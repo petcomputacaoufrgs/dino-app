@@ -1,0 +1,2 @@
+# DinoAPP
+Aplicativo PWA Dino

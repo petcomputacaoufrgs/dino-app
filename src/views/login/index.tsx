@@ -1,13 +1,15 @@
 import React from 'react'
-import GoogleLogin from 'react-google-login'
+import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout} from 'react-google-login'
 import Button from '../../components/button'
 import GoogleSecret from '../../config/client_secret.json'
+import LoginService from '../../services/LoginService'
 import './styles.css'
 
 const Login = () => {
-    const responseGoogle = (response: any) => {
-        console.log(response.tokenId);
-        alert(response.tokenId)
+    const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+        if ((response as GoogleLoginResponse).accessToken !== undefined) {
+            LoginService.login((response as GoogleLoginResponse).accessToken)
+        } 
     }
 
     return (

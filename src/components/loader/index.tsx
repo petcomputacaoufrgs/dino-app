@@ -15,7 +15,6 @@ const EndingClass = 'loader__ending'
 /* Timeout da animação de abertura e fechamento definida no CSS também */
 const AnimationTimeout = 200
 
-
 /**
  * @description Loader de tela cheia
  */

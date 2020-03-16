@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <Login/>
     </div>
-  );
+  )
 }
 
 export default App

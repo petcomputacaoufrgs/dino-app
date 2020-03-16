@@ -1,19 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login'
 import Button from '../../components/button'
+import Loader from '../../components/loader/'
 import GoogleSecret from '../../config/client_secret.json'
 import LoginService from '../../services/LoginService'
 import './styles.css'
 
+
+/**
+ * @description Tela de login com o Google
+ */
 const Login = () => {
+
+    const [loading, setLoading] = useState(false)
+
+    /**
+     * @description Função chamada após o login do usuário pela biblioteca de Login com o Google
+     * @param response Objeto retornado pela biblioteca definidos na sua documentação, 
+     * para a configuração responseType = 'code'retornará sempre um GoogleLoginResponseOffline
+     */
     const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        if ((response as GoogleLoginResponseOffline).code !== undefined) {
-            LoginService.login((response as GoogleLoginResponseOffline).code)
-            .then(response => console.log(response))
-            .catch(() => console.log('login error'))
-        } else {
-            console.log('login error type')
-        }
+        setLoading(true)
+
+        /** @todo Tratar erro de login em tela */
+        LoginService.login(response as GoogleLoginResponseOffline).then( () =>
+            setLoading(false)
+        )
     }
 
     return (
@@ -32,6 +44,7 @@ const Login = () => {
                     <Button onClick={renderProps.onClick}>Entrar com o Google</Button>
                   )}
             />
+            <Loader loading={loading} />
         </div>
     )
 }

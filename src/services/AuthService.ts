@@ -3,11 +3,10 @@ import Superagent from 'superagent'
 import HttpStatus from 'http-status-codes'
 import DinoApiConstants from '../constants/DinoApiConstants'
 import {GoogleLoginResponseOffline} from 'react-google-login'
-
 import LocalStorageService from './LocalStorageService'
-import AuthResponseModel from '../model/AuthResponseModel';
+import AuthResponseModel from '../model/AuthResponseModel'
 
-class LoginService {
+class AuthService {
 
     /**
      * @description Valida o login do usuário com a API e requere o token de acesso
@@ -22,13 +21,18 @@ class LoginService {
                 const responseBody: AuthResponseModel = response.body
 
                 LocalStorageService.setAuthToken(responseBody.accessToken)
-
-                return
             }
         }    
         /** @todo Melhorar erros de tela de login */
         alert('Erro na autenticação com a API do Dino')
     }
+
+    /**
+     * @description Verifica se o usuário está autenticado baseado no LocalStorage
+     */
+    isAuthenticated = () => (
+        Boolean(LocalStorageService.getAuthToken())
+    )
 }
 
-export default new LoginService()
+export default new AuthService()

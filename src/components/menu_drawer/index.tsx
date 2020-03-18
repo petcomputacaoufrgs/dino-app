@@ -25,13 +25,13 @@ import ListItemText from '@material-ui/core/ListItemText'
  */
 const MenuDrawer = (props: MenuDrawerProps) => {
 
-    /* Classes definidas */
+    /** Classes definidas */
     const classes = useStyles()
 
-    /* Tema do menu: mini drawer esquerdo */
+    /** Tema do menu: mini drawer esquerdo */
     const theme = useTheme()
 
-    /* Estado do menu de aberto e fechado */
+    /** Estado do menu de aberto e fechado */
     const [open, setOpen] = useState(false)
 
     /**
@@ -106,12 +106,15 @@ const MenuDrawer = (props: MenuDrawerProps) => {
     )
 }
 
-export default MenuDrawer
 
-/* Estilos do Menu */
-
+/** 
+ * @description Tamanho do drawer lateral
+ * */ 
 const drawerWidth = 240
 
+/** 
+ * @description Estilos do Menu
+ * */ 
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -182,3 +185,4 @@ export const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+export default MenuDrawer

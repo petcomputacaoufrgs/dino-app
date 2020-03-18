@@ -5,6 +5,7 @@ import GlossarySVG from '../../images/glossary.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
 import './styles.css'
+import BottomNavigation from '../../components/bottom_navigation';
 /**
  * @description Tela principal da aplicação
  **/
@@ -42,7 +43,7 @@ const Main = () : JSX.Element => {
 
     return (
         <Fragment>
-            <MenuDrawer items={items}/>
+            <BottomNavigation items={items}/>
             <div className='main'>
                 <LogoutButton />
             </div>

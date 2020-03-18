@@ -5,12 +5,12 @@ class PathConstants {
     /**
      * @description Diretório de login
      */
-    LOGIN = '/login'
+    LOGIN: string = '/login'
 
     /**
      * @description Diretório principal para usuários autenticados
      */
-    HOME = '/home'
+    HOME: string = '/home'
 }
 
 export default new PathConstants()

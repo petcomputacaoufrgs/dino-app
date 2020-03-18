@@ -1,15 +1,17 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import Login from './views/login'
+import Main from './views/main'
 import PrivateRoute from './components/private_route'
 import PathConstants from './constants/PathConstants'
+import history from './services/HistoryService'
 
 const App = () => (
     <div className='App'>
-      <BrowserRouter>
-        <PrivateRoute exact path={PathConstants.HOME}> oi </PrivateRoute>
+      <Router history = { history }>
+        <PrivateRoute exact path={PathConstants.HOME} component={Main} /> 
         <PrivateRoute exact path={PathConstants.LOGIN} component={Login} />
-      </BrowserRouter>
+      </Router>
     </div> 
 )
 

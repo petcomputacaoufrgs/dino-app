@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
-import { useHistory
- } from 'react-router-dom'
 import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login'
 import Button from '../../components/button'
 import Loader from '../../components/loader/'
 import GoogleSecret from '../../config/client_secret.json'
 import AuthService from '../../services/AuthService'
-import PathConstants from '../../constants/PathConstants'
 import './styles.css'
-
 
 
 /**
@@ -17,7 +13,6 @@ import './styles.css'
 const Login = () : JSX.Element => {
 
     const [loading, setLoading] = useState(false)
-    const history = useHistory()
 
     /**
      * @description Função chamada após o login do usuário pela biblioteca de Login com o Google
@@ -30,20 +25,12 @@ const Login = () : JSX.Element => {
         /** @todo Tratar erro de login em tela */
         AuthService.login(response as GoogleLoginResponseOffline).then( () => {
             setLoading(false)
-            redirect()
-        })
-    }
-
-    /**
-     * @description Redireciona o usuário para a tela principal
-     */
-    const redirect = () => {
-        history.push(PathConstants.HOME)
+        }).catch(() => setLoading(false))
     }
 
     return (
         <div className='login'>
-             <GoogleLogin
+            <GoogleLogin
                 clientId={GoogleSecret.web.client_id}
                 scope={'https://www.googleapis.com/auth/calendar'}
                 buttonText="Entrar com o Google"

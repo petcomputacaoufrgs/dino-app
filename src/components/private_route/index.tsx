@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
-import { Route, RouteProps, useHistory, useLocation } from 'react-router'
+import { Route, RouteProps, useLocation } from 'react-router'
 import AuthService from '../../services/AuthService'
 import PathConstants from '../../constants/PathConstants'
+import HistoryService from '../../services/HistoryService'
 
 /**
  * @description Gera uma rota com verificação de autenticação e redirecionamento automático
  * @param props Propriedades do Route
  */
 const PrivateRoute = (props: RouteProps) : JSX.Element => {
-
-    const history = useHistory()
     
     const location = useLocation()
 
@@ -32,9 +31,12 @@ const PrivateRoute = (props: RouteProps) : JSX.Element => {
         )
 
         if (!isAuthenticated() && !isLoginRoute()) {
-            history.push(PathConstants.LOGIN)
+            HistoryService.push(PathConstants.LOGIN)
+        } else if (isAuthenticated() && isLoginRoute()) {
+            HistoryService.push(PathConstants.HOME)
         }
-    }, [history, location])
+        
+    }, [location])
 
     return (
         <Route {...props}/>

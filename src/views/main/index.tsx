@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import LogoutButton from '../../components/logout_button'
-import MenuDrawer from '../../components/menu_drawer'
 import GlossarySVG from '../../images/glossary.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
+import ContentView from '../../components/content_view/index'
 import './styles.css'
-import BottomNavigation from '../../components/bottom_navigation';
+
+
 /**
  * @description Tela principal da aplicação
  **/
@@ -43,10 +44,11 @@ const Main = () : JSX.Element => {
 
     return (
         <Fragment>
-            <BottomNavigation items={items}/>
-            <div className='main'>
-                <LogoutButton />
-            </div>
+            <ContentView menuItems={items} component={(
+                <div className='main'>
+                    <LogoutButton />
+                </div>
+            )}/>
         </Fragment>
     )
 }

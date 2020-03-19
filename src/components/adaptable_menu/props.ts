@@ -1,9 +1,9 @@
 import MenuItem from '../../types/MenuItem'
 
 /**
- * @description Propriedades do menu drawer
+ * @description Propriedades do menu drawer.
  */
-export default class MenuDrawerProps{
+export default class AdaptableMenuProps{
     /**
      * @description Item que serão exibidos no menu
      */

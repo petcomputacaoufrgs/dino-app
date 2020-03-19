@@ -15,14 +15,14 @@ const PrivateRoute = (props: RouteProps) : JSX.Element => {
     /**
      * @description Verifica se o usuário está autenticado
      */
-    const isAuthenticated = () : boolean => (
+    const isAuthenticated = (): boolean => (
         AuthService.isAuthenticated()
     )
 
     /**
      * @description Redireciona o usuário não autenticado caso não esteja na tela de autenticação
      */
-    useEffect(() => {
+    useEffect((): void => {
         /**
          * @description Verifica se o Route chamado é o de Login
          */
@@ -33,7 +33,7 @@ const PrivateRoute = (props: RouteProps) : JSX.Element => {
         if (!isAuthenticated() && !isLoginRoute()) {
             HistoryService.push(PathConstants.LOGIN)
         } else if (isAuthenticated() && isLoginRoute()) {
-            HistoryService.push(PathConstants.HOME)
+            HistoryService.push(PathConstants.MAIN)
         }
         
     }, [location])

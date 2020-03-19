@@ -1,7 +1,7 @@
 /**
  * @description Valores chaves de Header utilizados pelo DinoAPI
  */
-class DinoHeaderConstants {
+class DinoAPIHeaderConstants {
     /**
      * @description Header para passar a autenticação, não esqueça de passar 'Bearer ' antes do valor do token
      */
@@ -13,4 +13,4 @@ class DinoHeaderConstants {
     REFRESH_TOKEN: string = 'Refresh'
 }
 
-export default new DinoHeaderConstants()
+export default new DinoAPIHeaderConstants()

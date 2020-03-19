@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import clsx from 'clsx'
-import MenuDrawerProps from './props'
+import DrawerNavigationProps from './props'
 import AppConstants from '../../constants/AppConstants'
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -23,7 +23,7 @@ import ListItemText from '@material-ui/core/ListItemText'
  * @description Menu lateral
  * @param props Propriedades definidas em MenuDrawerProps 
  */
-const MenuDrawer = (props: MenuDrawerProps) => {
+const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
 
     /** Classes definidas */
     const classes = useStyles()
@@ -34,36 +34,59 @@ const MenuDrawer = (props: MenuDrawerProps) => {
     /** Estado do menu de aberto e fechado */
     const [open, setOpen] = useState(false)
 
+    /** Salva o indice do item selecionado no vetor de itens */
+    const [selectecItemIndex, setSelectedItemIndex] = useState(props.selectedItem ? props.selectedItem : 0)
+
     /**
      * @description Altera o estado do menu para abert
      */
-    const handleDrawerOpen = () => {
+    const handleDrawerOpen = (): void  => {
         setOpen(true)
     }
 
     /**
      * @description Altera o estado do menu para fechado
      */
-    const handleDrawerClose = () => {
+    const handleDrawerClose = (): void => {
         setOpen(false)
     }
 
+    /**
+     * @description Modifica o item selecionado e chama a sua função de click
+     * @param index Indice do item clicado na lista de items da props
+     */
+    const onClick = (index: number) => {
+        setSelectedItemIndex(index)
+        props.items[index].onClick(index)
+    }
+
+    /**
+     * @description Retorna o componente do item selecionado no menu atualmente
+     */
+    const renderSelectedContent = (): JSX.Element => {
+        if (props.items.length > 0) {
+            return props.items[selectecItemIndex].component
+        }
+
+        return (<Fragment/>)
+    }
+
     return (
-        <Fragment>
+        <div className={classes.root}>
             <CssBaseline />
             <AppBar 
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                  })}>
+                className={clsx(classes.appBar, props.mini 
+                    ? { [classes.appBarShiftMini]: open, } 
+                    :  { [classes.appBarShift]: open, }
+                )}
+            >
                 <Toolbar>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
+                        className={clsx(props.mini ? classes.menuButtonMini : classes.menuButton, props.mini ? {[classes.hide]: open, } : open && classes.hide)}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -73,27 +96,29 @@ const MenuDrawer = (props: MenuDrawerProps) => {
                 </Toolbar>
             </AppBar>
             <Drawer 
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                  })}
+                variant={props.mini ? 'permanent' : "persistent" }
+                anchor={props.mini ? undefined : 'left'}
+                open={props.mini ? undefined : open }
+                className={props.mini ? clsx(classes.drawer, {
+                                [classes.drawerOpen]: open,
+                                [classes.drawerClose]: !open,
+                            }) : classes.drawer}
                 classes={{
-                    paper: clsx({
+                    paper: props.mini ? clsx({
                       [classes.drawerOpen]: open,
                       [classes.drawerClose]: !open,
-                    }),
+                    }) : classes.drawerPaper,
                 }}
             >
-                <div className={classes.toolbar}>
+                <div className={props.mini ? classes.toolbar : classes.drawerHeader}>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </div>
                 <Divider />
                 <List>
                     {props.items.map((item, index) => (
-                        <ListItem button key={item.name}>
+                        <ListItem button key={index} onClick={() => onClick(index)}>
                             <ListItemIcon>
                                 <img className={classes.image} src={item.image} alt={item.name}/>
                             </ListItemIcon>
@@ -102,7 +127,15 @@ const MenuDrawer = (props: MenuDrawerProps) => {
                     ))}
                 </List>
             </Drawer>
-        </Fragment>
+            <main
+                className={props.mini ? classes.contentMini : clsx(classes.content, {
+                    [classes.contentShift]: open,
+                })}
+            >
+                <div className={props.mini ? classes.toolbar : classes.drawerHeader} />
+                {renderSelectedContent()}
+            </main>
+        </div>
     )
 }
 
@@ -110,7 +143,7 @@ const MenuDrawer = (props: MenuDrawerProps) => {
 /** 
  * @description Tamanho do drawer lateral
  * */ 
-const drawerWidth = 240
+const drawerWidth: number = 240
 
 /** 
  * @description Estilos do Menu
@@ -122,23 +155,35 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         appBar: {
             position: 'fixed',
+            height: '45px',
             justifyContent: 'center',
             zIndex: theme.zIndex.drawer + 1,
             transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
             }),
         },
         appBarShift: {
             marginLeft: drawerWidth,
             width: `calc(100% - ${drawerWidth}px)`,
             transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
             }),
         },
-        menuButton: {
+        appBarShiftMini: {
+            marginLeft: drawerWidth,
+            width: `calc(100% - ${drawerWidth}px)`,
+            transition: theme.transitions.create(['width', 'margin'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        },
+        menuButtonMini: {
             marginRight: 36,
+        },
+        menuButton: {
+            marginRight: theme.spacing(2),
         },
         hide: {
             display: 'none',
@@ -155,6 +200,16 @@ export const useStyles = makeStyles((theme: Theme) =>
             duration: theme.transitions.duration.enteringScreen,
             }),
         },
+        drawerPaper: {
+            width: drawerWidth,
+        },
+        drawerHeader: {
+            display: 'flex',
+            alignItems: 'center',
+            padding: theme.spacing(0, 1),
+            justifyContent: 'flex-end',
+            height: '45px',
+        },
         drawerClose: {
             transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -170,19 +225,34 @@ export const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            height: '45px',
             padding: theme.spacing(0, 1),
-            // necessary for content to be below app bar
-            ...theme.mixins.toolbar,
+        },
+        contentMini: {
+            flexGrow: 1,
+            padding: theme.spacing(3),
         },
         content: {
             flexGrow: 1,
             padding: theme.spacing(3),
+            transition: theme.transitions.create('margin', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+            marginLeft: -drawerWidth,
+        },
+        contentShift: {
+            transition: theme.transitions.create('margin', {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            marginLeft: 0,
         },
         image: {
             width: '35px',
             marginLeft: '0px',
-        }
+        },
     }),
 );
 
-export default MenuDrawer
+export default DrawerNavigation

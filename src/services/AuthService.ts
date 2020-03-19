@@ -1,10 +1,10 @@
 import AuthRequestModel from '../model/AuthRequestModel'
 import HttpStatus from 'http-status-codes'
-import DinoURLConstants from '../constants/DinoURLConstants'
+import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
 import {GoogleLoginResponseOffline} from 'react-google-login'
 import LocalStorageService from './LocalStorageService'
 import AuthResponseModel from '../model/AuthResponseModel'
-import HttpService from './HttpService'
+import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 
@@ -18,7 +18,7 @@ class AuthService {
         if (loginResponse.code) { //Caso haja um token de autenticação
             const authRequestModel = new AuthRequestModel(loginResponse.code)
 
-            const response = await HttpService.post(DinoURLConstants.PATH_AUTH_GOOGLE).send(authRequestModel)
+            const response = await HttpService.post(DinoAPIURLConstants.PATH_AUTH_GOOGLE).send(authRequestModel)
             
             if (response.status === HttpStatus.OK) {
                 const responseBody: AuthResponseModel = response.body
@@ -27,7 +27,7 @@ class AuthService {
                 LocalStorageService.setAuthToken(responseBody.accessToken)
 
                 /* Redireciona para a página principal */
-                HistoryService.push(PathConstants.HOME)
+                HistoryService.push(PathConstants.MAIN)
 
                 return
             }
@@ -40,7 +40,7 @@ class AuthService {
      * @description Realiza o logout do usuário na aplicação
      */
     logout = async () => {
-        const response = await HttpService.put(DinoURLConstants.PATH_SIGOUT_GOOGLE)
+        const response = await HttpService.put(DinoAPIURLConstants.PATH_SIGOUT_GOOGLE)
 
         if(response.status === HttpStatus.OK) {
             LocalStorageService.setAuthToken('')

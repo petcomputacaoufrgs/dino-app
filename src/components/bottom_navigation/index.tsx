@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BottomNavigationProps from './props'
 import { makeStyles } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'
@@ -13,25 +13,33 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     /** Classes utilizadas */
     const classes = useStyles()
 
-    /** Item atualmente selecionado */
-    const [value, setValue] = React.useState('recents')
+    /** Salva o indice do item selecionado no vetor de itens */
+    const [selectecItemIndex, setSelectedItemIndex] = useState(props.selectedItem ? props.selectedItem : 0)
   
     /**
      * @description Executa os procedimentos para modificar o item do menu
      * @param event Dados do evento disparado
-     * @param newValue Novo valor selecionado
+     * @param newValue Indice do novo item selecionado no vetor de items
      */
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-        setValue(newValue)
+    const handleChange = (event: React.ChangeEvent<{}>, indexNewSelectedItem: string) => {
+        const intIndex = Number(indexNewSelectedItem)
+
+        setSelectedItemIndex(intIndex)
+
+        const selectedItem = props.items[intIndex]
+
+        selectedItem.onClick(intIndex)
+
+        props.onChange(intIndex)
     }
   
     return (
-      <MaterialBottomNavigation value={value} onChange={handleChange} className={classes.root}>
+      <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange} className={classes.root}>
         {props.items.map((item, index) => (
             <BottomNavigationAction 
                 key={index} 
                 label={item.name} 
-                value={item.name} 
+                value={index} 
                 icon={
                     <img className={classes.image} src={item.image} alt={item.name} />
                 } 

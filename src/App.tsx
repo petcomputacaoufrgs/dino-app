@@ -9,7 +9,7 @@ import history from './services/HistoryService'
 const App = () => (
     <div className='App'>
       <Router history = { history }>
-        <PrivateRoute exact path={PathConstants.HOME} component={Main} /> 
+        <PrivateRoute exact path={PathConstants.MAIN} component={Main} /> 
         <PrivateRoute exact path={PathConstants.LOGIN} component={Login} />
       </Router>
     </div> 

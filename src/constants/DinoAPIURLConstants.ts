@@ -1,7 +1,7 @@
 /**
  * @description Valores de URL da API para conexão
  */
-class DinoURLConstants {
+class DinoAPIURLConstants {
     private URL: string = 'http://localhost:8080/'
     private PATH_AUTH: string = 'auth/'
 
@@ -16,4 +16,4 @@ class DinoURLConstants {
     PATH_SIGOUT_GOOGLE: string = this.URL + this.PATH_AUTH + 'google/logout'
 }
 
-export default new DinoURLConstants()
+export default new DinoAPIURLConstants()

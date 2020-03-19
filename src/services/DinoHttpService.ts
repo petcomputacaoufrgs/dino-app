@@ -3,10 +3,13 @@ import AuthService from './AuthService'
 import HttpStatus from 'http-status-codes'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
-import DinoHeaderConstants from '../constants/DinoHeaderConstants'
+import DinoAPIHeaderConstants from '../constants/DinoAPIHeaderConstants'
 import LocalStorageService from './LocalStorageService'
 
-class HttpAgent {
+/**
+ * @description Abstrai a biblioteca Superagent com tratamentos para autenticação, erro de autenticação e renovação de token
+ */
+class DinoHttpService {
 
     /**
      * @description Cria uma requisição do tipo PUT com autenticação se houver e com filtro para erro de acesso negado
@@ -39,7 +42,7 @@ class HttpAgent {
         if (AuthService.isAuthenticated()) {
             const authorizationHeader = 'Bearer '.concat(AuthService.getAuthenticationToken())
 
-            return {[DinoHeaderConstants.AUTHORIZATION]: authorizationHeader}
+            return {[DinoAPIHeaderConstants.AUTHORIZATION]: authorizationHeader}
         }
         
         return {}
@@ -63,7 +66,7 @@ class HttpAgent {
      */
     private onResponse = (response: Response) => {
         /* Verifica se o token de autorização foi renovado */
-        const newToken = response.get(DinoHeaderConstants.REFRESH_TOKEN)
+        const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
 
         if (newToken) {
             /* Salva o novo token de autenticação, remove os 7 primeiros digitos correspondentes ao código 'Bearer ' */
@@ -72,5 +75,5 @@ class HttpAgent {
     }
 }
 
-export default new HttpAgent()
+export default new DinoHttpService()
 

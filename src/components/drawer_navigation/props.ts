@@ -1,9 +1,9 @@
 import MenuItem from '../../types/MenuItem'
 
 /**
- * @description Propriedades do menu de navegação inferior
+ * @description Propriedades do menu drawer.
  */
-export default class BottomNavigationProps{
+export default class DrawerNavigationProps {
     /**
      * @description Item que serão exibidos no menu
      */
@@ -15,6 +15,11 @@ export default class BottomNavigationProps{
     selectedItem?: number
 
     /**
+     * @description Defini se o estado do menu quando fechado deve exibir um mini menu ou não
+     */
+    mini?: boolean
+
+    /**
      * @description Função disparada com a mudança de item no menu
      * @param index Indíce do novo item selecionado
      */
@@ -23,9 +28,10 @@ export default class BottomNavigationProps{
     /**
      * @param items Define os itens que serão exibidos no menu
      */
-    constructor(items: MenuItem[], onChange: (index: number) => void, selectedItem: number) {
+    constructor(items: MenuItem[], onChange: (index: number) => void, mini: boolean = false, selectedItem: number) {
         this.items = items
         this.onChange = onChange
-        this.selectedItem = selectedItem
+        this.mini = mini
+        this.selectedItem = selectedItem   
     }   
 }

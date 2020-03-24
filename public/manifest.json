@@ -23,6 +23,6 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "permissions": [
-    "http://localhost:8080"
+    "https://pet-dino-server.herokuapp.com/"
   ]
 }

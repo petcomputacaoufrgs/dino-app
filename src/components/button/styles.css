@@ -1,0 +1,7 @@
+.button {
+    cursor: pointer;
+}
+
+.button__material_button{
+    text-transform: none !important;
+ }

@@ -12,9 +12,6 @@ const ClosedClass = 'loader__closed'
 /* Classe principal para Loader entrando em estado inativo */
 const EndingClass = 'loader__ending'
 
-/* Timeout da animação de abertura e fechamento definida no CSS também */
-const AnimationTimeout = 200
-
 /**
  * @description Loader de tela cheia
  */
@@ -31,9 +28,7 @@ const Loader = (props: LoaderProps) => {
             if (!props.loading) { // Caso tenha mudado o estado de loading para false
                 setLoading(props.loading)
 
-                setTimeout(() => { 
-                    setClosed(true)
-                }, AnimationTimeout)
+                setClosed(true)
             }
         } else if (props.loading) { // Caso tenha mudado do estado de loading para true
             setLoading(props.loading)

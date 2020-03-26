@@ -45,6 +45,9 @@ class AuthService {
         if(response.status === HttpStatus.OK) {
             LocalStorageService.setAuthToken('')
 
+            /* Redireciona para a página de login */
+            HistoryService.push(PathConstants.LOGIN)
+
             return
         }
         

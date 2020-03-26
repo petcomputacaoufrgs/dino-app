@@ -10,7 +10,7 @@ class PathConstants {
     /**
      * @description Diretório principal para usuários autenticados
      */
-    MAIN: string = '/main'
+    MAIN: string = '/'
 }
 
 export default new PathConstants()

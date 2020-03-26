@@ -1,13 +1,10 @@
 import React, { useState, Fragment } from 'react'
 import Button from '../button'
 import AuthService from '../../services/AuthService'
-import Loader from '../loader';
-import PathConstants from '../../constants/PathConstants'
-import HistoryService from '../../services/HistoryService';
+import Loader from '../loader'
 
 /**
- * @description Botão básico
- * @param props propriedades possíveis para este botão
+ * @description Botão para logout
  */
 const LogoutButton = () => {
 
@@ -16,10 +13,9 @@ const LogoutButton = () => {
     const logout = () => {
         setLoading(true)
 
-        AuthService.logout().then(() => {
-            setLoading(false)
-            HistoryService.push(PathConstants.LOGIN)
-        }).catch(() => setLoading(false))
+        /** @todo Tratar erro de logout */
+        AuthService.logout()
+            .catch(() => setLoading(false))
     }
 
     return (

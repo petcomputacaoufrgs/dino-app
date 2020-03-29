@@ -8,6 +8,7 @@ import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
 import { useLocation } from 'react-router';
 import HistoryService from '../../services/HistoryService';
+import Glossary from '../glossary'
 
 
 /**
@@ -58,6 +59,7 @@ const Main = () : JSX.Element => {
             'image':GlossarySVG,
             'name': 'Glossário',
             'onClick': goToGlossary,
+            'component': <Glossary />,
         }
     ]
 

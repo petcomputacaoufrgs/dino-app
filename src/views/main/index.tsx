@@ -79,7 +79,7 @@ const Main = () : JSX.Element => {
             <>
                 <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={() => <>GLOSSARY</>} />
+                <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
             </>
         )
     }

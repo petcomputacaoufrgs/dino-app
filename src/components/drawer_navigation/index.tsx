@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
 import AppConstants from '../../constants/AppConstants'
@@ -34,9 +34,6 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
     /** Estado do menu de aberto e fechado */
     const [open, setOpen] = useState(false)
 
-    /** Salva o indice do item selecionado no vetor de itens */
-    const [selectecItemIndex, setSelectedItemIndex] = useState(props.selectedItem ? props.selectedItem : 0)
-
     /**
      * @description Altera o estado do menu para abert
      */
@@ -56,19 +53,14 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
      * @param index Indice do item clicado na lista de items da props
      */
     const onClick = (index: number) => {
-        setSelectedItemIndex(index)
         props.items[index].onClick(index)
     }
 
     /**
      * @description Retorna o componente do item selecionado no menu atualmente
      */
-    const renderSelectedContent = (): JSX.Element => {
-        if (props.items.length > 0) {
-            return props.items[selectecItemIndex].component
-        }
-
-        return (<Fragment/>)
+    const renderContent = (): JSX.Element => {
+        return props.component
     }
 
     return (
@@ -133,7 +125,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
                 })}
             >
                 <div className={props.mini ? classes.toolbar : classes.drawerHeader} />
-                {renderSelectedContent()}
+                {renderContent()}
             </main>
         </div>
     )

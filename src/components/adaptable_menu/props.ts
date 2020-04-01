@@ -1,18 +1,20 @@
-import MenuItem from '../../types/MenuItem'
-
+import MenuItem from '../../types/MenuItem';
 /**
  * @description Propriedades do menu drawer.
  */
-export default class AdaptableMenuProps{
+export default interface AdaptableMenuProps{
     /**
-     * @description Item que serão exibidos no menu
+     * @description Componente com os itens do menu
+     */
+    component: JSX.Element
+
+    /**
+     * @description Itens que serão exibidos no menu
      */
     items: MenuItem[]
 
     /**
-     * @param items Define os itens que serão exibidos no menu
+     * @description Indice do item selecionado na lista de itens
      */
-    constructor(items: MenuItem[]) {
-        this.items = items
-    }   
+    selectedItem: number 
 }

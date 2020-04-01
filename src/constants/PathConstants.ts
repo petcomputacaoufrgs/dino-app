@@ -5,12 +5,27 @@ class PathConstants {
     /**
      * @description Diretório de login
      */
-    LOGIN: string = '/login'
+    LOGIN: string = '/'
 
     /**
-     * @description Diretório principal para usuários autenticados
+     * @description Diretório do app principal
      */
-    MAIN: string = '/'
+    APP: string = '/app'
+
+    /**
+     * @description Diretório home para usuários autenticados
+     */
+    HOME: string = this.APP + '/home'
+
+    /**
+     * @description Diretório do glossário
+     */
+    GLOSSARY: string = this.APP + '/glossary'
+
+    /**
+     * @description Diretório dos jogos
+     */
+    GAMES: string = this.APP + '/games'
 }
 
 export default new PathConstants()

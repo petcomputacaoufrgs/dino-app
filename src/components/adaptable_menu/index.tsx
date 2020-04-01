@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import AdaptableMenuProps from './props'
 import DrawerNavigation from '../drawer_navigation/index'
@@ -15,9 +15,6 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
     /** Estado que registra a orientação da tela */
     const [isLandscape, setIfIsLandscape] = useState(ScreenOrientationService.isLandscape())
 
-    /** Estado que registra o item selecionado no menu pelo seu indice no vetor de items */
-    const [selectedMenuItem, setSelectedMenuItem] = useState(0)
-
     /**
      * @description Função invocada quando a orientação da tela muda
      */
@@ -27,14 +24,6 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
 
     /** Configura a função onScreenOrientationChange para ser invocada quando houver mudança na horientação da tela */
     ScreenOrientationService.setOnScreenOrientationChangeEvent(onScreenOrientationChange)
-
-    /**
-     * @description Invocada quando houver alteração no item selecionado do menu
-     * @param index Indice do item selecionado no vetor de itens do menu
-     */
-    const onItemMenuChange = (index: number): void => {
-        setSelectedMenuItem(index)
-    }
 
     /**
      * @description Retorna o menu adaptavél com base no dispositivo utilizado e na horientação da tela
@@ -66,7 +55,12 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      * @returns Elemento JSX contendo o menu
      */
     const renderDrawerMenuWithContent = (mini: boolean): JSX.Element => {
-        return (<DrawerNavigation mini={mini} selectedItem={selectedMenuItem} onChange={onItemMenuChange} items={props.items} />)
+        return (
+            <DrawerNavigation 
+                mini={mini} 
+                items={props.items} 
+                component={props.component} />
+        )
     }
 
     /**
@@ -75,10 +69,10 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      */
     const renderBottomNavigationMenuWithContent = (): JSX.Element => {
         return ( 
-            <Fragment> 
-                <BottomNavigation selectedItem={selectedMenuItem} onChange={onItemMenuChange} items={props.items} />
-                {props.items[selectedMenuItem].component}
-            </Fragment>
+            <BottomNavigation 
+                selectedItem={props.selectedItem} 
+                items={props.items} 
+                component={props.component} />
         )
     }
 

@@ -19,10 +19,6 @@ type MenuItem = {
      */
     onClick: MenuItemOnClick
 
-    /**
-     * @description Componente exibido neste item do menu
-     */
-    component: JSX.Element
 }
 
 export default MenuItem

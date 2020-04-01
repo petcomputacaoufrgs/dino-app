@@ -13,7 +13,7 @@ class DinoAPIURLConstants {
     /**
      * @description URL para sair com a autenticação da API
      */
-    PATH_SIGOUT_GOOGLE: string = this.URL + this.PATH_AUTH + 'google/logout'
+    PATH_SIGNOUT_GOOGLE: string = this.URL + this.PATH_AUTH + 'google/logout'
 }
 
 export default new DinoAPIURLConstants()

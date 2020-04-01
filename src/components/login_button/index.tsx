@@ -9,7 +9,6 @@ import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 're
  * @description Botão para login
  */
 const LoginButton = () => {
-
     
     const [loading, setLoading] = useState(false)
 
@@ -39,18 +38,18 @@ const LoginButton = () => {
     return (
         <Fragment>
             <GoogleLogin
-                    clientId={GoogleSecret.web.client_id}
-                    scope={'https://www.googleapis.com/auth/calendar'}
-                    buttonText="Entrar com o Google"
-                    onSuccess={responseGoogle}
-                    onFailure={loginFail}
-                    cookiePolicy={'single_host_origin'}
-                    redirectUri={'http://localhost:3000'}
-                    responseType={'code'}
-                    accessType={'offline'}
-                    render={renderProps => (
-                        <Button onClick={renderProps.onClick}>Entrar com o Google</Button>
-                    )}
+                clientId={GoogleSecret.web.client_id}
+                scope={'https://www.googleapis.com/auth/calendar'}
+                buttonText="Entrar com o Google"
+                onSuccess={responseGoogle}
+                onFailure={loginFail}
+                cookiePolicy={'single_host_origin'}
+                redirectUri={'http://localhost:3000'}
+                responseType={'code'}
+                accessType={'offline'}
+                render={renderProps => (
+                    <Button onClick={renderProps.onClick}>Entrar com o Google</Button>
+                )}
                 />
             <Loader loading={loading} />
         </Fragment>

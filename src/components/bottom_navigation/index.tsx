@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BottomNavigationProps from './props'
 import { makeStyles } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'
@@ -29,23 +29,36 @@ const BottomNavigation = (props: BottomNavigationProps) => {
         const selectedItem = props.items[intIndex]
 
         selectedItem.onClick(intIndex)
+    }
 
-        props.onChange(intIndex)
+    /** Lida com a atualização externa da props */
+    useEffect(() => {
+        setSelectedItemIndex(props.selectedItem ? props.selectedItem : 0)
+    }, [props.selectedItem])
+
+    /**
+     * @description Carrega o componente com os items do menu dentro de rotas
+     */
+    const renderComponent = () : JSX.Element => {
+        return props.component
     }
   
     return (
-      <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange} className={classes.root}>
-        {props.items.map((item, index) => (
-            <BottomNavigationAction 
-                key={index} 
-                label={item.name} 
-                value={index} 
-                icon={
-                    <img className={classes.image} src={item.image} alt={item.name} />
-                } 
-            />
-        ))}
-      </MaterialBottomNavigation>
+        <>
+            <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange} className={classes.root}>
+                {props.items.map((item, index) => (
+                    <BottomNavigationAction 
+                        key={index} 
+                        label={item.name} 
+                        value={index} 
+                        icon={
+                            <img className={classes.image} src={item.image} alt={item.name} />
+                        } 
+                    />
+                ))}
+            </MaterialBottomNavigation>
+            {renderComponent()}
+        </>
     );
 }
 

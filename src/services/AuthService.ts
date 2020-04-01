@@ -27,7 +27,7 @@ class AuthService {
                 LocalStorageService.setAuthToken(responseBody.accessToken)
 
                 /* Redireciona para a página principal */
-                HistoryService.push(PathConstants.MAIN)
+                HistoryService.push(PathConstants.HOME)
 
                 return
             }
@@ -40,7 +40,7 @@ class AuthService {
      * @description Realiza o logout do usuário na aplicação
      */
     logout = async () => {
-        const response = await HttpService.put(DinoAPIURLConstants.PATH_SIGOUT_GOOGLE)
+        const response = await HttpService.put(DinoAPIURLConstants.PATH_SIGNOUT_GOOGLE)
 
         if(response.status === HttpStatus.OK) {
             LocalStorageService.setAuthToken('')

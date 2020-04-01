@@ -1,8 +1,8 @@
 /**
  * @description Valores de URL da API para conexão
  */
-class DinoURLConstants {
-    private URL: string = 'http://localhost:8080/'
+class DinoAPIURLConstants {
+    private URL: string = 'https://pet-dino-server.herokuapp.com/'
     private PATH_AUTH: string = 'auth/'
 
     /**
@@ -13,7 +13,7 @@ class DinoURLConstants {
     /**
      * @description URL para sair com a autenticação da API
      */
-    PATH_SIGOUT_GOOGLE: string = this.URL + this.PATH_AUTH + 'google/logout'
+    PATH_SIGNOUT_GOOGLE: string = this.URL + this.PATH_AUTH + 'google/logout'
 }
 
-export default new DinoURLConstants()
+export default new DinoAPIURLConstants()

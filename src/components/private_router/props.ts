@@ -18,7 +18,7 @@ export default class PrivateRouterProps<S = LocationState> {
     /**
      * @description Informa se o usuário não está autenticado
      */
-    isAuthenticated: boolean
+    isAuthenticated: () => boolean
 
     /**
      * 
@@ -30,7 +30,7 @@ export default class PrivateRouterProps<S = LocationState> {
      */
     children?: any
 
-    constructor(loginPath: string, homePath: string, isAuthenticated: boolean, browserHistory?: History<S>, children?: any) {
+    constructor(loginPath: string, homePath: string, isAuthenticated: () => boolean, browserHistory?: History<S>, children?: any) {
         this.loginPath = loginPath
         this.homePath = homePath
         this.isAuthenticated = isAuthenticated

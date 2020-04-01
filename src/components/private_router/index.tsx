@@ -6,7 +6,7 @@ import history from '../../services/HistoryService'
 /**
  * @description Contexto padrão para o router
  */
-export const PrivateRouterContext = createContext(new PrivateRouterProps('', '', false))
+export const PrivateRouterContext = createContext(new PrivateRouterProps('', '', () => false))
 
 /**
  * @description Gera uma rota com verificação de autenticação e redirecionamento automático

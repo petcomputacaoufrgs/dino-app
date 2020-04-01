@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import Button from '../button'
 import AuthService from '../../services/AuthService'
 import Loader from '../loader'
@@ -36,7 +36,7 @@ const LoginButton = () => {
     }
 
     return (
-        <Fragment>
+        <>
             <GoogleLogin
                 clientId={GoogleSecret.web.client_id}
                 scope={'https://www.googleapis.com/auth/calendar'}
@@ -50,9 +50,9 @@ const LoginButton = () => {
                 render={renderProps => (
                     <Button onClick={renderProps.onClick}>Entrar com o Google</Button>
                 )}
-                />
+            />
             <Loader loading={loading} />
-        </Fragment>
+        </>
     )
 }
 

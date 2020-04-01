@@ -5,8 +5,7 @@ import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
 import AdaptableMenu from '../../components/adaptable_menu/'
 import PathConstants from '../../constants/PathConstants'
-import PrivateRoute from '../../components/private_route'
-import { useLocation } from 'react-router';
+import { useLocation, Switch, Route } from 'react-router'
 import HistoryService from '../../services/HistoryService';
 
 
@@ -74,11 +73,11 @@ const Main = () : JSX.Element => {
     /** Componente interno do exibido com o menu definido pelo path */
     const renderMainComponent = (): JSX.Element => {
         return (
-            <>
-                <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
-                <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={() => <>GLOSSARY</>} />
-            </>
+            <Switch>
+                <Route exact path={PathConstants.HOME} component={LogoutButton} />
+                <Route exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
+                <Route exact path={PathConstants.GLOSSARY} component={() => <>GLOSSARY</>} />
+            </Switch>
         )
     }
 

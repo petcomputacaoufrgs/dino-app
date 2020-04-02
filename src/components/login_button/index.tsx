@@ -4,11 +4,14 @@ import AuthService from '../../services/AuthService'
 import Loader from '../loader'
 import GoogleSecret from '../../config/client_secret.json'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
+import GoogleLogo from '../../images/google_logo.png'
+import LoginButtonProps from './props'
+import './styles.css'
 
 /**
  * @description Botão para login
  */
-const LoginButton = () => {
+const LoginButton = (props: LoginButtonProps) => {
     
     const [loading, setLoading] = useState(false)
 
@@ -35,20 +38,23 @@ const LoginButton = () => {
         console.log('Login Fail')
     }
 
+    const getURI = () => {
+        return window.location.protocol + '//' + window.location.host + '/'
+    }
+
     return (
         <>
             <GoogleLogin
                 clientId={GoogleSecret.web.client_id}
                 scope={'https://www.googleapis.com/auth/calendar'}
-                buttonText="Entrar com o Google"
                 onSuccess={responseGoogle}
                 onFailure={loginFail}
                 cookiePolicy={'single_host_origin'}
-                redirectUri={'http://localhost:3000'}
+                redirectUri={getURI()}
                 responseType={'code'}
                 accessType={'offline'}
                 render={renderProps => (
-                    <Button onClick={renderProps.onClick}>Entrar com o Google</Button>
+                    <Button imageSrc={GoogleLogo} imageAlt={props.buttonText} className='login_button__button' onClick={renderProps.onClick}>{props.buttonText}</Button>
                 )}
             />
             <Loader loading={loading} />

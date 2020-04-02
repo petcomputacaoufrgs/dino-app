@@ -7,10 +7,45 @@ import './styles.css'
  * @description Botão básico
  * @param props propriedades possíveis para este botão
  */
-const Button = (props: ButtonProps) => (
-    <div className='button' onClick={props.onClick}>
-        <MaterialButton className='button__material_button' variant='contained' disabled={props.disabled}>{props.children}</MaterialButton>
-    </div>
-)
+const Button = (props: ButtonProps) => {
+
+    const getClassName = (): string => {
+        let className = 'button'
+
+        if (props.className) {
+            className = className.concat(' ').concat(props.className)
+        }
+
+        return className
+    }
+
+    const getImageComponent = (): JSX.Element => {
+        if (props.imageSrc) {
+            if (props.imageAlt) {
+                return (
+                    <img className='button__start_icon' src={props.imageSrc} alt={props.imageAlt} />
+                )
+            } else {
+                throw Error('Image without alt property!')
+            }   
+        }
+        
+        return (<></>)
+    }
+
+    return (
+        <div className={getClassName()} onClick={props.onClick}>
+            <MaterialButton 
+                startIcon={getImageComponent()} 
+                className='button__material_button' 
+                variant='contained' 
+                disabled={props.disabled}
+                size={props.size}
+            >
+                    {props.children}
+            </MaterialButton>
+        </div>
+    )
+}
 
 export default Button

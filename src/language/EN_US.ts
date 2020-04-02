@@ -9,4 +9,7 @@ export default class EN_US implements LanguageSet {
 
     NOT_FROND_REDIRECT_MESSAGE: string = 'Redirecting...'
     
+    WELCOME_MESSAGE = 'Welcome to DinoAPP!'
+
+    LOGIN_BUTTON_TEXT = 'Log in with Google'
 }

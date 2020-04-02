@@ -4,5 +4,8 @@
 
 .button__material_button{
     text-transform: none !important;
-    background-color: #FF759E !important;
+ }
+
+ .button__start_icon {
+     width: 15px;
  }

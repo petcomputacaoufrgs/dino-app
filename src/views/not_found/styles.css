@@ -1,0 +1,30 @@
+.not_found {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #36B344;
+    padding: 10px;
+}
+
+.not_found__image {
+    width: 250px;
+}
+
+.not_found__text {
+    font-size: x-large;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+}
+
+@media (orientation: landscape) {
+    .not_found__image {
+        width: 500px;
+    }
+}

@@ -8,22 +8,26 @@ import PathConstants from './constants/PathConstants'
 import AuthService from './services/AuthService'
 import HistoryService from './services/HistoryService'
 import { Switch, Route } from 'react-router'
+import NotFound from './views/not_found/index'
+import LanguageProvider from './components/language_provider'
 
 
 
 const App = (): JSX.Element => {
   return (
-    <PrivateRouter 
-      loginPath={PathConstants.LOGIN}
-      homePath={PathConstants.HOME}
-      isAuthenticated={AuthService.isAuthenticated}
-      browserHistory={HistoryService}>
-      <Switch>
-        <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-        <PrivateRoute path={PathConstants.APP} component={Main} />
-        <Route path={'/'} component={() => <>NOT FOUND</>} />
-      </Switch>
-    </PrivateRouter>
+    <LanguageProvider>
+      <PrivateRouter 
+        loginPath={PathConstants.LOGIN}
+        homePath={PathConstants.HOME}
+        isAuthenticated={AuthService.isAuthenticated}
+        browserHistory={HistoryService}>
+        <Switch>
+          <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
+          <PrivateRoute path={PathConstants.APP} component={Main} />
+          <Route path={'/'} component={NotFound} />
+        </Switch>
+      </PrivateRouter>
+    </LanguageProvider>
   )
 }
 

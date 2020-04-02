@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
 import { Router } from 'react-router'
 import PrivateRouterProps from './props'
-import history from '../../services/HistoryService'
+import { History, LocationState } from 'history'
 
 /**
  * @description Contexto padrão para o router
@@ -9,12 +9,22 @@ import history from '../../services/HistoryService'
 export const PrivateRouterContext = createContext(new PrivateRouterProps('', '', () => false))
 
 /**
- * @description Gera uma rota com verificação de autenticação e redirecionamento automático
- * @param props Propriedades do Route
+ * @description Gera os dados necessários para as rotas privadas e de login
+ * @param props Propriedades do PrivateRouter
  */
 const PrivateRouter = (props: PrivateRouterProps) : JSX.Element => {
+
+    const getHistory = (): History<LocationState> => {
+        if (props.browserHistory) {
+            return props.browserHistory
+        } 
+            
+        throw Error('PrivateRouter necessita de um History!')
+    }
+
+
     return (
-        <Router history={ history } >
+        <Router history={ getHistory() } >
             <PrivateRouterContext.Provider value={ props }>
                 {props.children}
             </PrivateRouterContext.Provider>

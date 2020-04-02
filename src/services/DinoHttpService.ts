@@ -53,7 +53,12 @@ class DinoHttpService {
      * @param erro Objeto contendo informações sobre o erro
      */
     private onError = (err: any) => {
-        if (err.status === HttpStatus.FORBIDDEN || err.status === HttpStatus.UNAUTHORIZED) {
+        if (err.status === HttpStatus.FORBIDDEN) {
+
+            /** Limpa o token de autenticação */
+            LocalStorageService.setAuthToken('')
+
+            /** Redireciona para o login */
             HistoryService.push(PathConstants.LOGIN)
 
             alert('Erro na autenticação com o servidor.')

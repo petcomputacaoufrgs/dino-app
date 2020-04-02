@@ -13,9 +13,7 @@ const LogoutButton = () => {
     const logout = () => {
         setLoading(true)
 
-        /** @todo Tratar erro de logout */
         AuthService.logout()
-            .catch(() => setLoading(false))
     }
 
     return (

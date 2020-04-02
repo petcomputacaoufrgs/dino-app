@@ -37,22 +37,13 @@ class AuthService {
     }
 
     /**
-     * @description Realiza o logout do usuário na aplicação
+     * @description Realiza o logout do usuário
      */
-    logout = async () => {
-        const response = await HttpService.put(DinoAPIURLConstants.PATH_SIGNOUT_GOOGLE)
+    logout = () => {
+        LocalStorageService.setAuthToken('')
 
-        if(response.status === HttpStatus.OK) {
-            LocalStorageService.setAuthToken('')
-
-            /* Redireciona para a página de login */
-            HistoryService.push(PathConstants.LOGIN)
-
-            return
-        }
-        
-        /** @todo Melhorar erros no botão de logout */
-        alert('Erro ao deslogar com a sua conta na API do Dino')
+        /* Redireciona para a página de login */
+        HistoryService.push(PathConstants.LOGIN)
     }
 
     /**

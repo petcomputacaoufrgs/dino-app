@@ -5,8 +5,11 @@ import LanguageSet from './LanguageSet'
  */
 export default class PT_BR implements LanguageSet {
 
-    NOT_FOUND_MESSAGE: string = 'Página não encontrada.'
+    NOT_FOUND_MESSAGE = 'Página não encontrada.'
 
-    NOT_FROND_REDIRECT_MESSAGE: string = 'Redirecionado...'
+    NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
     
+    WELCOME_MESSAGE = 'Bem vindo ao DinoAPP!'
+
+    LOGIN_BUTTON_TEXT = 'Entrar com o Google'
 }

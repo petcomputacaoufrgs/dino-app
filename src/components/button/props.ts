@@ -5,6 +5,10 @@ import MouseEvent from '../../types/MouseEvent'
  */
 export default interface ButtonProps {
     onClick: MouseEvent
+    className?: string
+    imageSrc?: string
+    imageAlt?: string
     disabled?: boolean | undefined
     children?: any
+    size?: 'small' | 'medium' | 'large'
 }

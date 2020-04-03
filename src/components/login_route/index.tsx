@@ -3,35 +3,35 @@ import { Route, RouteProps, useLocation } from 'react-router'
 import { PrivateRouterContext } from '../private_router'
 
 /**
- * @description Gera uma rota com verificação de autenticação e redirecionamento automático
+ * @description Gera uma rota de login com verificação de autenticação e redirecionamento automático
  * @param props Propriedades do Route
  */
-const PrivateRoute = (props: RouteProps) : JSX.Element => {
+const LoginRoute = (props: RouteProps) : JSX.Element => {
 
     const routerContext = useContext(PrivateRouterContext)
     
     const location = useLocation()
 
     /**
-     * @description Redireciona o usuário não autenticado caso não esteja na tela de autenticação
+     * @description Verifica se o usuário está autenticado e redireciona para a tela correta caso sim
      */
     useEffect((): void => {    
-        const goToLogin = () => {
-            routerContext.browserHistory?.push(routerContext.loginPath)
+        const goToHome = () => {
+            routerContext.browserHistory?.push(routerContext.homePath)
         }
 
         if (routerContext) {
-            if (!routerContext.isAuthenticated()) {
-                goToLogin()
+            if (routerContext.isAuthenticated()) {
+                goToHome()
             } 
         } else {
-            throw Error('Todo PrivateRoute deve estar dentro de um PrivateRouter!')
+            throw Error('Todo LoginRoute deve estar dentro de um PrivateRouter!')
         }
 
     }, [routerContext, location.pathname])
 
     const renderRoute = (): JSX.Element => {
-        if(routerContext.isAuthenticated()) {
+        if(!routerContext.isAuthenticated()) {
             return <Route {...props}/>
         } else {
             return <></>
@@ -41,4 +41,4 @@ const PrivateRoute = (props: RouteProps) : JSX.Element => {
     return renderRoute()
 }
 
-export default PrivateRoute
+export default LoginRoute

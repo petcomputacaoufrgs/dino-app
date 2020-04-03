@@ -16,6 +16,7 @@
     "@types/superagent": "^4.1.7",
     "http-status-codes": "^1.4.0",
     "react": "^16.13.0",
+    "react-device-detect": "^1.11.14",
     "react-dom": "^16.13.0",
     "react-google-login": "^5.1.1",
     "react-router": "^5.1.2",

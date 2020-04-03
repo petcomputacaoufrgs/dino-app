@@ -1,8 +1,8 @@
 import React from 'react'
 
 /**
- * @description tipo de entrada para função de eventos de clique
+ * @description Tipo de entrada para função de eventos de clique
  */
-type event_function = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+type mouse_event = (event?: React.MouseEvent) => void
 
-export default event_function
+export default mouse_event

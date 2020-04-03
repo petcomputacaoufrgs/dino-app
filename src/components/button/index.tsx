@@ -9,6 +9,9 @@ import './styles.css'
  */
 const Button = (props: ButtonProps) => {
 
+    /**
+     * @description Retorna o nome da classe baseado nas props do botão
+     */
     const getClassName = (): string => {
         let className = 'button'
 
@@ -19,6 +22,9 @@ const Button = (props: ButtonProps) => {
         return className
     }
 
+    /**
+     * @description Retorna um Elemento JSX com a imagem do botão
+     */
     const getImageComponent = (): JSX.Element => {
         if (props.imageSrc) {
             if (props.imageAlt) {

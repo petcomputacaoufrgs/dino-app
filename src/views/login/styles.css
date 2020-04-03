@@ -1,5 +1,6 @@
 .login {
     position: absolute;
+    overflow: hidden;
     top: 0;
     bottom: 0;
     left: 0;
@@ -33,9 +34,33 @@
     font-weight: 700;
 }
 
+@media (orientation: landscape) {
+    .login__logo {
+        width: 500px;
+    }    
+    .login__message {
+        font-size: xx-large;
+    }
+    .login__curious {
+        position: absolute;
+        right: -500px;
+        top: -50px;
+        width: 500px;
+        transform: rotate(-60deg);
+        animation: curious_dino_landscape 10s infinite;
+    }
+}
+
 @keyframes curious_dino {
     0% {right: -100px}
     35% {right: -10px; transform: rotate(-20deg);}
     45% {right: -100px; transform: rotate(0deg);}
     100% {right: -100px}
+}
+
+@keyframes curious_dino_landscape {
+    0% {right: -500px}
+    35% {right: -100px; transform: rotate(0deg);}
+    45% {right: -500px;}
+    100% {right: -500px}
 }

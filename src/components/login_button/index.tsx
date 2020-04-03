@@ -25,20 +25,32 @@ const LoginButton = (props: LoginButtonProps) => {
 
         /** @todo Tratar erro de login em tela */
         AuthService.login(response as GoogleLoginResponseOffline)
-            .catch(() => setLoading(false))
+            .catch(() => {
+                if (props.onFail) {
+                    props.onFail()
+                }
+
+                setLoading(false)
+            })
     }
 
     /**
-     * @todo Tratar o erro de falha no Login por parte do Google / usuário
      * @description Função chamada após falha no login do usuário com o Google
      * @param response Objeto retornado pela biblioteca definidos na sua documentação,
      * para a configuração responseType = 'code'retornará sempre um GoogleLoginResponseOffline
      */
     const loginFail = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        console.log('Login Fail')
+        if (props.onCancel) {
+            props.onCancel()
+        }
+
+        setLoading(false)
     }
 
-    const getURI = () => {
+    /**
+     * @description Retorna a URI apenas com o host e a porta
+     */
+    const getURIHost = () => {
         return window.location.protocol + '//' + window.location.host + '/'
     }
 
@@ -50,11 +62,11 @@ const LoginButton = (props: LoginButtonProps) => {
                 onSuccess={responseGoogle}
                 onFailure={loginFail}
                 cookiePolicy={'single_host_origin'}
-                redirectUri={getURI()}
+                redirectUri={getURIHost()}
                 responseType={'code'}
                 accessType={'offline'}
                 render={renderProps => (
-                    <Button imageSrc={GoogleLogo} imageAlt={props.buttonText} className='login_button__button' onClick={renderProps.onClick}>{props.buttonText}</Button>
+                    <Button size={props.size} imageSrc={GoogleLogo} imageAlt={props.buttonText} className='login_button__button' onClick={renderProps.onClick}>{props.buttonText}</Button>
                 )}
             />
             <Loader loading={loading} />

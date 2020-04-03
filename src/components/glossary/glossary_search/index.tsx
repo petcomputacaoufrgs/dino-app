@@ -17,7 +17,7 @@ const GlossarySearchBar = ({glossary}) : JSX.Element => {
             item.title.toLowerCase().includes(searchTerm.toLowerCase().trim())
         );
         setSearchResults(results);
-    }, [searchTerm]);
+    }, [searchTerm, glossary]);
 
     return (
         <div className="glossary">

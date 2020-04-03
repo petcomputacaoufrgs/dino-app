@@ -1,0 +1,12 @@
+import LanguageSet from './LanguageSet'
+
+/**
+ * @description Conjunto de textos em inglês americano
+ */
+export default class EN_US implements LanguageSet {
+
+    NOT_FOUND_MESSAGE: string = 'Page not found.'
+
+    NOT_FROND_REDIRECT_MESSAGE: string = 'Redirecting...'
+    
+}

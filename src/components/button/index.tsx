@@ -9,7 +9,7 @@ import './styles.css'
  */
 const Button = (props: ButtonProps) => (
     <div className='button' onClick={props.onClick}>
-        <MaterialButton className='button__material_button' variant='contained' color='inherit' disabled={props.disabled}>{props.children}</MaterialButton>
+        <MaterialButton className='button__material_button' variant='contained' disabled={props.disabled}>{props.children}</MaterialButton>
     </div>
 )
 

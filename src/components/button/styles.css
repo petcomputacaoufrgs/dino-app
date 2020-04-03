@@ -1,8 +1,8 @@
 .button {
     cursor: pointer;
-    background-color: rgb(86, 231, 231);
 }
 
 .button__material_button{
     text-transform: none !important;
+    background-color: #FF759E !important;
  }

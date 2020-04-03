@@ -8,6 +8,7 @@ import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
 import { useLocation, Switch } from 'react-router';
 import HistoryService from '../../services/HistoryService';
+import Glossary from '../glossary'
 
 
 /**
@@ -58,6 +59,7 @@ const Main = () : JSX.Element => {
             'image':GlossarySVG,
             'name': 'Glossário',
             'onClick': goToGlossary,
+            'component': <Glossary />,
         }
     ]
 
@@ -77,7 +79,7 @@ const Main = () : JSX.Element => {
             <Switch>
                 <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={() => <>GLOSSARY</>} />
+                <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
             </Switch>
         )
     }

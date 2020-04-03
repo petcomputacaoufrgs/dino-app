@@ -1,6 +1,7 @@
 import React from 'react'
 import Login from './views/login'
 import Main from './views/main'
+import Glossary from './views/glossary'
 import PrivateRouter from './components/private_router'
 import PrivateRoute from './components/private_route'
 import LoginRoute from './components/login_route/index'

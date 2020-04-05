@@ -3,6 +3,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css'
+import PathConstants from '../../../constants/PathConstants';
 
 //destructuring props into glossary
 const GlossaryItems = ({glossary}) : JSX.Element => {                     

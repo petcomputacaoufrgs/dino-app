@@ -4,7 +4,6 @@ import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css'
 import PathConstants from '../../../constants/PathConstants';
-//import PrivateRoute from '../../../components/private_route'
 import { Link } from 'react-router-dom'
 import {useParams} from 'react-router-dom'
 

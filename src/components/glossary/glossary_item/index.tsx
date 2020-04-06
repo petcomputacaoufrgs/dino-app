@@ -1,19 +1,27 @@
 import React from 'react';
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Glossary from '../../../views/glossary'
+import Card from 'react-bootstrap/Card'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const GlossaryItem = () : JSX.Element => {     
-  const {id} =  useParams()
-  console.log(id)
+const GlossaryItem = (): JSX.Element => {
+    const { id } = useParams()
 
-  const cardInfo = Glossary.items.find(
-     item =>item.id === Number(id)
-     )
-    
-    
-     //return <h6>{cardInfo.text_long}</h6>
-  return cardInfo !== undefined ? <h6>{cardInfo.text_long}</h6> : <h1>Card Not Found</h1> 
-  //return <h2>{id}</h2>
+    const item = Glossary.items.find(
+        item => item.id === Number(id)
+    )
+
+    return item !== undefined ?
+        <Card className="card" key={item.id}>
+            <Card.Header>
+            <Card.Title>{item.title}</Card.Title>
+            </Card.Header>
+            <Card.Body>
+                <Card.Subtitle className="mb-2 text-muted">{item.subtitle}</Card.Subtitle>
+                <Card.Text>{item.text_long}</Card.Text>
+            </Card.Body>
+        </Card>
+        : <h1>Card Not Found</h1>
 }
 
 export default GlossaryItem

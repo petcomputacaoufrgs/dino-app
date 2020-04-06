@@ -9,6 +9,8 @@ import PrivateRoute from '../../components/private_route'
 import { useLocation, Switch } from 'react-router';
 import HistoryService from '../../services/HistoryService';
 import Glossary from '../glossary'
+import GlossaryItem from '../../components/glossary/glossary_item'
+
 
 
 /**
@@ -79,7 +81,8 @@ const Main = () : JSX.Element => {
             <Switch>
                 <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute path={PathConstants.GLOSSARY} component={Glossary} />
+                <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
+                <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
         )
     }

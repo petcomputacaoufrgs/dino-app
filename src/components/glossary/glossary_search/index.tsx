@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchIcon from '@material-ui/icons/Search';
 import GlossaryItems from '../glossary_items';
+import Glossary from '../../../views/glossary';
 import './styles.css'
 
-const GlossarySearchBar = ({glossary}) : JSX.Element => {
+const GlossarySearchBar = () : JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState([{}]);
 
     const handleChange = event => {
         setSearchTerm(event.target.value);
     };
     useEffect(() => {
-        const results = glossary.filter(item =>
-            item.title.toLowerCase().includes(searchTerm.toLowerCase().trim())
+        const results = Glossary.items.filter(item =>
+            item.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setSearchResults(results);
-    }, [searchTerm, glossary]);
+    }, [searchTerm, Glossary.items]);
 
     return (
         <div className="glossary">

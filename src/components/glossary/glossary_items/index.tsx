@@ -4,9 +4,12 @@ import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css'
 import PathConstants from '../../../constants/PathConstants';
+//import PrivateRoute from '../../../components/private_route'
+import { Link } from 'react-router-dom'
+
 
 //destructuring props into glossary
-const GlossaryItems = ({glossary}) : JSX.Element => {                     
+const GlossaryItems = ({glossary}) : JSX.Element => {       
 	return (
         <Accordion className="accordion">
             {glossary.map(item =>                                                                             
@@ -18,7 +21,7 @@ const GlossaryItems = ({glossary}) : JSX.Element => {
                     <Card.Body>
                         <Card.Subtitle className="mb-2 text-muted">{item.subtitle}</Card.Subtitle>
                         <Card.Text>{item.text_quick}</Card.Text>
-                        <Card.Link href={item.link}>Read More</Card.Link>
+                        <Link to={PathConstants.GLOSSARY + "/" + item.id}>Read More</Link>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>)}

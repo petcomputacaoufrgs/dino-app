@@ -12,7 +12,6 @@ const Glossary = () : JSX.Element => {
 			title: 'Alopécia',
 			subtitle: 'Sintoma',
 			text_quick: "Queda de cabelos. Some quick example text to build on the card title and make up the bulk of the card's content.",
-			link: '#',
 			text_long: text
 		},
 		{
@@ -20,7 +19,6 @@ const Glossary = () : JSX.Element => {
 			title: 'Câncer',
 			subtitle: 'Doença',
 			text_quick: "Multiplicação de células anormais malignas. Some quick example text to build on the card title and make up the bulk of the card's content.",
-			link: '#',
 			text_long: text
 		},
 		{
@@ -28,11 +26,11 @@ const Glossary = () : JSX.Element => {
 			title: 'Cateter',
 			subtitle: 'Objeto',
 			text_quick: "Tubos colocados em veias grandes, fixado embaixo da pele. É por onde se recebe quimioterapia, medicações, soroterapia e sangue. Some quick example text to build on the card title and make up the bulk of the card's content.",
-			link: '#',
 			text_long: text
 		}
 	]
 
+	//<PrivateRoute exact path={PathConstants.GLOSSARY + "/Alopécia"} component={() => <>AAAAAAA</>} />
 	return <GlossarySearchBar glossary={glossary} />
 }
 

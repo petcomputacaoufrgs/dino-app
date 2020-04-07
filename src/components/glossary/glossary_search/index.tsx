@@ -36,7 +36,7 @@ const GlossarySearchBar = () : JSX.Element => {
                     />
                 </div>
             </div>
-            <GlossaryItems glossary={searchResults} />
+            <GlossaryItems items={searchResults} />
         </div>
     );
 }

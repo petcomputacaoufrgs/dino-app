@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom'
 //import { useParams } from 'react-router-dom'
 
 //destructuring props into glossary
-const GlossaryItems = ({ glossary }): JSX.Element => 
+const GlossaryItems = ({ items }): JSX.Element => 
     <Accordion className="accordion">
-        {glossary.map(item =>
+        {items.map(item =>
             <Card className="card" key={item.id}>
                 <Accordion.Toggle as={Card.Header} eventKey={item.id}>
                     <Card.Title className="accordion-card-title">{item.title}</Card.Title>

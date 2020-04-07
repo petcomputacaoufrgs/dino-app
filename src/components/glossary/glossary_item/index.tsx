@@ -1,18 +1,23 @@
 import React from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory  } from 'react-router-dom'
 import Glossary from '../../../views/glossary'
 import Card from 'react-bootstrap/Card'
+import IconButton from '@material-ui/core/IconButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+import ArrowBack from '../../../components/arrow_back'
 
 const GlossaryItem = (): JSX.Element => {
     const { id } = useParams()
-
+    
     const item = Glossary.items.find(
         item => item.id === Number(id)
     )
 
-    return item !== undefined ?
+    return (
+        <div>
+        <ArrowBack />
+        {item !== undefined ?
         <Card className="card">
             <Card.Header>
             <Card.Title>{item.title}</Card.Title>
@@ -22,7 +27,9 @@ const GlossaryItem = (): JSX.Element => {
                 <Card.Text>{item.text_long}</Card.Text>
             </Card.Body>
         </Card>
-        : <h1>Card Not Found</h1>
+        : <h5>Card Not Found</h5> } 
+        </div>
+    )
 }
 
 export default GlossaryItem

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Glossary from '../../../views/glossary'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles.css';
 
 const GlossaryItem = (): JSX.Element => {
     const { id } = useParams()
@@ -12,7 +13,7 @@ const GlossaryItem = (): JSX.Element => {
     )
 
     return item !== undefined ?
-        <Card className="card" key={item.id}>
+        <Card className="card">
             <Card.Header>
             <Card.Title>{item.title}</Card.Title>
             </Card.Header>

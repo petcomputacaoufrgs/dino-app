@@ -15,7 +15,7 @@ const GlossaryItem = (): JSX.Element => {
     )
 
     return (
-        <div>
+        <div className="glossary-item">
         <ArrowBack />
         {item !== undefined ?
         <Card className="card">

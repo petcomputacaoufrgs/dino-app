@@ -1,6 +1,5 @@
 import LocalStorageKeysConstants from "../constants/LocalStorageKeysConstants"
 
-
 /**
  * @description Auxilia a gravar e ler valores do local storage
  */
@@ -32,6 +31,10 @@ class LocalStorageService {
      */
     setAuthToken = (accessToken: string) => {
         this.set(LocalStorageKeysConstants.AUTH_TOKEN, accessToken)
+    }
+
+    setGlossaryVersion = (glossaryVersion: string) => {
+        this.set("GLOSSARY_VERSION", glossaryVersion)
     }
 }
 

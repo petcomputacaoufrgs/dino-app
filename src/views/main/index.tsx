@@ -11,8 +11,6 @@ import HistoryService from '../../services/HistoryService';
 import GlossaryItem from '../../components/glossary/glossary_item'
 import GlossarySearchBar from '../../components/glossary/glossary_search'
 
-
-
 /**
  * @description Tela principal da aplicação
  * @returns Elemento JSX com a tela principal do aplicativo
@@ -83,6 +81,7 @@ const Main = () : JSX.Element => {
                 <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
+                <PrivateRoute path={`${PathConstants.GLOSSARY}/version`} component={() => <>hm</>}/>
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
         )

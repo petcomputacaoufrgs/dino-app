@@ -1,5 +1,5 @@
 /**
- * @description MOdela o retorna da API para autenticação
+ * @description Modela o retorna da API para autenticação
  */
 class AuthResponseModel {
     accessToken: string

@@ -3,6 +3,10 @@
  */
 class LocalStorageKeys {
     AUTH_TOKEN: string = 'zyx'
+
+    GLOSSARY_VERSION: string = 'glossary version'
+
+    GLOSSARY_ITEMS: string = 'glossary items'
 }
 
 export default new LocalStorageKeys()

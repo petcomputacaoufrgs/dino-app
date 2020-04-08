@@ -33,8 +33,12 @@ class LocalStorageService {
         this.set(LocalStorageKeysConstants.AUTH_TOKEN, accessToken)
     }
 
-    setGlossaryVersion = (glossaryVersion: string) => {
-        this.set("GLOSSARY_VERSION", glossaryVersion)
+    setGlossaryVersion = (glossaryVersion : string) => {
+        this.set(LocalStorageKeysConstants.GLOSSARY_VERSION, glossaryVersion)
+    }
+
+    setGlossaryItems = (glossaryItems : string) => {
+        this.set(LocalStorageKeysConstants.GLOSSARY_ITEMS, glossaryItems)
     }
 }
 

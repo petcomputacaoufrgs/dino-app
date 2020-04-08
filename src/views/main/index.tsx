@@ -81,7 +81,6 @@ const Main = () : JSX.Element => {
                 <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
-                <PrivateRoute path={`${PathConstants.GLOSSARY}/version`} component={() => <>hm</>}/>
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
         )

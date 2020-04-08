@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import { Route, RouteProps, useLocation } from 'react-router'
 import { PrivateRouterContext } from '../private_router'
 
-import GlossaryVersionService from '../../services/GlossaryService'
+import GlossaryService from '../../services/GlossaryService'
 
 /**
  * @description Gera uma rota de login com verificação de autenticação e redirecionamento automático
@@ -24,7 +24,7 @@ const LoginRoute = (props: RouteProps) : JSX.Element => {
 
         if (routerContext) {
             if (routerContext.isAuthenticated()) {
-                GlossaryVersionService.getVersion()
+                GlossaryService.getVersion()
                 goToHome()
             } 
         } else {

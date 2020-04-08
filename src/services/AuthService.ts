@@ -27,7 +27,7 @@ class AuthService {
                 LocalStorageService.setAuthToken(responseBody.accessToken)
 
                 /* Redireciona para a página principal */
-                HistoryService.push(PathConstants.HOME)
+                //HistoryService.push(PathConstants.HOME)
 
                 return
             }

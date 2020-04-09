@@ -3,4 +3,7 @@ export default interface LanguageSet {
     NOT_FROND_REDIRECT_MESSAGE: string
     WELCOME_MESSAGE: string
     LOGIN_BUTTON_TEXT: string
+    LOGOUT_BUTTON_DESCRIPTION: string
+    SEARCH_HOLDER: string
+    LOADER_ALT: string
 }

@@ -17,5 +17,10 @@ export default interface BottomNavigationProps{
     /**
      * @description Componente com as views e as suas rotas
      */
-    component: JSX.Element  
+    component: JSX.Element
+
+    /**
+     * @description Componente que será colocado na barra superior
+     */
+    topBarComponent?: JSX.Element
 }

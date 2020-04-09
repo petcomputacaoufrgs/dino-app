@@ -1,14 +1,14 @@
 import React from 'react'
-import LogoutButton from '../../components/logout_button'
 import GlossarySVG from '../../images/glossary.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
-import AdaptableMenu from '../../components/adaptable_menu/'
+import AdaptableMenu from '../../components/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
 import { useLocation, Switch } from 'react-router';
-import HistoryService from '../../services/HistoryService';
+import HistoryService from '../../services/HistoryService'
 import Glossary from '../glossary'
+import TopBar from '../../components/top_bar'
 
 
 /**
@@ -74,18 +74,25 @@ const Main = () : JSX.Element => {
     }
 
     /** Componente interno do exibido com o menu definido pelo path */
-    const renderMainComponent = (): JSX.Element => {
-        return (
-            <Switch>
-                <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
-                <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
-            </Switch>
-        )
-    }
+    const renderMainComponent = (): JSX.Element => (
+        <Switch>
+            <PrivateRoute exact path={PathConstants.HOME} component={() => <></>} />
+            <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
+            <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
+        </Switch>
+    )
+
+    const renderTopBarComponent = (): JSX.Element => (
+        <TopBar />
+    )
 
     return (
-        <AdaptableMenu selectedItem={getSelectedItem()} items={items} component={renderMainComponent()} />
+        <AdaptableMenu 
+            selectedItem={getSelectedItem()} 
+            items={items} 
+            component={renderMainComponent()} 
+            topBarComponent={renderTopBarComponent()}
+        />
     )
 }
 

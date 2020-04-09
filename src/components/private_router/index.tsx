@@ -19,7 +19,7 @@ const PrivateRouter = (props: PrivateRouterProps) : JSX.Element => {
             return props.browserHistory
         } 
             
-        throw Error('PrivateRouter necessita de um History!')
+        throw Error('PrivateRouter necessita de um History.')
     }
 
 

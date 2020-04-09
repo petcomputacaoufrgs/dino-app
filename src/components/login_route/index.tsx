@@ -25,7 +25,7 @@ const LoginRoute = (props: RouteProps) : JSX.Element => {
                 goToHome()
             } 
         } else {
-            throw Error('Todo LoginRoute deve estar dentro de um PrivateRouter!')
+            throw Error('Todo LoginRoute deve estar dentro de um PrivateRouter.')
         }
 
     }, [routerContext, location.pathname])

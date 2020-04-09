@@ -18,4 +18,9 @@ export default interface DrawerNavigationProps {
      * @description Componente com as views e as suas rotas
      */
     component: JSX.Element
+
+    /**
+     * @description Componente que ficará na barra superior
+     */
+    topBarComponent?: JSX.Element
 }

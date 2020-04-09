@@ -9,21 +9,28 @@ import LocalStorageService from './LocalStorageService'
  */
 class GlossaryService {
 
-    private VERSION = "version" 
-    private ITEMS = "itemsList"
-
     getVersion = async () => {
         const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_VERSION).on('error', this.onError)
         if (response.status === HttpStatus.OK){
             alert('AEHOO')
             //const glossaryVersionModel = new GlossaryVersionModel(response.body.version)
             LocalStorageService.setGlossaryVersion(response.body.version.toString())
-            //LocalStorageService.setGlossaryVersion(response.body[this.VERSION].toString())
         } 
-        else alert('[Glossário] Erro na autenticação com a API do Dino')
+        else alert('[Versão Glossário] Erro na autenticação com a API do Dino')
         return
     }
 
+    getItems = async () => {
+        const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_LIST).on('error', this.onError)
+        if (response.status === HttpStatus.OK){
+            alert('OOHEA')
+            //const glossaryVersionModel = new GlossaryVersionModel(response.body.version)
+            //LocalStorageService.setGlossaryVersion(response.body.itemsList.toString())
+            console.log(response.body.itemsList)
+        } 
+        else alert('[Itens Glossário] Erro na autenticação com a API do Dino')
+        return
+    }
     
     /**
      * @description Trata erros nas requisições

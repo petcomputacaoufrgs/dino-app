@@ -25,6 +25,7 @@ const LoginRoute = (props: RouteProps) : JSX.Element => {
         if (routerContext) {
             if (routerContext.isAuthenticated()) {
                 GlossaryService.getVersion()
+                GlossaryService.getItems()
                 goToHome()
             } 
         } else {

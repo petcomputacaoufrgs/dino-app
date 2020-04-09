@@ -66,11 +66,9 @@ const Main = () : JSX.Element => {
     const getSelectedItem = (): number => {
         if (location.pathname === PathConstants.GAMES) {
             return 1
-        } else if (location.pathname === PathConstants.GLOSSARY) {
+        } else if (location.pathname.includes(PathConstants.GLOSSARY)) {
             return 2
-        } else {
-            return 0
-        }
+        } return 0
     }
     
 

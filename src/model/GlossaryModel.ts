@@ -2,18 +2,29 @@ import GlossaryItemModel from './GlossaryItemModel'
 
 class GlossaryModel {
 
-    itemList: Array<GlossaryItemModel>
+    version: number
+    itemList: Array<object>
 
-    constructor(itemList: Array<GlossaryItemModel>) {
+    constructor(version : number, itemList: Array<object>) {
+        this.version = version
         this.itemList = itemList
     }
 
-    public getItemList() : Array<GlossaryItemModel> {
+    public getItemList() : Array<object> {
         return this.itemList;
     }
 
-    public setItemList(itemList : Array<GlossaryItemModel>) : void {
+    public setItemList(itemList : Array<object>) : void {
+        
         this.itemList = itemList;
+    }
+
+    public getVersion() : number {
+        return this.version;
+    }
+
+    public setVersion(version : number) : void {
+        this.version = version;
     }
 }
 

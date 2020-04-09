@@ -73,7 +73,8 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         bottom: 0,
-        left: 0
+        left: 0,
+        'z-index': '100'
     },
     image: {
         width: '40px'

@@ -1,4 +1,4 @@
-import LocalStorageKeysConstants from "../constants/LocalStorageKeysConstants"
+import LS_Constants from "../constants/LocalStorageKeysConstants"
 
 /**
  * @description Auxilia a gravar e ler valores do local storage
@@ -20,7 +20,7 @@ class LocalStorageService {
      * @description Retorna o código de autenticação se houver
      */
     getAuthToken = () : string => {
-        const authToken = this.get(LocalStorageKeysConstants.AUTH_TOKEN)
+        const authToken = this.get(LS_Constants.AUTH_TOKEN)
         
         return authToken ? authToken : ''
     }
@@ -30,15 +30,29 @@ class LocalStorageService {
      * @param accessToken valor do token de acesso a ser salvo
      */
     setAuthToken = (accessToken: string) => {
-        this.set(LocalStorageKeysConstants.AUTH_TOKEN, accessToken)
+        this.set(LS_Constants.AUTH_TOKEN, accessToken)
     }
 
-    setGlossaryVersion = (glossaryVersion : string) => {
-        this.set(LocalStorageKeysConstants.GLOSSARY_VERSION, glossaryVersion)
+    /**
+     * @description 
+     * @param
+     */
+    getGlossaryVersion = () : string => {
+        let glossary = this.getGlossary
+        return glossary ? glossary[LS_Constants.GLOSSARY_VERSION] : ''   
     }
 
-    setGlossaryItems = (glossaryItems : string) => {
-        this.set(LocalStorageKeysConstants.GLOSSARY_ITEMS, glossaryItems)
+    getGlossaryItems = () : string => {
+        let glossary = this.getGlossary
+        return glossary ? glossary[LS_Constants.GLOSSARY_ITEMS] : ''  
+    }
+
+    getGlossary = () : string | null => {
+        return localStorage.getItem(LS_Constants.GLOSSARY)
+    }
+
+    setGlossary = (glossary : string) => {
+        this.set(LS_Constants.GLOSSARY, glossary)
     }
 }
 

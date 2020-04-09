@@ -4,19 +4,21 @@ import SearchIcon from '@material-ui/icons/Search';
 import GlossaryItems from '../glossary_items';
 import Glossary from '../../../views/glossary';
 import './styles.css';
-import glossarioTESTE from '../../../services/GlossaryService'
+import GlossaryService from '../../../services/GlossaryService'
 
 const GlossarySearchBar = () : JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([{}]);
 
+    const items = GlossaryService.glossary.getItemList();
+
     const handleChange = event => {
         setSearchTerm(event.target.value);
     };
     useEffect(() => {
-        const results = glossarioTESTE.getItems().filter(item =>
-            item["title"].toLowerCase().includes(searchTerm.toLowerCase())
+        const results = items.filter(item =>
+            item.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setSearchResults(results);
     }, [searchTerm]);

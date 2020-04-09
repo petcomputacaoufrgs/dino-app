@@ -1,20 +1,20 @@
-import GlossaryItemModel from './GlossaryItemModel'
+import ItemModel from './GlossaryItemModel'
 
 class GlossaryModel {
 
     version: number
-    itemList: Array<object>
+    itemList: Array<ItemModel>
 
-    constructor(version : number, itemList: Array<object>) {
+    constructor(version : number, itemList: Array<ItemModel>) {
         this.version = version
         this.itemList = itemList
     }
 
-    public getItemList() : Array<object> {
+    public getItemList() : Array<ItemModel> {
         return this.itemList;
     }
 
-    public setItemList(itemList : Array<object>) : void {
+    public setItemList(itemList : Array<ItemModel>) : void {
         
         this.itemList = itemList;
     }

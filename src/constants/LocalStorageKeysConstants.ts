@@ -4,9 +4,11 @@
 class LocalStorageKeys {
     AUTH_TOKEN: string = 'zyx'
 
-    GLOSSARY_VERSION: string = 'glossary version'
+    GLOSSARY: string = 'glossary'
 
-    GLOSSARY_ITEMS: string = 'glossary items'
+    GLOSSARY_VERSION: string = 'version'
+
+    GLOSSARY_ITEMS: string = 'itemsList'
 }
 
 export default new LocalStorageKeys()

@@ -1,8 +1,7 @@
 import React from 'react';
-import { useParams, useHistory  } from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import Glossary from '../../../views/glossary'
 import Card from 'react-bootstrap/Card'
-import IconButton from '@material-ui/core/IconButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import ArrowBack from '../../../components/arrow_back'

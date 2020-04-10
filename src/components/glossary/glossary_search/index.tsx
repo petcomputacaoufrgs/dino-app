@@ -7,18 +7,18 @@ import './styles.css'
 
 const GlossarySearchBar = () : JSX.Element => {
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([{}]);
+    const [searchTerm, setSearchTerm] = useState("")
+    const [searchResults, setSearchResults] = useState(new Array())
 
     const handleChange = event => {
-        setSearchTerm(event.target.value);
-    };
+        setSearchTerm(event.target.value)
+    }
     useEffect(() => {
         const results = Glossary.items.filter(item =>
             item.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        )
         setSearchResults(results);
-    }, [searchTerm]);
+    }, [searchTerm])
 
     return (
         <div className="glossary">

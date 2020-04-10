@@ -6,9 +6,9 @@ class LocalStorageKeys {
 
     GLOSSARY: string = 'glossary'
 
-    GLOSSARY_VERSION: string = 'version'
+    GLOSSARY_VERSION: string = 'G_version'
 
-    GLOSSARY_ITEMS: string = 'itemsList'
+    GLOSSARY_ITEMS: string = 'G_itemList'
 }
 
 export default new LocalStorageKeys()

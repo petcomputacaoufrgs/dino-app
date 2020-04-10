@@ -17,7 +17,7 @@ const GlossaryItems = ({ items }): JSX.Element =>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={item.id}>
                     <Card.Body>
-                        <Card.Subtitle className="mb-2 text-muted">{item.subtitle}</Card.Subtitle>
+                        <Card.Subtitle className="mb-2 text-muted">{"Aqui vai a tag"}</Card.Subtitle>
                         <Card.Text>{item.text}</Card.Text>
                         <Link to={`${PathConstants.GLOSSARY}/${item.id}`}>Leia Mais</Link>
                     </Card.Body>

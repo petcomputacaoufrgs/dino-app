@@ -2,42 +2,18 @@ import HttpService from './DinoHttpService'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import LocalStorageService from './LocalStorageService'
-import GlossaryModel from '../model/GlossaryModel'
-import GlossaryItemModel from '../model/GlossaryItemModel'
 
 /**
  * @description
  */
 class GlossaryService {
 
-    public glossaryJSON = '{"version": 5,' +
-        '"itemList": [{"id": 1, "title":"Adenomegalia", "text":"Linfonodos ou gânglios aumentados, também conhecidos como ínguas.", "long_text": "isso é um texto longo", "exists": true },' +
-        '{"id": 2, "title":"Anemia", "text":"Redução das células vermelhas do sangue.", "long_text": "isso é um texto longo", "exists": true },' +
-        '{"id": 3, "title":"Anestesia", "text":"", "long_text": "isso é um texto longo", "exists": true },' +
-        '{"id": 4, "title":"Antibiótico", "text":"Medicação contra bactérias.", "long_text": "isso é um texto longo", "exists": true },' +
-        '{"id": 5, "title":"Biópsia", "text":"Retirada de pequeno pedaço do tumor ou órgão que é analisada em labo-ratório.", "long_text": "isso é um texto longo", "exists": true },' +
-        '{"id": 6, "title":"Benigno", "text":"", "long_text": "isso é um texto longo", "exists": true }]}'
-    /*'{"id": 7, "title":"Anemia", "text":"Redução das células vermelhas do sangue.", "exists": true },'+
-    '{"id": 8, "title":"Anestesia", "text":"", "exists": true },'+
-    '{"id": 9, "title":"Antibiótico", "text":"Medicação contra bactérias.", "exists": true },'+
-    '{"id": 10, "title":"Biópsia", "text":"Retirada de pequeno pedaço do tumor ou órgão que é analisada em labo-ratório.", "exists": true },'+
-    '{"id": 11, "title":"Benigno", "text":"", "exists": true },'+
-    '{"id": 12, "title":"Anemia", "text":"Redução das células vermelhas do sangue.", "exists": true },'+
-    '{"id": 13, "title":"Anestesia", "text":"", "exists": true },'+
-    '{"id": 14, "title":"Antibiótico", "text":"Medicação contra bactérias.", "exists": true },'+
-    '{"id": 15, "title":"Biópsia", "text":"Retirada de pequeno pedaço do tumor ou órgão que é analisada em labo-ratório.", "exists": true },'+
-    '{"id": 16, "title":"Benigno", "text":"", "exists": true }]}'
-    */
-
-    public glossary: GlossaryModel = new GlossaryModel(0, [])
-
     getVersion = async () => {
 
         const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_VERSION).on('error', this.onError)
 
         if (response.status === HttpStatus.OK) {
-            //return Number(response.body.version)
-            return response.body.version.toString()
+            return response.body.version
         }
         else alert('[Versão Glossário] Erro na autenticação com a API do Dino')
         return LocalStorageService.getGlossaryVersion()
@@ -46,25 +22,29 @@ class GlossaryService {
     getItems = async () => {
 
         const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_LIST).on('error', this.onError)
+        //For future visitors: In the new HttpClient (Angular 4.3+), the response object is JSON by default, so you don't need to do response.json().data anymore. Just use response directly.
         if (response.status === HttpStatus.OK) {
-            alert('OOHEA')
-            return response.body.itemsList.toString() //preciso checar o tipo disso
+            return response.body.itemList
         }
         else alert('[Itens Glossário] Erro na autenticação com a API do Dino')
+        return LocalStorageService.getGlossaryItems()
     }
 
     checkUpdate = async () => {
+       
+        let newVersion = await this.getVersion()
 
-        alert('botando uns itens no localstorage pra simular server')
-        LocalStorageService.setGlossary(this.glossaryJSON)
-        const serverVersion = Number(this.getVersion())
+        if (LocalStorageService.getGlossaryVersion() !== newVersion) {
 
-        if (Number(LocalStorageService.getGlossaryVersion()) < serverVersion) {
-            let itensModelos = JSON.parse(await this.getItems()).map(item =>
+            let newItens = await this.getItems()
+            /*
+            let itensModelos = itens.map(item =>
                 new GlossaryItemModel(item["id"], item["title"], item["text"], item["exists"]))
-            this.glossary = new GlossaryModel(serverVersion, itensModelos)
-            console.log(this.glossary)
-        }
+            this.glossaryModel = new GlossaryModel(newVersion, itensModelos)
+            */
+           LocalStorageService.setGlossaryVersion(JSON.stringify(newVersion))
+           LocalStorageService.setGlossaryItems(JSON.stringify(newItens))
+        }       
     }
 
     /**

@@ -38,13 +38,15 @@ class LocalStorageService {
      * @param
      */
     getGlossaryVersion = () : string => {
-        let glossary = this.getGlossary
-        return glossary ? glossary[LS_Constants.GLOSSARY_VERSION] : ''   
+        let version = this.get(LS_Constants.GLOSSARY_VERSION)
+
+        return version ? version : ''   
     }
 
     getGlossaryItems = () : string => {
-        let glossary = this.getGlossary
-        return glossary ? glossary[LS_Constants.GLOSSARY_ITEMS] : ''  
+        let items = this.get(LS_Constants.GLOSSARY_ITEMS)
+        
+        return items ? items : '' 
     }
 
     getGlossary = () : string | null => {
@@ -53,6 +55,14 @@ class LocalStorageService {
 
     setGlossary = (glossary : string) => {
         this.set(LS_Constants.GLOSSARY, glossary)
+    }
+
+    setGlossaryVersion = (version : string) => {
+        this.set(LS_Constants.GLOSSARY_VERSION, version)
+    }
+
+    setGlossaryItems = (items : string) => {
+        this.set(LS_Constants.GLOSSARY_ITEMS, items)
     }
 }
 

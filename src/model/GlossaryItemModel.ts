@@ -29,7 +29,7 @@ class GlossaryItemModel {
     }
 
     public isValid() : boolean {
-        return this.text != null && this.title != null && this.title != "";
+        return this.text !== null && this.title !== null && this.title !== "";
     }
 
     public setId(id : number) : void {

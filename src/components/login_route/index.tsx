@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { Route, RouteProps, useLocation } from 'react-router'
 import { PrivateRouterContext } from '../private_router'
-
 import GlossaryService from '../../services/GlossaryService'
 
 /**
@@ -24,7 +23,6 @@ const LoginRoute = (props: RouteProps) : JSX.Element => {
 
         if (routerContext) {
             if (routerContext.isAuthenticated()) {
-                //GlossaryService.getVersion()
                 GlossaryService.checkUpdate()
                 goToHome()
             } 

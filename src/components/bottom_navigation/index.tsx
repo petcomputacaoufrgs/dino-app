@@ -74,7 +74,7 @@ const useStyles = makeStyles({
         alignItems: 'center',
         bottom: 0,
         left: 0,
-        'z-index': '100'
+        'z-index': '100'        
     },
     image: {
         width: '40px'

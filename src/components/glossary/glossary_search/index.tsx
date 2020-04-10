@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchIcon from '@material-ui/icons/Search';
 import GlossaryItems from '../glossary_items';
-import Glossary from '../../../views/glossary';
 import './styles.css';
-import GlossaryService from '../../../services/GlossaryService'
+import LocalStorageService from '../../../services/LocalStorageService'
+
 
 const GlossarySearchBar = () : JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([{}]);
 
-    const items = GlossaryService.glossary.getItemList();
+    const items = JSON.parse(LocalStorageService.getGlossaryItems())
 
     const handleChange = event => {
         setSearchTerm(event.target.value);

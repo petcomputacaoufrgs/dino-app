@@ -10,24 +10,24 @@ class GlossaryService {
 
     getVersion = async () => {
 
-        const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_VERSION).on('error', this.onError)
+        const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_VERSION).catch((error)=>{
+            console.log("[getVersion()] Api call error");
+            alert(error.message);
+         })
 
-        if (response.status === HttpStatus.OK) {
-            return response.body.version
-        }
-        else alert('[Versão Glossário] Erro na autenticação com a API do Dino')
-        return LocalStorageService.getGlossaryVersion()
+         return response ? response.body.version : LocalStorageService.getGlossaryVersion()
     }
 
     getItems = async () => {
 
-        const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_LIST).on('error', this.onError)
+        const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_LIST).catch((error)=>{
+            console.log("[getItems()] Api call error");
+            alert(error.message);
+         })
+         
         //For future visitors: In the new HttpClient (Angular 4.3+), the response object is JSON by default, so you don't need to do response.json().data anymore. Just use response directly.
-        if (response.status === HttpStatus.OK) {
-            return response.body.itemList
-        }
-        else alert('[Itens Glossário] Erro na autenticação com a API do Dino')
-        return LocalStorageService.getGlossaryItems()
+         return response ? response.body.itemList : LocalStorageService.getGlossaryItems()
+
     }
 
     checkUpdate = async () => {
@@ -42,20 +42,12 @@ class GlossaryService {
                 new GlossaryItemModel(item["id"], item["title"], item["text"], item["exists"]))
             this.glossaryModel = new GlossaryModel(newVersion, itensModelos)
             */
+
+            //sem o stringify não é possível acessar os dados
            LocalStorageService.setGlossaryVersion(JSON.stringify(newVersion))
            LocalStorageService.setGlossaryItems(JSON.stringify(newItens))
         }       
     }
-
-    /**
-     * @description Trata erros nas requisições
-     * @param erro Objeto contendo informações sobre o erro
-     */
-    private onError = (err: any) => {
-    if (err.status === HttpStatus.FORBIDDEN) {
-        alert('[Glossário] Erro na conexão com o servidor.')
-    }
-}
 }
 
 export default new GlossaryService()

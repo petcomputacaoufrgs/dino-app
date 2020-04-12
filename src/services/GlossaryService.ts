@@ -1,6 +1,5 @@
 import HttpService from './DinoHttpService'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
-import HttpStatus from 'http-status-codes'
 import LocalStorageService from './LocalStorageService'
 
 /**
@@ -24,7 +23,7 @@ class GlossaryService {
             console.log("[getItems()] Api call error");
             alert(error.message);
          })
-         
+
         //For future visitors: In the new HttpClient (Angular 4.3+), the response object is JSON by default, so you don't need to do response.json().data anymore. Just use response directly.
          return response ? response.body.itemList : LocalStorageService.getGlossaryItems()
 

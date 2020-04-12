@@ -9,14 +9,14 @@ import LocalStorageService from '../../../services/LocalStorageService'
 const GlossarySearchBar = () : JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([{}]);
-
-    const items = JSON.parse(LocalStorageService.getGlossaryItems())
+    const [searchResults, setSearchResults] = useState([]);
 
     const handleChange = event => {
         setSearchTerm(event.target.value);
     };
+
     useEffect(() => {
+        const items = JSON.parse(LocalStorageService.getGlossaryItems())
         const results = items.filter(item =>
             item.title.toLowerCase().includes(searchTerm.toLowerCase())
         );

@@ -1,5 +1,9 @@
+.glossary {
+  padding: 10px;
+}
+
 .search-bar {
-    margin: 10px;
+    margin: 0px;
   }
   
 input[type="text"], textarea {

@@ -8,7 +8,9 @@ import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
 import { useLocation, Switch } from 'react-router';
 import HistoryService from '../../services/HistoryService';
-import Glossary from '../glossary'
+import GlossaryItem from '../../components/glossary/glossary_item'
+import GlossarySearchBar from '../../components/glossary/glossary_search'
+
 
 
 /**
@@ -59,7 +61,7 @@ const Main = () : JSX.Element => {
             'image':GlossarySVG,
             'name': 'Glossário',
             'onClick': goToGlossary,
-            'component': <Glossary />,
+            'component': <GlossarySearchBar />,
         }
     ]
 
@@ -72,6 +74,7 @@ const Main = () : JSX.Element => {
             return 0
         }
     }
+    
 
     /** Componente interno do exibido com o menu definido pelo path */
     const renderMainComponent = (): JSX.Element => {
@@ -79,7 +82,8 @@ const Main = () : JSX.Element => {
             <Switch>
                 <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
+                <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
+                <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
         )
     }

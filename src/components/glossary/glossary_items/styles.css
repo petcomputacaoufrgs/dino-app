@@ -1,7 +1,7 @@
 .accordion {
-    margin: 10px;
+    margin: 15px 0px 5px;
   }
   
-.card-title {
-  margin-bottom: .2rem !important;
-}
+  .accordion-card-title {
+    margin-bottom: .2rem;
+  }

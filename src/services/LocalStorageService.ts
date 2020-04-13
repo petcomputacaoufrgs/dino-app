@@ -1,4 +1,6 @@
 import LS_Constants from "../constants/LocalStorageKeysConstants"
+import GlossaryItemModel from '../model/GlossaryItemModel';
+import GlossaryModel from '../model/GlossaryModel';
 
 /**
  * @description Auxilia a gravar e ler valores do local storage
@@ -43,10 +45,10 @@ class LocalStorageService {
         return version ? version : ''   
     }
 
-    getGlossaryItems = () : string => {
-        let items = this.get(LS_Constants.GLOSSARY_ITEMS)
+    getGlossaryItems = () : GlossaryModel => {
+        let ls_items = this.get(LS_Constants.GLOSSARY_ITEMS)
         
-        return items ? items : '' 
+        return JSON.parse(ls_items ? ls_items : '')
     }
 
     getGlossary = () : string | null => {

@@ -9,6 +9,8 @@ class LocalStorageKeys {
     NAME: string = 'nm'
 
     PICTURE_URL: string = 'piu'
+
+    GOOGLE_ACCESS_TOKEN: string = 'gat'
 }
 
 export default new LocalStorageKeys()

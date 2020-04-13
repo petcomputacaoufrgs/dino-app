@@ -8,9 +8,14 @@ class DinoAPIHeaderConstants {
     AUTHORIZATION: string = 'Authorization'
 
     /**
-     * @description Header passado pela API para retornar um novo token atualizado quando necessário, não esquece de retirar o 'Bearer ' do inicio
+     * @description Header passado pela API para retornar um novo token atualizado quando necessário
      */
     REFRESH_TOKEN: string = 'Refresh'
+
+    /**
+     * @description Header passado pela API para retornar novo token do Google atualizado
+     */
+    GOOGLE_REFRESH_TOKEN: string = 'Google Refresh'
 }
 
 export default new DinoAPIHeaderConstants()

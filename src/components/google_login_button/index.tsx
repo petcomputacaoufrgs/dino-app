@@ -6,12 +6,13 @@ import GoogleSecret from '../../config/client_secret.json'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import GoogleLogo from '../../images/google_logo.png'
 import LoginButtonProps from './props'
+import LoginErrorTypes from '../../constants/LoginErrorTypes'
 import './styles.css'
 
 /**
  * @description Botão para login
  */
-const LoginButton = (props: LoginButtonProps) => {
+const GoogleLoginButton = (props: LoginButtonProps) => {
     
     const [loading, setLoading] = useState(false)
 
@@ -24,9 +25,11 @@ const LoginButton = (props: LoginButtonProps) => {
         setLoading(true)
 
         GoogleAuthService.login(response as GoogleLoginResponseOffline)
-            .catch(() => {
-                if (props.onFail) {
-                    props.onFail()
+            .catch((loginError: number) => {
+                if (loginError === LoginErrorTypes.API_ERROR) {
+                    props.onDinoAPIFail && props.onDinoAPIFail()
+                } else if (loginError === LoginErrorTypes.EXTERNAL_SERVICE_ERROR) {
+                    props.onGoogleFail && props.onGoogleFail()
                 }
 
                 setLoading(false)
@@ -73,4 +76,4 @@ const LoginButton = (props: LoginButtonProps) => {
     )
 }
 
-export default LoginButton
+export default GoogleLoginButton

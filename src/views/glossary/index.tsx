@@ -1,7 +1,6 @@
-import React from 'react';
-//import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import GlossarySearchBar from '../../components/glossary/glossary_search';
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import GlossarySearchBar from '../../components/glossary/glossary_search'
 
 const Glossary = () : JSX.Element => {
 

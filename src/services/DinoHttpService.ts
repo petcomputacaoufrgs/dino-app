@@ -70,13 +70,24 @@ class DinoHttpService {
      * @param response Objeto contendo a resposta do servidor
      */
     private onResponse = (response: Response) => {
-        /* Verifica se o token de autorização foi renovado */
-        const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
-
-        if (newToken) {
-            /* Salva o novo token de autenticação, remove os 7 primeiros digitos correspondentes ao código 'Bearer ' */
-            LocalStorageService.setAuthToken(newToken.substring(7))
+        const verifyDinoAuth = () => {
+            const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
+            
+            if (newToken) {
+                LocalStorageService.setAuthToken(newToken.substring(7))
+            }   
         }
+
+        const verifyGoogleAuth = () => {
+            const newGoogleToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
+
+            if (newGoogleToken) {
+                LocalStorageService.setAuthToken(newGoogleToken.substring(7))
+            }
+        }
+
+        verifyDinoAuth()
+        verifyGoogleAuth()
     }
 }
 

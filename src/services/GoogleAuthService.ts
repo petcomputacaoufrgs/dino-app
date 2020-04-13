@@ -8,6 +8,7 @@ import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 import GoogleScopeConstants from '../constants/GoogleScopeConstants'
+import LoginErrorTypes from '../constants/LoginErrorTypes'
 
 class GoogleAuthService {
 
@@ -23,38 +24,31 @@ class GoogleAuthService {
      * @description Valida o login do usuário com a API e requere o token de acesso
      * @param loginResponse valor retornado pela API do GoogleOAuth com modo de login 'code'
      */
-    login = async (loginResponse: GoogleLoginResponseOffline) => {
-        if (loginResponse.code) { //Caso haja um token de autenticação
+    login = async (loginResponse: GoogleLoginResponseOffline): Promise<number> => {
+        if (loginResponse.code) {
             const authRequestModel = new AuthRequestModel(loginResponse.code)
 
             const response = await HttpService.post(DinoAPIURLConstants.PATH_AUTH_GOOGLE).send(authRequestModel)
             
-            if (response.status === HttpStatus.OK) {
-                const responseBody: AuthResponseModel = response.body
-
-                /* Salva os dados do usuário*/
-                LocalStorageService.setAuthToken(responseBody.accessToken)
-                LocalStorageService.setEmail(responseBody.email)
-                LocalStorageService.setName(responseBody.name)
-                LocalStorageService.setPictureUrl(responseBody.pictureUrl)
+            if (response.status === HttpStatus.OK) {                
+                this.saveResponseBodyData(response.body as AuthResponseModel)
 
                 /* Redireciona para a página principal */
                 HistoryService.push(PathConstants.HOME)
 
-                return
+                return LoginErrorTypes.API_ERROR
             }
         }    
-        /** @todo Melhorar erros de tela de login */
-        alert('Erro na autenticação com a API do Dino')
+        
+        return LoginErrorTypes.EXTERNAL_SERVICE_ERROR
     }
 
     /**
      * @description Realiza o logout do usuário
      */
     logout = () => {
-        LocalStorageService.setAuthToken('')
+        this.removeUserData()
 
-        /* Redireciona para a página de login */
         HistoryService.push(PathConstants.LOGIN)
     }
 
@@ -70,6 +64,29 @@ class GoogleAuthService {
      */
     getAuthenticationToken = () : string => {
         return LocalStorageService.getAuthToken()
+    }
+
+    /**
+     * @description Salva os dados de retorno para acesso futuro
+     * @param responseBody Retorno da requisição
+     */
+    private saveResponseBodyData(responseBody: AuthResponseModel) {
+        LocalStorageService.setAuthToken(responseBody.accessToken)
+        LocalStorageService.setGoogleAccessToken(responseBody.googleAccessToken)
+        LocalStorageService.setEmail(responseBody.email)
+        LocalStorageService.setName(responseBody.name)
+        LocalStorageService.setPictureUrl(responseBody.pictureUrl)
+    }
+    
+    /**
+     * @description Remove os dados do usuário salvos
+     */
+    private removeUserData() {
+        LocalStorageService.removeAuthToken()
+        LocalStorageService.removeGoogleAccessToken()
+        LocalStorageService.removeEmail()
+        LocalStorageService.removeName()
+        LocalStorageService.removePictureUrl()
     }
 }
 

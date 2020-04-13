@@ -12,4 +12,11 @@ export default class EN_US implements LanguageSet {
     WELCOME_MESSAGE = 'Welcome to DinoAPP!'
 
     LOGIN_BUTTON_TEXT = 'Log in with Google'
+
+    LOGIN_FAIL_BY_GOOGLE = 'Login with Google failed.'
+
+    LOGIN_FAIL_BY_API = 'Login with Dino server failed.'
+
+    LOGIN_CANCELED = 'Login canceled.'
+    
 }

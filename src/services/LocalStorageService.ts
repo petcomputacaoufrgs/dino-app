@@ -17,6 +17,14 @@ class LocalStorageService {
         } 
     }
 
+    private remove = (key: string) => {
+        if (!key) {
+            throw Error("Chave inválida!")
+        } else {
+            return localStorage.setItem(key, '')
+        } 
+    }
+
     /**
      * @description Retorna o código de autenticação se houver
      */
@@ -35,6 +43,34 @@ class LocalStorageService {
     }
 
     /**
+     * @description Limpa o token de autenticação
+     */
+    removeAuthToken = () => {
+        this.remove(LocalStorageKeysConstants.AUTH_TOKEN)
+    }
+
+    /**
+     * @description Busca o token de acesso do Google
+     */
+    getGoogleAccessToken = (): string | null => {
+        return this.get(LocalStorageKeysConstants.GOOGLE_ACCESS_TOKEN)
+    }
+
+    /**
+     * @description Salva um token de acesso do Google
+     */
+    setGoogleAccessToken = (googleAccessToken: string) => {
+        this.set(LocalStorageKeysConstants.GOOGLE_ACCESS_TOKEN, googleAccessToken)
+    }
+
+    /**
+     * @description Limpa o token de acesso do google
+     */
+    removeGoogleAccessToken = () => {
+        this.remove(LocalStorageKeysConstants.GOOGLE_ACCESS_TOKEN)
+    }
+
+    /**
      * @description Retorna o email do usuário caso esteja salvo
      */
     getEmail = () : string | null => {
@@ -47,6 +83,13 @@ class LocalStorageService {
      */
     setEmail = (email: string) => {
         this.set(LocalStorageKeysConstants.EMAIL, email)
+    }
+
+    /**
+     * @description Remove o email salvo
+     */
+    removeEmail = () => {
+        this.remove(LocalStorageKeysConstants.EMAIL)
     }
 
     /**
@@ -64,6 +107,13 @@ class LocalStorageService {
     } 
 
     /**
+     * @description Remove o nome salvo
+     */
+    removeName = () => {
+        this.remove(LocalStorageKeysConstants.NAME)
+    }
+
+    /**
      * @description Salva a imagem do usuário (url)
      */
     getPictureUrl = (): string | null => {
@@ -76,6 +126,14 @@ class LocalStorageService {
     setPictureUrl = (pictureUrl: string) => {
         this.set(LocalStorageKeysConstants.PICTURE_URL, pictureUrl)
     }
+
+    /**
+     * @description Remove a URL da foto salva
+     */
+    removePictureUrl = () => {
+        this.remove(LocalStorageKeysConstants.PICTURE_URL)
+    }
+
 
     /**
      * @description Recebe um valor do tipo string ou null e retorna uma string sempre.

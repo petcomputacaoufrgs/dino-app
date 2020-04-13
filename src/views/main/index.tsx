@@ -78,11 +78,13 @@ const Main = () : JSX.Element => {
 
     /** Componente interno do exibido com o menu definido pelo path */
     const renderMainComponent = (): JSX.Element => {
+        return(
             <Switch>
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
+        )
     }
 
     const renderTopBarComponent = (): JSX.Element => (

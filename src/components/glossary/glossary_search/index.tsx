@@ -11,7 +11,7 @@ const GlossarySearchBar = () : JSX.Element => {
     const languageContext = useContext(LanguageProviderContext)
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState(new Array());
 
     const handleChange = event => {
         setSearchTerm(event.target.value)

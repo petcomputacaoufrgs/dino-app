@@ -3,6 +3,7 @@ import BottomNavigationProps from './props'
 import { makeStyles } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
+import './styles.css'
 
 /**
  * @description Menu de navegação inferior
@@ -69,14 +70,15 @@ const useStyles = makeStyles({
     root: {
         position: 'fixed',
         width: '100%',
-        height: '70px',
+        height: '65px',
         display: 'flex',
         alignItems: 'center',
         bottom: 0,
-        left: 0
+        left: 0,
+        backgroundColor: '#B32E55'
     },
     image: {
-        width: '40px'
+        width: '35px'
     }
   })
 

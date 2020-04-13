@@ -75,7 +75,8 @@ const useStyles = makeStyles({
         alignItems: 'center',
         bottom: 0,
         left: 0,
-        backgroundColor: '#B32E55'
+        backgroundColor: '#B32E55',
+        overflow: 'hidden'
     },
     image: {
         width: '35px'

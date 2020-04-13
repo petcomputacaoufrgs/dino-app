@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../button'
-import AuthService from '../../services/AuthService'
+import GoogleAuthService from '../../services/GoogleAuthService'
 import Loader from '../loader'
 import GoogleSecret from '../../config/client_secret.json'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
@@ -23,8 +23,7 @@ const LoginButton = (props: LoginButtonProps) => {
     const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
         setLoading(true)
 
-        /** @todo Tratar erro de login em tela */
-        AuthService.login(response as GoogleLoginResponseOffline)
+        GoogleAuthService.login(response as GoogleLoginResponseOffline)
             .catch(() => {
                 if (props.onFail) {
                     props.onFail()
@@ -58,7 +57,7 @@ const LoginButton = (props: LoginButtonProps) => {
         <>
             <GoogleLogin
                 clientId={GoogleSecret.web.client_id}
-                scope={'https://www.googleapis.com/auth/calendar'}
+                scope={GoogleAuthService.getDefaultScopes()}
                 onSuccess={responseGoogle}
                 onFailure={loginFail}
                 cookiePolicy={'single_host_origin'}

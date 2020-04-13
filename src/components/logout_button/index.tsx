@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import Button from '../button'
-import AuthService from '../../services/AuthService'
+import AuthService from '../../services/GoogleAuthService'
 import Loader from '../loader'
 
 /**

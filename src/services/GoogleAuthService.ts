@@ -7,8 +7,17 @@ import AuthResponseModel from '../model/AuthResponseModel'
 import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
+import GoogleScopeConstants from '../constants/GoogleScopeConstants'
 
-class AuthService {
+class GoogleAuthService {
+
+    /**
+     * @description Retorna uma string com os escopos padrões da autenticação com o Google
+     */
+    getDefaultScopes = (): string => {
+        return GoogleScopeConstants.CALENDAR + ' ' +
+                GoogleScopeConstants.PROFILE
+    }
 
     /**
      * @description Valida o login do usuário com a API e requere o token de acesso
@@ -23,8 +32,11 @@ class AuthService {
             if (response.status === HttpStatus.OK) {
                 const responseBody: AuthResponseModel = response.body
 
-                /* Salva o token de autenticação*/
+                /* Salva os dados do usuário*/
                 LocalStorageService.setAuthToken(responseBody.accessToken)
+                LocalStorageService.setEmail(responseBody.email)
+                LocalStorageService.setName(responseBody.name)
+                LocalStorageService.setPictureUrl(responseBody.pictureUrl)
 
                 /* Redireciona para a página principal */
                 HistoryService.push(PathConstants.HOME)
@@ -61,4 +73,4 @@ class AuthService {
     }
 }
 
-export default new AuthService()
+export default new GoogleAuthService()

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import BottomNavigationProps from './props'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import './styles.css'
 
 /**
  * @description Menu de navegação inferior
@@ -39,12 +42,19 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     /**
      * @description Carrega o componente com os items do menu dentro de rotas
      */
-    const renderComponent = () : JSX.Element => {
+    const renderComponent = () : JSX.Element  => {
         return props.component
     }
   
     return (
         <>
+            <AppBar 
+                className={classes.appBar}
+            >
+                <Toolbar>
+                    {props.topBarComponent}
+                </Toolbar>
+            </AppBar>
             <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange} className={classes.root}>
                 {props.items.map((item, index) => (
                     <BottomNavigationAction 
@@ -57,7 +67,9 @@ const BottomNavigation = (props: BottomNavigationProps) => {
                     />
                 ))}
             </MaterialBottomNavigation>
-            {renderComponent()}
+            <div className='bottom_navigation__component'>
+                {renderComponent()}
+            </div>
         </>
     );
 }
@@ -65,19 +77,32 @@ const BottomNavigation = (props: BottomNavigationProps) => {
 /** 
  * @description Estilos do Menu
  * */ 
-const useStyles = makeStyles({
-    root: {
-        position: 'fixed',
-        width: '100%',
-        height: '70px',
-        display: 'flex',
-        alignItems: 'center',
-        bottom: 0,
-        left: 0
-    },
-    image: {
-        width: '40px'
-    }
-  })
+const useStyles = makeStyles((theme: Theme) => 
+    createStyles({
+        root: {
+            position: 'fixed',
+            width: '100%',
+            height: '70px',
+            display: 'flex',
+            alignItems: 'center',
+            bottom: 0,
+            left: 0
+        },
+        appBar: {
+            position: 'fixed',
+            height: '45px',
+            backgroundColor: '#B32E55',
+            justifyContent: 'center',
+            zIndex: theme.zIndex.drawer + 1,
+            transition: theme.transitions.create(['width', 'margin'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+        },
+        image: {
+            width: '40px'
+        },
+    }),
+  )
 
 export default BottomNavigation

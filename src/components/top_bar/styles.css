@@ -1,0 +1,14 @@
+.top_bar {
+    width: 100%;
+    display: flex;
+}
+
+.top_bar__app_name {
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.top_bar__logout_button {
+    position: absolute;
+    right: 15px;
+}

@@ -12,4 +12,10 @@ export default class PT_BR implements LanguageSet {
     WELCOME_MESSAGE = 'Bem vindo ao DinoAPP!'
 
     LOGIN_BUTTON_TEXT = 'Entrar com o Google'
+
+    LOGOUT_BUTTON_DESCRIPTION = 'Imagem de uma porta aberta com uma seta indicando saída.'
+
+    SEARCH_HOLDER = 'Buscar...'
+
+    LOADER_ALT = 'Imagem de círculo girando indicando carregamento.'
 }

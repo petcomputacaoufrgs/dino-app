@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
-import AppConstants from '../../constants/AppConstants'
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -9,7 +8,6 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import Typography from '@material-ui/core/Typography'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import Divider from '@material-ui/core/Divider'
@@ -82,9 +80,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>
-                        {AppConstants.APP_NAME}
-                    </Typography>
+                    {props.topBarComponent}
                 </Toolbar>
             </AppBar>
             <Drawer 
@@ -140,7 +136,7 @@ const drawerWidth: number = 240
 /** 
  * @description Estilos do Menu
  * */ 
-export const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             display: 'flex',
@@ -246,6 +242,6 @@ export const useStyles = makeStyles((theme: Theme) =>
             marginLeft: '0px',
         },
     }),
-);
+)
 
 export default DrawerNavigation

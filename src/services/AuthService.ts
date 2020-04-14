@@ -7,6 +7,7 @@ import AuthResponseModel from '../model/AuthResponseModel'
 import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
+import UpdateService from './UpdateService'
 
 class AuthService {
 
@@ -27,13 +28,14 @@ class AuthService {
                 LocalStorageService.setAuthToken(responseBody.accessToken)
 
                 /* Redireciona para a página principal */
-                //HistoryService.push(PathConstants.HOME)
+                UpdateService.checkUpdates()
+                HistoryService.push(PathConstants.HOME)
 
                 return
             }
         }    
         /** @todo Melhorar erros de tela de login */
-        alert('Erro na autenticação com a API do Dino')
+        alert('[AuthService login] Erro na autenticação com a API do Dino')
     }
 
     /**

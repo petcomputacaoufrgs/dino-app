@@ -4,12 +4,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import GlossaryItems from '../glossary_items';
 import './styles.css';
 import LocalStorageService from '../../../services/LocalStorageService'
+import GlossaryItemModel from '../../../model/GlossaryItemModel';
 
 
 const GlossarySearchBar = () : JSX.Element => {
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("")
+    const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
 
     const handleChange = event => {
         setSearchTerm(event.target.value);

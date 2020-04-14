@@ -5,6 +5,7 @@ class UpdateService {
 
     checkUpdates = async () => {
         if(AuthService.isAuthenticated()){
+            console.log('updating...')
             GlossaryService.checkUpdate()
         }
     }

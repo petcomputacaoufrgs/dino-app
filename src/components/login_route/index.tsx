@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { Route, RouteProps, useLocation } from 'react-router'
 import { PrivateRouterContext } from '../private_router'
-import GlossaryService from '../../services/GlossaryService'
 
 /**
  * @description Gera uma rota de login com verificação de autenticação e redirecionamento automático

@@ -1,5 +1,5 @@
 import Superagent, { Response } from 'superagent'
-import AuthService from './GoogleAuthService'
+import AuthService from './AuthService'
 import HttpStatus from 'http-status-codes'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'

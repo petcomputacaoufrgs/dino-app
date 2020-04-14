@@ -2,13 +2,14 @@ import React, { useContext } from 'react'
 import { Avatar } from '@material-ui/core'
 import { LanguageProviderContext } from '../../../components/language_provider'
 import './styles.css'
+import LocalStorageService from '../../../services/LocalStorageService'
 
 const Home = () => {
     const languageContext = useContext(LanguageProviderContext)
 
-    const avatarSrc = 'https://www.i9treinamentos.com/wp-content/uploads/elementor/thumbs/Conhe%C3%A7a-a-rela%C3%A7%C3%A3o-dos-%C3%BAltimos-munic%C3%ADpios-que-aderiram-ao-Crian%C3%A7a-Feliz-min-odgh9gqs3mqak9ehgnoa188p46tdlfwj066qj6w3o4.jpg'
+    const avatarSrc = LocalStorageService.getPictureUrl()
 
-    const username = 'Henrique Pereira'
+    const username = LocalStorageService.getName()
     
     return (
         <div className='home'>

@@ -24,14 +24,14 @@ class GoogleAuthService {
      * @description Valida o login do usuário com a API e requere o token de acesso
      * @param loginResponse valor retornado pela API do GoogleOAuth com modo de login 'code'
      */
-    login = async (loginResponse: GoogleLoginResponseOffline): Promise<number> => {
+    google_login = async (loginResponse: GoogleLoginResponseOffline): Promise<number> => {
         if (loginResponse.code) {
             const authRequestModel = new AuthRequestModel(loginResponse.code)
 
             const response = await HttpService.post(DinoAPIURLConstants.PATH_AUTH_GOOGLE).send(authRequestModel)
             
             if (response.status === HttpStatus.OK) {                
-                this.saveResponseBodyData(response.body as AuthResponseModel)
+                this.saveGoogleResponseBodyData(response.body as AuthResponseModel)
 
                 /* Redireciona para a página principal */
                 HistoryService.push(PathConstants.HOME)
@@ -46,8 +46,8 @@ class GoogleAuthService {
     /**
      * @description Realiza o logout do usuário
      */
-    logout = () => {
-        this.removeUserData()
+    google_logout = () => {
+        this.removeGoogleUserData()
 
         HistoryService.push(PathConstants.LOGIN)
     }
@@ -70,7 +70,7 @@ class GoogleAuthService {
      * @description Salva os dados de retorno para acesso futuro
      * @param responseBody Retorno da requisição
      */
-    private saveResponseBodyData(responseBody: AuthResponseModel) {
+    private saveGoogleResponseBodyData(responseBody: AuthResponseModel) {
         LocalStorageService.setAuthToken(responseBody.accessToken)
         LocalStorageService.setGoogleAccessToken(responseBody.googleAccessToken)
         LocalStorageService.setEmail(responseBody.email)
@@ -81,7 +81,7 @@ class GoogleAuthService {
     /**
      * @description Remove os dados do usuário salvos
      */
-    private removeUserData() {
+    private removeGoogleUserData() {
         LocalStorageService.removeAuthToken()
         LocalStorageService.removeGoogleAccessToken()
         LocalStorageService.removeEmail()

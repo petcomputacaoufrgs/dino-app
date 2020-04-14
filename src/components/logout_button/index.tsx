@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useContext } from 'react'
 import Button from '../button'
-import GoogleAuthService from '../../services/GoogleAuthService'
+import AuthService from '../../services/AuthService'
 import LogoutSVG from '../../images/logout.svg'
 import Loader from '../loader'
 import { LanguageProviderContext } from '../language_provider'
@@ -18,7 +18,7 @@ const LogoutButton = () => {
     const logout = () => {
         setLoading(true)
 
-        GoogleAuthService.logout()
+        AuthService.google_logout()
     }
 
     return (

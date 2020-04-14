@@ -10,6 +10,7 @@ import GlossaryItem from '../../components/glossary/glossary_item'
 import GlossarySearchBar from '../../components/glossary/glossary_search'
 import TopBar from '../../components/top_bar'
 import HistoryService from '../../services/HistoryService'
+import Home from './home'
 
 
 
@@ -80,6 +81,7 @@ const Main = () : JSX.Element => {
     const renderMainComponent = (): JSX.Element => {
         return(
             <Switch>
+                <PrivateRoute exact path={PathConstants.HOME} component={Home} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />

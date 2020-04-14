@@ -42,7 +42,7 @@ const LoginButton = (props: LoginButtonProps) => {
      * @param response Objeto retornado pela biblioteca definidos na sua documentação,
      * para a configuração responseType = 'code'retornará sempre um GoogleLoginResponseOffline
      */
-    const loginFail = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    const loginFail = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {        
         if (props.onCancel) {
             props.onCancel()
         }

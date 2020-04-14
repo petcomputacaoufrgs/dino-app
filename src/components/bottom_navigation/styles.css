@@ -1,3 +1,8 @@
 .bottom_navigation__component {
-    margin-top: 60px;
+    position: relative;
+    top: 45px;
+    bottom: 70px;
+    height: calc(100vh - 115px);
+    width: 100%;
+    overflow: scroll;
 }

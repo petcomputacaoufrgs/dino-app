@@ -6,4 +6,5 @@ export default interface LanguageSet {
     LOGOUT_BUTTON_DESCRIPTION: string
     SEARCH_HOLDER: string
     LOADER_ALT: string
+    AVATAR_ALT: string
 }

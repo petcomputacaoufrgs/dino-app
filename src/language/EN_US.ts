@@ -18,4 +18,6 @@ export default class EN_US implements LanguageSet {
     SEARCH_HOLDER = 'Search...'
 
     LOADER_ALT = 'Rotating circle image indicating loading.'
+
+    AVATAR_ALT = 'User\'s profile image with rounded edges.'
 }

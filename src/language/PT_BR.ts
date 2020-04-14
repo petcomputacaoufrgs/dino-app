@@ -18,4 +18,6 @@ export default class PT_BR implements LanguageSet {
     SEARCH_HOLDER = 'Buscar...'
 
     LOADER_ALT = 'Imagem de círculo girando indicando carregamento.'
+
+    AVATAR_ALT = 'Imagem de perfil do usuário com as bordas arredondadas.'
 }

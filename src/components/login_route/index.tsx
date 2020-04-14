@@ -23,7 +23,6 @@ const LoginRoute = (props: RouteProps) : JSX.Element => {
 
         if (routerContext) {
             if (routerContext.isAuthenticated()) {
-                GlossaryService.checkUpdate()
                 goToHome()
             } 
         } else {

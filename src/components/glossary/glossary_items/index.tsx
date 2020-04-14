@@ -5,12 +5,12 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import PathConstants from '../../../constants/PathConstants';
 import { Link } from 'react-router-dom'
-import GlossaryItemModel from '../../../model/GlossaryItemModel';
+import GlossaryItemProps from './props';
 
-//destructuring props into glossary
-const GlossaryItems = (items : Array<GlossaryItemModel>) : JSX.Element => 
+//(props: {  items: Array<GlossaryItemModel> })
+const GlossaryItems = (props: GlossaryItemProps) : JSX.Element => 
     <Accordion className="accordion">
-        {items.map(item =>
+        {props.items.map(item =>
             <Card className="card" key={item.id}>
                 <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
                     <Card.Title className="accordion-card-title">{item.title}</Card.Title>

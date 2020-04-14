@@ -6,3 +6,7 @@
     width: 100%;
     overflow: scroll;
 }
+.MuiBottomNavigationAction-root .Mui-selected {
+    font-weight: 700;
+    color: #FFFFFF;
+}

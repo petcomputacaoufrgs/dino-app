@@ -18,6 +18,13 @@ export default class PT_BR implements LanguageSet {
     SEARCH_HOLDER = 'Buscar...'
 
     LOADER_ALT = 'Imagem de círculo girando indicando carregamento.'
+    
+    LOGIN_FAIL_BY_GOOGLE = 'Erro no login com o Google.'
+
+    LOGIN_FAIL_BY_API = 'Erro no login com o servidor do Dino.'
+
+    LOGIN_CANCELED = 'Login cancelado.'
+
 
     AVATAR_ALT = 'Imagem de perfil do usuário com as bordas arredondadas.'
 }

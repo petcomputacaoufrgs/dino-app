@@ -3,7 +3,8 @@
  */
 export default interface LoginButtonProps {
     buttonText: string
-    onFail?: () => void
+    onGoogleFail?: () => void
+    onDinoAPIFail?: () => void
     onCancel?: () => void
     size?: 'small' | 'medium' | 'large'
 }

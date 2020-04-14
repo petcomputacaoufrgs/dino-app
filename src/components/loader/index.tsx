@@ -54,7 +54,11 @@ const Loader = (props: LoaderProps) => {
 
     return (
         <div className={getMainClass()}>
-            <img className='loader__image' src={LoaderSVG} alt='Carregando, aguarde.'/>
+            <img 
+                className='loader__image' 
+                src={LoaderSVG} 
+                alt={props.alt ? props.alt : 'Imagem de círculo girando indicando carregamento.'}
+            />
         </div>
     )
 }

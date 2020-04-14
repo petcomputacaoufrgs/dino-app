@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { LanguageProviderContext } from '../language_provider'
 import Button from '../button'
 import GoogleAuthService from '../../services/GoogleAuthService'
 import Loader from '../loader'
@@ -14,6 +15,8 @@ import './styles.css'
  */
 const GoogleLoginButton = (props: LoginButtonProps) => {
     
+    const languageContext = useContext(LanguageProviderContext)
+
     const [loading, setLoading] = useState(false)
 
     /**
@@ -71,7 +74,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
                     <Button size={props.size} imageSrc={GoogleLogo} imageAlt={props.buttonText} className='login_button__button' onClick={renderProps.onClick}>{props.buttonText}</Button>
                 )}
             />
-            <Loader loading={loading} />
+            <Loader alt={languageContext.LOADER_ALT} loading={loading} />
         </>
     )
 }

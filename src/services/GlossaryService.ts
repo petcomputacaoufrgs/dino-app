@@ -1,7 +1,8 @@
 import HttpService from './DinoHttpService'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
 import LocalStorageService from './LocalStorageService'
-import GlossaryItemModel from '../model/GlossaryItemModel';
+import GlossaryItemModel from '../model/GlossaryItemModel'
+import StringUtils from './utils/StringUtils'
 
 /**
  * @description
@@ -18,7 +19,7 @@ class GlossaryService {
         return response ? response.body : LocalStorageService.getGlossaryVersion()
     }
 
-    getItems = async () : Promise<Array<GlossaryItemModel>> => {
+    getItems = async (): Promise<Array<GlossaryItemModel>> => {
         const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_LIST).catch((error) => {
             console.log(error.message);
             alert("[getItems()] API call error");
@@ -37,7 +38,8 @@ class GlossaryService {
             let newItens = await this.getItems()
 
             LocalStorageService.setGlossaryVersion(newVersion)
-            LocalStorageService.setGlossaryItems(newItens.sort((a, b) => a.title < b.title ? -1 : 1))
+            LocalStorageService.setGlossaryItems(newItens.sort((a, b) =>
+            StringUtils.normalizeString(a.title) < StringUtils.normalizeString(b.title) ? -1 : 1))     
         }
     }
 }

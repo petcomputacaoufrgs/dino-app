@@ -6,6 +6,7 @@ import GlossaryItems from '../glossary_items';
 import './styles.css';
 import LocalStorageService from '../../../services/LocalStorageService'
 import GlossaryItemModel from '../../../model/GlossaryItemModel';
+import StringUtils from './../../../services/utils/StringUtils'
 
 
 const GlossarySearchBar = () : JSX.Element => {
@@ -22,8 +23,8 @@ const GlossarySearchBar = () : JSX.Element => {
     useEffect(() => {
         const items = LocalStorageService.getGlossaryItems()
         const results = items.filter(item =>
-            item.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .includes(searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+            StringUtils.normalizeString(item.title.toLowerCase())
+            .includes(StringUtils.normalizeString(searchTerm.toLowerCase()))
         );
         setSearchResults(results);
     }, [searchTerm])

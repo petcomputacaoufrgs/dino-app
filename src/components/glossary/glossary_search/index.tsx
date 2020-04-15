@@ -6,7 +6,7 @@ import GlossaryItems from '../glossary_items';
 import './styles.css';
 import LocalStorageService from '../../../services/LocalStorageService'
 import GlossaryItemModel from '../../../model/GlossaryItemModel';
-import StringUtils from './../../../services/utils/StringUtils'
+import StringUtils from '../../../utils/StringUtils'
 
 
 const GlossarySearchBar = () : JSX.Element => {

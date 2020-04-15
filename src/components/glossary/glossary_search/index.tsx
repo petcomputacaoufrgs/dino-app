@@ -16,10 +16,12 @@ const GlossarySearchBar = () : JSX.Element => {
         setSearchTerm(event.target.value);
     };
 
+    //Para realizar uma pesquisa global e substituir, incluir a chave g na expressão regular ou se o primeiro parâmetro é uma string, inclua g no parâmetro flags.
     useEffect(() => {
         const items = LocalStorageService.getGlossaryItems()
         const results = items.filter(item =>
-            item.title.toLowerCase().includes(searchTerm.toLowerCase())
+            item.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .includes(searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
         );
         setSearchResults(results);
     }, [searchTerm]);

@@ -32,13 +32,13 @@ class GlossaryService {
 
         let newVersion = await this.getVersion()
 
-        if (newVersion !== LocalStorageService.getGlossaryVersion()) {
+        if (newVersion == LocalStorageService.getGlossaryVersion()) {
 
             let newItens = await this.getItems()
 
             //sem o stringify não é possível acessar os dados
             LocalStorageService.setGlossaryVersion(JSON.stringify(newVersion))
-            LocalStorageService.setGlossaryItems(JSON.stringify(newItens))
+            LocalStorageService.setGlossaryItems(JSON.stringify(newItens.sort((a, b) => a.title < b.title ? -1 : 1)))
         }
     }
 }

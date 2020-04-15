@@ -1,5 +1,5 @@
 import GlossaryService from './GlossaryService'
-import AuthService from './AuthService'
+import AuthService from './GoogleAuthService'
 
 class UpdateService {
 

@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { LanguageProviderContext } from '../language_provider'
 import Button from '../button'
-import AuthService from '../../services/AuthService'
+import GoogleAuthService from '../../services/GoogleAuthService'
 import Loader from '../loader'
 import GoogleSecret from '../../config/client_secret.json'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import GoogleLogo from '../../images/google_logo.png'
 import LoginButtonProps from './props'
+import LoginErrorTypes from '../../constants/LoginErrorTypes'
 import './styles.css'
 
 /**
  * @description Botão para login
  */
-const LoginButton = (props: LoginButtonProps) => {
+const GoogleLoginButton = (props: LoginButtonProps) => {
     
+    const languageContext = useContext(LanguageProviderContext)
+
     const [loading, setLoading] = useState(false)
 
     /**
@@ -23,11 +27,12 @@ const LoginButton = (props: LoginButtonProps) => {
     const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
         setLoading(true)
 
-        /** @todo Tratar erro de login em tela */
-        AuthService.login(response as GoogleLoginResponseOffline)
-            .catch(() => {
-                if (props.onFail) {
-                    props.onFail()
+        GoogleAuthService.login(response as GoogleLoginResponseOffline)
+            .catch((loginError: number) => {
+                if (loginError === LoginErrorTypes.API_ERROR) {
+                    props.onDinoAPIFail && props.onDinoAPIFail()
+                } else if (loginError === LoginErrorTypes.EXTERNAL_SERVICE_ERROR) {
+                    props.onGoogleFail && props.onGoogleFail()
                 }
 
                 setLoading(false)
@@ -58,7 +63,7 @@ const LoginButton = (props: LoginButtonProps) => {
         <>
             <GoogleLogin
                 clientId={GoogleSecret.web.client_id}
-                scope={'https://www.googleapis.com/auth/calendar'}
+                scope={GoogleAuthService.getDefaultScopes()}
                 onSuccess={responseGoogle}
                 onFailure={loginFail}
                 cookiePolicy={'single_host_origin'}
@@ -69,9 +74,9 @@ const LoginButton = (props: LoginButtonProps) => {
                     <Button size={props.size} imageSrc={GoogleLogo} imageAlt={props.buttonText} className='login_button__button' onClick={renderProps.onClick}>{props.buttonText}</Button>
                 )}
             />
-            <Loader loading={loading} />
+            <Loader alt={languageContext.LOADER_ALT} loading={loading} />
         </>
     )
 }
 
-export default LoginButton
+export default GoogleLoginButton

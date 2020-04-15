@@ -1,0 +1,7 @@
+.bottom_navigation__component {
+    margin-top: 60px;
+}
+.MuiBottomNavigationAction-root .Mui-selected {
+    font-weight: 700;
+    color: #FFFFFF;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams} from 'react-router-dom'
-//import Glossary from '../../../views/glossary'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';

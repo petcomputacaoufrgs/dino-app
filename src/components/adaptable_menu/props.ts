@@ -1,4 +1,5 @@
-import MenuItem from '../../types/MenuItem';
+import MenuItem from '../../types/MenuItem'
+
 /**
  * @description Propriedades do menu drawer.
  */
@@ -17,4 +18,9 @@ export default interface AdaptableMenuProps{
      * @description Indice do item selecionado na lista de itens
      */
     selectedItem: number 
+
+    /**
+     * @description Componente que será colocado na barra superior
+     */
+    topBarComponent?: JSX.Element
 }

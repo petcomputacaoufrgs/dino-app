@@ -1,15 +1,15 @@
 import React from 'react'
-import LogoutButton from '../../components/logout_button'
 import GlossarySVG from '../../images/glossary.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
-import AdaptableMenu from '../../components/adaptable_menu/'
+import AdaptableMenu from '../../components/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
 import { useLocation, Switch } from 'react-router';
-import HistoryService from '../../services/HistoryService';
 import GlossaryItem from '../../components/glossary/glossary_item'
 import GlossarySearchBar from '../../components/glossary/glossary_search'
+import TopBar from '../../components/top_bar'
+import HistoryService from '../../services/HistoryService'
 
 /**
  * @description Tela principal da aplicação
@@ -74,9 +74,8 @@ const Main = () : JSX.Element => {
 
     /** Componente interno do exibido com o menu definido pelo path */
     const renderMainComponent = (): JSX.Element => {
-        return (
+        return(
             <Switch>
-                <PrivateRoute exact path={PathConstants.HOME} component={LogoutButton} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
@@ -84,8 +83,17 @@ const Main = () : JSX.Element => {
         )
     }
 
+    const renderTopBarComponent = (): JSX.Element => (
+        <TopBar />
+    )
+
     return (
-        <AdaptableMenu selectedItem={getSelectedItem()} items={items} component={renderMainComponent()} />
+        <AdaptableMenu 
+            selectedItem={getSelectedItem()} 
+            items={items} 
+            component={renderMainComponent()} 
+            topBarComponent={renderTopBarComponent()}
+        />
     )
 }
 

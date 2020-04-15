@@ -1,3 +1,5 @@
+Para ver a versão de teste do aplicativo: https://pet-dino-test-app.herokuapp.com/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

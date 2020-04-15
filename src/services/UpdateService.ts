@@ -1,5 +1,5 @@
 import GlossaryService from './GlossaryService'
-import AuthService from './GoogleAuthService'
+import AuthService from './AuthService'
 
 class UpdateService {
     checkUpdates = async () => {

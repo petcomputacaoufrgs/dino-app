@@ -25,4 +25,6 @@ export default class EN_US implements LanguageSet {
 
     LOGIN_CANCELED = 'Login canceled.'
     
+
+    AVATAR_ALT = 'User\'s profile image with rounded edges.'
 }

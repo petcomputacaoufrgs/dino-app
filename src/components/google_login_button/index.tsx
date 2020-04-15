@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { LanguageProviderContext } from '../language_provider'
 import Button from '../button'
-import GoogleAuthService from '../../services/GoogleAuthService'
+import AuthService from '../../services/AuthService'
 import Loader from '../loader'
 import GoogleSecret from '../../config/client_secret.json'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
@@ -27,7 +27,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
         setLoading(true)
 
-        GoogleAuthService.login(response as GoogleLoginResponseOffline)
+        AuthService.google_login(response as GoogleLoginResponseOffline)
             .catch((loginError: number) => {
                 if (loginError === LoginErrorTypes.API_ERROR) {
                     props.onDinoAPIFail && props.onDinoAPIFail()
@@ -44,7 +44,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
      * @param response Objeto retornado pela biblioteca definidos na sua documentação,
      * para a configuração responseType = 'code'retornará sempre um GoogleLoginResponseOffline
      */
-    const loginFail = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    const loginFail = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {        
         if (props.onCancel) {
             props.onCancel()
         }
@@ -63,7 +63,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
         <>
             <GoogleLogin
                 clientId={GoogleSecret.web.client_id}
-                scope={GoogleAuthService.getDefaultScopes()}
+                scope={AuthService.getDefaultScopes()}
                 onSuccess={responseGoogle}
                 onFailure={loginFail}
                 cookiePolicy={'single_host_origin'}

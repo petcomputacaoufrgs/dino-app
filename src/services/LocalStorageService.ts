@@ -126,8 +126,8 @@ class LocalStorageService {
     /**
      * @description Retorna o nome do usuário atual
      */
-    getName = (): string | null => {
-        return this.get(LS_Constants.NAME)
+    getName = (): string => {
+        return this.stringOrNullToString(this.get(LS.NAME))
     }
 
     /**
@@ -148,7 +148,7 @@ class LocalStorageService {
      * @description Salva a imagem do usuário (url)
      */
     getPictureUrl = (): string | null => {
-        return this.get(LS_Constants.PICTURE_URL)
+        return this.get(LocalStorageKeysConstants.PICTURE_URL)
     }
     
     /**

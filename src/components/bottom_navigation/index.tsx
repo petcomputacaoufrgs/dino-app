@@ -47,15 +47,13 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     }
   
     return (
-        <>
-            <AppBar 
-                className={classes.appBar}
-            >
+        <div className='bottom_navigation'>
+            <AppBar>
                 <Toolbar>
                     {props.topBarComponent}
                 </Toolbar>
             </AppBar>
-            <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange} className={classes.root}>
+            <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange}>
                 {props.items.map((item, index) => (
                     <BottomNavigationAction 
                         key={index} 
@@ -70,7 +68,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
             <div className='bottom_navigation__component'>
                 {renderComponent()}
             </div>
-        </>
+        </div>
     );
 }
 
@@ -79,27 +77,6 @@ const BottomNavigation = (props: BottomNavigationProps) => {
  * */ 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        root: {
-            position: 'fixed',
-            width: '100%',
-            height: '70px',
-            display: 'flex',
-            alignItems: 'center',
-            bottom: 0,
-            left: 0,
-            'z-index': '100'        
-        },
-        appBar: {
-            position: 'fixed',
-            height: '45px',
-            backgroundColor: '#B32E55',
-            justifyContent: 'center',
-            zIndex: theme.zIndex.drawer + 1,
-            transition: theme.transitions.create(['width', 'margin'], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
         image: {
             width: '40px'
         }

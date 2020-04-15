@@ -25,4 +25,6 @@ export default class PT_BR implements LanguageSet {
 
     LOGIN_CANCELED = 'Login cancelado.'
 
+
+    AVATAR_ALT = 'Imagem de perfil do usuário com as bordas arredondadas.'
 }

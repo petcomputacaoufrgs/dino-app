@@ -1,0 +1,34 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home .home__avatar {
+    margin-top: 60px;
+    width: 125px;
+    height: 125px;
+}
+
+.home .home__username, .home .home__welcome_message {
+    margin-top: 25px;
+    font-weight: 700;
+    font-size: large;
+}
+
+@media (orientation: landscape) {
+    .home .home__avatar {
+        margin-top: 80px;
+        width: 200px;
+        height: 200px;
+    }    
+
+    .home .home__username {
+        font-size: x-large;
+    }
+
+    .home .home__welcome_message {
+        margin-top: 25px;
+        font-size: xx-large;
+    }
+}

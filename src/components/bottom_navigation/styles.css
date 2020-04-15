@@ -13,6 +13,7 @@
 .bottom_navigation .MuiBottomNavigationAction-root.Mui-selected {
     font-weight: 700;
     color: #FFFFFF;
+    outline: none;
 }
 
 .bottom_navigation .MuiAppBar-root{

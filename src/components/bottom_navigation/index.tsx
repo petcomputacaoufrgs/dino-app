@@ -86,7 +86,8 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             bottom: 0,
-            left: 0
+            left: 0,
+            'z-index': '100'        
         },
         appBar: {
             position: 'fixed',
@@ -101,8 +102,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         image: {
             width: '40px'
-        },
-    }),
-  )
+        }
+    })
+)
 
 export default BottomNavigation

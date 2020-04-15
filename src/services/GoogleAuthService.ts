@@ -7,6 +7,7 @@ import AuthResponseModel from '../model/AuthResponseModel'
 import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
+import UpdateService from './UpdateService'
 import GoogleScopeConstants from '../constants/GoogleScopeConstants'
 import LoginErrorTypes from '../constants/LoginErrorTypes'
 
@@ -34,11 +35,14 @@ class GoogleAuthService {
                 this.saveResponseBodyData(response.body as AuthResponseModel)
 
                 /* Redireciona para a página principal */
+                UpdateService.checkUpdates()
                 HistoryService.push(PathConstants.HOME)
 
                 return LoginErrorTypes.API_ERROR
             }
         }    
+
+        console.error('[AuthService login] Erro na autenticação com a API do Dino')
         
         return LoginErrorTypes.EXTERNAL_SERVICE_ERROR
     }

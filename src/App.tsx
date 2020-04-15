@@ -7,6 +7,7 @@ import LoginRoute from './components/login_route/index'
 import PathConstants from './constants/PathConstants'
 import AuthService from './services/GoogleAuthService'
 import HistoryService from './services/HistoryService'
+import UpdateService from './services/UpdateService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import LanguageProvider from './components/language_provider'
@@ -14,6 +15,9 @@ import LanguageProvider from './components/language_provider'
 
 
 const App = (): JSX.Element => {
+
+  UpdateService.checkUpdates()
+
   return (
     <LanguageProvider>
       <PrivateRouter 

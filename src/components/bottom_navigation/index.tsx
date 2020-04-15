@@ -79,8 +79,8 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         image: {
             width: '40px'
-        },
-    }),
-  )
+        }
+    })
+)
 
 export default BottomNavigation

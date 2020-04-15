@@ -8,7 +8,7 @@ import GlossaryItemModel from '../model/GlossaryItemModel';
  */
 class GlossaryService {
 
-    getVersion = async () => {
+    getVersion = async (): Promise<number> => {
 
         const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_VERSION).catch((error) => {
             console.log(error.message);
@@ -32,13 +32,12 @@ class GlossaryService {
 
         let newVersion = await this.getVersion()
 
-        if (newVersion == LocalStorageService.getGlossaryVersion()) {
+        if (newVersion !== LocalStorageService.getGlossaryVersion()) {
 
             let newItens = await this.getItems()
 
-            //sem o stringify não é possível acessar os dados
-            LocalStorageService.setGlossaryVersion(JSON.stringify(newVersion))
-            LocalStorageService.setGlossaryItems(JSON.stringify(newItens.sort((a, b) => a.title < b.title ? -1 : 1)))
+            LocalStorageService.setGlossaryVersion(newVersion)
+            LocalStorageService.setGlossaryItems(newItens.sort((a, b) => a.title < b.title ? -1 : 1))
         }
     }
 }

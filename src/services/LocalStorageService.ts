@@ -3,6 +3,7 @@ import GlossaryItemModel from '../model/GlossaryItemModel';
 
 /**
  * @description Auxilia a gravar e ler valores do local storage
+ * Quando o objeto não for uma string é necessário o stringify caso contrário não é possível acessar os dados
  */
 class LocalStorageService {
     private get = (key: string) : string | null => {
@@ -46,16 +47,22 @@ class LocalStorageService {
 
     getGlossaryItems = () : Array<GlossaryItemModel> => {
         let items = this.get(LS_Constants.GLOSSARY_ITEMS)
+
+        let result = new Array<GlossaryItemModel>()
+
+        if (items) {
+            result = JSON.parse(items)
+        }
         
-        return JSON.parse(items ? items : '')
+        return result
     }
 
-    setGlossaryVersion = (version : string) => {
-        this.set(LS_Constants.GLOSSARY_VERSION, version)
+    setGlossaryVersion = (version: number) => {
+        this.set(LS_Constants.GLOSSARY_VERSION, JSON.stringify(version))
     }
 
-    setGlossaryItems = (items : string) => {
-        this.set(LS_Constants.GLOSSARY_ITEMS, items)
+    setGlossaryItems = (items: GlossaryItemModel[]) => {
+        this.set(LS_Constants.GLOSSARY_ITEMS, JSON.stringify(items))
     }
 }
 

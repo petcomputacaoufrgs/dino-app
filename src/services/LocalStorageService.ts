@@ -167,14 +167,27 @@ class LocalStorageService {
 
 
     /**
+     * @description Retorna o valor da linguagem do APP
+     */
+    getLanguage = (): string => (
+        this.stringOrNullToString(this.get(LS_Constants.LANGUAGE))
+    )
+
+    /**
+     * @description Salva o valor da linguagem do APP
+     */
+    setLanguage = (language: string) => {
+        this.set(LS_Constants.LANGUAGE, language)
+    }
+
+
+    /**
      * @description Recebe um valor do tipo string ou null e retorna uma string sempre.
      * Caso o valor seja null retorna uma string vazia
      */
     private stringOrNullToString = (nullableString: string | null): string => {
         return nullableString ? nullableString : ''
     }
-
-
 }
 
 export default new LocalStorageService()

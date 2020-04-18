@@ -1,0 +1,22 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.settings__language {
+    width: 75%;
+}
+
+.settings__title {
+    width: 100%;
+    text-align: center;
+}
+
+.settings .MuiTypography-root.settings__title.MuiTypography-body1 {
+    font-weight: 700;
+    font-size: large;
+    margin-bottom: 30px;
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
+import MenuItem from '../../types/MenuItem'
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -15,7 +16,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-
+import './styles.css'
 
 /**
  * @description Menu lateral
@@ -35,94 +36,141 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
     /**
      * @description Altera o estado do menu para abert
      */
-    const handleDrawerOpen = (): void  => {
+    const handleDrawerOpen = ()  => {
         setOpen(true)
     }
 
     /**
      * @description Altera o estado do menu para fechado
      */
-    const handleDrawerClose = (): void => {
+    const onClose = () => {
         setOpen(false)
     }
 
     /**
-     * @description Modifica o item selecionado e chama a sua função de click
+     * @description Chama a função correspondente ao item selecionado
      * @param index Indice do item clicado na lista de items da props
      */
-    const onClick = (index: number) => {
-        props.items[index].onClick(index)
+    const onClick = (item: MenuItem) => {
+        item.onClick()
+        setTimeout(onClose, 100)
     }
+
+    /**
+     * @description Retorna se o indice dado pertence ao último item do groupedItems
+     * @param groupIndex Indice de um grupo dentro do vetor groupedItems
+     */
+    const isLastGroup = (groupIndex: number): boolean => (
+        (props.groupedItems.length - 1) === groupIndex
+    )
 
     /**
      * @description Retorna o componente do item selecionado no menu atualmente
      */
     const renderContent = (): JSX.Element => {
-        return props.component
+        if (props.component) {
+            return (
+                <main
+                className={props.mini ? classes.contentMini : clsx(classes.content, {
+                    [classes.contentShift]: open,
+                })}
+                >
+                    <div className={props.mini ? classes.toolbar : classes.drawerHeader} />
+                    {props.component}
+                </main>
+            )
+        } 
+        
+        return <></>
     }
+
+    /**
+     * @description rendeniza um grupo de itens
+     */
+    const renderItems = (items: MenuItem[]): JSX.Element[] => (
+        items.map((item, itemIndex) => (
+            <ListItem button key={itemIndex} onClick={() => onClick(item)}>
+                <ListItemIcon>
+                    <img className={classes.image} src={item.image} alt={item.name}/>
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+            </ListItem>
+        ))
+    )
+
+    /**
+     * @description Rendeniza todos os itens do menu
+     */
+    const renderGroupItems = (): JSX.Element[] => (
+        props.groupedItems.map((items, groupIndex) => (
+            <div key={groupIndex}>
+                <List>
+                    {renderItems(items)}
+                </List>
+                {!isLastGroup(groupIndex) && <Divider/>}
+            </div>
+        ))
+    )
+
+    /**
+     * @description Rendeniza a AppBar se necessário
+     */
+    const renderAppBar = (): JSX.Element => (
+        <AppBar 
+        className={clsx(classes.appBar, props.mini 
+            ? { [classes.appBarShiftMini]: open, } 
+            :  { [classes.appBarShift]: open, }
+        )}
+        >
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    className={clsx(props.mini ? classes.menuButtonMini : classes.menuButton, props.mini ? {[classes.hide]: open, } : open && classes.hide)}
+                >
+                    <MenuIcon />
+                </IconButton>
+            </Toolbar>
+        </AppBar>
+    )
+
+    /**
+     * @description Rendeniza o menu completo
+     */
+    const renderDrawer = (): JSX.Element => (
+        <Drawer 
+            variant={props.mini ? 'permanent' : "persistent" }
+            anchor={props.mini ? undefined : 'left'}
+            open={props.mini ? undefined : open }
+            className={props.mini ? clsx(classes.drawer, {
+                            [classes.drawerOpen]: open,
+                            [classes.drawerClose]: !open,
+                        }) : classes.drawer}
+            classes={{
+                paper: props.mini ? clsx({
+                  [classes.drawerOpen]: open,
+                  [classes.drawerClose]: !open,
+                }) : classes.drawerPaper,
+            }}
+        >
+            <div className={props.mini ? classes.toolbar : classes.drawerHeader}>
+                <IconButton onClick={onClose}>
+                    {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </IconButton>
+            </div>
+            <Divider />
+            {renderGroupItems()}
+        </Drawer>
+    )
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar 
-                className={clsx(classes.appBar, props.mini 
-                    ? { [classes.appBarShiftMini]: open, } 
-                    :  { [classes.appBarShift]: open, }
-                )}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(props.mini ? classes.menuButtonMini : classes.menuButton, props.mini ? {[classes.hide]: open, } : open && classes.hide)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    {props.topBarComponent}
-                </Toolbar>
-            </AppBar>
-            <Drawer 
-                variant={props.mini ? 'permanent' : "persistent" }
-                anchor={props.mini ? undefined : 'left'}
-                open={props.mini ? undefined : open }
-                className={props.mini ? clsx(classes.drawer, {
-                                [classes.drawerOpen]: open,
-                                [classes.drawerClose]: !open,
-                            }) : classes.drawer}
-                classes={{
-                    paper: props.mini ? clsx({
-                      [classes.drawerOpen]: open,
-                      [classes.drawerClose]: !open,
-                    }) : classes.drawerPaper,
-                }}
-            >
-                <div className={props.mini ? classes.toolbar : classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    {props.items.map((item, index) => (
-                        <ListItem button key={index} onClick={() => onClick(index)}>
-                            <ListItemIcon>
-                                <img className={classes.image} src={item.image} alt={item.name}/>
-                            </ListItemIcon>
-                            <ListItemText primary={item.name} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
-            <main
-                className={props.mini ? classes.contentMini : clsx(classes.content, {
-                    [classes.contentShift]: open,
-                })}
-            >
-                <div className={props.mini ? classes.toolbar : classes.drawerHeader} />
-                {renderContent()}
-            </main>
+            {renderAppBar()}
+            {renderDrawer()}
+            {renderContent()}
         </div>
     )
 }

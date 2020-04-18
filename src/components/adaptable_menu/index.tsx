@@ -31,9 +31,9 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      */
     const renderAdaptableMenu = (): JSX.Element => {
         if (isMobile) {
-            return renderMobileMenuWithContent()
+            return renderMobileMenu()
         } else {
-            return renderDrawerMenuWithContent(true)
+            return renderDrawerMenu(true)
         }
     }
 
@@ -41,11 +41,11 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      * @description Retorna o menu adaptável para mobile com base na horientação da tela
      * @returns Elemento JSX com o menu
      */
-    const renderMobileMenuWithContent = (): JSX.Element => {
+    const renderMobileMenu = (): JSX.Element => {
         if (isLandscape) {
-            return renderDrawerMenuWithContent(false)
+            return renderDrawerMenu(false)
         } else {
-            return renderBottomNavigationMenuWithContent()
+            return renderBottomNavigation()
         }
     }
 
@@ -54,11 +54,11 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      * @param mini Define o tipo do menu, se mini então ele manterá um mini menu lateral de ícones quando o menu estiver fechado
      * @returns Elemento JSX contendo o menu
      */
-    const renderDrawerMenuWithContent = (mini: boolean): JSX.Element => {
+    const renderDrawerMenu = (mini: boolean): JSX.Element => {
         return (
             <DrawerNavigation 
                 mini={mini} 
-                items={props.items} 
+                groupedItems={props.groupedItems} 
                 component={props.component}
                 topBarComponent={props.topBarComponent} />
         )
@@ -68,11 +68,11 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      * @description Retorna o menu inferior
      * @returns Elemento JSX com o menu
      */
-    const renderBottomNavigationMenuWithContent = (): JSX.Element => {
+    const renderBottomNavigation = (): JSX.Element => {
         return ( 
             <BottomNavigation 
                 selectedItem={props.selectedItem} 
-                items={props.items} 
+                groupedItems={props.groupedItems} 
                 component={props.component}
                 topBarComponent={props.topBarComponent} />
         )

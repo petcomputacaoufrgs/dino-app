@@ -7,12 +7,12 @@ export default interface BottomNavigationProps{
     /**
      * @description Item que serão exibidos no menu
      */
-    items: MenuItem[]
+    groupedItems: MenuItem[][]
 
     /**
      * @description Indice do item selecionado para aparecer quando o menu carregar, default é ZERO
      */
-    selectedItem?: number
+    selectedItem: number
 
     /**
      * @description Componente com as views e as suas rotas

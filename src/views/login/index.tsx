@@ -15,6 +15,7 @@ const Login = () : JSX.Element => {
 
     const [alertDinoFail, showAlertDinoFail] = CustomAlert(languageContext.LOGIN_FAIL_BY_API, 'error')
     const [alertGoogleFail, showAlertGoogleFail] = CustomAlert(languageContext.LOGIN_FAIL_BY_GOOGLE, 'error')
+    const [alertRefreshError, showAlertRefreshError] = CustomAlert(languageContext.LOGIN_REFRESH_ERROR, 'warning')
     const [alertCancel, showAlertCancel] = CustomAlert(languageContext.LOGIN_CANCELED, 'warning')
  
     return (
@@ -28,10 +29,12 @@ const Login = () : JSX.Element => {
                     onCancel={showAlertCancel} 
                     onDinoAPIFail={showAlertDinoFail} 
                     onGoogleFail={showAlertGoogleFail}
+                    onRefreshTokenLostError={showAlertRefreshError}
                     buttonText={languageContext.LOGIN_BUTTON_TEXT} />
             </div>
             {alertDinoFail}
             {alertGoogleFail}
+            {alertRefreshError}
             {alertCancel}
         </div>
     )

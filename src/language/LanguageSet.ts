@@ -9,5 +9,6 @@ export default interface LanguageSet {
     LOGIN_FAIL_BY_GOOGLE: string
     LOGIN_FAIL_BY_API: string
     LOGIN_CANCELED: string
+    LOGIN_REFRESH_ERROR: string
     AVATAR_ALT: string
 }

@@ -2,13 +2,14 @@
  * @description Configuração de valores das chaves utilizadas para salvar valores no local storage
  */
 class LocalStorageKeys {
-    GLOSSARY_VERSION: string = 'G_version'
-    GLOSSARY_ITEMS: string = 'G_itemList'
-    EMAIL: string = 'em'
-    PICTURE_URL: string = 'piu'
-    NAME: string = 'nm'
-    GOOGLE_ACCESS_TOKEN: string = 'gat'
-    AUTH_TOKEN: string = 'at'
+    GLOSSARY_VERSION = 'G_version'
+    GLOSSARY_ITEMS = 'G_itemList'
+    EMAIL = 'e'
+    PICTURE_URL = 'pu'
+    NAME = 'n'
+    GOOGLE_ACCESS_TOKEN = 'gat'
+    AUTH_TOKEN = 'at'
+    REFRESH_TOKEN_REQUIRED = 'rtr'
 }
 
 export default new LocalStorageKeys()

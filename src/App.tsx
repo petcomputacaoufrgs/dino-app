@@ -8,23 +8,24 @@ import PathConstants from './constants/PathConstants'
 import AuthService from './services/AuthService'
 import HistoryService from './services/HistoryService'
 import UpdateService from './services/UpdateService'
+import LocalStorageService from './services/LocalStorageService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import LanguageProvider from './components/language_provider'
 
-
-
 const App = (): JSX.Element => {
 
+  LocalStorageService.cleanLocalStorageGarbage()
   UpdateService.checkUpdates()
-
+  
   return (
     <LanguageProvider>
       <PrivateRouter 
         loginPath={PathConstants.LOGIN}
         homePath={PathConstants.HOME}
         isAuthenticated={AuthService.isAuthenticated}
-        browserHistory={HistoryService}>
+        browserHistory={HistoryService}
+      >
         <Switch>
           <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
           <PrivateRoute path={PathConstants.APP} component={Main} />

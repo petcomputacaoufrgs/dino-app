@@ -1,4 +1,7 @@
 export default interface LanguageSet {
+    LANGUAGE_CODE: string
+    LANGUAGE_PORTUGUESE: string
+    LANGUAGE_ENGLISH: string
     NOT_FOUND_MESSAGE: string 
     NOT_FROND_REDIRECT_MESSAGE: string
     WELCOME_MESSAGE: string
@@ -11,4 +14,15 @@ export default interface LanguageSet {
     LOGIN_CANCELED: string
     LOGIN_REFRESH_ERROR: string
     AVATAR_ALT: string
+    LOGOUT_DIALOG_QUESTION: string
+    LOGOUT_DIALOG_DESCRIPTION: string
+    AGREEMENT_OPTION_TEXT: string
+    DISAGREEMENT_OPTION_TEXT: string
+    MENU_HOME: string
+    MENU_GAMES: string
+    MENU_GLOSSARY: string
+    MENU_SETTINGS: string
+    MENU_LOGOUT: string
+    SETTINGS_TITLE: string
+    SETTINGS_LANGUAGE: string
 }

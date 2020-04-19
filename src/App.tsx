@@ -12,6 +12,7 @@ import LocalStorageService from './services/LocalStorageService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import LanguageProvider from './components/language_provider'
+import './App.css'
 
 const App = (): JSX.Element => {
 

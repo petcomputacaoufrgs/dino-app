@@ -10,9 +10,10 @@ export default interface AdaptableMenuProps{
     component: JSX.Element
 
     /**
-     * @description Itens que serão exibidos no menu
+     * @description Lista com listas de itens organizados por grupo,
+     * no caso do menu inferior a primeira lista será exibida na parte inferior.
      */
-    items: MenuItem[]
+    groupedItems: MenuItem[][]
 
     /**
      * @description Indice do item selecionado na lista de itens

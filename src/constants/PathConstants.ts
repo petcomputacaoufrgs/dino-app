@@ -26,6 +26,11 @@ class PathConstants {
      * @description Diretório dos jogos
      */
     GAMES: string = this.APP + '/games'
+
+    /**
+     * @description Diretório das configurações
+     */
+    SETTINGS: string = this.APP + '/settings'
 }
 
 export default new PathConstants()

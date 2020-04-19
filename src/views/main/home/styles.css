@@ -18,7 +18,7 @@
 
 @media (orientation: landscape) {
     .home .home__avatar {
-        margin-top: 80px;
+        margin-top: 40px;
         width: 200px;
         height: 200px;
     }    

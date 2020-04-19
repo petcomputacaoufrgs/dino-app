@@ -1,7 +1,7 @@
 import GoogleAuthRequestModel from '../model/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
-import {GoogleLoginResponseOffline} from 'react-google-login'
+import { GoogleLoginResponseOffline } from 'react-google-login'
 import LocalStorageService from './LocalStorageService'
 import AuthResponseModel from '../model/AuthResponseModel'
 import HttpService from './DinoHttpService'
@@ -70,9 +70,6 @@ class GoogleAuthService {
         LocalStorageService.setPictureUrl(responseBody.pictureUrl)
     }
     
-    /**
-     * @description Remove os dados do usuário salvos
-     */
     public removeAuthData() {
         LocalStorageService.removeAuthToken()
         LocalStorageService.removeGoogleAccessToken()

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import BottomNavigationProps from './props'
+import MenuItem from '../../types/MenuItem'
+import DrawerNavigation from '../drawer_navigation'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 import './styles.css'
 
 /**
@@ -17,21 +17,21 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     const classes = useStyles()
 
     /** Salva o indice do item selecionado no vetor de itens */
-    const [selectecItemIndex, setSelectedItemIndex] = useState(props.selectedItem ? props.selectedItem : 0)
+    const [selectecItemIndex, setSelectedItemIndex] = useState(props.selectedItem)
   
     /**
      * @description Executa os procedimentos para modificar o item do menu
      * @param event Dados do evento disparado
      * @param newValue Indice do novo item selecionado no vetor de items
      */
-    const handleChange = (event: React.ChangeEvent<{}>, indexNewSelectedItem: string) => {
+    const onChange = (event: React.ChangeEvent<{}>, indexNewSelectedItem: string) => {
         const intIndex = Number(indexNewSelectedItem)
 
         setSelectedItemIndex(intIndex)
 
-        const selectedItem = props.items[intIndex]
+        const selectedItem = getFirstMenuItemsGroup()[intIndex]
 
-        selectedItem.onClick(intIndex)
+        selectedItem.onClick()
     }
 
     /** Lida com a atualização externa da props */
@@ -40,33 +40,71 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     }, [props.selectedItem])
 
     /**
+     * @description Retorna o primeiro e principal grupo de itens do menu
+     * @returns Primeiro grupo de itens do menu
+     */
+    const getFirstMenuItemsGroup = (): MenuItem[] => {
+        if (props.groupedItems.length !== 0) {
+            return props.groupedItems[0]
+        }
+
+        return []
+    }
+
+    /**
+     * @description Retorna todos os grupos de itens com exceção do primeiro
+     * @returns Lista de itens secundários do menu
+     */
+    const getSecondaryMenuItemsGroups = (): MenuItem[][] => (
+        props.groupedItems.slice(1)
+    )
+
+    /**
+     * @description Rendeniza os itens principais do menu
+     * @returns Elemento JSX com os itens principais em um BottomNavigation
+     */
+    const renderMainItems = (): JSX.Element => (
+        <MaterialBottomNavigation 
+            value={selectecItemIndex} 
+            onChange={onChange}
+        >
+            {getFirstMenuItemsGroup().map((item, index) => (
+                <BottomNavigationAction 
+                    key={index} 
+                    label={item.name} 
+                    value={index} 
+                    icon={
+                        <img className={classes.image} src={item.image} alt={item.name} />
+                    } 
+                />
+            ))}
+        </MaterialBottomNavigation>
+    )
+
+    /**
+     * @description Retorna o menu lateral com os itens secundários
+     * @returns Elemento JSX com o menu lateral contendo os itens secundários do menu
+     */
+    const renderSecondaryItems = (): JSX.Element => (
+        <DrawerNavigation 
+            mini={false} 
+            groupedItems={getSecondaryMenuItemsGroups()} 
+            topBarComponent={props.topBarComponent} />
+    )
+
+    /**
      * @description Carrega o componente com os items do menu dentro de rotas
      */
-    const renderComponent = () : JSX.Element  => {
+    const renderContent = () : JSX.Element  => {
         return props.component
     }
   
     return (
         <div className='bottom_navigation'>
-            <AppBar>
-                <Toolbar>
-                    {props.topBarComponent}
-                </Toolbar>
-            </AppBar>
-            <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange}>
-                {props.items.map((item, index) => (
-                    <BottomNavigationAction 
-                        key={index} 
-                        label={item.name} 
-                        value={index} 
-                        icon={
-                            <img className={classes.image} src={item.image} alt={item.name} />
-                        } 
-                    />
-                ))}
-            </MaterialBottomNavigation>
+            {renderMainItems()}
+            {renderSecondaryItems()}
             <div className='bottom_navigation__component'>
-                {renderComponent()}
+                {renderContent()}
             </div>
         </div>
     );
@@ -78,7 +116,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         image: {
-            width: '40px'
+            width: '35px'
         }
     })
 )

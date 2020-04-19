@@ -10,6 +10,7 @@ class LocalStorageKeys {
     GOOGLE_ACCESS_TOKEN = 'gat'
     AUTH_TOKEN = 'at'
     REFRESH_TOKEN_REQUIRED = 'rtr'
+    LANGUAGE: string = 'lan'
 }
 
 export default new LocalStorageKeys()

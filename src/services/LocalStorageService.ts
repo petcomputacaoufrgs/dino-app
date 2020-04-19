@@ -126,6 +126,14 @@ class LocalStorageService {
         this.set(LS_Constants.REFRESH_TOKEN_REQUIRED, 't')
     }
 
+    getLanguage = (): string => (
+        this.convertStringOrNullToString(this.get(LS_Constants.LANGUAGE))
+    )
+    
+    setLanguage = (language: string) => {
+        this.set(LS_Constants.LANGUAGE, language)
+    }
+    
     setRefreshRequiredToFalse = () => {
         this.remove(LS_Constants.REFRESH_TOKEN_REQUIRED)
     }
@@ -133,6 +141,7 @@ class LocalStorageService {
     private convertStringOrNullToString = (nullableString: string | null): string => (
         nullableString ? nullableString : ''
     )
+    
 }
 
 export default new LocalStorageService()

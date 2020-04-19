@@ -1,13 +1,20 @@
 import LanguageSet from './LanguageSet'
+import LanguageCodeConstants from '../constants/LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em inglês americano
  */
 export default class EN_US implements LanguageSet {
 
-    NOT_FOUND_MESSAGE: string = 'Page not found.'
+    LANGUAGE_CODE = LanguageCodeConstants.ENGLISH
 
-    NOT_FROND_REDIRECT_MESSAGE: string = 'Redirecting...'
+    LANGUAGE_PORTUGUESE = 'Portuguese'
+
+    LANGUAGE_ENGLISH = 'English'
+
+    NOT_FOUND_MESSAGE = 'Page not found.'
+
+    NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
     
     WELCOME_MESSAGE = 'Welcome to DinoAPP!'
 
@@ -24,9 +31,31 @@ export default class EN_US implements LanguageSet {
     LOGIN_FAIL_BY_API = 'Login with Dino server failed.'
 
     LOGIN_CANCELED = 'Login canceled.'
-    
+
     LOGIN_REFRESH_ERROR = 'Login with error. We need you to authenticate again, please.'
 
     AVATAR_ALT = 'User\'s profile image with rounded edges.'
+
+    LOGOUT_DIALOG_QUESTION = 'Are you sure you want to log out?'
+
+    LOGOUT_DIALOG_DESCRIPTION = 'If you say \'YES\' all your account data will be removed from this device'
+
+    AGREEMENT_OPTION_TEXT = 'YES'
+
+    DISAGREEMENT_OPTION_TEXT = 'NO'
+
+    MENU_HOME = 'Home'
+
+    MENU_GAMES = 'Games'
+    
+    MENU_GLOSSARY = 'Glossary'
+
+    MENU_SETTINGS = 'Settings'
+    
+    MENU_LOGOUT = 'Logout'
+    
+    SETTINGS_TITLE = 'Settings'
+    
+    SETTINGS_LANGUAGE = 'Choose Language'
     
 }

@@ -9,6 +9,7 @@ class LocalStorageKeys {
     NAME: string = 'nm'
     GOOGLE_ACCESS_TOKEN: string = 'gat'
     AUTH_TOKEN: string = 'at'
+    LANGUAGE: string = 'lan'
 }
 
 export default new LocalStorageKeys()

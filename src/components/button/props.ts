@@ -1,10 +1,10 @@
-import MouseEvent from '../../types/MouseEvent'
+import { MouseEventHandler } from "react"
 
 /**
  * @description Propriedades do botão
  */
 export default interface ButtonProps {
-    onClick: MouseEvent
+    onClick: MouseEventHandler<any>
     className?: string
     imageSrc?: string
     imageAlt?: string

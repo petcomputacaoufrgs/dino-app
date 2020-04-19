@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useLocation, Switch } from 'react-router'
+import { LanguageProviderContext } from '../../components/language_provider'
 import GlossarySVG from '../../images/glossary.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
+import SettingsSVG from '../../images/settings.svg'
+import LogoutSVG from '../../images/logout.svg'
 import AdaptableMenu from '../../components/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
-import { useLocation, Switch } from 'react-router';
+
 import GlossaryItem from '../../components/glossary/glossary_item'
 import GlossarySearchBar from '../../components/glossary/glossary_search'
 import TopBar from '../../components/top_bar'
 import HistoryService from '../../services/HistoryService'
 import Home from './home'
+import Settings from './settings'
+import LogoutDialog from '../../components/logout_dialog'
+import MenuItem from '../../types/MenuItem'
 
 /**
  * @description Tela principal da aplicação
@@ -20,48 +27,71 @@ const Main = () : JSX.Element => {
 
     const location = useLocation()
 
+    const languageContext = useContext(LanguageProviderContext)
+
     /**
      * @description Função chamada quando seu item for selecionado no menu
-     * @param index Indice do item que invocou a função no menu
      */
-    const goToHome = (): void => {
+    const goToHome = () => {
         HistoryService.push(PathConstants.HOME)
     }
 
     /**
      * @description Função chamada quando seu item for selecionado no menu
-     * @param index Indice do item que invocou a função no menu
      */
-    const goToGames = (): void => {
+    const goToGames = () => {
         HistoryService.push(PathConstants.GAMES)
     }
 
     /**
      * @description Função chamada quando seu item for selecionado no menu
-     * @param index Indice do item que invocou a função no menu
      */
-    const goToGlossary = (): void => {
+    const goToGlossary = () => {
         HistoryService.push(PathConstants.GLOSSARY)
     }
 
+    /**
+     * @description Função chamada quando seu item for selecionado no menu
+     */
+    const goToSettings = () => {
+        HistoryService.push(PathConstants.SETTINGS)
+    }
+
+    const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
+
     /** Itens do menu */
-    const items = [
-        {
-            'image': HomeSVG,
-            'name': 'Home',
-            'onClick': goToHome,
-        },
-        {
-            'image': GamesSVG,
-            'name': 'Jogos',
-            'onClick': goToGames,
-        },
-        {
-            'image':GlossarySVG,
-            'name': 'Glossário',
-            'onClick': goToGlossary,
-            'component': <GlossarySearchBar />,
-        }
+    const groupedItems: MenuItem[][] = [
+        [
+            {
+                'image': HomeSVG,
+                'name': languageContext.MENU_HOME,
+                'onClick': goToHome,
+            },
+            {
+                'image': GamesSVG,
+                'name': languageContext.MENU_GAMES,
+                'onClick': goToGames,
+            },
+            {
+                'image':GlossarySVG,
+                'name': languageContext.MENU_GLOSSARY,
+                'onClick': goToGlossary,
+            }
+        ],
+        [
+            {
+                'image': SettingsSVG,
+                'name': languageContext.MENU_SETTINGS,
+                'onClick': goToSettings,
+            },
+        ],
+        [
+            {
+                'image': LogoutSVG,
+                'name': languageContext.MENU_LOGOUT,
+                'onClick': showLogoutDialog,            
+            },
+        ]
     ]
 
     const getSelectedItem = (): number => {
@@ -69,33 +99,35 @@ const Main = () : JSX.Element => {
             return 1
         } else if (location.pathname.includes(PathConstants.GLOSSARY)) {
             return 2
-        } return 0
+        } else if (location.pathname === PathConstants.HOME) {
+            return 0
+        } else {
+            return -1
+        }
     }
     
-
-    /** Componente interno do exibido com o menu definido pelo path */
-    const renderMainComponent = (): JSX.Element => {
+    const renderMainContent = (): JSX.Element => {
         return(
             <Switch>
                 <PrivateRoute exact path={PathConstants.HOME} component={Home} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
+                <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
         )
     }
 
-    const renderTopBarComponent = (): JSX.Element => (
-        <TopBar />
-    )
-
     return (
-        <AdaptableMenu 
-            selectedItem={getSelectedItem()} 
-            items={items} 
-            component={renderMainComponent()} 
-            topBarComponent={renderTopBarComponent()}
-        />
+        <>
+            <AdaptableMenu 
+                selectedItem={getSelectedItem()} 
+                groupedItems={groupedItems} 
+                component={renderMainContent()} 
+                topBarComponent={<TopBar />}
+            />
+            <LogoutDialogElement />
+        </>
     )
 }
 

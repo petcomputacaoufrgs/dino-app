@@ -5,19 +5,19 @@ import MenuItem from '../../types/MenuItem'
  */
 export default interface DrawerNavigationProps {
     /**
-     * @description Item que serão exibidos no menu
+     * @description Itens que serão exibidos na parte superior do menu
      */
-    items: MenuItem[]
+    groupedItems: MenuItem[][]
 
     /**
-     * @description Defini se o estado do menu quando fechado deve exibir um mini menu ou não
+     * @description Define se o estado do menu quando fechado deve exibir um mini menu ou não
      */
     mini?: boolean
-
+    
     /**
      * @description Componente com as views e as suas rotas
      */
-    component: JSX.Element
+    component?: JSX.Element
 
     /**
      * @description Componente que ficará na barra superior

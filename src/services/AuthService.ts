@@ -34,7 +34,6 @@ class GoogleAuthService {
             if (response.status === HttpStatus.OK) {                
                 this.saveGoogleResponseBodyData(response.body as AuthResponseModel)
 
-                /* Redireciona para a página principal */
                 UpdateService.checkUpdates()
                 HistoryService.push(PathConstants.HOME)
 

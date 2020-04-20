@@ -1,13 +1,13 @@
 import GlossaryService from './GlossaryService'
 import AuthService from './AuthService'
 import AppSettingsService from './AppSettingsService'
-import LanguageProviderValue from '../components/language_provider/LanguageProviderValue';
+import LanguageContextValue from '../components/language_provider/context';
 
 class UpdateService {
-    checkUpdates = async (languageProvider?: LanguageProviderValue) => {
+    checkUpdates = async (languageContext?: LanguageContextValue) => {
         if(AuthService.isAuthenticated()){
             GlossaryService.checkUpdate()
-            AppSettingsService.checkUpdate(languageProvider)
+            AppSettingsService.checkUpdate(languageContext)
         }
     }
 }

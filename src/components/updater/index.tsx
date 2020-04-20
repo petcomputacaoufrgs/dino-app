@@ -6,10 +6,10 @@ import UpdaterProps from './props'
 
 const Updater = (props: UpdaterProps): JSX.Element => {
 
-    const languageProvider = useContext(LanguageContext)    
+    const languageContext = useContext(LanguageContext)    
 
     LocalStorageService.cleanLocalStorageGarbage()
-    UpdateService.checkUpdates(languageProvider)
+    UpdateService.checkUpdates(languageContext)
 
     return (
         <>

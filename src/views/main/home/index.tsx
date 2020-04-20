@@ -5,9 +5,9 @@ import './styles.css'
 import LocalStorageService from '../../../services/LocalStorageService'
 
 const Home = () => {
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
     const avatarSrc = LocalStorageService.getPictureUrl()
 

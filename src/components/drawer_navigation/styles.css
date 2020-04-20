@@ -4,6 +4,11 @@
     padding-left: 10px;
 }
 
+.MuiPaper-root.MuiDrawer-paper {
+    background-color: black;
+    width: 100vw;
+}
+
 .makeStyles-content-15 .makeStyles-drawerHeader-11 {
     height: 0px;
 }

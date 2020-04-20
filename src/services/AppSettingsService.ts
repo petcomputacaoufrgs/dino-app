@@ -3,11 +3,11 @@ import DinoAPIURLConstants from "../constants/DinoAPIURLConstants"
 import LocalStorageService from "./LocalStorageService"
 import AppSettingsResponseModel from '../model/AppSettingsResponseModel'
 import AppSettingsModel from '../model/AppSettingsModel'
-import LanguageProviderValue from "../components/language_provider/LanguageProviderValue"
+import LanguageContextValue from "../components/language_provider/context"
 
 class AppSettingsService {
 
-    checkUpdate = async (languageProvider?: LanguageProviderValue): Promise<void> => {
+    checkUpdate = async (languageContext?: LanguageContextValue): Promise<void> => {
         const updatedVersion = await this.getAppSettingsVersion()
 
         if (updatedVersion === 0) {
@@ -26,8 +26,8 @@ class AppSettingsService {
 
             this.saveAppSettingsData(appSettings, updatedVersion)
 
-            if (languageProvider) {
-                languageProvider.updateLanguage()
+            if (languageContext) {
+                languageContext.updateLanguage()
             }
         }
     }

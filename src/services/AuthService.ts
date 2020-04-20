@@ -76,6 +76,10 @@ class GoogleAuthService {
         LocalStorageService.removeEmail()
         LocalStorageService.removeName()
         LocalStorageService.removePictureUrl()
+        LocalStorageService.removeAppSettingsVersion()
+        LocalStorageService.removeAppSettings()
+        LocalStorageService.removeGlossaryVersion()
+        LocalStorageService.removeGlossaruItems()
     }
 }
 

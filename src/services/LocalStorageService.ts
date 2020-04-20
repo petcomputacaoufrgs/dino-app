@@ -1,10 +1,15 @@
 import LS_Constants from "../constants/LocalStorageKeysConstants"
 import GlossaryItemModel from '../model/GlossaryItemModel'
+import AppSettingsModel from '../model/AppSettingsModel'
 
 /**
- * @description Auxilia a gravar e ler valores do local storage
+ * @description 
+ * - Auxilia a gravar e ler valores do local storage
  * Quando o objeto não for uma string é necessário o stringify caso contrário não é possível acessar os dados
- */
+ * - Caso adicione algo temporário que não deve permanecer salvo quando o aplicativo reiniciar, 
+ * adicione um método de remoção no cleanLocalStorageGarbage
+ * */
+
 class LocalStorageService {
     private get = (key: string) : string | null => (
         localStorage.getItem(key)
@@ -29,6 +34,20 @@ class LocalStorageService {
     cleanLocalStorageGarbage = () => {
         this.setRefreshRequiredToFalse()
     }
+    
+    getAuthToken = () : string => {
+        const authToken = this.get(LS_Constants.AUTH_TOKEN)
+        
+        return this.convertStringOrNullToString(authToken)
+    }
+
+    setAuthToken = (accessToken: string) => {
+        this.set(LS_Constants.AUTH_TOKEN, accessToken)
+    }
+    
+    removeAuthToken = () => {
+        this.remove(LS_Constants.AUTH_TOKEN)
+    }
 
     getGlossaryVersion = () : number => {
         let version = this.get(LS_Constants.GLOSSARY_VERSION)
@@ -48,6 +67,10 @@ class LocalStorageService {
         return result
     }
 
+    removeGlossaruItems = () => {
+        this.remove(LS_Constants.GLOSSARY_ITEMS)
+    }
+
     setGlossaryVersion = (version: number) => {
         this.set(LS_Constants.GLOSSARY_VERSION, JSON.stringify(version))
     }
@@ -56,18 +79,8 @@ class LocalStorageService {
         this.set(LS_Constants.GLOSSARY_ITEMS, JSON.stringify(items))
     }
 
-    getAuthToken = () : string => {
-        const authToken = this.get(LS_Constants.AUTH_TOKEN)
-        
-        return this.convertStringOrNullToString(authToken)
-    }
-
-    setAuthToken = (accessToken: string) => {
-        this.set(LS_Constants.AUTH_TOKEN, accessToken)
-    }
-
-    removeAuthToken = () => {
-        this.remove(LS_Constants.AUTH_TOKEN)
+    removeGlossaryVersion = () => {
+        this.remove(LS_Constants.GLOSSARY_VERSION)
     }
 
     getGoogleAccessToken = (): string | null => (
@@ -125,17 +138,43 @@ class LocalStorageService {
     setRefreshRequiredToTrue = () => {
         this.set(LS_Constants.REFRESH_TOKEN_REQUIRED, 't')
     }
-
-    getLanguage = (): string => (
-        this.convertStringOrNullToString(this.get(LS_Constants.LANGUAGE))
-    )
-    
-    setLanguage = (language: string) => {
-        this.set(LS_Constants.LANGUAGE, language)
-    }
     
     setRefreshRequiredToFalse = () => {
         this.remove(LS_Constants.REFRESH_TOKEN_REQUIRED)
+    } 
+
+    getAppSettingsVersion = (): number => {
+        const versionSaved = this.get(LS_Constants.APP_SETTINGS_VERSION)
+
+        return versionSaved ? Number(versionSaved) : 0
+    }
+
+    setAppSettingsVersion = (version: number) => {
+        this.set(LS_Constants.APP_SETTINGS_VERSION, JSON.stringify(version))
+    }
+
+    removeAppSettingsVersion = () => {
+        this.remove(LS_Constants.APP_SETTINGS_VERSION)
+    }
+
+    getAppSettings = (): AppSettingsModel | null => {
+        const savedSettings = this.get(LS_Constants.APP_SETTINGS)
+
+        if (savedSettings) {
+            const appSettings: AppSettingsModel = JSON.parse(savedSettings)
+
+            return appSettings
+        }
+
+        return null
+    }
+
+    setAppSettings = (appSettings: AppSettingsModel) => {
+        this.set(LS_Constants.APP_SETTINGS, JSON.stringify(appSettings))
+    }
+
+    removeAppSettings = () => {
+        this.remove(LS_Constants.APP_SETTINGS)
     }
 
     private convertStringOrNullToString = (nullableString: string | null): string => (

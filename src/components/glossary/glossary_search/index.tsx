@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { LanguageProviderContext } from '../../language_provider';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import SearchIcon from '@material-ui/icons/Search';
-import GlossaryItems from '../glossary_items';
+import React, { useState, useEffect, useContext } from 'react'
+import { LanguageContext } from '../../language_provider'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import SearchIcon from '@material-ui/icons/Search'
+import GlossaryItems from '../glossary_items'
 import './styles.css';
 import LocalStorageService from '../../../services/LocalStorageService'
-import GlossaryItemModel from '../../../model/GlossaryItemModel';
+import GlossaryItemModel from '../../../model/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 
 
 const GlossarySearchBar = () : JSX.Element => {
 
-    const languageContext = useContext(LanguageProviderContext)
-    const [searchTerm, setSearchTerm] = useState("")
+    const languageProvider = useContext(LanguageContext)
+    const language = languageProvider.currentLanguage
+    const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
 
     const handleChange = event => {
@@ -41,7 +42,7 @@ const GlossarySearchBar = () : JSX.Element => {
                         aria-label="Search"
                         value={searchTerm}
                         onChange={handleChange}
-                        placeholder={languageContext.SEARCH_HOLDER}
+                        placeholder={language.SEARCH_HOLDER}
                     />
                 </div>
             </div>

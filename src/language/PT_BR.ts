@@ -6,7 +6,9 @@ import LanguageCodeConstants from '../constants/LanguageCodeConstants'
  */
 export default class PT_BR implements LanguageSet {
 
-    LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE
+    ISO_LANGUAGE_CODE = 'pt'
+
+    NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE
 
     LANGUAGE_PORTUGUESE = 'Português'
 
@@ -58,4 +60,8 @@ export default class PT_BR implements LanguageSet {
     
     SETTINGS_LANGUAGE = 'Escolher Idioma'
     
+    SETTINGS_SAVE = 'Salvar'
+
+    SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
+
 }

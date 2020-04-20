@@ -11,6 +11,9 @@ class LocalStorageKeys {
     AUTH_TOKEN = 'at'
     REFRESH_TOKEN_REQUIRED = 'rtr'
     LANGUAGE: string = 'lan'
+    APP_SETTINGS_VERSION: string = 'asv'
+    APP_SETTINGS: string = 'as'
+    PAGE_TEMP: string = 'pt'
 }
 
 export default new LocalStorageKeys()

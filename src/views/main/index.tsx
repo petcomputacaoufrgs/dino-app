@@ -9,9 +9,9 @@ import LogoutSVG from '../../images/logout.svg'
 import AdaptableMenu from '../../components/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
-
 import GlossaryItem from '../../components/glossary/glossary_item'
 import GlossarySearchBar from '../../components/glossary/glossary_search'
+import ContactSearchBar from '../../components/contact/contact_search'
 import TopBar from '../../components/top_bar'
 import HistoryService from '../../services/HistoryService'
 import Home from './home'
@@ -112,6 +112,7 @@ const Main = () : JSX.Element => {
                 <PrivateRoute exact path={PathConstants.HOME} component={Home} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
+                <PrivateRoute exact path={PathConstants.CONTACTS} component={ContactSearchBar} />
                 <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>

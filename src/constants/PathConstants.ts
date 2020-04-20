@@ -23,6 +23,11 @@ class PathConstants {
     GLOSSARY: string = this.APP + '/glossary'
 
     /**
+     * @description Diretório dos contatos de emergência
+     */
+    CONTACTS: string = this.APP + '/contacts'
+
+    /**
      * @description Diretório dos jogos
      */
     GAMES: string = this.APP + '/games'

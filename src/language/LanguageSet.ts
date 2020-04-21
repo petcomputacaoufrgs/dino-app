@@ -20,6 +20,7 @@ export default interface LanguageSet {
     MENU_HOME: string
     MENU_GAMES: string
     MENU_GLOSSARY: string
+    MENU_CONTACTS: string
     MENU_SETTINGS: string
     MENU_LOGOUT: string
     SETTINGS_TITLE: string

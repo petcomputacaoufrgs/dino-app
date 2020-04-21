@@ -48,6 +48,8 @@ export default class EN_US implements LanguageSet {
     
     MENU_GLOSSARY = 'Glossary'
 
+    MENU_CONTACTS = 'Contacts'
+
     MENU_SETTINGS = 'Settings'
     
     MENU_LOGOUT = 'Logout'

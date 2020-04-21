@@ -10,8 +10,8 @@ import AdaptableMenu from '../../components/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
 import GlossaryItem from '../../components/glossary/glossary_item'
-import GlossarySearchBar from '../../components/glossary/glossary_search'
-import ContactSearchBar from '../../components/contact/contact_search'
+import Glossary from '../../components/glossary'
+import Contacts from '../../components/contacts'
 import TopBar from '../../components/top_bar'
 import HistoryService from '../../services/HistoryService'
 import Home from './home'
@@ -23,7 +23,7 @@ import MenuItem from '../../types/MenuItem'
  * @description Tela principal da aplicação
  * @returns Elemento JSX com a tela principal do aplicativo
  **/
-const Main = () : JSX.Element => {
+const Main = (): JSX.Element => {
 
     const location = useLocation()
 
@@ -51,6 +51,13 @@ const Main = () : JSX.Element => {
     }
 
     /**
+    * @description Função chamada quando seu item for selecionado no menu
+    */
+    const goToContacts = () => {
+        HistoryService.push(PathConstants.CONTACTS)
+    }
+
+    /**
      * @description Função chamada quando seu item for selecionado no menu
      */
     const goToSettings = () => {
@@ -73,9 +80,14 @@ const Main = () : JSX.Element => {
                 'onClick': goToGames,
             },
             {
-                'image':GlossarySVG,
+                'image': GlossarySVG,
                 'name': languageContext.MENU_GLOSSARY,
                 'onClick': goToGlossary,
+            },
+            {
+                'image': GlossarySVG,
+                'name': languageContext.MENU_CONTACTS,
+                'onClick': goToContacts,
             }
         ],
         [
@@ -89,7 +101,7 @@ const Main = () : JSX.Element => {
             {
                 'image': LogoutSVG,
                 'name': languageContext.MENU_LOGOUT,
-                'onClick': showLogoutDialog,            
+                'onClick': showLogoutDialog,
             },
         ]
     ]
@@ -105,14 +117,14 @@ const Main = () : JSX.Element => {
             return -1
         }
     }
-    
+
     const renderMainContent = (): JSX.Element => {
-        return(
+        return (
             <Switch>
                 <PrivateRoute exact path={PathConstants.HOME} component={Home} />
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
-                <PrivateRoute exact path={PathConstants.CONTACTS} component={ContactSearchBar} />
+                <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
+                <PrivateRoute exact path={PathConstants.CONTACTS} component={Contacts} />
                 <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
@@ -121,10 +133,10 @@ const Main = () : JSX.Element => {
 
     return (
         <>
-            <AdaptableMenu 
-                selectedItem={getSelectedItem()} 
-                groupedItems={groupedItems} 
-                component={renderMainContent()} 
+            <AdaptableMenu
+                selectedItem={getSelectedItem()}
+                groupedItems={groupedItems}
+                component={renderMainContent()}
                 topBarComponent={<TopBar />}
             />
             <LogoutDialogElement />

@@ -48,6 +48,8 @@ export default class PT_BR implements LanguageSet {
 
     MENU_GLOSSARY = 'Glossário'
 
+    MENU_CONTACTS = 'Contatos'
+
     MENU_SETTINGS = 'Configurações'
 
     MENU_LOGOUT = 'Sair'

@@ -111,6 +111,8 @@ const Main = (): JSX.Element => {
             return 1
         } else if (location.pathname.includes(PathConstants.GLOSSARY)) {
             return 2
+        } else if (location.pathname.includes(PathConstants.CONTACTS)) {
+            return 3
         } else if (location.pathname === PathConstants.HOME) {
             return 0
         } else {

@@ -32,7 +32,8 @@ const Glossary = (): JSX.Element => {
             <SearchBar
                 value={searchTerm}
                 onChange={handleChange}
-                placeholder={languageContext.SEARCH_HOLDER} />
+                placeholder={languageContext.SEARCH_HOLDER} 
+            />
             <GlossaryItems items={searchResults} />
         </div>
     );

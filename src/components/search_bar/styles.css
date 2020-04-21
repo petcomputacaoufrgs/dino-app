@@ -1,10 +1,6 @@
-.glossary {
-  padding: 10px;
-}
-
 .search-bar {
     margin: 0px;
-  }
+}
   
 input[type="text"], textarea {
     outline: none;

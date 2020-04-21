@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useLocation, Switch } from 'react-router'
-import { LanguageProviderContext } from '../../components/language_provider'
+import { LanguageContext } from '../../components/language_provider'
 import GlossarySVG from '../../images/glossary.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
@@ -9,7 +9,6 @@ import LogoutSVG from '../../images/logout.svg'
 import AdaptableMenu from '../../components/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
-
 import GlossaryItem from '../../components/glossary/glossary_item'
 import GlossarySearchBar from '../../components/glossary/glossary_search'
 import TopBar from '../../components/top_bar'
@@ -27,7 +26,9 @@ const Main = () : JSX.Element => {
 
     const location = useLocation()
 
-    const languageContext = useContext(LanguageProviderContext)
+    const languageProvider = useContext(LanguageContext)
+
+    const language = languageProvider.currentLanguage
 
     /**
      * @description Função chamada quando seu item for selecionado no menu
@@ -64,31 +65,31 @@ const Main = () : JSX.Element => {
         [
             {
                 'image': HomeSVG,
-                'name': languageContext.MENU_HOME,
+                'name': language.MENU_HOME,
                 'onClick': goToHome,
             },
             {
                 'image': GamesSVG,
-                'name': languageContext.MENU_GAMES,
+                'name': language.MENU_GAMES,
                 'onClick': goToGames,
             },
             {
                 'image':GlossarySVG,
-                'name': languageContext.MENU_GLOSSARY,
+                'name': language.MENU_GLOSSARY,
                 'onClick': goToGlossary,
             }
         ],
         [
             {
                 'image': SettingsSVG,
-                'name': languageContext.MENU_SETTINGS,
+                'name': language.MENU_SETTINGS,
                 'onClick': goToSettings,
             },
         ],
         [
             {
                 'image': LogoutSVG,
-                'name': languageContext.MENU_LOGOUT,
+                'name': language.MENU_LOGOUT,
                 'onClick': showLogoutDialog,            
             },
         ]

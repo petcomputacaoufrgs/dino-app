@@ -1,5 +1,6 @@
 export default interface LanguageSet {
-    LANGUAGE_CODE: string
+    ISO_LANGUAGE_CODE: string
+    NAVIGATOR_LANGUAGE_CODE: string
     LANGUAGE_PORTUGUESE: string
     LANGUAGE_ENGLISH: string
     NOT_FOUND_MESSAGE: string 
@@ -12,6 +13,7 @@ export default interface LanguageSet {
     LOGIN_FAIL_BY_GOOGLE: string
     LOGIN_FAIL_BY_API: string
     LOGIN_CANCELED: string
+    LOGIN_REFRESH_ERROR: string
     AVATAR_ALT: string
     LOGOUT_DIALOG_QUESTION: string
     LOGOUT_DIALOG_DESCRIPTION: string
@@ -24,4 +26,6 @@ export default interface LanguageSet {
     MENU_LOGOUT: string
     SETTINGS_TITLE: string
     SETTINGS_LANGUAGE: string
+    SETTINGS_SAVE: string
+    SETTINGS_SAVE_SUCCESS: string
 }

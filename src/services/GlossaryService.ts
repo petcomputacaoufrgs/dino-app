@@ -28,12 +28,11 @@ class GlossaryService {
     }
 
     checkUpdate = async () => {
-
-        let newVersion = await this.getVersion()
+        const newVersion = await this.getVersion()
 
         if (newVersion !== LocalStorageService.getGlossaryVersion()) {
 
-            let newItens = await this.getItems()
+            const newItens = await this.getItems()
 
             LocalStorageService.setGlossaryVersion(newVersion)
             LocalStorageService.setGlossaryItems(newItens.sort((a, b) =>

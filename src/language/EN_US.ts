@@ -6,7 +6,9 @@ import LanguageCodeConstants from '../constants/LanguageCodeConstants'
  */
 export default class EN_US implements LanguageSet {
 
-    LANGUAGE_CODE = LanguageCodeConstants.ENGLISH
+    ISO_LANGUAGE_CODE = 'en'
+
+    NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.ENGLISH
 
     LANGUAGE_PORTUGUESE = 'Portuguese'
 
@@ -32,6 +34,8 @@ export default class EN_US implements LanguageSet {
 
     LOGIN_CANCELED = 'Login canceled.'
 
+    LOGIN_REFRESH_ERROR = 'Login with error. We need you to authenticate again, please.'
+
     AVATAR_ALT = 'User\'s profile image with rounded edges.'
 
     LOGOUT_DIALOG_QUESTION = 'Are you sure you want to log out?'
@@ -51,8 +55,13 @@ export default class EN_US implements LanguageSet {
     MENU_SETTINGS = 'Settings'
     
     MENU_LOGOUT = 'Logout'
-
+    
     SETTINGS_TITLE = 'Settings'
-
+    
     SETTINGS_LANGUAGE = 'Choose Language'
+
+    SETTINGS_SAVE = 'Save'
+    
+    SETTINGS_SAVE_SUCCESS = 'Settings updated.'
+    
 }

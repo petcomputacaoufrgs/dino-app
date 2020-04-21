@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
-import { makeStyles, Theme } from '@material-ui/core/styles'
+import './styles.css'
 
 const alertTime = 4000
 
@@ -10,7 +10,6 @@ const Alert = (props: AlertProps) => {
 }
 
 const CustomAlert = (message: string, severity: 'success' | 'info' | 'warning' | 'error'): [JSX.Element, () => void] => {
-  const classes = useStyles()
 
   const [open, setOpen] = useState(false)
 
@@ -23,7 +22,7 @@ const CustomAlert = (message: string, severity: 'success' | 'info' | 'warning' |
   }
 
   const render = (): JSX.Element => (
-    <div className={classes.root}>
+    <div className='custom_alert'>
       <Snackbar open={open} autoHideDuration={alertTime} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity}>
           {message}
@@ -38,14 +37,5 @@ const CustomAlert = (message: string, severity: 'success' | 'info' | 'warning' |
 
   return [render(), show]
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}))
 
 export default CustomAlert

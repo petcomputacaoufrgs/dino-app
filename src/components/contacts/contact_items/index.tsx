@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ContactItemsProps from './props';
 import ContactItem from '../contact_item'
 import { Avatar, List, ListItem, ListItemText, ListItemAvatar, Modal, Divider } from '@material-ui/core'
-import { Backdrop, Fade, Slide, Zoom } from '@material-ui/core'
+import { Backdrop, Slide } from '@material-ui/core'
 
 import { red, pink, purple, blue, green } from '@material-ui/core/colors';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
@@ -15,9 +15,6 @@ export const useStyles = makeStyles(() =>
             alignItems: 'center',
             justifyContent: 'center',
             outline: 0,
-            '&$selected': {
-                outline: 0,
-            },
         },
         card: {
             maxWidth: '70%',

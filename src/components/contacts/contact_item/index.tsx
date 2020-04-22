@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import { Avatar, Typography, IconButton } from '@material-ui/core'
 import { Card, CardHeader, CardContent } from '@material-ui/core'
 import { MoreVert } from '@material-ui/icons'
-import ContactItemModel from "../../../model/ContactItemModel";
 import { useStyles } from '../contact_items'
 import ContactItemProps from "./props";
 

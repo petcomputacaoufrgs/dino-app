@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { LanguageProviderContext } from '../language_provider';
+import ContactItemModel from '../../model/ContactItemModel'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ContactItems from './contact_items';
 import StringUtils from '../../utils/StringUtils'
@@ -11,7 +12,7 @@ const Contacts = (): JSX.Element => {
 
     const languageContext = useContext(LanguageProviderContext)
     const [searchTerm, setSearchTerm] = useState("")
-    const [searchResults, setSearchResults] = useState(new Array())//useState(new Array<ContactItemModel>())
+    const [searchResults, setSearchResults] = useState(new Array<ContactItemModel>())
 
     const handleChange = event => {
         setSearchTerm(event.target.value)
@@ -21,20 +22,28 @@ const Contacts = (): JSX.Element => {
     useEffect(() => {
         const items = [{
             'id': 1,
-            'name': 'Akqvjaahf',
-            'number': '5191242345'
+            'name': 'Babu Santana',
+            'number': '51 91242345',
+            'info': 'infosupersecretaaaaaa1',
+            'color': 'purple'
         }, {
             'id': 2,
-            'name': 'UDBIUABA',
-            'number': '36363634'
+            'name': 'Mari Baianinha',
+            'number': '51 36363634',
+            'info': 'infosupersecretaaaaaa2',
+            'color': 'red'
         }, {
             'id': 3,
-            'name': 'ASOIHAOFB',
-            'number': '51936365'
+            'name': 'Manu Gavassi',
+            'number': '51 98936365',
+            'info': 'infosupersecretaaaaaa3',
+            'color': 'pink'
         }, {
             'id': 4,
-            'name': 'SKLANDLN',
-            'number': '35353535'
+            'name': 'Thelminha',
+            'number': '51 35353535',
+            'info': 'infosupersecretaaaaaa4',
+            'color': 'green'
         }]
         const results = items.filter(item =>
             StringUtils.normalize(item.name.toLowerCase())

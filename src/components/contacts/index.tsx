@@ -14,7 +14,7 @@ const Contacts = (): JSX.Element => {
     const [searchResults, setSearchResults] = useState(new Array())//useState(new Array<ContactItemModel>())
 
     const handleChange = event => {
-        setSearchTerm(event.target.value);
+        setSearchTerm(event.target.value)
     };
 
     //isso é PROVISÓRIO ook não me matem
@@ -37,10 +37,10 @@ const Contacts = (): JSX.Element => {
             'number': '35353535'
         },]
         const results = items.filter(item =>
-            StringUtils.normalizeString(item.name.toLowerCase())
-                .includes(StringUtils.normalizeString(searchTerm.toLowerCase()))
-        );
-        setSearchResults(results);
+            StringUtils.normalize(item.name.toLowerCase())
+                .includes(StringUtils.normalize(searchTerm.toLowerCase()))
+        )
+        setSearchResults(results)
     }, [searchTerm])
 
     return (
@@ -52,7 +52,7 @@ const Contacts = (): JSX.Element => {
             />
             <ContactItems items={searchResults} />
         </div>
-    );
+    )
 }
 
 export default Contacts

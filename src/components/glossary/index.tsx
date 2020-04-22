@@ -15,16 +15,16 @@ const Glossary = (): JSX.Element => {
     const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
 
     const handleChange = event => {
-        setSearchTerm(event.target.value);
+        setSearchTerm(event.target.value)
     };
 
     useEffect(() => {
         const items = LocalStorageService.getGlossaryItems()
         const results = items.filter(item =>
-            StringUtils.normalizeString(item.title.toLowerCase())
-                .includes(StringUtils.normalizeString(searchTerm.toLowerCase()))
+            StringUtils.normalize(item.title.toLowerCase())
+                .includes(StringUtils.normalize(searchTerm.toLowerCase()))
         );
-        setSearchResults(results);
+        setSearchResults(results)
     }, [searchTerm])
 
     return (
@@ -36,7 +36,7 @@ const Glossary = (): JSX.Element => {
             />
             <GlossaryItems items={searchResults} />
         </div>
-    );
+    )
 }
 
 export default Glossary

@@ -17,6 +17,7 @@ import Home from './home'
 import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
 import MenuItem from '../../types/MenuItem'
+import Notes from './notes'
 
 /**
  * @description Tela principal da aplicação
@@ -111,7 +112,7 @@ const Main = () : JSX.Element => {
         return(
             <Switch>
                 <PrivateRoute exact path={PathConstants.HOME} component={Home} />
-                <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
+                <PrivateRoute exact path={PathConstants.GAMES} component={() => <Notes/>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
                 <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />

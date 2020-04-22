@@ -1,4 +1,3 @@
-//import './styles.css'
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Avatar, Typography, IconButton } from '@material-ui/core'
@@ -10,23 +9,13 @@ import { red, pink, purple, blue, green } from '@material-ui/core/colors';
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            maxWidth: 345,
+            maxWidth: '70%',
         },
-        red: {
-            backgroundColor: red[500],
-        },
-        pink: {
-            backgroundColor: pink[500],
-        },
-        purple: {
-            backgroundColor: purple[500],
-        },
-        blue: {
-            backgroundColor: blue[500],
-        },
-        green: {
-            backgroundColor: green[500],
-        },
+        red: {backgroundColor: red[500],},
+        pink: {backgroundColor: pink[500],},
+        purple: {backgroundColor: purple[500],},
+        blue: {backgroundColor: blue[500],},
+        green: {backgroundColor: green[500],},
     }),
 );
 

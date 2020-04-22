@@ -5,8 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ContactItems from './contact_items';
 import StringUtils from '../../utils/StringUtils'
 import SearchBar from '../search_bar'
-import './styles.css'
-
 
 const Contacts = (): JSX.Element => {
 
@@ -30,7 +28,7 @@ const Contacts = (): JSX.Element => {
             'id': 2,
             'name': 'Mari Baianinha',
             'number': '51 36363634',
-            'info': 'infosupersecretaaaaaa2',
+            'info': 'infosupersecretaaaaaa2 uhihaiugbdgiavduyavu yavuahvsacdtyacd ycdayivatsc dysadcaysdc',
             'color': 'red'
         }, {
             'id': 3,
@@ -53,7 +51,7 @@ const Contacts = (): JSX.Element => {
     }, [searchTerm])
 
     return (
-        <div className="contacts">
+        <div>
             <SearchBar
                 value={searchTerm}
                 onChange={handleChange}

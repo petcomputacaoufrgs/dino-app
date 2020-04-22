@@ -6,7 +6,6 @@ import LocalStorageService from '../../services/LocalStorageService'
 import GlossaryItemModel from '../../model/GlossaryItemModel';
 import StringUtils from '../../utils/StringUtils'
 import SearchBar from '../search_bar'
-import './styles.css';
 
 const Glossary = (): JSX.Element => {
 

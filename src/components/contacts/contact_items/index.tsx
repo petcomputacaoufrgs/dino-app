@@ -8,23 +8,11 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import GamesIcon from '@material-ui/icons/Games';
 import Divider from '@material-ui/core/Divider';
+import ContactItemsProps from './props';
 
-
-//(props: {  items: Array<GlossaryItemModel> })
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-            backgroundColor: theme.palette.background.paper,
-        },
-    }),
-);
-
-const ContactItems = (props): JSX.Element => {
-
+const ContactItems = (props: ContactItemsProps): JSX.Element => {
     return (
-        <List className={useStyles().root}>
+        <List className='list'>
             {props.items.map(item =>
                 <ListItem>
                     <ListItemAvatar>

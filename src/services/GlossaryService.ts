@@ -37,7 +37,7 @@ class GlossaryService {
 
             LocalStorageService.setGlossaryVersion(newVersion)
             LocalStorageService.setGlossaryItems(newItens.sort((a, b) =>
-            StringUtils.normalizeString(a.title) < StringUtils.normalizeString(b.title) ? -1 : 1))     
+            StringUtils.normalize(a.title) < StringUtils.normalize(b.title) ? -1 : 1))     
         }
     }
 }

@@ -35,7 +35,7 @@ const Contacts = (): JSX.Element => {
             'id': 4,
             'name': 'SKLANDLN',
             'number': '35353535'
-        },]
+        }]
         const results = items.filter(item =>
             StringUtils.normalize(item.name.toLowerCase())
                 .includes(StringUtils.normalize(searchTerm.toLowerCase()))

@@ -1,43 +1,30 @@
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import React, { forwardRef } from 'react';
 import { Avatar, Typography, IconButton } from '@material-ui/core'
 import { Card, CardHeader, CardContent } from '@material-ui/core'
 import { MoreVert } from '@material-ui/icons'
 import ContactItemModel from "../../../model/ContactItemModel";
-import { red, pink, purple, blue, green } from '@material-ui/core/colors';
+import { useStyles } from '../contact_items'
+import ContactItemProps from "./props";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            maxWidth: '70%',
-        },
-        red: {backgroundColor: red[500],},
-        pink: {backgroundColor: pink[500],},
-        purple: {backgroundColor: purple[500],},
-        blue: {backgroundColor: blue[500],},
-        green: {backgroundColor: green[500],},
-    }),
-);
-
-const ContactItem = (props: ContactItemModel): JSX.Element => {
+const ContactItem = forwardRef((props: ContactItemProps, ref): JSX.Element => {
 
     const classes = useStyles(props)
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.card} ref={ref}>
             <CardHeader
-                avatar={<Avatar aria-label="recipe" className={classes[props.color]}>{props.name[0]}</Avatar>}
+                avatar={<Avatar aria-label="recipe" className={classes[props.item.color]}>{props.item.name[0]}</Avatar>}
                 action={<IconButton aria-label="settings"><MoreVert /></IconButton>}
-                title={props.name}
-                subheader={props.number}
+                title={props.item.name}
+                subheader={props.item.number}
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {props.info}
+                    {props.item.info}
                 </Typography>
             </CardContent>
         </Card>
     )
-}
+})
 
 export default ContactItem

@@ -2,27 +2,35 @@ import './styles.css'
 import React, { useState } from 'react';
 import ContactItemsProps from './props';
 import ContactItem from '../contact_item'
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Avatar, List, ListItem, ListItemText, ListItemAvatar, Modal, Divider } from '@material-ui/core'
-import { Backdrop, Fade } from '@material-ui/core'
-import { red, pink, purple, blue, green } from '@material-ui/core/colors';
+import { Backdrop, Fade, Slide, Zoom } from '@material-ui/core'
 
-const useStyles = makeStyles(() =>
+import { red, pink, purple, blue, green } from '@material-ui/core/colors';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles(() =>
     createStyles({
         modal: {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-        }, root: {
-            maxWidth: 345,
+            outline: 0,
+            '&$selected': {
+                outline: 0,
+            },
         },
-        red: {backgroundColor: red[500],},
-        pink: {backgroundColor: pink[500],},
-        purple: {backgroundColor: purple[500],},
-        blue: {backgroundColor: blue[500],},
-        green: {backgroundColor: green[500],},
+        card: {
+            maxWidth: '70%',
+            outline: 0,
+        },
+        red: { backgroundColor: red[500], },
+        pink: { backgroundColor: pink[500], },
+        purple: { backgroundColor: purple[500], },
+        blue: { backgroundColor: blue[500], },
+        green: { backgroundColor: green[500], },
     }),
-);
+)
+
 
 const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
@@ -36,7 +44,7 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
     }
     const handleClose = () => setOpen(false)
 
-    const isOpen = (id:number) => open && selectedItem === id
+    const isOpen = (id: number) => open && selectedItem === id
 
     return (
         <List className='list'>
@@ -45,23 +53,23 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
                     <ListItem
                         button onClick={() => handleOpen(item.id)}>
                         <ListItemAvatar>
-                        <Avatar aria-label="recipe" className={classes[item.color]}>{item.name[0]}</Avatar>
+                            <Avatar aria-label="recipe" className={classes[item.color]}>{item.name[0]}</Avatar>
                         </ListItemAvatar>
                         <ListItemText primary={item.name} secondary={item.number} />
                     </ListItem>
                     <Modal
-                        aria-labelledby="transition-modal-title"
-                        aria-describedby="transition-modal-description"
                         className={classes.modal}
                         open={isOpen(item.id)}
                         onClose={handleClose}
                         closeAfterTransition
                         BackdropComponent={Backdrop}
                         BackdropProps={{ timeout: 500, }}
+                        disableAutoFocus//POR ESSA EU MEREÇO UM PRÊMIO ERRO CHATO DA PORRA
                     >
-                        <Fade in={isOpen(item.id)}>
-                            <ContactItem id={item.id} name={item.name} number={item.number} info={item.info} color={item.color}/>
-                        </Fade>
+                        <Slide in={isOpen(item.id)}
+                            direction='up' mountOnEnter unmountOnExit>
+                                <ContactItem item={item} />
+                        </Slide>
                     </Modal>
                     <Divider />
                 </div>

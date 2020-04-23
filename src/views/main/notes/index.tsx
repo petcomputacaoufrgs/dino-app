@@ -15,6 +15,7 @@ const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 const Notes = () => {
 
     const [data, setData] = useState(NotesService.getBoard())
+    const [search, setSearch] = useState([] as string[])
     const [selectedData, setSelectedData] = useState(data)
     const [dialogOpen, setDialogOpen] = useState(false)
     const [isNewNote, setIsNewNote] = useState(false)
@@ -48,7 +49,8 @@ const Notes = () => {
 
       setDialogOpen(false)
       setData(newData)
-      setSelectedData(newData)
+      
+      handleSearch(search)
     }
 
     const handleNewQuestion = () => {
@@ -93,6 +95,7 @@ const Notes = () => {
       const newData = NotesService.searchNotes(data, tagsSearch)
 
       setSelectedData(newData)
+      setSearch(tagsSearch)
     }
 
     const renderColumnHeader = (): JSX.Element => (

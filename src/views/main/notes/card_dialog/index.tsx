@@ -33,32 +33,31 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
 
     useEffect(() => {
         const defineText = (): string => {
-            if (props.questionCard && !props.newCard) {
-                if (props.model && props.model.question) {
-                    return props.model.question
-                }
-            } else {
-                if (props.model && props.model?.answer) {
-                    return props.model.answer
-                }
+            if (props.newCard) {
+                return ''
+            }
+
+            if (props.questionCard) {
+                return props.model.question
             }
             
-    
-            return ''
+            return props.model.answer
         }
 
-        if (props.open !== open) {
+        const changeState = props.open !== open
+
+        if (changeState) {
             setOpen(props.open)
 
-            if (props.open && props.questionCard) {
-                if (props.model.tagList !== tagList) {
+            const changeClosedToOpen = props.open
+
+            if (changeClosedToOpen) {
+                if (props.questionCard) {
                     setTagList(props.model.tagList)
                 }
-            }
-        }
 
-        if (props.open) {
-            setText(defineText())
+                setText(defineText())
+            }
         }
     },[props, open, tagList])
 

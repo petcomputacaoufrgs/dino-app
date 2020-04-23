@@ -2,25 +2,27 @@ import React, { useState } from 'react'
 import Board, { moveCard } from '@lourenci/react-kanban'
 import ReactKanbanCard from './react_kanban_card'
 import NotesCardDialog from './card_dialog/index'
-import Note from '../../../types/Note'
+import Note from '../../../types/Note';
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
-import Typography from '@material-ui/core/Typography'
 import NoteSVG from '../../../images/note.svg'
 import NotesService from '../../../services/NotesService'
+import SearchBar from '../../../components/search_bar'
 import './styles.css'
+
+const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
 const Notes = () => {
 
     const [data, setData] = useState(NotesService.getBoard())
+    const [selectedData, setSelectedData] = useState(data)
     const [dialogOpen, setDialogOpen] = useState(false)
     const [isNewNote, setIsNewNote] = useState(false)
     const [openModel, setOpenModel] = useState({} as Note)
     const [editingQuestion, setEditingQuestion] = useState(true)
 
     const handleCardMove = (card, source, destination) => {
-
-      const updatedData = moveCard(data, source, destination)
+      const updatedData = moveCard(selectedData, source, destination)
 
       const from = source.fromPosition
 
@@ -28,24 +30,25 @@ const Notes = () => {
 
       NotesService.updateNotesOrderOnAPI(updatedData, from, to)
 
-      setData(updatedData)
+      setSelectedData(updatedData)
     }
 
     const handleCloseCardDialog = () => {
       setDialogOpen(false)
     }
 
-    const handleSave = (id: number, text: string) => {
+    const handleSave = (id: number, text: string, tagList: string[]) => {
       const newData = {...data}
       
       if (isNewNote) {
-        NotesService.addNewCard(text, newData)
+        NotesService.addNewCard(text, newData, tagList)
       } else {
-        NotesService.updateNote(id, text, editingQuestion, newData)
+        NotesService.updateNote(id, text, editingQuestion, newData, tagList)
       }
 
-      setData(newData)
       setDialogOpen(false)
+      setData(newData)
+      setSelectedData(newData)
     }
 
     const handleNewQuestion = () => {
@@ -53,6 +56,7 @@ const Notes = () => {
         setEditingQuestion(true)
       }
       setIsNewNote(true)
+      setOpenModel({} as Note)
       setDialogOpen(true)
     }
 
@@ -82,14 +86,22 @@ const Notes = () => {
       NotesService.removeNoteById(newData, id)
 
       setData(newData)
+      setSelectedData(newData)
+    }
+
+    const handleSearch = (tagsSearch: string[]) => {
+      const newData = NotesService.searchNotes(data, tagsSearch)
+
+      setSelectedData(newData)
     }
 
     const renderColumnHeader = (): JSX.Element => (
         <div className='notes__column_header'>
             <img className='notes__column_header__image' src={NoteSVG} alt={'alt'}/>
-            <Typography className='notes__column_header_text' variant="h5" component="h2">
-                Notas
-            </Typography> 
+            <SearchBar 
+              textFieldClass={HEADER_TEXT_FIELD_CLASS}
+              options={NotesService.getTags()}
+              onSearch={handleSearch} />
         </div>
     )
 
@@ -109,6 +121,28 @@ const Notes = () => {
       </Fab>
     )
 
+    const updateListMarginTop = () => {
+      const foundDivs = document.getElementsByClassName('sc-fzozJi GHGWz')
+
+      if (foundDivs.length === 1) {
+        const noteListContainer = foundDivs[0]
+
+        setTimeout(() => {
+          const textField: HTMLElement | null = document.querySelector('.' + HEADER_TEXT_FIELD_CLASS)
+
+          if (textField) {
+
+            const value = (textField.offsetHeight + 94).toString() + 'px'
+            
+            noteListContainer.setAttribute("style", "top: " + value + ";")
+          }
+        }, 0.1)
+        
+      }
+    }
+
+    updateListMarginTop()
+
     return (
         <div className='notes'>
             <Board
@@ -123,12 +157,13 @@ const Notes = () => {
                 disableColumnDrag = {true}
                 
             >
-                {data}
+                {selectedData}
             </Board>
             {renderAddButton()}
             <NotesCardDialog
               model={openModel}
               open={dialogOpen}
+              tagOptions={NotesService.getTags()}
               newCard={isNewNote}
               questionCard={editingQuestion}
               onClose={handleCloseCardDialog}
@@ -136,7 +171,6 @@ const Notes = () => {
             />
         </div>
     )
-
 }
 
 export default Notes

@@ -5,6 +5,7 @@ export default interface NotesCardDialogProps {
     newCard: boolean
     questionCard: boolean
     model: Note
+    tagOptions: string[]
     onClose: () => void
-    onSave: (order: number, text: string) => void
+    onSave: (order: number, text: string, tagList: string[]) => void
 }

@@ -14,7 +14,8 @@ class NotesService {
                     api_id: 0,
                     question: "Qual os efeitos colaterais do antibiótico prescrito?",
                     answer: "",
-                    answered: false
+                    answered: false,
+                    tagList: ['teste', 'oi']
                   }
                 ] as Note[]
               }
@@ -22,6 +23,12 @@ class NotesService {
         } as NoteBoardType;
 
         return board
+    }
+
+    getTags = (): string[] => {
+      return [
+        'teste', 'oi', 'teste2', 'teste3', 'teste4'
+      ]
     }
 
     updateNotesOrderOnAPI = (board: NoteBoardType, from: number, to: number): NoteBoardType  => {
@@ -45,17 +52,42 @@ class NotesService {
       return newBoard
     }
 
-    compareNotes = (n1: Note, n2: Note) => {
-      return n1.id - n2.id
-    }
-
-    removeNoteById = (searchData: NoteBoardType, order: number) => {
-      const uniqueColumn = this.getUniqueColumnFromBoard(searchData)
+    removeNoteById = (data: NoteBoardType, order: number) => {
+      const uniqueColumn = this.getUniqueColumnFromBoard(data)
 
       uniqueColumn.cards = uniqueColumn.cards.filter(card => card.id !== order)
     } 
 
-    addNewCard = (text: string, dataCopy: NoteBoardType) => {
+    searchNotes = (data: NoteBoardType, searchTags: string[]) : NoteBoardType => {
+      if (searchTags.length === 0) {
+        const newData = {...data}
+
+        return newData
+      }
+      
+      const notes: Note[] = []
+
+      data.columns[0].cards.forEach(note => {
+        const included = note.tagList.some(tag=> searchTags.includes(tag))
+
+        if (included) {
+          notes.push({...note})
+        }
+      })
+
+      const columns = [{
+        'id': this.getUniqueColumnFromBoard(data).id,
+        'cards': notes,
+      }]
+      
+      const newBoard: NoteBoardType = {
+        'columns': columns
+      }
+
+      return newBoard
+    }
+
+    addNewCard = (text: string, dataCopy: NoteBoardType, tagList: string[]) => {
       const notes = this.getNotesFromBoard(dataCopy)
       
       const orderValues = notes.map(note => note.id)
@@ -65,17 +97,19 @@ class NotesService {
         'answered': false,
         'question': text,
         'id': Math.max(...orderValues) + 1,
+        'tagList': tagList
       }
 
       notes.push(newNote)
     }
 
-    updateNote = (order: number, text: string, editing: boolean, dataCopy: NoteBoardType) => {
+    updateNote = (order: number, text: string, editing: boolean, dataCopy: NoteBoardType, tagList: string[]) => {
       const note = this.getNoteById(dataCopy, order)
 
       if (note) {
         if (editing) {
           note.question = text
+          note.tagList = tagList
         } else {
           note.answer = text
           note.answered = Boolean(text)
@@ -93,15 +127,15 @@ class NotesService {
       return notes.find(card => card.id === id)
     }
 
-    private getUniqueColumnFromBoard = (board: NoteBoardType): NoteColumnsType => {
-      return board.columns[0]
-    }
-
     private setNoteIdByOrder = (notes: Note[]) => {
       notes.forEach((note, index) => {
         note.id = index
       })
     } 
+
+    private getUniqueColumnFromBoard = (board: NoteBoardType): NoteColumnsType => {
+      return board.columns[0]
+    }
 }
 
 export default new NotesService()

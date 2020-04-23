@@ -4,4 +4,5 @@ export default interface Note {
     question: string
     answer: string
     answered: boolean
+    tagList: string[]
 }

@@ -35,14 +35,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .notes__column_header {
+    position: fixed;
+    left: 0;
+    padding: 10px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
+}
+
+.sc-fzozJi.GHGWz {
+    position: absolute;
+    top: 150px;
+    padding: 0;
+    bottom: 70px;
+    overflow: scroll;
+}
+
+.sc-AxmLO.fcYNFc {
+    padding: 0px;
 }
 
 .notes__column_header__image {

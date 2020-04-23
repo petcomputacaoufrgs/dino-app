@@ -5,15 +5,22 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import NotesCardDialogProps from './props'
 import './styles.css'
 
 const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
     const [open, setOpen] = useState(props.open)
     const [text, setText] = useState('')
+    const [tagList, setTagList] = useState(props.model.tagList)
+
+    const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
+        console.log(values)
+        setTagList(values)
+    }
 
     const handleSave = () => {
-        props.onSave(props.model.id, text)
+        props.onSave(props.model.id, text, tagList)
     }
 
     const handlenCloseCardDialog = () => {
@@ -26,7 +33,7 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
 
     useEffect(() => {
         const defineText = (): string => {
-            if (props.questionCard) {
+            if (props.questionCard && !props.newCard) {
                 if (props.model && props.model.question) {
                     return props.model.question
                 }
@@ -42,13 +49,18 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
 
         if (props.open !== open) {
             setOpen(props.open)
+
+            if (props.open && props.questionCard) {
+                if (props.model.tagList !== tagList) {
+                    setTagList(props.model.tagList)
+                }
+            }
         }
 
         if (props.open) {
             setText(defineText())
         }
-
-    },[props.open, props.questionCard, props.model, open])
+    },[props, open, tagList])
 
     const renderDialogContent = (): JSX.Element => {
         const label = props.questionCard ? 'Question' : 'Answer'
@@ -64,7 +76,21 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
                     variant="outlined"
                     value={text} 
                     onChange={handleTextChange} 
-            />
+                />
+                {props.questionCard && 
+                    <Autocomplete
+                        multiple
+                        value={tagList}
+                        onChange={handleChange}
+                        options={props.tagOptions}
+                        renderInput={(params) => 
+                            <TextField {...params} 
+                                fullWidth
+                                label="Dar nome" 
+                                variant="outlined" />
+                        }
+                    />
+                }
             </DialogContent>
         )
     }

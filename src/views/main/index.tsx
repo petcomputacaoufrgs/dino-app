@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useLocation, Switch } from 'react-router'
 import { LanguageProviderContext } from '../../components/language_provider'
 import GlossarySVG from '../../images/glossary.svg'
+import ContactsSVG from '../../images/phone.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
 import SettingsSVG from '../../images/settings.svg'
@@ -85,7 +86,7 @@ const Main = (): JSX.Element => {
                 'onClick': goToGlossary,
             },
             {
-                'image': GlossarySVG,
+                'image': ContactsSVG,
                 'name': languageContext.MENU_CONTACTS,
                 'onClick': goToContacts,
             }

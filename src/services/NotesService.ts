@@ -4,7 +4,6 @@ import Note from '../types/Note'
 
 class NotesService {
     getBoard = () => {
-      console.log('board')
         const board = {
             columns: [
               {
@@ -25,22 +24,23 @@ class NotesService {
         return board
     }
 
-    updateNotesOrder = (board: NoteBoardType, from: number, to: number): NoteBoardType  => {
-      const newBoard = {...board}
+    updateNotesOrderOnAPI = (board: NoteBoardType, from: number, to: number): NoteBoardType  => {
+      const cards: Note[] = []
 
-      const notes = this.getNotesFromBoard(newBoard)
+      board.columns[0].cards.forEach(card => {
+        cards.push({...card})
+      })
 
-      const changedNote = {...notes[from]}
+      this.setNoteIdByOrder(cards)
 
-      const newNodes = notes.filter(note => note.id !== from)
-
-      newNodes.splice(to, 0, changedNote).sort(this.compareNotes)
-
-      this.setNoteIdBtOrder(newNodes)
+      const columns = [{
+        'id': board.columns[0].id,
+        'cards': cards,
+      }]
       
-      const uniqueColumn = this.getUniqueColumnFromBoard(newBoard)
-
-      uniqueColumn.cards = newNodes
+      const newBoard: NoteBoardType = {
+        'columns': columns
+      }
 
       return newBoard
     }
@@ -97,7 +97,7 @@ class NotesService {
       return board.columns[0]
     }
 
-    private setNoteIdBtOrder = (notes: Note[]) => {
+    private setNoteIdByOrder = (notes: Note[]) => {
       notes.forEach((note, index) => {
         note.id = index
       })

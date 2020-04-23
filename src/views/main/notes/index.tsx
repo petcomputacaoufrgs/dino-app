@@ -20,15 +20,15 @@ const Notes = () => {
 
     const handleCardMove = (card, source, destination) => {
 
-      const updatedData = moveCard(data, source, destination);
+      const updatedData = moveCard(data, source, destination)
 
       const from = source.fromPosition
 
       const to = destination.toPosition
 
-      const newData = NotesService.updateNotesOrder(data, from, to)
+      NotesService.updateNotesOrderOnAPI(updatedData, from, to)
 
-      setData(newData)
+      setData(updatedData)
     }
 
     const handleCloseCardDialog = () => {

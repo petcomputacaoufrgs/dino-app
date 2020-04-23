@@ -17,6 +17,7 @@ import Collapse from '@material-ui/core/Collapse'
 import CardProps from './props'
 import './styles.css'
 import Note from '../../../../types/Note';
+import TagList from '../../../../components/tag_list/index';
 
 const ReactKanbanCard = (props: CardProps): JSX.Element => {
     const classes = useStyles()
@@ -104,6 +105,14 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
         />
     )
 
+    const renderTags = (): JSX.Element => (
+        <CardContent className='card__tag_list'>
+            <TagList
+                tagList={content.tagList}
+            />
+        </CardContent>
+    )
+
     const renderActions = (): JSX.Element => (
         <CardActions disableSpacing>
             <IconButton onClick={handleEditAnswer} aria-label=''>
@@ -142,6 +151,7 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
     return (
         <MaterialCard className={getMainClass()}> 
             {renderHeader()}
+            {renderTags()}
             {renderActions()}
             {renderCollapse()}
         </MaterialCard>

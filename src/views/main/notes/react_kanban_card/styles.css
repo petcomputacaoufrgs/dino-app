@@ -27,6 +27,10 @@
     background-color: #75FF85;
 }
 
+.react_kanban_card .card__tag_list {
+    background-color: #75FF85;
+}
+
 .react_kanban_card .MuiCardActions-root {
     background-color: #75FF85;
 }

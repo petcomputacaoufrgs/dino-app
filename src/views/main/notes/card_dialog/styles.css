@@ -1,0 +1,51 @@
+.card_dialog.MuiDialog-root .MuiBackdrop-root .MuiDialog-container.MuiDialog-scrollPaper {
+    width: 100%;
+}
+
+.card_dialog.MuiDialog-root .MuiDialog-paper {
+    margin: 25px;
+}
+
+.card_dialog.MuiDialog-root .MuiDialogTitle-root {
+    padding: 8px 24px;
+}
+
+.card_dialog.MuiDialog-root .MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.card_dialog.MuiDialog-root .MuiInputBase-root {
+    width: 100%;
+}
+
+.card_dialog.MuiDialog-root .PrivateNotchedOutline-root-275.MuiOutlinedInput-notchedOutline {
+    border-color: #B32E55;
+}
+
+.card_dialog.MuiDialog-root .MuiFormLabel-root.Mui-focused {
+    color: #B32E55;
+}
+
+.card_dialog.MuiDialog-root .MuiInputBase-input textarea {
+    border: none;
+    border-color: transparent;
+}
+
+.card_dialog__save {
+    margin-top: 30px;
+    padding: 0px;
+}
+
+.card_dialog__save.MuiDialogActions-root {
+    padding: 0px;
+}
+
+.card_dialog__save .MuiButtonBase-root.MuiButton-root {
+    width: 100%;
+    background-color: #B32E55;
+    font-size: medium;
+    height: 50px;
+    border-radius: 0;
+    outline: none;
+}

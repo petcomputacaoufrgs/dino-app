@@ -1,7 +1,7 @@
 /**
  * @description Descreve o formato de cada item do Menu
  */
-type MenuItem = {
+interface MenuItem {
     /**
      * @description Define o icone que será exibido no menu
      */

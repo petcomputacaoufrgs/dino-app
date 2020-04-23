@@ -166,7 +166,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
     )
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root.concat(' drawer_menu')}>
             <CssBaseline />
             {renderAppBar()}
             {renderDrawer()}

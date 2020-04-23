@@ -1,0 +1,53 @@
+.notes { 
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.notes__add.MuiButtonBase-root.MuiFab-root {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 85px;
+    right: 20px;
+    background-color: #FF759E;
+    outline: none;
+}
+
+.sc-AxmLO.fcYNFc {
+    padding-top: 0px;
+}
+
+.sc-fzoyAV.hbVbBu {
+    width: 100%;
+}
+
+.sc-fzoLag.feoXx {
+    width: 100%;
+}
+
+.sc-AxmLO.fcYNFc {
+    margin: 0px;
+    width: 100%;
+    background-color: inherit;
+}
+
+.sc-AxjAm.eZiLDJ { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notes__column_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.notes__column_header__image {
+    width: 45px;
+    height: 45px;
+    margin-right: 20px;
+}
+

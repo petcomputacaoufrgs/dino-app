@@ -1,7 +1,18 @@
-.MuiToolbar-root.MuiToolbar-regular.MuiToolbar-gutters{
+.drawer_menu {
+    position: relative;
+    z-index: 5001;
+    height: 55px;
+}
+
+.drawer_menu .MuiPaper-root.MuiAppBar-root .MuiToolbar-root.MuiToolbar-regular.MuiToolbar-gutters{
     position: absolute;
     width: 100vw;
-    padding-left: 10px;
+    min-height: 55px;
+}
+
+.drawer_menu .MuiAppBar-colorPrimary {
+    background-color: #B32E55;
+    height: 55px;
 }
 
 .makeStyles-content-15 .makeStyles-drawerHeader-11 {

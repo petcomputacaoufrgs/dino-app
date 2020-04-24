@@ -2,7 +2,7 @@
  * @description Valores de URL da API para conexão
  */
 class DinoAPIURLConstants {
-    private URL: string = 'http://192.168.0.7:5000/'
+    private URL: string = 'http://localhost:5000/'
     private PATH_AUTH: string = 'auth/'
     private PATH_GLOSSARY: string = 'glossary/'
     private PATH_APP_SETTINGS: string = 'user_app_settings/'

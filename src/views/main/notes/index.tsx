@@ -11,9 +11,9 @@ import AddIcon from '@material-ui/icons/Add'
 import NoteSVG from '../../../images/note.svg'
 import NotesService from '../../../services/NotesService'
 import SearchBar from '../../../components/search_bar'
+import NoteBoardModel from '../../../model/NoteBoardModel'
+import { NoteBoardColumnModel } from '../../../model/NoteBoardModel'
 import './styles.css'
-import NoteBoardModel from '../../../model/NoteBoardModel';
-import { NoteBoardColumnModel } from '../../../model/NoteBoardModel';
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
@@ -58,7 +58,7 @@ const Notes = () => {
 
       const editedNote = notes.find(n => n.id === note.id)
 
-      if (editedNote && newAnswer !== answer) {
+      if (editedNote) {
         editedNote.answer = newAnswer
         editedNote.answered = true
 
@@ -218,7 +218,7 @@ const Notes = () => {
 
       notes.forEach(n => {
         n.showByTag = hasSomeTag(n.tagList, newTagSearch)
-        n.showByQuestion = hasText(n.question, textSearch)
+        n.showByQuestion = false
       })
 
       setBoard(newBoard)

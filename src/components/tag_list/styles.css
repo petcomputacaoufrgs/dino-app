@@ -13,3 +13,7 @@
     font-weight: 900;
     margin-right: 5px;
 }
+
+.tag_list.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {
+    box-shadow: none;
+}

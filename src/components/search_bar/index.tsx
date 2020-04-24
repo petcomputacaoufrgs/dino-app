@@ -23,7 +23,6 @@ const SearchBar = (props: SearchBarProps): JSX.Element => {
     return (
         <Autocomplete
             multiple
-            freeSolo
             options={props.options}
             getOptionLabel={(option) => option}
             className='search_bar'

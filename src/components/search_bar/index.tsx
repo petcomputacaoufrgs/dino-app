@@ -11,17 +11,25 @@ const SearchBar = (props: SearchBarProps): JSX.Element => {
     const language = languageProvider.currentLanguage
 
     const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
-        props.onSearch(values)
+        props.onTagSearch(values)
+    }
+
+    const handleInputChange = (event: React.ChangeEvent<{}>, value: string) => {
+        if (props.onTextSearch) {
+            props.onTextSearch(value)
+        }
     }
 
     return (
         <Autocomplete
             multiple
+            freeSolo
             options={props.options}
             getOptionLabel={(option) => option}
             className='search_bar'
             style={{ maxHeight: 50 }}
             onChange={handleChange}
+            onInputChange={handleInputChange}
             renderInput={(params) => 
                 <TextField {...params} 
                     className={props.textFieldClass}

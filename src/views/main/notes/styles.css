@@ -52,9 +52,12 @@
 .sc-fzozJi.GHGWz {
     position: absolute;
     top: 150px;
+    left: 0;
+    right: 0;
     padding: 0;
     bottom: 70px;
     overflow: scroll;
+    width: 100%;
 }
 
 .sc-AxmLO.fcYNFc {
@@ -66,4 +69,48 @@
     height: 45px;
     margin-right: 20px;
 }
+
+.note_card_dialog.MuiDialog-root .MuiBackdrop-root .MuiDialog-container.MuiDialog-scrollPaper {
+    width: 100%;
+}
+
+.note_card_dialog.MuiDialog-root .MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.note_card_dialog.MuiDialog-root .MuiDialog-paperWidthSm {
+    width: 100%;
+}
+
+.note_card_dialog.MuiDialog-root  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #B32E55;
+}
+
+.note_card_dialog.MuiDialog-root .MuiFormLabel-root.Mui-focused {
+    color: #B32E55;
+}
+
+.note_card_dialog.MuiDialog-root .MuiInputBase-input textarea {
+    border: none;
+    border-color: transparent;
+}
+
+.note_card_dialog__save {
+    padding: 0px;
+}
+
+.note_card_dialog__save.MuiDialogActions-root {
+    padding: 0px;
+}
+
+.note_card_dialog__save .MuiButtonBase-root.MuiButton-root {
+    width: 100%;
+    background-color: #B32E55;
+    font-size: medium;
+    height: 50px;
+    border-radius: 0;
+    outline: none;
+}
+
 

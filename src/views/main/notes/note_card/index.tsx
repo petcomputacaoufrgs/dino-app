@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import clsx from 'clsx'
-import Note from '../../../../types/Note'
+import DateUtils from '../../../../utils/DateUtils'
 import TagList from '../../../../components/tag_list/index'
 import { LanguageContext } from '../../../../components/language_provider'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
@@ -17,10 +17,10 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Collapse from '@material-ui/core/Collapse'
-import CardProps from './props'
+import NoteCardProps from './props'
 import './styles.css'
 
-const ReactKanbanCard = (props: CardProps): JSX.Element => {
+const NoteCard = (props: NoteCardProps): JSX.Element => {
 
     const languageProvider = useContext(LanguageContext)
     const language = languageProvider.currentLanguage
@@ -29,63 +29,55 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
 
     const [expanded, setExpanded] = useState(false)
     const [dragging, setDragging] = useState(false)
-    const [content, setContent] = useState(props.content as Note)
+    const [note, setNote] = useState(props.note)
 
     const handleEditQuestion = () => {
-        props.onEditQuestion(content)
+        props.onEditQuestion(note)
     }
 
     const handleEditAnswer = () => {
-        props.onEditAnswer(content)
+        props.onEditAnswer(note)
     }
 
     const handleExpand = () => {
-        if (content.answered) {
+        if (note.answered) {
             setExpanded(!expanded)
         }
     }
 
     const handleDelete = () => {
-        props.onDelete(content.id)
-    }
-
-    const showCardDoneMessage = () => {
-        console.log('done')
-    }
-
-    const showCardWaitingResponseMessage = () => {
-        console.log('waiting')
+        props.onDelete(note.id)
     }
 
     const renderStateButton = (): JSX.Element => {
-        const done = content.answered
-
+        const done = note.answered
         const icon = done ?  <DoneOutlineIcon /> : <QueryBuilderIcon />
-        const onClick = done ? showCardDoneMessage : showCardWaitingResponseMessage
         const state = done ? language.NOTE_STATE_DONE : language.NOTE_STATE_NOT_DONE
 
         return (
-            <IconButton onClick={onClick} aria-label={state}>
+            <IconButton aria-label={state}>
                 {icon}
             </IconButton>
         )
     }
 
-    useEffect((() => {
+    useEffect(() => {
         setDragging(props.dragging)
+        setNote(props.note)
 
         if (expanded && props.dragging) {
             setExpanded(false)
         } 
-
-        if (props.content !== content) {
-            setContent(content)
-        }
-
-    }), [props.dragging, props.content, expanded, content])
+    }, [props.dragging, 
+        props.note.question, 
+        props.note.tagList, 
+        props.note.answer, 
+        props.note.answered,
+        props.note, 
+        expanded])
 
     const renderMore = (): JSX.Element => {
-        if (content.answered) { 
+        if (note.answered) { 
             return (
                 <IconButton
                     className={clsx(classes.expand, {
@@ -106,15 +98,22 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
     const renderHeader = (): JSX.Element => (
         <CardHeader
             action={renderStateButton()}
-            title={content.question}
-            subheader="September 14, 2016"
+            title={note.question}
+            subheader={
+                DateUtils.getDateStringFormated(
+                    note.creationDay, 
+                    note.creationMonth, 
+                    note.creationYear, 
+                    language
+                )
+            }
         />
     )
 
     const renderTags = (): JSX.Element => (
         <CardContent className='card__tag_list'>
             <TagList
-                tagList={content.tagList}
+                tagList={note.tagList}
             />
         </CardContent>
     )
@@ -138,7 +137,7 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
                 <Typography paragraph>
-                    {content.answer}
+                    {note.answer}
                 </Typography>
             </CardContent>
         </Collapse>
@@ -182,4 +181,4 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default ReactKanbanCard
+export default NoteCard

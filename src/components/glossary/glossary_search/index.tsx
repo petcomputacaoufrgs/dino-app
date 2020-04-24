@@ -24,8 +24,8 @@ const GlossarySearchBar = () : JSX.Element => {
     useEffect(() => {
         const items = LocalStorageService.getGlossaryItems()
         const results = items.filter(item =>
-            StringUtils.normalizeString(item.title.toLowerCase())
-            .includes(StringUtils.normalizeString(searchTerm.toLowerCase()))
+            StringUtils.normalizeString(item.title)
+            .includes(StringUtils.normalizeString(searchTerm))
         );
         setSearchResults(results);
     }, [searchTerm])

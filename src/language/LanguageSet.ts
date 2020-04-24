@@ -43,4 +43,19 @@ export default interface LanguageSet {
     NOTE_DIALOG_SAVE_BUTTON_LABEL: string
     NOTE_DIALOG_SAVE_BUTTON_TEXT: string
     SEARCH_BUTTON_LABEL: string
+    ANSWER_DIALOG_LABEL: string
+    JANUARY: string
+    FEBRUARY: string
+    MARCH: string
+    APRIL: string
+    MAY: string
+    JUNE: string 
+    JULY: string
+    AUGUST: string
+    SEPTEMBER: string
+    OCTOBER: string
+    NOVEMBER: string
+    DECEMBER: string
+    INVALID_MONTH: string
+    STRING_DATE_FORMAT: string
 }

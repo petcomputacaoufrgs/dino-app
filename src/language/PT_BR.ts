@@ -94,4 +94,33 @@ export default class PT_BR implements LanguageSet {
 
     SEARCH_BUTTON_LABEL: string = 'Pesquisar'
 
+    ANSWER_DIALOG_LABEL = 'Tela para responder uma questão anotada.'
+
+    JANUARY = 'Janeiro'
+
+    FEBRUARY = 'Fevereiro'
+
+    MARCH = 'Março'
+
+    APRIL = 'Abril'
+
+    MAY = 'Maio'
+
+    JUNE = 'Junho' 
+
+    JULY = 'Julho'
+
+    AUGUST = 'Agosto'
+
+    SEPTEMBER = 'Setembro'
+
+    OCTOBER = 'Outubro'
+
+    NOVEMBER = 'Novembro'
+
+    DECEMBER = 'Dezembro'
+
+    INVALID_MONTH = 'Mês inválido'
+
+    STRING_DATE_FORMAT = 'DD de MM de YYYY'
 }

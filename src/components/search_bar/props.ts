@@ -1,5 +1,6 @@
 export default interface SearchBarProps {
     options: string[]
-    onSearch: (value: string[]) => void
+    onTagSearch: (value: string[]) => void
+    onTextSearch?: (value: string) => void
     textFieldClass?: string 
 }

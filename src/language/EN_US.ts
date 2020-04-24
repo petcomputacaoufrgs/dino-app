@@ -63,5 +63,35 @@ export default class EN_US implements LanguageSet {
     SETTINGS_SAVE = 'Save'
     
     SETTINGS_SAVE_SUCCESS = 'Settings updated.'
+
+    MENU_NOTES: string = 'Notes'
+
+    NOTES_HEADER_IMAGE_DESC: string = 'Image with a opened notebook and a hand writing.'
     
+    NOTES_ADD_BUTTON: string = 'Click to add a new note.'
+
+    NOTE_STATE_DONE: string = 'Note has a answer.'
+
+    NOTE_STATE_NOT_DONE: string = 'Note has no answers yet.'
+
+    NOTE_SHOW_ANSWER: string = 'Click to show the answer of this note right below.'
+
+    NOTE_EDIT_ANSWER_BUTTON: string = 'Click here to edit the answer of this note.'
+
+    NOTE_EDIT_QUESTION_BUTTON: string = 'Click here to edit the question of this note.'
+
+    NOTE_DELETE_BUTTON: string = 'Click here to delete this note.'
+
+    QUESTION_NOTE_DIALOG_TITLE: string = 'Question'
+
+    ANSWER_NOTE_DIALOG_TITLE: string = 'Answer'
+
+    NOTE_TAG_LABEL: string = 'Tags'
+
+    NOTE_DIALOG_SAVE_BUTTON_LABEL: string = 'Click to save.'
+
+    NOTE_DIALOG_SAVE_BUTTON_TEXT: string = 'Save'
+    
+    SEARCH_BUTTON_LABEL: string = 'Search'
+
 }

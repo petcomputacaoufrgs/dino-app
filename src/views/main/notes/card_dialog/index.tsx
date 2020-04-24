@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { LanguageContext } from '../../../../components/language_provider'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -10,12 +11,14 @@ import NotesCardDialogProps from './props'
 import './styles.css'
 
 const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
+    const languageProvider = useContext(LanguageContext)
+    const language = languageProvider.currentLanguage
+
     const [open, setOpen] = useState(props.open)
     const [text, setText] = useState('')
-    const [tagList, setTagList] = useState(props.model.tagList)
+    const [tagList, setTagList] = useState([] as string[])
 
     const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
-        console.log(values)
         setTagList(values)
     }
 
@@ -44,15 +47,15 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
             return props.model.answer
         }
 
-        const changeState = props.open !== open
+        const stateChanged = props.open !== open
 
-        if (changeState) {
+        if (stateChanged) {
             setOpen(props.open)
 
-            const changeClosedToOpen = props.open
+            const changedToOpen = props.open
 
-            if (changeClosedToOpen) {
-                if (props.questionCard) {
+            if (changedToOpen) {
+                if (props.questionCard && !props.newCard) {
                     setTagList(props.model.tagList)
                 }
 
@@ -62,7 +65,7 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
     },[props, open, tagList])
 
     const renderDialogContent = (): JSX.Element => {
-        const label = props.questionCard ? 'Question' : 'Answer'
+        const label = props.questionCard ? language.QUESTION_NOTE_DIALOG_TITLE : language.ANSWER_NOTE_DIALOG_TITLE
 
         return (
             <DialogContent>
@@ -85,7 +88,7 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
                         renderInput={(params) => 
                             <TextField {...params} 
                                 fullWidth
-                                label="Dar nome" 
+                                label={language.NOTE_TAG_LABEL}
                                 variant="outlined" />
                         }
                     />
@@ -98,11 +101,12 @@ const NotesCardDialog = (props: NotesCardDialogProps): JSX.Element => {
         <DialogActions className='card_dialog__save'>
           <Button 
             onClick={handleSave} 
+            aria-label={language.NOTE_DIALOG_SAVE_BUTTON_LABEL}
             variant="contained"
             size="small"
             startIcon={<SaveIcon />}
         >
-            Save
+            {language.NOTE_DIALOG_SAVE_BUTTON_TEXT}
           </Button>
         </DialogActions>
     )

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { LanguageContext } from '../../../components/language_provider'
 import Board, { moveCard } from '@lourenci/react-kanban'
 import ReactKanbanCard from './react_kanban_card'
 import NotesCardDialog from './card_dialog/index'
@@ -13,6 +14,9 @@ import './styles.css'
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
 const Notes = () => {
+
+    const languageProvider = useContext(LanguageContext)
+    const language = languageProvider.currentLanguage
 
     const [data, setData] = useState(NotesService.getBoard())
     const [search, setSearch] = useState([] as string[])
@@ -100,7 +104,7 @@ const Notes = () => {
 
     const renderColumnHeader = (): JSX.Element => (
         <div className='notes__column_header'>
-            <img className='notes__column_header__image' src={NoteSVG} alt={'alt'}/>
+            <img className='notes__column_header__image' src={NoteSVG} alt={language.NOTES_HEADER_IMAGE_DESC}/>
             <SearchBar 
               textFieldClass={HEADER_TEXT_FIELD_CLASS}
               options={NotesService.getTags()}
@@ -119,7 +123,7 @@ const Notes = () => {
     )
 
     const renderAddButton = (): JSX.Element => (
-      <Fab onClick={handleNewQuestion} className='notes__add' aria-label="add">
+      <Fab onClick={handleNewQuestion} className='notes__add' aria-label={language.NOTES_ADD_BUTTON}>
         <AddIcon />
       </Fab>
     )

@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import React, { useState, useEffect, useContext } from 'react'
 import clsx from 'clsx'
+import Note from '../../../../types/Note'
+import TagList from '../../../../components/tag_list/index'
+import { LanguageContext } from '../../../../components/language_provider'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import MaterialCard from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
@@ -16,10 +19,12 @@ import Typography from '@material-ui/core/Typography'
 import Collapse from '@material-ui/core/Collapse'
 import CardProps from './props'
 import './styles.css'
-import Note from '../../../../types/Note';
-import TagList from '../../../../components/tag_list/index';
 
 const ReactKanbanCard = (props: CardProps): JSX.Element => {
+
+    const languageProvider = useContext(LanguageContext)
+    const language = languageProvider.currentLanguage
+
     const classes = useStyles()
 
     const [expanded, setExpanded] = useState(false)
@@ -57,9 +62,10 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
 
         const icon = done ?  <DoneOutlineIcon /> : <QueryBuilderIcon />
         const onClick = done ? showCardDoneMessage : showCardWaitingResponseMessage
+        const state = done ? language.NOTE_STATE_DONE : language.NOTE_STATE_NOT_DONE
 
         return (
-            <IconButton onClick={onClick} aria-label='state'>
+            <IconButton onClick={onClick} aria-label={state}>
                 {icon}
             </IconButton>
         )
@@ -87,7 +93,7 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
                     })}
                     onClick={handleExpand}
                     aria-expanded={expanded}
-                    aria-label="show more"
+                    aria-label={language.NOTE_SHOW_ANSWER}
                 >
                     <ExpandMoreIcon />
                 </IconButton>
@@ -115,13 +121,13 @@ const ReactKanbanCard = (props: CardProps): JSX.Element => {
 
     const renderActions = (): JSX.Element => (
         <CardActions disableSpacing>
-            <IconButton onClick={handleEditAnswer} aria-label=''>
+            <IconButton onClick={handleEditAnswer} aria-label={language.NOTE_EDIT_ANSWER_BUTTON}>
                 <AssignmentTurnedInIcon />
             </IconButton>
-            <IconButton onClick={handleEditQuestion} arie-label=''>
+            <IconButton onClick={handleEditQuestion} arie-label={language.NOTE_EDIT_QUESTION_BUTTON}>
                 <EditIcon />
             </IconButton>
-            <IconButton onClick={handleDelete} aria-label=''>
+            <IconButton onClick={handleDelete} aria-label={language.NOTE_DELETE_BUTTON}>
                 <DeleteIcon />                 
             </IconButton>
             {renderMore()}

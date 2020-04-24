@@ -67,7 +67,6 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     }
 
     const getHostRootURI = () => {
-        console.log(window.location.protocol + '//' + window.location.host)
         return window.location.protocol + '//' + window.location.host
     }
 

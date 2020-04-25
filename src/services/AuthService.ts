@@ -10,7 +10,8 @@ import PathConstants from '../constants/PathConstants'
 import UpdateService from './UpdateService'
 import GoogleAuthConstants from '../constants/GoogleAuthConstants'
 import LoginErrorTypes from '../constants/LoginErrorTypes'
-import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel';
+import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel'
+import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
 
 class GoogleAuthService {
 
@@ -78,8 +79,8 @@ class GoogleAuthService {
         AuthLocalStorageService.removePictureUrl()
         AuthLocalStorageService.removeAppSettingsVersion()
         AuthLocalStorageService.removeAppSettings()
-        AuthLocalStorageService.removeGlossaryVersion()
-        AuthLocalStorageService.removeGlossaruItems()
+        GlossaryLocalStorageService.removeGlossaryVersion()
+        GlossaryLocalStorageService.removeGlossaruItems()
     }
 }
 

@@ -9,10 +9,10 @@ import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../model/AppSettingsModel'
 import AppSettingsService from '../../../services/AppSettingsService'
-import LocalStorageService from '../../../services/local_storage/LocalStorageService'
-import './styles.css'
+import SettingsLocalStorageService from '../../../services/local_storage/SettingsLocalStorageService'
 import CustomAlert from '../../../components/custom_alert'
 import HistoryService from '../../../services/HistoryService'
+import './styles.css'
 
 const Settings = (): JSX.Element => {
 
@@ -37,7 +37,7 @@ const Settings = (): JSX.Element => {
             'language': selectedLanguage
         }
 
-        LocalStorageService.setAppSettings(model)
+        SettingsLocalStorageService.setAppSettings(model)
         AppSettingsService.updateAppSettings(model)
 
         languageProvider.updateLanguage()

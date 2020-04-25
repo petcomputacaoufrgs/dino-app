@@ -13,6 +13,7 @@ import LoginErrorTypes from '../constants/LoginErrorTypes'
 import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel'
 import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
 import UserAuthDataStorageService from './local_storage/UserAuthDataStorageService'
+import SettingsLocalStorageService from './local_storage/SettingsLocalStorageService'
 
 class GoogleAuthService {
 
@@ -78,8 +79,8 @@ class GoogleAuthService {
         UserAuthDataStorageService.removeEmail()
         UserAuthDataStorageService.removeName()
         UserAuthDataStorageService.removePictureUrl()
-        AuthLocalStorageService.removeAppSettingsVersion()
-        AuthLocalStorageService.removeAppSettings()
+        SettingsLocalStorageService.removeAppSettingsVersion()
+        SettingsLocalStorageService.removeAppSettings()
         GlossaryLocalStorageService.removeGlossaryVersion()
         GlossaryLocalStorageService.removeGlossaruItems()
     }

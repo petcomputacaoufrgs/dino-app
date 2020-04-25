@@ -5,7 +5,7 @@ import Board, { moveCard } from '@lourenci/react-kanban'
 import NoteCard from './note_card'
 import AnswerDialog from './answer_dialog'
 import QuestionDialog from './question_dialog'
-import NoteModel from '../../../model/NoteModel';
+import NoteViewModel from '../../../model/view/NoteViewModel';
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import NoteSVG from '../../../images/note.svg'
@@ -30,7 +30,7 @@ const Notes = () => {
     const [newQuestionDialogOpen, setNewQuestionDialogOpen] = useState(false)
     const [textSearch, setTextSearch] = useState('')
     const [tagSearch, setTagSearch] = useState([] as string[])
-    const [note, setNote] = useState(undefined as NoteModel | undefined)
+    const [note, setNote] = useState(undefined as NoteViewModel | undefined)
     const [board, setBoard] = useState({
       columns: [
         {
@@ -41,7 +41,7 @@ const Notes = () => {
     } as NoteBoardModel)
 
     //#region Editing Answer
-    const handleEditAnswer = (note: NoteModel) => {
+    const handleEditAnswer = (note: NoteViewModel) => {
       setNote(note)
       setAnswer(note.answer)
       setAnswerDialogOpen(true)
@@ -62,7 +62,7 @@ const Notes = () => {
         editedNote.answer = newAnswer
         editedNote.answered = true
 
-        NotesService.updateNoteAnswerOnServer(editedNote)
+        NotesService.updateNoteAnswer(editedNote)
       }
 
       setNote(undefined)
@@ -87,7 +87,7 @@ const Notes = () => {
 
     //#region Editing Question
 
-    const handleOpenEditQuestionDialog = (note: NoteModel) => {
+    const handleOpenEditQuestionDialog = (note: NoteViewModel) => {
       setNote(note)
       setQuestion(note.question)
       setTagList(note.tagList)
@@ -107,7 +107,7 @@ const Notes = () => {
         editedNote.question = newQuestion
         editedNote.tagList = newTagList
 
-        NotesService.updateNoteQuestionOnServer(editedNote)
+        NotesService.updateNoteQuestion(editedNote)
       }
 
       setNote(undefined)
@@ -144,7 +144,7 @@ const Notes = () => {
       const newNotes = notes.filter(note => note.id !== id)
 
       if (deletedNote) {
-        NotesService.deleteNoteOnServer(deletedNote)
+        NotesService.deleteNote(deletedNote)
       }
       
       newData.columns[0].cards = newNotes
@@ -169,7 +169,7 @@ const Notes = () => {
 
       const date = new Date()
 
-      const newNote: NoteModel = {
+      const newNote: NoteViewModel = {
         'answer': '',
         'answered': false,
         'question': newQuestion,
@@ -182,7 +182,7 @@ const Notes = () => {
         'creationYear': date.getFullYear()
       }
 
-      NotesService.saveNoteOnServer(newNote)
+      NotesService.saveNote(newNote)
 
       newNotes.push(newNote)
       
@@ -289,7 +289,7 @@ const Notes = () => {
       </div>
     )
     
-    const renderCard = (cardNote: NoteModel, dragging: boolean): JSX.Element => (
+    const renderCard = (cardNote: NoteViewModel, dragging: boolean): JSX.Element => (
         <>
         {(cardNote.showByTag || cardNote.showByQuestion) &&
           <NoteCard 

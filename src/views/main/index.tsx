@@ -17,7 +17,7 @@ import HistoryService from '../../services/HistoryService'
 import Home from './home'
 import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
-import MenuItem from '../../types/MenuItem'
+import MenuItemViewModel from '../../model/view/MenuItemViewModel'
 import Notes from './notes'
 
 /**
@@ -35,7 +35,7 @@ const Main = () : JSX.Element => {
     const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
 
     /** Itens do menu */
-    const groupedItems: MenuItem[][] = [
+    const groupedItems: MenuItemViewModel[][] = [
         [
             {
                 'image': HomeSVG,

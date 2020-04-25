@@ -1,10 +1,11 @@
-import NoteBoardModel from '../model/NoteBoardModel'
-import { NoteBoardColumnModel } from '../model/NoteBoardModel'
-import NoteModel from '../model/NoteModel'
+import NoteBoardViewModel from '../model/view/NoteBoardViewModel'
+import { NoteBoardColumnViewModel } from '../model/view/NoteBoardViewModel'
+import NoteViewModel from '../model/view/NoteViewModel'
+import NoteLocalModel from '../model/local_storage/NoteLocalModel'
 
 class NotesService {
   
-    getNotesFromServer = (): NoteModel[] => {
+    getNotesFromServer = (): NoteViewModel[] => {
         return []
     }
 
@@ -14,7 +15,7 @@ class NotesService {
       ]
     }
 
-    saveNewNotesIdsOnServer = (notes: NoteModel[])  => {
+    saveNewNotesIdsOnServer = (notes: NoteViewModel[])  => {
       const newNotes = [...notes]
 
       newNotes.forEach((note, index) => {
@@ -24,19 +25,44 @@ class NotesService {
 
     //#region Note CRUD
 
-    saveNoteOnServer = (noteModel: NoteModel) => {
+    //#region Save
+
+    saveNote = (noteModel: NoteViewModel) => {
+      this.saveOnLocalHistory(noteModel)
+    }
+
+    saveOnLocalHistory = (noteModel: NoteViewModel) => {
+      const localModel: NoteLocalModel = {
+        'id': undefined,
+        'order': noteModel.id,
+        'question': noteModel.question,
+        'answer': noteModel.answer,
+        'answered': noteModel.answered,
+        'tagList': noteModel.tagList,
+        'creationDay': noteModel.creationDay,
+        'creationMonth': noteModel.creationMonth,
+        'creationYear': noteModel.creationYear,
+        'savedOnServer': false
+      }
+
       
     }
 
-    deleteNoteOnServer = (noteModel: NoteModel) => {
+    setOnServer = (noteModel: NoteViewModel) => {
+
+    }
+
+    //#endregion
+
+    deleteNote = (noteModel: NoteViewModel) => {
       
     } 
 
-    updateNoteQuestionOnServer = (noteModel: NoteModel) => {
+    updateNoteQuestion = (noteModel: NoteViewModel) => {
       
     }
 
-    updateNoteAnswerOnServer = (noteModel: NoteModel) => {
+    updateNoteAnswer = (noteModel: NoteViewModel) => {
      
     }
 
@@ -44,11 +70,11 @@ class NotesService {
 
     //#region Private methods
 
-    private getNotesFromBoard = (board: NoteBoardModel): NoteModel[] => {
+    private getNotesFromBoard = (board: NoteBoardViewModel): NoteViewModel[] => {
       return this.getDataFromBoard(board).cards
     }
 
-    private getDataFromBoard = (board: NoteBoardModel): NoteBoardColumnModel => {
+    private getDataFromBoard = (board: NoteBoardViewModel): NoteBoardColumnViewModel => {
       return board.columns[0]
     }
 

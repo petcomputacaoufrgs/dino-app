@@ -1,4 +1,4 @@
-export default interface NoteModel {
+export default interface NoteViewModel {
     id: number
     api_id?: number
     question: string

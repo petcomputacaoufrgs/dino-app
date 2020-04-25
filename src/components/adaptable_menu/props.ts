@@ -1,4 +1,4 @@
-import MenuItem from '../../types/MenuItem'
+import MenuItemViewModel from '../../model/view/MenuItemViewModel'
 
 /**
  * @description Propriedades do menu drawer.
@@ -13,7 +13,7 @@ export default interface AdaptableMenuProps{
      * @description Lista com listas de itens organizados por grupo,
      * no caso do menu inferior a primeira lista será exibida na parte inferior.
      */
-    groupedItems: MenuItem[][]
+    groupedItems: MenuItemViewModel[][]
 
     /**
      * @description Indice do item selecionado na lista de itens

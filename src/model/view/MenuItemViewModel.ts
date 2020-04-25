@@ -1,7 +1,7 @@
 /**
  * @description Descreve o formato de cada item do Menu
  */
-interface MenuItem {
+interface MenuItemViewModel {
     /**
      * @description Define o icone que será exibido no menu
      */
@@ -19,4 +19,4 @@ interface MenuItem {
 
 }
 
-export default MenuItem
+export default MenuItemViewModel

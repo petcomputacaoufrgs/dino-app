@@ -9,10 +9,10 @@ import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../model/AppSettingsModel'
 import AppSettingsService from '../../../services/AppSettingsService'
-import LocalStorageService from '../../../services/LocalStorageService'
+import LocalStorageService from '../../../services/local_storage/LocalStorageService'
 import './styles.css'
 import CustomAlert from '../../../components/custom_alert'
-import HistoryService from '../../../services/HistoryService';
+import HistoryService from '../../../services/HistoryService'
 
 const Settings = (): JSX.Element => {
 

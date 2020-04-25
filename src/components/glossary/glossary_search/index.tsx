@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import SearchIcon from '@material-ui/icons/Search'
 import GlossaryItems from '../glossary_items'
 import './styles.css';
-import LocalStorageService from '../../../services/LocalStorageService'
+import LocalStorageService from '../../../services/local_storage/LocalStorageService'
 import GlossaryItemModel from '../../../model/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 

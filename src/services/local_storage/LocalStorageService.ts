@@ -1,6 +1,6 @@
-import LS_Constants from "../constants/LocalStorageKeysConstants"
-import GlossaryItemModel from '../model/GlossaryItemModel'
-import AppSettingsModel from '../model/AppSettingsModel'
+import LS_Constants from "../../constants/LocalStorageKeysConstants"
+import GlossaryItemModel from '../../model/GlossaryItemModel'
+import AppSettingsModel from '../../model/AppSettingsModel'
 
 /**
  * @description 
@@ -9,13 +9,13 @@ import AppSettingsModel from '../model/AppSettingsModel'
  * - Caso adicione algo temporário que não deve permanecer salvo quando o aplicativo reiniciar, 
  * adicione um método de remoção no cleanLocalStorageGarbage
  * */
+export class LocalStorageService {
 
-class LocalStorageService {
-    private get = (key: string) : string | null => (
+    protected get = (key: string) : string | null => (
         localStorage.getItem(key)
     )
 
-    private set = (key: string, value: string) => {
+    protected set = (key: string, value: string) => {
         if (!key) {
             throw Error("Chave inválida!")
         } else {
@@ -23,7 +23,7 @@ class LocalStorageService {
         } 
     }
 
-    private remove = (key: string) => {
+    protected remove = (key: string) => {
         if (!key) {
             throw Error("Chave inválida!")
         } else {
@@ -35,19 +35,7 @@ class LocalStorageService {
         this.setRefreshRequiredToFalse()
     }
     
-    getAuthToken = () : string => {
-        const authToken = this.get(LS_Constants.AUTH_TOKEN)
-        
-        return this.convertStringOrNullToString(authToken)
-    }
-
-    setAuthToken = (accessToken: string) => {
-        this.set(LS_Constants.AUTH_TOKEN, accessToken)
-    }
     
-    removeAuthToken = () => {
-        this.remove(LS_Constants.AUTH_TOKEN)
-    }
 
     getGlossaryVersion = () : number => {
         let version = this.get(LS_Constants.GLOSSARY_VERSION)
@@ -177,7 +165,7 @@ class LocalStorageService {
         this.remove(LS_Constants.APP_SETTINGS)
     }
 
-    private convertStringOrNullToString = (nullableString: string | null): string => (
+    protected convertStringOrNullToString = (nullableString: string | null): string => (
         nullableString ? nullableString : ''
     )
     

@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import ArrowBack from '../../../components/arrow_back'
-import LocalStorageService from '../../../services/LocalStorageService'
+import LocalStorageService from '../../../services/local_storage/LocalStorageService'
 
 
 const GlossaryItem = (): JSX.Element => {

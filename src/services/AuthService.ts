@@ -2,7 +2,7 @@ import GoogleAuthRequestModel from '../model/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
-import LocalStorageService from './LocalStorageService'
+import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
 import AuthResponseModel from '../model/AuthResponseModel'
 import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
@@ -51,35 +51,35 @@ class GoogleAuthService {
     }
 
     isAuthenticated = () : boolean => (
-        Boolean(LocalStorageService.getAuthToken())
+        Boolean(AuthLocalStorageService.getAuthToken())
     )
 
     getAuthenticationToken = () : string => {
-        return LocalStorageService.getAuthToken()
+        return AuthLocalStorageService.getAuthToken()
     }
 
     private saveGoogleAuthDataFromRequestBody(responseBody: GoogleAuthResponseModel) {
-        LocalStorageService.setGoogleAccessToken(responseBody.googleAccessToken)
+        AuthLocalStorageService.setGoogleAccessToken(responseBody.googleAccessToken)
         this.saveUserAuthDataFromRequestBody(responseBody)
     }
 
     private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
-        LocalStorageService.setAuthToken(responseBody.accessToken)
-        LocalStorageService.setEmail(responseBody.email)
-        LocalStorageService.setName(responseBody.name)
-        LocalStorageService.setPictureUrl(responseBody.pictureUrl)
+        AuthLocalStorageService.setAuthToken(responseBody.accessToken)
+        AuthLocalStorageService.setEmail(responseBody.email)
+        AuthLocalStorageService.setName(responseBody.name)
+        AuthLocalStorageService.setPictureUrl(responseBody.pictureUrl)
     }
     
     public removeAuthData() {
-        LocalStorageService.removeAuthToken()
-        LocalStorageService.removeGoogleAccessToken()
-        LocalStorageService.removeEmail()
-        LocalStorageService.removeName()
-        LocalStorageService.removePictureUrl()
-        LocalStorageService.removeAppSettingsVersion()
-        LocalStorageService.removeAppSettings()
-        LocalStorageService.removeGlossaryVersion()
-        LocalStorageService.removeGlossaruItems()
+        AuthLocalStorageService.removeAuthToken()
+        AuthLocalStorageService.removeGoogleAccessToken()
+        AuthLocalStorageService.removeEmail()
+        AuthLocalStorageService.removeName()
+        AuthLocalStorageService.removePictureUrl()
+        AuthLocalStorageService.removeAppSettingsVersion()
+        AuthLocalStorageService.removeAppSettings()
+        AuthLocalStorageService.removeGlossaryVersion()
+        AuthLocalStorageService.removeGlossaruItems()
     }
 }
 

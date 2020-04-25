@@ -8,7 +8,7 @@ import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 're
 import GoogleLogo from '../../images/google_logo.png'
 import LoginButtonProps from './props'
 import LoginErrorTypes from '../../constants/LoginErrorTypes'
-import LocalStorageService from '../../services/LocalStorageService'
+import LocalStorageService from '../../services/local_storage/LocalStorageService'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
 import './styles.css'
 

@@ -1,6 +1,6 @@
 import HttpService from './DinoHttpService'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
-import LocalStorageService from './LocalStorageService'
+import LocalStorageService from './local_storage/LocalStorageService'
 import GlossaryItemModel from '../model/GlossaryItemModel'
 import StringUtils from '../utils/StringUtils'
 

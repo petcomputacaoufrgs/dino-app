@@ -82,7 +82,7 @@ class GoogleAuthService {
         SettingsLocalStorageService.removeAppSettingsVersion()
         SettingsLocalStorageService.removeAppSettings()
         GlossaryLocalStorageService.removeGlossaryVersion()
-        GlossaryLocalStorageService.removeGlossaruItems()
+        GlossaryLocalStorageService.removeGlossaryItems()
     }
 }
 

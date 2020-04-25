@@ -5,24 +5,18 @@ import GlossaryItemModel from '../../model/GlossaryItemModel'
 class GlossaryLocalStorageService extends LocalStorageService {
 
     getGlossaryVersion = () : number => {
-        let version = this.get(LS_Constants.GLOSSARY_VERSION)
+        const version = this.get(LS_Constants.GLOSSARY_VERSION)
 
         return version ? Number(version) : -1   
     }
 
     getGlossaryItems = () : Array<GlossaryItemModel> => {
-        let items = this.get(LS_Constants.GLOSSARY_ITEMS)
+        const items = this.get(LS_Constants.GLOSSARY_ITEMS)
 
-        let result = new Array<GlossaryItemModel>()
-
-        if (items) {
-            result = JSON.parse(items)
-        }
-        
-        return result
+        return items ? JSON.parse(items) : new Array<GlossaryItemModel>()
     }
 
-    removeGlossaruItems = () => {
+    removeGlossaryItems = () => {
         this.remove(LS_Constants.GLOSSARY_ITEMS)
     }
 

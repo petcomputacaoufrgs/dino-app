@@ -4,7 +4,7 @@ import HttpStatus from 'http-status-codes'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 import DinoAPIHeaderConstants from '../constants/DinoAPIHeaderConstants'
-import LocalStorageService from './LocalStorageService'
+import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
 
 /**
  * @description Abstrai a biblioteca Superagent com tratamentos para autenticação, erro de autenticação e renovação de token
@@ -51,7 +51,7 @@ class DinoHttpService {
 
             HistoryService.push(PathConstants.LOGIN)
         } else if (err.status === HttpStatus.PRECONDITION_REQUIRED) {
-            LocalStorageService.setRefreshRequiredToTrue()
+            AuthLocalStorageService.setRefreshRequiredToTrue()
         }
     }
 
@@ -60,7 +60,7 @@ class DinoHttpService {
             const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
             
             if (newToken) {
-                LocalStorageService.setAuthToken(newToken.substring(7))
+                AuthLocalStorageService.setAuthToken(newToken.substring(7))
             }   
         }
 
@@ -68,7 +68,7 @@ class DinoHttpService {
             const newGoogleToken = response.get(DinoAPIHeaderConstants.GOOGLE_REFRESH_TOKEN)
 
             if (newGoogleToken) {
-                LocalStorageService.setAuthToken(newGoogleToken.substring(7))
+                AuthLocalStorageService.setAuthToken(newGoogleToken.substring(7))
             }
         }
 

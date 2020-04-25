@@ -2,7 +2,7 @@ import GoogleAuthRequestModel from '../model/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
-import LocalStorageService from './LocalStorageService'
+import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
 import AuthResponseModel from '../model/AuthResponseModel'
 import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
@@ -10,7 +10,10 @@ import PathConstants from '../constants/PathConstants'
 import UpdateService from './UpdateService'
 import GoogleAuthConstants from '../constants/GoogleAuthConstants'
 import LoginErrorTypes from '../constants/LoginErrorTypes'
-import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel';
+import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel'
+import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
+import UserAuthDataStorageService from './local_storage/UserAuthDataStorageService'
+import SettingsLocalStorageService from './local_storage/SettingsLocalStorageService'
 
 class GoogleAuthService {
 
@@ -51,35 +54,35 @@ class GoogleAuthService {
     }
 
     isAuthenticated = () : boolean => (
-        Boolean(LocalStorageService.getAuthToken())
+        Boolean(AuthLocalStorageService.getAuthToken())
     )
 
     getAuthenticationToken = () : string => {
-        return LocalStorageService.getAuthToken()
+        return AuthLocalStorageService.getAuthToken()
     }
 
     private saveGoogleAuthDataFromRequestBody(responseBody: GoogleAuthResponseModel) {
-        LocalStorageService.setGoogleAccessToken(responseBody.googleAccessToken)
+        AuthLocalStorageService.setGoogleAccessToken(responseBody.googleAccessToken)
         this.saveUserAuthDataFromRequestBody(responseBody)
     }
 
     private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
-        LocalStorageService.setAuthToken(responseBody.accessToken)
-        LocalStorageService.setEmail(responseBody.email)
-        LocalStorageService.setName(responseBody.name)
-        LocalStorageService.setPictureUrl(responseBody.pictureUrl)
+        AuthLocalStorageService.setAuthToken(responseBody.accessToken)
+        UserAuthDataStorageService.setEmail(responseBody.email)
+        UserAuthDataStorageService.setName(responseBody.name)
+        UserAuthDataStorageService.setPictureUrl(responseBody.pictureUrl)
     }
     
     public removeAuthData() {
-        LocalStorageService.removeAuthToken()
-        LocalStorageService.removeGoogleAccessToken()
-        LocalStorageService.removeEmail()
-        LocalStorageService.removeName()
-        LocalStorageService.removePictureUrl()
-        LocalStorageService.removeAppSettingsVersion()
-        LocalStorageService.removeAppSettings()
-        LocalStorageService.removeGlossaryVersion()
-        LocalStorageService.removeGlossaruItems()
+        AuthLocalStorageService.removeAuthToken()
+        AuthLocalStorageService.removeGoogleAccessToken()
+        UserAuthDataStorageService.removeEmail()
+        UserAuthDataStorageService.removeName()
+        UserAuthDataStorageService.removePictureUrl()
+        SettingsLocalStorageService.removeAppSettingsVersion()
+        SettingsLocalStorageService.removeAppSettings()
+        GlossaryLocalStorageService.removeGlossaryVersion()
+        GlossaryLocalStorageService.removeGlossaruItems()
     }
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { LanguageProviderContext } from '../language_provider';
+import { LanguageContext } from '../language_provider';
 import ContactItemModel from '../../model/ContactItemModel'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ContactItems from './contact_items';
@@ -8,7 +8,8 @@ import SearchBar from '../search_bar'
 
 const Contacts = (): JSX.Element => {
 
-    const languageContext = useContext(LanguageProviderContext)
+    const languageProvider = useContext(LanguageContext)
+    const language = languageProvider.currentLanguage
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResults, setSearchResults] = useState(new Array<ContactItemModel>())
 
@@ -55,7 +56,7 @@ const Contacts = (): JSX.Element => {
             <SearchBar
                 value={searchTerm}
                 onChange={handleChange}
-                placeholder={languageContext.SEARCH_HOLDER}
+                placeholder={language.SEARCH_HOLDER}
             />
             <ContactItems items={searchResults} />
         </div>

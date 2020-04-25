@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { LanguageProviderContext } from '../language_provider';
+import { LanguageContext } from '../language_provider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GlossaryItems from './glossary_items';
-import LocalStorageService from '../../services/LocalStorageService'
+import LocalStorageService from '../../services/local_storage/GlossaryLocalStorageService'
 import GlossaryItemModel from '../../model/GlossaryItemModel';
 import StringUtils from '../../utils/StringUtils'
 import SearchBar from '../search_bar'
 
 const Glossary = (): JSX.Element => {
 
-    const languageContext = useContext(LanguageProviderContext)
+    const languageProvider = useContext(LanguageContext)
+    const language = languageProvider.currentLanguage
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
 
@@ -29,7 +30,7 @@ const Glossary = (): JSX.Element => {
             <SearchBar
                 value={searchTerm}
                 onChange={handleChange}
-                placeholder={languageContext.SEARCH_HOLDER} 
+                placeholder={language.SEARCH_HOLDER} 
             />
             <GlossaryItems items={searchResults} />
         </div>

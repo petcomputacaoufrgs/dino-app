@@ -89,7 +89,7 @@ const Main = (): JSX.Element => {
             },
             {
                 'image': ContactsSVG,
-                'name': languageContext.MENU_CONTACTS,
+                'name': language.MENU_CONTACTS,
                 'onClick': goToContacts,
             }
         ],

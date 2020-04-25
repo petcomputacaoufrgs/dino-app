@@ -1,5 +1,6 @@
 import LS_Constants from "../../constants/LocalStorageKeysConstants"
 import AppSettingsModel from '../../model/AppSettingsModel'
+import AuthLocalStorageService from './AuthLocalStorageService'
 
 /**
  * @description 
@@ -31,20 +32,8 @@ export class LocalStorageService {
     }
 
     cleanLocalStorageGarbage = () => {
-        this.setRefreshRequiredToFalse()
+        AuthLocalStorageService.setRefreshRequiredToFalse()
     }
-
-    isRefreshRequired = (): boolean => (
-        Boolean(this.get(LS_Constants.REFRESH_TOKEN_REQUIRED))
-    )
- 
-    setRefreshRequiredToTrue = () => {
-        this.set(LS_Constants.REFRESH_TOKEN_REQUIRED, 't')
-    }
-    
-    setRefreshRequiredToFalse = () => {
-        this.remove(LS_Constants.REFRESH_TOKEN_REQUIRED)
-    } 
 
     getAppSettingsVersion = (): number => {
         const versionSaved = this.get(LS_Constants.APP_SETTINGS_VERSION)

@@ -1,6 +1,6 @@
 import DinoHttpService from "./DinoHttpService"
 import DinoAPIURLConstants from "../constants/DinoAPIURLConstants"
-import LocalStorageService from "./LocalStorageService"
+import SettingsLocalStorageService from "./local_storage/SettingsLocalStorageService"
 import AppSettingsResponseModel from '../model/AppSettingsResponseModel'
 import AppSettingsModel from '../model/AppSettingsModel'
 import LanguageProviderValue from "../components/language_provider/LanguageProviderValue"
@@ -19,7 +19,7 @@ class AppSettingsService {
             return
         } 
 
-        const savedVersion = LocalStorageService.getAppSettingsVersion()
+        const savedVersion = SettingsLocalStorageService.getAppSettingsVersion()
 
         if (updatedVersion !== savedVersion) {
             const appSettings = await this.getAppSettingsFromServer()
@@ -33,9 +33,9 @@ class AppSettingsService {
     }
 
     getAppSettings = (): AppSettingsModel => {
-        const savedVersion = LocalStorageService.getAppSettingsVersion()
+        const savedVersion = SettingsLocalStorageService.getAppSettingsVersion()
 
-        const savedAppSettings = LocalStorageService.getAppSettings()
+        const savedAppSettings = SettingsLocalStorageService.getAppSettings()
 
         if (savedVersion !== 0) {
             if (savedAppSettings) {
@@ -81,8 +81,8 @@ class AppSettingsService {
     }
 
     private saveAppSettingsData = (model: AppSettingsModel, version: number) => {
-        LocalStorageService.setAppSettingsVersion(version)
-        LocalStorageService.setAppSettings(model)
+        SettingsLocalStorageService.setAppSettingsVersion(version)
+        SettingsLocalStorageService.setAppSettings(model)
     }
 }
 

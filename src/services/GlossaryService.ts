@@ -1,6 +1,6 @@
 import HttpService from './DinoHttpService'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
-import LocalStorageService from './LocalStorageService'
+import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
 import GlossaryItemModel from '../model/GlossaryItemModel'
 import StringUtils from '../utils/StringUtils'
 
@@ -15,7 +15,7 @@ class GlossaryService {
             alert("[getVersion()] API call error");
         })
 
-        return response ? response.body : LocalStorageService.getGlossaryVersion()
+        return response ? response.body : GlossaryLocalStorageService.getGlossaryVersion()
     }
 
     getItems = async (): Promise<Array<GlossaryItemModel>> => {
@@ -24,18 +24,18 @@ class GlossaryService {
         })
 
         //For future visitors: In the new HttpClient (Angular 4.3+), the response object is JSON by default, so you don't need to do response.json().data anymore. Just use response directly.
-        return response ? response.body : LocalStorageService.getGlossaryItems()
+        return response ? response.body : GlossaryLocalStorageService.getGlossaryItems()
     }
 
     checkUpdate = async () => {
         const newVersion = await this.getVersion()
 
-        if (newVersion !== LocalStorageService.getGlossaryVersion()) {
+        if (newVersion !== GlossaryLocalStorageService.getGlossaryVersion()) {
 
             const newItens = await this.getItems()
 
-            LocalStorageService.setGlossaryVersion(newVersion)
-            LocalStorageService.setGlossaryItems(newItens.sort((a, b) =>
+            GlossaryLocalStorageService.setGlossaryVersion(newVersion)
+            GlossaryLocalStorageService.setGlossaryItems(newItens.sort((a, b) =>
             StringUtils.normalizeString(a.title) < StringUtils.normalizeString(b.title) ? -1 : 1))     
         }
     }

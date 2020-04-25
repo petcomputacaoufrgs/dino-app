@@ -17,6 +17,18 @@ class AuthLocalStorageService extends LocalStorageService {
         this.remove(LS_Constants.AUTH_TOKEN)
     }
 
+    getGoogleAccessToken = (): string | null => (
+        this.get(LS_Constants.GOOGLE_ACCESS_TOKEN)
+    )
+
+    setGoogleAccessToken = (googleAccessToken: string) => {
+        this.set(LS_Constants.GOOGLE_ACCESS_TOKEN, googleAccessToken)
+    }
+
+    removeGoogleAccessToken = () => {
+        this.remove(LS_Constants.GOOGLE_ACCESS_TOKEN)
+    }
+    
 }
 
 export default new AuthLocalStorageService()

@@ -12,6 +12,7 @@ import GoogleAuthConstants from '../constants/GoogleAuthConstants'
 import LoginErrorTypes from '../constants/LoginErrorTypes'
 import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel'
 import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
+import UserAuthDataStorageService from './local_storage/UserAuthDataStorageService'
 
 class GoogleAuthService {
 
@@ -66,17 +67,17 @@ class GoogleAuthService {
 
     private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
         AuthLocalStorageService.setAuthToken(responseBody.accessToken)
-        AuthLocalStorageService.setEmail(responseBody.email)
-        AuthLocalStorageService.setName(responseBody.name)
-        AuthLocalStorageService.setPictureUrl(responseBody.pictureUrl)
+        UserAuthDataStorageService.setEmail(responseBody.email)
+        UserAuthDataStorageService.setName(responseBody.name)
+        UserAuthDataStorageService.setPictureUrl(responseBody.pictureUrl)
     }
     
     public removeAuthData() {
         AuthLocalStorageService.removeAuthToken()
         AuthLocalStorageService.removeGoogleAccessToken()
-        AuthLocalStorageService.removeEmail()
-        AuthLocalStorageService.removeName()
-        AuthLocalStorageService.removePictureUrl()
+        UserAuthDataStorageService.removeEmail()
+        UserAuthDataStorageService.removeName()
+        UserAuthDataStorageService.removePictureUrl()
         AuthLocalStorageService.removeAppSettingsVersion()
         AuthLocalStorageService.removeAppSettings()
         GlossaryLocalStorageService.removeGlossaryVersion()

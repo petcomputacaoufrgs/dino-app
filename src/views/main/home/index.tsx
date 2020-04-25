@@ -2,16 +2,16 @@ import React, { useContext } from 'react'
 import { Avatar } from '@material-ui/core'
 import { LanguageContext } from '../../../components/language_provider'
 import './styles.css'
-import LocalStorageService from '../../../services/local_storage/LocalStorageService'
+import UserAuthDataStorageService from '../../../services/local_storage/UserAuthDataStorageService'
 
 const Home = () => {
     const languageProvider = useContext(LanguageContext)
 
     const language = languageProvider.currentLanguage
 
-    const avatarSrc = LocalStorageService.getPictureUrl()
+    const avatarSrc = UserAuthDataStorageService.getPictureUrl()
 
-    const username = LocalStorageService.getName()
+    const username = UserAuthDataStorageService.getName()
     
     return (
         <div className='home'>

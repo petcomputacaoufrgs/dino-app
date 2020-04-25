@@ -6,7 +6,9 @@ import LanguageCodeConstants from '../constants/LanguageCodeConstants'
  */
 export default class PT_BR implements LanguageSet {
 
-    LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE
+    ISO_LANGUAGE_CODE = 'pt'
+
+    NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE
 
     LANGUAGE_PORTUGUESE = 'Português'
 
@@ -32,29 +34,36 @@ export default class PT_BR implements LanguageSet {
 
     LOGIN_CANCELED = 'Login cancelado.'
 
+    LOGIN_REFRESH_ERROR = 'Ocorreu um erro. Precisamos que se autentique novamente, por favor.'
+
     AVATAR_ALT = 'Imagem de perfil do usuário com as bordas arredondadas.'
-
+    
     LOGOUT_DIALOG_QUESTION = 'Tem certeza que deseja sair do DinoApp?'
-
+    
     LOGOUT_DIALOG_DESCRIPTION = 'Se disser \'SIM\' todos os dados referentes a sua conta serão removidos deste dispositivo.'
-
+    
     AGREEMENT_OPTION_TEXT = 'SIM'
-
+    
     DISAGREEMENT_OPTION_TEXT = 'NÃO'
-
+    
     MENU_HOME = 'Home'
-
+    
     MENU_GAMES = 'Jogos'
-
+    
+    MENU_SETTINGS = 'Configurações'
+    
     MENU_GLOSSARY = 'Glossário'
 
     MENU_CONTACTS = 'Contatos'
 
-    MENU_SETTINGS = 'Configurações'
-
     MENU_LOGOUT = 'Sair'
-
+    
     SETTINGS_TITLE = 'Configurações'
     
     SETTINGS_LANGUAGE = 'Escolher Idioma'
+    
+    SETTINGS_SAVE = 'Salvar'
+
+    SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
+
 }

@@ -4,7 +4,7 @@ import HttpStatus from 'http-status-codes'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 import DinoAPIHeaderConstants from '../constants/DinoAPIHeaderConstants'
-import LocalStorageService from './LocalStorageService'
+import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
 
 /**
  * @description Abstrai a biblioteca Superagent com tratamentos para autenticação, erro de autenticação e renovação de token
@@ -35,9 +35,6 @@ class DinoHttpService {
         return Superagent.get(url).set(this.getHeader()).on('error', this.onError).on('response', this.onResponse)
     }
 
-    /**
-     * @description Retorna o header da autenticação se houver
-     */
     private getHeader = () : object => {
         if (AuthService.isAuthenticated()) {
             const authorizationHeader = 'Bearer '.concat(AuthService.getAuthenticationToken())
@@ -48,46 +45,37 @@ class DinoHttpService {
         return {}
     }
 
-    /**
-     * @description Trata erros nas requisições
-     * @param erro Objeto contendo informações sobre o erro
-     */
     private onError = (err: any) => {
         if (err.status === HttpStatus.FORBIDDEN) {
+            AuthService.removeAuthData()
 
-            /** Limpa o token de autenticação */
-            LocalStorageService.setAuthToken('')
-
-            /** Redireciona para o login */
             HistoryService.push(PathConstants.LOGIN)
-
-            alert('Erro na autenticação com o servidor.')
+        } else if (err.status === HttpStatus.PRECONDITION_REQUIRED) {
+            AuthLocalStorageService.setRefreshRequiredToTrue()
         }
     }
 
-    /**
-     * @description Trata filtros na resposta da requisição
-     * @param response Objeto contendo a resposta do servidor
-     */
     private onResponse = (response: Response) => {
         const verifyDinoAuth = () => {
             const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
             
             if (newToken) {
-                LocalStorageService.setAuthToken(newToken.substring(7))
+                AuthLocalStorageService.setAuthToken(newToken.substring(7))
             }   
         }
 
         const verifyGoogleAuth = () => {
-            const newGoogleToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
+            const newGoogleToken = response.get(DinoAPIHeaderConstants.GOOGLE_REFRESH_TOKEN)
 
             if (newGoogleToken) {
-                LocalStorageService.setAuthToken(newGoogleToken.substring(7))
+                AuthLocalStorageService.setAuthToken(newGoogleToken.substring(7))
             }
         }
 
-        verifyDinoAuth()
-        verifyGoogleAuth()
+        if (response.status === HttpStatus.OK) {
+            verifyDinoAuth()
+            verifyGoogleAuth()
+        }
     }
 }
 

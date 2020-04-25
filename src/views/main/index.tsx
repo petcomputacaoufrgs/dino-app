@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useLocation, Switch } from 'react-router'
-import { LanguageProviderContext } from '../../components/language_provider'
+import { LanguageContext } from '../../components/language_provider'
 import GlossarySVG from '../../images/glossary.svg'
 import ContactsSVG from '../../images/phone.svg'
 import GamesSVG from '../../images/games.svg'
@@ -28,7 +28,9 @@ const Main = (): JSX.Element => {
 
     const location = useLocation()
 
-    const languageContext = useContext(LanguageProviderContext)
+    const languageProvider = useContext(LanguageContext)
+
+    const language = languageProvider.currentLanguage
 
     /**
      * @description Função chamada quando seu item for selecionado no menu
@@ -72,17 +74,17 @@ const Main = (): JSX.Element => {
         [
             {
                 'image': HomeSVG,
-                'name': languageContext.MENU_HOME,
+                'name': language.MENU_HOME,
                 'onClick': goToHome,
             },
             {
                 'image': GamesSVG,
-                'name': languageContext.MENU_GAMES,
+                'name': language.MENU_GAMES,
                 'onClick': goToGames,
             },
             {
-                'image': GlossarySVG,
-                'name': languageContext.MENU_GLOSSARY,
+                'image':GlossarySVG,
+                'name': language.MENU_GLOSSARY,
                 'onClick': goToGlossary,
             },
             {
@@ -94,15 +96,15 @@ const Main = (): JSX.Element => {
         [
             {
                 'image': SettingsSVG,
-                'name': languageContext.MENU_SETTINGS,
+                'name': language.MENU_SETTINGS,
                 'onClick': goToSettings,
             },
         ],
         [
             {
                 'image': LogoutSVG,
-                'name': languageContext.MENU_LOGOUT,
-                'onClick': showLogoutDialog,
+                'name': language.MENU_LOGOUT,
+                'onClick': showLogoutDialog,            
             },
         ]
     ]

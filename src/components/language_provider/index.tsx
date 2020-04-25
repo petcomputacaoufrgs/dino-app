@@ -3,24 +3,16 @@ import LanguageProviderProps from './props'
 import LanguageSet from '../../language/LanguageSet'
 import EN_US from '../../language/EN_US'
 import PT_BR from '../../language/PT_BR'
-import LocalStorageService from '../../services/LocalStorageService'
-import LanguageListContext from './LanguageListContext'
+import AppSettingsService from '../../services/AppSettingsService'
+import LanguageProviderValue, { Language } from './LanguageProviderValue'
 import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
 
-/**
- * @description Contexto de linguagem
- */
-export const LanguageProviderContext = createContext(new PT_BR())
+export const LanguageContext = createContext({
+    'currentLanguage': new PT_BR(),
+    'getLanguageList': () => new Array<Language>(),
+    'updateLanguage': () => {}
+} as LanguageProviderValue)
 
-/**
- * @description Contexto com a lista de linguagens
- */
-export const LanguageListProviderContext = createContext(new Array<LanguageListContext>())
-
-/**
- * @description Contexto com função para mudar a linguagem
- */
-export const LanguageSetProviderContext = createContext((languageCode: string) => {})
 
 /**
  * @description Gera um objeto do tipo LanguageSet com os textos na linguagem correta
@@ -28,11 +20,6 @@ export const LanguageSetProviderContext = createContext((languageCode: string) =
  */
 const LanguageProvider = (props: LanguageProviderProps) : JSX.Element => {
 
-    /**
-     * Recebe um código de linguagem e retorna o LanguageSet relacionado.
-     * Caso o código seja inválido o default é Inglês
-     * @param languageCode Código da linha padronizado para navegadores
-     */
     const getLanguageSetByCode = (languageCode: string): LanguageSet => {
         if (languageCode === LanguageCodeConstants.PORTUGUESE) {
             return new PT_BR()
@@ -41,53 +28,56 @@ const LanguageProvider = (props: LanguageProviderProps) : JSX.Element => {
         }
     }
 
-    /**
-     * @description Define o conjunto de textos a ser utilizado baseado na linguagem do navegador
-     * @todo Variar conforme a configuração da conta do usuário
-     */
     const getLanguageSet = (): LanguageSet => {
-        let languageCode = LocalStorageService.getLanguage()
+        const language = AppSettingsService.getAppSettings().language
 
-        if (!languageCode) {
-            languageCode = navigator.language
-            LocalStorageService.setLanguage(languageCode)
+        return getLanguageSetByCode(language)
+    }
+
+    const setHTMLElementLanguage = (language: LanguageSet) => {
+        const html = document.getElementById("html")
+
+        if (html) {
+            html.lang = language.ISO_LANGUAGE_CODE
         }
-
-        return getLanguageSetByCode(languageCode)
     }
 
     const [currentLanguage, setCurrentLanguage] = useState(getLanguageSet())
+    setHTMLElementLanguage(currentLanguage)
 
-    const setCurrentLanguageByCode = (languageCode: string) => {
-        let language;
+    const updateCurrentLanguage = () => {
+        const language = getLanguageSet()
 
-        if (languageCode === LanguageCodeConstants.PORTUGUESE) {
-            language = new PT_BR()
-        } else {
-            language = new EN_US()
-        }
+        setHTMLElementLanguage(language)
 
         setCurrentLanguage(language)
-        LocalStorageService.setLanguage(language.LANGUAGE_CODE)
     }
 
-    const getLanguageList = (): LanguageListContext[] => {
+    const getLanguageList = (): Language[] => {
         const language = getLanguageSet()
 
         return [
-            new LanguageListContext(language.LANGUAGE_PORTUGUESE, LanguageCodeConstants.PORTUGUESE),
-            new LanguageListContext(language.LANGUAGE_ENGLISH, LanguageCodeConstants.ENGLISH)
+            {
+                'code': LanguageCodeConstants.PORTUGUESE,
+                'name': language.LANGUAGE_PORTUGUESE
+            } as Language,
+            {
+                'code': LanguageCodeConstants.ENGLISH,
+                'name': language.LANGUAGE_ENGLISH
+            } as Language
         ]
     }
 
+    const provider: LanguageProviderValue  = {
+        'currentLanguage': currentLanguage,
+        'getLanguageList': getLanguageList,
+        'updateLanguage': updateCurrentLanguage
+    }
+
     return (
-        <LanguageProviderContext.Provider value={ currentLanguage }>
-            <LanguageListProviderContext.Provider value={ getLanguageList() }>
-                <LanguageSetProviderContext.Provider value={ setCurrentLanguageByCode }>
-                    {props.children}
-                </LanguageSetProviderContext.Provider>
-            </LanguageListProviderContext.Provider>
-        </LanguageProviderContext.Provider>
+        <LanguageContext.Provider value={ provider }>
+            {props.children}
+        </LanguageContext.Provider>
     )
 }
 

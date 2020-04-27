@@ -29,7 +29,7 @@ export class LocalStorageService {
         } 
     }
 
-    cleanLocalStorageGarbage = () => {
+    cleanGarbage = () => {
         AuthLocalStorageService.setRefreshRequiredToFalse()
     }
 

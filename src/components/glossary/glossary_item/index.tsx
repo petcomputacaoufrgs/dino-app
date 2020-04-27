@@ -11,7 +11,7 @@ const GlossaryItem = (): JSX.Element => {
 
     const { id } = useParams()
 
-    const items = GlossaryLocalStorageService.getGlossaryItems()
+    const items = GlossaryLocalStorageService.getItems()
     
     const item = items.find(item => item.id === Number(id))
 

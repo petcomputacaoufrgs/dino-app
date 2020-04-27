@@ -15,7 +15,7 @@ class GlossaryService {
             console.log("[getVersion()] API call error");
         })
 
-        return response ? response.body : GlossaryLocalStorageService.getGlossaryVersion()
+        return response ? response.body : GlossaryLocalStorageService.getVersion()
     }
 
     getItems = async (): Promise<Array<GlossaryItemModel>> => {
@@ -23,20 +23,19 @@ class GlossaryService {
             console.log("[getItems()] API call error");
         })
 
-        //For future visitors: In the new HttpClient (Angular 4.3+), the response object is JSON by default, so you don't need to do response.json().data anymore. Just use response directly.
-        return response ? response.body : GlossaryLocalStorageService.getGlossaryItems()
+        return response ? response.body : GlossaryLocalStorageService.getItems()
     }
 
     checkUpdate = async () => {
 
         const newVersion = await this.getVersion()
 
-        if (newVersion !== GlossaryLocalStorageService.getGlossaryVersion()) {
+        if (newVersion !== GlossaryLocalStorageService.getVersion()) {
 
             const newItens = await this.getItems()
 
-            GlossaryLocalStorageService.setGlossaryVersion(newVersion)
-            GlossaryLocalStorageService.setGlossaryItems(newItens.sort((a, b) =>
+            GlossaryLocalStorageService.setVersion(newVersion)
+            GlossaryLocalStorageService.setItems(newItens.sort((a, b) =>
             StringUtils.normalize(a.title) < StringUtils.normalize(b.title) ? -1 : 1))     
         }
     }

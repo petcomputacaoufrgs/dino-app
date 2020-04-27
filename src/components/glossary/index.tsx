@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { LanguageContext } from '../language_provider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GlossaryItems from './glossary_items';
-import LocalStorageService from '../../services/local_storage/GlossaryLocalStorageService'
+import GlossaryLocalStorageService from '../../services/local_storage/GlossaryLocalStorageService'
 import GlossaryItemModel from '../../model/GlossaryItemModel';
 import StringUtils from '../../utils/StringUtils'
 import SearchBar from '../search_bar'
@@ -17,7 +17,7 @@ const Glossary = (): JSX.Element => {
     const handleChange = event => setSearchTerm(event.target.value)
 
     useEffect(() => {
-        const items = LocalStorageService.getGlossaryItems()
+        const items = GlossaryLocalStorageService.getItems()
         const results = items.filter(item =>
             StringUtils.normalize(item.title.toLowerCase())
                 .includes(StringUtils.normalize(searchTerm.toLowerCase()))

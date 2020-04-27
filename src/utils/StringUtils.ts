@@ -4,9 +4,9 @@
  */
 class StringUtils {
 
-    normalizeString = (oldString : string) : string => {
+    normalize = (str : string) : string => {
 
-        return oldString.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     }
 
 }

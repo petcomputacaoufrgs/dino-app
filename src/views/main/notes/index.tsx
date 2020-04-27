@@ -11,9 +11,11 @@ import AddIcon from '@material-ui/icons/Add'
 import NoteSVG from '../../../images/note.svg'
 import NotesService from '../../../services/NotesService'
 import SearchBar from '../../../components/search_bar'
-import NoteBoardModel from '../../../model/NoteBoardModel'
-import { NoteBoardColumnModel } from '../../../model/NoteBoardModel'
+import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
+import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
 import './styles.css'
+import AgreementDialogProps from '../../../components/generic_agreement_dialog/props'
+import AgreementDialog from '../../../components/generic_agreement_dialog'
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
@@ -35,10 +37,11 @@ const Notes = () => {
       columns: [
         {
           'id': 0,
-          'cards': NotesService.getNotesFromServer()
-        } as NoteBoardColumnModel
-      ] as NoteBoardColumnModel[]
-    } as NoteBoardModel)
+          'cards': NotesService.getSavedNotes()
+        } as NoteBoardColumnViewModel
+      ] as NoteBoardColumnViewModel[]
+    } as NoteBoardViewModel)
+    const [idNoteToDelete, setIdNoteToDelete] = useState(undefined as number | undefined)
 
     //#region Editing Answer
     const handleEditAnswer = (note: NoteViewModel) => {
@@ -108,6 +111,7 @@ const Notes = () => {
         editedNote.tagList = newTagList
 
         NotesService.updateNoteQuestion(editedNote)
+        NotesService.saveTags(newTagList)
       }
 
       setNote(undefined)
@@ -124,7 +128,7 @@ const Notes = () => {
         open={questionDialogOpen}
         question={question}
         tagList={tagList}
-        tagOptions={NotesService.getTagsFromServer()}
+        tagOptions={NotesService.getSavedTags()}
         onSave={handleSaveQuestion}
         onClose={handleCloseQuestionDialog}
       />
@@ -135,13 +139,19 @@ const Notes = () => {
     //#region Deleting Note
 
     const handleDeleteNote = (id: number) => {
+      setIdNoteToDelete(id)
+
+      showDeleteDialog()
+    }
+
+    const deleteNote = () => {
       const newData = {...board}
 
       const notes = newData.columns[0].cards
 
-      const deletedNote = notes.find(note => note.id === id)
+      const deletedNote = notes.find(note => note.id === idNoteToDelete)
 
-      const newNotes = notes.filter(note => note.id !== id)
+      const newNotes = notes.filter(note => note.id !== idNoteToDelete)
 
       if (deletedNote) {
         NotesService.deleteNote(deletedNote)
@@ -151,6 +161,16 @@ const Notes = () => {
 
       setBoard(newData)
     }
+
+    const agreementDialogProps: AgreementDialogProps = {
+      onAgree: deleteNote,
+      question: language.DELETE_NOTE_ALERT_TITLE,
+      description: language.DELETE_NOTE_ALERT_TEXT,
+      agreeOptionText: language.AGREEMENT_OPTION_TEXT,
+      disagreeOptionText: language.DISAGREEMENT_OPTION_TEXT
+    }
+
+    const [DeleteDialog, showDeleteDialog] = AgreementDialog(agreementDialogProps)
 
     //#endregion
     
@@ -179,10 +199,13 @@ const Notes = () => {
         'showByQuestion': hasText(newQuestion, textSearch),
         'creationDay':  date.getDay(),
         'creationMonth': date.getMonth(),
-        'creationYear': date.getFullYear()
+        'creationYear': date.getFullYear(),
+        'savedOnServer': false
       }
 
       NotesService.saveNote(newNote)
+
+      NotesService.saveTags(newTagList)
 
       newNotes.push(newNote)
       
@@ -199,7 +222,7 @@ const Notes = () => {
         open={newQuestionDialogOpen}
         question={''}
         tagList={[]}
-        tagOptions={NotesService.getTagsFromServer()}
+        tagOptions={NotesService.getSavedTags()}
         onSave={handleSaveNewQuestion}
         onClose={handleCloseNewQuestionDialog}
       />
@@ -245,7 +268,7 @@ const Notes = () => {
         return StringUtils.contains(nodeText, searchText)
       }
 
-      return tagSearch.length !== 0
+      return tagSearch.length === 0
     }
 
     const hasSomeTag = (nodeTags: string[], searchTags: string[], tSearch?: string): boolean => {
@@ -263,7 +286,7 @@ const Notes = () => {
 
     const renderSearchBar = (): JSX.Element => (
       <SearchBar 
-        options={NotesService.getTagsFromServer()}
+        options={NotesService.getSavedTags()}
         onTagSearch={handleTagSearch}
         onTextSearch={handleTextSearch} 
         textFieldClass={HEADER_TEXT_FIELD_CLASS}
@@ -274,9 +297,9 @@ const Notes = () => {
 
     //#region Moving card
     const handleCardMove = (card, source, destination) => {
-      const newBoard: NoteBoardModel  = moveCard(board, source, destination)
+      const newBoard: NoteBoardViewModel  = moveCard(board, source, destination)
 
-      NotesService.saveNewNotesIdsOnServer(newBoard.columns[0].cards)
+      NotesService.saveNewNoteIds(newBoard.columns[0].cards)
 
       setBoard(newBoard)
     }
@@ -351,6 +374,7 @@ const Notes = () => {
             {renderUpdateAnswerDialog()}
             {renderUpdateQuestionDialog()}
             {renderNewQuestionDialog()}
+            <DeleteDialog />
         </div>
     )
 }

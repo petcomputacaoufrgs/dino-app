@@ -10,5 +10,6 @@ export default interface NoteViewModel {
     creationDay: number
     creationMonth: number
     creationYear: number
+    savedOnServer: boolean
 }
 

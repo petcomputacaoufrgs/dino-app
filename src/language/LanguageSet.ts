@@ -58,4 +58,6 @@ export default interface LanguageSet {
     DECEMBER: string
     INVALID_MONTH: string
     STRING_DATE_FORMAT: string
+    DELETE_NOTE_ALERT_TITLE: string
+    DELETE_NOTE_ALERT_TEXT: string
 }

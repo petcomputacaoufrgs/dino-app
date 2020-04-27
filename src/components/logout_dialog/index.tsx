@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { LanguageContext } from '../language_provider'
 import AuthService from '../../services/AuthService'
-import GenericAgreementDialog from '../generic_agreement_dialog'
+import AgreementDialog from '../generic_agreement_dialog'
 import AgreementDialogProps from '../generic_agreement_dialog/props'
 import './styles.css'
 
@@ -27,7 +27,7 @@ const LogoutDialog = (): [() => JSX.Element, () => void] => {
         'disagreeOptionText': language.DISAGREEMENT_OPTION_TEXT
     }
 
-    const [Dialog, showAgreementDialog] = GenericAgreementDialog(agreementDialogProps)
+    const [Dialog, showAgreementDialog] = AgreementDialog(agreementDialogProps)
 
     return [Dialog, showAgreementDialog]
 }

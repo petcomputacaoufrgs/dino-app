@@ -51,7 +51,7 @@ const Main = () : JSX.Element => {
                 'image':GlossarySVG,
                 'name': language.MENU_GLOSSARY,
                 'onClick': () => HistoryService.push(PathConstants.GLOSSARY),
-            }
+            },
         ],
         [
             {
@@ -59,6 +59,8 @@ const Main = () : JSX.Element => {
                 'name': language.MENU_NOTES,
                 'onClick': () => HistoryService.push(PathConstants.NOTES),    
             },
+        ],
+        [
             {
                 'image': SettingsSVG,
                 'name': language.MENU_SETTINGS,

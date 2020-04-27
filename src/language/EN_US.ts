@@ -123,4 +123,8 @@ export default class EN_US implements LanguageSet {
     INVALID_MONTH = 'Invalid month'
 
     STRING_DATE_FORMAT = 'MM DD, YYYY'
+
+    DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
+
+    DELETE_NOTE_ALERT_TEXT = 'If you agree this note will be deleted permanently.'
 }

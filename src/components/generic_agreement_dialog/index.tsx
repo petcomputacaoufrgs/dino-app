@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import DialogProps from './props'
+import AgreementDialogProps from './props'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -11,7 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
  * Dialog genérica com duas opções
  * @param props Propriedades para especializar a Dialog
  */
-const GenericAgreementDialog = (props: DialogProps): [() => JSX.Element, () => void] => {
+const AgreementDialog = (props: AgreementDialogProps): [() => JSX.Element, () => void] => {
 
     const [open, setOpen] = React.useState(false)
 
@@ -60,4 +60,4 @@ const GenericAgreementDialog = (props: DialogProps): [() => JSX.Element, () => v
     return [render, show]
 }
 
-export default GenericAgreementDialog
+export default AgreementDialog

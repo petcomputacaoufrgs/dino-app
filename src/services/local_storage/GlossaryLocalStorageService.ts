@@ -4,13 +4,13 @@ import GlossaryItemModel from '../../model/GlossaryItemModel'
 
 class GlossaryLocalStorageService extends LocalStorageService {
 
-    getGlossaryVersion = () : number => {
+    getVersion = () : number => {
         let version = this.get(LS_Constants.GLOSSARY_VERSION)
 
         return version ? Number(version) : -1   
     }
 
-    getGlossaryItems = () : Array<GlossaryItemModel> => {
+    getItems = () : Array<GlossaryItemModel> => {
         let items = this.get(LS_Constants.GLOSSARY_ITEMS)
 
         let result = new Array<GlossaryItemModel>()
@@ -22,19 +22,19 @@ class GlossaryLocalStorageService extends LocalStorageService {
         return result
     }
 
-    removeGlossaruItems = () => {
+    removeItems = () => {
         this.remove(LS_Constants.GLOSSARY_ITEMS)
     }
 
-    setGlossaryVersion = (version: number) => {
+    setVersion = (version: number) => {
         this.set(LS_Constants.GLOSSARY_VERSION, JSON.stringify(version))
     }
 
-    setGlossaryItems = (items: GlossaryItemModel[]) => {
+    setItems = (items: GlossaryItemModel[]) => {
         this.set(LS_Constants.GLOSSARY_ITEMS, JSON.stringify(items))
     }
 
-    removeGlossaryVersion = () => {
+    removeVersion = () => {
         this.remove(LS_Constants.GLOSSARY_VERSION)
     }
 

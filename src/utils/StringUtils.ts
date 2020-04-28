@@ -1,29 +1,31 @@
 
 class StringUtils {
 
-    normalizeString = (oldString : string) : string => (
-        oldString.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    normalize = (str : string) : string => (
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
     )
-
+    
     /**
      * @param s1 String maior
      * @param s2 String possivelmente incluida na maior
      * @returns True para s2 contida em s1
      */
     contains = (s1: string, s2: string) : boolean => (
-        this.normalizeString(s1)
-            .includes(this.normalizeString(s2))
+        this.normalize(s1)
+            .includes(this.normalize(s2))
     )
 
-    convertNumberToStringWithZeros(n: number, length: number) {
-        let result = n.toString()
+    /**
+     * 
+     * @param n Número a ser convertido
+     * @param length Número de zeros a esquerda
+     */
+    toStringWithZeros(n: number, length: number): string {
+        const stringNumber = n.toString()
 
-        while (result.length < length) {
-            result = '0'.concat(result)
-        }
-
-        return result
+        return stringNumber.padStart(length, '0')
     }
+
 }
 
 export default new StringUtils()

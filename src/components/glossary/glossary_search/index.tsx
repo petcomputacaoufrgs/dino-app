@@ -22,7 +22,7 @@ const GlossarySearchBar = () : JSX.Element => {
 
     //Para realizar uma pesquisa global e substituir, incluir a chave g na expressão regular ou se o primeiro parâmetro é uma string, inclua g no parâmetro flags.
     useEffect(() => {
-        const items = GlossaryLocalStorageService.getGlossaryItems()
+        const items = GlossaryLocalStorageService.getItems()
         const results = items.filter(item =>
             StringUtils.normalizeString(item.title)
             .includes(StringUtils.normalizeString(searchTerm))

@@ -6,7 +6,7 @@ class DateUtils {
     getDateStringFormated = (day: number, month: number, year: number, language: LanguageSet): string => {
         const stringDate = language.STRING_DATE_FORMAT
 
-        const stringDay = StringUtils.convertNumberToStringWithZeros(day, 2)
+        const stringDay = StringUtils.toStringWithZeros(day, 2)
 
         const stringMonth = this.getMonthName(month, language)
 

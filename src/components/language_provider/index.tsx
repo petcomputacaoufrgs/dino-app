@@ -4,14 +4,14 @@ import LanguageSet from '../../language/LanguageSet'
 import EN_US from '../../language/EN_US'
 import PT_BR from '../../language/PT_BR'
 import AppSettingsService from '../../services/AppSettingsService'
-import LanguageProviderValue, { Language } from './LanguageProviderValue'
+import LanguageContextValue, { Language } from './context'
 import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
 
 export const LanguageContext = createContext({
     'currentLanguage': new PT_BR(),
     'getLanguageList': () => new Array<Language>(),
     'updateLanguage': () => {}
-} as LanguageProviderValue)
+} as LanguageContextValue)
 
 
 /**
@@ -68,14 +68,14 @@ const LanguageProvider = (props: LanguageProviderProps) : JSX.Element => {
         ]
     }
 
-    const provider: LanguageProviderValue  = {
+    const value: LanguageContextValue  = {
         'currentLanguage': currentLanguage,
         'getLanguageList': getLanguageList,
         'updateLanguage': updateCurrentLanguage
     }
 
     return (
-        <LanguageContext.Provider value={ provider }>
+        <LanguageContext.Provider value={ value }>
             {props.children}
         </LanguageContext.Provider>
     )

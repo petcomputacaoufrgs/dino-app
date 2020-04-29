@@ -9,7 +9,7 @@ const Updater = (props: UpdaterProps): JSX.Element => {
     const languageContext = useContext(LanguageContext)    
 
     LocalStorageService.cleanGarbage()
-    UpdateService.checkUpdates(languageProvider)
+    UpdateService.checkUpdates(languageContext)
 
     return (
         <>

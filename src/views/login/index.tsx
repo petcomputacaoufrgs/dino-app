@@ -3,23 +3,36 @@ import './styles.css'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../images/dinosaur_1.svg'
 import Dinosaur2 from '../../images/dinosaur_2.svg'
-import {LanguageContext} from '../../components/language_provider'
-import CustomAlert from '../../components/custom_alert/index';
+import { LanguageContext } from '../../components/language_provider'
+import { AlertContext } from '../../components/alert_provider'
 
 /**
  * @description Tela de login com o Google
  */
 const Login = () : JSX.Element => {
 
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
-    const [alertDinoFail, showAlertDinoFail] = CustomAlert(language.LOGIN_FAIL_BY_API, 'error')
-    const [alertGoogleFail, showAlertGoogleFail] = CustomAlert(language.LOGIN_FAIL_BY_GOOGLE, 'error')
-    const [alertRefreshError, showAlertRefreshError] = CustomAlert(language.LOGIN_REFRESH_ERROR, 'warning')
-    const [alertCancel, showAlertCancel] = CustomAlert(language.LOGIN_CANCELED, 'warning')
+    const alertProvider = useContext(AlertContext)
  
+    const showAlertDinoFail = () => {
+        alertProvider.showErrorAlert(language.LOGIN_FAIL_BY_API)
+    }
+
+    const showAlertGoogleFail = () => {
+        alertProvider.showErrorAlert(language.LOGIN_FAIL_BY_GOOGLE)
+    }
+
+    const showAlertRefreshError = () => {
+        alertProvider.showInfoAlert(language.LOGIN_REFRESH_ERROR)
+    }
+
+    const showAlertCancel = () => {
+        alertProvider.showInfoAlert(language.LOGIN_CANCELED)
+    }
+
     return (
         <div className='login'>
             <img className='login__curious' src={Dinosaur2} alt='Curious dino' />
@@ -34,10 +47,6 @@ const Login = () : JSX.Element => {
                     onRefreshTokenLostError={showAlertRefreshError}
                     buttonText={language.LOGIN_BUTTON_TEXT} />
             </div>
-            {alertDinoFail}
-            {alertGoogleFail}
-            {alertRefreshError}
-            {alertCancel}
         </div>
     )
 }

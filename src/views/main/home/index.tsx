@@ -5,9 +5,9 @@ import './styles.css'
 import UserAuthDataStorageService from '../../../services/local_storage/UserAuthDataStorageService'
 
 const Home = () => {
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
     const avatarSrc = UserAuthDataStorageService.getPictureUrl()
 

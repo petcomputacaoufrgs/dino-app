@@ -12,9 +12,9 @@ const redirectTimeout = 3000
  */
 const NotFound = (): JSX.Element => {
 
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
     const redirectToHome = () => {
         HistoryService.push(PathConstants.HOME)

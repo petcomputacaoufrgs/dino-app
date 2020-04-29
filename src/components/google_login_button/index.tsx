@@ -8,7 +8,7 @@ import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 're
 import GoogleLogo from '../../images/google_logo.png'
 import LoginButtonProps from './props'
 import LoginErrorTypes from '../../constants/LoginErrorTypes'
-import LocalStorageService from '../../services/LocalStorageService'
+import AuthLocalStorageService from '../../services/local_storage/AuthLocalStorageService'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
 import './styles.css'
 
@@ -26,10 +26,10 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
         const authResponse = await AuthService.google_login(response as GoogleLoginResponseOffline)
         
         if (authResponse === LoginErrorTypes.SUCCESS) {
-            const refreshTokenRequired = LocalStorageService.isRefreshRequired()
+            const refreshTokenRequired = AuthLocalStorageService.isRefreshRequired()
 
             if (refreshTokenRequired) {
-                LocalStorageService.setRefreshRequiredToFalse()
+                AuthLocalStorageService.setRefreshRequiredToFalse()
             }
 
             languageContext.updateLanguage()
@@ -57,7 +57,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     }
 
     const getPrompt = (): string => {
-        const refreshTokenRequired = LocalStorageService.isRefreshRequired()
+        const refreshTokenRequired = AuthLocalStorageService.isRefreshRequired()
 
         if (refreshTokenRequired) {
             return GoogleAuthConstants.PROMPT_CONSENT

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import SearchIcon from '@material-ui/icons/Search'
 import GlossaryItems from '../glossary_items'
 import './styles.css';
-import LocalStorageService from '../../../services/LocalStorageService'
+import GlossaryLocalStorageService from '../../../services/local_storage/GlossaryLocalStorageService'
 import GlossaryItemModel from '../../../model/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 
@@ -22,10 +22,10 @@ const GlossarySearchBar = () : JSX.Element => {
 
     //Para realizar uma pesquisa global e substituir, incluir a chave g na expressão regular ou se o primeiro parâmetro é uma string, inclua g no parâmetro flags.
     useEffect(() => {
-        const items = LocalStorageService.getGlossaryItems()
+        const items = GlossaryLocalStorageService.getItems()
         const results = items.filter(item =>
-            StringUtils.normalizeString(item.title.toLowerCase())
-            .includes(StringUtils.normalizeString(searchTerm.toLowerCase()))
+            StringUtils.normalize(item.title.toLowerCase())
+            .includes(StringUtils.normalize(searchTerm.toLowerCase()))
         );
         setSearchResults(results);
     }, [searchTerm])

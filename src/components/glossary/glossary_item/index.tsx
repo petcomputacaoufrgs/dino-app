@@ -1,17 +1,17 @@
-import React from 'react';
+import React from 'react'
 import { useParams} from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles.css'
 import ArrowBack from '../../../components/arrow_back'
-import LocalStorageService from '../../../services/LocalStorageService'
+import GlossaryLocalStorageService from '../../../services/local_storage/GlossaryLocalStorageService'
 
 
 const GlossaryItem = (): JSX.Element => {
 
     const { id } = useParams()
 
-    const items = LocalStorageService.getGlossaryItems()
+    const items = GlossaryLocalStorageService.getItems()
     
     const item = items.find(item => item.id === Number(id))
 

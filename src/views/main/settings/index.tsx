@@ -37,7 +37,7 @@ const Settings = (): JSX.Element => {
             'language': selectedLanguage
         }
 
-        LocalStorageService.setAppSettings(model)
+        SettingsLocalStorageService.setAppSettings(model)
         AppSettingsService.updateAppSettings(model)
 
         languageContext.updateLanguage()

@@ -27,7 +27,7 @@ class GoogleAuthService {
             const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
                 
             try {
-                const response = await HttpService.post(DinoAPIURLConstants.PATH_AUTH_GOOGLE).send(authRequestModel)
+                const response = await HttpService.post(DinoAPIURLConstants.AUTH_GOOGLE).send(authRequestModel)
 
                 this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
     

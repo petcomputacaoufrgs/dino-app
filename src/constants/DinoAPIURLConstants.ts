@@ -3,21 +3,27 @@
  */
 class DinoAPIURLConstants {
     private URL: string = 'http://localhost:5000/'
-    private PATH_AUTH: string = 'auth/'
-    private PATH_GLOSSARY: string = 'glossary/'
-    private PATH_APP_SETTINGS: string = 'user_app_settings/'
+    private AUTH: string = this.URL + 'auth/'
+    private GLOSSARY: string = this.URL + 'glossary/'
+    private APP_SETTINGS: string = this.URL + 'user_app_settings/'
+    private NOTE: string = this.URL + 'note/'
 
-    PATH_AUTH_GOOGLE: string = this.URL + this.PATH_AUTH + 'google/'
+    AUTH_GOOGLE = this.AUTH + 'google/'
 
-    PATH_GLOSSARY_LIST: string = this.URL + this.PATH_GLOSSARY + 'get/'
+    GLOSSARY_LIST = this.GLOSSARY + 'get/'
 
-    PATH_GLOSSARY_VERSION: string = this.URL + this.PATH_GLOSSARY + 'version/'
+    GLOSSARY_VERSION = this.GLOSSARY + 'version/'
 
-    PATH_APP_SETTINGS_VERSION: string = this.URL + this.PATH_APP_SETTINGS + 'version/'
+    APP_SETTINGS_VERSION = this.APP_SETTINGS + 'version/'
 
-    PATH_APP_SETTINGS_GET: string = this.URL + this.PATH_APP_SETTINGS
+    APP_SETTINGS_GET = this.APP_SETTINGS
 
-    PATH_APP_SETTINGS_SAVE: string = this.URL + this.PATH_APP_SETTINGS
+    APP_SETTINGS_SAVE = this.APP_SETTINGS
+
+    NOTE_GET_VERSION = this.NOTE + 'version/'
+
+    NOTE_GET = this.NOTE
+
 
 }
 

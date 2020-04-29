@@ -41,6 +41,24 @@ class NotesLocalStorageService extends LocalStorageService {
         this.remove(LS_Constants.NOTE)
     }
 
+    getVersion = (): number => {
+        const version = this.get(LS_Constants.NOTE_VERSION)
+
+        if (version) {
+            return JSON.parse(version)
+        }
+        
+        return -1
+    }
+
+    setVersion = (version: number) => {
+        this.set(LS_Constants.NOTE_VERSION, JSON.stringify(version))
+    }
+
+    removeVersion = () => {
+        this.remove(LS_Constants.NOTE_VERSION)
+    }
+
 }
 
 export default new NotesLocalStorageService()

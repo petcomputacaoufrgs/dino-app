@@ -16,6 +16,7 @@ class LocalStorageKeys {
     PAGE_TEMP: string = 'pt'
     NOTE: string = 'no'
     NOTE_TAGS: string = 'nt'
+    NOTE_VERSION: string = 'nv'
 }
 
 export default new LocalStorageKeys()

@@ -11,7 +11,7 @@ class GlossaryService {
 
     getVersion = async (): Promise<number> => {
 
-        const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_VERSION).catch((error) => {
+        const response = await HttpService.get(DinoAPIURLConstants.GLOSSARY_VERSION).catch((error) => {
             console.log("[getVersion()] API call error");
         })
 
@@ -19,7 +19,7 @@ class GlossaryService {
     }
 
     getItems = async (): Promise<Array<GlossaryItemModel>> => {
-        const response = await HttpService.get(DinoAPIURLConstants.PATH_GLOSSARY_LIST).catch((error) => {
+        const response = await HttpService.get(DinoAPIURLConstants.GLOSSARY_LIST).catch((error) => {
             console.log("[getItems()] API call error");
         })
 

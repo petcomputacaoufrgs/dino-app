@@ -48,7 +48,7 @@ class AppSettingsService {
     
     updateAppSettings = async (model: AppSettingsModel): Promise<void> => {
         
-        const response = await DinoHttpService.post(DinoAPIURLConstants.PATH_APP_SETTINGS_SAVE).send(model)
+        const response = await DinoHttpService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE).send(model)
         
         const newVersion = response.body
 
@@ -65,7 +65,7 @@ class AppSettingsService {
     }
 
     private getAppSettingsFromServer = async (): Promise<AppSettingsResponseModel> => {
-        const response = await DinoHttpService.get(DinoAPIURLConstants.PATH_APP_SETTINGS_GET)
+        const response = await DinoHttpService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
 
         const appSettings: AppSettingsResponseModel = response.body
 
@@ -73,7 +73,7 @@ class AppSettingsService {
     }
 
     private getAppSettingsVersion = async (): Promise<number> => {
-        const response = await DinoHttpService.get(DinoAPIURLConstants.PATH_APP_SETTINGS_VERSION)
+        const response = await DinoHttpService.get(DinoAPIURLConstants.APP_SETTINGS_VERSION)
 
         const version: number = response.body
 

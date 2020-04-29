@@ -2,8 +2,63 @@ import NoteViewModel from '../model/view/NoteViewModel'
 import NoteLocalModel from '../model/local_storage/NoteLocalModel';
 import NotesLocalStorageService from './local_storage/NotesLocalStorageService'
 import NoteTagLocalModel from '../model/local_storage/NoteTagLocalModel';
+import DinoHttpService from './DinoHttpService'
+import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
+import NoteAPIModel from '../model/dino_api/NoteAPIModel';
+import HttpStatus from 'http-status-codes';
 
 class NotesService {
+
+    //#region Updater
+    checkUpdate = async (): Promise<void> => {
+      const serverVersion = await this.getServerNotesVersion()
+
+      const savedVersion = NotesLocalStorageService.getVersion()
+
+      if (serverVersion !== savedVersion) {
+        
+      }
+      
+
+    }
+
+    private updateNotesVersion = async (): Promise<void> => {
+      const response = await DinoHttpService.get(DinoAPIURLConstants.NOTE_GET)
+
+      if (response.status === HttpStatus.OK) {
+        const notes: NoteAPIModel[] = response.body
+
+        const localNotes: NoteLocalModel[] = notes.map(n => {
+          const localNote: NoteLocalModel = {...n, savedOnServer: true, tagList: n.tagList.map(t => {
+            const tag: NoteTagLocalModel = {...t, savedOnServer: true}
+  
+            return tag
+          })}
+
+          return localNote
+        })
+
+        NotesLocalStorageService.setNotes(localNotes)
+      } else {
+        
+        this.updateNotesVersion()
+      }
+    } 
+      
+
+    private getServerNotes = async (): Promise<number> => {
+
+    }
+
+    private getServerNotesVersion = async (): Promise<number> => {
+      const response = await DinoHttpService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
+
+      const version: number = response.body
+
+      return version
+    }
+
+    //#endregion
   
     getSavedNotes = (): NoteViewModel[] => {
         const savedNotes = NotesLocalStorageService.getNotes()
@@ -15,9 +70,9 @@ class NotesService {
             'answer': savedNote.answer,
             'answered': savedNote.answered,
             'tagList': savedNote.tagList,
-            'creationDay': savedNote.creationDay,
-            'creationMonth': savedNote.creationMonth,
-            'creationYear': savedNote.creationYear,
+            'creationDay': savedNote.lastUpdateDay,
+            'creationMonth': savedNote.lastUpdateMonth,
+            'creationYear': savedNote.lastUpdateYear,
             'showByQuestion': true,
             'showByTag': true,
             'savedOnServer': savedNote.savedOnServer
@@ -46,7 +101,6 @@ class NotesService {
 
         NotesLocalStorageService.setTags(tags)
       }
-
     }
 
     saveNewNoteIds = (notes: NoteViewModel[])  => {
@@ -89,9 +143,9 @@ class NotesService {
         'answer': noteModel.answer,
         'answered': noteModel.answered,
         'tagList': noteModel.tagList,
-        'creationDay': noteModel.creationDay,
-        'creationMonth': noteModel.creationMonth,
-        'creationYear': noteModel.creationYear,
+        'lastUpdateDay': noteModel.creationDay,
+        'lastUpdateMonth': noteModel.creationMonth,
+        'lastUpdateYear': noteModel.creationYear,
         'savedOnServer': noteModel.savedOnServer
       }
 

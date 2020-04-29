@@ -11,8 +11,8 @@ import StringUtils from '../../../utils/StringUtils'
 
 const GlossarySearchBar = () : JSX.Element => {
 
-    const languageProvider = useContext(LanguageContext)
-    const language = languageProvider.currentLanguage
+    const languageContext = useContext(LanguageContext)
+    const language = languageContext.currentLanguage
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
 

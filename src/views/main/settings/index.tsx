@@ -10,21 +10,21 @@ import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../model/AppSettingsModel'
 import AppSettingsService from '../../../services/AppSettingsService'
 import SettingsLocalStorageService from '../../../services/local_storage/SettingsLocalStorageService'
-import CustomAlert from '../../../components/custom_alert'
 import HistoryService from '../../../services/HistoryService'
+import { AlertContext } from '../../../components/alert_provider/index'
 import './styles.css'
 
 const Settings = (): JSX.Element => {
 
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
-    const languageList = languageProvider.getLanguageList()
+    const alertProvider = useContext(AlertContext)
+
+    const languageList = languageContext.getLanguageList()
 
     const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
-
-    const [alertSuccess, showAlertSuccess] = CustomAlert(language.SETTINGS_SAVE_SUCCESS, 'success')
 
     const onChangeLanguage = (event: any) => {
         if (event && event.target && event.target.value) {
@@ -40,8 +40,8 @@ const Settings = (): JSX.Element => {
         SettingsLocalStorageService.setAppSettings(model)
         AppSettingsService.updateAppSettings(model)
 
-        languageProvider.updateLanguage()
-        showAlertSuccess()
+        languageContext.updateLanguage()
+        alertProvider.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
         
         HistoryService.goBack()
     }
@@ -93,7 +93,6 @@ const Settings = (): JSX.Element => {
                 {renderSelectLanguage()}
             </FormControl>
             {renderSaveButton()}
-            {alertSuccess}
         </div>
     )
 }

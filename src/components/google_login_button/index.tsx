@@ -14,9 +14,9 @@ import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
 
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
     const [loading, setLoading] = useState(false)
 
@@ -32,7 +32,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
                 AuthLocalStorageService.setRefreshRequiredToFalse()
             }
 
-            languageProvider.updateLanguage()
+            languageContext.updateLanguage()
             
             return
         }

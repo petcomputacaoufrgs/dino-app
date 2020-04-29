@@ -10,13 +10,13 @@ import './styles.css'
  */
 const LogoutDialog = (): [() => JSX.Element, () => void] => {
 
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
     const logout = () => {
         AuthService.google_logout()
-        languageProvider.updateLanguage()
+        languageContext.updateLanguage()
     }
 
     const agreementDialogProps: AgreementDialogProps = {

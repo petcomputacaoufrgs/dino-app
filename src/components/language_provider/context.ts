@@ -5,7 +5,7 @@ export interface Language {
     code: string
 }
 
-export default interface LanguageProviderValue {
+export default interface LanguageContextValue {
     currentLanguage: LanguageSet
     getLanguageList: () => Language[]
     updateLanguage: () => void

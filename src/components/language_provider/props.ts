@@ -1,4 +1,4 @@
 
 export default interface LanguageProviderProps {
-    children? : any
+    children?: JSX.Element
 }

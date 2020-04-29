@@ -28,9 +28,9 @@ const Main = () : JSX.Element => {
 
     const location = useLocation()
 
-    const languageProvider = useContext(LanguageContext)
+    const languageContext = useContext(LanguageContext)
 
-    const language = languageProvider.currentLanguage
+    const language = languageContext.currentLanguage
 
     const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
 

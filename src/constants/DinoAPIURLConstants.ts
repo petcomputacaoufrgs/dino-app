@@ -24,7 +24,7 @@ class DinoAPIURLConstants {
 
     NOTE_GET = this.NOTE
 
-
+    NOTE_SAVE = this.NOTE
 }
 
 export default new DinoAPIURLConstants()

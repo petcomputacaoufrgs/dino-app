@@ -1,6 +1,6 @@
 import { LocalStorageService } from './LocalStorageService'
 import LS_Constants from "../../constants/LocalStorageKeysConstants"
-import GlossaryItemModel from '../../model/GlossaryItemModel'
+import GlossaryItemModel from '../../model/dino_api/glossary/GlossaryItemModel'
 
 class GlossaryLocalStorageService extends LocalStorageService {
 

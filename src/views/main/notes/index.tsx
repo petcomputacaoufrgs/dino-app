@@ -13,9 +13,10 @@ import NotesService from '../../../services/NotesService'
 import SearchBar from '../../../components/search_bar'
 import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
 import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
-import './styles.css'
 import AgreementDialogProps from '../../../components/generic_agreement_dialog/props'
 import AgreementDialog from '../../../components/generic_agreement_dialog'
+import NoteTagLocalModel from '../../../model/local_storage/NoteTagLocalModel';
+import './styles.css'
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
@@ -27,7 +28,7 @@ const Notes = () => {
     const [answer, setAnswer] = useState('')
     const [answerDialogOpen, setAnswerDialogOpen] = useState(false)
     const [question, setQuestion] = useState('')
-    const [tagList, setTagList] = useState([] as string[])
+    const [tagList, setTagList] = useState([] as NoteTagLocalModel[])
     const [questionDialogOpen, setQuestionDialogOpen] = useState(false)
     const [newQuestionDialogOpen, setNewQuestionDialogOpen] = useState(false)
     const [textSearch, setTextSearch] = useState('')
@@ -97,7 +98,7 @@ const Notes = () => {
       setQuestionDialogOpen(true)
     }
 
-    const handleSaveQuestion = (newQuestion: string, newTagList: string[]) => {
+    const handleSaveQuestion = (newQuestion: string, newTagList: NoteTagLocalModel[]) => {
       if (!note) {
         return
       }
@@ -111,7 +112,6 @@ const Notes = () => {
         editedNote.tagList = newTagList
 
         NotesService.updateNoteQuestion(editedNote)
-        NotesService.saveTags(newTagList)
       }
 
       setNote(undefined)
@@ -128,7 +128,7 @@ const Notes = () => {
         open={questionDialogOpen}
         question={question}
         tagList={tagList}
-        tagOptions={NotesService.getSavedTags()}
+        tagOptions={NotesService.getSavedTags().map(tag => tag.name)}
         onSave={handleSaveQuestion}
         onClose={handleCloseQuestionDialog}
       />
@@ -180,7 +180,7 @@ const Notes = () => {
       setNewQuestionDialogOpen(true)
     }
 
-    const handleSaveNewQuestion = (newQuestion: string, newTagList: string[]) => {
+    const handleSaveNewQuestion = (newQuestion: string, newTagList: NoteTagLocalModel[]) => {
       const newBoard = {...board}
 
       const newNotes = newBoard.columns[0].cards
@@ -190,22 +190,20 @@ const Notes = () => {
       const date = new Date()
 
       const newNote: NoteViewModel = {
-        'answer': '',
-        'answered': false,
-        'question': newQuestion,
-        'id': newId,
-        'tagList': newTagList,
-        'showByTag': hasSomeTag(newTagList, tagSearch),
-        'showByQuestion': hasText(newQuestion, textSearch),
-        'creationDay':  date.getDay(),
-        'creationMonth': date.getMonth(),
-        'creationYear': date.getFullYear(),
-        'savedOnServer': false
+        answer: '',
+        answered: false,
+        question: newQuestion,
+        id: newId,
+        tagList: newTagList,
+        showByTag: hasSomeTag(newTagList, tagSearch),
+        showByQuestion: hasText(newQuestion, textSearch),
+        lastUpdateDay: date.getDay(),
+        lastUpdateMonth: date.getMonth(),
+        lastUpdateYear: date.getFullYear(),
+        savedOnServer: false
       }
 
       NotesService.saveNote(newNote)
-
-      NotesService.saveTags(newTagList)
 
       newNotes.push(newNote)
       
@@ -222,7 +220,7 @@ const Notes = () => {
         open={newQuestionDialogOpen}
         question={''}
         tagList={[]}
-        tagOptions={NotesService.getSavedTags()}
+        tagOptions={NotesService.getSavedTags().map(tag => tag.name)}
         onSave={handleSaveNewQuestion}
         onClose={handleCloseNewQuestionDialog}
       />
@@ -271,9 +269,9 @@ const Notes = () => {
       return tagSearch.length === 0
     }
 
-    const hasSomeTag = (nodeTags: string[], searchTags: string[], tSearch?: string): boolean => {
+    const hasSomeTag = (nodeTags: NoteTagLocalModel[], searchTags: string[], tSearch?: string): boolean => {
       if (searchTags.length > 0) {
-        return nodeTags.some(tag => searchTags.includes(tag))
+        return nodeTags.some(tag => searchTags.includes(tag.name))
       } 
 
       if (tSearch && tSearch.length !== 0) {
@@ -286,7 +284,7 @@ const Notes = () => {
 
     const renderSearchBar = (): JSX.Element => (
       <SearchBar 
-        options={NotesService.getSavedTags()}
+        options={NotesService.getSavedTags().map(tag => tag.name)}
         onTagSearch={handleTagSearch}
         onTextSearch={handleTextSearch} 
         textFieldClass={HEADER_TEXT_FIELD_CLASS}

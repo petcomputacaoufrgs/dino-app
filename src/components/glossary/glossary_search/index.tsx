@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import GlossaryItems from '../glossary_items'
 import './styles.css';
 import GlossaryLocalStorageService from '../../../services/local_storage/GlossaryLocalStorageService'
-import GlossaryItemModel from '../../../model/GlossaryItemModel'
+import GlossaryItemModel from '../../../model/dino_api/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 
 

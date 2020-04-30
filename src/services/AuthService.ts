@@ -1,16 +1,15 @@
-import GoogleAuthRequestModel from '../model/GoogleAuthRequestModel'
+import GoogleAuthRequestModel from '../model/dino_api/auth/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
 import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
-import AuthResponseModel from '../model/AuthResponseModel'
+import AuthResponseModel from '../model/dino_api/settings/AuthResponseModel'
 import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
-import UpdateService from './UpdateService'
 import GoogleAuthConstants from '../constants/GoogleAuthConstants'
 import LoginErrorTypes from '../constants/LoginErrorTypes'
-import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel'
+import GoogleAuthResponseModel from '../model/dino_api/auth/GoogleAuthResponseModel'
 import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
 import UserAuthDataStorageService from './local_storage/UserAuthDataStorageService'
 import SettingsLocalStorageService from './local_storage/SettingsLocalStorageService'
@@ -30,9 +29,6 @@ class GoogleAuthService {
                 const response = await HttpService.post(DinoAPIURLConstants.AUTH_GOOGLE).send(authRequestModel)
 
                 this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
-    
-                UpdateService.checkUpdates()
-                HistoryService.push(PathConstants.HOME)
     
                 return LoginErrorTypes.SUCCESS
             } catch (error){

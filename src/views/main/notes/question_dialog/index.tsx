@@ -6,6 +6,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import QuestionDialogProps from './props'
+import NoteTagLocalModel from '../../../../model/local_storage/NoteTagLocalModel';
 
 const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
     const languageProvider = useContext(LanguageContext)
@@ -14,13 +15,23 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
     const [open, setOpen] = useState(props.open)
     const [question, setQuestion] = useState('')
     const [tagList, setTagList] = useState([] as string[])
+    const [originalTagList, setOriginalTagList] = useState([] as NoteTagLocalModel[])
 
     const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
+        const newTags = values.filter(value => originalTagList.every(tag => tag.name !== value))
+
+        const localNewTags = newTags.map(nt => ({ name: nt, savedOnServer: false } as NoteTagLocalModel))
+
+        const newOriginalTagList = [...originalTagList, ...localNewTags]
+        
         setTagList(values)
+        setOriginalTagList(newOriginalTagList)
     }
 
     const handleSave = () => {
-        props.onSave(question, tagList)
+        const tags = originalTagList.filter(otag => tagList.some(tag => tag === otag.name))
+
+        props.onSave(question, tags)
     }
 
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +47,7 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
             const changedToOpen = props.open
 
             if (changedToOpen) {
-                setTagList(props.tagList)
+                setTagList(props.tagList.map(tag => tag.name))
                 setQuestion(props.question)
             }
         }

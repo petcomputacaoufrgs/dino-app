@@ -10,11 +10,16 @@ import LoginButtonProps from './props'
 import LoginErrorTypes from '../../constants/LoginErrorTypes'
 import AuthLocalStorageService from '../../services/local_storage/AuthLocalStorageService'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
+import { UpdaterContext } from '../updater/index'
+import HistoryService from '../../services/HistoryService'
+import PathConstants from '../../constants/PathConstants'
 import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
 
     const languageContext = useContext(LanguageContext)
+
+    const updaterContext = useContext(UpdaterContext)
 
     const language = languageContext.currentLanguage
 
@@ -30,10 +35,13 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
 
             if (refreshTokenRequired) {
                 AuthLocalStorageService.setRefreshRequiredToFalse()
+            } else {
+                updaterContext.update()
             }
 
-            languageContext.updateLanguage()
-            
+            setLoading(false)
+            HistoryService.push(PathConstants.HOME)
+
             return
         }
 

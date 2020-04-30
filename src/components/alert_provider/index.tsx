@@ -43,7 +43,6 @@ const AlertProvider = (props: AlertProviderProps) => {
 
     const renderAlerts = (): JSX.Element => (
         <>
-        {console.log('render')}
         {alertList.map((alertProps, index) => (
             <Alert {...alertProps} key={index} />
         ))}

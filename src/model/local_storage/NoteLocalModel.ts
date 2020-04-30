@@ -1,4 +1,5 @@
-import NoteTagLocalModel from './NoteTagLocalModel';
+import NoteTagLocalModel from './NoteTagLocalModel'
+
 export default interface NoteLocalModel {
     id?: number
     order: number

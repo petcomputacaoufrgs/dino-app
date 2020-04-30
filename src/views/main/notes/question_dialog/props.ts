@@ -1,9 +1,8 @@
-import NoteTagLocalModel from '../../../../model/local_storage/NoteTagLocalModel';
 export default interface QuestionDialogProps {
     open: boolean
     question: string
-    tagList: NoteTagLocalModel[]
+    tagList: string[]
     tagOptions: string[]
-    onSave: (question: string, tagList: NoteTagLocalModel[]) => void
+    onSave: (question: string, tagList: string[]) => void
     onClose: () => void
 }

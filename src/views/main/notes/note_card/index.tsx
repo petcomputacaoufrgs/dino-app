@@ -70,7 +70,7 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
         } 
     }, [props.dragging, 
         props.note.question, 
-        props.note.tagList, 
+        props.note.tagNames, 
         props.note.answer, 
         props.note.answered,
         props.note, 
@@ -113,7 +113,7 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
     const renderTags = (): JSX.Element => (
         <CardContent className='card__tag_list'>
             <TagList
-                tagList={note.tagList.map(tag => tag.name)}
+                tagList={note.tagNames}
             />
         </CardContent>
     )

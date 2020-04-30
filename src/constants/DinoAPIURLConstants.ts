@@ -25,6 +25,10 @@ class DinoAPIURLConstants {
     NOTE_GET = this.NOTE
 
     NOTE_SAVE = this.NOTE
+
+    NOTE_ORDER = this.NOTE + 'order/'
+
+    NOTE_DELETE = this.NOTE
 }
 
 export default new DinoAPIURLConstants()

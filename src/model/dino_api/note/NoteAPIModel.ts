@@ -11,7 +11,7 @@ export default interface NoteAPIModel {
 
     answered: boolean
 
-    tagList: NoteTagAPIModel[]
+    tags: NoteTagAPIModel[]
 
     lastUpdateDay: number
 

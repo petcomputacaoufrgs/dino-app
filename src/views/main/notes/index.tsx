@@ -15,7 +15,6 @@ import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
 import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
 import AgreementDialogProps from '../../../components/generic_agreement_dialog/props'
 import AgreementDialog from '../../../components/generic_agreement_dialog'
-import NoteTagLocalModel from '../../../model/local_storage/NoteTagLocalModel';
 import './styles.css'
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
@@ -28,7 +27,7 @@ const Notes = () => {
     const [answer, setAnswer] = useState('')
     const [answerDialogOpen, setAnswerDialogOpen] = useState(false)
     const [question, setQuestion] = useState('')
-    const [tagList, setTagList] = useState([] as NoteTagLocalModel[])
+    const [tagList, setTagList] = useState([] as string[])
     const [questionDialogOpen, setQuestionDialogOpen] = useState(false)
     const [newQuestionDialogOpen, setNewQuestionDialogOpen] = useState(false)
     const [textSearch, setTextSearch] = useState('')
@@ -94,11 +93,11 @@ const Notes = () => {
     const handleOpenEditQuestionDialog = (note: NoteViewModel) => {
       setNote(note)
       setQuestion(note.question)
-      setTagList(note.tagList)
+      setTagList(note.tagNames)
       setQuestionDialogOpen(true)
     }
 
-    const handleSaveQuestion = (newQuestion: string, newTagList: NoteTagLocalModel[]) => {
+    const handleSaveQuestion = (newQuestion: string, newTagNames: string[]) => {
       if (!note) {
         return
       }
@@ -109,7 +108,7 @@ const Notes = () => {
 
       if (editedNote) {
         editedNote.question = newQuestion
-        editedNote.tagList = newTagList
+        editedNote.tagNames = newTagNames
 
         NotesService.updateNoteQuestion(editedNote)
       }
@@ -180,7 +179,7 @@ const Notes = () => {
       setNewQuestionDialogOpen(true)
     }
 
-    const handleSaveNewQuestion = (newQuestion: string, newTagList: NoteTagLocalModel[]) => {
+    const handleSaveNewQuestion = (newQuestion: string, newTagNames: string[]) => {
       const newBoard = {...board}
 
       const newNotes = newBoard.columns[0].cards
@@ -194,8 +193,8 @@ const Notes = () => {
         answered: false,
         question: newQuestion,
         id: newId,
-        tagList: newTagList,
-        showByTag: hasSomeTag(newTagList, tagSearch),
+        tagNames: newTagNames,
+        showByTag: hasSomeTag(newTagNames, tagSearch),
         showByQuestion: hasText(newQuestion, textSearch),
         lastUpdateDay: date.getDay(),
         lastUpdateMonth: date.getMonth(),
@@ -238,7 +237,7 @@ const Notes = () => {
       setTagSearch(newTagSearch)
 
       notes.forEach(n => {
-        n.showByTag = hasSomeTag(n.tagList, newTagSearch)
+        n.showByTag = hasSomeTag(n.tagNames, newTagSearch)
         n.showByQuestion = false
       })
 
@@ -254,7 +253,7 @@ const Notes = () => {
       setTextSearch(newTextSearch)
 
       notes.forEach(n => {
-        n.showByTag = hasSomeTag(n.tagList, tagSearch, newTextSearch)
+        n.showByTag = hasSomeTag(n.tagNames, tagSearch, newTextSearch)
         n.showByQuestion = hasText(n.question, newTextSearch)
       })
 
@@ -269,9 +268,9 @@ const Notes = () => {
       return tagSearch.length === 0
     }
 
-    const hasSomeTag = (nodeTags: NoteTagLocalModel[], searchTags: string[], tSearch?: string): boolean => {
+    const hasSomeTag = (nodeTagNames: string[], searchTags: string[], tSearch?: string): boolean => {
       if (searchTags.length > 0) {
-        return nodeTags.some(tag => searchTags.includes(tag.name))
+        return nodeTagNames.some(name => searchTags.includes(name))
       } 
 
       if (tSearch && tSearch.length !== 0) {
@@ -297,7 +296,7 @@ const Notes = () => {
     const handleCardMove = (card, source, destination) => {
       const newBoard: NoteBoardViewModel  = moveCard(board, source, destination)
 
-      NotesService.saveNewNoteIds(newBoard.columns[0].cards)
+      NotesService.updateNotesOrder(newBoard.columns[0].cards)
 
       setBoard(newBoard)
     }

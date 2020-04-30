@@ -10,9 +10,9 @@ import PathConstants from '../constants/PathConstants'
 import GoogleAuthConstants from '../constants/GoogleAuthConstants'
 import LoginErrorTypes from '../constants/LoginErrorTypes'
 import GoogleAuthResponseModel from '../model/dino_api/auth/GoogleAuthResponseModel'
-import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
 import UserAuthDataStorageService from './local_storage/UserAuthDataStorageService'
 import SettingsLocalStorageService from './local_storage/SettingsLocalStorageService'
+import NotesLocalStorageService from './local_storage/NotesLocalStorageService'
 
 class GoogleAuthService {
 
@@ -30,6 +30,8 @@ class GoogleAuthService {
 
                 this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
     
+                AuthLocalStorageService.cleanLoginGarbage()
+
                 return LoginErrorTypes.SUCCESS
             } catch (error){
                 if (error.status === HttpStatus.PRECONDITION_REQUIRED) {
@@ -44,7 +46,7 @@ class GoogleAuthService {
     }
 
     google_logout = () => {
-        this.removeAuthData()
+        this.removeUserData()
 
         HistoryService.push(PathConstants.LOGIN)
     }
@@ -69,16 +71,11 @@ class GoogleAuthService {
         UserAuthDataStorageService.setPictureUrl(responseBody.pictureUrl)
     }
     
-    public removeAuthData() {
-        AuthLocalStorageService.removeAuthToken()
-        AuthLocalStorageService.removeGoogleAccessToken()
-        UserAuthDataStorageService.removeEmail()
-        UserAuthDataStorageService.removeName()
-        UserAuthDataStorageService.removePictureUrl()
-        SettingsLocalStorageService.removeAppSettingsVersion()
-        SettingsLocalStorageService.removeAppSettings()
-        GlossaryLocalStorageService.removeVersion()
-        GlossaryLocalStorageService.removeItems()
+    public removeUserData() {
+        AuthLocalStorageService.removeUserData()
+        UserAuthDataStorageService.removeUserData()
+        SettingsLocalStorageService.removeUserData()
+        NotesLocalStorageService.removeUserData()
     }
 }
 

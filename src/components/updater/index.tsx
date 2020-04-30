@@ -1,5 +1,4 @@
 import React, { useContext, createContext } from 'react'
-import LocalStorageService from '../../services/local_storage/LocalStorageService'
 import UpdateService from '../../services/UpdateService'
 import { LanguageContext } from '../language_provider/index'
 import NotesService from '../../services/NotesService'
@@ -12,7 +11,6 @@ const Updater = (props: UpdaterProps): JSX.Element => {
     const languageContext = useContext(LanguageContext)    
 
     const update = () => {
-        LocalStorageService.cleanGarbage()
         UpdateService.checkUpdates(languageContext)
         NotesService.checkUpdates()
     }

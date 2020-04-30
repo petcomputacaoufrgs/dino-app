@@ -40,6 +40,11 @@ class AuthLocalStorageService extends LocalStorageService {
     setRefreshRequiredToFalse = () => {
         this.remove(LS_Constants.REFRESH_TOKEN_REQUIRED)
     } 
+
+    removeUserData = () => {
+        this.removeAuthToken()
+        this.removeGoogleAccessToken()
+    }
     
 }
 

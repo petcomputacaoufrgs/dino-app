@@ -35,6 +35,14 @@ class DinoHttpService {
         return Superagent.get(url).set(this.getHeader()).on('error', this.onError).on('response', this.onResponse)
     }
 
+    /**
+     * @description Cria uma requisição do tipo DELETE com autenticação se houver e com filtro para erro de acesso negado
+     * @param url URL da entrada de comunicação com a API
+     */
+    delete = (url: string) : Superagent.SuperAgentRequest => {
+        return Superagent.delete(url).set(this.getHeader()).on('error', this.onError).on('response', this.onResponse)
+    }
+
     private getHeader = () : object => {
         if (AuthService.isAuthenticated()) {
             const authorizationHeader = 'Bearer '.concat(AuthService.getAuthenticationToken())
@@ -47,7 +55,7 @@ class DinoHttpService {
 
     private onError = (err: any) => {
         if (err.status === HttpStatus.FORBIDDEN) {
-            AuthService.removeAuthData()
+            AuthService.removeUserData()
 
             HistoryService.push(PathConstants.LOGIN)
         } else if (err.status === HttpStatus.PRECONDITION_REQUIRED) {

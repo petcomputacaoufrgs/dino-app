@@ -38,6 +38,11 @@ class SettingsLocalStorageService extends LocalStorageService {
         this.remove(LS_Constants.APP_SETTINGS)
     }
 
+    removeUserData = () => {
+        this.removeAppSettingsVersion()
+        this.removeAppSettings()
+    }
+
 }
 
 export default new SettingsLocalStorageService()

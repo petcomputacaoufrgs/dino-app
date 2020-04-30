@@ -1,12 +1,9 @@
-import NoteTagLocalModel from '../local_storage/NoteTagLocalModel'
-
 export default interface NoteViewModel {
     id: number
-    api_id?: number
     question: string
     answer: string
     answered: boolean
-    tagList: NoteTagLocalModel[]
+    tagNames: string[]
     showByTag: boolean
     showByQuestion: boolean
     lastUpdateDay: number

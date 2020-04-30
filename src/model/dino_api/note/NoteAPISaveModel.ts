@@ -1,13 +1,9 @@
-import NoteTagAPIModel from './NoteTagAPIModel'
-
-export default interface NoteAPISaveModel {
+export default interface NoteSaveAPIModel {
     order: number
 
     question: string
 
-    tagIdList: number[]
-
-    newTags: string[]
+    tagNames: string[]
 
     lastUpdateDay: number
 

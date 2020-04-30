@@ -1,5 +1,5 @@
 import NoteViewModel from '../model/view/NoteViewModel'
-import NoteLocalModel from '../model/local_storage/NoteLocalModel'
+import NoteLocalModel from '../model/local_storage/NoteLocalModel';
 import NotesLocalStorageService from './local_storage/NotesLocalStorageService'
 import NoteTagLocalModel from '../model/local_storage/NoteTagLocalModel'
 import DinoHttpService from './DinoHttpService'
@@ -7,30 +7,41 @@ import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
 import NoteAPIModel from '../model/dino_api/note/NoteAPIModel'
 import HttpStatus from 'http-status-codes'
 import AuthService from './AuthService'
-import NoteAPISaveModel from '../model/dino_api/note/NoteAPISaveModel'
+import NoteSaveAPIModel from '../model/dino_api/note/NoteAPISaveModel'
 import NoteSaveResponseAPIModel from '../model/dino_api/note/NoteSaveResponseAPIModel'
+import NoteOrderAPIModel from '../model/dino_api/note/NoteOrderAPIModel'
+import ArraySeparate from '../utils/ArraySeparate'
+import NoteDeleteAPIModel from '../model/dino_api/note/NoteDeleteAPIModel';
 
-class NotesService {
+class NotesService {  
 
     //#region SERVER UPDATER
 
     checkUpdates = async (): Promise<void> => {
+      NotesLocalStorageService.setUpdateNotesWithError(false)
+
       if (AuthService.isAuthenticated()) { 
         NotesLocalStorageService.setUpdatingNotes(true)
 
-        const serverVersion = await this.getServerNotesVersion()
+        const response = await DinoHttpService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
 
-        const savedVersion = NotesLocalStorageService.getVersion()
+        if (response.status === HttpStatus.OK) {
+          const serverVersion: number = response.body
 
-        if (serverVersion !== savedVersion) {
-          await this.updateNotesVersion()
+          const savedVersion = NotesLocalStorageService.getVersion()
+
+          if (serverVersion !== savedVersion) {
+            await this.updateNotesVersion(serverVersion)
+          } 
+        } else {
+          NotesLocalStorageService.setUpdateNotesWithError(true)
         }
-
+        
         NotesLocalStorageService.setUpdatingNotes(false)
       }
     }
 
-    private updateNotesVersion = async (): Promise<void> => {
+    private updateNotesVersion = async (version: number): Promise<void> => {
       const response = await DinoHttpService.get(DinoAPIURLConstants.NOTE_GET)
 
       if (response.status === HttpStatus.OK) {
@@ -38,7 +49,7 @@ class NotesService {
         const tags: NoteTagLocalModel[] = []
 
         const localNotes: NoteLocalModel[] = notes.map(n => {
-          const localNote: NoteLocalModel = {...n, savedOnServer: true, tagList: n.tagList.map(t => {
+          const localNote: NoteLocalModel = {...n, savedOnServer: true, tagNames: n.tags.map(t => {
             const tag: NoteTagLocalModel = {...t, savedOnServer: true}
             
             const tagNotPushed = !tags.map(t => t.name).includes(tag.name)
@@ -47,7 +58,7 @@ class NotesService {
               tags.push(tag)
             }
             
-            return tag
+            return tag.name
           })}
 
           return localNote
@@ -55,19 +66,10 @@ class NotesService {
 
         NotesLocalStorageService.setNotes(localNotes)
         NotesLocalStorageService.setTags(tags)
-        NotesLocalStorageService.setUpdateNotesWithError(false)
-      } else {
-        NotesLocalStorageService.setUpdateNotesWithError(true)
+        NotesLocalStorageService.setVersion(version)
       }
+      NotesLocalStorageService.setUpdateNotesWithError(true)
     } 
-
-    private getServerNotesVersion = async (): Promise<number> => {
-      const response = await DinoHttpService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
-
-      const version: number = response.body
-
-      return version
-    }
 
     //#endregion
   
@@ -95,19 +97,18 @@ class NotesService {
     saveNote = (noteModel: NoteViewModel) => {
       noteModel.savedOnServer = false
       this.saveOnLocalHistory(noteModel)
-      this.saveTagsOnLocalStorage(noteModel.tagList)
+      this.saveTagsOnLocalStorage(noteModel.tagNames)
       this.saveNoteOnServer(noteModel)
     }
 
     saveNoteOnServer = async (noteModel: NoteViewModel) => {
-      const newNote: NoteAPISaveModel = {
+      const newNote: NoteSaveAPIModel = {
         order: noteModel.id,
         question: noteModel.question,
         lastUpdateDay: noteModel.lastUpdateDay,
         lastUpdateMonth: noteModel.lastUpdateMonth,
         lastUpdateYear: noteModel.lastUpdateYear,
-        tagIdList: noteModel.tagList.filter(t => t.id).map(t => t.id ? t.id : -1),
-        newTags: noteModel.tagList.filter(t => !t.id).map(t => t.name)
+        tagNames: noteModel.tagNames
       }
 
       const response = await DinoHttpService.post(DinoAPIURLConstants.NOTE_SAVE).send(newNote)
@@ -115,22 +116,20 @@ class NotesService {
       if (response.status === HttpStatus.OK) {
         const body: NoteSaveResponseAPIModel = response.body
 
-        NotesLocalStorageService.setVersion(body.version)
+        console.log(response.body)
 
         const tags = NotesLocalStorageService.getTags()
 
-        const newTags = tags
-        .map(tag => {
-          const savedTag = body.tags.some(t => t.name === tag.name)
+        const newTags = tags.map(tag => {
+          const savedTag = body.newTags.find(t => t.name === tag.name)
           
           if (savedTag) {
             tag.savedOnServer = true
+            tag.id = savedTag.id
           }
 
           return tag
         })
-
-        NotesLocalStorageService.setTags(newTags)
 
         const notes = NotesLocalStorageService.getNotes()
 
@@ -138,10 +137,11 @@ class NotesService {
 
         if (savedNote) {
           savedNote.savedOnServer = true
-
-          savedNote.tagList.forEach(tag => tag.savedOnServer = true)
+          savedNote.id = body.noteId
 
           NotesLocalStorageService.setNotes(notes)
+          NotesLocalStorageService.setTags(newTags)
+          NotesLocalStorageService.setVersion(body.version)
         }
       }
     }
@@ -150,10 +150,12 @@ class NotesService {
 
     //#region SAVE & UPDATE
     
-    saveTagsOnLocalStorage = (tagNames: NoteTagLocalModel[]) => {
+    saveTagsOnLocalStorage = (tagNames: string[]) => {
       const savedTags = NotesLocalStorageService.getTags()
 
-      const newTags = tagNames.filter(tag => !savedTags.some(savedTag => savedTag.name === tag.name))
+      const newTags = tagNames
+        .filter(name => savedTags.every(tag => tag.name !== name))
+        .map(name => ({name: name, savedOnServer: false} as NoteTagLocalModel))
 
       if (newTags.length > 0) {
         const tags = savedTags.concat(newTags)
@@ -162,38 +164,83 @@ class NotesService {
       }
     }
 
-    saveNewNoteIds = (notes: NoteViewModel[])  => {
-      const newNotes = [...notes]
+    updateNotesOrder = (notes: NoteViewModel[])  => {
+      const viewNote = [...notes]
 
-      NotesLocalStorageService.removeNotes()
+      const savedNotes = NotesLocalStorageService.getNotes()
 
-      const newStorageNotes: NoteLocalModel[] = []
-
-      newNotes.forEach((note, index) => {
-        note.id = index
-        note.savedOnServer = false
-
-        const localModel = this.noteViewModelToLocalStorageModel(note)
-
-        newStorageNotes.push(localModel)
+      savedNotes.forEach(note => {
+        const newOrder = viewNote.findIndex(n => n.question === note.question)
+        
+        note.order = newOrder
       })
 
-      NotesLocalStorageService.setNotes(newStorageNotes)
+      NotesLocalStorageService.setNotes(savedNotes)
+      this.updateOrderOnServer(savedNotes)
     }
 
+    private updateOrderOnServer = async (notes: NoteLocalModel[]): Promise<void> => {
+      const model: NoteOrderAPIModel[] = []
 
+      notes.forEach(note => {
+        model.push({
+          id: note.id,
+          order: note.order
+        } as NoteOrderAPIModel)
+      })
 
-    saveOnServer = (noteModel: NoteViewModel) => {
+      const response = await DinoHttpService.put(DinoAPIURLConstants.NOTE_ORDER).send(model)
 
+      if (response.status === HttpStatus.OK) {
+        NotesLocalStorageService.setVersion(response.body)
+      }
     }
 
     deleteNote = (noteModel: NoteViewModel) => {
       const savedNotes = NotesLocalStorageService.getNotes()
 
-      const newSavedNotes = savedNotes.filter(n => n.order !== noteModel.id)
+      const [newSavedNotes, deletedNotes] = ArraySeparate(savedNotes, n => n.order !== noteModel.id)
 
-      NotesLocalStorageService.setNotes(newSavedNotes)
+      if (deletedNotes.length === 1) {
+        const deletedNote = deletedNotes[0]
+
+        if (!deletedNote.id) {
+          return 
+        }
+
+        const deletedTagNames = noteModel.tagNames
+          .filter(tagName => newSavedNotes.every(note => !note.tagNames.includes(tagName)))
+
+        const savedTags = NotesLocalStorageService.getTags()
+
+        const newSavedTags = savedTags.filter(tag => deletedTagNames.every(t => t !== tag.name))
+        
+        const notesToDelete = NotesLocalStorageService.getNotesToDelete()
+
+        notesToDelete.push(deletedNote)
+
+        NotesLocalStorageService.setNotesToDelete(notesToDelete)
+        NotesLocalStorageService.setNotes(newSavedNotes)
+        NotesLocalStorageService.setTags(newSavedTags)
+        this.deleteNoteOnServer(deletedNote)
+      }
     } 
+
+    private deleteNoteOnServer = async (note: NoteLocalModel) => {
+      if (note.id) {
+        const model: NoteDeleteAPIModel = { id: note.id }
+
+        const response = await DinoHttpService.delete(DinoAPIURLConstants.NOTE_DELETE).send(model)
+
+        if (response.status === HttpStatus.OK && response.body === 1) {
+          const notesToDelete = NotesLocalStorageService.getNotesToDelete()
+
+          const updatedData = notesToDelete.filter(n => n.id !== note.id)
+
+          NotesLocalStorageService.setNotesToDelete(updatedData)
+        } 
+      }
+    }
 
     updateNoteQuestion = (noteModel: NoteViewModel) => {
       const savedNotes = NotesLocalStorageService.getNotes()
@@ -203,13 +250,29 @@ class NotesService {
       
       if (changedNote) {
         changedNote.question = noteModel.question
-        changedNote.tagList = noteModel.tagList
+        changedNote.tagNames = noteModel.tagNames
         changedNote.savedOnServer = false
 
         unchangedNotes.push(changedNote)
 
         NotesLocalStorageService.setNotes(unchangedNotes)
-        this.saveTagsOnLocalStorage(changedNote.tagList)
+
+        const tags = NotesLocalStorageService.getTags()
+
+        changedNote.tagNames.forEach(name => {
+          const isNew = tags.every(tag => tag.name !== name)
+
+          if (isNew) {
+            const newTag: NoteTagLocalModel = {
+              name: name,
+              savedOnServer: false
+            }
+
+            tags.push(newTag)
+          }
+        })
+
+        NotesLocalStorageService.setTags(tags)
       }
     }
 
@@ -233,7 +296,17 @@ class NotesService {
     //#endregion
 
     private saveOnLocalHistory = (noteModel: NoteViewModel) => {
-      const localModel = this.noteViewModelToLocalStorageModel(noteModel)
+      const localModel: NoteLocalModel = {
+        answer: noteModel.answer,
+        answered: noteModel.answered,
+        lastUpdateDay: noteModel.lastUpdateDay,
+        lastUpdateMonth: noteModel.lastUpdateMonth,
+        lastUpdateYear: noteModel.lastUpdateYear,
+        question: noteModel.question,
+        savedOnServer: false,
+        order: noteModel.id,
+        tagNames: noteModel.tagNames
+      }
 
       const notes = NotesLocalStorageService.getNotes()
 
@@ -241,14 +314,6 @@ class NotesService {
 
       NotesLocalStorageService.setNotes(notes)
     }
-
-    protected noteViewModelToLocalStorageModel = (noteModel: NoteViewModel) => {
-      const localModel: NoteLocalModel = {...noteModel, 
-        'id': noteModel.api_id,'order': noteModel.id}
-
-      return localModel
-    }
-
 }
 
 export default new NotesService()

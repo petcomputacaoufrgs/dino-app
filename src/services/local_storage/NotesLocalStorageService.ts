@@ -74,7 +74,7 @@ class NotesLocalStorageService extends LocalStorageService {
     }
 
     removeTags = () => {
-        this.remove(LS_Constants.NOTE)
+        this.remove(LS_Constants.NOTE_TAGS)
     }
 
     getVersion = (): number => {
@@ -93,6 +93,33 @@ class NotesLocalStorageService extends LocalStorageService {
 
     removeVersion = () => {
         this.remove(LS_Constants.NOTE_VERSION)
+    }
+
+    getNotesToDelete = (): NoteLocalModel[] => {
+        const notesToDelete = this.get(LS_Constants.NOTES_TO_DELETE)
+
+        if (notesToDelete) {
+            return JSON.parse(notesToDelete)
+        }
+        
+        return []
+    }
+
+    setNotesToDelete = (notesToDelete: NoteLocalModel[]) => {
+        this.set(LS_Constants.NOTES_TO_DELETE, JSON.stringify(notesToDelete))
+    }
+
+    removeNotesToDelete = () => {
+        this.remove(LS_Constants.NOTES_TO_DELETE)
+    }
+    
+    removeUserData = () => {
+        this.removeNotes()
+        this.removeTags()
+        this.removeUpdateNotesWithError()
+        this.removeUpdatingNotes()
+        this.removeVersion()
+        this.removeNotesToDelete()
     }
 
 }

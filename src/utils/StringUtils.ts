@@ -1,9 +1,9 @@
 
 class StringUtils {
 
-    normalize = (str : string) : string => (
-        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-    )
+    normalizer = (str: string): string => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    }
 
     /**
      * @param s1 String um
@@ -11,7 +11,7 @@ class StringUtils {
      * @returns True para s1 normalizada igual a s2 normalizada
      */
     areEqual = (s1: string, s2: string): boolean => (
-        this.normalize(s1) === this.normalize(s2)
+        this.normalizer(s1) === this.normalizer(s2)
     )
 
     /**
@@ -28,17 +28,17 @@ class StringUtils {
      * @param s2 String possivelmente incluida na maior
      * @returns True para s2 contida em s1
      */
-    contains = (s1: string, s2: string) : boolean => (
-        this.normalize(s1)
-            .includes(this.normalize(s2))
-    )
+    contains = (s1: string, s2: string): boolean => {
+        return this.normalizer(s1).includes(this.normalizer(s2))
+    }
 
     /**
      * 
      * @param n Número a ser convertido
      * @param length Número de zeros a esquerda
      */
-    toStringWithZeros(n: number, length: number): string {
+    toStringWithZeros = (n: number, length: number): string => {
+
         const stringNumber = n.toString()
 
         return stringNumber.padStart(length, '0')

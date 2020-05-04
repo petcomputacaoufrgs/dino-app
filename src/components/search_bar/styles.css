@@ -1,11 +1,9 @@
-.search_bar {
-    width: 100%;
+.search-bar {
+    padding: 10px;
 }
-
-.search_bar  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #B32E55;
-}
-
-.search_bar .MuiFormLabel-root.Mui-focused {
-    color: #B32E55;
+  
+.search-bar input[type="text"], .search-bar textarea {
+    outline: none;
+    box-shadow: none !important;
+    border:1px solid #ccc !important;
 }

@@ -11,13 +11,13 @@ import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import NoteSVG from '../../../images/note.svg'
 import NotesService from '../../../services/NotesService'
-import SearchBar from '../../../components/search_bar'
 import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
 import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
 import AgreementDialogProps from '../../../components/generic_agreement_dialog/props'
 import AgreementDialog from '../../../components/generic_agreement_dialog'
 import DinoAPIGeneralConstants from '../../../constants/dino_api/DinoAPIGeneralConstants'
 import './styles.css'
+import TagSearchBar from '../../../components/tag_search_bar/index';
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
@@ -285,7 +285,7 @@ const Notes = () => {
 
 
     const renderSearchBar = (): JSX.Element => (
-      <SearchBar 
+      <TagSearchBar 
         options={NotesService.getSavedTags()}
         onTagSearch={handleTagSearch}
         onTextSearch={handleTextSearch} 

@@ -13,13 +13,7 @@ class GlossaryLocalStorageService extends LocalStorageService {
     getItems = () : Array<GlossaryItemModel> => {
         let items = this.get(LS_Constants.GLOSSARY_ITEMS)
 
-        let result = new Array<GlossaryItemModel>()
-
-        if (items) {
-            result = JSON.parse(items)
-        }
-        
-        return result
+        return items ? JSON.parse(items) : new Array<GlossaryItemModel>()
     }
 
     removeItems = () => {

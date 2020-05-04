@@ -5,7 +5,7 @@ class AppConstants {
     /**
      * @description Nome do aplicativo
      */
-    APP_NAME: string =  'Dino APP'
+    APP_NAME: string =  'DinoApp'
 }
 
 export default new AppConstants()

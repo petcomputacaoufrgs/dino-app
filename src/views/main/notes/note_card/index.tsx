@@ -101,9 +101,7 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
             title={note.question}
             subheader={
                 DateUtils.getDateStringFormated(
-                    note.lastUpdateDay, 
-                    note.lastUpdateMonth, 
-                    note.lastUpdateYear, 
+                    note.lastUpdate, 
                     language
                 )
             }

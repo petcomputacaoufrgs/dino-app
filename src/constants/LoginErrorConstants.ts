@@ -1,7 +1,7 @@
 /**
  * @description Tipos de erros retornados no serviço de login
  */
-class LoginErrorTypes {
+class LoginErrorConstants {
 
     SUCCESS = -1
 
@@ -9,7 +9,7 @@ class LoginErrorTypes {
 
     UNKNOW_API_ERROR = 1
 
-    REFRESH_TOKEN_LOST_ERROR = 2
+    REFRESH_TOKEN_REFRESH_NECESSARY = 2
 }
 
-export default new LoginErrorTypes()
+export default new LoginErrorConstants()

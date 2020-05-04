@@ -34,7 +34,7 @@ export default class PT_BR implements LanguageSet {
 
     LOGIN_CANCELED = 'Login cancelado.'
 
-    LOGIN_REFRESH_ERROR = 'Ocorreu um erro. Precisamos que se autentique novamente, por favor.'
+    LOGIN_REFRESH_NECESSARY = 'Ocorreu um erro. Precisamos que se autentique novamente, por favor.'
 
     AVATAR_ALT = 'Imagem de perfil do usuário com as bordas arredondadas.'
     

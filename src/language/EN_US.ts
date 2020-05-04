@@ -34,7 +34,7 @@ export default class EN_US implements LanguageSet {
 
     LOGIN_CANCELED = 'Login canceled.'
 
-    LOGIN_REFRESH_ERROR = 'Login with error. We need you to authenticate again, please.'
+    LOGIN_REFRESH_NECESSARY = 'Login with error. We need you to authenticate again, please.'
 
     AVATAR_ALT = 'User\'s profile image with rounded edges.'
 

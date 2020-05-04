@@ -3,7 +3,7 @@ import NoteLocalModel from '../model/local_storage/NoteLocalModel';
 import NotesLocalStorageService from './local_storage/NotesLocalStorageService'
 import NoteTagLocalModel from '../model/local_storage/NoteTagLocalModel'
 import DinoHttpService from './DinoHttpService'
-import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
+import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
 import NoteAPIModel from '../model/dino_api/note/NoteAPIModel'
 import HttpStatus from 'http-status-codes'
 import AuthService from './AuthService'
@@ -101,13 +101,11 @@ class NotesService {
       this.saveNoteOnServer(noteModel)
     }
 
-    saveNoteOnServer = async (noteModel: NoteViewModel) => {
+    saveNoteOnServer = async (noteModel: NoteViewModel) => {      
       const newNote: NoteSaveAPIModel = {
         order: noteModel.id,
         question: noteModel.question,
-        lastUpdateDay: noteModel.lastUpdateDay,
-        lastUpdateMonth: noteModel.lastUpdateMonth,
-        lastUpdateYear: noteModel.lastUpdateYear,
+        lastUpdate: noteModel.lastUpdate,
         tagNames: noteModel.tagNames
       }
 
@@ -115,8 +113,6 @@ class NotesService {
 
       if (response.status === HttpStatus.OK) {
         const body: NoteSaveResponseAPIModel = response.body
-
-        console.log(response.body)
 
         const tags = NotesLocalStorageService.getTags()
 
@@ -279,10 +275,11 @@ class NotesService {
     updateNoteAnswer = (noteModel: NoteViewModel) => {
       const savedNotes = NotesLocalStorageService.getNotes()
 
-      const unchangedNotes = savedNotes.filter(n => n.order !== noteModel.id)
-      const editedNote = savedNotes.find(n => n.order === noteModel.id)
+      const [editedNotes, unchangedNotes] = ArraySeparate(savedNotes, n => n.order === noteModel.id)
       
-      if (editedNote) {
+      if (editedNotes.length === 1) {
+        const editedNote = editedNotes[0]
+        
         editedNote.answer = noteModel.answer
         editedNote.answered = noteModel.answered
         editedNote.savedOnServer = false
@@ -299,9 +296,7 @@ class NotesService {
       const localModel: NoteLocalModel = {
         answer: noteModel.answer,
         answered: noteModel.answered,
-        lastUpdateDay: noteModel.lastUpdateDay,
-        lastUpdateMonth: noteModel.lastUpdateMonth,
-        lastUpdateYear: noteModel.lastUpdateYear,
+        lastUpdate: noteModel.lastUpdate,
         question: noteModel.question,
         savedOnServer: false,
         order: noteModel.id,

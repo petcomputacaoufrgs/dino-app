@@ -3,14 +3,16 @@ import StringUtils from './StringUtils'
 
 class DateUtils {
 
-    getDateStringFormated = (day: number, month: number, year: number, language: LanguageSet): string => {
+    getDateStringFormated = (dateMS: number, language: LanguageSet): string => {
+        const date = new Date(dateMS)
+
         const stringDate = language.STRING_DATE_FORMAT
 
-        const stringDay = StringUtils.toStringWithZeros(day, 2)
+        const stringDay = StringUtils.toStringWithZeros(date.getDate(), 2)
 
-        const stringMonth = this.getMonthName(month, language)
+        const stringMonth = this.getMonthName(date.getMonth(), language)
 
-        const stringYear = year.toString()
+        const stringYear = date.getFullYear().toString()
 
         return stringDate.replace('DD', stringDay)
                         .replace('MM', stringMonth)

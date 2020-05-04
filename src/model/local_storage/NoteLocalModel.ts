@@ -5,8 +5,6 @@ export default interface NoteLocalModel {
     answer: string
     answered: boolean
     tagNames: string[]
-    lastUpdateDay: number
-    lastUpdateMonth: number
-    lastUpdateYear: number
+    lastUpdate: number
     savedOnServer: boolean
 }

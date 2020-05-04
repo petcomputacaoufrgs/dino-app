@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { DateTime } from 'luxon'
 import { LanguageContext } from '../../../components/language_provider'
 import StringUtils from '../../../utils/StringUtils'
 import Board, { moveCard } from '@lourenci/react-kanban'
@@ -15,6 +16,7 @@ import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
 import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
 import AgreementDialogProps from '../../../components/generic_agreement_dialog/props'
 import AgreementDialog from '../../../components/generic_agreement_dialog'
+import DinoAPIGeneralConstants from '../../../constants/dino_api/DinoAPIGeneralConstants'
 import './styles.css'
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
@@ -44,7 +46,7 @@ const Notes = () => {
     const [idNoteToDelete, setIdNoteToDelete] = useState(undefined as number | undefined)
 
     //#region Editing Answer
-    const handleEditAnswer = (note: NoteViewModel) => {
+    const handleOpenAnswerDialog = (note: NoteViewModel) => {
       setNote(note)
       setAnswer(note.answer)
       setAnswerDialogOpen(true)
@@ -137,13 +139,13 @@ const Notes = () => {
 
     //#region Deleting Note
 
-    const handleDeleteNote = (id: number) => {
+    const handleOpenDeleteNoteDialog = (id: number) => {
       setIdNoteToDelete(id)
 
       showDeleteDialog()
     }
 
-    const deleteNote = () => {
+    const handleDeleteNote = () => {
       const newData = {...board}
 
       const notes = newData.columns[0].cards
@@ -162,7 +164,7 @@ const Notes = () => {
     }
 
     const agreementDialogProps: AgreementDialogProps = {
-      onAgree: deleteNote,
+      onAgree: handleDeleteNote,
       question: language.DELETE_NOTE_ALERT_TITLE,
       description: language.DELETE_NOTE_ALERT_TEXT,
       agreeOptionText: language.AGREEMENT_OPTION_TEXT,
@@ -186,7 +188,7 @@ const Notes = () => {
 
       const newId = newNotes.length
 
-      const date = new Date()
+      const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
 
       const newNote: NoteViewModel = {
         answer: '',
@@ -196,9 +198,7 @@ const Notes = () => {
         tagNames: newTagNames,
         showByTag: hasSomeTag(newTagNames, tagSearch),
         showByQuestion: hasText(newQuestion, textSearch),
-        lastUpdateDay: date.getDay(),
-        lastUpdateMonth: date.getMonth(),
-        lastUpdateYear: date.getFullYear(),
+        lastUpdate: date,
         savedOnServer: false
       }
 
@@ -316,8 +316,8 @@ const Notes = () => {
             dragging={dragging}
             note={cardNote}
             onEditQuestion={handleOpenEditQuestionDialog}
-            onEditAnswer={handleEditAnswer}
-            onDelete={handleDeleteNote}>
+            onEditAnswer={handleOpenAnswerDialog}
+            onDelete={handleOpenDeleteNoteDialog}>
           </NoteCard>
         }
         </>

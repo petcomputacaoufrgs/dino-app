@@ -1,6 +1,6 @@
 import GoogleAuthRequestModel from '../model/dino_api/auth/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
-import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
+import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
 import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
 import AuthResponseModel from '../model/dino_api/settings/AuthResponseModel'
@@ -8,7 +8,7 @@ import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 import GoogleAuthConstants from '../constants/GoogleAuthConstants'
-import LoginErrorTypes from '../constants/LoginErrorTypes'
+import LoginErrorConstants from '../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../model/dino_api/auth/GoogleAuthResponseModel'
 import UserAuthDataStorageService from './local_storage/UserAuthDataStorageService'
 import SettingsLocalStorageService from './local_storage/SettingsLocalStorageService'
@@ -28,21 +28,24 @@ class GoogleAuthService {
             try {
                 const response = await HttpService.post(DinoAPIURLConstants.AUTH_GOOGLE).send(authRequestModel)
 
-                this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
+                if (response.status === HttpStatus.OK) {
+                    this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
     
-                AuthLocalStorageService.cleanLoginGarbage()
+                    AuthLocalStorageService.cleanLoginGarbage()
+    
+                    return LoginErrorConstants.SUCCESS
+                }
 
-                return LoginErrorTypes.SUCCESS
-            } catch (error){
-                if (error.status === HttpStatus.PRECONDITION_REQUIRED) {
-                    return LoginErrorTypes.REFRESH_TOKEN_LOST_ERROR
-                } 
+                if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+                    return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
+                }
 
-                return LoginErrorTypes.UNKNOW_API_ERROR
+            } catch (error) {
+                return LoginErrorConstants.UNKNOW_API_ERROR
             }
         }    
         
-        return LoginErrorTypes.EXTERNAL_SERVICE_ERROR
+        return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
     }
 
     google_logout = () => {

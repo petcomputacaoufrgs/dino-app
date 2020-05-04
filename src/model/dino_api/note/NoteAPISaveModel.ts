@@ -5,9 +5,6 @@ export default interface NoteSaveAPIModel {
 
     tagNames: string[]
 
-    lastUpdateDay: number
+    lastUpdate: number
 
-    lastUpdateMonth: number
-
-    lastUpdateYear: number
 }

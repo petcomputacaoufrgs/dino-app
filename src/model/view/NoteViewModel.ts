@@ -6,9 +6,7 @@ export default interface NoteViewModel {
     tagNames: string[]
     showByTag: boolean
     showByQuestion: boolean
-    lastUpdateDay: number
-    lastUpdateMonth: number
-    lastUpdateYear: number
+    lastUpdate: number
     savedOnServer: boolean
 }
 

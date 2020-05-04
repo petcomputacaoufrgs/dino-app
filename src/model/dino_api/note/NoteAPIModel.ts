@@ -13,9 +13,5 @@ export default interface NoteAPIModel {
 
     tags: NoteTagAPIModel[]
 
-    lastUpdateDay: number
-
-    lastUpdateMonth: number
-
-    lastUpdateYear: number
+    lastUpdate: number
 }

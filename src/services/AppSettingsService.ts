@@ -1,5 +1,5 @@
 import DinoHttpService from "./DinoHttpService"
-import DinoAPIURLConstants from "../constants/DinoAPIURLConstants"
+import DinoAPIURLConstants from "../constants/dino_api/DinoAPIURLConstants"
 import SettingsLocalStorageService from "./local_storage/SettingsLocalStorageService"
 import AppSettingsResponseModel from '../model/dino_api/settings/AppSettingsResponseModel'
 import AppSettingsModel from '../model/dino_api/settings/AppSettingsModel'

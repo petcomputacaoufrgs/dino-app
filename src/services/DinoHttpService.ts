@@ -3,7 +3,7 @@ import AuthService from './AuthService'
 import HttpStatus from 'http-status-codes'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
-import DinoAPIHeaderConstants from '../constants/DinoAPIHeaderConstants'
+import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
 import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
 
 /**

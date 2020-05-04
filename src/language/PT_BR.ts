@@ -53,7 +53,9 @@ export default class PT_BR implements LanguageSet {
     MENU_SETTINGS = 'Configurações'
     
     MENU_GLOSSARY = 'Glossário'
-    
+
+    MENU_CONTACTS = 'Contatos'
+
     MENU_LOGOUT = 'Sair'
     
     SETTINGS_TITLE = 'Configurações'

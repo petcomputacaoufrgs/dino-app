@@ -27,6 +27,7 @@ class GlossaryService {
     }
 
     checkUpdate = async () => {
+
         const newVersion = await this.getVersion()
 
         if (newVersion !== GlossaryLocalStorageService.getVersion()) {

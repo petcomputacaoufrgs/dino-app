@@ -10,12 +10,12 @@ import AuthService from './services/AuthService'
 import HistoryService from './services/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import LanguageProvider from './components/language_provider'
+import ProviderLoader from './components/provider_loader'
 import './App.css'
 
 const App = (): JSX.Element => {  
   return (
-    <LanguageProvider>
+    <ProviderLoader>
       <Updater>
         <PrivateRouter 
           loginPath={PathConstants.LOGIN}
@@ -30,7 +30,7 @@ const App = (): JSX.Element => {
           </Switch>
         </PrivateRouter>
       </Updater>
-    </LanguageProvider>
+    </ProviderLoader>
   )
 }
 

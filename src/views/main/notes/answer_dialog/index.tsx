@@ -30,7 +30,7 @@ const AnswerDialog = (props: AnswerProps): JSX.Element => {
             const changedToOpen = props.open
 
             if (changedToOpen) {
-                setAnswer(props.answer)
+                setAnswer(props.answer ? props.answer : '')
             }
         }
     },[props.open, props.answer, open])

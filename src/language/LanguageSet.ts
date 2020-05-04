@@ -60,4 +60,8 @@ export default interface LanguageSet {
     STRING_DATE_FORMAT: string
     DELETE_NOTE_ALERT_TITLE: string
     DELETE_NOTE_ALERT_TEXT: string
+    LOADING: string
+    NO_OPTIONS: string
+    EMPTY_FIELD_ERROR: string
+    QUESTION_ALREADY_EXISTS_ERROR: string
 }

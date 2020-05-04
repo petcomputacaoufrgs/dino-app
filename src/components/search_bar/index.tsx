@@ -23,6 +23,8 @@ const SearchBar = (props: SearchBarProps): JSX.Element => {
     return (
         <Autocomplete
             multiple
+            loadingText={language.LOADING}
+            noOptionsText={language.NO_OPTIONS}
             options={props.options}
             getOptionLabel={(option) => option}
             className='search_bar'

@@ -127,4 +127,13 @@ export default class EN_US implements LanguageSet {
     DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
 
     DELETE_NOTE_ALERT_TEXT = 'If you agree this note will be deleted permanently.'
+
+    LOADING = 'Loading...'
+
+    NO_OPTIONS = 'No options'
+
+    EMPTY_FIELD_ERROR = 'Field can\'t be empty.'
+
+    QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
+
 }

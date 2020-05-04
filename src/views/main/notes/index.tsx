@@ -109,8 +109,11 @@ const Notes = () => {
       const editedNote = newData.columns[0].cards.find(n => n.id === note.id)
 
       if (editedNote) {
+        const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
+
         editedNote.question = newQuestion
         editedNote.tagNames = newTagNames
+        editedNote.lastUpdate = date
 
         NotesService.updateNoteQuestion(editedNote)
       }
@@ -129,7 +132,7 @@ const Notes = () => {
         open={questionDialogOpen}
         question={question}
         tagList={tagList}
-        tagOptions={NotesService.getSavedTags().map(tag => tag.name)}
+        tagOptions={NotesService.getSavedTags()}
         onSave={handleSaveQuestion}
         onClose={handleCloseQuestionDialog}
       />
@@ -219,7 +222,7 @@ const Notes = () => {
         open={newQuestionDialogOpen}
         question={''}
         tagList={[]}
-        tagOptions={NotesService.getSavedTags().map(tag => tag.name)}
+        tagOptions={NotesService.getSavedTags()}
         onSave={handleSaveNewQuestion}
         onClose={handleCloseNewQuestionDialog}
       />
@@ -283,7 +286,7 @@ const Notes = () => {
 
     const renderSearchBar = (): JSX.Element => (
       <SearchBar 
-        options={NotesService.getSavedTags().map(tag => tag.name)}
+        options={NotesService.getSavedTags()}
         onTagSearch={handleTagSearch}
         onTextSearch={handleTextSearch} 
         textFieldClass={HEADER_TEXT_FIELD_CLASS}

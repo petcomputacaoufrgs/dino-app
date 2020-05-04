@@ -1,7 +1,6 @@
 import { LocalStorageService } from './LocalStorageService'
 import LS_Constants from '../../constants/LocalStorageKeysConstants'
 import NoteLocalModel from '../../model/local_storage/NoteLocalModel';
-import NoteTagLocalModel from '../../model/local_storage/NoteTagLocalModel';
 
 class NotesLocalStorageService extends LocalStorageService {
     
@@ -59,7 +58,7 @@ class NotesLocalStorageService extends LocalStorageService {
         this.remove(LS_Constants.UPDATE_NOTES_WITH_ERROR)
     }
 
-    getTags = (): NoteTagLocalModel[] => {
+    getTags = (): string[] => {
         const items = this.get(LS_Constants.NOTE_TAGS)
 
         if (items) {
@@ -69,7 +68,7 @@ class NotesLocalStorageService extends LocalStorageService {
         return []
     }
 
-    setTags = (tags: NoteTagLocalModel[]) => {
+    setTags = (tags: string[]) => {
         this.set(LS_Constants.NOTE_TAGS, JSON.stringify(tags))
     }
 

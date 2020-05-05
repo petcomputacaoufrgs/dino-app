@@ -1,4 +1,4 @@
-import AuthLocalStorageService from './AuthLocalStorageService'
+import AuthLocalStorageService from './AuthLocalStorage'
 
 /**
  * @description 

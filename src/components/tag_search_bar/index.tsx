@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { LanguageContext } from '../language_provider'
+import { LanguageContext } from '../../provider/language_provider'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import TagSearchBarProps from './props'

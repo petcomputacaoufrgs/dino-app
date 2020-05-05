@@ -1,6 +1,6 @@
-import { LocalStorageService } from './LocalStorageService'
-import LS_Constants from "../../constants/LocalStorageKeysConstants"
-import AppSettingsModel from '../../model/dino_api/settings/AppSettingsModel'
+import { LocalStorageService } from './LocalStorage'
+import LS_Constants from "../constants/LocalStorageKeysConstants"
+import AppSettingsModel from '../model/dino_api/settings/AppSettingsModel'
 
 class SettingsLocalStorageService extends LocalStorageService {
 

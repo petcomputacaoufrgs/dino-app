@@ -4,7 +4,7 @@ import HttpStatus from 'http-status-codes'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
-import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
+import AuthLocalStorageService from '../local_storage/AuthLocalStorage'
 
 /**
  * @description Abstrai a biblioteca Superagent com tratamentos para autenticação, erro de autenticação e renovação de token

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { LanguageContext } from '../language_provider';
+import { LanguageContext } from '../../provider/language_provider';
 import ContactItemModel from '../../model/ContactItemModel'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ContactItems from './contact_items';

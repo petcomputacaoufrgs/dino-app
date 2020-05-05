@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import { LanguageContext } from '../language_provider'
+import { LanguageContext } from '../../provider/language_provider'
 import AuthService from '../../services/AuthService'
-import AgreementDialog from '../generic_agreement_dialog'
-import AgreementDialogProps from '../generic_agreement_dialog/props'
+import AgreementDialog from '../agreement_dialog'
+import AgreementDialogProps from '../agreement_dialog/props'
 import './styles.css'
 
 /**

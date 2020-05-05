@@ -1,0 +1,40 @@
+[Tue, 05 May 2020 20:26:18 GMT] [info] [<0.000.0>] pouchdb-server has started on http://127.0.0.1:5984/
+[Tue, 05 May 2020 20:26:18 GMT] [info] [<0.000.0>] navigate to http://127.0.0.1:5984/_utils for the Fauxton UI.
+[Tue, 05 May 2020 20:26:29 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET / 200
+[Tue, 05 May 2020 20:26:29 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET / 304
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils 301
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/ 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/css/styles-a9623008fc27e79da2388441deeacfab.css 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/js/bundle-34997e32896293a1fa5d71f79eb1b4f7.js 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_session 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_session 304
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET / 304
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/img/pouchdb-site.png 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/fonts/fauxtonicon5.woff 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_all_dbs?_=1588710402478 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_all_dbs?startkey=%22%22&endkey=%22%E9%A6%99%22&limit=30&_=1588710402479 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/ 304
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_replicator?_=1588710402480 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/img/pouchdb-favicon.png 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_users?_=1588710402481 200
+[Tue, 05 May 2020 20:26:42 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/fonts/fontawesome-webfont.woff 200
+[Tue, 05 May 2020 20:27:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_membership 200
+[Tue, 05 May 2020 20:27:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/httpd/enable_cors 404
+[Tue, 05 May 2020 20:27:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/credentials 404
+[Tue, 05 May 2020 20:27:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/methods 404
+[Tue, 05 May 2020 20:27:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/origins 404
+[Tue, 05 May 2020 20:27:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/headers 404
+[Tue, 05 May 2020 20:28:00 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_membership 200
+[Tue, 05 May 2020 20:28:00 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/httpd/enable_cors 404
+[Tue, 05 May 2020 20:28:00 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/origins 404
+[Tue, 05 May 2020 20:28:00 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/credentials 404
+[Tue, 05 May 2020 20:28:00 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/methods 404
+[Tue, 05 May 2020 20:28:00 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/headers 404
+[Tue, 05 May 2020 20:28:57 GMT] [info] [<0.000.0>] pouchdb-server has started on http://127.0.0.1:5984/
+[Tue, 05 May 2020 20:28:57 GMT] [info] [<0.000.0>] navigate to http://127.0.0.1:5984/_utils for the Fauxton UI.
+[Tue, 05 May 2020 20:29:05 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_membership 200
+[Tue, 05 May 2020 20:29:05 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/origins 404
+[Tue, 05 May 2020 20:29:05 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/httpd/enable_cors 404
+[Tue, 05 May 2020 20:29:05 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/methods 404
+[Tue, 05 May 2020 20:29:05 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/credentials 404
+[Tue, 05 May 2020 20:29:05 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /_node/node1@127.0.0.1//_config/cors/headers 404

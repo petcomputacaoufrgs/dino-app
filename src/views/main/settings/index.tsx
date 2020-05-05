@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { LanguageContext } from '../../../components/language_provider'
+import { LanguageContext } from '../../../provider/language_provider'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -9,9 +9,9 @@ import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../model/dino_api/settings/AppSettingsModel'
 import AppSettingsService from '../../../services/AppSettingsService'
-import SettingsLocalStorageService from '../../../services/local_storage/SettingsLocalStorageService'
+import SettingsLocalStorageService from '../../../local_storage/SettingsLocalStorage'
 import HistoryService from '../../../services/HistoryService'
-import { AlertContext } from '../../../components/alert_provider/index'
+import { AlertContext } from '../../../provider/alert_provider/index'
 import './styles.css'
 
 const Settings = (): JSX.Element => {

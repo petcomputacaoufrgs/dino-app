@@ -1,6 +1,6 @@
-import { LocalStorageService } from './LocalStorageService'
-import LS_Constants from '../../constants/LocalStorageKeysConstants'
-import NoteLocalModel from '../../model/local_storage/NoteLocalModel';
+import { LocalStorageService } from './LocalStorage'
+import LS_Constants from '../constants/LocalStorageKeysConstants'
+import NoteLocalModel from '../model/local_storage/NoteLocalModel';
 
 class NotesLocalStorageService extends LocalStorageService {
     

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { LanguageContext } from '../../components/language_provider'
+import { LanguageContext } from '../../provider/language_provider'
 import PageNotFound from '../../images/page-not-found.svg'
 import HistoryService from '../../services/HistoryService'
 import PathConstants from '../../constants/PathConstants'

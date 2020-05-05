@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
-import MenuItemViewModel from '../../model/view/MenuItemViewModel'
+import MenuItemViewModel from '../../../model/view/MenuItemViewModel'
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'

@@ -6,7 +6,7 @@ import UpdaterProps from './props'
 
 export const UpdaterContext = createContext({update: () => {}})
 
-const Updater = (props: UpdaterProps): JSX.Element => {
+const UpdateProvider = (props: UpdaterProps): JSX.Element => {
 
     const languageContext = useContext(LanguageContext)    
 
@@ -22,4 +22,4 @@ const Updater = (props: UpdaterProps): JSX.Element => {
     )
 }
 
-export default Updater
+export default UpdateProvider

@@ -1,5 +1,5 @@
-import { LocalStorageService } from './LocalStorageService'
-import LS_Constants from "../../constants/LocalStorageKeysConstants"
+import { LocalStorageService } from './LocalStorage'
+import LS_Constants from "../constants/LocalStorageKeysConstants"
 
 class AuthLocalStorageService extends LocalStorageService {
     

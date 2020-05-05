@@ -3,8 +3,8 @@ import './styles.css'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../images/dinosaur_1.svg'
 import Dinosaur2 from '../../images/dinosaur_2.svg'
-import { LanguageContext } from '../../components/language_provider'
-import { AlertContext } from '../../components/alert_provider'
+import { LanguageContext } from '../../provider/language_provider'
+import { AlertContext } from '../../provider/alert_provider'
 
 /**
  * @description Tela de login com o Google

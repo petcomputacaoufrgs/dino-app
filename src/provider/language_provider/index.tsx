@@ -13,7 +13,6 @@ export const LanguageContext = createContext({
     'updateLanguage': () => {}
 } as LanguageContextValue)
 
-
 /**
  * @description Gera um objeto do tipo LanguageSet com os textos na linguagem correta
  * @param props Propriedades do LanguageProvider
@@ -35,7 +34,7 @@ const LanguageProvider = (props: LanguageProviderProps) : JSX.Element => {
     }
 
     const setHTMLElementLanguage = (language: LanguageSet) => {
-        const html = document.getElementById("html")
+        const html = document.getElementById('html')
 
         if (html) {
             html.lang = language.ISO_LANGUAGE_CODE

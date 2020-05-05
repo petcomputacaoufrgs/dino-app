@@ -1,9 +1,9 @@
 import DinoHttpService from "./DinoHttpService"
 import DinoAPIURLConstants from "../constants/dino_api/DinoAPIURLConstants"
-import SettingsLocalStorageService from "./local_storage/SettingsLocalStorageService"
+import SettingsLocalStorageService from "../local_storage/SettingsLocalStorage"
 import AppSettingsResponseModel from '../model/dino_api/settings/AppSettingsResponseModel'
 import AppSettingsModel from '../model/dino_api/settings/AppSettingsModel'
-import LanguageContextValue from "../components/language_provider/context"
+import LanguageContextValue from "../provider/language_provider/context"
 
 class AppSettingsService {
 

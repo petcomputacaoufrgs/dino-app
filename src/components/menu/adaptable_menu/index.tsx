@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect'
 import AdaptableMenuProps from './props'
 import DrawerNavigation from '../drawer_navigation/index'
 import BottomNavigation from '../bottom_navigation/index'
-import ScreenOrientationService from '../../services/ScreenOrientationService'
+import ScreenOrientationService from '../../../services/ScreenOrientationService'
 
 /**
  * @description Menu adaptável para mobile e desktop

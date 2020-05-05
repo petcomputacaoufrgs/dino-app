@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { Avatar } from '@material-ui/core'
-import { LanguageContext } from '../../../components/language_provider'
+import { LanguageContext } from '../../../provider/language_provider'
 import './styles.css'
-import UserAuthDataStorageService from '../../../services/local_storage/UserAuthDataStorageService'
+import UserAuthDataStorageService from '../../../local_storage/UserAuthDataStorage'
 
 const Home = () => {
     const languageContext = useContext(LanguageContext)

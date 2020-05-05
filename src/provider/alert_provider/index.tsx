@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react'
 import AlertContextValue from './context'
-import AlertProps from '../alert/props'
-import Alert from '../alert'
+import AlertProps from '../../components/alert/props'
+import Alert from '../../components/alert'
 import AlertProviderProps from './props'
 
 const ALERT_DURATION = 4000 

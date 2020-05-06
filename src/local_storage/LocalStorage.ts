@@ -1,5 +1,3 @@
-import AuthLocalStorageService from './AuthLocalStorage'
-
 /**
  * @description 
  * - Auxilia a gravar e ler valores do local storage
@@ -7,7 +5,7 @@ import AuthLocalStorageService from './AuthLocalStorage'
  * - Caso adicione algo temporário que não deve permanecer salvo quando o aplicativo reiniciar, 
  * adicione um método de remoção no cleanLocalStorageGarbage
  * */
-export class LocalStorageService {
+export default class LocalStorage {
 
     protected get = (key: string) : string | null => (
         localStorage.getItem(key)
@@ -29,14 +27,7 @@ export class LocalStorageService {
         } 
     }
 
-    cleanLoginGarbage = () => {
-        AuthLocalStorageService.setRefreshRequiredToFalse()
-    }
-
     protected convertStringOrNullToString = (nullableString: string | null): string => (
         nullableString ? nullableString : ''
     )
-    
 }
-
-export default new LocalStorageService()

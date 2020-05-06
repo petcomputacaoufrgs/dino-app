@@ -13,17 +13,10 @@ import './styles.css'
  */
 const BottomNavigation = (props: BottomNavigationProps) => {
 
-    /** Classes utilizadas */
     const classes = useStyles()
 
-    /** Salva o indice do item selecionado no vetor de itens */
     const [selectecItemIndex, setSelectedItemIndex] = useState(props.selectedItem)
   
-    /**
-     * @description Executa os procedimentos para modificar o item do menu
-     * @param event Dados do evento disparado
-     * @param newValue Indice do novo item selecionado no vetor de items
-     */
     const onChange = (event: React.ChangeEvent<{}>, indexNewSelectedItem: string) => {
         const intIndex = Number(indexNewSelectedItem)
 
@@ -34,35 +27,22 @@ const BottomNavigation = (props: BottomNavigationProps) => {
         selectedItem.onClick()
     }
 
-    /** Lida com a atualização externa da props */
     useEffect(() => {
         setSelectedItemIndex(props.selectedItem ? props.selectedItem : 0)
     }, [props.selectedItem])
 
-    /**
-     * @description Retorna o primeiro e principal grupo de itens do menu
-     * @returns Primeiro grupo de itens do menu
-     */
     const getFirstMenuItemsGroup = (): MenuItemViewModel[] => {
-        if (props.groupedItems.length !== 0) {
+        if (props.groupedItems.length !== 0 && !props.hideBottomBar) {
             return props.groupedItems[0]
         }
 
         return []
     }
 
-    /**
-     * @description Retorna todos os grupos de itens com exceção do primeiro
-     * @returns Lista de itens secundários do menu
-     */
     const getSecondaryMenuItemsGroups = (): MenuItemViewModel[][] => (
-        props.groupedItems.slice(1)
+        props.hideBottomBar ? props.groupedItems : props.groupedItems.slice(1)
     )
 
-    /**
-     * @description Rendeniza os itens principais do menu
-     * @returns Elemento JSX com os itens principais em um BottomNavigation
-     */
     const renderMainItems = (): JSX.Element => (
         <MaterialBottomNavigation 
             value={selectecItemIndex} 
@@ -81,19 +61,12 @@ const BottomNavigation = (props: BottomNavigationProps) => {
         </MaterialBottomNavigation>
     )
 
-    /**
-     * @description Retorna o menu lateral com os itens secundários
-     * @returns Elemento JSX com o menu lateral contendo os itens secundários do menu
-     */
     const renderSecondaryItems = (): JSX.Element => (
         <DrawerNavigation 
-            mini={false} 
+            mini={props.showMiniDrawer} 
             groupedItems={getSecondaryMenuItemsGroups()} />
     )
 
-    /**
-     * @description Carrega o componente com os items do menu dentro de rotas
-     */
     const renderContent = () : JSX.Element  => {
         return props.component
     }
@@ -101,10 +74,13 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     return (
         <div className='bottom_navigation'>
             {renderSecondaryItems()}
-            <div className='bottom_navigation__component'>
+            <div className={props.hideBottomBar ? 
+                'bottom_navigation__component_without_bottom' : 
+                'bottom_navigation__component'}
+            >
                 {renderContent()}
             </div>
-            {renderMainItems()}
+            {!props.hideBottomBar && renderMainItems()}
         </div>
     );
 }

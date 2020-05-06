@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { AppContext } from '../../../provider/app_provider'
+import React, { useState, useEffect } from 'react'
+import { useLanguage } from '../../../../provider/app_provider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import SearchIcon from '@material-ui/icons/Search'
 import GlossaryItems from '../glossary_items'
 import './styles.css';
-import GlossaryLocalStorageService from '../../../local_storage/GlossaryLocalStorage'
-import GlossaryItemModel from '../../../model/dino_api/glossary/GlossaryItemModel'
-import StringUtils from '../../../utils/StringUtils'
+import GlossaryLocalStorage from '../../../../local_storage/GlossaryLocalStorage'
+import GlossaryItemModel from '../../../../model/dino_api/glossary/GlossaryItemModel'
+import StringUtils from '../../../../utils/StringUtils'
 
 
 const GlossarySearchBar = () : JSX.Element => {
 
-    const language = useContext(AppContext).language.currentLanguage
+    const language = useLanguage().currentLanguage
 
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
@@ -22,7 +22,7 @@ const GlossarySearchBar = () : JSX.Element => {
 
     //Para realizar uma pesquisa global e substituir, incluir a chave g na expressão regular ou se o primeiro parâmetro é uma string, inclua g no parâmetro flags.
     useEffect(() => {
-        const items = GlossaryLocalStorageService.getItems()
+        const items = GlossaryLocalStorage.getItems()
         const results = items.filter(item =>
             StringUtils.contains(item.title, searchTerm)
         )

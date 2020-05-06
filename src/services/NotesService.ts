@@ -1,7 +1,7 @@
 import NoteViewModel from '../model/view/NoteViewModel'
 import NoteLocalModel from '../model/local_storage/NoteLocalModel'
 import NotesLocalStorage from '../local_storage/NotesLocalStorage'
-import DinoHttpService from './DinoHttpService'
+import DinoAgentService from './DinoAgentService';
 import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
 import NoteAPIModel from '../model/dino_api/note/NoteAPIModel'
 import HttpStatus from 'http-status-codes'
@@ -25,7 +25,7 @@ class NotesService {
       if (AuthService.isAuthenticated()) { 
         NotesLocalStorage.setUpdatingNotes(true)
 
-        const response = await DinoHttpService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
+        const response = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
 
         if (response.status === HttpStatus.OK) {
           const serverVersion: number = response.body
@@ -44,7 +44,7 @@ class NotesService {
     }
 
     private updateNotesVersion = async (version: number): Promise<void> => {
-      const response = await DinoHttpService.get(DinoAPIURLConstants.NOTE_GET)
+      const response = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
 
       if (response.status === HttpStatus.OK) {
         const notes: NoteAPIModel[] = response.body
@@ -135,7 +135,7 @@ class NotesService {
         tagNames: noteModel.tagNames
       }
 
-      const response = await DinoHttpService.post(DinoAPIURLConstants.NOTE_SAVE).send(newNote)
+      const response = await DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE).send(newNote)
 
       if (response.status === HttpStatus.OK) {
         const body: NoteSaveResponseAPIModel = response.body
@@ -197,7 +197,7 @@ class NotesService {
         } as NoteOrderAPIModel)
       })
 
-      const response = await DinoHttpService.put(DinoAPIURLConstants.NOTE_ORDER).send(model)
+      const response = await DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER).send(model)
 
       if (response.status === HttpStatus.OK) {
         NotesLocalStorage.setVersion(response.body)
@@ -227,7 +227,7 @@ class NotesService {
       if (note.id) {
         const model: NoteDeleteAPIModel = { id: note.id }
 
-        const response = await DinoHttpService.delete(DinoAPIURLConstants.NOTE_DELETE).send(model)
+        const response = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE).send(model)
 
         if (response.status === HttpStatus.OK && response.body === 1) {
           const notesToDelete = NotesLocalStorage.getNotesToDelete()
@@ -268,7 +268,7 @@ class NotesService {
           lastUpdate: note.lastUpdate
         }
 
-        const response = await DinoHttpService.put(DinoAPIURLConstants.NOTE_UPDATE_QUESTION).send(model)
+        const response = await DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_QUESTION).send(model)
 
         if (response.status === HttpStatus.OK) {
           const notes = NotesLocalStorage.getNotes()
@@ -313,7 +313,7 @@ class NotesService {
           answer: note.answer
         }
 
-        const response = await DinoHttpService.put(DinoAPIURLConstants.NOTE_UPDATE_ANSWER).send(model)
+        const response = await DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_ANSWER).send(model)
 
         if (response.status === HttpStatus.OK) {
           const notes = NotesLocalStorage.getNotes()
@@ -352,4 +352,3 @@ class NotesService {
 }
 
 export default new NotesService()
-

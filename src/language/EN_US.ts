@@ -14,7 +14,7 @@ export default class EN_US implements LanguageSet {
 
     LANGUAGE_ENGLISH = 'English'
 
-    NOT_FOUND_MESSAGE = 'Page not found.'
+    NOT_FOUND_MESSAGE = 'Item not found.'
 
     NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
     

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLanguage } from '../../../../provider/app_provider'
 import clsx from 'clsx'
 import DateUtils from '../../../../utils/DateUtils'
 import TagList from '../../../../components/tag_list/index'
-import { AppContext } from '../../../../provider/app_provider'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import MaterialCard from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -22,7 +22,7 @@ import './styles.css'
 
 const NoteCard = (props: NoteCardProps): JSX.Element => {
 
-    const language = useContext(AppContext).language.currentLanguage
+    const language = useLanguage().currentLanguage
 
     const classes = useStyles()
 

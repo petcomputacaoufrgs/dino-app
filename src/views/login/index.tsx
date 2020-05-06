@@ -1,8 +1,8 @@
-import React, {useContext} from 'react'
+import React from 'react'
+import { useApp } from '../../provider/app_provider'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../images/dinosaur_1.svg'
 import Dinosaur2 from '../../images/dinosaur_2.svg'
-import { AppContext } from '../../provider/app_provider'
 import './styles.css'
 
 /**
@@ -10,7 +10,7 @@ import './styles.css'
  */
 const Login = () : JSX.Element => {
 
-    const appContext = useContext(AppContext)
+    const appContext = useApp()
 
     const alert = appContext.alert
 

@@ -1,12 +1,12 @@
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { Router } from 'react-router'
-import PrivateRouterProps from './props'
 import { History, LocationState } from 'history'
+import PrivateRouterProps from './props'
 
 /**
  * @description Contexto padrão para o router
  */
-export const PrivateRouterContext = createContext(new PrivateRouterProps('', '', () => false))
+const PrivateRouterContext = createContext(new PrivateRouterProps('', '', () => false))
 
 /**
  * @description Gera os dados necessários para as rotas privadas e de login
@@ -31,5 +31,9 @@ const PrivateRouter = (props: PrivateRouterProps) : JSX.Element => {
         </Router>
     )
 }
+
+export const useRouter = () => (
+    useContext(PrivateRouterContext)
+)
 
 export default PrivateRouter

@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { AppContext } from '../../../../provider/app_provider'
+import React, { useState, useEffect } from 'react'
+import { useLanguage } from '../../../../provider/app_provider'
 import DialogActions from '../dialog_actions'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import QuestionDialogProps from './props'
-import NotesService from '../../../../services/NotesService'
 import StringUtils from '../../../../utils/StringUtils'
+import NotesService from '../../../../services/NotesService'
 
 const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
-    const language = useContext(AppContext).language.currentLanguage
+    const language = useLanguage().currentLanguage
 
     const [open, setOpen] = useState(props.open)
     const [originalQuestion, setOriginalQuestion] = useState('')

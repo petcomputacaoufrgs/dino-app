@@ -1,51 +1,42 @@
 import Superagent, { Response } from 'superagent'
-import AuthService from './AuthService'
 import HttpStatus from 'http-status-codes'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
-import AuthLocalStorageService from '../local_storage/AuthLocalStorage'
+import AuthLocalStorage from '../local_storage/AuthLocalStorage'
 
 /**
  * @description Abstrai a biblioteca Superagent com tratamentos para autenticação, erro de autenticação e renovação de token
  */
-class DinoHttpService {
+class DinoAgentService {
 
-    /**
-     * @description Cria uma requisição do tipo PUT com autenticação se houver e com filtro para erro de acesso negado
-     * @param url URL da entrada de comunicação com a API
-     */
     put = (url: string) : Superagent.SuperAgentRequest => {
         return Superagent.put(url).set(this.getHeader()).on('error', this.onError).on('response', this.onResponse)
     }
 
-    /**
-     * @description Cria uma requisição do tipo POST com autenticação se houver e com filtro para erro de acesso negado
-     * @param url URL da entrada de comunicação com a API
-     */
     post = (url: string) : Superagent.SuperAgentRequest => {
         return Superagent.post(url).set(this.getHeader()).on('error', this.onError).on('response', this.onResponse)
     }
 
-    /**
-     * @description Cria uma requisição do tipo GET com autenticação se houver e com filtro para erro de acesso negado
-     * @param url URL da entrada de comunicação com a API
-     */
     get = (url: string) : Superagent.SuperAgentRequest => {
         return Superagent.get(url).set(this.getHeader()).on('error', this.onError).on('response', this.onResponse)
     }
 
-    /**
-     * @description Cria uma requisição do tipo DELETE com autenticação se houver e com filtro para erro de acesso negado
-     * @param url URL da entrada de comunicação com a API
-     */
     delete = (url: string) : Superagent.SuperAgentRequest => {
         return Superagent.delete(url).set(this.getHeader()).on('error', this.onError).on('response', this.onResponse)
     }
 
+    private getAuthToken = () : string => (
+        AuthLocalStorage.getAuthToken()
+    )
+
+    private isAuthenticated = (): boolean => (
+        Boolean(this.getAuthToken())
+    )
+
     private getHeader = () : object => {
-        if (AuthService.isAuthenticated()) {
-            const authorizationHeader = 'Bearer '.concat(AuthService.getAuthenticationToken())
+        if (this.isAuthenticated()) {
+            const authorizationHeader = 'Bearer '.concat(this.getAuthToken())
 
             return {[DinoAPIHeaderConstants.AUTHORIZATION]: authorizationHeader}
         }
@@ -55,11 +46,11 @@ class DinoHttpService {
 
     private onError = (err: any) => {
         if (err.status === HttpStatus.FORBIDDEN) {
-            AuthService.removeUserData()
+            AuthLocalStorage.removeUserData()
 
             HistoryService.push(PathConstants.LOGIN)
         } else if (err.status === HttpStatus.PRECONDITION_REQUIRED) {
-            AuthLocalStorageService.setRefreshRequiredToTrue()
+            AuthLocalStorage.setRefreshRequiredToTrue()
         }
     }
 
@@ -68,7 +59,7 @@ class DinoHttpService {
             const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
             
             if (newToken) {
-                AuthLocalStorageService.setAuthToken(newToken.substring(7))
+                AuthLocalStorage.setAuthToken(newToken.substring(7))
             }   
         }
 
@@ -76,7 +67,7 @@ class DinoHttpService {
             const newGoogleToken = response.get(DinoAPIHeaderConstants.GOOGLE_REFRESH_TOKEN)
 
             if (newGoogleToken) {
-                AuthLocalStorageService.setAuthToken(newGoogleToken.substring(7))
+                AuthLocalStorage.setAuthToken(newGoogleToken.substring(7))
             }
         }
 
@@ -87,5 +78,4 @@ class DinoHttpService {
     }
 }
 
-export default new DinoHttpService()
-
+export default new DinoAgentService()

@@ -1,8 +1,8 @@
-import { LocalStorageService } from './LocalStorage'
+import LocalStorage from './LocalStorage'
 import LS_Constants from "../constants/LocalStorageKeysConstants"
 import GlossaryItemModel from '../model/dino_api/glossary/GlossaryItemModel'
 
-class GlossaryLocalStorageService extends LocalStorageService {
+class GlossaryLocalStorage extends LocalStorage {
 
     getVersion = () : number => {
         let version = this.get(LS_Constants.GLOSSARY_VERSION)
@@ -34,4 +34,4 @@ class GlossaryLocalStorageService extends LocalStorageService {
 
 }
 
-export default new GlossaryLocalStorageService()
+export default new GlossaryLocalStorage()

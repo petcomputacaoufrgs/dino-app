@@ -2,19 +2,18 @@ import GoogleAuthRequestModel from '../model/dino_api/auth/GoogleAuthRequestMode
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
-import AuthLocalStorageService from '../local_storage/AuthLocalStorage'
+import AuthLocalStorage from '../local_storage/AuthLocalStorage'
 import AuthResponseModel from '../model/dino_api/settings/AuthResponseModel'
-import HttpService from './DinoHttpService'
+import DinoAgentService from './DinoAgentService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
 import GoogleAuthConstants from '../constants/GoogleAuthConstants'
 import LoginErrorConstants from '../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../model/dino_api/auth/GoogleAuthResponseModel'
-import UserAuthDataStorageService from '../local_storage/UserAuthDataStorage'
-import SettingsLocalStorageService from '../local_storage/SettingsLocalStorage'
-import NotesLocalStorageService from '../local_storage/NotesLocalStorage'
+import UserLocalStorage from '../local_storage/UserLocalStorage'
+import UserService from './UserService'
 
-class GoogleAuthService {
+class AuthService {
 
     getDefaultScopes = (): string => {
         return GoogleAuthConstants.SCOPE_CALENDAR + ' ' +
@@ -26,12 +25,12 @@ class GoogleAuthService {
             const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
                 
             try {
-                const response = await HttpService.post(DinoAPIURLConstants.AUTH_GOOGLE).send(authRequestModel)
+                const response = await DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE).send(authRequestModel)
 
                 if (response.status === HttpStatus.OK) {
                     this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
     
-                    AuthLocalStorageService.cleanLoginGarbage()
+                    AuthLocalStorage.cleanLoginGarbage()
     
                     return LoginErrorConstants.SUCCESS
                 }
@@ -49,37 +48,31 @@ class GoogleAuthService {
     }
 
     google_logout = () => {
-        this.removeUserData()
+        UserService.removeUserData()
 
         HistoryService.push(PathConstants.LOGIN)
     }
 
     isAuthenticated = () : boolean => (
-        Boolean(AuthLocalStorageService.getAuthToken())
+        Boolean(AuthLocalStorage.getAuthToken())
     )
 
     getAuthenticationToken = () : string => {
-        return AuthLocalStorageService.getAuthToken()
+        return AuthLocalStorage.getAuthToken()
     }
 
     private saveGoogleAuthDataFromRequestBody(responseBody: GoogleAuthResponseModel) {
-        AuthLocalStorageService.setGoogleAccessToken(responseBody.googleAccessToken)
+        AuthLocalStorage.setGoogleAccessToken(responseBody.googleAccessToken)
         this.saveUserAuthDataFromRequestBody(responseBody)
     }
 
     private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
-        AuthLocalStorageService.setAuthToken(responseBody.accessToken)
-        UserAuthDataStorageService.setEmail(responseBody.email)
-        UserAuthDataStorageService.setName(responseBody.name)
-        UserAuthDataStorageService.setPictureUrl(responseBody.pictureUrl)
+        AuthLocalStorage.setAuthToken(responseBody.accessToken)
+        UserLocalStorage.setEmail(responseBody.email)
+        UserLocalStorage.setName(responseBody.name)
+        UserLocalStorage.setPictureUrl(responseBody.pictureUrl)
     }
     
-    public removeUserData() {
-        AuthLocalStorageService.removeUserData()
-        UserAuthDataStorageService.removeUserData()
-        SettingsLocalStorageService.removeUserData()
-        NotesLocalStorageService.removeUserData()
-    }
 }
 
-export default new GoogleAuthService()
+export default new AuthService()

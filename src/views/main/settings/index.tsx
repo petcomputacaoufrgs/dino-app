@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { AppContext } from '../../../provider/app_provider'
+import React, { useState } from 'react'
+import { useApp } from '../../../provider/app_provider'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -8,14 +8,14 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../model/dino_api/settings/AppSettingsModel'
-import AppSettingsService from '../../../services/AppSettingsService'
-import SettingsLocalStorageService from '../../../local_storage/SettingsLocalStorage'
+import SettingsLocalStorage from '../../../local_storage/SettingsLocalStorage'
 import HistoryService from '../../../services/HistoryService'
 import './styles.css'
+import AppSettingsService from '../../../services/AppSettingsService'
 
 const Settings = (): JSX.Element => {
 
-    const appContext = useContext(AppContext)
+    const appContext = useApp()
 
     const language = appContext.language.currentLanguage
 
@@ -36,8 +36,8 @@ const Settings = (): JSX.Element => {
             'language': selectedLanguage
         }
 
-        SettingsLocalStorageService.setAppSettings(model)
-        AppSettingsService.updateAppSettings(model)
+        SettingsLocalStorage.setAppSettings(model)
+        AppSettingsService.update(model)
 
         appContext.language.updateLanguage()
         alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)

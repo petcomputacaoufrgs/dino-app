@@ -18,4 +18,14 @@ export default interface BottomNavigationProps{
      * @description Componente com as views e as suas rotas
      */
     component: JSX.Element
+
+    /**
+     * @description Exibe um mini menu lateral
+     */
+    showMiniDrawer?: boolean
+
+    /**
+     * @description Esconde a barra inferior mostrando apenas o menu lateral
+     */
+    hideBottomBar?: boolean
 }

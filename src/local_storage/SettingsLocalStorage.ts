@@ -1,8 +1,8 @@
-import { LocalStorageService } from './LocalStorage'
+import LocalStorage from './LocalStorage'
 import LS_Constants from "../constants/LocalStorageKeysConstants"
 import AppSettingsModel from '../model/dino_api/settings/AppSettingsModel'
 
-class SettingsLocalStorageService extends LocalStorageService {
+class SettingsLocalStorage extends LocalStorage {
 
     getAppSettingsVersion = (): number => {
         const versionSaved = this.get(LS_Constants.APP_SETTINGS_VERSION)
@@ -45,4 +45,4 @@ class SettingsLocalStorageService extends LocalStorageService {
 
 }
 
-export default new SettingsLocalStorageService()
+export default new SettingsLocalStorage()

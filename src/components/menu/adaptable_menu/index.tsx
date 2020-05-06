@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import AdaptableMenuProps from './props'
-import DrawerNavigation from '../drawer_navigation/index'
-import BottomNavigation from '../bottom_navigation/index'
-import ScreenOrientationService from '../../../services/ScreenOrientationService'
+import BottomNavigation from '../bottom_navigation'
+import ScreenService from '../../../services/ScreenService'
 
 /**
  * @description Menu adaptável para mobile e desktop
@@ -13,17 +12,17 @@ import ScreenOrientationService from '../../../services/ScreenOrientationService
 const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
     
     /** Estado que registra a orientação da tela */
-    const [isLandscape, setIfIsLandscape] = useState(ScreenOrientationService.isLandscape())
+    const [isLandscape, setIfIsLandscape] = useState(ScreenService.isLandscape())
 
     /**
      * @description Função invocada quando a orientação da tela muda
      */
     const onScreenOrientationChange = () => {
-        setIfIsLandscape(ScreenOrientationService.isLandscape())
+        setIfIsLandscape(ScreenService.isLandscape())
     }
 
     /** Configura a função onScreenOrientationChange para ser invocada quando houver mudança na horientação da tela */
-    ScreenOrientationService.setOnScreenOrientationChangeEvent(onScreenOrientationChange)
+    ScreenService.setOnScreenOrientationChangeEvent(onScreenOrientationChange)
 
     /**
      * @description Retorna o menu adaptavél com base no dispositivo utilizado e na horientação da tela
@@ -33,7 +32,7 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
         if (isMobile) {
             return renderMobileMenu()
         } else {
-            return renderDrawerMenu(true)
+            return renderWithoutBottomMenu(true)
         }
     }
 
@@ -43,7 +42,7 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      */
     const renderMobileMenu = (): JSX.Element => {
         if (isLandscape) {
-            return renderDrawerMenu(false)
+            return renderWithoutBottomMenu(false)
         } else {
             return renderBottomNavigation()
         }
@@ -54,10 +53,12 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
      * @param mini Define o tipo do menu, se mini então ele manterá um mini menu lateral de ícones quando o menu estiver fechado
      * @returns Elemento JSX contendo o menu
      */
-    const renderDrawerMenu = (mini: boolean): JSX.Element => {
+    const renderWithoutBottomMenu = (mini: boolean): JSX.Element => {
         return (
-            <DrawerNavigation 
-                mini={mini} 
+            <BottomNavigation 
+                hideBottomBar={true}
+                selectedItem={props.selectedItem} 
+                showMiniDrawer={mini} 
                 groupedItems={props.groupedItems} 
                 component={props.component} />
         )

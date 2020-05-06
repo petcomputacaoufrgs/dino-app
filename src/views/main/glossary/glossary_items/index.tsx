@@ -3,7 +3,7 @@ import './styles.css'
 import React from 'react';
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
-import PathConstants from '../../../constants/PathConstants';
+import PathConstants from '../../../../constants/PathConstants';
 import { Link } from 'react-router-dom'
 import GlossaryItemProps from './props';
 

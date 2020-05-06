@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { DateTime } from 'luxon'
-import { AppContext } from '../../../provider/app_provider'
+import { isMobile } from 'react-device-detect'
 import StringUtils from '../../../utils/StringUtils'
 import Board, { moveCard } from '@lourenci/react-kanban'
 import NoteCard from './note_card'
@@ -10,20 +10,21 @@ import NoteViewModel from '../../../model/view/NoteViewModel';
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import NoteSVG from '../../../images/note.svg'
-import NotesService from '../../../services/NotesService'
 import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
 import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
 import AgreementDialogProps from '../../../components/agreement_dialog/props'
 import AgreementDialog from '../../../components/agreement_dialog'
 import DinoAPIGeneralConstants from '../../../constants/dino_api/DinoAPIGeneralConstants'
+import TagSearchBar from '../../../components/tag_search_bar/index'
+import { useLanguage } from '../../../provider/app_provider/index'
+import NotesService from '../../../services/NotesService'
 import './styles.css'
-import TagSearchBar from '../../../components/tag_search_bar/index';
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
 const Notes = () => {
 
-    const language = useContext(AppContext).language.currentLanguage
+    const language = useLanguage().currentLanguage
 
     const [answer, setAnswer] = useState('')
     const [answerDialogOpen, setAnswerDialogOpen] = useState(false)
@@ -281,16 +282,6 @@ const Notes = () => {
       
       return true
     }
-
-
-    const renderSearchBar = (): JSX.Element => (
-      <TagSearchBar 
-        options={NotesService.getSavedTags()}
-        onTagSearch={handleTagSearch}
-        onTextSearch={handleTextSearch} 
-        textFieldClass={HEADER_TEXT_FIELD_CLASS}
-      />
-    )
     
     //#endregion
 
@@ -304,9 +295,20 @@ const Notes = () => {
     }
     //#endregion
    
-    const renderColumnHeader = (): JSX.Element => (
-      <div className='notes__column_header'>
-          <img className='notes__column_header__image' src={NoteSVG} alt={language.NOTES_HEADER_IMAGE_DESC}/>
+    //#region Render
+
+    const renderSearchBar = (): JSX.Element => (
+      <TagSearchBar 
+        options={NotesService.getSavedTags()}
+        onTagSearch={handleTagSearch}
+        onTextSearch={handleTextSearch} 
+        textFieldClass={HEADER_TEXT_FIELD_CLASS}
+      />
+    )
+
+    const renderHeader = (): JSX.Element => (
+      <div className={isMobile ? 'notes__header' : 'notes__header_desktop'}>
+          <img className='notes__header__image' src={NoteSVG} alt={language.NOTES_HEADER_IMAGE_DESC}/>
           {renderSearchBar()}
       </div>
     )
@@ -325,11 +327,29 @@ const Notes = () => {
         </>
     )
 
+    const renderBoard = () => (
+      <Board
+          renderCard={(cardNote, { dragging }) => (
+              renderCard(cardNote, dragging)
+          )}
+          onCardDragEnd = {handleCardMove}
+          allowAddColumn = {false}
+          allowRemoveColumn = {false}
+          allowRenameColumn = {false}
+          disableColumnDrag = {true}
+          
+      >
+          {board}
+      </Board>
+    )
+
     const renderAddButton = (): JSX.Element => (
       <Fab onClick={handleOpenNewQuestionDialog} className='notes__add' aria-label={language.NOTES_ADD_BUTTON}>
         <AddIcon />
       </Fab>
     )
+
+    //#endregion
 
     const updateListMarginTop = () => {
       const foundDivs = document.getElementsByClassName('sc-fzozJi GHGWz')
@@ -342,7 +362,9 @@ const Notes = () => {
 
           if (textField) {
 
-            const value = (textField.offsetHeight + 94).toString() + 'px'
+            const fixValue = isMobile ? 94 : 144
+
+            const value = (textField.offsetHeight + fixValue).toString() + 'px'
             
             noteListContainer.setAttribute("style", "top: " + value + ";")
           }
@@ -354,21 +376,9 @@ const Notes = () => {
     updateListMarginTop()
 
     return (
-        <div className='notes'>
-            <Board
-                renderCard={(cardNote, { dragging }) => (
-                    renderCard(cardNote, dragging)
-                )}
-                renderColumnHeader = {renderColumnHeader}
-                onCardDragEnd = {handleCardMove}
-                allowAddColumn = {false}
-                allowRemoveColumn = {false}
-                allowRenameColumn = {false}
-                disableColumnDrag = {true}
-                
-            >
-                {board}
-            </Board>
+        <div className={'notes' + (!isMobile && ' notes_desktop')}>
+            {renderHeader()}
+            {renderBoard()}
             {renderAddButton()}
             {renderUpdateAnswerDialog()}
             {renderUpdateQuestionDialog()}

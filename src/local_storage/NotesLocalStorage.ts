@@ -1,8 +1,8 @@
-import { LocalStorageService } from './LocalStorage'
+import LocalStorage from './LocalStorage'
 import LS_Constants from '../constants/LocalStorageKeysConstants'
 import NoteLocalModel from '../model/local_storage/NoteLocalModel';
 
-class NotesLocalStorageService extends LocalStorageService {
+class NotesLocalStorage extends LocalStorage {
     
     getNotes = (): NoteLocalModel[] => {
         const items = this.get(LS_Constants.NOTE)
@@ -123,4 +123,4 @@ class NotesLocalStorageService extends LocalStorageService {
 
 }
 
-export default new NotesLocalStorageService()
+export default new NotesLocalStorage()

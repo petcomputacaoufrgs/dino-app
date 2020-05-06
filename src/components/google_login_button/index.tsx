@@ -1,24 +1,23 @@
-import React, { useState, useContext } from 'react'
-import { AppContext } from '../../provider/app_provider/'
+import React, { useState } from 'react'
+import { useLanguage } from '../../provider/app_provider'
 import Button from '../button'
-import AuthService from '../../services/AuthService'
 import Loader from '../loader'
 import GoogleSecret from '../../config/client_secret.json'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import GoogleLogo from '../../images/google_logo.png'
 import LoginButtonProps from './props'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
-import AuthLocalStorageService from '../../local_storage/AuthLocalStorage'
+import AuthLocalStorage from '../../local_storage/AuthLocalStorage'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
 import HistoryService from '../../services/HistoryService'
 import PathConstants from '../../constants/PathConstants'
+import AuthService from '../../services/AuthService'
+import UpdateService from '../../services/UpdateService'
 import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
 
-    const language = useContext(AppContext).language.currentLanguage
-
-    const updater = useContext(AppContext).updater
+    const language = useLanguage().currentLanguage
 
     const [loading, setLoading] = useState(false)
 
@@ -28,12 +27,12 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
         const authResponse = await AuthService.google_login(response as GoogleLoginResponseOffline)
         
         if (authResponse === LoginErrorConstants.SUCCESS) {
-            const refreshTokenRequired = AuthLocalStorageService.isRefreshRequired()
+            const refreshTokenRequired = AuthLocalStorage.isRefreshRequired()
 
             if (refreshTokenRequired) {
-                AuthLocalStorageService.setRefreshRequiredToFalse()
+                AuthLocalStorage.setRefreshRequiredToFalse()
             } else {
-                updater.update()
+                UpdateService.checkUpdates()
             }
 
             setLoading(false)
@@ -47,7 +46,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
         } else if (authResponse === LoginErrorConstants.EXTERNAL_SERVICE_ERROR) {
             props.onGoogleFail && props.onGoogleFail()
         } else if (authResponse === LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY) {
-            AuthLocalStorageService.setRefreshRequiredToTrue()
+            AuthLocalStorage.setRefreshRequiredToTrue()
             props.onRefreshTokenLostError && props.onRefreshTokenLostError()
         }
             
@@ -63,7 +62,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     }
 
     const getPrompt = (): string => {
-        const refreshTokenRequired = AuthLocalStorageService.isRefreshRequired()
+        const refreshTokenRequired = AuthLocalStorage.isRefreshRequired()
 
         if (refreshTokenRequired) {
             return GoogleAuthConstants.PROMPT_CONSENT

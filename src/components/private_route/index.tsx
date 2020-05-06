@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useRouter } from '../../provider/private_router_provider'
 import { Route, RouteProps, useLocation, Redirect } from 'react-router'
-import { PrivateRouterContext } from '../private_router'
 
 /**
  * @description Gera uma rota com verificação de autenticação e redirecionamento automático
@@ -8,18 +8,18 @@ import { PrivateRouterContext } from '../private_router'
  */
 const PrivateRoute = (props: RouteProps) : JSX.Element => {
 
-    const routerContext = useContext(PrivateRouterContext)
+    const router = useRouter()
     
     const location = useLocation()
 
     return (
         <>
-            {routerContext.isAuthenticated() ? 
+            {router.isAuthenticated() ? 
                 <Route {...props}/>
                 :
                 <Redirect 
                     to={{
-                        pathname: routerContext.loginPath, 
+                        pathname: router.loginPath, 
                         state: {from: location}}} 
                 />
             }

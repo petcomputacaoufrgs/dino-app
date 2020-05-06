@@ -3,7 +3,7 @@ import ScreenOrientationConstants from "../constants/ScreenOrientationConstants"
 /**
  * @description Service que fornece informações e ações baseadas no estado de rotação da tela. ESTA SERVICE NÃO É SUPORTADA POR TODOS OS NAVEGADORES, VERIFIQUE NA FUNÇÃO ANTES DE UTILIZÁ-LA.
  */
-class ScreenOrientarionService {
+class ScreenService {
 
     /**
      * @description Cria um evento que dispara (função callback) toda a vez que a orientação da tela for trocada. NÃO É SUPORTADO POR TODOS OS NAVEGADORES.
@@ -48,4 +48,4 @@ class ScreenOrientarionService {
 
 }
 
-export default new ScreenOrientarionService()
+export default new ScreenService()

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { AppContext } from '../../provider/app_provider/'
+import React, { useState, useEffect } from 'react'
+import { useLanguage } from '../../provider/app_provider'
 import ContactItemModel from '../../model/ContactItemModel'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ContactItems from './contact_items';
@@ -8,7 +8,7 @@ import SearchBar from '../search_bar'
 
 const Contacts = (): JSX.Element => {
 
-    const language = useContext(AppContext).language.currentLanguage
+    const language = useLanguage().currentLanguage
 
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResults, setSearchResults] = useState(new Array<ContactItemModel>())

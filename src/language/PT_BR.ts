@@ -14,7 +14,7 @@ export default class PT_BR implements LanguageSet {
 
     LANGUAGE_ENGLISH = 'Inglês'
 
-    NOT_FOUND_MESSAGE = 'Página não encontrada.'
+    NOT_FOUND_MESSAGE = 'Item não encontrado.'
 
     NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
     

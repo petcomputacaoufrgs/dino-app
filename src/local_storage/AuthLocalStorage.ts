@@ -1,7 +1,7 @@
-import { LocalStorageService } from './LocalStorage'
+import LocalStorage from './LocalStorage'
 import LS_Constants from "../constants/LocalStorageKeysConstants"
 
-class AuthLocalStorageService extends LocalStorageService {
+class AuthLocalStorage extends LocalStorage {
     
     getAuthToken = () : string => {
         const authToken = this.get(LS_Constants.AUTH_TOKEN)
@@ -46,6 +46,9 @@ class AuthLocalStorageService extends LocalStorageService {
         this.removeGoogleAccessToken()
     }
     
+    cleanLoginGarbage = () => {
+        this.setRefreshRequiredToFalse()
+    }
 }
 
-export default new AuthLocalStorageService()
+export default new AuthLocalStorage()

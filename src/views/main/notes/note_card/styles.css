@@ -24,15 +24,28 @@
 .react_kanban_card .MuiCardHeader-root {
     padding: 16px;
     padding-bottom: 0px;
+}
+
+.react_kanban_card.MuiCard-root {
     background-color: #75FF85;
 }
 
 .react_kanban_card .card__tag_list {
-    background-color: #75FF85;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    margin-right: 16px;
+    margin-left: 8px;
 }
 
-.react_kanban_card .MuiCardActions-root {
-    background-color: #75FF85;
+.react_kanban_card .card__tag_list.MuiCardContent-root {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-right: 16px; 
+    padding-left: 8px;
+} 
+
+.react_kanban_card .card__tag_list::-webkit-scrollbar {
+    display: none;
 }
 
 .react_kanban_card .MuiCollapse-container {

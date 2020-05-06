@@ -1,7 +1,7 @@
-import { LocalStorageService } from './LocalStorage'
+import LocalStorage from './LocalStorage'
 import LS_Constants from '../constants/LocalStorageKeysConstants'
 
-class UserAuthDataStorageService extends LocalStorageService {
+class UserLocalStorage extends LocalStorage {
 
     getEmail = () : string | null => (
         this.get(LS_Constants.EMAIL)
@@ -47,4 +47,4 @@ class UserAuthDataStorageService extends LocalStorageService {
 
 }
 
-export default new UserAuthDataStorageService()
+export default new UserLocalStorage()

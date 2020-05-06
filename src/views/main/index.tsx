@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useLocation, Switch } from 'react-router'
-import { AppContext } from '../../provider/app_provider'
+import { useLanguage } from '../../provider/app_provider'
 import GlossarySVG from '../../images/glossary.svg'
 import ContactsSVG from '../../images/phone.svg'
 import GamesSVG from '../../images/games.svg'
@@ -10,9 +10,9 @@ import SettingsSVG from '../../images/settings.svg'
 import LogoutSVG from '../../images/logout.svg'
 import AdaptableMenu from '../../components/menu/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
-import PrivateRoute from '../../provider/route_provider/private_route'
-import GlossaryItem from '../../components/glossary/glossary_item'
-import Glossary from '../../components/glossary'
+import PrivateRoute from '../../components/private_route'
+import GlossaryItem from './glossary/glossary_item'
+import Glossary from './glossary'
 import Contacts from '../../components/contacts'
 import TopBar from '../../components/top_bar'
 import HistoryService from '../../services/HistoryService'
@@ -21,6 +21,7 @@ import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
 import MenuItemViewModel from '../../model/view/MenuItemViewModel'
 import Notes from './notes'
+import NotFound from '../not_found/index'
 
 /**
  * @description Tela principal da aplicação
@@ -30,7 +31,7 @@ const Main = (): JSX.Element => {
 
     const location = useLocation()
 
-    const language = useContext(AppContext).language.currentLanguage
+    const language = useLanguage().currentLanguage
 
     const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
 
@@ -105,6 +106,7 @@ const Main = (): JSX.Element => {
                 <PrivateRoute exact path={PathConstants.NOTES} component={Notes} /> 
                 <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
+                <PrivateRoute path={'/'} component={NotFound} />
             </Switch>
         )
     }

@@ -1,15 +1,15 @@
 import PouchDB from 'pouchdb'
 
-class DatabaseManager {
+class DatabaseService {
     db: PouchDB.Database
 
     constructor() {
         this.db = new PouchDB('dinoapp', {auto_compaction: true})
     }
 
-    getDatabase = (): PouchDB.Database => {
+    getConnection = (): PouchDB.Database => {
         return this.db
     }
 }
 
-export default new DatabaseManager()
+export default new DatabaseService()

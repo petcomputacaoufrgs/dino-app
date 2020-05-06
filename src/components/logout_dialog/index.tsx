@@ -1,16 +1,12 @@
-import { useContext } from 'react'
-import { AppContext } from '../../provider/app_provider'
-import AuthService from '../../services/AuthService'
 import AgreementDialog from '../agreement_dialog'
 import AgreementDialogProps from '../agreement_dialog/props'
 import './styles.css'
+import { useLanguage } from '../../provider/app_provider'
+import AuthService from '../../services/AuthService'
 
-/**
- * @description Dialog de logout
- */
 const LogoutDialog = (): [() => JSX.Element, () => void] => {
 
-    const languageContext = useContext(AppContext).language
+    const languageContext = useLanguage()
 
     const language = languageContext.currentLanguage
 

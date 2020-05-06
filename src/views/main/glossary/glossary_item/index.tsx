@@ -3,15 +3,15 @@ import { useParams } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
-import ArrowBack from '../../../components/arrow_back'
-import GlossaryLocalStorageService from '../../../local_storage/GlossaryLocalStorage'
+import ArrowBack from '../../../../components/arrow_back'
+import GlossaryLocalStorage from '../../../../local_storage/GlossaryLocalStorage'
 
 
 const GlossaryItem = (): JSX.Element => {
 
     const { id } = useParams()
 
-    const items = GlossaryLocalStorageService.getItems()
+    const items = GlossaryLocalStorage.getItems()
     
     const item = items.find(item => item.id === Number(id))
 

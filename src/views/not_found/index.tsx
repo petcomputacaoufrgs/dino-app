@@ -1,18 +1,18 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../../provider/app_provider'
+import React from 'react'
+import { useLanguage } from '../../provider/app_provider'
 import PageNotFound from '../../images/page-not-found.svg'
 import HistoryService from '../../services/HistoryService'
 import PathConstants from '../../constants/PathConstants'
 import './styles.css'
 
-const redirectTimeout = 3000
+const redirectTimeout = 2000
 
 /**
  * @description Tela para diretório não encontrado
  */
 const NotFound = (): JSX.Element => {
 
-    const language = useContext(AppContext).language.currentLanguage
+    const language = useLanguage().currentLanguage
 
     const redirectToHome = () => {
         HistoryService.push(PathConstants.HOME)

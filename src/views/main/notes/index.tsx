@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { DateTime } from 'luxon'
-import { LanguageContext } from '../../../provider/language_provider'
+import { AppContext } from '../../../provider/app_provider'
 import StringUtils from '../../../utils/StringUtils'
 import Board, { moveCard } from '@lourenci/react-kanban'
 import NoteCard from './note_card'
@@ -23,8 +23,7 @@ const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
 const Notes = () => {
 
-    const languageProvider = useContext(LanguageContext)
-    const language = languageProvider.currentLanguage
+    const language = useContext(AppContext).language.currentLanguage
 
     const [answer, setAnswer] = useState('')
     const [answerDialogOpen, setAnswerDialogOpen] = useState(false)

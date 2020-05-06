@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { LanguageContext } from '../../provider/language_provider'
+import { AppContext } from '../../provider/app_provider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItems from './glossary_items'
 import GlossaryLocalStorageService from '../../local_storage/GlossaryLocalStorage'
@@ -9,8 +9,8 @@ import SearchBar from '../search_bar'
 
 const Glossary = (): JSX.Element => {
 
-    const languageProvider = useContext(LanguageContext)
-    const language = languageProvider.currentLanguage
+    const language = useContext(AppContext).language.currentLanguage
+    
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
 

@@ -1,23 +1,12 @@
-import React, { createContext, useState } from 'react'
-import LanguageProviderProps from './props'
-import LanguageSet from '../../language/LanguageSet'
-import EN_US from '../../language/EN_US'
-import PT_BR from '../../language/PT_BR'
-import AppSettingsService from '../../services/AppSettingsService'
-import LanguageContextValue, { Language } from './context'
-import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
+import { useState } from 'react'
+import LanguageSet from '../../../language/LanguageSet'
+import EN_US from '../../../language/EN_US'
+import PT_BR from '../../../language/PT_BR'
+import AppSettingsService from '../../../services/AppSettingsService'
+import LanguageSubProviderValue, { Language } from './value'
+import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 
-export const LanguageContext = createContext({
-    'currentLanguage': new PT_BR(),
-    'getLanguageList': () => new Array<Language>(),
-    'updateLanguage': () => {}
-} as LanguageContextValue)
-
-/**
- * @description Gera um objeto do tipo LanguageSet com os textos na linguagem correta
- * @param props Propriedades do LanguageProvider
- */
-const LanguageProvider = (props: LanguageProviderProps) : JSX.Element => {
+const LanguageSubProvider = () : LanguageSubProviderValue => {
 
     const getLanguageSetByCode = (languageCode: string): LanguageSet => {
         if (languageCode === LanguageCodeConstants.PORTUGUESE) {
@@ -42,6 +31,7 @@ const LanguageProvider = (props: LanguageProviderProps) : JSX.Element => {
     }
 
     const [currentLanguage, setCurrentLanguage] = useState(getLanguageSet())
+
     setHTMLElementLanguage(currentLanguage)
 
     const updateCurrentLanguage = () => {
@@ -67,17 +57,13 @@ const LanguageProvider = (props: LanguageProviderProps) : JSX.Element => {
         ]
     }
 
-    const value: LanguageContextValue  = {
+    const value: LanguageSubProviderValue  = {
         'currentLanguage': currentLanguage,
         'getLanguageList': getLanguageList,
         'updateLanguage': updateCurrentLanguage
     }
 
-    return (
-        <LanguageContext.Provider value={ value }>
-            {props.children}
-        </LanguageContext.Provider>
-    )
+    return value
 }
 
-export default LanguageProvider
+export default LanguageSubProvider

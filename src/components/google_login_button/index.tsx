@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { LanguageContext } from '../../provider/language_provider'
+import { AppContext } from '../../provider/app_provider/'
 import Button from '../button'
 import AuthService from '../../services/AuthService'
 import Loader from '../loader'
@@ -10,18 +10,15 @@ import LoginButtonProps from './props'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import AuthLocalStorageService from '../../local_storage/AuthLocalStorage'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
-import { UpdaterContext } from '../../provider/update_provider/index'
 import HistoryService from '../../services/HistoryService'
 import PathConstants from '../../constants/PathConstants'
 import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
 
-    const languageContext = useContext(LanguageContext)
+    const language = useContext(AppContext).language.currentLanguage
 
-    const updaterContext = useContext(UpdaterContext)
-
-    const language = languageContext.currentLanguage
+    const updater = useContext(AppContext).updater
 
     const [loading, setLoading] = useState(false)
 
@@ -36,7 +33,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
             if (refreshTokenRequired) {
                 AuthLocalStorageService.setRefreshRequiredToFalse()
             } else {
-                updaterContext.update()
+                updater.update()
             }
 
             setLoading(false)

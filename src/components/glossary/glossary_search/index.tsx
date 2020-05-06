@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { LanguageContext } from '../../../provider/language_provider'
+import { AppContext } from '../../../provider/app_provider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import SearchIcon from '@material-ui/icons/Search'
 import GlossaryItems from '../glossary_items'
@@ -11,8 +11,8 @@ import StringUtils from '../../../utils/StringUtils'
 
 const GlossarySearchBar = () : JSX.Element => {
 
-    const languageContext = useContext(LanguageContext)
-    const language = languageContext.currentLanguage
+    const language = useContext(AppContext).language.currentLanguage
+
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
 

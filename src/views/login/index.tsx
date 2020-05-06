@@ -1,36 +1,35 @@
 import React, {useContext} from 'react'
-import './styles.css'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../images/dinosaur_1.svg'
 import Dinosaur2 from '../../images/dinosaur_2.svg'
-import { LanguageContext } from '../../provider/language_provider'
-import { AlertContext } from '../../provider/alert_provider'
+import { AppContext } from '../../provider/app_provider'
+import './styles.css'
 
 /**
  * @description Tela de login com o Google
  */
 const Login = () : JSX.Element => {
 
-    const languageContext = useContext(LanguageContext)
+    const appContext = useContext(AppContext)
 
-    const language = languageContext.currentLanguage
+    const alert = appContext.alert
 
-    const alertProvider = useContext(AlertContext)
+    const language = appContext.language.currentLanguage
  
     const showAlertDinoFail = () => {
-        alertProvider.showErrorAlert(language.LOGIN_FAIL_BY_API)
+        alert.showErrorAlert(language.LOGIN_FAIL_BY_API)
     }
 
     const showAlertGoogleFail = () => {
-        alertProvider.showErrorAlert(language.LOGIN_FAIL_BY_GOOGLE)
+        alert.showErrorAlert(language.LOGIN_FAIL_BY_GOOGLE)
     }
 
     const showAlertRefreshError = () => {
-        alertProvider.showInfoAlert(language.LOGIN_REFRESH_NECESSARY)
+        alert.showInfoAlert(language.LOGIN_REFRESH_NECESSARY)
     }
 
     const showAlertCancel = () => {
-        alertProvider.showInfoAlert(language.LOGIN_CANCELED)
+        alert.showInfoAlert(language.LOGIN_CANCELED)
     }
 
     return (

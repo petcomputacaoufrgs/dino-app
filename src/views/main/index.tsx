@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useLocation, Switch } from 'react-router'
-import { LanguageContext } from '../../provider/language_provider'
+import { AppContext } from '../../provider/app_provider'
 import GlossarySVG from '../../images/glossary.svg'
 import ContactsSVG from '../../images/phone.svg'
 import GamesSVG from '../../images/games.svg'
@@ -30,9 +30,7 @@ const Main = (): JSX.Element => {
 
     const location = useLocation()
 
-    const languageContext = useContext(LanguageContext)
-
-    const language = languageContext.currentLanguage
+    const language = useContext(AppContext).language.currentLanguage
 
     const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
 

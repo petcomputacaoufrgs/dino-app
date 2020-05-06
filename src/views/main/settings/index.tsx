@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { LanguageContext } from '../../../provider/language_provider'
+import { AppContext } from '../../../provider/app_provider'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -11,18 +11,17 @@ import AppSettingsModel from '../../../model/dino_api/settings/AppSettingsModel'
 import AppSettingsService from '../../../services/AppSettingsService'
 import SettingsLocalStorageService from '../../../local_storage/SettingsLocalStorage'
 import HistoryService from '../../../services/HistoryService'
-import { AlertContext } from '../../../provider/alert_provider/index'
 import './styles.css'
 
 const Settings = (): JSX.Element => {
 
-    const languageContext = useContext(LanguageContext)
+    const appContext = useContext(AppContext)
 
-    const language = languageContext.currentLanguage
+    const language = appContext.language.currentLanguage
 
-    const alertProvider = useContext(AlertContext)
+    const alert = appContext.alert
 
-    const languageList = languageContext.getLanguageList()
+    const languageList = appContext.language.getLanguageList()
 
     const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
 
@@ -40,8 +39,8 @@ const Settings = (): JSX.Element => {
         SettingsLocalStorageService.setAppSettings(model)
         AppSettingsService.updateAppSettings(model)
 
-        languageContext.updateLanguage()
-        alertProvider.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
+        appContext.language.updateLanguage()
+        alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
         
         HistoryService.goBack()
     }

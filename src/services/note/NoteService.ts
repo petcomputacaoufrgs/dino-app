@@ -1,5 +1,5 @@
 import NoteViewModel from '../../views/main/notes/model/NoteViewModel'
-import NotesLocalStorage from './local_storage/NotesLocalStorage'
+import NoteVersionLocalStorage from './local_storage/NoteVersionLocalStorage'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import NoteSaveAPIModel from './api_model/NoteAPISaveModel'
@@ -8,10 +8,11 @@ import NoteOrderAPIModel from './api_model/NoteOrderAPIModel'
 import NoteDeleteAPIModel from './api_model/NoteDeleteAPIModel'
 import NoteAPIQuestionModel from './api_model/NoteAPIQuestionModel'
 import NoteAPIAnswerModel from './api_model/NoteAnswerModel'
-import NoteDoc from './database/NoteDoc'
+import NoteDoc from './database/docs/NoteDoc'
 import NoteDatabase from './database/NoteDatabase'
 import DeletedNoteDatabase from './database/DeletedNoteDatabase'
 import DinoAgentService from '../dino_agent/DinoAgentService'
+import NoteUpdateLocalStorage from './local_storage/NoteUpdateLocalStorage'
 
 class NoteService {  
   
@@ -47,27 +48,27 @@ class NoteService {
     //#region SAVE
 
     getVersion = (): number => (
-      NotesLocalStorage.getVersion()
+      NoteVersionLocalStorage.getVersion()
     )
 
     setVersion = (version: number) => {
-      NotesLocalStorage.setVersion(version)
+      NoteVersionLocalStorage.setVersion(version)
     }
 
     setUpdateNotesWithError = () => {
-      NotesLocalStorage.setUpdateNotesWithError(true)
+      NoteUpdateLocalStorage.setUpdateNotesWithError(true)
     }
 
     setUpdateNotesWithoutError = () => {
-      NotesLocalStorage.setUpdateNotesWithError(false)
+      NoteUpdateLocalStorage.setUpdateNotesWithError(false)
     }
 
     setUpdatingNotes = () => {
-      NotesLocalStorage.setUpdatingNotes(true)
+      NoteUpdateLocalStorage.setUpdatingNotes(true)
     }
 
     setNotesUpdated = () => {
-      NotesLocalStorage.setUpdatingNotes(false)
+      NoteUpdateLocalStorage.setUpdatingNotes(false)
     }
 
     saveNote = async (noteModel: NoteViewModel, updateState: () => void) => {
@@ -110,7 +111,7 @@ class NoteService {
           noteDoc.external_id = body.noteId
 
           await NoteDatabase.put(noteDoc)
-          NotesLocalStorage.setVersion(body.version)
+          NoteVersionLocalStorage.setVersion(body.version)
         }
       }
     }
@@ -120,7 +121,7 @@ class NoteService {
     //#region DELETE
 
     removeUserData = () => {
-      NotesLocalStorage.removeUserData()
+      NoteVersionLocalStorage.removeUserData()
       NoteDatabase.removeAll()
     }
 
@@ -154,11 +155,11 @@ class NoteService {
         const response = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE).send(model)
 
         if (response.status === HttpStatus.OK && response.body === 1) {
-          const notesToDelete = NotesLocalStorage.getNotesToDelete()
+          const deletedNote = await DeletedNoteDatabase.getByQuestion(noteDoc.question)
 
-          const updatedData = notesToDelete.filter(n => n.external_id !== noteDoc.external_id)
-
-          NotesLocalStorage.setNotesToDelete(updatedData)
+          if (deletedNote) {
+            DeletedNoteDatabase.deleteByNoteDoc(deletedNote)
+          }
         } 
       }
     }
@@ -195,7 +196,7 @@ class NoteService {
       const response = await DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER).send(model)
 
       if (response.status === HttpStatus.OK) {
-        NotesLocalStorage.setVersion(response.body)
+        NoteVersionLocalStorage.setVersion(response.body)
       }
     }
 
@@ -236,7 +237,7 @@ class NoteService {
 
               NoteDatabase.put(savedNoteDoc)
 
-              NotesLocalStorage.setVersion(response.body)
+              NoteVersionLocalStorage.setVersion(response.body)
             }
         } 
       }
@@ -272,7 +273,7 @@ class NoteService {
             savedNoteDoc.savedOnServer = true;
 
             NoteDatabase.put(savedNoteDoc)
-            NotesLocalStorage.setVersion(response.body)
+            NoteVersionLocalStorage.setVersion(response.body)
           }
         } 
       }

@@ -1,5 +1,5 @@
 import PouchDB from 'pouchdb'
-import NoteDoc from './NoteDoc'
+import NoteDoc from './docs/NoteDoc'
 import StringUtils from '../../../utils/StringUtils'
 import BaseDatabase from '../../BaseDatabase'
 import ArrayUtils from '../../../utils/ArrayUtils'

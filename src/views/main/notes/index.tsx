@@ -5,17 +5,17 @@ import Board, { moveCard } from '@lourenci/react-kanban'
 import NoteCard from './note_card'
 import AnswerDialog from './answer_dialog'
 import QuestionDialog from './question_dialog'
-import NoteViewModel from '../../../model/view/NoteViewModel';
+import NoteViewModel from './model/NoteViewModel';
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import NoteSVG from '../../../images/note.svg'
-import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
-import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
+import NoteBoardViewModel from './model/NoteBoardViewModel'
+import { NoteBoardColumnViewModel } from './model/NoteBoardViewModel'
 import AgreementDialogProps from '../../../components/agreement_dialog/props'
 import AgreementDialog from '../../../components/agreement_dialog'
 import TagSearchBar from '../../../components/tag_search_bar/index'
 import { useLanguage } from '../../../provider/app_provider/index'
-import NotesService from '../../../services/NotesService'
+import NoteService from '../../../services/note/NoteService'
 import './styles.css'
 import DateUtils from '../../../utils/DateUtils'
 
@@ -62,7 +62,7 @@ const Notes = () => {
         editedNote.answer = newAnswer
         editedNote.answered = true
 
-        NotesService.updateNoteAnswer(editedNote)
+        NoteService.updateNoteAnswer(editedNote)
       }
 
       setNote(undefined)
@@ -102,7 +102,7 @@ const Notes = () => {
         editedNote.tagNames = newTagNames
         editedNote.lastUpdate = date
 
-        NotesService.updateNoteQuestion(editedNote, updateState)
+        NoteService.updateNoteQuestion(editedNote, updateState)
       }
 
       setNote(undefined)
@@ -134,7 +134,7 @@ const Notes = () => {
       const newNotes = notes.filter(note => note.id !== idNoteToDelete)
 
       if (deletedNote) {
-        NotesService.deleteNote(deletedNote, updateState)
+        NoteService.deleteNote(deletedNote, updateState)
       }
       
       newData.columns[0].cards = newNotes
@@ -181,7 +181,7 @@ const Notes = () => {
         savedOnServer: false
       }
 
-      NotesService.saveNote(newNote, updateState)
+      NoteService.saveNote(newNote, updateState)
 
       newNotes.push(newNote)
       
@@ -254,7 +254,7 @@ const Notes = () => {
     const handleCardMove = (card, source, destination) => {
       const newBoard: NoteBoardViewModel = moveCard(board, source, destination)
 
-      NotesService.updateNotesOrder(newBoard.columns[0].cards)
+      NoteService.updateNotesOrder(newBoard.columns[0].cards)
 
       setBoard(newBoard)
     }
@@ -349,7 +349,7 @@ const Notes = () => {
 
     useEffect(() => {
       if (board.columns.length === 0) {
-        const notesPromisse = NotesService.getNotes()
+        const notesPromisse = NoteService.getNotes()
 
         notesPromisse.then(notes => setBoard({
           columns: [
@@ -360,7 +360,7 @@ const Notes = () => {
           ] as NoteBoardColumnViewModel[]
         } as NoteBoardViewModel)).catch()
 
-        const tagsPromise = NotesService.getTags()
+        const tagsPromise = NoteService.getTags()
 
         tagsPromise.then(tags => setTags(tags)).catch()
       }
@@ -369,7 +369,7 @@ const Notes = () => {
     const updateState = async () => {
       console.log('oi')
 
-      const tags = await NotesService.getTags()
+      const tags = await NoteService.getTags()
 
       setTags(tags)
     }

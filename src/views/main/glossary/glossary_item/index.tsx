@@ -4,14 +4,13 @@ import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
-import GlossaryLocalStorage from '../../../../local_storage/GlossaryLocalStorage'
-
+import GlossaryService from '../../../../services/glossary/GlossaryService'
 
 const GlossaryItem = (): JSX.Element => {
 
     const { id } = useParams()
 
-    const items = GlossaryLocalStorage.getItems()
+    const items = GlossaryService.getItems()
     
     const item = items.find(item => item.id === Number(id))
 

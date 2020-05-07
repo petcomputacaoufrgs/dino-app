@@ -1,4 +1,4 @@
-import MenuItemViewModel from '../../../model/view/MenuItemViewModel'
+import MenuItemViewModel from './MenuItemViewModel'
 
 /**
  * @description Propriedades do menu drawer.

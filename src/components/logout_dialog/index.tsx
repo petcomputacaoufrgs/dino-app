@@ -2,7 +2,7 @@ import AgreementDialog from '../agreement_dialog'
 import AgreementDialogProps from '../agreement_dialog/props'
 import './styles.css'
 import { useLanguage } from '../../provider/app_provider'
-import AuthService from '../../services/AuthService'
+import AuthService from '../../services/auth/AuthService'
 
 const LogoutDialog = (): [() => JSX.Element, () => void] => {
 

@@ -3,7 +3,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-import HistoryService from '../../services/HistoryService'
+import HistoryService from '../../services/history/HistoryService'
 
 const ArrowBack = (): JSX.Element => {
 

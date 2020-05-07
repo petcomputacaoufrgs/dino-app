@@ -4,7 +4,7 @@ import EN_US from '../../../language/EN_US'
 import PT_BR from '../../../language/PT_BR'
 import LanguageSubProviderValue, { Language } from './value'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
-import AppSettingsService from '../../../services/AppSettingsService'
+import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 
 const LanguageSubProvider = () : LanguageSubProviderValue => {
 

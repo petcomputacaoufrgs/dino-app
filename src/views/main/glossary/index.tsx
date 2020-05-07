@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useLanguage } from '../../../provider/app_provider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItems from './glossary_items'
-import GlossaryLocalStorage from '../../../local_storage/GlossaryLocalStorage'
-import GlossaryItemModel from '../../../model/dino_api/glossary/GlossaryItemModel'
+import GlossaryItemModel from '../../../services/glossary/api_model/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import SearchBar from '../../../components/search_bar'
+import GlossaryService from '../../../services/glossary/GlossaryService'
 
 const Glossary = (): JSX.Element => {
 
@@ -17,7 +17,7 @@ const Glossary = (): JSX.Element => {
     const handleChange = event => setSearchTerm(event.target.value)
 
     useEffect(() => {
-        const items = GlossaryLocalStorage.getItems()
+        const items = GlossaryService.getItems()
         const results = items.filter(item =>
             StringUtils.contains(item.title, searchTerm)
         )

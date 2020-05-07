@@ -7,11 +7,10 @@ import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
-import AppSettingsModel from '../../../model/dino_api/settings/AppSettingsModel'
-import SettingsLocalStorage from '../../../local_storage/SettingsLocalStorage'
-import HistoryService from '../../../services/HistoryService'
+import AppSettingsModel from '../../../services/app_settings/api_model/AppSettingsModel'
+import HistoryService from '../../../services/history/HistoryService'
+import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 import './styles.css'
-import AppSettingsService from '../../../services/AppSettingsService'
 
 const Settings = (): JSX.Element => {
 
@@ -36,8 +35,7 @@ const Settings = (): JSX.Element => {
             'language': selectedLanguage
         }
 
-        SettingsLocalStorage.setAppSettings(model)
-        AppSettingsService.update(model)
+        AppSettingsService.set(model)
 
         appContext.language.updateLanguage()
         alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)

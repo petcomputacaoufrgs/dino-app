@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import QuestionDialogProps from './props'
 import StringUtils from '../../../../utils/StringUtils'
-import NotesService from '../../../../services/NotesService'
+import NoteService from '../../../../services/note/NoteService'
 
 const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
     const language = useLanguage().currentLanguage
@@ -32,7 +32,7 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
         }
 
         if (StringUtils.areNotEqual(question, originalQuestion)) {
-            NotesService.questionAlreadyExists(question).then(exists => {
+            NoteService.questionAlreadyExists(question).then(exists => {
                                 
                 if (exists) {
                     setQuestionError(true)

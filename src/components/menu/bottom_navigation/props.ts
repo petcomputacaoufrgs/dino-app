@@ -1,4 +1,4 @@
-import MenuItemViewModel from '../../../model/view/MenuItemViewModel'
+import MenuItemViewModel from '../adaptable_menu/MenuItemViewModel'
 
 /**
  * @description Propriedades do menu de navegação inferior

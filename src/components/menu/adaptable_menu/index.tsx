@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import AdaptableMenuProps from './props'
 import BottomNavigation from '../bottom_navigation'
-import ScreenService from '../../../services/ScreenService'
+import ScreenUtils from '../../../utils/ScreenUtils'
 
 /**
  * @description Menu adaptável para mobile e desktop
@@ -12,17 +12,17 @@ import ScreenService from '../../../services/ScreenService'
 const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
     
     /** Estado que registra a orientação da tela */
-    const [isLandscape, setIfIsLandscape] = useState(ScreenService.isLandscape())
+    const [isLandscape, setIfIsLandscape] = useState(ScreenUtils.isLandscape())
 
     /**
      * @description Função invocada quando a orientação da tela muda
      */
     const onScreenOrientationChange = () => {
-        setIfIsLandscape(ScreenService.isLandscape())
+        setIfIsLandscape(ScreenUtils.isLandscape())
     }
 
     /** Configura a função onScreenOrientationChange para ser invocada quando houver mudança na horientação da tela */
-    ScreenService.setOnScreenOrientationChangeEvent(onScreenOrientationChange)
+    ScreenUtils.setOnScreenOrientationChangeEvent(onScreenOrientationChange)
 
     /**
      * @description Retorna o menu adaptavél com base no dispositivo utilizado e na horientação da tela

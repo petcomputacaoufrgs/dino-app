@@ -3,11 +3,10 @@ import { useLanguage } from '../../../../provider/app_provider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import SearchIcon from '@material-ui/icons/Search'
 import GlossaryItems from '../glossary_items'
-import './styles.css';
-import GlossaryLocalStorage from '../../../../local_storage/GlossaryLocalStorage'
-import GlossaryItemModel from '../../../../model/dino_api/glossary/GlossaryItemModel'
+import GlossaryItemModel from '../../../../services/glossary/api_model/GlossaryItemModel'
 import StringUtils from '../../../../utils/StringUtils'
-
+import GlossaryService from '../../../../services/glossary/GlossaryService'
+import './styles.css'
 
 const GlossarySearchBar = () : JSX.Element => {
 
@@ -22,7 +21,7 @@ const GlossarySearchBar = () : JSX.Element => {
 
     //Para realizar uma pesquisa global e substituir, incluir a chave g na expressão regular ou se o primeiro parâmetro é uma string, inclua g no parâmetro flags.
     useEffect(() => {
-        const items = GlossaryLocalStorage.getItems()
+        const items = GlossaryService.getItems()
         const results = items.filter(item =>
             StringUtils.contains(item.title, searchTerm)
         )

@@ -1,3 +1,3 @@
 export default interface AppSettingsModel {
-    language: string
+  language: string
 }

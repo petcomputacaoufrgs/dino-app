@@ -12,11 +12,10 @@ import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import './App.css'
 
-const App = (): JSX.Element => {  
-
+const App = (): JSX.Element => {
   return (
     <AppProvider>
-      <PrivateRouter 
+      <PrivateRouter
         loginPath={PathConstants.LOGIN}
         homePath={PathConstants.HOME}
         isAuthenticated={AuthService.isAuthenticated}

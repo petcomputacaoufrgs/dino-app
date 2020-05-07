@@ -2,29 +2,27 @@ import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 import BaseLocalStorage from '../../BaseLocalStorage'
 
 class NoteVersionLocalStorage extends BaseLocalStorage {
+  getVersion = (): number => {
+    const version = this.get(LS_Constants.NOTE_VERSION)
 
-    getVersion = (): number => {
-        const version = this.get(LS_Constants.NOTE_VERSION)
-
-        if (version) {
-            return JSON.parse(version)
-        }
-        
-        return -1
+    if (version) {
+      return JSON.parse(version)
     }
 
-    setVersion = (version: number) => {
-        this.set(LS_Constants.NOTE_VERSION, JSON.stringify(version))
-    }
+    return -1
+  }
 
-    removeVersion = () => {
-        this.remove(LS_Constants.NOTE_VERSION)
-    }
-    
-    removeUserData = () => {
-        this.removeVersion()
-    }
+  setVersion = (version: number) => {
+    this.set(LS_Constants.NOTE_VERSION, JSON.stringify(version))
+  }
 
+  removeVersion = () => {
+    this.remove(LS_Constants.NOTE_VERSION)
+  }
+
+  removeUserData = () => {
+    this.removeVersion()
+  }
 }
 
 export default new NoteVersionLocalStorage()

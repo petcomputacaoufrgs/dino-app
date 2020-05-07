@@ -6,48 +6,53 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 
 class AppSettingsUpdater implements BaseUpdater {
+  checkUpdates = async (
+    languageContext?: LanguageSubProviderValue,
+  ): Promise<void> => {
+    const updatedVersion = await this.getAppSettingsVersion()
 
-    checkUpdates = async (languageContext?: LanguageSubProviderValue): Promise<void> => {
-        const updatedVersion = await this.getAppSettingsVersion()
+    if (updatedVersion === 0) {
+      const defaultAppSettings = AppSettingsService.getDefaultAppSettings()
 
-        if (updatedVersion === 0) {
+      await AppSettingsService.saveOnServer(defaultAppSettings)
 
-            const defaultAppSettings = AppSettingsService.getDefaultAppSettings()
-
-            await AppSettingsService.saveOnServer(defaultAppSettings)
-            
-            return
-        } 
-
-        const savedVersion = AppSettingsService.getAppSettingsVersion()
-
-        if (updatedVersion !== savedVersion) {
-            const appSettings = await this.getAppSettingsFromServer()
-
-            AppSettingsService.saveAppSettingsData(appSettings, updatedVersion)
-
-            if (languageContext) {
-                languageContext.updateLanguage()
-            }
-        }
+      return
     }
 
-    private getAppSettingsFromServer = async (): Promise<AppSettingsResponseModel> => {
-        const response = await DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
+    const savedVersion = AppSettingsService.getAppSettingsVersion()
 
-        const appSettings: AppSettingsResponseModel = response.body
+    if (updatedVersion !== savedVersion) {
+      const appSettings = await this.getAppSettingsFromServer()
 
-        return appSettings
+      AppSettingsService.saveAppSettingsData(appSettings, updatedVersion)
+
+      if (languageContext) {
+        languageContext.updateLanguage()
+      }
     }
+  }
 
-    private getAppSettingsVersion = async (): Promise<number> => {
-        const response = await DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_VERSION)
+  private getAppSettingsFromServer = async (): Promise<
+    AppSettingsResponseModel
+  > => {
+    const response = await DinoAgentService.get(
+      DinoAPIURLConstants.APP_SETTINGS_GET,
+    )
 
-        const version: number = response.body
+    const appSettings: AppSettingsResponseModel = response.body
 
-        return version
-    }
+    return appSettings
+  }
 
+  private getAppSettingsVersion = async (): Promise<number> => {
+    const response = await DinoAgentService.get(
+      DinoAPIURLConstants.APP_SETTINGS_VERSION,
+    )
+
+    const version: number = response.body
+
+    return version
+  }
 }
 
 export default new AppSettingsUpdater()

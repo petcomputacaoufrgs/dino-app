@@ -1,5 +1,5 @@
-import ContactItemModel from "../../../../services/contact/api_model/ContactItemModel";
+import ContactItemModel from '../../../../services/contact/api_model/ContactItemModel'
 
 export default interface ContactItemsProps {
-    items: Array<ContactItemModel>
+  items: Array<ContactItemModel>
 }

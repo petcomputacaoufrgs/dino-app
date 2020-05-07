@@ -1,11 +1,9 @@
 export default interface NoteAPIQuestionModel {
+  id: number
 
-    id: number
+  question: string
 
-    question: string
+  tagNames: string[]
 
-    tagNames: string[]
-    
-    lastUpdate: number
-    
+  lastUpdate: number
 }

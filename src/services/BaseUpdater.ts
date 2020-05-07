@@ -1,3 +1,3 @@
 export default interface BaseUpdater {
-    checkUpdates: () => void
+  checkUpdates: () => void
 }

@@ -1,6 +1,4 @@
 export default interface NoteOrderAPIModel {
-
-    id: number,
-    order: number
-    
+  id: number
+  order: number
 }

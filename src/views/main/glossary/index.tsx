@@ -8,32 +8,33 @@ import SearchBar from '../../../components/search_bar'
 import GlossaryService from '../../../services/glossary/GlossaryService'
 
 const Glossary = (): JSX.Element => {
+  const language = useLanguage().currentLanguage
 
-    const language = useLanguage().currentLanguage
-    
-    const [searchTerm, setSearchTerm] = useState("")
-    const [searchResults, setSearchResults] = useState(new Array<GlossaryItemModel>())
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState(
+    new Array<GlossaryItemModel>(),
+  )
 
-    const handleChange = event => setSearchTerm(event.target.value)
+  const handleChange = (event) => setSearchTerm(event.target.value)
 
-    useEffect(() => {
-        const items = GlossaryService.getItems()
-        const results = items.filter(item =>
-            StringUtils.contains(item.title, searchTerm)
-        )
-        setSearchResults(results)
-    }, [searchTerm])
-
-    return (
-        <div className="glossary">
-            <SearchBar
-                value={searchTerm}
-                onChange={handleChange}
-                placeholder={language.SEARCH_HOLDER} 
-            />
-            <GlossaryItems items={searchResults} />
-        </div>
+  useEffect(() => {
+    const items = GlossaryService.getItems()
+    const results = items.filter((item) =>
+      StringUtils.contains(item.title, searchTerm),
     )
+    setSearchResults(results)
+  }, [searchTerm])
+
+  return (
+    <div className="glossary">
+      <SearchBar
+        value={searchTerm}
+        onChange={handleChange}
+        placeholder={language.SEARCH_HOLDER}
+      />
+      <GlossaryItems items={searchResults} />
+    </div>
+  )
 }
 
 export default Glossary

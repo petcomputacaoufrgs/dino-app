@@ -6,13 +6,13 @@ import AppSettingsUpdater from '../app_settings/AppSettingsUpdater'
 import BaseUpdater from '../BaseUpdater'
 
 class UpdaterService implements BaseUpdater {
-    checkUpdates = async (languageContext?: LanguageSubProviderValue) => {
-        if(AuthService.isAuthenticated()){
-            GlossaryUpdater.checkUpdates()
-            NoteUpdater.checkUpdates()
-            AppSettingsUpdater.checkUpdates(languageContext)
-        }
+  checkUpdates = async (languageContext?: LanguageSubProviderValue) => {
+    if (AuthService.isAuthenticated()) {
+      GlossaryUpdater.checkUpdates()
+      NoteUpdater.checkUpdates()
+      AppSettingsUpdater.checkUpdates(languageContext)
     }
+  }
 }
 
 export default new UpdaterService()

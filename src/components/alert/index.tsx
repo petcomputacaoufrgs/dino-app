@@ -5,11 +5,10 @@ import AlertProps from './props'
 import './styles.css'
 
 const MaterialAlert = (props: MuiAlertProps) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const Alert = (props: AlertProps): JSX.Element => {
-
   const [open, setOpen] = useState(true)
 
   const onClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -21,7 +20,7 @@ const Alert = (props: AlertProps): JSX.Element => {
   }
 
   return (
-    <div className='custom_alert'>
+    <div className="custom_alert">
       <Snackbar open={open} onClose={onClose}>
         <MaterialAlert onClose={onClose} severity={props.severity}>
           {props.message}

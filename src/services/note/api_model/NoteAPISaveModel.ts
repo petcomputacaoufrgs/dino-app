@@ -1,11 +1,9 @@
 export default interface NoteSaveAPIModel {
-    
-    order: number
+  order: number
 
-    question: string
+  question: string
 
-    tagNames: string[]
+  tagNames: string[]
 
-    lastUpdate: number
-
+  lastUpdate: number
 }

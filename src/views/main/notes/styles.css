@@ -1,157 +1,159 @@
-.notes { 
-    padding-top: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: center;
+.notes {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .notes__add.MuiButtonBase-root.MuiFab-root {
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    bottom: 85px;
-    right: 20px;
-    background-color: #FF759E;
-    outline: none;
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  bottom: 85px;
+  right: 20px;
+  background-color: #ff759e;
+  outline: none;
 }
 
 @media (orientation: landscape) {
-    .notes__add.MuiButtonBase-root.MuiFab-root {
-        bottom: 15px;
-    }
+  .notes__add.MuiButtonBase-root.MuiFab-root {
+    bottom: 15px;
+  }
 }
 
 .notes__header {
-    position: fixed;
-    width: 95%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px;
+  position: fixed;
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
 }
 
 .notes__header_desktop {
-    position: fixed;
-    width: 70%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 20px;
-    padding-left: 80px;
+  position: fixed;
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  padding-left: 80px;
 }
 
 .notes__header__image {
-    width: 45px;
-    height: 45px;
-    margin-right: 20px;
+  width: 45px;
+  height: 45px;
+  margin-right: 20px;
 }
 
-
 .sc-AxmLO.fcYNFc {
-    padding-top: 0px;
+  padding-top: 0px;
 }
 
 .sc-fzoyAV.hbVbBu {
-    width: 100%;
+  width: 100%;
 }
 
 .sc-fzoLag.feoXx {
-    width: 100%;
+  width: 100%;
 }
 
 .sc-AxmLO.fcYNFc {
-    margin: 0px;
-    width: 100%;
-    background-color: inherit;
+  margin: 0px;
+  width: 100%;
+  background-color: inherit;
 }
 
-.sc-AxjAm.eZiLDJ { 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 10px;
-    padding-right: 10px;
+.sc-AxjAm.eZiLDJ {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .notes_desktop .sc-AxjAm.eZiLDJ {
-    padding-left: 15%;
-    padding-right: 15%;
+  padding-left: 15%;
+  padding-right: 15%;
 }
 
 .sc-fzozJi.GHGWz {
-    position: absolute;
-    top: 150px;
-    left: 0;
-    right: 0;
-    padding: 0;
-    bottom: 70px;
-    overflow: scroll;
-    width: 100%;
-    padding-bottom: 70px;
+  position: absolute;
+  top: 150px;
+  left: 0;
+  right: 0;
+  padding: 0;
+  bottom: 70px;
+  overflow: scroll;
+  width: 100%;
+  padding-bottom: 70px;
 }
 
 @media (orientation: landscape) {
-    .sc-fzozJi.GHGWz {
-        bottom: 0px;
-    }
+  .sc-fzozJi.GHGWz {
+    bottom: 0px;
+  }
 }
 
 .notes_desktop .sc-fzozJi.GHGWz {
-    left: 80px;
-    width: calc(100% - 80px);
-    bottom: 0;
-    -ms-overflow-style: none;
-    top: 200px;
+  left: 80px;
+  width: calc(100% - 80px);
+  bottom: 0;
+  -ms-overflow-style: none;
+  top: 200px;
 }
 
 .notes_desktop .sc-fzozJi.GHGWz::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .sc-AxmLO.fcYNFc {
-    padding: 0px;
+  padding: 0px;
 }
 
-.note_card_dialog.MuiDialog-root .MuiBackdrop-root .MuiDialog-container.MuiDialog-scrollPaper {
-    width: 100%;
+.note_card_dialog.MuiDialog-root
+  .MuiBackdrop-root
+  .MuiDialog-container.MuiDialog-scrollPaper {
+  width: 100%;
 }
 
 .note_card_dialog.MuiDialog-root .MuiFormControl-root {
-    width: 100%;
-    margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .note_card_dialog.MuiDialog-root .MuiDialog-paperWidthSm {
-    width: 100%;
+  width: 100%;
 }
 
-.note_card_dialog.MuiDialog-root  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #B32E55;
+.note_card_dialog.MuiDialog-root
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #b32e55;
 }
 
 .note_card_dialog.MuiDialog-root .MuiFormLabel-root.Mui-focused {
-    color: #B32E55;
+  color: #b32e55;
 }
 
 .note_card_dialog.MuiDialog-root .MuiInputBase-input textarea {
-    border: none;
-    border-color: transparent;
+  border: none;
+  border-color: transparent;
 }
 
 .note_card_dialog__save {
-    padding: 0px;
+  padding: 0px;
 }
 
 .note_card_dialog__save.MuiDialogActions-root {
-    padding: 0px;
+  padding: 0px;
 }
 
 .note_card_dialog__save .MuiButtonBase-root.MuiButton-root {
-    width: 100%;
-    background-color: #B32E55;
-    font-size: medium;
-    height: 50px;
-    border-radius: 0;
-    outline: none;
+  width: 100%;
+  background-color: #b32e55;
+  font-size: medium;
+  height: 50px;
+  border-radius: 0;
+  outline: none;
 }
-

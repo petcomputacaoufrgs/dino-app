@@ -1,54 +1,51 @@
 import BaseLocalStorage from '../../BaseLocalStorage'
-import LS_Constants from "../../../constants/LocalStorageKeysConstants"
+import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 
 class AuthLocalStorage extends BaseLocalStorage {
-    
-    getAuthToken = () : string => {
-        const authToken = this.get(LS_Constants.AUTH_TOKEN)
-        
-        return this.convertStringOrNullToString(authToken)
-    }
+  getAuthToken = (): string => {
+    const authToken = this.get(LS_Constants.AUTH_TOKEN)
 
-    setAuthToken = (accessToken: string) => {
-        this.set(LS_Constants.AUTH_TOKEN, accessToken)
-    }
-    
-    removeAuthToken = () => {
-        this.remove(LS_Constants.AUTH_TOKEN)
-    }
+    return this.convertStringOrNullToString(authToken)
+  }
 
-    getGoogleAccessToken = (): string | null => (
-        this.get(LS_Constants.GOOGLE_ACCESS_TOKEN)
-    )
+  setAuthToken = (accessToken: string) => {
+    this.set(LS_Constants.AUTH_TOKEN, accessToken)
+  }
 
-    setGoogleAccessToken = (googleAccessToken: string) => {
-        this.set(LS_Constants.GOOGLE_ACCESS_TOKEN, googleAccessToken)
-    }
+  removeAuthToken = () => {
+    this.remove(LS_Constants.AUTH_TOKEN)
+  }
 
-    removeGoogleAccessToken = () => {
-        this.remove(LS_Constants.GOOGLE_ACCESS_TOKEN)
-    }
+  getGoogleAccessToken = (): string | null =>
+    this.get(LS_Constants.GOOGLE_ACCESS_TOKEN)
 
-    isRefreshRequired = (): boolean => (
-        Boolean(this.get(LS_Constants.REFRESH_TOKEN_REQUIRED))
-    )
- 
-    setRefreshRequiredToTrue = () => {
-        this.set(LS_Constants.REFRESH_TOKEN_REQUIRED, 't')
-    }
-    
-    setRefreshRequiredToFalse = () => {
-        this.remove(LS_Constants.REFRESH_TOKEN_REQUIRED)
-    } 
+  setGoogleAccessToken = (googleAccessToken: string) => {
+    this.set(LS_Constants.GOOGLE_ACCESS_TOKEN, googleAccessToken)
+  }
 
-    removeUserData = () => {
-        this.removeAuthToken()
-        this.removeGoogleAccessToken()
-    }
-    
-    cleanLoginGarbage = () => {
-        this.setRefreshRequiredToFalse()
-    }
+  removeGoogleAccessToken = () => {
+    this.remove(LS_Constants.GOOGLE_ACCESS_TOKEN)
+  }
+
+  isRefreshRequired = (): boolean =>
+    Boolean(this.get(LS_Constants.REFRESH_TOKEN_REQUIRED))
+
+  setRefreshRequiredToTrue = () => {
+    this.set(LS_Constants.REFRESH_TOKEN_REQUIRED, 't')
+  }
+
+  setRefreshRequiredToFalse = () => {
+    this.remove(LS_Constants.REFRESH_TOKEN_REQUIRED)
+  }
+
+  removeUserData = () => {
+    this.removeAuthToken()
+    this.removeGoogleAccessToken()
+  }
+
+  cleanLoginGarbage = () => {
+    this.setRefreshRequiredToFalse()
+  }
 }
 
 export default new AuthLocalStorage()

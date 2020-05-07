@@ -1,9 +1,9 @@
 class GoogleAuthRequestModel {
-    token: string
+  token: string
 
-    constructor(token: string) {
-        this.token = token
-    }
+  constructor(token: string) {
+    this.token = token
+  }
 }
 
 export default GoogleAuthRequestModel

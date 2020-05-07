@@ -1,16 +1,18 @@
 .drawer_menu {
-    position: relative;
-    z-index: 5001;
-    height: 55px;
+  position: relative;
+  z-index: 5001;
+  height: 55px;
 }
 
-.drawer_menu .MuiPaper-root.MuiAppBar-root .MuiToolbar-root.MuiToolbar-regular.MuiToolbar-gutters{
-    position: absolute;
-    width: 100vw;
-    height: 55px;
+.drawer_menu
+  .MuiPaper-root.MuiAppBar-root
+  .MuiToolbar-root.MuiToolbar-regular.MuiToolbar-gutters {
+  position: absolute;
+  width: 100vw;
+  height: 55px;
 }
 
 .drawer_menu .MuiAppBar-colorPrimary {
-    background-color: #B32E55;
-    height: 55px;
+  background-color: #b32e55;
+  height: 55px;
 }

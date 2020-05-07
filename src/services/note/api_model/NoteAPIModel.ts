@@ -1,15 +1,15 @@
 export default interface NoteAPIModel {
-    id: number
+  id: number
 
-    order: number
+  order: number
 
-    question: string
+  question: string
 
-    answer: string
+  answer: string
 
-    answered: boolean
+  answered: boolean
 
-    tags: string[]
+  tags: string[]
 
-    lastUpdate: number
+  lastUpdate: number
 }

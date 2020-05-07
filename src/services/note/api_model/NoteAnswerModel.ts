@@ -1,7 +1,5 @@
 export default interface NoteAPIAnswerModel {
+  id: number
 
-    id: number
-
-    answer: string
-
+  answer: string
 }

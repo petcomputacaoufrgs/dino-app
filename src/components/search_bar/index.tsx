@@ -4,20 +4,24 @@ import SearchIcon from '@material-ui/icons/Search'
 import SearchBarProps from './props'
 import './styles.css'
 
-const SearchBar = (props: SearchBarProps): JSX.Element =>
-    <div className='search-bar'>
-        <div className="input-group">
-            <div className="input-group-prepend">
-                <span className="input-group-text" id="inputGroupPrepend"><SearchIcon /></span>
-            </div>
-            <input className="form-control"
-                type="text"
-                aria-label="Search"
-                value={props.value}
-                onChange={props.onChange}
-                placeholder={props.placeholder}
-            />
-        </div>
+const SearchBar = (props: SearchBarProps): JSX.Element => (
+  <div className="search-bar">
+    <div className="input-group">
+      <div className="input-group-prepend">
+        <span className="input-group-text" id="inputGroupPrepend">
+          <SearchIcon />
+        </span>
+      </div>
+      <input
+        className="form-control"
+        type="text"
+        aria-label="Search"
+        value={props.value}
+        onChange={props.onChange}
+        placeholder={props.placeholder}
+      />
     </div>
+  </div>
+)
 
 export default SearchBar

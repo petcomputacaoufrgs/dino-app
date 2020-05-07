@@ -1,61 +1,65 @@
 .react_kanban_card {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .react_kanban_card.dragging {
-    animation: scale 250ms ease-in-out;
-    transform: scale(1.05);
+  animation: scale 250ms ease-in-out;
+  transform: scale(1.05);
 }
 
 @keyframes scale {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(1.05);
-    }
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
 }
 
 .react_kanban_card.dragging {
-    width: 100%;
+  width: 100%;
 }
 
 .react_kanban_card .MuiCardHeader-root {
-    padding: 16px;
-    padding-bottom: 0px;
+  padding: 16px;
+  padding-bottom: 0px;
 }
 
 .react_kanban_card.MuiCard-root {
-    background-color: #75FF85;
+  background-color: #75ff85;
 }
 
 .react_kanban_card .card__tag_list {
-    overflow: scroll;
-    -ms-overflow-style: none;
-    margin-right: 16px;
-    margin-left: 8px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  margin-right: 16px;
+  margin-left: 8px;
 }
 
 .react_kanban_card .card__tag_list.MuiCardContent-root {
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-right: 16px; 
-    padding-left: 8px;
-} 
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-right: 16px;
+  padding-left: 8px;
+}
 
 .react_kanban_card .card__tag_list::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .react_kanban_card .MuiCollapse-container {
-    background-color: #8FFF9C;
+  background-color: #8fff9c;
 }
 
-.react_kanban_card .MuiCardHeader-content .MuiTypography-root.MuiCardHeader-title {
-    font-size: large;
-} 
+.react_kanban_card
+  .MuiCardHeader-content
+  .MuiTypography-root.MuiCardHeader-title {
+  font-size: large;
+}
 
-.react_kanban_card .MuiCardHeader-content .MuiTypography-root.MuiCardHeader-subheader {
-    font-size: small;
+.react_kanban_card
+  .MuiCardHeader-content
+  .MuiTypography-root.MuiCardHeader-subheader {
+  font-size: small;
 }

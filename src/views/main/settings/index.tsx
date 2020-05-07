@@ -13,85 +13,87 @@ import AppSettingsService from '../../../services/app_settings/AppSettingsServic
 import './styles.css'
 
 const Settings = (): JSX.Element => {
+  const appContext = useApp()
 
-    const appContext = useApp()
+  const language = appContext.language.currentLanguage
 
-    const language = appContext.language.currentLanguage
+  const alert = appContext.alert
 
-    const alert = appContext.alert
+  const languageList = appContext.language.getLanguageList()
 
-    const languageList = appContext.language.getLanguageList()
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    language.NAVIGATOR_LANGUAGE_CODE,
+  )
 
-    const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
+  const onChangeLanguage = (event: any) => {
+    if (event && event.target && event.target.value) {
+      setSelectedLanguage(event.target.value as string)
+    }
+  }
 
-    const onChangeLanguage = (event: any) => {
-        if (event && event.target && event.target.value) {
-            setSelectedLanguage(event.target.value as string)
-        }
+  const onSave = () => {
+    const model: AppSettingsModel = {
+      language: selectedLanguage,
     }
 
-    const onSave = () => {
-        const model: AppSettingsModel = {
-            'language': selectedLanguage
-        }
+    AppSettingsService.set(model)
 
-        AppSettingsService.set(model)
+    appContext.language.updateLanguage()
+    alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
 
-        appContext.language.updateLanguage()
-        alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
-        
-        HistoryService.goBack()
-    }
+    HistoryService.goBack()
+  }
 
-    const renderSelectLanguage = (): JSX.Element => (
-        <>
-        <InputLabel id='language-select-label'>
-            {language.SETTINGS_LANGUAGE}
-        </InputLabel>
-        <Select
-            labelId='language-select-label'
-            id='language-select'
-            value={selectedLanguage}
-            onChange={onChangeLanguage}
-        >
-            {languageList.map((language, index) => (
-                <MenuItem 
-                    key={index} 
-                    value={language.code}
-                >
-                    {language.name}
-                </MenuItem>
-            ))}
-        </Select>
-        </>
-    )
+  const renderSelectLanguage = (): JSX.Element => (
+    <>
+      <InputLabel id="language-select-label">
+        {language.SETTINGS_LANGUAGE}
+      </InputLabel>
+      <Select
+        labelId="language-select-label"
+        id="language-select"
+        value={selectedLanguage}
+        onChange={onChangeLanguage}
+      >
+        {languageList.map((language, index) => (
+          <MenuItem key={index} value={language.code}>
+            {language.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </>
+  )
 
-    const renderSaveButton = ():JSX.Element => (
-        <div className='settings__save_button_container'>
-            <Button
-                variant='contained'
-                color='primary'
-                size='large'
-                className='settings__save_button'
-                startIcon={<SaveIcon />}
-                onClick={onSave}
-            >
-                {language.SETTINGS_SAVE}
-            </Button>
-        </div>
-    )
+  const renderSaveButton = (): JSX.Element => (
+    <div className="settings__save_button_container">
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        className="settings__save_button"
+        startIcon={<SaveIcon />}
+        onClick={onSave}
+      >
+        {language.SETTINGS_SAVE}
+      </Button>
+    </div>
+  )
 
-    return (
-        <div className='settings'>
-            <Typography className='settings__title' color='textSecondary' gutterBottom>
-                {language.SETTINGS_TITLE}
-            </Typography>
-            <FormControl className='settings__form'>  
-                {renderSelectLanguage()}
-            </FormControl>
-            {renderSaveButton()}
-        </div>
-    )
+  return (
+    <div className="settings">
+      <Typography
+        className="settings__title"
+        color="textSecondary"
+        gutterBottom
+      >
+        {language.SETTINGS_TITLE}
+      </Typography>
+      <FormControl className="settings__form">
+        {renderSelectLanguage()}
+      </FormControl>
+      {renderSaveButton()}
+    </div>
+  )
 }
 
 export default Settings

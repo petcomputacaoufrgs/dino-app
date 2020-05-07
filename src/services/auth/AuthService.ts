@@ -13,89 +13,93 @@ import UserService from '../user/UserService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 
 class AuthService {
-
-    getDefaultScopes = (): string => {
-        return GoogleAuthConstants.SCOPE_CALENDAR + ' ' +
-                GoogleAuthConstants.SCOPE_PROFILE
-    }
-
-    google_login = async (loginResponse: GoogleLoginResponseOffline): Promise<number> => {
-        if (loginResponse.code) {
-            const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
-                
-            try {
-                const response = await DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE).send(authRequestModel)
-
-                if (response.status === HttpStatus.OK) {
-                    this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
-    
-                    AuthLocalStorage.cleanLoginGarbage()
-    
-                    return LoginErrorConstants.SUCCESS
-                }
-
-                if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
-                    return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
-                }
-
-            } catch (error) {
-                return LoginErrorConstants.UNKNOW_API_ERROR
-            }
-        }    
-        
-        return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
-    }
-
-    google_logout = () => {
-        UserService.removeUserData()
-
-        HistoryService.push(PathConstants.LOGIN)
-    }
-
-    isAuthenticated = () : boolean => (
-        Boolean(AuthLocalStorage.getAuthToken())
+  getDefaultScopes = (): string => {
+    return (
+      GoogleAuthConstants.SCOPE_CALENDAR +
+      ' ' +
+      GoogleAuthConstants.SCOPE_PROFILE
     )
+  }
 
-    setGoogleAccessToken = (token: string) => {
-        AuthLocalStorage.setGoogleAccessToken(token)
+  google_login = async (
+    loginResponse: GoogleLoginResponseOffline,
+  ): Promise<number> => {
+    if (loginResponse.code) {
+      const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
+
+      try {
+        const response = await DinoAgentService.post(
+          DinoAPIURLConstants.AUTH_GOOGLE,
+        ).send(authRequestModel)
+
+        if (response.status === HttpStatus.OK) {
+          this.saveGoogleAuthDataFromRequestBody(
+            response.body as GoogleAuthResponseModel,
+          )
+
+          AuthLocalStorage.cleanLoginGarbage()
+
+          return LoginErrorConstants.SUCCESS
+        }
+
+        if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+          return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
+        }
+      } catch (error) {
+        return LoginErrorConstants.UNKNOW_API_ERROR
+      }
     }
 
-    setAuthToken = (token: string) => {
-        AuthLocalStorage.setAuthToken(token)
-    }
+    return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
+  }
 
-    getAuthToken = () : string => {
-        return AuthLocalStorage.getAuthToken()
-    }
+  google_logout = () => {
+    UserService.removeUserData()
 
-    removeUserData = () => {
-        AuthLocalStorage.removeUserData()
-    }
+    HistoryService.push(PathConstants.LOGIN)
+  }
 
-    setRefreshRequiredToTrue = () => {
-        AuthLocalStorage.setRefreshRequiredToTrue()
-    }
+  isAuthenticated = (): boolean => Boolean(AuthLocalStorage.getAuthToken())
 
-    setRefreshRequiredToFalse = () => {
-        AuthLocalStorage.setRefreshRequiredToFalse()
-    }
+  setGoogleAccessToken = (token: string) => {
+    AuthLocalStorage.setGoogleAccessToken(token)
+  }
 
-    isRefreshRequired = (): boolean => (
-        AuthLocalStorage.isRefreshRequired()
-    )
+  setAuthToken = (token: string) => {
+    AuthLocalStorage.setAuthToken(token)
+  }
 
-    private saveGoogleAuthDataFromRequestBody(responseBody: GoogleAuthResponseModel) {
-        this.setGoogleAccessToken(responseBody.googleAccessToken)
-        this.saveUserAuthDataFromRequestBody(responseBody)
-    }
+  getAuthToken = (): string => {
+    return AuthLocalStorage.getAuthToken()
+  }
 
-    private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
-        AuthLocalStorage.setAuthToken(responseBody.accessToken)
-        UserService.setEmail(responseBody.email)
-        UserService.setName(responseBody.name)
-        UserService.setPictureUrl(responseBody.pictureUrl)
-    }
-    
+  removeUserData = () => {
+    AuthLocalStorage.removeUserData()
+  }
+
+  setRefreshRequiredToTrue = () => {
+    AuthLocalStorage.setRefreshRequiredToTrue()
+  }
+
+  setRefreshRequiredToFalse = () => {
+    AuthLocalStorage.setRefreshRequiredToFalse()
+  }
+
+  isRefreshRequired = (): boolean => AuthLocalStorage.isRefreshRequired()
+
+  private saveGoogleAuthDataFromRequestBody(
+    responseBody: GoogleAuthResponseModel,
+  ) {
+    this.setGoogleAccessToken(responseBody.googleAccessToken)
+    this.saveUserAuthDataFromRequestBody(responseBody)
+  }
+
+  private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
+    AuthLocalStorage.setAuthToken(responseBody.accessToken)
+    UserService.setEmail(responseBody.email)
+    UserService.setName(responseBody.name)
+    UserService.setPictureUrl(responseBody.pictureUrl)
+  }
 }
 
 export default new AuthService()

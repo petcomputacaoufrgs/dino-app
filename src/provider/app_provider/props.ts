@@ -1,3 +1,3 @@
 export default interface DatabaseProviderProps {
-    children?: JSX.Element
+  children?: JSX.Element
 }

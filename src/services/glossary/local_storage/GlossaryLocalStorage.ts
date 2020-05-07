@@ -3,35 +3,33 @@ import BaseLocalStorage from '../../BaseLocalStorage'
 import GlossaryItemModel from '../api_model/GlossaryItemModel'
 
 class GlossaryLocalStorage extends BaseLocalStorage {
+  getVersion = (): number => {
+    let version = this.get(LS_Constants.GLOSSARY_VERSION)
 
-    getVersion = () : number => {
-        let version = this.get(LS_Constants.GLOSSARY_VERSION)
+    return version ? Number(version) : -1
+  }
 
-        return version ? Number(version) : -1   
-    }
+  getItems = (): Array<GlossaryItemModel> => {
+    let items = this.get(LS_Constants.GLOSSARY_ITEMS)
 
-    getItems = () : Array<GlossaryItemModel> => {
-        let items = this.get(LS_Constants.GLOSSARY_ITEMS)
+    return items ? JSON.parse(items) : new Array<GlossaryItemModel>()
+  }
 
-        return items ? JSON.parse(items) : new Array<GlossaryItemModel>()
-    }
+  removeItems = () => {
+    this.remove(LS_Constants.GLOSSARY_ITEMS)
+  }
 
-    removeItems = () => {
-        this.remove(LS_Constants.GLOSSARY_ITEMS)
-    }
+  setVersion = (version: number) => {
+    this.set(LS_Constants.GLOSSARY_VERSION, JSON.stringify(version))
+  }
 
-    setVersion = (version: number) => {
-        this.set(LS_Constants.GLOSSARY_VERSION, JSON.stringify(version))
-    }
+  setItems = (items: GlossaryItemModel[]) => {
+    this.set(LS_Constants.GLOSSARY_ITEMS, JSON.stringify(items))
+  }
 
-    setItems = (items: GlossaryItemModel[]) => {
-        this.set(LS_Constants.GLOSSARY_ITEMS, JSON.stringify(items))
-    }
-
-    removeVersion = () => {
-        this.remove(LS_Constants.GLOSSARY_VERSION)
-    }
-
+  removeVersion = () => {
+    this.remove(LS_Constants.GLOSSARY_VERSION)
+  }
 }
 
 export default new GlossaryLocalStorage()

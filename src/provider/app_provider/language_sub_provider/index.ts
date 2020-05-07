@@ -6,64 +6,63 @@ import LanguageSubProviderValue, { Language } from './value'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 
-const LanguageSubProvider = () : LanguageSubProviderValue => {
-
-    const getLanguageSetByCode = (languageCode: string): LanguageSet => {
-        if (languageCode === LanguageCodeConstants.PORTUGUESE) {
-            return new PT_BR()
-        } else {
-            return new EN_US()
-        }
+const LanguageSubProvider = (): LanguageSubProviderValue => {
+  const getLanguageSetByCode = (languageCode: string): LanguageSet => {
+    if (languageCode === LanguageCodeConstants.PORTUGUESE) {
+      return new PT_BR()
+    } else {
+      return new EN_US()
     }
+  }
 
-    const getLanguageSet = (): LanguageSet => {
-        const language = AppSettingsService.get().language
+  const getLanguageSet = (): LanguageSet => {
+    const language = AppSettingsService.get().language
 
-        return getLanguageSetByCode(language)
+    return getLanguageSetByCode(language)
+  }
+
+  const setHTMLElementLanguage = (language: LanguageSet) => {
+    const html = document.getElementById('html')
+
+    if (html) {
+      html.lang = language.ISO_LANGUAGE_CODE
     }
+  }
 
-    const setHTMLElementLanguage = (language: LanguageSet) => {
-        const html = document.getElementById('html')
+  const [currentLanguage, setCurrentLanguage] = useState(getLanguageSet())
 
-        if (html) {
-            html.lang = language.ISO_LANGUAGE_CODE
-        }
-    }
+  setHTMLElementLanguage(currentLanguage)
 
-    const [currentLanguage, setCurrentLanguage] = useState(getLanguageSet())
+  const updateCurrentLanguage = () => {
+    const language = getLanguageSet()
 
-    setHTMLElementLanguage(currentLanguage)
+    setHTMLElementLanguage(language)
 
-    const updateCurrentLanguage = () => {
-        const language = getLanguageSet()
+    setCurrentLanguage(language)
+  }
 
-        setHTMLElementLanguage(language)
+  const getLanguageList = (): Language[] => {
+    const language = getLanguageSet()
 
-        setCurrentLanguage(language)
-    }
+    return [
+      {
+        code: LanguageCodeConstants.PORTUGUESE,
+        name: language.LANGUAGE_PORTUGUESE,
+      } as Language,
+      {
+        code: LanguageCodeConstants.ENGLISH,
+        name: language.LANGUAGE_ENGLISH,
+      } as Language,
+    ]
+  }
 
-    const getLanguageList = (): Language[] => {
-        const language = getLanguageSet()
+  const value: LanguageSubProviderValue = {
+    currentLanguage: currentLanguage,
+    getLanguageList: getLanguageList,
+    updateLanguage: updateCurrentLanguage,
+  }
 
-        return [
-            {
-                'code': LanguageCodeConstants.PORTUGUESE,
-                'name': language.LANGUAGE_PORTUGUESE
-            } as Language,
-            {
-                'code': LanguageCodeConstants.ENGLISH,
-                'name': language.LANGUAGE_ENGLISH
-            } as Language
-        ]
-    }
-
-    const value: LanguageSubProviderValue  = {
-        'currentLanguage': currentLanguage,
-        'getLanguageList': getLanguageList,
-        'updateLanguage': updateCurrentLanguage
-    }
-
-    return value
+  return value
 }
 
 export default LanguageSubProvider

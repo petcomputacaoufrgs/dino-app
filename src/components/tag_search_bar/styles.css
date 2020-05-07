@@ -1,11 +1,13 @@
 .tag_search_bar {
-    width: 100%;
+  width: 100%;
 }
 
-.tag_search_bar  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #B32E55;
+.tag_search_bar
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #b32e55;
 }
 
 .tag_search_bar .MuiFormLabel-root.Mui-focused {
-    color: #B32E55;
+  color: #b32e55;
 }

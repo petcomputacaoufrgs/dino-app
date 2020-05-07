@@ -1,7 +1,5 @@
 export default interface NoteSaveResponseAPIModel {
+  version: number
 
-    version: number
-
-    noteId: number
-
+  noteId: number
 }

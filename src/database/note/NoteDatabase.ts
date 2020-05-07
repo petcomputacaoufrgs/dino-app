@@ -1,15 +1,11 @@
 import NoteDoc from './NoteDoc'
-import PouchDB from 'pouchdb'
 import StringUtils from '../../utils/StringUtils'
+import Database from '../Database'
+import ArrayUtils from '../../utils/ArrayUtils'
 
 const ID_PREFIX = 'note_'
 
-class NoteDatabase {
-    db: PouchDB.Database
-
-    constructor(db: PouchDB.Database) {
-        this.db = db
-    }
+class NoteDatabase extends Database {
 
     private getId = (question: string) => (
         StringUtils.normalizer(ID_PREFIX + question)
@@ -23,14 +19,29 @@ class NoteDatabase {
         this.db.put(doc)
     }
 
+    putAll = async (docs: NoteDoc[]) => {
+        docs.forEach(doc => {
+            if (!doc._id) {
+                doc._id = this.getId(doc.question)
+            }
+        })
+
+        this.db.bulkDocs(docs)
+    }
+
     deleteByNoteDoc = async (doc: NoteDoc) => {
         try {
-            const id = doc._id
-            const rev = doc._rev
+            if (doc._id && doc._rev) {
+                const id = doc._id
+                const rev = doc._rev
+    
+                this.db.remove(id, rev)
+            } else {
+                throw new Error("Deletando item sem id ou sem rev")
+            }
 
-            this.db.remove(id, rev)
         } catch {
-            throw new Error("Delete on local database error")
+            throw new Error("Erro ao deletar item do banco de dados local.")
         }
     }
 
@@ -86,6 +97,16 @@ class NoteDatabase {
         }
     }
 
+    getAllTags = async (): Promise<string[]> => {
+        const noteDocs = await this.getAll()
+
+        const tags: string[] = []
+
+        noteDocs.forEach(noteDoc => tags.push.apply(tags, noteDoc.tagNames))
+
+        return ArrayUtils.removeRepeatedValues(tags)
+    }
+
     getByQuestion = async (question: string): Promise<NoteDoc | null> => {
         const id = this.getId(question)
 
@@ -98,6 +119,14 @@ class NoteDatabase {
             return null
         }
     }
+
+    removeAll = async () => {
+        const allDocs = await this.getAll()
+
+        allDocs.forEach(doc => {
+            this.deleteByNoteDoc(doc)
+        })
+    }
 }
 
-export default NoteDatabase
+export default new NoteDatabase()

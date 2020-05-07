@@ -14,8 +14,6 @@ class LocalStorageKeys {
     APP_SETTINGS_VERSION = 'asv'
     APP_SETTINGS = 'as'
     PAGE_TEMP = 'pt'
-    NOTE = 'no'
-    NOTE_TAGS = 'nt'
     NOTE_VERSION = 'nv'
     UPDATING_NOTES = 'un'
     UPDATE_NOTES_WITH_ERROR = 'une'

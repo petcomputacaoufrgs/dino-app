@@ -1,7 +1,13 @@
 import LanguageSet from '../language/LanguageSet'
 import StringUtils from './StringUtils'
+import { DateTime } from 'luxon'
+import DinoAPIGeneralConstants from '../constants/dino_api/DinoAPIGeneralConstants'
 
 class DateUtils {
+
+    getDatetimeInMillis = (): number => {
+        return DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
+    }
 
     getDateStringFormated = (dateMS: number, language: LanguageSet): string => {
         const date = new Date(dateMS)

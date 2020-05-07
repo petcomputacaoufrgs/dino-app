@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { DateTime } from 'luxon'
+import React, { useState, useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import StringUtils from '../../../utils/StringUtils'
 import Board, { moveCard } from '@lourenci/react-kanban'
@@ -14,11 +13,11 @@ import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
 import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
 import AgreementDialogProps from '../../../components/agreement_dialog/props'
 import AgreementDialog from '../../../components/agreement_dialog'
-import DinoAPIGeneralConstants from '../../../constants/dino_api/DinoAPIGeneralConstants'
 import TagSearchBar from '../../../components/tag_search_bar/index'
 import { useLanguage } from '../../../provider/app_provider/index'
 import NotesService from '../../../services/NotesService'
 import './styles.css'
+import DateUtils from '../../../utils/DateUtils'
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
@@ -29,20 +28,16 @@ const Notes = () => {
     const [answer, setAnswer] = useState('')
     const [answerDialogOpen, setAnswerDialogOpen] = useState(false)
     const [question, setQuestion] = useState('')
-    const [tagList, setTagList] = useState([] as string[])
     const [questionDialogOpen, setQuestionDialogOpen] = useState(false)
     const [newQuestionDialogOpen, setNewQuestionDialogOpen] = useState(false)
     const [textSearch, setTextSearch] = useState('')
     const [tagSearch, setTagSearch] = useState([] as string[])
     const [note, setNote] = useState(undefined as NoteViewModel | undefined)
+    const [noteTags, setNoteTags] = useState([] as string[])
     const [board, setBoard] = useState({
-      columns: [
-        {
-          'id': 0,
-          'cards': NotesService.getSavedNotes()
-        } as NoteBoardColumnViewModel
-      ] as NoteBoardColumnViewModel[]
+      columns: [] as NoteBoardColumnViewModel[]
     } as NoteBoardViewModel)
+    const [tags, setTags] = useState([] as string[])
     const [idNoteToDelete, setIdNoteToDelete] = useState(undefined as number | undefined)
 
     //#region Editing Answer
@@ -79,15 +74,6 @@ const Notes = () => {
       setAnswerDialogOpen(false)
     }
 
-    const renderUpdateAnswerDialog = (): JSX.Element => (
-      <AnswerDialog 
-        open={answerDialogOpen}
-        answer={answer}
-        onSave={handleSaveAnswer}
-        onClose={handleCloseAnswerDialog}
-      />
-    )
-
     //#endregion
 
     //#region Editing Question
@@ -95,27 +81,28 @@ const Notes = () => {
     const handleOpenEditQuestionDialog = (note: NoteViewModel) => {
       setNote(note)
       setQuestion(note.question)
-      setTagList(note.tagNames)
+      setNoteTags(note.tagNames)
       setQuestionDialogOpen(true)
     }
 
     const handleSaveQuestion = (newQuestion: string, newTagNames: string[]) => {
+            
       if (!note) {
         return
       }
 
       const newData = {...board}
 
-      const editedNote = newData.columns[0].cards.find(n => n.id === note.id)
+      const editedNote = newData.columns[0].cards.find(n => n.question === note.question)
 
       if (editedNote) {
-        const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
+        const date = DateUtils.getDatetimeInMillis()
 
         editedNote.question = newQuestion
         editedNote.tagNames = newTagNames
         editedNote.lastUpdate = date
 
-        NotesService.updateNoteQuestion(editedNote)
+        NotesService.updateNoteQuestion(editedNote, updateState)
       }
 
       setNote(undefined)
@@ -126,17 +113,6 @@ const Notes = () => {
     const handleCloseQuestionDialog = () => {
       setQuestionDialogOpen(false)
     }
-
-    const renderUpdateQuestionDialog = (): JSX.Element => (
-      <QuestionDialog 
-        open={questionDialogOpen}
-        question={question}
-        tagList={tagList}
-        tagOptions={NotesService.getSavedTags()}
-        onSave={handleSaveQuestion}
-        onClose={handleCloseQuestionDialog}
-      />
-    )
 
     //#endregion 
 
@@ -158,7 +134,7 @@ const Notes = () => {
       const newNotes = notes.filter(note => note.id !== idNoteToDelete)
 
       if (deletedNote) {
-        NotesService.deleteNote(deletedNote)
+        NotesService.deleteNote(deletedNote, updateState)
       }
       
       newData.columns[0].cards = newNotes
@@ -191,7 +167,7 @@ const Notes = () => {
 
       const newId = newNotes.length
 
-      const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
+      const date = DateUtils.getDatetimeInMillis()
 
       const newNote: NoteViewModel = {
         answer: '',
@@ -205,7 +181,7 @@ const Notes = () => {
         savedOnServer: false
       }
 
-      NotesService.saveNote(newNote)
+      NotesService.saveNote(newNote, updateState)
 
       newNotes.push(newNote)
       
@@ -216,17 +192,6 @@ const Notes = () => {
     const handleCloseNewQuestionDialog = () => {
       setNewQuestionDialogOpen(false)
     }
-
-    const renderNewQuestionDialog = (): JSX.Element => (
-      <QuestionDialog 
-        open={newQuestionDialogOpen}
-        question={''}
-        tagList={[]}
-        tagOptions={NotesService.getSavedTags()}
-        onSave={handleSaveNewQuestion}
-        onClose={handleCloseNewQuestionDialog}
-      />
-    )
 
     //#endregion
 
@@ -287,7 +252,7 @@ const Notes = () => {
 
     //#region Moving card
     const handleCardMove = (card, source, destination) => {
-      const newBoard: NoteBoardViewModel  = moveCard(board, source, destination)
+      const newBoard: NoteBoardViewModel = moveCard(board, source, destination)
 
       NotesService.updateNotesOrder(newBoard.columns[0].cards)
 
@@ -299,7 +264,7 @@ const Notes = () => {
 
     const renderSearchBar = (): JSX.Element => (
       <TagSearchBar 
-        options={NotesService.getSavedTags()}
+        options={tags}
         onTagSearch={handleTagSearch}
         onTextSearch={handleTextSearch} 
         textFieldClass={HEADER_TEXT_FIELD_CLASS}
@@ -343,13 +308,71 @@ const Notes = () => {
       </Board>
     )
 
+    const renderUpdateQuestionDialog = (): JSX.Element => (
+      <QuestionDialog 
+        open={questionDialogOpen}
+        question={question}
+        tagList={noteTags}
+        tagOptions={tags}
+        onSave={handleSaveQuestion}
+        onClose={handleCloseQuestionDialog}
+      />
+    )
+
     const renderAddButton = (): JSX.Element => (
       <Fab onClick={handleOpenNewQuestionDialog} className='notes__add' aria-label={language.NOTES_ADD_BUTTON}>
         <AddIcon />
       </Fab>
     )
 
+    const renderNewQuestionDialog = (): JSX.Element => (
+      <QuestionDialog 
+        open={newQuestionDialogOpen}
+        question={''}
+        tagList={[]}
+        tagOptions={tags}
+        onSave={handleSaveNewQuestion}
+        onClose={handleCloseNewQuestionDialog}
+      />
+    )
+
+    const renderUpdateAnswerDialog = (): JSX.Element => (
+      <AnswerDialog 
+        open={answerDialogOpen}
+        answer={answer}
+        onSave={handleSaveAnswer}
+        onClose={handleCloseAnswerDialog}
+      />
+    )
+
     //#endregion
+
+    useEffect(() => {
+      if (board.columns.length === 0) {
+        const notesPromisse = NotesService.getNotes()
+
+        notesPromisse.then(notes => setBoard({
+          columns: [
+            {
+              'id': 0,
+              'cards': notes
+            } as NoteBoardColumnViewModel
+          ] as NoteBoardColumnViewModel[]
+        } as NoteBoardViewModel)).catch()
+
+        const tagsPromise = NotesService.getTags()
+
+        tagsPromise.then(tags => setTags(tags)).catch()
+      }
+    })
+
+    const updateState = async () => {
+      console.log('oi')
+
+      const tags = await NotesService.getTags()
+
+      setTags(tags)
+    }
 
     const updateListMarginTop = () => {
       const foundDivs = document.getElementsByClassName('sc-fzozJi GHGWz')

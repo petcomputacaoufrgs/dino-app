@@ -1,26 +1,8 @@
 import LocalStorage from './LocalStorage'
 import LS_Constants from '../constants/LocalStorageKeysConstants'
-import NoteLocalModel from '../model/local_storage/NoteLocalModel';
+import NoteDoc from '../database/note/NoteDoc'
 
 class NotesLocalStorage extends LocalStorage {
-    
-    getNotes = (): NoteLocalModel[] => {
-        const items = this.get(LS_Constants.NOTE)
-
-        if (items) {
-            return JSON.parse(items)
-        }
-
-        return []
-    }
-    
-    setNotes = (notes: NoteLocalModel[]) => {
-        this.set(LS_Constants.NOTE, JSON.stringify(notes))
-    }
-
-    removeNotes = () => {
-        this.remove(LS_Constants.NOTE)
-    }
 
     getUpdatingNotes = (): boolean => {
         const updating = this.get(LS_Constants.UPDATING_NOTES)
@@ -58,24 +40,6 @@ class NotesLocalStorage extends LocalStorage {
         this.remove(LS_Constants.UPDATE_NOTES_WITH_ERROR)
     }
 
-    getTags = (): string[] => {
-        const items = this.get(LS_Constants.NOTE_TAGS)
-
-        if (items) {
-            return JSON.parse(items)
-        }
-
-        return []
-    }
-
-    setTags = (tags: string[]) => {
-        this.set(LS_Constants.NOTE_TAGS, JSON.stringify(tags))
-    }
-
-    removeTags = () => {
-        this.remove(LS_Constants.NOTE_TAGS)
-    }
-
     getVersion = (): number => {
         const version = this.get(LS_Constants.NOTE_VERSION)
 
@@ -94,7 +58,7 @@ class NotesLocalStorage extends LocalStorage {
         this.remove(LS_Constants.NOTE_VERSION)
     }
 
-    getNotesToDelete = (): NoteLocalModel[] => {
+    getNotesToDelete = (): NoteDoc[] => {
         const notesToDelete = this.get(LS_Constants.NOTES_TO_DELETE)
 
         if (notesToDelete) {
@@ -104,8 +68,8 @@ class NotesLocalStorage extends LocalStorage {
         return []
     }
 
-    setNotesToDelete = (notesToDelete: NoteLocalModel[]) => {
-        this.set(LS_Constants.NOTES_TO_DELETE, JSON.stringify(notesToDelete))
+    setNotesToDelete = (noteDocs: NoteDoc[]) => {
+        this.set(LS_Constants.NOTES_TO_DELETE, JSON.stringify(noteDocs))
     }
 
     removeNotesToDelete = () => {
@@ -113,8 +77,6 @@ class NotesLocalStorage extends LocalStorage {
     }
     
     removeUserData = () => {
-        this.removeNotes()
-        this.removeTags()
         this.removeUpdateNotesWithError()
         this.removeUpdatingNotes()
         this.removeVersion()

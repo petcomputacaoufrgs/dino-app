@@ -32,15 +32,20 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
         }
 
         if (StringUtils.areNotEqual(question, originalQuestion)) {
-            if (NotesService.questionAlreadyExists(question)) {
-                setQuestionError(true)
-                setErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
+            NotesService.questionAlreadyExists(question).then(exists => {
+                                
+                if (exists) {
+                    setQuestionError(true)
+                    setErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
+    
+                    return
+                }
 
-                return
-            }
+                props.onSave(question, tagList)
+            }).catch()
+        } else {
+            props.onSave(question, tagList)
         }
-        
-        props.onSave(question, tagList)
     }
 
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -367,8 +367,6 @@ const Notes = () => {
     })
 
     const updateState = async () => {
-      console.log('oi')
-
       const tags = await NoteService.getTags()
 
       setTags(tags)

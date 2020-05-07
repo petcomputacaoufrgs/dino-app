@@ -1,6 +1,7 @@
-export default interface NoteDoc {
+import PouchDB from 'pouchdb'
+
+export default interface NoteDoc extends PouchDB.Core.GetMeta {
     _id?: string
-    _rev?: string
     external_id?: number
     order: number
     question: string

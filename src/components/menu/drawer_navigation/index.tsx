@@ -191,7 +191,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         appBar: {
             position: 'fixed',
-            height: '45px',
+            height: '54px',
             backgroundColor: '#B32E55',
             justifyContent: 'center',
             zIndex: theme.zIndex.drawer + 1,
@@ -245,7 +245,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'center',
             padding: theme.spacing(0, 1),
             justifyContent: 'flex-end',
-            height: '45px',
+            height: '54px',
         },
         drawerClose: {
             transition: theme.transitions.create('width', {
@@ -262,7 +262,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            height: '45px',
+            height: '54px',
             padding: theme.spacing(0, 1),
         },
         contentMini: {

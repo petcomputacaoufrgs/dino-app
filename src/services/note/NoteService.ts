@@ -79,7 +79,8 @@ class NoteService {
         question: noteModel.question,
         savedOnServer: false,
         order: noteModel.id,
-        tagNames: noteModel.tagNames
+        tagNames: noteModel.tagNames,
+        _rev: ''
       }
 
       this.saveNoteOnServer(noteModel)
@@ -123,24 +124,27 @@ class NoteService {
     removeUserData = () => {
       NoteVersionLocalStorage.removeUserData()
       NoteDatabase.removeAll()
+      DeletedNoteDatabase.removeAll()
     }
 
     deleteNote = async (noteModel: NoteViewModel, updateState: () => {}) => {
       const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
-
+      
       if (noteDoc) {
 
+        console.log(noteDoc)
+
+        await NoteDatabase.deleteByNoteDoc(noteDoc)
+        
         if (noteDoc.external_id) {
-          const deletedNote = DeletedNoteDatabase.getByQuestion(noteDoc.question)
+          const deletedNote = await DeletedNoteDatabase.getByQuestion(noteDoc.question)
 
           if (!deletedNote) {
-            DeletedNoteDatabase.putNew(noteDoc)
+            await DeletedNoteDatabase.putNew(noteDoc)
 
             this.deleteNoteOnServer(noteDoc)
           }
         }
-
-        await NoteDatabase.deleteByNoteDoc(noteDoc)
         
         if (updateState) {
           updateState()

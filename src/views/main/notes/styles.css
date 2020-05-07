@@ -87,6 +87,7 @@
     bottom: 70px;
     overflow: scroll;
     width: 100%;
+    padding-bottom: 70px;
 }
 
 @media (orientation: landscape) {

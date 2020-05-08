@@ -7,11 +7,11 @@ import StringUtils from '../../../utils/StringUtils'
 import SearchBar from '../../../components/search_bar'
 
 const Contacts = (): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState(
-    new Array<ContactItemModel>(),
+    new Array<ContactItemModel>()
   )
 
   const handleChange = (event) => {
@@ -52,7 +52,7 @@ const Contacts = (): JSX.Element => {
       },
     ]
     const results = items.filter((item) =>
-      StringUtils.contains(item.name, searchTerm),
+      StringUtils.contains(item.name, searchTerm)
     )
     setSearchResults(results)
   }, [searchTerm])

@@ -7,7 +7,7 @@ import AnswerProps from './props'
 import DialogActions from '../dialog_actions'
 
 const AnswerDialog = (props: AnswerProps): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [open, setOpen] = useState(false)
   const [answer, setAnswer] = useState('')

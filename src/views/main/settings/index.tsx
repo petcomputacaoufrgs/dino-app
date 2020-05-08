@@ -15,14 +15,14 @@ import './styles.css'
 const Settings = (): JSX.Element => {
   const appContext = useApp()
 
-  const language = appContext.language.currentLanguage
+  const language = appContext.language.current
 
   const alert = appContext.alert
 
   const languageList = appContext.language.getLanguageList()
 
   const [selectedLanguage, setSelectedLanguage] = useState(
-    language.NAVIGATOR_LANGUAGE_CODE,
+    language.NAVIGATOR_LANGUAGE_CODE
   )
 
   const onChangeLanguage = (event: any) => {

@@ -19,17 +19,17 @@ import UpdaterService from '../../services/updater/UpdaterService'
 import { Typography } from '@material-ui/core'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [loading, setLoading] = useState(false)
 
   const responseGoogle = async (
-    response: GoogleLoginResponse | GoogleLoginResponseOffline,
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     setLoading(true)
 
     const authResponse = await AuthService.google_login(
-      response as GoogleLoginResponseOffline,
+      response as GoogleLoginResponseOffline
     )
 
     if (authResponse === LoginErrorConstants.SUCCESS) {
@@ -62,7 +62,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   }
 
   const loginFail = (
-    response: GoogleLoginResponse | GoogleLoginResponseOffline,
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     if (props.onCancel) {
       props.onCancel()

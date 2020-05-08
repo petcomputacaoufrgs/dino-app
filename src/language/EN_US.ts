@@ -139,4 +139,9 @@ export default class EN_US implements LanguageSet {
   EMPTY_FIELD_ERROR = "Field can't be empty."
 
   QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
+
+  DISCONNECTED_MESSAGE =
+    "You're disconnected of the Internet :(. Please connected this app on the internet to. save local changes."
+
+  CONNECTED_MESSAGE = "Now you're connected! :)"
 }

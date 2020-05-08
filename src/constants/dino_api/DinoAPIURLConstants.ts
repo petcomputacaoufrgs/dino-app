@@ -2,11 +2,11 @@
  * @description Valores de URL da API para conexão
  */
 class DinoAPIURLConstants {
-  private URL: string = 'http://localhost:5000/'
-  private AUTH: string = this.URL + 'auth/'
-  private GLOSSARY: string = this.URL + 'glossary/'
-  private APP_SETTINGS: string = this.URL + 'user_app_settings/'
-  private NOTE: string = this.URL + 'note/'
+  private URL = 'http://localhost:5000/'
+  private AUTH = this.URL + 'auth/'
+  private GLOSSARY = this.URL + 'glossary/'
+  private APP_SETTINGS = this.URL + 'user_app_settings/'
+  private NOTE = this.URL + 'note/'
 
   AUTH_GOOGLE = this.AUTH + 'google/'
 
@@ -33,6 +33,8 @@ class DinoAPIURLConstants {
   NOTE_UPDATE_QUESTION = this.NOTE + 'question/'
 
   NOTE_UPDATE_ANSWER = this.NOTE + 'answer/'
+
+  TEST_CONNECTION = this.URL + 'test_connection/'
 }
 
 export default new DinoAPIURLConstants()

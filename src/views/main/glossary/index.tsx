@@ -8,11 +8,11 @@ import SearchBar from '../../../components/search_bar'
 import GlossaryService from '../../../services/glossary/GlossaryService'
 
 const Glossary = (): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState(
-    new Array<GlossaryItemModel>(),
+    new Array<GlossaryItemModel>()
   )
 
   const handleChange = (event) => setSearchTerm(event.target.value)
@@ -20,7 +20,7 @@ const Glossary = (): JSX.Element => {
   useEffect(() => {
     const items = GlossaryService.getItems()
     const results = items.filter((item) =>
-      StringUtils.contains(item.title, searchTerm),
+      StringUtils.contains(item.title, searchTerm)
     )
     setSearchResults(results)
   }, [searchTerm])

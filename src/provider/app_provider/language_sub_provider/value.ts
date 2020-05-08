@@ -6,7 +6,7 @@ export interface Language {
 }
 
 export default interface LanguageSubProviderValue {
-  currentLanguage: LanguageSet
+  current: LanguageSet
   getLanguageList: () => Language[]
   updateLanguage: () => void
 }

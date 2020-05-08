@@ -18,6 +18,7 @@ class LocalStorageKeys {
   UPDATING_NOTES = 'un'
   UPDATE_NOTES_WITH_ERROR = 'une'
   NOTES_TO_DELETE = 'ntd'
+  CONNECTION = 'con'
 }
 
 export default new LocalStorageKeys()

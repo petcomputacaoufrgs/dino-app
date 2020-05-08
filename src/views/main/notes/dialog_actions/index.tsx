@@ -6,7 +6,7 @@ import SaveIcon from '@material-ui/icons/Save'
 import DialogActionsProps from './props'
 
 const DialogActions = (props: DialogActionsProps) => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   return (
     <MaterialDialogActions className="note_card_dialog__save">

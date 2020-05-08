@@ -10,7 +10,7 @@ import StringUtils from '../../../../utils/StringUtils'
 import NoteService from '../../../../services/note/NoteService'
 
 const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [open, setOpen] = useState(props.open)
   const [originalQuestion, setOriginalQuestion] = useState('')

@@ -57,7 +57,7 @@ const LanguageSubProvider = (): LanguageSubProviderValue => {
   }
 
   const value: LanguageSubProviderValue = {
-    currentLanguage: currentLanguage,
+    current: currentLanguage,
     getLanguageList: getLanguageList,
     updateLanguage: updateCurrentLanguage,
   }

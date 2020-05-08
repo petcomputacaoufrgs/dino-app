@@ -6,7 +6,7 @@ import TagSearchBarProps from './props'
 import './styles.css'
 
 const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
     props.onTagSearch(values)

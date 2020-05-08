@@ -30,7 +30,7 @@ import NotFound from '../not_found/index'
 const Main = (): JSX.Element => {
   const location = useLocation()
 
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
 

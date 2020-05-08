@@ -11,7 +11,7 @@ const redirectTimeout = 2000
  * @description Tela para diretório não encontrado
  */
 const NotFound = (): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const redirectToHome = () => {
     HistoryService.push(PathConstants.HOME)

@@ -65,4 +65,6 @@ export default interface LanguageSet {
   NO_OPTIONS: string
   EMPTY_FIELD_ERROR: string
   QUESTION_ALREADY_EXISTS_ERROR: string
+  DISCONNECTED_MESSAGE: string
+  CONNECTED_MESSAGE: string
 }

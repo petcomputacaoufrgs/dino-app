@@ -142,4 +142,9 @@ export default class PT_BR implements LanguageSet {
   EMPTY_FIELD_ERROR = 'Campo não pode ser vazio.'
 
   QUESTION_ALREADY_EXISTS_ERROR = 'Questão já adicionada.'
+
+  DISCONNECTED_MESSAGE =
+    'Você está desconectado da Internet:(. Para salvar alterações locais conecte-se a Internet.'
+
+  CONNECTED_MESSAGE = 'Agora você está conectado! :)'
 }

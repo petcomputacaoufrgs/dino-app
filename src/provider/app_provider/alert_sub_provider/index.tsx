@@ -10,15 +10,18 @@ const AlertSubProvider = (): [JSX.Element, AlertSubProviderValue] => {
 
   const showAlert = (
     message: string,
-    severity: 'success' | 'info' | 'warning' | 'error',
+    severity: 'success' | 'info' | 'warning' | 'error'
   ) => {
     const newSuccessAlert = {
       message: message,
       severity: severity,
     } as AlertProps
 
+    if (alertList.length === 0) {
+      setTimeout(removeAlert, ALERT_DURATION)
+    }
+
     setAlertList([...alertList, newSuccessAlert])
-    setTimeout(removeAlert, ALERT_DURATION)
   }
 
   const removeAlert = () => {
@@ -26,15 +29,15 @@ const AlertSubProvider = (): [JSX.Element, AlertSubProviderValue] => {
 
     newAlertList.shift()
 
+    if (newAlertList.length > 0) {
+      setTimeout(removeAlert, ALERT_DURATION)
+    }
+
     setAlertList(newAlertList)
   }
 
   const render = (): JSX.Element => (
-    <>
-      {alertList.map((alertProps, index) => (
-        <Alert {...alertProps} key={index} />
-      ))}
-    </>
+    <>{alertList.length > 0 && <Alert {...alertList[0]} />}</>
   )
 
   const value: AlertSubProviderValue = {

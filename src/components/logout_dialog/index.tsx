@@ -7,7 +7,7 @@ import AuthService from '../../services/auth/AuthService'
 const LogoutDialog = (): [() => JSX.Element, () => void] => {
   const languageContext = useLanguage()
 
-  const language = languageContext.currentLanguage
+  const language = languageContext.current
 
   const logout = () => {
     AuthService.google_logout()

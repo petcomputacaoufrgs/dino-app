@@ -14,7 +14,7 @@ const Login = (): JSX.Element => {
 
   const alert = appContext.alert
 
-  const language = appContext.language.currentLanguage
+  const language = appContext.language.current
 
   const showAlertDinoFail = () => {
     alert.showErrorAlert(language.LOGIN_FAIL_BY_API)

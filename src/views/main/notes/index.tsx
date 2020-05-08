@@ -22,7 +22,7 @@ import DateUtils from '../../../utils/DateUtils'
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
 const Notes = () => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [answer, setAnswer] = useState('')
   const [answerDialogOpen, setAnswerDialogOpen] = useState(false)
@@ -38,7 +38,7 @@ const Notes = () => {
   } as NoteBoardViewModel)
   const [tags, setTags] = useState([] as string[])
   const [idNoteToDelete, setIdNoteToDelete] = useState(
-    undefined as number | undefined,
+    undefined as number | undefined
   )
 
   //#region Editing Answer
@@ -94,7 +94,7 @@ const Notes = () => {
     const newData = { ...board }
 
     const editedNote = newData.columns[0].cards.find(
-      (n) => n.question === note.question,
+      (n) => n.question === note.question
     )
 
     if (editedNote) {
@@ -164,7 +164,7 @@ const Notes = () => {
 
   const handleSaveNewQuestion = (
     newQuestion: string,
-    newTagNames: string[],
+    newTagNames: string[]
   ) => {
     const newBoard = { ...board }
 
@@ -243,7 +243,7 @@ const Notes = () => {
   const hasSomeTag = (
     nodeTagNames: string[],
     searchTags: string[],
-    tSearch?: string,
+    tSearch?: string
   ): boolean => {
     if (searchTags.length > 0) {
       return nodeTagNames.some((name) => searchTags.includes(name))
@@ -292,7 +292,7 @@ const Notes = () => {
 
   const renderCard = (
     cardNote: NoteViewModel,
-    dragging: boolean,
+    dragging: boolean
   ): JSX.Element => (
     <>
       {(cardNote.showByTag || cardNote.showByQuestion) && (
@@ -376,7 +376,7 @@ const Notes = () => {
                 cards: notes,
               } as NoteBoardColumnViewModel,
             ] as NoteBoardColumnViewModel[],
-          } as NoteBoardViewModel),
+          } as NoteBoardViewModel)
         )
         .catch()
 
@@ -400,7 +400,7 @@ const Notes = () => {
 
       setTimeout(() => {
         const textField: HTMLElement | null = document.querySelector(
-          '.' + HEADER_TEXT_FIELD_CLASS,
+          '.' + HEADER_TEXT_FIELD_CLASS
         )
 
         if (textField) {

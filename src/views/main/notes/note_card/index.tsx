@@ -21,7 +21,7 @@ import NoteCardProps from './props'
 import './styles.css'
 
 const NoteCard = (props: NoteCardProps): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const classes = useStyles()
 
@@ -172,7 +172,7 @@ const useStyles = makeStyles((theme: Theme) =>
     expandOpen: {
       transform: 'rotate(180deg)',
     },
-  }),
+  })
 )
 
 export default NoteCard

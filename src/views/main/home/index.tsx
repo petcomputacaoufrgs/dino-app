@@ -5,7 +5,7 @@ import UserService from '../../../services/user/UserService'
 import './styles.css'
 
 const Home = () => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const avatarSrc = UserService.getPictureUrl()
 

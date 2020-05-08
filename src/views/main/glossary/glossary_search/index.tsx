@@ -9,11 +9,11 @@ import GlossaryService from '../../../../services/glossary/GlossaryService'
 import './styles.css'
 
 const GlossarySearchBar = (): JSX.Element => {
-  const language = useLanguage().currentLanguage
+  const language = useLanguage().current
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState(
-    new Array<GlossaryItemModel>(),
+    new Array<GlossaryItemModel>()
   )
 
   const handleChange = (event) => {
@@ -24,7 +24,7 @@ const GlossarySearchBar = (): JSX.Element => {
   useEffect(() => {
     const items = GlossaryService.getItems()
     const results = items.filter((item) =>
-      StringUtils.contains(item.title, searchTerm),
+      StringUtils.contains(item.title, searchTerm)
     )
     setSearchResults(results)
   }, [searchTerm])

@@ -10,24 +10,29 @@ import PathConstants from './constants/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
+import UpdaterService from './services/updater/UpdaterService'
 import './App.css'
 
 const App = (): JSX.Element => {
+  UpdaterService.checkUpdates()
+
   return (
-    <AppProvider>
-      <PrivateRouter
-        loginPath={PathConstants.LOGIN}
-        homePath={PathConstants.HOME}
-        isAuthenticated={AuthService.isAuthenticated}
-        browserHistory={HistoryService}
-      >
-        <Switch>
-          <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-          <PrivateRoute path={PathConstants.APP} component={Main} />
-          <Route path={'/'} component={NotFound} />
-        </Switch>
-      </PrivateRouter>
-    </AppProvider>
+    <div className="app">
+      <AppProvider>
+        <PrivateRouter
+          loginPath={PathConstants.LOGIN}
+          homePath={PathConstants.HOME}
+          isAuthenticated={AuthService.isAuthenticated}
+          browserHistory={HistoryService}
+        >
+          <Switch>
+            <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
+            <PrivateRoute path={PathConstants.APP} component={Main} />
+            <Route path={'/'} component={NotFound} />
+          </Switch>
+        </PrivateRouter>
+      </AppProvider>
+    </div>
   )
 }
 

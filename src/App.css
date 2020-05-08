@@ -1,3 +1,11 @@
+.app .MuiTypography-root,
+.app .MuiChip-label,
+.app .MuiBottomNavigationAction-label,
+.app .MuiButton-label,
+.MuiFormLabel-root {
+  font-family: 'Raleway', sans-serif;
+}
+
 .MuiButtonBase-root.MuiIconButton-root {
   outline: none;
 }

@@ -6,6 +6,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import './styles.css'
+import Typography from '@material-ui/core/Typography'
 
 /**
  * @description Menu de navegação inferior

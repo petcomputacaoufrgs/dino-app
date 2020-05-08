@@ -16,6 +16,7 @@ import PathConstants from '../../constants/PathConstants'
 import AuthService from '../../services/auth/AuthService'
 import './styles.css'
 import UpdaterService from '../../services/updater/UpdaterService'
+import { Typography } from '@material-ui/core'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
   const language = useLanguage().currentLanguage
@@ -104,7 +105,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
             className="login_button__button"
             onClick={renderProps.onClick}
           >
-            {props.buttonText}
+            <Typography component="p">{props.buttonText}</Typography>
           </Button>
         )}
       />

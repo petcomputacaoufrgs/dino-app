@@ -1,5 +1,6 @@
 import React from 'react'
 import { useApp } from '../../provider/app_provider'
+import { Typography } from '@material-ui/core'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../images/dinosaur_1.svg'
 import Dinosaur2 from '../../images/dinosaur_2.svg'
@@ -35,7 +36,9 @@ const Login = (): JSX.Element => {
     <div className="login">
       <img className="login__curious" src={Dinosaur2} alt="Curious dino" />
       <img className="login__logo" src={Dinosaur1} alt="DinoAPP" />
-      <p className="login__message">{language.WELCOME_MESSAGE}</p>
+      <Typography className="login__message" variant="h6" component="p">
+        {language.WELCOME_MESSAGE}
+      </Typography>
       <div className="login__button">
         <GoogleLoginButton
           size="large"

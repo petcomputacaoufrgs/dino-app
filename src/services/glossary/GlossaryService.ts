@@ -13,6 +13,14 @@ class GlossaryService {
   setVersion = (version: number) => {
     GlossaryLocalStorage.setVersion(version)
   }
+
+  shouldSync = (): boolean => {
+    return GlossaryLocalStorage.getShouldSync()
+  }
+
+  setShouldSync = (should: boolean) => {
+    GlossaryLocalStorage.setShouldSync(should)
+  }
 }
 
 export default new GlossaryService()

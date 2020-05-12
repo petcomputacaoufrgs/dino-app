@@ -9,6 +9,8 @@ class LoginErrorConstants {
   UNKNOW_API_ERROR = 1
 
   REFRESH_TOKEN_REFRESH_NECESSARY = 2
+
+  DISCONNECTED = 3
 }
 
 export default new LoginErrorConstants()

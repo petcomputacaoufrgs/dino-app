@@ -37,9 +37,28 @@ class AppSettingsLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.APP_SETTINGS)
   }
 
+  getShouldSync = (): boolean => {
+    const shouldSync = this.get(LS_Constants.APP_SETTINGS_SHOULD_SYNC)
+
+    if (shouldSync) {
+      return JSON.parse(shouldSync)
+    }
+
+    return false
+  }
+
+  setShouldSync = (shouldSync: boolean) => {
+    this.set(LS_Constants.APP_SETTINGS_SHOULD_SYNC, JSON.stringify(shouldSync))
+  }
+
+  removeShouldSync = () => {
+    this.remove(LS_Constants.APP_SETTINGS_SHOULD_SYNC)
+  }
+
   removeUserData = () => {
     this.removeAppSettingsVersion()
     this.removeAppSettings()
+    this.removeShouldSync()
   }
 }
 

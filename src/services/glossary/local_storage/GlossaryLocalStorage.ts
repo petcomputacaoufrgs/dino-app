@@ -15,10 +15,6 @@ class GlossaryLocalStorage extends BaseLocalStorage {
     return items ? JSON.parse(items) : new Array<GlossaryItemModel>()
   }
 
-  removeItems = () => {
-    this.remove(LS_Constants.GLOSSARY_ITEMS)
-  }
-
   setVersion = (version: number) => {
     this.set(LS_Constants.GLOSSARY_VERSION, JSON.stringify(version))
   }
@@ -27,8 +23,18 @@ class GlossaryLocalStorage extends BaseLocalStorage {
     this.set(LS_Constants.GLOSSARY_ITEMS, JSON.stringify(items))
   }
 
-  removeVersion = () => {
-    this.remove(LS_Constants.GLOSSARY_VERSION)
+  getShouldSync = (): boolean => {
+    const should = this.get(LS_Constants.GLOSSARY_SHOULD_SYNC)
+
+    if (should) {
+      return JSON.parse(should)
+    }
+
+    return false
+  }
+
+  setShouldSync = (should: boolean) => {
+    this.set(LS_Constants.GLOSSARY_SHOULD_SYNC, JSON.stringify(should))
   }
 }
 

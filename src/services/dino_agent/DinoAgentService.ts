@@ -4,37 +4,58 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/PathConstants'
 import DinoAPIHeaderConstants from '../../constants/dino_api/DinoAPIHeaderConstants'
 import AuthService from '../auth/AuthService'
+import ConnectionListenerService from '../connection/ConnectionListenerService'
+import DinoAgentRequest from './model/DinoAgentRequest'
+import DinoAgentStatus from './model/DinoAgentStatus'
 
 /**
- * @description Abstrai a biblioteca Superagent com tratamentos para autenticação, erro de autenticação e renovação de token
+ * @description Abstrai a biblioteca Superagent com tratamentos para conexão,autenticação, erro de autenticação e renovação de token
  */
 class DinoAgentService {
-  put = (url: string): Superagent.SuperAgentRequest => {
-    return Superagent.put(url)
+  put = (url: string): DinoAgentRequest => {
+    const request = Superagent.put(url)
       .set(this.getHeader())
       .on('error', this.onError)
       .on('response', this.onResponse)
+
+    return this.getDinoAgentRequest(request)
   }
 
-  post = (url: string): Superagent.SuperAgentRequest => {
-    return Superagent.post(url)
+  post = (url: string): DinoAgentRequest => {
+    const request = Superagent.post(url)
       .set(this.getHeader())
       .on('error', this.onError)
       .on('response', this.onResponse)
+
+    return this.getDinoAgentRequest(request)
   }
 
-  get = (url: string): Superagent.SuperAgentRequest => {
-    return Superagent.get(url)
+  get = (url: string): DinoAgentRequest => {
+    const request = Superagent.get(url)
       .set(this.getHeader())
       .on('error', this.onError)
       .on('response', this.onResponse)
+
+    return this.getDinoAgentRequest(request)
   }
 
-  delete = (url: string): Superagent.SuperAgentRequest => {
-    return Superagent.delete(url)
+  delete = (url: string): DinoAgentRequest => {
+    const request = Superagent.delete(url)
       .set(this.getHeader())
       .on('error', this.onError)
       .on('response', this.onResponse)
+
+    return this.getDinoAgentRequest(request)
+  }
+
+  private getDinoAgentRequest = (
+    request: Superagent.SuperAgentRequest
+  ): DinoAgentRequest => {
+    if (ConnectionListenerService.isConnected()) {
+      return { get: () => request, status: DinoAgentStatus.OK }
+    } else {
+      return { get: () => request, status: DinoAgentStatus.DISCONNECTED }
+    }
   }
 
   private getAuthToken = (): string => AuthService.getAuthToken()
@@ -72,7 +93,7 @@ class DinoAgentService {
 
     const verifyGoogleAuth = () => {
       const newGoogleToken = response.get(
-        DinoAPIHeaderConstants.GOOGLE_REFRESH_TOKEN,
+        DinoAPIHeaderConstants.GOOGLE_REFRESH_TOKEN
       )
 
       if (newGoogleToken) {

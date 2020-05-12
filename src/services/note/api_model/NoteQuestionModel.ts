@@ -1,5 +1,5 @@
-export default interface NoteSaveAPIModel {
-  order: number
+export default interface NoteQuestionModel {
+  id: number
 
   question: string
 

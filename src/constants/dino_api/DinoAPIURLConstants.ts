@@ -34,6 +34,8 @@ class DinoAPIURLConstants {
 
   NOTE_UPDATE_ANSWER = this.NOTE + 'answer/'
 
+  NOTE_UPDATE_ALL = this.NOTE + 'all/'
+
   TEST_CONNECTION = this.URL + 'test_connection/'
 }
 

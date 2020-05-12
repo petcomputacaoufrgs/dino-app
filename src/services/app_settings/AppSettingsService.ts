@@ -2,6 +2,8 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AppSettingsLocalStorage from './local_storage/AppSettingsLocalStorage'
 import AppSettingsModel from './api_model/AppSettingsModel'
 import DinoAgentService from '../dino_agent/DinoAgentService'
+import DinoAgentStatus from '../dino_agent/model/DinoAgentStatus'
+import AppSettingsResponseModel from './api_model/AppSettingsResponseModel'
 
 class AppSettingsService {
   get = (): AppSettingsModel => {
@@ -27,6 +29,45 @@ class AppSettingsService {
   getAppSettingsVersion = (): number =>
     AppSettingsLocalStorage.getAppSettingsVersion()
 
+  getAppSettingsVersionFromServer = async (): Promise<number | undefined> => {
+    const request = DinoAgentService.get(
+      DinoAPIURLConstants.APP_SETTINGS_VERSION
+    )
+
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get()
+        const version: number = response.body
+
+        return version
+      } catch {
+        /**TO-DO Fazer log do erro */
+      }
+    }
+
+    return undefined
+  }
+
+  getAppSettingsFromServer = async (): Promise<
+    AppSettingsResponseModel | undefined
+  > => {
+    const request = DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
+
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get()
+
+        const appSettings: AppSettingsResponseModel = response.body
+
+        return appSettings
+      } catch {
+        /**TO-DO Fazer log do erro */
+      }
+    }
+
+    return undefined
+  }
+
   removeUserData = () => {
     AppSettingsLocalStorage.removeUserData()
   }
@@ -39,14 +80,29 @@ class AppSettingsService {
     return defaultAppSettings
   }
 
+  shouldSync = (): boolean => AppSettingsLocalStorage.getShouldSync()
+
+  setShouldSync = (should: boolean) => {
+    AppSettingsLocalStorage.setShouldSync(should)
+  }
+
   saveOnServer = async (model: AppSettingsModel): Promise<void> => {
-    const response = await DinoAgentService.post(
-      DinoAPIURLConstants.APP_SETTINGS_SAVE,
-    ).send(model)
+    const request = DinoAgentService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE)
 
-    const newVersion = response.body
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get().send(model)
+        const newVersion = response.body
 
-    this.saveAppSettingsData(model, newVersion)
+        this.saveAppSettingsData(model, newVersion)
+
+        return
+      } catch {
+        /**TO-DO Fazer log do erro */
+      }
+    }
+
+    AppSettingsLocalStorage.setShouldSync(true)
   }
 
   saveAppSettingsData = (model: AppSettingsModel, version: number) => {

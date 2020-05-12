@@ -60,9 +60,10 @@ class ConnectionListenerService {
 
   private isDinoConnected = async (): Promise<Boolean> => {
     try {
-      const response = await DinoAgentService.get(
-        DinoAPIURLConstants.TEST_CONNECTION
-      )
+      const request = DinoAgentService.get(DinoAPIURLConstants.TEST_CONNECTION)
+
+      const response = await request.get()
+
       return response.status === HttpStatus.OK
     } catch {
       return false

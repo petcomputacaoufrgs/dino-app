@@ -1,4 +1,4 @@
-export default interface NoteAPIModel {
+export default interface NoteModel {
   id: number
 
   order: number

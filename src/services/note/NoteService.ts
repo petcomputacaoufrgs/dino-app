@@ -2,17 +2,19 @@ import NoteViewModel from '../../views/main/notes/model/NoteViewModel'
 import NoteVersionLocalStorage from './local_storage/NoteVersionLocalStorage'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
-import NoteSaveAPIModel from './api_model/NoteAPISaveModel'
+import NoteSaveModel from './api_model/NoteSaveModel'
 import NoteSaveResponseAPIModel from './api_model/NoteSaveResponseAPIModel'
 import NoteOrderAPIModel from './api_model/NoteOrderAPIModel'
 import NoteDeleteAPIModel from './api_model/NoteDeleteAPIModel'
-import NoteAPIQuestionModel from './api_model/NoteAPIQuestionModel'
+import NoteQuestionModel from './api_model/NoteQuestionModel'
 import NoteAPIAnswerModel from './api_model/NoteAnswerModel'
 import NoteDoc from './database/docs/NoteDoc'
 import NoteDatabase from './database/NoteDatabase'
 import DeletedNoteDatabase from './database/DeletedNoteDatabase'
 import DinoAgentService from '../dino_agent/DinoAgentService'
-import NoteUpdateLocalStorage from './local_storage/NoteUpdateLocalStorage'
+import NoteSyncLocalStorage from './local_storage/NoteSyncLocalStorage'
+import DinoAgentStatus from '../dino_agent/model/DinoAgentStatus'
+import NoteUpdateModel from './api_model/NoteUpdateModel'
 
 class NoteService {
   //#region GET
@@ -34,10 +36,14 @@ class NoteService {
             savedOnServer: note.savedOnServer,
             showByQuestion: true,
             showByTag: true,
-          } as NoteViewModel),
+          } as NoteViewModel)
       )
 
     return viewModels
+  }
+
+  getDatabaseNotes = async (): Promise<NoteDoc[]> => {
+    return NoteDatabase.getAll()
   }
 
   getTags = async (): Promise<string[]> => {
@@ -50,24 +56,28 @@ class NoteService {
 
   getVersion = (): number => NoteVersionLocalStorage.getVersion()
 
+  getVersionFromServer = async (): Promise<number | undefined> => {
+    const request = DinoAgentService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
+
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get()
+
+        if (response.status === HttpStatus.OK) {
+          const serverVersion: number = response.body
+
+          return serverVersion
+        }
+      } catch {
+        /**TO-DO Salvar log com o erro*/
+      }
+    }
+
+    return undefined
+  }
+
   setVersion = (version: number) => {
     NoteVersionLocalStorage.setVersion(version)
-  }
-
-  setUpdateNotesWithError = () => {
-    NoteUpdateLocalStorage.setUpdateNotesWithError(true)
-  }
-
-  setUpdateNotesWithoutError = () => {
-    NoteUpdateLocalStorage.setUpdateNotesWithError(false)
-  }
-
-  setUpdatingNotes = () => {
-    NoteUpdateLocalStorage.setUpdatingNotes(true)
-  }
-
-  setNotesUpdated = () => {
-    NoteUpdateLocalStorage.setUpdatingNotes(false)
   }
 
   saveNote = async (noteModel: NoteViewModel, updateState: () => void) => {
@@ -92,30 +102,40 @@ class NoteService {
   }
 
   saveNoteOnServer = async (noteModel: NoteViewModel) => {
-    const newNote: NoteSaveAPIModel = {
+    const newNote: NoteSaveModel = {
       order: noteModel.id,
       question: noteModel.question,
       lastUpdate: noteModel.lastUpdate,
       tagNames: noteModel.tagNames,
     }
 
-    const response = await DinoAgentService.post(
-      DinoAPIURLConstants.NOTE_SAVE,
-    ).send(newNote)
+    const request = DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
 
-    if (response.status === HttpStatus.OK) {
-      const body: NoteSaveResponseAPIModel = response.body
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get().send(newNote)
 
-      const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
+        if (response.status === HttpStatus.OK) {
+          const body: NoteSaveResponseAPIModel = response.body
 
-      if (noteDoc) {
-        noteDoc.savedOnServer = true
-        noteDoc.external_id = body.noteId
+          const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
-        await NoteDatabase.put(noteDoc)
-        NoteVersionLocalStorage.setVersion(body.version)
+          if (noteDoc) {
+            noteDoc.savedOnServer = true
+            noteDoc.external_id = body.noteId
+
+            await NoteDatabase.put(noteDoc)
+            NoteVersionLocalStorage.setVersion(body.version)
+          }
+
+          return
+        }
+      } catch {
+        /**TO-DO Fazer log de erro */
       }
     }
+
+    NoteSyncLocalStorage.setShouldSync(true)
   }
 
   //#endregion
@@ -123,7 +143,8 @@ class NoteService {
   //#region DELETE
 
   removeUserData = () => {
-    NoteVersionLocalStorage.removeUserData()
+    NoteVersionLocalStorage.removeVersion()
+    NoteSyncLocalStorage.removeShouldSync()
     NoteDatabase.removeAll()
     DeletedNoteDatabase.removeAll()
   }
@@ -132,13 +153,11 @@ class NoteService {
     const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
     if (noteDoc) {
-      console.log(noteDoc)
-
       await NoteDatabase.deleteByNoteDoc(noteDoc)
 
       if (noteDoc.external_id) {
         const deletedNote = await DeletedNoteDatabase.getByQuestion(
-          noteDoc.question,
+          noteDoc.question
         )
 
         if (!deletedNote) {
@@ -158,19 +177,28 @@ class NoteService {
     if (noteDoc.external_id) {
       const model: NoteDeleteAPIModel = { id: noteDoc.external_id }
 
-      const response = await DinoAgentService.delete(
-        DinoAPIURLConstants.NOTE_DELETE,
-      ).send(model)
+      const request = DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE)
 
-      if (response.status === HttpStatus.OK && response.body === 1) {
-        const deletedNote = await DeletedNoteDatabase.getByQuestion(
-          noteDoc.question,
-        )
+      if (request.status === DinoAgentStatus.OK) {
+        try {
+          const response = await request.get().send(model)
 
-        if (deletedNote) {
-          DeletedNoteDatabase.deleteByNoteDoc(deletedNote)
+          if (response.status === HttpStatus.OK && response.body === 1) {
+            const deletedNote = await DeletedNoteDatabase.getByQuestion(
+              noteDoc.question
+            )
+
+            if (deletedNote) {
+              DeletedNoteDatabase.deleteByNoteDoc(deletedNote)
+            }
+
+            return
+          }
+        } catch {
+          /**TO-DO Fazer log do erro */
         }
       }
+      NoteSyncLocalStorage.setShouldSync(true)
     }
   }
 
@@ -183,7 +211,7 @@ class NoteService {
 
     noteDocs.forEach((noteDoc) => {
       const newOrder = viewNotes.findIndex(
-        (n) => n.question === noteDoc.question,
+        (n) => n.question === noteDoc.question
       )
 
       noteDoc.order = newOrder
@@ -193,7 +221,7 @@ class NoteService {
     this.updateOrderOnServer(noteDocs)
   }
 
-  private updateOrderOnServer = async (noteDocs: NoteDoc[]): Promise<void> => {
+  updateOrderOnServer = async (noteDocs: NoteDoc[]): Promise<void> => {
     const model: NoteOrderAPIModel[] = []
 
     noteDocs.forEach((note) => {
@@ -205,18 +233,62 @@ class NoteService {
       }
     })
 
-    const response = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_ORDER,
-    ).send(model)
+    const request = DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
 
-    if (response.status === HttpStatus.OK) {
-      NoteVersionLocalStorage.setVersion(response.body)
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get().send(model)
+
+        if (response.status === HttpStatus.OK) {
+          NoteVersionLocalStorage.setVersion(response.body)
+
+          return
+        }
+      } catch {
+        /**TO-DO Salvar log de erro */
+      }
     }
+
+    NoteSyncLocalStorage.setShouldSync(true)
+  }
+
+  updateNotes = async (models: NoteUpdateModel[]) => {
+    const request = DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_ALL)
+
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get().send(models)
+
+        if (response.status === HttpStatus.OK) {
+          const newVersion = response.body
+
+          const promises = models.map(async (model) => {
+            const noteDoc = await NoteDatabase.getByQuestion(model.question)
+
+            if (noteDoc) {
+              noteDoc.savedOnServer = true
+
+              NoteDatabase.put(noteDoc)
+            }
+          })
+
+          await Promise.all(promises)
+
+          this.setVersion(newVersion)
+
+          return
+        }
+      } catch {
+        /**TO-DO Save log error */
+      }
+    }
+
+    this.setShouldSync(true)
   }
 
   updateNoteQuestion = async (
     noteModel: NoteViewModel,
-    updateState: () => void,
+    updateState: () => void
   ) => {
     const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
@@ -237,29 +309,43 @@ class NoteService {
 
   private updateNoteQuestionOnServer = async (noteDoc: NoteDoc) => {
     if (noteDoc.external_id) {
-      const model: NoteAPIQuestionModel = {
+      const model: NoteQuestionModel = {
         id: noteDoc.external_id,
         question: noteDoc.question,
         tagNames: noteDoc.tagNames,
         lastUpdate: noteDoc.lastUpdate,
       }
 
-      const response = await DinoAgentService.put(
-        DinoAPIURLConstants.NOTE_UPDATE_QUESTION,
-      ).send(model)
+      const request = DinoAgentService.put(
+        DinoAPIURLConstants.NOTE_UPDATE_QUESTION
+      )
 
-      if (response.status === HttpStatus.OK) {
-        const savedNoteDoc = await NoteDatabase.getByQuestion(noteDoc.question)
+      if (request.status === DinoAgentStatus.OK) {
+        try {
+          const response = await request.get().send(model)
 
-        if (savedNoteDoc) {
-          savedNoteDoc.savedOnServer = true
+          if (response.status === HttpStatus.OK) {
+            const savedNoteDoc = await NoteDatabase.getByQuestion(
+              noteDoc.question
+            )
 
-          NoteDatabase.put(savedNoteDoc)
+            if (savedNoteDoc) {
+              savedNoteDoc.savedOnServer = true
 
-          NoteVersionLocalStorage.setVersion(response.body)
+              NoteDatabase.put(savedNoteDoc)
+
+              NoteVersionLocalStorage.setVersion(response.body)
+            }
+
+            return
+          }
+        } catch {
+          /**TO-DO Salvar log de erro */
         }
       }
     }
+
+    return NoteSyncLocalStorage.setShouldSync(true)
   }
 
   updateNoteAnswer = async (noteModel: NoteViewModel) => {
@@ -283,21 +369,47 @@ class NoteService {
         answer: noteDoc.answer,
       }
 
-      const response = await DinoAgentService.put(
-        DinoAPIURLConstants.NOTE_UPDATE_ANSWER,
-      ).send(model)
+      const request = DinoAgentService.put(
+        DinoAPIURLConstants.NOTE_UPDATE_ANSWER
+      )
 
-      if (response.status === HttpStatus.OK) {
-        const savedNoteDoc = await NoteDatabase.getByQuestion(noteDoc.question)
+      if (request.status === DinoAgentStatus.OK) {
+        try {
+          const response = await request.get().send(model)
 
-        if (savedNoteDoc) {
-          savedNoteDoc.savedOnServer = true
+          if (response.status === HttpStatus.OK) {
+            const savedNoteDoc = await NoteDatabase.getByQuestion(
+              noteDoc.question
+            )
 
-          NoteDatabase.put(savedNoteDoc)
-          NoteVersionLocalStorage.setVersion(response.body)
+            if (savedNoteDoc) {
+              savedNoteDoc.savedOnServer = true
+
+              NoteDatabase.put(savedNoteDoc)
+              NoteVersionLocalStorage.setVersion(response.body)
+            }
+
+            return
+          }
+        } catch {
+          /**TO-DO Salvar log de erro */
         }
       }
     }
+
+    NoteSyncLocalStorage.setShouldSync(true)
+  }
+
+  //#endregion
+
+  //#region SYNC
+
+  shouldSync = (): boolean => {
+    return NoteSyncLocalStorage.getShouldSync()
+  }
+
+  setShouldSync = (should: boolean) => {
+    return NoteSyncLocalStorage.setShouldSync(should)
   }
 
   //#endregion

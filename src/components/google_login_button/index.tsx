@@ -47,6 +47,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
       return
     }
 
+    /**TO-DO Tratar erro DISCONNECTED */
     if (authResponse === LoginErrorConstants.UNKNOW_API_ERROR) {
       props.onDinoAPIFail && props.onDinoAPIFail()
     } else if (authResponse === LoginErrorConstants.EXTERNAL_SERVICE_ERROR) {

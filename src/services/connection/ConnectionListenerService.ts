@@ -4,6 +4,7 @@ import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
 import ConnectionLocalStorage from './local_storage/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
+import SyncService from '../sync/SyncService'
 
 export type ConnectionListennerCallback = (online: boolean) => void
 
@@ -71,9 +72,6 @@ class ConnectionListenerService {
   }
 
   private setConnected = () => {
-    console.log(this.isDiconnected())
-    console.log(this.firstVerification)
-
     if (this.isDiconnected() || this.firstVerification) {
       ConnectionLocalStorage.setConnected()
 
@@ -81,6 +79,8 @@ class ConnectionListenerService {
 
       if (this.firstVerification) {
         this.firstVerification = false
+      } else {
+        SyncService.sync()
       }
     }
   }

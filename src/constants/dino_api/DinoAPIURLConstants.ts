@@ -30,6 +30,8 @@ class DinoAPIURLConstants {
 
   NOTE_DELETE = this.NOTE
 
+  NOTE_DELETE_ALL = this.NOTE + 'all/'
+
   NOTE_UPDATE_QUESTION = this.NOTE + 'question/'
 
   NOTE_UPDATE_ANSWER = this.NOTE + 'answer/'

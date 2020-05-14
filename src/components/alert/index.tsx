@@ -20,13 +20,17 @@ const Alert = (props: AlertProps): JSX.Element => {
   }
 
   return (
-    <div className="custom_alert">
-      <Snackbar open={open} onClose={onClose}>
-        <MaterialAlert onClose={onClose} severity={props.severity}>
-          {props.message}
-        </MaterialAlert>
-      </Snackbar>
-    </div>
+    <>
+      {open && (
+        <div className="custom_alert">
+          <Snackbar open={open} onClose={onClose}>
+            <MaterialAlert onClose={onClose} severity={props.severity}>
+              {props.message}
+            </MaterialAlert>
+          </Snackbar>
+        </div>
+      )}
+    </>
   )
 }
 

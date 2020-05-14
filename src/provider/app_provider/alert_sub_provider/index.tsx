@@ -1,53 +1,66 @@
-import React, { useState } from 'react'
-import AlertSubProviderValue from './value'
+import React, { useState, useEffect } from 'react'
 import AlertProps from '../../../components/alert/props'
 import Alert from '../../../components/alert'
+import AlertSubProviderValue from './value'
 
 const ALERT_DURATION = 4000
 
-const AlertSubProvider = (): [JSX.Element, AlertSubProviderValue] => {
-  const [alertList, setAlertList] = useState(new Array<AlertProps>())
+const VERIFY_DELAY = 50
 
-  const showAlert = (
-    message: string,
-    severity: 'success' | 'info' | 'warning' | 'error'
-  ) => {
-    const newSuccessAlert = {
-      message: message,
-      severity: severity,
-    } as AlertProps
+const AlertList = new Array<AlertProps>()
 
-    if (alertList.length === 0) {
-      setTimeout(removeAlert, ALERT_DURATION)
+const AddAlert = (
+  message: string,
+  severity: 'success' | 'info' | 'warning' | 'error'
+) => {
+  const newSuccessAlert = {
+    message: message,
+    severity: severity,
+  } as AlertProps
+
+  AlertList.push(newSuccessAlert)
+}
+
+export const AlertControl: AlertSubProviderValue = {
+  showSuccessAlert: (message: string) => AddAlert(message, 'success'),
+  showWarningAlert: (message: string) => AddAlert(message, 'warning'),
+  showInfoAlert: (message: string) => AddAlert(message, 'info'),
+  showErrorAlert: (message: string) => AddAlert(message, 'error'),
+}
+
+const AlertSubProvider = (): JSX.Element => {
+  const [alert, setAlert] = useState(undefined as AlertProps | undefined)
+
+  useEffect(() => {
+    const getNextAlert = () => {
+      const newAlert = AlertList.shift()
+
+      if (newAlert) {
+        const now = new Date().getTime()
+        newAlert.end = now + ALERT_DURATION
+      }
+
+      setAlert(newAlert)
     }
 
-    setAlertList([...alertList, newSuccessAlert])
-  }
+    const verify = () => {
+      if (alert && alert.end) {
+        const now = new Date().getTime()
 
-  const removeAlert = () => {
-    const newAlertList = [...alertList]
-
-    newAlertList.shift()
-
-    if (newAlertList.length > 0) {
-      setTimeout(removeAlert, ALERT_DURATION)
+        if (alert.end <= now) {
+          getNextAlert()
+        }
+      } else if (AlertList.length > 0) {
+        getNextAlert()
+      }
     }
 
-    setAlertList(newAlertList)
-  }
+    const interval = setInterval(verify, VERIFY_DELAY)
 
-  const render = (): JSX.Element => (
-    <>{alertList.length > 0 && <Alert {...alertList[0]} />}</>
-  )
+    return () => clearInterval(interval)
+  }, [alert])
 
-  const value: AlertSubProviderValue = {
-    showSuccessAlert: (message: string) => showAlert(message, 'success'),
-    showWarningAlert: (message: string) => showAlert(message, 'warning'),
-    showInfoAlert: (message: string) => showAlert(message, 'info'),
-    showErrorAlert: (message: string) => showAlert(message, 'error'),
-  }
-
-  return [render(), value]
+  return <>{alert && <Alert {...alert} />}</>
 }
 
 export default AlertSubProvider

@@ -3,10 +3,12 @@ import GlossaryService from './GlossaryService'
 import GlossaryUpdater from './GlossaryUpdater'
 
 class GlossarySync implements BaseSync {
-  sync = async () => {
+  sync = async (): Promise<boolean> => {
     if (GlossaryService.shouldSync()) {
       GlossaryUpdater.checkUpdates()
     }
+
+    return true
   }
 }
 

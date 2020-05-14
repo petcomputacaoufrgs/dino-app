@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AuthService from './services/auth/AuthService'
 import Login from './views/login'
 import Main from './views/main'
@@ -13,30 +13,70 @@ import UpdaterService from './services/updater/UpdaterService'
 import ConnectionListenerService from './services/connection/ConnectionListenerService'
 import { useAlert, useLanguage } from './provider/app_provider/index'
 import './App.css'
+import SyncService from './services/sync/SyncService'
+import SyncControlModel from './services/sync/model/SyncControlModel'
 
 const App = (): JSX.Element => {
+  const [first, setFirst] = useState(true)
+
   const alert = useAlert()
   const language = useLanguage()
 
   UpdaterService.checkUpdates()
 
-  const updateConnectionState = (isConnected: boolean) => {
-    if (isConnected) {
-      alert.showSuccessAlert(language.current.CONNECTED_MESSAGE)
-    } else {
-      alert.showInfoAlert(language.current.DISCONNECTED_MESSAGE)
-    }
-  }
-
   useEffect(() => {
+    const updateConnectionState = (isConnected: boolean) => {
+      if (isConnected) {
+        alert.showSuccessAlert(language.current.CONNECTED_MESSAGE)
+      } else {
+        alert.showInfoAlert(language.current.DISCONNECTED_MESSAGE)
+      }
+    }
+
+    const onSyncStart = () => {
+      alert.showInfoAlert(language.current.SYNC_STARTED)
+    }
+
+    const onSyncFinish = () => {
+      alert.showSuccessAlert(language.current.SYNC_FINISH)
+    }
+
+    const onSyncFail = () => {
+      alert.showWarningAlert(language.current.SYNC_FAIL)
+    }
+
+    const onInternetFail = () => {
+      alert.showWarningAlert(language.current.SYNC_CONNECTION_FAIL)
+    }
+
+    SyncService.startSyncService({
+      language: language,
+      onFail: onSyncFail,
+      onFinish: onSyncFinish,
+      onStart: onSyncStart,
+      onInternetFail: onInternetFail,
+    } as SyncControlModel)
+
+    if (first) {
+      setFirst(false)
+      SyncService.sync()
+    }
+
     ConnectionListenerService.addEventListener(updateConnectionState)
 
     const removeListener = () => {
       ConnectionListenerService.removeEventListener(updateConnectionState)
+      SyncService.startSyncService({
+        language: language,
+        onFail: undefined,
+        onFinish: undefined,
+        onStart: undefined,
+        onInternetFail: undefined,
+      })
     }
 
     return removeListener
-  })
+  }, [first, language, alert])
 
   return (
     <div className="app">

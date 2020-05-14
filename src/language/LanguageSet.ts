@@ -67,4 +67,8 @@ export default interface LanguageSet {
   QUESTION_ALREADY_EXISTS_ERROR: string
   DISCONNECTED_MESSAGE: string
   CONNECTED_MESSAGE: string
+  SYNC_STARTED: string
+  SYNC_FINISH: string
+  SYNC_FAIL: string
+  SYNC_CONNECTION_FAIL: string
 }

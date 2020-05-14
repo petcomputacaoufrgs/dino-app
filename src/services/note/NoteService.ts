@@ -5,7 +5,7 @@ import HttpStatus from 'http-status-codes'
 import NoteSaveModel from './api_model/NoteSaveModel'
 import NoteSaveResponseAPIModel from './api_model/NoteSaveResponseAPIModel'
 import NoteOrderAPIModel from './api_model/NoteOrderAPIModel'
-import NoteDeleteAPIModel from './api_model/NoteDeleteAPIModel'
+import NoteDeleteModel from './api_model/NoteDeleteModel'
 import NoteQuestionModel from './api_model/NoteQuestionModel'
 import NoteAPIAnswerModel from './api_model/NoteAnswerModel'
 import NoteDoc from './database/docs/NoteDoc'
@@ -44,6 +44,10 @@ class NoteService {
 
   getDatabaseNotes = async (): Promise<NoteDoc[]> => {
     return NoteDatabase.getAll()
+  }
+
+  getDeletedNotes = async (): Promise<NoteDoc[]> => {
+    return DeletedNoteDatabase.getAll()
   }
 
   getTags = async (): Promise<string[]> => {
@@ -173,9 +177,41 @@ class NoteService {
     }
   }
 
+  deleteNotesOnServer = async () => {
+    const deletedDocs = await this.getDeletedNotes()
+
+    const models = deletedDocs.map(
+      (doc) =>
+        ({
+          id: doc.external_id,
+        } as NoteDeleteModel)
+    )
+
+    const request = DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE_ALL)
+
+    if (request.status === DinoAgentStatus.OK) {
+      try {
+        const response = await request.get().send(models)
+
+        if (response.status === HttpStatus.OK) {
+          const newVersion = response.body
+
+          DeletedNoteDatabase.removeAll()
+          NoteVersionLocalStorage.setVersion(newVersion)
+
+          return
+        }
+      } catch {
+        /**Save error log */
+      }
+    }
+
+    NoteSyncLocalStorage.setShouldSync(true)
+  }
+
   private deleteNoteOnServer = async (noteDoc: NoteDoc) => {
     if (noteDoc.external_id) {
-      const model: NoteDeleteAPIModel = { id: noteDoc.external_id }
+      const model: NoteDeleteModel = { id: noteDoc.external_id }
 
       const request = DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE)
 
@@ -183,7 +219,9 @@ class NoteService {
         try {
           const response = await request.get().send(model)
 
-          if (response.status === HttpStatus.OK && response.body === 1) {
+          if (response.status === HttpStatus.OK) {
+            const newVersion = response.body
+
             const deletedNote = await DeletedNoteDatabase.getByQuestion(
               noteDoc.question
             )
@@ -191,6 +229,8 @@ class NoteService {
             if (deletedNote) {
               DeletedNoteDatabase.deleteByNoteDoc(deletedNote)
             }
+
+            NoteVersionLocalStorage.setVersion(newVersion)
 
             return
           }

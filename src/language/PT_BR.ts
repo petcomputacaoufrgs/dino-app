@@ -147,4 +147,13 @@ export default class PT_BR implements LanguageSet {
     'Você está desconectado da Internet:(. Para salvar alterações locais conecte-se a Internet.'
 
   CONNECTED_MESSAGE = 'Agora você está conectado! :)'
+
+  SYNC_STARTED = 'Sincronizando dados...'
+
+  SYNC_FINISH = 'Dados sincronizados!'
+
+  SYNC_FAIL = 'Sincronização falhou. Iremos tentar novamente...'
+
+  SYNC_CONNECTION_FAIL =
+    'Erro de conexão durante a sincronização. Assim que a conexão retornar tentaremos novamente.'
 }

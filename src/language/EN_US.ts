@@ -144,4 +144,13 @@ export default class EN_US implements LanguageSet {
     "You're disconnected of the Internet :(. Please connected this app on the internet to. save local changes."
 
   CONNECTED_MESSAGE = "Now you're connected! :)"
+
+  SYNC_STARTED = 'Synchronizing data...'
+
+  SYNC_FINISH = 'Sync finished!'
+
+  SYNC_FAIL = "Sync fail. Let's try again..."
+
+  SYNC_CONNECTION_FAIL =
+    'Sync connection error. We will try again when internet connection return.'
 }

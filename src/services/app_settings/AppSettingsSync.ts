@@ -3,15 +3,20 @@ import LanguageSubProviderValue from '../../provider/app_provider/language_sub_p
 import BaseSync from '../BaseSync'
 
 class AppSettingsSync implements BaseSync {
-  sync = async (languageContext?: LanguageSubProviderValue) => {
+  sync = async (
+    languageContext?: LanguageSubProviderValue
+  ): Promise<boolean> => {
     if (AppSettingsService.shouldSync()) {
+      console.log('oi')
       const serverVersion = await AppSettingsService.getAppSettingsVersionFromServer()
 
       if (serverVersion !== undefined) {
         const localVersion = AppSettingsService.getAppSettingsVersion()
 
         if (localVersion === serverVersion) {
-          return
+          AppSettingsService.setShouldSync(false)
+
+          return true
         }
 
         if (localVersion > serverVersion) {
@@ -19,7 +24,9 @@ class AppSettingsSync implements BaseSync {
 
           AppSettingsService.saveOnServer(localSettings)
 
-          return
+          AppSettingsService.setShouldSync(false)
+
+          return true
         }
 
         if (localVersion < serverVersion) {
@@ -32,13 +39,17 @@ class AppSettingsSync implements BaseSync {
               languageContext.updateLanguage()
             }
 
-            return
+            AppSettingsService.setShouldSync(false)
+
+            return true
           }
         }
       }
 
-      AppSettingsService.setShouldSync(true)
+      return false
     }
+
+    return true
   }
 }
 

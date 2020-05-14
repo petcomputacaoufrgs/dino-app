@@ -1,3 +1,3 @@
 export default interface BaseSync {
-  sync: () => Promise<void>
+  sync: () => Promise<boolean>
 }

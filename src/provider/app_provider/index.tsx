@@ -2,16 +2,17 @@ import React, { createContext, useContext } from 'react'
 import AppProviderProps from './props'
 import AppProviderValue from './value'
 import AlertSubProvider from './alert_sub_provider'
-import LanguageSubProvider from './language_sub_provider/index'
+import LanguageSubProvider from './language_sub_provider'
+import { AlertControl } from './alert_sub_provider'
 
 const AppContext = createContext({} as AppProviderValue)
 
 const AppProvider = (props: AppProviderProps) => {
-  const [alertRender, alertValue] = AlertSubProvider()
+  const alertRender = AlertSubProvider()
   const languageValue = LanguageSubProvider()
 
   const value = {
-    alert: alertValue,
+    alert: AlertControl,
     language: languageValue,
   } as AppProviderValue
 

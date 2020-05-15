@@ -11,7 +11,7 @@ const AlertList = new Array<AlertProps>()
 
 const AddAlert = (
   message: string,
-  severity: 'success' | 'info' | 'warning' | 'error'
+  severity: 'success' | 'info' | 'warning' | 'error',
 ) => {
   const newSuccessAlert = {
     message: message,
@@ -34,10 +34,10 @@ const AlertSubProvider = (): JSX.Element => {
   useEffect(() => {
     const getNextAlert = () => {
       const newAlert = AlertList.shift()
-
       if (newAlert) {
         const now = new Date().getTime()
         newAlert.end = now + ALERT_DURATION
+        newAlert.onClose = getNextAlert
       }
 
       setAlert(newAlert)
@@ -56,6 +56,13 @@ const AlertSubProvider = (): JSX.Element => {
     }
 
     const interval = setInterval(verify, VERIFY_DELAY)
+
+    if (alert) {
+      const newAlert = alert
+      newAlert.onClose = getNextAlert
+
+      setAlert(newAlert)
+    }
 
     return () => clearInterval(interval)
   }, [alert])

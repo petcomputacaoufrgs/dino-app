@@ -111,6 +111,8 @@ class NoteService {
       question: noteModel.question,
       lastUpdate: noteModel.lastUpdate,
       tagNames: noteModel.tagNames,
+      answered: false,
+      id: 0
     }
 
     const request = DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
@@ -179,6 +181,10 @@ class NoteService {
 
   deleteNotesOnServer = async () => {
     const deletedDocs = await this.getDeletedNotes()
+
+    if (deletedDocs.length === 0) {
+      return
+    }
 
     const models = deletedDocs.map(
       (doc) =>
@@ -249,16 +255,18 @@ class NoteService {
   updateNotesOrder = async (viewNotes: NoteViewModel[]) => {
     const noteDocs = await NoteDatabase.getAll()
 
-    noteDocs.forEach((noteDoc) => {
-      const newOrder = viewNotes.findIndex(
-        (n) => n.question === noteDoc.question
-      )
+    if (noteDocs.length > 0) {
+      noteDocs.forEach((noteDoc) => {
+        const newOrder = viewNotes.findIndex(
+          (n) => n.question === noteDoc.question
+        )
 
-      noteDoc.order = newOrder
-    })
+        noteDoc.order = newOrder
+      })
 
-    NoteDatabase.putAll(noteDocs)
-    this.updateOrderOnServer(noteDocs)
+      NoteDatabase.putAll(noteDocs)
+      this.updateOrderOnServer(noteDocs)
+    }
   }
 
   updateOrderOnServer = async (noteDocs: NoteDoc[]): Promise<void> => {
@@ -327,10 +335,11 @@ class NoteService {
   }
 
   updateNoteQuestion = async (
+    oldQuestion: string,
     noteModel: NoteViewModel,
     updateState: () => void
   ) => {
-    const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
+    const noteDoc = await NoteDatabase.getByQuestion(oldQuestion)
 
     if (noteDoc) {
       noteDoc.question = noteModel.question
@@ -354,6 +363,7 @@ class NoteService {
         question: noteDoc.question,
         tagNames: noteDoc.tagNames,
         lastUpdate: noteDoc.lastUpdate,
+        answered: noteDoc.answered
       }
 
       const request = DinoAgentService.put(

@@ -1,9 +1,5 @@
-export default interface NoteSaveModel {
+import NoteQuestionModel from './NoteQuestionModel'
+
+export default interface NoteSaveModel extends NoteQuestionModel {
   order: number
-
-  question: string
-
-  tagNames: string[]
-
-  lastUpdate: number
 }

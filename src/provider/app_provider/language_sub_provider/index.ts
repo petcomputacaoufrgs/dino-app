@@ -33,12 +33,14 @@ const LanguageSubProvider = (): LanguageSubProviderValue => {
 
   setHTMLElementLanguage(currentLanguage)
 
-  const updateCurrentLanguage = () => {
+  const updateCurrentLanguage = (): LanguageSet => {
     const language = getLanguageSet()
 
     setHTMLElementLanguage(language)
 
     setCurrentLanguage(language)
+
+    return language
   }
 
   const getLanguageList = (): Language[] => {

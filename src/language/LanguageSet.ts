@@ -71,4 +71,6 @@ export default interface LanguageSet {
   SYNC_FINISH: string
   SYNC_FAIL: string
   SYNC_CONNECTION_FAIL: string
+  CANT_LOGIN_DISCONNECTED: string
+  DISCONNECTED: string
 }

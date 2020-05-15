@@ -5,6 +5,7 @@ import GlossaryUpdater from './GlossaryUpdater'
 class GlossarySync implements BaseSync {
   sync = async (): Promise<boolean> => {
     if (GlossaryService.shouldSync()) {
+      GlossaryService.setShouldSync(false)
       GlossaryUpdater.checkUpdates()
     }
 

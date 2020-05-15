@@ -10,24 +10,21 @@ import DinoAgentStatus from '../dino_agent/model/DinoAgentStatus'
 import NoteSyncLocalStorage from './local_storage/NoteSyncLocalStorage'
 
 class NoteUpdater implements BaseUpdater {
-  checkUpdates = async (serverVersion?: number): Promise<void> => {
-    if (!serverVersion) {
-      serverVersion = await NoteService.getVersionFromServer()
-    }
+  checkUpdates = async (): Promise<void> => {
+    const serverVersion = await NoteService.getVersionFromServer()
 
-    if (serverVersion) {
+    if (serverVersion !== undefined) {
       const localVersion = NoteService.getVersion()
 
       if (serverVersion !== localVersion) {
-        await this.updateNotesVersion(serverVersion)
+        await this.update(serverVersion)
       }
 
       return
     }
-    NoteService.setShouldSync(true)
   }
 
-  private updateNotesVersion = async (version: number): Promise<void> => {
+  update = async (version: number): Promise<void> => {
     const request = DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
 
     if (request.status === DinoAgentStatus.OK) {

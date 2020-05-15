@@ -8,9 +8,9 @@ import BaseUpdater from '../BaseUpdater'
 class UpdaterService implements BaseUpdater {
   checkUpdates = async (languageContext?: LanguageSubProviderValue) => {
     if (AuthService.isAuthenticated()) {
+      AppSettingsUpdater.checkUpdates(languageContext)
       GlossaryUpdater.checkUpdates()
       NoteUpdater.checkUpdates()
-      AppSettingsUpdater.checkUpdates(languageContext)
     }
   }
 }

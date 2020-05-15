@@ -18,11 +18,12 @@ import SyncControlModel from './services/sync/model/SyncControlModel'
 
 const App = (): JSX.Element => {
   const [first, setFirst] = useState(true)
+  const languageContext = useLanguage()
 
   const alert = useAlert()
   const language = useLanguage()
 
-  UpdaterService.checkUpdates()
+  UpdaterService.checkUpdates(languageContext)
 
   useEffect(() => {
     const updateConnectionState = (isConnected: boolean) => {
@@ -64,7 +65,7 @@ const App = (): JSX.Element => {
 
     ConnectionListenerService.addEventListener(updateConnectionState)
 
-    const removeListener = () => {
+    const cleanBeforeUpdate = () => {
       ConnectionListenerService.removeEventListener(updateConnectionState)
       SyncService.startSyncService({
         language: language,
@@ -75,7 +76,7 @@ const App = (): JSX.Element => {
       })
     }
 
-    return removeListener
+    return cleanBeforeUpdate
   }, [first, language, alert])
 
   return (

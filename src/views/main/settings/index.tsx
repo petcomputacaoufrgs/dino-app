@@ -38,8 +38,8 @@ const Settings = (): JSX.Element => {
 
     AppSettingsService.set(model)
 
-    appContext.language.updateLanguage()
-    alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
+    const currentLanguage = appContext.language.updateLanguage()
+    alert.showSuccessAlert(currentLanguage.SETTINGS_SAVE_SUCCESS)
 
     HistoryService.goBack()
   }

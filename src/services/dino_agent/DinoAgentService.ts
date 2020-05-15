@@ -7,6 +7,7 @@ import AuthService from '../auth/AuthService'
 import ConnectionListenerService from '../connection/ConnectionListenerService'
 import DinoAgentRequest from './model/DinoAgentRequest'
 import DinoAgentStatus from './model/DinoAgentStatus'
+import UserService from '../user/UserService'
 
 /**
  * @description Abstrai a biblioteca Superagent com tratamentos para conexão,autenticação, erro de autenticação e renovação de token
@@ -74,7 +75,7 @@ class DinoAgentService {
 
   private onError = (err: any) => {
     if (err.status === HttpStatus.FORBIDDEN) {
-      AuthService.removeUserData()
+      UserService.removeUserData()
 
       HistoryService.push(PathConstants.LOGIN)
     } else if (err.status === HttpStatus.PRECONDITION_REQUIRED) {

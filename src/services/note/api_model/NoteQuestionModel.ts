@@ -6,4 +6,6 @@ export default interface NoteQuestionModel {
   tagNames: string[]
 
   lastUpdate: number
+
+  answered: boolean
 }

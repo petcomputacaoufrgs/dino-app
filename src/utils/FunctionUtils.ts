@@ -4,8 +4,6 @@ class FunctionUtils {
   }
 
   compare = (f1: Function, f2: Function) => {
-    console.log(f1.toString())
-    console.log(f2.toString)
     return f1.toString() === f2.toString()
   }
 }

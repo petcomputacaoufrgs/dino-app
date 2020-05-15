@@ -144,9 +144,9 @@ export default class PT_BR implements LanguageSet {
   QUESTION_ALREADY_EXISTS_ERROR = 'Questão já adicionada.'
 
   DISCONNECTED_MESSAGE =
-    'Você está desconectado da Internet:(. Para salvar alterações locais conecte-se a Internet.'
+    'Você está desconectado da Internet. Para salvar alterações locais conecte-se a Internet.'
 
-  CONNECTED_MESSAGE = 'Agora você está conectado! :)'
+  CONNECTED_MESSAGE = 'Agora você está conectado!'
 
   SYNC_STARTED = 'Sincronizando dados...'
 
@@ -156,4 +156,9 @@ export default class PT_BR implements LanguageSet {
 
   SYNC_CONNECTION_FAIL =
     'Erro de conexão durante a sincronização. Assim que a conexão retornar tentaremos novamente.'
+
+  CANT_LOGIN_DISCONNECTED = 'Conexão com a internet necessária para login'
+
+  DISCONNECTED = 'Desconectado'
+
 }

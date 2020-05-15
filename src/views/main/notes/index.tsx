@@ -93,8 +93,10 @@ const Notes = () => {
 
     const newData = { ...board }
 
+    const oldQuestion = note.question
+
     const editedNote = newData.columns[0].cards.find(
-      (n) => n.question === note.question
+      (n) => n.question === oldQuestion
     )
 
     if (editedNote) {
@@ -104,7 +106,7 @@ const Notes = () => {
       editedNote.tagNames = newTagNames
       editedNote.lastUpdate = date
 
-      NoteService.updateNoteQuestion(editedNote, updateState)
+      NoteService.updateNoteQuestion(oldQuestion, editedNote, updateState)
     }
 
     setNote(undefined)
@@ -294,18 +296,18 @@ const Notes = () => {
     cardNote: NoteViewModel,
     dragging: boolean
   ): JSX.Element => (
-    <>
-      {(cardNote.showByTag || cardNote.showByQuestion) && (
-        <NoteCard
-          dragging={dragging}
-          note={cardNote}
-          onEditQuestion={handleOpenEditQuestionDialog}
-          onEditAnswer={handleOpenAnswerDialog}
-          onDelete={handleOpenDeleteNoteDialog}
-        ></NoteCard>
-      )}
-    </>
-  )
+      <>
+        {(cardNote.showByTag || cardNote.showByQuestion) && (
+          <NoteCard
+            dragging={dragging}
+            note={cardNote}
+            onEditQuestion={handleOpenEditQuestionDialog}
+            onEditAnswer={handleOpenAnswerDialog}
+            onDelete={handleOpenDeleteNoteDialog}
+          ></NoteCard>
+        )}
+      </>
+    )
 
   const renderBoard = () => (
     <Board

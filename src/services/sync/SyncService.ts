@@ -41,8 +41,8 @@ class SyncService {
     }
 
     promises.push(AppSettingsSync.sync(control.language))
-    //promises.push(GlossarySync.sync())
-    //promises.push(NoteSync.sync())
+    promises.push(GlossarySync.sync())
+    promises.push(NoteSync.sync())
 
     const results = await Promise.all(promises)
 

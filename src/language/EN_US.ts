@@ -141,9 +141,9 @@ export default class EN_US implements LanguageSet {
   QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
 
   DISCONNECTED_MESSAGE =
-    "You're disconnected of the Internet :(. Please connected this app on the internet to. save local changes."
+    "You're disconnected of the Internet. Connect again to save local data."
 
-  CONNECTED_MESSAGE = "Now you're connected! :)"
+  CONNECTED_MESSAGE = "Now you're connected!"
 
   SYNC_STARTED = 'Synchronizing data...'
 
@@ -153,4 +153,8 @@ export default class EN_US implements LanguageSet {
 
   SYNC_CONNECTION_FAIL =
     'Sync connection error. We will try again when internet connection return.'
+
+  CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
+
+  DISCONNECTED = 'Disconnected'
 }

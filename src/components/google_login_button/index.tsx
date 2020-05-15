@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useLanguage } from '../../provider/app_provider'
+import React, { useState, useEffect } from 'react'
+import { useLanguage, useAlert } from '../../provider/app_provider'
 import Button from '../button'
 import Loader from '../loader'
 import GoogleSecret from '../../config/client_secret.json'
@@ -14,14 +14,32 @@ import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
 import HistoryService from '../../services/history/HistoryService'
 import PathConstants from '../../constants/PathConstants'
 import AuthService from '../../services/auth/AuthService'
-import './styles.css'
 import UpdaterService from '../../services/updater/UpdaterService'
 import { Typography } from '@material-ui/core'
+import ConnectionListenerService from '../../services/connection/ConnectionListenerService'
+import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
-  const language = useLanguage().current
+  const languageContext = useLanguage()
+  const language = languageContext.current
+  const alert = useAlert()
 
   const [loading, setLoading] = useState(false)
+  const [connected, setConnected] = useState(true)
+
+  useEffect(() => {
+    const updateConnectionState = (connected) => {
+      setConnected(connected)
+    }
+
+    ConnectionListenerService.addEventListener(updateConnectionState)
+
+    const cleanBeforeUpdate = () => {
+      ConnectionListenerService.removeEventListener(updateConnectionState)
+    }
+
+    return cleanBeforeUpdate
+  })
 
   const responseGoogle = async (
     response: GoogleLoginResponse | GoogleLoginResponseOffline
@@ -38,7 +56,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
       if (refreshTokenRequired) {
         AuthService.setRefreshRequiredToFalse()
       } else {
-        UpdaterService.checkUpdates()
+        UpdaterService.checkUpdates(languageContext)
       }
 
       setLoading(false)
@@ -86,8 +104,12 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     return window.location.protocol + '//' + window.location.host
   }
 
+  const showOfflineMessage = () => {
+    alert.showInfoAlert(language.CANT_LOGIN_DISCONNECTED)
+  }
+
   return (
-    <>
+    <div className='google_login_button'>
       <GoogleLogin
         clientId={GoogleSecret.web.client_id}
         scope={AuthService.getDefaultScopes()}
@@ -103,15 +125,21 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
             size={props.size}
             imageSrc={GoogleLogo}
             imageAlt={props.buttonText}
-            className="login_button__button"
-            onClick={renderProps.onClick}
+            className="google_login_button__button"
+            onClick={connected ? renderProps.onClick : showOfflineMessage}
+            disabled={!connected}
           >
             <Typography component="p">{props.buttonText}</Typography>
           </Button>
         )}
       />
       <Loader alt={language.LOADER_ALT} loading={loading} />
-    </>
+      {!connected &&
+        <Typography className='google_login_button__error' component="p">
+          {language.DISCONNECTED}
+        </Typography>
+      }
+    </div>
   )
 }
 

@@ -7,19 +7,12 @@ class AppSettingsSync implements BaseSync {
     languageContext?: LanguageSubProviderValue
   ): Promise<boolean> => {
     if (AppSettingsService.shouldSync()) {
-      console.log('oi')
       const serverVersion = await AppSettingsService.getAppSettingsVersionFromServer()
 
       if (serverVersion !== undefined) {
         const localVersion = AppSettingsService.getAppSettingsVersion()
 
-        if (localVersion === serverVersion) {
-          AppSettingsService.setShouldSync(false)
-
-          return true
-        }
-
-        if (localVersion > serverVersion) {
+        if (localVersion >= serverVersion) {
           const localSettings = AppSettingsService.get()
 
           AppSettingsService.saveOnServer(localSettings)

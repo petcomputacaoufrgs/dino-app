@@ -46,38 +46,12 @@
   margin-right: 20px;
 }
 
-.sc-AxmLO.fcYNFc {
-  padding-top: 0px;
-}
-
-.sc-fzoyAV.hbVbBu {
-  width: 100%;
-}
-
-.sc-fzoLag.feoXx {
-  width: 100%;
-}
-
-.sc-AxmLO.fcYNFc {
-  margin: 0px;
-  width: 100%;
-  background-color: inherit;
-}
-
-.sc-AxjAm.eZiLDJ {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.notes_desktop .sc-AxjAm.eZiLDJ {
+.notes_desktop .sc-AxjAm {
   padding-left: 15%;
   padding-right: 15%;
 }
 
-.sc-fzozJi.GHGWz {
+.notes .sc-fzozJi {
   position: absolute;
   top: 150px;
   left: 0;
@@ -89,13 +63,25 @@
   padding-bottom: 70px;
 }
 
+.notes .sc-AxmLO {
+  background-color: inherit;
+}
+
+.notes .sc-AxjAm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 @media (orientation: landscape) {
-  .sc-fzozJi.GHGWz {
+  .notes .sc-fzozJi {
     bottom: 0px;
   }
 }
 
-.notes_desktop .sc-fzozJi.GHGWz {
+.notes_desktop .sc-fzozJi {
   left: 80px;
   width: calc(100% - 80px);
   bottom: 0;
@@ -103,12 +89,8 @@
   top: 200px;
 }
 
-.notes_desktop .sc-fzozJi.GHGWz::-webkit-scrollbar {
+.notes_desktop .sc-fzozJi::-webkit-scrollbar {
   display: none;
-}
-
-.sc-AxmLO.fcYNFc {
-  padding: 0px;
 }
 
 .note_card_dialog.MuiDialog-root

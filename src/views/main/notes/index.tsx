@@ -395,7 +395,7 @@ const Notes = () => {
   }
 
   const updateListMarginTop = () => {
-    const foundDivs = document.getElementsByClassName('sc-fzozJi GHGWz')
+    const foundDivs = document.getElementsByClassName('notes__board')
 
     if (foundDivs.length === 1) {
       const noteListContainer = foundDivs[0]
@@ -418,8 +418,18 @@ const Notes = () => {
 
   updateListMarginTop()
 
+  const getClass = () => {
+    const mainClass = 'notes'
+
+    if (isMobile) {
+      return mainClass
+    }
+
+    return mainClass + ' notes_desktop'
+  }
+
   return (
-    <div className={'notes' + (!isMobile && ' notes_desktop')}>
+    <div className={getClass()}>
       {renderHeader()}
       {renderBoard()}
       {renderAddButton()}

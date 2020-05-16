@@ -11,15 +11,10 @@ class NoteSync implements BaseSync {
       const localVersion = NoteService.getVersion()
 
       if (serverVersion > localVersion) {
-        console.log('update from server')
         NoteUpdater.update(serverVersion)
         NoteService.setShouldSync(false)
 
-        return true
-      }
-
-      if (NoteService.shouldSync()) {
-        console.log('update from app')
+      } else if (NoteService.shouldSync()) {
         const noteDocs = await NoteService.getDatabaseNotes()
 
         const models = noteDocs
@@ -36,23 +31,21 @@ class NoteSync implements BaseSync {
               } as NoteUpdateModel)
           )
 
-        console.log(models)
-
         await NoteService.updateNotes(models)
 
         await NoteService.deleteNotesOnServer()
 
         NoteService.updateOrderOnServer(noteDocs)
-      } else {
-        console.log('dont sync')
       }
 
       return true
+
     }
 
     NoteService.setShouldSync(true)
 
     return false
+
   }
 }
 

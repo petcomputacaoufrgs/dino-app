@@ -115,7 +115,7 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
       </IconButton>
       <IconButton
         onClick={handleEditQuestion}
-        arie-label={language.NOTE_EDIT_QUESTION_BUTTON}
+        aria-label={language.NOTE_EDIT_QUESTION_BUTTON}
       >
         <EditIcon />
       </IconButton>

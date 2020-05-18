@@ -5,47 +5,6 @@
   justify-content: center;
 }
 
-.notes__add.MuiButtonBase-root.MuiFab-root {
-  position: fixed;
-  width: 50px;
-  height: 50px;
-  bottom: 85px;
-  right: 20px;
-  background-color: #ff759e;
-  outline: none;
-}
-
-@media (orientation: landscape) {
-  .notes__add.MuiButtonBase-root.MuiFab-root {
-    bottom: 15px;
-  }
-}
-
-.notes__header {
-  position: fixed;
-  width: 95%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 10px;
-}
-
-.notes__header_desktop {
-  position: fixed;
-  width: 70%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 20px;
-  padding-left: 80px;
-}
-
-.notes__header__image {
-  width: 45px;
-  height: 45px;
-  margin-right: 20px;
-}
-
 .notes_desktop .sc-AxjAm {
   padding-left: 15%;
   padding-right: 15%;

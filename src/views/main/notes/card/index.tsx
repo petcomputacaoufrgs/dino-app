@@ -47,14 +47,6 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
     props.onDelete(note.id)
   }
 
-  const renderStateButton = (): JSX.Element => {
-    const done = note.answered
-    const icon = done ? <DoneOutlineIcon /> : <QueryBuilderIcon />
-    const state = done ? language.NOTE_STATE_DONE : language.NOTE_STATE_NOT_DONE
-
-    return <IconButton aria-label={state}>{icon}</IconButton>
-  }
-
   useEffect(() => {
     setDragging(props.dragging)
     setNote(props.note)
@@ -71,6 +63,14 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
     props.note,
     expanded,
   ])
+
+  const renderStateButton = (): JSX.Element => {
+    const done = note.answered
+    const icon = done ? <DoneOutlineIcon /> : <QueryBuilderIcon />
+    const state = done ? language.NOTE_STATE_DONE : language.NOTE_STATE_NOT_DONE
+
+    return <IconButton aria-label={state}>{icon}</IconButton>
+  }
 
   const renderMore = (): JSX.Element => {
     if (note.answered) {

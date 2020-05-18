@@ -6,6 +6,10 @@
   font-family: 'Raleway', sans-serif;
 }
 
+.MuiDialog-root {
+  outline: none;
+}
+
 .MuiButtonBase-root.MuiIconButton-root {
   outline: none;
 }

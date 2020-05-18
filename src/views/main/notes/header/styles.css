@@ -1,0 +1,24 @@
+.notes__header {
+  position: fixed;
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+
+.notes__header_desktop {
+  position: fixed;
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  padding-left: 80px;
+}
+
+.notes__header__image {
+  width: 45px;
+  height: 45px;
+  margin-right: 20px;
+}

@@ -4,6 +4,7 @@ import { LanguageContext } from '../../components/language_provider'
 import GlossarySVG from '../../images/glossary.svg'
 import GamesSVG from '../../images/games.svg'
 import HomeSVG from '../../images/home.svg'
+import NotesSVG from '../../images/note.svg'
 import SettingsSVG from '../../images/settings.svg'
 import LogoutSVG from '../../images/logout.svg'
 import AdaptableMenu from '../../components/adaptable_menu'
@@ -17,6 +18,7 @@ import Home from './home'
 import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
 import MenuItem from '../../types/MenuItem'
+import Notes from './notes'
 
 /**
  * @description Tela principal da aplicação
@@ -30,34 +32,6 @@ const Main = () : JSX.Element => {
 
     const language = languageContext.currentLanguage
 
-    /**
-     * @description Função chamada quando seu item for selecionado no menu
-     */
-    const goToHome = () => {
-        HistoryService.push(PathConstants.HOME)
-    }
-
-    /**
-     * @description Função chamada quando seu item for selecionado no menu
-     */
-    const goToGames = () => {
-        HistoryService.push(PathConstants.GAMES)
-    }
-
-    /**
-     * @description Função chamada quando seu item for selecionado no menu
-     */
-    const goToGlossary = () => {
-        HistoryService.push(PathConstants.GLOSSARY)
-    }
-
-    /**
-     * @description Função chamada quando seu item for selecionado no menu
-     */
-    const goToSettings = () => {
-        HistoryService.push(PathConstants.SETTINGS)
-    }
-
     const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
 
     /** Itens do menu */
@@ -66,24 +40,29 @@ const Main = () : JSX.Element => {
             {
                 'image': HomeSVG,
                 'name': language.MENU_HOME,
-                'onClick': goToHome,
+                'onClick': () =>  HistoryService.push(PathConstants.HOME),
             },
             {
                 'image': GamesSVG,
                 'name': language.MENU_GAMES,
-                'onClick': goToGames,
+                'onClick': () => HistoryService.push(PathConstants.GAMES),
             },
             {
                 'image':GlossarySVG,
                 'name': language.MENU_GLOSSARY,
-                'onClick': goToGlossary,
+                'onClick': () => HistoryService.push(PathConstants.GLOSSARY),
             }
         ],
         [
             {
+                'image': NotesSVG,
+                'name': language.MENU_NOTES,
+                'onClick': () => HistoryService.push(PathConstants.NOTES),    
+            },
+            {
                 'image': SettingsSVG,
                 'name': language.MENU_SETTINGS,
-                'onClick': goToSettings,
+                'onClick': () => HistoryService.push(PathConstants.SETTINGS),
             },
         ],
         [
@@ -111,9 +90,10 @@ const Main = () : JSX.Element => {
         return(
             <Switch>
                 <PrivateRoute exact path={PathConstants.HOME} component={Home} />
-                <PrivateRoute exact path={PathConstants.GAMES} component={() => <>GAMES</>} />
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
+                <PrivateRoute exact path={PathConstants.GAMES} component={() => <></>} />
                 <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} />
+                <PrivateRoute exact path={PathConstants.NOTES} component={Notes} /> 
+                <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
         )

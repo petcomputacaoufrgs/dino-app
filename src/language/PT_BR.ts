@@ -64,4 +64,63 @@ export default class PT_BR implements LanguageSet {
 
     SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
 
+    MENU_NOTES: string = 'Notas'
+
+    NOTES_HEADER_IMAGE_DESC: string = 'Imagem com um caderno de anotações com uma mão escrevendo.'
+
+    NOTES_ADD_BUTTON: string = 'Clique para adicionar uma nova anotação.'
+
+    NOTE_STATE_DONE: string = 'Anotação respondida.'
+
+    NOTE_STATE_NOT_DONE: string = 'Anotação ainda não possui uma resposta.'
+
+    NOTE_SHOW_ANSWER: string = 'Clique para ver a resposta desta pergunta logo abaixo.'
+
+    NOTE_EDIT_ANSWER_BUTTON: string = 'Clique aqui para editar a resposta dessa anotação.'
+
+    NOTE_EDIT_QUESTION_BUTTON: string = 'Clique aqui para editar a pergunta desta anotação.'
+
+    NOTE_DELETE_BUTTON: string = 'Clique aqui para apagar está anotação.'
+
+    QUESTION_NOTE_DIALOG_TITLE: string = 'Pergunta'
+
+    ANSWER_NOTE_DIALOG_TITLE: string = 'Resposta'
+
+    NOTE_TAG_LABEL: string = 'Tags'
+
+    NOTE_DIALOG_SAVE_BUTTON_LABEL: string = 'Clique para salvar.'
+
+    NOTE_DIALOG_SAVE_BUTTON_TEXT: string = 'Salvar'
+
+    SEARCH_BUTTON_LABEL: string = 'Pesquisar'
+
+    ANSWER_DIALOG_LABEL = 'Tela para responder uma questão anotada.'
+
+    JANUARY = 'Janeiro'
+
+    FEBRUARY = 'Fevereiro'
+
+    MARCH = 'Março'
+
+    APRIL = 'Abril'
+
+    MAY = 'Maio'
+
+    JUNE = 'Junho' 
+
+    JULY = 'Julho'
+
+    AUGUST = 'Agosto'
+
+    SEPTEMBER = 'Setembro'
+
+    OCTOBER = 'Outubro'
+
+    NOVEMBER = 'Novembro'
+
+    DECEMBER = 'Dezembro'
+
+    INVALID_MONTH = 'Mês inválido'
+
+    STRING_DATE_FORMAT = 'DD de MM de YYYY'
 }

@@ -63,5 +63,64 @@ export default class EN_US implements LanguageSet {
     SETTINGS_SAVE = 'Save'
     
     SETTINGS_SAVE_SUCCESS = 'Settings updated.'
+
+    MENU_NOTES = 'Notes'
+
+    NOTES_HEADER_IMAGE_DESC = 'Image with a opened notebook and a hand writing.'
     
+    NOTES_ADD_BUTTON = 'Click to add a new note.'
+
+    NOTE_STATE_DONE = 'Note has a answer.'
+
+    NOTE_STATE_NOT_DONE = 'Note has no answers yet.'
+
+    NOTE_SHOW_ANSWER = 'Click to show the answer of this note right below.'
+
+    NOTE_EDIT_ANSWER_BUTTON = 'Click here to edit the answer of this note.'
+
+    NOTE_EDIT_QUESTION_BUTTON = 'Click here to edit the question of this note.'
+
+    NOTE_DELETE_BUTTON = 'Click here to delete this note.'
+
+    QUESTION_NOTE_DIALOG_TITLE = 'Question'
+
+    ANSWER_NOTE_DIALOG_TITLE = 'Answer'
+
+    NOTE_TAG_LABEL = 'Tags'
+
+    NOTE_DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
+
+    NOTE_DIALOG_SAVE_BUTTON_TEXT = 'Save'
+    
+    SEARCH_BUTTON_LABEL = 'Search'
+
+    ANSWER_DIALOG_LABEL = 'Model for answer a question note'
+
+    JANUARY = 'January'
+
+    FEBRUARY = 'February'
+
+    MARCH = 'March'
+
+    APRIL = 'April'
+
+    MAY = 'May'
+
+    JUNE = 'June' 
+
+    JULY = 'July'
+
+    AUGUST = 'August'
+
+    SEPTEMBER = 'September'
+
+    OCTOBER = 'October'
+
+    NOVEMBER = 'November'
+
+    DECEMBER = 'December'
+
+    INVALID_MONTH = 'Invalid month'
+
+    STRING_DATE_FORMAT = 'MM DD, YYYY'
 }

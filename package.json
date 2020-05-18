@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@lourenci/react-kanban": "^1.1.0",
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.47",
@@ -18,6 +19,7 @@
     "acorn": "^7.1.1",
     "bootstrap": "^4.4.1",
     "http-status-codes": "^1.4.0",
+    "immutability-helper": "^3.0.2",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0",
     "react-device-detect": "^1.11.14",
@@ -27,6 +29,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-spinners": "^0.8.1",
+    "styled-components": "^5.1.0",
     "superagent": "^5.2.2",
     "typescript": "~3.7.2"
   },

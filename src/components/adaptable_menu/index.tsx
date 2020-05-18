@@ -59,8 +59,7 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
             <DrawerNavigation 
                 mini={mini} 
                 groupedItems={props.groupedItems} 
-                component={props.component}
-                topBarComponent={props.topBarComponent} />
+                component={props.component} />
         )
     }
 
@@ -73,8 +72,7 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
             <BottomNavigation 
                 selectedItem={props.selectedItem} 
                 groupedItems={props.groupedItems} 
-                component={props.component}
-                topBarComponent={props.topBarComponent} />
+                component={props.component} />
         )
     }
 

@@ -88,8 +88,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     const renderSecondaryItems = (): JSX.Element => (
         <DrawerNavigation 
             mini={false} 
-            groupedItems={getSecondaryMenuItemsGroups()} 
-            topBarComponent={props.topBarComponent} />
+            groupedItems={getSecondaryMenuItemsGroups()} />
     )
 
     /**
@@ -101,11 +100,11 @@ const BottomNavigation = (props: BottomNavigationProps) => {
   
     return (
         <div className='bottom_navigation'>
-            {renderMainItems()}
             {renderSecondaryItems()}
             <div className='bottom_navigation__component'>
                 {renderContent()}
             </div>
+            {renderMainItems()}
         </div>
     );
 }

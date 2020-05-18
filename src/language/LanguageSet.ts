@@ -28,4 +28,34 @@ export default interface LanguageSet {
     SETTINGS_LANGUAGE: string
     SETTINGS_SAVE: string
     SETTINGS_SAVE_SUCCESS: string
+    MENU_NOTES: string
+    NOTES_HEADER_IMAGE_DESC: string
+    NOTES_ADD_BUTTON: string
+    NOTE_STATE_DONE: string
+    NOTE_STATE_NOT_DONE: string
+    NOTE_SHOW_ANSWER: string
+    NOTE_EDIT_ANSWER_BUTTON: string
+    NOTE_EDIT_QUESTION_BUTTON: string
+    NOTE_DELETE_BUTTON: string
+    QUESTION_NOTE_DIALOG_TITLE: string
+    ANSWER_NOTE_DIALOG_TITLE: string
+    NOTE_TAG_LABEL: string
+    NOTE_DIALOG_SAVE_BUTTON_LABEL: string
+    NOTE_DIALOG_SAVE_BUTTON_TEXT: string
+    SEARCH_BUTTON_LABEL: string
+    ANSWER_DIALOG_LABEL: string
+    JANUARY: string
+    FEBRUARY: string
+    MARCH: string
+    APRIL: string
+    MAY: string
+    JUNE: string 
+    JULY: string
+    AUGUST: string
+    SEPTEMBER: string
+    OCTOBER: string
+    NOVEMBER: string
+    DECEMBER: string
+    INVALID_MONTH: string
+    STRING_DATE_FORMAT: string
 }

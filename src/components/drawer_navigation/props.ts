@@ -1,4 +1,4 @@
-import MenuItem from '../../types/MenuItem'
+import MenuItemViewModel from '../../model/view/MenuItemViewModel'
 
 /**
  * @description Propriedades do menu drawer.
@@ -7,7 +7,7 @@ export default interface DrawerNavigationProps {
     /**
      * @description Itens que serão exibidos na parte superior do menu
      */
-    groupedItems: MenuItem[][]
+    groupedItems: MenuItemViewModel[][]
 
     /**
      * @description Define se o estado do menu quando fechado deve exibir um mini menu ou não

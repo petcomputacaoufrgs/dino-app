@@ -1,4 +1,4 @@
-export default interface DialogProps {
+export default interface AgreementDialogProps {
     question: string
     description: string
     onAgree?: () => void

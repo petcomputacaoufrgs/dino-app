@@ -1,10 +1,10 @@
-import NoteModel from '../../../../model/NoteModel'
+import NoteViewModel from '../../../../model/view/NoteViewModel'
 
 export default interface NoteCardProps { 
-    onEditQuestion: (note: NoteModel) => void
-    onEditAnswer: (note: NoteModel) => void
+    onEditQuestion: (note: NoteViewModel) => void
+    onEditAnswer: (note: NoteViewModel) => void
     onDelete: (id: number) => void
     dragging: boolean
-    note: NoteModel
+    note: NoteViewModel
     children?: any
 }

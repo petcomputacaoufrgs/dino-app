@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
-import MenuItem from '../../types/MenuItem'
+import MenuItemViewModel from '../../model/view/MenuItemViewModel'
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -51,7 +51,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
      * @description Chama a função correspondente ao item selecionado
      * @param index Indice do item clicado na lista de items da props
      */
-    const onClick = (item: MenuItem) => {
+    const onClick = (item: MenuItemViewModel) => {
         item.onClick()
         setTimeout(onClose, 100)
     }
@@ -87,7 +87,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
     /**
      * @description rendeniza um grupo de itens
      */
-    const renderItems = (items: MenuItem[]): JSX.Element[] => (
+    const renderItems = (items: MenuItemViewModel[]): JSX.Element[] => (
         items.map((item, itemIndex) => (
             <ListItem button key={itemIndex} onClick={() => onClick(item)}>
                 <ListItemIcon>

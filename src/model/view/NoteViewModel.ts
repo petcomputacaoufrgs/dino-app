@@ -1,4 +1,4 @@
-export default interface NoteModel {
+export default interface NoteViewModel {
     id: number
     api_id?: number
     question: string
@@ -10,5 +10,6 @@ export default interface NoteModel {
     creationDay: number
     creationMonth: number
     creationYear: number
+    savedOnServer: boolean
 }
 

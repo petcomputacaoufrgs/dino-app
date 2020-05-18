@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import BottomNavigationProps from './props'
-import MenuItem from '../../types/MenuItem'
+import MenuItemViewModel from '../../model/view/MenuItemViewModel'
 import DrawerNavigation from '../drawer_navigation'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'
@@ -43,7 +43,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
      * @description Retorna o primeiro e principal grupo de itens do menu
      * @returns Primeiro grupo de itens do menu
      */
-    const getFirstMenuItemsGroup = (): MenuItem[] => {
+    const getFirstMenuItemsGroup = (): MenuItemViewModel[] => {
         if (props.groupedItems.length !== 0) {
             return props.groupedItems[0]
         }
@@ -55,7 +55,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
      * @description Retorna todos os grupos de itens com exceção do primeiro
      * @returns Lista de itens secundários do menu
      */
-    const getSecondaryMenuItemsGroups = (): MenuItem[][] => (
+    const getSecondaryMenuItemsGroups = (): MenuItemViewModel[][] => (
         props.groupedItems.slice(1)
     )
 

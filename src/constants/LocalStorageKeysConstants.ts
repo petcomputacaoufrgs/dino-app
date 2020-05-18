@@ -14,6 +14,8 @@ class LocalStorageKeys {
     APP_SETTINGS_VERSION: string = 'asv'
     APP_SETTINGS: string = 'as'
     PAGE_TEMP: string = 'pt'
+    NOTE: string = 'no'
+    NOTE_TAGS: string = 'nt'
 }
 
 export default new LocalStorageKeys()

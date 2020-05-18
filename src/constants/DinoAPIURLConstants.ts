@@ -2,7 +2,7 @@
  * @description Valores de URL da API para conexão
  */
 class Constants {
-    private URL: string = 'https://pet-dino-server.herokuapp.com/'
+    private URL: string = 'http://localhost:5000/'
     private PATH_AUTH: string = 'auth/'
     private PATH_GLOSSARY: string = 'glossary/'
     private PATH_APP_SETTINGS: string = 'user_app_settings/'

@@ -1,36 +1,34 @@
-import React from 'react'
+import React from 'react';
 import { useParams } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
-import GlossaryService from '../../../../services/glossary/GlossaryService'
+import GlossaryLocalStorageService from '../../../../services/glossary/local_storage/GlossaryLocalStorage'
+
 
 const GlossaryItem = (): JSX.Element => {
+
   const { id } = useParams()
 
-  const items = GlossaryService.getItems()
+  const items = GlossaryLocalStorageService.getItems()
 
-  const item = items.find((item) => item.id === Number(id))
+  const item = items.find(item => item.id === Number(id))
 
   return (
     <div className="glossary-item">
       <ArrowBack />
-      {item !== undefined ? (
+      {item !== undefined ?
         <Card className="card">
           <Card.Header>
             <Card.Title>{item.title}</Card.Title>
           </Card.Header>
           <Card.Body>
-            <Card.Subtitle className="mb-2 text-muted">
-              {'Aqui vai a tag'}
-            </Card.Subtitle>
-            <Card.Text>{'Aqui vai um texto loongo'}</Card.Text>
+            <Card.Subtitle className="mb-2 text-muted">{item.subtitle || 'Aqui vai a subtitle'}</Card.Subtitle>
+            <Card.Text>{item.full_text || 'Aqui vai um texto'}</Card.Text>
           </Card.Body>
         </Card>
-      ) : (
-        <h5>Card Not Found</h5>
-      )}
+        : <h5>Card Not Found</h5>}
     </div>
   )
 }

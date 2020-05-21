@@ -25,7 +25,7 @@ const GlossaryItem = (): JSX.Element => {
           </Card.Header>
           <Card.Body>
             <Card.Subtitle className="mb-2 text-muted">{item.subtitle || 'Aqui vai a subtitle'}</Card.Subtitle>
-            <Card.Text>{item.full_text || 'Aqui vai um texto'}</Card.Text>
+            <Card.Text>{item.fullText || 'Aqui vai um texto'}</Card.Text>
           </Card.Body>
         </Card>
         : <h5>Card Not Found</h5>}

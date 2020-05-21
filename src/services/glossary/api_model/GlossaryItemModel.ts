@@ -4,6 +4,6 @@ export default interface GlossaryItemModel {
   title: string
   subtitle?: string
   text: string
-  full_text?: string
+  fullText?: string
   exists: boolean
 }

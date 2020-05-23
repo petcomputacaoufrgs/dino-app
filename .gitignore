@@ -31,3 +31,4 @@ pouch__all_dbs__/
 log.txt
 
 .vscode/launch.json
+.vscode/settings.json

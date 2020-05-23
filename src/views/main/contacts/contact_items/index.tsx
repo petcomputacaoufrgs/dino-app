@@ -1,82 +1,50 @@
-import './styles.css'
 import React, { useState } from 'react'
 import ContactItemsProps from './props'
-import ContactItem from '../contact_item'
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Modal,
-  Divider,
-} from '@material-ui/core'
+import ContactItemCard from '../contact_item/contact_item_card'
+import ContactItemList from '../contact_item/contact_item_list'
+
+import { Avatar, List, ListItem, ListItemText, ListItemAvatar, Modal, Divider, } from '@material-ui/core'
 import { Backdrop, Slide } from '@material-ui/core'
-
-import { red, pink, purple, blue, green } from '@material-ui/core/colors'
-import { makeStyles, createStyles } from '@material-ui/core/styles'
-
-export const useStyles = makeStyles(() =>
-  createStyles({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      outline: 0,
-    },
-    card: {
-      maxWidth: '70%',
-      outline: 0,
-    },
-    red: { backgroundColor: red[500] },
-    pink: { backgroundColor: pink[500] },
-    purple: { backgroundColor: purple[500] },
-    blue: { backgroundColor: blue[500] },
-    green: { backgroundColor: green[500] },
-  }),
-)
+import useStyles from './styles'
 
 const ContactItems = (props: ContactItemsProps): JSX.Element => {
+
+  const classes = useStyles(props)
+
   const [selectedItem, setSelectedItem] = useState(0)
   const [open, setOpen] = useState(false)
-  const classes = useStyles()
-
   const handleOpen = (id: number) => {
     setOpen(true)
     setSelectedItem(id)
   }
   const handleClose = () => setOpen(false)
 
-  const isOpen = (id: number) => open && selectedItem === id
+  const isOpen = (id: number): boolean => open && selectedItem === id
 
   return (
-    <List className="list">
-      {props.items.map((item) => (
-        <div className="contact-item" key={item.id}>
-          <ListItem button onClick={() => handleOpen(item.id)}>
-            <ListItemAvatar>
-              <Avatar aria-label="recipe" className={classes[item.color]}>
-                {item.name[0]}
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={item.name} secondary={item.number} />
-          </ListItem>
+    <List className={classes.list}>
+      {props.items.map((contact) => (
+        <div key={contact.id}>
+          <ContactItemList
+            item={contact}
+            onClick={() => handleOpen(contact.id)}
+          />
           <Modal
             className={classes.modal}
-            open={isOpen(item.id)}
+            open={isOpen(contact.id)}
             onClose={handleClose}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{ timeout: 500 }}
-            disableAutoFocus //POR ESSA EU MEREÇO UM PRÊMIO ERRO CHATO DA PORRA
+            disableAutoFocus
           >
             <Slide
-              in={isOpen(item.id)}
+              in={isOpen(contact.id)}
               direction="up"
               mountOnEnter
               unmountOnExit
             >
-              <ContactItem item={item} />
+              <ContactItemCard item={contact} />
             </Slide>
           </Modal>
           <Divider />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLanguage } from '../../../provider/app_provider'
-import ContactItemModel from '../../../services/contact/api_model/ContactItemModel'
+import ContactItemModel from '../../../services/contact/api_model/ContactModel'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ContactItems from './contact_items'
 import StringUtils from '../../../utils/StringUtils'
@@ -22,33 +22,40 @@ const Contacts = (): JSX.Element => {
   useEffect(() => {
     const items = [
       {
+        id: 100,
+        name: 'SAMU',
+        phone: { id: 100, countryCode: '', areaCode: '', number: '192', type: 1 },
+        description: '',
+        color: 'red'
+      },
+      {
         id: 1,
         name: 'Babu Santana',
-        number: '51 91242345',
-        info: 'infosupersecretaaaaaa1',
-        color: 'purple',
+        phone: { id: 1, countryCode: '55', areaCode: '51', number: '96969696', type: 6 },
+        description: 'infosupersecretaaaaaa1',
+        color: 'red'
       },
       {
         id: 2,
         name: 'Mari Baianinha',
-        number: '51 36363634',
-        info:
+        phone: { id: 2, countryCode: '', areaCode: '', number: '36969696', type: 2 },
+        description:
           'infosupersecretaaaaaa2 uhihaiugbdgiavduyavu yavuahvsacdtyacd ycdayivatsc dysadcaysdc',
-        color: 'red',
+        color: 'pink'
       },
       {
         id: 3,
         name: 'Manu Gavassi',
-        number: '51 98936365',
-        info: 'infosupersecretaaaaaa3',
-        color: 'pink',
+        phone: { id: 3, countryCode: '55', areaCode: '', number: '26969696', type: 2 },
+        description: 'infosupersecretaaaaaa3',
+        color: 'green'
       },
       {
         id: 4,
         name: 'Thelminha',
-        number: '51 35353535',
-        info: 'infosupersecretaaaaaa4',
-        color: 'green',
+        phone: { id: 4, countryCode: '', areaCode: '51', number: '96969696', type: 6 },
+        description: 'infosupersecretaaaaaa4',
+        color: 'pink'
       },
     ]
     const results = items.filter((item) =>

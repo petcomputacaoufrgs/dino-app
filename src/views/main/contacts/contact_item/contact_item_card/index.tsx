@@ -2,18 +2,20 @@ import React, { forwardRef } from 'react'
 import { Avatar, Typography, IconButton } from '@material-ui/core'
 import { Card, CardHeader, CardContent } from '@material-ui/core'
 import { MoreVert } from '@material-ui/icons'
-import { useStyles } from '../contact_items'
-import ContactItemProps from './props'
+import useStyles from '../../contact_item/styles'
+import ContactModel from '../../../../../services/contact/api_model/ContactModel'
 
-const ContactItem = forwardRef(
-  (props: ContactItemProps, ref): JSX.Element => {
+const ContactItemCard = forwardRef(
+  (props: { item: ContactModel }, ref): JSX.Element => {
     const classes = useStyles(props)
+
+    const phone = props.item.phone
 
     return (
       <Card className={classes.card} ref={ref}>
         <CardHeader
           avatar={
-            <Avatar aria-label="recipe" className={classes[props.item.color]}>
+            <Avatar aria-label="recipe" className={classes['pink']}>
               {props.item.name[0]}
             </Avatar>
           }
@@ -23,11 +25,15 @@ const ContactItem = forwardRef(
             </IconButton>
           }
           title={props.item.name}
-          subheader={props.item.number}
+          subheader={`
+            ${phone.countryCode ? '+' + phone.countryCode + ' ' : ''}
+            ${phone.areaCode ? '(' + phone.areaCode + ') ' : ''}
+            ${phone.number}
+          `}
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.item.info}
+            {props.item.description}
           </Typography>
         </CardContent>
       </Card>
@@ -35,4 +41,4 @@ const ContactItem = forwardRef(
   },
 )
 
-export default ContactItem
+export default ContactItemCard

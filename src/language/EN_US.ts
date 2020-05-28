@@ -48,6 +48,10 @@ export default class EN_US implements LanguageSet {
 
   DISAGREEMENT_OPTION_TEXT = 'NO'
 
+  ADD_OPTION_TEXT = 'ADD'
+
+  CANCEL_OPTION_TEXT = 'CANCEL'
+
   MENU_HOME = 'Home'
 
   MENU_GAMES = 'Games'
@@ -99,6 +103,22 @@ export default class EN_US implements LanguageSet {
   SEARCH_BUTTON_LABEL = 'Search'
 
   ANSWER_DIALOG_LABEL = 'Model for answer a question note'
+
+  FORM_NAME = 'Name'
+
+  FORM_TYPE = 'Type'
+
+  FORM_PHONE = 'Phone'
+
+  CONTACTS_ADD_CONTACT = 'ADD NEW CONTACT'
+
+  CONTACTS_MOBILE_PHONE = 'Mobile'
+
+  CONTACTS_RESIDENTIAL_PHONE = 'Residential'
+
+  CONTACTS_PUBLIC_SERVICE_PHONE = 'Public Service'
+
+  NO_AVAILABLE_TEXT = 'No Available Text'
 
   JANUARY = 'January'
 

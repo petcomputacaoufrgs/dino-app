@@ -19,6 +19,8 @@ export default interface LanguageSet {
   LOGOUT_DIALOG_DESCRIPTION: string
   AGREEMENT_OPTION_TEXT: string
   DISAGREEMENT_OPTION_TEXT: string
+  ADD_OPTION_TEXT: string
+  CANCEL_OPTION_TEXT: string
   MENU_HOME: string
   MENU_GAMES: string
   MENU_GLOSSARY: string
@@ -45,6 +47,14 @@ export default interface LanguageSet {
   NOTE_DIALOG_SAVE_BUTTON_TEXT: string
   SEARCH_BUTTON_LABEL: string
   ANSWER_DIALOG_LABEL: string
+  FORM_NAME: string
+  FORM_TYPE: string
+  FORM_PHONE: string
+  CONTACTS_ADD_CONTACT: string
+  CONTACTS_MOBILE_PHONE: string
+  CONTACTS_RESIDENTIAL_PHONE: string
+  CONTACTS_PUBLIC_SERVICE_PHONE: string
+  NO_AVAILABLE_TEXT: string
   JANUARY: string
   FEBRUARY: string
   MARCH: string

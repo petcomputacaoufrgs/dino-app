@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../../../provider/app_provider'
 import { useParams } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -6,10 +7,11 @@ import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
 import GlossaryLocalStorageService from '../../../../services/glossary/local_storage/GlossaryLocalStorage'
 
-
 const GlossaryItem = (): JSX.Element => {
 
   const { id } = useParams()
+
+  const language = useLanguage().current
 
   const items = GlossaryLocalStorageService.getItems()
 
@@ -18,17 +20,15 @@ const GlossaryItem = (): JSX.Element => {
   return (
     <div className="glossary-item">
       <ArrowBack />
-      {item !== undefined ?
-        <Card className="card">
-          <Card.Header>
-            <Card.Title>{item.title}</Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Card.Subtitle className="mb-2 text-muted">{item.subtitle}</Card.Subtitle>
-            <Card.Text>{item.fullText || 'Aqui vai um texto'}</Card.Text>
-          </Card.Body>
-        </Card>
-        : <h5>Card Not Found</h5>}
+      <Card className="card">
+        <Card.Header>
+          <Card.Title>{item ? item.title : language.NO_AVAILABLE_TEXT}</Card.Title>
+        </Card.Header>
+        <Card.Body>
+          <Card.Subtitle className="mb-2 text-muted">{item ? item.subtitle : ''}</Card.Subtitle>
+          <Card.Text>{item ? item.fullText : language.NO_AVAILABLE_TEXT}</Card.Text>
+        </Card.Body>
+      </Card>
     </div>
   )
 }

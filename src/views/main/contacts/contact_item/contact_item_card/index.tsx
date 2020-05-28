@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react'
 import { Avatar, Typography, IconButton } from '@material-ui/core'
-import { Card, CardHeader, CardContent } from '@material-ui/core'
+import { Card, CardHeader, CardContent, Slide } from '@material-ui/core'
 import { MoreVert } from '@material-ui/icons'
-import useStyles from '../../contact_item/styles'
+import useStyles from '../../styles'
 import ContactModel from '../../../../../services/contact/api_model/ContactModel'
 
 const ContactItemCard = forwardRef(
   (props: { item: ContactModel }, ref): JSX.Element => {
+
     const classes = useStyles(props)
 
     const phone = props.item.phone

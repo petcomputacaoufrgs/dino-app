@@ -1,13 +1,7 @@
 import React from 'react'
-import useStyles from '../../contact_item/styles'
+import useStyles from '../../styles'
 import ContactItemListProps from './props'
-
-import {
-    Avatar,
-    ListItem,
-    ListItemText,
-    ListItemAvatar,
-} from '@material-ui/core'
+import { Avatar, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core'
 
 
 const ContactItemList = (props: ContactItemListProps): JSX.Element => {

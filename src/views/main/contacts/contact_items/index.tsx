@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import ContactItemsProps from './props'
 import ContactItemCard from '../contact_item/contact_item_card'
 import ContactItemList from '../contact_item/contact_item_list'
-
-import { Avatar, List, ListItem, ListItemText, ListItemAvatar, Modal, Divider, } from '@material-ui/core'
+import { List, Modal, Divider, } from '@material-ui/core'
 import { Backdrop, Slide } from '@material-ui/core'
-import useStyles from './styles'
+import useStyles from '../styles'
 
 const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
@@ -13,13 +12,15 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
   const [selectedItem, setSelectedItem] = useState(0)
   const [open, setOpen] = useState(false)
+
   const handleOpen = (id: number) => {
     setOpen(true)
     setSelectedItem(id)
   }
+
   const handleClose = () => setOpen(false)
 
-  const isOpen = (id: number): boolean => open && selectedItem === id
+  const isContactOpen = (id: number): boolean => open && selectedItem === id
 
   return (
     <List className={classes.list}>
@@ -31,15 +32,16 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
           />
           <Modal
             className={classes.modal}
-            open={isOpen(contact.id)}
+            open={isContactOpen(contact.id)}
             onClose={handleClose}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{ timeout: 500 }}
             disableAutoFocus
+
           >
             <Slide
-              in={isOpen(contact.id)}
+              in={isContactOpen(contact.id)}
               direction="up"
               mountOnEnter
               unmountOnExit

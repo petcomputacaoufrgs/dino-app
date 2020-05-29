@@ -110,7 +110,7 @@ export default class EN_US implements LanguageSet {
 
   FORM_PHONE = 'Phone'
 
-  CONTACTS_ADD_CONTACT = 'ADD NEW CONTACT'
+  CONTACTS_ADD_CONTACT = 'New Contact'
 
   CONTACTS_MOBILE_PHONE = 'Mobile'
 

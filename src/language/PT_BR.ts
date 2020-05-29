@@ -112,7 +112,7 @@ export default class PT_BR implements LanguageSet {
 
   FORM_PHONE = 'Telefone'
 
-  CONTACTS_ADD_CONTACT = 'ADICIONAR NOVO CONTATO'
+  CONTACTS_ADD_CONTACT = 'Novo Contato'
 
   CONTACTS_MOBILE_PHONE = 'Telefone Móvel'
 

@@ -11,10 +11,11 @@ const AddContactDialogContent = (props: {
     setNumber: React.Dispatch<React.SetStateAction<string>>
     type: string,
     setType: React.Dispatch<React.SetStateAction<string>>
+    validName: boolean
+    validNumber: boolean
 }): JSX.Element => {
 
     const language = useLanguage().current
-
 
     const types = [
         { label: language.CONTACTS_MOBILE_PHONE },
@@ -32,12 +33,15 @@ const AddContactDialogContent = (props: {
         props.setType(event.target.value as string)
     }
 
+
     return (
         <>
             <TextField
                 required
+                fullWidth
                 value={props.name}
                 onChange={handleChangeName}
+                error={!props.validName}
                 autoFocus
                 margin="dense"
                 id="name"
@@ -48,6 +52,7 @@ const AddContactDialogContent = (props: {
             <TextField
                 id="select-type"
                 select
+                fullWidth
                 label={language.FORM_TYPE}
                 value={props.type}
                 onChange={handleChangeType}
@@ -61,7 +66,8 @@ const AddContactDialogContent = (props: {
             <br />
             <TextField
                 required
-                autoFocus
+                fullWidth
+                error={!props.validNumber}
                 value={props.number}
                 onChange={handleChangeNumber}
                 margin="dense"
@@ -70,7 +76,6 @@ const AddContactDialogContent = (props: {
                 type="tel"
             />
         </>
-
     )
 }
 

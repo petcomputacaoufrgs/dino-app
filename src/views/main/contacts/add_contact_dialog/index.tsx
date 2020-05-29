@@ -28,21 +28,50 @@ const AddContactDialog = (props: {
     const [number, setNumber] = useState('')
     const [type, setType] = useState(language.CONTACTS_MOBILE_PHONE)
     const [color, setColor] = useState('')
+    const [validName, setValidName] = useState(true)
+    const [validNumber, setValidNumber] = useState(true)
+
+    const validInfo = () => {
+        if (!name) setValidName(false)
+        if (!number) setValidNumber(false)
+
+        return name && number
+    }
+
+    const cleanInfo = () => {
+        setName('')
+        setNumber('')
+        setType(language.CONTACTS_MOBILE_PHONE)
+        setColor('')
+        setValidName(true)
+        setValidNumber(true)
+    }
+
 
     const handleClose = () => {
         props.setDialogOpen(false)
     }
+    const handleCancel = () => {
+        props.setDialogOpen(false)
+        cleanInfo()
+    }
     const handleAdd = () => {
-        console.log(name, type, number, color)
-        handleClose()
+        if (validInfo()) {
+            console.log(name, type, number, color)
+            handleClose()
+            cleanInfo()
+        }
     }
 
     return (
 
         <Dialog
+            fullWidth
+            maxWidth='xs'
+            onClose={handleClose}
             TransitionComponent={TransitionSlide}
             open={props.dialogOpen}
-            aria-labelledby="form-dialog-title">
+            aria-labelledby="form-dialog">
             <AddContactDialogHeader
                 name={name}
                 type={type}
@@ -58,10 +87,12 @@ const AddContactDialog = (props: {
                     setNumber={setNumber}
                     type={type}
                     setType={setType}
+                    validName={validName}
+                    validNumber={validNumber}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">{language.CANCEL_OPTION_TEXT}</Button>
+                <Button onClick={handleCancel} color="primary">{language.CANCEL_OPTION_TEXT}</Button>
                 <Button onClick={handleAdd} color="primary">{language.ADD_OPTION_TEXT}</Button>
             </DialogActions>
         </Dialog>

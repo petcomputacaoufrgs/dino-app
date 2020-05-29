@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../../../provider/app_provider'
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import { Dialog, DialogActions, DialogContent, MenuItem, DialogTitle, Divider } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, Divider } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { Slide } from '@material-ui/core'
+import AddContactDialogHeader from './header/'
+import AddContactDialogContent from './content/'
+
 
 
 const TransitionSlide = React.forwardRef(function Transition(
@@ -15,36 +17,23 @@ const TransitionSlide = React.forwardRef(function Transition(
 })
 
 
-const FormDialog = (props: {
+const AddContactDialog = (props: {
     dialogOpen: boolean,
     setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
 
     const language = useLanguage().current
 
-    const types = [
-        { label: language.CONTACTS_MOBILE_PHONE },
-        { label: language.CONTACTS_RESIDENTIAL_PHONE },
-        { label: language.CONTACTS_PUBLIC_SERVICE_PHONE }
-    ]
-
     const [name, setName] = useState('')
     const [number, setNumber] = useState('')
     const [type, setType] = useState(language.CONTACTS_MOBILE_PHONE)
+    const [color, setColor] = useState('')
 
-    const handleChangeName = (event: React.ChangeEvent<{ value: string }>) => {
-        setName(event.target.value as string)
+    const handleClose = () => {
+        props.setDialogOpen(false)
     }
-    const handleChangeNumber = (event: React.ChangeEvent<{ value: string }>) => {
-        setNumber(event.target.value as string)
-    }
-    const handleChangeType = (event: React.ChangeEvent<{ value: string }>) => {
-        setType(event.target.value as string)
-    }
-
-    const handleClose = () => props.setDialogOpen(false)
     const handleAdd = () => {
-        console.log(name, type, number)
+        console.log(name, type, number, color)
         handleClose()
     }
 
@@ -54,44 +43,21 @@ const FormDialog = (props: {
             TransitionComponent={TransitionSlide}
             open={props.dialogOpen}
             aria-labelledby="form-dialog-title">
-            <DialogTitle className="mb-2 text-muted" >{language.CONTACTS_ADD_CONTACT}</DialogTitle>
+            <AddContactDialogHeader
+                name={name}
+                type={type}
+                color={color}
+                setColor={setColor}
+            />
             <Divider />
             <DialogContent>
-                <TextField
-                    required
-                    value={name}
-                    onChange={handleChangeName}
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label={language.FORM_NAME}
-                    type="name"
-                />
-                <br />
-                <TextField
-                    id="select-type"
-                    select
-                    label={language.FORM_TYPE}
-                    value={type}
-                    onChange={handleChangeType}
-                    helperText="Please select the phone type"
-                >
-                    {types.map((option) => (
-                        <MenuItem key={option.label} value={option.label}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-                <br />
-                <TextField
-                    required
-                    autoFocus
-                    value={number}
-                    onChange={handleChangeNumber}
-                    margin="dense"
-                    id="tel"
-                    label={language.FORM_PHONE}
-                    type="tel"
+                <AddContactDialogContent
+                    name={name}
+                    setName={setName}
+                    number={number}
+                    setNumber={setNumber}
+                    type={type}
+                    setType={setType}
                 />
             </DialogContent>
             <DialogActions>
@@ -103,4 +69,4 @@ const FormDialog = (props: {
 }
 
 
-export default FormDialog
+export default AddContactDialog

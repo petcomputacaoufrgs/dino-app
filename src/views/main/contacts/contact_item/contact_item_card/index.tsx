@@ -16,7 +16,7 @@ const ContactItemCard = forwardRef(
       <Card className={classes.card} ref={ref}>
         <CardHeader
           avatar={
-            <Avatar aria-label="recipe" className={classes['pink']}>
+            <Avatar aria-label="avatar" className={classes[props.item.color]}>
               {props.item.name[0]}
             </Avatar>
           }

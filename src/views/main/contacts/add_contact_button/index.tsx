@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import FormDialog from '../add_contact_dialog'
+import AddContactDialog from '../add_contact_dialog'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import './styles.css'
@@ -18,7 +18,7 @@ const AddContactButton = () => {
             <Fab onClick={handleOpenDialog} className="notes__add">
                 <AddIcon />
             </Fab>
-            <FormDialog
+            <AddContactDialog
                 dialogOpen={dialogOpen}
                 setDialogOpen={setDialogOpen}
             />

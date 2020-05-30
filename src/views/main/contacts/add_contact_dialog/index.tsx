@@ -31,11 +31,10 @@ const AddContactDialog = (props: {
     const [validName, setValidName] = useState(true)
     const [validNumber, setValidNumber] = useState(true)
 
-    const validInfo = () => {
-        if (!name) setValidName(false)
-        if (!number) setValidNumber(false)
-
-        return name && number
+    const validInfo = (): boolean => {
+        setValidName(name !== '')
+        setValidNumber(number !== '')
+        return name !== '' && number !== ''
     }
 
     const cleanInfo = () => {

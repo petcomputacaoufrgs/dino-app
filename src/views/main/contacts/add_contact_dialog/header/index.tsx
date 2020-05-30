@@ -24,9 +24,10 @@ const AddContactDialogHeader = (props:
 
     return (
         <CardHeader
-            avatar={<Avatar aria-label="avatar" className={classes[props.color]}>
-                {props.name ? props.name[0].toUpperCase() : '?'}
-            </Avatar>}
+            avatar={
+                <Avatar aria-label="avatar" className={classes[props.color]}>
+                    {props.name ? props.name[0].toUpperCase() : '?'}
+                </Avatar>}
             action={
                 <IconButton
                     aria-label="color"

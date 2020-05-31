@@ -1,9 +1,8 @@
-import PhoneModel from './PhoneModel'
-
 export default interface ContactModel {
   id: number
   name: string
-  phone: PhoneModel
+  phone: string
+  type: string
   description: string
   color: string
 }

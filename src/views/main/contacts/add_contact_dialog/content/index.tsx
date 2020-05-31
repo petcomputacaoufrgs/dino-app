@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../../../../provider/app_provider'
 import TextField from '@material-ui/core/TextField';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem, CircularProgress } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Superagent from 'superagent'
+import { AddContactDialogContentProps, CountryTypeProps } from './props'
+import useStyles from './styles'
 
 
-const AddContactDialogContent = (props: {
-    name: string,
-    setName: React.Dispatch<React.SetStateAction<string>>
-    number: string,
-    setNumber: React.Dispatch<React.SetStateAction<string>>
-    type: string,
-    setType: React.Dispatch<React.SetStateAction<string>>
-    validName: boolean
-    validNumber: boolean
-}): JSX.Element => {
+function countryToFlag(isoCode: string) {
+    return typeof String.fromCodePoint !== 'undefined'
+        ? isoCode.toUpperCase().replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
+        : isoCode;
+}
 
+
+const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Element => {
+
+    const classes = useStyles()
     const language = useLanguage().current
+
+    let prevNumber = ''
 
     const types = [
         { label: language.CONTACTS_MOBILE_PHONE },
@@ -23,14 +28,71 @@ const AddContactDialogContent = (props: {
         { label: language.CONTACTS_PUBLIC_SERVICE_PHONE }
     ]
 
+    const [openCountry, setOpenCountry] = useState(false);
+    const [countries, setCountries] = useState<CountryTypeProps[]>([])
+
     const handleChangeName = (event: React.ChangeEvent<{ value: string }>) => {
         props.setName(event.target.value as string)
     }
     const handleChangeNumber = (event: React.ChangeEvent<{ value: string }>) => {
-        props.setNumber(event.target.value as string)
+        let value = event.target.value
+
+        if (props.dialCode === "(+55)" && prevNumber.length < value.length) {
+
+            if (props.type === language.CONTACTS_MOBILE_PHONE) {
+                if (value.length === 8)
+                    value += '-'
+                else if (value.length === 2)
+                    value += ' '
+            }
+
+            else if (props.type === language.CONTACTS_RESIDENTIAL_PHONE) {
+                if (value.length === 7)
+                    value += '-'
+                else if (value.length === 2)
+                    value += ' '
+            }
+        }
+        prevNumber = value
+        props.setNumber(value)
     }
     const handleChangeType = (event: React.ChangeEvent<{ value: string }>) => {
         props.setType(event.target.value as string)
+    }
+
+    const loading = openCountry && countries.length === 0;
+
+
+    useEffect(() => {
+
+        if (openCountry) {
+            Superagent
+                .get('https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/f77e7598a8503f1f70528ae1cbf9f66755698a16/CountryCodes.json')
+                .then(res => {
+                    if (res.status === 200) {
+                        setCountries(JSON.parse(res.text))
+                    }
+
+                    // res.body, res.headers, res.status
+                })
+                .catch(err => {
+                    // err.message, err.response
+                    console.error(err)
+                })
+        }
+    }, [openCountry])
+
+
+    const phonePlaceHolder = (): string => {
+        switch (props.type) {
+            case language.CONTACTS_MOBILE_PHONE:
+                return '89 89898-9898'
+            case language.CONTACTS_RESIDENTIAL_PHONE:
+                return '23 4567-2345'
+            case language.CONTACTS_PUBLIC_SERVICE_PHONE:
+                return '111'
+        }
+        return ''
     }
 
 
@@ -53,6 +115,7 @@ const AddContactDialogContent = (props: {
                 id="select-type"
                 select
                 fullWidth
+                margin="dense"
                 label={language.FORM_TYPE}
                 value={props.type}
                 onChange={handleChangeType}
@@ -64,9 +127,46 @@ const AddContactDialogContent = (props: {
                 ))}
             </TextField>
             <br />
+            <Autocomplete
+                id="country-select"
+                classes={{
+                    option: classes.option,
+                }}
+                open={openCountry}
+                onOpen={() => setOpenCountry(true)}
+                onClose={() => setOpenCountry(false)}
+                onInputChange={(e, value) => props.setDialCode(value)}
+                defaultValue={{
+                    "name": "Brazil",
+                    "dial_code": "+55",
+                    "code": "BR"
+                }}
+                getOptionSelected={(option, value) => option.name === value.name}
+                getOptionLabel={(option) => `(${option.dial_code})`}
+                options={countries}
+                loading={loading}
+                renderOption={(option) => (
+                    <React.Fragment>
+                        <span>{countryToFlag(option.code)}</span>
+                        {option.name} ({option.dial_code})
+                    </React.Fragment>
+                )}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        fullWidth
+                        margin="dense"
+                        label="Dial Code"
+                        type="tel"
+                        inputProps={{ ...params.inputProps, }}
+                    />
+                )}
+            />
+
             <TextField
                 required
                 fullWidth
+                placeholder={phonePlaceHolder()}
                 error={!props.validNumber}
                 value={props.number}
                 onChange={handleChangeNumber}
@@ -80,3 +180,4 @@ const AddContactDialogContent = (props: {
 }
 
 export default AddContactDialogContent
+

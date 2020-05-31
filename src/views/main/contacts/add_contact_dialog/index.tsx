@@ -25,6 +25,7 @@ const AddContactDialog = (props: {
     const language = useLanguage().current
 
     const [name, setName] = useState('')
+    const [dialCode, setDialCode] = useState("+55")
     const [number, setNumber] = useState('')
     const [type, setType] = useState(language.CONTACTS_MOBILE_PHONE)
     const [color, setColor] = useState('')
@@ -56,7 +57,7 @@ const AddContactDialog = (props: {
     }
     const handleAdd = () => {
         if (validInfo()) {
-            console.log(name, type, number, color)
+            console.log(name, type, dialCode, number, color)
             handleClose()
             cleanInfo()
         }
@@ -84,6 +85,8 @@ const AddContactDialog = (props: {
                     setName={setName}
                     number={number}
                     setNumber={setNumber}
+                    dialCode={dialCode}
+                    setDialCode={setDialCode}
                     type={type}
                     setType={setType}
                     validName={validName}

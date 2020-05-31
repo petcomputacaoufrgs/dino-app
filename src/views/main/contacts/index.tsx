@@ -27,21 +27,24 @@ const Contacts = (): JSX.Element => {
       {
         id: 100,
         name: 'SAMU',
-        phone: { id: 100, countryCode: '', areaCode: '', number: '192' },
+        phone: '192',
+        type: language.CONTACTS_PUBLIC_SERVICE_PHONE,
         description: '',
         color: 'red'
       },
       {
         id: 1,
         name: 'Babu Santana',
-        phone: { id: 1, countryCode: '55', areaCode: '51', number: '96969696' },
+        phone: '555196969696',
+        type: language.CONTACTS_MOBILE_PHONE,
         description: 'infosupersecretaaaaaa1',
         color: 'red'
       },
       {
         id: 2,
         name: 'Mari Baianinha',
-        phone: { id: 2, countryCode: '', areaCode: '', number: '36969696' },
+        phone: '36969696',
+        type: language.CONTACTS_RESIDENTIAL_PHONE,
         description:
           'infosupersecretaaaaaa2 uhihaiugbdgiavduyavu yavuahvsacdtyacd ycdayivatsc dysadcaysdc',
         color: 'pink'
@@ -49,14 +52,16 @@ const Contacts = (): JSX.Element => {
       {
         id: 3,
         name: 'Manu Gavassi',
-        phone: { id: 3, countryCode: '55', areaCode: '', number: '26969696' },
+        phone: '26969696',
+        type: language.CONTACTS_RESIDENTIAL_PHONE,
         description: 'infosupersecretaaaaaa3',
         color: 'green'
       },
       {
         id: 4,
         name: 'Thelminha',
-        phone: { id: 4, countryCode: '', areaCode: '51', number: '96969696' },
+        phone: '96969696',
+        type: language.CONTACTS_MOBILE_PHONE,
         description: 'infosupersecretaaaaaa4',
         color: 'pink'
       },

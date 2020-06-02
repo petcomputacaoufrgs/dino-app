@@ -4,8 +4,10 @@ import Button from '@material-ui/core/Button';
 import { Dialog, DialogActions, DialogContent, Divider } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { Slide } from '@material-ui/core'
-import AddContactDialogHeader from './header/'
-import AddContactDialogContent from './content/'
+import ContactFormDialogHeader from './header/'
+import ContactFormDialogContent from './content/'
+import ContactFormDialogProps from './props'
+import ContactsConstants from '../../../../constants/ContactsConstants'
 
 
 
@@ -17,32 +19,25 @@ const TransitionSlide = React.forwardRef(function Transition(
 })
 
 
-const AddContactDialog = (props: {
-    dialogOpen: boolean,
-    setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): JSX.Element => {
+const ContactFormDialog = (props: ContactFormDialogProps): JSX.Element => {
 
     const language = useLanguage().current
 
-    const [name, setName] = useState('')
     const [dialCode, setDialCode] = useState("+55")
-    const [number, setNumber] = useState('')
-    const [type, setType] = useState(language.CONTACTS_MOBILE_PHONE)
-    const [color, setColor] = useState('')
     const [validName, setValidName] = useState(true)
     const [validNumber, setValidNumber] = useState(true)
 
     const validInfo = (): boolean => {
-        setValidName(name !== '')
-        setValidNumber(number !== '')
-        return name !== '' && number !== ''
+        setValidName(props.name !== '')
+        setValidNumber(props.number !== '')
+        return props.name !== '' && props.number !== ''
     }
 
     const cleanInfo = () => {
-        setName('')
-        setNumber('')
-        setType(language.CONTACTS_MOBILE_PHONE)
-        setColor('')
+        props.setName('')
+        props.setNumber('')
+        props.setType(ContactsConstants.MOBILE)
+        props.setColor('')
         setValidName(true)
         setValidNumber(true)
     }
@@ -57,11 +52,12 @@ const AddContactDialog = (props: {
     }
     const handleAdd = () => {
         if (validInfo()) {
-            console.log(name, type, dialCode, number, color)
+            console.log(props.name, props.type, dialCode, props.number, props.color)
             handleClose()
             cleanInfo()
         }
     }
+    const handleEdit = () => { }
 
     return (
 
@@ -72,34 +68,44 @@ const AddContactDialog = (props: {
             TransitionComponent={TransitionSlide}
             open={props.dialogOpen}
             aria-labelledby="form-dialog">
-            <AddContactDialogHeader
-                name={name}
-                type={type}
-                color={color}
-                setColor={setColor}
+            <ContactFormDialogHeader
+                name={props.name}
+                type={props.type}
+                color={props.color}
+                setColor={props.setColor}
             />
             <Divider />
             <DialogContent>
-                <AddContactDialogContent
-                    name={name}
-                    setName={setName}
-                    number={number}
-                    setNumber={setNumber}
+                <ContactFormDialogContent
+                    name={props.name}
+                    setName={props.setName}
+                    number={props.number}
+                    setNumber={props.setNumber}
                     dialCode={dialCode}
                     setDialCode={setDialCode}
-                    type={type}
-                    setType={setType}
+                    type={props.type}
+                    setType={props.setType}
                     validName={validName}
                     validNumber={validNumber}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCancel} color="primary">{language.CANCEL_OPTION_TEXT}</Button>
-                <Button onClick={handleAdd} color="primary">{language.ADD_OPTION_TEXT}</Button>
+                <Button
+                    aria-labelledby={language.DIALOG_CANCEL_BUTTON_LABEL}
+                    onClick={handleCancel}
+                    color="primary">
+                    {language.DIALOG_CANCEL_BUTTON_TEXT}
+                </Button>
+                <Button
+                    aria-labelledby={language.DIALOG_SAVE_BUTTON_LABEL}
+                    onClick={props.action === "add" ? handleAdd : handleEdit}
+                    color="primary">
+                    {language.DIALOG_SAVE_BUTTON_TEXT}
+                </Button>
             </DialogActions>
         </Dialog>
     )
 }
 
 
-export default AddContactDialog
+export default ContactFormDialog

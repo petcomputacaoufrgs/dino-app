@@ -4,8 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import { MenuItem, CircularProgress } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Superagent from 'superagent'
-import { AddContactDialogContentProps, CountryTypeProps } from './props'
+import { ContactFormDialogContentProps, CountryTypeProps } from './props'
 import useStyles from './styles'
+import ContactsConstants from '../../../../../constants/ContactsConstants'
 
 
 function countryToFlag(isoCode: string) {
@@ -15,7 +16,7 @@ function countryToFlag(isoCode: string) {
 }
 
 
-const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Element => {
+const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Element => {
 
     const classes = useStyles()
     const language = useLanguage().current
@@ -23,9 +24,9 @@ const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Eleme
     let prevNumber = ''
 
     const types = [
-        { label: language.CONTACTS_MOBILE_PHONE },
-        { label: language.CONTACTS_RESIDENTIAL_PHONE },
-        { label: language.CONTACTS_PUBLIC_SERVICE_PHONE }
+        { label: language.CONTACTS_MOBILE_PHONE, id: ContactsConstants.MOBILE },
+        { label: language.CONTACTS_RESIDENTIAL_PHONE, id: ContactsConstants.RESIDENTIAL },
+        { label: language.CONTACTS_PUBLIC_SERVICE_PHONE, id: ContactsConstants.PUBLIC_SERVICE }
     ]
 
     const [openCountry, setOpenCountry] = useState(false);
@@ -38,15 +39,14 @@ const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Eleme
         let value = event.target.value
 
         if (props.dialCode === "(+55)" && prevNumber.length < value.length) {
-
-            if (props.type === language.CONTACTS_MOBILE_PHONE) {
+            if (props.type === ContactsConstants.MOBILE) {
                 if (value.length === 8)
                     value += '-'
                 else if (value.length === 2)
                     value += ' '
-            }
 
-            else if (props.type === language.CONTACTS_RESIDENTIAL_PHONE) {
+            }
+            else if (props.type === ContactsConstants.RESIDENTIAL) {
                 if (value.length === 7)
                     value += '-'
                 else if (value.length === 2)
@@ -56,8 +56,9 @@ const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Eleme
         prevNumber = value
         props.setNumber(value)
     }
-    const handleChangeType = (event: React.ChangeEvent<{ value: string }>) => {
-        props.setType(event.target.value as string)
+    const handleChangeType = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.setType(Number(event.target.value))
+
     }
 
     const loading = openCountry && countries.length === 0;
@@ -80,16 +81,17 @@ const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Eleme
                     console.error(err)
                 })
         }
+        console.log('a')
     }, [openCountry])
 
 
     const phonePlaceHolder = (): string => {
         switch (props.type) {
-            case language.CONTACTS_MOBILE_PHONE:
+            case ContactsConstants.MOBILE:
                 return '89 89898-9898'
-            case language.CONTACTS_RESIDENTIAL_PHONE:
+            case ContactsConstants.RESIDENTIAL:
                 return '23 4567-2345'
-            case language.CONTACTS_PUBLIC_SERVICE_PHONE:
+            case ContactsConstants.PUBLIC_SERVICE:
                 return '111'
         }
         return ''
@@ -121,7 +123,7 @@ const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Eleme
                 onChange={handleChangeType}
             >
                 {types.map((option) => (
-                    <MenuItem key={option.label} value={option.label}>
+                    <MenuItem key={option.id} value={option.id}>
                         {option.label}
                     </MenuItem>
                 ))}
@@ -179,5 +181,5 @@ const AddContactDialogContent = (props: AddContactDialogContentProps): JSX.Eleme
     )
 }
 
-export default AddContactDialogContent
+export default ContactFormDialogContent
 

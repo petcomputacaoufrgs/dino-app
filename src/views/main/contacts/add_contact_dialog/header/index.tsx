@@ -1,16 +1,25 @@
 import React from 'react';
 import { useLanguage } from '../../../../../provider/app_provider'
 import { Avatar, CardHeader, IconButton } from '@material-ui/core';
-import ColorLensIcon from '@material-ui/icons/ColorLens'
+import { ColorLens as ColorLensIcon } from '@material-ui/icons'
 import useStyles from '../../styles'
+import ContactFormDialogHeaderProps from './props'
+import ContactsConstants from '../../../../../constants/ContactsConstants'
 
-const AddContactDialogHeader = (props:
-    { name: string, type: string, color: string, setColor: React.Dispatch<React.SetStateAction<string>> }
-): JSX.Element => {
+
+const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Element => {
 
     const classes = useStyles(props)
 
     const language = useLanguage().current
+
+    const getType = (): string => {
+        if (props.type === ContactsConstants.MOBILE)
+            return language.CONTACTS_MOBILE_PHONE
+        else if (props.type === ContactsConstants.RESIDENTIAL)
+            return language.CONTACTS_RESIDENTIAL_PHONE
+        return language.CONTACTS_PUBLIC_SERVICE_PHONE
+    }
 
     const handleChangeColor = () => {
 
@@ -32,13 +41,14 @@ const AddContactDialogHeader = (props:
                 <IconButton
                     aria-label="color"
                     size='small'
+                    className={classes.iconButton}
                     onClick={handleChangeColor}
                 >
                     <ColorLensIcon />
                 </IconButton>
             }
             title={props.name || language.CONTACTS_ADD_CONTACT}
-            subheader={props.type}
+            subheader={getType()}
         />
     )
 }

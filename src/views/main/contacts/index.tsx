@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ContactItems from './contact_items'
 import StringUtils from '../../../utils/StringUtils'
 import SearchBar from '../../../components/search_bar'
-import AddContactButton from './add_contact_button'
+import ContactsConstants from '../../../constants/ContactsConstants'
 
 
 const Contacts = (): JSX.Element => {
@@ -28,7 +28,7 @@ const Contacts = (): JSX.Element => {
         id: 100,
         name: 'SAMU',
         phone: '192',
-        type: language.CONTACTS_PUBLIC_SERVICE_PHONE,
+        type: ContactsConstants.PUBLIC_SERVICE,
         description: '',
         color: 'red'
       },
@@ -36,7 +36,7 @@ const Contacts = (): JSX.Element => {
         id: 1,
         name: 'Babu Santana',
         phone: '555196969696',
-        type: language.CONTACTS_MOBILE_PHONE,
+        type: ContactsConstants.MOBILE,
         description: 'infosupersecretaaaaaa1',
         color: 'red'
       },
@@ -44,16 +44,16 @@ const Contacts = (): JSX.Element => {
         id: 2,
         name: 'Mari Baianinha',
         phone: '36969696',
-        type: language.CONTACTS_RESIDENTIAL_PHONE,
+        type: ContactsConstants.RESIDENTIAL,
         description:
-          'infosupersecretaaaaaa2 uhihaiugbdgiavduyavu yavuahvsacdtyacd ycdayivatsc dysadcaysdc',
+          'blubublu blablalba blubublu blablalba blubublu blablalba blubublu',
         color: 'pink'
       },
       {
         id: 3,
         name: 'Manu Gavassi',
         phone: '26969696',
-        type: language.CONTACTS_RESIDENTIAL_PHONE,
+        type: ContactsConstants.RESIDENTIAL,
         description: 'infosupersecretaaaaaa3',
         color: 'green'
       },
@@ -61,7 +61,22 @@ const Contacts = (): JSX.Element => {
         id: 4,
         name: 'Thelminha',
         phone: '96969696',
-        type: language.CONTACTS_MOBILE_PHONE,
+        type: ContactsConstants.MOBILE,
+        description: 'infosupersecretaaaaaa4',
+        color: 'pink'
+      }, {
+        id: 5,
+        name: 'Manu Gavassi',
+        phone: '26969696',
+        type: ContactsConstants.RESIDENTIAL,
+        description: 'infosupersecretaaaaaa3',
+        color: 'green'
+      },
+      {
+        id: 6,
+        name: 'Thelminha',
+        phone: '96969696',
+        type: ContactsConstants.MOBILE,
         description: 'infosupersecretaaaaaa4',
         color: 'pink'
       },
@@ -80,7 +95,6 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} />
-      <AddContactButton />
     </div>
   )
 }

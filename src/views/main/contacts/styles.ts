@@ -3,6 +3,10 @@ import { red, pink, purple, blue, green } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(() =>
   createStyles({
+    iconButton: {
+      marginLeft: 25,
+      padding: 5,
+    },
     modal: {
       display: 'flex',
       alignItems: 'center',
@@ -14,6 +18,7 @@ const useStyles = makeStyles(() =>
       padding: '0px 5px 5px',
     },
     card: {
+      minWidth: '30%',
       maxWidth: '70%',
       outline: 0,
     },

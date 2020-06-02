@@ -2,5 +2,5 @@ import ContactItemModel from '../../../../../services/contact/api_model/ContactM
 
 export default interface ContactItemListProps {
   item: ContactItemModel
-  onClick: (id: number) => void
+  onOpen: (id: number) => void
 }

@@ -1,12 +1,12 @@
-export interface AddContactDialogContentProps {
+export interface ContactFormDialogContentProps {
   name: string
   setName: React.Dispatch<React.SetStateAction<string>>
   number: string
   setNumber: React.Dispatch<React.SetStateAction<string>>
   dialCode: string
   setDialCode: React.Dispatch<React.SetStateAction<string>>
-  type: string
-  setType: React.Dispatch<React.SetStateAction<string>>
+  type: number
+  setType: React.Dispatch<React.SetStateAction<number>>
   validName: boolean
   validNumber: boolean
 }

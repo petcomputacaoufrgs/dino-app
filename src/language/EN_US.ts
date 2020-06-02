@@ -96,9 +96,13 @@ export default class EN_US implements LanguageSet {
 
   NOTE_TAG_LABEL = 'Tags'
 
-  NOTE_DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
+  DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
 
-  NOTE_DIALOG_SAVE_BUTTON_TEXT = 'Save'
+  DIALOG_SAVE_BUTTON_TEXT = 'Save'
+
+  DIALOG_CANCEL_BUTTON_LABEL = 'Click to cancel.'
+
+  DIALOG_CANCEL_BUTTON_TEXT = 'Save'
 
   SEARCH_BUTTON_LABEL = 'Search'
 

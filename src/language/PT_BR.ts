@@ -98,9 +98,13 @@ export default class PT_BR implements LanguageSet {
 
   NOTE_TAG_LABEL = 'Tags'
 
-  NOTE_DIALOG_SAVE_BUTTON_LABEL = 'Clique para salvar.'
+  DIALOG_SAVE_BUTTON_LABEL = 'Clique para salvar.'
 
-  NOTE_DIALOG_SAVE_BUTTON_TEXT = 'Salvar'
+  DIALOG_SAVE_BUTTON_TEXT = 'Salvar'
+
+  DIALOG_CANCEL_BUTTON_LABEL = 'Clique para cancelar.'
+
+  DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
 
   SEARCH_BUTTON_LABEL = 'Pesquisar'
 

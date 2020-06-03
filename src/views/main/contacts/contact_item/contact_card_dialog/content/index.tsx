@@ -10,10 +10,10 @@ const ContactCardContent = (props: ContactCardContentProps) => {
 
     const classes = useStyles()
 
-    const getTypePhoneIcon = () => {
-        if (props.item.type === ContactsConstants.MOBILE)
+    const getTypePhoneIcon = (phone) => {
+        if (phone.type === ContactsConstants.MOBILE)
             return <PhoneIcon />
-        else if (props.item.type === ContactsConstants.RESIDENTIAL)
+        else if (phone.type === ContactsConstants.RESIDENTIAL)
             return <HomeIcon />
 
         return <LocalHospitalIcon />
@@ -45,16 +45,20 @@ const ContactCardContent = (props: ContactCardContentProps) => {
             {getDescription()}
             <List component="nav" aria-label="idk">
                 <Divider className={classes.DividerMargin} />
-                <ListItem button className={classes.ListItem}>
-                    <ListItemIcon>
-                        {getTypePhoneIcon()}
-                    </ListItemIcon>
-                    <ListItemText primary={
-                        <Typography variant="subtitle1" color="textSecondary" component="p">
-                            {props.item.phone}
-                        </Typography>}
-                    />
-                </ListItem>
+                {props.item.phones.map((phone) => (
+                    <ListItem button className={classes.ListItem} key={phone.number}>
+                        <ListItemIcon>
+                            {getTypePhoneIcon(phone)}
+                        </ListItemIcon>
+                        <ListItemText primary={
+                            <Typography variant="subtitle1" color="textSecondary" component="p">
+                                {phone.number}
+                            </Typography>}
+                        />
+                    </ListItem>
+
+                ))}
+
             </List>
         </CardContent>
     )

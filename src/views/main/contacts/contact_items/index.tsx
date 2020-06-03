@@ -6,17 +6,10 @@ import { List, Divider } from '@material-ui/core'
 import useStyles from '../styles'
 import AddContactButton from '../add_contact_button'
 import ContactFormDialog from '../contact_form_dialog'
-import ContactsConstants from '../../../../constants/ContactsConstants'
-
 
 const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
   const classes = useStyles()
-
-  const [name, setName] = useState('Nome do carinha')
-  const [number, setNumber] = useState('')
-  const [type, setType] = useState(ContactsConstants.MOBILE)
-  const [color, setColor] = useState('')
 
   const [selectedItem, setSelectedItem] = useState(0)
   const [open, setOpen] = useState(false)
@@ -49,13 +42,12 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
               setDialogOpen={setOpen}
             />
             <ContactFormDialog
-              itemId={selectedItem}
               action="edit"
               dialogOpen={isContactEditOpen(contact.id)}
               setDialogOpen={setEdit}
+              id={selectedItem}
               name={contact.name}
-              number={contact.phone}
-              type={contact.type}
+              phones={contact.phones}
               color={contact.color}
             />
             <Divider />

@@ -21,8 +21,8 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     const language = useLanguage().current
 
     const [name, setName] = useState(props.name || '')
-    const [number, setNumber] = useState(props.number || '')
-    const [type, setType] = useState(props.type || ContactsConstants.MOBILE)
+    const [number, setNumber] = useState(props.phones ? props.phones[0].number : '')
+    const [type, setType] = useState(props.phones ? props.phones[0].type : ContactsConstants.MOBILE)
     const [color, setColor] = useState(props.color || '')
     const [dialCode, setDialCode] = useState("+55")
     const [validName, setValidName] = useState(true)
@@ -50,7 +50,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     }
     const handleAdd = () => {
         if (validInfo()) {
-            console.log(props.name, props.type, dialCode, props.number, props.color)
+            console.log(name, type, dialCode, number, color)
             handleClose()
             cleanInfo()
         }

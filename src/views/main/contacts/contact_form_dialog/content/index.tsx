@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../../../../provider/app_provider'
 import TextField from '@material-ui/core/TextField';
-import { MenuItem, CircularProgress } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Superagent from 'superagent'
 import { ContactFormDialogContentProps, CountryTypeProps } from './props'
@@ -73,7 +73,6 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                     if (res.status === 200) {
                         setCountries(JSON.parse(res.text))
                     }
-
                     // res.body, res.headers, res.status
                 })
                 .catch(err => {
@@ -81,11 +80,10 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                     console.error(err)
                 })
         }
-        console.log('a')
     }, [openCountry])
 
 
-    const phonePlaceHolder = (): string => {
+    const getNumberPlaceHolder = (): string => {
         switch (props.type) {
             case ContactsConstants.MOBILE:
                 return '89 89898-9898'
@@ -168,7 +166,7 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
             <TextField
                 required
                 fullWidth
-                placeholder={phonePlaceHolder()}
+                placeholder={getNumberPlaceHolder()}
                 error={!props.validNumber}
                 value={props.number}
                 onChange={handleChangeNumber}

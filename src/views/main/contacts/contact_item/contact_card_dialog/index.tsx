@@ -33,7 +33,6 @@ const ContactCard = forwardRef((props: ContactCardProps, ref: React.Ref<unknown>
       <ContactCardContent item={props.item} />
     </Dialog >
   )
-},
-)
+})
 
 export default ContactCard

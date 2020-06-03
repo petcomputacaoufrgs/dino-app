@@ -14,11 +14,25 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     const language = useLanguage().current
 
 
-    const getPhoneType = (): string => {
-        if (props.item.type === ContactsConstants.MOBILE)
+    const getPhoneType = (phones: Array<any>): string => {
+
+        let mobile = false
+        let residential = false
+
+        phones.forEach(phone => {
+            if (phone.type === ContactsConstants.MOBILE)
+                mobile = true
+            if (phone.type === ContactsConstants.RESIDENTIAL)
+                residential = true
+        })
+
+        if (mobile && residential)
+            return language.CONTACTS_MOBILE_PHONE + ", " + language.CONTACTS_RESIDENTIAL_PHONE
+        else if (mobile)
             return language.CONTACTS_MOBILE_PHONE
-        else if (props.item.type === ContactsConstants.RESIDENTIAL)
+        else if (residential)
             return language.CONTACTS_RESIDENTIAL_PHONE
+
         return language.CONTACTS_PUBLIC_SERVICE_PHONE
     }
 
@@ -42,7 +56,7 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
                 </>
             }
             title={props.item.name}
-            subheader={getPhoneType()}
+            subheader={getPhoneType(props.item.phones)}
         />
     )
 }

@@ -27,24 +27,33 @@ const Contacts = (): JSX.Element => {
       {
         id: 100,
         name: 'SAMU',
-        phone: '192',
-        type: ContactsConstants.PUBLIC_SERVICE,
+        phones: [{
+          number: '192',
+          type: ContactsConstants.PUBLIC_SERVICE
+        }],
         description: '',
         color: 'red'
       },
       {
         id: 1,
         name: 'Babu Santana',
-        phone: '555196969696',
-        type: ContactsConstants.MOBILE,
+        phones: [{
+          number: '555196969696',
+          type: ContactsConstants.MOBILE
+        }],
         description: 'infosupersecretaaaaaa1',
         color: 'red'
       },
       {
         id: 2,
         name: 'Mari Baianinha',
-        phone: '36969696',
-        type: ContactsConstants.RESIDENTIAL,
+        phones: [{
+          number: '36969696',
+          type: ContactsConstants.RESIDENTIAL
+        }, {
+          number: '995353453',
+          type: ContactsConstants.MOBILE
+        }],
         description:
           'blubublu blablalba blubublu blablalba blubublu blablalba blubublu',
         color: 'pink'
@@ -52,31 +61,20 @@ const Contacts = (): JSX.Element => {
       {
         id: 3,
         name: 'Manu Gavassi',
-        phone: '26969696',
-        type: ContactsConstants.RESIDENTIAL,
+        phones: [{
+          number: '26969696',
+          type: ContactsConstants.RESIDENTIAL,
+        }],
         description: 'infosupersecretaaaaaa3',
         color: 'green'
       },
       {
         id: 4,
         name: 'Thelminha',
-        phone: '96969696',
-        type: ContactsConstants.MOBILE,
-        description: 'infosupersecretaaaaaa4',
-        color: 'pink'
-      }, {
-        id: 5,
-        name: 'Manu Gavassi',
-        phone: '26969696',
-        type: ContactsConstants.RESIDENTIAL,
-        description: 'infosupersecretaaaaaa3',
-        color: 'green'
-      },
-      {
-        id: 6,
-        name: 'Thelminha',
-        phone: '96969696',
-        type: ContactsConstants.MOBILE,
+        phones: [{
+          number: '96969696',
+          type: ContactsConstants.MOBILE,
+        }],
         description: 'infosupersecretaaaaaa4',
         color: 'pink'
       },

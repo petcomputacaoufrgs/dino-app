@@ -47,7 +47,7 @@ const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Elemen
                     <ColorLensIcon />
                 </IconButton>
             }
-            title={props.name || language.CONTACTS_ADD_CONTACT}
+            title={props.action === 'add' ? props.name || language.CONTACTS_ADD_CONTACT : props.name}
             subheader={getType()}
         />
     )

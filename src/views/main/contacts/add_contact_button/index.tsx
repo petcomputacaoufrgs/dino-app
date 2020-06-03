@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ContactFormDialog from '../add_contact_dialog'
+import ContactFormDialog from '../contact_form_dialog'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import './styles.css'
@@ -14,10 +14,7 @@ const ContactFormDialogButton = () => {
         setDialogOpen(true)
     }
 
-    const [name, setName] = useState('')
-    const [number, setNumber] = useState('')
-    const [type, setType] = useState(ContactsConstants.MOBILE)
-    const [color, setColor] = useState('')
+
 
     return (
         <div>
@@ -28,14 +25,6 @@ const ContactFormDialogButton = () => {
                 action="add"
                 dialogOpen={dialogOpen}
                 setDialogOpen={setDialogOpen}
-                name={name}
-                setName={setName}
-                number={number}
-                setNumber={setNumber}
-                type={type}
-                setType={setType}
-                color={color}
-                setColor={setColor}
             />
         </div>
     )

@@ -7,20 +7,26 @@ const useStyles = makeStyles(() =>
       marginLeft: 25,
       padding: 5,
     },
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      outline: 0,
-    },
     list: {
       width: '100%',
       padding: '0px 5px 5px',
     },
-    card: {
-      minWidth: '30%',
-      maxWidth: '70%',
-      outline: 0,
+    CardContent: {
+      paddingTop: 8,
+      paddingBottom: 8,
+    },
+    DividerMargin: {
+      marginTop: 5,
+      marginBottom: 5,
+    },
+    ListItem: {
+      padding: 5,
+    },
+    TextContact: {
+      display: 'flex',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      textAlign: 'start',
     },
     red: { backgroundColor: red[500] },
     pink: { backgroundColor: pink[500] },

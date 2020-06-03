@@ -21,7 +21,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
     }
 
     return (
-        <ListItem button onClick={() => props.onOpen(props.item.id)}>
+        <ListItem button onClick={() => props.onClick(props.item.id)}>
             <ListItemAvatar>
                 <Avatar aria-label="recipe" className={classes[props.item.color]}>
                     {props.item.name[0]}

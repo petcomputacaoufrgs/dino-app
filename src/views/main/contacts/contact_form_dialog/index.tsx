@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { useLanguage } from '../../../../provider/app_provider'
 import Button from '@material-ui/core/Button';
 import { Dialog, DialogActions, DialogContent, Divider } from '@material-ui/core';
@@ -9,45 +9,43 @@ import ContactFormDialogContent from './content/'
 import ContactFormDialogProps from './props'
 import ContactsConstants from '../../../../constants/ContactsConstants'
 
-
-
-const TransitionSlide = React.forwardRef(function Transition(
+const TransitionSlide = forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement },
     ref: React.Ref<unknown>,
 ) {
     return <Slide direction="up" ref={ref} mountOnEnter unmountOnExit {...props} />;
 })
 
-
-const ContactFormDialog = (props: ContactFormDialogProps): JSX.Element => {
+const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
 
     const language = useLanguage().current
 
+    const [name, setName] = useState(props.name || '')
+    const [number, setNumber] = useState(props.number || '')
+    const [type, setType] = useState(props.type || ContactsConstants.MOBILE)
+    const [color, setColor] = useState(props.color || '')
     const [dialCode, setDialCode] = useState("+55")
     const [validName, setValidName] = useState(true)
     const [validNumber, setValidNumber] = useState(true)
 
     const validInfo = (): boolean => {
-        setValidName(props.name !== '')
-        setValidNumber(props.number !== '')
-        return props.name !== '' && props.number !== ''
+        setValidName(name !== '')
+        setValidNumber(number !== '')
+        return name !== '' && number !== ''
     }
-
     const cleanInfo = () => {
-        props.setName('')
-        props.setNumber('')
-        props.setType(ContactsConstants.MOBILE)
-        props.setColor('')
+        setNumber('')
+        setName('')
+        setType(ContactsConstants.MOBILE)
+        setColor('')
         setValidName(true)
         setValidNumber(true)
     }
-
-
     const handleClose = () => {
         props.setDialogOpen(false)
     }
     const handleCancel = () => {
-        props.setDialogOpen(false)
+        handleClose()
         cleanInfo()
     }
     const handleAdd = () => {
@@ -57,34 +55,39 @@ const ContactFormDialog = (props: ContactFormDialogProps): JSX.Element => {
             cleanInfo()
         }
     }
-    const handleEdit = () => { }
+    const handleEdit = () => {
+        console.log('aqui edita')
+        handleAdd()
+    }
 
     return (
 
         <Dialog
+            ref={ref}
+            open={props.dialogOpen}
             fullWidth
             maxWidth='xs'
             onClose={handleClose}
             TransitionComponent={TransitionSlide}
-            open={props.dialogOpen}
             aria-labelledby="form-dialog">
             <ContactFormDialogHeader
-                name={props.name}
-                type={props.type}
-                color={props.color}
-                setColor={props.setColor}
+                action={props.action}
+                name={name}
+                type={type}
+                color={color}
+                setColor={setColor}
             />
             <Divider />
             <DialogContent>
                 <ContactFormDialogContent
-                    name={props.name}
-                    setName={props.setName}
-                    number={props.number}
-                    setNumber={props.setNumber}
+                    name={name}
+                    setName={setName}
+                    number={number}
+                    setNumber={setNumber}
                     dialCode={dialCode}
                     setDialCode={setDialCode}
-                    type={props.type}
-                    setType={props.setType}
+                    type={type}
+                    setType={setType}
                     validName={validName}
                     validNumber={validNumber}
                 />
@@ -105,7 +108,7 @@ const ContactFormDialog = (props: ContactFormDialogProps): JSX.Element => {
             </DialogActions>
         </Dialog>
     )
-}
+})
 
 
 export default ContactFormDialog

@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import ContactItemsProps from './props'
-import ContactItemCard from '../contact_item/contact_item_card'
-import ContactItemList from '../contact_item/contact_item_list'
-import { List, Modal, Divider, } from '@material-ui/core'
-import { Backdrop, Slide } from '@material-ui/core'
+import ContactCard from '../contact_item/contact_card_dialog'
+import ContactItemList from '../contact_item/contact_list_item'
+import { List, Divider } from '@material-ui/core'
 import useStyles from '../styles'
 import AddContactButton from '../add_contact_button'
-import ContactFormDialog from '../add_contact_dialog'
+import ContactFormDialog from '../contact_form_dialog'
 import ContactsConstants from '../../../../constants/ContactsConstants'
 
 
 const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
-  const classes = useStyles(props)
+  const classes = useStyles()
 
   const [name, setName] = useState('Nome do carinha')
   const [number, setNumber] = useState('')
@@ -30,7 +29,8 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
   const handleClose = () => setOpen(false)
 
-  const isContactOpen = (id: number): boolean => open && selectedItem === id
+  const isContactCardOpen = (id: number): boolean => open && selectedItem === id
+  const isContactEditOpen = (id: number): boolean => edit && selectedItem === id
 
   return (
     <div>
@@ -39,46 +39,31 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
           <div key={contact.id}>
             <ContactItemList
               item={contact}
-              onOpen={() => handleOpen(contact.id)}
+              onClick={() => handleOpen(contact.id)}
             />
-            <Modal
-              className={classes.modal}
-              open={isContactOpen(contact.id)}
+            <ContactCard
+              item={contact}
               onClose={handleClose}
-              closeAfterTransition
-              BackdropComponent={Backdrop}
-              //BackdropProps={{ timeout: 500 }}
-              disableAutoFocus
-
-            >
-              <Slide
-                in={isContactOpen(contact.id)}
-                direction="up"
-                mountOnEnter
-                unmountOnExit
-              >
-                <ContactItemCard item={contact} closeCard={handleClose} setEdit={setEdit} />
-              </Slide>
-            </Modal>
+              setEdit={setEdit}
+              dialogOpen={isContactCardOpen(contact.id)}
+              setDialogOpen={setOpen}
+            />
+            <ContactFormDialog
+              itemId={selectedItem}
+              action="edit"
+              dialogOpen={isContactEditOpen(contact.id)}
+              setDialogOpen={setEdit}
+              name={contact.name}
+              number={contact.phone}
+              type={contact.type}
+              color={contact.color}
+            />
             <Divider />
           </div>
         ))}
       </List>
       <AddContactButton />
-      <ContactFormDialog
-        itemId={selectedItem}
-        action="edit"
-        dialogOpen={edit}
-        setDialogOpen={setEdit}
-        name={name}
-        setName={setName}
-        number={number}
-        setNumber={setNumber}
-        type={type}
-        setType={setType}
-        color={color}
-        setColor={setColor}
-      />
+
     </div>
   )
 }

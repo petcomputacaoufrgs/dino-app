@@ -102,7 +102,7 @@ export default class EN_US implements LanguageSet {
 
   DIALOG_CANCEL_BUTTON_LABEL = 'Click to cancel.'
 
-  DIALOG_CANCEL_BUTTON_TEXT = 'Save'
+  DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
   SEARCH_BUTTON_LABEL = 'Search'
 

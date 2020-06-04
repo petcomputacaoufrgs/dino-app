@@ -32,7 +32,7 @@ const Contacts = (): JSX.Element => {
           type: ContactsConstants.PUBLIC_SERVICE
         }],
         description: '',
-        color: 'red'
+        color: ContactsConstants.RED
       },
       {
         id: 1,
@@ -42,7 +42,7 @@ const Contacts = (): JSX.Element => {
           type: ContactsConstants.MOBILE
         }],
         description: 'infosupersecretaaaaaa1',
-        color: 'red'
+        color: ContactsConstants.PURPLE
       },
       {
         id: 2,
@@ -56,7 +56,17 @@ const Contacts = (): JSX.Element => {
         }],
         description:
           'blubublu blablalba blubublu blablalba blubublu blablalba blubublu',
-        color: 'pink'
+        color: ContactsConstants.BLUE
+      },
+      {
+        id: 5,
+        name: 'Bial',
+        phones: [{
+          number: '43244443',
+          type: ContactsConstants.RESIDENTIAL,
+        }],
+        description: 'infosupersecretaaaaaa5',
+        color: ContactsConstants.GREY
       },
       {
         id: 3,
@@ -66,7 +76,7 @@ const Contacts = (): JSX.Element => {
           type: ContactsConstants.RESIDENTIAL,
         }],
         description: 'infosupersecretaaaaaa3',
-        color: 'green'
+        color: ContactsConstants.PINK
       },
       {
         id: 4,
@@ -76,9 +86,13 @@ const Contacts = (): JSX.Element => {
           type: ContactsConstants.MOBILE,
         }],
         description: 'infosupersecretaaaaaa4',
-        color: 'pink'
+        color: ContactsConstants.GREEN
       },
+
     ]
+    items.sort((a, b) =>
+      StringUtils.normalizer(a.name) < StringUtils.normalizer(b.name) ? -1 : 1
+    )
     const results = items.filter((item) =>
       StringUtils.contains(item.name, searchTerm)
     )

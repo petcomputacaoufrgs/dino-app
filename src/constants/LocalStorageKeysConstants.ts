@@ -5,6 +5,8 @@ class LocalStorageKeys {
   GLOSSARY_VERSION = 'G_version'
   GLOSSARY_ITEMS = 'G_itemList'
   GLOSSARY_SHOULD_SYNC = 'G_shouldSync'
+  CONTACTS_VERSION = 'C_version'
+  CONTACTS = 'C_itemList'
   EMAIL = 'e'
   PICTURE_URL = 'pu'
   NAME = 'n'

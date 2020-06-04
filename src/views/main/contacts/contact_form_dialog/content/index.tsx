@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { useLanguage } from '../../../../../provider/app_provider'
-import TextField from '@material-ui/core/TextField';
-import { MenuItem } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField'
+import { MenuItem } from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import Superagent from 'superagent'
 import { ContactFormDialogContentProps, CountryTypeProps } from './props'
 import useStyles from './styles'
@@ -12,7 +12,7 @@ import ContactsConstants from '../../../../../constants/ContactsConstants'
 function countryToFlag(isoCode: string) {
     return typeof String.fromCodePoint !== 'undefined'
         ? isoCode.toUpperCase().replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
-        : isoCode;
+        : isoCode
 }
 
 
@@ -29,7 +29,7 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
         { label: language.CONTACTS_PUBLIC_SERVICE_PHONE, id: ContactsConstants.PUBLIC_SERVICE }
     ]
 
-    const [openCountry, setOpenCountry] = useState(false);
+    const [openCountry, setOpenCountry] = useState(false)
     const [countries, setCountries] = useState<CountryTypeProps[]>([])
 
     const handleChangeName = (event: React.ChangeEvent<{ value: string }>) => {
@@ -38,7 +38,7 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
     const handleChangeNumber = (event: React.ChangeEvent<{ value: string }>) => {
         let value = event.target.value
 
-        if (props.dialCode === "(+55)" && prevNumber.length < value.length) {
+        if (props.dialCode === "+55" && prevNumber.length < value.length) {
             if (props.type === ContactsConstants.MOBILE) {
                 if (value.length === 8)
                     value += '-'
@@ -61,27 +61,30 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
 
     }
 
-    const loading = openCountry && countries.length === 0;
+    const loading = openCountry && countries.length === 0
 
 
     useEffect(() => {
-
         if (openCountry) {
-            Superagent
-                .get('https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/f77e7598a8503f1f70528ae1cbf9f66755698a16/CountryCodes.json')
-                .then(res => {
-                    if (res.status === 200) {
-                        setCountries(JSON.parse(res.text))
-                    }
-                    // res.body, res.headers, res.status
-                })
-                .catch(err => {
-                    // err.message, err.response
-                    console.error(err)
-                })
+            getItems()
         }
     }, [openCountry])
 
+
+    const getItems = () => {
+        Superagent
+            .get('https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/f77e7598a8503f1f70528ae1cbf9f66755698a16/CountryCodes.json')
+            .then(res => {
+                if (res.status === 200) {
+                    setCountries(JSON.parse(res.text))
+                }
+                // res.body, res.headers, res.status
+            })
+            .catch(err => {
+                // err.message, err.response
+                console.error(err)
+            })
+    }
 
     const getNumberPlaceHolder = (): string => {
         switch (props.type) {
@@ -94,7 +97,6 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
         }
         return ''
     }
-
 
     return (
         <>
@@ -136,13 +138,8 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                 onOpen={() => setOpenCountry(true)}
                 onClose={() => setOpenCountry(false)}
                 onInputChange={(e, value) => props.setDialCode(value)}
-                defaultValue={{
-                    "name": "Brazil",
-                    "dial_code": "+55",
-                    "code": "BR"
-                }}
-                getOptionSelected={(option, value) => option.name === value.name}
-                getOptionLabel={(option) => `(${option.dial_code})`}
+                getOptionSelected={(option, value) => option.dial_code === value.dial_code}
+                getOptionLabel={(option) => `${option.dial_code}`}
                 options={countries}
                 loading={loading}
                 renderOption={(option) => (

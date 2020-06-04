@@ -4,6 +4,6 @@ export default interface ContactModel {
   id: number
   name: string
   phones: Array<PhoneModel>
-  description: string
+  description?: string
   color: string
 }

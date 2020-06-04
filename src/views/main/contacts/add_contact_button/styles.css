@@ -1,15 +1,16 @@
-.notes__add.MuiButtonBase-root.MuiFab-root {
+.contact__add.MuiButtonBase-root.MuiFab-root {
   position: fixed;
   width: 50px;
   height: 50px;
   bottom: 85px;
   right: 20px;
-  background-color: #ff759e;
+  background-color: #7abe2c;
+  color: white;
   outline: none;
 }
 
 @media (orientation: landscape) {
-  .notes__add.MuiButtonBase-root.MuiFab-root {
+  .contact__add.MuiButtonBase-root.MuiFab-root {
     bottom: 15px;
   }
 }

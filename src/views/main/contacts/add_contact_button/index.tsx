@@ -9,13 +9,11 @@ const ContactFormDialogButton = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false)
 
-    const handleOpenDialog = () => {
-        setDialogOpen(true)
-    }
+    const handleOpenDialog = () => setDialogOpen(true)
 
     return (
         <div>
-            <Fab onClick={handleOpenDialog} className="notes__add">
+            <Fab onClick={handleOpenDialog} className="contact__add">
                 <AddIcon />
             </Fab>
             <ContactFormDialog

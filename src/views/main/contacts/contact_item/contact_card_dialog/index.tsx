@@ -1,16 +1,9 @@
 import React, { forwardRef } from 'react'
-import { Dialog, Slide } from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions';
+import { Dialog } from '@material-ui/core'
 import ContactCardProps from './props'
 import ContactCardHeader from './header'
 import ContactCardContent from './content'
-
-const TransitionSlide = forwardRef(function Transition(
-  props: TransitionProps & { children?: React.ReactElement },
-  ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} mountOnEnter unmountOnExit {...props} />;
-})
+import TransitionSlide from '../../../../../components/slide_transition'
 
 const ContactCard = forwardRef((props: ContactCardProps, ref: React.Ref<unknown>): JSX.Element => {
 
@@ -20,7 +13,7 @@ const ContactCard = forwardRef((props: ContactCardProps, ref: React.Ref<unknown>
       style={{ padding: 0 }}
       fullWidth
       maxWidth='xs'
-      onClose={() => props.onClose()}
+      onClose={props.onClose}
       TransitionComponent={TransitionSlide}
       open={props.dialogOpen}
       aria-labelledby="CARD-dialog">

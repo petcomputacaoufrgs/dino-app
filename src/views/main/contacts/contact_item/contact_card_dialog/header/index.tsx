@@ -1,6 +1,5 @@
 import React from 'react'
-import { Avatar, IconButton } from '@material-ui/core'
-import { CardHeader, } from '@material-ui/core'
+import { Avatar, IconButton, CardHeader } from '@material-ui/core'
 import useStyles from '../../../styles'
 import { Edit as EditIcon, } from '@material-ui/icons'
 import ContactCardHeaderProps from './props'

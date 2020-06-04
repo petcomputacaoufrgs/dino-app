@@ -1,20 +1,12 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../../../../provider/app_provider'
 import Button from '@material-ui/core/Button';
 import { Dialog, DialogActions, DialogContent, Divider } from '@material-ui/core';
-import { TransitionProps } from '@material-ui/core/transitions';
-import { Slide } from '@material-ui/core'
 import ContactFormDialogHeader from './header/'
 import ContactFormDialogContent from './content/'
 import ContactFormDialogProps from './props'
 import ContactsConstants from '../../../../constants/ContactsConstants'
-
-const TransitionSlide = forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} mountOnEnter unmountOnExit {...props} />;
-})
+import TransitionSlide from '../../../../components/slide_transition'
 
 const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
 

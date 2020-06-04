@@ -1,21 +1,20 @@
 import React from 'react'
 import ContactsConstants from '../../../../../../constants/ContactsConstants'
 import ContactCardContentProps from './props'
-import { Typography, CardContent } from '@material-ui/core'
 import useStyles from '../../../styles'
-import { List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
+import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
 import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospital as LocalHospitalIcon } from '@material-ui/icons'
+import PhoneModel from '../../../../../../services/contact/api_model/PhoneModel'
 
 const ContactCardContent = (props: ContactCardContentProps) => {
 
     const classes = useStyles()
 
-    const getTypePhoneIcon = (phone) => {
+    const getTypePhoneIcon = (phone: PhoneModel) => {
         if (phone.type === ContactsConstants.MOBILE)
             return <PhoneIcon />
         else if (phone.type === ContactsConstants.RESIDENTIAL)
             return <HomeIcon />
-
         return <LocalHospitalIcon />
     }
 

@@ -4,7 +4,6 @@ import ContactCard from '../contact_item/contact_card_dialog'
 import ContactItemList from '../contact_item/contact_list_item'
 import { List, Divider } from '@material-ui/core'
 import useStyles from '../styles'
-import AddContactButton from '../add_contact_button'
 import ContactFormDialog from '../contact_form_dialog'
 import ContactsService from '../../../../services/contact/ContactsService'
 
@@ -66,8 +65,6 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
           </div>
         ))}
       </List>
-      <AddContactButton />
-
     </div>
   )
 }

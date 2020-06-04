@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ContactItems from './contact_items'
 import StringUtils from '../../../utils/StringUtils'
 import SearchBar from '../../../components/search_bar'
-//import ContactsConstants from '../../../constants/ContactsConstants'
+import AddContactButton from './add_contact_button'
 import ContactsService from '../../../services/contact/ContactsService'
 
 
@@ -36,6 +36,7 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} />
+      <AddContactButton />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import useStyles from '../../styles'
 import ContactItemListProps from './props'
 import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, IconButton, Menu, MenuItem } from '@material-ui/core'

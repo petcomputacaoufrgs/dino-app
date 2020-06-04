@@ -22,15 +22,12 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
     setSelectedItem(id)
   }
 
-  const handleDelete = () => {
-    console.log(_delete, selectedItem)
-    ContactsService.deleteContact(selectedItem)
-  }
-
   useEffect(() => {
-    if (_delete)
-      handleDelete()
-  }, [_delete])
+    if (_delete) {
+      console.log(_delete, selectedItem)
+      ContactsService.deleteContact(selectedItem)
+    }
+  }, [_delete, selectedItem])
 
   const handleClose = () => setOpen(false)
 

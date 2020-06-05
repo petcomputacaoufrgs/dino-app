@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField'
 import { MenuItem } from '@material-ui/core'
 import ContactsConstants from '../../../../../../constants/ContactsConstants'
 import PhoneFieldsProps from './props'
+import NumberFormat from 'react-number-format'
+import strUtils from '../../../../../../utils/StringUtils'
 
 const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
 
@@ -15,12 +17,12 @@ const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
         { label: language.CONTACTS_PUBLIC_SERVICE_PHONE, id: ContactsConstants.PUBLIC_SERVICE }
     ]
 
-    const getNumberPlaceHolder = (): string => {
+    const getNumberFormat = (): string => {
         switch (props.type) {
             case ContactsConstants.MOBILE:
-                return '89 89898-9898'
+                return '(89)89898-9898'
             case ContactsConstants.RESIDENTIAL:
-                return '23 4567-2345'
+                return '(23)4567-2345'
             case ContactsConstants.PUBLIC_SERVICE:
                 return '111'
         }
@@ -44,9 +46,11 @@ const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
                     </MenuItem>
                 ))}
             </TextField>
-            <TextField
+            <NumberFormat
+                customInput={TextField}
+                format={strUtils.replaceDigits(getNumberFormat(), '#')}
                 fullWidth
-                placeholder={getNumberPlaceHolder()}
+                placeholder={getNumberFormat()}
                 required={props.required}
                 error={props.error}
                 value={props.number}

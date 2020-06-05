@@ -10,6 +10,7 @@ import TransitionSlide from '../../../../components/slide_transition'
 import ContactsService from '../../../../services/contact/ContactsService'
 import ContactModel from '../../../../services/contact/api_model/ContactModel'
 import PhoneModel from '../../../../services/contact/api_model/PhoneModel'
+import strUtils from '../../../../utils/StringUtils'
 
 const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
 
@@ -71,7 +72,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
 
     const handleAdd = () => {
         if (validInfo()) {
-            let aux = number.replace(/[^0-9]/g, "")
+            let aux = strUtils.replaceNonDigits(number, '')
             console.log(aux)
 
             const item: ContactModel = {
@@ -80,7 +81,6 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
                 description: description,
                 phones: getPhones(),
                 color: color
-
             }
             ContactsService.addContact(item)
             console.log(item)

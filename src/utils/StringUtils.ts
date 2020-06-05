@@ -40,6 +40,14 @@ class StringUtils {
 
     return stringNumber.padStart(length, '0')
   }
+
+  replaceDigits = (str: string, replacer: string): string => {
+    return str.replace(/[0-9]/g, replacer)
+  }
+
+  replaceNonDigits = (str: string, replacer: string): string => {
+    return str.replace(/[^0-9]/g, replacer)
+  }
 }
 
 export default new StringUtils()

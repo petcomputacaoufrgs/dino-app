@@ -26,6 +26,7 @@ const Contacts = (): JSX.Element => {
       StringUtils.contains(item.name, searchTerm)
     )
     setSearchResults(results)
+    console.log('itens tirados')
   }, [searchTerm])
 
   return (

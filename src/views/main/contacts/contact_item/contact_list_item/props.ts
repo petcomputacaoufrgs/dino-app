@@ -6,4 +6,5 @@ export default interface ContactItemListProps {
   setDelete: React.Dispatch<React.SetStateAction<boolean>>
   setSelected: React.Dispatch<React.SetStateAction<number>>
   onClick: (id: number) => void
+  children?: JSX.Element | Array<JSX.Element>
 }

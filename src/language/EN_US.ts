@@ -110,6 +110,8 @@ export default class EN_US implements LanguageSet {
 
   FORM_NAME = 'Name'
 
+  FORM_DESCRIPTION = 'Description'
+
   FORM_TYPE = 'Type'
 
   FORM_PHONE = 'Phone'

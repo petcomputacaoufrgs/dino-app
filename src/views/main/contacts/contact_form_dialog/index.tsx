@@ -11,27 +11,31 @@ import ContactsService from '../../../../services/contact/ContactsService'
 import ContactModel from '../../../../services/contact/api_model/ContactModel'
 import PhoneModel from '../../../../services/contact/api_model/PhoneModel'
 
-
-
 const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
 
     const language = useLanguage().current
 
-    const onlyNumber = (phone: PhoneModel): string => {
-        return phone.number.substr(phone.number.indexOf(' ') + 1)
-    }
-
-    const onlyDialCode = (phone: PhoneModel): string => {
-        return phone.number.substr(0, phone.number.indexOf(' '))
-    }
-
     const [name, setName] = useState(props.name || '')
-    const [number, setNumber] = useState(props.phones ? onlyNumber(props.phones[0]) : '')
+    const [description, setDescription] = useState(props.description || '')
+    const [number, setNumber] = useState(props.phones ? props.phones[0].number : '')
     const [type, setType] = useState(props.phones ? props.phones[0].type : ContactsConstants.MOBILE)
     const [color, setColor] = useState(props.color || '')
-    const [dialCode, setDialCode] = useState(props.phones ? onlyDialCode(props.phones[0]) : '+55')
     const [validName, setValidName] = useState(true)
     const [validNumber, setValidNumber] = useState(true)
+    const [addPhoneAction, setAddPhoneAction] = useState(false)
+
+    let secNumberValue = ''
+    let secTypeValue = ContactsConstants.MOBILE
+    if (props.action === 'edit') {
+        if (props.phones && props.phones.length > 1) {
+            secNumberValue = props.phones[1].number
+            secTypeValue = props.phones[1].type
+            console.log(secNumberValue)
+        }
+    }
+    const [secNumber, setSecNumber] = useState(secNumberValue)
+    const [secType, setSecType] = useState(secTypeValue)
+
 
     const validInfo = (): boolean => {
         setValidName(name !== '')
@@ -43,6 +47,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         setName('')
         setType(ContactsConstants.MOBILE)
         setColor('')
+        setAddPhoneAction(false)
         setValidName(true)
         setValidNumber(true)
     }
@@ -51,8 +56,19 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     }
     const handleCancel = () => {
         handleClose()
-        cleanInfo()
+        if (props.action === 'add')
+            cleanInfo()
     }
+
+    const getPhones = (): Array<PhoneModel> => {
+        const phones = new Array<PhoneModel>({ number: number, type: type })
+        if (addPhoneAction) {
+            phones.push({ number: secNumber, type: secType })
+            console.log(secNumber)
+        }
+        return phones
+    }
+
     const handleAdd = () => {
         if (validInfo()) {
             let aux = number.replace(/[^0-9]/g, "")
@@ -61,7 +77,8 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
             const item: ContactModel = {
                 id: Number(aux),
                 name: name,
-                phones: [{ number: dialCode + " " + number, type: type }],
+                description: description,
+                phones: getPhones(),
                 color: color
 
             }
@@ -75,7 +92,14 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     const handleEdit = () => {
         if (props.id) {
             console.log(props.id)
-            ContactsService.editContact(props.id, name, dialCode, { number: number, type: type }, color)
+            const item: ContactModel = {
+                id: props.id,
+                name: name,
+                description: description,
+                phones: getPhones(),
+                color: color
+            }
+            ContactsService.editContact(item)
         }
         handleClose()
         cleanInfo()
@@ -97,18 +121,25 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
                 type={type}
                 color={color}
                 setColor={setColor}
+                setAddPhoneAction={setAddPhoneAction}
             />
             <Divider />
             <DialogContent>
                 <ContactFormDialogContent
+                    open={props.dialogOpen}
                     name={name}
                     setName={setName}
+                    description={description}
+                    setDescription={setDescription}
                     number={number}
                     setNumber={setNumber}
-                    dialCode={dialCode}
-                    setDialCode={setDialCode}
                     type={type}
                     setType={setType}
+                    addPhoneAction={addPhoneAction}
+                    secNumber={secNumber}
+                    setSecNumber={setSecNumber}
+                    secType={secType}
+                    setSecType={setSecType}
                     validName={validName}
                     validNumber={validNumber}
                 />

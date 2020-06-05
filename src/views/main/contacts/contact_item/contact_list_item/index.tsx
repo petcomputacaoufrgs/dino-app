@@ -14,6 +14,10 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
         setAnchorEl(event.currentTarget)
     }
 
+    const handleOpen = () => {
+        props.onClick(props.item.id)
+    }
+
     const handleClose = () => {
         setAnchorEl(null)
     }
@@ -31,7 +35,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
 
     return (
         <>
-            <ListItem button onClick={() => props.onClick(props.item.id)}>
+            <ListItem button onClick={handleOpen}>
                 <ListItemAvatar>
                     <Avatar aria-label="recipe" className={classes[props.item.color]}>
                         {props.item.name[0]}
@@ -53,6 +57,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
                 <MenuItem onClick={handleEdit}>Editar</MenuItem>
                 <MenuItem onClick={handleDelete}>Excluir</MenuItem>
             </Menu>
+            {props.children}
         </>
     )
 }

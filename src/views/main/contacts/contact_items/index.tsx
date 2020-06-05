@@ -34,17 +34,16 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   const isContactEditOpen = (id: number): boolean => edit && selectedItem === id
 
   return (
-    <div>
-      <List className={classes.list}>
-        {props.items.map((contact) => (
-          <div key={contact.id}>
-            <ContactItemList
-              item={contact}
-              setEdit={setEdit}
-              setDelete={setDelete}
-              setSelected={setSelectedItem}
-              onClick={() => handleOpen(contact.id)}
-            />
+    <List className={classes.list}>
+      {props.items.map((contact) => (
+        <div key={contact.id}>
+          <ContactItemList
+            item={contact}
+            setEdit={setEdit}
+            setDelete={setDelete}
+            setSelected={setSelectedItem}
+            onClick={() => handleOpen(contact.id)}
+          >
             <ContactCard
               item={contact}
               onClose={handleClose}
@@ -58,14 +57,15 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
               setDialogOpen={setEdit}
               id={selectedItem}
               name={contact.name}
+              description={contact.description}
               phones={contact.phones}
               color={contact.color}
             />
-            <Divider />
-          </div>
-        ))}
-      </List>
-    </div>
+          </ContactItemList>
+          <Divider />
+        </div>
+      ))}
+    </List>
   )
 }
 

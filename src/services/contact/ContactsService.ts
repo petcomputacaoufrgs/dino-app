@@ -20,23 +20,17 @@ class ContactsService {
     )
   }
 
-  editContact = (
-    editedId: number,
-    name: string,
-    dialCode: string,
-    phone: PhoneModel,
-    color?: string
-  ) => {
+  editContact = (edited: ContactModel) => {
     const items = this.getItems()
 
     const index = items.findIndex(function (item: ContactModel) {
-      return item.id === editedId
+      return item.id === edited.id
     })
 
-    items[index].name = name
-    items[index].phones[0].number = dialCode + ' ' + phone.number
-    items[index].phones[0].type = phone.type
-    if (color) items[index].color = color
+    items[index].name = edited.name
+    items[index].description = edited.description
+    items[index].phones = edited.phones
+    if (edited.color) items[index].color = edited.color
 
     this.setItems(items)
   }

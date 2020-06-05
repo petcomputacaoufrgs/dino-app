@@ -50,6 +50,7 @@ export default interface LanguageSet {
   SEARCH_BUTTON_LABEL: string
   ANSWER_DIALOG_LABEL: string
   FORM_NAME: string
+  FORM_DESCRIPTION: string
   FORM_TYPE: string
   FORM_PHONE: string
   CONTACTS_ADD_CONTACT: string

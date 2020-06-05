@@ -112,6 +112,8 @@ export default class PT_BR implements LanguageSet {
 
   FORM_NAME = 'Nome'
 
+  FORM_DESCRIPTION = 'Descrição'
+
   FORM_TYPE = 'Tipo'
 
   FORM_PHONE = 'Telefone'

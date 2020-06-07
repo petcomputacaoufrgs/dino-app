@@ -12,7 +12,7 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
 
     const handleEdit = () => {
         props.onClose()
-        setTimeout(() => { props.setEdit(true) }, 300);
+        setTimeout(() => { props.setEdit(props.item.id) }, 300)
     }
 
     return (

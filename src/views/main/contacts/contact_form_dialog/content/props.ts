@@ -1,5 +1,4 @@
 export interface ContactFormDialogContentProps {
-  open: boolean
   name: string
   setName: React.Dispatch<React.SetStateAction<string>>
   description: string

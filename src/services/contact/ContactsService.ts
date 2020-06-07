@@ -8,6 +8,7 @@ class ContactsService {
   addContact = (item: ContactModel) => {
     const items = this.getItems()
     items.push(item)
+    console.log(item)
     this.setItems(items)
   }
 
@@ -31,6 +32,7 @@ class ContactsService {
     items[index].description = edited.description
     items[index].phones = edited.phones
     if (edited.color) items[index].color = edited.color
+    console.log(edited)
 
     this.setItems(items)
   }

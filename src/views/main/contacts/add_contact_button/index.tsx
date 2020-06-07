@@ -7,18 +7,17 @@ import './styles.css'
 
 const ContactFormDialogButton = () => {
 
-    const [dialogOpen, setDialogOpen] = useState(false)
-
-    const handleOpenDialog = () => setDialogOpen(true)
+    //o motivo de eu não usar booleanos eh pq o <ContactFormDialog /> tbm é usado ao editar items, e o operadores para abrí-lo são os seus ids (que aqui não existem)
+    const [dialogOpen, setDialogOpen] = useState(0)
 
     return (
         <div>
-            <Fab onClick={handleOpenDialog} className="contact__add">
+            <Fab onClick={() => setDialogOpen(1)} className="contact__add">
                 <AddIcon />
             </Fab>
             <ContactFormDialog
                 action="add"
-                dialogOpen={dialogOpen}
+                dialogOpen={Boolean(dialogOpen)}
                 setDialogOpen={setDialogOpen}
             />
         </div>

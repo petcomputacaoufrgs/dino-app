@@ -11,27 +11,21 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
   const classes = useStyles()
 
-  const [selectedItem, setSelectedItem] = useState(0)
-  const [open, setOpen] = useState(false)
-  const [edit, setEdit] = useState(false)
-  const [_delete, setDelete] = useState(false)
+  const [open, setOpen] = useState(0)
+  const [edit, setEdit] = useState(0)
+  const [_delete, setDelete] = useState(0)
 
-  const handleOpen = (id: number) => {
-    setOpen(true)
-    setSelectedItem(id)
+  const handleDelete = () => {
+    if (_delete) {
+      console.log(_delete)
+      ContactsService.deleteContact(_delete)
+    }
   }
 
   useEffect(() => {
-    if (_delete) {
-      console.log(_delete, selectedItem)
-      ContactsService.deleteContact(selectedItem)
-    }
-  }, [_delete, selectedItem])
+    handleDelete()
+  }, [_delete])
 
-  const handleClose = () => setOpen(false)
-
-  const isContactCardOpen = (id: number): boolean => open && selectedItem === id
-  const isContactEditOpen = (id: number): boolean => edit && selectedItem === id
 
   return (
     <List className={classes.list}>
@@ -41,25 +35,20 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
             item={contact}
             setEdit={setEdit}
             setDelete={setDelete}
-            setSelected={setSelectedItem}
-            onClick={() => handleOpen(contact.id)}
+            onClick={() => setOpen(contact.id)}
           >
             <ContactCard
               item={contact}
-              onClose={handleClose}
+              onClose={() => setOpen(0)}
               setEdit={setEdit}
-              dialogOpen={isContactCardOpen(contact.id)}
+              dialogOpen={open === contact.id}
               setDialogOpen={setOpen}
             />
             <ContactFormDialog
-              action="edit"
-              dialogOpen={isContactEditOpen(contact.id)}
+              item={contact}
+              dialogOpen={edit === contact.id}
               setDialogOpen={setEdit}
-              id={selectedItem}
-              name={contact.name}
-              description={contact.description}
-              phones={contact.phones}
-              color={contact.color}
+              action="edit"
             />
           </ContactItemList>
           <Divider />

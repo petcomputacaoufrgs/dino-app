@@ -23,13 +23,11 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
     }
 
     const handleEdit = () => {
-        props.setSelected(props.item.id)
-        props.setEdit(true)
+        props.setEdit(props.item.id)
         handleClose()
     }
     const handleDelete = () => {
-        props.setSelected(props.item.id)
-        props.setDelete(true)
+        props.setDelete(props.item.id)
         handleClose()
     }
 
@@ -38,7 +36,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
             <ListItem button onClick={handleOpen}>
                 <ListItemAvatar>
                     <Avatar aria-label="recipe" className={classes[props.item.color]}>
-                        {props.item.name[0]}
+                        {props.item.name[0].toUpperCase()}
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={props.item.name} secondary={ContactsService.getPhoneTypes(props.item.phones)}

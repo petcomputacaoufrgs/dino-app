@@ -1,12 +1,9 @@
 import PhoneModel from '../../../../services/contact/api_model/PhoneModel'
+import ContactModel from '../../../../services/contact/api_model/ContactModel'
 
 export default interface ContactFormDialogProps {
   dialogOpen: boolean
-  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
-  action: 'add' | 'edit' | 'addPhone'
-  id?: number
-  name?: string
-  description?: string
-  phones?: Array<PhoneModel>
-  color?: string
+  setDialogOpen: React.Dispatch<React.SetStateAction<number>>
+  action: 'add' | 'edit'
+  item?: ContactModel
 }

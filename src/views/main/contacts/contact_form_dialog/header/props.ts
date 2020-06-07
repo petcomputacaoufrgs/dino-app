@@ -1,5 +1,5 @@
 export default interface AddContactDialogHeaderProps {
-  action: 'add' | 'edit' | 'addPhone'
+  action: 'add' | 'edit'
   name: string
   type: number
   color: string

@@ -55,9 +55,7 @@ const ContactCardContent = (props: ContactCardContentProps) => {
                             </Typography>}
                         />
                     </ListItem>
-
                 ))}
-
             </List>
         </CardContent>
     )

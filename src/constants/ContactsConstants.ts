@@ -6,12 +6,14 @@ class ContactsConstants {
   RESIDENTIAL: number = 2
   MOBILE: number = 8
 
-  RED: string = 'red'
-  PURPLE: string = 'purple'
-  BLUE: string = 'blue'
-  GREEN: string = 'green'
-  PINK: string = 'pink'
-  GREY: string = ''
+  COLORS: Object = {
+    RED: 'red',
+    PURPLE: 'purple',
+    BLUE: 'blue',
+    GREEN: 'green',
+    PINK: 'pink',
+    GREY: '',
+  }
 }
 
 export default new ContactsConstants()

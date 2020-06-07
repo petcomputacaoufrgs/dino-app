@@ -16,21 +16,21 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
 
     const language = useLanguage().current
 
-    const [name, setName] = useState(props.name || '')
-    const [description, setDescription] = useState(props.description || '')
-    const [number, setNumber] = useState(props.phones ? props.phones[0].number : '')
-    const [type, setType] = useState(props.phones ? props.phones[0].type : ContactsConstants.MOBILE)
-    const [color, setColor] = useState(props.color || '')
+    const [name, setName] = useState(props.item?.name || '')
+    const [description, setDescription] = useState(props.item?.description || '')
+    const [number, setNumber] = useState(props.item?.phones ? props.item.phones[0].number : '')
+    const [type, setType] = useState(props.item?.phones ? props.item.phones[0].type : ContactsConstants.MOBILE)
+    const [color, setColor] = useState(props.item?.color || '')
     const [validName, setValidName] = useState(true)
     const [validNumber, setValidNumber] = useState(true)
     const [addPhoneAction, setAddPhoneAction] = useState(false)
 
     let secNumberValue = ''
     let secTypeValue = ContactsConstants.MOBILE
-    if (props.action === 'edit') {
-        if (props.phones && props.phones.length > 1) {
-            secNumberValue = props.phones[1].number
-            secTypeValue = props.phones[1].type
+    if (props.action === 'edit' && props.item) {
+        if (props.item.phones && props.item.phones.length > 1) {
+            secNumberValue = props.item.phones[1].number
+            secTypeValue = props.item.phones[1].type
             console.log(secNumberValue)
         }
     }
@@ -53,7 +53,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         setValidNumber(true)
     }
     const handleClose = () => {
-        props.setDialogOpen(false)
+        props.setDialogOpen(0)
     }
     const handleCancel = () => {
         handleClose()
@@ -70,18 +70,20 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         return phones
     }
 
+    const getItem = (id: number): ContactModel => {
+        const item: ContactModel = {
+            id: id,
+            name: name,
+            description: description,
+            phones: getPhones(),
+            color: color
+        }
+        return item
+    }
+
     const handleAdd = () => {
         if (validInfo()) {
-            let aux = strUtils.replaceNonDigits(number, '')
-            console.log(aux)
-
-            const item: ContactModel = {
-                id: Number(aux),
-                name: name,
-                description: description,
-                phones: getPhones(),
-                color: color
-            }
+            const item = getItem(Number(strUtils.replaceNonDigits(number, '')))
             ContactsService.addContact(item)
             console.log(item)
             handleClose()
@@ -90,15 +92,8 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     }
 
     const handleEdit = () => {
-        if (props.id) {
-            console.log(props.id)
-            const item: ContactModel = {
-                id: props.id,
-                name: name,
-                description: description,
-                phones: getPhones(),
-                color: color
-            }
+        if (props.item?.id) {
+            const item = getItem(props.item.id)
             ContactsService.editContact(item)
         }
         handleClose()
@@ -109,7 +104,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
 
         <Dialog
             ref={ref}
-            open={props.dialogOpen}
+            open={Boolean(props.dialogOpen)}
             fullWidth
             maxWidth='xs'
             onClose={handleClose}
@@ -126,7 +121,6 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
             <Divider />
             <DialogContent>
                 <ContactFormDialogContent
-                    open={props.dialogOpen}
                     name={name}
                     setName={setName}
                     description={description}

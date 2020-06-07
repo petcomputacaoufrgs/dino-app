@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useLanguage } from '../../../../../provider/app_provider'
 import TextField from '@material-ui/core/TextField'
 import { ContactFormDialogContentProps } from './props'

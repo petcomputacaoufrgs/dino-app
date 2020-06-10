@@ -19,14 +19,13 @@ const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
 
     const getNumberFormat = (): string => {
         switch (props.type) {
-            case ContactsConstants.MOBILE:
-                return '(89)89898-9898'
             case ContactsConstants.RESIDENTIAL:
                 return '(23)4567-2345'
             case ContactsConstants.PUBLIC_SERVICE:
                 return '111'
+            default:
+                return '(89)89898-9898'
         }
-        return ''
     }
 
     return (

@@ -28,10 +28,9 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     let secNumberValue = ''
     let secTypeValue = ContactsConstants.MOBILE
     if (props.action === 'edit' && props.item) {
-        if (props.item.phones && props.item.phones.length > 1) {
+        if (props.item.phones.length > 1) {
             secNumberValue = props.item.phones[1].number
             secTypeValue = props.item.phones[1].type
-            console.log(secNumberValue)
         }
     }
     const [secNumber, setSecNumber] = useState(secNumberValue)
@@ -43,7 +42,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         setValidNumber(number !== '')
         return name !== '' && number !== ''
     }
-    const cleanInfo = () => {
+    const cleanInfo = () => { //@TO-DO resolver essa bodega
         setNumber('')
         setName('')
         setType(ContactsConstants.MOBILE)
@@ -65,7 +64,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         const phones = new Array<PhoneModel>({ number: number, type: type })
         if (addPhoneAction) {
             phones.push({ number: secNumber, type: secType })
-            console.log(secNumber)
+            console.log(secNumber) //!!!!!!!!!
         }
         return phones
     }

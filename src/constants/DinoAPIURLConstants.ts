@@ -21,4 +21,4 @@ class DinoAPIURLConstants {
 
 }
 
-export default new DinoAPIURLConstants()
+export default new Constants()

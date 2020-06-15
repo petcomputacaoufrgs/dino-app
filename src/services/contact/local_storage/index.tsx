@@ -29,6 +29,20 @@ class ContactsLocalStorage extends BaseLocalStorage {
     setItems = (items: ContactModel[]) => {
         this.set(LS_Constants.CONTACTS, JSON.stringify(items))
     }
+
+    setShouldSyncItems = (items: Array<number>) => {
+        this.set(LS_Constants.SHOULD_SYNC_CONTACTS, items.toString())
+    }
+
+    getShouldSyncItems = (): number[] => {
+        const items = this.get(LS_Constants.SHOULD_SYNC_CONTACTS)?.split(',').map(x => +x)
+        console.log(items)
+        return items || []
+    }
+
+    addShouldSyncItem = (id: number) => {
+        this.getShouldSyncItems().push(id)
+    }
 }
 
 export default new ContactsLocalStorage()

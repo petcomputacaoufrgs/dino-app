@@ -24,16 +24,22 @@ class ContactsService {
   editContact = (edited: ContactModel) => {
     const items = this.getItems()
 
-    const index = items.findIndex(function (item: ContactModel) {
+    const index = items.findIndex((item: ContactModel) => {
       return item.id === edited.id
     })
 
-    items[index].name = edited.name
-    items[index].description = edited.description
-    items[index].phones = edited.phones
-    if (edited.color) items[index].color = edited.color
-    console.log(edited)
+    if (items[index].name !== edited.name) items[index].name = edited.name
+    if (items[index].description !== edited.description)
+      items[index].description = edited.description
+    items[index].phones.forEach((phone, index) => {
+      if (phone !== edited.phones[index])
+        if (index === 0) ContactsLocalStorage.addShouldSyncItem(items[index].id)
+      phone = edited.phones[index]
+    })
+    if (edited.color && items[index].color !== edited.color)
+      items[index].color = edited.color
 
+    console.log(edited)
     this.setItems(items)
   }
 
@@ -52,7 +58,7 @@ class ContactsService {
   getPhoneTypes = (phones: Array<PhoneModel>): string => {
     if (phones.length === 1) return this.getPhoneType(phones[0])
 
-    let strings = new Array<string>()
+    const strings = new Array<string>()
 
     phones.forEach((phone) => {
       strings.push(this.getPhoneType(phone))

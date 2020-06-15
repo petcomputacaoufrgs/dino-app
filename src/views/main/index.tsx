@@ -132,12 +132,9 @@ const Main = (): JSX.Element => {
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <></>} />
                 <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} />
                 <PrivateRoute exact path={PathConstants.CONTACTS} component={Contacts} />
-=========
                 <PrivateRoute exact path={PathConstants.GAMES} component={() => <></>} />
->>>>>>>>> Temporary merge branch 2
                 <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} />
                 <PrivateRoute exact path={PathConstants.NOTES} component={Notes} /> 
-                <PrivateRoute exact path={PathConstants.GLOSSARY} component={GlossarySearchBar} />
                 <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
             </Switch>
         )

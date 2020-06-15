@@ -11,7 +11,7 @@ class StringUtils {
      * @returns True para s1 normalizada igual a s2 normalizada
      */
     areEqual = (s1: string, s2: string): boolean => (
-        this.normalizer(s1) === this.normalizer(s2)
+        this.normalize(s1) === this.normalize(s2)
     )
 
     /**

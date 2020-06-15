@@ -4,7 +4,7 @@ import ContactItemModel from '../../model/ContactItemModel'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ContactItems from './contact_items';
 import StringUtils from '../../utils/StringUtils'
-import SearchBar from '../search_bar'
+import BootstrapSearchBar from '../bootstrap_search_bar'
 
 const Contacts = (): JSX.Element => {
 
@@ -45,15 +45,15 @@ const Contacts = (): JSX.Element => {
             'color': 'green'
         }]
         const results = items.filter(item =>
-            StringUtils.normalize(item.name.toLowerCase())
-                .includes(StringUtils.normalize(searchTerm.toLowerCase()))
+            StringUtils.normalize(item.name)
+                .includes(StringUtils.normalize(searchTerm))
         )
         setSearchResults(results)
     }, [searchTerm])
 
     return (
         <div>
-            <SearchBar
+            <BootstrapSearchBar
                 value={searchTerm}
                 onChange={handleChange}
                 placeholder={language.SEARCH_HOLDER}

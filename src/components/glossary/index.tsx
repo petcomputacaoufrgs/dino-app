@@ -5,7 +5,7 @@ import GlossaryItems from './glossary_items';
 import GlossaryLocalStorageService from '../../services/local_storage/GlossaryLocalStorageService'
 import GlossaryItemModel from '../../model/GlossaryItemModel';
 import StringUtils from '../../utils/StringUtils'
-import SearchBar from '../search_bar'
+import BootstrapSearchBar from '../bootstrap_search_bar'
 
 const Glossary = (): JSX.Element => {
 
@@ -27,7 +27,7 @@ const Glossary = (): JSX.Element => {
 
     return (
         <div className="glossary">
-            <SearchBar
+            <BootstrapSearchBar
                 value={searchTerm}
                 onChange={handleChange}
                 placeholder={language.SEARCH_HOLDER} 

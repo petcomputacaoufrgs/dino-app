@@ -1,7 +1,7 @@
 
 class StringUtils {
 
-    normalizer = (str: string): string => {
+    normalize = (str: string): string => {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
     }
 
@@ -11,7 +11,7 @@ class StringUtils {
      * @returns True para s2 contida em s1
      */
     contains = (s1: string, s2: string): boolean => {
-        return this.normalizer(s1).includes(this.normalizer(s2))
+        return this.normalize(s1).includes(this.normalize(s2))
     }
 
     /**

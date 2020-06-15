@@ -1,19 +1,18 @@
-import GoogleAuthRequestModel from '../model/GoogleAuthRequestModel'
+import GoogleAuthRequestModel from '../model/dino_api/auth/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
-import DinoAPIURLConstants from '../constants/DinoAPIURLConstants'
+import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
 import AuthLocalStorageService from './local_storage/AuthLocalStorageService'
-import AuthResponseModel from '../model/AuthResponseModel'
+import AuthResponseModel from '../model/dino_api/settings/AuthResponseModel'
 import HttpService from './DinoHttpService'
 import HistoryService from './HistoryService'
 import PathConstants from '../constants/PathConstants'
-import UpdateService from './UpdateService'
 import GoogleAuthConstants from '../constants/GoogleAuthConstants'
-import LoginErrorTypes from '../constants/LoginErrorTypes'
-import GoogleAuthResponseModel from '../model/GoogleAuthResponseModel'
-import GlossaryLocalStorageService from './local_storage/GlossaryLocalStorageService'
+import LoginErrorConstants from '../constants/LoginErrorConstants'
+import GoogleAuthResponseModel from '../model/dino_api/auth/GoogleAuthResponseModel'
 import UserAuthDataStorageService from './local_storage/UserAuthDataStorageService'
 import SettingsLocalStorageService from './local_storage/SettingsLocalStorageService'
+import NotesLocalStorageService from './local_storage/NotesLocalStorageService'
 
 class GoogleAuthService {
 
@@ -27,28 +26,30 @@ class GoogleAuthService {
             const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
                 
             try {
-                const response = await HttpService.post(DinoAPIURLConstants.PATH_AUTH_GOOGLE).send(authRequestModel)
+                const response = await HttpService.post(DinoAPIURLConstants.AUTH_GOOGLE).send(authRequestModel)
 
-                this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
+                if (response.status === HttpStatus.OK) {
+                    this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
     
-                UpdateService.checkUpdates()
-                HistoryService.push(PathConstants.HOME)
+                    AuthLocalStorageService.cleanLoginGarbage()
     
-                return LoginErrorTypes.SUCCESS
-            } catch (error){
-                if (error.status === HttpStatus.PRECONDITION_REQUIRED) {
-                    return LoginErrorTypes.REFRESH_TOKEN_LOST_ERROR
-                } 
+                    return LoginErrorConstants.SUCCESS
+                }
 
-                return LoginErrorTypes.UNKNOW_API_ERROR
+                if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+                    return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
+                }
+
+            } catch (error) {
+                return LoginErrorConstants.UNKNOW_API_ERROR
             }
         }    
         
-        return LoginErrorTypes.EXTERNAL_SERVICE_ERROR
+        return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
     }
 
     google_logout = () => {
-        this.removeAuthData()
+        this.removeUserData()
 
         HistoryService.push(PathConstants.LOGIN)
     }
@@ -73,16 +74,11 @@ class GoogleAuthService {
         UserAuthDataStorageService.setPictureUrl(responseBody.pictureUrl)
     }
     
-    public removeAuthData() {
-        AuthLocalStorageService.removeAuthToken()
-        AuthLocalStorageService.removeGoogleAccessToken()
-        UserAuthDataStorageService.removeEmail()
-        UserAuthDataStorageService.removeName()
-        UserAuthDataStorageService.removePictureUrl()
-        SettingsLocalStorageService.removeAppSettingsVersion()
-        SettingsLocalStorageService.removeAppSettings()
-        GlossaryLocalStorageService.removeVersion()
-        GlossaryLocalStorageService.removeItems()
+    public removeUserData() {
+        AuthLocalStorageService.removeUserData()
+        UserAuthDataStorageService.removeUserData()
+        SettingsLocalStorageService.removeUserData()
+        NotesLocalStorageService.removeUserData()
     }
 }
 

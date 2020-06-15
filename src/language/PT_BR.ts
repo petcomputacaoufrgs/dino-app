@@ -34,7 +34,7 @@ export default class PT_BR implements LanguageSet {
 
     LOGIN_CANCELED = 'Login cancelado.'
 
-    LOGIN_REFRESH_ERROR = 'Ocorreu um erro. Precisamos que se autentique novamente, por favor.'
+    LOGIN_REFRESH_NECESSARY = 'Ocorreu um erro. Precisamos que se autentique novamente, por favor.'
 
     AVATAR_ALT = 'Imagem de perfil do usuário com as bordas arredondadas.'
     
@@ -129,4 +129,13 @@ export default class PT_BR implements LanguageSet {
     DELETE_NOTE_ALERT_TITLE = 'Tem certeza que deseja excluir esta anotação?'
 
     DELETE_NOTE_ALERT_TEXT = 'Ao aceitar esta anotação será removida permanentemente.'
+
+    LOADING = 'Carregando...'
+
+    NO_OPTIONS = 'Sem opções'
+
+    EMPTY_FIELD_ERROR = 'Campo não pode ser vazio.'
+
+    QUESTION_ALREADY_EXISTS_ERROR = 'Questão já adicionada.'
+
 }

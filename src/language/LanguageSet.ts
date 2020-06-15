@@ -13,7 +13,7 @@ export default interface LanguageSet {
     LOGIN_FAIL_BY_GOOGLE: string
     LOGIN_FAIL_BY_API: string
     LOGIN_CANCELED: string
-    LOGIN_REFRESH_ERROR: string
+    LOGIN_REFRESH_NECESSARY: string
     AVATAR_ALT: string
     LOGOUT_DIALOG_QUESTION: string
     LOGOUT_DIALOG_DESCRIPTION: string
@@ -61,4 +61,8 @@ export default interface LanguageSet {
     STRING_DATE_FORMAT: string
     DELETE_NOTE_ALERT_TITLE: string
     DELETE_NOTE_ALERT_TEXT: string
+    LOADING: string
+    NO_OPTIONS: string
+    EMPTY_FIELD_ERROR: string
+    QUESTION_ALREADY_EXISTS_ERROR: string
 }

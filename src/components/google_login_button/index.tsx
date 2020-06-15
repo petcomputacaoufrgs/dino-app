@@ -7,14 +7,19 @@ import GoogleSecret from '../../config/client_secret.json'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import GoogleLogo from '../../images/google_logo.png'
 import LoginButtonProps from './props'
-import LoginErrorTypes from '../../constants/LoginErrorTypes'
+import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import AuthLocalStorageService from '../../services/local_storage/AuthLocalStorageService'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
+import { UpdaterContext } from '../updater/index'
+import HistoryService from '../../services/HistoryService'
+import PathConstants from '../../constants/PathConstants'
 import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
 
     const languageContext = useContext(LanguageContext)
+
+    const updaterContext = useContext(UpdaterContext)
 
     const language = languageContext.currentLanguage
 
@@ -25,23 +30,27 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
 
         const authResponse = await AuthService.google_login(response as GoogleLoginResponseOffline)
         
-        if (authResponse === LoginErrorTypes.SUCCESS) {
+        if (authResponse === LoginErrorConstants.SUCCESS) {
             const refreshTokenRequired = AuthLocalStorageService.isRefreshRequired()
 
             if (refreshTokenRequired) {
                 AuthLocalStorageService.setRefreshRequiredToFalse()
+            } else {
+                updaterContext.update()
             }
 
-            languageContext.updateLanguage()
-            
-            return
-        }
+            setLoading(false)
+            HistoryService.push(PathConstants.HOME)
 
-        if (authResponse === LoginErrorTypes.UNKNOW_API_ERROR) {
+            return 
+        } 
+        
+        if (authResponse === LoginErrorConstants.UNKNOW_API_ERROR) {
             props.onDinoAPIFail && props.onDinoAPIFail()
-        } else if (authResponse === LoginErrorTypes.EXTERNAL_SERVICE_ERROR) {
+        } else if (authResponse === LoginErrorConstants.EXTERNAL_SERVICE_ERROR) {
             props.onGoogleFail && props.onGoogleFail()
-        } else if (authResponse === LoginErrorTypes.REFRESH_TOKEN_LOST_ERROR) {
+        } else if (authResponse === LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY) {
+            AuthLocalStorageService.setRefreshRequiredToTrue()
             props.onRefreshTokenLostError && props.onRefreshTokenLostError()
         }
             

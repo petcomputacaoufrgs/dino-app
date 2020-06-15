@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { DateTime } from 'luxon'
 import { LanguageContext } from '../../../components/language_provider'
 import StringUtils from '../../../utils/StringUtils'
 import Board, { moveCard } from '@lourenci/react-kanban'
@@ -10,12 +11,13 @@ import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import NoteSVG from '../../../images/note.svg'
 import NotesService from '../../../services/NotesService'
-import SearchBar from '../../../components/search_bar'
 import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
 import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
-import './styles.css'
 import AgreementDialogProps from '../../../components/generic_agreement_dialog/props'
 import AgreementDialog from '../../../components/generic_agreement_dialog'
+import DinoAPIGeneralConstants from '../../../constants/dino_api/DinoAPIGeneralConstants'
+import './styles.css'
+import TagSearchBar from '../../../components/tag_search_bar/index';
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
@@ -44,7 +46,7 @@ const Notes = () => {
     const [idNoteToDelete, setIdNoteToDelete] = useState(undefined as number | undefined)
 
     //#region Editing Answer
-    const handleEditAnswer = (note: NoteViewModel) => {
+    const handleOpenAnswerDialog = (note: NoteViewModel) => {
       setNote(note)
       setAnswer(note.answer)
       setAnswerDialogOpen(true)
@@ -93,11 +95,11 @@ const Notes = () => {
     const handleOpenEditQuestionDialog = (note: NoteViewModel) => {
       setNote(note)
       setQuestion(note.question)
-      setTagList(note.tagList)
+      setTagList(note.tagNames)
       setQuestionDialogOpen(true)
     }
 
-    const handleSaveQuestion = (newQuestion: string, newTagList: string[]) => {
+    const handleSaveQuestion = (newQuestion: string, newTagNames: string[]) => {
       if (!note) {
         return
       }
@@ -107,11 +109,13 @@ const Notes = () => {
       const editedNote = newData.columns[0].cards.find(n => n.id === note.id)
 
       if (editedNote) {
+        const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
+
         editedNote.question = newQuestion
-        editedNote.tagList = newTagList
+        editedNote.tagNames = newTagNames
+        editedNote.lastUpdate = date
 
         NotesService.updateNoteQuestion(editedNote)
-        NotesService.saveTags(newTagList)
       }
 
       setNote(undefined)
@@ -138,13 +142,13 @@ const Notes = () => {
 
     //#region Deleting Note
 
-    const handleDeleteNote = (id: number) => {
+    const handleOpenDeleteNoteDialog = (id: number) => {
       setIdNoteToDelete(id)
 
       showDeleteDialog()
     }
 
-    const deleteNote = () => {
+    const handleDeleteNote = () => {
       const newData = {...board}
 
       const notes = newData.columns[0].cards
@@ -163,7 +167,7 @@ const Notes = () => {
     }
 
     const agreementDialogProps: AgreementDialogProps = {
-      onAgree: deleteNote,
+      onAgree: handleDeleteNote,
       question: language.DELETE_NOTE_ALERT_TITLE,
       description: language.DELETE_NOTE_ALERT_TEXT,
       agreeOptionText: language.AGREEMENT_OPTION_TEXT,
@@ -180,32 +184,28 @@ const Notes = () => {
       setNewQuestionDialogOpen(true)
     }
 
-    const handleSaveNewQuestion = (newQuestion: string, newTagList: string[]) => {
+    const handleSaveNewQuestion = (newQuestion: string, newTagNames: string[]) => {
       const newBoard = {...board}
 
       const newNotes = newBoard.columns[0].cards
 
       const newId = newNotes.length
 
-      const date = new Date()
+      const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
 
       const newNote: NoteViewModel = {
-        'answer': '',
-        'answered': false,
-        'question': newQuestion,
-        'id': newId,
-        'tagList': newTagList,
-        'showByTag': hasSomeTag(newTagList, tagSearch),
-        'showByQuestion': hasText(newQuestion, textSearch),
-        'creationDay':  date.getDay(),
-        'creationMonth': date.getMonth(),
-        'creationYear': date.getFullYear(),
-        'savedOnServer': false
+        answer: '',
+        answered: false,
+        question: newQuestion,
+        id: newId,
+        tagNames: newTagNames,
+        showByTag: hasSomeTag(newTagNames, tagSearch),
+        showByQuestion: hasText(newQuestion, textSearch),
+        lastUpdate: date,
+        savedOnServer: false
       }
 
       NotesService.saveNote(newNote)
-
-      NotesService.saveTags(newTagList)
 
       newNotes.push(newNote)
       
@@ -240,7 +240,7 @@ const Notes = () => {
       setTagSearch(newTagSearch)
 
       notes.forEach(n => {
-        n.showByTag = hasSomeTag(n.tagList, newTagSearch)
+        n.showByTag = hasSomeTag(n.tagNames, newTagSearch)
         n.showByQuestion = false
       })
 
@@ -256,7 +256,7 @@ const Notes = () => {
       setTextSearch(newTextSearch)
 
       notes.forEach(n => {
-        n.showByTag = hasSomeTag(n.tagList, tagSearch, newTextSearch)
+        n.showByTag = hasSomeTag(n.tagNames, tagSearch, newTextSearch)
         n.showByQuestion = hasText(n.question, newTextSearch)
       })
 
@@ -271,9 +271,9 @@ const Notes = () => {
       return tagSearch.length === 0
     }
 
-    const hasSomeTag = (nodeTags: string[], searchTags: string[], tSearch?: string): boolean => {
+    const hasSomeTag = (nodeTagNames: string[], searchTags: string[], tSearch?: string): boolean => {
       if (searchTags.length > 0) {
-        return nodeTags.some(tag => searchTags.includes(tag))
+        return nodeTagNames.some(name => searchTags.includes(name))
       } 
 
       if (tSearch && tSearch.length !== 0) {
@@ -285,7 +285,7 @@ const Notes = () => {
 
 
     const renderSearchBar = (): JSX.Element => (
-      <SearchBar 
+      <TagSearchBar 
         options={NotesService.getSavedTags()}
         onTagSearch={handleTagSearch}
         onTextSearch={handleTextSearch} 
@@ -299,7 +299,7 @@ const Notes = () => {
     const handleCardMove = (card, source, destination) => {
       const newBoard: NoteBoardViewModel  = moveCard(board, source, destination)
 
-      NotesService.saveNewNoteIds(newBoard.columns[0].cards)
+      NotesService.updateNotesOrder(newBoard.columns[0].cards)
 
       setBoard(newBoard)
     }
@@ -319,8 +319,8 @@ const Notes = () => {
             dragging={dragging}
             note={cardNote}
             onEditQuestion={handleOpenEditQuestionDialog}
-            onEditAnswer={handleEditAnswer}
-            onDelete={handleDeleteNote}>
+            onEditAnswer={handleOpenAnswerDialog}
+            onDelete={handleOpenDeleteNoteDialog}>
           </NoteCard>
         }
         </>

@@ -10,12 +10,16 @@ class LocalStorageKeys {
     GOOGLE_ACCESS_TOKEN = 'gat'
     AUTH_TOKEN = 'at'
     REFRESH_TOKEN_REQUIRED = 'rtr'
-    LANGUAGE: string = 'lan'
-    APP_SETTINGS_VERSION: string = 'asv'
-    APP_SETTINGS: string = 'as'
-    PAGE_TEMP: string = 'pt'
-    NOTE: string = 'no'
-    NOTE_TAGS: string = 'nt'
+    LANGUAGE = 'lan'
+    APP_SETTINGS_VERSION = 'asv'
+    APP_SETTINGS = 'as'
+    PAGE_TEMP = 'pt'
+    NOTE = 'no'
+    NOTE_TAGS = 'nt'
+    NOTE_VERSION = 'nv'
+    UPDATING_NOTES = 'un'
+    UPDATE_NOTES_WITH_ERROR = 'une'
+    NOTES_TO_DELETE = 'ntd'
 }
 
 export default new LocalStorageKeys()

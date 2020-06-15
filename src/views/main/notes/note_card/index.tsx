@@ -70,7 +70,7 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
         } 
     }, [props.dragging, 
         props.note.question, 
-        props.note.tagList, 
+        props.note.tagNames, 
         props.note.answer, 
         props.note.answered,
         props.note, 
@@ -101,9 +101,7 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
             title={note.question}
             subheader={
                 DateUtils.getDateStringFormated(
-                    note.creationDay, 
-                    note.creationMonth, 
-                    note.creationYear, 
+                    note.lastUpdate, 
                     language
                 )
             }
@@ -113,7 +111,7 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
     const renderTags = (): JSX.Element => (
         <CardContent className='card__tag_list'>
             <TagList
-                tagList={note.tagList}
+                tagList={note.tagNames}
             />
         </CardContent>
     )

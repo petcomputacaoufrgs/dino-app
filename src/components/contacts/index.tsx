@@ -45,8 +45,7 @@ const Contacts = (): JSX.Element => {
             'color': 'green'
         }]
         const results = items.filter(item =>
-            StringUtils.normalize(item.name)
-                .includes(StringUtils.normalize(searchTerm))
+            StringUtils.contains(item.name, searchTerm)
         )
         setSearchResults(results)
     }, [searchTerm])

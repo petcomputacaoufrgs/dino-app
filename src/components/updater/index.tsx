@@ -1,20 +1,24 @@
-import React, { useContext } from 'react'
-import LocalStorageService from '../../services/local_storage/LocalStorageService'
+import React, { useContext, createContext } from 'react'
 import UpdateService from '../../services/UpdateService'
 import { LanguageContext } from '../language_provider/index'
+import NotesService from '../../services/NotesService'
 import UpdaterProps from './props'
+
+export const UpdaterContext = createContext({update: () => {}})
 
 const Updater = (props: UpdaterProps): JSX.Element => {
 
     const languageContext = useContext(LanguageContext)    
 
-    LocalStorageService.cleanGarbage()
-    UpdateService.checkUpdates(languageContext)
+    const update = () => {
+        UpdateService.checkUpdates(languageContext)
+        NotesService.checkUpdates()
+    }
 
     return (
-        <>
-        {props.children}
-        </>
+        <UpdaterContext.Provider value={{update: update}}>
+            {props.children}
+        </UpdaterContext.Provider>
     )
 }
 

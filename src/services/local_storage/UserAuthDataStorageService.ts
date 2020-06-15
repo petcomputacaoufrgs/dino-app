@@ -39,6 +39,12 @@ class UserAuthDataStorageService extends LocalStorageService {
         this.remove(LS_Constants.PICTURE_URL)
     }
 
+    removeUserData = () => {
+        this.removeEmail()
+        this.removeName()
+        this.removePictureUrl()
+    }
+
 }
 
 export default new UserAuthDataStorageService()

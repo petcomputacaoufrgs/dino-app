@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { LanguageContext } from '../language_provider';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import GlossaryItems from './glossary_items';
+import React, { useState, useEffect, useContext } from 'react'
+import { LanguageContext } from '../language_provider'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import GlossaryItems from './glossary_items'
 import GlossaryLocalStorageService from '../../services/local_storage/GlossaryLocalStorageService'
-import GlossaryItemModel from '../../model/GlossaryItemModel';
+import GlossaryItemModel from '../../model/dino_api/glossary/GlossaryItemModel'
 import StringUtils from '../../utils/StringUtils'
 import BootstrapSearchBar from '../bootstrap_search_bar'
 
@@ -19,8 +19,7 @@ const Glossary = (): JSX.Element => {
     useEffect(() => {
         const items = GlossaryLocalStorageService.getItems()
         const results = items.filter(item =>
-            StringUtils.normalize(item.title.toLowerCase())
-                .includes(StringUtils.normalize(searchTerm.toLowerCase()))
+            StringUtils.contains(item.title, searchTerm)
         )
         setSearchResults(results)
     }, [searchTerm])

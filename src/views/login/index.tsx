@@ -26,7 +26,7 @@ const Login = () : JSX.Element => {
     }
 
     const showAlertRefreshError = () => {
-        alertProvider.showInfoAlert(language.LOGIN_REFRESH_ERROR)
+        alertProvider.showInfoAlert(language.LOGIN_REFRESH_NECESSARY)
     }
 
     const showAlertCancel = () => {

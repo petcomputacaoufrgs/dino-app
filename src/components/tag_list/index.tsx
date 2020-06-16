@@ -6,16 +6,14 @@ import './styles.css'
 
 const TagList = (props: TagListProps): JSX.Element => {
   return (
-    <Paper className='tag_list' component="ul">
-        {props.tagList.map((tag, index) => (
-            <li key={index}>
-                <Chip
-                    label={tag}
-                />
-            </li>
-        ))}
+    <Paper className="tag_list" component="ul">
+      {props.tagList.map((tag, index) => (
+        <li key={index}>
+          <Chip label={tag} />
+        </li>
+      ))}
     </Paper>
-  );
+  )
 }
 
 export default TagList

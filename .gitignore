@@ -22,4 +22,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.vscode/
+_replicator/
+
+_users/
+
+pouch__all_dbs__/
+
+log.txt
+
+.vscode/launch.json

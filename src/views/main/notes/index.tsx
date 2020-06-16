@@ -1,382 +1,261 @@
-import React, { useState, useContext } from 'react'
-import { DateTime } from 'luxon'
-import { LanguageContext } from '../../../components/language_provider'
+import React, { useState, useEffect } from 'react'
+import { isMobile } from 'react-device-detect'
 import StringUtils from '../../../utils/StringUtils'
-import Board, { moveCard } from '@lourenci/react-kanban'
-import NoteCard from './note_card'
-import AnswerDialog from './answer_dialog'
-import QuestionDialog from './question_dialog'
-import NoteViewModel from '../../../model/view/NoteViewModel';
-import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
-import NoteSVG from '../../../images/note.svg'
-import NotesService from '../../../services/NotesService'
-import NoteBoardViewModel from '../../../model/view/NoteBoardViewModel'
-import { NoteBoardColumnViewModel } from '../../../model/view/NoteBoardViewModel'
-import AgreementDialogProps from '../../../components/generic_agreement_dialog/props'
-import AgreementDialog from '../../../components/generic_agreement_dialog'
-import DinoAPIGeneralConstants from '../../../constants/dino_api/DinoAPIGeneralConstants'
+import NoteViewModel from './model/NoteViewModel'
+import NoteBoardViewModel from './model/NoteBoardViewModel'
+import { NoteBoardColumnViewModel } from './model/NoteBoardViewModel'
+import NoteService from '../../../services/note/NoteService'
+import DateUtils from '../../../utils/DateUtils'
+import NoteHeader from './header'
+import NoteBoard from './board'
+import NoteAddButton from './note_add_button'
 import './styles.css'
-import TagSearchBar from '../../../components/tag_search_bar/index';
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
 const Notes = () => {
+  const [textSearch, setTextSearch] = useState('')
+  const [tagSearch, setTagSearch] = useState([] as string[])
+  const [board, setBoard] = useState({
+    columns: [] as NoteBoardColumnViewModel[],
+  } as NoteBoardViewModel)
+  const [tags, setTags] = useState([] as string[])
 
-    const languageProvider = useContext(LanguageContext)
-    const language = languageProvider.currentLanguage
+  const handleSaveNewNote = (
+    newQuestion: string,
+    newTagNames: string[]
+  ) => {
+    const newBoard = { ...board }
 
-    const [answer, setAnswer] = useState('')
-    const [answerDialogOpen, setAnswerDialogOpen] = useState(false)
-    const [question, setQuestion] = useState('')
-    const [tagList, setTagList] = useState([] as string[])
-    const [questionDialogOpen, setQuestionDialogOpen] = useState(false)
-    const [newQuestionDialogOpen, setNewQuestionDialogOpen] = useState(false)
-    const [textSearch, setTextSearch] = useState('')
-    const [tagSearch, setTagSearch] = useState([] as string[])
-    const [note, setNote] = useState(undefined as NoteViewModel | undefined)
-    const [board, setBoard] = useState({
-      columns: [
-        {
-          'id': 0,
-          'cards': NotesService.getSavedNotes()
-        } as NoteBoardColumnViewModel
-      ] as NoteBoardColumnViewModel[]
-    } as NoteBoardViewModel)
-    const [idNoteToDelete, setIdNoteToDelete] = useState(undefined as number | undefined)
+    const newNotes = newBoard.columns[0].cards
 
-    //#region Editing Answer
-    const handleOpenAnswerDialog = (note: NoteViewModel) => {
-      setNote(note)
-      setAnswer(note.answer)
-      setAnswerDialogOpen(true)
+    const newId = newNotes.length
+
+    const date = DateUtils.getDatetimeInMillis()
+
+    const newNote: NoteViewModel = {
+      answer: '',
+      answered: false,
+      question: newQuestion,
+      id: newId,
+      tagNames: newTagNames,
+      showByTag: hasSomeTag(newTagNames, tagSearch),
+      showByQuestion: hasText(newQuestion, textSearch),
+      lastUpdate: date,
+      savedOnServer: false,
     }
 
-    const handleSaveAnswer = (newAnswer: string) => {
-      if (!note) {
-        return
-      }
+    NoteService.saveNote(newNote, updateTags)
 
-      const newData = {...board}
+    newNotes.push(newNote)
 
-      const notes = newData.columns[0].cards
+    setBoard(newBoard)
+  }
 
-      const editedNote = notes.find(n => n.id === note.id)
+  const handleSaveQuestion = (newQuestion: string, newTagNames: string[], noteView: NoteViewModel) => {
+    const newData = { ...board }
 
-      if (editedNote) {
-        editedNote.answer = newAnswer
-        editedNote.answered = true
+    const oldQuestion = noteView.question
 
-        NotesService.updateNoteAnswer(editedNote)
-      }
-
-      setNote(undefined)
-      setBoard(newData)
-      setAnswerDialogOpen(false)
-    } 
-
-    const handleCloseAnswerDialog = () => {
-      setAnswerDialogOpen(false)
-    }
-
-    const renderUpdateAnswerDialog = (): JSX.Element => (
-      <AnswerDialog 
-        open={answerDialogOpen}
-        answer={answer}
-        onSave={handleSaveAnswer}
-        onClose={handleCloseAnswerDialog}
-      />
+    const editedNote = newData.columns[0].cards.find(
+      (n) => n.question === oldQuestion
     )
 
-    //#endregion
+    if (editedNote) {
+      const date = DateUtils.getDatetimeInMillis()
 
-    //#region Editing Question
+      editedNote.question = newQuestion
+      editedNote.tagNames = newTagNames
+      editedNote.lastUpdate = date
 
-    const handleOpenEditQuestionDialog = (note: NoteViewModel) => {
-      setNote(note)
-      setQuestion(note.question)
-      setTagList(note.tagNames)
-      setQuestionDialogOpen(true)
+      NoteService.updateNoteQuestion(oldQuestion, editedNote, updateTags)
     }
 
-    const handleSaveQuestion = (newQuestion: string, newTagNames: string[]) => {
-      if (!note) {
-        return
-      }
+    setBoard(newData)
+  }
 
-      const newData = {...board}
+  const handleSaveAnswer = (newAnswer: string, noteView: NoteViewModel) => {
+    const newData = { ...board }
 
-      const editedNote = newData.columns[0].cards.find(n => n.id === note.id)
+    const notes = newData.columns[0].cards
 
-      if (editedNote) {
-        const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
+    const editedNote = notes.find((n) => n.id === noteView.id)
 
-        editedNote.question = newQuestion
-        editedNote.tagNames = newTagNames
-        editedNote.lastUpdate = date
+    if (editedNote) {
+      editedNote.answer = newAnswer
+      editedNote.answered = true
 
-        NotesService.updateNoteQuestion(editedNote)
-      }
-
-      setNote(undefined)
-      setBoard(newData)
-      setQuestionDialogOpen(false)
+      NoteService.updateNoteAnswer(editedNote)
     }
 
-    const handleCloseQuestionDialog = () => {
-      setQuestionDialogOpen(false)
+    setBoard(newData)
+  }
+
+  const handleDeleteNote = (noteId: number) => {
+    const newData = { ...board }
+
+    const notes = newData.columns[0].cards
+
+    const deletedNote = notes.find((note) => note.id === noteId)
+
+    const newNotes = notes.filter((note) => note.id !== noteId)
+
+    if (deletedNote) {
+      NoteService.deleteNote(deletedNote, updateTags)
     }
 
-    const renderUpdateQuestionDialog = (): JSX.Element => (
-      <QuestionDialog 
-        open={questionDialogOpen}
-        question={question}
-        tagList={tagList}
-        tagOptions={NotesService.getSavedTags()}
-        onSave={handleSaveQuestion}
-        onClose={handleCloseQuestionDialog}
-      />
-    )
+    newData.columns[0].cards = newNotes
 
-    //#endregion 
+    setBoard(newData)
+  }
 
-    //#region Deleting Note
+  const handleBoardOrderChanged = (board: NoteBoardViewModel) => {
+    setBoard(board)
+  }
 
-    const handleOpenDeleteNoteDialog = (id: number) => {
-      setIdNoteToDelete(id)
+  //#region Searching
 
-      showDeleteDialog()
+  const handleTagSearch = (newTagSearch: string[]) => {
+    const newBoard = { ...board }
+
+    const notes = newBoard.columns[0].cards
+
+    setTagSearch(newTagSearch)
+
+    notes.forEach((n) => {
+      n.showByTag = hasSomeTag(n.tagNames, newTagSearch)
+      n.showByQuestion = false
+    })
+
+    setBoard(newBoard)
+  }
+
+  const handleTextSearch = (newTextSearch: string) => {
+    const newBoard = { ...board }
+
+    const notes = newBoard.columns[0].cards
+
+    setTextSearch(newTextSearch)
+
+    notes.forEach((n) => {
+      n.showByTag = hasSomeTag(n.tagNames, tagSearch, newTextSearch)
+      n.showByQuestion = hasText(n.question, newTextSearch)
+    })
+
+    setBoard(newBoard)
+  }
+
+  const hasText = (nodeText: string, searchText: string): boolean => {
+    if (searchText.trim()) {
+      return StringUtils.contains(nodeText, searchText)
     }
 
-    const handleDeleteNote = () => {
-      const newData = {...board}
+    return tagSearch.length === 0
+  }
 
-      const notes = newData.columns[0].cards
-
-      const deletedNote = notes.find(note => note.id === idNoteToDelete)
-
-      const newNotes = notes.filter(note => note.id !== idNoteToDelete)
-
-      if (deletedNote) {
-        NotesService.deleteNote(deletedNote)
-      }
-      
-      newData.columns[0].cards = newNotes
-
-      setBoard(newData)
+  const hasSomeTag = (
+    nodeTagNames: string[],
+    searchTags: string[],
+    tSearch?: string
+  ): boolean => {
+    if (searchTags.length > 0) {
+      return nodeTagNames.some((name) => searchTags.includes(name))
     }
 
-    const agreementDialogProps: AgreementDialogProps = {
-      onAgree: handleDeleteNote,
-      question: language.DELETE_NOTE_ALERT_TITLE,
-      description: language.DELETE_NOTE_ALERT_TEXT,
-      agreeOptionText: language.AGREEMENT_OPTION_TEXT,
-      disagreeOptionText: language.DISAGREEMENT_OPTION_TEXT
+    if (tSearch && tSearch.length !== 0) {
+      return false
     }
 
-    const [DeleteDialog, showDeleteDialog] = AgreementDialog(agreementDialogProps)
+    return true
+  }
 
-    //#endregion
-    
-    //#region Adding new Note
+  //#endregion
 
-    const handleOpenNewQuestionDialog = () => {
-      setNewQuestionDialogOpen(true)
+  useEffect(() => {
+    if (board.columns.length === 0) {
+      const notesPromisse = NoteService.getNotes()
+
+      notesPromisse
+        .then((notes) =>
+          setBoard({
+            columns: [
+              {
+                id: 0,
+                cards: notes,
+              } as NoteBoardColumnViewModel,
+            ] as NoteBoardColumnViewModel[],
+          } as NoteBoardViewModel)
+        )
+        .catch()
+
+      const tagsPromise = NoteService.getTags()
+
+      tagsPromise.then((tags) => setTags(tags)).catch()
     }
+  })
 
-    const handleSaveNewQuestion = (newQuestion: string, newTagNames: string[]) => {
-      const newBoard = {...board}
+  const updateTags = async () => {
+    const tags = await NoteService.getTags()
 
-      const newNotes = newBoard.columns[0].cards
+    setTags(tags)
+  }
 
-      const newId = newNotes.length
+  const updateListMarginTop = () => {
+    const foundDivs = document.getElementsByClassName('notes__board')
 
-      const date = DateTime.local().setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE).toMillis()
+    if (foundDivs.length === 1) {
+      const noteListContainer = foundDivs[0]
 
-      const newNote: NoteViewModel = {
-        answer: '',
-        answered: false,
-        question: newQuestion,
-        id: newId,
-        tagNames: newTagNames,
-        showByTag: hasSomeTag(newTagNames, tagSearch),
-        showByQuestion: hasText(newQuestion, textSearch),
-        lastUpdate: date,
-        savedOnServer: false
-      }
+      setTimeout(() => {
+        const textField: HTMLElement | null = document.querySelector(
+          '.' + HEADER_TEXT_FIELD_CLASS
+        )
 
-      NotesService.saveNote(newNote)
+        if (textField) {
+          const fixValue = isMobile ? 94 : 144
 
-      newNotes.push(newNote)
-      
-      setBoard(newBoard)
-      setNewQuestionDialogOpen(false)
-    }
+          const value = (textField.offsetHeight + fixValue).toString() + 'px'
 
-    const handleCloseNewQuestionDialog = () => {
-      setNewQuestionDialogOpen(false)
-    }
-
-    const renderNewQuestionDialog = (): JSX.Element => (
-      <QuestionDialog 
-        open={newQuestionDialogOpen}
-        question={''}
-        tagList={[]}
-        tagOptions={NotesService.getSavedTags()}
-        onSave={handleSaveNewQuestion}
-        onClose={handleCloseNewQuestionDialog}
-      />
-    )
-
-    //#endregion
-
-    //#region Searching
-
-    const handleTagSearch = (newTagSearch: string[]) => {
-      const newBoard = {...board}
-
-      const notes = newBoard.columns[0].cards
-
-      setTagSearch(newTagSearch)
-
-      notes.forEach(n => {
-        n.showByTag = hasSomeTag(n.tagNames, newTagSearch)
-        n.showByQuestion = false
-      })
-
-      setBoard(newBoard)
-    }
-
-    const handleTextSearch = (newTextSearch: string) => {
-      const newBoard = {...board}
-
-      const notes = newBoard.columns[0].cards
-
-
-      setTextSearch(newTextSearch)
-
-      notes.forEach(n => {
-        n.showByTag = hasSomeTag(n.tagNames, tagSearch, newTextSearch)
-        n.showByQuestion = hasText(n.question, newTextSearch)
-      })
-
-      setBoard(newBoard)
-    }
-
-    const hasText = (nodeText: string, searchText: string): boolean => {
-      if(searchText.trim()) {
-        return StringUtils.contains(nodeText, searchText)
-      }
-
-      return tagSearch.length === 0
-    }
-
-    const hasSomeTag = (nodeTagNames: string[], searchTags: string[], tSearch?: string): boolean => {
-      if (searchTags.length > 0) {
-        return nodeTagNames.some(name => searchTags.includes(name))
-      } 
-
-      if (tSearch && tSearch.length !== 0) {
-        return false
-      } 
-      
-      return true
-    }
-
-
-    const renderSearchBar = (): JSX.Element => (
-      <TagSearchBar 
-        options={NotesService.getSavedTags()}
-        onTagSearch={handleTagSearch}
-        onTextSearch={handleTextSearch} 
-        textFieldClass={HEADER_TEXT_FIELD_CLASS}
-      />
-    )
-    
-    //#endregion
-
-    //#region Moving card
-    const handleCardMove = (card, source, destination) => {
-      const newBoard: NoteBoardViewModel  = moveCard(board, source, destination)
-
-      NotesService.updateNotesOrder(newBoard.columns[0].cards)
-
-      setBoard(newBoard)
-    }
-    //#endregion
-   
-    const renderColumnHeader = (): JSX.Element => (
-      <div className='notes__column_header'>
-          <img className='notes__column_header__image' src={NoteSVG} alt={language.NOTES_HEADER_IMAGE_DESC}/>
-          {renderSearchBar()}
-      </div>
-    )
-    
-    const renderCard = (cardNote: NoteViewModel, dragging: boolean): JSX.Element => (
-        <>
-        {(cardNote.showByTag || cardNote.showByQuestion) &&
-          <NoteCard 
-            dragging={dragging}
-            note={cardNote}
-            onEditQuestion={handleOpenEditQuestionDialog}
-            onEditAnswer={handleOpenAnswerDialog}
-            onDelete={handleOpenDeleteNoteDialog}>
-          </NoteCard>
+          noteListContainer.setAttribute('style', 'top: ' + value + ';')
         }
-        </>
-    )
+      }, 0.1)
+    }
+  }
 
-    const renderAddButton = (): JSX.Element => (
-      <Fab onClick={handleOpenNewQuestionDialog} className='notes__add' aria-label={language.NOTES_ADD_BUTTON}>
-        <AddIcon />
-      </Fab>
-    )
+  updateListMarginTop()
 
-    const updateListMarginTop = () => {
-      const foundDivs = document.getElementsByClassName('sc-fzozJi GHGWz')
+  const getMainClass = () => {
+    const mainClass = 'notes'
 
-      if (foundDivs.length === 1) {
-        const noteListContainer = foundDivs[0]
-
-        setTimeout(() => {
-          const textField: HTMLElement | null = document.querySelector('.' + HEADER_TEXT_FIELD_CLASS)
-
-          if (textField) {
-
-            const value = (textField.offsetHeight + 94).toString() + 'px'
-            
-            noteListContainer.setAttribute("style", "top: " + value + ";")
-          }
-        }, 0.1)
-        
-      }
+    if (isMobile) {
+      return mainClass
     }
 
-    updateListMarginTop()
+    return mainClass + ' notes_desktop'
+  }
 
-    return (
-        <div className='notes'>
-            <Board
-                renderCard={(cardNote, { dragging }) => (
-                    renderCard(cardNote, dragging)
-                )}
-                renderColumnHeader = {renderColumnHeader}
-                onCardDragEnd = {handleCardMove}
-                allowAddColumn = {false}
-                allowRemoveColumn = {false}
-                allowRenameColumn = {false}
-                disableColumnDrag = {true}
-                
-            >
-                {board}
-            </Board>
-            {renderAddButton()}
-            {renderUpdateAnswerDialog()}
-            {renderUpdateQuestionDialog()}
-            {renderNewQuestionDialog()}
-            <DeleteDialog />
-        </div>
-    )
+  return (
+    <div className={getMainClass()}>
+      <NoteHeader
+        handleTagSearch={handleTagSearch}
+        handleTextSearch={handleTextSearch}
+        headerClass={HEADER_TEXT_FIELD_CLASS}
+        tags={tags}
+      />
+      <NoteBoard
+        onBoardOrderChanged={handleBoardOrderChanged}
+        onSaveAnswer={handleSaveAnswer}
+        onSaveQuestion={handleSaveQuestion}
+        onDeleteNote={handleDeleteNote}
+        board={board}
+        tags={tags}
+      />
+      <NoteAddButton
+        onSave={handleSaveNewNote}
+        tags={tags}
+      />
+    </div>
+  )
 }
 
 export default Notes

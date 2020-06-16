@@ -1,0 +1,19 @@
+.tag_list.MuiPaper-root {
+  display: flex;
+  flex-direction: row;
+  background-color: inherit;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag_list.MuiPaper-root .MuiChip-root {
+  background-color: #b32e55;
+  color: white;
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+.tag_list.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {
+  box-shadow: none;
+}

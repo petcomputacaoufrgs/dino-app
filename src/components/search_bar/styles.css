@@ -1,9 +1,0 @@
-.search-bar {
-    padding: 10px;
-}
-  
-.search-bar input[type="text"], textarea {
-    outline: none;
-    box-shadow: none !important;
-    border:1px solid #ccc !important;
-}

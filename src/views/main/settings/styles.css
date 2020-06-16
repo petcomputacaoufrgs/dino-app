@@ -1,42 +1,42 @@
 .settings {
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-bottom: 50px;
-    min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 50px;
+  min-height: 100%;
 }
 
 .settings__form {
-    align-self: center;
-    width: 90%;
+  align-self: center;
+  width: 90%;
 }
 
 .settings__title {
-    width: 100%;
-    text-align: center;   
+  width: 100%;
+  text-align: center;
 }
 
 .settings__save_button_container {
-    margin-top: auto;
-    align-items: flex-end;
-    align-self: center;
-    width: 50%;
+  margin-top: auto;
+  align-items: flex-end;
+  align-self: center;
+  width: 50%;
 }
 
 .settings__save_button {
-    width: 100%;
-    margin-top: auto;
+  width: 100%;
+  margin-top: auto;
 }
 
 .settings__save_button.MuiButtonBase-root {
-    margin-top: 50px;
-    background-color: #36B344;
+  margin-top: 50px;
+  background-color: #36b344;
 }
 
 .settings__title.MuiTypography-root {
-    font-weight: 700;
-    font-size: large;
-    margin-bottom: 40px;
+  font-weight: 700;
+  font-size: large;
+  margin-bottom: 40px;
 }

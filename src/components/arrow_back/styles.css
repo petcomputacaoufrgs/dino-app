@@ -1,8 +1,9 @@
 .arrow-back {
-    padding: 0px !important;
-    margin-bottom: 10px !important;
-  }
+  padding: 0px !important;
+  margin-bottom: 10px !important;
+}
 
-  .arrow-back:focus, .arrow-back:active {
-    outline: none !important;
- }
+.arrow-back:focus,
+.arrow-back:active {
+  outline: none !important;
+}

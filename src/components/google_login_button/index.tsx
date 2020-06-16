@@ -1,94 +1,146 @@
-import React, { useState, useContext } from 'react'
-import { LanguageContext } from '../language_provider'
+import React, { useState, useEffect } from 'react'
+import { useLanguage, useAlert } from '../../provider/app_provider'
 import Button from '../button'
-import AuthService from '../../services/AuthService'
 import Loader from '../loader'
 import GoogleSecret from '../../config/client_secret.json'
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
+import GoogleLogin, {
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from 'react-google-login'
 import GoogleLogo from '../../images/google_logo.png'
 import LoginButtonProps from './props'
-import LoginErrorTypes from '../../constants/LoginErrorTypes'
-import AuthLocalStorageService from '../../services/local_storage/AuthLocalStorageService'
+import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
+import HistoryService from '../../services/history/HistoryService'
+import PathConstants from '../../constants/PathConstants'
+import AuthService from '../../services/auth/AuthService'
+import UpdaterService from '../../services/updater/UpdaterService'
+import { Typography } from '@material-ui/core'
+import ConnectionListenerService from '../../services/connection/ConnectionListenerService'
 import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
+  const languageContext = useLanguage()
+  const language = languageContext.current
+  const alert = useAlert()
 
-    const languageContext = useContext(LanguageContext)
+  const [loading, setLoading] = useState(false)
+  const [connected, setConnected] = useState(true)
 
-    const language = languageContext.currentLanguage
-
-    const [loading, setLoading] = useState(false)
-
-    const responseGoogle = async (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        setLoading(true)
-
-        const authResponse = await AuthService.google_login(response as GoogleLoginResponseOffline)
-        
-        if (authResponse === LoginErrorTypes.SUCCESS) {
-            const refreshTokenRequired = AuthLocalStorageService.isRefreshRequired()
-
-            if (refreshTokenRequired) {
-                AuthLocalStorageService.setRefreshRequiredToFalse()
-            }
-
-            languageContext.updateLanguage()
-            
-            return
-        }
-
-        if (authResponse === LoginErrorTypes.UNKNOW_API_ERROR) {
-            props.onDinoAPIFail && props.onDinoAPIFail()
-        } else if (authResponse === LoginErrorTypes.EXTERNAL_SERVICE_ERROR) {
-            props.onGoogleFail && props.onGoogleFail()
-        } else if (authResponse === LoginErrorTypes.REFRESH_TOKEN_LOST_ERROR) {
-            props.onRefreshTokenLostError && props.onRefreshTokenLostError()
-        }
-            
-        setLoading(false)
+  useEffect(() => {
+    const updateConnectionState = (connected) => {
+      setConnected(connected)
     }
 
-    const loginFail = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {        
-        if (props.onCancel) {
-            props.onCancel()
-        }
+    ConnectionListenerService.addEventListener(updateConnectionState)
 
-        setLoading(false)
+    const cleanBeforeUpdate = () => {
+      ConnectionListenerService.removeEventListener(updateConnectionState)
     }
 
-    const getPrompt = (): string => {
-        const refreshTokenRequired = AuthLocalStorageService.isRefreshRequired()
+    return cleanBeforeUpdate
+  })
 
-        if (refreshTokenRequired) {
-            return GoogleAuthConstants.PROMPT_CONSENT
-        }
+  const responseGoogle = async (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    setLoading(true)
 
-        return ''
-    }
-
-    const getHostRootURI = () => {
-        return window.location.protocol + '//' + window.location.host + '/'
-    }
-
-    return (
-        <>
-            <GoogleLogin
-                clientId={GoogleSecret.web.client_id}
-                scope={AuthService.getDefaultScopes()}
-                onSuccess={responseGoogle}
-                onFailure={loginFail}
-                cookiePolicy={'single_host_origin'}
-                redirectUri={getHostRootURI()}
-                responseType={'code'}
-                accessType={'offline'}
-                prompt={getPrompt()}
-                render={renderProps => (
-                    <Button size={props.size} imageSrc={GoogleLogo} imageAlt={props.buttonText} className='login_button__button' onClick={renderProps.onClick}>{props.buttonText}</Button>
-                )}
-            />
-            <Loader alt={language.LOADER_ALT} loading={loading} />
-        </>
+    const authResponse = await AuthService.google_login(
+      response as GoogleLoginResponseOffline
     )
+
+    if (authResponse === LoginErrorConstants.SUCCESS) {
+      const refreshTokenRequired = AuthService.isRefreshRequired()
+
+      if (refreshTokenRequired) {
+        AuthService.setRefreshRequiredToFalse()
+      } else {
+        UpdaterService.checkUpdates(languageContext)
+      }
+
+      setLoading(false)
+      HistoryService.push(PathConstants.HOME)
+
+      return
+    }
+
+    /**TO-DO Tratar erro DISCONNECTED */
+    if (authResponse === LoginErrorConstants.UNKNOW_API_ERROR) {
+      props.onDinoAPIFail && props.onDinoAPIFail()
+    } else if (authResponse === LoginErrorConstants.EXTERNAL_SERVICE_ERROR) {
+      props.onGoogleFail && props.onGoogleFail()
+    } else if (
+      authResponse === LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
+    ) {
+      AuthService.setRefreshRequiredToTrue()
+      props.onRefreshTokenLostError && props.onRefreshTokenLostError()
+    }
+
+    setLoading(false)
+  }
+
+  const loginFail = (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    if (props.onCancel) {
+      props.onCancel()
+    }
+
+    setLoading(false)
+  }
+
+  const getPrompt = (): string => {
+    const refreshTokenRequired = AuthService.isRefreshRequired()
+
+    if (refreshTokenRequired) {
+      return GoogleAuthConstants.PROMPT_CONSENT
+    }
+
+    return ''
+  }
+
+  const getHostRootURI = () => {
+    return window.location.protocol + '//' + window.location.host
+  }
+
+  const showOfflineMessage = () => {
+    alert.showInfoAlert(language.CANT_LOGIN_DISCONNECTED)
+  }
+
+  return (
+    <div className='google_login_button'>
+      <GoogleLogin
+        clientId={GoogleSecret.web.client_id}
+        scope={AuthService.getDefaultScopes()}
+        onSuccess={responseGoogle}
+        onFailure={loginFail}
+        cookiePolicy={'single_host_origin'}
+        redirectUri={getHostRootURI()}
+        responseType={'code'}
+        accessType={'offline'}
+        prompt={getPrompt()}
+        render={(renderProps) => (
+          <Button
+            size={props.size}
+            imageSrc={GoogleLogo}
+            imageAlt={props.buttonText}
+            className="google_login_button__button"
+            onClick={connected ? renderProps.onClick : showOfflineMessage}
+            disabled={!connected}
+          >
+            <Typography component="p">{props.buttonText}</Typography>
+          </Button>
+        )}
+      />
+      <Loader alt={language.LOADER_ALT} loading={loading} />
+      {!connected &&
+        <Typography className='google_login_button__error' component="p">
+          {language.DISCONNECTED}
+        </Typography>
+      }
+    </div>
+  )
 }
 
 export default GoogleLoginButton

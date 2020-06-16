@@ -1,25 +1,31 @@
-import React, { useContext } from 'react'
-import { Avatar } from '@material-ui/core'
-import { LanguageContext } from '../../../components/language_provider'
+import React from 'react'
+import { useLanguage } from '../../../provider/app_provider'
+import { Avatar, Typography } from '@material-ui/core'
+import UserService from '../../../services/user/UserService'
 import './styles.css'
-import UserAuthDataStorageService from '../../../services/local_storage/UserAuthDataStorageService'
 
 const Home = () => {
-    const languageContext = useContext(LanguageContext)
+  const language = useLanguage().current
 
-    const language = languageContext.currentLanguage
+  const avatarSrc = UserService.getPictureUrl()
 
-    const avatarSrc = UserAuthDataStorageService.getPictureUrl()
+  const username = UserService.getName()
 
-    const username = UserAuthDataStorageService.getName()
-    
-    return (
-        <div className='home'>
-            <p className='home__welcome_message'>{language.WELCOME_MESSAGE}</p>
-            <Avatar src={avatarSrc} alt={language.AVATAR_ALT} className='home__avatar' />
-            <p className='home__username'>{username}</p>
-        </div>
-    )
+  return (
+    <div className="home">
+      <Typography className="home__welcome_message" component="p">
+        {language.WELCOME_MESSAGE}
+      </Typography>
+      <Avatar
+        src={avatarSrc}
+        alt={language.AVATAR_ALT}
+        className="home__avatar"
+      />
+      <Typography className="home__username" component="p">
+        {username}
+      </Typography>
+    </div>
+  )
 }
 
 export default Home

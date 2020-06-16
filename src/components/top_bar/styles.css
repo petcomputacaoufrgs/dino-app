@@ -1,10 +1,10 @@
 .top_bar {
-    width: 100%;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .top_bar__app_name {
-    font-size: x-large;
-    font-weight: 700;
+  font-size: x-large;
+  font-weight: 700;
 }

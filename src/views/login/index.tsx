@@ -1,54 +1,56 @@
-import React, {useContext} from 'react'
-import './styles.css'
+import React from 'react'
+import { useApp } from '../../provider/app_provider'
+import { Typography } from '@material-ui/core'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../images/dinosaur_1.svg'
 import Dinosaur2 from '../../images/dinosaur_2.svg'
-import { LanguageContext } from '../../components/language_provider'
-import { AlertContext } from '../../components/alert_provider'
+import './styles.css'
 
 /**
  * @description Tela de login com o Google
  */
-const Login = () : JSX.Element => {
+const Login = (): JSX.Element => {
+  const appContext = useApp()
 
-    const languageContext = useContext(LanguageContext)
+  const alert = appContext.alert
 
-    const language = languageContext.currentLanguage
+  const language = appContext.language.current
 
-    const alertProvider = useContext(AlertContext)
- 
-    const showAlertDinoFail = () => {
-        alertProvider.showErrorAlert(language.LOGIN_FAIL_BY_API)
-    }
+  const showAlertDinoFail = () => {
+    alert.showErrorAlert(language.LOGIN_FAIL_BY_API)
+  }
 
-    const showAlertGoogleFail = () => {
-        alertProvider.showErrorAlert(language.LOGIN_FAIL_BY_GOOGLE)
-    }
+  const showAlertGoogleFail = () => {
+    alert.showErrorAlert(language.LOGIN_FAIL_BY_GOOGLE)
+  }
 
-    const showAlertRefreshError = () => {
-        alertProvider.showInfoAlert(language.LOGIN_REFRESH_ERROR)
-    }
+  const showAlertRefreshError = () => {
+    alert.showInfoAlert(language.LOGIN_REFRESH_NECESSARY)
+  }
 
-    const showAlertCancel = () => {
-        alertProvider.showInfoAlert(language.LOGIN_CANCELED)
-    }
+  const showAlertCancel = () => {
+    alert.showInfoAlert(language.LOGIN_CANCELED)
+  }
 
-    return (
-        <div className='login'>
-            <img className='login__curious' src={Dinosaur2} alt='Curious dino' />
-            <img className='login__logo' src={Dinosaur1} alt='DinoAPP' />
-            <p className='login__message'>{ language.WELCOME_MESSAGE }</p>
-            <div className='login__button'>
-                <GoogleLoginButton 
-                    size='large' 
-                    onCancel={showAlertCancel} 
-                    onDinoAPIFail={showAlertDinoFail} 
-                    onGoogleFail={showAlertGoogleFail}
-                    onRefreshTokenLostError={showAlertRefreshError}
-                    buttonText={language.LOGIN_BUTTON_TEXT} />
-            </div>
-        </div>
-    )
+  return (
+    <div className="login">
+      <img className="login__curious" src={Dinosaur2} alt="Curious dino" />
+      <img className="login__logo" src={Dinosaur1} alt="DinoAPP" />
+      <Typography className="login__message" variant="h6" component="p">
+        {language.WELCOME_MESSAGE}
+      </Typography>
+      <div className="login__button">
+        <GoogleLoginButton
+          size="large"
+          onCancel={showAlertCancel}
+          onDinoAPIFail={showAlertDinoFail}
+          onGoogleFail={showAlertGoogleFail}
+          onRefreshTokenLostError={showAlertRefreshError}
+          buttonText={language.LOGIN_BUTTON_TEXT}
+        />
+      </div>
+    </div>
+  )
 }
 
 export default Login

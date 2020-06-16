@@ -1,11 +1,11 @@
 .loader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.7);
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

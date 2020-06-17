@@ -7,7 +7,7 @@ import ContactFormDialogContent from './content/'
 import ContactFormDialogProps from './props'
 import ContactsConstants from '../../../../constants/ContactsConstants'
 import TransitionSlide from '../../../../components/slide_transition'
-import ContactsService from '../../../../services/contact/ContactsService'
+import Service from '../../../../services/contact/ContactsService'
 import ContactModel from '../../../../services/contact/api_model/ContactModel'
 import PhoneModel from '../../../../services/contact/api_model/PhoneModel'
 import strUtils from '../../../../utils/StringUtils'
@@ -71,23 +71,22 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         return phones
     }
 
-    const getItem = (id: number): ContactModel => {
-        const item: ContactModel = {
+    const makeItem = (id = Service.makeId()): ContactModel => {
+        return {
             id: id,
             name: name,
             description: description,
             phones: getPhones(),
             color: color
         }
-        return item
     }
 
     const handleAdd = () => {
         if (validInfo()) {
-            const item = getItem(Number(strUtils.replaceNonDigits(number, '')))
-            const exists = ContactsService.checkUniquePhone(item.phones[0])
+            const item = makeItem()
+            const exists = Service.checkUniquePhone(item.phones[0])
             if(!exists){
-                ContactsService.addContact(item)
+                Service.addContact(item)
                 handleClose()
                 cleanInfo()
             }
@@ -100,10 +99,10 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
 
     const handleEdit = () => {
         if (props.item?.id) {
-            const item = getItem(props.item.id)
-            const exists = ContactsService.checkUniquePhone(item.phones[0])
-            if(!exists){
-                ContactsService.editContact(item)
+            const item = makeItem(props.item.id)
+            const exists = Service.checkUniquePhone(item.phones[0])
+            if(!exists || exists.id === item.id){
+                Service.editContact(item)
                 handleClose()
             }
             else{
@@ -114,7 +113,6 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     }
 
     return (
-
         <Dialog
             ref={ref}
             open={Boolean(props.dialogOpen)}

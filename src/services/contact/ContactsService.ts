@@ -3,14 +3,15 @@ import { useLanguage } from '../../provider/app_provider'
 import PhoneModel from './api_model/PhoneModel'
 import ContactModel from './api_model/ContactModel'
 import LS from './local_storage'
-import StrUtils from '../../utils/StringUtils'
 import ArrayUtils from '../../utils/ArrayUtils'
 
 class ContactsService {
   
   getItems = (): ContactModel[] => LS.getItems()
   setItems = (items: ContactModel[]) => LS.setItems(items)
-  addShouldSyncItem = (id: number) => LS.addShouldSyncItem(id) 
+  addShouldSyncItem = (id: number) => LS.addShouldSyncItem(id)
+  makeId = () => LS.updateLastId() 
+  
   
   addContact = (item: ContactModel) => {
     const items = this.getItems()
@@ -62,26 +63,19 @@ class ContactsService {
     
     let changed = false
 
-    if (item.name !== edited.name)
-      changed = true
+    if (item.name !== edited.name) changed = true
 
-    if (item.description !== edited.description){
-      changed = true
-    }
+    if (item.description !== edited.description) changed = true
 
     if(item.phones.length === edited.phones.length){
       item.phones.forEach((phone, index) => {
-        if (phone.number !== edited.phones[index].number){
+        if (phone.number !== edited.phones[index].number) 
           changed = true
-        }
       })
     }
     else changed = true
 
-    if (edited.color !== edited.color){
-      console.log(changed)
-      changed = true
-    }
+    if (edited.color !== edited.color) changed = true
 
     return changed
   }

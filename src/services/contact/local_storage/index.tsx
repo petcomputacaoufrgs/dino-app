@@ -1,7 +1,8 @@
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 import BaseLocalStorage from '../../BaseLocalStorage'
 import ContactModel from '../api_model/ContactModel'
-import StrUtils from '../../../utils/StringUtils'
+import StrU from '../../../utils/StringUtils'
+import ArrayU from '../../../utils/ArrayUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
 
@@ -14,7 +15,7 @@ class ContactsLocalStorage extends BaseLocalStorage {
     }
 
     setItems = (items: ContactModel[]) => {
-        this.set(LS_Constants.CONTACTS, JSON.stringify(StrUtils.sortByAttr(items, "name")))
+        this.set(LS_Constants.CONTACTS, JSON.stringify(StrU.sortByAttr(items, "name")))
     }
 
     setShouldSyncItems = (items: Array<number>) => {
@@ -29,12 +30,25 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     addShouldSyncItem = (id: number) => {
         let items = this.getShouldSyncItems()
-        items.push(id)
-        this.setShouldSyncItems(items)
+        if(!items.includes(id)){
+            items.push(id)
+            this.setShouldSyncItems(items)
+        }
     }
 
     cleanShouldSync = () => {
         localStorage.removeItem(LS_Constants.SHOULD_SYNC_CONTACTS)
+    }
+
+    getLastId = (): number => {
+       const id = localStorage.getItem(LS_Constants.CONTACTS_LAST_ID)
+       return id ?  Number(id) : 0 
+    }
+
+    updateLastId = (): number => {
+        const lastId = this.getLastId() + 1
+        localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, lastId.toString())
+        return lastId
     }
 }
 

@@ -57,6 +57,7 @@ const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
                 margin="dense"
                 label={language.FORM_PHONE}
                 type="tel"
+                helperText={props.helperText}
             />
         </>
     )

@@ -5,4 +5,5 @@ export default interface PhoneFieldsProps {
   onChangeNumber: (event: React.ChangeEvent<HTMLInputElement>) => void
   required?: true
   error?: boolean
+  helperText?: string
 }

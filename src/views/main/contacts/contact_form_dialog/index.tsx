@@ -24,6 +24,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     const [validName, setValidName] = useState(true)
     const [validNumber, setValidNumber] = useState(true)
     const [addPhoneAction, setAddPhoneAction] = useState(false)
+    const [helperText, setHelperText] = useState('')
 
     let secNumberValue = ''
     let secTypeValue = ContactsConstants.MOBILE
@@ -50,6 +51,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         setAddPhoneAction(false)
         setValidName(true)
         setValidNumber(true)
+        setHelperText('')
     }
     const handleClose = () => {
         props.setDialogOpen(0)
@@ -83,10 +85,19 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     const handleAdd = () => {
         if (validInfo()) {
             const item = getItem(Number(strUtils.replaceNonDigits(number, '')))
-            ContactsService.addContact(item)
             console.log(item)
-            handleClose()
-            cleanInfo()
+            const exists = ContactsService.checkUniquePhone(item.phones[0])
+            if(!exists){
+                ContactsService.addContact(item)
+                handleClose()
+                cleanInfo()
+            }
+            else{
+                console.log("repetido")
+                setValidNumber(false)
+                setHelperText(`O número já está registrado no contato ${exists.name}`)
+                
+            } 
         }
     }
 
@@ -96,7 +107,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
             ContactsService.editContact(item)
         }
         handleClose()
-        cleanInfo()
+        //cleanInfo()
     }
 
     return (
@@ -135,6 +146,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
                     setSecType={setSecType}
                     validName={validName}
                     validNumber={validNumber}
+                    helperText={helperText}
                 />
             </DialogContent>
             <DialogActions>

@@ -14,4 +14,5 @@ export interface ContactFormDialogContentProps {
   setSecType: React.Dispatch<React.SetStateAction<number>>
   validName: boolean
   validNumber: boolean
+  helperText: string
 }

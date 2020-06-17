@@ -65,6 +65,7 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                 onChangeNumber={handleChangeNumber}
                 required
                 error={!props.validNumber}
+                helperText={props.helperText}
             />
             {props.addPhoneAction || props.secNumber ?
                 <><br />

@@ -50,9 +50,12 @@ class StringUtils {
   }
 
   sortByAttr = (array: Array<any>, attr:string): Array<any> => {
-      return array.sort((a, b) =>
+      if(array){
+        return array.sort((a, b) =>
         this.normalize(a[attr]) < this.normalize(b[attr]) ? -1 : 1
-      )
+        )
+      }
+      return array
   }
 }
 

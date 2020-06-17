@@ -2,12 +2,12 @@ import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 import BaseLocalStorage from '../../BaseLocalStorage'
 import ContactModel from '../api_model/ContactModel'
 import StrU from '../../../utils/StringUtils'
-import ArrayU from '../../../utils/ArrayUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
 
     getItems = (): Array<ContactModel> => {
         let items = this.get(LS_Constants.CONTACTS)
+        
         let result = Array<ContactModel>()
         if (items) 
             result = JSON.parse(items)
@@ -24,7 +24,6 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     getShouldSyncItems = (): number[] => {
         const items = this.get(LS_Constants.SHOULD_SYNC_CONTACTS)?.split(',').map(x => +x)
-        console.log(items)
         return items || []
     }
 
@@ -42,7 +41,16 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     getLastId = (): number => {
        const id = localStorage.getItem(LS_Constants.CONTACTS_LAST_ID)
-       return id ?  Number(id) : 0 
+       return id ?  Number(id) : this.getLastItemId() 
+    }
+    
+    getLastItemId = (): number => {
+        let items: Array<ContactModel> = this.getItems()
+        if(items.length){
+            items.sort((a, b) => a.id - b.id)
+            return items[items.length-1].id
+        }
+        return 0
     }
 
     updateLastId = (): number => {

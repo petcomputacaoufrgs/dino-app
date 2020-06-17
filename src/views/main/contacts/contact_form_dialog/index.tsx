@@ -62,7 +62,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
 
     const getPhones = (): Array<PhoneModel> => {
         const phones = new Array<PhoneModel>({ number: number, type: type })
-        if (addPhoneAction) {
+        if (secNumber) {
             phones.push({ number: secNumber, type: secType })
             console.log(secNumber) //!!!!!!!!!
         }

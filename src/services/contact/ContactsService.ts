@@ -1,15 +1,22 @@
-import ContactsConstants from '../../constants/ContactsConstants'
+import ContactsConsts from '../../constants/ContactsConstants'
 import { useLanguage } from '../../provider/app_provider'
 import PhoneModel from './api_model/PhoneModel'
 import ContactModel from './api_model/ContactModel'
-import ContactsLocalStorage from './local_storage'
+import LS from './local_storage'
+import ArrayUtils from '../../utils/ArrayUtils'
 
 class ContactsService {
+  
+  getItems = (): ContactModel[] => LS.getItems()
+  setItems = (items: ContactModel[]) => LS.setItems(items)
+  addShouldSyncItem = (id: number) => LS.addShouldSyncItem(id) 
+  
   addContact = (item: ContactModel) => {
     const items = this.getItems()
     items.push(item)
-    console.log(item)
     this.setItems(items)
+    this.addShouldSyncItem(item.id)
+    console.log(item)
   }
 
   deleteContact = (id: number) => {
@@ -19,6 +26,7 @@ class ContactsService {
         return item.id !== id
       })
     )
+    this.addShouldSyncItem(id)
   }
 
   editContact = (edited: ContactModel) => {
@@ -28,58 +36,62 @@ class ContactsService {
       return item.id === edited.id
     })
 
-    if (items[index].name !== edited.name) items[index].name = edited.name
-    if (items[index].description !== edited.description)
-      items[index].description = edited.description
-    items[index].phones.forEach((phone, index) => {
-      if (phone !== edited.phones[index])
-        if (index === 0) ContactsLocalStorage.addShouldSyncItem(items[index].id)
-      phone = edited.phones[index]
-    })
-    if (edited.color && items[index].color !== edited.color)
-      items[index].color = edited.color
+    console.log(items[index], edited)
 
-    console.log(edited)
-    this.setItems(items)
+
+    if(index && this.checkChanges(items[index], edited)) {
+      items[index] = edited
+      this.setItems(items)
+    }
+    else console.log("item não encontrado")
+
   }
 
-  setItems = (items: ContactModel[]) => {
-    ContactsLocalStorage.setItems(items)
+  //@TO-DO, verificação back-end pra ver se o id é o mesmo que o primeiro fone
+  checkChanges = (item: ContactModel, edited: ContactModel): boolean => {
+    
+    let changed = false
+
+    if (item.name !== edited.name)
+      changed = true
+
+    if (item.description !== edited.description)
+      changed = true
+
+    if(item.phones.length === edited.phones.length){
+      item.phones.forEach((phone, index) => {
+        if (phone !== edited.phones[index])
+          changed = true
+      })
+    }
+    else changed = true
+
+    if (edited.color !== edited.color){
+      changed = true
+    }
+    return changed
   }
 
-  getItems = (): ContactModel[] => ContactsLocalStorage.getItems()
-
-  getVersion = (): number => ContactsLocalStorage.getVersion()
-
-  setVersion = (version: number) => {
-    ContactsLocalStorage.setVersion(version)
-  }
 
   getPhoneTypes = (phones: Array<PhoneModel>): string => {
-    if (phones.length === 1) return this.getPhoneType(phones[0])
+    if (phones.length === 1) return this.getPhoneType(phones[0].type)
 
-    const strings = new Array<string>()
-
-    phones.forEach((phone) => {
-      strings.push(this.getPhoneType(phone))
-    })
-
-    let result = strings[0]
-
-    strings.forEach((str, index) => {
-      if (index > 0) result += ', ' + str
+    const types = ArrayUtils.removeRepeatedValues(phones.map((phone) => phone.type))
+    let result = this.getPhoneType(types[0])
+    types.forEach((type, index) => {
+      if (index > 0) result += ', ' + this.getPhoneType(type)
     })
 
     return result
   }
 
-  getPhoneType = (phone: PhoneModel): string => {
+  getPhoneType = (type: number): string => {
     const language = useLanguage().current
 
-    switch (phone.type) {
-      case ContactsConstants.PUBLIC_SERVICE:
+    switch (type) {
+      case ContactsConsts.PUBLIC_SERVICE:
         return language.CONTACTS_PUBLIC_SERVICE_PHONE
-      case ContactsConstants.RESIDENTIAL:
+      case ContactsConsts.RESIDENTIAL:
         return language.CONTACTS_RESIDENTIAL_PHONE
       default:
         return language.CONTACTS_MOBILE_PHONE

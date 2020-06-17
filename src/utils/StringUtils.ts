@@ -1,5 +1,5 @@
 class StringUtils {
-  normalizer = (str: string): string => {
+  normalize = (str: string): string => {
     return str
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
@@ -12,7 +12,7 @@ class StringUtils {
    * @returns True para s1 normalizada igual a s2 normalizada
    */
   areEqual = (s1: string, s2: string): boolean =>
-    this.normalizer(s1) === this.normalizer(s2)
+    this.normalize(s1) === this.normalize(s2)
 
   /**
    * @param s1 String um
@@ -27,7 +27,7 @@ class StringUtils {
    * @returns True para s2 contida em s1
    */
   contains = (s1: string, s2: string): boolean => {
-    return this.normalizer(s1).includes(this.normalizer(s2))
+    return this.normalize(s1).includes(this.normalize(s2))
   }
 
   /**
@@ -47,6 +47,12 @@ class StringUtils {
 
   replaceNonDigits = (str: string, replacer: string): string => {
     return str.replace(/[^0-9]/g, replacer)
+  }
+
+  sortByAttr = (array: Array<any>, attr:string): Array<any> => {
+      return array.sort((a, b) =>
+        this.normalize(a[attr]) < this.normalize(b[attr]) ? -1 : 1
+      )
   }
 }
 

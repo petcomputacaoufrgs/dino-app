@@ -15,7 +15,7 @@ class NoteDatabase implements BaseDatabase {
   getNewConnection = (): PouchDB.Database<{}> =>
     new PouchDB(DatabaseConstants.NOTE, { auto_compaction: true })
 
-  private getId = (question: string) => StringUtils.normalizer(question)
+  private getId = (question: string) => StringUtils.normalize(question)
 
   put = async (doc: NoteDoc) => {
     if (!doc._id) {

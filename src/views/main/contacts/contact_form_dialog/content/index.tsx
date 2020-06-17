@@ -16,12 +16,21 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
     }
     const handleChangeNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value as string
-        props.addPhoneAction ? props.setSecNumber(value) : props.setNumber(value)
+        props.setNumber(value)
+    }
+    const handleChangeSecNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value as string
+        props.setSecNumber(value)
     }
     const handleChangeType = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(event.target.value)
-        props.addPhoneAction ? props.setSecType(value) : props.setType(value)
+        props.setType(value)
     }
+    const handleChangeSecType = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Number(event.target.value)
+        props.setSecType(value)
+    }
+    
 
 
     return (
@@ -61,9 +70,9 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                 <><br />
                     <PhoneFields
                         type={props.secType}
-                        onChangeType={handleChangeType}
+                        onChangeType={handleChangeSecType}
                         number={props.secNumber}
-                        onChangeNumber={handleChangeNumber}
+                        onChangeNumber={handleChangeSecNumber}
                     />
                 </> : <></>
             }

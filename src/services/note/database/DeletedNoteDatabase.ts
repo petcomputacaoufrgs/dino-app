@@ -14,7 +14,7 @@ class DeletedNoteDatabase implements BaseDatabase {
   getNewConnection = (): PouchDB.Database<{}> =>
     new PouchDB(DatabaseConstants.DELETED_NOTE, { auto_compaction: true })
 
-  private getId = (question: string) => StringUtils.normalizer(question)
+  private getId = (question: string) => StringUtils.normalize(question)
 
   putNew = async (doc: NoteDoc) => {
     doc._id = this.getId(doc.question)

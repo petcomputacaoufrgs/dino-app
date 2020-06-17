@@ -85,7 +85,6 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     const handleAdd = () => {
         if (validInfo()) {
             const item = getItem(Number(strUtils.replaceNonDigits(number, '')))
-            console.log(item)
             const exists = ContactsService.checkUniquePhone(item.phones[0])
             if(!exists){
                 ContactsService.addContact(item)
@@ -93,10 +92,8 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
                 cleanInfo()
             }
             else{
-                console.log("repetido")
                 setValidNumber(false)
                 setHelperText(`O número já está registrado no contato ${exists.name}`)
-                
             } 
         }
     }
@@ -104,10 +101,16 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     const handleEdit = () => {
         if (props.item?.id) {
             const item = getItem(props.item.id)
-            ContactsService.editContact(item)
+            const exists = ContactsService.checkUniquePhone(item.phones[0])
+            if(!exists){
+                ContactsService.editContact(item)
+                handleClose()
+            }
+            else{
+                setValidNumber(false)
+                setHelperText(`O número já está registrado no contato ${exists.name}`)
+            } 
         }
-        handleClose()
-        //cleanInfo()
     }
 
     return (

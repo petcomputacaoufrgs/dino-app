@@ -37,28 +37,26 @@ class ContactsService {
     const index = items.findIndex((item: ContactModel) => {
       return item.id === edited.id
     })
-
-    if(index && this.checkChanges(items[index], edited)) {
-      items[index] = edited
-      this.setItems(items)
-      this.addShouldSyncItem(items[index].id)
-    }
-    else console.log("item não encontrado")
+    
+    if(index > -1) 
+      if(this.checkChanges(items[index], edited)){
+        items[index] = edited
+        console.log(items[index])
+        this.setItems(items)
+        this.addShouldSyncItem(items[index].id)
+      }
+      else console.log("não mudou")
+    else console.log("item não existe")
 
   }
 
-  checkUniquePhone = (newPhone:PhoneModel): ContactModel | undefined => {
+  findPhone = (newPhone:PhoneModel): ContactModel | undefined => {
     const items = this.getItems()
-    return items.find((item) => {
-      return Boolean(
-        item.phones.find((phone) => { 
-          return phone.number === newPhone.number 
-        })
-      )
+    return items.find(item => {
+      return Boolean(item.phones.find(phone => { return phone.number === newPhone.number }))
     })
   }
 
-  //@TO-DO, verificação back-end pra ver se o id é o mesmo que o primeiro fone
   checkChanges = (item: ContactModel, edited: ContactModel): boolean => {
     
     let changed = false
@@ -75,7 +73,7 @@ class ContactsService {
     }
     else changed = true
 
-    if (edited.color !== edited.color) changed = true
+    if (item.color !== edited.color) changed = true
 
     return changed
   }

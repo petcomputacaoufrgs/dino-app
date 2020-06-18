@@ -47,11 +47,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
                     </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
-            <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
                 <MenuItem onClick={handleEdit}>Editar</MenuItem>
                 <MenuItem onClick={handleDelete}>Excluir</MenuItem>
             </Menu>

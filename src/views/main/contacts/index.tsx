@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ContactItems from './contact_items'
 import StringUtils from '../../../utils/StringUtils'
 import SearchBar from '../../../components/search_bar'
-import AddContactButton from './add_contact_button'
+import AddContactButton from './contact_button_add'
 import ContactsService from '../../../services/contact/ContactsService'
 
 

@@ -67,7 +67,8 @@ class ContactsService {
 
     if(item.phones.length === edited.phones.length){
       item.phones.forEach((phone, index) => {
-        if (phone.number !== edited.phones[index].number) 
+        if (phone.number !== edited.phones[index].number || 
+            phone.type !== edited.phones[index].type) 
           changed = true
       })
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useLanguage } from '../../../../provider/app_provider'
 import Button from '@material-ui/core/Button'
-import { Dialog, DialogActions, DialogContent, Divider, TextField } from '@material-ui/core'
+import { Dialog, DialogActions, DialogContent, Divider } from '@material-ui/core'
 import ContactFormDialogHeader from './header/'
 import ContactFormDialogContent from './content/'
 import ContactFormDialogProps from './props'
@@ -10,7 +10,6 @@ import TransitionSlide from '../../../../components/slide_transition'
 import Service from '../../../../services/contact/ContactsService'
 import ContactModel from '../../../../services/contact/api_model/ContactModel'
 import PhoneModel from '../../../../services/contact/api_model/PhoneModel'
-import PhoneFields from './content/phone_fields'
 
 const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
 

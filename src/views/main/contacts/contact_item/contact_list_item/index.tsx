@@ -1,5 +1,6 @@
 import React from 'react'
 import useStyles from '../../styles'
+import { useLanguage } from '../../../../../provider/app_provider'
 import ContactItemListProps from './props'
 import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, IconButton, Menu, MenuItem } from '@material-ui/core'
 import ContactsService from '../../../../../services/contact/ContactsService'
@@ -8,6 +9,8 @@ import { MoreVert } from '@material-ui/icons'
 const ContactItemList = (props: ContactItemListProps): JSX.Element => {
 
     const classes = useStyles(props)
+    const language = useLanguage().current
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,8 +51,8 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
                 </ListItemSecondaryAction>
             </ListItem>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={handleEdit}>Editar</MenuItem>
-                <MenuItem onClick={handleDelete}>Excluir</MenuItem>
+                <MenuItem onClick={handleEdit}>{language.EDIT_OPTION_TEXT}</MenuItem>
+                <MenuItem onClick={handleDelete}>{language.DELETE_OPTION_TEXT}</MenuItem>
             </Menu>
             {props.children}
         </>

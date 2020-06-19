@@ -52,6 +52,10 @@ export default class PT_BR implements LanguageSet {
 
   CANCEL_OPTION_TEXT = 'CANCELAR'
 
+  EDIT_OPTION_TEXT = 'EDITAR'
+
+  DELETE_OPTION_TEXT = 'DELETAR'
+
   MENU_HOME = 'Home'
 
   MENU_GAMES = 'Jogos'

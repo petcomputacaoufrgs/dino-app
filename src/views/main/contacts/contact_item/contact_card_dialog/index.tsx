@@ -21,6 +21,7 @@ const ContactCard = forwardRef((props: ContactCardProps, ref: React.Ref<unknown>
       <ContactCardHeader
         item={props.item}
         setEdit={props.setEdit}
+        setDelete={props.setDelete}
         onClose={props.onClose}
       />
       <ContactCardContent item={props.item} />

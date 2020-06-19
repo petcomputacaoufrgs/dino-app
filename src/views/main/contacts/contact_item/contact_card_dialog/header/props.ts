@@ -3,5 +3,6 @@ import ContactModel from '../../../../../../services/contact/api_model/ContactMo
 export default interface ContactCardHeaderProps {
   item: ContactModel
   setEdit: React.Dispatch<React.SetStateAction<number>>
+  setDelete: React.Dispatch<React.SetStateAction<number>>
   onClose: () => void
 }

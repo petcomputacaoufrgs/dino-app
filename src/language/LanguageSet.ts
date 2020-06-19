@@ -21,6 +21,8 @@ export default interface LanguageSet {
   DISAGREEMENT_OPTION_TEXT: string
   ADD_OPTION_TEXT: string
   CANCEL_OPTION_TEXT: string
+  EDIT_OPTION_TEXT: string
+  DELETE_OPTION_TEXT:string
   MENU_HOME: string
   MENU_GAMES: string
   MENU_GLOSSARY: string

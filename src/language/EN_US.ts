@@ -52,6 +52,10 @@ export default class EN_US implements LanguageSet {
 
   CANCEL_OPTION_TEXT = 'CANCEL'
 
+  EDIT_OPTION_TEXT = 'EDIT'
+
+  DELETE_OPTION_TEXT = 'DELETE'
+
   MENU_HOME = 'Home'
 
   MENU_GAMES = 'Games'

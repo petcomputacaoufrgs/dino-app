@@ -41,6 +41,7 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
               item={contact}
               onClose={() => setOpen(0)}
               setEdit={setEdit}
+              setDelete={setDelete}
               dialogOpen={open === contact.id}
               setDialogOpen={setOpen}
             />

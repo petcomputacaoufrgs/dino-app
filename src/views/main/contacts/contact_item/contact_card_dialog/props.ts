@@ -6,4 +6,5 @@ export default interface ContactCardProps {
   setDialogOpen: React.Dispatch<React.SetStateAction<number>>
   onClose: () => void
   setEdit: React.Dispatch<React.SetStateAction<number>>
+  setDelete: React.Dispatch<React.SetStateAction<number>>
 }

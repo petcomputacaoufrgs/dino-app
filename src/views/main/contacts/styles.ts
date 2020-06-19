@@ -4,7 +4,7 @@ import { red, pink, purple, blue, green } from '@material-ui/core/colors'
 const useStyles = makeStyles(() =>
   createStyles({
     iconButton: {
-      marginLeft: 25,
+      //marginLeft: 5,
       padding: 5,
     },
     list: {

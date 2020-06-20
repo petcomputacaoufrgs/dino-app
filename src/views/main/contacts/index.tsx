@@ -13,20 +13,20 @@ const Contacts = (): JSX.Element => {
 
   const language = useLanguage().current
 
+  //const [items, setItems] = useState(ContactsService.getItems())
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState(new Array<ContactModel>())
 
   const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
     setSearchTerm(event.target.value)
   }
-
+  
   useEffect(() => {
     const items = ContactsService.getItems()
     const results = items.filter((item) =>
       StringUtils.contains(item.name, searchTerm)
     )
     setSearchResults(results)
-    console.log('itens tirados')
   }, [searchTerm])
 
   return (
@@ -36,7 +36,7 @@ const Contacts = (): JSX.Element => {
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}
       />
-      <ContactItems items={searchResults} />
+      <ContactItems items={searchResults} setItems={setSearchResults}/>
       <AddContactButton />
     </div>
   )

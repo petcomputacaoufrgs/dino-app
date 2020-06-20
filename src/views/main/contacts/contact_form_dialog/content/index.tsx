@@ -32,7 +32,6 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
     }
     
 
-
     return (
         <>
             <TextField
@@ -75,8 +74,8 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                         number={props.secNumber}
                         onChangeNumber={handleChangeSecNumber}
                     />
-                </> : <></>
-            }
+                </> 
+            : <></>}
         </>
     )
 }

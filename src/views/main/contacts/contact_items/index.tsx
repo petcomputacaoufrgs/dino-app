@@ -14,47 +14,43 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   const [open, setOpen] = useState(0)
   const [edit, setEdit] = useState(0)
   const [_delete, setDelete] = useState(0)
-
-  const handleDelete = () => {
-    if (_delete) {
-      console.log(_delete)
-      ContactsService.deleteContact(_delete)
-    }
-  }
-
+    
   useEffect(() => {
-    handleDelete()
+    if (_delete) {
+        ContactsService.deleteContact(_delete)
+        const index = props.items.findIndex(item => item.id === _delete)
+        props.items.splice(index, 1)
+        props.setItems([...props.items])
+      }
   }, [_delete])
 
 
   return (
     <List className={classes.list}>
-      {props.items.map((contact) => (
-        <div key={contact.id}>
-          <ContactItemList
-            item={contact}
-            setEdit={setEdit}
-            setDelete={setDelete}
-            onClick={() => setOpen(contact.id)}
-          >
-            <ContactCard
-              item={contact}
-              onClose={() => setOpen(0)}
-              setEdit={setEdit}
-              setDelete={setDelete}
-              dialogOpen={open === contact.id}
-              setDialogOpen={setOpen}
-            />
-            <ContactFormDialog
-              item={contact}
-              dialogOpen={edit === contact.id}
-              setDialogOpen={setEdit}
-              action="edit"
-            />
-          </ContactItemList>
-          <Divider />
-        </div>
-      ))}
+        {props.items.map((contact) => (
+          <div key={contact.id}>
+              <ContactItemList
+                item={contact}
+                setEdit={setEdit}
+                setDelete={setDelete}
+                onClick={() => setOpen(contact.id)}
+              >
+                <ContactCard
+                  item={contact}
+                  onClose={() => setOpen(0)}
+                  setEdit={setEdit}
+                  dialogOpen={open === contact.id}
+                  setDialogOpen={setOpen}
+                />
+                <ContactFormDialog
+                  item={contact}
+                  dialogOpen={edit === contact.id}
+                  setDialogOpen={setEdit}
+                  action="edit"
+                />
+              </ContactItemList>
+          </div>
+        ))}
     </List>
   )
 }

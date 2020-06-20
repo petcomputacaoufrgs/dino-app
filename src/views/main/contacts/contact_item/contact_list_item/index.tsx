@@ -17,13 +17,9 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
         setAnchorEl(event.currentTarget)
     }
 
-    const handleOpen = () => {
-        props.onClick(props.item.id)
-    }
+    const handleOpen = () => props.onClick(props.item.id)
 
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+    const handleClose = () => setAnchorEl(null)
 
     const handleEdit = () => {
         props.setEdit(props.item.id)

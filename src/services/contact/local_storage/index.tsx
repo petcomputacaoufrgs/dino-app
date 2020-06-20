@@ -7,7 +7,7 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     getItems = (): Array<ContactModel> => {
         let items = this.get(LS_Constants.CONTACTS)
-        
+        console.log("tirou")
         let result = Array<ContactModel>()
         if (items) 
             result = JSON.parse(items)

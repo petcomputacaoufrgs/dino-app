@@ -9,26 +9,26 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
     const language = useLanguage().current
 
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.setName(event.target.value as string)
+        props.sets.setName(event.target.value as string)
     }
     const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.setDescription(event.target.value as string)
+        props.sets.setDescription(event.target.value as string)
     }
     const handleChangeNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value as string
-        props.setNumber(value)
+        props.sets.setNumber(value)
     }
     const handleChangeSecNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value as string
-        props.setSecNumber(value)
+        props.sets.setSecNumber(value)
     }
     const handleChangeType = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(event.target.value)
-        props.setType(value)
+        props.sets.setType(value)
     }
     const handleChangeSecType = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(event.target.value)
-        props.setSecType(value)
+        props.sets.setSecType(value)
     }
     
 
@@ -37,9 +37,9 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
             <TextField
                 required
                 fullWidth
-                value={props.name}
+                value={props.values.name}
                 onChange={handleChangeName}
-                error={!props.validName}
+                error={!props.values.validName}
                 autoFocus
                 margin="dense"
                 id="name"
@@ -49,7 +49,7 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
             <br />
             <TextField
                 fullWidth
-                value={props.description}
+                value={props.values.description}
                 onChange={handleChangeDescription}
                 margin="dense"
                 id="description"
@@ -58,20 +58,20 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
             />
             <br />
             <PhoneFields
-                type={props.type}
+                type={props.values.type}
                 onChangeType={handleChangeType}
-                number={props.number}
+                number={props.values.number}
                 onChangeNumber={handleChangeNumber}
                 required
-                error={!props.validNumber}
-                helperText={props.helperText}
+                error={!props.values.validNumber}
+                helperText={props.values.helperText}
             />
-            {props.addPhoneAction || props.secNumber ?
+            {props.values.addPhoneAction || props.values.secNumber ?
                 <><br />
                     <PhoneFields
-                        type={props.secType}
+                        type={props.values.secType}
                         onChangeType={handleChangeSecType}
-                        number={props.secNumber}
+                        number={props.values.secNumber}
                         onChangeNumber={handleChangeSecNumber}
                     />
                 </> 

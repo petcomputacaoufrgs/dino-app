@@ -52,9 +52,9 @@ export default class EN_US implements LanguageSet {
 
   CANCEL_OPTION_TEXT = 'CANCEL'
 
-  EDIT_OPTION_TEXT = 'EDIT'
+  EDIT_OPTION_TEXT = 'Edit'
 
-  DELETE_OPTION_TEXT = 'DELETE'
+  DELETE_OPTION_TEXT = 'Delete'
 
   MENU_HOME = 'Home'
 

@@ -52,9 +52,9 @@ export default class PT_BR implements LanguageSet {
 
   CANCEL_OPTION_TEXT = 'CANCELAR'
 
-  EDIT_OPTION_TEXT = 'EDITAR'
+  EDIT_OPTION_TEXT = 'Editar'
 
-  DELETE_OPTION_TEXT = 'DELETAR'
+  DELETE_OPTION_TEXT = 'Deletar'
 
   MENU_HOME = 'Home'
 

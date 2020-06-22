@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ContactItemsProps from './props'
 import ContactCard from '../contact_item/contact_card_dialog'
 import ContactItemList from '../contact_item/contact_list_item'
-import { List, Divider } from '@material-ui/core'
+import { List } from '@material-ui/core'
 import useStyles from '../styles'
 import ContactFormDialog from '../contact_form_dialog'
 import ContactsService from '../../../../services/contact/ContactsService'
@@ -17,12 +17,21 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
     
   useEffect(() => {
     if (_delete) {
+        console.log("delete")
         ContactsService.deleteContact(_delete)
-        const index = props.items.findIndex(item => item.id === _delete)
-        props.items.splice(index, 1)
-        props.setItems([...props.items])
-      }
+        //const index = props.items.findIndex(item => item.id === _delete)
+        //props.items.splice(index, 1)
+        //props.setItems([...props.items])
+        props.setItems([...ContactsService.getItems()])
+    }
   }, [_delete])
+
+  useEffect(()=> {
+    if (!edit) {
+      console.log("edit")
+      props.setItems([...ContactsService.getItems()])
+    }
+  }, [edit])
 
 
   return (

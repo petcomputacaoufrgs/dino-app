@@ -8,11 +8,11 @@ import SearchBar from '../../../components/search_bar'
 import AddContactButton from './contact_button_add'
 import ContactsService from '../../../services/contact/ContactsService'
 
-
 const Contacts = (): JSX.Element => {
 
   const language = useLanguage().current
 
+  const [add, setAdd] = useState(0)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState(new Array<ContactModel>())
 
@@ -21,12 +21,15 @@ const Contacts = (): JSX.Element => {
   }
   
   useEffect(() => {
-    const items = ContactsService.getItems()
-    const results = items.filter((item) =>
-      StringUtils.contains(item.name, searchTerm)
-    )
-    setSearchResults(results)
-  }, [searchTerm])
+    if(add === 0){
+      console.log("pai tirou")
+      const items = ContactsService.getItems()
+      const results = items.filter((item) =>
+        StringUtils.contains(item.name, searchTerm)
+      )
+      setSearchResults(results)
+    }
+  }, [searchTerm, add])
 
   return (
     <div>
@@ -36,7 +39,7 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults}/>
-      <AddContactButton />
+      <AddContactButton dialogOpen={add} setDialogOpen={setAdd}/>
     </div>
   )
 }

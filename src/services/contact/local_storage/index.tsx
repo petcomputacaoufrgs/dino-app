@@ -7,7 +7,6 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     getItems = (): Array<ContactModel> => {
         let items = this.get(LS_Constants.CONTACTS)
-        console.log("tirou")
         let result = Array<ContactModel>()
         if (items) 
             result = JSON.parse(items)
@@ -29,10 +28,11 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     addShouldSyncItem = (id: number) => {
         let items = this.getShouldSyncItems()
-        if(!items.includes(id)){
-            items.push(id)
-            this.setShouldSyncItems(items)
-        }
+        const index = items.findIndex(idFromList => idFromList === id )
+
+        if(index > -1) items.splice(index, 1)
+        items.push(id)
+        this.setShouldSyncItems(items)
     }
 
     cleanShouldSync = () => {

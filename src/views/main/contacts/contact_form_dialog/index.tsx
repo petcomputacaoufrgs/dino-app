@@ -42,6 +42,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         setValidNumber(number !== '')
         return name !== '' && number !== ''
     }
+
     const cleanInfo = () => { //@TO-DO resolver essa bodega
         setNumber('')
         setName('')
@@ -52,32 +53,26 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         setValidNumber(true)
         setHelperText('')
     }
+
     const handleClose = () => {
         props.setDialogOpen(0)
-    }
-    const handleCancel = () => {
-        handleClose()
-        if (props.action === 'add')
+        if(props.action === 'add')
             cleanInfo()
     }
 
     const getPhones = (): Array<PhoneModel> => {
         const phones = new Array<PhoneModel>({ number: number, type: type })
-        console.log(phones)
-        if (secNumber) {
-            phones.push({ number: secNumber, type: secType })
-            console.log(secNumber)
-        }
+        if (secNumber) phones.push({ number: secNumber, type: secType })
         return phones
     }
 
     const makeItem = (id = Service.makeId()): ContactModel => {
         return {
-            id: id,
-            name: name,
-            description: description,
-            phones: getPhones(),
-            color: color
+        id: id,
+        name: name,
+        description: description,
+        phones: getPhones(),
+        color: color
         }
     }
 
@@ -85,12 +80,12 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         if (validInfo()) {
             const item = makeItem()
             const exists = Service.findPhone(item.phones[0])
-            if(!exists){
+            if(!exists) {
                 Service.addContact(item)
                 handleClose()
                 cleanInfo()
             }
-            else{
+            else {
                 setValidNumber(false)
                 setHelperText(`O número já está registrado no contato ${exists.name}`)
             } 
@@ -132,28 +127,14 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
             <Divider />
             <DialogContent>
                 <ContactFormDialogContent 
-                    name={name}
-                    setName={setName}
-                    description={description}
-                    setDescription={setDescription}
-                    number={number}
-                    setNumber={setNumber}
-                    type={type}
-                    setType={setType}
-                    addPhoneAction={addPhoneAction}
-                    secNumber={secNumber}
-                    setSecNumber={setSecNumber}
-                    secType={secType}
-                    setSecType={setSecType}
-                    validName={validName}
-                    validNumber={validNumber}
-                    helperText={helperText}
+                    values={{name,description, number, type, addPhoneAction, secNumber, secType, validName, validNumber, helperText}}
+                    sets={{setName, setDescription, setNumber, setType, setSecNumber, setSecType,}}
                 />
             </DialogContent>
             <DialogActions>
                 <Button
                     aria-labelledby={language.DIALOG_CANCEL_BUTTON_LABEL}
-                    onClick={handleCancel}
+                    onClick={handleClose}
                     color="primary">
                     {language.DIALOG_CANCEL_BUTTON_TEXT}
                 </Button>

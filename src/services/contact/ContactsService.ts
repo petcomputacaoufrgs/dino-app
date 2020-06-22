@@ -10,6 +10,7 @@ class ContactsService {
   getItems = (): ContactModel[] => LS.getItems()
   setItems = (items: ContactModel[]) => LS.setItems(items)
   addShouldSyncItem = (id: number) => LS.addShouldSyncItem(id)
+  getShouldSyncItems = (): Array<number> => LS.getShouldSyncItems()
   makeId = () => LS.updateLastId() 
   
   
@@ -40,14 +41,12 @@ class ContactsService {
     
     if(index > -1) 
       if(this.checkChanges(items[index], edited)){
-        items[index] = edited
-        console.log(items[index])
+        items.splice(index, 1, edited)
         this.setItems(items)
         this.addShouldSyncItem(items[index].id)
       }
       else console.log("não mudou")
     else console.log("item não existe")
-
   }
 
   findPhone = (newPhone:PhoneModel): ContactModel | undefined => {

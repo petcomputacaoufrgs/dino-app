@@ -13,7 +13,6 @@ const Contacts = (): JSX.Element => {
 
   const language = useLanguage().current
 
-  //const [items, setItems] = useState(ContactsService.getItems())
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState(new Array<ContactModel>())
 

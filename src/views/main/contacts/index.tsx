@@ -21,8 +21,7 @@ const Contacts = (): JSX.Element => {
   }
   
   useEffect(() => {
-    if(add === 0){
-      console.log("pai tirou")
+    if(!add){
       const items = ContactsService.getItems()
       const results = items.filter((item) =>
         StringUtils.contains(item.name, searchTerm)

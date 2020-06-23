@@ -6,6 +6,7 @@ import StrU from '../../../utils/StringUtils'
 class ContactsLocalStorage extends BaseLocalStorage {
 
     getItems = (): Array<ContactModel> => {
+        console.log("jjjjj")
         let items = this.get(LS_Constants.CONTACTS)
         let result = Array<ContactModel>()
         if (items) 

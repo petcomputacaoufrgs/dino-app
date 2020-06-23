@@ -49,10 +49,10 @@ class ContactsService {
     else console.log("item não existe")
   }
 
-  findPhone = (newPhone:PhoneModel): ContactModel | undefined => {
+  findPhone = (newPhones:Array<PhoneModel>): ContactModel | undefined => {
     const items = this.getItems()
     return items.find(item => {
-      return Boolean(item.phones.find(phone => { return phone.number === newPhone.number }))
+      return item.phones.some(phone => newPhones.some(newPhone => newPhone.number === phone.number))
     })
   }
 

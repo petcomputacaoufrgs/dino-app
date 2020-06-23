@@ -12,25 +12,21 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   const classes = useStyles()
 
   const [open, setOpen] = useState(0)
-  const [edit, setEdit] = useState(0)
+  const [edit, setEdit] = useState(-1)
   const [_delete, setDelete] = useState(0)
     
   useEffect(() => {
     if (_delete) {
-        console.log("delete")
         ContactsService.deleteContact(_delete)
-        //const index = props.items.findIndex(item => item.id === _delete)
-        //props.items.splice(index, 1)
-        //props.setItems([...props.items])
-        props.setItems([...ContactsService.getItems()])
+        props.items.splice(props.items.findIndex(item => item.id === _delete), 1)
+        props.setItems([...props.items])
+        //props.setItems([...ContactsService.getItems()])
     }
   }, [_delete])
 
   useEffect(()=> {
-    if (!edit) {
-      console.log("edit")
+    if (!edit) 
       props.setItems([...ContactsService.getItems()])
-    }
   }, [edit])
 
 

@@ -4,11 +4,11 @@ export interface ContactFormDialogContentProps {
     description:string, 
     number: string
     type: number
-    addPhoneAction: boolean
+    addPhone: boolean
     secNumber: string
     secType: number
-    validName: boolean
-    validNumber: boolean
+    invalidName: boolean
+    invalidNumber: string
     helperText: string 
   }
   sets: { 

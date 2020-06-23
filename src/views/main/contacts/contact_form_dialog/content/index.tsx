@@ -31,6 +31,7 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
         props.sets.setSecType(value)
     }
     
+    const isTheInvalidNumber = (number: string): boolean => props.values.invalidNumber === number
 
     return (
         <>
@@ -39,7 +40,7 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                 fullWidth
                 value={props.values.name}
                 onChange={handleChangeName}
-                error={!props.values.validName}
+                error={props.values.invalidName}
                 autoFocus
                 margin="dense"
                 id="name"
@@ -63,16 +64,18 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
                 number={props.values.number}
                 onChangeNumber={handleChangeNumber}
                 required
-                error={!props.values.validNumber}
-                helperText={props.values.helperText}
+                error={isTheInvalidNumber(props.values.number)}
+                helperText={isTheInvalidNumber(props.values.number) ? props.values.helperText : ''}
             />
-            {props.values.addPhoneAction || props.values.secNumber ?
+            {props.values.addPhone ?
                 <><br />
                     <PhoneFields
                         type={props.values.secType}
                         onChangeType={handleChangeSecType}
                         number={props.values.secNumber}
                         onChangeNumber={handleChangeSecNumber}
+                        error={isTheInvalidNumber(props.values.secNumber)}
+                        helperText={isTheInvalidNumber(props.values.secNumber) ? props.values.helperText : ''}
                     />
                 </> 
             : <></>}

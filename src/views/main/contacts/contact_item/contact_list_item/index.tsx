@@ -4,7 +4,7 @@ import { useLanguage } from '../../../../../provider/app_provider'
 import ContactItemListProps from './props'
 import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, IconButton, Menu, MenuItem } from '@material-ui/core'
 import ContactsService from '../../../../../services/contact/ContactsService'
-import { MoreVert } from '@material-ui/icons'
+import { MoreVert as MoreVertIcon, } from '@material-ui/icons'
 
 const ContactItemList = (props: ContactItemListProps): JSX.Element => {
 
@@ -42,7 +42,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
                 />
                 <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="options" onClick={handleClick}>
-                        <MoreVert />
+                        <MoreVertIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>

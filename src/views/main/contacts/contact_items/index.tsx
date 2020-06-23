@@ -16,12 +16,8 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   const [_delete, setDelete] = useState(0)
     
   useEffect(() => {
-    if (_delete) {
-        ContactsService.deleteContact(_delete)
-        props.items.splice(props.items.findIndex(item => item.id === _delete), 1)
-        props.setItems([...props.items])
-        //props.setItems([...ContactsService.getItems()])
-    }
+    if (_delete) 
+        props.setItems([...ContactsService.deleteContact(_delete)])
   }, [_delete])
 
   useEffect(()=> {

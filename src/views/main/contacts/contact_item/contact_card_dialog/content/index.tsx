@@ -1,14 +1,19 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import ContactsConstants from '../../../../../../constants/ContactsConstants'
 import ContactCardContentProps from './props'
 import useStyles from '../../../styles'
-import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
-import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospital as LocalHospitalIcon } from '@material-ui/icons'
+import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction, Divider, IconButton } from '@material-ui/core'
+import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospital as LocalHospitalIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import PhoneModel from '../../../../../../services/contact/api_model/PhoneModel'
+import ContactModel from '../../../../../../services/contact/api_model/ContactModel'
+import Service from '../../../../../../services/contact/ContactsService'
 
 const ContactCardContent = (props: ContactCardContentProps) => {
 
     const classes = useStyles()
+    const [phones, setPhones] = useState(new Array<PhoneModel>())
+
+    useEffect(() => setPhones([...props.item.phones]), [])
 
     const getTypePhoneIcon = (phone: PhoneModel) => {
         if (phone.type === ContactsConstants.MOBILE)
@@ -44,7 +49,7 @@ const ContactCardContent = (props: ContactCardContentProps) => {
             {getDescription()}
             <List component="nav" aria-label="idk">
                 <Divider className={classes.DividerMargin} />
-                {props.item.phones.map((phone) => (
+                {phones.map((phone) => (
                     <ListItem button className={classes.ListItem} key={phone.number}>
                         <ListItemIcon>
                             {getTypePhoneIcon(phone)}
@@ -54,6 +59,12 @@ const ContactCardContent = (props: ContactCardContentProps) => {
                                 {phone.number}
                             </Typography>}
                         />
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete" 
+                            onClick={() => setPhones([...Service.deletePhone(props.item, phone)])}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
                     </ListItem>
                 ))}
             </List>

@@ -22,14 +22,25 @@ class ContactsService {
     console.log(item)
   }
 
-  deleteContact = (deletedID: number) => {
+  deleteContact = (deletedID: number): ContactModel[] => {
     const items = this.getItems()
-    this.setItems(
-      items.filter(function (item: ContactModel) {
-        return item.id !== deletedID
-      })
-    )
-    this.addShouldSyncItem(deletedID)
+    const index = items.findIndex(item => item.id === deletedID)
+    this.addShouldSyncItem(items.splice(index, 1)[0].id)
+    this.setItems(items)
+    return items
+  }
+
+  deletePhone = (fromItem: ContactModel, deletedPhone: PhoneModel): PhoneModel[] => {
+    const items = this.getItems()
+    const index = items.findIndex(item => item.id === fromItem.id)
+    let indexPhone = -1
+    if(index > -1) {
+      indexPhone = items[index].phones.findIndex(phone => phone.number === deletedPhone.number)
+      items[index].phones.splice(indexPhone, 1)
+      this.addShouldSyncItem(items[index].id)
+      this.setItems(items)
+    }
+    return items[index].phones
   }
 
   editContact = (edited: ContactModel) => {

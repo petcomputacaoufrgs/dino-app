@@ -3,7 +3,7 @@ import { Dialog } from '@material-ui/core'
 import ContactCardProps from './props'
 import ContactCardHeader from './header'
 import ContactCardContent from './content'
-import TransitionSlide from '../../../../../components/slide_transition'
+import TransitionSlide from '../../../../components/slide_transition'
 
 const ContactCard = forwardRef((props: ContactCardProps, ref: React.Ref<unknown>): JSX.Element => {
 

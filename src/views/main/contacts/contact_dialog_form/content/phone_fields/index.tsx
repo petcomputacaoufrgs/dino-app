@@ -1,11 +1,13 @@
 import React from 'react'
 import { useLanguage } from '../../../../../../provider/app_provider'
 import TextField from '@material-ui/core/TextField'
-import { MenuItem } from '@material-ui/core'
+import { MenuItem, IconButton } from '@material-ui/core'
+import { Clear } from '@material-ui/icons'
 import ContactsConstants from '../../../../../../constants/ContactsConstants'
 import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
 
@@ -47,10 +49,21 @@ const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
             </TextField>
             <NumberFormat
                 customInput={TextField}
+                //required={props.required}
                 format={strUtils.replaceDigits(getNumberFormat(), '#')}
+                InputProps ={{
+                    endAdornment:
+                    <InputAdornment position="end">
+                      <IconButton
+                        size='small'
+                        onClick={() => props.handleDeletePhone(props.number)}
+                      >
+                          <Clear/>
+                      </IconButton>
+                    </InputAdornment>
+                }}
                 fullWidth
                 placeholder={getNumberFormat()}
-                required={props.required}
                 error={props.error}
                 value={props.number}
                 onChange={props.onChangeNumber}

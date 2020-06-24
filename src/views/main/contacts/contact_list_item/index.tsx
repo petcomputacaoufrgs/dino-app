@@ -1,9 +1,9 @@
 import React from 'react'
-import useStyles from '../../styles'
-import { useLanguage } from '../../../../../provider/app_provider'
+import useStyles from '../styles'
+import { useLanguage } from '../../../../provider/app_provider'
 import ContactItemListProps from './props'
 import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, IconButton, Menu, MenuItem } from '@material-ui/core'
-import ContactsService from '../../../../../services/contact/ContactsService'
+import ContactsService from '../../../../services/contact/ContactsService'
 import { MoreVert as MoreVertIcon, } from '@material-ui/icons'
 
 const ContactItemList = (props: ContactItemListProps): JSX.Element => {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import ContactFormDialog from '../contact_form_dialog'
+import React from 'react'
+import ContactFormDialog from '../contact_dialog_form'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import './styles.css'

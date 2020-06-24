@@ -1,10 +1,10 @@
 import React from 'react'
-import { useLanguage } from '../../../../../../provider/app_provider'
+import { useLanguage } from '../../../../../provider/app_provider'
 import { Avatar, IconButton, CardHeader, Menu, MenuItem } from '@material-ui/core'
-import useStyles from '../../../styles'
+import useStyles from '../../styles'
 import { MoreVert } from '@material-ui/icons'
 import ContactCardHeaderProps from './props'
-import ContactsService from '../../../../../../services/contact/ContactsService'
+import ContactsService from '../../../../../services/contact/ContactsService'
 
 
 const ContactCardHeader = (props: ContactCardHeaderProps) => {

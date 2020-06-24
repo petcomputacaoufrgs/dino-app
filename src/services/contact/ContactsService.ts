@@ -30,12 +30,12 @@ class ContactsService {
     return items
   }
 
-  deletePhone = (fromItem: ContactModel, deletedPhone: PhoneModel): PhoneModel[] => {
+  deletePhone = (fromItem: ContactModel, deletedNumber: string): PhoneModel[] => {
     const items = this.getItems()
     const index = items.findIndex(item => item.id === fromItem.id)
     let indexPhone = -1
     if(index > -1) {
-      indexPhone = items[index].phones.findIndex(phone => phone.number === deletedPhone.number)
+      indexPhone = items[index].phones.findIndex(phone => phone.number === deletedNumber)
       items[index].phones.splice(indexPhone, 1)
       this.addShouldSyncItem(items[index].id)
       this.setItems(items)
@@ -64,6 +64,11 @@ class ContactsService {
     const items = this.getItems()
     return items.find(item => {
       return item.phones.some(phone => newPhones.some(newPhone => newPhone.number === phone.number))
+      /*const itemPhones = item.phones.map(phone => phone.number)
+      const phone = newPhones.find(newPhone => itemPhones.includes(newPhone.number))
+      if(phone) existsNumber = phone.number
+      return Boolean(phone)
+      */
     })
   }
 
@@ -71,19 +76,18 @@ class ContactsService {
     
     let changed = false
 
-    if (item.name !== edited.name) changed = true
-
-    if (item.description !== edited.description) changed = true
-
-    if(item.phones.length === edited.phones.length){
-      item.phones.forEach((phone, index) => {
-        if (phone.number !== edited.phones[index].number || 
-            phone.type !== edited.phones[index].type) 
-          changed = true
-      })
+    if(item.phones.length === edited.phones.length) {
+      changed = item.phones.some((phone, index) => 
+        phone.number !== edited.phones[index].number 
+        || phone.type !== edited.phones[index].type 
+      )
     }
     else changed = true
 
+    if (item.name !== edited.name) changed = true
+
+    if (item.description !== edited.description) changed = true
+    
     if (item.color !== edited.color) changed = true
 
     return changed

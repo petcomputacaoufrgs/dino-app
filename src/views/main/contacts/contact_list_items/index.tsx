@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import ContactItemsProps from './props'
-import ContactCard from '../contact_item/contact_card_dialog'
-import ContactItemList from '../contact_item/contact_list_item'
+import ContactCard from '../contact_dialog_card'
+import ContactItemList from '../contact_list_item'
 import { List } from '@material-ui/core'
 import useStyles from '../styles'
-import ContactFormDialog from '../contact_form_dialog'
+import ContactFormDialog from '../contact_dialog_form'
 import ContactsService from '../../../../services/contact/ContactsService'
 
 const ContactItems = (props: ContactItemsProps): JSX.Element => {
@@ -23,7 +23,7 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   useEffect(()=> {
     if (!edit) 
       props.setItems([...ContactsService.getItems()])
-  }, [edit])
+  }, [edit, props])
 
 
   return (

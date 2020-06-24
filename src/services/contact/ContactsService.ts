@@ -11,7 +11,7 @@ class ContactsService {
   setItems = (items: ContactModel[]) => LS.setItems(items)
   addShouldSyncItem = (id: number) => LS.addShouldSyncItem(id)
   getShouldSyncItems = (): Array<number> => LS.getShouldSyncItems()
-  makeId = () => LS.updateLastId() 
+  makeId = (): number => LS.updateLastId() 
   
   
   addContact = (item: ContactModel) => {

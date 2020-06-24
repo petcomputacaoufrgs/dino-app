@@ -23,7 +23,7 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   useEffect(()=> {
     if (!edit) 
       props.setItems([...ContactsService.getItems()])
-  }, [edit, props])
+  }, [edit])
 
 
   return (

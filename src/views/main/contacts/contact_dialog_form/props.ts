@@ -4,6 +4,6 @@ import ContactModel from '../../../../services/contact/api_model/ContactModel'
 export default interface ContactFormDialogProps {
   dialogOpen: boolean
   setDialogOpen: React.Dispatch<React.SetStateAction<number>>
-  action: 'add' | 'edit'
+  action: number
   item?: ContactModel
 }

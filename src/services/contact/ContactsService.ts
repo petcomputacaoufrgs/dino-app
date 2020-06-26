@@ -30,19 +30,6 @@ class ContactsService {
     return items
   }
 
-  deletePhone = (fromItem: ContactModel, deletedNumber: string): PhoneModel[] => {
-    const items = this.getItems()
-    const index = items.findIndex(item => item.id === fromItem.id)
-    let indexPhone = -1
-    if(index > -1) {
-      indexPhone = items[index].phones.findIndex(phone => phone.number === deletedNumber)
-      items[index].phones.splice(indexPhone, 1)
-      this.addShouldSyncItem(items[index].id)
-      this.setItems(items)
-    }
-    return items[index].phones
-  }
-
   editContact = (edited: ContactModel) => {
     const items = this.getItems()
 
@@ -56,19 +43,12 @@ class ContactsService {
         this.setItems(items)
         this.addShouldSyncItem(items[index].id)
       }
-      else console.log("não mudou")
-    else console.log("item não existe")
   }
 
   findPhone = (newPhones:Array<PhoneModel>): ContactModel | undefined => {
     const items = this.getItems()
     return items.find(item => {
       return item.phones.some(phone => newPhones.some(newPhone => newPhone.number === phone.number))
-      /*const itemPhones = item.phones.map(phone => phone.number)
-      const phone = newPhones.find(newPhone => itemPhones.includes(newPhone.number))
-      if(phone) existsNumber = phone.number
-      return Boolean(phone)
-      */
     })
   }
 

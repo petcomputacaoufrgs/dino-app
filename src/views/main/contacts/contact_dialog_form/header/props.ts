@@ -1,6 +1,6 @@
 import PhoneModel from '../../../../../services/contact/api_model/PhoneModel'
 export default interface AddContactDialogHeaderProps {
-  action: 'add' | 'edit'
+  action: number
   name: string
   phones: PhoneModel[]
   color: string

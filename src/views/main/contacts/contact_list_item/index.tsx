@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useStyles from '../styles'
 import { useLanguage } from '../../../../provider/app_provider'
 import ContactItemListProps from './props'
@@ -11,11 +11,9 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
     const classes = useStyles(props)
     const language = useLanguage().current
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget)
-    }
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
 
     const handleOpen = () => props.onClick(props.item.id)
 

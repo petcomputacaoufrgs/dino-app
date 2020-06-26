@@ -6,6 +6,7 @@ import { List } from '@material-ui/core'
 import useStyles from '../styles'
 import ContactFormDialog from '../contact_dialog_form'
 import ContactsService from '../../../../services/contact/ContactsService'
+import Constants from '../../../../constants/ContactsConstants'
 
 const ContactItems = (props: ContactItemsProps): JSX.Element => {
 
@@ -48,7 +49,7 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
                   item={contact}
                   dialogOpen={edit === contact.id}
                   setDialogOpen={setEdit}
-                  action="edit"
+                  action={Constants.ACTION_EDIT}
                 />
               </ContactItemList>
           </div>

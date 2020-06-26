@@ -4,8 +4,7 @@ import { Avatar, CardHeader, IconButton } from '@material-ui/core'
 import { ColorLens as ColorLensIcon, Add as AddIcon } from '@material-ui/icons'
 import useStyles from '../../styles'
 import ContactFormDialogHeaderProps from './props'
-import C_Constants from '../../../../../constants/ContactsConstants'
-//import Service from '../../../../../services/contact/ContactsService'
+import Constants from '../../../../../constants/ContactsConstants'
 
 const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Element => {
 
@@ -14,7 +13,7 @@ const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Elemen
     const language = useLanguage().current
 
     const handleChangeColor = () => {
-        const colors = Object.values(C_Constants.COLORS)
+        const colors = Object.values(Constants.COLORS)
         colors.forEach((color, i) => {
             if (props.color === color)
                 props.setColor(colors[(i + 1) % colors.length])
@@ -47,8 +46,8 @@ const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Elemen
                     </IconButton>
                 </>
             }
-            title={props.action === 'add' ? props.name || language.CONTACTS_ADD_CONTACT : props.name}
-            subheader='Contato'//{Service.getPhoneTypes(props.phones)}
+            title={props.action === Constants.ACTION_ADD ? props.name || language.CONTACTS_ADD_CONTACT : props.name}
+            subheader='Contato'
         />
     )
 }

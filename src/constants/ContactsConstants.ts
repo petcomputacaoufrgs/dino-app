@@ -14,6 +14,9 @@ class ContactsConstants {
     PINK: 'pink',
     GREY: '',
   }
+
+  ACTION_ADD: number = 1
+  ACTION_EDIT: number = 2
 }
 
 export default new ContactsConstants()

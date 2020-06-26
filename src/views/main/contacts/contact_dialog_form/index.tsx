@@ -34,10 +34,8 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
     const handleClose = () => props.setDialogOpen(0)
 
     const handleDeletePhone = (number: string) => {
-        //setPhones([...Service.deletePhone(number)])
         const indexPhone = phones.findIndex(phone => phone.number === number)
         phones.splice(indexPhone, 1)
-        console.log(phones)
         setPhones([...phones])
     }
 
@@ -48,8 +46,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
             return name
         }
         const handleTakenNumber = (item: ContactModel, exists: ContactModel) => {     
-            const existsPhones = exists.phones.map(phone => phone.number)
-            const phone = item.phones.find(phone => existsPhones.includes(phone.number))
+            const phone = item.phones.find(phone => exists.phones.map(phone => phone.number).includes(phone.number))
             if(phone) setInvalidPhone({number:phone.number,text:`O número já está registrado no contato ${exists.name}`})
         }
         const makeItem = (id = Service.makeId()): ContactModel => {
@@ -62,11 +59,10 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
             }
         }
         if (validInfo()){
-            if (props.action === 'edit' && props.item) {
+            if (props.action === Constants.ACTION_EDIT && props.item) {
                 const item = makeItem(props.item.id)
                 const exists = Service.findPhone(item.phones)
                 if(!exists || exists.id === item.id){
-                    console.log(item)
                     Service.editContact(item)
                     handleClose()
                 }

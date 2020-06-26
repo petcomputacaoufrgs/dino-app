@@ -3,6 +3,7 @@ import ContactFormDialog from '../contact_dialog_form'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import './styles.css'
+import Contants from '../../../../constants/ContactsConstants'
 
 
 const ContactFormDialogButton = ( props: {dialogOpen, setDialogOpen}) => {
@@ -15,7 +16,7 @@ const ContactFormDialogButton = ( props: {dialogOpen, setDialogOpen}) => {
                 <AddIcon />
             </Fab>
             <ContactFormDialog
-                action="add"
+                action={Contants.ACTION_ADD}
                 dialogOpen={Boolean(props.dialogOpen)}
                 setDialogOpen={props.setDialogOpen}
             />

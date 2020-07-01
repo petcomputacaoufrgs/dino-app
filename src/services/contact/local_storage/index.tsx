@@ -40,7 +40,7 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     getLastId = (): number => {
        const id = localStorage.getItem(LS_Constants.CONTACTS_LAST_ID)
-       return id ?  Number(id) : this.getLastItemId() 
+       return id ?  JSON.parse(id) : this.getLastItemId() 
     }
     
     getLastItemId = (): number => {
@@ -54,7 +54,7 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
     updateLastId = (): number => {
         const lastId = this.getLastId() + 1
-        localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, lastId.toString())
+        localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, JSON.stringify(lastId))
         return lastId
     }
 }

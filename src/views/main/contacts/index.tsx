@@ -32,7 +32,7 @@ const Contacts = (): JSX.Element => {
 
   return (
     <div>
-      <SearchBar
+      <BootstrapSearchBar
         value={searchTerm}
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}

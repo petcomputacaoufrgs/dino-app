@@ -1,3 +1,3 @@
-Test environment: https://dino-app-test.herokuapp.com
+Test environment: https://test.dinoapp.tk
 
 Dependency Manager: Yarn

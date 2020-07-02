@@ -2,7 +2,7 @@
  * @description Valores de URL da API para conexão
  */
 class DinoAPIURLConstants {
-  private URL = 'http://localhost:5000/'
+  private URL = 'https://inf-ufrgs-tst-api-dino.herokuapp.com/'
   private AUTH = this.URL + 'auth/'
   private GLOSSARY = this.URL + 'glossary/'
   private APP_SETTINGS = this.URL + 'user_app_settings/'

@@ -4,7 +4,7 @@ import ContactModel from '../../../services/contact/api_model/ContactModel'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
-import SearchBar from '../../../components/search_bar'
+import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import AddContactButton from './contact_button_add'
 import ContactsService from '../../../services/contact/ContactsService'
 

@@ -24,4 +24,4 @@ const BootstrapSearchBar = (props: SearchBarProps): JSX.Element => (
   </div>
 );
 
-export default BootstrapSearchBar;
+export default BootstrapSearchBar

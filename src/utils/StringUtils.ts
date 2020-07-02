@@ -14,14 +14,12 @@ class StringUtils {
   areEqual = (s1: string, s2: string): boolean =>
     this.normalize(s1) === this.normalize(s2)
 
-    /**
-     * @param s1 String maior
-     * @param s2 String possivelmente incluida na maior
-     * @returns True para s2 contida em s1
-     */
-    contains = (s1: string, s2: string): boolean => {
-        return this.normalize(s1).includes(this.normalize(s2))
-    }
+  /**
+   * @param s1 String um
+   * @param s2 String dois
+   * @returns True para s1 normalizada diferente de s2 normalizada
+   */
+  areNotEqual = (s1: string, s2: string): boolean => !this.areEqual(s1, s2)
 
   /**
    * @param s1 String maior
@@ -29,11 +27,16 @@ class StringUtils {
    * @returns True para s2 contida em s1
    */
   contains = (s1: string, s2: string): boolean => {
-    return this.normalize(s1).includes(this.normalize(s2))
+      return this.normalize(s1).includes(this.normalize(s2))
   }
 
-        return stringNumber.padStart(length, '0')
-    }
+  /**
+   *
+   * @param n Número a ser convertido
+   * @param length Número de zeros a esquerda
+  */
+  toStringWithZeros = (n: number, length: number): string => {
+    const stringNumber = n.toString()
 
     return stringNumber.padStart(length, '0')
   }

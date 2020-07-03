@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import LanguageSet from '../../../language/LanguageSet'
-import EN_US from '../../../language/EN_US'
-import PT_BR from '../../../language/PT_BR'
-import LanguageSubProviderValue, { Language } from './value'
+import LanguageSet from './languages/LanguageBase'
+import EN_US from './languages/EN_US'
+import PT_BR from './languages/pt_br'
+import LanguageProviderValue, { Language } from './value'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 
-const LanguageSubProvider = (): LanguageSubProviderValue => {
+const LanguageProvider = (): LanguageProviderValue => {
   const getLanguageSetByCode = (languageCode: string): LanguageSet => {
     if (languageCode === LanguageCodeConstants.PORTUGUESE) {
       return new PT_BR()
@@ -58,7 +58,7 @@ const LanguageSubProvider = (): LanguageSubProviderValue => {
     ]
   }
 
-  const value: LanguageSubProviderValue = {
+  const value: LanguageProviderValue = {
     current: currentLanguage,
     getLanguageList: getLanguageList,
     updateLanguage: updateCurrentLanguage,
@@ -67,4 +67,4 @@ const LanguageSubProvider = (): LanguageSubProviderValue => {
   return value
 }
 
-export default LanguageSubProvider
+export default LanguageProvider

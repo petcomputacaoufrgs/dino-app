@@ -1,5 +1,5 @@
 import AppSettingsService from './AppSettingsService'
-import LanguageSubProviderValue from '../../provider/app_provider/language_sub_provider/value'
+import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
 import BaseSync from '../BaseSync'
 
 class AppSettingsSync implements BaseSync {

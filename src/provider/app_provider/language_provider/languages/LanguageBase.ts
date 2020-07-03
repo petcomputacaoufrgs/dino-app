@@ -1,4 +1,4 @@
-export default interface LanguageSet {
+export default interface LanguageBase {
   ISO_LANGUAGE_CODE: string
   NAVIGATOR_LANGUAGE_CODE: string
   LANGUAGE_PORTUGUESE: string

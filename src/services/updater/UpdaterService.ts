@@ -1,4 +1,4 @@
-import LanguageSubProviderValue from '../../provider/app_provider/language_sub_provider/value'
+import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
 import AuthService from '../auth/AuthService'
 import GlossaryUpdater from '../glossary/GlossaryUpdater'
 import NoteUpdater from '../note/NoteUpdater'

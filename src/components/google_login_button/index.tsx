@@ -7,7 +7,7 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login'
-import GoogleLogo from '../../images/google_logo.png'
+import GoogleLogo from '../../assets/logos/google.png'
 import LoginButtonProps from './props'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'

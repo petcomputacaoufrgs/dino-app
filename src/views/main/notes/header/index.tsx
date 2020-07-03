@@ -1,6 +1,6 @@
 import React from 'react'
 import TagSearchBar from '../../../../components/tag_search_bar'
-import NoteSVG from '../../../../images/note.svg'
+import NoteSVG from '../../../../assets/icons/note.svg'
 import { isMobile } from 'react-device-detect'
 import { useLanguage } from '../../../../provider/app_provider'
 import './styles.css'

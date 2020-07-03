@@ -32,3 +32,5 @@ log.txt
 
 .vscode/launch.json
 .vscode/settings.json
+
+src/config/client_secret.json

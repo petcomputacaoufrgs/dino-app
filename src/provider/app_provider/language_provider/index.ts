@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import LanguageSet from './languages/LanguageBase'
+import LanguageBase from './languages/LanguageBase'
 import EN_US from './languages/EN_US'
-import PT_BR from './languages/pt_br'
+import PT_BR from './languages/PT_BR'
 import LanguageProviderValue, { Language } from './value'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 
 const LanguageProvider = (): LanguageProviderValue => {
-  const getLanguageSetByCode = (languageCode: string): LanguageSet => {
+  const getLanguageSetByCode = (languageCode: string): LanguageBase => {
     if (languageCode === LanguageCodeConstants.PORTUGUESE) {
       return new PT_BR()
     } else {
@@ -15,13 +15,13 @@ const LanguageProvider = (): LanguageProviderValue => {
     }
   }
 
-  const getLanguageSet = (): LanguageSet => {
+  const getLanguageSet = (): LanguageBase => {
     const language = AppSettingsService.get().language
 
     return getLanguageSetByCode(language)
   }
 
-  const setHTMLElementLanguage = (language: LanguageSet) => {
+  const setHTMLElementLanguage = (language: LanguageBase) => {
     const html = document.getElementById('html')
 
     if (html) {
@@ -33,7 +33,7 @@ const LanguageProvider = (): LanguageProviderValue => {
 
   setHTMLElementLanguage(currentLanguage)
 
-  const updateCurrentLanguage = (): LanguageSet => {
+  const updateCurrentLanguage = (): LanguageBase => {
     const language = getLanguageSet()
 
     setHTMLElementLanguage(language)

@@ -99,31 +99,12 @@ const Main = (): JSX.Element => {
     return (
       <Switch>
         <PrivateRoute exact path={PathConstants.HOME} component={Home} />
-        <PrivateRoute
-          exact
-          path={PathConstants.GAMES}
-          component={() => <></>}
-        />
-        <PrivateRoute
-          exact
-          path={PathConstants.GLOSSARY}
-          component={Glossary}
-        />
-        <PrivateRoute
-          exact
-          path={PathConstants.CONTACTS}
-          component={Contacts}
-        />
-        <PrivateRoute exact path={PathConstants.NOTES} component={Notes} />
-        <PrivateRoute
-          exact
-          path={PathConstants.SETTINGS}
-          component={Settings}
-        />
-        <PrivateRoute
-          path={`${PathConstants.GLOSSARY}/:id`}
-          component={GlossaryItem}
-        />
+        <PrivateRoute exact path={PathConstants.GAMES} component={() => <></>}/>
+        <PrivateRoute exact path={PathConstants.GLOSSARY} component={Glossary} /> 
+        <PrivateRoute exact path={PathConstants.CONTACTS} component={Contacts} /> 
+        <PrivateRoute exact path={PathConstants.NOTES} component={Notes} /> 
+        <PrivateRoute exact path={PathConstants.SETTINGS} component={Settings} /> 
+        <PrivateRoute path={`${PathConstants.GLOSSARY}/:id`} component={GlossaryItem} />
         <PrivateRoute path={'/'} component={NotFound} />
       </Switch>
     )

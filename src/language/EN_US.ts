@@ -48,6 +48,14 @@ export default class EN_US implements LanguageSet {
 
   DISAGREEMENT_OPTION_TEXT = 'NO'
 
+  ADD_OPTION_TEXT = 'ADD'
+
+  CANCEL_OPTION_TEXT = 'CANCEL'
+
+  EDIT_OPTION_TEXT = 'Edit'
+
+  DELETE_OPTION_TEXT = 'Delete'
+
   MENU_HOME = 'Home'
 
   MENU_GAMES = 'Games'
@@ -92,13 +100,35 @@ export default class EN_US implements LanguageSet {
 
   NOTE_TAG_LABEL = 'Tags'
 
-  NOTE_DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
+  DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
 
-  NOTE_DIALOG_SAVE_BUTTON_TEXT = 'Save'
+  DIALOG_SAVE_BUTTON_TEXT = 'Save'
+
+  DIALOG_CANCEL_BUTTON_LABEL = 'Click to cancel.'
+
+  DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
   SEARCH_BUTTON_LABEL = 'Search'
 
   ANSWER_DIALOG_LABEL = 'Model for answer a question note'
+
+  FORM_NAME = 'Name'
+
+  FORM_DESCRIPTION = 'Description'
+
+  FORM_TYPE = 'Type'
+
+  FORM_PHONE = 'Phone'
+
+  CONTACTS_ADD_CONTACT = 'New Contact'
+
+  CONTACTS_MOBILE_PHONE = 'Mobile'
+
+  CONTACTS_RESIDENTIAL_PHONE = 'Residential'
+
+  CONTACTS_PUBLIC_SERVICE_PHONE = 'Public Service'
+
+  NO_AVAILABLE_TEXT = 'No Available Text'
 
   JANUARY = 'January'
 

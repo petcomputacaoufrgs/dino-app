@@ -48,6 +48,14 @@ export default class PT_BR implements LanguageSet {
 
   DISAGREEMENT_OPTION_TEXT = 'NÃO'
 
+  ADD_OPTION_TEXT = 'ADICIONAR'
+
+  CANCEL_OPTION_TEXT = 'CANCELAR'
+
+  EDIT_OPTION_TEXT = 'Editar'
+
+  DELETE_OPTION_TEXT = 'Deletar'
+
   MENU_HOME = 'Home'
 
   MENU_GAMES = 'Jogos'
@@ -94,13 +102,35 @@ export default class PT_BR implements LanguageSet {
 
   NOTE_TAG_LABEL = 'Tags'
 
-  NOTE_DIALOG_SAVE_BUTTON_LABEL = 'Clique para salvar.'
+  DIALOG_SAVE_BUTTON_LABEL = 'Clique para salvar.'
 
-  NOTE_DIALOG_SAVE_BUTTON_TEXT = 'Salvar'
+  DIALOG_SAVE_BUTTON_TEXT = 'Salvar'
+
+  DIALOG_CANCEL_BUTTON_LABEL = 'Clique para cancelar.'
+
+  DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
 
   SEARCH_BUTTON_LABEL = 'Pesquisar'
 
   ANSWER_DIALOG_LABEL = 'Tela para responder uma questão anotada.'
+
+  FORM_NAME = 'Nome'
+
+  FORM_DESCRIPTION = 'Descrição'
+
+  FORM_TYPE = 'Tipo'
+
+  FORM_PHONE = 'Telefone'
+
+  CONTACTS_ADD_CONTACT = 'Novo Contato'
+
+  CONTACTS_MOBILE_PHONE = 'Telefone Móvel'
+
+  CONTACTS_RESIDENTIAL_PHONE = 'Telefone Fixo'
+
+  CONTACTS_PUBLIC_SERVICE_PHONE = 'Serviço Público'
+
+  NO_AVAILABLE_TEXT = 'Sem Texto Disponível'
 
   JANUARY = 'Janeiro'
 
@@ -160,5 +190,4 @@ export default class PT_BR implements LanguageSet {
   CANT_LOGIN_DISCONNECTED = 'Conexão com a internet necessária para login'
 
   DISCONNECTED = 'Desconectado'
-
 }

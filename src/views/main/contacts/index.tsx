@@ -1,61 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { useLanguage } from '../../../provider/app_provider'
-import ContactItemModel from '../../../services/contact/api_model/ContactItemModel'
+import ContactModel from '../../../services/contact/api_model/ContactModel'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import ContactItems from './contact_items'
+import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
+import AddContactButton from './contact_button_add'
+import ContactsService from '../../../services/contact/ContactsService'
 
 const Contacts = (): JSX.Element => {
+
   const language = useLanguage().current
 
+  const [add, setAdd] = useState(0)
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState(
-    new Array<ContactItemModel>()
-  )
+  const [searchResults, setSearchResults] = useState(new Array<ContactModel>())
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
     setSearchTerm(event.target.value)
   }
-
-  //isso é PROVISÓRIO ook não me matem
+  
   useEffect(() => {
-    const items = [
-      {
-        id: 1,
-        name: 'Babu Santana',
-        number: '51 91242345',
-        info: 'infosupersecretaaaaaa1',
-        color: 'purple',
-      },
-      {
-        id: 2,
-        name: 'Mari Baianinha',
-        number: '51 36363634',
-        info:
-          'infosupersecretaaaaaa2 uhihaiugbdgiavduyavu yavuahvsacdtyacd ycdayivatsc dysadcaysdc',
-        color: 'red',
-      },
-      {
-        id: 3,
-        name: 'Manu Gavassi',
-        number: '51 98936365',
-        info: 'infosupersecretaaaaaa3',
-        color: 'pink',
-      },
-      {
-        id: 4,
-        name: 'Thelminha',
-        number: '51 35353535',
-        info: 'infosupersecretaaaaaa4',
-        color: 'green',
-      },
-    ]
-    const results = items.filter((item) =>
-      StringUtils.contains(item.name, searchTerm)
-    )
-    setSearchResults(results)
-  }, [searchTerm])
+    if(!add){
+      const items = ContactsService.getItems()
+      const results = items.filter((item) =>
+        StringUtils.contains(item.name, searchTerm)
+      )
+      setSearchResults(results)
+    }
+  }, [searchTerm, add])
 
   return (
     <div>
@@ -64,7 +37,8 @@ const Contacts = (): JSX.Element => {
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}
       />
-      <ContactItems items={searchResults} />
+      <ContactItems items={searchResults} setItems={setSearchResults}/>
+      <AddContactButton dialogOpen={add} setDialogOpen={setAdd}/>
     </div>
   )
 }

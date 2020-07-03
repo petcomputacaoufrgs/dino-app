@@ -12,12 +12,12 @@ const DialogActions = (props: DialogActionsProps) => {
     <MaterialDialogActions className="note_card_dialog__save">
       <Button
         onClick={props.onSave}
-        aria-label={language.NOTE_DIALOG_SAVE_BUTTON_LABEL}
+        aria-label={language.DIALOG_SAVE_BUTTON_LABEL}
         variant="contained"
         size="small"
         startIcon={<SaveIcon />}
       >
-        {language.NOTE_DIALOG_SAVE_BUTTON_TEXT}
+        {language.DIALOG_SAVE_BUTTON_TEXT}
       </Button>
     </MaterialDialogActions>
   )

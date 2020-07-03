@@ -2,8 +2,8 @@ import React from 'react'
 import { useApp } from '../../provider/app_provider'
 import { Typography } from '@material-ui/core'
 import GoogleLoginButton from '../../components/google_login_button'
-import Dinosaur1 from '../../images/dinosaur_1.svg'
-import Dinosaur2 from '../../images/dinosaur_2.svg'
+import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'
+import Dinosaur2 from '../../assets/images/dinosaur_2.svg'
 import './styles.css'
 
 /**

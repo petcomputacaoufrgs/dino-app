@@ -1,10 +1,10 @@
-import LanguageSet from './LanguageSet'
-import LanguageCodeConstants from '../constants/LanguageCodeConstants'
+import LanguageBase from './LanguageBase'
+import LanguageCodeConstants from '../../../../constants/LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em português brasileiro
  */
-export default class PT_BR implements LanguageSet {
+export default class PT_BR implements LanguageBase {
   ISO_LANGUAGE_CODE = 'pt'
 
   NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE

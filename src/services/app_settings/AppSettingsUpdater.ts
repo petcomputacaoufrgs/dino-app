@@ -1,5 +1,5 @@
 import BaseUpdater from '../BaseUpdater'
-import LanguageSubProviderValue from '../../provider/app_provider/language_sub_provider/value'
+import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
 import AppSettingsService from './AppSettingsService'
 
 class AppSettingsUpdater implements BaseUpdater {

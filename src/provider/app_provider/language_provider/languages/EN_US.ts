@@ -1,10 +1,10 @@
-import LanguageSet from './LanguageSet'
-import LanguageCodeConstants from '../constants/LanguageCodeConstants'
+import LanguageBase from './LanguageBase'
+import LanguageCodeConstants from '../../../../constants/LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em inglês americano
  */
-export default class EN_US implements LanguageSet {
+export default class EN_US implements LanguageBase {
   ISO_LANGUAGE_CODE = 'en'
 
   NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.ENGLISH

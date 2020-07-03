@@ -1,4 +1,4 @@
-import LanguageSet from '../language/LanguageSet'
+import LanguageSet from '../provider/app_provider/language_provider/languages/LanguageBase'
 import StringUtils from './StringUtils'
 import { DateTime } from 'luxon'
 import DinoAPIGeneralConstants from '../constants/dino_api/DinoAPIGeneralConstants'

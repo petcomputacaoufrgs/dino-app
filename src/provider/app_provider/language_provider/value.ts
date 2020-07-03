@@ -1,4 +1,4 @@
-import LanguageSet from '../../../language/LanguageSet'
+import LanguageSet from './languages/LanguageBase'
 
 export interface Language {
   name: string

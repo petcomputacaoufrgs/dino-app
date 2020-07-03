@@ -16,26 +16,39 @@ class ContactsLocalStorage extends BaseLocalStorage {
         this.set(LS_Constants.CONTACTS, JSON.stringify(StrU.sortByAttr(items, "name")))
     }
 
-    setShouldSyncItems = (items: Array<number>) => {
-        this.set(LS_Constants.SHOULD_SYNC_CONTACTS, items.toString())
+    setOpIDs = (LSkey: string, ids: Array<number>) => {
+        this.set(LSkey, ids.toString())
     }
 
-    getShouldSyncItems = (): number[] => {
-        const items = this.get(LS_Constants.SHOULD_SYNC_CONTACTS)?.split(',').map(x => +x)
+    getOpIDs = (LSkey: string): number[] => {
+        const items = this.get(LSkey)?.split(',').map(x => +x)
         return items || []
     }
 
-    addShouldSyncItem = (id: number) => {
-        let items = this.getShouldSyncItems()
-        const index = items.findIndex(idFromList => idFromList === id )
-
-        if(index > -1) items.splice(index, 1)
-        items.push(id)
-        this.setShouldSyncItems(items)
+    pushToStack = (id: number, ids: Array<number>): Array<number> => {
+        const index = ids.findIndex(stackId => stackId === id )
+        if(index > -1) ids.splice(index, 1)
+        ids.push(id)
+        return ids
     }
 
-    cleanShouldSync = () => {
-        localStorage.removeItem(LS_Constants.SHOULD_SYNC_CONTACTS)
+    pushAddOp = (id: number) => {
+        const ids = this.getOpIDs(LS_Constants.ADD_CONTACTS)
+        this.setOpIDs(LS_Constants.ADD_CONTACTS, this.pushToStack(id, ids))
+    }
+
+    pushEditOp = (id: number) => {
+        let ids = this.getOpIDs(LS_Constants.EDIT_CONTACTS)
+        this.setOpIDs(LS_Constants.EDIT_CONTACTS, this.pushToStack(id, ids))
+    }
+
+    pushDeleteOp = (id: number) => {
+        let ids = this.getOpIDs(LS_Constants.DELETE_CONTACTS)
+        this.setOpIDs(LS_Constants.DELETE_CONTACTS, this.pushToStack(id, ids))
+    }
+
+    cleanOpIDs = (LSkey: string) => {
+        localStorage.removeItem(LSkey)
     }
 
     getLastId = (): number => {
@@ -46,8 +59,8 @@ class ContactsLocalStorage extends BaseLocalStorage {
     getLastItemId = (): number => {
         let items: Array<ContactModel> = this.getItems()
         if(items.length){
-            items.sort((a, b) => a.id - b.id)
-            return items[items.length-1].id
+            items.sort((a, b) => a.localID - b.localID)
+            return items[items.length-1].localID
         }
         return 0
     }

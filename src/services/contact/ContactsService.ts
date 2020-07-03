@@ -9,23 +9,19 @@ class ContactsService {
   
   getItems = (): ContactModel[] => LS.getItems()
   setItems = (items: ContactModel[]) => LS.setItems(items)
-  addShouldSyncItem = (id: number) => LS.addShouldSyncItem(id)
-  getShouldSyncItems = (): Array<number> => LS.getShouldSyncItems()
   makeId = (): number => LS.updateLastId() 
-  
   
   addContact = (item: ContactModel) => {
     const items = this.getItems()
     items.push(item)
     this.setItems(items)
-    this.addShouldSyncItem(item.id)
-    console.log(item)
+    LS.pushAddOp(item.localID)
   }
 
   deleteContact = (deletedID: number): ContactModel[] => {
     const items = this.getItems()
-    const index = items.findIndex(item => item.id === deletedID)
-    this.addShouldSyncItem(items.splice(index, 1)[0].id)
+    const index = items.findIndex(item => item.localID === deletedID)
+    LS.pushDeleteOp(items.splice(index, 1)[0].localID)
     this.setItems(items)
     return items
   }
@@ -34,14 +30,14 @@ class ContactsService {
     const items = this.getItems()
 
     const index = items.findIndex((item: ContactModel) => {
-      return item.id === edited.id
+      return item.localID === edited.localID
     })
     
     if(index > -1) 
       if(this.checkChanges(items[index], edited)){
         items.splice(index, 1, edited)
         this.setItems(items)
-        this.addShouldSyncItem(items[index].id)
+        LS.pushEditOp(items[index].localID)
       }
   }
 

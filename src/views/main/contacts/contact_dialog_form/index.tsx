@@ -51,7 +51,7 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         }
         const makeItem = (id = Service.makeId()): ContactModel => {
             return {
-                id: id,
+                localID: id,
                 name: name,
                 description: description,
                 phones: phones.filter(phone => phone.number !== ''),
@@ -60,16 +60,15 @@ const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: 
         }
         if (validInfo()){
             if (props.action === Constants.ACTION_EDIT && props.item) {
-                const item = makeItem(props.item.id)
+                const item = makeItem(props.item.localID)
                 const exists = Service.findPhone(item.phones)
-                if(!exists || exists.id === item.id){
+                if(!exists || exists.localID === item.localID){
                     Service.editContact(item)
                     handleClose()
                 }
                 else handleTakenNumber(item, exists)
             } else {
                 const item = makeItem()
-                console.log(item)
                 const exists = Service.findPhone(item.phones)
                 if(!exists) {
                     Service.addContact(item)

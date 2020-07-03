@@ -1,4 +1,4 @@
-import GlossaryItemModel from './api_model/GlossaryItemModel'
+import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
 import GlossaryLocalStorage from './local_storage/GlossaryLocalStorage'
 
 class GlossaryService {

@@ -4,7 +4,7 @@ import ContactCardContentProps from './props'
 import useStyles from '../../styles'
 import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
 import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospital as LocalHospitalIcon } from '@material-ui/icons'
-import PhoneModel from '../../../../../services/contact/api_model/PhoneModel'
+import PhoneModel from '../../../../../types/contact/PhoneModel'
 
 const ContactCardContent = (props: ContactCardContentProps) => {
 

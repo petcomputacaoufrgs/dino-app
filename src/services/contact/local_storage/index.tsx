@@ -1,6 +1,6 @@
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 import BaseLocalStorage from '../../BaseLocalStorage'
-import ContactModel from '../api_model/ContactModel'
+import ContactModel from '../../../types/contact/ContactModel'
 import StrU from '../../../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {

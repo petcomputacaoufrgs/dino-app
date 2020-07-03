@@ -1,4 +1,4 @@
-import PhoneModel from '../../../../../services/contact/api_model/PhoneModel'
+import PhoneModel from '../../../../../types/contact/PhoneModel'
 export default interface AddContactDialogHeaderProps {
   action: number
   name: string

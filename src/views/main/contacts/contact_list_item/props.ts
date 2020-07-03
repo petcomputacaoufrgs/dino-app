@@ -1,4 +1,4 @@
-import ContactItemModel from '../../../../services/contact/api_model/ContactModel'
+import ContactItemModel from '../../../../types/contact/ContactModel'
 
 export default interface ContactItemListProps {
   item: ContactItemModel

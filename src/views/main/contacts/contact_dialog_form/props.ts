@@ -1,5 +1,5 @@
-import PhoneModel from '../../../../services/contact/api_model/PhoneModel'
-import ContactModel from '../../../../services/contact/api_model/ContactModel'
+import PhoneModel from '../../../../types/contact/PhoneModel'
+import ContactModel from '../../../../types/contact/ContactModel'
 
 export default interface ContactFormDialogProps {
   dialogOpen: boolean

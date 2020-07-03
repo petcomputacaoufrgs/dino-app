@@ -8,7 +8,7 @@ import ContactFormDialogProps from './props'
 import Constants from '../../../../constants/ContactsConstants'
 import TransitionSlide from '../../../../components/slide_transition'
 import Service from '../../../../services/contact/ContactsService'
-import ContactModel from '../../../../services/contact/api_model/ContactModel'
+import ContactModel from '../../../../types/contact/ContactModel'
 
 const ContactFormDialog = React.forwardRef((props: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
 

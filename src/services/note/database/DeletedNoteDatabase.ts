@@ -2,7 +2,7 @@ import PouchDB from 'pouchdb'
 import BaseDatabase from '../../BaseDatabase'
 import DatabaseConstants from '../../../constants/DatabaseConstants'
 import StringUtils from '../../../utils/StringUtils'
-import NoteDoc from './docs/NoteDoc'
+import NoteDoc from '../../../types/note/database/NoteDoc'
 
 class DeletedNoteDatabase implements BaseDatabase {
   db: PouchDB.Database<{}>

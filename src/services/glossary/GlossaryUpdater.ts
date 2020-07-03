@@ -1,10 +1,10 @@
 import StringUtils from '../../utils/StringUtils'
 import DinoAgentService from '../dino_agent/DinoAgentService'
-import GlossaryItemModel from './api_model/GlossaryItemModel'
+import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import GlossaryService from './GlossaryService'
 import BaseUpdater from '../BaseUpdater'
-import DinoAgentStatus from '../dino_agent/model/DinoAgentStatus'
+import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import HttpStatus from 'http-status-codes'
 
 class GlossaryUpdater implements BaseUpdater {

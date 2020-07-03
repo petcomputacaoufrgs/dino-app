@@ -1,7 +1,7 @@
 import BaseSync from '../BaseSync'
 import NoteService from './NoteService'
 import NoteUpdater from './NoteUpdater'
-import NoteUpdateModel from './api_model/NoteUpdateModel'
+import NoteUpdateModel from '../../types/note/NoteUpdateModel'
 
 class NoteSync implements BaseSync {
   sync = async (): Promise<boolean> => {

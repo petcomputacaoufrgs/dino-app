@@ -1,4 +1,4 @@
-import GlossaryItemModel from '../../../../services/glossary/api_model/GlossaryItemModel'
+import GlossaryItemModel from '../../../../types/glossary/GlossaryItemModel'
 
 export default interface GlossaryItemsProps {
   items: Array<GlossaryItemModel>

@@ -5,8 +5,8 @@ import PathConstants from '../../constants/PathConstants'
 import DinoAPIHeaderConstants from '../../constants/dino_api/DinoAPIHeaderConstants'
 import AuthService from '../auth/AuthService'
 import ConnectionListenerService from '../connection/ConnectionListenerService'
-import DinoAgentRequest from './model/DinoAgentRequest'
-import DinoAgentStatus from './model/DinoAgentStatus'
+import DinoAgentRequest from '../../types/dino_agent/DinoAgentRequest' 
+import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import UserService from '../user/UserService'
 
 /**

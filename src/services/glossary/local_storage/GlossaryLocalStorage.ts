@@ -1,6 +1,6 @@
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 import BaseLocalStorage from '../../BaseLocalStorage'
-import GlossaryItemModel from '../api_model/GlossaryItemModel'
+import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 
 class GlossaryLocalStorage extends BaseLocalStorage {
   getVersion = (): number => {

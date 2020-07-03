@@ -2,7 +2,7 @@ import AppSettingsSync from '../app_settings/AppSettingsSync'
 import GlossarySync from '../glossary/GlossarySync'
 import NoteSync from '../note/NoteSync'
 import ConnectionListenerService from '../connection/ConnectionListenerService'
-import SyncControlModel from './model/SyncControlModel'
+import SyncControlModel from '../../types/sync/SyncControlModel'
 import AuthService from '../auth/AuthService'
 
 const SYNC_FAIL_INTERVAL = 60000

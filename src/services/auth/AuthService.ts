@@ -1,17 +1,17 @@
-import GoogleAuthRequestModel from './api_model/GoogleAuthRequestModel'
+import GoogleAuthRequestModel from '../../types/auth/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
 import AuthLocalStorage from './local_storage/AuthLocalStorage'
-import AuthResponseModel from './api_model/AuthResponseModel'
+import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/PathConstants'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
-import GoogleAuthResponseModel from './api_model/GoogleAuthResponseModel'
+import GoogleAuthResponseModel from '../../types/auth/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../dino_agent/model/DinoAgentStatus'
+import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 
 class AuthService {
   getDefaultScopes = (): string => {

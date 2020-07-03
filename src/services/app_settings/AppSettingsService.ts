@@ -1,9 +1,9 @@
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AppSettingsLocalStorage from './local_storage/AppSettingsLocalStorage'
-import AppSettingsModel from './api_model/AppSettingsModel'
+import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
 import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../dino_agent/model/DinoAgentStatus'
-import AppSettingsResponseModel from './api_model/AppSettingsResponseModel'
+import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
 
 class AppSettingsService {
   get = (): AppSettingsModel => {

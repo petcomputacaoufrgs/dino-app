@@ -1,6 +1,6 @@
 import BaseLocalStorage from '../../BaseLocalStorage'
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
-import AppSettingsModel from '../api_model/AppSettingsModel'
+import AppSettingsModel from '../../../types/app_settings/AppSettingsModel'
 
 class AppSettingsLocalStorage extends BaseLocalStorage {
   getAppSettingsVersion = (): number => {

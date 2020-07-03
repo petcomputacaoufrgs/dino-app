@@ -1,12 +1,12 @@
 import HttpStatus from 'http-status-codes'
 import BaseUpdater from '../BaseUpdater'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import NoteModel from './api_model/NoteModel'
-import NoteDoc from './database/docs/NoteDoc'
+import NoteModel from '../../types/note/NoteModel'
+import NoteDoc from '../../types/note/database/NoteDoc'
 import NoteDatabase from './database/NoteDatabase'
 import NoteService from './NoteService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../dino_agent/model/DinoAgentStatus'
+import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import NoteSyncLocalStorage from './local_storage/NoteSyncLocalStorage'
 
 class NoteUpdater implements BaseUpdater {

@@ -1,7 +1,7 @@
 import ContactsConsts from '../../constants/ContactsConstants'
 import { useLanguage } from '../../provider/app_provider'
-import PhoneModel from './api_model/PhoneModel'
-import ContactModel from './api_model/ContactModel'
+import PhoneModel from '../../types/contact/PhoneModel'
+import ContactModel from '../../types/contact/ContactModel'
 import LS from './local_storage'
 import ArrayUtils from '../../utils/ArrayUtils'
 

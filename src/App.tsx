@@ -14,7 +14,7 @@ import ConnectionListenerService from './services/connection/ConnectionListenerS
 import { useAlert, useLanguage } from './provider/app_provider/index'
 import './App.css'
 import SyncService from './services/sync/SyncService'
-import SyncControlModel from './services/sync/model/SyncControlModel'
+import SyncControlModel from './types/sync/SyncControlModel'
 
 const App = (): JSX.Element => {
   const [first, setFirst] = useState(true)

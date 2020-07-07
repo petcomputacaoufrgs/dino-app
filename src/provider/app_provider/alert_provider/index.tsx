@@ -11,7 +11,7 @@ const AlertList = new Array<AlertProps>()
 
 const AddAlert = (
   message: string,
-  severity: 'success' | 'info' | 'warning' | 'error',
+  severity: 'success' | 'info' | 'warning' | 'error'
 ) => {
   const newSuccessAlert = {
     message: message,

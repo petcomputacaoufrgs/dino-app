@@ -25,6 +25,6 @@ export default class BaseLocalStorage {
   }
 
   protected convertStringOrNullToString = (
-    nullableString: string | null,
+    nullableString: string | null
   ): string => (nullableString ? nullableString : '')
 }

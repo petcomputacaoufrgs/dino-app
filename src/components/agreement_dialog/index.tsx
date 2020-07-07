@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
  * @param props Propriedades para especializar a Dialog
  */
 const AgreementDialog = (
-  props: AgreementDialogProps,
+  props: AgreementDialogProps
 ): [() => JSX.Element, () => void] => {
   const [open, setOpen] = React.useState(false)
 

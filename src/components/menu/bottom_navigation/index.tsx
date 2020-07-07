@@ -18,7 +18,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
 
   const onChange = (
     event: React.ChangeEvent<{}>,
-    indexNewSelectedItem: string,
+    indexNewSelectedItem: string
   ) => {
     const intIndex = Number(indexNewSelectedItem)
 
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) =>
     image: {
       width: '35px',
     },
-  }),
+  })
 )
 
 export default BottomNavigation

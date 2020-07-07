@@ -6,9 +6,9 @@
 
 .google_login_button .google_login_button__error {
   margin-top: 50px;
-  color: #FF0000;
+  color: #ff0000;
   padding: 2px;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   font-weight: bold;
 }
 
@@ -20,4 +20,3 @@
   padding-left: 25px;
   padding-right: 25px;
 }
-

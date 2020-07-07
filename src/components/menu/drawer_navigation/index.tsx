@@ -126,7 +126,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
         classes.appBar,
         props.mini
           ? { [classes.appBarShiftMini]: open }
-          : { [classes.appBarShift]: open },
+          : { [classes.appBarShift]: open }
       )}
     >
       <Toolbar>
@@ -137,7 +137,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
           edge="start"
           className={clsx(
             props.mini ? classes.menuButtonMini : classes.menuButton,
-            props.mini ? { [classes.hide]: open } : open && classes.hide,
+            props.mini ? { [classes.hide]: open } : open && classes.hide
           )}
         >
           <MenuIcon />
@@ -310,7 +310,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '35px',
       marginLeft: '0px',
     },
-  }),
+  })
 )
 
 export default DrawerNavigation

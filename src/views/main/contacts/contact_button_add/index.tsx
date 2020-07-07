@@ -5,23 +5,21 @@ import AddIcon from '@material-ui/icons/Add'
 import './styles.css'
 import Contants from '../../../../constants/ContactsConstants'
 
+const ContactFormDialogButton = (props: { dialogOpen; setDialogOpen }) => {
+  //o motivo de eu não usar booleanos eh pq o <ContactFormDialog /> tbm é usado ao editar items, e o operadores para abrí-lo são os seus ids (que aqui não existem)
 
-const ContactFormDialogButton = ( props: {dialogOpen, setDialogOpen}) => {
-
-    //o motivo de eu não usar booleanos eh pq o <ContactFormDialog /> tbm é usado ao editar items, e o operadores para abrí-lo são os seus ids (que aqui não existem)
-
-    return (
-        <div>
-            <Fab onClick={() => props.setDialogOpen(1)} className="contact__add">
-                <AddIcon />
-            </Fab>
-            <ContactFormDialog
-                action={Contants.ACTION_ADD}
-                dialogOpen={Boolean(props.dialogOpen)}
-                setDialogOpen={props.setDialogOpen}
-            />
-        </div>
-    )
+  return (
+    <div>
+      <Fab onClick={() => props.setDialogOpen(1)} className="contact__add">
+        <AddIcon />
+      </Fab>
+      <ContactFormDialog
+        action={Contants.ACTION_ADD}
+        dialogOpen={Boolean(props.dialogOpen)}
+        setDialogOpen={props.setDialogOpen}
+      />
+    </div>
+  )
 }
 
 export default ContactFormDialogButton

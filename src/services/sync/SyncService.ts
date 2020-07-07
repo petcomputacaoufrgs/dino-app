@@ -21,15 +21,15 @@ class SyncService {
   }
 
   sync = async () => {
-      if (this.control) {
-        if (ConnectionService.isConnected()) {
-          this.start(this.control)
-        } else if (this.control.onInternetFail) {
-          this.control.onInternetFail()
-        }
-      } else {
-        setTimeout(this.sync, SYNC_FAIL_WITHOUT_CONTROL)
+    if (this.control) {
+      if (ConnectionService.isConnected()) {
+        this.start(this.control)
+      } else if (this.control.onInternetFail) {
+        this.control.onInternetFail()
       }
+    } else {
+      setTimeout(this.sync, SYNC_FAIL_WITHOUT_CONTROL)
+    }
   }
 
   private start = async (control: SyncControlModel) => {
@@ -41,27 +41,27 @@ class SyncService {
       promises.push(AppSettingsSync.sync(control.language))
       promises.push(GlossarySync.sync())
       promises.push(NoteSync.sync())
-    } 
+    }
 
     promises.push(AuthSync.sync())
 
-      if (control.onStart) {
-        control.onStart()
+    if (control.onStart) {
+      control.onStart()
+    }
+
+    const results = await Promise.all(promises)
+
+    if (results.every((success) => success)) {
+      if (control.onFinish) {
+        control.onFinish()
+      }
+    } else {
+      if (control.onFail) {
+        control.onFail()
       }
 
-      const results = await Promise.all(promises)
-
-      if (results.every((success) => success)) {
-        if (control.onFinish) {
-          control.onFinish()
-        }
-      } else {
-        if (control.onFail) {
-          control.onFail()
-        }
-
-        setTimeout(this.sync, SYNC_FAIL_INTERVAL)
-      }
+      setTimeout(this.sync, SYNC_FAIL_INTERVAL)
+    }
   }
 }
 

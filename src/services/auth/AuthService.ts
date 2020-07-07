@@ -80,7 +80,9 @@ class AuthService {
 
         return true
       }
-    } catch {/* TO-DO Salvar erro */}
+    } catch {
+      /* TO-DO Salvar erro */
+    }
 
     AuthLocalStorage.setLogoutToken(authToken)
 

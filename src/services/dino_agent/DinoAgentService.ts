@@ -14,7 +14,6 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
  * @description Abstrai a biblioteca Superagent com tratamentos para conexão,autenticação, erro de autenticação e renovação de token
  */
 class DinoAgentService {
-
   logout = (token: string): DinoAgentRequest => {
     const request = Superagent.put(DinoAPIURLConstants.LOGOUT)
       .set(this.getHeader(token))

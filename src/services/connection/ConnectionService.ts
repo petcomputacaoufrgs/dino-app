@@ -8,7 +8,7 @@ import SyncService from '../sync/SyncService'
 
 export type ConnectionListennerCallback = (online: boolean) => void
 
-const DELAY_TO_VERIFY_DINO_CONNECTION = 5000
+const DELAY_TO_VERIFY_DINO_CONNECTION = 2500
 
 class ConnectionService {
   callbacks = [] as ConnectionListennerCallback[]

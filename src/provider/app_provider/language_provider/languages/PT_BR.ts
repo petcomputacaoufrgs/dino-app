@@ -30,7 +30,7 @@ export default class PT_BR implements LanguageBase {
 
   LOGIN_FAIL_BY_GOOGLE = 'Erro no login com o Google.'
 
-  LOGIN_FAIL_BY_API = 'Erro no login com o servidor do Dino.'
+  LOGIN_FAIL_BY_API = 'Erro no login com o servidor do DinoApp.'
 
   LOGIN_CANCELED = 'Login cancelado.'
 

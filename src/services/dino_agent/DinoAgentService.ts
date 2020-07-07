@@ -4,7 +4,7 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/PathConstants'
 import DinoAPIHeaderConstants from '../../constants/dino_api/DinoAPIHeaderConstants'
 import AuthService from '../auth/AuthService'
-import ConnectionListenerService from '../connection/ConnectionListenerService'
+import ConnectionService from '../connection/ConnectionService'
 import DinoAgentRequest from '../../types/dino_agent/DinoAgentRequest' 
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import UserService from '../user/UserService'
@@ -52,7 +52,7 @@ class DinoAgentService {
   private getDinoAgentRequest = (
     request: Superagent.SuperAgentRequest
   ): DinoAgentRequest => {
-    if (ConnectionListenerService.isConnected()) {
+    if (ConnectionService.isConnected()) {
       return { get: () => request, status: DinoAgentStatus.OK }
     } else {
       return { get: () => request, status: DinoAgentStatus.DISCONNECTED }

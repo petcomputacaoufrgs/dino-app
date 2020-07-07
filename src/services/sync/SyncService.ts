@@ -1,7 +1,7 @@
 import AppSettingsSync from '../app_settings/AppSettingsSync'
 import GlossarySync from '../glossary/GlossarySync'
 import NoteSync from '../note/NoteSync'
-import ConnectionListenerService from '../connection/ConnectionListenerService'
+import ConnectionService from '../connection/ConnectionService'
 import SyncControlModel from '../../types/sync/SyncControlModel'
 import AuthService from '../auth/AuthService'
 
@@ -22,7 +22,7 @@ class SyncService {
   sync = async () => {
     if (AuthService.isAuthenticated()) {
       if (this.control) {
-        if (ConnectionListenerService.isConnected()) {
+        if (ConnectionService.isConnected()) {
           this.start(this.control)
         } else if (this.control.onInternetFail) {
           this.control.onInternetFail()

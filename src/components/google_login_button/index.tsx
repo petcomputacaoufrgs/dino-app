@@ -16,7 +16,7 @@ import PathConstants from '../../constants/PathConstants'
 import AuthService from '../../services/auth/AuthService'
 import UpdaterService from '../../services/updater/UpdaterService'
 import { Typography } from '@material-ui/core'
-import ConnectionListenerService from '../../services/connection/ConnectionListenerService'
+import ConnectionService from '../../services/connection/ConnectionService'
 import './styles.css'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
@@ -32,10 +32,10 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
       setConnected(connected)
     }
 
-    ConnectionListenerService.addEventListener(updateConnectionState)
+    ConnectionService.addEventListener(updateConnectionState)
 
     const cleanBeforeUpdate = () => {
-      ConnectionListenerService.removeEventListener(updateConnectionState)
+      ConnectionService.removeEventListener(updateConnectionState)
     }
 
     return cleanBeforeUpdate

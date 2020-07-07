@@ -10,7 +10,7 @@ export type ConnectionListennerCallback = (online: boolean) => void
 
 const DELAY_TO_VERIFY_DINO_CONNECTION = 5000
 
-class ConnectionListenerService {
+class ConnectionService {
   callbacks = [] as ConnectionListennerCallback[]
   firstVerification = true
 
@@ -98,4 +98,4 @@ class ConnectionListenerService {
   }
 }
 
-export default new ConnectionListenerService()
+export default new ConnectionService()

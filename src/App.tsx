@@ -10,7 +10,7 @@ import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import UpdaterService from './services/updater/UpdaterService'
-import ConnectionListenerService from './services/connection/ConnectionListenerService'
+import ConnectionService from './services/connection/ConnectionService'
 import { useAlert, useLanguage } from './provider/app_provider/index'
 import './App.css'
 import SyncService from './services/sync/SyncService'
@@ -63,10 +63,10 @@ const App = (): JSX.Element => {
       SyncService.sync()
     }
 
-    ConnectionListenerService.addEventListener(updateConnectionState)
+    ConnectionService.addEventListener(updateConnectionState)
 
     const cleanBeforeUpdate = () => {
-      ConnectionListenerService.removeEventListener(updateConnectionState)
+      ConnectionService.removeEventListener(updateConnectionState)
       SyncService.startSyncService({
         language: language,
         onFail: undefined,

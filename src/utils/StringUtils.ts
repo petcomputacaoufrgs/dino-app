@@ -27,14 +27,14 @@ class StringUtils {
    * @returns True para s2 contida em s1
    */
   contains = (s1: string, s2: string): boolean => {
-      return this.normalize(s1).includes(this.normalize(s2))
+    return this.normalize(s1).includes(this.normalize(s2))
   }
 
   /**
    *
    * @param n Número a ser convertido
    * @param length Número de zeros a esquerda
-  */
+   */
   toStringWithZeros = (n: number, length: number): string => {
     const stringNumber = n.toString()
 
@@ -49,11 +49,12 @@ class StringUtils {
     return str.replace(/[^0-9]/g, replacer)
   }
 
-  sortByAttr = (array: Array<any>, attr:string): Array<any> => {
-      if(array)
-        return array.sort((a, b) =>
-        this.normalize(a[attr]) < this.normalize(b[attr]) ? -1 : 1)
-      return array
+  sortByAttr = (array: Array<any>, attr: string): Array<any> => {
+    if (array)
+      return array.sort((a, b) =>
+        this.normalize(a[attr]) < this.normalize(b[attr]) ? -1 : 1
+      )
+    return array
   }
 }
 

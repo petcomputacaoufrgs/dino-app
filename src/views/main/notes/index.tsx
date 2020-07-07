@@ -21,10 +21,7 @@ const Notes = () => {
   } as NoteBoardViewModel)
   const [tags, setTags] = useState([] as string[])
 
-  const handleSaveNewNote = (
-    newQuestion: string,
-    newTagNames: string[]
-  ) => {
+  const handleSaveNewNote = (newQuestion: string, newTagNames: string[]) => {
     const newBoard = { ...board }
 
     const newNotes = newBoard.columns[0].cards
@@ -52,7 +49,11 @@ const Notes = () => {
     setBoard(newBoard)
   }
 
-  const handleSaveQuestion = (newQuestion: string, newTagNames: string[], noteView: NoteViewModel) => {
+  const handleSaveQuestion = (
+    newQuestion: string,
+    newTagNames: string[],
+    noteView: NoteViewModel
+  ) => {
     const newData = { ...board }
 
     const oldQuestion = noteView.question
@@ -250,10 +251,7 @@ const Notes = () => {
         board={board}
         tags={tags}
       />
-      <NoteAddButton
-        onSave={handleSaveNewNote}
-        tags={tags}
-      />
+      <NoteAddButton onSave={handleSaveNewNote} tags={tags} />
     </div>
   )
 }

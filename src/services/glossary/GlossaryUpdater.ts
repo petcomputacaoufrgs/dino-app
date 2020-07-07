@@ -25,7 +25,7 @@ class GlossaryUpdater implements BaseUpdater {
       }
 
       GlossaryService.setVersion(newVersion)
-      GlossaryService.setItems(StringUtils.sortByAttr(newItens, "title"))
+      GlossaryService.setItems(StringUtils.sortByAttr(newItens, 'title'))
     }
   }
 

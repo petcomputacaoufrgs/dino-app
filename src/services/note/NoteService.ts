@@ -112,7 +112,7 @@ class NoteService {
       lastUpdate: noteModel.lastUpdate,
       tagNames: noteModel.tagNames,
       answered: false,
-      id: 0
+      id: 0,
     }
 
     const request = DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
@@ -363,7 +363,7 @@ class NoteService {
         question: noteDoc.question,
         tagNames: noteDoc.tagNames,
         lastUpdate: noteDoc.lastUpdate,
-        answered: noteDoc.answered
+        answered: noteDoc.answered,
       }
 
       const request = DinoAgentService.put(

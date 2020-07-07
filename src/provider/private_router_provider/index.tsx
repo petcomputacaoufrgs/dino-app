@@ -7,7 +7,7 @@ import PrivateRouterProps from './props'
  * @description Contexto padrão para o router
  */
 const PrivateRouterContext = createContext(
-  new PrivateRouterProps('', '', () => false),
+  new PrivateRouterProps('', '', () => false)
 )
 
 /**

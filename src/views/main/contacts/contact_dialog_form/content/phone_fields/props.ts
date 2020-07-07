@@ -7,5 +7,4 @@ export default interface PhoneFieldsProps {
   error?: boolean
   helperText?: string
   handleDeletePhone: (number: string) => void
-
 }

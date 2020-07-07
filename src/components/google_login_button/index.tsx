@@ -109,7 +109,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   }
 
   return (
-    <div className='google_login_button'>
+    <div className="google_login_button">
       <GoogleLogin
         clientId={GoogleSecret.web.client_id}
         scope={AuthService.getDefaultScopes()}
@@ -134,11 +134,11 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
         )}
       />
       <Loader alt={language.LOADER_ALT} loading={loading} />
-      {!connected &&
-        <Typography className='google_login_button__error' component="p">
+      {!connected && (
+        <Typography className="google_login_button__error" component="p">
           {language.DISCONNECTED}
         </Typography>
-      }
+      )}
     </div>
   )
 }

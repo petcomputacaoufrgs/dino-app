@@ -13,7 +13,6 @@ class NoteSync implements BaseSync {
       if (serverVersion > localVersion) {
         NoteUpdater.update(serverVersion)
         NoteService.setShouldSync(false)
-
       } else if (NoteService.shouldSync()) {
         const noteDocs = await NoteService.getDatabaseNotes()
 
@@ -27,7 +26,7 @@ class NoteSync implements BaseSync {
                 question: doc.question,
                 tagNames: doc.tagNames,
                 lastUpdate: doc.lastUpdate,
-                answered: doc.answered
+                answered: doc.answered,
               } as NoteUpdateModel)
           )
 
@@ -39,13 +38,11 @@ class NoteSync implements BaseSync {
       }
 
       return true
-
     }
 
     NoteService.setShouldSync(true)
 
     return false
-
   }
 }
 

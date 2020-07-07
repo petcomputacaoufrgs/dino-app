@@ -34,7 +34,7 @@ export default class PrivateRouterProps<S = LocationState> {
     homePath: string,
     isAuthenticated: () => boolean,
     browserHistory?: History<S>,
-    children?: any,
+    children?: any
   ) {
     this.loginPath = loginPath
     this.homePath = homePath

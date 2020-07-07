@@ -1,8 +1,8 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import SearchIcon from "@material-ui/icons/Search";
-import SearchBarProps from "./props";
-import "./styles.css";
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import SearchIcon from '@material-ui/icons/Search'
+import SearchBarProps from './props'
+import './styles.css'
 
 const BootstrapSearchBar = (props: SearchBarProps): JSX.Element => (
   <div className="search-bar">
@@ -22,6 +22,6 @@ const BootstrapSearchBar = (props: SearchBarProps): JSX.Element => (
       />
     </div>
   </div>
-);
+)
 
 export default BootstrapSearchBar

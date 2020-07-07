@@ -9,7 +9,6 @@ import AddContactButton from './contact_button_add'
 import ContactsService from '../../../services/contact/ContactsService'
 
 const Contacts = (): JSX.Element => {
-
   const language = useLanguage().current
 
   const [add, setAdd] = useState(0)
@@ -19,9 +18,9 @@ const Contacts = (): JSX.Element => {
   const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
     setSearchTerm(event.target.value)
   }
-  
+
   useEffect(() => {
-    if(!add){
+    if (!add) {
       const items = ContactsService.getItems()
       const results = items.filter((item) =>
         StringUtils.contains(item.name, searchTerm)
@@ -37,8 +36,8 @@ const Contacts = (): JSX.Element => {
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}
       />
-      <ContactItems items={searchResults} setItems={setSearchResults}/>
-      <AddContactButton dialogOpen={add} setDialogOpen={setAdd}/>
+      <ContactItems items={searchResults} setItems={setSearchResults} />
+      <AddContactButton dialogOpen={add} setDialogOpen={setAdd} />
     </div>
   )
 }

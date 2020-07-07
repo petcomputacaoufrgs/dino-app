@@ -16,6 +16,20 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.AUTH_TOKEN)
   }
 
+  getLogoutToken = (): string => {
+    const authToken = this.get(LS_Constants.LOGOUT_TOKEN)
+
+    return this.convertStringOrNullToString(authToken)
+  }
+
+  setLogoutToken = (accessToken: string) => {
+    this.set(LS_Constants.LOGOUT_TOKEN, accessToken)
+  }
+
+  removeLogoutToken = () => {
+    this.remove(LS_Constants.LOGOUT_TOKEN)
+  }
+
   getGoogleAccessToken = (): string | null =>
     this.get(LS_Constants.GOOGLE_ACCESS_TOKEN)
 

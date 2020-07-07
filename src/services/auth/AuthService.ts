@@ -60,9 +60,45 @@ class AuthService {
   }
 
   google_logout = () => {
+    const authToken = AuthLocalStorage.getAuthToken()
+
+    this.logout(authToken)
+
     UserService.removeUserData()
 
     HistoryService.push(PathConstants.LOGIN)
+  }
+
+  logout = async (authToken: string): Promise<boolean> => {
+    try {
+      const request = DinoAgentService.logout(authToken)
+
+      console.log(request)
+
+      if (request.status === DinoAgentStatus.OK) {
+        await request.get()
+
+        return true
+      }
+    } catch {/* TO-DO Salvar erro */}
+
+    AuthLocalStorage.setLogoutToken(authToken)
+
+    return false
+  }
+
+  getLogoutToken = (): string => {
+    return AuthLocalStorage.getLogoutToken()
+  }
+
+  removeLogoutToken = () => {
+    AuthLocalStorage.removeLogoutToken()
+  }
+
+  shouldSync = (): boolean => {
+    const tokenToLogout = AuthLocalStorage.getLogoutToken()
+
+    return Boolean(tokenToLogout)
   }
 
   isAuthenticated = (): boolean => Boolean(AuthLocalStorage.getAuthToken())

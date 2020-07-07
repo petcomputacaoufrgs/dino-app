@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLanguage, useAlert } from '../../provider/app_provider'
 import Button from '../button'
 import Loader from '../loader'
-import GoogleSecret from '../../config/client_secret.json'
+import GoogleSecret from '../../secret/client_secret.json'
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,

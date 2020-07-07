@@ -1,3 +1,3 @@
-Test environment: https://test.dinoapp.tk
+# DinoAPP
 
-Dependency Manager: Yarn
+#### Aplicação PWA do projeto `DinoApp`

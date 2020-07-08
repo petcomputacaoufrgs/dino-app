@@ -32,6 +32,17 @@ const Login = (): JSX.Element => {
     alert.showInfoAlert(language.LOGIN_CANCELED)
   }
 
+  const renderLoginButton = (): JSX.Element => (
+    <GoogleLoginButton
+      size="large"
+      onCancel={showAlertCancel}
+      onDinoAPIFail={showAlertDinoFail}
+      onGoogleFail={showAlertGoogleFail}
+      onRefreshTokenLostError={showAlertRefreshError}
+      buttonText={language.LOGIN_BUTTON_TEXT}
+    />
+  )
+
   return (
     <div className="login">
       <img className="login__curious" src={Dinosaur2} alt="Curious dino" />
@@ -40,14 +51,7 @@ const Login = (): JSX.Element => {
         {language.WELCOME_MESSAGE}
       </Typography>
       <div className="login__button">
-        <GoogleLoginButton
-          size="large"
-          onCancel={showAlertCancel}
-          onDinoAPIFail={showAlertDinoFail}
-          onGoogleFail={showAlertGoogleFail}
-          onRefreshTokenLostError={showAlertRefreshError}
-          buttonText={language.LOGIN_BUTTON_TEXT}
-        />
+        {renderLoginButton()}
       </div>
     </div>
   )

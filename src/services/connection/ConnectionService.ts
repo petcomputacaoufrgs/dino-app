@@ -1,3 +1,4 @@
+import Superagent, { Response } from 'superagent'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
@@ -12,7 +13,6 @@ const DELAY_TO_VERIFY_DINO_CONNECTION = 2500
 
 class ConnectionService {
   callbacks = [] as ConnectionListennerCallback[]
-  firstVerification = true
 
   constructor() {
     this.start()
@@ -36,7 +36,10 @@ class ConnectionService {
     return ConnectionLocalStorage.isDisconnected()
   }
 
-  private start = async () => {
+  private start = () => {
+    ConnectionLocalStorage.setConnected()
+    this.awaitForDinoConnection()
+
     window.addEventListener('online', async () => {
       this.awaitForDinoConnection()
     })
@@ -47,12 +50,17 @@ class ConnectionService {
   }
 
   private awaitForDinoConnection = async () => {
+    let isConnected = this.isConnected()
+
     while (navigator.onLine) {
       const isDinoConnected = await this.isDinoConnected()
 
       if (isDinoConnected) {
         this.setConnected()
         break
+      } else if (isConnected) {
+        isConnected = false
+        this.setDisconnected()
       }
 
       await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
@@ -61,39 +69,31 @@ class ConnectionService {
 
   private isDinoConnected = async (): Promise<Boolean> => {
     try {
-      const request = DinoAgentService.get(DinoAPIURLConstants.TEST_CONNECTION)
+      const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
 
-      const response = await request.get()
+      const response = await request
 
       return response.status === HttpStatus.OK
-    } catch {
-      return false
-    }
+    } catch {/** TO-DO Log error */}
+
+    return false
   }
 
   private setConnected = () => {
-    if (this.isDiconnected() || this.firstVerification) {
+    if (this.isDiconnected()) {
       ConnectionLocalStorage.setConnected()
 
       this.callbacks.forEach((callback) => callback(true))
 
-      if (this.firstVerification) {
-        this.firstVerification = false
-      } else {
-        SyncService.sync()
-      }
+      SyncService.sync()
     }
   }
 
   private setDisconnected = () => {
-    if (this.isConnected() || this.firstVerification) {
+    if (this.isConnected()) {
       ConnectionLocalStorage.setDisconnected()
 
       this.callbacks.forEach((callback) => callback(false))
-
-      if (this.firstVerification) {
-        this.firstVerification = false
-      }
     }
   }
 }

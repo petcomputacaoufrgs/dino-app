@@ -50,9 +50,7 @@ const Login = (): JSX.Element => {
       <Typography className="login__message" variant="h6" component="p">
         {language.WELCOME_MESSAGE}
       </Typography>
-      <div className="login__button">
-        {renderLoginButton()}
-      </div>
+      <div className="login__button">{renderLoginButton()}</div>
     </div>
   )
 }

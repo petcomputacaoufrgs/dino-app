@@ -15,6 +15,7 @@ import { useAlert, useLanguage } from './provider/app_provider/index'
 import './App.css'
 import SyncService from './services/sync/SyncService'
 import SyncControlModel from './types/sync/SyncControlModel'
+import AppSettingsWebsocket from './services/app_settings/AppSettingsWebsocket'
 
 const App = (): JSX.Element => {
   const [first, setFirst] = useState(true)
@@ -24,6 +25,8 @@ const App = (): JSX.Element => {
   const language = useLanguage()
 
   UpdaterService.checkUpdates(languageContext)
+
+  AppSettingsWebsocket.start()
 
   useEffect(() => {
     const updateConnectionState = (isConnected: boolean) => {

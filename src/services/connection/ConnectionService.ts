@@ -74,7 +74,9 @@ class ConnectionService {
       const response = await request
 
       return response.status === HttpStatus.OK
-    } catch {/** TO-DO Log error */}
+    } catch {
+      /** TO-DO Log error */
+    }
 
     return false
   }

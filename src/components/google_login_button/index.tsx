@@ -25,7 +25,9 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   const alert = useAlert()
 
   const [loading, setLoading] = useState(false)
-  const [isConnected, setIsConnected] = useState(ConnectionService.isConnected())
+  const [isConnected, setIsConnected] = useState(
+    ConnectionService.isConnected()
+  )
 
   useEffect(() => {
     const updateConnectionState = (connected) => {

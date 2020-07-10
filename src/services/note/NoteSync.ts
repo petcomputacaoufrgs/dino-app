@@ -1,6 +1,5 @@
 import BaseSync from '../BaseSync'
 import NoteService from './NoteService'
-import NoteUpdater from './NoteUpdater'
 import NoteUpdateModel from '../../types/note/NoteUpdateModel'
 
 class NoteSync implements BaseSync {
@@ -11,7 +10,7 @@ class NoteSync implements BaseSync {
       const localVersion = NoteService.getVersion()
 
       if (serverVersion > localVersion) {
-        NoteUpdater.update(serverVersion)
+        NoteService.updateNotesFromServer(serverVersion)
         NoteService.setShouldSync(false)
       } else if (NoteService.shouldSync()) {
         const noteDocs = await NoteService.getDatabaseNotes()

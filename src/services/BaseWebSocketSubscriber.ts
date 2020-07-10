@@ -1,4 +1,5 @@
+import SubscriberItem from '../types/web_socket/SubscriberItem'
+
 export default interface BaseWebSocketSubscriber {
-  path: string
-  callback: (data: any) => void
+  items: SubscriberItem[]
 }

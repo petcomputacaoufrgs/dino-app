@@ -4,8 +4,15 @@ import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
+import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
 
 class AppSettingsService {
+  languageContext?: LanguageSubProviderValue
+
+  start = (languageContext: LanguageSubProviderValue) => {
+    this.languageContext = languageContext
+  }
+
   get = (): AppSettingsModel => {
     const savedVersion = AppSettingsLocalStorage.getAppSettingsVersion()
 
@@ -24,6 +31,24 @@ class AppSettingsService {
     AppSettingsLocalStorage.setAppSettings(appSettings)
 
     this.saveOnServer(appSettings)
+  }
+
+  update = async (newVersion: number) => {
+    const savedVersion = this.getAppSettingsVersion()
+
+    if (newVersion !== savedVersion) {
+      const appSettings = await this.getAppSettingsFromServer()
+
+      if (appSettings) {
+        this.saveAppSettingsData(appSettings, newVersion)
+
+        if (this.languageContext) {
+          this.languageContext.updateLanguage()
+        }
+      } else {
+        this.setShouldSync(true)
+      }
+    }
   }
 
   getAppSettingsVersion = (): number =>

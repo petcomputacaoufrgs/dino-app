@@ -2,41 +2,35 @@ import AppSettingsSync from '../app_settings/AppSettingsSync'
 import GlossarySync from '../glossary/GlossarySync'
 import NoteSync from '../note/NoteSync'
 import ConnectionService from '../connection/ConnectionService'
-import SyncControlModel from '../../types/sync/SyncControlModel'
 import AuthService from '../auth/AuthService'
 import AuthSync from '../auth/AuthSync'
+import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
 
 const SYNC_FAIL_INTERVAL = 60000
 const SYNC_FAIL_WITHOUT_CONTROL = 200
 
 class SyncService {
-  control?: SyncControlModel
+  languageContext?: LanguageSubProviderValue
 
-  start = (control: SyncControlModel) => {
-    this.control = control
-  }
-
-  stop = () => {
-    this.control = undefined
+  start = (languageContext: LanguageSubProviderValue) => {
+    this.languageContext = languageContext
   }
 
   sync = async () => {
-    if (this.control) {
-      if (ConnectionService.isConnected()) {
-        this.startSync(this.control)
-      } 
+    if (ConnectionService.isConnected()) {
+      this.startSync()
     } else {
       setTimeout(this.sync, SYNC_FAIL_WITHOUT_CONTROL)
     }
   }
 
-  private startSync = async (control: SyncControlModel) => {
+  private startSync = async () => {
     const promises: Promise<boolean>[] = []
 
     const isAuthenticated = AuthService.isAuthenticated()
 
     if (isAuthenticated) {
-      promises.push(AppSettingsSync.sync(control.language))
+      promises.push(AppSettingsSync.sync(this.languageContext))
       promises.push(GlossarySync.sync())
       promises.push(NoteSync.sync())
     }
@@ -46,10 +40,10 @@ class SyncService {
     const results = await Promise.all(promises)
 
     const syncWithError = !results.every((success) => success)
-    
+
     if (syncWithError) {
       setTimeout(this.sync, SYNC_FAIL_INTERVAL)
-    } 
+    }
   }
 }
 

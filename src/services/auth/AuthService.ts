@@ -37,7 +37,9 @@ class AuthService {
             AuthLocalStorage.cleanLoginGarbage()
             this.setRefreshRequiredToFalse()
 
-            this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
+            this.saveGoogleAuthDataFromRequestBody(
+              response.body as GoogleAuthResponseModel
+            )
 
             EventsService.whenLogin()
 

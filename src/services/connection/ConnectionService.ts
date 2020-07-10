@@ -65,7 +65,7 @@ class ConnectionService {
     }
   }
 
-  private isDinoConnected = async(): Promise<Boolean> => {
+  private isDinoConnected = async (): Promise<Boolean> => {
     try {
       const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
 

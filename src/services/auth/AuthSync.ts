@@ -4,7 +4,7 @@ import AuthService from './AuthService'
 class AuthSync implements BaseSync {
   sync = async (): Promise<boolean> => {
     if (AuthService.shouldSync()) {
-      const success = await AuthService.logout(AuthService.getLogoutToken())
+      const success = await AuthService.APILogout(AuthService.getLogoutToken())
       if (success) {
         AuthService.removeLogoutToken()
       }

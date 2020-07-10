@@ -4,14 +4,13 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
 import AuthLocalStorage from './local_storage/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
-import HistoryService from '../history/HistoryService'
-import PathConstants from '../../constants/PathConstants'
 import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import EventsService from '../events/EventsService'
 
 class AuthService {
   getDefaultScopes = (): string => {
@@ -22,7 +21,7 @@ class AuthService {
     )
   }
 
-  google_login = async (
+  googleLogin = async (
     loginResponse: GoogleLoginResponseOffline
   ): Promise<number> => {
     if (loginResponse.code) {
@@ -35,16 +34,18 @@ class AuthService {
           const response = await request.get().send(authRequestModel)
 
           if (response.status === HttpStatus.OK) {
-            this.saveGoogleAuthDataFromRequestBody(
-              response.body as GoogleAuthResponseModel
-            )
-
             AuthLocalStorage.cleanLoginGarbage()
+            this.setRefreshRequiredToFalse()
+
+            this.saveGoogleAuthDataFromRequestBody(response.body as GoogleAuthResponseModel)
+
+            EventsService.whenLogin()
 
             return LoginErrorConstants.SUCCESS
           }
 
           if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+            this.setRefreshRequiredToTrue()
             return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
           }
         }
@@ -59,21 +60,17 @@ class AuthService {
     return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
   }
 
-  google_logout = () => {
+  googleLogout = () => {
     const authToken = AuthLocalStorage.getAuthToken()
 
-    this.logout(authToken)
+    this.APILogout(authToken)
 
-    UserService.removeUserData()
-
-    HistoryService.push(PathConstants.LOGIN)
+    EventsService.whenLogout()
   }
 
-  logout = async (authToken: string): Promise<boolean> => {
+  APILogout = async (authToken: string): Promise<boolean> => {
     try {
       const request = DinoAgentService.logout(authToken)
-
-      console.log(request)
 
       if (request.status === DinoAgentStatus.OK) {
         await request.get()

@@ -1,11 +1,9 @@
-import Superagent, { Response } from 'superagent'
-import DinoAgentService from '../dino_agent/DinoAgentService'
+import Superagent from 'superagent'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
 import ConnectionLocalStorage from './local_storage/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
-import SyncService from '../sync/SyncService'
 
 export type ConnectionListennerCallback = (online: boolean) => void
 
@@ -67,7 +65,7 @@ class ConnectionService {
     }
   }
 
-  private isDinoConnected = async (): Promise<Boolean> => {
+  private isDinoConnected = async(): Promise<Boolean> => {
     try {
       const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
 
@@ -86,8 +84,6 @@ class ConnectionService {
       ConnectionLocalStorage.setConnected()
 
       this.callbacks.forEach((callback) => callback(true))
-
-      SyncService.sync()
     }
   }
 

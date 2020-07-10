@@ -1,14 +1,12 @@
 import Superagent, { Response } from 'superagent'
 import HttpStatus from 'http-status-codes'
-import HistoryService from '../history/HistoryService'
-import PathConstants from '../../constants/PathConstants'
 import DinoAPIHeaderConstants from '../../constants/dino_api/DinoAPIHeaderConstants'
 import AuthService from '../auth/AuthService'
 import ConnectionService from '../connection/ConnectionService'
 import DinoAgentRequest from '../../types/dino_agent/DinoAgentRequest'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
-import UserService from '../user/UserService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import EventsService from '../events/EventsService'
 
 /**
  * @description Abstrai a biblioteca Superagent com tratamentos para conexão,autenticação, erro de autenticação e renovação de token
@@ -83,9 +81,7 @@ class DinoAgentService {
     }
 
     if (this.isAuthenticated() || forceAuth) {
-      const authorizationHeader = 'Bearer '.concat(token)
-
-      return { [DinoAPIHeaderConstants.AUTHORIZATION]: authorizationHeader }
+      return { [DinoAPIHeaderConstants.AUTHORIZATION]: token }
     }
 
     return {}
@@ -93,9 +89,7 @@ class DinoAgentService {
 
   private onError = (err: any) => {
     if (err.status === HttpStatus.FORBIDDEN) {
-      UserService.removeUserData()
-
-      HistoryService.push(PathConstants.LOGIN)
+      EventsService.whenLoginForbidden()
     } else if (err.status === HttpStatus.PRECONDITION_REQUIRED) {
       AuthService.setRefreshRequiredToTrue()
     }

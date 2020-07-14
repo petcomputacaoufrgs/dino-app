@@ -1,11 +1,14 @@
-export default interface NoteViewModel {
+export interface NoteValue {
   id: number
   question: string
   answer: string
   answered: boolean
   tagNames: string[]
-  showByTag: boolean
-  showByQuestion: boolean
   lastUpdate: number
   savedOnServer: boolean
+}
+
+export default interface NotesProviderValue {
+  notes: NoteValue[]
+  tags: string[]
 }

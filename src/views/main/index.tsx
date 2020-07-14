@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, Switch } from 'react-router'
-import { useLanguage } from '../../provider/app_provider'
+import { useLanguage } from '../../provider/app_settings_provider'
 import GlossarySVG from '../../assets/icons/glossary.svg'
 import ContactsSVG from '../../assets/icons/phone.svg'
 import GamesSVG from '../../assets/icons/games.svg'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../../../provider/app_provider'
+import { useLanguage } from '../../../../../../provider/app_settings_provider'
 import TextField from '@material-ui/core/TextField'
 import { MenuItem, IconButton } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'

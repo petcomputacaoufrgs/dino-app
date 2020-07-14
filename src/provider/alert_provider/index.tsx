@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import AlertProps from '../../../components/alert/props'
-import Alert from '../../../components/alert'
-import AlertSubProviderValue from './value'
+import React, { useState, useEffect, createContext, useContext } from 'react'
+import AlertProps from '../../components/alert/props'
+import Alert from '../../components/alert'
+import AlertProviderValue from './value'
+import AlertProviderProps from './props'
 
 const ALERT_DURATION = 4000
 
@@ -21,14 +22,16 @@ const AddAlert = (
   AlertList.push(newSuccessAlert)
 }
 
-export const AlertControl: AlertSubProviderValue = {
+const AlertProviderContext = createContext({} as AlertProviderValue)
+
+export const AlertControl: AlertProviderValue = {
   showSuccessAlert: (message: string) => AddAlert(message, 'success'),
   showWarningAlert: (message: string) => AddAlert(message, 'warning'),
   showInfoAlert: (message: string) => AddAlert(message, 'info'),
   showErrorAlert: (message: string) => AddAlert(message, 'error'),
 }
 
-const AlertSubProvider = (): JSX.Element => {
+const AlertProvider = (props: AlertProviderProps): JSX.Element => {
   const [alert, setAlert] = useState(undefined as AlertProps | undefined)
 
   useEffect(() => {
@@ -67,7 +70,14 @@ const AlertSubProvider = (): JSX.Element => {
     return () => clearInterval(interval)
   }, [alert])
 
-  return <>{alert && <Alert {...alert} />}</>
+  return (
+    <AlertProviderContext.Provider value={AlertControl}>
+      {alert && <Alert {...alert} />}
+      {props.children}
+    </AlertProviderContext.Provider>
+  )
 }
 
-export default AlertSubProvider
+export const useAlert = () => useContext(AlertProviderContext)
+
+export default AlertProvider

@@ -1,4 +1,4 @@
-import BaseSync from '../BaseSync'
+import BaseSync from '../../types/services/BaseSync'
 import AuthService from './AuthService'
 
 class AuthSync implements BaseSync {

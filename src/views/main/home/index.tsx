@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../provider/app_provider'
+import { useLanguage } from '../../../provider/app_settings_provider'
 import { Avatar, Typography } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import './styles.css'

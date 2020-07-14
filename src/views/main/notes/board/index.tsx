@@ -7,7 +7,7 @@ import NoteService from '../../../../services/note/NoteService'
 import AnswerDialog from '../answer_dialog'
 import QuestionDialog from '../question_dialog'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useLanguage } from '../../../../provider/app_provider'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 import AgreementDialogProps from '../../../../components/agreement_dialog/props'
 
 const NoteBoard = (props: {

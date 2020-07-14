@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../provider/app_provider'
+import { useLanguage } from '../../../provider/app_settings_provider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItems from './glossary_items'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'

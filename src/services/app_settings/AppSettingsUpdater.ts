@@ -1,9 +1,9 @@
-import BaseUpdater from '../BaseUpdater'
+import BaseUpdater from '../../types/services/BaseUpdater'
 import AppSettingsService from './AppSettingsService'
 
 class AppSettingsUpdater implements BaseUpdater {
   checkUpdates = async (): Promise<void> => {
-    const updatedVersion = await AppSettingsService.getAppSettingsVersionFromServer()
+    const updatedVersion = await AppSettingsService.getServerVersion()
 
     if (updatedVersion === undefined) {
       AppSettingsService.setShouldSync(true)

@@ -1,4 +1,4 @@
-import BaseSync from '../BaseSync'
+import BaseSync from '../../types/services/BaseSync'
 import GlossaryService from './GlossaryService'
 import GlossaryUpdater from './GlossaryUpdater'
 

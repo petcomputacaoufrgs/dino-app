@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../../../../provider/app_provider'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 import Button from '@material-ui/core/Button'
 import {
   Dialog,

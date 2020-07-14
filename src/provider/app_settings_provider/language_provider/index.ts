@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import LanguageBase from './languages/LanguageBase'
-import EN_US from './languages/EN_US'
-import PT_BR from './languages/PT_BR'
+import LanguageBase from '../../../types/languages/LanguageBase'
+import EN_US from '../../../types/languages/EN_US'
+import PT_BR from '../../../types/languages/PT_BR'
 import LanguageProviderValue, { Language } from './value'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 
-const LanguageProvider = (): LanguageProviderValue => {
+const AppSettingsProvider = (): LanguageProviderValue => {
   const getLanguageSetByCode = (languageCode: string): LanguageBase => {
     if (languageCode === LanguageCodeConstants.PORTUGUESE) {
       return new PT_BR()
@@ -21,7 +21,7 @@ const LanguageProvider = (): LanguageProviderValue => {
     return getLanguageSetByCode(language)
   }
 
-  const setHTMLElementLanguage = (language: LanguageBase) => {
+  const setHTMLLanguage = (language: LanguageBase) => {
     const html = document.getElementById('html')
 
     if (html) {
@@ -31,19 +31,19 @@ const LanguageProvider = (): LanguageProviderValue => {
 
   const [currentLanguage, setCurrentLanguage] = useState(getLanguageSet())
 
-  setHTMLElementLanguage(currentLanguage)
+  setHTMLLanguage(currentLanguage)
 
   const updateCurrentLanguage = (): LanguageBase => {
     const language = getLanguageSet()
 
-    setHTMLElementLanguage(language)
+    setHTMLLanguage(language)
 
     setCurrentLanguage(language)
 
     return language
   }
 
-  const getLanguageList = (): Language[] => {
+  const getLanguages = (): Language[] => {
     const language = getLanguageSet()
 
     return [
@@ -60,11 +60,11 @@ const LanguageProvider = (): LanguageProviderValue => {
 
   const value: LanguageProviderValue = {
     current: currentLanguage,
-    getLanguageList: getLanguageList,
+    getLanguages: getLanguages,
     updateLanguage: updateCurrentLanguage,
   }
 
   return value
 }
 
-export default LanguageProvider
+export default AppSettingsProvider

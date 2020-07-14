@@ -119,11 +119,10 @@ const Main = (): JSX.Element => {
           exact
           path={PathConstants.NOTES}
           component={() => (
-              <NotesProvider>
-                <Notes />
-              </NotesProvider>
-            )
-          }
+            <NotesProvider>
+              <Notes />
+            </NotesProvider>
+          )}
         />
         <PrivateRoute
           exact

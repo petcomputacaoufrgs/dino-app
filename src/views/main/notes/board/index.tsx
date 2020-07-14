@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Board, { moveCard } from '@lourenci/react-kanban'
-import { NoteValue } from '../../../../provider/notes_provider/value'
 import NoteCard from '../card'
 import NoteBoardViewModel, {
   NoteBoardColumnViewModel,
@@ -151,15 +150,14 @@ const NoteBoard = (props: BoardProps): JSX.Element => {
   )
 }
 
-const createBoard = (cards: NoteViewModel[]) => (
-  {
+const createBoard = (cards: NoteViewModel[]) =>
+  ({
     columns: [
       {
         id: 0,
         cards: cards,
       } as NoteBoardColumnViewModel,
     ] as NoteBoardColumnViewModel[],
-  } as NoteBoardViewModel
-)
+  } as NoteBoardViewModel)
 
 export default NoteBoard

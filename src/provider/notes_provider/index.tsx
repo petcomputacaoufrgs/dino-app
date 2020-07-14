@@ -14,7 +14,6 @@ const NotesProvider = (props: NotesProviderProps): JSX.Element => {
   const [tags, setTags] = useState([] as string[])
   const [firstLoad, setFirstLoad] = useState(true)
 
-
   useEffect(() => {
     const getTagsAndNotes = async () => {
       const notes = await NoteService.getNotes()

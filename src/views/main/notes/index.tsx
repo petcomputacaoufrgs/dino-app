@@ -21,8 +21,6 @@ const Notes = () => {
   const [viewNotes, setViewNotes] = useState([] as NoteViewModel[])
 
   useEffect(() => {
-    console.log("notes updated")
-    console.log(notes)
     setViewNotes(
       notes.map((note) => {
         const viewNote: NoteViewModel = {

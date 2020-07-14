@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../types/app_settings/AppSettingsModel'
-import HistoryService from '../../../services/history/HistoryService'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 import './styles.css'
 
@@ -45,8 +44,6 @@ const Settings = (): JSX.Element => {
 
     const currentLanguage = appContext.language.updateLanguage()
     alert.showSuccessAlert(currentLanguage.SETTINGS_SAVE_SUCCESS)
-
-    HistoryService.goBack()
   }
 
   const renderSelectLanguage = (): JSX.Element => (

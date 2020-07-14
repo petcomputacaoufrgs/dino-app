@@ -136,7 +136,11 @@ const Main = (): JSX.Element => {
         />
         <PrivateRoute
           path={`${PathConstants.GLOSSARY}/:id`}
-          component={GlossaryItem}
+          component={() => (
+            <GlossaryProvider>
+              <GlossaryItem />
+            </GlossaryProvider>
+          )}
         />
         <PrivateRoute path={'/'} component={NotFound} />
       </Switch>

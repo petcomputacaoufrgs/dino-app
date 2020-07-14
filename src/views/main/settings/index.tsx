@@ -30,7 +30,7 @@ const Settings = (): JSX.Element => {
     setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
   }, [language])
 
-  const onChangeLanguage = (event: any) => {
+  const handleSelectionChanged = (event: any) => {
     if (event && event.target && event.target.value) {
       setSelectedLanguage(event.target.value as string)
     }
@@ -58,7 +58,7 @@ const Settings = (): JSX.Element => {
         labelId="language-select-label"
         id="language-select"
         value={selectedLanguage}
-        onChange={onChangeLanguage}
+        onChange={handleSelectionChanged}
       >
         {languageList.map((language, index) => (
           <MenuItem key={index} value={language.code}>

@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import LanguageBase from '../../../types/languages/LanguageBase'
-import EN_US from '../../../types/languages/EN_US'
-import PT_BR from '../../../types/languages/PT_BR'
 import LanguageProviderValue, { Language } from './value'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'

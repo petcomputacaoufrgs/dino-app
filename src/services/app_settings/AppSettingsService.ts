@@ -4,7 +4,6 @@ import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
-import LanguageSubProviderValue from '../../provider/app_settings_provider/language_provider/value'
 import LanguageBase from '../../types/languages/LanguageBase'
 import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
 import PT_BR from '../../types/languages/PT_BR'
@@ -12,13 +11,7 @@ import EN_US from '../../types/languages/EN_US'
 import AppSettingsContextUpdater from './AppSettingsContextUpdater'
 
 class AppSettingsService {
-  languageContext?: LanguageSubProviderValue
-
   listenner = {}
-
-  start = (languageContext: LanguageSubProviderValue) => {
-    this.languageContext = languageContext
-  }
 
   get = (): AppSettingsModel => {
     const savedVersion = AppSettingsLocalStorage.getAppSettingsVersion()
@@ -49,10 +42,6 @@ class AppSettingsService {
       if (appSettings) {
         AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
         this.updateLocalAppSettings(appSettings)
-
-        if (this.languageContext) {
-          this.languageContext.updateLanguage()
-        }
       } else {
         this.setShouldSync(true)
       }
@@ -139,6 +128,11 @@ class AppSettingsService {
     const language = this.get().language
 
     return this.getLanguageBaseByCode(language)
+  }
+
+  returnAppSettingsToDefault = (): void => {
+    const appSettings = this.getDefaultAppSettings()
+    this.updateLocalAppSettings(appSettings)
   }
 
   private updateLocalAppSettings = (appSettings: AppSettingsModel) => {

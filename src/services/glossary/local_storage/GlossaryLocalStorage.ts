@@ -22,20 +22,6 @@ class GlossaryLocalStorage extends BaseLocalStorage {
   setItems = (items: GlossaryItemModel[]) => {
     this.set(LS_Constants.GLOSSARY_ITEMS, JSON.stringify(items))
   }
-
-  getShouldSync = (): boolean => {
-    const should = this.get(LS_Constants.GLOSSARY_SHOULD_SYNC)
-
-    if (should) {
-      return JSON.parse(should)
-    }
-
-    return false
-  }
-
-  setShouldSync = (should: boolean) => {
-    this.set(LS_Constants.GLOSSARY_SHOULD_SYNC, JSON.stringify(should))
-  }
 }
 
 export default new GlossaryLocalStorage()

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useLanguage } from '../../../provider/app_settings_provider'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItems from './glossary_items'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
-import GlossaryService from '../../../services/glossary/GlossaryService'
+import { useGlossary } from '../../../provider/glossary_provider'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Glossary = (): JSX.Element => {
   const language = useLanguage().current
+  const items = useGlossary().items
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState(
@@ -18,12 +19,11 @@ const Glossary = (): JSX.Element => {
   const handleChange = (event) => setSearchTerm(event.target.value)
 
   useEffect(() => {
-    const items = GlossaryService.getItems()
     const results = items.filter((item) =>
       StringUtils.contains(item.title, searchTerm)
     )
     setSearchResults(results)
-  }, [searchTerm])
+  }, [items, searchTerm])
 
   return (
     <div className="glossary">

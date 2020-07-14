@@ -1,5 +1,4 @@
 import AppSettingsSync from '../app_settings/AppSettingsSync'
-import GlossarySync from '../glossary/GlossarySync'
 import NoteSync from '../note/NoteSync'
 import ConnectionService from '../connection/ConnectionService'
 import AuthService from '../auth/AuthService'
@@ -24,7 +23,6 @@ class SyncService {
 
     if (isAuthenticated) {
       promises.push(AppSettingsSync.sync())
-      promises.push(GlossarySync.sync())
       promises.push(NoteSync.sync())
     }
 

@@ -25,7 +25,9 @@ const NotesProvider = (props: NotesProviderProps): JSX.Element => {
     let saveTagsAndNotes = (notes: NoteValue[], tags: string[]) => {
       setNotes(notes)
       setTags(tags)
-      setFirstLoad(false)
+      if (firstLoad) {
+        setFirstLoad(false)
+      }
     }
 
     if (firstLoad) {

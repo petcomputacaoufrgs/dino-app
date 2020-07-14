@@ -23,6 +23,7 @@ import MenuItemViewModel from '../../components/menu/model/MenuItemViewModel'
 import Notes from './notes'
 import NotFound from '../not_found/index'
 import NotesProvider from '../../provider/notes_provider'
+import GlossaryProvider from '../../provider/glossary_provider'
 
 /**
  * @description Tela principal da aplicação
@@ -108,7 +109,11 @@ const Main = (): JSX.Element => {
         <PrivateRoute
           exact
           path={PathConstants.GLOSSARY}
-          component={Glossary}
+          component={() => (
+            <GlossaryProvider>
+              <Glossary />
+            </GlossaryProvider>
+          )}
         />
         <PrivateRoute
           exact

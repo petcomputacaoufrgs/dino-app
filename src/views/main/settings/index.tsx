@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppSettings } from '../../../provider/app_settings_provider'
 import { useAlert } from '../../../provider/alert_provider'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -25,6 +25,10 @@ const Settings = (): JSX.Element => {
   const [selectedLanguage, setSelectedLanguage] = useState(
     language.NAVIGATOR_LANGUAGE_CODE
   )
+
+  useEffect(() => {
+    setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
+  }, [language])
 
   const onChangeLanguage = (event: any) => {
     if (event && event.target && event.target.value) {

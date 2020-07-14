@@ -5,6 +5,11 @@ import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
 import LanguageSubProviderValue from '../../provider/app_settings_provider/language_provider/value'
+import LanguageBase from '../../types/languages/LanguageBase'
+import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
+import PT_BR from '../../types/languages/PT_BR'
+import EN_US from '../../types/languages/EN_US'
+import AppSettingsContextUpdater from './AppSettingsContextUpdater'
 
 class AppSettingsService {
   languageContext?: LanguageSubProviderValue
@@ -30,7 +35,7 @@ class AppSettingsService {
   }
 
   set = (appSettings: AppSettingsModel) => {
-    AppSettingsLocalStorage.setAppSettings(appSettings)
+    this.updateLocalAppSettings(appSettings)
 
     this.saveOnServer(appSettings)
   }
@@ -42,7 +47,8 @@ class AppSettingsService {
       const appSettings = await this.getServer()
 
       if (appSettings) {
-        this.saveAppSettingsData(appSettings, newVersion)
+        AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
+        this.updateLocalAppSettings(appSettings)
 
         if (this.languageContext) {
           this.languageContext.updateLanguage()
@@ -118,7 +124,7 @@ class AppSettingsService {
         const response = await request.get().send(model)
         const newVersion = response.body
 
-        this.saveAppSettingsData(model, newVersion)
+        AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
 
         return
       } catch {
@@ -129,9 +135,23 @@ class AppSettingsService {
     AppSettingsLocalStorage.setShouldSync(true)
   }
 
-  saveAppSettingsData = (model: AppSettingsModel, version: number) => {
-    AppSettingsLocalStorage.setAppSettingsVersion(version)
-    AppSettingsLocalStorage.setAppSettings(model)
+  getLanguageBase = (): LanguageBase => {
+    const language = this.get().language
+
+    return this.getLanguageBaseByCode(language)
+  }
+
+  private updateLocalAppSettings = (appSettings: AppSettingsModel) => {
+    AppSettingsLocalStorage.setAppSettings(appSettings)
+    AppSettingsContextUpdater.update()
+  }
+
+  private getLanguageBaseByCode = (languageCode: string): LanguageBase => {
+    if (languageCode === LanguageCodeConstants.PORTUGUESE) {
+      return new PT_BR()
+    } else {
+      return new EN_US()
+    }
   }
 }
 

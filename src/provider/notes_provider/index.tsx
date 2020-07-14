@@ -15,31 +15,31 @@ const NotesProvider = (props: NotesProviderProps): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
-    const getTagsAndNotes = async () => {
+    const updateTagsAndNotes = async () => {
       const notes = await NoteService.getNotes()
       const tags = await NoteService.getTags()
 
-      updateTagsAndNotes(notes, tags)
+      saveTagsAndNotes(notes, tags)
     }
 
-    let updateTagsAndNotes = (notes: NoteValue[], tags: string[]) => {
+    let saveTagsAndNotes = (notes: NoteValue[], tags: string[]) => {
       setNotes(notes)
       setTags(tags)
       setFirstLoad(false)
     }
 
     if (firstLoad) {
-      getTagsAndNotes()
+      updateTagsAndNotes()
     }
 
     const handleLocalDataChanged = () => {
-      getTagsAndNotes()
+      updateTagsAndNotes()
     }
 
     NoteContextUpdater.setCallback(handleLocalDataChanged)
 
     const cleanBeforeUpdate = () => {
-      updateTagsAndNotes = () => {}
+      saveTagsAndNotes = () => {}
     }
 
     return cleanBeforeUpdate

@@ -4,15 +4,10 @@ import DatabaseConstants from '../../../constants/DatabaseConstants'
 import StringUtils from '../../../utils/StringUtils'
 import NoteDoc from '../../../types/note/database/NoteDoc'
 
-class DeletedNoteDatabase implements BaseDatabase {
-  db: PouchDB.Database<{}>
-
+class DeletedNoteDatabase extends BaseDatabase {
   constructor() {
-    this.db = this.getNewConnection()
+    super(DatabaseConstants.DELETED_NOTE)
   }
-
-  getNewConnection = (): PouchDB.Database<{}> =>
-    new PouchDB(DatabaseConstants.DELETED_NOTE, { auto_compaction: true })
 
   private getId = (question: string) => StringUtils.normalize(question)
 
@@ -88,11 +83,6 @@ class DeletedNoteDatabase implements BaseDatabase {
     } catch {
       return []
     }
-  }
-
-  removeAll = async () => {
-    await this.db.destroy()
-    this.db = this.getNewConnection()
   }
 }
 

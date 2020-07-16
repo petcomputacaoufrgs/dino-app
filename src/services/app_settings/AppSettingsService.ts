@@ -93,7 +93,7 @@ class AppSettingsService {
 
   getDefaultAppSettings = (): AppSettingsModel => {
     const defaultAppSettings: AppSettingsModel = {
-      language: navigator.language.slice(0,2),
+      language: navigator.language.slice(0, 2),
     }
 
     return defaultAppSettings

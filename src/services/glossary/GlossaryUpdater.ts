@@ -5,11 +5,9 @@ class GlossaryUpdater implements BaseUpdater {
   checkUpdates = async () => {
     const newVersion = await GlossaryService.getAPIVersion()
 
-    if (newVersion === undefined) {
-      return
+    if (newVersion !== undefined) {
+      GlossaryService.update(newVersion)
     }
-
-    GlossaryService.update(newVersion)
   }
 }
 

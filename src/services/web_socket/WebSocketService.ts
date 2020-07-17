@@ -7,6 +7,7 @@ import BaseWebSocketSubscriber from '../../types/services/BaseWebSocketSubscribe
 import GlossaryWebSocketSubscriber from '../glossary/GlossaryWebSocketSubscriber'
 import AppSettingsWebSocketSubscriber from '../app_settings/AppSettingsWebSocketSubscriber'
 import NoteWebSocketSubscriber from '../note/NoteWebSocketSubscriber'
+import UserWebSocketSubscriber from '../user/UserWebSocketSubscriber'
 
 class WebSocketService {
   socket?: WebSocket
@@ -42,6 +43,7 @@ class WebSocketService {
     subscribers.push(GlossaryWebSocketSubscriber)
     subscribers.push(AppSettingsWebSocketSubscriber)
     subscribers.push(NoteWebSocketSubscriber)
+    subscribers.push(UserWebSocketSubscriber)
 
     subscribers.forEach((subscriber) => {
       subscriber.items.forEach((item) => {

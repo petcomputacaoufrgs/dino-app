@@ -1,9 +1,9 @@
 type ImageFormat = 'jpeg' | 'png'
 
 interface ImageProcessItem {
-    src: string,
-    type: ImageFormat,
-    callback: (base64: string, success: boolean) => void
+  src: string
+  type: ImageFormat
+  callback: (base64: string, success: boolean) => void
 }
 
 /**
@@ -47,8 +47,6 @@ class ImageToBase64Utils {
     }
 
     this.queue.push(item)
-
-    console.log(this.queue)
 
     if (!this.processing) {
       this.run()

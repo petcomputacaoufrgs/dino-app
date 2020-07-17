@@ -1,12 +1,12 @@
-import GoogleAuthRequestModel from '../../types/auth/GoogleAuthRequestModel'
+import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
 import AuthLocalStorage from './local_storage/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
-import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
+import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
-import GoogleAuthResponseModel from '../../types/auth/GoogleAuthResponseModel'
+import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
@@ -83,26 +83,14 @@ class AuthService {
       /* TO-DO Salvar erro */
     }
 
-    AuthLocalStorage.setLogoutToken(authToken)
-
     return false
   }
 
-  getLogoutToken = (): string => {
-    return AuthLocalStorage.getLogoutToken()
-  }
-
-  removeLogoutToken = () => {
-    AuthLocalStorage.removeLogoutToken()
-  }
-
-  shouldSync = (): boolean => {
-    const tokenToLogout = AuthLocalStorage.getLogoutToken()
-
-    return Boolean(tokenToLogout)
-  }
-
   isAuthenticated = (): boolean => Boolean(AuthLocalStorage.getAuthToken())
+
+  getGoogleAccessToken = (): string | null => {
+    return AuthLocalStorage.getGoogleAccessToken()
+  }
 
   setGoogleAccessToken = (token: string) => {
     AuthLocalStorage.setGoogleAccessToken(token)
@@ -139,9 +127,7 @@ class AuthService {
 
   private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
     AuthLocalStorage.setAuthToken(responseBody.accessToken)
-    UserService.setEmail(responseBody.email)
-    UserService.setName(responseBody.name)
-    UserService.setPictureUrl(responseBody.pictureUrl)
+    UserService.saveUserDataFromModel(responseBody.user)
   }
 }
 

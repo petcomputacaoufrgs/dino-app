@@ -11,7 +11,7 @@ import GoogleLogin, {
 import GoogleLogo from '../../assets/logos/google.png'
 import LoginButtonProps from './props'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
-import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
+import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import AuthService from '../../services/auth/AuthService'
 import { Typography } from '@material-ui/core'
 import ConnectionService from '../../services/connection/ConnectionService'

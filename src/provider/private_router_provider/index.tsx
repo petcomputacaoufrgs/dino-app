@@ -6,15 +6,17 @@ import PrivateRouterProps from './props'
 /**
  * @description Contexto padrão para o router
  */
-const PrivateRouterContext = createContext(
-  new PrivateRouterProps('', '', () => false)
-)
+const PrivateRouterContext = createContext({
+  homePath: '',
+  loginPath: '',
+  isAuthenticated: () => false,
+} as PrivateRouterProps)
 
 /**
  * @description Gera os dados necessários para as rotas privadas e de login
  * @param props Propriedades do PrivateRouter
  */
-const PrivateRouter = (props: PrivateRouterProps): JSX.Element => {
+const PrivateRouter: React.FC<PrivateRouterProps> = (props): JSX.Element => {
   const getHistory = (): History<LocationState> => {
     if (props.browserHistory) {
       return props.browserHistory

@@ -3,15 +3,16 @@ import NoteService from './NoteService'
 import NoteUpdateModel from '../../types/note/NoteUpdateModel'
 
 class NoteSync implements BaseSync {
-  sync = async (): Promise<boolean> => {
+  sync = async () => {
     const serverVersion = await NoteService.getVersionFromServer()
 
     if (serverVersion !== undefined) {
+      NoteService.setShouldSync(false)
+
       const localVersion = NoteService.getVersion()
 
       if (serverVersion > localVersion) {
         NoteService.updateNotesFromServer(serverVersion)
-        NoteService.setShouldSync(false)
       } else if (NoteService.shouldSync()) {
         const noteDocs = await NoteService.getDatabaseNotes()
 
@@ -35,13 +36,9 @@ class NoteSync implements BaseSync {
 
         NoteService.updateOrderOnServer(noteDocs)
       }
-
-      return true
     }
 
     NoteService.setShouldSync(true)
-
-    return false
   }
 }
 

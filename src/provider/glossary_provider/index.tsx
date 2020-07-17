@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import GlossaryProviderProps from './props'
 import GlossaryProviderValue from './value'
 import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
 import GlossaryService from '../../services/glossary/GlossaryService'
@@ -9,7 +8,7 @@ const GlossaryProviderContext = createContext({
   items: [] as GlossaryItemModel[],
 } as GlossaryProviderValue)
 
-const GlossaryProvider = (props: GlossaryProviderProps): JSX.Element => {
+const GlossaryProvider: React.FC = (props) => {
   const [items, setItems] = useState([] as GlossaryItemModel[])
   const [firstLoad, setFirstLoad] = useState(true)
 

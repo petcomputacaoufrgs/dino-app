@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import NotesProviderProps from './props'
 import NotesProviderValue, { NoteValue } from './value'
 import NoteService from '../../services/note/NoteService'
 import NoteContextUpdater from '../../services/note/NoteContextUpdater'
@@ -9,7 +8,7 @@ const NotesProviderContext = createContext({
   tags: [],
 } as NotesProviderValue)
 
-const NotesProvider = (props: NotesProviderProps): JSX.Element => {
+const NotesProvider: React.FC = (props) => {
   const [notes, setNotes] = useState([] as NoteValue[])
   const [tags, setTags] = useState([] as string[])
   const [firstLoad, setFirstLoad] = useState(true)

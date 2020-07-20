@@ -8,7 +8,7 @@ import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
-import DinoAgentService from '../dino_agent/DinoAgentService'
+import DinoAgentService from '../agent/dino/DinoAgentService'
 import AgentStatus from '../../types/agent/AgentStatus'
 import EventsService from '../events/EventsService'
 

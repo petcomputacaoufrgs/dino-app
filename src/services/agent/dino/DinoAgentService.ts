@@ -1,11 +1,11 @@
 import Superagent, { Response } from 'superagent'
 import HttpStatus from 'http-status-codes'
-import DinoAPIHeaderConstants from '../../constants/dino_api/DinoAPIHeaderConstants'
-import AuthService from '../auth/AuthService'
-import AgentRequest from '../../types/agent/AgentRequest'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import EventsService from '../events/EventsService'
-import AgentBase from '../../types/agent/AgentBase'
+import DinoAPIHeaderConstants from '../../../constants/dino_api/DinoAPIHeaderConstants'
+import AuthService from '../../auth/AuthService'
+import AgentRequest from '../../../types/agent/AgentRequest'
+import DinoAPIURLConstants from '../../../constants/dino_api/DinoAPIURLConstants'
+import EventsService from '../../events/EventsService'
+import AgentBase from '../../../types/agent/AgentBase'
 
 /**
  * @description Adapta a biblioteca Superagent para lidar com a DinoAPI

@@ -1,7 +1,7 @@
 import Superagent from 'superagent'
-import AuthService from '../auth/AuthService'
-import GoogleAPIHeaderConstants from '../../constants/google/GoogleAPIHeaderConstants'
-import AgentBase from '../../types/agent/AgentBase'
+import AuthService from '../../auth/AuthService'
+import GoogleAPIHeaderConstants from '../../../constants/google/GoogleAPIHeaderConstants'
+import AgentBase from '../../../types/agent/AgentBase'
 
 /**
  * @description Adapta a biblioteca Superagent para lidar com a GoogleAPI

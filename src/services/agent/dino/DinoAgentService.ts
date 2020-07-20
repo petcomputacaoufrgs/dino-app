@@ -2,8 +2,6 @@ import Superagent, { Response } from 'superagent'
 import HttpStatus from 'http-status-codes'
 import DinoAPIHeaderConstants from '../../../constants/dino_api/DinoAPIHeaderConstants'
 import AuthService from '../../auth/AuthService'
-import AgentRequest from '../../../types/services/agent/AgentRequest'
-import DinoAPIURLConstants from '../../../constants/dino_api/DinoAPIURLConstants'
 import EventsService from '../../events/EventsService'
 import BaseAgent from '../../../types/services/agent/BaseAgent'
 
@@ -12,16 +10,7 @@ import BaseAgent from '../../../types/services/agent/BaseAgent'
  */
 class DinoAgentService extends BaseAgent {
 
-  logout = (token: string): AgentRequest => {
-    const request = Superagent.put(DinoAPIURLConstants.LOGOUT)
-      .set(this.getHeader(token))
-      .on('error', this.onError)
-      .on('response', this.onResponse)
-
-    return this.getAgentRequest(request)
-  }
-
-  protected filter = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
+  protected filterWhileCreating = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
     request.set(this.getHeader())
     return request
   }

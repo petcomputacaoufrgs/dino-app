@@ -19,6 +19,7 @@ class LocalStorageKeys {
   GOOGLE_ACCESS_TOKEN = 'gat'
   GOOGLE_EXPIRES_DATE = 'ged'
   AUTH_TOKEN = 'at'
+  TEMP_AUTH_TOKEN = 'tat'
   REFRESH_TOKEN_REQUIRED = 'rtr'
   LANGUAGE = 'lan'
   APP_SETTINGS_VERSION = 'asv'

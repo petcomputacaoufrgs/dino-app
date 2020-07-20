@@ -63,7 +63,7 @@ class UserService {
   }
 
   getServerVersion = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -80,7 +80,7 @@ class UserService {
   }
 
   getServer = async (): Promise<UserModel | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.USER_GET)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_GET)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -151,7 +151,7 @@ class UserService {
   }
 
   saveNewPhotoOnServer = async (pictureURL: string) => {
-    const request = DinoAgentService.put(DinoAPIURLConstants.USER_PUT_PHOTO)
+    const request = await DinoAgentService.put(DinoAPIURLConstants.USER_PUT_PHOTO)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -176,7 +176,7 @@ class UserService {
   }
 
   private getUserGoogleAPIPhoto = async (): Promise<GooglePhotoResponseModel | null> => {
-    const request = GoogleAgentService.get(
+    const request = await GoogleAgentService.get(
       GooglePeopleAPIURLConstants.GET_USER_PHOTOS
     )
 

@@ -5,32 +5,40 @@ import AgentStatus from './AgentStatus'
 
 export default class BaseAgent {
 
-    put = (url: string): AgentRequest => {
-        const request = this.filter(Superagent.put(url)
+    put = async (url: string): Promise<AgentRequest> => {
+        await this.filterBeforeCreate()
+
+        const request = this.filterWhileCreating(Superagent.put(url)
             .on('error', this.onError)
             .on('response', this.onResponse))
 
         return this.getAgentRequest(request)
     }
 
-    post = (url: string): AgentRequest => {
-        const request = this.filter(Superagent.post(url)
+    post = async (url: string): Promise<AgentRequest> => {
+        await this.filterBeforeCreate()
+
+        const request = this.filterWhileCreating(Superagent.post(url)
             .on('error', this.onError)
             .on('response', this.onResponse))
 
         return this.getAgentRequest(request)
     }
 
-    get = (url: string): AgentRequest => {
-        const request = this.filter(Superagent.get(url)
+    get = async (url: string): Promise<AgentRequest> => {
+        await this.filterBeforeCreate()
+
+        const request = this.filterWhileCreating(Superagent.get(url)
             .on('error', this.onError)
             .on('response', this.onResponse))
 
         return this.getAgentRequest(request)
     }
 
-    delete = (url: string): AgentRequest => {
-        const request = this.filter(Superagent.delete(url)
+    delete = async (url: string): Promise<AgentRequest> => {
+        await this.filterBeforeCreate() 
+
+        const request = this.filterWhileCreating(Superagent.delete(url)
             .on('error', this.onError)
             .on('response', this.onResponse))
 
@@ -38,7 +46,11 @@ export default class BaseAgent {
         return this.getAgentRequest(request)
     }
 
-    protected filter = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
+    protected filterBeforeCreate = async () => {
+        return
+    }
+
+    protected filterWhileCreating = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
         return request
     }
 

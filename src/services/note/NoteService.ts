@@ -62,7 +62,7 @@ class NoteService {
   getVersion = (): number => NoteVersionLocalStorage.getVersion()
 
   getVersionFromServer = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -114,7 +114,7 @@ class NoteService {
       id: 0,
     }
 
-    const request = DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
+    const request = await DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -193,7 +193,7 @@ class NoteService {
         } as NoteDeleteModel)
     )
 
-    const request = DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE_ALL)
+    const request = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE_ALL)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -219,7 +219,7 @@ class NoteService {
     if (noteDoc.external_id) {
       const model: NoteDeleteModel = { id: noteDoc.external_id }
 
-      const request = DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE)
+      const request = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE)
 
       if (request.status === AgentStatus.OK) {
         try {
@@ -284,7 +284,7 @@ class NoteService {
       }
     })
 
-    const request = DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
+    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -304,7 +304,7 @@ class NoteService {
   }
 
   updateNotes = async (models: NoteUpdateModel[]) => {
-    const request = DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_ALL)
+    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_ALL)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -366,7 +366,7 @@ class NoteService {
         answered: noteDoc.answered,
       }
 
-      const request = DinoAgentService.put(
+      const request = await DinoAgentService.put(
         DinoAPIURLConstants.NOTE_UPDATE_QUESTION
       )
 
@@ -421,7 +421,7 @@ class NoteService {
         answer: noteDoc.answer,
       }
 
-      const request = DinoAgentService.put(
+      const request = await DinoAgentService.put(
         DinoAPIURLConstants.NOTE_UPDATE_ANSWER
       )
 
@@ -459,7 +459,7 @@ class NoteService {
     const localVersion = this.getVersion()
 
     if (newVersion > localVersion) {
-      const request = DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
+      const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
 
       if (request.status === AgentStatus.OK) {
         try {

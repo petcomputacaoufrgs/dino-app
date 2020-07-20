@@ -51,7 +51,7 @@ class AppSettingsService {
   getVersion = (): number => AppSettingsLocalStorage.getAppSettingsVersion()
 
   getServerVersion = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(
+    const request = await DinoAgentService.get(
       DinoAPIURLConstants.APP_SETTINGS_VERSION
     )
 
@@ -70,7 +70,7 @@ class AppSettingsService {
   }
 
   getServer = async (): Promise<AppSettingsResponseModel | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -106,7 +106,7 @@ class AppSettingsService {
   }
 
   saveOnServer = async (model: AppSettingsModel): Promise<void> => {
-    const request = DinoAgentService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE)
+    const request = await DinoAgentService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE)
 
     if (request.status === AgentStatus.OK) {
       try {

@@ -28,7 +28,7 @@ class AuthService {
       const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
 
       try {
-        const request = DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
+        const request = await DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
 
         if (request.status === AgentStatus.OK) {
           const response = await request.get().send(authRequestModel)
@@ -63,7 +63,7 @@ class AuthService {
   }
 
   googleLogout = () => {
-    const authToken = AuthLocalStorage.getAuthToken()
+    const authToken = this.getAuthToken()
 
     this.serverLogout(authToken)
 
@@ -72,7 +72,11 @@ class AuthService {
 
   serverLogout = async (authToken: string): Promise<boolean> => {
     try {
-      const request = DinoAgentService.logout(authToken)
+      this.setTempAuthToken(authToken)
+
+      const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
+
+      this.removeTempAuthToken()
 
       if (request.status === AgentStatus.OK) {
         await request.get()
@@ -108,7 +112,21 @@ class AuthService {
     AuthLocalStorage.setAuthToken(token)
   }
 
+  setTempAuthToken = (tempToken: string) => {
+    AuthLocalStorage.setTempAuthToken(tempToken)
+  }
+
+  removeTempAuthToken = () => {
+    AuthLocalStorage.removeTempAuthToken()
+  }
+
   getAuthToken = (): string => {
+    const tempAuthToken = AuthLocalStorage.getTempAuthToken()
+
+    if (tempAuthToken) {
+      return tempAuthToken
+    }
+    
     return AuthLocalStorage.getAuthToken()
   }
 

@@ -8,7 +8,7 @@ import BaseAgent from '../../../types/services/agent/BaseAgent'
  */
 class GoogleAgentService extends BaseAgent {
   
-  protected filter = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
+  protected filterWhileCreating = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
     request.set(this.getHeader())
 
     return request

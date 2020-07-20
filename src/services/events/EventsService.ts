@@ -6,6 +6,7 @@ import PathConstants from '../../constants/PathConstants'
 import UpdaterService from '../updater/UpdaterService'
 import WebSocketService from '../web_socket/WebSocketService'
 import AppSettingsService from '../app_settings/AppSettingsService'
+import AuthService from '../auth/AuthService'
 
 /**
  * Executa funções baseado em eventos da aplicação
@@ -16,6 +17,7 @@ class EventsService {
   }
 
   whenStart = () => {
+    AuthService.removeTempAuthToken()
     SyncService.sync()
     UpdaterService.checkUpdates()
     WebSocketService.connect()

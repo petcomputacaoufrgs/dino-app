@@ -20,6 +20,5 @@
   "background_color": "#B32E55",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
-  "permissions": ["https://pet-dino-test-server.herokuapp.com"]
+  "start_url": "/"
 }

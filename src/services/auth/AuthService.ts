@@ -9,7 +9,7 @@ import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../agent/dino/DinoAgentService'
-import AgentStatus from '../../types/agent/AgentStatus'
+import AgentStatus from '../../types/services/agent/AgentStatus'
 import EventsService from '../events/EventsService'
 
 class AuthService {

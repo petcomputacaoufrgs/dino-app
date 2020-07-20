@@ -1,9 +1,9 @@
 import Superagent from 'superagent'
 import AgentRequest from './AgentRequest'
-import ConnectionService from '../../services/connection/ConnectionService'
+import ConnectionService from '../../../services/connection/ConnectionService'
 import AgentStatus from './AgentStatus'
 
-export default class AgentBase {
+export default class BaseAgent {
 
     put = (url: string): AgentRequest => {
         const request = this.filter(Superagent.put(url)

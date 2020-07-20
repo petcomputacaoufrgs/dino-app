@@ -1,12 +1,12 @@
 import Superagent from 'superagent'
 import AuthService from '../../auth/AuthService'
 import GoogleAPIHeaderConstants from '../../../constants/google/GoogleAPIHeaderConstants'
-import AgentBase from '../../../types/agent/AgentBase'
+import BaseAgent from '../../../types/services/agent/BaseAgent'
 
 /**
  * @description Adapta a biblioteca Superagent para lidar com a GoogleAPI
  */
-class GoogleAgentService extends AgentBase {
+class GoogleAgentService extends BaseAgent {
   
   protected filter = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
     request.set(this.getHeader())

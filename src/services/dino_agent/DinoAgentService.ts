@@ -2,69 +2,28 @@ import Superagent, { Response } from 'superagent'
 import HttpStatus from 'http-status-codes'
 import DinoAPIHeaderConstants from '../../constants/dino_api/DinoAPIHeaderConstants'
 import AuthService from '../auth/AuthService'
-import ConnectionService from '../connection/ConnectionService'
-import DinoAgentRequest from '../../types/dino_agent/DinoAgentRequest'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import AgentRequest from '../../types/agent/AgentRequest'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import EventsService from '../events/EventsService'
+import AgentBase from '../../types/agent/AgentBase'
 
 /**
  * @description Adapta a biblioteca Superagent para lidar com a DinoAPI
  */
-class DinoAgentService {
-  logout = (token: string): DinoAgentRequest => {
+class DinoAgentService extends AgentBase {
+
+  logout = (token: string): AgentRequest => {
     const request = Superagent.put(DinoAPIURLConstants.LOGOUT)
       .set(this.getHeader(token))
       .on('error', this.onError)
       .on('response', this.onResponse)
 
-    return this.getDinoAgentRequest(request)
+    return this.getAgentRequest(request)
   }
 
-  put = (url: string): DinoAgentRequest => {
-    const request = Superagent.put(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
-      .on('response', this.onResponse)
-
-    return this.getDinoAgentRequest(request)
-  }
-
-  post = (url: string): DinoAgentRequest => {
-    const request = Superagent.post(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
-      .on('response', this.onResponse)
-
-    return this.getDinoAgentRequest(request)
-  }
-
-  get = (url: string): DinoAgentRequest => {
-    const request = Superagent.get(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
-      .on('response', this.onResponse)
-
-    return this.getDinoAgentRequest(request)
-  }
-
-  delete = (url: string): DinoAgentRequest => {
-    const request = Superagent.delete(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
-      .on('response', this.onResponse)
-
-    return this.getDinoAgentRequest(request)
-  }
-
-  private getDinoAgentRequest = (
-    request: Superagent.SuperAgentRequest
-  ): DinoAgentRequest => {
-    if (ConnectionService.isConnected()) {
-      return { get: () => request, status: DinoAgentStatus.OK }
-    } else {
-      return { get: () => request, status: DinoAgentStatus.DISCONNECTED }
-    }
+  protected filter = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
+    request.set(this.getHeader())
+    return request
   }
 
   private getAuthToken = (): string => AuthService.getAuthToken()
@@ -87,7 +46,7 @@ class DinoAgentService {
     return {}
   }
 
-  private onError = (err: any) => {
+  protected onError = (err: any) => {
     if (err.status === HttpStatus.FORBIDDEN) {
       EventsService.whenLoginForbidden()
     } else if (err.status === HttpStatus.PRECONDITION_REQUIRED) {
@@ -95,7 +54,7 @@ class DinoAgentService {
     }
   }
 
-  private onResponse = (response: Response) => {
+  protected onResponse = (response: Response) => {
     const verifyDinoAuth = () => {
       const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
 

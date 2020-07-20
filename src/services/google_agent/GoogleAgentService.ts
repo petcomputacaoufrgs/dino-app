@@ -1,54 +1,17 @@
 import Superagent from 'superagent'
 import AuthService from '../auth/AuthService'
-import ConnectionService from '../connection/ConnectionService'
-import DinoAgentRequest from '../../types/dino_agent/DinoAgentRequest'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import GoogleAPIHeaderConstants from '../../constants/google/GoogleAPIHeaderConstants'
+import AgentBase from '../../types/agent/AgentBase'
 
 /**
  * @description Adapta a biblioteca Superagent para lidar com a GoogleAPI
  */
-class GoogleAgentService {
-  put = (url: string): DinoAgentRequest => {
-    const request = Superagent.put(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
+class GoogleAgentService extends AgentBase {
+  
+  protected filter = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
+    request.set(this.getHeader())
 
-    return this.getDinoAgentRequest(request)
-  }
-
-  post = (url: string): DinoAgentRequest => {
-    const request = Superagent.post(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
-
-    return this.getDinoAgentRequest(request)
-  }
-
-  get = (url: string): DinoAgentRequest => {
-    const request = Superagent.get(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
-
-    return this.getDinoAgentRequest(request)
-  }
-
-  delete = (url: string): DinoAgentRequest => {
-    const request = Superagent.delete(url)
-      .set(this.getHeader())
-      .on('error', this.onError)
-
-    return this.getDinoAgentRequest(request)
-  }
-
-  private getDinoAgentRequest = (
-    request: Superagent.SuperAgentRequest
-  ): DinoAgentRequest => {
-    if (ConnectionService.isConnected()) {
-      return { get: () => request, status: DinoAgentStatus.OK }
-    } else {
-      return { get: () => request, status: DinoAgentStatus.DISCONNECTED }
-    }
+    return request
   }
 
   private getGoogleAccessToken = (): string | null =>
@@ -66,10 +29,6 @@ class GoogleAgentService {
     }
 
     return {}
-  }
-
-  private onError = (err: any) => {
-    //TO-DO: request new google auth token
   }
 }
 

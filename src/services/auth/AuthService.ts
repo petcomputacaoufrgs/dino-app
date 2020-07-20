@@ -9,7 +9,7 @@ import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import AgentStatus from '../../types/agent/AgentStatus'
 import EventsService from '../events/EventsService'
 
 class AuthService {
@@ -30,7 +30,7 @@ class AuthService {
       try {
         const request = DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
 
-        if (request.status === DinoAgentStatus.OK) {
+        if (request.status === AgentStatus.OK) {
           const response = await request.get().send(authRequestModel)
 
           if (response.status === HttpStatus.OK) {
@@ -74,7 +74,7 @@ class AuthService {
     try {
       const request = DinoAgentService.logout(authToken)
 
-      if (request.status === DinoAgentStatus.OK) {
+      if (request.status === AgentStatus.OK) {
         await request.get()
 
         return true

@@ -5,7 +5,7 @@ import NoteService from '../note/NoteService'
 import UserModel from '../../types/user/UserModel'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import AgentStatus from '../../types/agent/AgentStatus'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import UserContextUpdater from './UserContextUpdater'
@@ -65,7 +65,7 @@ class UserService {
   getServerVersion = async (): Promise<number | undefined> => {
     const request = DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
         const response = await request.get()
         const version: number = response.body
@@ -82,7 +82,7 @@ class UserService {
   getServer = async (): Promise<UserModel | undefined> => {
     const request = DinoAgentService.get(DinoAPIURLConstants.USER_GET)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
         const response = await request.get()
 
@@ -153,7 +153,7 @@ class UserService {
   saveNewPhotoOnServer = async (pictureURL: string) => {
     const request = DinoAgentService.put(DinoAPIURLConstants.USER_PUT_PHOTO)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
         const model: UserUpdatePictureModel = {
           pictureURL: pictureURL,
@@ -180,7 +180,7 @@ class UserService {
       GooglePeopleAPIURLConstants.GET_USER_PHOTOS
     )
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
         const response = await request.get()
 

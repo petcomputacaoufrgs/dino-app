@@ -100,7 +100,7 @@ class DinoAgentService {
       const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
 
       if (newToken) {
-        AuthService.setAuthToken(newToken.substring(7))
+        AuthService.setAuthToken(newToken)
       }
     }
 
@@ -110,7 +110,9 @@ class DinoAgentService {
       )
 
       if (newGoogleToken) {
-        AuthService.setGoogleAccessToken(newGoogleToken.substring(7))
+        const newExpiresDate = response.get(DinoAPIHeaderConstants.GOOGLE_EXPIRES_DATE)
+        AuthService.setGoogleAccessToken(newGoogleToken)
+        AuthService.setGoogleExpiresDate(JSON.parse(newExpiresDate))
       }
     }
 

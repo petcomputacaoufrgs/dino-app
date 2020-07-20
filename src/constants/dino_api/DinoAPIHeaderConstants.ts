@@ -1,9 +1,12 @@
 class DinoAPIHeaderConstants {
-  AUTHORIZATION: string = 'dino_an'
+  AUTHORIZATION = 'dino_an'
 
-  REFRESH_TOKEN: string = 'refresh'
+  REFRESH_TOKEN = 'refresh'
 
-  GOOGLE_REFRESH_TOKEN: string = 'google_refresh'
+  GOOGLE_REFRESH_TOKEN = 'google_refresh'
+
+
+  GOOGLE_EXPIRES_DATE = 'google_expires_date'
 }
 
 export default new DinoAPIHeaderConstants()

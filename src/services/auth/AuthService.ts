@@ -65,12 +65,12 @@ class AuthService {
   googleLogout = () => {
     const authToken = AuthLocalStorage.getAuthToken()
 
-    this.APILogout(authToken)
+    this.serverLogout(authToken)
 
     EventsService.whenLogout()
   }
 
-  APILogout = async (authToken: string): Promise<boolean> => {
+  serverLogout = async (authToken: string): Promise<boolean> => {
     try {
       const request = DinoAgentService.logout(authToken)
 
@@ -94,6 +94,14 @@ class AuthService {
 
   setGoogleAccessToken = (token: string) => {
     AuthLocalStorage.setGoogleAccessToken(token)
+  }
+
+  getGoogleExpiresDate = (): number | null => {
+    return AuthLocalStorage.getGoogleExpiresDate()
+  }
+
+  setGoogleExpiresDate = (tokenExpiresDate: number) => {
+    AuthLocalStorage.setGoogleExpiresDate(tokenExpiresDate)
   }
 
   setAuthToken = (token: string) => {
@@ -122,6 +130,7 @@ class AuthService {
     responseBody: GoogleAuthResponseModel
   ) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
+    this.setGoogleExpiresDate(responseBody.googleExpiresDate)
     this.saveUserAuthDataFromRequestBody(responseBody)
   }
 

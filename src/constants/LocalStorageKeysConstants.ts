@@ -17,6 +17,7 @@ class LocalStorageKeys {
   SAVED_PICTURE = 'sp'
   NAME = 'n'
   GOOGLE_ACCESS_TOKEN = 'gat'
+  GOOGLE_EXPIRES_DATE = 'ged'
   AUTH_TOKEN = 'at'
   REFRESH_TOKEN_REQUIRED = 'rtr'
   LANGUAGE = 'lan'

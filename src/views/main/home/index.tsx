@@ -9,10 +9,6 @@ const Home = () => {
 
   const user = useUser()
 
-  const onClick = () => {
-    throw new Error('teste')
-  }
-
   return (
     <div className="home">
       <Typography className="home__welcome_message" component="p">
@@ -26,7 +22,6 @@ const Home = () => {
       <Typography className="home__username" component="p">
         {user.name}
       </Typography>
-      <button onClick={onClick}>Teste</button>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import AgentStatus from '../../types/services/agent/AgentStatus'
 import HttpStatus from 'http-status-codes'
 import StringUtils from '../../utils/StringUtils'
 import GlossaryContextUpdater from './GlossaryContextUpdater'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class GlossaryService {
   setItems = (items: GlossaryItemModel[]) => {
@@ -46,8 +47,8 @@ class GlossaryService {
         if (response.status === HttpStatus.OK) {
           return response.body
         }
-      } catch {
-        /**TO-DO Log de erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -66,8 +67,8 @@ class GlossaryService {
         if (response.status === HttpStatus.OK) {
           return response.body
         }
-      } catch {
-        /**TO-DO Log error */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 

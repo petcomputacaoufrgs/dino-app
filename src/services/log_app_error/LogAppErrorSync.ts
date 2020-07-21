@@ -13,6 +13,7 @@ class LogAppErrorSync {
             title: log.title,
             error: log.error,
             file: log.file,
+            date: log.date,
           } as LogAppErrorModel)
       )
 

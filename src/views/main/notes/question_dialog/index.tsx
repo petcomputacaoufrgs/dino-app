@@ -8,6 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import QuestionDialogProps from './props'
 import StringUtils from '../../../../utils/StringUtils'
 import NoteService from '../../../../services/note/NoteService'
+import LogAppErrorService from '../../../../services/log_app_error/LogAppErrorService'
 
 const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
   const language = useLanguage().current
@@ -43,7 +44,7 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
 
           props.onSave(question, tagList)
         })
-        .catch()
+        .catch((e) => LogAppErrorService.saveDefault(e))
     } else {
       props.onSave(question, tagList)
     }

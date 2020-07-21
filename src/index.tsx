@@ -4,9 +4,9 @@ import App from './App'
 import * as ServiceWorker from './serviceWorker'
 import AlertProvider from './provider/alert_provider'
 import AppSettingsProvider from './provider/app_settings_provider'
-import ErrorHandler from './error/ErrorHandler'
+import ErrorHandlerService from './services/error_handler/ErrorHandlerService'
 
-ErrorHandler.register()
+ErrorHandlerService.register()
 
 ReactDOM.render(
   <AlertProvider>

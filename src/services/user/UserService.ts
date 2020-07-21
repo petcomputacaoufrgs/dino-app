@@ -14,6 +14,7 @@ import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIU
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GlossaryService from '../glossary/GlossaryService'
 import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 const DELAY_TO_SAVE_IMAGE = 120000
 
@@ -71,8 +72,8 @@ class UserService {
         const version: number = response.body
 
         return version
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -89,8 +90,8 @@ class UserService {
         const user: UserModel = response.body
 
         return user
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -165,8 +166,8 @@ class UserService {
         const newVersion: number = response.body
 
         this.setVersion(newVersion)
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
   }
@@ -187,8 +188,8 @@ class UserService {
         const response = await request.get()!
 
         return response.body
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 

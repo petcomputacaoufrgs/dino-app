@@ -4,6 +4,7 @@ import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
 import ConnectionLocalStorage from './local_storage/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 export type ConnectionListennerCallback = (online: boolean) => void
 
@@ -72,8 +73,8 @@ class ConnectionService {
       const response = await request
 
       return response.status === HttpStatus.OK
-    } catch {
-      /** TO-DO Log error */
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
     }
 
     return false

@@ -6,6 +6,7 @@ import DinoAPIURLConstants from '../../../constants/dino_api/DinoAPIURLConstants
 import DinoAgentService from '../dino/DinoAgentService'
 import AgentStatus from '../../../types/services/agent/AgentStatus'
 import GoogleRefreshAuthResponseModel from '../../../types/auth/google/GoogleRefreshAuthResponseModel'
+import LogAppErrorService from '../../log_app_error/LogAppErrorService'
 
 const TIME_MARGIN_OF_ERROR_IN_MS = 300000
 
@@ -59,8 +60,8 @@ class GoogleAgentService extends BaseAgent {
             const googleAuth: GoogleRefreshAuthResponseModel = response.body
             AuthService.setGoogleAccessToken(googleAuth.googleAccessToken)
             AuthService.setGoogleExpiresDate(googleAuth.googleExpiresDate)
-          } catch {
-            /**TO-DO Fazer log do erro */
+          } catch (e) {
+            LogAppErrorService.saveDefault(e)
             return false
           }
         }

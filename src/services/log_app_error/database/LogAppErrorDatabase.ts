@@ -1,6 +1,7 @@
 import BaseDatabase from '../../../types/services/BaseDatabase'
 import DatabaseConstants from '../../../constants/DatabaseConstants'
 import LogAppErrorDoc from '../../../types/log_app_error/database/LogAppErrorDoc'
+import LogAppErrorService from '../LogAppErrorService'
 
 class LogAppErrorDatabase extends BaseDatabase {
   constructor() {
@@ -39,6 +40,7 @@ class LogAppErrorDatabase extends BaseDatabase {
               error: doc.error,
               file: doc.file,
               title: doc.title,
+              date: doc.date,
             } as LogAppErrorDoc
           }
 
@@ -47,7 +49,8 @@ class LogAppErrorDatabase extends BaseDatabase {
         .filter((log) => log !== null)
 
       return logAppErrors as LogAppErrorDoc[]
-    } catch {
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
       return []
     }
   }

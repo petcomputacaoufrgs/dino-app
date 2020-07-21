@@ -3,6 +3,7 @@ import BaseDatabase from '../../../types/services/BaseDatabase'
 import DatabaseConstants from '../../../constants/DatabaseConstants'
 import StringUtils from '../../../utils/StringUtils'
 import NoteDoc from '../../../types/note/database/NoteDoc'
+import LogAppErrorService from '../../log_app_error/LogAppErrorService'
 
 class DeletedNoteDatabase extends BaseDatabase {
   constructor() {
@@ -28,8 +29,8 @@ class DeletedNoteDatabase extends BaseDatabase {
       } else {
         throw new Error('Deletando item sem id ou sem rev')
       }
-    } catch {
-      throw new Error('Erro ao deletar item do banco de dados local.')
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
     }
   }
 
@@ -40,7 +41,8 @@ class DeletedNoteDatabase extends BaseDatabase {
       const doc: NoteDoc = await this.db.get(id)
 
       return doc
-    } catch {
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
       return null
     }
   }
@@ -80,7 +82,8 @@ class DeletedNoteDatabase extends BaseDatabase {
       })
 
       return notes
-    } catch {
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
       return []
     }
   }

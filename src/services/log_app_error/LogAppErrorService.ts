@@ -25,26 +25,45 @@ class LogAppErrorService {
       error: model.error,
       file: model.file,
       title: model.title,
+      date: model.date,
     } as LogAppErrorDoc
 
     LogAppErrorDatabase.put(doc)
   }
 
-  save = async (model: LogAppErrorModel) => {
-    const request = await DinoAgentService.post(
-      DinoAPIURLConstants.SAVE_LOG_APP_ERROR
-    )
+  saveDefault = (error: Error) => {
+    if (error) {
+      this.save({
+        date: new Date().getTime(),
+        error: error.stack,
+        title: error.message,
+      } as LogAppErrorModel)
+    }
+  }
 
-    if (request.status === AgentStatus.OK) {
-      try {
-        await request.get()!.send(model)
-      } catch {
+  save = async (model: LogAppErrorModel) => {
+    if (model.date && model.error) {
+      const request = await DinoAgentService.post(
+        DinoAPIURLConstants.SAVE_LOG_APP_ERROR
+      )
+
+      if (request.status === AgentStatus.OK) {
+        try {
+          await request.get()!.send(model)
+        } catch {
+          this.saveLocalLog(model)
+          this.setShouldSync(true)
+        }
+      } else {
         this.saveLocalLog(model)
         this.setShouldSync(true)
       }
     } else {
-      this.saveLocalLog(model)
-      this.setShouldSync(true)
+      this.saveDefault(
+        new Error(
+          `Error Model without date or error. Model: ${JSON.stringify(model)}`
+        )
+      )
     }
   }
 

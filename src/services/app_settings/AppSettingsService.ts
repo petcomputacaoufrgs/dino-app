@@ -57,7 +57,7 @@ class AppSettingsService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
         const version: number = response.body
 
         return version
@@ -74,7 +74,7 @@ class AppSettingsService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         const appSettings: AppSettingsResponseModel = response.body
 
@@ -110,7 +110,7 @@ class AppSettingsService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(model)
+        const response = await request.get()!.send(model)
         const newVersion = response.body
 
         AppSettingsLocalStorage.setAppSettingsVersion(newVersion)

@@ -39,7 +39,7 @@ class GlossaryService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         if (response.status === HttpStatus.OK) {
           return response.body
@@ -57,7 +57,7 @@ class GlossaryService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         if (response.status === HttpStatus.OK) {
           return response.body

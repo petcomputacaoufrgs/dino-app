@@ -67,7 +67,7 @@ class UserService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
         const version: number = response.body
 
         return version
@@ -84,7 +84,7 @@ class UserService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         const user: UserModel = response.body
 
@@ -158,7 +158,7 @@ class UserService {
         const model: UserUpdatePictureModel = {
           pictureURL: pictureURL,
         }
-        const response = await request.get().send(model)
+        const response = await request.get()!.send(model)
 
         const newVersion: number = response.body
 
@@ -182,7 +182,7 @@ class UserService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         return response.body
       } catch {

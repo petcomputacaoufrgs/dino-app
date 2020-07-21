@@ -31,7 +31,7 @@ class AuthService {
         const request = await DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
 
         if (request.status === AgentStatus.OK) {
-          const response = await request.get().send(authRequestModel)
+          const response = await request.get()!.send(authRequestModel)
 
           if (response.status === HttpStatus.OK) {
             AuthLocalStorage.cleanLoginGarbage()
@@ -46,7 +46,7 @@ class AuthService {
             return LoginErrorConstants.SUCCESS
           }
 
-          if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+          if (response?.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
             this.setRefreshRequiredToTrue()
             return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
           }

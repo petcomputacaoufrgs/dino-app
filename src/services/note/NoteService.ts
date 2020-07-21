@@ -66,7 +66,7 @@ class NoteService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         if (response.status === HttpStatus.OK) {
           const serverVersion: number = response.body
@@ -118,7 +118,7 @@ class NoteService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(newNote)
+        const response = await request.get()!.send(newNote)
 
         if (response.status === HttpStatus.OK) {
           const body: NoteSaveResponseAPIModel = response.body
@@ -197,7 +197,7 @@ class NoteService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(models)
+        const response = await request.get()!.send(models)
 
         if (response.status === HttpStatus.OK) {
           const newVersion = response.body
@@ -223,7 +223,7 @@ class NoteService {
 
       if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get().send(model)
+          const response = await request.get()!.send(model)
 
           if (response.status === HttpStatus.OK) {
             const newVersion = response.body
@@ -288,7 +288,7 @@ class NoteService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(model)
+        const response = await request.get()!.send(model)
 
         if (response.status === HttpStatus.OK) {
           NoteVersionLocalStorage.setVersion(response.body)
@@ -308,7 +308,7 @@ class NoteService {
 
     if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(models)
+        const response = await request.get()!.send(models)
 
         if (response.status === HttpStatus.OK) {
           const newVersion = response.body
@@ -372,7 +372,7 @@ class NoteService {
 
       if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get().send(model)
+          const response = await request.get()!.send(model)
 
           if (response.status === HttpStatus.OK) {
             const savedNoteDoc = await NoteDatabase.getByQuestion(
@@ -427,7 +427,7 @@ class NoteService {
 
       if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get().send(model)
+          const response = await request.get()!.send(model)
 
           if (response.status === HttpStatus.OK) {
             const savedNoteDoc = await NoteDatabase.getByQuestion(
@@ -463,7 +463,7 @@ class NoteService {
 
       if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get()
+          const response = await request.get()!
 
           if (response.status === HttpStatus.OK) {
             const notes: NoteModel[] = response.body

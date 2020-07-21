@@ -2,6 +2,6 @@ import { AgentStatusValue } from './AgentStatus'
 import Superagent from 'superagent'
 
 export default interface AgentRequest {
-  get: () => Superagent.SuperAgentRequest
+  get: () => Superagent.SuperAgentRequest | undefined
   status: AgentStatusValue
 }

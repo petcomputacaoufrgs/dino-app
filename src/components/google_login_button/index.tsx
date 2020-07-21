@@ -114,11 +114,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
             imageSrc={GoogleLogo}
             imageAlt={props.buttonText}
             className="google_login_button__button"
-            onClick={
-              isConnected
-                ? renderProps.onClick
-                : showOfflineMessage
-            }
+            onClick={isConnected ? renderProps.onClick : showOfflineMessage}
             disabled={!isConnected}
           >
             <Typography component="p">{props.buttonText}</Typography>

@@ -35,7 +35,9 @@ class GlossaryService {
   }
 
   getAPIItems = async (): Promise<Array<GlossaryItemModel> | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_LIST)
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.GLOSSARY_LIST
+    )
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -53,7 +55,9 @@ class GlossaryService {
   }
 
   getAPIVersion = async (): Promise<number | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_VERSION)
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.GLOSSARY_VERSION
+    )
 
     if (request.status === AgentStatus.OK) {
       try {

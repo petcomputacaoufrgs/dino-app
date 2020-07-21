@@ -9,8 +9,9 @@ import BaseAgent from '../../../types/services/agent/BaseAgent'
  * @description Adapta a biblioteca Superagent para lidar com a DinoAPI
  */
 class DinoAgentService extends BaseAgent {
-
-  protected filterWhileCreating = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
+  protected filterWhileCreating = (
+    request: Superagent.SuperAgentRequest
+  ): Superagent.SuperAgentRequest => {
     request.set(this.getHeader())
     return request
   }
@@ -58,7 +59,9 @@ class DinoAgentService extends BaseAgent {
       )
 
       if (newGoogleToken) {
-        const newExpiresDate = response.get(DinoAPIHeaderConstants.GOOGLE_EXPIRES_DATE)
+        const newExpiresDate = response.get(
+          DinoAPIHeaderConstants.GOOGLE_EXPIRES_DATE
+        )
         AuthService.setGoogleAccessToken(newGoogleToken)
         AuthService.setGoogleExpiresDate(JSON.parse(newExpiresDate))
       }

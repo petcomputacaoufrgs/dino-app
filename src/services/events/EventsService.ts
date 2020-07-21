@@ -52,6 +52,10 @@ class EventsService {
     WebSocketService.disconnect()
   }
 
+  whenError = () => {
+    HistoryService.push(PathConstants.HOME)
+  }
+
   private connectionCallback = (online: boolean) => {
     online ? this.whenConnectionReturn() : this.whenConnectionLost()
   }

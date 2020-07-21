@@ -70,7 +70,9 @@ class AppSettingsService {
   }
 
   getServer = async (): Promise<AppSettingsResponseModel | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.APP_SETTINGS_GET
+    )
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -106,7 +108,9 @@ class AppSettingsService {
   }
 
   saveOnServer = async (model: AppSettingsModel): Promise<void> => {
-    const request = await DinoAgentService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE)
+    const request = await DinoAgentService.post(
+      DinoAPIURLConstants.APP_SETTINGS_SAVE
+    )
 
     if (request.status === AgentStatus.OK) {
       try {

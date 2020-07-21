@@ -13,7 +13,7 @@ export default class BaseDatabase {
   }
 
   removeAll = async () => {
-    await this.db.remove
+    await this.db.destroy
     this.resetDatabase()
   }
 

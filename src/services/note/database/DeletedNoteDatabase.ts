@@ -4,6 +4,7 @@ import DatabaseConstants from '../../../constants/DatabaseConstants'
 import StringUtils from '../../../utils/StringUtils'
 import NoteDoc from '../../../types/note/database/NoteDoc'
 import LogAppErrorService from '../../log_app_error/LogAppErrorService'
+import DatabaseDeleteWithoutID from '../../../error/DatabaseDeleteWithoutID'
 
 class DeletedNoteDatabase extends BaseDatabase {
   constructor() {
@@ -27,7 +28,7 @@ class DeletedNoteDatabase extends BaseDatabase {
 
         this.db.remove(id, rev)
       } else {
-        throw new Error('Deletando item sem id ou sem rev')
+        throw new DatabaseDeleteWithoutID(DatabaseConstants.DELETED_NOTE, doc)
       }
     } catch (e) {
       LogAppErrorService.saveDefault(e)

@@ -4,6 +4,7 @@ import BaseDatabase from '../../../types/services/BaseDatabase'
 import ArrayUtils from '../../../utils/ArrayUtils'
 import DatabaseConstants from '../../../constants/DatabaseConstants'
 import LogAppErrorService from '../../log_app_error/LogAppErrorService'
+import DatabaseDeleteWithoutID from '../../../error/DatabaseDeleteWithoutID'
 
 class NoteDatabase extends BaseDatabase {
   constructor() {
@@ -38,7 +39,7 @@ class NoteDatabase extends BaseDatabase {
 
         this.db.remove(id, rev)
       } else {
-        throw new Error('Deletando item sem id ou sem rev.')
+        throw new DatabaseDeleteWithoutID(DatabaseConstants.NOTE, doc)
       }
     } catch (e) {
       LogAppErrorService.saveDefault(e)

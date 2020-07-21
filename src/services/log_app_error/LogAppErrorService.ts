@@ -6,6 +6,7 @@ import LogAppErrorSyncLocalStorage from './local_storage/LogAppErrorSyncLocalSto
 import LogAppErrorDatabase from './database/LogAppErrorDatabase'
 import LogAppErrorDoc from '../../types/log_app_error/database/LogAppErrorDoc'
 import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
+import LogAppModelError from '../../error/LogAppModelError'
 
 class LogAppErrorService {
   shouldSync = (): boolean => {
@@ -22,10 +23,7 @@ class LogAppErrorService {
 
   saveLocalLog = (model: LogAppErrorModel) => {
     const doc = {
-      error: model.error,
-      file: model.file,
-      title: model.title,
-      date: model.date,
+      ...model,
     } as LogAppErrorDoc
 
     LogAppErrorDatabase.put(doc)
@@ -59,11 +57,7 @@ class LogAppErrorService {
         this.setShouldSync(true)
       }
     } else {
-      this.saveDefault(
-        new Error(
-          `Error Model without date or error. Model: ${JSON.stringify(model)}`
-        )
-      )
+      this.saveDefault(new LogAppModelError(model))
     }
   }
 
@@ -71,8 +65,6 @@ class LogAppErrorService {
     const request = await DinoAgentService.post(
       DinoAPIURLConstants.SAVE_ALL_LOG_APP_ERROR
     )
-
-    console.log(models)
 
     if (request.status === AgentStatus.OK) {
       try {

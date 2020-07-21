@@ -220,6 +220,7 @@ class UserService {
     AppSettingsService.removeUserData()
     NoteService.removeUserData()
     GlossaryService.removeUserData()
+    LogAppErrorService.removeUserData()
   }
 }
 

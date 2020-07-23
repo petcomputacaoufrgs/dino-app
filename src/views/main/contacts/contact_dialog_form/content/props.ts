@@ -9,8 +9,8 @@ export interface ContactFormDialogContentProps {
     helperText: { number: string; text: string }
   
   handleDeletePhone: (number: string) => void
-  handleChangeName: () => void
-  handleChangeDescription: () => void
+  handleChangeName: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleChangeDescription: (event: React.ChangeEvent<HTMLInputElement>) => void
   handleChangeType: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
   handleChangeNumber: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
 }

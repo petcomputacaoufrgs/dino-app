@@ -5,29 +5,27 @@ import Service from '../../../../services/contact/ContactsService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import View from './view'
 
-const ContactFormDialog = React.forwardRef(
-  ({ dialogOpen, setDialogOpen, action, item } : ContactFormDialogProps,
-    ref: React.Ref<unknown>): JSX.Element => {
+const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : ContactFormDialogProps): JSX.Element => {
 
     const [name, setName] = useState(item?.name || '')
     const [description, setDescription] = useState(item?.description || '')
     const [color, setColor] = useState(item?.color || '')
     const [invalidName, setInvalidName] = useState(false)
-    const [invalidPhone, setInvalidPhone] = useState(Constants.DEFAULT_INVALID_PHONE)
-    const [phones, setPhones] = useState(item ? item.phones : [Constants.DEFAULT_PHONE])
+    const [invalidPhone, setInvalidPhone] = useState(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
+    const [phones, setPhones] = useState(item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE)])
 
     const cleanInfo = () => {
       //TO-DO: resolver essa bodega
       setName('')
-      setPhones([Constants.DEFAULT_PHONE])
+      setPhones([{ type: Constants.MOBILE, number: '' }])
       setColor('')
       setInvalidName(false)
-      setInvalidPhone(Constants.DEFAULT_INVALID_PHONE)
+      setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
     }
 
     const handleClose = () => setDialogOpen(0)
 
-    const handleSave = () => {
+    const handleSave = (): void => {
 
       function validInfo(): string {
         setInvalidName(name === '')
@@ -77,7 +75,9 @@ const ContactFormDialog = React.forwardRef(
     }
 
     const handleAddPhone = () => {
-      phones.push(Constants.DEFAULT_PHONE)
+      // phones.push(Constants.DEFAULT_PHONE) n rola, n faz cópia
+      //const newPhone = Constants.DEFAULT_PHONE tbm n rola
+      phones.push(JSON.parse(Constants.DEFAULT_PHONE))
       setPhones([...phones])
     }
     const handleDeletePhone = (number: string) => {
@@ -102,7 +102,6 @@ const ContactFormDialog = React.forwardRef(
 
     return (
       <View
-        ref={ref}
         open={Boolean(dialogOpen)}
         handleClose={handleClose}
         action={action}
@@ -116,13 +115,12 @@ const ContactFormDialog = React.forwardRef(
         handleChangeDescription={handleChangeDescription}
         handleChangeNumber={handleChangeNumber}
         handleChangeType={handleChangeType}
+        handleChangeColor={handleChangeColor} 
         handleAddPhone={handleAddPhone}
         handleDeletePhone={handleDeletePhone}
-        handleChangeColor={handleChangeColor} 
         handleSave={handleSave}
       />
     )
   }
-)
 
 export default ContactFormDialog

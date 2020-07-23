@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useLanguage } from '../../../../../provider/app_provider'
 import TextField from '@material-ui/core/TextField'
 import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'
-import Constants from '../../../../../constants/ContactsConstants'
 
 const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Element => {
   const language = useLanguage().current

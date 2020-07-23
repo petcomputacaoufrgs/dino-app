@@ -1,20 +1,17 @@
 import React from 'react'
 import { useLanguage } from '../../../../provider/app_provider'
 import Button from '@material-ui/core/Button'
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Divider,
-} from '@material-ui/core'
+import { Dialog, DialogActions, DialogContent, Divider,} from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 import { ContactFormDialogViewProps } from './props'
 
 
-const View = ({ ref, open, handleClose, action, name, phones, color, description, handleChangeColor, invalidName, invalidPhone, handleDeletePhone, handleChangeName, handleChangeDescription, handleChangeType, handleChangeNumber, handleAddPhone, handleSave
-}: ContactFormDialogViewProps): JSX.Element => {
+const View = React.forwardRef(({ open, handleClose, action, name, phones, color, description, invalidName, 
+  invalidPhone, handleChangeColor, handleDeletePhone, handleChangeName, handleChangeDescription, 
+  handleChangeType, handleChangeNumber, handleAddPhone, handleSave
+}: ContactFormDialogViewProps, ref: React.Ref<unknown>): JSX.Element => {
 
     const language = useLanguage().current
 
@@ -41,13 +38,13 @@ const View = ({ ref, open, handleClose, action, name, phones, color, description
               name={name}
               description={description}
               phones={phones}
-              invalidName={invalidName}
               helperText={invalidPhone}
-              handleDeletePhone={handleDeletePhone}
+              invalidName={invalidName}
               handleChangeName={handleChangeName}
               handleChangeDescription={handleChangeDescription}
               handleChangeType={handleChangeType}
               handleChangeNumber={handleChangeNumber}
+              handleDeletePhone={handleDeletePhone}
           />
         </DialogContent>
         <DialogActions>
@@ -70,5 +67,6 @@ const View = ({ ref, open, handleClose, action, name, phones, color, description
     </Dialog>
     )
 }
+)
 
 export default View

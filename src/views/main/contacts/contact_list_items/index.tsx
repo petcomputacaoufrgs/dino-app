@@ -26,24 +26,24 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   return (
     <List className={classes.list}>
       {props.items.map((contact) => (
-        <div key={contact.localID}>
+        <div key={contact.frontId}>
           <ContactItemList
             item={contact}
             setEdit={setEdit}
             setDelete={setDelete}
-            onClick={() => setOpen(contact.localID)}
+            onClick={() => setOpen(contact.frontId)}
           >
             <ContactCard
               item={contact}
               onClose={() => setOpen(0)}
               setEdit={setEdit}
               setDelete={setDelete}
-              dialogOpen={open === contact.localID}
+              dialogOpen={open === contact.frontId}
               setDialogOpen={setOpen}
             />
             <ContactFormDialog
               item={contact}
-              dialogOpen={edit === contact.localID}
+              dialogOpen={edit === contact.frontId}
               setDialogOpen={setEdit}
               action={Constants.ACTION_EDIT}
             />

@@ -4,6 +4,6 @@ export default interface AddContactDialogHeaderProps {
   name: string
   phones: PhoneModel[]
   color: string
-  setColor: React.Dispatch<React.SetStateAction<string>>
-  setAddPhoneAction: React.Dispatch<React.SetStateAction<boolean>>
+  handleChangeColor: () => void
+  handleAddPhone: () => void
 }

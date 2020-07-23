@@ -30,7 +30,7 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     handleClose()
     props.onClose()
     setTimeout(() => {
-      props.setEdit(props.item.localID)
+      props.setEdit(props.item.frontId)
     }, 300)
   }
 
@@ -38,7 +38,7 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     handleClose()
     props.onClose()
     setTimeout(() => {
-      props.setDelete(props.item.localID)
+      props.setDelete(props.item.frontId)
     }, 300)
   }
 

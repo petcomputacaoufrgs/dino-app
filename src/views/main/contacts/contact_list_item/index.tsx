@@ -24,16 +24,16 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget)
 
-  const handleOpen = () => props.onClick(props.item.localID)
+  const handleOpen = () => props.onClick(props.item.frontId)
 
   const handleClose = () => setAnchorEl(null)
 
   const handleEdit = () => {
-    props.setEdit(props.item.localID)
+    props.setEdit(props.item.frontId)
     handleClose()
   }
   const handleDelete = () => {
-    props.setDelete(props.item.localID)
+    props.setDelete(props.item.frontId)
     handleClose()
   }
 

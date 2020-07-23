@@ -63,8 +63,8 @@ class ContactsLocalStorage extends BaseLocalStorage {
   getLastItemId = (): number => {
     let items: Array<ContactModel> = this.getItems()
     if (items.length) {
-      items.sort((a, b) => a.localID - b.localID)
-      return items[items.length - 1].localID
+      items.sort((a, b) => a.frontId - b.frontId)
+      return items[items.length - 1].frontId
     }
     return 0
   }

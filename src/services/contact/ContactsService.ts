@@ -14,13 +14,13 @@ class ContactsService {
     const items = this.getItems()
     items.push(item)
     this.setItems(items)
-    LS.pushAddOp(item.localID)
+    LS.pushAddOp(item.frontId)
   }
 
   deleteContact = (deletedID: number): ContactModel[] => {
     const items = this.getItems()
-    const index = items.findIndex((item) => item.localID === deletedID)
-    LS.pushDeleteOp(items.splice(index, 1)[0].localID)
+    const index = items.findIndex((item) => item.frontId === deletedID)
+    LS.pushDeleteOp(items.splice(index, 1)[0].frontId)
     this.setItems(items)
     return items
   }
@@ -29,14 +29,14 @@ class ContactsService {
     const items = this.getItems()
 
     const index = items.findIndex((item: ContactModel) => {
-      return item.localID === edited.localID
+      return item.frontId === edited.frontId
     })
 
     if (index > -1)
       if (this.checkChanges(items[index], edited)) {
         items.splice(index, 1, edited)
         this.setItems(items)
-        LS.pushEditOp(items[index].localID)
+        LS.pushEditOp(items[index].frontId)
       }
   }
 

@@ -1,6 +1,7 @@
 import AppSettingsSync from '../app_settings/AppSettingsSync'
 import GlossarySync from '../glossary/GlossarySync'
 import NoteSync from '../note/NoteSync'
+import ContactsSync from '../contact/ContactSync'
 import ConnectionService from '../connection/ConnectionService'
 import SyncControlModel from '../../types/sync/SyncControlModel'
 import AuthService from '../auth/AuthService'
@@ -43,6 +44,7 @@ class SyncService {
     promises.push(AppSettingsSync.sync(control.language))
     promises.push(GlossarySync.sync())
     promises.push(NoteSync.sync())
+    promises.push(ContactsSync.sync())
 
     const results = await Promise.all(promises)
 

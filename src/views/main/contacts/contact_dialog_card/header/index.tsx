@@ -10,7 +10,7 @@ import {
 import useStyles from '../../styles'
 import { MoreVert } from '@material-ui/icons'
 import ContactCardHeaderProps from './props'
-import ContactsService from '../../../../../services/contact/ContactsService'
+import ContactsService from '../../../../../services/contact/ContactService'
 
 const ContactCardHeader = (props: ContactCardHeaderProps) => {
   const classes = useStyles()

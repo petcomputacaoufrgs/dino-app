@@ -7,6 +7,7 @@ class DinoAPIURLConstants {
   private GLOSSARY = this.URL + 'glossary/'
   private APP_SETTINGS = this.URL + 'user_app_settings/'
   private NOTE = this.URL + 'note/'
+  private CONTACT = this.URL + 'contacts/'
 
   AUTH_GOOGLE = this.AUTH + 'google/'
 
@@ -37,6 +38,20 @@ class DinoAPIURLConstants {
   NOTE_UPDATE_ANSWER = this.NOTE + 'answer/'
 
   NOTE_UPDATE_ALL = this.NOTE + 'all/'
+
+  CONTACT_CONTACT_VERSION = this.CONTACT + 'version/'
+
+  CONTACT_GET = this.CONTACT 
+
+  CONTACT_SAVE = this.CONTACT 
+
+  CONTACT_DELETE = this.CONTACT
+
+  CONTACT_SAVE_ALL = this.CONTACT + 'all/'
+
+  CONTACT_EDIT_ALL = this.CONTACT + 'all/'
+  
+  CONTACT_DELETE_ALL = this.CONTACT + 'all/'
 
   TEST_CONNECTION = this.URL + 'test_connection/'
 }

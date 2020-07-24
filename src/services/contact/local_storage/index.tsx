@@ -4,6 +4,25 @@ import ContactModel from '../../../types/contact/ContactModel'
 import StrU from '../../../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
+
+  getShouldSync = () : boolean => {
+    const shouldSync = this.get(LS_Constants.CONTACTS_SHOULD_SYNC)
+    return shouldSync ? JSON.parse(shouldSync) : true 
+  }
+
+  setShouldSync = (shouldSync : boolean) => {
+    this.set(LS_Constants.CONTACTS_SHOULD_SYNC, JSON.stringify(shouldSync))
+  }
+
+  getVersion = (): number => {
+    const version = this.get(LS_Constants.CONTACTS_VERSION)
+    return version ? JSON.parse(version) : 0 
+  }
+
+  setVersion = (version : number) => {
+    this.set(LS_Constants.CONTACTS_VERSION, JSON.stringify(version))
+  }
+  
   getItems = (): Array<ContactModel> => {
     let items = this.get(LS_Constants.CONTACTS)
     let result = Array<ContactModel>()
@@ -16,6 +35,12 @@ class ContactsLocalStorage extends BaseLocalStorage {
       LS_Constants.CONTACTS,
       JSON.stringify(StrU.sortByAttr(items, 'name'))
     )
+  }
+
+  shouldSync = (): boolean => {
+    return this.get(LS_Constants.CONTACTS_ADD) != null 
+    //|| this.get(LS_Constants.EDIT_CONTACTS) != null 
+    //|| this.get(LS_Constants.DELETE_CONTACTS) != null
   }
 
   setOpIDs = (LSkey: string, ids: Array<number>) => {
@@ -37,18 +62,18 @@ class ContactsLocalStorage extends BaseLocalStorage {
   }
 
   pushAddOp = (id: number) => {
-    const ids = this.getOpIDs(LS_Constants.ADD_CONTACTS)
-    this.setOpIDs(LS_Constants.ADD_CONTACTS, this.pushToStack(id, ids))
+    const ids = this.getOpIDs(LS_Constants.CONTACTS_ADD)
+    this.setOpIDs(LS_Constants.CONTACTS_ADD, this.pushToStack(id, ids))
   }
 
   pushEditOp = (id: number) => {
-    let ids = this.getOpIDs(LS_Constants.EDIT_CONTACTS)
-    this.setOpIDs(LS_Constants.EDIT_CONTACTS, this.pushToStack(id, ids))
+    let ids = this.getOpIDs(LS_Constants.CONTACTS_EDIT)
+    this.setOpIDs(LS_Constants.CONTACTS_EDIT, this.pushToStack(id, ids))
   }
 
   pushDeleteOp = (id: number) => {
-    let ids = this.getOpIDs(LS_Constants.DELETE_CONTACTS)
-    this.setOpIDs(LS_Constants.DELETE_CONTACTS, this.pushToStack(id, ids))
+    let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)
+    this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToStack(id, ids))
   }
 
   cleanOpIDs = (LSkey: string) => {

@@ -1,5 +1,5 @@
 export default interface ContactModel {
-  apiID?: number
+  id?: number
   number: string
   type: number
 }

@@ -27,7 +27,6 @@ const View = React.forwardRef(({ open, handleClose, action, name, phones, color,
         <ContactFormDialogHeader
           action={action}
           name={name}
-          phones={phones}
           color={color}
           handleChangeColor={handleChangeColor}
           handleAddPhone={handleAddPhone}

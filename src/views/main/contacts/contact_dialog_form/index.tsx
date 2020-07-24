@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { ContactFormDialogProps } from './props'
 import Constants from '../../../../constants/ContactsConstants'
-import Service from '../../../../services/contact/ContactsService'
+import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
+import PhoneModel from '../../../../types/contact/PhoneModel'
 import View from './view'
 
 const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : ContactFormDialogProps): JSX.Element => {
@@ -12,7 +13,7 @@ const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : Contact
     const [color, setColor] = useState(item?.color || '')
     const [invalidName, setInvalidName] = useState(false)
     const [invalidPhone, setInvalidPhone] = useState(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
-    const [phones, setPhones] = useState(item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE)])
+    const [phones, setPhones] = useState(item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel])
 
     const cleanInfo = () => {
       //TO-DO: resolver essa bodega

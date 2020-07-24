@@ -2,6 +2,7 @@ import LanguageSubProviderValue from '../../provider/app_provider/language_provi
 import AuthService from '../auth/AuthService'
 import GlossaryUpdater from '../glossary/GlossaryUpdater'
 import NoteUpdater from '../note/NoteUpdater'
+import ContactUpdater from '../contact/ContactUpdater'
 import AppSettingsUpdater from '../app_settings/AppSettingsUpdater'
 import BaseUpdater from '../BaseUpdater'
 
@@ -11,6 +12,7 @@ class UpdaterService implements BaseUpdater {
       AppSettingsUpdater.checkUpdates(languageContext)
       GlossaryUpdater.checkUpdates()
       NoteUpdater.checkUpdates()
+      ContactUpdater.checkUpdates()
     }
   }
 }

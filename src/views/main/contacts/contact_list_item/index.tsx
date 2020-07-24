@@ -12,7 +12,7 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core'
-import ContactsService from '../../../../services/contact/ContactsService'
+import ContactsService from '../../../../services/contact/ContactService'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 
 const ContactItemList = (props: ContactItemListProps): JSX.Element => {

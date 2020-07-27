@@ -34,9 +34,7 @@ class GoogleAgentService extends BaseAgent {
   private isAuthenticated = (): boolean => Boolean(this.getGoogleAccessToken())
 
   private getHeader = (): object => {
-    let forceAuth = false
-
-    if (this.isAuthenticated() || forceAuth) {
+    if (this.isAuthenticated()) {
       const token = this.getGoogleAccessToken()
 
       return { [GoogleAPIHeaderConstants.AUTHORIZATION]: `Bearer ${token}` }

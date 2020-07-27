@@ -16,8 +16,6 @@ import GlossaryService from '../glossary/GlossaryService'
 import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
-const DELAY_TO_SAVE_IMAGE = 120000
-
 class UserService {
   private setVersion = (version: number) => {
     UserLocalStorage.setVersion(version)
@@ -31,12 +29,26 @@ class UserService {
     return UserLocalStorage.getPictureURL()
   }
 
+  getSavePictureWithError = (): boolean => {
+    const savedValue = UserLocalStorage.getSavePictureWithError()
+
+    if (savedValue) {
+      return savedValue
+    }
+
+    return false
+  }
+
   private setPictureUrl = (url: string) => {
     UserLocalStorage.setPictureURL(url)
   }
 
   private setSavedPicture = (base64Photo: string) => {
     UserLocalStorage.setSavedPicture(base64Photo)
+  }
+
+  private setSavePictureWithError = (isWithError: boolean) => {
+    UserLocalStorage.setSavePictureWithError(isWithError)
   }
 
   getPicture = () => {
@@ -142,7 +154,10 @@ class UserService {
           125
         )
 
-        if (this.getPictureUrl() !== pictureURL) {
+        if (
+          this.getSavePictureWithError() ||
+          this.getPictureUrl() !== pictureURL
+        ) {
           this.setPictureUrl(pictureURL)
           this.donwloadPicture(pictureURL)
           this.saveNewPhotoOnServer(pictureURL)
@@ -197,21 +212,25 @@ class UserService {
   }
 
   private donwloadPicture = (pictureURL: string) => {
-    ImageToBase64Utils.getBase64FromImageSource(
-      pictureURL,
-      'jpeg',
-      this.saveDowloadedImage
-    )
+    try {
+      ImageToBase64Utils.getBase64FromImageSource(
+        pictureURL,
+        'jpeg',
+        this.saveDowloadedImage
+      )
+    } catch (e) {
+      this.setSavePictureWithError(true)
+      LogAppErrorService.saveDefault(e)
+    }
   }
 
   private saveDowloadedImage = (base64Image: string, success: boolean) => {
     if (success) {
       this.setSavedPicture(base64Image)
       UserContextUpdater.update()
-    } else {
-      const pictureURL = this.getPicture()
-      setTimeout(() => this.donwloadPicture(pictureURL), DELAY_TO_SAVE_IMAGE)
     }
+
+    this.setSavePictureWithError(!success)
   }
 
   removeUserData() {

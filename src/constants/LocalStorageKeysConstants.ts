@@ -15,6 +15,7 @@ class LocalStorageKeys {
   EMAIL = 'e'
   PICTURE_URL = 'pu'
   SAVED_PICTURE = 'sp'
+  SAVE_PICTURE_WITH_ERROR = 'spwe'
   NAME = 'n'
   GOOGLE_ACCESS_TOKEN = 'gat'
   GOOGLE_EXPIRES_DATE = 'ged'

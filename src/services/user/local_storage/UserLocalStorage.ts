@@ -59,12 +59,31 @@ class UserLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.SAVED_PICTURE)
   }
 
+  getSavePictureWithError = (): boolean | null => {
+    const savedValue = this.get(LS_Constants.SAVE_PICTURE_WITH_ERROR)
+
+    if (savedValue) {
+      return JSON.parse(savedValue)
+    }
+
+    return null
+  }
+
+  setSavePictureWithError = (isWithError: boolean) => {
+    this.set(LS_Constants.SAVE_PICTURE_WITH_ERROR, JSON.stringify(isWithError))
+  }
+
+  removeSavePictureWithError = () => {
+    this.remove(LS_Constants.SAVE_PICTURE_WITH_ERROR)
+  }
+
   removeUserData = () => {
     this.removeEmail()
     this.removeName()
     this.removePictureURL()
     this.removeSavedPicture()
     this.removeVersion()
+    this.removeSavePictureWithError()
   }
 }
 

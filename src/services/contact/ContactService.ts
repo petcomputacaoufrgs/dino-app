@@ -6,8 +6,6 @@ import LS from './local_storage'
 import ArrayUtils from '../../utils/ArrayUtils'
 import LS_Constants from '../../constants/LocalStorageKeysConstants'
 
-
-
 class ContactsService {
 
   getItems = (): ContactModel[] => LS.getItems()
@@ -15,8 +13,20 @@ class ContactsService {
   makeId = (): number => LS.updateLastId()
   getVersion = (): number => LS.getVersion()
   setVersion = (version : number) => LS.setVersion(version)
-  shouldSync = (): boolean => LS.shouldSync()
+  shouldSync = (): boolean => LS.getShouldSync()
   setShouldSync = (bool: boolean) => LS.setShouldSync(bool)
+
+  cleanUpdateQueue = () => {
+    LS.cleanOpQueue(LS_Constants.CONTACTS_UPDATE)
+  }
+
+  cleanDeleteQueue = () => {
+    LS.cleanOpQueue(LS_Constants.CONTACTS_DEL)
+  }
+
+  getIdsToUpdate = (): number[] => {
+    return LS.getOpIDs(LS_Constants.CONTACTS_UPDATE)
+  }
 
   addContact = (item: ContactModel) => {
     const items = this.getItems()
@@ -114,6 +124,10 @@ class ContactsService {
         }, { toAdd: Array<ContactModel>(), toEdit: Array<ContactModel>()})
   }
 
+  setContactsToUpdate = (contacts: ContactModel[]) => {
+    LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, contacts.map(c => c.frontId))
+  }
+
   getContactsToDelete = ():{ id: number }[] => {
     return LS.getOpIDs(LS_Constants.CONTACTS_DEL)
     .map(id => {
@@ -121,27 +135,28 @@ class ContactsService {
     }) 
   }
 
-  updateContactIds = (response: ContactModel[] | undefined, contacts: ContactModel[]) => {
+  updateContactIds = (updatedModels: ContactModel[] | undefined, contacts: ContactModel[]): ContactModel[] => {
 
-    if(response !== undefined) {
-
-      console.log("aqui foi")
+    if(updatedModels !== undefined) {
 
       const updatedContacts = contacts.map(c => {
         if(c.id === undefined) {
-          const updatedContactIndex = response.findIndex(contactResponse => contactResponse.frontId === c.frontId)
-          c.id = response[updatedContactIndex].id
-          response.splice(updatedContactIndex, 1)
+          const updatedContactIndex = updatedModels.findIndex(contactResponse => 
+            contactResponse.frontId === c.frontId)
+          c.id = updatedModels[updatedContactIndex].id
+          updatedModels.splice(updatedContactIndex, 1)
         }
         return c
       })
       
-      LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, response.map(contact => contact.frontId))
-      
       console.log(updatedContacts)
 
       LS.setItems(updatedContacts)
+
+      return updatedModels
     }
+
+    return []
   }
 }
 export default new ContactsService()

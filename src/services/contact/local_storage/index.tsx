@@ -5,7 +5,7 @@ import StrU from '../../../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
 
-  shouldSync = () : boolean => {
+  getShouldSync = () : boolean => {
     const shouldSync = this.get(LS_Constants.CONTACTS_SHOULD_SYNC)
     return shouldSync ? JSON.parse(shouldSync) || 
     this.get(LS_Constants.CONTACTS_UPDATE) != null : true 
@@ -51,7 +51,8 @@ class ContactsLocalStorage extends BaseLocalStorage {
 
   pushToQueue = (id: number, ids: Array<number>): Array<number> => {
     const index = ids.findIndex(queueId => queueId === id)
-    if (index > -1) ids.splice(index, 1)
+    if (index > -1) 
+      ids.splice(index, 1)
     ids.push(id)
     return ids
   }
@@ -66,8 +67,8 @@ class ContactsLocalStorage extends BaseLocalStorage {
     this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToQueue(id, ids))
   }
 
-  cleanOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL) => {
-    localStorage.removeItem(LSkey)
+  cleanOpQueue = (key: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL) => {
+    localStorage.removeItem(key)
   }
 
   getLastId = (): number => {

@@ -6,7 +6,6 @@ import Service from './ContactService'
 import ServerService from './ContactServerService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
-//import ContactSyncLocalStorage from './local_storage/ContactSyncLocalStorage'
 import LS from './local_storage/index'
 import LS_Constants from '../../constants/LocalStorageKeysConstants'
 
@@ -54,28 +53,57 @@ class ContactUpdater implements BaseUpdater {
   }
 
   updateServer = async () => {
-    const idsToUpdate = LS.getOpIDs(LS_Constants.CONTACTS_UPDATE)
+
+    let idsToUpdate = Service.getIdsToUpdate()
+    let sucessfulEdit = true
+    let sucessfulAdd = true
+    let sucessfulDel = true
 
         if(idsToUpdate.length > 0) {
-          const contacts = LS.getItems()
+
+          const contacts = Service.getItems()
           const contactsToUpdate = Service.getContactsToUpdate(contacts, idsToUpdate)
+
           if(contactsToUpdate.toAdd.length > 0) {
-            const response = await ServerService.saveContacts(contactsToUpdate.toAdd)
-            if(response) {
-              Service.updateContactIds(response.resposeModels, contacts)
-              Service.setVersion(response.version)
-            }
+            
+            const saveResponse = await ServerService.saveContacts(contactsToUpdate.toAdd)
+            
+            if(saveResponse !== undefined) {
+              contactsToUpdate.toAdd = Service.updateContactIds(saveResponse.resposeModels, contacts)
+              Service.setVersion(saveResponse.version)
+              if(contactsToUpdate.toAdd.length > 0) {
+                sucessfulAdd = false
+              }
+            } else sucessfulAdd = false
           }
+
           if(contactsToUpdate.toEdit.length > 0) {
-            await ServerService.editContacts(contactsToUpdate.toEdit)
-          } 
+            
+            const version = await ServerService.editContacts(contactsToUpdate.toEdit)
+            
+            if (version !== undefined) {
+              Service.setVersion(version)
+            } else sucessfulEdit = false  
+          }
+
+          if(sucessfulAdd && sucessfulEdit) 
+            Service.cleanUpdateQueue()
+          else Service.setContactsToUpdate(contactsToUpdate.toEdit.concat(contactsToUpdate.toAdd))
         }
 
         const idsToDelete = Service.getContactsToDelete()
 
         if(idsToDelete.length > 0) {
-          await ServerService.deleteContacts(idsToDelete)
+          const version = await ServerService.deleteContacts(idsToDelete)
+
+          if (version !== undefined) {
+            Service.setVersion(version)
+            Service.cleanDeleteQueue()
+          } else sucessfulDel = false
         }
+
+      if(sucessfulAdd && sucessfulEdit && sucessfulDel)
+        Service.setShouldSync(false)
   }
 
 }

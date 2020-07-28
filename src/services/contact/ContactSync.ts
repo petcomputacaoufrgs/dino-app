@@ -14,9 +14,9 @@ class ContactSync implements BaseSync {
     const serverVersion = await ServerService.getVersion()
 
     if (serverVersion !== undefined) {
+      /*
       const localVersion = Service.getVersion()
 
-      /*
       if (serverVersion > localVersion) {
         ContactsUpdater.updateLocal(serverVersion) //SERVER -> LOCAL
         Service.setShouldSync(false)
@@ -25,6 +25,7 @@ class ContactSync implements BaseSync {
       if (Service.shouldSync()) { //LOCAL -> SERVER
         console.log("checando")
         ContactsUpdater.updateServer()
+        
       }
       
       return true

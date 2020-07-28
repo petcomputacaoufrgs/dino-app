@@ -5,9 +5,10 @@ import StrU from '../../../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
 
-  getShouldSync = () : boolean => {
+  shouldSync = () : boolean => {
     const shouldSync = this.get(LS_Constants.CONTACTS_SHOULD_SYNC)
-    return shouldSync ? JSON.parse(shouldSync) : true 
+    return shouldSync ? JSON.parse(shouldSync) || 
+    this.get(LS_Constants.CONTACTS_UPDATE) != null : true 
   }
 
   setShouldSync = (shouldSync : boolean) => {
@@ -37,46 +38,35 @@ class ContactsLocalStorage extends BaseLocalStorage {
     )
   }
 
-  shouldSync = (): boolean => {
-    return this.get(LS_Constants.CONTACTS_ADD) != null 
-    //|| this.get(LS_Constants.EDIT_CONTACTS) != null 
-    //|| this.get(LS_Constants.DELETE_CONTACTS) != null
+  setOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL, ids: Array<number>) => {
+    this.set(LSkey, JSON.stringify(ids))
   }
 
-  setOpIDs = (LSkey: string, ids: Array<number>) => {
-    this.set(LSkey, ids.toString())
-  }
-
-  getOpIDs = (LSkey: string): number[] => {
-    const items = this.get(LSkey)
-      ?.split(',')
-      .map((x) => +x)
+  getOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL): number[] => {
+    const items = JSON.parse(this.get(LSkey) || '[]')
+      //?.split(',')
+      //.map((x) => +x)
     return items || []
   }
 
-  pushToStack = (id: number, ids: Array<number>): Array<number> => {
-    const index = ids.findIndex((stackId) => stackId === id)
+  pushToQueue = (id: number, ids: Array<number>): Array<number> => {
+    const index = ids.findIndex(queueId => queueId === id)
     if (index > -1) ids.splice(index, 1)
     ids.push(id)
     return ids
   }
 
-  pushAddOp = (id: number) => {
-    const ids = this.getOpIDs(LS_Constants.CONTACTS_ADD)
-    this.setOpIDs(LS_Constants.CONTACTS_ADD, this.pushToStack(id, ids))
-  }
-
-  pushEditOp = (id: number) => {
-    let ids = this.getOpIDs(LS_Constants.CONTACTS_EDIT)
-    this.setOpIDs(LS_Constants.CONTACTS_EDIT, this.pushToStack(id, ids))
+  pushUpdateOp = (id: number) => {
+    const ids = this.getOpIDs(LS_Constants.CONTACTS_UPDATE)
+    this.setOpIDs(LS_Constants.CONTACTS_UPDATE, this.pushToQueue(id, ids))
   }
 
   pushDeleteOp = (id: number) => {
     let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)
-    this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToStack(id, ids))
+    this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToQueue(id, ids))
   }
 
-  cleanOpIDs = (LSkey: string) => {
+  cleanOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL) => {
     localStorage.removeItem(LSkey)
   }
 

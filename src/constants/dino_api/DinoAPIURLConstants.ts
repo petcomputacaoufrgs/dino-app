@@ -21,7 +21,7 @@ class DinoAPIURLConstants {
 
   APP_SETTINGS_SAVE = this.APP_SETTINGS
 
-  NOTE_GET_VERSION = this.NOTE + 'version/'
+  NOTE_GET_VERSION = this.NOTE + 'version'
 
   NOTE_GET = this.NOTE
 

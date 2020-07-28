@@ -4,17 +4,25 @@ import PhoneModel from '../../types/contact/PhoneModel'
 import ContactModel from '../../types/contact/ContactModel'
 import LS from './local_storage'
 import ArrayUtils from '../../utils/ArrayUtils'
+import LS_Constants from '../../constants/LocalStorageKeysConstants'
+
+
 
 class ContactsService {
+
   getItems = (): ContactModel[] => LS.getItems()
   setItems = (items: ContactModel[]) => LS.setItems(items)
   makeId = (): number => LS.updateLastId()
+  getVersion = (): number => LS.getVersion()
+  setVersion = (version : number) => LS.setVersion(version)
+  shouldSync = (): boolean => LS.shouldSync()
+  setShouldSync = (bool: boolean) => LS.setShouldSync(bool)
 
   addContact = (item: ContactModel) => {
     const items = this.getItems()
     items.push(item)
     this.setItems(items)
-    LS.pushAddOp(item.frontId)
+    LS.pushUpdateOp(item.frontId)
   }
 
   deleteContact = (deletedID: number): ContactModel[] => {
@@ -36,7 +44,7 @@ class ContactsService {
       if (this.checkChanges(items[index], edited)) {
         items.splice(index, 1, edited)
         this.setItems(items)
-        LS.pushEditOp(items[index].frontId)
+        LS.pushUpdateOp(items[index].frontId)
       }
   }
 
@@ -93,6 +101,46 @@ class ContactsService {
         return language.CONTACTS_RESIDENTIAL_PHONE
       default:
         return language.CONTACTS_MOBILE_PHONE
+    }
+  }
+
+  getContactsToUpdate = (contacts: ContactModel[], idsToUpdate: number[]): {toAdd: ContactModel[]; toEdit: ContactModel[];} => {
+    return contacts
+      .filter(contact => idsToUpdate.includes(contact.frontId))
+      .reduce((acum, contact) => {
+            const toAddOrEdit = contact.id === undefined ? 'toAdd' : 'toEdit'
+            acum[toAddOrEdit].push(contact)
+            return acum
+        }, { toAdd: Array<ContactModel>(), toEdit: Array<ContactModel>()})
+  }
+
+  getContactsToDelete = ():{ id: number }[] => {
+    return LS.getOpIDs(LS_Constants.CONTACTS_DEL)
+    .map(id => {
+      return { id: id }
+    }) 
+  }
+
+  updateContactIds = (response: ContactModel[] | undefined, contacts: ContactModel[]) => {
+
+    if(response !== undefined) {
+
+      console.log("aqui foi")
+
+      const updatedContacts = contacts.map(c => {
+        if(c.id === undefined) {
+          const updatedContactIndex = response.findIndex(contactResponse => contactResponse.frontId === c.frontId)
+          c.id = response[updatedContactIndex].id
+          response.splice(updatedContactIndex, 1)
+        }
+        return c
+      })
+      
+      LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, response.map(contact => contact.frontId))
+      
+      console.log(updatedContacts)
+
+      LS.setItems(updatedContacts)
     }
   }
 }

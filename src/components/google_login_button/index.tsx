@@ -111,7 +111,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   return (
     <div className="google_login_button">
       <GoogleLogin
-        clientId={"827716196925-579v2eutqhafp7vtes5abirpg2g8ui0i.apps.googleusercontent.com"}
+        clientId={GoogleSecret.web.client_id}
         scope={AuthService.getDefaultScopes()}
         onSuccess={responseGoogle}
         onFailure={loginFail}

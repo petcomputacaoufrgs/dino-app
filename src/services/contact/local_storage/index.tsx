@@ -38,32 +38,40 @@ class ContactsLocalStorage extends BaseLocalStorage {
     )
   }
 
-  setOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL, ids: Array<number>) => {
+  removeAllItems = () => {
+    this.remove(LS_Constants.CONTACTS)
+    this.remove(LS_Constants.CONTACTS_LAST_ID)
+    this.remove(LS_Constants.CONTACTS_UPDATE)
+    this.remove(LS_Constants.CONTACTS_DEL)
+    this.remove(LS_Constants.CONTACTS_VERSION)
+    this.remove(LS_Constants.CONTACTS_SHOULD_SYNC)
+  }
+
+  setOpIDs = (LSkey: string, ids: Array<number>) => {
     this.set(LSkey, JSON.stringify(ids))
   }
 
   getOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL): number[] => {
-    const items = JSON.parse(this.get(LSkey) || '[]')
-      //?.split(',')
-      //.map((x) => +x)
-    return items || []
+    const items = this.get(LSkey)
+    return items ? JSON.parse(items) as number[] : new Array<number>()
   }
 
   pushToQueue = (id: number, ids: Array<number>): Array<number> => {
-    const index = ids.findIndex(queueId => queueId === id)
-    if (index > -1) 
-      ids.splice(index, 1)
-    ids.push(id)
-    return ids
+    const newIds = ids.filter(queueId => queueId !== id)
+    newIds.push(id)
+    console.log(newIds)
+    return newIds
   }
 
   pushUpdateOp = (id: number) => {
     const ids = this.getOpIDs(LS_Constants.CONTACTS_UPDATE)
+    console.log(ids)
     this.setOpIDs(LS_Constants.CONTACTS_UPDATE, this.pushToQueue(id, ids))
   }
 
   pushDeleteOp = (id: number) => {
     let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)
+    console.log(ids)
     this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToQueue(id, ids))
   }
 

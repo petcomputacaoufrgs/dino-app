@@ -2,6 +2,8 @@ import UserLocalStorage from './local_storage/UserLocalStorage'
 import AuthService from '../auth/AuthService'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'
+import ContactsService from '../contact/ContactService'
+
 
 class UserService {
   getPictureUrl = () => {
@@ -31,6 +33,7 @@ class UserService {
     AuthService.removeUserData()
     AppSettingsService.removeUserData()
     NoteService.removeUserData()
+    ContactsService.removeUserData()
   }
 }
 

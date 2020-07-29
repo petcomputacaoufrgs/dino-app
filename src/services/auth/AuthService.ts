@@ -27,9 +27,11 @@ class AuthService {
   ): Promise<number> => {
     if (loginResponse.code) {
       const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
+      
 
       try {
         const request = DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
+        console.log(request)
 
         if (request.status === DinoAgentStatus.OK) {
           const response = await request.get().send(authRequestModel)

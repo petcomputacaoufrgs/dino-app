@@ -6,8 +6,6 @@ import Service from './ContactService'
 import ServerService from './ContactServerService'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
-import LS from './local_storage/index'
-import LS_Constants from '../../constants/LocalStorageKeysConstants'
 
 
 class ContactUpdater implements BaseUpdater {
@@ -91,10 +89,12 @@ class ContactUpdater implements BaseUpdater {
           else Service.setContactsToUpdate(contactsToUpdate.toEdit.concat(contactsToUpdate.toAdd))
         }
 
-        const idsToDelete = Service.getContactsToDelete()
+        const idsToDelete = Service.getIdsToDelete()
+
+        console.log(idsToDelete)
 
         if(idsToDelete.length > 0) {
-          const version = await ServerService.deleteContacts(idsToDelete)
+          const version = await ServerService.deleteContacts(Service.getContactsToDelete())
 
           if (version !== undefined) {
             Service.setVersion(version)

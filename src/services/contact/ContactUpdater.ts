@@ -10,11 +10,9 @@ import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 
 class ContactUpdater implements BaseUpdater {
 
-  checkUpdates = async (): Promise<void> => {
+  checkUpdates = async (): Promise<void> => { //server -> local
     
-    console.log("check updates")
     const serverVersion = await ServerService.getVersion()
-    console.log(serverVersion)
 
     if (serverVersion !== undefined) {
       const localVersion = Service.getVersion()
@@ -22,7 +20,6 @@ class ContactUpdater implements BaseUpdater {
       if (serverVersion !== localVersion) {
         await this.updateLocal(serverVersion)
       }
-
       return
     }
   }
@@ -39,7 +36,10 @@ class ContactUpdater implements BaseUpdater {
 
           Service.setVersion(version)
 
-          Service.setItems(contacts)
+          Service.setItems(contacts.map(c => {
+            c.frontId = Service.makeFrontId() 
+            return c
+          }))
 
           return
         }
@@ -47,15 +47,13 @@ class ContactUpdater implements BaseUpdater {
         /**TO-DO Salvar log de erro */
       }
     }
-    Service.setShouldSync(true)
   }
 
   updateServer = async () => {
 
-    let idsToUpdate = Service.getIdsToUpdate()
-    let sucessfulEdit = true
     let sucessfulAdd = true
-    let sucessfulDel = true
+    let sucessfulEdit = true
+    let idsToUpdate = Service.getIdsToUpdate()
 
         if(idsToUpdate.length > 0) {
 
@@ -64,12 +62,12 @@ class ContactUpdater implements BaseUpdater {
 
           if(contactsToUpdate.toAdd.length > 0) {
             
-            const saveResponse = await ServerService.saveContacts(contactsToUpdate.toAdd)
+            const responseModels = await ServerService.saveContacts(contactsToUpdate.toAdd)
             
-            if(saveResponse !== undefined) {
-              contactsToUpdate.toAdd = Service.updateContactIds(saveResponse.resposeModels, contacts)
-              Service.setVersion(saveResponse.version)
-              if(contactsToUpdate.toAdd.length > 0) {
+            if(responseModels !== undefined) {
+              const failedToUpdate = Service.updateContactIds(responseModels, contacts)
+              
+              if(failedToUpdate.length > 0) {
                 sucessfulAdd = false
               }
             } else sucessfulAdd = false
@@ -94,16 +92,14 @@ class ContactUpdater implements BaseUpdater {
         console.log(idsToDelete)
 
         if(idsToDelete.length > 0) {
-          const version = await ServerService.deleteContacts(Service.getContactsToDelete())
+
+          const version = await ServerService.deleteContacts(idsToDelete)
 
           if (version !== undefined) {
             Service.setVersion(version)
             Service.cleanDeleteQueue()
-          } else sucessfulDel = false
+          }
         }
-
-      if(sucessfulAdd && sucessfulEdit && sucessfulDel)
-        Service.setShouldSync(false)
   }
 
 }

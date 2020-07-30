@@ -10,11 +10,32 @@ class ContactsService {
 
   getItems = (): ContactModel[]       => LS.getItems()
   setItems = (items: ContactModel[])  => LS.setItems(items)
-  makeId = (): number                 => LS.updateLastId()
-  getVersion = (): number             => LS.getVersion()
+  getVersion = (): number | undefined => LS.getVersion()
   setVersion = (version : number)     => LS.setVersion(version)
-  shouldSync = (): boolean            => LS.getShouldSync()
-  setShouldSync = (bool: boolean)     => LS.setShouldSync(bool)
+
+  shouldSync = (): boolean => {
+    return this.getIdsToUpdate().length > 0 || this.getIdsToDelete().length > 0
+  }
+
+  makeFrontId = (): number => {
+    const lastId = this.getLastFrontId() + 1
+    LS.setLastId(lastId)
+    return lastId
+  }
+
+  getLastFrontId =(): number => { 
+    const id = LS.getLastId() 
+    return id ? JSON.parse(id) : this.getLastItemId() 
+  }
+
+  getLastItemId = (): number => {
+    let items: Array<ContactModel> = this.getItems()
+    if (items.length) {
+      items.sort((a, b) => a.frontId - b.frontId)
+      return items[items.length - 1].frontId
+    }
+    return 0
+  }
 
   cleanUpdateQueue = () => {
     LS.cleanOpQueue(LS_Constants.CONTACTS_UPDATE)
@@ -37,37 +58,51 @@ class ContactsService {
   
   deleteContact = (deletedID: number): ContactModel[] => {
     const items = this.getItems()
-    const index = items.findIndex((item) => item.frontId === deletedID)
-    LS.pushDeleteOp(items.splice(index, 1)[0].frontId)
+    const index = items.findIndex(item => item.frontId === deletedID)
+
+    const deletedDatabaseId = items.splice(index, 1)[0].id
+    if(deletedDatabaseId !== undefined)
+      LS.pushDeleteOp(deletedDatabaseId)
+
     this.setItems(items)
+
+    const idsToUpdate = this.getIdsToUpdate()
+    const idToUpdateIndex = idsToUpdate.findIndex(id => id === deletedID)
+
+    if(idToUpdateIndex > -1) {
+      idsToUpdate.splice(idToUpdateIndex, 1)
+      this.setIdsToUpdate(idsToUpdate)
+    }
+
     return items
   }
   
   editContact = (edited: ContactModel) => {
     const items = this.getItems()
     
-    const index = items.findIndex((item: ContactModel) => {
-      return item.frontId === edited.frontId
-    })
+    const index = items.findIndex(item => item.frontId === edited.frontId)
     
-    if (index > -1)
-    if (this.checkChanges(items[index], edited)) {
+    if (index > -1) {
+      if (this.changed(items[index], edited)) {
       items.splice(index, 1, edited)
       this.setItems(items)
+
       LS.pushUpdateOp(items[index].frontId)
+      }
     }
   }
   
-  findPhone = (newPhones: Array<PhoneModel>): ContactModel | undefined => {
+  findItemByPhones = (newPhones: Array<PhoneModel>): ContactModel | undefined => {
     const items = this.getItems()
     return items.find((item) => {
-      return item.phones.some((phone) =>
-      newPhones.some((newPhone) => newPhone.number === phone.number)
+      return item.phones.some(phone =>
+      newPhones.some(newPhone => 
+        newPhone.number === phone.number)
       )
     })
   }
   
-  checkChanges = (item: ContactModel, edited: ContactModel): boolean => {
+  changed = (item: ContactModel, edited: ContactModel): boolean => {
     let changed = false
     
     if (item.phones.length === edited.phones.length) {
@@ -118,8 +153,8 @@ class ContactsService {
     return LS.getOpIDs(LS_Constants.CONTACTS_UPDATE)
   }
 
-  getIdsToDelete = (): number[] => {
-    return LS.getOpIDs(LS_Constants.CONTACTS_DEL)
+  setIdsToUpdate = (ids: Array<number>) => {
+    LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, ids)
   }
     
   getContactsToUpdate = (contacts: ContactModel[], idsToUpdate: number[]): {toAdd: ContactModel[]; toEdit: ContactModel[];} => {
@@ -136,34 +171,27 @@ class ContactsService {
     LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, contacts.map(c => c.frontId))
   }
 
-  getContactsToDelete = ():{ id: number }[] => {
+  getIdsToDelete = ():{ id: number }[] => {
     return LS.getOpIDs(LS_Constants.CONTACTS_DEL)
-      .map(id => {
-        return { id: id }
-    }) 
+      .map(id => { return { id } }) 
   }
   
-  updateContactIds = (updatedModels: ContactModel[] | undefined, contacts: ContactModel[]): ContactModel[] => {
+  updateContactIds = (updatedModels: ContactModel[], contacts: ContactModel[]): ContactModel[] => {
     
-    if(updatedModels !== undefined) {
-
       const updatedContacts = contacts.map(c => {
         if(c.id === undefined) {
-          const updatedContactIndex = updatedModels.findIndex(contactResponse => 
-            contactResponse.frontId === c.frontId)
-            c.id = updatedModels[updatedContactIndex].id
-            updatedModels.splice(updatedContactIndex, 1)
+          const updatedContactIndex = updatedModels.findIndex(updatedModel => updatedModel.frontId === c.frontId)
+          c.id = updatedModels.splice(updatedContactIndex, 1)[0].id
         }
         return c
       })
       
+      console.log("updating contacts")
       console.log(updatedContacts)
       
       LS.setItems(updatedContacts)
       
       return updatedModels
-    }
-    return []
   }
 }
 export default new ContactsService()

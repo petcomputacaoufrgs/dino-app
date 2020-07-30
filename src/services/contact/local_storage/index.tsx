@@ -5,19 +5,9 @@ import StrU from '../../../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
 
-  getShouldSync = () : boolean => {
-    const shouldSync = this.get(LS_Constants.CONTACTS_SHOULD_SYNC)
-    return shouldSync ? JSON.parse(shouldSync) || 
-    this.get(LS_Constants.CONTACTS_UPDATE) != null : true 
-  }
-
-  setShouldSync = (shouldSync : boolean) => {
-    this.set(LS_Constants.CONTACTS_SHOULD_SYNC, JSON.stringify(shouldSync))
-  }
-
-  getVersion = (): number => {
+  getVersion = (): number | undefined => {
     const version = this.get(LS_Constants.CONTACTS_VERSION)
-    return version ? JSON.parse(version) : 0 
+    return version ? JSON.parse(version) : undefined 
   }
 
   setVersion = (version : number) => {
@@ -59,19 +49,19 @@ class ContactsLocalStorage extends BaseLocalStorage {
   pushToQueue = (id: number, ids: Array<number>): Array<number> => {
     const newIds = ids.filter(queueId => queueId !== id)
     newIds.push(id)
-    console.log(newIds)
     return newIds
   }
 
   pushUpdateOp = (id: number) => {
     const ids = this.getOpIDs(LS_Constants.CONTACTS_UPDATE)
-    console.log(ids)
     this.setOpIDs(LS_Constants.CONTACTS_UPDATE, this.pushToQueue(id, ids))
   }
 
   pushDeleteOp = (id: number) => {
     let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)
+    
     console.log(ids)
+    
     this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToQueue(id, ids))
   }
 
@@ -79,25 +69,14 @@ class ContactsLocalStorage extends BaseLocalStorage {
     localStorage.removeItem(key)
   }
 
-  getLastId = (): number => {
-    const id = localStorage.getItem(LS_Constants.CONTACTS_LAST_ID)
-    return id ? JSON.parse(id) : this.getLastItemId()
+  getLastId = (): string | null => {
+    return localStorage.getItem(LS_Constants.CONTACTS_LAST_ID)
   }
 
-  getLastItemId = (): number => {
-    let items: Array<ContactModel> = this.getItems()
-    if (items.length) {
-      items.sort((a, b) => a.frontId - b.frontId)
-      return items[items.length - 1].frontId
-    }
-    return 0
+  setLastId = (lastId: number) => {
+    return localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, JSON.stringify(lastId))
   }
-
-  updateLastId = (): number => {
-    const lastId = this.getLastId() + 1
-    localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, JSON.stringify(lastId))
-    return lastId
-  }
+  
 }
 
 export default new ContactsLocalStorage()

@@ -11,29 +11,17 @@ import LS_Constants from '../../constants/LocalStorageKeysConstants'
 class ContactSync implements BaseSync {
 
   sync = async (): Promise<boolean> => {
+
     const serverVersion = await ServerService.getVersion()
 
-    if (serverVersion !== undefined) {
-      /*
       const localVersion = Service.getVersion()
 
-      if (serverVersion > localVersion) {
-        ContactsUpdater.updateLocal(serverVersion) //SERVER -> LOCAL
-        Service.setShouldSync(false)
-      } else 
-      */
-      if (Service.shouldSync()) { //LOCAL -> SERVER
-        console.log("checando")
-        ContactsUpdater.updateServer()
-        
+      if (serverVersion === localVersion) { //LOCAL -> SERVER
+        if(Service.shouldSync())
+          ContactsUpdater.updateServer()
+        return true
       }
-      
-      return true
-    }
-
-    Service.setShouldSync(true)
-
-    return false
+      return false
   }
 }
 

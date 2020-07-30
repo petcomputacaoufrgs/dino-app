@@ -39,7 +39,7 @@ class DinoAPIURLConstants {
 
   NOTE_UPDATE_ALL = this.NOTE + 'all/'
 
-  CONTACT_CONTACT_VERSION = this.CONTACT + 'version/'
+  CONTACT_VERSION = this.CONTACT + 'version/'
 
   CONTACT_GET = this.CONTACT 
 

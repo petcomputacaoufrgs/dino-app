@@ -4,22 +4,24 @@ import ResponseSaveModel from '../../types/contact/ResponseSaveModel'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import HttpStatus from 'http-status-codes'
-import LS from './local_storage/index'
-import LS_Constants from '../../constants/LocalStorageKeysConstants'
+import Service from './ContactService'
 
 class ContactServerService {
 
-  saveContacts = async (contactModels: Array<ContactModel>): Promise<ResponseSaveModel | undefined> => {
+  saveContacts = async (contactModels: Array<ContactModel>): Promise<ContactModel[] | undefined> => {
 
-    const request = DinoAgentService.put(DinoAPIURLConstants.CONTACT_SAVE_ALL)
+    console.log(contactModels)
+
+    const request = DinoAgentService.post(DinoAPIURLConstants.CONTACT_SAVE_ALL)
 
     if (request.status === DinoAgentStatus.OK) {
-      console.log(request)
       try {
         const response = await request.get().send(contactModels)
 
         if (response.status === HttpStatus.OK) {
-          return response.body as ResponseSaveModel
+          const responseSaveModel = response.body as ResponseSaveModel
+          Service.setVersion(responseSaveModel.version)
+          return responseSaveModel.responseModels
         }
       } catch {
         /**TO-DO Fazer log de erro */
@@ -53,10 +55,9 @@ class ContactServerService {
 
   deleteContacts = async (contactIds: {id: number}[]): Promise<number | undefined> => {
 
-    const request = DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT_ALL)
+    const request = DinoAgentService.delete(DinoAPIURLConstants.CONTACT_EDIT_ALL)
 
     if (request.status === DinoAgentStatus.OK) {
-      console.log("ok")
       try {
         const response = await request.get().send(contactIds)
 
@@ -73,7 +74,7 @@ class ContactServerService {
   }
 
   getVersion = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.CONTACT_CONTACT_VERSION)
+    const request = DinoAgentService.get(DinoAPIURLConstants.CONTACT_VERSION)
 
     if (request.status === DinoAgentStatus.OK) {
       try {

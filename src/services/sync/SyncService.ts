@@ -4,6 +4,7 @@ import NoteSync from '../note/NoteSync'
 import ConnectionService from '../connection/ConnectionService'
 import SyncControlModel from '../../types/sync/SyncControlModel'
 import AuthService from '../auth/AuthService'
+import AuthSync from '../auth/AuthSync'
 
 const SYNC_FAIL_INTERVAL = 60000
 const SYNC_FAIL_WITHOUT_CONTROL = 200
@@ -20,29 +21,33 @@ class SyncService {
   }
 
   sync = async () => {
-    if (AuthService.isAuthenticated()) {
-      if (this.control) {
-        if (ConnectionService.isConnected()) {
-          this.start(this.control)
-        } else if (this.control.onInternetFail) {
-          this.control.onInternetFail()
-        }
-      } else {
-        setTimeout(this.sync, SYNC_FAIL_WITHOUT_CONTROL)
+    if (this.control) {
+      if (ConnectionService.isConnected()) {
+        this.start(this.control)
+      } else if (this.control.onInternetFail) {
+        this.control.onInternetFail()
       }
+    } else {
+      setTimeout(this.sync, SYNC_FAIL_WITHOUT_CONTROL)
     }
   }
 
   private start = async (control: SyncControlModel) => {
     const promises: Promise<boolean>[] = []
 
+    const isAuthenticated = AuthService.isAuthenticated()
+
+    if (isAuthenticated) {
+      promises.push(AppSettingsSync.sync(control.language))
+      promises.push(GlossarySync.sync())
+      promises.push(NoteSync.sync())
+    }
+
+    promises.push(AuthSync.sync())
+
     if (control.onStart) {
       control.onStart()
     }
-
-    promises.push(AppSettingsSync.sync(control.language))
-    promises.push(GlossarySync.sync())
-    promises.push(NoteSync.sync())
 
     const results = await Promise.all(promises)
 

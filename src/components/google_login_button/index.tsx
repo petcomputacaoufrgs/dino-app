@@ -25,11 +25,11 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   const alert = useAlert()
 
   const [loading, setLoading] = useState(false)
-  const [connected, setConnected] = useState(true)
+  const [isConnected, setIsConnected] = useState(ConnectionService.isConnected())
 
   useEffect(() => {
     const updateConnectionState = (connected) => {
-      setConnected(connected)
+      setIsConnected(connected)
     }
 
     ConnectionService.addEventListener(updateConnectionState)
@@ -126,15 +126,15 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
             imageSrc={GoogleLogo}
             imageAlt={props.buttonText}
             className="google_login_button__button"
-            onClick={connected ? renderProps.onClick : showOfflineMessage}
-            disabled={!connected}
+            onClick={isConnected ? renderProps.onClick : showOfflineMessage}
+            disabled={!isConnected}
           >
             <Typography component="p">{props.buttonText}</Typography>
           </Button>
         )}
       />
       <Loader alt={language.LOADER_ALT} loading={loading} />
-      {!connected && (
+      {!isConnected && (
         <Typography className="google_login_button__error" component="p">
           {language.DISCONNECTED}
         </Typography>

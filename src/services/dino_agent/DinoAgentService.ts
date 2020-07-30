@@ -8,11 +8,21 @@ import ConnectionService from '../connection/ConnectionService'
 import DinoAgentRequest from '../../types/dino_agent/DinoAgentRequest'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import UserService from '../user/UserService'
+import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 
 /**
  * @description Abstrai a biblioteca Superagent com tratamentos para conexão,autenticação, erro de autenticação e renovação de token
  */
 class DinoAgentService {
+  logout = (token: string): DinoAgentRequest => {
+    const request = Superagent.put(DinoAPIURLConstants.LOGOUT)
+      .set(this.getHeader(token))
+      .on('error', this.onError)
+      .on('response', this.onResponse)
+
+    return this.getDinoAgentRequest(request)
+  }
+
   put = (url: string): DinoAgentRequest => {
     const request = Superagent.put(url)
       .set(this.getHeader())
@@ -63,9 +73,17 @@ class DinoAgentService {
 
   private isAuthenticated = (): boolean => Boolean(this.getAuthToken())
 
-  private getHeader = (): object => {
-    if (this.isAuthenticated()) {
-      const authorizationHeader = 'Bearer '.concat(this.getAuthToken())
+  private getHeader = (token?: string): object => {
+    let forceAuth = false
+
+    if (!token) {
+      token = this.getAuthToken()
+    } else {
+      forceAuth = true
+    }
+
+    if (this.isAuthenticated() || forceAuth) {
+      const authorizationHeader = 'Bearer '.concat(token)
 
       return { [DinoAPIHeaderConstants.AUTHORIZATION]: authorizationHeader }
     }

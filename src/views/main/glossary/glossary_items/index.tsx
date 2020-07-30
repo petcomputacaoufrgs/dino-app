@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useLanguage } from '../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../context_provider/app_settings'
 import './styles.css'
 import React from 'react'
 import Accordion from 'react-bootstrap/Accordion'

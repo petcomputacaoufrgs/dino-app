@@ -1,11 +1,11 @@
 import React from 'react'
-import { useLanguage } from '../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../context_provider/app_settings'
 import { useParams } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
-import { useGlossary } from '../../../../provider/glossary_provider'
+import { useGlossary } from '../../../../context_provider/glossary'
 
 const GlossaryItem = (): JSX.Element => {
   const { id } = useParams()

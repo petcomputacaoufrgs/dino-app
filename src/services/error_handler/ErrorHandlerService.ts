@@ -1,6 +1,6 @@
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
-import EventsService from '../events/EventsService'
+import EventService from '../events/EventService'
 import AuthService from '../auth/AuthService'
 
 class ErrorHandlerService {
@@ -23,7 +23,7 @@ class ErrorHandlerService {
         date: new Date().getTime(),
       } as LogAppErrorModel)
 
-      EventsService.whenError()
+      EventService.whenError()
     }
 
     return process.env.NODE_ENV === 'production' ? true : false

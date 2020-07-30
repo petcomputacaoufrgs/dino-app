@@ -1,4 +1,4 @@
-import NoteVersionLocalStorage from './local_storage/NoteVersionLocalStorage'
+import NoteVersionLocalStorage from '../../local_storage/NoteVersionLocalStorage'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import NoteSaveModel from '../../types/note/NoteSaveModel'
@@ -8,22 +8,22 @@ import NoteDeleteModel from '../../types/note/NoteDeleteModel'
 import NoteQuestionModel from '../../types/note/NoteQuestionModel'
 import NoteAPIAnswerModel from '../../types/note/NoteAnswerModel'
 import NoteDoc from '../../types/note/database/NoteDoc'
-import NoteDatabase from './database/NoteDatabase'
-import DeletedNoteDatabase from './database/DeletedNoteDatabase'
-import DinoAgentService from '../agent/dino/DinoAgentService'
-import NoteSyncLocalStorage from './local_storage/NoteSyncLocalStorage'
-import AgentStatus from '../../types/services/agent/AgentStatus'
+import NoteDatabase from '../../database/NoteDatabase'
+import DeletedNoteDatabase from '../../database/DeletedNoteDatabase'
+import DinoAgentService from '../../agent/DinoAgentService'
+import NoteSyncLocalStorage from '../../local_storage/NoteSyncLocalStorage'
+import AgentStatus from '../../types/agent/AgentStatus'
 import NoteUpdateModel from '../../types/note/NoteUpdateModel'
 import NoteModel from '../../types/note/NoteModel'
-import NoteContextUpdater from './NoteContextUpdater'
+import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteViewModel from '../../types/note/NoteViewModel'
-import { NoteValue } from '../../provider/notes_provider/value'
+import { NoteContextType } from '../../types/context_provider/NotesContextType'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class NoteService {
   //#region GET
 
-  getNotes = async (): Promise<NoteValue[]> => {
+  getNotes = async (): Promise<NoteContextType[]> => {
     const noteDocs = await NoteDatabase.getAll()
 
     const notes = noteDocs
@@ -38,7 +38,7 @@ class NoteService {
             question: note.question,
             tagNames: note.tagNames,
             savedOnServer: note.savedOnServer,
-          } as NoteValue)
+          } as NoteContextType)
       )
 
     return notes
@@ -77,7 +77,7 @@ class NoteService {
           return serverVersion
         }
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -88,7 +88,7 @@ class NoteService {
     NoteVersionLocalStorage.setVersion(version)
   }
 
-  saveNote = async (noteModel: NoteValue) => {
+  saveNote = async (noteModel: NoteContextType) => {
     const noteDoc: NoteDoc = {
       answer: noteModel.answer,
       answered: noteModel.answered,
@@ -107,7 +107,7 @@ class NoteService {
     this.saveNoteOnServer(noteModel)
   }
 
-  saveNoteOnServer = async (noteModel: NoteValue) => {
+  saveNoteOnServer = async (noteModel: NoteContextType) => {
     const newNote: NoteSaveModel = {
       order: noteModel.id,
       question: noteModel.question,
@@ -142,7 +142,7 @@ class NoteService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -160,7 +160,7 @@ class NoteService {
     DeletedNoteDatabase.removeAll()
   }
 
-  deleteNote = async (noteModel: NoteValue) => {
+  deleteNote = async (noteModel: NoteContextType) => {
     const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
     if (noteDoc) {
@@ -213,7 +213,7 @@ class NoteService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -248,7 +248,7 @@ class NoteService {
             return
           }
         } catch (e) {
-          LogAppErrorService.saveDefault(e)
+          LogAppErrorService.saveError(e)
         }
       }
       NoteSyncLocalStorage.setShouldSync(true)
@@ -303,7 +303,7 @@ class NoteService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -341,14 +341,14 @@ class NoteService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
     this.setShouldSync(true)
   }
 
-  updateNoteQuestion = async (oldQuestion: string, noteModel: NoteValue) => {
+  updateNoteQuestion = async (oldQuestion: string, noteModel: NoteContextType) => {
     const noteDoc = await NoteDatabase.getByQuestion(oldQuestion)
 
     if (noteDoc) {
@@ -399,7 +399,7 @@ class NoteService {
             return
           }
         } catch (e) {
-          LogAppErrorService.saveDefault(e)
+          LogAppErrorService.saveError(e)
         }
       }
     }
@@ -407,7 +407,7 @@ class NoteService {
     return NoteSyncLocalStorage.setShouldSync(true)
   }
 
-  updateNoteAnswer = async (noteModel: NoteValue) => {
+  updateNoteAnswer = async (noteModel: NoteContextType) => {
     const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
     if (noteDoc) {
@@ -456,7 +456,7 @@ class NoteService {
             return
           }
         } catch (e) {
-          LogAppErrorService.saveDefault(e)
+          LogAppErrorService.saveError(e)
         }
       }
     }
@@ -502,7 +502,7 @@ class NoteService {
             return
           }
         } catch (e) {
-          LogAppErrorService.saveDefault(e)
+          LogAppErrorService.saveError(e)
         }
       }
       NoteSyncLocalStorage.setShouldSync(true)

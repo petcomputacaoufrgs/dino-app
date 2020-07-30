@@ -1,6 +1,6 @@
 import React from 'react'
-import { useLanguage } from '../../provider/app_settings_provider'
-import { useAlert } from '../../provider/alert_provider'
+import { useLanguage } from '../../context_provider/app_settings'
+import { useAlert } from '../../context_provider/alert'
 import { Typography } from '@material-ui/core'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'

@@ -1,5 +1,5 @@
 import ContactsConsts from '../../constants/ContactsConstants'
-import { useLanguage } from '../../provider/app_settings_provider'
+import { useLanguage } from '../../context_provider/app_settings'
 import PhoneModel from '../../types/contact/PhoneModel'
 import ContactModel from '../../types/contact/ContactModel'
 import LS from './local_storage'

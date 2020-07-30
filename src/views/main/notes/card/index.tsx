@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../context_provider/app_settings'
 import clsx from 'clsx'
 import DateUtils from '../../../../utils/DateUtils'
 import TagList from '../../../../components/tag_list/index'

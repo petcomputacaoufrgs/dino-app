@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AuthService from './services/auth/AuthService'
 import Login from './views/login'
 import Main from './views/main'
-import PrivateRouter from './provider/private_router_provider'
+import PrivateRouterContextProvider from './context_provider/private_router'
 import PrivateRoute from './components/private_route'
 import LoginRoute from './components/login_route/index'
 import PathConstants from './constants/PathConstants'
@@ -10,10 +10,10 @@ import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import ConnectionService from './services/connection/ConnectionService'
-import { useLanguage } from './provider/app_settings_provider'
-import { useAlert } from './provider/alert_provider'
-import EventsService from './services/events/EventsService'
-import UserProvider from './provider/user_provider'
+import { useLanguage } from './context_provider/app_settings'
+import { useAlert } from './context_provider/alert'
+import EventService from './services/events/EventService'
+import UserContextProvider from './context_provider/user'
 import './App.css'
 
 const App = (): JSX.Element => {
@@ -43,13 +43,13 @@ const App = (): JSX.Element => {
   useEffect(() => {
     if (firstLoad) {
       setFirstLoad(false)
-      EventsService.whenStart()
+      EventService.whenStart()
     }
   }, [language, firstLoad])
 
   return (
     <div className="app">
-      <PrivateRouter
+      <PrivateRouterContextProvider
         loginPath={PathConstants.LOGIN}
         homePath={PathConstants.HOME}
         isAuthenticated={AuthService.isAuthenticated}
@@ -60,14 +60,14 @@ const App = (): JSX.Element => {
           <PrivateRoute
             path={PathConstants.APP}
             component={() => (
-              <UserProvider>
+              <UserContextProvider>
                 <Main />
-              </UserProvider>
+              </UserContextProvider>
             )}
           />
           <Route path={'/'} component={NotFound} />
         </Switch>
-      </PrivateRouter>
+      </PrivateRouterContextProvider>
     </div>
   )
 }

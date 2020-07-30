@@ -1,5 +1,5 @@
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
-import BaseLocalStorage from '../../../types/services/BaseLocalStorage'
+import BaseLocalStorage from '../../../local_storage/BaseLocalStorage'
 import ContactModel from '../../../types/contact/ContactModel'
 import StrU from '../../../utils/StringUtils'
 

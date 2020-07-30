@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../../context_provider/app_settings'
 import {
   Avatar,
   IconButton,

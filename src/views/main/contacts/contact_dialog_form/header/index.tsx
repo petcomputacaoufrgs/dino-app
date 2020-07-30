@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../../context_provider/app_settings'
 import { Avatar, CardHeader, IconButton } from '@material-ui/core'
 import { ColorLens as ColorLensIcon, Add as AddIcon } from '@material-ui/icons'
 import useStyles from '../../styles'

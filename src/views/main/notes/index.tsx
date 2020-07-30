@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import StringUtils from '../../../utils/StringUtils'
-import { NoteValue } from '../../../provider/notes_provider/value'
+import { NoteContextType } from '../../../types/context_provider/NotesContextType'
 import NoteViewModel from '../../../types/note/NoteViewModel'
 import NoteService from '../../../services/note/NoteService'
 import DateUtils from '../../../utils/DateUtils'
 import NoteHeader from './header'
 import NoteBoard from './board'
 import NoteAddButton from './note_add_button'
-import { useTags, useNotes } from '../../../provider/notes_provider'
+import { useTags, useNotes } from '../../../context_provider/notes'
 import './styles.css'
 
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
@@ -38,7 +38,7 @@ const Notes = () => {
 
     const date = DateUtils.getDatetimeInMillis()
 
-    const newNote: NoteValue = {
+    const newNote: NoteContextType = {
       answer: '',
       answered: false,
       question: newQuestion,

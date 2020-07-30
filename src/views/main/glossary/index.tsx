@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../provider/app_settings_provider'
+import { useLanguage } from '../../../context_provider/app_settings'
 import GlossaryItems from './glossary_items'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
-import { useGlossary } from '../../../provider/glossary_provider'
+import { useGlossary } from '../../../context_provider/glossary'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Glossary = (): JSX.Element => {

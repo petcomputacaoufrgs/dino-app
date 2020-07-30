@@ -1,7 +1,7 @@
 import React from 'react'
-import { useLanguage } from '../../../provider/app_settings_provider'
+import { useLanguage } from '../../../context_provider/app_settings'
 import { Avatar, Typography } from '@material-ui/core'
-import { useUser } from '../../../provider/user_provider'
+import { useUser } from '../../../context_provider/user'
 import './styles.css'
 
 const Home = () => {

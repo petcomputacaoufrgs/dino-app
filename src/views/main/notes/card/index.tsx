@@ -20,11 +20,12 @@ import Collapse from '@material-ui/core/Collapse'
 import NoteCardProps from './props'
 import './styles.css'
 
+
 const NoteCard = (props: NoteCardProps): JSX.Element => {
   const language = useLanguage().current
 
   const classes = useStyles()
-
+  
   const [expanded, setExpanded] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [note, setNote] = useState(props.note)

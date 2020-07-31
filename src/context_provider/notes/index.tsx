@@ -18,6 +18,10 @@ const NotesContextProvider: React.FC = (props) => {
       const notes = await NoteService.getNotes()
       const tags = await NoteService.getTags()
 
+      saveData(notes, tags)
+    }
+
+    let saveData = (notes: NoteContextType[], tags: string[]) => {
       setNotes(notes)
       setTags(tags)
       if (firstLoad) {
@@ -37,6 +41,7 @@ const NotesContextProvider: React.FC = (props) => {
 
     const cleanBeforeUpdate = () => {
       handleLocalDataChanged = () => {}
+      //saveData = () => {}
     }
 
     return cleanBeforeUpdate

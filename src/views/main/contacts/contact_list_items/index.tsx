@@ -8,7 +8,7 @@ import ContactFormDialog from '../contact_dialog_form'
 import ContactsService from '../../../../services/contact/ContactService'
 import Constants from '../../../../constants/ContactsConstants'
 
-const ContactItems = (props: ContactItemsProps): JSX.Element => {
+const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
   const classes = useStyles()
 
   const [open, setOpen] = useState(0)
@@ -16,16 +16,20 @@ const ContactItems = (props: ContactItemsProps): JSX.Element => {
   const [_delete, setDelete] = useState(0)
 
   useEffect(() => {
-    if (_delete) props.setItems([...ContactsService.deleteContact(_delete)])
-  }, [_delete])
+    if (_delete) {
+      ContactsService.deleteContact(_delete)
+      setItems([...ContactsService.getItems()])
+    }
+  }, [_delete, setItems])
 
   useEffect(() => {
-    if (!edit) props.setItems([...ContactsService.getItems()])
-  }, [edit])
+    if (!edit) 
+      setItems([...ContactsService.getItems()])
+  }, [edit, setItems])
 
   return (
     <List className={classes.list}>
-      {props.items.map((contact) => (
+      {items.map((contact) => (
         <div key={contact.frontId}>
           <ContactItemList
             item={contact}

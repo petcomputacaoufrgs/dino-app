@@ -2,6 +2,7 @@ import ContactsConsts from '../../constants/ContactsConstants'
 import { useLanguage } from '../../provider/app_provider'
 import PhoneModel from '../../types/contact/PhoneModel'
 import ContactModel from '../../types/contact/ContactModel'
+import ResponseModel from '../../types/contact/ResponseModel'
 import LS from './local_storage'
 import ArrayUtils from '../../utils/ArrayUtils'
 import LS_Constants from '../../constants/LocalStorageKeysConstants'
@@ -56,7 +57,7 @@ class ContactsService {
     LS.pushUpdateOp(item.frontId)
   }
   
-  deleteContact = (deletedID: number): ContactModel[] => {
+  deleteContact = (deletedID: number) => {
     const items = this.getItems()
     const index = items.findIndex(item => item.frontId === deletedID)
 
@@ -73,8 +74,6 @@ class ContactsService {
       idsToUpdate.splice(idToUpdateIndex, 1)
       this.setIdsToUpdate(idsToUpdate)
     }
-
-    return items
   }
   
   editContact = (edited: ContactModel) => {
@@ -87,14 +86,14 @@ class ContactsService {
       items.splice(index, 1, edited)
       this.setItems(items)
 
-      LS.pushUpdateOp(items[index].frontId)
+      LS.pushUpdateOp(edited.frontId)
       }
     }
   }
   
   findItemByPhones = (newPhones: Array<PhoneModel>): ContactModel | undefined => {
     const items = this.getItems()
-    return items.find((item) => {
+    return items.find(item => {
       return item.phones.some(phone =>
       newPhones.some(newPhone => 
         newPhone.number === phone.number)
@@ -176,22 +175,23 @@ class ContactsService {
       .map(id => { return { id } }) 
   }
   
-  updateContactIds = (updatedModels: ContactModel[], contacts: ContactModel[]): ContactModel[] => {
+  updateContactIds = (responseModels: ResponseModel[], contacts: ContactModel[]) => {
     
-      const updatedContacts = contacts.map(c => {
-        if(c.id === undefined) {
-          const updatedContactIndex = updatedModels.findIndex(updatedModel => updatedModel.frontId === c.frontId)
-          c.id = updatedModels.splice(updatedContactIndex, 1)[0].id
-        }
-        return c
-      })
-      
-      console.log("updating contacts")
-      console.log(updatedContacts)
-      
-      LS.setItems(updatedContacts)
-      
-      return updatedModels
+      const updatedContacts = contacts
+        .filter(c => c.id !== undefined)
+        .concat(responseModels
+          .map(response => {
+          return { 
+            id: response.id,
+            frontId: this.makeFrontId(),
+            name: response.name,
+            phones: response.phones,
+            description: response.description,
+            color: response.color,
+        } as ContactModel
+      }))
+        
+      this.setItems(updatedContacts)
   }
 }
 export default new ContactsService()

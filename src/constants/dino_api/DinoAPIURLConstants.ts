@@ -11,6 +11,8 @@ class DinoAPIURLConstants {
 
   AUTH_GOOGLE = this.AUTH + 'google/'
 
+  LOGOUT = this.AUTH + 'logout/'
+
   GLOSSARY_LIST = this.GLOSSARY + 'get/'
 
   GLOSSARY_VERSION = this.GLOSSARY + 'version/'

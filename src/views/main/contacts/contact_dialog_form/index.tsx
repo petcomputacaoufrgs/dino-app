@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ContactFormDialogProps } from './props'
 import Constants from '../../../../constants/ContactsConstants'
 import Service from '../../../../services/contact/ContactService'
@@ -15,15 +15,26 @@ const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : Contact
     const [invalidPhone, setInvalidPhone] = useState(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
     const [phones, setPhones] = useState(item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel])
 
-    const cleanInfo = () => {
-      //TO-DO: resolver essa bodega
-      setName('')
-      setPhones([{ type: Constants.MOBILE, number: '' }])
-      setDescription('')
-      setColor('')
+    useEffect(() => {
+
+      setName(item?.name || '')
+      setDescription(item?.description || '')
+      setPhones(item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel])
+      setColor(item?.color || '')
       setInvalidName(false)
       setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
-    }
+
+      return () => {
+
+        setName('')
+        setPhones([{ type: Constants.MOBILE, number: '' }])
+        setDescription('')
+        setColor('')
+        setInvalidName(false)
+        setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
+      }
+    }, [dialogOpen, item])
+
 
     const handleClose = () => setDialogOpen(0)
 
@@ -33,18 +44,19 @@ const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : Contact
         setInvalidName(name === '')
         return name
       }
+
       function handleTakenNumber(item: ContactModel, exists: ContactModel) {
-        const phone = item.phones.find((phone) =>
-          exists.phones.map((phone) => phone.number).includes(phone.number)
-        )
-        if (phone)
+        const phone = item.phones
+        .find(phone => exists.phones
+          .map((phone) => phone.number)
+          .includes(phone.number))
+        if (phone) 
           setInvalidPhone({number: phone.number, text: `O número já está registrado no contato ${exists.name}`})
       }
+
       function makeItem(): ContactModel {
-
-          const frontId = item ? item.frontId : Service.makeFrontId()
-
-          return { frontId, id: item?.id, name, description, phones: phones.filter(phone => phone.number !== ''), color }
+        const frontId = item !== undefined ? item.frontId : Service.makeFrontId()
+        return { frontId, id: item?.id, name, description, phones: phones.filter(phone => phone.number !== ''), color }
       }
 
       if (validInfo()) {
@@ -52,19 +64,20 @@ const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : Contact
         const newItem = makeItem()
         const exists = Service.findItemByPhones(newItem.phones)
 
-        if (action === Constants.ACTION_EDIT && item) {
+        if (action === Constants.ACTION_EDIT) {
 
           if (!exists || exists.frontId === newItem.frontId) {
             Service.editContact(newItem)
             handleClose()
+
           } else handleTakenNumber(newItem, exists)
 
         } else {
 
           if (!exists) {
             Service.addContact(newItem)
-            cleanInfo()
             handleClose()
+
           } else handleTakenNumber(newItem, exists)
         }
       }
@@ -79,8 +92,6 @@ const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : Contact
     }
 
     const handleAddPhone = () => {
-      // phones.push(Constants.DEFAULT_PHONE) n rola, n faz cópia
-      //const newPhone = Constants.DEFAULT_PHONE tbm n rola
       phones.push(JSON.parse(Constants.DEFAULT_PHONE))
       setPhones([...phones])
     }

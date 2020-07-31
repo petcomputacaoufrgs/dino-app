@@ -9,8 +9,6 @@ class ContactServerService {
 
   saveContacts = async (contactModels: Array<ContactModel>): Promise<ResponseSaveModel | undefined> => {
 
-    console.log(contactModels)
-
     const request = DinoAgentService.post(DinoAPIURLConstants.CONTACT_SAVE_ALL)
 
     if (request.status === DinoAgentStatus.OK) {
@@ -24,7 +22,6 @@ class ContactServerService {
         }
       } catch {
         /**TO-DO Fazer log de erro */
-        console.log("nop")
       }
 
       return undefined
@@ -36,7 +33,6 @@ class ContactServerService {
     const request = DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT_ALL)
 
     if (request.status === DinoAgentStatus.OK) {
-      console.log("ok")
       try {
         const response = await request.get().send(contactModels)
 
@@ -45,7 +41,6 @@ class ContactServerService {
         }
       } catch {
         /**TO-DO Fazer log de erro */
-        console.log("nop")
       }
 
       return undefined
@@ -65,7 +60,6 @@ class ContactServerService {
         }
       } catch {
         /**TO-DO Fazer log de erro */
-        console.log("nop")
       }
 
       return undefined

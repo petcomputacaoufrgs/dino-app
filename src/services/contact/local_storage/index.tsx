@@ -58,10 +58,7 @@ class ContactsLocalStorage extends BaseLocalStorage {
   }
 
   pushDeleteOp = (id: number) => {
-    let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)
-    
-    console.log(ids)
-    
+    let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)    
     this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToQueue(id, ids))
   }
 

@@ -31,7 +31,6 @@ class AuthService {
 
       try {
         const request = DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
-        console.log(request)
 
         if (request.status === DinoAgentStatus.OK) {
           const response = await request.get().send(authRequestModel)

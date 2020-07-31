@@ -28,15 +28,16 @@ class ContactUpdater implements BaseUpdater {
     const request = DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
 
     if (request.status === DinoAgentStatus.OK) {
+
       try {
         const response = await request.get()
 
         if (response.status === HttpStatus.OK) {
-          const contacts: ContactModel[] = response.body
+          const newContacts: ContactModel[] = response.body
 
           Service.setVersion(version)
 
-          Service.setItems(contacts.map(c => {
+          Service.setItems(newContacts.map(c => {
             c.frontId = Service.makeFrontId() 
             return c
           }))
@@ -62,14 +63,18 @@ class ContactUpdater implements BaseUpdater {
 
           if(contactsToUpdate.toAdd.length > 0) {
             
-            const responseModels = await ServerService.saveContacts(contactsToUpdate.toAdd)
+            const responseSaveModel = await ServerService.saveContacts(contactsToUpdate.toAdd)
             
-            if(responseModels !== undefined) {
-              const failedToUpdate = Service.updateContactIds(responseModels, contacts)
+            if(responseSaveModel !== undefined) {
               
-              if(failedToUpdate.length > 0) {
-                sucessfulAdd = false
+              const version = responseSaveModel.version
+              const responseModels = responseSaveModel.responseModels
+
+              if(version !== undefined && responseModels !== undefined) {
+                Service.setVersion(version)
+                Service.updateContactIds(responseModels, contacts)
               }
+
             } else sucessfulAdd = false
           }
 
@@ -79,6 +84,7 @@ class ContactUpdater implements BaseUpdater {
             
             if (version !== undefined) {
               Service.setVersion(version)
+
             } else sucessfulEdit = false  
           }
 
@@ -88,8 +94,6 @@ class ContactUpdater implements BaseUpdater {
         }
 
         const idsToDelete = Service.getIdsToDelete()
-
-        console.log(idsToDelete)
 
         if(idsToDelete.length > 0) {
 

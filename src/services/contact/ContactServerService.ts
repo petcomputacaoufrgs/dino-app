@@ -4,11 +4,10 @@ import ResponseSaveModel from '../../types/contact/ResponseSaveModel'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import HttpStatus from 'http-status-codes'
-import Service from './ContactService'
 
 class ContactServerService {
 
-  saveContacts = async (contactModels: Array<ContactModel>): Promise<ContactModel[] | undefined> => {
+  saveContacts = async (contactModels: Array<ContactModel>): Promise<ResponseSaveModel | undefined> => {
 
     console.log(contactModels)
 
@@ -20,8 +19,8 @@ class ContactServerService {
 
         if (response.status === HttpStatus.OK) {
           const responseSaveModel = response.body as ResponseSaveModel
-          Service.setVersion(responseSaveModel.version)
-          return responseSaveModel.responseModels
+
+          return responseSaveModel
         }
       } catch {
         /**TO-DO Fazer log de erro */
@@ -92,40 +91,7 @@ class ContactServerService {
 
     return undefined
   }
-  /*
-
-  checkUpdates = async () => {
-    
-    if(LS.shouldSync()){
-      console.log("checando")
-
-      //const idsToSave = LS.getOpIDs(LS_Constants.ADD_CONTACTS)
-      const contacts = LS.getItems()
-
-      const contactsResponse = await this.saveContacts(contacts.filter(contact => contact.id === undefined))
-      console.log(contactsResponse)
-
-      if(contactsResponse !== undefined) {
-        console.log("aqui foi")
-        const updatedContacts = contacts.map(c => {
-          if(c.id === undefined) {
-            const updatedContactIndex = contactsResponse.findIndex(contactResponse => contactResponse.frontId === c.frontId)
-            c.id = contactsResponse[updatedContactIndex].id
-            contactsResponse.splice(updatedContactIndex, 1)
-          }
-          return c
-        })
-        if(contactsResponse.length === 0) {
-          LS.cleanOpIDs(LS_Constants.CONTACTS_ADD)
-        }
-        console.log(updatedContacts)
-        LS.setItems(updatedContacts)
-      }
-    }
-  }
-  */
-
-
+  
   getItems = async (): Promise<Array<ContactModel> | undefined> => {
     const request = DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_LIST)
 

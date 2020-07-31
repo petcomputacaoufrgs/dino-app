@@ -1,7 +1,7 @@
-import ContactModel from './ContactModel'
+import ResponseModel from './ResponseModel'
 
 export default interface ResponseSaveModel {
     version: number
-    responseModels: Array<ContactModel>
+    responseModels: Array<ResponseModel>
   }
   

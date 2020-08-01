@@ -37,10 +37,12 @@ class ContactUpdater implements BaseUpdater {
 
           Service.setVersion(version)
 
-          Service.setItems(newContacts.map(c => {
+          Service.setItems(Service.getItems()
+          .filter(c => c.id === undefined)
+          .concat(newContacts.map(c => {
             c.frontId = Service.makeFrontId() 
             return c
-          }))
+          })))
 
           return
         }

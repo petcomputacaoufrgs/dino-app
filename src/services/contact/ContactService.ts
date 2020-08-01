@@ -158,7 +158,8 @@ class ContactsService {
     
   getContactsToUpdate = (contacts: ContactModel[], idsToUpdate: number[]): {toAdd: ContactModel[]; toEdit: ContactModel[];} => {
     return contacts
-    .filter(contact => idsToUpdate.includes(contact.frontId))
+    .filter(contact => idsToUpdate
+      .includes(contact.frontId))
     .reduce((acum, contact) => {
       const toAddOrEdit = contact.id === undefined ? 'toAdd' : 'toEdit'
       acum[toAddOrEdit].push(contact)
@@ -169,6 +170,8 @@ class ContactsService {
   setContactsToUpdate = (contacts: ContactModel[]) => {
     LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, contacts.map(c => c.frontId))
   }
+
+
 
   getIdsToDelete = ():{ id: number }[] => {
     return LS.getOpIDs(LS_Constants.CONTACTS_DEL)

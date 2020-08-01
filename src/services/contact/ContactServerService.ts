@@ -85,26 +85,6 @@ class ContactServerService {
 
     return undefined
   }
-  
-  getItems = async (): Promise<Array<ContactModel> | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_LIST)
-
-    if (request.status === DinoAgentStatus.OK) {
-      try {
-        const response = await request.get()
-
-        if (response.status === HttpStatus.OK) {
-          const contactsToUpdate: Array<ContactModel> = response.body
-          return contactsToUpdate
-        }
-      } catch {
-        /**TO-DO Log de erro */
-      }
-    }
-
-    return undefined
-  }
-
 
 }
 

@@ -2,15 +2,10 @@ import BaseSync from '../BaseSync'
 import Service from './ContactService'
 import ServerService from './ContactServerService'
 import ContactsUpdater from './ContactUpdater'
-/*
-import ContactModel from '../../types/contact/ContactModel'
-import LS from './local_storage/index'
-import LS_Constants from '../../constants/LocalStorageKeysConstants'
-*/
 
 class ContactSync implements BaseSync {
 
-  sync = async (): Promise<boolean> => {
+  sync = async (): Promise<boolean> => { //fazer primeiro o local na base do sync, tirar o if de versoes
 
     const serverVersion = await ServerService.getVersion()
 

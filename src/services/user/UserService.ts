@@ -151,7 +151,9 @@ class UserService {
   }
 
   saveNewPhotoOnServer = async (pictureURL: string) => {
-    const request = await DinoAgentService.put(DinoAPIURLConstants.USER_PUT_PHOTO)
+    const request = await DinoAgentService.put(
+      DinoAPIURLConstants.USER_PUT_PHOTO
+    )
 
     if (request.status === AgentStatus.OK) {
       try {

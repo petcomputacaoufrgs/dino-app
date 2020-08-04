@@ -19,6 +19,10 @@ class NoteVersionLocalStorage extends BaseLocalStorage {
   removeVersion = () => {
     this.remove(LS_Constants.NOTE_VERSION)
   }
+
+  removeUserData = () => {
+    this.removeVersion()
+  }
 }
 
 export default new NoteVersionLocalStorage()

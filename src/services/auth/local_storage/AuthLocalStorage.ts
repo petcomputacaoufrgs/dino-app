@@ -53,7 +53,10 @@ class AuthLocalStorage extends BaseLocalStorage {
   }
 
   setGoogleExpiresDate = (googleExpiredDate: number) => {
-    this.set(LS_Constants.GOOGLE_EXPIRES_DATE, JSON.stringify(googleExpiredDate))
+    this.set(
+      LS_Constants.GOOGLE_EXPIRES_DATE,
+      JSON.stringify(googleExpiredDate)
+    )
   }
 
   removeGoogleExpiresDate = () => {

@@ -32,6 +32,7 @@ class LocalStorageKeys {
   UPDATE_NOTES_WITH_ERROR = 'une'
   NOTES_TO_DELETE = 'ntd'
   CONNECTION = 'con'
+  LOG_APP_ERROR_SYNC = 'laes'
 }
 
 export default new LocalStorageKeys()

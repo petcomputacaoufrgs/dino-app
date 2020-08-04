@@ -28,7 +28,9 @@ class AuthService {
       const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
 
       try {
-        const request = await DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
+        const request = await DinoAgentService.post(
+          DinoAPIURLConstants.AUTH_GOOGLE
+        )
 
         if (request.status === AgentStatus.OK) {
           const response = await request.get()!.send(authRequestModel)
@@ -126,7 +128,7 @@ class AuthService {
     if (tempAuthToken) {
       return tempAuthToken
     }
-    
+
     return AuthLocalStorage.getAuthToken()
   }
 

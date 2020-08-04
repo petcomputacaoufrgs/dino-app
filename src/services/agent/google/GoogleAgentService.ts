@@ -7,20 +7,21 @@ import DinoAgentService from '../dino/DinoAgentService'
 import AgentStatus from '../../../types/services/agent/AgentStatus'
 import GoogleRefreshAuthResponseModel from '../../../types/auth/google/GoogleRefreshAuthResponseModel'
 
-const TIME_MARGIN_OF_ERROR_IN_MS = 300000 
+const TIME_MARGIN_OF_ERROR_IN_MS = 300000
 
 /**
  * @description Adapta a biblioteca Superagent para lidar com a GoogleAPI
  */
 class GoogleAgentService extends BaseAgent {
-  
   protected filterBeforeCreate = async () => {
     const success = this.updateGoogleAccessTokenIfNecessary()
 
     return success
   }
 
-  protected filterWhileCreating = (request: Superagent.SuperAgentRequest): Superagent.SuperAgentRequest => {
+  protected filterWhileCreating = (
+    request: Superagent.SuperAgentRequest
+  ): Superagent.SuperAgentRequest => {
     request.set(this.getHeader())
 
     return request
@@ -47,7 +48,6 @@ class GoogleAgentService extends BaseAgent {
     const expiresDate = AuthService.getGoogleExpiresDate()
 
     if (expiresDate) {
-
       if (this.needsUpdateToken(expiresDate)) {
         const request = await DinoAgentService.get(
           DinoAPIURLConstants.REFRESH_AUTH_GOOGLE
@@ -64,7 +64,7 @@ class GoogleAgentService extends BaseAgent {
             return false
           }
         }
-      } 
+      }
 
       return true
     }

@@ -62,7 +62,9 @@ class NoteService {
   getVersion = (): number => NoteVersionLocalStorage.getVersion()
 
   getVersionFromServer = async (): Promise<number | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.NOTE_GET_VERSION
+    )
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -151,8 +153,8 @@ class NoteService {
   //#region DELETE
 
   removeUserData = () => {
-    NoteVersionLocalStorage.removeVersion()
-    NoteSyncLocalStorage.removeShouldSync()
+    NoteVersionLocalStorage.removeUserData()
+    NoteSyncLocalStorage.removeUserData()
     NoteDatabase.removeAll()
     DeletedNoteDatabase.removeAll()
   }
@@ -193,7 +195,9 @@ class NoteService {
         } as NoteDeleteModel)
     )
 
-    const request = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE_ALL)
+    const request = await DinoAgentService.delete(
+      DinoAPIURLConstants.NOTE_DELETE_ALL
+    )
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -219,7 +223,9 @@ class NoteService {
     if (noteDoc.external_id) {
       const model: NoteDeleteModel = { id: noteDoc.external_id }
 
-      const request = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE)
+      const request = await DinoAgentService.delete(
+        DinoAPIURLConstants.NOTE_DELETE
+      )
 
       if (request.status === AgentStatus.OK) {
         try {
@@ -304,7 +310,9 @@ class NoteService {
   }
 
   updateNotes = async (models: NoteUpdateModel[]) => {
-    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_ALL)
+    const request = await DinoAgentService.put(
+      DinoAPIURLConstants.NOTE_UPDATE_ALL
+    )
 
     if (request.status === AgentStatus.OK) {
       try {

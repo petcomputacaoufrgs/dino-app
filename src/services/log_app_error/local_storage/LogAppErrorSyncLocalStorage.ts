@@ -1,9 +1,9 @@
 import BaseLocalStorage from '../../../types/services/BaseLocalStorage'
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 
-class NoteSyncLocalStorage extends BaseLocalStorage {
+class LogAppErroLocalStorage extends BaseLocalStorage {
   getShouldSync = (): boolean => {
-    const should = this.get(LS_Constants.NOTE_SHOULD_SYNC)
+    const should = this.get(LS_Constants.LOG_APP_ERROR_SYNC)
 
     if (should) {
       return JSON.parse(should)
@@ -13,11 +13,11 @@ class NoteSyncLocalStorage extends BaseLocalStorage {
   }
 
   setShouldSync = (should: boolean) => {
-    this.set(LS_Constants.NOTE_SHOULD_SYNC, JSON.stringify(should))
+    this.set(LS_Constants.LOG_APP_ERROR_SYNC, JSON.stringify(should))
   }
 
   removeShouldSync = () => {
-    this.remove(LS_Constants.NOTE_SHOULD_SYNC)
+    this.remove(LS_Constants.LOG_APP_ERROR_SYNC)
   }
 
   removeUserData = () => {
@@ -25,4 +25,4 @@ class NoteSyncLocalStorage extends BaseLocalStorage {
   }
 }
 
-export default new NoteSyncLocalStorage()
+export default new LogAppErroLocalStorage()

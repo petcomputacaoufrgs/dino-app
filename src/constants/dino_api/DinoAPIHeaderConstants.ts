@@ -5,7 +5,6 @@ class DinoAPIHeaderConstants {
 
   GOOGLE_REFRESH_TOKEN = 'google_refresh'
 
-
   GOOGLE_EXPIRES_DATE = 'google_expires_date'
 }
 

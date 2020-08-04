@@ -2,8 +2,9 @@ import ContactModel from '../../types/contact/ContactModel'
 import ResponseSaveModel from '../../types/contact/ResponseSaveModel'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
-import DinoAgentService from '../agent/dino/DinoAgentService'
-import AgentStatus from '../../types/services/agent/AgentStatus'
+import DinoAgentService from '../../agent/DinoAgentService'
+import AgentStatus from '../../types/agent/AgentStatus'
+
 
 class ContactServerService {
 

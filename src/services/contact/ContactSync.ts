@@ -1,7 +1,7 @@
 import Service from './ContactService'
 import ServerService from './ContactServerService'
 import ContactsUpdater from './ContactUpdater'
-import BaseSync from '../../types/services/BaseSync'
+import BaseSync from '../../sync/BaseSync'
 
 class ContactSync implements BaseSync {
 

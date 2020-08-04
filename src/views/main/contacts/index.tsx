@@ -5,7 +5,7 @@ import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import AddContactButton from './contact_button_add'
-import ContactsService from '../../../services/contact/ContactsService'
+import ContactService from '../../../services/contact/ContactService'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Contacts = (): JSX.Element => {
@@ -21,7 +21,7 @@ const Contacts = (): JSX.Element => {
 
   useEffect(() => {
     if (!add) {
-      const items = ContactsService.getItems()
+      const items = ContactService.getItems()
       const results = items.filter((item) =>
         StringUtils.contains(item.name, searchTerm)
       )

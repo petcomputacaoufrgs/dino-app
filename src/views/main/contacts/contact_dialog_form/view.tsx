@@ -5,8 +5,7 @@ import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 import { ContactFormDialogViewProps } from './props'
-import { useLanguage } from '../../../../provider/app_settings_provider'
-
+import { useLanguage } from '../../../../context_provider/app_settings'
 
 const View = React.forwardRef(({ open, handleClose, action, name, phones, color, description, invalidName, 
   invalidPhone, handleChangeColor, handleDeletePhone, handleChangeName, handleChangeDescription, 

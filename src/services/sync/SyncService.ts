@@ -4,18 +4,11 @@ import NoteSync from '../note/NoteSync'
 import ConnectionService from '../connection/ConnectionService'
 import AuthService from '../auth/AuthService'
 import AuthSync from '../auth/AuthSync'
-import LanguageSubProviderValue from '../../provider/app_settings_provider/language_provider/value'
 
 const SYNC_FAIL_INTERVAL = 60000
 const SYNC_FAIL_WITHOUT_CONTROL = 200
 
 class SyncService {
-  languageContext?: LanguageSubProviderValue
-
-  start = (languageContext: LanguageSubProviderValue) => {
-    this.languageContext = languageContext
-  }
-
   sync = async () => {
     if (ConnectionService.isConnected()) {
       this.startSync()
@@ -30,7 +23,7 @@ class SyncService {
     const isAuthenticated = AuthService.isAuthenticated()
 
     if (isAuthenticated) {
-      promises.push(AppSettingsSync.sync(this.languageContext))
+      promises.push(AppSettingsSync.sync())
       promises.push(GlossarySync.sync())
       promises.push(NoteSync.sync())
     }

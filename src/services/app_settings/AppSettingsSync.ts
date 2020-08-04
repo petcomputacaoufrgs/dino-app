@@ -1,11 +1,8 @@
 import AppSettingsService from './AppSettingsService'
-import LanguageSubProviderValue from '../../provider/app_settings_provider/language_provider/value'
 import BaseSync from '../../types/services/BaseSync'
 
 class AppSettingsSync implements BaseSync {
-  sync = async (
-    languageContext?: LanguageSubProviderValue
-  ): Promise<boolean> => {
+  sync = async (): Promise<boolean> => {
     if (AppSettingsService.shouldSync()) {
       const serverVersion = await AppSettingsService.getServerVersion()
 
@@ -18,25 +15,9 @@ class AppSettingsSync implements BaseSync {
           AppSettingsService.saveOnServer(localSettings)
 
           AppSettingsService.setShouldSync(false)
-
-          return true
         }
 
-        if (localVersion < serverVersion) {
-          const appSettings = await AppSettingsService.getServer()
-
-          if (appSettings) {
-            AppSettingsService.saveAppSettingsData(appSettings, serverVersion)
-
-            if (languageContext) {
-              languageContext.updateLanguage()
-            }
-
-            AppSettingsService.setShouldSync(false)
-
-            return true
-          }
-        }
+        return true
       }
 
       return false

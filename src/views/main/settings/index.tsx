@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppSettings } from '../../../provider/app_settings_provider'
 import { useAlert } from '../../../provider/alert_provider'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../types/app_settings/AppSettingsModel'
-import HistoryService from '../../../services/history/HistoryService'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 import './styles.css'
 
@@ -26,7 +25,11 @@ const Settings = (): JSX.Element => {
     language.NAVIGATOR_LANGUAGE_CODE
   )
 
-  const onChangeLanguage = (event: any) => {
+  useEffect(() => {
+    setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
+  }, [language])
+
+  const handleSelectionChanged = (event: any) => {
     if (event && event.target && event.target.value) {
       setSelectedLanguage(event.target.value as string)
     }
@@ -41,8 +44,6 @@ const Settings = (): JSX.Element => {
 
     const currentLanguage = appContext.language.updateLanguage()
     alert.showSuccessAlert(currentLanguage.SETTINGS_SAVE_SUCCESS)
-
-    HistoryService.goBack()
   }
 
   const renderSelectLanguage = (): JSX.Element => (
@@ -54,7 +55,7 @@ const Settings = (): JSX.Element => {
         labelId="language-select-label"
         id="language-select"
         value={selectedLanguage}
-        onChange={onChangeLanguage}
+        onChange={handleSelectionChanged}
       >
         {languageList.map((language, index) => (
           <MenuItem key={index} value={language.code}>

@@ -1,26 +1,10 @@
 import { useState } from 'react'
 import LanguageBase from '../../../types/languages/LanguageBase'
-import EN_US from '../../../types/languages/EN_US'
-import PT_BR from '../../../types/languages/PT_BR'
 import LanguageProviderValue, { Language } from './value'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 
 const AppSettingsProvider = (): LanguageProviderValue => {
-  const getLanguageSetByCode = (languageCode: string): LanguageBase => {
-    if (languageCode === LanguageCodeConstants.PORTUGUESE) {
-      return new PT_BR()
-    } else {
-      return new EN_US()
-    }
-  }
-
-  const getLanguageSet = (): LanguageBase => {
-    const language = AppSettingsService.get().language
-
-    return getLanguageSetByCode(language)
-  }
-
   const setHTMLLanguage = (language: LanguageBase) => {
     const html = document.getElementById('html')
 
@@ -29,12 +13,14 @@ const AppSettingsProvider = (): LanguageProviderValue => {
     }
   }
 
-  const [currentLanguage, setCurrentLanguage] = useState(getLanguageSet())
+  const [currentLanguage, setCurrentLanguage] = useState(
+    AppSettingsService.getLanguageBase()
+  )
 
   setHTMLLanguage(currentLanguage)
 
-  const updateCurrentLanguage = (): LanguageBase => {
-    const language = getLanguageSet()
+  const updateLanguage = (): LanguageBase => {
+    const language = AppSettingsService.getLanguageBase()
 
     setHTMLLanguage(language)
 
@@ -44,7 +30,7 @@ const AppSettingsProvider = (): LanguageProviderValue => {
   }
 
   const getLanguages = (): Language[] => {
-    const language = getLanguageSet()
+    const language = AppSettingsService.getLanguageBase()
 
     return [
       {
@@ -61,7 +47,7 @@ const AppSettingsProvider = (): LanguageProviderValue => {
   const value: LanguageProviderValue = {
     current: currentLanguage,
     getLanguages: getLanguages,
-    updateLanguage: updateCurrentLanguage,
+    updateLanguage: updateLanguage,
   }
 
   return value

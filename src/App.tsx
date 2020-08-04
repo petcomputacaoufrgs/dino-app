@@ -42,7 +42,7 @@ const App = (): JSX.Element => {
   useEffect(() => {
     if (firstLoad) {
       setFirstLoad(false)
-      EventsService.whenStart(language)
+      EventsService.whenStart()
     }
   }, [language, firstLoad])
 

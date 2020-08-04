@@ -1,11 +1,8 @@
 import BaseUpdater from '../BaseUpdater'
-import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
 import AppSettingsService from './AppSettingsService'
 
 class AppSettingsUpdater implements BaseUpdater {
-  checkUpdates = async (
-    languageContext?: LanguageSubProviderValue
-  ): Promise<void> => {
+  checkUpdates = async (): Promise<void> => {
     const updatedVersion = await AppSettingsService.getAppSettingsVersionFromServer()
 
     if (updatedVersion === undefined) {
@@ -22,21 +19,7 @@ class AppSettingsUpdater implements BaseUpdater {
       return
     }
 
-    const savedVersion = AppSettingsService.getAppSettingsVersion()
-
-    if (updatedVersion !== savedVersion) {
-      const appSettings = await AppSettingsService.getAppSettingsFromServer()
-
-      if (appSettings) {
-        AppSettingsService.saveAppSettingsData(appSettings, updatedVersion)
-
-        if (languageContext) {
-          languageContext.updateLanguage()
-        }
-      } else {
-        AppSettingsService.setShouldSync(true)
-      }
-    }
+    AppSettingsService.update(updatedVersion)
   }
 }
 

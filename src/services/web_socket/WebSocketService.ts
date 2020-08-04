@@ -6,6 +6,7 @@ import DinoAPIHeaderConstants from '../../constants/dino_api/DinoAPIHeaderConsta
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
 import GlossaryWebSocketSubscriber from '../glossary/GlossaryWebSocketSubscriber'
 import AppSettingsWebSocketSubscriber from '../app_settings/AppSettingsWebSocketSubscriber'
+import NoteWebSocketSubscriber from '../note/NoteWebSocketSubscriber'
 
 class WebSocketService {
   socket?: WebSocket
@@ -40,6 +41,7 @@ class WebSocketService {
 
     subscribers.push(GlossaryWebSocketSubscriber)
     subscribers.push(AppSettingsWebSocketSubscriber)
+    subscribers.push(NoteWebSocketSubscriber)
 
     subscribers.forEach((subscriber) => {
       subscriber.items.forEach((item) => {

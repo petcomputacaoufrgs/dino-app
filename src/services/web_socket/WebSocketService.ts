@@ -22,7 +22,7 @@ class WebSocketService {
     if (AuthService.isAuthenticated()) {
       this.socket = new SockJS(this.getSocketBaseURL())
       this.stompClient = Stomp.over(this.socket)
-      this.stompClient.debug = () => {} //TO-DO Log do debug
+      this.stompClient.debug = (...args: string[]) => {}
       this.stompClient.connect({}, this.subscribe)
     }
   }

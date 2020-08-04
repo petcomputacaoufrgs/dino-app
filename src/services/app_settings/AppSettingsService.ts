@@ -9,6 +9,7 @@ import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
 import PT from '../../types/languages/PT'
 import EN from '../../types/languages/EN'
 import AppSettingsContextUpdater from './AppSettingsContextUpdater'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class AppSettingsService {
   listenner = {}
@@ -61,8 +62,8 @@ class AppSettingsService {
         const version: number = response.body
 
         return version
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -81,8 +82,8 @@ class AppSettingsService {
         const appSettings: AppSettingsResponseModel = response.body
 
         return appSettings
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -120,8 +121,8 @@ class AppSettingsService {
         AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
 
         return
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 

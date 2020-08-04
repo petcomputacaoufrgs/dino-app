@@ -11,6 +11,7 @@ import UserService from '../user/UserService'
 import DinoAgentService from '../agent/dino/DinoAgentService'
 import AgentStatus from '../../types/services/agent/AgentStatus'
 import EventsService from '../events/EventsService'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class AuthService {
   getDefaultScopes = (): string => {
@@ -55,8 +56,8 @@ class AuthService {
         }
 
         return LoginErrorConstants.DISCONNECTED
-      } catch {
-        /**TO-DO Faz log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
         return LoginErrorConstants.UNKNOW_API_ERROR
       }
     }
@@ -85,8 +86,8 @@ class AuthService {
 
         return true
       }
-    } catch {
-      /* TO-DO Salvar erro */
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
     }
 
     return false

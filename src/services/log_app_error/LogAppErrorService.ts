@@ -6,6 +6,7 @@ import LogAppErrorSyncLocalStorage from './local_storage/LogAppErrorSyncLocalSto
 import LogAppErrorDatabase from './database/LogAppErrorDatabase'
 import LogAppErrorDoc from '../../types/log_app_error/database/LogAppErrorDoc'
 import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
+import LogAppModelError from '../../error/LogAppModelError'
 
 class LogAppErrorService {
   shouldSync = (): boolean => {
@@ -22,29 +23,41 @@ class LogAppErrorService {
 
   saveLocalLog = (model: LogAppErrorModel) => {
     const doc = {
-      error: model.error,
-      file: model.file,
-      title: model.title,
+      ...model,
     } as LogAppErrorDoc
 
     LogAppErrorDatabase.put(doc)
   }
 
-  save = async (model: LogAppErrorModel) => {
-    const request = await DinoAgentService.post(
-      DinoAPIURLConstants.SAVE_LOG_APP_ERROR
-    )
+  saveDefault = (error: Error) => {
+    if (error) {
+      this.save({
+        date: new Date().getTime(),
+        error: error.stack,
+        title: error.message,
+      } as LogAppErrorModel)
+    }
+  }
 
-    if (request.status === AgentStatus.OK) {
-      try {
-        await request.get()!.send(model)
-      } catch {
+  save = async (model: LogAppErrorModel) => {
+    if (model.date && model.error) {
+      const request = await DinoAgentService.post(
+        DinoAPIURLConstants.SAVE_LOG_APP_ERROR
+      )
+
+      if (request.status === AgentStatus.OK) {
+        try {
+          await request.get()!.send(model)
+        } catch {
+          this.saveLocalLog(model)
+          this.setShouldSync(true)
+        }
+      } else {
         this.saveLocalLog(model)
         this.setShouldSync(true)
       }
     } else {
-      this.saveLocalLog(model)
-      this.setShouldSync(true)
+      this.saveDefault(new LogAppModelError(model))
     }
   }
 
@@ -52,8 +65,6 @@ class LogAppErrorService {
     const request = await DinoAgentService.post(
       DinoAPIURLConstants.SAVE_ALL_LOG_APP_ERROR
     )
-
-    console.log(models)
 
     if (request.status === AgentStatus.OK) {
       try {

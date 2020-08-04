@@ -2,7 +2,7 @@ import NoteVersionLocalStorage from './local_storage/NoteVersionLocalStorage'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import NoteSaveModel from '../../types/note/NoteSaveModel'
-import NoteSaveResponseAPIModel from '../../types/note/NoteSaveResponseAPIModel'
+import NoteSaveResponseModel from '../../types/note/NoteSaveResponseModel'
 import NoteOrderAPIModel from '../../types/note/NoteOrderAPIModel'
 import NoteDeleteModel from '../../types/note/NoteDeleteModel'
 import NoteQuestionModel from '../../types/note/NoteQuestionModel'
@@ -18,6 +18,7 @@ import NoteModel from '../../types/note/NoteModel'
 import NoteContextUpdater from './NoteContextUpdater'
 import NoteViewModel from '../../types/note/NoteViewModel'
 import { NoteValue } from '../../provider/notes_provider/value'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class NoteService {
   //#region GET
@@ -75,8 +76,8 @@ class NoteService {
 
           return serverVersion
         }
-      } catch {
-        /**TO-DO Salvar log com o erro*/
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -123,7 +124,7 @@ class NoteService {
         const response = await request.get()!.send(newNote)
 
         if (response.status === HttpStatus.OK) {
-          const body: NoteSaveResponseAPIModel = response.body
+          const body: NoteSaveResponseModel = response.body
 
           const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
@@ -140,8 +141,8 @@ class NoteService {
 
           return
         }
-      } catch {
-        /**TO-DO Fazer log de erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -211,8 +212,8 @@ class NoteService {
 
           return
         }
-      } catch {
-        /**Save error log */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -246,8 +247,8 @@ class NoteService {
 
             return
           }
-        } catch {
-          /**TO-DO Fazer log do erro */
+        } catch (e) {
+          LogAppErrorService.saveDefault(e)
         }
       }
       NoteSyncLocalStorage.setShouldSync(true)
@@ -301,8 +302,8 @@ class NoteService {
 
           return
         }
-      } catch {
-        /**TO-DO Salvar log de erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -339,8 +340,8 @@ class NoteService {
 
           return
         }
-      } catch {
-        /**TO-DO Save log error */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -397,8 +398,8 @@ class NoteService {
 
             return
           }
-        } catch {
-          /**TO-DO Salvar log de erro */
+        } catch (e) {
+          LogAppErrorService.saveDefault(e)
         }
       }
     }
@@ -454,8 +455,8 @@ class NoteService {
 
             return
           }
-        } catch {
-          /**TO-DO Salvar log de erro */
+        } catch (e) {
+          LogAppErrorService.saveDefault(e)
         }
       }
     }
@@ -500,8 +501,8 @@ class NoteService {
 
             return
           }
-        } catch {
-          /**TO-DO Salvar log de erro */
+        } catch (e) {
+          LogAppErrorService.saveDefault(e)
         }
       }
       NoteSyncLocalStorage.setShouldSync(true)

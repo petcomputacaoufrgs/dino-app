@@ -4,4 +4,6 @@ export default interface LogAppErrorModel {
   file: string
 
   error: string
+
+  date: number
 }

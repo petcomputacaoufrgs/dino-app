@@ -14,14 +14,8 @@ const PhoneFields = (props: PhoneFieldsProps): JSX.Element => {
 
   const types = [
     { label: language.CONTACTS_MOBILE_PHONE, id: ContactsConstants.MOBILE },
-    {
-      label: language.CONTACTS_RESIDENTIAL_PHONE,
-      id: ContactsConstants.RESIDENTIAL,
-    },
-    {
-      label: language.CONTACTS_PUBLIC_SERVICE_PHONE,
-      id: ContactsConstants.PUBLIC_SERVICE,
-    },
+    { label: language.CONTACTS_RESIDENTIAL_PHONE, id: ContactsConstants.RESIDENTIAL,},
+    { label: language.CONTACTS_PUBLIC_SERVICE_PHONE, id: ContactsConstants.PUBLIC_SERVICE,},
   ]
 
   const getNumberFormat = (): string => {

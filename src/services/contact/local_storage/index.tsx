@@ -4,6 +4,16 @@ import ContactModel from '../../../types/contact/ContactModel'
 import StrU from '../../../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
+
+  getVersion = (): number | undefined => {
+    const version = this.get(LS_Constants.CONTACTS_VERSION)
+    return version ? JSON.parse(version) : undefined 
+  }
+
+  setVersion = (version : number) => {
+    this.set(LS_Constants.CONTACTS_VERSION, JSON.stringify(version))
+  }
+  
   getItems = (): Array<ContactModel> => {
     let items = this.get(LS_Constants.CONTACTS)
     let result = Array<ContactModel>()
@@ -18,62 +28,52 @@ class ContactsLocalStorage extends BaseLocalStorage {
     )
   }
 
+  removeAllItems = () => {
+    this.remove(LS_Constants.CONTACTS)
+    this.remove(LS_Constants.CONTACTS_LAST_ID)
+    this.remove(LS_Constants.CONTACTS_UPDATE)
+    this.remove(LS_Constants.CONTACTS_DEL)
+    this.remove(LS_Constants.CONTACTS_VERSION)
+    this.remove(LS_Constants.CONTACTS_SHOULD_SYNC)
+  }
+
   setOpIDs = (LSkey: string, ids: Array<number>) => {
-    this.set(LSkey, ids.toString())
+    this.set(LSkey, JSON.stringify(ids))
   }
 
-  getOpIDs = (LSkey: string): number[] => {
+  getOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL): number[] => {
     const items = this.get(LSkey)
-      ?.split(',')
-      .map((x) => +x)
-    return items || []
+    return items ? JSON.parse(items) as number[] : new Array<number>()
   }
 
-  pushToStack = (id: number, ids: Array<number>): Array<number> => {
-    const index = ids.findIndex((stackId) => stackId === id)
-    if (index > -1) ids.splice(index, 1)
-    ids.push(id)
-    return ids
+  pushToQueue = (id: number, ids: Array<number>): Array<number> => {
+    const newIds = ids.filter(queueId => queueId !== id)
+    newIds.push(id)
+    return newIds
   }
 
-  pushAddOp = (id: number) => {
-    const ids = this.getOpIDs(LS_Constants.ADD_CONTACTS)
-    this.setOpIDs(LS_Constants.ADD_CONTACTS, this.pushToStack(id, ids))
-  }
-
-  pushEditOp = (id: number) => {
-    let ids = this.getOpIDs(LS_Constants.EDIT_CONTACTS)
-    this.setOpIDs(LS_Constants.EDIT_CONTACTS, this.pushToStack(id, ids))
+  pushUpdateOp = (id: number) => {
+    const ids = this.getOpIDs(LS_Constants.CONTACTS_UPDATE)
+    this.setOpIDs(LS_Constants.CONTACTS_UPDATE, this.pushToQueue(id, ids))
   }
 
   pushDeleteOp = (id: number) => {
-    let ids = this.getOpIDs(LS_Constants.DELETE_CONTACTS)
-    this.setOpIDs(LS_Constants.DELETE_CONTACTS, this.pushToStack(id, ids))
+    let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)    
+    this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToQueue(id, ids))
   }
 
-  cleanOpIDs = (LSkey: string) => {
-    localStorage.removeItem(LSkey)
+  cleanOpQueue = (key: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL) => {
+    localStorage.removeItem(key)
   }
 
-  getLastId = (): number => {
-    const id = localStorage.getItem(LS_Constants.CONTACTS_LAST_ID)
-    return id ? JSON.parse(id) : this.getLastItemId()
+  getLastId = (): string | null => {
+    return localStorage.getItem(LS_Constants.CONTACTS_LAST_ID)
   }
 
-  getLastItemId = (): number => {
-    let items: Array<ContactModel> = this.getItems()
-    if (items.length) {
-      items.sort((a, b) => a.localID - b.localID)
-      return items[items.length - 1].localID
-    }
-    return 0
+  setLastId = (lastId: number) => {
+    return localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, JSON.stringify(lastId))
   }
-
-  updateLastId = (): number => {
-    const lastId = this.getLastId() + 1
-    localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, JSON.stringify(lastId))
-    return lastId
-  }
+  
 }
 
 export default new ContactsLocalStorage()

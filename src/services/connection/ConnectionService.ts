@@ -43,9 +43,12 @@ class ConnectionService {
       this.awaitForDinoConnection()
     })
 
+
     window.addEventListener('offline', () => {
       this.setDisconnected()
     })
+    
+
   }
 
   private awaitForDinoConnection = async () => {

@@ -22,6 +22,7 @@ import LogoutDialog from '../../components/logout_dialog'
 import MenuItemViewModel from '../../components/menu/model/MenuItemViewModel'
 import Notes from './notes'
 import NotFound from '../not_found/index'
+import NotesProvider from '../../provider/notes_provider'
 
 /**
  * @description Tela principal da aplicação
@@ -114,7 +115,15 @@ const Main = (): JSX.Element => {
           path={PathConstants.CONTACTS}
           component={Contacts}
         />
-        <PrivateRoute exact path={PathConstants.NOTES} component={Notes} />
+        <PrivateRoute
+          exact
+          path={PathConstants.NOTES}
+          component={() => (
+            <NotesProvider>
+              <Notes />
+            </NotesProvider>
+          )}
+        />
         <PrivateRoute
           exact
           path={PathConstants.SETTINGS}

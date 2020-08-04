@@ -11,7 +11,6 @@ import AppSettingsService from '../app_settings/AppSettingsService'
  * Executa funções baseado em eventos da aplicação
  */
 class EventsService {
-
   constructor() {
     ConnectionService.addEventListener(this.connectionCallback)
   }

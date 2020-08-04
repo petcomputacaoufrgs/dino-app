@@ -1,4 +1,3 @@
-import NoteViewModel from '../../views/main/notes/model/NoteViewModel'
 import NoteVersionLocalStorage from './local_storage/NoteVersionLocalStorage'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
@@ -16,14 +15,17 @@ import NoteSyncLocalStorage from './local_storage/NoteSyncLocalStorage'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import NoteUpdateModel from '../../types/note/NoteUpdateModel'
 import NoteModel from '../../types/note/NoteModel'
+import NoteContextUpdater from './NoteContextUpdater'
+import NoteViewModel from '../../types/note/NoteViewModel'
+import { NoteValue } from '../../provider/notes_provider/value'
 
 class NoteService {
   //#region GET
 
-  getNotes = async (): Promise<NoteViewModel[]> => {
+  getNotes = async (): Promise<NoteValue[]> => {
     const noteDocs = await NoteDatabase.getAll()
 
-    const viewModels = noteDocs
+    const notes = noteDocs
       .sort((n1, n2) => n1.order - n2.order)
       .map(
         (note) =>
@@ -35,12 +37,10 @@ class NoteService {
             question: note.question,
             tagNames: note.tagNames,
             savedOnServer: note.savedOnServer,
-            showByQuestion: true,
-            showByTag: true,
-          } as NoteViewModel)
+          } as NoteValue)
       )
 
-    return viewModels
+    return notes
   }
 
   getDatabaseNotes = async (): Promise<NoteDoc[]> => {
@@ -85,7 +85,7 @@ class NoteService {
     NoteVersionLocalStorage.setVersion(version)
   }
 
-  saveNote = async (noteModel: NoteViewModel, updateState: () => void) => {
+  saveNote = async (noteModel: NoteValue) => {
     const noteDoc: NoteDoc = {
       answer: noteModel.answer,
       answered: noteModel.answered,
@@ -97,16 +97,14 @@ class NoteService {
       _rev: '',
     }
 
-    this.saveNoteOnServer(noteModel)
-
     await NoteDatabase.put(noteDoc)
 
-    if (updateState) {
-      updateState()
-    }
+    NoteContextUpdater.update()
+
+    this.saveNoteOnServer(noteModel)
   }
 
-  saveNoteOnServer = async (noteModel: NoteViewModel) => {
+  saveNoteOnServer = async (noteModel: NoteValue) => {
     const newNote: NoteSaveModel = {
       order: noteModel.id,
       question: noteModel.question,
@@ -132,7 +130,10 @@ class NoteService {
             noteDoc.external_id = body.noteId
 
             await NoteDatabase.put(noteDoc)
-            NoteVersionLocalStorage.setVersion(body.version)
+
+            NoteContextUpdater.update()
+
+            this.setVersion(body.version)
           }
 
           return
@@ -156,11 +157,13 @@ class NoteService {
     DeletedNoteDatabase.removeAll()
   }
 
-  deleteNote = async (noteModel: NoteViewModel, updateState: () => {}) => {
+  deleteNote = async (noteModel: NoteValue) => {
     const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
     if (noteDoc) {
       await NoteDatabase.deleteByNoteDoc(noteDoc)
+
+      NoteContextUpdater.update()
 
       if (noteDoc.external_id) {
         const deletedNote = await DeletedNoteDatabase.getByQuestion(
@@ -172,10 +175,6 @@ class NoteService {
 
           this.deleteNoteOnServer(noteDoc)
         }
-      }
-
-      if (updateState) {
-        updateState()
       }
     }
   }
@@ -265,7 +264,10 @@ class NoteService {
         noteDoc.order = newOrder
       })
 
-      NoteDatabase.putAll(noteDocs)
+      await NoteDatabase.putAll(noteDocs)
+
+      NoteContextUpdater.update()
+
       this.updateOrderOnServer(noteDocs)
     }
   }
@@ -323,6 +325,8 @@ class NoteService {
 
           await Promise.all(promises)
 
+          NoteContextUpdater.update()
+
           this.setVersion(newVersion)
 
           return
@@ -335,11 +339,7 @@ class NoteService {
     this.setShouldSync(true)
   }
 
-  updateNoteQuestion = async (
-    oldQuestion: string,
-    noteModel: NoteViewModel,
-    updateState: () => void
-  ) => {
+  updateNoteQuestion = async (oldQuestion: string, noteModel: NoteValue) => {
     const noteDoc = await NoteDatabase.getByQuestion(oldQuestion)
 
     if (noteDoc) {
@@ -348,12 +348,11 @@ class NoteService {
       noteDoc.lastUpdate = noteModel.lastUpdate
       noteDoc.savedOnServer = false
 
-      this.updateNoteQuestionOnServer(noteDoc)
       await NoteDatabase.put(noteDoc)
 
-      if (updateState) {
-        updateState()
-      }
+      NoteContextUpdater.update()
+
+      this.updateNoteQuestionOnServer(noteDoc)
     }
   }
 
@@ -399,7 +398,7 @@ class NoteService {
     return NoteSyncLocalStorage.setShouldSync(true)
   }
 
-  updateNoteAnswer = async (noteModel: NoteViewModel) => {
+  updateNoteAnswer = async (noteModel: NoteValue) => {
     const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
 
     if (noteDoc) {
@@ -407,7 +406,9 @@ class NoteService {
       noteDoc.answered = noteModel.answered
       noteDoc.savedOnServer = false
 
-      NoteDatabase.put(noteDoc)
+      await NoteDatabase.put(noteDoc)
+
+      NoteContextUpdater.update()
 
       this.updateNoteAnswerOnServer(noteDoc)
     }
@@ -436,7 +437,10 @@ class NoteService {
             if (savedNoteDoc) {
               savedNoteDoc.savedOnServer = true
 
-              NoteDatabase.put(savedNoteDoc)
+              await NoteDatabase.put(savedNoteDoc)
+
+              NoteContextUpdater.update()
+
               NoteVersionLocalStorage.setVersion(response.body)
             }
 
@@ -478,10 +482,13 @@ class NoteService {
                 } as NoteDoc)
             )
 
-            this.setVersion(newVersion)
-
             await NoteDatabase.removeAll()
+
             await NoteDatabase.putAll(noteDocs)
+
+            NoteContextUpdater.update()
+
+            this.setVersion(newVersion)
 
             return
           }

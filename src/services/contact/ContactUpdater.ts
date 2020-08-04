@@ -1,11 +1,11 @@
 import HttpStatus from 'http-status-codes'
-import BaseUpdater from '../BaseUpdater'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import ContactModel from '../../types/contact/ContactModel'
 import Service from './ContactService'
 import ServerService from './ContactServerService'
-import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import BaseUpdater from '../../types/services/BaseUpdater'
+import AgentStatus from '../../types/services/agent/AgentStatus'
+import DinoAgentService from '../agent/dino/DinoAgentService'
 
 
 class ContactUpdater implements BaseUpdater {
@@ -25,12 +25,12 @@ class ContactUpdater implements BaseUpdater {
   }
 
   updateLocal = async (version: number): Promise<void> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
 
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         if (response.status === HttpStatus.OK) {
           const newContacts: ContactModel[] = response.body

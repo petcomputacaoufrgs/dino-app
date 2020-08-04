@@ -1,11 +1,11 @@
 import React from 'react'
-import { useLanguage } from '../../../../provider/app_provider'
 import Button from '@material-ui/core/Button'
 import { Dialog, DialogActions, DialogContent, Divider,} from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 import { ContactFormDialogViewProps } from './props'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 
 
 const View = React.forwardRef(({ open, handleClose, action, name, phones, color, description, invalidName, 

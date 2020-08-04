@@ -15,6 +15,7 @@ import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotos
 import GlossaryService from '../glossary/GlossaryService'
 import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import ContactService from '../contact/ContactService'
 
 
 class UserService {
@@ -241,7 +242,7 @@ class UserService {
     NoteService.removeUserData()
     GlossaryService.removeUserData()
     LogAppErrorService.removeUserData()
-    ContactsService.removeUserData()
+    ContactService.removeUserData()
   }
 }
 

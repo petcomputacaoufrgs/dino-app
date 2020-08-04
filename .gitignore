@@ -34,3 +34,5 @@ log.txt
 .vscode/settings.json
 
 src/secret/client_secret.json
+
+src/environment/

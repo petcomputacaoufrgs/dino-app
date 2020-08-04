@@ -1,12 +1,12 @@
-import BaseLocalStorage from '../../BaseLocalStorage'
+import BaseLocalStorage from '../../../types/services/BaseLocalStorage'
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 import AppSettingsModel from '../../../types/app_settings/AppSettingsModel'
 
 class AppSettingsLocalStorage extends BaseLocalStorage {
   getAppSettingsVersion = (): number => {
-    const versionSaved = this.get(LS_Constants.APP_SETTINGS_VERSION)
+    const version = this.get(LS_Constants.APP_SETTINGS_VERSION)
 
-    return versionSaved ? Number(versionSaved) : 0
+    return version ? Number(version) : 0
   }
 
   setAppSettingsVersion = (version: number) => {

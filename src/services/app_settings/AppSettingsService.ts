@@ -1,11 +1,19 @@
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AppSettingsLocalStorage from './local_storage/AppSettingsLocalStorage'
 import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
-import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import DinoAgentService from '../agent/dino/DinoAgentService'
+import AgentStatus from '../../types/services/agent/AgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
+import LanguageBase from '../../types/languages/LanguageBase'
+import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
+import PT from '../../types/languages/PT'
+import EN from '../../types/languages/EN'
+import AppSettingsContextUpdater from './AppSettingsContextUpdater'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class AppSettingsService {
+  listenner = {}
+
   get = (): AppSettingsModel => {
     const savedVersion = AppSettingsLocalStorage.getAppSettingsVersion()
 
@@ -21,47 +29,61 @@ class AppSettingsService {
   }
 
   set = (appSettings: AppSettingsModel) => {
-    AppSettingsLocalStorage.setAppSettings(appSettings)
+    this.updateLocalAppSettings(appSettings)
 
     this.saveOnServer(appSettings)
   }
 
-  getAppSettingsVersion = (): number =>
-    AppSettingsLocalStorage.getAppSettingsVersion()
+  update = async (newVersion: number) => {
+    const savedVersion = this.getVersion()
 
-  getAppSettingsVersionFromServer = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(
+    if (newVersion !== savedVersion) {
+      const appSettings = await this.getServer()
+
+      if (appSettings) {
+        AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
+        this.updateLocalAppSettings(appSettings)
+      } else {
+        this.setShouldSync(true)
+      }
+    }
+  }
+
+  getVersion = (): number => AppSettingsLocalStorage.getAppSettingsVersion()
+
+  getServerVersion = async (): Promise<number | undefined> => {
+    const request = await DinoAgentService.get(
       DinoAPIURLConstants.APP_SETTINGS_VERSION
     )
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
         const version: number = response.body
 
         return version
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
     return undefined
   }
 
-  getAppSettingsFromServer = async (): Promise<
-    AppSettingsResponseModel | undefined
-  > => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
+  getServer = async (): Promise<AppSettingsResponseModel | undefined> => {
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.APP_SETTINGS_GET
+    )
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         const appSettings: AppSettingsResponseModel = response.body
 
         return appSettings
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
@@ -74,7 +96,7 @@ class AppSettingsService {
 
   getDefaultAppSettings = (): AppSettingsModel => {
     const defaultAppSettings: AppSettingsModel = {
-      language: navigator.language,
+      language: navigator.language.slice(0, 2),
     }
 
     return defaultAppSettings
@@ -87,27 +109,48 @@ class AppSettingsService {
   }
 
   saveOnServer = async (model: AppSettingsModel): Promise<void> => {
-    const request = DinoAgentService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE)
+    const request = await DinoAgentService.post(
+      DinoAPIURLConstants.APP_SETTINGS_SAVE
+    )
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(model)
+        const response = await request.get()!.send(model)
         const newVersion = response.body
 
-        this.saveAppSettingsData(model, newVersion)
+        AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
 
         return
-      } catch {
-        /**TO-DO Fazer log do erro */
+      } catch (e) {
+        LogAppErrorService.saveDefault(e)
       }
     }
 
     AppSettingsLocalStorage.setShouldSync(true)
   }
 
-  saveAppSettingsData = (model: AppSettingsModel, version: number) => {
-    AppSettingsLocalStorage.setAppSettingsVersion(version)
-    AppSettingsLocalStorage.setAppSettings(model)
+  getLanguageBase = (): LanguageBase => {
+    const language = this.get().language
+
+    return this.getLanguageBaseByCode(language)
+  }
+
+  returnAppSettingsToDefault = (): void => {
+    const appSettings = this.getDefaultAppSettings()
+    this.updateLocalAppSettings(appSettings)
+  }
+
+  private updateLocalAppSettings = (appSettings: AppSettingsModel) => {
+    AppSettingsLocalStorage.setAppSettings(appSettings)
+    AppSettingsContextUpdater.update()
+  }
+
+  private getLanguageBaseByCode = (languageCode: string): LanguageBase => {
+    if (languageCode === LanguageCodeConstants.PORTUGUESE) {
+      return new PT()
+    } else {
+      return new EN()
+    }
   }
 }
 

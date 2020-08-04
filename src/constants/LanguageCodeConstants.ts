@@ -1,6 +1,6 @@
 class LanguageCodeConstants {
-  PORTUGUESE = 'pt-BR'
-  ENGLISH = 'en-US'
+  PORTUGUESE = 'pt'
+  ENGLISH = 'en'
 }
 
 export default new LanguageCodeConstants()

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../provider/app_provider'
+import { useLanguage } from '../../../provider/app_settings_provider'
 import ContactModel from '../../../types/contact/ContactModel'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ContactItems from './contact_list_items'

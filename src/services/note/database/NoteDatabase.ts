@@ -1,19 +1,15 @@
-import PouchDB from 'pouchdb'
 import NoteDoc from '../../../types/note/database/NoteDoc'
 import StringUtils from '../../../utils/StringUtils'
-import BaseDatabase from '../../BaseDatabase'
+import BaseDatabase from '../../../types/services/BaseDatabase'
 import ArrayUtils from '../../../utils/ArrayUtils'
 import DatabaseConstants from '../../../constants/DatabaseConstants'
+import LogAppErrorService from '../../log_app_error/LogAppErrorService'
+import DatabaseDeleteWithoutID from '../../../error/DatabaseDeleteWithoutID'
 
-class NoteDatabase implements BaseDatabase {
-  db: PouchDB.Database<{}>
-
+class NoteDatabase extends BaseDatabase {
   constructor() {
-    this.db = this.getNewConnection()
+    super(DatabaseConstants.NOTE)
   }
-
-  getNewConnection = (): PouchDB.Database<{}> =>
-    new PouchDB(DatabaseConstants.NOTE, { auto_compaction: true })
 
   private getId = (question: string) => StringUtils.normalize(question)
 
@@ -43,10 +39,10 @@ class NoteDatabase implements BaseDatabase {
 
         this.db.remove(id, rev)
       } else {
-        throw new Error('Deletando item sem id ou sem rev')
+        throw new DatabaseDeleteWithoutID(DatabaseConstants.NOTE, doc)
       }
-    } catch (erro) {
-      throw new Error('Erro ao deletar item do banco de dados local.')
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
     }
   }
 
@@ -57,7 +53,8 @@ class NoteDatabase implements BaseDatabase {
       const doc: NoteDoc = await this.db.get(id)
 
       return doc
-    } catch {
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
       return null
     }
   }
@@ -97,7 +94,8 @@ class NoteDatabase implements BaseDatabase {
       })
 
       return notes
-    } catch {
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
       return []
     }
   }
@@ -110,11 +108,6 @@ class NoteDatabase implements BaseDatabase {
     noteDocs.forEach((noteDoc) => tags.push.apply(tags, noteDoc.tagNames))
 
     return ArrayUtils.removeRepeatedValues(tags)
-  }
-
-  removeAll = async () => {
-    await this.db.destroy()
-    this.db = this.getNewConnection()
   }
 }
 

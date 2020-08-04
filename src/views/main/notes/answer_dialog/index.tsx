@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../../provider/app_provider'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'

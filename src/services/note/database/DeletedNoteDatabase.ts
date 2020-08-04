@@ -1,18 +1,15 @@
 import PouchDB from 'pouchdb'
-import BaseDatabase from '../../BaseDatabase'
+import BaseDatabase from '../../../types/services/BaseDatabase'
 import DatabaseConstants from '../../../constants/DatabaseConstants'
 import StringUtils from '../../../utils/StringUtils'
 import NoteDoc from '../../../types/note/database/NoteDoc'
+import LogAppErrorService from '../../log_app_error/LogAppErrorService'
+import DatabaseDeleteWithoutID from '../../../error/DatabaseDeleteWithoutID'
 
-class DeletedNoteDatabase implements BaseDatabase {
-  db: PouchDB.Database<{}>
-
+class DeletedNoteDatabase extends BaseDatabase {
   constructor() {
-    this.db = this.getNewConnection()
+    super(DatabaseConstants.DELETED_NOTE)
   }
-
-  getNewConnection = (): PouchDB.Database<{}> =>
-    new PouchDB(DatabaseConstants.DELETED_NOTE, { auto_compaction: true })
 
   private getId = (question: string) => StringUtils.normalize(question)
 
@@ -31,10 +28,10 @@ class DeletedNoteDatabase implements BaseDatabase {
 
         this.db.remove(id, rev)
       } else {
-        throw new Error('Deletando item sem id ou sem rev')
+        throw new DatabaseDeleteWithoutID(DatabaseConstants.DELETED_NOTE, doc)
       }
-    } catch {
-      throw new Error('Erro ao deletar item do banco de dados local.')
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
     }
   }
 
@@ -45,7 +42,8 @@ class DeletedNoteDatabase implements BaseDatabase {
       const doc: NoteDoc = await this.db.get(id)
 
       return doc
-    } catch {
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
       return null
     }
   }
@@ -85,14 +83,10 @@ class DeletedNoteDatabase implements BaseDatabase {
       })
 
       return notes
-    } catch {
+    } catch (e) {
+      LogAppErrorService.saveDefault(e)
       return []
     }
-  }
-
-  removeAll = async () => {
-    await this.db.destroy()
-    this.db = this.getNewConnection()
   }
 }
 

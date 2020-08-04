@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, Switch } from 'react-router'
-import { useLanguage } from '../../provider/app_provider'
+import { useLanguage } from '../../provider/app_settings_provider'
 import GlossarySVG from '../../assets/icons/glossary.svg'
 import ContactsSVG from '../../assets/icons/phone.svg'
 import GamesSVG from '../../assets/icons/games.svg'
@@ -22,6 +22,8 @@ import LogoutDialog from '../../components/logout_dialog'
 import MenuItemViewModel from '../../components/menu/model/MenuItemViewModel'
 import Notes from './notes'
 import NotFound from '../not_found/index'
+import NotesProvider from '../../provider/notes_provider'
+import GlossaryProvider from '../../provider/glossary_provider'
 
 /**
  * @description Tela principal da aplicação
@@ -107,14 +109,26 @@ const Main = (): JSX.Element => {
         <PrivateRoute
           exact
           path={PathConstants.GLOSSARY}
-          component={Glossary}
+          component={() => (
+            <GlossaryProvider>
+              <Glossary />
+            </GlossaryProvider>
+          )}
         />
         <PrivateRoute
           exact
           path={PathConstants.CONTACTS}
           component={Contacts}
         />
-        <PrivateRoute exact path={PathConstants.NOTES} component={Notes} />
+        <PrivateRoute
+          exact
+          path={PathConstants.NOTES}
+          component={() => (
+            <NotesProvider>
+              <Notes />
+            </NotesProvider>
+          )}
+        />
         <PrivateRoute
           exact
           path={PathConstants.SETTINGS}
@@ -122,7 +136,11 @@ const Main = (): JSX.Element => {
         />
         <PrivateRoute
           path={`${PathConstants.GLOSSARY}/:id`}
-          component={GlossaryItem}
+          component={() => (
+            <GlossaryProvider>
+              <GlossaryItem />
+            </GlossaryProvider>
+          )}
         />
         <PrivateRoute path={'/'} component={NotFound} />
       </Switch>

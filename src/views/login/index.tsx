@@ -1,5 +1,6 @@
 import React from 'react'
-import { useApp } from '../../provider/app_provider'
+import { useLanguage } from '../../provider/app_settings_provider'
+import { useAlert } from '../../provider/alert_provider'
 import { Typography } from '@material-ui/core'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'
@@ -10,11 +11,9 @@ import './styles.css'
  * @description Tela de login com o Google
  */
 const Login = (): JSX.Element => {
-  const appContext = useApp()
+  const alert = useAlert()
 
-  const alert = appContext.alert
-
-  const language = appContext.language.current
+  const language = useLanguage().current
 
   const showAlertDinoFail = () => {
     alert.showErrorAlert(language.LOGIN_FAIL_BY_API)
@@ -50,9 +49,7 @@ const Login = (): JSX.Element => {
       <Typography className="login__message" variant="h6" component="p">
         {language.WELCOME_MESSAGE}
       </Typography>
-      <div className="login__button">
-        {renderLoginButton()}
-      </div>
+      <div className="login__button">{renderLoginButton()}</div>
     </div>
   )
 }

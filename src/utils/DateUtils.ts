@@ -1,7 +1,7 @@
-import LanguageSet from '../provider/app_provider/language_provider/languages/LanguageBase'
 import StringUtils from './StringUtils'
 import { DateTime } from 'luxon'
 import DinoAPIGeneralConstants from '../constants/dino_api/DinoAPIGeneralConstants'
+import LanguageBase from '../types/languages/LanguageBase'
 
 class DateUtils {
   getDatetimeInMillis = (): number => {
@@ -10,7 +10,7 @@ class DateUtils {
       .toMillis()
   }
 
-  getDateStringFormated = (dateMS: number, language: LanguageSet): string => {
+  getDateStringFormated = (dateMS: number, language: LanguageBase): string => {
     const date = new Date(dateMS)
 
     const stringDate = language.STRING_DATE_FORMAT
@@ -27,7 +27,7 @@ class DateUtils {
       .replace('YYYY', stringYear)
   }
 
-  getMonthName = (monthNumber: number, language: LanguageSet): string => {
+  getMonthName = (monthNumber: number, language: LanguageBase): string => {
     switch (monthNumber) {
       case 1:
         return language.JANUARY

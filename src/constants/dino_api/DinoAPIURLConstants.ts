@@ -1,45 +1,50 @@
+import APIConfig from '../../environment/api_config.json'
+
 /**
  * @description Valores de URL da API para conexão
  */
 class DinoAPIURLConstants {
-  private URL = 'http://localhost:5000/'
-  private AUTH = this.URL + 'auth/'
-  private GLOSSARY = this.URL + 'glossary/'
-  private APP_SETTINGS = this.URL + 'user_app_settings/'
-  private NOTE = this.URL + 'note/'
+  URL = APIConfig.URL
+  private AUTH = `${this.URL}auth/`
+  private USER = `${this.URL}user/`
+  private PUBLIC_AUTH = `${this.URL}public/auth/`
+  private GLOSSARY = `${this.URL}glossary/`
+  private APP_SETTINGS = `${this.URL}user_app_settings/`
+  private NOTE = `${this.URL}note/`
+  private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
 
-  AUTH_GOOGLE = this.AUTH + 'google/'
+  AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 
-  LOGOUT = this.AUTH + 'logout/'
+  REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`
 
-  GLOSSARY_LIST = this.GLOSSARY + 'get/'
+  USER_VERSION = `${this.USER}version/`
 
-  GLOSSARY_VERSION = this.GLOSSARY + 'version/'
+  USER_GET = this.USER
 
-  APP_SETTINGS_VERSION = this.APP_SETTINGS + 'version/'
+  USER_PUT_PHOTO = `${this.USER}photo/`
 
-  APP_SETTINGS_GET = this.APP_SETTINGS
+  LOGOUT = `${this.AUTH}logout/`
 
-  APP_SETTINGS_SAVE = this.APP_SETTINGS
+  GLOSSARY_LIST = `${this.GLOSSARY}get/`
 
-  NOTE_GET_VERSION = this.NOTE + 'version/'
+  GLOSSARY_VERSION = `${this.GLOSSARY}version/`
 
-  NOTE_GET = this.NOTE
+  APP_SETTINGS_VERSION = `${this.APP_SETTINGS}version/`
 
-  NOTE_SAVE = this.NOTE
+  APP_SETTINGS_GET = `${this.APP_SETTINGS}`
 
-  NOTE_ORDER = this.NOTE + 'order/'
+  APP_SETTINGS_SAVE = `${this.APP_SETTINGS}`
 
-  NOTE_DELETE = this.NOTE
+  NOTE_GET_VERSION = `${this.NOTE}version/`
 
-  NOTE_DELETE_ALL = this.NOTE + 'all/'
+  NOTE_GET = `${this.NOTE}`
 
-  NOTE_UPDATE_QUESTION = this.NOTE + 'question/'
+  NOTE_SAVE = `${this.NOTE}`
 
-  NOTE_UPDATE_ANSWER = this.NOTE + 'answer/'
+  NOTE_ORDER = `${this.NOTE}order/`
 
-  NOTE_UPDATE_ALL = this.NOTE + 'all/'
+  NOTE_DELETE = `${this.NOTE}`
 
   CONTACT_VERSION = this.CONTACT + 'version/'
 
@@ -54,8 +59,20 @@ class DinoAPIURLConstants {
   CONTACT_EDIT_ALL = this.CONTACT + 'all/'
   
   CONTACT_DELETE_ALL = this.CONTACT + 'all/'
+  
+  NOTE_DELETE_ALL = `${this.NOTE}all/`
 
-  TEST_CONNECTION = this.URL + 'test_connection/'
+  NOTE_UPDATE_QUESTION = `${this.NOTE}question/`
+
+  NOTE_UPDATE_ANSWER = `${this.NOTE}answer/`
+
+  NOTE_UPDATE_ALL = `${this.NOTE}all/`
+
+  TEST_CONNECTION = `${this.URL}public/test_connection/`
+
+  SAVE_LOG_APP_ERROR = `${this.LOG_APP_ERROR}`
+
+  SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
 }
 
 export default new DinoAPIURLConstants()

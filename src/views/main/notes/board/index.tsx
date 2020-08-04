@@ -1,28 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Board, { moveCard } from '@lourenci/react-kanban'
-import NoteViewModel from '../model/NoteViewModel'
 import NoteCard from '../card'
-import NoteBoardViewModel from '../model/NoteBoardViewModel'
+import NoteBoardViewModel, {
+  NoteBoardColumnViewModel,
+} from '../../../../types/note/NoteBoardViewModel'
 import NoteService from '../../../../services/note/NoteService'
 import AnswerDialog from '../answer_dialog'
 import QuestionDialog from '../question_dialog'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useLanguage } from '../../../../provider/app_provider'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 import AgreementDialogProps from '../../../../components/agreement_dialog/props'
+import NoteViewModel from '../../../../types/note/NoteViewModel'
+import BoardProps from './props'
 
-const NoteBoard = (props: {
-  onSaveQuestion: (
-    question: string,
-    tags: string[],
-    noteView: NoteViewModel
-  ) => void
-  onSaveAnswer: (answer: string, noteView: NoteViewModel) => void
-  onBoardOrderChanged: (board: NoteBoardViewModel) => void
-  onDeleteNote: (noteId: number) => void
-  board: NoteBoardViewModel
-  tags: string[]
-}): JSX.Element => {
+const NoteBoard = (props: BoardProps): JSX.Element => {
   const language = useLanguage().current
+
+  const [board, setBoard] = useState(createBoard([] as NoteViewModel[]))
 
   const [note, setNote] = useState(undefined as NoteViewModel | undefined)
   const [idNoteToDelete, setIdNoteToDelete] = useState(
@@ -33,6 +27,10 @@ const NoteBoard = (props: {
   const [answerDialogOpen, setAnswerDialogOpen] = useState(false)
   const [question, setQuestion] = useState('')
   const [questionDialogOpen, setQuestionDialogOpen] = useState(false)
+
+  useEffect(() => {
+    setBoard(createBoard(props.viewNotes))
+  }, [props.viewNotes])
 
   const handleOpenAnswerDialog = (noteView: NoteViewModel) => {
     setNote(noteView)
@@ -109,15 +107,11 @@ const NoteBoard = (props: {
   )
 
   const handleCardMove = (card, source, destination) => {
-    const newBoard: NoteBoardViewModel = moveCard(
-      props.board,
-      source,
-      destination
-    )
+    const newBoard: NoteBoardViewModel = moveCard(board, source, destination)
 
     NoteService.updateNotesOrder(newBoard.columns[0].cards)
 
-    props.onBoardOrderChanged(newBoard)
+    setBoard(newBoard)
   }
 
   const renderCard = (
@@ -147,7 +141,7 @@ const NoteBoard = (props: {
         allowRenameColumn={false}
         disableColumnDrag={true}
       >
-        {props.board}
+        {board}
       </Board>
       {renderUpdateAnswerDialog()}
       {renderUpdateQuestionDialog()}
@@ -155,5 +149,15 @@ const NoteBoard = (props: {
     </>
   )
 }
+
+const createBoard = (cards: NoteViewModel[]) =>
+  ({
+    columns: [
+      {
+        id: 0,
+        cards: cards,
+      } as NoteBoardColumnViewModel,
+    ] as NoteBoardColumnViewModel[],
+  } as NoteBoardViewModel)
 
 export default NoteBoard

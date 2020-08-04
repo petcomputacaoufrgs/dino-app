@@ -1,18 +1,18 @@
 import React from 'react'
-import { useLanguage } from '../../../../provider/app_provider'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 import { useParams } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
-import GlossaryLocalStorageService from '../../../../services/glossary/local_storage/GlossaryLocalStorage'
+import { useGlossary } from '../../../../provider/glossary_provider'
 
 const GlossaryItem = (): JSX.Element => {
   const { id } = useParams()
 
   const language = useLanguage().current
 
-  const items = GlossaryLocalStorageService.getItems()
+  const items = useGlossary().items
 
   const item = items.find((item) => item.id === Number(id))
 
@@ -27,7 +27,7 @@ const GlossaryItem = (): JSX.Element => {
         </Card.Header>
         <Card.Body>
           <Card.Subtitle className="mb-2 text-muted">
-            {item ? item.subtitle : ''}
+            {item ? item.text : ''}
           </Card.Subtitle>
           <Card.Text>
             {item ? item.fullText : language.NO_AVAILABLE_TEXT}

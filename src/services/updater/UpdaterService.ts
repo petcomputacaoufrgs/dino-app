@@ -1,18 +1,19 @@
-import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
 import AuthService from '../auth/AuthService'
 import GlossaryUpdater from '../glossary/GlossaryUpdater'
 import NoteUpdater from '../note/NoteUpdater'
 import ContactUpdater from '../contact/ContactUpdater'
 import AppSettingsUpdater from '../app_settings/AppSettingsUpdater'
-import BaseUpdater from '../BaseUpdater'
+import BaseUpdater from '../../types/services/BaseUpdater'
+import UserUpdater from '../user/UserUpdater'
 
 class UpdaterService implements BaseUpdater {
-  checkUpdates = async (languageContext?: LanguageSubProviderValue) => {
+  checkUpdates = async () => {
     if (AuthService.isAuthenticated()) {
-      AppSettingsUpdater.checkUpdates(languageContext)
+      AppSettingsUpdater.checkUpdates()
       GlossaryUpdater.checkUpdates()
       NoteUpdater.checkUpdates()
       ContactUpdater.checkUpdates()
+      UserUpdater.checkUpdates()
     }
   }
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import QuestionDialog from '../question_dialog'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { useLanguage } from '../../../../provider/app_provider'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 import './styles.css'
 
 const NoteAddButton = (props: {

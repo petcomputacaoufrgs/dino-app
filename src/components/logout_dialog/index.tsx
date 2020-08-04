@@ -1,7 +1,7 @@
 import AgreementDialog from '../agreement_dialog'
 import AgreementDialogProps from '../agreement_dialog/props'
 import './styles.css'
-import { useLanguage } from '../../provider/app_provider'
+import { useLanguage } from '../../provider/app_settings_provider'
 import AuthService from '../../services/auth/AuthService'
 
 const LogoutDialog = (): [() => JSX.Element, () => void] => {
@@ -9,13 +9,8 @@ const LogoutDialog = (): [() => JSX.Element, () => void] => {
 
   const language = languageContext.current
 
-  const logout = () => {
-    AuthService.google_logout()
-    languageContext.updateLanguage()
-  }
-
   const agreementDialogProps: AgreementDialogProps = {
-    onAgree: logout,
+    onAgree: AuthService.googleLogout,
     question: language.LOGOUT_DIALOG_QUESTION,
     description: language.LOGOUT_DIALOG_DESCRIPTION,
     agreeOptionText: language.AGREEMENT_OPTION_TEXT,

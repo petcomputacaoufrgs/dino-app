@@ -1,5 +1,5 @@
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
-import BaseLocalStorage from '../../BaseLocalStorage'
+import BaseLocalStorage from '../../../types/services/BaseLocalStorage'
 
 class NoteVersionLocalStorage extends BaseLocalStorage {
   getVersion = (): number => {
@@ -18,6 +18,10 @@ class NoteVersionLocalStorage extends BaseLocalStorage {
 
   removeVersion = () => {
     this.remove(LS_Constants.NOTE_VERSION)
+  }
+
+  removeUserData = () => {
+    this.removeVersion()
   }
 }
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage, useAlert } from '../../provider/app_provider'
+import { useLanguage } from '../../provider/app_settings_provider'
+import { useAlert } from '../../provider/alert_provider'
 import Button from '../button'
 import Loader from '../loader'
-import GoogleSecret from '../../secret/client_secret.json'
+import GoogleSecret from '../../environment/client_secret.json'
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
@@ -10,11 +11,8 @@ import GoogleLogin, {
 import GoogleLogo from '../../assets/logos/google.png'
 import LoginButtonProps from './props'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
-import GoogleAuthConstants from '../../constants/GoogleAuthConstants'
-import HistoryService from '../../services/history/HistoryService'
-import PathConstants from '../../constants/PathConstants'
+import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import AuthService from '../../services/auth/AuthService'
-import UpdaterService from '../../services/updater/UpdaterService'
 import { Typography } from '@material-ui/core'
 import ConnectionService from '../../services/connection/ConnectionService'
 import './styles.css'
@@ -25,7 +23,9 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   const alert = useAlert()
 
   const [loading, setLoading] = useState(false)
-  const [isConnected, setIsConnected] = useState(ConnectionService.isConnected())
+  const [isConnected, setIsConnected] = useState(
+    ConnectionService.isConnected()
+  )
 
   useEffect(() => {
     const updateConnectionState = (connected) => {
@@ -46,26 +46,14 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   ) => {
     setLoading(true)
 
-    const authResponse = await AuthService.google_login(
+    const authResponse = await AuthService.googleLogin(
       response as GoogleLoginResponseOffline
     )
 
     if (authResponse === LoginErrorConstants.SUCCESS) {
-      const refreshTokenRequired = AuthService.isRefreshRequired()
-
-      if (refreshTokenRequired) {
-        AuthService.setRefreshRequiredToFalse()
-      } else {
-        UpdaterService.checkUpdates(languageContext)
-      }
-
-      setLoading(false)
-      HistoryService.push(PathConstants.HOME)
-
       return
     }
 
-    /**TO-DO Tratar erro DISCONNECTED */
     if (authResponse === LoginErrorConstants.UNKNOW_API_ERROR) {
       props.onDinoAPIFail && props.onDinoAPIFail()
     } else if (authResponse === LoginErrorConstants.EXTERNAL_SERVICE_ERROR) {
@@ -73,7 +61,6 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     } else if (
       authResponse === LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
     ) {
-      AuthService.setRefreshRequiredToTrue()
       props.onRefreshTokenLostError && props.onRefreshTokenLostError()
     }
 

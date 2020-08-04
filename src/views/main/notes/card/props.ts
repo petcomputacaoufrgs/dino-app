@@ -1,4 +1,4 @@
-import NoteViewModel from '../model/NoteViewModel'
+import NoteViewModel from '../../../../types/note/NoteViewModel'
 
 export default interface NoteCardProps {
   onEditQuestion: (note: NoteViewModel) => void

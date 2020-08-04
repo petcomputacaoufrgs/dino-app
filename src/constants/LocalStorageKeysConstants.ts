@@ -11,12 +11,17 @@ class LocalStorageKeys {
   CONTACTS_DEL: string = 'c_del'
   CONTACTS_VERSION = 'cv'
   CONTACTS_SHOULD_SYNC = 'css'
+  USER_VERSION = 'uv'
+  USER_SHOULD_SYNC = 'uss'
   EMAIL = 'e'
   PICTURE_URL = 'pu'
+  SAVED_PICTURE = 'sp'
+  SAVE_PICTURE_WITH_ERROR = 'spwe'
   NAME = 'n'
   GOOGLE_ACCESS_TOKEN = 'gat'
+  GOOGLE_EXPIRES_DATE = 'ged'
   AUTH_TOKEN = 'at'
-  LOGOUT_TOKEN = 'lt'
+  TEMP_AUTH_TOKEN = 'tat'
   REFRESH_TOKEN_REQUIRED = 'rtr'
   LANGUAGE = 'lan'
   APP_SETTINGS_VERSION = 'asv'
@@ -29,6 +34,7 @@ class LocalStorageKeys {
   UPDATE_NOTES_WITH_ERROR = 'une'
   NOTES_TO_DELETE = 'ntd'
   CONNECTION = 'con'
+  LOG_APP_ERROR_SYNC = 'laes'
 }
 
 export default new LocalStorageKeys()

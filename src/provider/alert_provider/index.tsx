@@ -2,13 +2,12 @@ import React, { useState, useEffect, createContext, useContext } from 'react'
 import AlertProps from '../../components/alert/props'
 import Alert from '../../components/alert'
 import AlertProviderValue from './value'
-import AlertProviderProps from './props'
 
 const ALERT_DURATION = 4000
 
 const VERIFY_DELAY = 50
 
-const AlertList = new Array<AlertProps>()
+const AlertList = [] as AlertProps[]
 
 const AddAlert = (
   message: string,
@@ -31,7 +30,7 @@ export const AlertControl: AlertProviderValue = {
   showErrorAlert: (message: string) => AddAlert(message, 'error'),
 }
 
-const AlertProvider = (props: AlertProviderProps): JSX.Element => {
+const AlertProvider: React.FC = (props) => {
   const [alert, setAlert] = useState(undefined as AlertProps | undefined)
 
   useEffect(() => {

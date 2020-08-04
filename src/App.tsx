@@ -13,6 +13,7 @@ import ConnectionService from './services/connection/ConnectionService'
 import { useLanguage } from './provider/app_settings_provider'
 import { useAlert } from './provider/alert_provider'
 import EventsService from './services/events/EventsService'
+import UserProvider from './provider/user_provider'
 import './App.css'
 
 const App = (): JSX.Element => {
@@ -56,7 +57,14 @@ const App = (): JSX.Element => {
       >
         <Switch>
           <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-          <PrivateRoute path={PathConstants.APP} component={Main} />
+          <PrivateRoute
+            path={PathConstants.APP}
+            component={() => (
+              <UserProvider>
+                <Main />
+              </UserProvider>
+            )}
+          />
           <Route path={'/'} component={NotFound} />
         </Switch>
       </PrivateRouter>

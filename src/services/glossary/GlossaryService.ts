@@ -69,6 +69,10 @@ class GlossaryService {
 
     return undefined
   }
+
+  removeUserData = () => {
+    GlossaryLocalStorage.removeUserData()
+  }
 }
 
 export default new GlossaryService()

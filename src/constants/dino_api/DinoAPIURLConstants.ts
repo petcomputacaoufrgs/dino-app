@@ -3,45 +3,52 @@
  */
 class DinoAPIURLConstants {
   URL = 'http://localhost:5000/'
-  private AUTH = this.URL + 'auth/'
-  private PUBLIC_AUTH = this.URL + 'public/auth/'
-  private GLOSSARY = this.URL + 'glossary/'
-  private APP_SETTINGS = this.URL + 'user_app_settings/'
-  private NOTE = this.URL + 'note/'
+  private AUTH = `${this.URL}auth/`
+  private USER = `${this.URL}user/`
+  private PUBLIC_AUTH = `${this.URL}public/auth/`
+  private GLOSSARY = `${this.URL}glossary/`
+  private APP_SETTINGS = `${this.URL}user_app_settings/`
+  private NOTE = `${this.URL}note/`
 
-  AUTH_GOOGLE = this.PUBLIC_AUTH + 'google/'
+  AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 
-  LOGOUT = this.AUTH + 'logout/'
+  USER_VERSION = `${this.USER}version/`
 
-  GLOSSARY_LIST = this.GLOSSARY + 'get/'
+  USER_GET = this.USER
 
-  GLOSSARY_VERSION = this.GLOSSARY + 'version/'
+  USER_PUT_PHOTO = `${this.USER}photo/`
 
-  APP_SETTINGS_VERSION = this.APP_SETTINGS + 'version/'
+  LOGOUT = `${this.AUTH}logout/`
 
-  APP_SETTINGS_GET = this.APP_SETTINGS
+  GLOSSARY_LIST = `${this.GLOSSARY}get/`
 
-  APP_SETTINGS_SAVE = this.APP_SETTINGS
+  GLOSSARY_VERSION = `${this.GLOSSARY}version/`
 
-  NOTE_GET_VERSION = this.NOTE + 'version/'
+  APP_SETTINGS_VERSION = `${this.APP_SETTINGS}version/`
 
-  NOTE_GET = this.NOTE
+  APP_SETTINGS_GET = `${this.APP_SETTINGS}`
 
-  NOTE_SAVE = this.NOTE
+  APP_SETTINGS_SAVE = `${this.APP_SETTINGS}`
 
-  NOTE_ORDER = this.NOTE + 'order/'
+  NOTE_GET_VERSION = `${this.NOTE}version/`
 
-  NOTE_DELETE = this.NOTE
+  NOTE_GET = `${this.NOTE}`
 
-  NOTE_DELETE_ALL = this.NOTE + 'all/'
+  NOTE_SAVE = `${this.NOTE}`
 
-  NOTE_UPDATE_QUESTION = this.NOTE + 'question/'
+  NOTE_ORDER = `${this.NOTE}order/`
 
-  NOTE_UPDATE_ANSWER = this.NOTE + 'answer/'
+  NOTE_DELETE = `${this.NOTE}`
 
-  NOTE_UPDATE_ALL = this.NOTE + 'all/'
+  NOTE_DELETE_ALL = `${this.NOTE}all/`
 
-  TEST_CONNECTION = this.URL + 'public/test_connection/'
+  NOTE_UPDATE_QUESTION = `${this.NOTE}question/`
+
+  NOTE_UPDATE_ANSWER = `${this.NOTE}answer/`
+
+  NOTE_UPDATE_ALL = `${this.NOTE}all/`
+
+  TEST_CONNECTION = `${this.URL}public/test_connection/`
 }
 
 export default new DinoAPIURLConstants()

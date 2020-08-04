@@ -9,7 +9,7 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import EventsService from '../events/EventsService'
 
 /**
- * @description Abstrai a biblioteca Superagent com tratamentos para conexão,autenticação, erro de autenticação e renovação de token
+ * @description Adapta a biblioteca Superagent para lidar com a DinoAPI
  */
 class DinoAgentService {
   logout = (token: string): DinoAgentRequest => {

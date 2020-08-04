@@ -6,5 +6,5 @@
  * novos da API.
  */
 export default interface BaseUpdater {
-  checkUpdates: () => void
+  checkUpdates: () => Promise<void>
 }

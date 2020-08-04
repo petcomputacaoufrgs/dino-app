@@ -44,7 +44,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "prettier --write . && react-scripts start --ssl",
+    "start": "react-scripts start --ssl",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier": "prettier --write .",

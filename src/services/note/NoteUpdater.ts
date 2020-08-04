@@ -6,9 +6,7 @@ class NoteUpdater implements BaseUpdater {
     const serverVersion = await NoteService.getVersionFromServer()
 
     if (serverVersion !== undefined) {
-      await NoteService.updateNotesFromServer(serverVersion)
-
-      return
+      NoteService.updateNotesFromServer(serverVersion)
     }
   }
 }

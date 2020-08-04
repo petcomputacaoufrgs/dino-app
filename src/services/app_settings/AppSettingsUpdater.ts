@@ -2,12 +2,10 @@ import BaseUpdater from '../../types/services/BaseUpdater'
 import AppSettingsService from './AppSettingsService'
 
 class AppSettingsUpdater implements BaseUpdater {
-  checkUpdates = async (): Promise<void> => {
+  checkUpdates = async () => {
     const updatedVersion = await AppSettingsService.getServerVersion()
 
     if (updatedVersion === undefined) {
-      AppSettingsService.setShouldSync(true)
-
       return
     }
 
@@ -15,11 +13,11 @@ class AppSettingsUpdater implements BaseUpdater {
       const defaultAppSettings = AppSettingsService.getDefaultAppSettings()
 
       await AppSettingsService.saveOnServer(defaultAppSettings)
-
-      return
     }
 
     AppSettingsService.update(updatedVersion)
+
+    return
   }
 }
 

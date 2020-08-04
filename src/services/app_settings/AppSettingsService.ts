@@ -6,8 +6,8 @@ import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
 import LanguageBase from '../../types/languages/LanguageBase'
 import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
-import PT_BR from '../../types/languages/PT_BR'
-import EN_US from '../../types/languages/EN_US'
+import PT from '../../types/languages/PT'
+import EN from '../../types/languages/EN'
 import AppSettingsContextUpdater from './AppSettingsContextUpdater'
 
 class AppSettingsService {
@@ -93,7 +93,7 @@ class AppSettingsService {
 
   getDefaultAppSettings = (): AppSettingsModel => {
     const defaultAppSettings: AppSettingsModel = {
-      language: navigator.language,
+      language: navigator.language.slice(0,2),
     }
 
     return defaultAppSettings
@@ -142,9 +142,9 @@ class AppSettingsService {
 
   private getLanguageBaseByCode = (languageCode: string): LanguageBase => {
     if (languageCode === LanguageCodeConstants.PORTUGUESE) {
-      return new PT_BR()
+      return new PT()
     } else {
-      return new EN_US()
+      return new EN()
     }
   }
 }

@@ -4,7 +4,7 @@ import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
 /**
  * @description Conjunto de textos em inglês americano
  */
-export default class EN_US implements LanguageBase {
+export default class EN implements LanguageBase {
   ISO_LANGUAGE_CODE = 'en'
 
   NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.ENGLISH

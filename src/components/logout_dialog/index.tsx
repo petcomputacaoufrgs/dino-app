@@ -8,14 +8,9 @@ const LogoutDialog = (): [() => JSX.Element, () => void] => {
   const languageContext = useLanguage()
 
   const language = languageContext.current
-
-  const logout = () => {
-    AuthService.google_logout()
-    languageContext.updateLanguage()
-  }
-
+  
   const agreementDialogProps: AgreementDialogProps = {
-    onAgree: logout,
+    onAgree: AuthService.googleLogout,
     question: language.LOGOUT_DIALOG_QUESTION,
     description: language.LOGOUT_DIALOG_DESCRIPTION,
     agreeOptionText: language.AGREEMENT_OPTION_TEXT,

@@ -12,27 +12,25 @@ const SYNC_FAIL_WITHOUT_CONTROL = 200
 class SyncService {
   control?: SyncControlModel
 
-  startSyncService = (control: SyncControlModel) => {
+  start = (control: SyncControlModel) => {
     this.control = control
   }
 
-  stopSyncService = () => {
+  stop = () => {
     this.control = undefined
   }
 
   sync = async () => {
     if (this.control) {
       if (ConnectionService.isConnected()) {
-        this.start(this.control)
-      } else if (this.control.onInternetFail) {
-        this.control.onInternetFail()
-      }
+        this.startSync(this.control)
+      } 
     } else {
       setTimeout(this.sync, SYNC_FAIL_WITHOUT_CONTROL)
     }
   }
 
-  private start = async (control: SyncControlModel) => {
+  private startSync = async (control: SyncControlModel) => {
     const promises: Promise<boolean>[] = []
 
     const isAuthenticated = AuthService.isAuthenticated()
@@ -45,23 +43,13 @@ class SyncService {
 
     promises.push(AuthSync.sync())
 
-    if (control.onStart) {
-      control.onStart()
-    }
-
     const results = await Promise.all(promises)
 
-    if (results.every((success) => success)) {
-      if (control.onFinish) {
-        control.onFinish()
-      }
-    } else {
-      if (control.onFail) {
-        control.onFail()
-      }
-
+    const syncWithError = !results.every((success) => success)
+    
+    if (syncWithError) {
       setTimeout(this.sync, SYNC_FAIL_INTERVAL)
-    }
+    } 
   }
 }
 

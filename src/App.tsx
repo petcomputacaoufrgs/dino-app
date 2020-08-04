@@ -9,21 +9,16 @@ import PathConstants from './constants/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import UpdaterService from './services/updater/UpdaterService'
 import ConnectionService from './services/connection/ConnectionService'
 import { useAlert, useLanguage } from './provider/app_provider/index'
+import EventsService from './services/events/EventsService'
 import './App.css'
-import SyncService from './services/sync/SyncService'
-import SyncControlModel from './types/sync/SyncControlModel'
 
 const App = (): JSX.Element => {
-  const [first, setFirst] = useState(true)
-  const languageContext = useLanguage()
+  const [firstLoad, setFirstLoad] = useState(true)
 
   const alert = useAlert()
   const language = useLanguage()
-
-  UpdaterService.checkUpdates(languageContext)
 
   useEffect(() => {
     const updateConnectionState = (isConnected: boolean) => {
@@ -34,50 +29,21 @@ const App = (): JSX.Element => {
       }
     }
 
-    const onSyncStart = () => {
-      alert.showInfoAlert(language.current.SYNC_STARTED)
-    }
-
-    const onSyncFinish = () => {
-      alert.showSuccessAlert(language.current.SYNC_FINISH)
-    }
-
-    const onSyncFail = () => {
-      alert.showWarningAlert(language.current.SYNC_FAIL)
-    }
-
-    const onInternetFail = () => {
-      alert.showWarningAlert(language.current.SYNC_CONNECTION_FAIL)
-    }
-
-    SyncService.startSyncService({
-      language: language,
-      onFail: onSyncFail,
-      onFinish: onSyncFinish,
-      onStart: onSyncStart,
-      onInternetFail: onInternetFail,
-    } as SyncControlModel)
-
-    if (first) {
-      setFirst(false)
-      SyncService.sync()
-    }
-
     ConnectionService.addEventListener(updateConnectionState)
 
     const cleanBeforeUpdate = () => {
       ConnectionService.removeEventListener(updateConnectionState)
-      SyncService.startSyncService({
-        language: language,
-        onFail: undefined,
-        onFinish: undefined,
-        onStart: undefined,
-        onInternetFail: undefined,
-      })
     }
 
     return cleanBeforeUpdate
-  }, [first, language, alert])
+  }, [alert, language])
+
+  useEffect(() => {
+    if (firstLoad) {
+      setFirstLoad(false)
+      EventsService.whenStart(language)
+    }
+  }, [language, firstLoad])
 
   return (
     <div className="app">

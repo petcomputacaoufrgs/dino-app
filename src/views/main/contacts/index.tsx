@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../provider/app_settings_provider'
+import { useLanguage } from '../../../context_provider/app_settings'
 import ContactModel from '../../../types/contact/ContactModel'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import AddContactButton from './contact_button_add'
-import ContactsService from '../../../services/contact/ContactService'
+import ContactsService from '../../../services/contact/ContactsService'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Contacts = (): JSX.Element => {
   const language = useLanguage().current

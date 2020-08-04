@@ -9,7 +9,6 @@ export default interface LanguageBase {
   LOGIN_BUTTON_TEXT: string
   LOGOUT_BUTTON_DESCRIPTION: string
   SEARCH_HOLDER: string
-  LOADER_ALT: string
   LOGIN_FAIL_BY_GOOGLE: string
   LOGIN_FAIL_BY_API: string
   LOGIN_CANCELED: string

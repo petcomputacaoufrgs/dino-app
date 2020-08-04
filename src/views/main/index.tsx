@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, Switch } from 'react-router'
-import { useLanguage } from '../../provider/app_settings_provider'
+import { useLanguage } from '../../context_provider/app_settings'
 import GlossarySVG from '../../assets/icons/glossary.svg'
 import ContactsSVG from '../../assets/icons/phone.svg'
 import GamesSVG from '../../assets/icons/games.svg'
@@ -22,8 +22,8 @@ import LogoutDialog from '../../components/logout_dialog'
 import MenuItemViewModel from '../../components/menu/model/MenuItemViewModel'
 import Notes from './notes'
 import NotFound from '../not_found/index'
-import NotesProvider from '../../provider/notes_provider'
-import GlossaryProvider from '../../provider/glossary_provider'
+import NotesContextProvider from '../../context_provider/notes'
+import GlossaryContextProvider from '../../context_provider/glossary'
 
 /**
  * @description Tela principal da aplicação
@@ -110,9 +110,9 @@ const Main = (): JSX.Element => {
           exact
           path={PathConstants.GLOSSARY}
           component={() => (
-            <GlossaryProvider>
+            <GlossaryContextProvider>
               <Glossary />
-            </GlossaryProvider>
+            </GlossaryContextProvider>
           )}
         />
         <PrivateRoute
@@ -124,9 +124,9 @@ const Main = (): JSX.Element => {
           exact
           path={PathConstants.NOTES}
           component={() => (
-            <NotesProvider>
+            <NotesContextProvider>
               <Notes />
-            </NotesProvider>
+            </NotesContextProvider>
           )}
         />
         <PrivateRoute
@@ -137,9 +137,9 @@ const Main = (): JSX.Element => {
         <PrivateRoute
           path={`${PathConstants.GLOSSARY}/:id`}
           component={() => (
-            <GlossaryProvider>
+            <GlossaryContextProvider>
               <GlossaryItem />
-            </GlossaryProvider>
+            </GlossaryContextProvider>
           )}
         />
         <PrivateRoute path={'/'} component={NotFound} />

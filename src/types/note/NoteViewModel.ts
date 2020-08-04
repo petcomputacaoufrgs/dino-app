@@ -1,6 +1,6 @@
-import { NoteValue } from '../../provider/notes_provider/value'
+import { NoteContextType } from '../context_provider/NotesContextType'
 
-export default interface NoteViewModel extends NoteValue {
+export default interface NoteViewModel extends NoteContextType {
   showByTag: boolean
   showByQuestion: boolean
 }

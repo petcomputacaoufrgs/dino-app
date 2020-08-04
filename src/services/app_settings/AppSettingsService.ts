@@ -1,14 +1,14 @@
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AppSettingsLocalStorage from './local_storage/AppSettingsLocalStorage'
+import AppSettingsLocalStorage from '../../local_storage/AppSettingsLocalStorage'
 import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
-import DinoAgentService from '../agent/dino/DinoAgentService'
-import AgentStatus from '../../types/services/agent/AgentStatus'
+import DinoAgentService from '../../agent/DinoAgentService'
+import AgentStatus from '../../types/agent/AgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
 import LanguageBase from '../../types/languages/LanguageBase'
 import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
 import PT from '../../types/languages/PT'
 import EN from '../../types/languages/EN'
-import AppSettingsContextUpdater from './AppSettingsContextUpdater'
+import AppSettingsContextUpdater from '../../context_updater/AppSettingsContextUpdater'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class AppSettingsService {
@@ -63,7 +63,7 @@ class AppSettingsService {
 
         return version
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -83,7 +83,7 @@ class AppSettingsService {
 
         return appSettings
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -122,7 +122,7 @@ class AppSettingsService {
 
         return
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 

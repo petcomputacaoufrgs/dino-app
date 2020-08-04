@@ -2,15 +2,15 @@ import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestMod
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
-import AuthLocalStorage from './local_storage/AuthLocalStorage'
+import AuthLocalStorage from '../../local_storage/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
-import DinoAgentService from '../agent/dino/DinoAgentService'
-import AgentStatus from '../../types/services/agent/AgentStatus'
-import EventsService from '../events/EventsService'
+import DinoAgentService from '../../agent/DinoAgentService'
+import AgentStatus from '../../types/agent/AgentStatus'
+import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class AuthService {
@@ -45,7 +45,7 @@ class AuthService {
               response.body as GoogleAuthResponseModel
             )
 
-            EventsService.whenLogin()
+            EventService.whenLogin()
 
             return LoginErrorConstants.SUCCESS
           }
@@ -58,7 +58,7 @@ class AuthService {
 
         return LoginErrorConstants.DISCONNECTED
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
         return LoginErrorConstants.UNKNOW_API_ERROR
       }
     }
@@ -71,7 +71,7 @@ class AuthService {
 
     this.serverLogout(authToken)
 
-    EventsService.whenLogout()
+    EventService.whenLogout()
   }
 
   serverLogout = async (authToken: string): Promise<boolean> => {
@@ -88,7 +88,7 @@ class AuthService {
         return true
       }
     } catch (e) {
-      LogAppErrorService.saveDefault(e)
+      LogAppErrorService.saveError(e)
     }
 
     return false

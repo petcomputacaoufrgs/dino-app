@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRouter } from '../../provider/private_router_provider'
+import { usePrivateRouter } from '../../context_provider/private_router'
 import { Route, RouteProps, useLocation } from 'react-router'
 
 /**
@@ -7,7 +7,7 @@ import { Route, RouteProps, useLocation } from 'react-router'
  * @param props Propriedades do Route
  */
 const LoginRoute = (props: RouteProps): JSX.Element => {
-  const routerContext = useRouter()
+  const router = usePrivateRouter()
 
   const location = useLocation()
 
@@ -16,20 +16,20 @@ const LoginRoute = (props: RouteProps): JSX.Element => {
    */
   useEffect((): void => {
     const goToHome = () => {
-      routerContext.browserHistory?.push(routerContext.homePath)
+      router.browserHistory?.push(router.homePath)
     }
 
-    if (routerContext) {
-      if (routerContext.isAuthenticated()) {
+    if (router) {
+      if (router.isAuthenticated()) {
         goToHome()
       }
     } else {
       throw Error('Todo LoginRoute deve estar dentro de um PrivateRouter.')
     }
-  }, [routerContext, location.pathname])
+  }, [router, location.pathname])
 
   const renderRoute = (): JSX.Element => {
-    if (!routerContext.isAuthenticated()) {
+    if (!router.isAuthenticated()) {
       return <Route {...props} />
     } else {
       return <></>

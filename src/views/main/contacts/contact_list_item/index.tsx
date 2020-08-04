@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import useStyles from '../styles'
-import { useLanguage } from '../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../context_provider/app_settings'
 import ContactItemListProps from './props'
 import {
   Avatar,

@@ -1,9 +1,9 @@
 import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
-import DinoAgentService from '../agent/dino/DinoAgentService'
+import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AgentStatus from '../../types/services/agent/AgentStatus'
-import LogAppErrorSyncLocalStorage from './local_storage/LogAppErrorSyncLocalStorage'
-import LogAppErrorDatabase from './database/LogAppErrorDatabase'
+import AgentStatus from '../../types/agent/AgentStatus'
+import LogAppErrorSyncLocalStorage from '../../local_storage/LogAppErrorSyncLocalStorage'
+import LogAppErrorDatabase from '../../database/LogAppErrorDatabase'
 import LogAppErrorDoc from '../../types/log_app_error/database/LogAppErrorDoc'
 import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
 import LogAppModelError from '../../error/LogAppModelError'
@@ -13,23 +13,11 @@ class LogAppErrorService {
     return LogAppErrorSyncLocalStorage.getShouldSync()
   }
 
-  setShouldSync = (should: boolean) => {
-    LogAppErrorSyncLocalStorage.setShouldSync(should)
-  }
-
   getSavedLogs = (): Promise<LogAppErrorDoc[]> => {
     return LogAppErrorDatabase.getAll()
   }
 
-  saveLocalLog = (model: LogAppErrorModel) => {
-    const doc = {
-      ...model,
-    } as LogAppErrorDoc
-
-    LogAppErrorDatabase.put(doc)
-  }
-
-  saveDefault = (error: Error) => {
+  saveError = (error: Error) => {
     if (error) {
       this.save({
         date: new Date().getTime(),
@@ -57,7 +45,7 @@ class LogAppErrorService {
         this.setShouldSync(true)
       }
     } else {
-      this.saveDefault(new LogAppModelError(model))
+      this.saveError(new LogAppModelError(model))
     }
   }
 
@@ -81,6 +69,18 @@ class LogAppErrorService {
   removeUserData = () => {
     LogAppErrorSyncLocalStorage.removeUserData()
     LogAppErrorDatabase.removeAll()
+  }
+
+  private saveLocalLog = (model: LogAppErrorModel) => {
+    const doc = {
+      ...model,
+    } as LogAppErrorDoc
+
+    LogAppErrorDatabase.put(doc)
+  }
+
+  private setShouldSync = (should: boolean) => {
+    LogAppErrorSyncLocalStorage.setShouldSync(should)
   }
 }
 

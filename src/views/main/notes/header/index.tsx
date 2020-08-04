@@ -2,7 +2,7 @@ import React from 'react'
 import TagSearchBar from '../../../../components/tag_search_bar'
 import NoteSVG from '../../../../assets/icons/note.svg'
 import { isMobile } from 'react-device-detect'
-import { useLanguage } from '../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../context_provider/app_settings'
 import './styles.css'
 
 const NoteHeader = (props: {

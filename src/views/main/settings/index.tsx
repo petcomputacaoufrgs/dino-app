@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useAppSettings } from '../../../provider/app_settings_provider'
-import { useAlert } from '../../../provider/alert_provider'
+import { useAppSettings } from '../../../context_provider/app_settings'
+import { useAlert } from '../../../context_provider/alert'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'

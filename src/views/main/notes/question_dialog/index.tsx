@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../context_provider/app_settings'
 import DialogActions from '../dialog_actions'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -44,7 +44,7 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
 
           props.onSave(question, tagList)
         })
-        .catch((e) => LogAppErrorService.saveDefault(e))
+        .catch((e) => LogAppErrorService.saveError(e))
     } else {
       props.onSave(question, tagList)
     }

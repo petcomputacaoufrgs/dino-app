@@ -1,5 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { ContactFormDialogProps } from './props'
+import React, { useState } from 'react'
+import { useLanguage } from '../../../../context_provider/app_settings'
+import Button from '@material-ui/core/Button'
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Divider,
+} from '@material-ui/core'
+import ContactFormDialogHeader from './header'
+import ContactFormDialogContent from './content'
+import ContactFormDialogProps from './props'
 import Constants from '../../../../constants/ContactsConstants'
 import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'

@@ -1,15 +1,15 @@
-import UserLocalStorage from './local_storage/UserLocalStorage'
+import UserLocalStorage from '../../local_storage/UserLocalStorage'
 import AuthService from '../auth/AuthService'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'
 import UserModel from '../../types/user/UserModel'
-import DinoAgentService from '../agent/dino/DinoAgentService'
+import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AgentStatus from '../../types/services/agent/AgentStatus'
+import AgentStatus from '../../types/agent/AgentStatus'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
-import UserContextUpdater from './UserContextUpdater'
-import GoogleAgentService from '../agent/google/GoogleAgentService'
+import UserContextUpdater from '../../context_updater/UserContextUpdater'
+import GoogleAgentService from '../../agent/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GlossaryService from '../glossary/GlossaryService'
@@ -87,7 +87,7 @@ class UserService {
 
         return version
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -105,7 +105,7 @@ class UserService {
 
         return user
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -184,7 +184,7 @@ class UserService {
 
         this.setVersion(newVersion)
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
   }
@@ -206,7 +206,7 @@ class UserService {
 
         return response.body
       } catch (e) {
-        LogAppErrorService.saveDefault(e)
+        LogAppErrorService.saveError(e)
       }
     }
 
@@ -222,7 +222,7 @@ class UserService {
       )
     } catch (e) {
       this.setSavePictureWithError(true)
-      LogAppErrorService.saveDefault(e)
+      LogAppErrorService.saveError(e)
     }
   }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../provider/app_settings_provider'
-import { useAlert } from '../../provider/alert_provider'
+import { useLanguage } from '../../context_provider/app_settings'
+import { useAlert } from '../../context_provider/alert'
 import Button from '../button'
 import Loader from '../loader'
 import GoogleSecret from '../../environment/client_secret.json'
@@ -21,8 +21,8 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   const languageContext = useLanguage()
   const language = languageContext.current
   const alert = useAlert()
-
   const [loading, setLoading] = useState(false)
+
   const [isConnected, setIsConnected] = useState(
     ConnectionService.isConnected()
   )
@@ -96,37 +96,38 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
   }
 
   return (
-    <div className="google_login_button">
-      <GoogleLogin
-        clientId={GoogleSecret.web.client_id}
-        scope={AuthService.getDefaultScopes()}
-        onSuccess={responseGoogle}
-        onFailure={loginFail}
-        cookiePolicy={'single_host_origin'}
-        redirectUri={getHostRootURI()}
-        responseType={'code'}
-        accessType={'offline'}
-        prompt={getPrompt()}
-        render={(renderProps) => (
-          <Button
-            size={props.size}
-            imageSrc={GoogleLogo}
-            imageAlt={props.buttonText}
-            className="google_login_button__button"
-            onClick={isConnected ? renderProps.onClick : showOfflineMessage}
-            disabled={!isConnected}
-          >
-            <Typography component="p">{props.buttonText}</Typography>
-          </Button>
+    <Loader loading={loading}>
+      <div className="google_login_button">
+        <GoogleLogin
+          clientId={GoogleSecret.web.client_id}
+          scope={AuthService.getDefaultScopes()}
+          onSuccess={responseGoogle}
+          onFailure={loginFail}
+          cookiePolicy={'single_host_origin'}
+          redirectUri={getHostRootURI()}
+          responseType={'code'}
+          accessType={'offline'}
+          prompt={getPrompt()}
+          render={(renderProps) => (
+            <Button
+              size={props.size}
+              imageSrc={GoogleLogo}
+              imageAlt={props.buttonText}
+              className="google_login_button__button"
+              onClick={isConnected ? renderProps.onClick : showOfflineMessage}
+              disabled={!isConnected}
+            >
+              <Typography component="p">{props.buttonText}</Typography>
+            </Button>
+          )}
+        />
+        {!isConnected && (
+          <Typography className="google_login_button__error" component="p">
+            {language.DISCONNECTED}
+          </Typography>
         )}
-      />
-      <Loader alt={language.LOADER_ALT} loading={loading} />
-      {!isConnected && (
-        <Typography className="google_login_button__error" component="p">
-          {language.DISCONNECTED}
-        </Typography>
-      )}
-    </div>
+      </div>
+    </Loader>
   )
 }
 

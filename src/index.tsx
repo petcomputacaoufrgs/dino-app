@@ -2,18 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as ServiceWorker from './serviceWorker'
-import AlertProvider from './provider/alert_provider'
-import AppSettingsProvider from './provider/app_settings_provider'
+import AlertContextProvider from './context_provider/alert'
+import AppSettingsContextProvider from './context_provider/app_settings'
 import ErrorHandlerService from './services/error_handler/ErrorHandlerService'
 
 ErrorHandlerService.register()
 
 ReactDOM.render(
-  <AlertProvider>
-    <AppSettingsProvider>
+  <AlertContextProvider>
+    <AppSettingsContextProvider>
       <App />
-    </AppSettingsProvider>
-  </AlertProvider>,
+    </AppSettingsContextProvider>
+  </AlertContextProvider>,
   document.getElementById('root')
 )
 

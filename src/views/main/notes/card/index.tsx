@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../../provider/app_settings_provider'
+import { useLanguage } from '../../../../context_provider/app_settings'
 import clsx from 'clsx'
 import DateUtils from '../../../../utils/DateUtils'
 import TagList from '../../../../components/tag_list/index'
@@ -20,11 +20,12 @@ import Collapse from '@material-ui/core/Collapse'
 import NoteCardProps from './props'
 import './styles.css'
 
+
 const NoteCard = (props: NoteCardProps): JSX.Element => {
   const language = useLanguage().current
 
   const classes = useStyles()
-
+  
   const [expanded, setExpanded] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [note, setNote] = useState(props.note)

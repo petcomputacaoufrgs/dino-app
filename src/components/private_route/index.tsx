@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRouter } from '../../provider/private_router_provider'
+import { usePrivateRouter } from '../../context_provider/private_router'
 import { Route, RouteProps, useLocation, Redirect } from 'react-router'
 
 /**
@@ -7,7 +7,7 @@ import { Route, RouteProps, useLocation, Redirect } from 'react-router'
  * @param props Propriedades do Route
  */
 const PrivateRoute = (props: RouteProps): JSX.Element => {
-  const router = useRouter()
+  const router = usePrivateRouter()
 
   const location = useLocation()
 

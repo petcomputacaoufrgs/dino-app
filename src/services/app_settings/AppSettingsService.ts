@@ -1,8 +1,8 @@
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AppSettingsLocalStorage from './local_storage/AppSettingsLocalStorage'
 import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
-import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import DinoAgentService from '../agent/dino/DinoAgentService'
+import AgentStatus from '../../types/services/agent/AgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
 import LanguageBase from '../../types/languages/LanguageBase'
 import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
@@ -51,13 +51,13 @@ class AppSettingsService {
   getVersion = (): number => AppSettingsLocalStorage.getAppSettingsVersion()
 
   getServerVersion = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(
+    const request = await DinoAgentService.get(
       DinoAPIURLConstants.APP_SETTINGS_VERSION
     )
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
         const version: number = response.body
 
         return version
@@ -70,11 +70,11 @@ class AppSettingsService {
   }
 
   getServer = async (): Promise<AppSettingsResponseModel | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         const appSettings: AppSettingsResponseModel = response.body
 
@@ -106,11 +106,11 @@ class AppSettingsService {
   }
 
   saveOnServer = async (model: AppSettingsModel): Promise<void> => {
-    const request = DinoAgentService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE)
+    const request = await DinoAgentService.post(DinoAPIURLConstants.APP_SETTINGS_SAVE)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(model)
+        const response = await request.get()!.send(model)
         const newVersion = response.body
 
         AppSettingsLocalStorage.setAppSettingsVersion(newVersion)

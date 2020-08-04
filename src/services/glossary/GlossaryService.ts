@@ -1,8 +1,8 @@
 import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
 import GlossaryLocalStorage from './local_storage/GlossaryLocalStorage'
-import DinoAgentService from '../dino_agent/DinoAgentService'
+import DinoAgentService from '../agent/dino/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import AgentStatus from '../../types/services/agent/AgentStatus'
 import HttpStatus from 'http-status-codes'
 import StringUtils from '../../utils/StringUtils'
 import GlossaryContextUpdater from './GlossaryContextUpdater'
@@ -35,11 +35,11 @@ class GlossaryService {
   }
 
   getAPIItems = async (): Promise<Array<GlossaryItemModel> | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_LIST)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_LIST)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         if (response.status === HttpStatus.OK) {
           return response.body
@@ -53,11 +53,11 @@ class GlossaryService {
   }
 
   getAPIVersion = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_VERSION)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.GLOSSARY_VERSION)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         if (response.status === HttpStatus.OK) {
           return response.body

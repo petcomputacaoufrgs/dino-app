@@ -10,9 +10,9 @@ import NoteAPIAnswerModel from '../../types/note/NoteAnswerModel'
 import NoteDoc from '../../types/note/database/NoteDoc'
 import NoteDatabase from './database/NoteDatabase'
 import DeletedNoteDatabase from './database/DeletedNoteDatabase'
-import DinoAgentService from '../dino_agent/DinoAgentService'
+import DinoAgentService from '../agent/dino/DinoAgentService'
 import NoteSyncLocalStorage from './local_storage/NoteSyncLocalStorage'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import AgentStatus from '../../types/services/agent/AgentStatus'
 import NoteUpdateModel from '../../types/note/NoteUpdateModel'
 import NoteModel from '../../types/note/NoteModel'
 import NoteContextUpdater from './NoteContextUpdater'
@@ -62,11 +62,11 @@ class NoteService {
   getVersion = (): number => NoteVersionLocalStorage.getVersion()
 
   getVersionFromServer = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET_VERSION)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         if (response.status === HttpStatus.OK) {
           const serverVersion: number = response.body
@@ -114,11 +114,11 @@ class NoteService {
       id: 0,
     }
 
-    const request = DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
+    const request = await DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(newNote)
+        const response = await request.get()!.send(newNote)
 
         if (response.status === HttpStatus.OK) {
           const body: NoteSaveResponseAPIModel = response.body
@@ -193,11 +193,11 @@ class NoteService {
         } as NoteDeleteModel)
     )
 
-    const request = DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE_ALL)
+    const request = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE_ALL)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(models)
+        const response = await request.get()!.send(models)
 
         if (response.status === HttpStatus.OK) {
           const newVersion = response.body
@@ -219,11 +219,11 @@ class NoteService {
     if (noteDoc.external_id) {
       const model: NoteDeleteModel = { id: noteDoc.external_id }
 
-      const request = DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE)
+      const request = await DinoAgentService.delete(DinoAPIURLConstants.NOTE_DELETE)
 
-      if (request.status === DinoAgentStatus.OK) {
+      if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get().send(model)
+          const response = await request.get()!.send(model)
 
           if (response.status === HttpStatus.OK) {
             const newVersion = response.body
@@ -284,11 +284,11 @@ class NoteService {
       }
     })
 
-    const request = DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
+    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(model)
+        const response = await request.get()!.send(model)
 
         if (response.status === HttpStatus.OK) {
           NoteVersionLocalStorage.setVersion(response.body)
@@ -304,11 +304,11 @@ class NoteService {
   }
 
   updateNotes = async (models: NoteUpdateModel[]) => {
-    const request = DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_ALL)
+    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_UPDATE_ALL)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get().send(models)
+        const response = await request.get()!.send(models)
 
         if (response.status === HttpStatus.OK) {
           const newVersion = response.body
@@ -366,13 +366,13 @@ class NoteService {
         answered: noteDoc.answered,
       }
 
-      const request = DinoAgentService.put(
+      const request = await DinoAgentService.put(
         DinoAPIURLConstants.NOTE_UPDATE_QUESTION
       )
 
-      if (request.status === DinoAgentStatus.OK) {
+      if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get().send(model)
+          const response = await request.get()!.send(model)
 
           if (response.status === HttpStatus.OK) {
             const savedNoteDoc = await NoteDatabase.getByQuestion(
@@ -421,13 +421,13 @@ class NoteService {
         answer: noteDoc.answer,
       }
 
-      const request = DinoAgentService.put(
+      const request = await DinoAgentService.put(
         DinoAPIURLConstants.NOTE_UPDATE_ANSWER
       )
 
-      if (request.status === DinoAgentStatus.OK) {
+      if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get().send(model)
+          const response = await request.get()!.send(model)
 
           if (response.status === HttpStatus.OK) {
             const savedNoteDoc = await NoteDatabase.getByQuestion(
@@ -459,11 +459,11 @@ class NoteService {
     const localVersion = this.getVersion()
 
     if (newVersion > localVersion) {
-      const request = DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
+      const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
 
-      if (request.status === DinoAgentStatus.OK) {
+      if (request.status === AgentStatus.OK) {
         try {
-          const response = await request.get()
+          const response = await request.get()!
 
           if (response.status === HttpStatus.OK) {
             const notes: NoteModel[] = response.body

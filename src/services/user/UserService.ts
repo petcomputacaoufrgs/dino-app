@@ -3,13 +3,13 @@ import AuthService from '../auth/AuthService'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'
 import UserModel from '../../types/user/UserModel'
-import DinoAgentService from '../dino_agent/DinoAgentService'
+import DinoAgentService from '../agent/dino/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import AgentStatus from '../../types/services/agent/AgentStatus'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import UserContextUpdater from './UserContextUpdater'
-import GoogleAgentService from '../google_agent/GoogleAgentService'
+import GoogleAgentService from '../agent/google/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GlossaryService from '../glossary/GlossaryService'
@@ -63,11 +63,11 @@ class UserService {
   }
 
   getServerVersion = async (): Promise<number | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
         const version: number = response.body
 
         return version
@@ -80,11 +80,11 @@ class UserService {
   }
 
   getServer = async (): Promise<UserModel | undefined> => {
-    const request = DinoAgentService.get(DinoAPIURLConstants.USER_GET)
+    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_GET)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         const user: UserModel = response.body
 
@@ -151,14 +151,14 @@ class UserService {
   }
 
   saveNewPhotoOnServer = async (pictureURL: string) => {
-    const request = DinoAgentService.put(DinoAPIURLConstants.USER_PUT_PHOTO)
+    const request = await DinoAgentService.put(DinoAPIURLConstants.USER_PUT_PHOTO)
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
         const model: UserUpdatePictureModel = {
           pictureURL: pictureURL,
         }
-        const response = await request.get().send(model)
+        const response = await request.get()!.send(model)
 
         const newVersion: number = response.body
 
@@ -176,13 +176,13 @@ class UserService {
   }
 
   private getUserGoogleAPIPhoto = async (): Promise<GooglePhotoResponseModel | null> => {
-    const request = GoogleAgentService.get(
+    const request = await GoogleAgentService.get(
       GooglePeopleAPIURLConstants.GET_USER_PHOTOS
     )
 
-    if (request.status === DinoAgentStatus.OK) {
+    if (request.status === AgentStatus.OK) {
       try {
-        const response = await request.get()
+        const response = await request.get()!
 
         return response.body
       } catch {

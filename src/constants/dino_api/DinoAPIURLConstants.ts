@@ -1,8 +1,10 @@
+import APIConfig from '../../environment/api_config.json'
+
 /**
  * @description Valores de URL da API para conexão
  */
 class DinoAPIURLConstants {
-  URL = 'http://localhost:5000/'
+  URL = APIConfig.URL
   private AUTH = `${this.URL}auth/`
   private USER = `${this.URL}user/`
   private PUBLIC_AUTH = `${this.URL}public/auth/`
@@ -11,6 +13,8 @@ class DinoAPIURLConstants {
   private NOTE = `${this.URL}note/`
 
   AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
+
+  REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`
 
   USER_VERSION = `${this.USER}version/`
 

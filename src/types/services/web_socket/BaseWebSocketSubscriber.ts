@@ -1,4 +1,4 @@
-import SubscriberItem from '../web_socket/SubscriberItem'
+import SubscriberItem from './SubscriberItem'
 
 /**
  * @description Base para criar services que irão abrir subscribers com a API.

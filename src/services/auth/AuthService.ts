@@ -8,8 +8,8 @@ import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
-import DinoAgentService from '../dino_agent/DinoAgentService'
-import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
+import DinoAgentService from '../agent/dino/DinoAgentService'
+import AgentStatus from '../../types/services/agent/AgentStatus'
 import EventsService from '../events/EventsService'
 
 class AuthService {
@@ -28,10 +28,10 @@ class AuthService {
       const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
 
       try {
-        const request = DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
+        const request = await DinoAgentService.post(DinoAPIURLConstants.AUTH_GOOGLE)
 
-        if (request.status === DinoAgentStatus.OK) {
-          const response = await request.get().send(authRequestModel)
+        if (request.status === AgentStatus.OK) {
+          const response = await request.get()!.send(authRequestModel)
 
           if (response.status === HttpStatus.OK) {
             AuthLocalStorage.cleanLoginGarbage()
@@ -46,7 +46,7 @@ class AuthService {
             return LoginErrorConstants.SUCCESS
           }
 
-          if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+          if (response?.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
             this.setRefreshRequiredToTrue()
             return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
           }
@@ -63,18 +63,22 @@ class AuthService {
   }
 
   googleLogout = () => {
-    const authToken = AuthLocalStorage.getAuthToken()
+    const authToken = this.getAuthToken()
 
-    this.APILogout(authToken)
+    this.serverLogout(authToken)
 
     EventsService.whenLogout()
   }
 
-  APILogout = async (authToken: string): Promise<boolean> => {
+  serverLogout = async (authToken: string): Promise<boolean> => {
     try {
-      const request = DinoAgentService.logout(authToken)
+      this.setTempAuthToken(authToken)
 
-      if (request.status === DinoAgentStatus.OK) {
+      const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
+
+      this.removeTempAuthToken()
+
+      if (request.status === AgentStatus.OK) {
         await request.get()
 
         return true
@@ -96,11 +100,33 @@ class AuthService {
     AuthLocalStorage.setGoogleAccessToken(token)
   }
 
+  getGoogleExpiresDate = (): number | null => {
+    return AuthLocalStorage.getGoogleExpiresDate()
+  }
+
+  setGoogleExpiresDate = (tokenExpiresDate: number) => {
+    AuthLocalStorage.setGoogleExpiresDate(tokenExpiresDate)
+  }
+
   setAuthToken = (token: string) => {
     AuthLocalStorage.setAuthToken(token)
   }
 
+  setTempAuthToken = (tempToken: string) => {
+    AuthLocalStorage.setTempAuthToken(tempToken)
+  }
+
+  removeTempAuthToken = () => {
+    AuthLocalStorage.removeTempAuthToken()
+  }
+
   getAuthToken = (): string => {
+    const tempAuthToken = AuthLocalStorage.getTempAuthToken()
+
+    if (tempAuthToken) {
+      return tempAuthToken
+    }
+    
     return AuthLocalStorage.getAuthToken()
   }
 
@@ -122,6 +148,7 @@ class AuthService {
     responseBody: GoogleAuthResponseModel
   ) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
+    this.setGoogleExpiresDate(responseBody.googleExpiresDate)
     this.saveUserAuthDataFromRequestBody(responseBody)
   }
 

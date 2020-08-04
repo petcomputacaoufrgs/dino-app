@@ -2,12 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import AppProvider from './provider/app_provider/index'
+import AlertProvider from './provider/alert_provider'
+import AppSettingsProvider from './provider/app_settings_provider'
 
 ReactDOM.render(
-  <AppProvider>
-    <App />
-  </AppProvider>,
+  <AlertProvider>
+    <AppSettingsProvider>
+      <App />
+    </AppSettingsProvider>
+  </AlertProvider>,
   document.getElementById('root')
 )
 

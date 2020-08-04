@@ -1,4 +1,4 @@
-import BaseUpdater from '../BaseUpdater'
+import BaseUpdater from '../../types/services/BaseUpdater'
 import NoteService from './NoteService'
 
 class NoteUpdater implements BaseUpdater {

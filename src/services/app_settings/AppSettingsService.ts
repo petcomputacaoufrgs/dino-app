@@ -4,10 +4,12 @@ import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
 import DinoAgentService from '../dino_agent/DinoAgentService'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
-import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
+import LanguageSubProviderValue from '../../provider/app_settings_provider/language_provider/value'
 
 class AppSettingsService {
   languageContext?: LanguageSubProviderValue
+
+  listenner = {}
 
   start = (languageContext: LanguageSubProviderValue) => {
     this.languageContext = languageContext
@@ -34,10 +36,10 @@ class AppSettingsService {
   }
 
   update = async (newVersion: number) => {
-    const savedVersion = this.getAppSettingsVersion()
+    const savedVersion = this.getVersion()
 
     if (newVersion !== savedVersion) {
-      const appSettings = await this.getAppSettingsFromServer()
+      const appSettings = await this.getServer()
 
       if (appSettings) {
         this.saveAppSettingsData(appSettings, newVersion)
@@ -51,10 +53,9 @@ class AppSettingsService {
     }
   }
 
-  getAppSettingsVersion = (): number =>
-    AppSettingsLocalStorage.getAppSettingsVersion()
+  getVersion = (): number => AppSettingsLocalStorage.getAppSettingsVersion()
 
-  getAppSettingsVersionFromServer = async (): Promise<number | undefined> => {
+  getServerVersion = async (): Promise<number | undefined> => {
     const request = DinoAgentService.get(
       DinoAPIURLConstants.APP_SETTINGS_VERSION
     )
@@ -73,9 +74,7 @@ class AppSettingsService {
     return undefined
   }
 
-  getAppSettingsFromServer = async (): Promise<
-    AppSettingsResponseModel | undefined
-  > => {
+  getServer = async (): Promise<AppSettingsResponseModel | undefined> => {
     const request = DinoAgentService.get(DinoAPIURLConstants.APP_SETTINGS_GET)
 
     if (request.status === DinoAgentStatus.OK) {

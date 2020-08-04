@@ -1,4 +1,4 @@
-import BaseLocalStorage from '../../BaseLocalStorage'
+import BaseLocalStorage from '../../../types/services/BaseLocalStorage'
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
 import AppSettingsModel from '../../../types/app_settings/AppSettingsModel'
 

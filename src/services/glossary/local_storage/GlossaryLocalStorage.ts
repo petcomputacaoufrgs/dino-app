@@ -1,5 +1,5 @@
 import LS_Constants from '../../../constants/LocalStorageKeysConstants'
-import BaseLocalStorage from '../../BaseLocalStorage'
+import BaseLocalStorage from '../../../types/services/BaseLocalStorage'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 
 class GlossaryLocalStorage extends BaseLocalStorage {

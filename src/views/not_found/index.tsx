@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../provider/app_provider'
+import { useLanguage } from '../../provider/app_settings_provider'
 import PageNotFound from '../../assets/images/page-not-found.svg'
 import HistoryService from '../../services/history/HistoryService'
 import PathConstants from '../../constants/PathConstants'

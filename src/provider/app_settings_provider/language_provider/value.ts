@@ -1,4 +1,4 @@
-import LanguageSet from './languages/LanguageBase'
+import LanguageSet from '../../../types/languages/LanguageBase'
 
 export interface Language {
   name: string
@@ -7,6 +7,6 @@ export interface Language {
 
 export default interface LanguageSubProviderValue {
   current: LanguageSet
-  getLanguageList: () => Language[]
+  getLanguages: () => Language[]
   updateLanguage: () => LanguageSet
 }

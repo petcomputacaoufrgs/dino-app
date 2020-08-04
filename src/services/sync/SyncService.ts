@@ -4,7 +4,7 @@ import NoteSync from '../note/NoteSync'
 import ConnectionService from '../connection/ConnectionService'
 import AuthService from '../auth/AuthService'
 import AuthSync from '../auth/AuthSync'
-import LanguageSubProviderValue from '../../provider/app_provider/language_provider/value'
+import LanguageSubProviderValue from '../../provider/app_settings_provider/language_provider/value'
 
 const SYNC_FAIL_INTERVAL = 60000
 const SYNC_FAIL_WITHOUT_CONTROL = 200

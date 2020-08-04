@@ -1,5 +1,5 @@
 import GlossaryService from './GlossaryService'
-import BaseUpdater from '../BaseUpdater'
+import BaseUpdater from '../../types/services/BaseUpdater'
 
 class GlossaryUpdater implements BaseUpdater {
   checkUpdates = async () => {

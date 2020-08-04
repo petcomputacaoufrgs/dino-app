@@ -1,4 +1,4 @@
-import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
+import BaseWebSocketSubscriber from '../../types/services/BaseWebSocketSubscriber'
 import DinoAPIWebSocketConstants from '../../constants/dino_api/DinoAPIWebSocketConstants'
 import AppSettingsWebSocketAlertUpdateModel from '../../types/app_settings/AppSettingsWebSocketAlertUpdateModel'
 import AppSettingsService from './AppSettingsService'

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useLanguage } from '../../../../../provider/app_provider'
+import { useLanguage } from '../../../../../provider/app_settings_provider'
 import TextField from '@material-ui/core/TextField'
 import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'

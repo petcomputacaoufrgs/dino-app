@@ -1,4 +1,4 @@
-import BaseSync from '../BaseSync'
+import BaseSync from '../../types/services/BaseSync'
 import NoteService from './NoteService'
 import NoteUpdateModel from '../../types/note/NoteUpdateModel'
 

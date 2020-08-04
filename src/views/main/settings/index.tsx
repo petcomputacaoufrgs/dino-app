@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useApp } from '../../../provider/app_provider'
+import { useAppSettings } from '../../../provider/app_settings_provider'
+import { useAlert } from '../../../provider/alert_provider'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -13,13 +14,13 @@ import AppSettingsService from '../../../services/app_settings/AppSettingsServic
 import './styles.css'
 
 const Settings = (): JSX.Element => {
-  const appContext = useApp()
+  const appContext = useAppSettings()
 
   const language = appContext.language.current
 
-  const alert = appContext.alert
+  const alert = useAlert()
 
-  const languageList = appContext.language.getLanguageList()
+  const languageList = appContext.language.getLanguages()
 
   const [selectedLanguage, setSelectedLanguage] = useState(
     language.NAVIGATOR_LANGUAGE_CODE

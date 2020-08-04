@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../provider/app_provider'
+import { useLanguage } from '../../../../provider/app_settings_provider'
 import MaterialDialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'

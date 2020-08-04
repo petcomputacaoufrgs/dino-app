@@ -5,6 +5,7 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import DinoAgentStatus from '../../types/dino_agent/DinoAgentStatus'
 import HttpStatus from 'http-status-codes'
 import StringUtils from '../../utils/StringUtils'
+import GlossaryContextUpdater from './GlossaryContextUpdater'
 
 class GlossaryService {
   setItems = (items: GlossaryItemModel[]) => {
@@ -19,25 +20,17 @@ class GlossaryService {
     GlossaryLocalStorage.setVersion(version)
   }
 
-  shouldSync = (): boolean => {
-    return GlossaryLocalStorage.getShouldSync()
-  }
-
-  setShouldSync = (should: boolean) => {
-    GlossaryLocalStorage.setShouldSync(should)
-  }
-
   update = async (newVersion: number) => {
     if (newVersion !== this.getVersion()) {
       const newItens = await this.getAPIItems()
 
       if (newItens === undefined) {
-        this.setShouldSync(true)
         return
       }
 
       this.setVersion(newVersion)
       this.setItems(StringUtils.sortByAttr(newItens, 'title'))
+      GlossaryContextUpdater.update()
     }
   }
 

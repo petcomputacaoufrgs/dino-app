@@ -6,7 +6,6 @@ class GlossaryUpdater implements BaseUpdater {
     const newVersion = await GlossaryService.getAPIVersion()
 
     if (newVersion === undefined) {
-      GlossaryService.setShouldSync(true)
       return
     }
 

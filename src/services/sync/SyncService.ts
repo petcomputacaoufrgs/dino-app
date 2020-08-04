@@ -9,6 +9,7 @@ class SyncService {
       AppSettingsSync.sync()
       NoteSync.sync()
       LogAppErrorSync.sync()
+      ContactsSync.sync()
     }
   }
 }

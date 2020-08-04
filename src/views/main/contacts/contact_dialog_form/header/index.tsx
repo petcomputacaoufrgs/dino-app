@@ -6,19 +6,10 @@ import useStyles from '../../styles'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/ContactsConstants'
 
-const AddContactDialogHeader = (
-  props: ContactFormDialogHeaderProps
-): JSX.Element => {
+const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Element => {
   const classes = useStyles(props)
 
   const language = useLanguage().current
-
-  const handleChangeColor = () => {
-    const colors = Object.values(Constants.COLORS)
-    colors.forEach((color, i) => {
-      if (props.color === color) props.setColor(colors[(i + 1) % colors.length])
-    })
-  }
 
   return (
     <CardHeader
@@ -33,7 +24,7 @@ const AddContactDialogHeader = (
             aria-label="color"
             size="small"
             className={classes.iconButton}
-            onClick={handleChangeColor}
+            onClick={props.handleChangeColor}
           >
             <ColorLensIcon />
           </IconButton>
@@ -41,7 +32,7 @@ const AddContactDialogHeader = (
             aria-label="add_phone"
             size="small"
             className={classes.iconButton}
-            onClick={() => props.setAddPhoneAction(true)}
+            onClick={props.handleAddPhone}
           >
             <AddIcon />
           </IconButton>

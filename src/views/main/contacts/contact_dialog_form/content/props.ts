@@ -1,19 +1,16 @@
 import PhoneModel from '../../../../../types/contact/PhoneModel'
 
 export interface ContactFormDialogContentProps {
-  values: {
+
     name: string
     description: string
     phones: PhoneModel[]
-    addPhone: boolean
     invalidName: boolean
     helperText: { number: string; text: string }
-  }
-  sets: {
-    setName: React.Dispatch<React.SetStateAction<string>>
-    setDescription: React.Dispatch<React.SetStateAction<string>>
-    setPhones: React.Dispatch<React.SetStateAction<PhoneModel[]>>
-    setAddPhone: React.Dispatch<React.SetStateAction<boolean>>
-  }
+  
   handleDeletePhone: (number: string) => void
+  handleChangeName: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleChangeDescription: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleChangeType: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  handleChangeNumber: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
 }

@@ -1,50 +1,100 @@
-import React, { useState } from 'react'
-import { useLanguage } from '../../../../provider/app_settings_provider'
-import Button from '@material-ui/core/Button'
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Divider,
-} from '@material-ui/core'
-import ContactFormDialogHeader from './header'
-import ContactFormDialogContent from './content'
-import ContactFormDialogProps from './props'
+import React, { useState, useEffect } from 'react'
+import { ContactFormDialogProps } from './props'
 import Constants from '../../../../constants/ContactsConstants'
-import TransitionSlide from '../../../../components/slide_transition'
-import Service from '../../../../services/contact/ContactsService'
+import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
+import PhoneModel from '../../../../types/contact/PhoneModel'
+import View from './view'
 
-const ContactFormDialog = React.forwardRef(
-  (props: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
-    const language = useLanguage().current
+const ContactFormDialog = ({ dialogOpen, setDialogOpen, action, item } : ContactFormDialogProps): JSX.Element => {
 
-    const [name, setName] = useState(props.item?.name || '')
-    const [description, setDescription] = useState(
-      props.item?.description || ''
-    )
-    const [color, setColor] = useState(props.item?.color || '')
+    const [name, setName] = useState(item?.name || '')
+    const [description, setDescription] = useState(item?.description || '')
+    const [color, setColor] = useState(item?.color || '')
     const [invalidName, setInvalidName] = useState(false)
-    const [invalidPhone, setInvalidPhone] = useState({
-      number: 'invalid',
-      text: '',
-    })
-    const [phones, setPhones] = useState(
-      props.item ? props.item.phones : [{ type: Constants.MOBILE, number: '' }]
-    )
-    const [addPhone, setAddPhone] = useState(false)
+    const [invalidPhone, setInvalidPhone] = useState(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
+    const [phones, setPhones] = useState(item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel])
 
-    const cleanInfo = () => {
-      //@TO-DO resolver essa bodega
-      setName('')
-      setPhones([{ type: Constants.MOBILE, number: '' }])
-      setColor('')
-      setAddPhone(false)
+    useEffect(() => {
+
+      setName(item?.name || '')
+      setDescription(item?.description || '')
+      setPhones(item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel])
+      setColor(item?.color || '')
       setInvalidName(false)
-      setInvalidPhone({ number: 'invalid', text: '' })
+      setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
+
+      return () => {
+
+        setName('')
+        setPhones([{ type: Constants.MOBILE, number: '' }])
+        setDescription('')
+        setColor('')
+        setInvalidName(false)
+        setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
+      }
+    }, [dialogOpen, item])
+
+
+    const handleClose = () => setDialogOpen(0)
+
+    const handleSave = (): void => {
+
+      function validInfo(): string {
+        setInvalidName(name === '')
+        return name
+      }
+
+      function handleTakenNumber(item: ContactModel, exists: ContactModel) {
+        const phone = item.phones
+        .find(phone => exists.phones
+          .map((phone) => phone.number)
+          .includes(phone.number))
+        if (phone) 
+          setInvalidPhone({number: phone.number, text: `O número já está registrado no contato ${exists.name}`})
+      }
+
+      function makeItem(): ContactModel {
+        const frontId = item !== undefined ? item.frontId : Service.makeFrontId()
+        return { frontId, id: item?.id, name, description, phones: phones.filter(phone => phone.number !== ''), color }
+      }
+
+      if (validInfo()) {
+
+        const newItem = makeItem()
+        const exists = Service.findItemByPhones(newItem.phones)
+
+        if (action === Constants.ACTION_EDIT) {
+
+          if (!exists || exists.frontId === newItem.frontId) {
+            Service.editContact(newItem)
+            handleClose()
+
+          } else handleTakenNumber(newItem, exists)
+
+        } else {
+
+          if (!exists) {
+            Service.addContact(newItem)
+            handleClose()
+
+          } else handleTakenNumber(newItem, exists)
+        }
+      }
     }
 
-    const handleClose = () => props.setDialogOpen(0)
+    const handleChangeColor = () => {
+      const colors = Object.values(Constants.COLORS)
+      colors.forEach((colorObj, i) => {
+        if (colorObj === color) 
+          setColor(colors[(i + 1) % colors.length])
+      })
+    }
+
+    const handleAddPhone = () => {
+      phones.push(JSON.parse(Constants.DEFAULT_PHONE))
+      setPhones([...phones])
+    }
 
     const handleDeletePhone = (number: string) => {
       const indexPhone = phones.findIndex((phone) => phone.number === number)
@@ -52,101 +102,45 @@ const ContactFormDialog = React.forwardRef(
       setPhones([...phones])
     }
 
-    const handleSave = () => {
-      const validInfo = () => {
-        setInvalidName(name === '')
-        return name
-      }
-      const handleTakenNumber = (item: ContactModel, exists: ContactModel) => {
-        const phone = item.phones.find((phone) =>
-          exists.phones.map((phone) => phone.number).includes(phone.number)
-        )
-        if (phone)
-          setInvalidPhone({
-            number: phone.number,
-            text: `O número já está registrado no contato ${exists.name}`,
-          })
-      }
-      const makeItem = (id = Service.makeId()): ContactModel => {
-        return {
-          localID: id,
-          name: name,
-          description: description,
-          phones: phones.filter((phone) => phone.number !== ''),
-          color: color,
-        }
-      }
-      if (validInfo()) {
-        if (props.action === Constants.ACTION_EDIT && props.item) {
-          const item = makeItem(props.item.localID)
-          const exists = Service.findPhone(item.phones)
-          if (!exists || exists.localID === item.localID) {
-            Service.editContact(item)
-            handleClose()
-          } else handleTakenNumber(item, exists)
-        } else {
-          const item = makeItem()
-          const exists = Service.findPhone(item.phones)
-          if (!exists) {
-            Service.addContact(item)
-            cleanInfo()
-            handleClose()
-          } else handleTakenNumber(item, exists)
-        }
-      }
+    const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setName(event.target.value as string)
+    }
+
+    const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setDescription(event.target.value as string)
+    }
+
+    const handleChangeType = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      phones[index].type = Number(event.target.value)
+      setPhones([...phones])
+    }
+
+    const handleChangeNumber = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      phones[index].number = event.target.value as string
+      setPhones([...phones])
     }
 
     return (
-      <Dialog
-        ref={ref}
-        open={Boolean(props.dialogOpen)}
-        fullWidth
-        onClose={handleClose}
-        TransitionComponent={TransitionSlide}
-        aria-labelledby="form-dialog"
-      >
-        <ContactFormDialogHeader
-          action={props.action}
-          name={name}
-          phones={phones}
-          color={color}
-          setColor={setColor}
-          setAddPhoneAction={setAddPhone}
-        />
-        <Divider />
-        <DialogContent>
-          <ContactFormDialogContent
-            values={{
-              name,
-              description,
-              phones,
-              addPhone,
-              invalidName,
-              helperText: invalidPhone,
-            }}
-            sets={{ setName, setDescription, setPhones, setAddPhone }}
-            handleDeletePhone={handleDeletePhone}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            aria-labelledby={language.DIALOG_CANCEL_BUTTON_LABEL}
-            onClick={handleClose}
-            color="primary"
-          >
-            {language.DIALOG_CANCEL_BUTTON_TEXT}
-          </Button>
-          <Button
-            aria-labelledby={language.DIALOG_SAVE_BUTTON_LABEL}
-            onClick={handleSave}
-            color="primary"
-          >
-            {language.DIALOG_SAVE_BUTTON_TEXT}
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <View
+        open={Boolean(dialogOpen)}
+        handleClose={handleClose}
+        action={action}
+        name={name}
+        phones={phones} 
+        color={color} 
+        description={description} 
+        invalidName={invalidName}
+        invalidPhone={invalidPhone}
+        handleChangeName={handleChangeName}
+        handleChangeDescription={handleChangeDescription}
+        handleChangeNumber={handleChangeNumber}
+        handleChangeType={handleChangeType}
+        handleChangeColor={handleChangeColor} 
+        handleAddPhone={handleAddPhone}
+        handleDeletePhone={handleDeletePhone}
+        handleSave={handleSave}
+      />
     )
   }
-)
 
 export default ContactFormDialog

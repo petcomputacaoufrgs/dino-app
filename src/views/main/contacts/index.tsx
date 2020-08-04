@@ -6,7 +6,7 @@ import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import AddContactButton from './contact_button_add'
-import ContactsService from '../../../services/contact/ContactsService'
+import ContactsService from '../../../services/contact/ContactService'
 
 const Contacts = (): JSX.Element => {
   const language = useLanguage().current

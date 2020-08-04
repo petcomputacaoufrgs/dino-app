@@ -16,6 +16,7 @@ import GlossaryService from '../glossary/GlossaryService'
 import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
+
 class UserService {
   private setVersion = (version: number) => {
     UserLocalStorage.setVersion(version)
@@ -240,6 +241,7 @@ class UserService {
     NoteService.removeUserData()
     GlossaryService.removeUserData()
     LogAppErrorService.removeUserData()
+    ContactsService.removeUserData()
   }
 }
 

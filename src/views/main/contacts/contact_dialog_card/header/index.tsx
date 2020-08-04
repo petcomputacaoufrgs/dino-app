@@ -10,7 +10,7 @@ import {
 import useStyles from '../../styles'
 import { MoreVert } from '@material-ui/icons'
 import ContactCardHeaderProps from './props'
-import ContactsService from '../../../../../services/contact/ContactsService'
+import ContactsService from '../../../../../services/contact/ContactService'
 
 const ContactCardHeader = (props: ContactCardHeaderProps) => {
   const classes = useStyles()
@@ -30,7 +30,7 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     handleClose()
     props.onClose()
     setTimeout(() => {
-      props.setEdit(props.item.localID)
+      props.setEdit(props.item.frontId)
     }, 300)
   }
 
@@ -38,7 +38,7 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     handleClose()
     props.onClose()
     setTimeout(() => {
-      props.setDelete(props.item.localID)
+      props.setDelete(props.item.frontId)
     }, 300)
   }
 

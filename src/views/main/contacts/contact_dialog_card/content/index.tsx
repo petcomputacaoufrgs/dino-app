@@ -19,11 +19,11 @@ import {
 } from '@material-ui/icons'
 import PhoneModel from '../../../../../types/contact/PhoneModel'
 
-const ContactCardContent = (props: ContactCardContentProps) => {
+const ContactCardContent = ({item}:ContactCardContentProps) => {
   const classes = useStyles()
   const [phones, setPhones] = useState(new Array<PhoneModel>())
 
-  useEffect(() => setPhones([...props.item.phones]), [props.item.phones])
+  useEffect(() => setPhones([...item.phones]), [item.phones])
 
   const getTypePhoneIcon = (phone: PhoneModel) => {
     if (phone.type === ContactsConstants.MOBILE) return <PhoneIcon />
@@ -32,7 +32,7 @@ const ContactCardContent = (props: ContactCardContentProps) => {
   }
 
   const getDescription = () => {
-    if (props.item.description)
+    if (item.description)
       return (
         <ListItem button className={classes.ListItem}>
           <ListItemIcon>
@@ -46,7 +46,7 @@ const ContactCardContent = (props: ContactCardContentProps) => {
                 component="p"
                 className={classes.TextContact}
               >
-                {props.item.description}
+                {item.description}
               </Typography>
             }
           />

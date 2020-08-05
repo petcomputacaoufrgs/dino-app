@@ -2,7 +2,6 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AppSettingsLocalStorage from '../../local_storage/AppSettingsLocalStorage'
 import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
 import DinoAgentService from '../../agent/DinoAgentService'
-import AgentStatus from '../../types/agent/AgentStatus'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
 import LanguageBase from '../../types/languages/LanguageBase'
 import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
@@ -56,11 +55,10 @@ class AppSettingsService {
       DinoAPIURLConstants.APP_SETTINGS_VERSION
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
+        const response = await request.authenticate().go()
         const version: number = response.body
-
         return version
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -75,12 +73,10 @@ class AppSettingsService {
       DinoAPIURLConstants.APP_SETTINGS_GET
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
-
+        const response = await request.authenticate().go()
         const appSettings: AppSettingsResponseModel = response.body
-
         return appSettings
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -113,13 +109,11 @@ class AppSettingsService {
       DinoAPIURLConstants.APP_SETTINGS_SAVE
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!.send(model)
+        const response = await request.authenticate().setBody(model).go()
         const newVersion = response.body
-
         AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
-
         return
       } catch (e) {
         LogAppErrorService.saveError(e)

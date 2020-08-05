@@ -9,7 +9,6 @@ import LoginErrorConstants from '../../constants/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../../agent/DinoAgentService'
-import AgentStatus from '../../types/agent/AgentStatus'
 import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
@@ -34,8 +33,8 @@ class AuthService {
           DinoAPIURLConstants.AUTH_GOOGLE
         )
 
-        if (request.status === AgentStatus.OK) {
-          const response = await request.get()!.send(authRequestModel)
+        if (request.canGo) {
+          const response = await request.setBody(authRequestModel).go()
 
           if (response.status === HttpStatus.OK) {
             AuthLocalStorage.cleanLoginGarbage()
@@ -82,8 +81,8 @@ class AuthService {
 
       this.removeTempAuthToken()
 
-      if (request.status === AgentStatus.OK) {
-        await request.get()
+      if (request.canGo) {
+        await request.authenticate().go()
 
         return true
       }
@@ -112,8 +111,26 @@ class AuthService {
     AuthLocalStorage.setGoogleExpiresDate(tokenExpiresDate)
   }
 
+  getAuthToken = (): string => {
+    const tempAuthToken = AuthLocalStorage.getTempAuthToken()
+
+    if (tempAuthToken && tempAuthToken.trim() !== "") {
+      return tempAuthToken
+    }
+
+    return AuthLocalStorage.getAuthToken()
+  }
+
   setAuthToken = (token: string) => {
     AuthLocalStorage.setAuthToken(token)
+  }
+
+  getAuthTokenExpiresDate = (): number => (
+    AuthLocalStorage.getAuthTokenExpiresDate()
+  )
+
+  setAuthTokenExpiresDate = (authTokenExpiresDate: number) => {
+    AuthLocalStorage.setAuthTokenExpiresDate(authTokenExpiresDate)
   }
 
   setTempAuthToken = (tempToken: string) => {
@@ -122,16 +139,6 @@ class AuthService {
 
   removeTempAuthToken = () => {
     AuthLocalStorage.removeTempAuthToken()
-  }
-
-  getAuthToken = (): string => {
-    const tempAuthToken = AuthLocalStorage.getTempAuthToken()
-
-    if (tempAuthToken) {
-      return tempAuthToken
-    }
-
-    return AuthLocalStorage.getAuthToken()
   }
 
   removeUserData = () => {
@@ -158,6 +165,7 @@ class AuthService {
 
   private saveUserAuthDataFromRequestBody(responseBody: AuthResponseModel) {
     AuthLocalStorage.setAuthToken(responseBody.accessToken)
+    AuthLocalStorage.setAuthTokenExpiresDate(responseBody.expiresDate)
     UserService.saveUserDataFromModel(responseBody.user)
   }
 }

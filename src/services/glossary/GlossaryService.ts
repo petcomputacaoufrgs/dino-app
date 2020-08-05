@@ -2,8 +2,6 @@ import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
 import GlossaryLocalStorage from '../../local_storage/GlossaryLocalStorage'
 import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AgentStatus from '../../types/agent/AgentStatus'
-import HttpStatus from 'http-status-codes'
 import StringUtils from '../../utils/StringUtils'
 import GlossaryContextUpdater from '../../context_updater/GlossaryContextUpdater'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
@@ -40,13 +38,11 @@ class GlossaryService {
       DinoAPIURLConstants.GLOSSARY_LIST
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
+        const response = await request.authenticate().go()
 
-        if (response.status === HttpStatus.OK) {
-          return response.body
-        }
+        return response.body
       } catch (e) {
         LogAppErrorService.saveError(e)
       }
@@ -60,13 +56,11 @@ class GlossaryService {
       DinoAPIURLConstants.GLOSSARY_VERSION
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
+        const response = await request.authenticate().go()
 
-        if (response.status === HttpStatus.OK) {
-          return response.body
-        }
+        return response.body
       } catch (e) {
         LogAppErrorService.saveError(e)
       }

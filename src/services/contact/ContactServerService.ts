@@ -1,10 +1,13 @@
 import ContactModel from '../../types/contact/ContactModel'
-import ResponseSaveModel from '../../types/contact/ResponseSaveModel'
+import SaveResponseModelAll from '../../types/contact/SaveResponseModelAll'
+import SaveResponseModel from '../../types/contact/SaveResponseModel'
+import ContactResponseModel from '../../types/contact/ContactResponseModel'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import DinoAgentService from '../../agent/DinoAgentService'
 import AgentStatus from '../../types/agent/AgentStatus'
 import Service from './ContactService'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 
 class ContactServerService {
@@ -27,11 +30,11 @@ class ContactServerService {
             if(responseSaveModel !== undefined) {
               
               const version = responseSaveModel.version
-              const responseModels = responseSaveModel.responseModels
+              const responseContactModels = responseSaveModel.contactResponseModels
 
-              if(version !== undefined && responseModels !== undefined) {
+              if(version !== undefined && responseContactModels !== undefined) {
                 Service.setVersion(version)
-                Service.updateContactIds(responseModels, contacts)
+                Service.updateContactIds(responseContactModels, contacts)
               }
 
             } else sucessfulAdd = false
@@ -65,7 +68,28 @@ class ContactServerService {
         }
   }
 
-  saveContacts = async (contactModels: Array<ContactModel>): Promise<ResponseSaveModel | undefined> => {
+  saveContact = async (contactModel: ContactModel): Promise<ContactResponseModel | undefined> => {
+    const request = await DinoAgentService.post(DinoAPIURLConstants.CONTACT_SAVE)
+
+    if (request.status === AgentStatus.OK) {
+      try {
+        const response = await request.get()!.send(contactModel)
+
+        if (response.status === HttpStatus.OK) {
+          const responseSaveModel = response.body as SaveResponseModel
+          
+          Service.setVersion(responseSaveModel.version)
+          return responseSaveModel.contactResponseModel
+        }
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    }
+    Service.pushToUpdate(contactModel.frontId)
+    return undefined
+  }
+
+  saveContacts = async (contactModels: Array<ContactModel>): Promise<SaveResponseModelAll | undefined> => {
     const request = await DinoAgentService.post(DinoAPIURLConstants.CONTACT_SAVE_ALL)
 
     if (request.status === AgentStatus.OK) {
@@ -73,16 +97,33 @@ class ContactServerService {
         const response = await request.get()!.send(contactModels)
 
         if (response.status === HttpStatus.OK) {
-          const responseSaveModel = response.body as ResponseSaveModel
-
-          return responseSaveModel
+          return response.body as SaveResponseModelAll
         }
-      } catch {
-        /**TO-DO Fazer log de erro */
+      } catch (e) {
+        LogAppErrorService.saveError(e)
       }
-
       return undefined
     }
+  }
+
+  editContact = async (contactModel: ContactModel) => {
+
+    const request = await DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT)
+
+    if (request.status === AgentStatus.OK) {
+      try {
+        const response = await request.get()!.send(contactModel)
+
+        if (response.status === HttpStatus.OK) {
+          Service.setVersion(response.body) 
+          return
+        }
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    }
+
+    Service.pushToUpdate(contactModel.frontId)
   }
 
   editContacts = async (contactModels: Array<ContactModel>): Promise<number | undefined> => {
@@ -96,17 +137,36 @@ class ContactServerService {
         if (response.status === HttpStatus.OK) {
           return response.body
         }
-      } catch {
-        /**TO-DO Fazer log de erro */
+      } catch (e) {
+        LogAppErrorService.saveError(e)
       }
 
       return undefined
     }
   }
 
+  deleteContact = async (contactId: number) => {
+
+    const request = await DinoAgentService.delete(DinoAPIURLConstants.CONTACT_DELETE)
+
+    if (request.status === AgentStatus.OK) {
+      try {
+        const response = await request.get()!.send({id: contactId})
+
+        if (response.status === HttpStatus.OK) {
+          Service.setVersion(response.body) 
+          return
+        }
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    }
+    Service.pushToDelete(contactId)
+  }
+
   deleteContacts = async (contactIds: {id: number}[]): Promise<number | undefined> => {
 
-    const request = await DinoAgentService.delete(DinoAPIURLConstants.CONTACT_EDIT_ALL)
+    const request = await DinoAgentService.delete(DinoAPIURLConstants.CONTACT_DELETE_ALL)
 
     if (request.status === AgentStatus.OK) {
       try {
@@ -115,8 +175,8 @@ class ContactServerService {
         if (response.status === HttpStatus.OK) {
           return response.body
         }
-      } catch {
-        /**TO-DO Fazer log de erro */
+      } catch (e) {
+        LogAppErrorService.saveError(e)
       }
 
       return undefined
@@ -135,8 +195,8 @@ class ContactServerService {
 
           return version
         }
-      } catch {
-        /**TO-DO Salvar log com o erro*/
+      } catch (e) {
+        LogAppErrorService.saveError(e)
       }
     }
 

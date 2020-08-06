@@ -2,7 +2,7 @@ import ContactsConsts from '../../constants/ContactsConstants'
 import { useLanguage } from '../../context_provider/app_settings'
 import PhoneModel from '../../types/contact/PhoneModel'
 import ContactModel from '../../types/contact/ContactModel'
-import ResponseModel from '../../types/contact/ResponseModel'
+import ContactResponseModel from '../../types/contact/ContactResponseModel'
 import LS from './local_storage'
 import ArrayUtils from '../../utils/ArrayUtils'
 import LS_Constants from '../../constants/LocalStorageKeysConstants'
@@ -10,6 +10,7 @@ import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AgentStatus from '../../types/agent/AgentStatus'
 import DinoAgentService from '../../agent/DinoAgentService'
+import Server from './ContactServerService'
 
 class ContactsService {
 
@@ -17,7 +18,22 @@ class ContactsService {
   setItems = (items: ContactModel[])  => LS.setItems(items)
   getVersion = (): number | undefined => LS.getVersion()
   setVersion = (version : number)     => LS.setVersion(version)
+  
+  pushToUpdate = (frontId: number)    => LS.pushUpdateOp(frontId)
 
+  pushToDelete = (deletedID: number) => {
+
+    LS.pushDeleteOp(deletedID)
+
+    const idsToUpdate = this.getIdsToUpdate()
+    const idToUpdateIndex = idsToUpdate.findIndex(id => id === deletedID)
+
+    if(idToUpdateIndex > -1) {
+      idsToUpdate.splice(idToUpdateIndex, 1)
+      this.setIdsToUpdate(idsToUpdate)
+    }
+  }
+  
   updateLocal = async (version: number): Promise<void> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
 
@@ -82,33 +98,32 @@ class ContactsService {
     LS.removeAllItems()
   }
   
-  addContact = (item: ContactModel) => {
+  addContact = async (item: ContactModel) => {
+    
+    const response = await Server.saveContact(item)
+
+    if(response !== undefined) {
+      item.id = response.id
+    }
+
     const items = this.getItems()
     items.push(item)
     this.setItems(items)
-    LS.pushUpdateOp(item.frontId)
+
+    console.log(response)
   }
   
-  deleteContact = (deletedID: number) => {
+  deleteContact = (deletedFrontID: number) => {
     const items = this.getItems()
-    const index = items.findIndex(item => item.frontId === deletedID)
-
-    const deletedDatabaseId = items.splice(index, 1)[0].id
-    if(deletedDatabaseId !== undefined)
-      LS.pushDeleteOp(deletedDatabaseId)
-
+    const index = items.findIndex(item => item.frontId === deletedFrontID)
+    const item = items.splice(index, 1)[0]
+    if(item.id)
+      Server.deleteContact(item.id)
     this.setItems(items)
 
-    const idsToUpdate = this.getIdsToUpdate()
-    const idToUpdateIndex = idsToUpdate.findIndex(id => id === deletedID)
-
-    if(idToUpdateIndex > -1) {
-      idsToUpdate.splice(idToUpdateIndex, 1)
-      this.setIdsToUpdate(idsToUpdate)
-    }
   }
   
-  editContact = (edited: ContactModel) => {
+  editContact = async (edited: ContactModel) => {
     const items = this.getItems()
     
     const index = items.findIndex(item => item.frontId === edited.frontId)
@@ -118,7 +133,7 @@ class ContactsService {
       items.splice(index, 1, edited)
       this.setItems(items)
 
-      LS.pushUpdateOp(edited.frontId)
+      Server.editContact(edited)
       }
     }
   }
@@ -201,14 +216,13 @@ class ContactsService {
     LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, contacts.map(c => c.frontId))
   }
 
-
-
   getIdsToDelete = ():{ id: number }[] => {
     return LS.getOpIDs(LS_Constants.CONTACTS_DEL)
       .map(id => { return { id } }) 
   }
+
   
-  updateContactIds = (responseModels: ResponseModel[], contacts: ContactModel[]) => {
+  updateContactIds = (responseModels: ContactResponseModel[], contacts: ContactModel[]) => {
     
       const updatedContacts = contacts
         .filter(c => c.id !== undefined)

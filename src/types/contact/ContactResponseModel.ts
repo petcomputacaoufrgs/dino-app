@@ -1,6 +1,6 @@
 import PhoneModel from './PhoneModel'
 
-export default interface ResponseModel {
+export default interface ContactResponseModel {
   id: number
   name: string
   phones: Array<PhoneModel>

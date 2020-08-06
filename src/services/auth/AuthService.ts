@@ -79,16 +79,18 @@ class AuthService {
 
       const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
 
-      this.removeTempAuthToken()
-
       if (request.canGo) {
         await request.authenticate().go()
+
+        this.removeTempAuthToken()
 
         return true
       }
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
+
+    this.removeTempAuthToken()
 
     return false
   }

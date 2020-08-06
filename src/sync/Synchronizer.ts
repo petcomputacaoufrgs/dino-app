@@ -3,6 +3,7 @@ import AppSettingsSync from './AppSettingsSync'
 import NoteSync from './NoteSync'
 import LogAppErrorSync from './LogAppErrorSync'
 import UserSync from './UserSync'
+import ContactSync from './ContactSync'
 import BaseSync from './BaseSync'
 
 class SyncService {
@@ -10,6 +11,7 @@ class SyncService {
     AppSettingsSync,
     LogAppErrorSync,
     NoteSync,
+    ContactSync,
     UserSync,
   ]
 

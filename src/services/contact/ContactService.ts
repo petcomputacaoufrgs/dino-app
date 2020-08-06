@@ -6,6 +6,10 @@ import ResponseModel from '../../types/contact/ResponseModel'
 import LS from './local_storage'
 import ArrayUtils from '../../utils/ArrayUtils'
 import LS_Constants from '../../constants/LocalStorageKeysConstants'
+import HttpStatus from 'http-status-codes'
+import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import AgentStatus from '../../types/agent/AgentStatus'
+import DinoAgentService from '../../agent/DinoAgentService'
 
 class ContactsService {
 
@@ -13,6 +17,34 @@ class ContactsService {
   setItems = (items: ContactModel[])  => LS.setItems(items)
   getVersion = (): number | undefined => LS.getVersion()
   setVersion = (version : number)     => LS.setVersion(version)
+
+  updateLocal = async (version: number): Promise<void> => {
+    const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
+
+    if (request.status === AgentStatus.OK) {
+
+      try {
+        const response = await request.get()!
+
+        if (response.status === HttpStatus.OK) {
+          const serverContacts: ContactModel[] = response.body
+
+          this.setVersion(version)
+
+          const newLocalItens = this.getItems().filter(c => c.id === undefined)
+
+          this.setItems(newLocalItens.concat(
+            serverContacts.map(c => { c.frontId = this.makeFrontId() 
+              return c
+          })))
+
+          return
+        }
+      } catch {
+        /**TO-DO Salvar log de erro */
+      }
+    }
+  }
 
   shouldSync = (): boolean => {
     return this.getIdsToUpdate().length > 0 || this.getIdsToDelete().length > 0
@@ -157,13 +189,11 @@ class ContactsService {
   }
     
   getContactsToUpdate = (contacts: ContactModel[], idsToUpdate: number[]): {toAdd: ContactModel[]; toEdit: ContactModel[];} => {
-    return contacts
-    .filter(contact => idsToUpdate
-      .includes(contact.frontId))
-    .reduce((acum, contact) => {
+    return contacts.filter(contact => idsToUpdate.includes(contact.frontId))
+    .reduce((acc, contact) => {
       const toAddOrEdit = contact.id === undefined ? 'toAdd' : 'toEdit'
-      acum[toAddOrEdit].push(contact)
-      return acum
+      acc[toAddOrEdit].push(contact)
+      return acc
     }, { toAdd: Array<ContactModel>(), toEdit: Array<ContactModel>()})
   }
         

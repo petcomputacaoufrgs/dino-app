@@ -4,9 +4,66 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import DinoAgentService from '../../agent/DinoAgentService'
 import AgentStatus from '../../types/agent/AgentStatus'
+import Service from './ContactService'
 
 
 class ContactServerService {
+
+  updateServer = async () => {
+
+    let sucessfulAdd = true
+    let sucessfulEdit = true
+    let idsToUpdate = Service.getIdsToUpdate()
+
+        if(idsToUpdate.length > 0) {
+
+          const contacts = Service.getItems()
+          const contactsToUpdate = Service.getContactsToUpdate(contacts, idsToUpdate)
+
+          if(contactsToUpdate.toAdd.length > 0) {
+            
+            const responseSaveModel = await this.saveContacts(contactsToUpdate.toAdd)
+            
+            if(responseSaveModel !== undefined) {
+              
+              const version = responseSaveModel.version
+              const responseModels = responseSaveModel.responseModels
+
+              if(version !== undefined && responseModels !== undefined) {
+                Service.setVersion(version)
+                Service.updateContactIds(responseModels, contacts)
+              }
+
+            } else sucessfulAdd = false
+          }
+
+          if(contactsToUpdate.toEdit.length > 0) {
+            
+            const version = await this.editContacts(contactsToUpdate.toEdit)
+            
+            if (version !== undefined) {
+              Service.setVersion(version)
+
+            } else sucessfulEdit = false  
+          }
+
+          if(sucessfulAdd && sucessfulEdit) 
+            Service.cleanUpdateQueue()
+          else Service.setContactsToUpdate(contactsToUpdate.toEdit.concat(contactsToUpdate.toAdd))
+        }
+
+        const idsToDelete = Service.getIdsToDelete()
+
+        if(idsToDelete.length > 0) {
+
+          const version = await this.deleteContacts(idsToDelete)
+
+          if (version !== undefined) {
+            Service.setVersion(version)
+            Service.cleanDeleteQueue()
+          }
+        }
+  }
 
   saveContacts = async (contactModels: Array<ContactModel>): Promise<ResponseSaveModel | undefined> => {
     const request = await DinoAgentService.post(DinoAPIURLConstants.CONTACT_SAVE_ALL)

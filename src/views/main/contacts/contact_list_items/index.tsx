@@ -23,8 +23,7 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
   }, [_delete, setItems])
 
   useEffect(() => {
-    if (!edit) 
-      setItems([...ContactsService.getItems()])
+    if (!edit) setItems([...ContactsService.getItems()])
   }, [edit, setItems])
 
   return (

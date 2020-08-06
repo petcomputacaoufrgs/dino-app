@@ -19,7 +19,7 @@ import {
 } from '@material-ui/icons'
 import PhoneModel from '../../../../../types/contact/PhoneModel'
 
-const ContactCardContent = ({item}:ContactCardContentProps) => {
+const ContactCardContent = ({ item }: ContactCardContentProps) => {
   const classes = useStyles()
   const [phones, setPhones] = useState(new Array<PhoneModel>())
 

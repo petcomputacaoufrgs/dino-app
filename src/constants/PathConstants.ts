@@ -1,46 +1,21 @@
-/**
- * @description Configuração de paths
- */
 class PathConstants {
-  /**
-   * @description Diretório de login
-   */
-  LOGIN: string = '/'
+  LOGIN: string = `/`
 
-  /**
-   * @description Diretório do app principal
-   */
-  APP: string = '/app'
+  APP: string = `/app`
 
-  /**
-   * @description Diretório home para usuários autenticados
-   */
-  HOME: string = this.APP + '/home'
+  HOME: string = `${this.APP}/home`
 
-  /**
-   * @description Diretório do glossário
-   */
-  GLOSSARY: string = this.APP + '/glossary'
+  GLOSSARY: string = `${this.APP}/glossary`
 
-  /**
-   * @description Diretório dos contatos de emergência
-   */
-  CONTACTS: string = this.APP + '/contacts'
+  CONTACTS: string = `${this.APP}/contacts`
 
-  /**
-   * @description Diretório dos jogos
-   */
-  GAMES: string = this.APP + '/games'
+  GAMES: string = `${this.APP}/games`
 
-  /**
-   * @description Diretório das configurações
-   */
-  SETTINGS: string = this.APP + '/settings'
+  SETTINGS: string = `${this.APP}/settings`
 
-  /**
-   * @description Diretório das notas do usuário
-   */
-  NOTES: string = this.APP + '/notes'
+  NOTES: string = `${this.APP}/notes`
+
+  CALENDAR = `${this.APP}/calendar`
 }
 
 export default new PathConstants()

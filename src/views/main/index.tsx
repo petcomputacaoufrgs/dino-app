@@ -8,6 +8,7 @@ import HomeSVG from '../../assets/icons/home.svg'
 import NotesSVG from '../../assets/icons/note.svg'
 import SettingsSVG from '../../assets/icons/settings.svg'
 import LogoutSVG from '../../assets/icons/logout.svg'
+import CalendarSVG from '../../assets/icons/calendar.svg'
 import AdaptableMenu from '../../components/menu/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
@@ -24,6 +25,7 @@ import Notes from './notes'
 import NotFound from '../not_found/index'
 import NotesContextProvider from '../../context_provider/notes'
 import GlossaryContextProvider from '../../context_provider/glossary'
+import Calendar from './calendar'
 
 /**
  * @description Tela principal da aplicação
@@ -65,6 +67,11 @@ const Main = (): JSX.Element => {
         image: NotesSVG,
         name: language.MENU_NOTES,
         onClick: () => HistoryService.push(PathConstants.NOTES),
+      },
+      {
+        image: CalendarSVG,
+        name: language.MENU_CALENDAR,
+        onClick: () => HistoryService.push(PathConstants.CALENDAR),
       },
     ],
     [
@@ -141,6 +148,10 @@ const Main = (): JSX.Element => {
               <GlossaryItem />
             </GlossaryContextProvider>
           )}
+        />
+        <PrivateRoute
+          path={PathConstants.CALENDAR}
+          component={() => <Calendar />}
         />
         <PrivateRoute path={'/'} component={NotFound} />
       </Switch>

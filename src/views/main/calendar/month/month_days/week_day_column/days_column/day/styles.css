@@ -1,0 +1,11 @@
+.calendar__month__month_days__week_day_column__days_column__day {
+  width: 100%;
+  height: 16.67%;
+  border-top: black 1px solid;
+}
+
+.calendar__month__month_days__week_day_column__days_column__day__title h3 {
+  font-size: 0.8em;
+  margin-top: 3px;
+  margin-left: 3px;
+}

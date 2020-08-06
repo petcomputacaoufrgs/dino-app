@@ -6,7 +6,9 @@ import useStyles from '../../styles'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/ContactsConstants'
 
-const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Element => {
+const AddContactDialogHeader = (
+  props: ContactFormDialogHeaderProps
+): JSX.Element => {
   const classes = useStyles(props)
 
   const language = useLanguage().current

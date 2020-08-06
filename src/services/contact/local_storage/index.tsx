@@ -4,16 +4,15 @@ import ContactModel from '../../../types/contact/ContactModel'
 import StrU from '../../../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
-
   getVersion = (): number | undefined => {
     const version = this.get(LS_Constants.CONTACTS_VERSION)
-    return version ? JSON.parse(version) : undefined 
+    return version ? JSON.parse(version) : undefined
   }
 
-  setVersion = (version : number) => {
+  setVersion = (version: number) => {
     this.set(LS_Constants.CONTACTS_VERSION, JSON.stringify(version))
   }
-  
+
   getItems = (): Array<ContactModel> => {
     let items = this.get(LS_Constants.CONTACTS)
     let result = Array<ContactModel>()
@@ -41,13 +40,17 @@ class ContactsLocalStorage extends BaseLocalStorage {
     this.set(LSkey, JSON.stringify(ids))
   }
 
-  getOpIDs = (LSkey: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL): number[] => {
+  getOpIDs = (
+    LSkey:
+      | typeof LS_Constants.CONTACTS_UPDATE
+      | typeof LS_Constants.CONTACTS_DEL
+  ): number[] => {
     const items = this.get(LSkey)
-    return items ? JSON.parse(items) as number[] : new Array<number>()
+    return items ? (JSON.parse(items) as number[]) : new Array<number>()
   }
 
   pushToQueue = (id: number, ids: Array<number>): Array<number> => {
-    const newIds = ids.filter(queueId => queueId !== id)
+    const newIds = ids.filter((queueId) => queueId !== id)
     newIds.push(id)
     return newIds
   }
@@ -58,11 +61,13 @@ class ContactsLocalStorage extends BaseLocalStorage {
   }
 
   pushDeleteOp = (id: number) => {
-    let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)    
+    let ids = this.getOpIDs(LS_Constants.CONTACTS_DEL)
     this.setOpIDs(LS_Constants.CONTACTS_DEL, this.pushToQueue(id, ids))
   }
 
-  cleanOpQueue = (key: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL) => {
+  cleanOpQueue = (
+    key: typeof LS_Constants.CONTACTS_UPDATE | typeof LS_Constants.CONTACTS_DEL
+  ) => {
     localStorage.removeItem(key)
   }
 
@@ -71,9 +76,11 @@ class ContactsLocalStorage extends BaseLocalStorage {
   }
 
   setLastId = (lastId: number) => {
-    return localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, JSON.stringify(lastId))
+    return localStorage.setItem(
+      LS_Constants.CONTACTS_LAST_ID,
+      JSON.stringify(lastId)
+    )
   }
-  
 }
 
 export default new ContactsLocalStorage()

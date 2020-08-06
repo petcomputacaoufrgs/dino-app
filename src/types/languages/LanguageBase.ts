@@ -28,6 +28,7 @@ export default interface LanguageBase {
   MENU_CONTACTS: string
   MENU_SETTINGS: string
   MENU_LOGOUT: string
+  MENU_CALENDAR: string
   SETTINGS_TITLE: string
   SETTINGS_LANGUAGE: string
   SETTINGS_SAVE: string
@@ -87,4 +88,11 @@ export default interface LanguageBase {
   SYNC_CONNECTION_FAIL: string
   CANT_LOGIN_DISCONNECTED: string
   DISCONNECTED: string
+  SUNDAY_NAME: string
+  MONDAY_NAME: string
+  TUESDAY_NAME: string
+  WEDNESDAY_NAME: string
+  THURSDAY_NAME: string
+  FRIDAY_NAME: string
+  SATURDAY_NAME: string
 }

@@ -12,7 +12,6 @@ const AppSettingsContextProvider: React.FC = (props) => {
     language: languageContextProvider,
   } as AppSettingsContextType
 
-
   useEffect(() => {
     let handleLocalDataChanged = () => {
       languageContextProvider.updateLanguage()

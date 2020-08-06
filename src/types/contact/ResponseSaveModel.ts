@@ -1,7 +1,6 @@
 import ResponseModel from './ResponseModel'
 
 export default interface ResponseSaveModel {
-    version: number
-    responseModels: Array<ResponseModel>
-  }
-  
+  version: number
+  responseModels: Array<ResponseModel>
+}

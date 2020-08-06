@@ -1,21 +1,44 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import { Dialog, DialogActions, DialogContent, Divider,} from '@material-ui/core'
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Divider,
+} from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 import { ContactFormDialogViewProps } from './props'
 import { useLanguage } from '../../../../context_provider/app_settings'
 
-const View = React.forwardRef(({ open, handleClose, action, name, phones, color, description, invalidName, 
-  invalidPhone, handleChangeColor, handleDeletePhone, handleChangeName, handleChangeDescription, 
-  handleChangeType, handleChangeNumber, handleAddPhone, handleSave
-}: ContactFormDialogViewProps, ref: React.Ref<unknown>): JSX.Element => {
-
+const View = React.forwardRef(
+  (
+    {
+      open,
+      handleClose,
+      action,
+      name,
+      phones,
+      color,
+      description,
+      invalidName,
+      invalidPhone,
+      handleChangeColor,
+      handleDeletePhone,
+      handleChangeName,
+      handleChangeDescription,
+      handleChangeType,
+      handleChangeNumber,
+      handleAddPhone,
+      handleSave,
+    }: ContactFormDialogViewProps,
+    ref: React.Ref<unknown>
+  ): JSX.Element => {
     const language = useLanguage().current
 
     return (
-    <Dialog
+      <Dialog
         ref={ref}
         open={open}
         fullWidth
@@ -33,16 +56,16 @@ const View = React.forwardRef(({ open, handleClose, action, name, phones, color,
         <Divider />
         <DialogContent>
           <ContactFormDialogContent
-              name={name}
-              description={description}
-              phones={phones}
-              helperText={invalidPhone}
-              invalidName={invalidName}
-              handleChangeName={handleChangeName}
-              handleChangeDescription={handleChangeDescription}
-              handleChangeType={handleChangeType}
-              handleChangeNumber={handleChangeNumber}
-              handleDeletePhone={handleDeletePhone}
+            name={name}
+            description={description}
+            phones={phones}
+            helperText={invalidPhone}
+            invalidName={invalidName}
+            handleChangeName={handleChangeName}
+            handleChangeDescription={handleChangeDescription}
+            handleChangeType={handleChangeType}
+            handleChangeNumber={handleChangeNumber}
+            handleDeletePhone={handleDeletePhone}
           />
         </DialogContent>
         <DialogActions>
@@ -52,7 +75,7 @@ const View = React.forwardRef(({ open, handleClose, action, name, phones, color,
             color="primary"
           >
             {language.DIALOG_CANCEL_BUTTON_TEXT}
-          </Button> 
+          </Button>
 
           <Button
             aria-labelledby={language.DIALOG_SAVE_BUTTON_LABEL}
@@ -62,9 +85,9 @@ const View = React.forwardRef(({ open, handleClose, action, name, phones, color,
             {language.DIALOG_SAVE_BUTTON_TEXT}
           </Button>
         </DialogActions>
-    </Dialog>
+      </Dialog>
     )
-}
+  }
 )
 
 export default View

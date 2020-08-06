@@ -26,7 +26,6 @@ class AuthService {
   ): Promise<number> => {
     if (loginResponse.code) {
       const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
-      
 
       try {
         const request = await DinoAgentService.post(
@@ -116,7 +115,7 @@ class AuthService {
   getAuthToken = (): string => {
     const tempAuthToken = AuthLocalStorage.getTempAuthToken()
 
-    if (tempAuthToken && tempAuthToken.trim() !== "") {
+    if (tempAuthToken && tempAuthToken.trim() !== '') {
       return tempAuthToken
     }
 
@@ -127,9 +126,8 @@ class AuthService {
     AuthLocalStorage.setAuthToken(token)
   }
 
-  getAuthTokenExpiresDate = (): number => (
+  getAuthTokenExpiresDate = (): number =>
     AuthLocalStorage.getAuthTokenExpiresDate()
-  )
 
   setAuthTokenExpiresDate = (authTokenExpiresDate: number) => {
     AuthLocalStorage.setAuthTokenExpiresDate(authTokenExpiresDate)

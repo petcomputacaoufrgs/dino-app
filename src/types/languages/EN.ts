@@ -66,6 +66,8 @@ export default class EN implements LanguageBase {
 
   MENU_LOGOUT = 'Logout'
 
+  MENU_CALENDAR = 'Calendar'
+
   SETTINGS_TITLE = 'Settings'
 
   SETTINGS_LANGUAGE = 'Choose Language'
@@ -185,4 +187,18 @@ export default class EN implements LanguageBase {
   CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
 
   DISCONNECTED = 'Disconnected'
+
+  SUNDAY_NAME = 'Sunday'
+
+  MONDAY_NAME = 'Monday'
+
+  TUESDAY_NAME = 'Tuesday'
+
+  WEDNESDAY_NAME = 'Webnesday'
+
+  THURSDAY_NAME = 'Thursday'
+
+  FRIDAY_NAME = 'Friday'
+
+  SATURDAY_NAME = 'Saturday'
 }

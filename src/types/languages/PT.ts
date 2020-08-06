@@ -76,6 +76,8 @@ export default class PT implements LanguageBase {
 
   MENU_NOTES = 'Notas'
 
+  MENU_CALENDAR = 'Calendário'
+
   NOTES_HEADER_IMAGE_DESC =
     'Imagem com um caderno de anotações com uma mão escrevendo.'
 
@@ -188,4 +190,18 @@ export default class PT implements LanguageBase {
   CANT_LOGIN_DISCONNECTED = 'Conexão com a internet necessária para login'
 
   DISCONNECTED = 'Desconectado'
+
+  SUNDAY_NAME = 'Domingo'
+
+  MONDAY_NAME = 'Segunda'
+
+  TUESDAY_NAME = 'Terça'
+
+  WEDNESDAY_NAME = 'Quarta'
+
+  THURSDAY_NAME = 'Quinta'
+
+  FRIDAY_NAME = 'Sexta'
+
+  SATURDAY_NAME = 'Sabádo'
 }

@@ -1,0 +1,15 @@
+.calendar__month__month_days__week_day_column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 1.2em;
+  width: 14.29%;
+  height: 100%;
+}
+
+.calendar__month__month_days__bottom_bar {
+  width: 100%;
+  height: 1px;
+  background-color: black;
+}

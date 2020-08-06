@@ -24,6 +24,7 @@
 }
 
 .bottom_navigation__component {
+  position: relative;
   width: 100%;
   height: calc(100% - 55px - 70px);
   overflow: scroll;

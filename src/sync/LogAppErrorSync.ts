@@ -25,8 +25,6 @@ class LogAppErrorSync implements BaseSync {
       LogAppErrorService.saveAll(model)
     }
   }
-
-  receive = async () => {}
 }
 
 export default new LogAppErrorSync()

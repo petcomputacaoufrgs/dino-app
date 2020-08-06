@@ -16,7 +16,9 @@ const PrivateRouterContext = createContext({
  * @description Gera os dados necessários para as rotas privadas e de login
  * @param props Propriedades do PrivateRouter
  */
-const PrivateRouterContextProvider: React.FC<PrivateRouterContextType> = (props): JSX.Element => {
+const PrivateRouterContextProvider: React.FC<PrivateRouterContextType> = (
+  props
+): JSX.Element => {
   const getHistory = (): History<LocationState> => {
     if (props.browserHistory) {
       return props.browserHistory

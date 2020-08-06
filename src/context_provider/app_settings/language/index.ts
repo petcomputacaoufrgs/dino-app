@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import LanguageBase from '../../../types/languages/LanguageBase'
-import LanguageContextType, { Language } from '../../../types/context_provider/LanguageContextType'
+import LanguageContextType, {
+  Language,
+} from '../../../types/context_provider/LanguageContextType'
 import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 

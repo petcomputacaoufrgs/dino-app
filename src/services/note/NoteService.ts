@@ -348,7 +348,10 @@ class NoteService {
     this.setShouldSync(true)
   }
 
-  updateNoteQuestion = async (oldQuestion: string, noteModel: NoteContextType) => {
+  updateNoteQuestion = async (
+    oldQuestion: string,
+    noteModel: NoteContextType
+  ) => {
     const noteDoc = await NoteDatabase.getByQuestion(oldQuestion)
 
     if (noteDoc) {

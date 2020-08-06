@@ -17,7 +17,6 @@ import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ContactService from '../contact/ContactService'
 
-
 class UserService {
   private setVersion = (version: number) => {
     UserLocalStorage.setVersion(version)

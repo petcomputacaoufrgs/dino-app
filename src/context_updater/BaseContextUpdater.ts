@@ -9,7 +9,7 @@ export default class BaseContextUpdater {
   protected callback?: () => void
 
   /**
-   * @description Adicionar a função de atualização de dados 
+   * @description Adicionar a função de atualização de dados
    * do ContextṔrovider
    */
   setCallback = (callback: () => void) => {

@@ -11,7 +11,7 @@ class AppSettingsWebSocketSubscriber implements BaseWebSocketSubscriber {
       callback: (model: AppSettingsWebSocketAlertUpdateModel) => {
         AppSettingsService.update(model.newVersion)
       },
-    }
+    },
   ]
 }
 

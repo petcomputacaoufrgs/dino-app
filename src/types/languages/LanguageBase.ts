@@ -95,4 +95,6 @@ export default interface LanguageBase {
   THURSDAY_NAME: string
   FRIDAY_NAME: string
   SATURDAY_NAME: string
+  NEXT_BUTTON_TEXT: string
+  PREVIOUS_BUTTON_TEXT: string
 }

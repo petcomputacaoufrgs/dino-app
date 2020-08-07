@@ -204,4 +204,8 @@ export default class PT implements LanguageBase {
   FRIDAY_NAME = 'Sexta'
 
   SATURDAY_NAME = 'Sabádo'
+
+  NEXT_BUTTON_TEXT = 'Próximo'
+
+  PREVIOUS_BUTTON_TEXT = 'Anterior'
 }

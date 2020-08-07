@@ -1,121 +1,55 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './styles.css'
+import React, { useState, useEffect } from 'react'
+import Carousel from 'nuka-carousel'
 import HorizontalPagionationProps from './props'
-
-const SCROLL_PORCENTAGE_TO_CHANGE = 1.4
+import { useLanguage } from '../../context_provider/app_settings'
+import { isMobile } from 'react-device-detect'
+import './styles.css'
 
 const HorizontalPagination: React.FC<HorizontalPagionationProps> = ({
   pages,
+  info,
+  onSlideChange
 }) => {
-  const mainRef = useRef({} as HTMLDivElement)
-  const [touchStart, setTouchStart] = useState(false)
-  const [isScrolling, setIsScrolling] = useState(false)
-  const [forcedScroll, setForcedScroll] = useState(false)
-  const [currentScrollLeft, setCurrentScrollLeft] = useState(0)
+  const language = useLanguage().current
+  
+  const [slideIndex, setSlideIndex] = useState(info.currentPage)
+  const [isUpdateCallback, setIsUpdateCallback] = useState(false)
 
-  useEffect(() => {
-    const changePage = (newScrollLeft: number): boolean => {
-      if (currentScrollLeft !== newScrollLeft) {
-        setCurrentScrollLeft(newScrollLeft)
-        mainRef.current.scrollLeft = newScrollLeft
-        return true
-      }
-
-      return false
-    }
-
-    const calculatePreviousPage = (scrollLeft: number, clientWidth: number) => {
-      let newScrollLeft = currentScrollLeft
-
-      while (scrollLeft >= newScrollLeft * SCROLL_PORCENTAGE_TO_CHANGE) {
-        newScrollLeft = newScrollLeft + clientWidth
-      }
-
-
-      return changePage(newScrollLeft)
-    }
-
-    const calculateNextPage = (scrollLeft: number, clientWidth: number): boolean => {
-      let newScrollLeft = currentScrollLeft
-
-      while (scrollLeft <= newScrollLeft * SCROLL_PORCENTAGE_TO_CHANGE) {
-        newScrollLeft = newScrollLeft - clientWidth
-      }
-
-      return changePage(newScrollLeft)
-    }
-
-    const calculatePage = () => {
-      setForcedScroll(true)
-
-      const scrollLeft = mainRef.current.scrollLeft
-      let clientWidth = mainRef.current.clientWidth
-
-      const pageChanged = calculatePreviousPage(scrollLeft, clientWidth)
-
-      if (!pageChanged) {
-        calculateNextPage(scrollLeft, clientWidth)
+  const handleSlideChange = (slide: number) => {
+    if (isUpdateCallback) {
+      setIsUpdateCallback(false)
+    } else {
+      setIsUpdateCallback(true)
+      setSlideIndex(slide)
+      if (onSlideChange) {
+        onSlideChange(slide)
       }
     }
-
-    let handleContainerTouchEnd = (e) => {
-      if (isScrolling) {
-        setIsScrolling(false)
-        setTouchStart(false)
-        calculatePage()
-      }
-    }
-
-    let handleContainerTouchStart = () => {
-      setTouchStart(true)
-    }
-
-    let handleCalendarScroll = (e) => {
-      if (forcedScroll) {
-        setForcedScroll(false)
-        return
-      }
-
-      if (touchStart) {
-        setIsScrolling(true)
-      } else {
-        console.log("returning")
-        mainRef.current.scrollLeft = currentScrollLeft
-      }
-    }
-
-    if (mainRef.current) {
-      mainRef.current.ontouchend = handleContainerTouchEnd
-      mainRef.current.ontouchstart = handleContainerTouchStart
-      mainRef.current.onscroll = handleCalendarScroll
-    }
-
-    const cleanBeforeUpdate = () => {
-      handleCalendarScroll = () => {}
-      handleContainerTouchEnd = () => {}
-    }
-
-    return cleanBeforeUpdate
-  })
-
-  const getTotalWidth = (): string => {
-    const totalWidth = pages.length * 100
-
-    return `${totalWidth}%`
   }
 
+  useEffect(() => {
+    setSlideIndex(info.currentPage)
+  }, [info])
+
   return (
-    <div className='horizontal_pagination' ref={mainRef}>
-      <div
-        className="horizontal_pagination__pages_container"
-        style={{ width: getTotalWidth() }}
+    <div className="horizontal_pagination">
+      <Carousel
+        withoutControls={isMobile}
+        afterSlide={handleSlideChange}
+        defaultControlsConfig={{
+          nextButtonText: language.NEXT_BUTTON_TEXT,
+          prevButtonText: language.PREVIOUS_BUTTON_TEXT,
+        }}
+        disableAnimation={isUpdateCallback}
+        slideIndex={slideIndex}
+        disableEdgeSwiping
       >
-        {pages.map((page, key) => (
-          <div className="horizontal_pagination__item" key={key}>
+        {pages.map((page, index) => (
+          <div className="horizontal_pagination__slide" key={index}>
             {page}
           </div>
         ))}
-      </div>
+      </Carousel>
     </div>
   )
 }

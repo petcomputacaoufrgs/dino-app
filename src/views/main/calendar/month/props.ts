@@ -1,4 +1,4 @@
 export default interface MonthProps {
-  name: string
-  year: number
+  date: Date
+  goToCurrentMonth: () => void
 }

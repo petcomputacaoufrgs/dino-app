@@ -2,8 +2,18 @@ import StringUtils from './StringUtils'
 import { DateTime } from 'luxon'
 import DinoAPIGeneralConstants from '../constants/dino_api/DinoAPIGeneralConstants'
 import LanguageBase from '../types/languages/LanguageBase'
+import moment from 'moment'
 
 class DateUtils {
+  
+  getLastMonth = (date: Date): Date => {
+    return moment(date).add(-1, 'M').startOf('month').toDate()
+  }
+
+  getNextMonth = (date: Date): Date => {
+    return moment(date).add(1, 'M').startOf('month').toDate()
+  }
+
   getDatetimeInMillis = (): number => {
     return DateTime.local()
       .setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE)
@@ -29,29 +39,29 @@ class DateUtils {
 
   getMonthName = (monthNumber: number, language: LanguageBase): string => {
     switch (monthNumber) {
-      case 1:
+      case 0:
         return language.JANUARY
-      case 2:
+      case 1:
         return language.FEBRUARY
-      case 3:
+      case 2:
         return language.MARCH
-      case 4:
+      case 3:
         return language.APRIL
-      case 5:
+      case 4:
         return language.MAY
-      case 6:
+      case 5:
         return language.JUNE
-      case 7:
+      case 6:
         return language.JULY
-      case 8:
+      case 7:
         return language.AUGUST
-      case 9:
+      case 8:
         return language.SEPTEMBER
-      case 10:
+      case 9:
         return language.OCTOBER
-      case 11:
+      case 10:
         return language.NOVEMBER
-      case 12:
+      case 11:
         return language.DECEMBER
       default:
         return language.INVALID_MONTH

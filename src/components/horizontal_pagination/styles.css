@@ -1,19 +1,18 @@
 .horizontal_pagination {
-  position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  overflow: hidden;
 }
 
-.horizontal_pagination__pages_container {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
+.horizontal_pagination .slider .slider-frame .slider-list {
+  height: 100% !important;
 }
 
-.horizontal_pagination__item {
+.horizontal_pagination .slider .slider-frame .slider-list .slider-slide {
+  height: 100% !important;
+}
+
+.horizontal_pagination__slide {
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
 }

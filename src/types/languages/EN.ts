@@ -201,4 +201,8 @@ export default class EN implements LanguageBase {
   FRIDAY_NAME = 'Friday'
 
   SATURDAY_NAME = 'Saturday'
+
+  NEXT_BUTTON_TEXT = 'Next'
+
+  PREVIOUS_BUTTON_TEXT = 'Previous'
 }

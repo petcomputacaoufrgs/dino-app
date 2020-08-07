@@ -1,1 +1,3 @@
-export default interface MonthDaysProps {}
+export default interface MonthDaysProps {
+    date: Date
+}

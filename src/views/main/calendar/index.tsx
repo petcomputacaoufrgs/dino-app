@@ -5,19 +5,55 @@ import HorizontalPagination from '../../../components/horizontal_pagination'
 import DateUtils from '../../../utils/DateUtils'
 import './styles.css'
 
+const HALF_MONTH_RANGE = 20
+
 const Calendar: React.FC = () => {
-  const [slideDate, setSlideDate] = useState(new Date())
+  const [mainDate, setMainDate] = useState(new Date())
+  const [slide, setSlide] = useState(HALF_MONTH_RANGE)
+  const [animate, setAnimate] = useState(false)
 
   const handleSlideChange = (newSlide: number) => {
-    if (newSlide > 2) {
-      setSlideDate(DateUtils.getNextMonth(slideDate))
+    const indexBasedInMainSlide = newSlide - HALF_MONTH_RANGE
+
+    if (animate) {
+      setAnimate(false)
+    }
+
+    if (indexBasedInMainSlide > (HALF_MONTH_RANGE/2)) {
+      setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
+      setSlide(HALF_MONTH_RANGE)
+    } else if (indexBasedInMainSlide < (HALF_MONTH_RANGE/2 * -1)){
+      setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
+      setSlide(HALF_MONTH_RANGE)
     } else {
-      setSlideDate(DateUtils.getLastMonth(slideDate))
+      setSlide(newSlide)
     }
   }
 
+  const getMonthElementList = () : JSX.Element[] => {
+    const months: JSX.Element[] = []
+
+    let start = HALF_MONTH_RANGE * -1
+
+    while (start <= HALF_MONTH_RANGE) {
+      months.push(getMonthElement(start))
+      start++
+    }
+
+    return months
+  }
+
+  const getMonthElement = (diff: number): JSX.Element => (
+    <Month
+      date={DateUtils.addMonth(mainDate, diff)}
+      goToCurrentMonth={goToCurrentMonth}
+    />
+  )
+
   const goToCurrentMonth = () => {
-    setSlideDate(new Date())
+    setMainDate(new Date())
+    setAnimate(true)
+    setSlide(HALF_MONTH_RANGE)
   }
 
   return (
@@ -25,27 +61,9 @@ const Calendar: React.FC = () => {
       <div className="calendar">
         <HorizontalPagination
           onSlideChange={handleSlideChange}
-          initialSlide={2}
-          fixInitialSlide={true}
-          pages={[
-            <Month
-              date={DateUtils.getLastMonth(DateUtils.getLastMonth(slideDate))}
-              goToCurrentMonth={goToCurrentMonth}
-            />,
-            <Month
-              date={DateUtils.getLastMonth(slideDate)}
-              goToCurrentMonth={goToCurrentMonth}
-            />,
-            <Month date={slideDate} goToCurrentMonth={goToCurrentMonth} />,
-            <Month
-              date={DateUtils.getNextMonth(slideDate)}
-              goToCurrentMonth={goToCurrentMonth}
-            />,
-            <Month
-              date={DateUtils.getNextMonth(DateUtils.getNextMonth(slideDate))}
-              goToCurrentMonth={goToCurrentMonth}
-            />,
-          ]}
+          slide={slide}
+          dontAnimate={!animate}
+          pages={getMonthElementList()}
         />
       </div>
       <AddButton />

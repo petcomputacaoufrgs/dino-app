@@ -14,6 +14,10 @@ class DateUtils {
     return moment(date).add(1, 'M').startOf('month').toDate()
   }
 
+  addMonth = (date: Date, diff: number): Date => {
+    return moment(date).add(diff, 'M').startOf('month').toDate()
+  }
+
   getDatetimeInMillis = (): number => {
     return DateTime.local()
       .setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE)

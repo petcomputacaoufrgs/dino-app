@@ -4,8 +4,8 @@ import WeekDayColumn from './week_day_column'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import { Calendar } from 'calendar'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
-import './styles.css'
 import DateUtils from '../../../../../utils/DateUtils'
+import './styles.css'
 
 const DAYS_IN_VIEW = 42
 

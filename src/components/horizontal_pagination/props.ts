@@ -1,6 +1,6 @@
 export default interface HorizontalPagionationProps {
   pages: JSX.Element[]
-  initialSlide: number
-  fixInitialSlide?: boolean
+  slide?: number
+  dontAnimate?: boolean
   onSlideChange?: (slide: number) => void
 }

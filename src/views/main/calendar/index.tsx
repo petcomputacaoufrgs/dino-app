@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Month from './month'
 import AddButton from './add_button'
 import HorizontalPagination from '../../../components/horizontal_pagination'
 import DateUtils from '../../../utils/DateUtils'
-import MenuContextUpdater from '../../../context_updater/MenuContextUpdater'
 import './styles.css'
 
-const HALF_MONTH_RANGE = 15
+const HALF_MONTH_RANGE = 10
+const UPDATE_MARGIN = 5
 
 const Calendar: React.FC = () => {
   const [mainDate, setMainDate] = useState(new Date())
   const [slide, setSlide] = useState(HALF_MONTH_RANGE)
   const [animate, setAnimate] = useState(false)
   
-  useEffect(() => {
-    MenuContextUpdater.update(<>OI</>)
-  })
-
   const handleSlideChange = (newSlide: number) => {
     const indexBasedInMainSlide = newSlide - HALF_MONTH_RANGE
 
@@ -24,10 +20,10 @@ const Calendar: React.FC = () => {
       setAnimate(false)
     }
 
-    if (indexBasedInMainSlide > 4) {
+    if (indexBasedInMainSlide > UPDATE_MARGIN) {
       setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
       setSlide(HALF_MONTH_RANGE)
-    } else if (indexBasedInMainSlide < -4){
+    } else if (indexBasedInMainSlide < UPDATE_MARGIN * -1){
       setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
       setSlide(HALF_MONTH_RANGE)
     } else {

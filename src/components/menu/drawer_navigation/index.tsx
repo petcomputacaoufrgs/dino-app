@@ -40,7 +40,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
 
   const onClick = (item: MenuItemViewModel) => {
     item.onClick()
-    setTimeout(onClose, 100)
+    onClose()
   }
 
   const isLastGroup = (groupIndex: number): boolean => (

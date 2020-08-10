@@ -48,6 +48,7 @@ const HorizontalPagination: React.FC<HorizontalPagionationProps> = ({
         speed={500}
         afterChange={update}
         initialSlide={slide ? slide : 0}
+        lazyLoad="progressive"
       >
         {pages.map((Page, index) => (
           <div className="horizontal_pagination__slide" key={index}>

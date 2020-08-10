@@ -15,13 +15,20 @@ const HorizontalPagination: React.FC<HorizontalPagionationProps> = ({
   const [updateCount, setUpdateCount] = useState(0)
 
   const update = (currentSlide: number) => {
-    if (onSlideChange) {
+    if (slide) {
       if (!SLIDE_UPDATED) {
         SLIDE_UPDATED = true
         setUpdateCount(updateCount + 1)
-        onSlideChange(currentSlide)
+        if (onSlideChange) {
+          onSlideChange(currentSlide)
+        }
       } else {
         SLIDE_UPDATED = false
+      }
+    } else {
+      sliderRef.current.slickGoTo(currentSlide, dontAnimate)
+      if (onSlideChange) {
+        onSlideChange(currentSlide)
       }
     }
   }
@@ -40,11 +47,11 @@ const HorizontalPagination: React.FC<HorizontalPagionationProps> = ({
         infinite={false}
         speed={500}
         afterChange={update}
-        initialSlide={slide}
+        initialSlide={slide ? slide : 0}
       >
-        {pages.map((page, index) => (
+        {pages.map((Page, index) => (
           <div className="horizontal_pagination__slide" key={index}>
-            {page}
+            <Page />
           </div>
         ))}
       </Slider>

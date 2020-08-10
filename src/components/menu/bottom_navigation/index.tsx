@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import BottomNavigationProps from './props'
-import MenuItemViewModel from '../model/MenuItemViewModel'
+import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import DrawerNavigation from '../drawer_navigation'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { default as MaterialBottomNavigation } from '@material-ui/core/BottomNavigation'

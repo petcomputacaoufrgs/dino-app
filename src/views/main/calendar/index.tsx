@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Month from './month'
 import AddButton from './add_button'
 import HorizontalPagination from '../../../components/horizontal_pagination'
 import DateUtils from '../../../utils/DateUtils'
+import MenuContextUpdater from '../../../context_updater/MenuContextUpdater'
 import './styles.css'
 
 const HALF_MONTH_RANGE = 20
@@ -11,6 +12,10 @@ const Calendar: React.FC = () => {
   const [mainDate, setMainDate] = useState(new Date())
   const [slide, setSlide] = useState(HALF_MONTH_RANGE)
   const [animate, setAnimate] = useState(false)
+  
+  useEffect(() => {
+    //MenuContextUpdater.update(<>OI</>)
+  })
 
   const handleSlideChange = (newSlide: number) => {
     const indexBasedInMainSlide = newSlide - HALF_MONTH_RANGE
@@ -30,8 +35,8 @@ const Calendar: React.FC = () => {
     }
   }
 
-  const getMonthElementList = () : JSX.Element[] => {
-    const months: JSX.Element[] = []
+  const getMonthElementList = () : React.FC[] => {
+    const months: React.FC[] = []
 
     let start = HALF_MONTH_RANGE * -1
 
@@ -43,11 +48,13 @@ const Calendar: React.FC = () => {
     return months
   }
 
-  const getMonthElement = (diff: number): JSX.Element => (
-    <Month
-      date={DateUtils.addMonth(mainDate, diff)}
-      goToCurrentMonth={goToCurrentMonth}
-    />
+  const getMonthElement = (diff: number): React.FC => (
+    () => (
+      <Month
+        date={DateUtils.addMonth(mainDate, diff)}
+        goToCurrentMonth={goToCurrentMonth}
+      />
+    )
   )
 
   const goToCurrentMonth = () => {

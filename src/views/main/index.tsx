@@ -20,12 +20,12 @@ import HistoryService from '../../services/history/HistoryService'
 import Home from './home'
 import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
-import MenuItemViewModel from '../../components/menu/model/MenuItemViewModel'
 import Notes from './notes'
 import NotFound from '../not_found/index'
 import NotesContextProvider from '../../context_provider/notes'
 import GlossaryContextProvider from '../../context_provider/glossary'
 import Calendar from './calendar'
+import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 
 /**
  * @description Tela principal da aplicação
@@ -151,7 +151,7 @@ const Main = (): JSX.Element => {
         />
         <PrivateRoute
           path={PathConstants.CALENDAR}
-          component={() => <Calendar />}
+          component={Calendar}
         />
         <PrivateRoute path={'/'} component={NotFound} />
       </Switch>

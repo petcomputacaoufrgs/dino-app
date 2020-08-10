@@ -21,13 +21,10 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import { useMenu } from '../../../context_provider/menu'
 import './styles.css'
 
 const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
   const classes = useStyles()
-
-  //const menuContext = useMenu()
 
   const theme = useTheme()
 
@@ -113,14 +110,9 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
         >
           <MenuIcon />
         </IconButton>
-        <div className='drawer_menu_app_bar'>
-        </div>
       </Toolbar>
     </AppBar>
   )
-
-  //          {menuContext.component}
-
 
   const renderDrawer = (): JSX.Element => (
     <Drawer

@@ -6,7 +6,7 @@ import DateUtils from '../../../utils/DateUtils'
 import MenuContextUpdater from '../../../context_updater/MenuContextUpdater'
 import './styles.css'
 
-const HALF_MONTH_RANGE = 20
+const HALF_MONTH_RANGE = 15
 
 const Calendar: React.FC = () => {
   const [mainDate, setMainDate] = useState(new Date())
@@ -14,7 +14,7 @@ const Calendar: React.FC = () => {
   const [animate, setAnimate] = useState(false)
   
   useEffect(() => {
-    //MenuContextUpdater.update(<>OI</>)
+    MenuContextUpdater.update(<>OI</>)
   })
 
   const handleSlideChange = (newSlide: number) => {
@@ -24,10 +24,10 @@ const Calendar: React.FC = () => {
       setAnimate(false)
     }
 
-    if (indexBasedInMainSlide > (HALF_MONTH_RANGE/2)) {
+    if (indexBasedInMainSlide > 4) {
       setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
       setSlide(HALF_MONTH_RANGE)
-    } else if (indexBasedInMainSlide < (HALF_MONTH_RANGE/2 * -1)){
+    } else if (indexBasedInMainSlide < -4){
       setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
       setSlide(HALF_MONTH_RANGE)
     } else {

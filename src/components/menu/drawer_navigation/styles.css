@@ -16,10 +16,3 @@
   background-color: #b32e55;
   height: 55px;
 }
-
-.drawer_menu_app_bar {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}

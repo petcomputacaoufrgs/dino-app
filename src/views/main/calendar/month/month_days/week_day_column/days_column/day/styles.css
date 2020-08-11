@@ -12,6 +12,18 @@
   background-color: transparent;
   margin: 0px;
   outline: none !important;
+  background-position: center;
+  transition: background 0.8s;
+}
+
+.calendar__month__month_days__week_day_column__days_column__box:hover {
+  background: white radial-gradient(circle, transparent 1%, white 1%) center/15000%;
+}
+
+.calendar__month__month_days__week_day_column__days_column__box:active {
+  background-color: #b9b9a2;
+  background-size: 100%;
+  transition: background 0s;
 }
 
 .calendar__month__month_days__week_day_column__days_column__box__day {

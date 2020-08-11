@@ -5,7 +5,15 @@ import LanguageBase from '../types/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {
-  
+
+  isEqualDay = (d1: Date, d2: Date): boolean => (
+    d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
+  )
+
+  isEqualMonth = (d1: Date, d2: Date): boolean => (
+    d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
+  )
+
   getLastMonth = (date: Date): Date => {
     return moment(date).add(-1, 'M').startOf('month').toDate()
   }

@@ -1,4 +1,6 @@
+import DayViewModel from "../../../../../../../types/calendar/DayViewModel";
+
 export default interface DayColumnProps {
-  days: number[]
+  days: DayViewModel[]
   first?: boolean
 }

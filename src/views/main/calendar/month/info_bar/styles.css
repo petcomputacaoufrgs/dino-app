@@ -1,17 +1,15 @@
 .calendar__month__info_bar {
   width: 100%;
-  height: 10%;
+  height: 8%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 20px;
-  padding-right: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .calendar__month__info_bar h1 {
-  font-size: 1.4em;
+  font-size: 1.3em;
   margin-bottom: 0;
   margin-right: 10px;
   width: 50%;
@@ -19,11 +17,16 @@
 
 .calendar__month__info_bar_buttons {
   width: 50%;
+  height: 100%;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
-.calendar__month__info_bar_buttons button {
-  margin-left: 5px;
-  margin-right: 5px;
+.calendar__month__info_bar_buttons__today_button .MuiIconButton-root {
+  padding: 0;
+}
+
+.calendar__month__info_bar_buttons__today_button__image {
+  height: 20px;
 }

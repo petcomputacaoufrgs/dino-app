@@ -5,14 +5,14 @@ import HorizontalPagination from '../../../components/horizontal_pagination'
 import DateUtils from '../../../utils/DateUtils'
 import './styles.css'
 
-const HALF_MONTH_RANGE = 10
-const UPDATE_MARGIN = 5
+const HALF_MONTH_RANGE = 7
+const UPDATE_MARGIN = 3
 
 const Calendar: React.FC = () => {
   const [mainDate, setMainDate] = useState(new Date())
   const [slide, setSlide] = useState(HALF_MONTH_RANGE)
   const [animate, setAnimate] = useState(false)
-  
+
   const handleSlideChange = (newSlide: number) => {
     const indexBasedInMainSlide = newSlide - HALF_MONTH_RANGE
 
@@ -23,7 +23,7 @@ const Calendar: React.FC = () => {
     if (indexBasedInMainSlide > UPDATE_MARGIN) {
       setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
       setSlide(HALF_MONTH_RANGE)
-    } else if (indexBasedInMainSlide < UPDATE_MARGIN * -1){
+    } else if (indexBasedInMainSlide < UPDATE_MARGIN * -1) {
       setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
       setSlide(HALF_MONTH_RANGE)
     } else {
@@ -31,7 +31,7 @@ const Calendar: React.FC = () => {
     }
   }
 
-  const getMonthElementList = () : React.FC[] => {
+  const getMonthElementList = (): React.FC[] => {
     const months: React.FC[] = []
 
     let start = HALF_MONTH_RANGE * -1
@@ -44,14 +44,16 @@ const Calendar: React.FC = () => {
     return months
   }
 
-  const getMonthElement = (diff: number): React.FC => (
-    () => (
+  const getMonthElement = (diff: number): React.FC => () => {
+    const date = DateUtils.addMonth(mainDate, diff)
+    return (
       <Month
-        date={DateUtils.addMonth(mainDate, diff)}
+        date={date}
         goToCurrentMonth={goToCurrentMonth}
+        isCurrentMonth={DateUtils.isEqualMonth(date, new Date())}
       />
     )
-  )
+  }
 
   const goToCurrentMonth = () => {
     setMainDate(new Date())

@@ -43,10 +43,9 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
     onClose()
   }
 
-  const isLastGroup = (groupIndex: number): boolean => (
+  const isLastGroup = (groupIndex: number): boolean =>
     props.groupedItems.length - 1 === groupIndex
-  )
-    
+
   const renderContent = (): JSX.Element => {
     if (props.component) {
       return (

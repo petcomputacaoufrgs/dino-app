@@ -149,10 +149,7 @@ const Main = (): JSX.Element => {
             </GlossaryContextProvider>
           )}
         />
-        <PrivateRoute
-          path={PathConstants.CALENDAR}
-          component={Calendar}
-        />
+        <PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
         <PrivateRoute path={'/'} component={NotFound} />
       </Switch>
     )

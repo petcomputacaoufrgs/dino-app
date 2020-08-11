@@ -1,3 +1,4 @@
 export default interface MonthDaysProps {
-    date: Date
+  date: Date
+  isCurrentMonth: boolean
 }

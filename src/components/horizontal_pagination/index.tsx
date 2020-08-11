@@ -9,7 +9,7 @@ const HorizontalPagination: React.FC<HorizontalPagionationProps> = ({
   pages,
   slide,
   dontAnimate,
-  onSlideChange
+  onSlideChange,
 }) => {
   const sliderRef = useRef({} as Slider)
   const [updateCount, setUpdateCount] = useState(0)
@@ -45,7 +45,7 @@ const HorizontalPagination: React.FC<HorizontalPagionationProps> = ({
         ref={sliderRef}
         dots={false}
         infinite={false}
-        speed={500}
+        speed={150}
         afterChange={update}
         initialSlide={slide ? slide : 0}
         lazyLoad="progressive"

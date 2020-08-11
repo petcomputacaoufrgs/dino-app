@@ -1,4 +1,4 @@
 export default interface InfoBarProps {
-  date: Date,
+  date: Date
   goToCurrentMonth: () => void
 }

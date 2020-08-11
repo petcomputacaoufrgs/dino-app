@@ -12,12 +12,12 @@
   margin-bottom: 0.2em;
   width: 100%;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.7em;
 }
 
 .calendar__month__month_days__week_day_column__title__separation_bar {
   width: 1px;
-  height: 0.6em;
-  background-color: black;
+  height: 0.4em;
+  background-color: #b9b9a2;
   align-self: flex-end;
 }

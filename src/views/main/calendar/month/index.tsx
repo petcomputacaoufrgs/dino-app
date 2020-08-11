@@ -4,11 +4,11 @@ import InfoBar from './info_bar'
 import MonthDays from './month_days'
 import './styles.css'
 
-const Month: React.FC<MonthProps> = ({ date, goToCurrentMonth }) => {
+const Month: React.FC<MonthProps> = ({ date, goToCurrentMonth, isCurrentMonth }) => {
   return (
     <div className="month">
       <InfoBar date={date} goToCurrentMonth={goToCurrentMonth} />
-      <MonthDays date={date} />
+      <MonthDays date={date} isCurrentMonth={isCurrentMonth}/>
     </div>
   )
 }

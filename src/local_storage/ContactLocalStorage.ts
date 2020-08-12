@@ -1,7 +1,7 @@
-import LS_Constants from '../../../constants/LocalStorageKeysConstants'
-import BaseLocalStorage from '../../../local_storage/BaseLocalStorage'
-import ContactModel from '../../../types/contact/ContactModel'
-import StrU from '../../../utils/StringUtils'
+import LS_Constants from '../constants/LocalStorageKeysConstants'
+import BaseLocalStorage from './BaseLocalStorage'
+import ContactModel from '../types/contact/ContactModel'
+import StrU from '../utils/StringUtils'
 
 class ContactsLocalStorage extends BaseLocalStorage {
 

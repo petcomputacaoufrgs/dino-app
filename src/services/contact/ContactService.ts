@@ -11,29 +11,22 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AgentStatus from '../../types/agent/AgentStatus'
 import DinoAgentService from '../../agent/DinoAgentService'
 import Server from './ContactServerService'
+import ContactContextUpdater from '../../context_updater/ContactContextUpdater'
+
 
 class ContactsService {
 
-  getItems = (): ContactModel[]       => LS.getItems()
-  setItems = (items: ContactModel[])  => LS.setItems(items)
-  getVersion = (): number | undefined => LS.getVersion()
-  setVersion = (version : number)     => LS.setVersion(version)
-  
-  pushToUpdate = (frontId: number)    => LS.pushUpdateOp(frontId)
+  getItems = (): ContactModel[]         => LS.getItems()
+  setItems = (items: ContactModel[])    => LS.setItems(items)
+  getVersion = (): number | undefined   => LS.getVersion()
+  setVersion = (version : number)       => LS.setVersion(version)
+  pushToUpdate = (frontId: number)      => LS.pushUpdateOp(frontId)
+  cleanUpdateQueue = ()                 => LS.cleanOpQueue(LS_Constants.CONTACTS_UPDATE)
+  cleanDeleteQueue = ()                 => LS.cleanOpQueue(LS_Constants.CONTACTS_DEL)
+  removeUserData = ()                   => LS.removeAllItems()
+  getIdsToUpdate = (): number[]         => LS.getOpIDs(LS_Constants.CONTACTS_UPDATE)
+  setIdsToUpdate = (ids: Array<number>) => LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, ids)
 
-  pushToDelete = (deletedID: number) => {
-
-    LS.pushDeleteOp(deletedID)
-
-    const idsToUpdate = this.getIdsToUpdate()
-    const idToUpdateIndex = idsToUpdate.findIndex(id => id === deletedID)
-
-    if(idToUpdateIndex > -1) {
-      idsToUpdate.splice(idToUpdateIndex, 1)
-      this.setIdsToUpdate(idsToUpdate)
-    }
-  }
-  
   updateLocal = async (version: number): Promise<void> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
 
@@ -54,6 +47,8 @@ class ContactsService {
               return c
           })))
 
+          ContactContextUpdater.update()
+
           return
         }
       } catch {
@@ -62,7 +57,22 @@ class ContactsService {
     }
   }
 
+  pushToDelete = (deletedID: number) => {
+
+    LS.pushDeleteOp(deletedID)
+
+    const idsToUpdate = this.getIdsToUpdate()
+    const idToUpdateIndex = idsToUpdate.findIndex(id => id === deletedID)
+
+    if(idToUpdateIndex > -1) {
+      idsToUpdate.splice(idToUpdateIndex, 1)
+      this.setIdsToUpdate(idsToUpdate)
+    }
+  }
+  
   shouldSync = (): boolean => {
+    console.log(this.getIdsToUpdate().length > 0 || this.getIdsToDelete().length > 0)
+
     return this.getIdsToUpdate().length > 0 || this.getIdsToDelete().length > 0
   }
 
@@ -86,18 +96,6 @@ class ContactsService {
     return 0
   }
 
-  cleanUpdateQueue = () => {
-    LS.cleanOpQueue(LS_Constants.CONTACTS_UPDATE)
-  }
-
-  cleanDeleteQueue = () => {
-    LS.cleanOpQueue(LS_Constants.CONTACTS_DEL)
-  }
-  
-  removeUserData = () => {
-    LS.removeAllItems()
-  }
-  
   addContact = async (item: ContactModel) => {
     
     const response = await Server.saveContact(item)
@@ -110,16 +108,26 @@ class ContactsService {
     items.push(item)
     this.setItems(items)
 
-    console.log(response)
+    ContactContextUpdater.update()
+
   }
   
   deleteContact = (deletedFrontID: number) => {
     const items = this.getItems()
     const index = items.findIndex(item => item.frontId === deletedFrontID)
-    const item = items.splice(index, 1)[0]
-    if(item.id)
-      Server.deleteContact(item.id)
-    this.setItems(items)
+    console.log(index)
+
+    if (index > -1) {
+      console.log('achou')
+      const item = items.splice(index, 1)[0]
+      console.log(item)
+
+      if(item.id)
+        Server.deleteContact(item.id)
+      this.setItems(items)
+
+      ContactContextUpdater.update()
+    }
 
   }
   
@@ -135,6 +143,8 @@ class ContactsService {
 
       Server.editContact(edited)
       }
+
+      ContactContextUpdater.update()
     }
   }
   
@@ -194,14 +204,6 @@ class ContactsService {
         return language.CONTACTS_MOBILE_PHONE
       }
     }
-    
-  getIdsToUpdate = (): number[] => {
-    return LS.getOpIDs(LS_Constants.CONTACTS_UPDATE)
-  }
-
-  setIdsToUpdate = (ids: Array<number>) => {
-    LS.setOpIDs(LS_Constants.CONTACTS_UPDATE, ids)
-  }
     
   getContactsToUpdate = (contacts: ContactModel[], idsToUpdate: number[]): {toAdd: ContactModel[]; toEdit: ContactModel[];} => {
     return contacts.filter(contact => idsToUpdate.includes(contact.frontId))

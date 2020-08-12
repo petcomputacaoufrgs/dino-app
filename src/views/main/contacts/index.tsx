@@ -7,27 +7,27 @@ import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import AddContactButton from './contact_button_add'
 import ContactService from '../../../services/contact/ContactService'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { useContacts } from '../../../context_provider/contact'
+
 
 const Contacts = (): JSX.Element => {
   const language = useLanguage().current
 
+  const items = useContacts().items
   const [add, setAdd] = useState(0)
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState(new Array<ContactModel>())
+  const [searchResults, setSearchResults] = useState([] as ContactModel[])
 
   const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
     setSearchTerm(event.target.value)
   }
 
   useEffect(() => {
-    if (!add) {
-      const items = ContactService.getItems()
       const results = items.filter((item) =>
         StringUtils.contains(item.name, searchTerm)
       )
       setSearchResults(results)
-    }
-  }, [searchTerm, add])
+  }, [items, searchTerm])
 
   return (
     <div>

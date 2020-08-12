@@ -13,7 +13,6 @@ class ContactSync implements BaseSync {
   
   receive = async (): Promise<void> => {
     const serverVersion = await ServerService.getVersion()
-
     if (serverVersion !== undefined) {
       await Service.updateLocal(serverVersion)
     }

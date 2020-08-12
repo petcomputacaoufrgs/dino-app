@@ -24,6 +24,7 @@ import Notes from './notes'
 import NotFound from '../not_found/index'
 import NotesContextProvider from '../../context_provider/notes'
 import GlossaryContextProvider from '../../context_provider/glossary'
+import ContactsContextProvider from '../../context_provider/contact'
 
 /**
  * @description Tela principal da aplicação
@@ -118,7 +119,11 @@ const Main = (): JSX.Element => {
         <PrivateRoute
           exact
           path={PathConstants.CONTACTS}
-          component={Contacts}
+          component={() => (
+            <ContactsContextProvider>
+              <Contacts />
+            </ContactsContextProvider>
+          )}
         />
         <PrivateRoute
           exact

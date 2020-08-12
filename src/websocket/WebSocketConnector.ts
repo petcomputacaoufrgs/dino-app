@@ -25,7 +25,7 @@ class WebSocketConnector {
     if (AuthService.isAuthenticated()) {
       this.socket = new SockJS(this.getSocketBaseURL())
       this.stompClient = Stomp.over(this.socket)
-      this.muteConnectionLogs()
+      //this.muteConnectionLogs() //esconde os logs do socket
       this.stompClient.connect({}, this.subscribe)
     }
   }

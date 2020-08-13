@@ -16,7 +16,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
 
   const [selectecItemIndex, setSelectedItemIndex] = useState(props.selectedItem)
 
-  const onChange = (
+  const handleChange = (
     event: React.ChangeEvent<{}>,
     indexNewSelectedItem: string
   ) => {
@@ -45,7 +45,7 @@ const BottomNavigation = (props: BottomNavigationProps) => {
     props.hideBottomBar ? props.groupedItems : props.groupedItems.slice(1)
 
   const renderMainItems = (): JSX.Element => (
-    <MaterialBottomNavigation value={selectecItemIndex} onChange={onChange}>
+    <MaterialBottomNavigation value={selectecItemIndex} onChange={handleChange}>
       {getFirstMenuItemsGroup().map((item, index) => (
         <BottomNavigationAction
           key={index}

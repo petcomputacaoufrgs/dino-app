@@ -4,20 +4,12 @@
   overflow: hidden;
 }
 
-.horizontal_pagination .slick-slider {
-  height: 100% !important;
+.horizontal_pagination .react-swipe-container.carousel {
+  height: 100%;
 }
 
-.horizontal_pagination .slick-slider .slick-list {
-  height: 100% !important;
-}
-
-.horizontal_pagination .slick-slider .slick-list .slick-track {
-  height: 100% !important;
-}
-
-.horizontal_pagination .slick-slide {
-  position: relative;
+.horizontal_pagination .react-swipe-container.carousel > div {
+  height: 100%;
 }
 
 .horizontal_pagination__slide {

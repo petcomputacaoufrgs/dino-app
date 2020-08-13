@@ -39,8 +39,8 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
   }
 
   const onClick = (item: MenuItemViewModel) => {
-    item.onClick()
     onClose()
+    item.onClick()
   }
 
   const isLastGroup = (groupIndex: number): boolean =>

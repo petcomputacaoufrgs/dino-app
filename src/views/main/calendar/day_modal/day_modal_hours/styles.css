@@ -32,6 +32,11 @@
     transform: translate3d(0,-10px,0);
 }
 
+.calendar__day__modal__hours__hours_list__line:last-child > .calendar__day__modal__hours__hours_list__line__hour {
+    height: 50px;
+    transform: translate3d(0px, -5px, 0px);
+}
+
 .calendar__day__modal__hours__hours_list__line__hour p {
     margin-bottom: 0;
     height: 20px;
@@ -48,6 +53,10 @@
     padding-left: 10px;
     padding-right: 5px;
     transform: translate3d(-5px,0,0);
+}
+
+.calendar__day__modal__hours__hours_list__line:last-child > .calendar__day__modal__hours__hours_list__line__events{
+    border-bottom: 0;
 }
 
 .calendar__day__modal__hours__hours_list__line__events__item {

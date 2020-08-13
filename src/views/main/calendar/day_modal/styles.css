@@ -1,7 +1,8 @@
 .calendar__day__modal.mobile .MuiDialog-container.MuiDialog-scrollPaper {
     position: absolute;
     top: 55px;
-    bottom: 70px;
+    margin-bottom: 70px;
+    height: calc(100% - 125px);
     left: 0;
     right: 0;
 }

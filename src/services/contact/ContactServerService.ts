@@ -52,14 +52,13 @@ class ContactServerService {
 
           if(sucessfulAdd && sucessfulEdit) 
             Service.cleanUpdateQueue()
-          else Service.setContactsToUpdate(contactsToUpdate.toEdit.concat(contactsToUpdate.toAdd))
         }
 
         const idsToDelete = Service.getIdsToDelete()
 
         if(idsToDelete.length > 0) {
 
-          const version = await this.deleteContacts(idsToDelete)
+          const version = await this.deleteContacts(Service.getContactsToDelete())
 
           if (version !== undefined) {
             Service.setVersion(version)
@@ -122,7 +121,7 @@ class ContactServerService {
         LogAppErrorService.saveError(e)
       }
     }
-
+    
     Service.pushToUpdate(contactModel.frontId)
   }
 

@@ -25,9 +25,7 @@ class GlossaryService {
     if (newVersion !== this.getVersion()) {
       const newItens = await this.getAPIItems()
 
-      if (newItens === undefined) {
-        return
-      }
+      if (newItens === undefined) return
 
       this.setVersion(newVersion)
       this.setItems(StringUtils.sortByAttr(newItens, 'title'))

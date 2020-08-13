@@ -6,6 +6,10 @@ import moment from 'moment'
 
 class DateUtils {
 
+  getEndOfDay = (date: Date): Date => (
+    moment(date).endOf('day').toDate()
+  )
+
   isEqualDay = (d1: Date, d2: Date): boolean => (
     d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
   )

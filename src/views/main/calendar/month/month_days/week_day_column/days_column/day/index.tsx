@@ -12,13 +12,10 @@ const Day: React.FC<DayProps> = ({ day }) => {
   )
 
   const handleDayClick = (day: DayViewModel) => {
-    console.log("click")
-    console.log(day.number)
     setDialogOpen(true)
   }
 
   const handleClose = () => {
-    console.log("close")
     setDialogOpen(false)
   }
 
@@ -36,7 +33,7 @@ const Day: React.FC<DayProps> = ({ day }) => {
         <div className="calendar__month__month_days__week_day_column__days_column__box__day">
           <div className="calendar__month__month_days__week_day_column__days_column__box__day__title">
             <div className={getBoxClass()}>
-              <h3>{day.number}</h3>
+              <h3>{day.date.getDate()}</h3>
             </div>
           </div>
           <div className="calendar__month__month_days__week_day_column__days_column__box__day__events">

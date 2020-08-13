@@ -11,6 +11,7 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
+    padding-top: 50px;
 }
 
 .calendar__day__modal__hours__hours_list__line {
@@ -43,9 +44,9 @@
 }
 
 .calendar__day__modal__hours__hours_list__line__events {
-    min-width: calc(84% + 5px);
     width: calc(84% + 5px);
     min-height: 40px;
+    max-height: 40px;
     margin-right: -5px;
     display: flex;
     flex-direction: row;
@@ -60,6 +61,29 @@
 }
 
 .calendar__day__modal__hours__hours_list__line__events__item {
-    overflow: hidden;
-    width: auto;
+    font-size: 0.8em;
+    margin-left: 2px;
+    color: white;
+    padding: 2px;
+    padding-left: 6px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-weight: 700;
+    border: 1px white solid; 
+    border-radius: 4px;
+    overflow-wrap: anywhere;
+}
+
+.calendar__day__modal__hours__hours_list__line__events__item p {
+    margin-bottom: 0;
+}
+
+.calendar__day__modal__now_line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    width: calc(84% + 5px);
+    margin-left: calc(16% - 5px);
 }

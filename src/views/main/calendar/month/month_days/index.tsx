@@ -5,8 +5,8 @@ import { useLanguage } from '../../../../../context_provider/app_settings'
 import { Calendar } from 'calendar'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import DateUtils from '../../../../../utils/DateUtils'
-import './styles.css'
 import DayViewModel from '../../../../../types/calendar/DayViewModel'
+import './styles.css'
 
 const DAYS_IN_VIEW = 42
 
@@ -46,8 +46,8 @@ const MonthDays: React.FC<MonthDaysProps> = ({ date, isCurrentMonth }) => {
       .map(
         (day) =>
           ({
-            number: day.getDate(),
             isToday: isCurrentMonth && DateUtils.isEqualDay(day, now),
+            date: day,
             events:
               isCurrentMonth && DateUtils.isEqualDay(day, now)
                 ? [
@@ -55,73 +55,92 @@ const MonthDays: React.FC<MonthDaysProps> = ({ date, isCurrentMonth }) => {
                       color: '#4785E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime() - 7200000),
+                      end_date: new Date(new Date().getTime()),
+                    },
+                    {
+                      color: '#4785E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_date: new Date(new Date().getTime() - 7200000),
+                      end_date: new Date(new Date().getTime()),
+                    },
+                    {
+                      color: '#4785E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_date: new Date(new Date().getTime() - 7200000),
+                      end_date: new Date(new Date().getTime()),
                     },
                     {
                       color: '#5785E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime() - 3600000),
+                      end_date: new Date(new Date().getTime()),
                     },
                     {
                       color: '#4285E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime() - 3600000),
+                      end_date: new Date(new Date().getTime()),
                     },
                     {
-                      color: '#4355E6',
+                      color: '#4285E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime() - 3600000),
+                      end_date: new Date(new Date().getTime()),
                     },
                     {
-                      color: '#4125E6',
+                      color: '#4285E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime() - 4800000),
+                      end_date: new Date(new Date().getTime()),
                     },
                     {
-                      color: '#478CC6',
+                      color: '#4285E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime() - 1600000),
+                      end_date: new Date(new Date().getTime() + 4800000),
                     },
                     {
-                      color: '#47ABE6',
+                      color: '#4285E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime() - 1600000),
+                      end_date: new Date(new Date().getTime() + 4800000),
                     },
                     {
-                      color: '#4215E6',
+                      color: '#4285E6',
                       name: 'Consulta Oftalmo',
                       description: '',
-                      init_hour: 5,
-                      init_min: 30,
-                      end_hour: 6,
-                      end_min: 0,
+                      init_date: new Date(new Date().getTime()),
+                      end_date: new Date(new Date().getTime() + 4800000),
+                    },
+                    {
+                      color: '#4285E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_date: new Date(new Date().getTime()),
+                      end_date: new Date(new Date().getTime() + 4800000),
+                    },
+                    {
+                      color: '#4285E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_date: new Date(new Date().getTime()),
+                      end_date: new Date(new Date().getTime() + 4800000),
+                    },
+                    {
+                      color: '#4285E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_date: new Date(new Date().getTime()),
+                      end_date: new Date(new Date().getTime() + 4800000),
                     },
                   ]
                 : [],

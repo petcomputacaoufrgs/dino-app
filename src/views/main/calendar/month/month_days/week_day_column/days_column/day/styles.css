@@ -82,10 +82,10 @@
 .calendar__month__month_days__week_day_column__days_column__box__day__events__item {
   white-space: nowrap;
   font-size: 0.8em;
-  background-color: blue;
   border-radius: 2px;
-  overflow-y: hidden;
+ 
   height: 1.2em;
   color: white;
   margin-bottom: 2%;
+  overflow-wrap: anywhere;
 }

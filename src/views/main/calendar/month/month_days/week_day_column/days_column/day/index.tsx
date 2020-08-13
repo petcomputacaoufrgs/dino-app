@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import DayProps from './props'
-import './styles.css'
 import DayViewModel from '../../../../../../../../types/calendar/DayViewModel'
-import TransitionSlide from '../../../../../../../../components/slide_transition'
-import { Dialog } from '@material-ui/core'
+import DayModal from '../../../../../day_modal'
+import './styles.css'
 
 const Day: React.FC<DayProps> = ({ day }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -23,28 +22,17 @@ const Day: React.FC<DayProps> = ({ day }) => {
     setDialogOpen(false)
   }
 
-  const DayDialog = React.forwardRef((
-    {children},
-    ref: React.Ref<unknown>
-  ): JSX.Element => {
-    return (
-      <Dialog
-        ref={ref}
-        open={dialogOpen}
-        fullWidth
-        onClose={handleClose}
-        TransitionComponent={TransitionSlide}
-        aria-labelledby="form-dialog"
-      >
-        Oi
-      </Dialog>
-    )
-  })
-
   return (
     <>
-      <DayDialog />
-      <button onClick={() =>handleDayClick(day)} className="calendar__month__month_days__week_day_column__days_column__box">
+      <DayModal 
+        day={day}
+        onClose={handleClose}
+        open={dialogOpen}
+      />
+      <button
+        onClick={() => handleDayClick(day)}
+        className="calendar__month__month_days__week_day_column__days_column__box"
+      >
         <div className="calendar__month__month_days__week_day_column__days_column__box__day">
           <div className="calendar__month__month_days__week_day_column__days_column__box__day__title">
             <div className={getBoxClass()}>
@@ -53,7 +41,11 @@ const Day: React.FC<DayProps> = ({ day }) => {
           </div>
           <div className="calendar__month__month_days__week_day_column__days_column__box__day__events">
             {day.events.map((item, index) => (
-              <div key={index} style={{ backgroundColor: item.color }} className="calendar__month__month_days__week_day_column__days_column__box__day__events__item">
+              <div
+                key={index}
+                style={{ backgroundColor: item.color }}
+                className="calendar__month__month_days__week_day_column__days_column__box__day__events__item"
+              >
                 <p>{item.name}</p>
               </div>
             ))}

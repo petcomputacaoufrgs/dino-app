@@ -8,7 +8,10 @@ const Month: React.FC<MonthProps> = ({ date, goToCurrentMonth, isCurrentMonth })
   return (
     <div className="month">
       <InfoBar date={date} goToCurrentMonth={goToCurrentMonth} />
-      <MonthDays date={date} isCurrentMonth={isCurrentMonth}/>
+      <MonthDays
+        date={date}
+        isCurrentMonth={isCurrentMonth}
+      />
     </div>
   )
 }

@@ -5,38 +5,52 @@
     flex-direction: row;
 }
 
-.calendar__day__modal__hours__hours_column {
+.calendar__day__modal__hours__hours_list {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 20%;
+    width: 100%;
     height: 100%;
 }
 
-.calendar__day__modal__hours__hours_column__line {
+.calendar__day__modal__hours__hours_list__line {
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: row;
     width: 100%;
-    height: 20%;
-    min-height: 20%;
-    border-right: 1px #b9b9a2 solid;
+    min-height: 40px;
 }
 
-.calendar__day__modal__hours__hours_column__line p {
-    margin-top: 0em;
-    margin-bottom: 0em;
-}
-
-.calendar__day__modal__hours__events_column {
-    width: 80   %;
+.calendar__day__modal__hours__hours_list__line__hour {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 16%;
     height: 100%;
+    border-right: 1px #b9b9a2 solid;
+    font-size: 1em;
+    transform: translate3d(0,-10px,0);
 }
 
-.calendar__day__modal__hours__events_column__line {
+.calendar__day__modal__hours__hours_list__line__hour p {
+    margin-bottom: 0;
+    height: 20px;
+}
+
+.calendar__day__modal__hours__hours_list__line__events {
+    min-width: calc(84% + 5px);
+    width: calc(84% + 5px);
+    min-height: 40px;
+    margin-right: -5px;
+    display: flex;
+    flex-direction: row;
     border-bottom: 1px #b9b9a2 solid;
-    height: 10%;
-    margin-left: -2.5%;
-    padding-left: 2.5%;
-    width: 102.5%;
+    padding-left: 10px;
+    padding-right: 5px;
+    transform: translate3d(-5px,0,0);
+}
+
+.calendar__day__modal__hours__hours_list__line__events__item {
+    overflow: hidden;
+    width: auto;
 }

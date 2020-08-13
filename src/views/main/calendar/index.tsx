@@ -61,6 +61,8 @@ const Calendar: React.FC = () => {
     setSlide(HALF_MONTH_RANGE)
   }
 
+  const Render = getMonthElementList()[7]
+
   return (
     <>
       <div className="calendar">

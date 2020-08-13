@@ -1,8 +1,8 @@
 import React from 'react'
 import WeekDayColumnProps from './props'
 import Title from './title'
-import './styles.css'
 import DaysColumn from './days_column'
+import './styles.css'
 
 const WeekDayColumn: React.FC<WeekDayColumnProps> = ({
   shortName,

@@ -5,5 +5,6 @@ export default interface HorizontalPagionationProps {
   slide?: number
   dontAnimate?: boolean
   controlChange?: boolean
+  shouldSwipe?: boolean
   onSlideChange?: (slide: number) => void
 }

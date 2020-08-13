@@ -43,24 +43,92 @@ const MonthDays: React.FC<MonthDaysProps> = ({ date, isCurrentMonth }) => {
       .filter((day: Date) => {
         return day.getDay() === dayOfWeek
       })
-      .map((day) => ({
-        number: day.getDate(),
-        isToday: isCurrentMonth && DateUtils.isEqualDay(day, now),
-        events: isCurrentMonth && DateUtils.isEqualDay(day, now) ? 
-          [
-            { color: "#4785E6", name:"Consulta Oftalmo", description:""},
-            { color: "#5785E6", name: "Consulta Oftalmo", description: "" },
-            { color: "#4285E6", name: "Consulta Oftalmo", description: "" },
-            { color: "#4355E6", name: "Consulta Oftalmo", description: "" },
-            { color: "#4125E6", name: "Consulta Oftalmo", description: "" },
-            { color: "#478CC6", name: "Consulta Oftalmo", description: "" },
-            { color: "#47ABE6", name: "Consulta Oftalmo", description: "" },
-            { color: "#4215E6", name: "Consulta Oftalmo", description: "" }] 
-          : 
-          []
-      } as DayViewModel))
+      .map(
+        (day) =>
+          ({
+            number: day.getDate(),
+            isToday: isCurrentMonth && DateUtils.isEqualDay(day, now),
+            events:
+              isCurrentMonth && DateUtils.isEqualDay(day, now)
+                ? [
+                    {
+                      color: '#4785E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                    {
+                      color: '#5785E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                    {
+                      color: '#4285E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                    {
+                      color: '#4355E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                    {
+                      color: '#4125E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                    {
+                      color: '#478CC6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                    {
+                      color: '#47ABE6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                    {
+                      color: '#4215E6',
+                      name: 'Consulta Oftalmo',
+                      description: '',
+                      init_hour: 5,
+                      init_min: 30,
+                      end_hour: 6,
+                      end_min: 0,
+                    },
+                  ]
+                : [],
+          } as DayViewModel)
+      )
 
-    return days
+      return days
   }
 
   return (

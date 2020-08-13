@@ -3,44 +3,58 @@ import DayModalHour from "../../../../../types/calendar/DayModalHour"
 import StringUtils from '../../../../../utils/StringUtils'
 import DayModalHoursProps from './props'
 import './styles.css'
+import EventViewModel from '../../../../../types/calendar/EventViewModel'
 
 const DayModalHours: React.FC<DayModalHoursProps> = ({ day }) => {
+
   const getFormatedHour = (hour: DayModalHour): string => (
     `${StringUtils.toStringWithZeros(
       hour.hour,
       2
     )}:${StringUtils.toStringWithZeros(hour.min, 2)}`
-  )
+  ) 
 
-  const getHourLineTransform = (index: number): React.CSSProperties => (
-    {
-        transform: `translate3d(0, -${index*50}%, 0)`
-    }
-  )
-     
+  const getEventsStartedBeforeAndEndedAfter = (hour: DayModalHour): EventViewModel[] =>
+    day.events.filter((event) => event.init_hour < hour.hour && event.end_hour > hour.hour)
+  
+  const getEventsByInitHour = (hour: DayModalHour): EventViewModel[] =>
+    day.events.filter((event) => event.init_hour === hour.hour)
+
+  const renderEventsByInitHour = (hour: DayModalHour): JSX.Element => {
+    const startedEvents = getEventsByInitHour(hour)
+    const currentEvents = getEventsStartedBeforeAndEndedAfter(hour)
+
+    const eventsCount = startedEvents.length + currentEvents.length
+
+    return (
+      <>
+        {startedEvents.map((event, index) => (
+          <div
+            key={index}
+            className="calendar__day__modal__hours__hours_list__line__events__item"
+            style={{ width: `${100 / eventsCount}%` }}
+          >
+            {event.name}
+          </div>
+        ))}
+      </>
+    )
+  }
 
   return (
     <div className="calendar__day__modal__hours">
-      <div className="calendar__day__modal__hours__hours_column">
-        {HOURS.map((hour, index) => (
-            index !== 0 && (
-            <div
-                key={index}
-                className="calendar__day__modal__hours__hours_column__line"
-                style={getHourLineTransform(index)}
-            >
-                <p>{getFormatedHour(hour)}</p>
-            </div>
-            )
-        ))}
-      </div>
-      <div className="calendar__day__modal__hours__events_column">
+      <div className="calendar__day__modal__hours__hours_list">
         {HOURS.map((hour, index) => (
           <div
             key={index}
-            className="calendar__day__modal__hours__events_column__line"
+            className="calendar__day__modal__hours__hours_list__line"
           >
-            <p>Teste</p>
+            <div className="calendar__day__modal__hours__hours_list__line__hour">
+              {index !== 0 && <p>{getFormatedHour(hour)}</p>}
+            </div>
+            <div className="calendar__day__modal__hours__hours_list__line__events">
+              {renderEventsByInitHour(hour)}
+            </div>
           </div>
         ))}
       </div>

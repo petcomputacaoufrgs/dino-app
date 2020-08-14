@@ -54,6 +54,8 @@ class DinoAPIURLConstants {
 
   CONTACT_SAVE = `${this.CONTACT}`
 
+  CONTACT_EDIT = `${this.CONTACT}` 
+
   CONTACT_DELETE = `${this.CONTACT}`
 
   CONTACT_SAVE_ALL = `${this.CONTACT}all/`

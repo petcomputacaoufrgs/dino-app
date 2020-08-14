@@ -9,6 +9,7 @@ class DinoAPIWebSocketConstants {
   ALERT_APP_SETTINGS_UPDATE = '/user/queue/user_app_settings/update'
   ALERT_NOTE_UPDATE = '/user/queue/note/update'
   ALERT_USER_UPDATE = '/user/queue/user/update'
+  ALERT_CONTACT_UPDATE = '/user/queue/contact/update'
 }
 
 export default new DinoAPIWebSocketConstants()

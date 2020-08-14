@@ -19,7 +19,7 @@ const PrivateRouterContext = createContext({
 const PrivateRouterContextProvider: React.FC<PrivateRouterContextType> = (
   props
 ): JSX.Element => {
-  const getHistory = (): History => {
+  const getHistory = (): History<LocationState> => {
     if (props.browserHistory) {
       return props.browserHistory
     }

@@ -12,20 +12,15 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
   const classes = useStyles()
 
   const [open, setOpen] = useState(0)
-  const [edit, setEdit] = useState(-1)
+  const [edit, setEdit] = useState(0)
   const [_delete, setDelete] = useState(0)
 
   useEffect(() => {
     if (_delete) {
       ContactsService.deleteContact(_delete)
-      setItems([...ContactsService.getItems()])
+      setDelete(0)
     }
   }, [_delete, setItems])
-
-  useEffect(() => {
-    if (!edit) 
-      setItems([...ContactsService.getItems()])
-  }, [edit, setItems])
 
   return (
     <List className={classes.list}>

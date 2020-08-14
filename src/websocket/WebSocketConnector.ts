@@ -5,6 +5,7 @@ import GlossaryWebSocketSubscriber from './GlossaryWebSocketSubscriber'
 import AppSettingsWebSocketSubscriber from './AppSettingsWebSocketSubscriber'
 import NoteWebSocketSubscriber from './NoteWebSocketSubscriber'
 import UserWebSocketSubscriber from './UserWebSocketSubscriber'
+import ContactWebSocketSubscriber from './ContactWebSocketSubscriber'
 import AuthService from '../services/auth/AuthService'
 import DinoAPIWebSocketConstants from '../constants/dino_api/DinoAPIWebSocketConstants'
 import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
@@ -17,13 +18,14 @@ class WebSocketConnector {
     AppSettingsWebSocketSubscriber,
     NoteWebSocketSubscriber,
     UserWebSocketSubscriber,
+    ContactWebSocketSubscriber,
   ]
 
   connect = () => {
     if (AuthService.isAuthenticated()) {
       this.socket = new SockJS(this.getSocketBaseURL())
       this.stompClient = Stomp.over(this.socket)
-      this.muteConnectionLogs()
+      //this.muteConnectionLogs() //esconde os logs do socket
       this.stompClient.connect({}, this.subscribe)
     }
   }

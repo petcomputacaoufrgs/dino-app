@@ -5,7 +5,6 @@ import ContactResponseModel from '../../types/contact/ContactResponseModel'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import DinoAgentService from '../../agent/DinoAgentService'
-import AgentStatus from '../../types/agent/AgentStatus'
 import Service from './ContactService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
@@ -69,9 +68,9 @@ class ContactServerService {
   saveContact = async (contactModel: ContactModel): Promise<ContactResponseModel | undefined> => {
     const request = await DinoAgentService.post(DinoAPIURLConstants.CONTACT_SAVE)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!.send(contactModel)
+        const response = await request.authenticate().setBody(contactModel).go()
 
         if (response.status === HttpStatus.OK) {
           const responseSaveModel = response.body as SaveResponseModel
@@ -108,9 +107,9 @@ class ContactServerService {
 
     const request = await DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!.send(contactModel)
+        const response = await request.authenticate().setBody(contactModel).go()
 
         if (response.status === HttpStatus.OK) {
           Service.setVersion(response.body) 
@@ -147,9 +146,9 @@ class ContactServerService {
 
     const request = await DinoAgentService.delete(DinoAPIURLConstants.CONTACT_DELETE)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!.send({id: contactId})
+        const response = await request.authenticate().setBody({id: contactId}).go()
 
         if (response.status === HttpStatus.OK) {
           Service.setVersion(response.body) 
@@ -190,8 +189,7 @@ class ContactServerService {
 
         const version: number = response.body
 
-          return version
-        }
+        return version
       } catch (e) {
         LogAppErrorService.saveError(e)
       }

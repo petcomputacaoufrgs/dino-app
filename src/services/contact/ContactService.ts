@@ -7,7 +7,6 @@ import LS from '../../local_storage/ContactLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AgentStatus from '../../types/agent/AgentStatus'
 import DinoAgentService from '../../agent/DinoAgentService'
 import Server from './ContactServerService'
 import ContactContextUpdater from '../../context_updater/ContactContextUpdater'
@@ -21,10 +20,10 @@ class ContactsService {
   updateLocal = async (version: number): Promise<void> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
   
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
   
       try {
-        const response = await request.get()!
+        const response = await request.authenticate().go()
   
         if (response.status === HttpStatus.OK) {
           const serverContacts: ContactModel[] = response.body

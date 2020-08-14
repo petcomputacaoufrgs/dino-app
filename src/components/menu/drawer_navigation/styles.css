@@ -16,3 +16,7 @@
   background-color: #b32e55;
   height: 55px;
 }
+
+.drawer_menu .MuiList-root.MuiList-padding {
+  padding: 0;
+}

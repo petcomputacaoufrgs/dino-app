@@ -1,12 +1,12 @@
 import React from 'react'
-import DayModalHeaderProps from './props'
+import HeaderProps from './props'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import DateUtils from '../../../../../utils/DateUtils'
 import { Fab } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import './styles.css'
 
-const Header: React.FC<DayModalHeaderProps> = ({ day, onClose }) => {
+const Header: React.FC<HeaderProps> = ({ day, onClose }) => {
     const language = useLanguage().current
     
     return (

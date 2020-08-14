@@ -205,4 +205,18 @@ export default class EN implements LanguageBase {
   NEXT_BUTTON_TEXT = 'Next'
 
   PREVIOUS_BUTTON_TEXT = 'Previous'
+
+  CLOSE_ARIA_LABEL = 'Close'
+
+  DELETE_ARIA_LABEL = 'Delete'
+  
+  EDIT_ARIA_LABEL = 'Edit'
+
+  INVALID_WEEKDAY = 'Invalid weekday.'
+
+  TODAY = 'Today'
+
+  DATE_FROM = 'From'
+
+  DATE_TO = 'To'
 }

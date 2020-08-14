@@ -1,0 +1,42 @@
+.calendar__event_modal__title h2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.calendar__event_modal__title__color {
+    width: 24px;
+    height: 24px;
+    border-radius: 10%;
+    margin-right: 16px;
+}
+
+.calendar__event_modal .MuiDialog-paperWidthSm {
+    height: 100%;
+    width: 100%;
+}
+
+.calendar__event_modal.MuiDialog-root {
+    z-index: 5100;
+}
+
+.calendar__event_modal.MuiDialog-root .MuiDialog-paperScrollPaper {
+    max-height: 100%;
+}
+
+.calendar__event_modal.MuiDialog-root .MuiDialog-paper {
+    margin: 0;
+}
+
+.calendar__event_modal.MuiDialog-root .MuiPaper-rounded {
+    border-radius: 0;
+}
+
+.calendar__event_modal.MuiDialog-root .MuiDialogTitle-root {
+    padding-bottom: 0;
+    padding-left: 20px;
+}
+
+.calendar__event_modal .MuiDialogContent-root {
+    padding-left: 60px;
+}

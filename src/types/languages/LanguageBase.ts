@@ -95,6 +95,13 @@ export default interface LanguageBase {
   THURSDAY_NAME: string
   FRIDAY_NAME: string
   SATURDAY_NAME: string
+  INVALID_WEEKDAY: string
   NEXT_BUTTON_TEXT: string
   PREVIOUS_BUTTON_TEXT: string
+  CLOSE_ARIA_LABEL: string
+  DELETE_ARIA_LABEL: string
+  EDIT_ARIA_LABEL: string
+  TODAY: string
+  DATE_FROM: string
+  DATE_TO: string
 }

@@ -1,6 +1,5 @@
 import DayViewModel from "../../../../../types/calendar/DayViewModel";
 
-export default interface HeaderProps {
+export default interface ContentProps {
   day: DayViewModel
-  onClose: () => void
 }

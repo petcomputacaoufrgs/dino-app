@@ -83,6 +83,27 @@ class DateUtils {
         return language.INVALID_MONTH
     }
   }
+
+  getWeekDayName = (weekDayNumber: number, language: LanguageBase): string => {
+    switch (weekDayNumber) {
+      case 0:
+        return language.SUNDAY_NAME
+      case 1:
+        return language.MONDAY_NAME
+      case 2:
+        return language.TUESDAY_NAME
+      case 3:
+        return language.WEDNESDAY_NAME
+      case 4:
+        return language.THURSDAY_NAME
+      case 5:
+        return language.FRIDAY_NAME
+      case 6:
+        return language.SATURDAY_NAME
+      default:
+        return language.INVALID_WEEKDAY
+    }
+  }
 }
 
 export default new DateUtils()

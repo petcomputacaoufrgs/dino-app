@@ -208,4 +208,18 @@ export default class PT implements LanguageBase {
   NEXT_BUTTON_TEXT = 'Próximo'
 
   PREVIOUS_BUTTON_TEXT = 'Anterior'
+
+  CLOSE_ARIA_LABEL = 'Fechar'
+
+  DELETE_ARIA_LABEL = 'Deletar'
+  
+  EDIT_ARIA_LABEL = 'Editar'
+
+  INVALID_WEEKDAY = 'Dia da semana inválido.'
+
+  TODAY = 'Hoje'
+
+  DATE_FROM = 'De'
+
+  DATE_TO = 'Até'
 }

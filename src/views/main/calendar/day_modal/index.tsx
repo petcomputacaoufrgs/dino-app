@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dialog } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
-import HoursList from './hours_list'
+import Content from './content'
 import DayModalProps from './props'
 import { isMobile } from 'react-device-detect'
 import Header from './header'
@@ -22,7 +22,7 @@ const DayModal = React.forwardRef<React.Ref<unknown>, DayModalProps>(
         className={`calendar__day__modal ${isMobile ? `mobile` : `desktop`}`}
       >
         <Header day={day} onClose={onClose} />
-        <HoursList day={day} />
+        <Content day={day} />
         <AddButton />
       </Dialog>
     )

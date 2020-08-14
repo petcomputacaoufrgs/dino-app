@@ -1,0 +1,56 @@
+import React, { useState } from 'react'
+import DayProps from './props'
+import DayViewModel from '../../../../../../../../types/calendar/DayViewModel'
+import DayModal from '../../../../../day_modal'
+import './styles.css'
+
+const Day: React.FC<DayProps> = ({ day }) => {
+  const [dialogOpen, setDialogOpen] = useState(false)
+
+  const getBoxClass = (): string => (
+    `calendar__month__content__week_day_column__content__day__box__title__box ${day.isToday ? 'today' : ''}`
+  )
+
+  const handleDayClick = (day: DayViewModel) => {
+    setDialogOpen(true)
+  }
+
+  const handleClose = () => {
+    setDialogOpen(false)
+  }
+
+  return (
+    <>
+      <DayModal 
+        day={day}
+        onClose={handleClose}
+        open={dialogOpen}
+      />
+      <button
+        onClick={() => handleDayClick(day)}
+        className="calendar__month__content__week_day_column__content__day"
+      >
+        <div className="calendar__month__content__week_day_column__content__day__box">
+          <div className="calendar__month__content__week_day_column__content__day__box__title">
+            <div className={getBoxClass()}>
+              <h3>{day.date.getDate()}</h3>
+            </div>
+          </div>
+          <div className="calendar__month__content__week_day_column__content__day__box__events">
+            {day.events.map((item, index) => (
+              <div
+                key={index}
+                style={{ backgroundColor: item.color }}
+                className="calendar__month__content__week_day_column__content__day__box__events__item"
+              >
+                <p>{item.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </button>
+    </>
+  )
+}
+
+export default Day

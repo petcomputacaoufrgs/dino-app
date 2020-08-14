@@ -1,7 +1,6 @@
 import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
 import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AgentStatus from '../../types/agent/AgentStatus'
 import LogAppErrorSyncLocalStorage from '../../local_storage/LogAppErrorSyncLocalStorage'
 import LogAppErrorDatabase from '../../database/LogAppErrorDatabase'
 import LogAppErrorDoc from '../../types/log_app_error/database/LogAppErrorDoc'
@@ -33,9 +32,9 @@ class LogAppErrorService {
         DinoAPIURLConstants.SAVE_LOG_APP_ERROR
       )
 
-      if (request.status === AgentStatus.OK) {
+      if (request.canGo) {
         try {
-          await request.get()!.send(model)
+          await request.authenticate().setBody(model).go()
         } catch {
           this.saveLocalLog(model)
           this.setShouldSync(true)
@@ -54,9 +53,9 @@ class LogAppErrorService {
       DinoAPIURLConstants.SAVE_ALL_LOG_APP_ERROR
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        await request.get()!.send(models)
+        await request.authenticate().setBody(models).go()
         this.setShouldSync(false)
       } catch {
         this.setShouldSync(true)

@@ -36,19 +36,20 @@ class ConnectionService {
   }
 
   private start = () => {
-    ConnectionLocalStorage.setConnected()
-    this.awaitForDinoConnection()
+    if (navigator.onLine) {
+      ConnectionLocalStorage.setConnected()
+      this.awaitForDinoConnection()
+    } else {
+      ConnectionLocalStorage.setDisconnected()
+    }
 
     window.addEventListener('online', async () => {
       this.awaitForDinoConnection()
     })
 
-
     window.addEventListener('offline', () => {
       this.setDisconnected()
     })
-    
-
   }
 
   private awaitForDinoConnection = async () => {

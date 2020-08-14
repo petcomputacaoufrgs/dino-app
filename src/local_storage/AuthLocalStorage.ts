@@ -16,6 +16,24 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.AUTH_TOKEN)
   }
 
+  getAuthTokenExpiresDate = (): number => {
+    const expiresDate = this.get(LS_Constants.AUTH_TOKEN_EXPIRES_DATE)
+
+    if (expiresDate) {
+      return JSON.parse(expiresDate)
+    }
+
+    return 0
+  }
+
+  setAuthTokenExpiresDate = (expiresDate: number) => {
+    this.set(LS_Constants.AUTH_TOKEN_EXPIRES_DATE, JSON.stringify(expiresDate))
+  }
+
+  removeAuthTokenExpiresDate = () => {
+    this.remove(LS_Constants.AUTH_TOKEN_EXPIRES_DATE)
+  }
+
   getTempAuthToken = (): string => {
     const authToken = this.get(LS_Constants.TEMP_AUTH_TOKEN)
 
@@ -76,6 +94,7 @@ class AuthLocalStorage extends BaseLocalStorage {
 
   removeUserData = () => {
     this.removeAuthToken()
+    this.removeAuthTokenExpiresDate()
     this.removeGoogleAccessToken()
     this.removeGoogleExpiresDate()
   }

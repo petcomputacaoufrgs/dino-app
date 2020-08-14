@@ -9,7 +9,6 @@ import AgentStatus from '../../types/agent/AgentStatus'
 import Service from './ContactService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
-
 class ContactServerService {
 
   updateServer = async () => {
@@ -91,9 +90,9 @@ class ContactServerService {
   saveContacts = async (contactModels: Array<ContactModel>): Promise<SaveResponseModelAll | undefined> => {
     const request = await DinoAgentService.post(DinoAPIURLConstants.CONTACT_SAVE_ALL)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!.send(contactModels)
+        const response = await request.authenticate().setBody(contactModels).go()
 
         if (response.status === HttpStatus.OK) {
           return response.body as SaveResponseModelAll
@@ -129,9 +128,9 @@ class ContactServerService {
 
     const request = await DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT_ALL)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!.send(contactModels)
+        const response = await request.authenticate().setBody(contactModels).go()
 
         if (response.status === HttpStatus.OK) {
           return response.body
@@ -167,9 +166,9 @@ class ContactServerService {
 
     const request = await DinoAgentService.delete(DinoAPIURLConstants.CONTACT_DELETE_ALL)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!.send(contactIds)
+        const response = await request.authenticate().setBody(contactIds).go()
 
         if (response.status === HttpStatus.OK) {
           return response.body
@@ -185,12 +184,11 @@ class ContactServerService {
   getVersion = async (): Promise<number | undefined> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_VERSION)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
+        const response = await request.authenticate().go()
 
-        if (response.status === HttpStatus.OK) {
-          const version: number = response.body
+        const version: number = response.body
 
           return version
         }

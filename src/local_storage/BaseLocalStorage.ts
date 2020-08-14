@@ -1,4 +1,4 @@
-import LocalStorageEmpyKeyError from "../error/LocalStorageEmpyKeyError"
+import LocalStorageEmpyKeyError from '../error/LocalStorageEmpyKeyError'
 
 /**
  * @description Define uma base para gravar e ler dados do LocalStorage
@@ -26,5 +26,5 @@ export default class BaseLocalStorage {
 
   protected convertStringOrNullToString = (
     nullableString: string | null
-  ): string => (nullableString || '')
+  ): string => nullableString || ''
 }

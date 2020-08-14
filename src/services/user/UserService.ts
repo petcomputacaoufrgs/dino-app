@@ -5,7 +5,6 @@ import NoteService from '../note/NoteService'
 import UserModel from '../../types/user/UserModel'
 import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AgentStatus from '../../types/agent/AgentStatus'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import UserContextUpdater from '../../context_updater/UserContextUpdater'
@@ -16,7 +15,6 @@ import GlossaryService from '../glossary/GlossaryService'
 import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ContactService from '../contact/ContactService'
-
 
 class UserService {
   private setVersion = (version: number) => {
@@ -80,11 +78,10 @@ class UserService {
   getServerVersion = async (): Promise<number | undefined> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
+        const response = await request.authenticate().go()
         const version: number = response.body
-
         return version
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -97,12 +94,10 @@ class UserService {
   getServer = async (): Promise<UserModel | undefined> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.USER_GET)
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
-
+        const response = await request.authenticate().go()
         const user: UserModel = response.body
-
         return user
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -173,15 +168,13 @@ class UserService {
       DinoAPIURLConstants.USER_PUT_PHOTO
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
         const model: UserUpdatePictureModel = {
           pictureURL: pictureURL,
         }
-        const response = await request.get()!.send(model)
-
+        const response = await request.authenticate().setBody(model).go()
         const newVersion: number = response.body
-
         this.setVersion(newVersion)
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -200,10 +193,9 @@ class UserService {
       GooglePeopleAPIURLConstants.GET_USER_PHOTOS
     )
 
-    if (request.status === AgentStatus.OK) {
+    if (request.canGo) {
       try {
-        const response = await request.get()!
-
+        const response = await request.authenticate().go()
         return response.body
       } catch (e) {
         LogAppErrorService.saveError(e)

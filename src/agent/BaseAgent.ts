@@ -1,70 +1,64 @@
 import Superagent from 'superagent'
-import AgentRequest from '../types/agent/AgentRequest'
+import AgentRequest, { AgentRequestInfo } from '../types/agent/AgentRequest'
 import ConnectionService from '../services/connection/ConnectionService'
-import AgentStatus from '../types/agent/AgentStatus'
 
 export default class BaseAgent {
   put = async (url: string): Promise<AgentRequest> => {
-    const _continue = await this.filterBeforeCreate()
+    const request = this.filterWhileCreating(
+      Superagent.put(url)
+        .on('error', this.onError)
+        .on('response', this.onResponse)
+    )
 
-    if (_continue) {
-      const request = this.filterWhileCreating(
-        Superagent.put(url)
-          .on('error', this.onError)
-          .on('response', this.onResponse)
-      )
-      return this.getAgentRequest(request)
-    } else {
-      return this.getAgentConnectiontError()
-    }
+    return this.getAgentRequest({
+      request: request,
+      canGo: await this.canGo()
+    })
   }
 
   post = async (url: string): Promise<AgentRequest> => {
-    const _continue = await this.filterBeforeCreate()
+    const request = this.filterWhileCreating(
+      Superagent.post(url)
+        .on('error', this.onError)
+        .on('response', this.onResponse)
+    )
 
-    if (_continue) {
-      const request = this.filterWhileCreating(
-        Superagent.post(url)
-          .on('error', this.onError)
-          .on('response', this.onResponse)
-      )
-
-      return this.getAgentRequest(request)
-    } else {
-      return this.getAgentConnectiontError()
-    }
+    return this.getAgentRequest({
+      request: request,
+      canGo: await this.canGo()
+    })
   }
 
   get = async (url: string): Promise<AgentRequest> => {
-    const _continue = await this.filterBeforeCreate()
+    const request = this.filterWhileCreating(
+      Superagent.get(url)
+        .on('error', this.onError)
+        .on('response', this.onResponse)
+    )
 
-    if (_continue) {
-      const request = this.filterWhileCreating(
-        Superagent.get(url)
-          .on('error', this.onError)
-          .on('response', this.onResponse)
-      )
-
-      return this.getAgentRequest(request)
-    } else {
-      return this.getAgentConnectiontError()
-    }
+    return this.getAgentRequest({
+      request: request,
+      canGo: await this.canGo()
+    })
   }
 
   delete = async (url: string): Promise<AgentRequest> => {
-    const _continue = await this.filterBeforeCreate()
+    const request = this.filterWhileCreating(
+      Superagent.delete(url)
+        .on('error', this.onError)
+        .on('response', this.onResponse)
+    )
 
-    if (_continue) {
-      const request = this.filterWhileCreating(
-        Superagent.delete(url)
-          .on('error', this.onError)
-          .on('response', this.onResponse)
-      )
+    return this.getAgentRequest({
+      request: request,
+      canGo: await this.canGo()
+    })
+  }
 
-      return this.getAgentRequest(request)
-    } else {
-      return this.getAgentConnectiontError()
-    }
+  protected addAuth = (
+    request: Superagent.SuperAgentRequest
+  ): Superagent.SuperAgentRequest => {
+    return request
   }
 
   protected filterBeforeCreate = async (): Promise<boolean> => {
@@ -81,19 +75,43 @@ export default class BaseAgent {
 
   protected onResponse = (response: Superagent.Response) => {}
 
-  protected getAgentRequest = (
-    request: Superagent.SuperAgentRequest
-  ): AgentRequest => {
-    if (ConnectionService.isConnected()) {
-      return { get: () => request, status: AgentStatus.OK }
-    } else {
-      return this.getAgentConnectiontError(request)
-    }
+  private canGo = async () => {
+    return ConnectionService.isConnected() && await this.filterBeforeCreate()
   }
 
-  protected getAgentConnectiontError = (
-    request?: Superagent.SuperAgentRequest
+  private setBody = (
+    info: AgentRequestInfo,
+    body: string | object,
   ): AgentRequest => {
-    return { get: () => request, status: AgentStatus.DISCONNECTED }
+    info.request.send(body)
+    return this.getAgentRequest(info)
+  }
+
+  private addHeader = (
+    info: AgentRequestInfo,
+    key: string,
+    value: string,
+  ): AgentRequest => {
+    info.request.set(key, value)
+    return this.getAgentRequest(info)
+  }
+
+  private authenticate = (
+    info: AgentRequestInfo
+  ): AgentRequest => {
+    info.request = this.addAuth(info.request)
+    return this.getAgentRequest(info)
+  }
+
+  private getAgentRequest = (
+    info: AgentRequestInfo
+  ): AgentRequest => {
+    return {
+      go: async (): Promise<Superagent.Response> => await info.request,
+      canGo: info.canGo,
+      authenticate: () => this.authenticate(info),
+      setBody: (body: string | object) => this.setBody(info, body),
+      addHeader: (key: string, value: string) => this.addHeader(info, key, value)
+    }
   }
 }

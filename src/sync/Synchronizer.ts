@@ -5,36 +5,40 @@ import LogAppErrorSync from './LogAppErrorSync'
 import UserSync from './UserSync'
 import ContactSync from './ContactSync'
 import BaseSync from './BaseSync'
+import GlossarySync from './GlossarySync'
 
-class SyncService {
+class Syncronizer {
   private syncronizers: BaseSync[] = [
     AppSettingsSync,
     LogAppErrorSync,
+    GlossarySync,
     NoteSync,
     ContactSync,
     UserSync,
   ]
 
-  sync = () => {
-    this.receive()
+  sync = async () => {
+    await this.receive()
     this.send()
   }
 
-  send = () => {
+  send = async () => {
     if (AuthService.isAuthenticated()) {
-      this.syncronizers.forEach((syncronizer) => {
-        syncronizer.send()
-      })
+      const executionList = this.syncronizers
+        .filter((sincronizer) => sincronizer.send)
+        .map((sincronizer) => sincronizer.send!())
+      await Promise.all(executionList)
     }
   }
 
-  receive = () => {
+  receive = async () => {
     if (AuthService.isAuthenticated()) {
-      this.syncronizers.forEach((syncronizer) => {
-        syncronizer.receive()
-      })
+      const executionList = this.syncronizers
+        .filter((sincronizer) => sincronizer.receive)
+        .map((sincronizer) => sincronizer.receive!())
+      await Promise.all(executionList)
     }
   }
 }
 
-export default new SyncService()
+export default new Syncronizer()

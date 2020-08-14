@@ -35,9 +35,7 @@ const UserContextProvider: React.FC = (props) => {
   }, [value])
 
   return (
-    <UserContext.Provider value={value}>
-      {props.children}
-    </UserContext.Provider>
+    <UserContext.Provider value={value}>{props.children}</UserContext.Provider>
   )
 }
 

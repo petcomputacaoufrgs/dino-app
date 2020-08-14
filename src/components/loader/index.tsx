@@ -3,10 +3,7 @@ import RingLoader from 'react-spinners/RingLoader'
 import LoaderProps from './props'
 import './styles.css'
 
-const Loader: React.FC<LoaderProps> = ({
-  loading,
-  children
-}): ReactElement => {
+const Loader: React.FC<LoaderProps> = ({ loading, children }): ReactElement => {
   const [showLoader, setShowLoader] = useState(false)
 
   useEffect(() => {
@@ -15,16 +12,16 @@ const Loader: React.FC<LoaderProps> = ({
 
   return (
     <>
-      {showLoader ?
-        <div className='loader'>
+      {showLoader ? (
+        <div className="loader">
           {children}
-          <div className='loader__screen'>
+          <div className="loader__screen">
             <RingLoader size={40} color={'#B32E55'} loading={loading} />
           </div>
         </div>
-        :
+      ) : (
         <>{children}</>
-      }
+      )}
     </>
   )
 }

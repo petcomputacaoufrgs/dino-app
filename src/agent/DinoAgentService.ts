@@ -1,36 +1,30 @@
-import Superagent, { Response } from 'superagent'
+import Superagent from 'superagent'
 import HttpStatus from 'http-status-codes'
 import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
 import AuthService from '../services/auth/AuthService'
 import EventService from '../services/events/EventService'
 import BaseAgent from './BaseAgent'
+import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
+import AuthRefreshRequestModel from '../types/auth/AuthRefreshRequestModel'
+import AuthRefreshResponseModel from '../types/auth/AuthRefreshResponseModel'
+import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
+
+const TIME_MARGIN_OF_ERROR_IN_MS = 300000
 
 class DinoAgentService extends BaseAgent {
-  protected filterWhileCreating = (
-    request: Superagent.SuperAgentRequest
-  ): Superagent.SuperAgentRequest => {
-    request.set(this.getHeader())
-    return request
+  protected filterBeforeCreate = async () => {
+    const success = this.updateGoogleAccessTokenIfNecessary()
+
+    return success
   }
 
-  private getAuthToken = (): string => AuthService.getAuthToken()
+  protected addAuth = (
+    request: Superagent.SuperAgentRequest
+  ): Superagent.SuperAgentRequest => {
+    const token = AuthService.getAuthToken()
 
-  private isAuthenticated = (): boolean => Boolean(this.getAuthToken())
-
-  private getHeader = (token?: string): object => {
-    let forceAuth = false
-
-    if (!token) {
-      token = this.getAuthToken()
-    } else {
-      forceAuth = true
-    }
-
-    if (this.isAuthenticated() || forceAuth) {
-      return { [DinoAPIHeaderConstants.AUTHORIZATION]: token }
-    }
-
-    return {}
+    request.set(DinoAPIHeaderConstants.AUTHORIZATION, token)
+    return request
   }
 
   protected onError = (err: any) => {
@@ -41,33 +35,43 @@ class DinoAgentService extends BaseAgent {
     }
   }
 
-  protected onResponse = (response: Response) => {
-    const verifyDinoAuth = () => {
-      const newToken = response.get(DinoAPIHeaderConstants.REFRESH_TOKEN)
+  private updateGoogleAccessTokenIfNecessary = async (): Promise<boolean> => {
+    const isAuthenticated = AuthService.isAuthenticated()
 
-      if (newToken) {
-        AuthService.setAuthToken(newToken)
+    if (isAuthenticated) {
+      const expiresDate = AuthService.getAuthTokenExpiresDate()
+
+      if (this.needsUpdateToken(expiresDate)) {
+        const model: AuthRefreshRequestModel = {
+          accessToken: AuthService.getAuthToken()
+        }
+        const response = await Superagent.put(
+          DinoAPIURLConstants.REFRESH_AUTH
+        ).send(model)
+        if (response.status === HttpStatus.OK) {
+          try {
+            const refreshResponse: AuthRefreshResponseModel = response.body
+            AuthService.setAuthToken(refreshResponse.accessToken)
+            AuthService.setAuthTokenExpiresDate(refreshResponse.expiresDate)
+          } catch (e) {
+            LogAppErrorService.saveError(e)
+            return false
+          }
+        }
       }
-    }
 
-    const verifyGoogleAuth = () => {
-      const newGoogleToken = response.get(
-        DinoAPIHeaderConstants.GOOGLE_REFRESH_TOKEN
-      )
-
-      if (newGoogleToken) {
-        const newExpiresDate = response.get(
-          DinoAPIHeaderConstants.GOOGLE_EXPIRES_DATE
-        )
-        AuthService.setGoogleAccessToken(newGoogleToken)
-        AuthService.setGoogleExpiresDate(JSON.parse(newExpiresDate))
-      }
+      return true
     }
+    
+    return true
+  }
 
-    if (response.status === HttpStatus.OK) {
-      verifyDinoAuth()
-      verifyGoogleAuth()
-    }
+  private needsUpdateToken = (expiresDate: number): boolean => {
+    const expiresDateWithMargin = expiresDate - TIME_MARGIN_OF_ERROR_IN_MS
+
+    const nowInMS = new Date().getDate()
+
+    return expiresDateWithMargin <= nowInMS
   }
 }
 

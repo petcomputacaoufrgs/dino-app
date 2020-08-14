@@ -4,7 +4,6 @@ import GoogleAPIHeaderConstants from '../constants/google/GoogleAPIHeaderConstan
 import BaseAgent from './BaseAgent'
 import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
 import DinoAgentService from './DinoAgentService'
-import AgentStatus from '../types/agent/AgentStatus'
 import GoogleRefreshAuthResponseModel from '../types/auth/google/GoogleRefreshAuthResponseModel'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 
@@ -17,29 +16,20 @@ class GoogleAgentService extends BaseAgent {
     return success
   }
 
-  protected filterWhileCreating = (
+  protected addAuth = (
     request: Superagent.SuperAgentRequest
   ): Superagent.SuperAgentRequest => {
-    request.set(this.getHeader())
+    const token = this.getGoogleAccessToken()
+
+    request.set(GoogleAPIHeaderConstants.AUTHORIZATION, `Bearer ${token}`)
 
     return request
   }
 
-  private getGoogleAccessToken = (): string | null =>
+  private getGoogleAccessToken = (): string | null => (
     AuthService.getGoogleAccessToken()
-
-  private isAuthenticated = (): boolean => Boolean(this.getGoogleAccessToken())
-
-  private getHeader = (): object => {
-    if (this.isAuthenticated()) {
-      const token = this.getGoogleAccessToken()
-
-      return { [GoogleAPIHeaderConstants.AUTHORIZATION]: `Bearer ${token}` }
-    }
-
-    return {}
-  }
-
+  )
+    
   private updateGoogleAccessTokenIfNecessary = async (): Promise<boolean> => {
     const expiresDate = AuthService.getGoogleExpiresDate()
 
@@ -49,9 +39,9 @@ class GoogleAgentService extends BaseAgent {
           DinoAPIURLConstants.REFRESH_AUTH_GOOGLE
         )
 
-        if (request.status === AgentStatus.OK) {
+        if (request.canGo) {
           try {
-            const response = await request.get()!
+            const response = await request.authenticate().go()
             const googleAuth: GoogleRefreshAuthResponseModel = response.body
             AuthService.setGoogleAccessToken(googleAuth.googleAccessToken)
             AuthService.setGoogleExpiresDate(googleAuth.googleExpiresDate)

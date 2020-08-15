@@ -25,6 +25,8 @@ import NotFound from '../not_found/index'
 import NotesContextProvider from '../../context_provider/notes'
 import GlossaryContextProvider from '../../context_provider/glossary'
 import ContactsContextProvider from '../../context_provider/contact'
+import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
+import Calendar from './calendar'
 
 /**
  * @description Tela principal da aplicação

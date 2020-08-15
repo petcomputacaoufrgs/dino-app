@@ -219,4 +219,26 @@ export default class EN implements LanguageBase {
   DATE_FROM = 'From'
 
   DATE_TO = 'To'
+
+  MEDICAL_APPOINTMENT_TYPE = 'Medical appointment'
+
+  MEDICINE_TYPE = 'Medicine'
+
+  INVALID_EVENT_TYPE = 'Invalid event type'
+
+  MINUTES = 'minutes'
+  
+  HOURS = 'hours'
+  
+  DAYS = 'days'
+
+  AND = 'and'
+
+  BEFORE = 'before'
+
+  MINUTE = 'minute'
+
+  HOUR = 'hour'
+
+  DAY = 'day'
 }

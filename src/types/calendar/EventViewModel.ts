@@ -3,5 +3,7 @@ export default interface EventViewModel {
     description: string,
     color: string,
     init_date: Date,
-    end_date: Date
+    end_date: Date,
+    alarm: Date,
+    type: number
 }

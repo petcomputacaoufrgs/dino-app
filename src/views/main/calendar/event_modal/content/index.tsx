@@ -1,15 +1,102 @@
 import React from 'react'
 import ContentProps from './props'
-import './styles.css'
 import DateUtils from '../../../../../utils/DateUtils'
+import AlarmIcon from '@material-ui/icons/Alarm'
+import EventIcon from '@material-ui/icons/Event'
+import DescriptionIcon from '@material-ui/icons/Description'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import StringUtils from '../../../../../utils/StringUtils'
+import CalendarService from '../../../../../services/calendar/CalendarService'
+import './styles.css'
 
-const Content: React.FC<ContentProps> = ({event}) => {
+const Content: React.FC<ContentProps> = ({ event } ) => {
     const language = useLanguage().current
 
     const getHourString = (date: Date): string => {
         return `${StringUtils.toStringWithZeros(date.getHours(),2)}:${StringUtils.toStringWithZeros(date.getMinutes(), 2)}`
+    }
+
+    const getDaysBeforeString = (days: number): string => 
+      `${days} ${days === 1 ? language.DAY : language.DAYS}`
+
+    const getHoursBeforeString = (hours: number): string =>
+      `${hours} ${hours === 1 ? language.HOUR : language.HOURS}`
+
+    const getMinutesBeforeString = (minutes: number): string =>
+      `${minutes} ${minutes === 1 ? language.MINUTE : language.MINUTES}`
+
+    const getSeparator = (andCount: number): string =>
+      andCount > 1 ? ', ' : ` ${language.AND} `
+
+    const getEventAlarmString = (): string => {
+      let finalString = ''
+
+      let andCount = 0
+
+      const difference = event.init_date.getTime() - event.alarm.getTime()
+
+      const differenceInMinutes = Math.round(difference / 60000)
+
+      if (differenceInMinutes > 59) {
+        const differenceInHours = Math.round(differenceInMinutes / 60)
+        const minutes = differenceInMinutes % 60
+
+        if (minutes > 0) {
+          finalString = getMinutesBeforeString(minutes).concat(
+            ` ${language.AND} `,
+            finalString
+          )
+
+          andCount++
+        }
+
+        if (differenceInHours > 24) {
+          const differenceInDays = Math.round(differenceInHours / 24)
+          const hours = differenceInDays % 24
+
+          if (hours > 0) {
+            finalString = getHoursBeforeString(hours).concat(
+              getSeparator(andCount),
+              finalString
+            )
+
+            andCount++
+          }
+
+          finalString = getDaysBeforeString(differenceInDays).concat(
+            getSeparator(andCount),
+            finalString
+          )
+
+          andCount++
+        } else {
+          finalString = getHoursBeforeString(differenceInHours).concat(
+            getSeparator(andCount),
+            finalString
+          )
+
+          andCount++
+        }
+      } else {
+        finalString = getMinutesBeforeString(differenceInMinutes)
+      }
+
+      const finalAnd = getSeparator(0)
+
+      if (finalString.endsWith(finalAnd)) {
+        finalString = finalString.substring(0, finalString.length - finalAnd.length)
+      } 
+
+      const finalComma = getSeparator(2)
+
+      if (finalString.endsWith(finalComma)) {
+        finalString = finalString.substring(
+          0,
+          finalString.length - finalComma.length
+        )
+      } 
+      
+      return `${finalString} ${language.BEFORE}`
     }
 
     const renderDate = (): JSX.Element => {
@@ -39,9 +126,43 @@ const Content: React.FC<ContentProps> = ({event}) => {
         )
     }
 
+    const renderAlarm = (): JSX.Element => (
+      <div className="calendar__event_modal__content__data">
+        <div className="calendar__event_modal__content__data__icon">
+          <AlarmIcon fontSize="default" />
+        </div>
+        <p>{getEventAlarmString()}</p>
+      </div>
+    )
+
+    const renderEventType = (): JSX.Element => (
+      <div className="calendar__event_modal__content__data">
+        <div className="calendar__event_modal__content__data__icon">
+          <EventIcon fontSize="default" />
+        </div>
+          <p>{CalendarService.getEventTypeName(event.type, language)}</p>
+      </div>
+    )
+
+    const renderDescription = (): JSX.Element => (
+      <div className="calendar__event_modal__content__data description">
+        <div className="calendar__event_modal__content__data__icon">
+          <DescriptionIcon fontSize="default" />
+        </div>
+        <div className="calendar__event_modal__content__data__description">
+          <p>
+            {event.description}
+          </p>
+        </div>
+      </div>
+    )
+
     return (
       <div className="calendar__event_modal__content">
         {renderDate()}
+        {renderAlarm()}
+        {renderEventType()}
+        {renderDescription()}
       </div>
     )
 }

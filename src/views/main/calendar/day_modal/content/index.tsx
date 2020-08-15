@@ -52,7 +52,7 @@ const Content: React.FC<ContentProps> = ({ day }) => {
 
       if (element) {
         const scrollTo =
-          ((element.scrollHeight - element.clientHeight) / 1440) *
+          (element.scrollHeight / 1440) *
           (now.getHours() * 60 + now.getMinutes())
         element.scrollTop = scrollTo
       }
@@ -85,7 +85,9 @@ const Content: React.FC<ContentProps> = ({ day }) => {
           {HOURS.map((hour, index) => (
             <div
               key={index}
-              className="calendar__day__modal__hours__hours_list__line"
+              className={`calendar__day__modal__hours__hours_list__line${
+                day.isToday ? ' today' : ' n_today'
+              }`}
             >
               <div className="calendar__day__modal__hours__hours_list__line__hour">
                 {index !== 0 && <p>{getFormatedHour(hour)}</p>}

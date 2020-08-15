@@ -222,4 +222,26 @@ export default class PT implements LanguageBase {
   DATE_FROM = 'De'
 
   DATE_TO = 'Até'
+
+  MEDICAL_APPOINTMENT_TYPE = 'Consulta médica'
+
+  MEDICINE_TYPE = 'Medicamento'
+
+  INVALID_EVENT_TYPE = 'Tipo de evento inválido'
+
+  MINUTES = 'minutos '
+  
+  HOURS = 'horas'
+  
+  DAYS = 'dias'
+
+  AND = 'e'
+
+  BEFORE = 'antes'
+
+  MINUTE = 'minuto'
+
+  HOUR = 'hora'
+  
+  DAY = 'dia'
 }

@@ -35,7 +35,12 @@
     transform: translate3d(0,-10px,0);
 }
 
-.calendar__day__modal__hours__hours_list__line:nth-last-child(2) > .calendar__day__modal__hours__hours_list__line__hour {
+.calendar__day__modal__hours__hours_list__line.today:nth-last-child(2) > .calendar__day__modal__hours__hours_list__line__hour {
+    height: 50px;
+    transform: translate3d(0px, -5px, 0px);
+}
+
+.calendar__day__modal__hours__hours_list__line.n_today:nth-last-child(1) > .calendar__day__modal__hours__hours_list__line__hour {
     height: 50px;
     transform: translate3d(0px, -5px, 0px);
 }
@@ -59,7 +64,11 @@
     pointer-events: none;
 }
 
-.calendar__day__modal__hours__hours_list__line:nth-last-child(2) > .calendar__day__modal__hours__hours_list__line__events {
+.calendar__day__modal__hours__hours_list__line.today:nth-last-child(2) > .calendar__day__modal__hours__hours_list__line__events {
+    border-bottom: 0;
+}
+
+.calendar__day__modal__hours__hours_list__line.n_today:nth-last-child(1) > .calendar__day__modal__hours__hours_list__line__events {
     border-bottom: 0;
 }
 

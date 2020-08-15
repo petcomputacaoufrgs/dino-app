@@ -18,8 +18,8 @@ const Header: React.FC<HeaderProps> = ({onClose, onDelete, onEdit}) => {
                 aria-label={language.CLOSE_ARIA_LABEL} 
                 onClick={onClose}
             >
-            <CloseIcon fontSize="default" />
-          </IconButton>
+                <CloseIcon fontSize="default" />
+            </IconButton>
         </div>
         <div className="calendar__event_modal__header__left">
             <IconButton

@@ -104,4 +104,15 @@ export default interface LanguageBase {
   TODAY: string
   DATE_FROM: string
   DATE_TO: string
+  MEDICAL_APPOINTMENT_TYPE: string
+  MEDICINE_TYPE: string
+  INVALID_EVENT_TYPE: string
+  MINUTES: string
+  MINUTE: string
+  HOURS: string
+  HOUR: string
+  DAYS: string
+  DAY: string
+  AND: string
+  BEFORE: string
 }

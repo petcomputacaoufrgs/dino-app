@@ -10,6 +10,10 @@ class DateUtils {
     moment(date).endOf('day').toDate()
   )
 
+  isEqualHour = (d1: Date, d2: Date): boolean => (
+    d1.getHours() === d2.getHours() && this.isEqualDay(d1, d2)
+  )
+
   isEqualDay = (d1: Date, d2: Date): boolean => (
     d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
   )

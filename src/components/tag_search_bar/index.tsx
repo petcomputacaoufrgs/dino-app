@@ -20,13 +20,13 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
 
   return (
     <Autocomplete
+      freeSolo
       multiple
       loadingText={language.LOADING}
       noOptionsText={language.NO_OPTIONS}
       options={props.options}
       getOptionLabel={(option) => option}
       className="tag_search_bar"
-      style={{ maxHeight: 50 }}
       onChange={handleChange}
       onInputChange={handleInputChange}
       renderInput={(params) => (

@@ -14,7 +14,7 @@
   height: 70px;
   display: flex;
   align-items: center;
-  z-index: 5001;
+  z-index: 1000;
 }
 
 .bottom_navigation .MuiBottomNavigationAction-root.Mui-selected {

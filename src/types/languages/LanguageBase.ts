@@ -1,3 +1,5 @@
+import { StringDecoder } from "string_decoder";
+
 export default interface LanguageBase {
   ISO_LANGUAGE_CODE: string
   NAVIGATOR_LANGUAGE_CODE: string
@@ -115,4 +117,20 @@ export default interface LanguageBase {
   DAY: string
   AND: string
   BEFORE: string
+  ADD_EVENT_TITLE: string
+  EVENT_TYPE_LABEL: string
+  EVENT_NAME_LABEL: string
+  EVENT_INIT_DATE_LABEL: string
+  EVENT_INIT_TIME_LABEL: string
+  EVENT_END_DATE_LABEL: string
+  EVENT_END_TIME_LABEL: string
+  DATE_PICKER_DAY_FORMAT: string
+  EVENT_REPEAT_NOT_REPEAT: string
+  EVENT_REPEAT_EVERY_DAY: string
+  EVENT_REPEAT_EVERY_WEEK: string
+  EVENT_REPEAT_EVERY_MONTH: string
+  EVENT_REPEAT_EVERY_YEAR: string
+  EVENT_REPEAT_EVERY_CUSTOMIZED: string
+  EVENT_REPEAT_TYPE_LABEL: string
+  INVALID_EVENT_REPEAT_TYPE: string
 }

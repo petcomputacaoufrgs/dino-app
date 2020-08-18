@@ -1,6 +1,6 @@
 .drawer_menu {
   position: relative;
-  z-index: 5001;
+  z-index: 1000;
   height: 55px;
 }
 

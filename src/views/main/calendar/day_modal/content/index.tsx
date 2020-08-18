@@ -62,7 +62,7 @@ const Content: React.FC<ContentProps> = ({ day, events }) => {
         element.scrollTop = scrollTo
       }
     }
-  }, [updateCount])
+  }, [updateCount, isToday])
 
   useEffect(() => {
     let updateScreen = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Dialog } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import Content from './content'
@@ -16,6 +16,7 @@ const DayModal = React.forwardRef<React.Ref<unknown>, DayModalProps>(
         open={open}
         fullWidth
         maxWidth={'sm'}
+        style={{ zIndex: 990 }}
         onClose={onClose}
         TransitionComponent={TransitionSlide}
         aria-labelledby="form-dialog"

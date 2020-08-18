@@ -244,4 +244,36 @@ export default class PT implements LanguageBase {
   HOUR = 'hora'
   
   DAY = 'dia'
+
+  ADD_EVENT_TITLE = 'Novo Evento'
+
+  EVENT_TYPE_LABEL = 'Tipo de Evento'
+
+  EVENT_NAME_LABEL = 'Nome do Evento'
+  
+  EVENT_INIT_DATE_LABEL = 'Dia de início'
+
+  EVENT_INIT_TIME_LABEL = 'Horário de início'
+
+  EVENT_END_DATE_LABEL = 'Dia de termino'
+  
+  EVENT_END_TIME_LABEL = 'Horário de termino'
+
+  DATE_PICKER_DAY_FORMAT = 'dd/MM/yyyy'
+
+  EVENT_REPEAT_NOT_REPEAT = 'Náo se repete'
+
+  EVENT_REPEAT_EVERY_DAY = 'Todos os dias'
+
+  EVENT_REPEAT_EVERY_WEEK = 'Todas as semenas'
+
+  EVENT_REPEAT_EVERY_MONTH = 'Todos os meses'
+
+  EVENT_REPEAT_EVERY_YEAR = 'Todos os anos'
+
+  EVENT_REPEAT_EVERY_CUSTOMIZED = 'Personalizado'
+
+  EVENT_REPEAT_TYPE_LABEL = 'Tipo de repetição do evento'
+
+  INVALID_EVENT_REPEAT_TYPE = 'Tipo de repetição inválida'
 }

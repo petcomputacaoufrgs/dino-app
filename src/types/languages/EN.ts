@@ -241,4 +241,36 @@ export default class EN implements LanguageBase {
   HOUR = 'hour'
 
   DAY = 'day'
+
+  ADD_EVENT_TITLE = 'New Event'
+
+  EVENT_TYPE_LABEL = 'Event Type'
+
+  EVENT_NAME_LABEL = 'Event Name'
+
+  EVENT_INIT_DATE_LABEL = 'Start day'
+
+  EVENT_INIT_TIME_LABEL = 'Start time'
+
+  EVENT_END_DATE_LABEL = 'End day'
+  
+  EVENT_END_TIME_LABEL = 'End time'
+
+  DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
+
+  EVENT_REPEAT_NOT_REPEAT = 'Not repeat'
+
+  EVENT_REPEAT_EVERY_DAY = 'Everyday'
+
+  EVENT_REPEAT_EVERY_WEEK = 'Every week'
+
+  EVENT_REPEAT_EVERY_MONTH = 'Every month'
+
+  EVENT_REPEAT_EVERY_YEAR = 'Every year'
+
+  EVENT_REPEAT_EVERY_CUSTOMIZED = 'Customized'
+
+  EVENT_REPEAT_TYPE_LABEL = 'Event repeat type'
+
+  INVALID_EVENT_REPEAT_TYPE = 'Invalid event repeat'
 }

@@ -26,6 +26,7 @@ export default interface LanguageBase {
   MENU_GAMES: string
   MENU_GLOSSARY: string
   MENU_CONTACTS: string
+  MENU_FAQ: string
   MENU_SETTINGS: string
   MENU_LOGOUT: string
   SETTINGS_TITLE: string

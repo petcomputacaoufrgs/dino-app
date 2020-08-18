@@ -62,6 +62,8 @@ export default class EN implements LanguageBase {
 
   MENU_CONTACTS = 'Contacts'
 
+  MENU_FAQ = 'FAQ'
+
   MENU_SETTINGS = 'Settings'
 
   MENU_LOGOUT = 'Logout'

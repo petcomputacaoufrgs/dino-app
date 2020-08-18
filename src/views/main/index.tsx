@@ -25,6 +25,7 @@ import NotFound from '../not_found/index'
 import NotesContextProvider from '../../context_provider/notes'
 import GlossaryContextProvider from '../../context_provider/glossary'
 import ContactsContextProvider from '../../context_provider/contact'
+import Faq from './faq'
 
 /**
  * @description Tela principal da aplicação
@@ -66,6 +67,13 @@ const Main = (): JSX.Element => {
         image: NotesSVG,
         name: language.MENU_NOTES,
         onClick: () => HistoryService.push(PathConstants.NOTES),
+      },
+    ],
+    [
+      {
+        image: NotesSVG,
+        name: language.MENU_FAQ,
+        onClick: () => HistoryService.push(PathConstants.FAQ),
       },
     ],
     [
@@ -145,6 +153,14 @@ const Main = (): JSX.Element => {
             <GlossaryContextProvider>
               <GlossaryItem />
             </GlossaryContextProvider>
+          )}
+        />
+        <PrivateRoute
+          path={PathConstants.FAQ}
+          component={() => (
+            //<GlossaryContextProvider>
+              <Faq />
+            //</GlossaryContextProvider>
           )}
         />
         <PrivateRoute path={'/'} component={NotFound} />

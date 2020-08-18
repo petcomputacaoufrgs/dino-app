@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DayProps from './props'
 import DayViewModel from '../../../../../../../../types/calendar/DayViewModel'
 import DayModal from '../../../../../day_modal'
+import CalendarService from '../../../../../../../../services/calendar/CalendarService'
+import DateUtils from '../../../../../../../../utils/DateUtils'
+import EventDoc from '../../../../../../../../types/calendar/database/EventDoc'
 import './styles.css'
 
 const Day: React.FC<DayProps> = ({ day }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [events, setEvents] = useState<EventDoc[]>([])
+  const isToday = DateUtils.isToday(day.date)
 
-  const getBoxClass = (): string => (
-    `calendar__month__content__week_day_column__content__day__box__title__box ${day.isToday ? 'today' : ''}`
-  )
+  const getBoxClass = (): string =>
+    `calendar__month__content__week_day_column__content__day__box__title__box ${
+      isToday ? 'today' : ''
+    }`
 
   const handleDayClick = (day: DayViewModel) => {
     setDialogOpen(true)
@@ -19,10 +25,32 @@ const Day: React.FC<DayProps> = ({ day }) => {
     setDialogOpen(false)
   }
 
+  useEffect(() => {
+    const findEvents = async () => {
+      const events = await CalendarService.getEventByDate(day.date)
+      updateEvents(events)
+    }
+
+    let updateEvents = (events: EventDoc[]) => {
+      setEvents(events)
+    }
+
+    if (DateUtils.isToday(day.date) && events.length === 0) {
+      findEvents()
+    }
+
+    const cleanBeforeUpdate = () => {
+      updateEvents = (events: EventDoc[]) => {}
+    }
+
+    return cleanBeforeUpdate
+  }, [day.date, events])
+
   return (
     <>
-      <DayModal 
+      <DayModal
         day={day}
+        events={events}
         onClose={handleClose}
         open={dialogOpen}
       />
@@ -37,7 +65,7 @@ const Day: React.FC<DayProps> = ({ day }) => {
             </div>
           </div>
           <div className="calendar__month__content__week_day_column__content__day__box__events">
-            {day.events.map((item, index) => (
+            {events.map((item, index) => (
               <div
                 key={index}
                 style={{ backgroundColor: item.color }}

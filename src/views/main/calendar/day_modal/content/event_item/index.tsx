@@ -17,7 +17,6 @@ const EventItem: React.FC<EventItemProps> = ({ day, event, totalEventsOnHour }) 
     const minutesDuration = end.getMinutes() - event.init_date.getMinutes()
 
     const handleClick = () => {
-      console.log('abrir')
       setOpenDialog(true)
     }
 

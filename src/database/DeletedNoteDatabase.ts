@@ -5,7 +5,7 @@ import NoteDoc from '../types/note/database/NoteDoc'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import DatabaseDeleteWithoutID from '../error/DatabaseDeleteWithoutID'
 
-class DeletedNoteDatabase extends BaseDatabase {
+class DeletedNoteDatabase extends BaseDatabase<NoteDoc> {
   constructor() {
     super(DatabaseConstants.DELETED_NOTE)
   }
@@ -38,7 +38,7 @@ class DeletedNoteDatabase extends BaseDatabase {
     const id = this.getId(question)
 
     try {
-      const doc: NoteDoc = await this.db.get(id)
+      const doc = await this.db.get(id)
 
       return doc
     } catch (e) {

@@ -17,7 +17,7 @@ const EventModal: React.FC<EventModalProps> = ({ open, onClose, event }) => {
     }
 
     const handleDelete = () => {
-
+      
     }
 
     const handleEdit = () => {
@@ -25,7 +25,6 @@ const EventModal: React.FC<EventModalProps> = ({ open, onClose, event }) => {
     }
 
     useEffect(() => {
-      console.log('open')
       setDialogOpen(open)
     }, [open])
 

@@ -1,7 +1,7 @@
-import EventViewModel from "../../../../types/calendar/EventViewModel";
+import EventDoc from "../../../../types/calendar/database/EventDoc";
 
 export default interface EventModalProps {
-  event: EventViewModel
+  event: EventDoc
   open: boolean
   onClose: () => void
 }

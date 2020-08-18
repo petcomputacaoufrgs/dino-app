@@ -1,7 +1,3 @@
-.calendar__day__modal {
-    font-family: 'Raleway', sans-serif;
-}
-
 .calendar__day__modal.mobile .MuiDialog-container.MuiDialog-scrollPaper {
     position: absolute;
     top: 55px;

@@ -1,10 +1,13 @@
 import PouchDB from 'pouchdb'
+import findPlugin from 'pouchdb-find'
+
+PouchDB.plugin(findPlugin)
 
 /**
  * @description Define a base para uma service de banco de dados PouchDB
  */
-export default class BaseDatabase {
-  db: PouchDB.Database<{}>
+export default class BaseDatabase<T> {
+  db: PouchDB.Database<T>
   databaseName: string
 
   constructor(databaseName: string) {
@@ -24,6 +27,6 @@ export default class BaseDatabase {
     this.db = this.getNewConnection()
   }
 
-  private getNewConnection = (): PouchDB.Database<{}> =>
+  private getNewConnection = (): PouchDB.Database<T> =>
     new PouchDB(this.databaseName, { auto_compaction: true })
 }

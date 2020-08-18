@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react'
 import DayModalHour from "../../../../../types/calendar/DayModalHour"
 import StringUtils from '../../../../../utils/StringUtils'
 import ContentProps from './props'
-import EventViewModel from '../../../../../types/calendar/EventViewModel'
 import EventItem from './event_item'
+import EventDoc from '../../../../../types/calendar/database/EventDoc'
+import DateUtils from '../../../../../utils/DateUtils'
 import './styles.css'
 
-const Content: React.FC<ContentProps> = ({ day }) => {
+const DELAY_TO_UPDATE_SCREE_WITH_CURRENT_TIME_IN_MS = 60000
+
+const Content: React.FC<ContentProps> = ({ day, events }) => {
   const [updateCount, setUpdateCount] = useState(0)
+  const isToday = DateUtils.isToday(day.date)
 
   const getFormatedHour = (hour: DayModalHour): string => (
     `${StringUtils.toStringWithZeros(
@@ -16,8 +20,9 @@ const Content: React.FC<ContentProps> = ({ day }) => {
     )}:${StringUtils.toStringWithZeros(hour.min, 2)}`
   ) 
 
-  const getEventsByInitHour = (hour: DayModalHour): EventViewModel[] =>
-    day.events.filter((event) => event.init_date.getHours() === hour.hour)
+  const getEventsByInitHour = (hour: DayModalHour): EventDoc[] => {
+    return events.filter(event => event.init_date.getHours() === hour.hour)
+  }
 
   const renderEventsByInitHour = (hour: DayModalHour): JSX.Element => {
     const startedEvents = getEventsByInitHour(hour)
@@ -43,7 +48,7 @@ const Content: React.FC<ContentProps> = ({ day }) => {
   }
 
   useEffect(() => {
-    if (updateCount === 0) {
+    if (isToday && updateCount === 0) {
       const element = document.getElementById(
         'calendar__day__modal__hours__hours_list'
       )
@@ -52,12 +57,12 @@ const Content: React.FC<ContentProps> = ({ day }) => {
 
       if (element) {
         const scrollTo =
-          (element.scrollHeight / 1440) *
+          ((element.scrollHeight - element.clientHeight) / 1440) *
           (now.getHours() * 60 + now.getMinutes())
         element.scrollTop = scrollTo
       }
     }
-  })
+  }, [updateCount])
 
   useEffect(() => {
     let updateScreen = () => {
@@ -68,12 +73,15 @@ const Content: React.FC<ContentProps> = ({ day }) => {
       updateScreen = () => {}
     }
 
-    if (day.isToday) {
-      setTimeout(updateScreen, 30000)
+    if (DateUtils.isToday(day.date)) {
+      setTimeout(
+        updateScreen,
+        DELAY_TO_UPDATE_SCREE_WITH_CURRENT_TIME_IN_MS
+      )
     } 
 
     return cleanBeforeUpdate
-  }, [updateCount, day.isToday])
+  }, [updateCount, day.date])
 
   return (
     <>
@@ -86,7 +94,7 @@ const Content: React.FC<ContentProps> = ({ day }) => {
             <div
               key={index}
               className={`calendar__day__modal__hours__hours_list__line${
-                day.isToday ? ' today' : ' n_today'
+                isToday ? ' today' : ' n_today'
               }`}
             >
               <div className="calendar__day__modal__hours__hours_list__line__hour">
@@ -97,7 +105,7 @@ const Content: React.FC<ContentProps> = ({ day }) => {
               </div>
             </div>
           ))}
-          {day.isToday && (
+          {isToday && (
             <div
               className="calendar__day__modal__now_line"
               style={getNowLineStyles()}

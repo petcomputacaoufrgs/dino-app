@@ -12,7 +12,7 @@ const WeekDayColumn: React.FC<WeekDayColumnProps> = ({
   return (
     <div className="calendar__month__content__week_day_column">
       <Header shortName={shortName} first={first} />
-      <Content  days={days} first={first} />
+      <Content days={days} first={first} />
     </div>
   )
 }

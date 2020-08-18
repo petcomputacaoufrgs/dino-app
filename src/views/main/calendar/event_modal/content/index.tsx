@@ -33,7 +33,7 @@ const Content: React.FC<ContentProps> = ({ event } ) => {
 
       let andCount = 0
 
-      const difference = event.init_date.getTime() - event.alarm.getTime()
+      const difference = event.reminder_alarm_ms
 
       const differenceInMinutes = Math.round(difference / 60000)
 

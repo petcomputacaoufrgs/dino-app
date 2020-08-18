@@ -1,8 +1,8 @@
-import EventViewModel from "../../../../../../types/calendar/EventViewModel";
 import DayViewModel from "../../../../../../types/calendar/DayViewModel";
+import EventDoc from "../../../../../../types/calendar/database/EventDoc";
 
 export default interface EventItemProps {
     day: DayViewModel
-    event: EventViewModel
+    event: EventDoc
     totalEventsOnHour: number
 }

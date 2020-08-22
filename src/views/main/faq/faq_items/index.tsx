@@ -27,7 +27,7 @@ const FaqItems = ({items}: FaqItemsProps): JSX.Element => {
   return(
       <div className='faq'>
       {items.map(item => (
-            <Accordion>
+            <Accordion key={item.id}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"

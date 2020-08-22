@@ -187,4 +187,8 @@ export default class EN implements LanguageBase {
   CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
 
   DISCONNECTED = 'Disconnected'
+
+  SELECT_FAQ_BUTTON = 'SEARCH FAQ'
+
+  SELECT_TREATMENT = 'Select Treatment'
 }

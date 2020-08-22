@@ -88,4 +88,6 @@ export default interface LanguageBase {
   SYNC_CONNECTION_FAIL: string
   CANT_LOGIN_DISCONNECTED: string
   DISCONNECTED: string
+  SELECT_FAQ_BUTTON: string
+  SELECT_TREATMENT: string
 }

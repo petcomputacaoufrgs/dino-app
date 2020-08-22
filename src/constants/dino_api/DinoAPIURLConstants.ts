@@ -13,6 +13,7 @@ class DinoAPIURLConstants {
   private NOTE = `${this.URL}note/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
+  private FAQ = this.URL + 'faq/'
 
   AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 
@@ -77,6 +78,13 @@ class DinoAPIURLConstants {
   SAVE_LOG_APP_ERROR = `${this.LOG_APP_ERROR}`
 
   SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
+
+  FAQ_GET = `${this.FAQ}`
+
+  FAQ_SAVE = `${this.FAQ}`
+
+  FAQ_OPTIONS = `${this.URL}public/faq/options/`
+
 }
 
 export default new DinoAPIURLConstants()

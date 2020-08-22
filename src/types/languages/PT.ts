@@ -190,4 +190,8 @@ export default class PT implements LanguageBase {
   CANT_LOGIN_DISCONNECTED = 'Conexão com a internet necessária para login'
 
   DISCONNECTED = 'Desconectado'
+
+  SELECT_FAQ_BUTTON = 'Busque FAQ'
+
+  SELECT_TREATMENT = 'Selecione Tratamento'
 }

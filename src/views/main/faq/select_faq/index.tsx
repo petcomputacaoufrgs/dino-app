@@ -1,67 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {FormControl,Select,MenuItem, InputLabel} from '@material-ui/core'
 import FaqService from '../../../../services/faq/FaqService'
-import { FaqTitleOptionsModel } from '../../../../types/faq/FaqOptionsModel'
+import FaqOptionsModel from '../../../../types/faq/FaqOptionsModel'
 import { useLanguage } from '../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-interface SelectFaqProps {
-  selectedFaq: FaqTitleOptionsModel | undefined
-  setSelectedFaq: React.Dispatch<React.SetStateAction<FaqTitleOptionsModel | undefined>>
-}
+import SelectFaqProps from './props'
 
 const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element => {
 
     const language = useLanguage().current
 
-    const [faqOptions, setFaqOptions] = useState([] as FaqTitleOptionsModel[])
+    const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
     const [open, setOpen] = useState(false)
+    const [value, setValue] = React.useState<FaqOptionsModel | null>(selectedFaq || null);
+    const [inputValue, setInputValue] = React.useState(selectedFaq ? selectedFaq.title : '');
+    
     const loading = open && faqOptions.length === 0;
 
-    const [value, setValue] = React.useState<FaqTitleOptionsModel | null>(selectedFaq || null);
-    const [inputValue, setInputValue] = React.useState(selectedFaq ? selectedFaq.title : '');
-
-    const handleChange = (newValue: FaqTitleOptionsModel | null) => {
-      if(newValue)
-        setSelectedFaq(newValue)
-    }
-
     useEffect(() => {
-
-      let active = true;
-
       if (!loading) {
-        return undefined;
+        return undefined
       }
-
       const getFaqOptions = async () => {
-      if(open) {
-        const optionsItems = await FaqService.getFaqOptions() as FaqTitleOptionsModel[]
-        if(optionsItems.length > 0)
-          setFaqOptions(optionsItems)
+        if(open) {
+          const response = await FaqService.getFaqOptions() as FaqOptionsModel[]
+          if(response !== undefined) {
+            setFaqOptions(response)
+          }
+        }
       }
-    }
       getFaqOptions()
-
-      return () => {
-        active = false;
-      };
     }, [loading])
-
-    useEffect(() => {
-      if (!open) {
-        setFaqOptions([] as FaqTitleOptionsModel[]);
-      }
-    }, [open]);
 
     useEffect(() => {
       if (value !== null) {
         setSelectedFaq(value)
       }
-    }, [value]);
+    }, [value])
 
     return (
       <>
@@ -75,13 +52,9 @@ const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element =
         options={faqOptions}
         loading={loading}
         inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-        }}
+        onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
         value={value}
-        onChange={(event: any, newValue: FaqTitleOptionsModel | null) => {
-          setValue(newValue);
-        }}
+        onChange={(event: any, newValue: FaqOptionsModel | null) => setValue(newValue)}
         renderInput={params => (
           <TextField
             {...params}

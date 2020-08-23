@@ -2,7 +2,7 @@ import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import FaqModel from '../../types/faq/FaqModel'
-import { FaqOptionsModel } from '../../types/faq/FaqOptionsModel'
+import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import HttpStatus from 'http-status-codes'
 import FaqService from './FaqService'
 
@@ -49,13 +49,14 @@ class FaqServerService {
     return undefined
   }
     
-getFaqOptions = async (): Promise<FaqOptionsModel | undefined> => {
+getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_OPTIONS)
   
     if (request.canGo) {
       try {
         const response = await request.authenticate().go()
   
+        console.log(response)
         if (response.status === HttpStatus.OK) {
           return response.body
         }

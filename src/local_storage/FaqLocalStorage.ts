@@ -1,7 +1,7 @@
 import LS_Constants from '../constants/LocalStorageKeysConstants'
 import BaseLocalStorage from './BaseLocalStorage'
 import FaqItemModel from '../types/faq/FaqItemModel'
-import { FaqTitleOptionsModel } from '../types/faq/FaqOptionsModel'
+import FaqOptionsModel from '../types/faq/FaqOptionsModel'
 
 class FaqLocalStorage extends BaseLocalStorage {
   getItems = (): Array<FaqItemModel> => {
@@ -13,47 +13,15 @@ class FaqLocalStorage extends BaseLocalStorage {
   setItems = (items: FaqItemModel[]) => {
     this.set(LS_Constants.FAQ_ITEMS, JSON.stringify(items))
   }
-  /*
 
-  getOptions = (): Array<FaqTitleOptionsModel> => {
-    const faqOptions = this.get(LS_Constants.FAQ_OPTIONS)
-
-    return faqOptions ? JSON.parse(faqOptions) : new Array<FaqTitleOptionsModel>()
-  }
-
-  setOptions = (options: Array<FaqTitleOptionsModel>) => {
-    this.set(LS_Constants.FAQ_OPTIONS, JSON.stringify(options))
-  }
-  
-  getOptionsVersion = (): number => {
-    const version = this.get(LS_Constants.FAQ_OPTIONS_VERSION)
-
-    return version ? JSON.parse(version) : 0
-  }
-
-  setOptionsVersion = (version: number) => {
-    this.set(LS_Constants.FAQ_OPTIONS_VERSION, JSON.stringify(version))
-  }
-  */
-
-  getUserFaqId = (): number => {
-    const id = this.get(LS_Constants.FAQ_USER_ID)
+  getUserFaq = (): FaqOptionsModel | undefined => {
+    const faq = this.get(LS_Constants.FAQ_USER_INFO)
     
-    return id ? JSON.parse(id) : 0
+    return faq ? JSON.parse(faq) : undefined
   }
   
-  setUserFaqId = (id: number) => {
-    this.set(LS_Constants.FAQ_USER_ID, JSON.stringify(id))
-  }
-
-  getUserFaqInfo = (): FaqTitleOptionsModel | undefined => {
-    const info = this.get(LS_Constants.FAQ_USER_INFO)
-    
-    return info ? JSON.parse(info) : undefined
-  }
-  
-  setUserFaqInfo = (faqOption: FaqTitleOptionsModel) => {
-    this.set(LS_Constants.FAQ_USER_INFO, JSON.stringify(faqOption))
+  setUserFaq = (faq: FaqOptionsModel) => {
+    this.set(LS_Constants.FAQ_USER_INFO, JSON.stringify(faq))
   }
 
   getVersion = (): number => {
@@ -68,10 +36,8 @@ class FaqLocalStorage extends BaseLocalStorage {
 
   removeUserData = () => {
     this.remove(LS_Constants.FAQ_ITEMS)
-    this.remove(LS_Constants.FAQ_OPTIONS)
-    this.remove(LS_Constants.FAQ_OPTIONS_VERSION)
-    this.remove(LS_Constants.FAQ_USER_ID)
     this.remove(LS_Constants.FAQ_USER_VERSION)
+    this.remove(LS_Constants.FAQ_USER_INFO)
   }
 }
 

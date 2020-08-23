@@ -2,7 +2,7 @@ import FaqItemModel from '../../types/faq/FaqItemModel'
 import FaqLocalStorage from '../../local_storage/FaqLocalStorage'
 import FaqContextUpdater from '../../context_updater/FaqContextUpdater'
 import FaqModel from '../../types/faq/FaqModel'
-import {FaqOptionsModel, FaqTitleOptionsModel} from '../../types/faq/FaqOptionsModel'
+import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import ServerService from './FaqServerService'
 
 class FaqService {
@@ -13,19 +13,18 @@ class FaqService {
 
   }
 
-  switchUserFaq = async (faqOption: FaqTitleOptionsModel) => {
+  switchUserFaq = async (faqOption: FaqOptionsModel) => {
     if(faqOption.id > 0) {
       await this.saveUserFaqOnServer(faqOption)
       await this.getUserFaq()
     }
   }
 
-  saveUserFaqOnServer = async (faqOption: FaqTitleOptionsModel) => {
+  saveUserFaqOnServer = async (faqOption: FaqOptionsModel) => {
     const savedId = await ServerService.saveUserFaqId(faqOption.id)
 
     if(savedId !== undefined) {
-      //FaqLocalStorage.setUserFaqId(savedId)
-      FaqLocalStorage.setUserFaqInfo(faqOption)
+      FaqLocalStorage.setUserFaq(faqOption)
     }
   }
 
@@ -48,8 +47,7 @@ class FaqService {
   }
 
   getCurrentFaqInfo = () => {
-    return FaqLocalStorage.getUserFaqInfo()
-
+    return FaqLocalStorage.getUserFaq()
   }
 
   setItems = (items: FaqItemModel[]) => FaqLocalStorage.setItems(items)
@@ -64,29 +62,10 @@ class FaqService {
 
   setUserFaqVersion = (version: number) => FaqLocalStorage.setVersion(version)
 
-  getFaqOptions = async (): Promise<Array<FaqTitleOptionsModel>> => {
+  getFaqOptions = async (): Promise<Array<FaqOptionsModel>> => {
 
-    const response = await ServerService.getFaqOptions() as FaqOptionsModel
+    return await ServerService.getFaqOptions() as FaqOptionsModel[]
 
-    if(response !== undefined) {
-      //this.setFaqOptionsVersion(response.version)
-      return response.options
-    }
-
-    return [] as FaqTitleOptionsModel[]
-  }
-
-  //setFaqOptions = (options: Array<FaqTitleOptionsModel>) => FaqLocalStorage.setOptions(options)
-
-  //getFaqOptionsVersion = (): number => FaqLocalStorage.getOptionsVersion()
-
-  //setFaqOptionsVersion = (version: number) => FaqLocalStorage.setFaqOptionsVersion(version) 
-
-  getUserFaqId = (): number => FaqLocalStorage.getUserFaqId()
-
-  setUserFaqId = (id: number) => {
-    ServerService.saveUserFaqId(id)
-    FaqLocalStorage.setUserFaqId(id)
   }
   
   removeUserData = () => FaqLocalStorage.removeUserData()

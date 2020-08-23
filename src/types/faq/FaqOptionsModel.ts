@@ -1,9 +1,4 @@
-export interface FaqOptionsModel {
-    version: number,
-    options: FaqTitleOptionsModel[],
-}
-
-export interface FaqTitleOptionsModel {
+export default interface FaqOptionsModel {
     id: number,
     title: string
 }

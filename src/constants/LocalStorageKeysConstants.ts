@@ -36,13 +36,9 @@ class LocalStorageKeys {
   NOTES_TO_DELETE = 'ntd'
   CONNECTION = 'con'
   LOG_APP_ERROR_SYNC = 'laes'
-  FAQ_ITEMS = 'fi'
-  FAQ_USER_ID = 'fuid'
-  FAQ_USER_TITLE = 'fut'
-  FAQ_USER_INFO = 'fui'
   FAQ_USER_VERSION = 'fuv'
-  FAQ_OPTIONS = 'foptns'
-  FAQ_OPTIONS_VERSION = 'fov'
+  FAQ_USER_INFO = 'fui'
+  FAQ_ITEMS = 'fi'
 }
 
 export default new LocalStorageKeys()

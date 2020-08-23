@@ -7,6 +7,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,11 +22,15 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const FaqItems = ({items}: FaqItemsProps): JSX.Element => {
+const FaqItems = ({items, title}: FaqItemsProps): JSX.Element => {
   const classes = useStyles();
 
   return(
-      <div className='faqItems'>
+      <div className='faq-items'>
+        <div className='faq-items__title'>
+          <Typography>{title}</Typography>
+          <Divider/>
+        </div>
       {items.map(item => (
             <Accordion key={item.id}>
               <AccordionSummary

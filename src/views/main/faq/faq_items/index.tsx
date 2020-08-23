@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-//(props: {  items: Array<GlossaryItemModel> })
+
 const FaqItems = ({items}: FaqItemsProps): JSX.Element => {
   const classes = useStyles();
 
   return(
-      <div className='faq'>
+      <div className='faqItems'>
       {items.map(item => (
             <Accordion key={item.id}>
               <AccordionSummary

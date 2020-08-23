@@ -13,6 +13,7 @@ class FaqLocalStorage extends BaseLocalStorage {
   setItems = (items: FaqItemModel[]) => {
     this.set(LS_Constants.FAQ_ITEMS, JSON.stringify(items))
   }
+  /*
 
   getOptions = (): Array<FaqTitleOptionsModel> => {
     const faqOptions = this.get(LS_Constants.FAQ_OPTIONS)
@@ -23,7 +24,7 @@ class FaqLocalStorage extends BaseLocalStorage {
   setOptions = (options: Array<FaqTitleOptionsModel>) => {
     this.set(LS_Constants.FAQ_OPTIONS, JSON.stringify(options))
   }
-
+  
   getOptionsVersion = (): number => {
     const version = this.get(LS_Constants.FAQ_OPTIONS_VERSION)
 
@@ -33,13 +34,8 @@ class FaqLocalStorage extends BaseLocalStorage {
   setOptionsVersion = (version: number) => {
     this.set(LS_Constants.FAQ_OPTIONS_VERSION, JSON.stringify(version))
   }
+  */
 
-  getVersion = (): number => {
-    const version = this.get(LS_Constants.FAQ_USER_VERSION)
-    
-    return version ? JSON.parse(version) : 0
-  }
-  
   getUserFaqId = (): number => {
     const id = this.get(LS_Constants.FAQ_USER_ID)
     
@@ -50,18 +46,24 @@ class FaqLocalStorage extends BaseLocalStorage {
     this.set(LS_Constants.FAQ_USER_ID, JSON.stringify(id))
   }
 
-  getUserFaqVersion = (): number => {
+  getUserFaqInfo = (): FaqTitleOptionsModel | undefined => {
+    const info = this.get(LS_Constants.FAQ_USER_INFO)
+    
+    return info ? JSON.parse(info) : undefined
+  }
+  
+  setUserFaqInfo = (faqOption: FaqTitleOptionsModel) => {
+    this.set(LS_Constants.FAQ_USER_INFO, JSON.stringify(faqOption))
+  }
+
+  getVersion = (): number => {
     const version = this.get(LS_Constants.FAQ_USER_VERSION)
     
     return version ? JSON.parse(version) : 0
   }
 
-  setUserFaqVersion = (version: number) => {
+  setVersion = (version: number) => {
     this.set(LS_Constants.FAQ_USER_VERSION, JSON.stringify(version))
-  }
-
-  setFaqOptionsVersion = (version: number) => {
-    this.set(LS_Constants.FAQ_OPTIONS_VERSION, JSON.stringify(version))
   }
 
   removeUserData = () => {

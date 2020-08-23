@@ -31,6 +31,7 @@ export default interface LanguageBase {
   MENU_LOGOUT: string
   SETTINGS_TITLE: string
   SETTINGS_LANGUAGE: string
+  SETTINGS_FAQ: string
   SETTINGS_SAVE: string
   SETTINGS_SAVE_SUCCESS: string
   MENU_NOTES: string

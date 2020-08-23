@@ -19,8 +19,6 @@ class FaqServerService {
         
         const response = await request.authenticate().go()
 
-        console.log("response", response)
-
         if (response.status === HttpStatus.OK) {
           const faqModel = response.body as FaqModel
 
@@ -59,7 +57,6 @@ getFaqOptions = async (): Promise<FaqOptionsModel | undefined> => {
         const response = await request.authenticate().go()
   
         if (response.status === HttpStatus.OK) {
-          console.log(response.body)
           return response.body
         }
       } catch (e) {

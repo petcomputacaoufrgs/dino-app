@@ -10,6 +10,9 @@ import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import AppSettingsModel from '../../../types/app_settings/AppSettingsModel'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
+import FaqService from '../../../services/faq/FaqService'
+import SelectFaq from '../faq/select_faq'
+
 import './styles.css'
 
 const Settings = (): JSX.Element => {
@@ -24,6 +27,8 @@ const Settings = (): JSX.Element => {
   const [selectedLanguage, setSelectedLanguage] = useState(
     language.NAVIGATOR_LANGUAGE_CODE
   )
+
+  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getCurrentFaqInfo())
 
   useEffect(() => {
     setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
@@ -43,6 +48,11 @@ const Settings = (): JSX.Element => {
     AppSettingsService.set(model)
 
     const currentLanguage = appContext.language.updateLanguage()
+
+    if(selectedFaq !== undefined) {
+      FaqService.switchUserFaq(selectedFaq)
+    }
+
     alert.showSuccessAlert(currentLanguage.SETTINGS_SAVE_SUCCESS)
   }
 
@@ -81,6 +91,13 @@ const Settings = (): JSX.Element => {
     </div>
   )
 
+  const renderSelectFaq = (): JSX.Element => (
+    <SelectFaq 
+      selectedFaq={selectedFaq}
+      setSelectedFaq={setSelectedFaq}
+    />
+  )
+
   return (
     <div className="settings">
       <Typography
@@ -92,6 +109,9 @@ const Settings = (): JSX.Element => {
       </Typography>
       <FormControl className="settings__form">
         {renderSelectLanguage()}
+      </FormControl>
+      <FormControl className="settings__form">
+        {renderSelectFaq()}
       </FormControl>
       {renderSaveButton()}
     </div>

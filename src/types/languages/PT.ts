@@ -72,6 +72,8 @@ export default class PT implements LanguageBase {
 
   SETTINGS_LANGUAGE = 'Escolher Idioma'
 
+  SETTINGS_FAQ = 'Escolher F.A.Q'
+
   SETTINGS_SAVE = 'Salvar'
 
   SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'

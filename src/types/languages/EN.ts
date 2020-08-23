@@ -72,6 +72,8 @@ export default class EN implements LanguageBase {
 
   SETTINGS_LANGUAGE = 'Choose Language'
 
+  SETTINGS_FAQ = 'Choose F.A.Q'
+
   SETTINGS_SAVE = 'Save'
 
   SETTINGS_SAVE_SUCCESS = 'Settings updated.'

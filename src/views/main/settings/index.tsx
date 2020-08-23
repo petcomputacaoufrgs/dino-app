@@ -28,7 +28,7 @@ const Settings = (): JSX.Element => {
     language.NAVIGATOR_LANGUAGE_CODE
   )
 
-  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getCurrentFaqInfo())
+  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
 
   useEffect(() => {
     setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)

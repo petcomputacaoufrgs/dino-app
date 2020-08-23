@@ -25,7 +25,7 @@ const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element =
       }
       const getFaqOptions = async () => {
         if(open) {
-          const response = await FaqService.getFaqOptions() as FaqOptionsModel[]
+          const response = await FaqService.getFaqOptionsFromServer() as FaqOptionsModel[]
           if(response !== undefined) {
             setFaqOptions(response)
           }

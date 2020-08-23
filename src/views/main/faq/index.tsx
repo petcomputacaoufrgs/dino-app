@@ -19,7 +19,7 @@ const Faq = (): JSX.Element => {
   const [items, setItems] = useState(FaqService.getItems())
   const language = useLanguage().current
 
-  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getCurrentFaqInfo())
+  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
 
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')

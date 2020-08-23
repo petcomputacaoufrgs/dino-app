@@ -7,68 +7,85 @@ import ServerService from './FaqServerService'
 
 class FaqService {
 
-  updateLocal = async (version: number): Promise<void> => {
-    
-    this.getUserFaq()
-
-  }
-
-  switchUserFaq = async (faqOption: FaqOptionsModel) => {
-    if(faqOption.id > 0) {
-      await this.saveUserFaqOnServer(faqOption)
-      await this.getUserFaq()
+  updateFaq = async (newVersion: number): Promise<void> => {
+    if(FaqLocalStorage.getVersion() !== newVersion) {
+      await this.getUserFaqFromServer()
     }
   }
 
-  saveUserFaqOnServer = async (faqOption: FaqOptionsModel) => {
-    const savedId = await ServerService.saveUserFaqId(faqOption.id)
+  updateUserFaq = async (newFaq: number): Promise<void> => {
+    if(FaqLocalStorage.getUserFaq()?.id !== newFaq) {
+      await this.getUserFaqFromServer()
+    }
+  }
 
-    if(savedId !== undefined) {
+  switchUserFaq = async (faqOption: FaqOptionsModel) => {
+    await this.saveUserFaqOnServer(faqOption)
+    await this.getUserFaqFromServer()
+    this.setShouldSync(true)
+  }
+
+  saveUserFaqOnServer = async (faqOption: FaqOptionsModel) => {
+
+    const response = await ServerService.saveUserFaqId(faqOption.id)
+
+    if(response !== undefined) {
+      FaqLocalStorage.removeUserData()
       FaqLocalStorage.setUserFaq(faqOption)
     }
   }
 
-  getUserFaq = async () => {
+  getUserFaqFromServer = async () => {
 
     const response = await ServerService.getUserFaq() as FaqModel
     
     if(response !== undefined) {
       
-      this.setUserFaqVersion(response.version)
+      this.setFaq(response)
 
-      this.setItems(response.items)
-
-      FaqContextUpdater.update()
-      
     } else {
       console.log("não foi")
     }
-
   }
 
-  getCurrentFaqInfo = () => {
-    return FaqLocalStorage.getUserFaq()
+  setFaq = (faq: FaqModel) => {
+    FaqLocalStorage.setVersion(faq.version)
+
+    FaqLocalStorage.setUserFaq({
+      id: faq.id,
+      title: faq.title
+    } as FaqOptionsModel)
+
+    this.setItems(faq.items)
   }
 
-  setItems = (items: FaqItemModel[]) => FaqLocalStorage.setItems(items)
+  setItems = (items: FaqItemModel[]) => {
+    FaqLocalStorage.setItems(items)
+    FaqContextUpdater.update()
+  }
 
   getItems = (): FaqItemModel[] => {
-    
     const items = FaqLocalStorage.getItems()
     return items
   }
-    
-  getUserFaqVersion = (): number => FaqLocalStorage.getVersion()
+  
+  getUserFaqInfo = () => {
+    return FaqLocalStorage.getUserFaq()
+  }
 
-  setUserFaqVersion = (version: number) => FaqLocalStorage.setVersion(version)
+  getVersion = () => {
+    return FaqLocalStorage.getVersion()
+  }
 
-  getFaqOptions = async (): Promise<Array<FaqOptionsModel>> => {
-
+  getFaqOptionsFromServer = async (): Promise<Array<FaqOptionsModel>> => {
     return await ServerService.getFaqOptions() as FaqOptionsModel[]
-
   }
   
   removeUserData = () => FaqLocalStorage.removeUserData()
+
+  shouldSync = () => FaqLocalStorage.getShouldSync()
+
+  setShouldSync = (shouldSync: boolean) => FaqLocalStorage.setShouldSync(shouldSync)
 
 }
 

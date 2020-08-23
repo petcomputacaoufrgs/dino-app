@@ -4,8 +4,6 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import HttpStatus from 'http-status-codes'
-import FaqService from './FaqService'
-
 
 class FaqServerService {
 
@@ -22,7 +20,6 @@ class FaqServerService {
         if (response.status === HttpStatus.OK) {
           const faqModel = response.body as FaqModel
 
-          FaqService.setUserFaqVersion(faqModel.version)
           return faqModel
         }
       } catch (e) {

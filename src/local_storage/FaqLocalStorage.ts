@@ -34,10 +34,21 @@ class FaqLocalStorage extends BaseLocalStorage {
     this.set(LS_Constants.FAQ_USER_VERSION, JSON.stringify(version))
   }
 
+  getShouldSync = (): boolean => {
+    const shouldSync = this.get(LS_Constants.FAQ_SHOULD_SYNC)
+    
+    return shouldSync ? JSON.parse(shouldSync) : false
+  }
+  
+  setShouldSync = (shouldSync: boolean) => {
+    this.set(LS_Constants.FAQ_SHOULD_SYNC, JSON.stringify(shouldSync))
+  }
+
   removeUserData = () => {
     this.remove(LS_Constants.FAQ_ITEMS)
     this.remove(LS_Constants.FAQ_USER_VERSION)
     this.remove(LS_Constants.FAQ_USER_INFO)
+    this.remove(LS_Constants.FAQ_SHOULD_SYNC)
   }
 }
 

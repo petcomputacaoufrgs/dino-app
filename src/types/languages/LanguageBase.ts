@@ -133,4 +133,9 @@ export default interface LanguageBase {
   EVENT_REPEAT_EVERY_CUSTOMIZED: string
   EVENT_REPEAT_TYPE_LABEL: string
   INVALID_EVENT_REPEAT_TYPE: string
+  EVENT_TITLE_ICON_ALT: string
+  EVENT_TYPE_ICON_ALT: string
+  EVENT_DATE_ICON_ALT: string
+  EVENT_REPEAT_ICON_ALT: string
+  EVENT_REPEAT_END_DATE_LABEL: string
 }

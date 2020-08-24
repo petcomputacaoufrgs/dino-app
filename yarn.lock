@@ -10175,6 +10175,11 @@ react-transition-group@^4.0.0, react-transition-group@^4.4.0, react-transition-g
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-weekday-picker@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-weekday-picker/-/react-weekday-picker-1.0.8.tgz#b7e5598ddfe98a6ec5f01a4194b8f2de11104787"
+  integrity sha1-t+VZjd/pim7F8BpBlLjy3hEQR4c=
+
 react@^16.13.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"

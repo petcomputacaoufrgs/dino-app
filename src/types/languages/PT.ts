@@ -276,4 +276,15 @@ export default class PT implements LanguageBase {
   EVENT_REPEAT_TYPE_LABEL = 'Tipo de repetição do evento'
 
   INVALID_EVENT_REPEAT_TYPE = 'Tipo de repetição inválida'
+
+  EVENT_TITLE_ICON_ALT = 'Escolha o título do evento'
+
+  EVENT_TYPE_ICON_ALT = 'Escolha o tipo do evento'
+
+  EVENT_DATE_ICON_ALT = 'Escolha a data do evento'
+
+  EVENT_REPEAT_ICON_ALT = 'Escolha a repetição do evento'
+
+  EVENT_REPEAT_END_DATE_LABEL = 'Final da repetição'
+
 }

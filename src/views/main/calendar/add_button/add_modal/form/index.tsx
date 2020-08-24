@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useLanguage } from '../../../../../../context_provider/app_settings'
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Grid, Button } from '@material-ui/core'
+import { FormControl, RadioGroup, FormControlLabel, Radio, TextField, Grid, Button } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
 import {
   MuiPickersUtilsProvider,
@@ -12,16 +12,23 @@ import EventRepeatModal from './event_repeat_modal'
 import EventType from '../../../../../../constants/calendar/EventType'
 import CalendarService from '../../../../../../services/calendar/CalendarService'
 import EventRepeatType from '../../../../../../constants/calendar/EventRepeatType'
+import WeekDayPicker from '../../../../../../components/week_day_picker'
+import TitleSVG from '../../../../../../assets/icons/title.svg'
+import HealingSVG from '../../../../../../assets/icons/healing.svg'
+import ScheduleSVG from '../../../../../../assets/icons/schedule.svg'
+import RepeatSVG from '../../../../../../assets/icons/repeat.svg'
+import FormItem from './form_item'
 import './styles.css'
 
 const Form: React.FC = () => {
     const language = useLanguage().current
 
     const [eventType, setEventType] = useState(language.MEDICAL_APPOINTMENT_TYPE)
-    const [eventName, setEventName] = useState('')
+    const [eventName, setEventName] = useState<string>()
     const [initDate, setInitDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
     const [repeatType, setRepeatType] = useState(EventRepeatType.NOT_REPEAT)
+    const [endRepeatDate, setEndRepeatDate] = useState<Date | undefined>()
     const [repeatModalOpen, setRepeatModalOpen] = useState(false)
 
     const handleEventTypeChange = (
@@ -67,9 +74,20 @@ const Form: React.FC = () => {
       handleCloseEventRepeatModal()
     }
 
-    return (
-      <div className="calendar__add_modal__form">
-        <FormControl>
+    const handleRepeatEndDateChange = (
+      date: MaterialUiPickersDate,
+      value?: string | null | undefined
+    ) => {
+      if (date) {
+        setEndRepeatDate(date)
+      }
+    }
+
+    const renderEventNameField = (): JSX.Element => (
+      <FormItem
+        iconSrc={TitleSVG}
+        iconAlt={language.EVENT_TITLE_ICON_ALT}
+        item={
           <TextField
             label={language.EVENT_NAME_LABEL}
             value={eventName}
@@ -77,25 +95,47 @@ const Form: React.FC = () => {
             className="calendar__add_modal__event_name_text_field"
             onChange={handleEventNameChange}
           />
-          <FormLabel component="legend">{language.EVENT_TYPE_LABEL}:</FormLabel>
-          <RadioGroup
-            aria-label={language.EVENT_TYPE_LABEL}
-            value={eventType}
-            onChange={handleEventTypeChange}
-          >
-            <FormControlLabel
-              value={EventType.MEDICINE}
-              control={<Radio />}
-              label={language.MEDICINE_TYPE}
-            />
-            <FormControlLabel
-              value={EventType.MEDICAL_APPOINTMENT}
-              control={<Radio />}
-              label={language.MEDICAL_APPOINTMENT_TYPE}
-            />
-          </RadioGroup>
-          <div className="calendar__add_modal__form__space_line" />
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        }
+      />
+    )
+
+    const renderEventTypeRadioGroup = (): JSX.Element => (
+      <>
+        <RadioGroup
+          aria-label={language.EVENT_TYPE_LABEL}
+          value={eventType}
+          onChange={handleEventTypeChange}
+        >
+          <FormItem
+            iconSrc={HealingSVG}
+            iconAlt={''}
+            item={
+              <FormControlLabel
+                value={EventType.MEDICINE}
+                control={<Radio />}
+                label={language.MEDICINE_TYPE}
+              />
+            }
+          />
+          <FormItem
+            item={
+              <FormControlLabel
+                value={EventType.MEDICAL_APPOINTMENT}
+                control={<Radio />}
+                label={language.MEDICAL_APPOINTMENT_TYPE}
+              />
+            }
+          />
+        </RadioGroup>
+      </>
+    )
+
+    const renderDatePicker = (): JSX.Element => (
+      <>
+        <FormItem
+          iconSrc={ScheduleSVG}
+          iconAlt={language.EVENT_DATE_ICON_ALT}
+          item={
             <Grid container justify="space-around">
               <KeyboardDatePicker
                 margin="normal"
@@ -119,6 +159,10 @@ const Form: React.FC = () => {
                 }}
               />
             </Grid>
+          }
+        />
+        <FormItem
+          item={
             <Grid container justify="space-around">
               <KeyboardDatePicker
                 margin="normal"
@@ -142,8 +186,16 @@ const Form: React.FC = () => {
                 }}
               />
             </Grid>
-          </MuiPickersUtilsProvider>
-          <div className="calendar__add_modal__form__space_line" />
+          }
+        />
+      </>
+    )
+
+    const renderEventRepeatPicker = (): JSX.Element => (
+      <FormItem
+        iconSrc={RepeatSVG}
+        iconAlt={language.EVENT_REPEAT_ICON_ALT}
+        item={
           <Button
             color="primary"
             className="calendar__add__modal__event_repeat_button"
@@ -154,7 +206,46 @@ const Form: React.FC = () => {
               language
             )}
           </Button>
-          <div className="calendar__add_modal__form__space_line" />
+        }
+      />
+    )
+
+    const renderRepeatDataPicker = (): JSX.Element => (
+      <>
+        {repeatType !== EventRepeatType.NOT_REPEAT && (
+          <FormItem
+            item={
+              <KeyboardDatePicker
+                margin="normal"
+                label={language.EVENT_END_DATE_LABEL}
+                format={language.DATE_PICKER_DAY_FORMAT}
+                value={endRepeatDate}
+                onChange={handleRepeatEndDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            }
+          />
+        )}
+      </>
+    )
+
+    return (
+      <div className="calendar__add_modal__form">
+        <FormControl>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            {renderEventNameField()}
+            <div className="calendar__add_modal__form__space_line" />
+            {renderEventTypeRadioGroup()}
+            <div className="calendar__add_modal__form__space_line" />
+            {renderDatePicker()}
+            <div className="calendar__add_modal__form__space_line" />
+            {renderEventRepeatPicker()}
+            {renderRepeatDataPicker()}
+            <div className="calendar__add_modal__form__space_line" />
+            <WeekDayPicker />
+          </MuiPickersUtilsProvider>
         </FormControl>
         <EventRepeatModal
           onClose={handleCloseEventRepeatModal}

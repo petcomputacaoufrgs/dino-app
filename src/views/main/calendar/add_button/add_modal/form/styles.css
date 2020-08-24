@@ -9,7 +9,7 @@
 .calendar__add_modal__form__space_line {
     width: 100%;
     height: 1px;
-    background-color: rgba(128,128,128, 0.8);
+    background-color: rgba(200, 200, 200, 0.5);
     margin-bottom: 10px;
     margin-top: 10px;
 }

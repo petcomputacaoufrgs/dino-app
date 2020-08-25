@@ -1,5 +1,3 @@
-import { StringDecoder } from "string_decoder";
-
 export default interface LanguageBase {
   APP_NAME: string
   CURIOUS_DINO_ALT: string
@@ -140,4 +138,5 @@ export default interface LanguageBase {
   EVENT_DATE_ICON_ALT: string
   EVENT_REPEAT_ICON_ALT: string
   EVENT_REPEAT_END_DATE_LABEL: string
+  EVENT_WEEKDAY_SELECT_LABEL: string
 }

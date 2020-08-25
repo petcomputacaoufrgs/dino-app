@@ -12,13 +12,15 @@ import EventRepeatModal from './event_repeat_modal'
 import EventType from '../../../../../../constants/calendar/EventType'
 import CalendarService from '../../../../../../services/calendar/CalendarService'
 import EventRepeatType from '../../../../../../constants/calendar/EventRepeatType'
-import WeekDayPicker from '../../../../../../components/week_day_picker'
+import WeekDayPicker from '../../../../../../components/weekday_picker'
 import TitleSVG from '../../../../../../assets/icons/title.svg'
 import HealingSVG from '../../../../../../assets/icons/healing.svg'
 import ScheduleSVG from '../../../../../../assets/icons/schedule.svg'
 import RepeatSVG from '../../../../../../assets/icons/repeat.svg'
 import FormItem from './form_item'
 import './styles.css'
+import Week from '../../../../../../types/weekday_picker/Week'
+import Weekday from '../../../../../../types/weekday_picker/Weekday'
 
 const Form: React.FC = () => {
     const language = useLanguage().current
@@ -30,6 +32,7 @@ const Form: React.FC = () => {
     const [repeatType, setRepeatType] = useState(EventRepeatType.NOT_REPEAT)
     const [endRepeatDate, setEndRepeatDate] = useState<Date | undefined>()
     const [repeatModalOpen, setRepeatModalOpen] = useState(false)
+    const [week, setWeek] = useState(new Week(language))
 
     const handleEventTypeChange = (
       event: React.ChangeEvent<HTMLInputElement>,
@@ -81,6 +84,13 @@ const Form: React.FC = () => {
       if (date) {
         setEndRepeatDate(date)
       }
+    }
+
+    const handleWeekdayClick = (
+      weekday: Weekday
+    ) => {
+      week.updateWeekdayByIndex(weekday.index, !weekday.isSelected)
+      setWeek({...week})
     }
 
     const renderEventNameField = (): JSX.Element => (
@@ -231,6 +241,23 @@ const Form: React.FC = () => {
       </>
     )
 
+    const renderWeekDaySelector = (): JSX.Element => (
+      <>
+        {repeatType === EventRepeatType.EVERY_WEEK && (
+          <FormItem
+            item={
+              <div className='calendar__add_modal__form__weekday_picker'>
+                <p className='calendar__add_modal__form__weekday_picker__label'>
+                  {language.EVENT_WEEKDAY_SELECT_LABEL}
+                </p>
+                <WeekDayPicker week={week} onWeekdayClick={handleWeekdayClick} />
+              </div>
+            }
+          />
+        )}
+      </>
+    )
+
     return (
       <div className="calendar__add_modal__form">
         <FormControl>
@@ -242,9 +269,9 @@ const Form: React.FC = () => {
             {renderDatePicker()}
             <div className="calendar__add_modal__form__space_line" />
             {renderEventRepeatPicker()}
+            {renderWeekDaySelector()}
             {renderRepeatDataPicker()}
             <div className="calendar__add_modal__form__space_line" />
-            <WeekDayPicker />
           </MuiPickersUtilsProvider>
         </FormControl>
         <EventRepeatModal

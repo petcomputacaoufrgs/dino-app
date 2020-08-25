@@ -291,4 +291,6 @@ export default class PT implements LanguageBase {
 
   EVENT_REPEAT_END_DATE_LABEL = 'Final da repetição'
 
+  EVENT_WEEKDAY_SELECT_LABEL = 'Selecione os dias:'
+
 }

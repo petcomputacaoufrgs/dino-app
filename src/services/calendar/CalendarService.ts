@@ -16,7 +16,6 @@ class CalendarService {
   }
 
   getEventRepeatTypeName = (type: number, language: LanguageBase) => {
-    console.log(type)
     switch (type) {
       case 0:
         return language.EVENT_REPEAT_NOT_REPEAT

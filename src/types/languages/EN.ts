@@ -288,4 +288,6 @@ export default class EN implements LanguageBase {
 
   EVENT_REPEAT_END_DATE_LABEL = 'Repetition end'
 
+  EVENT_WEEKDAY_SELECT_LABEL = 'Select days:'
+
 }

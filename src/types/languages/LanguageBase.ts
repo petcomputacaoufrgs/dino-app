@@ -1,6 +1,8 @@
 import { StringDecoder } from "string_decoder";
 
 export default interface LanguageBase {
+  APP_NAME: string
+  CURIOUS_DINO_ALT: string
   ISO_LANGUAGE_CODE: string
   NAVIGATOR_LANGUAGE_CODE: string
   LANGUAGE_PORTUGUESE: string

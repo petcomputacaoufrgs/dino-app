@@ -44,8 +44,8 @@ const Login = (): JSX.Element => {
 
   return (
     <div className="login">
-      <img className="login__curious" src={Dinosaur2} alt="Curious dino" />
-      <img className="login__logo" src={Dinosaur1} alt="DinoAPP" />
+      <img className="login__curious" src={Dinosaur2} alt={language.CURIOUS_DINO_ALT} />
+      <img className="login__logo" src={Dinosaur1} alt={language.APP_NAME} />
       <Typography className="login__message" variant="h6" component="p">
         {language.WELCOME_MESSAGE}
       </Typography>

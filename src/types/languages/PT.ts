@@ -5,6 +5,10 @@ import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
  * @description Conjunto de textos em português brasileiro
  */
 export default class PT implements LanguageBase {
+  APP_NAME = 'DinoApp'
+
+  CURIOUS_DINO_ALT = 'Dinossauro curioso'
+
   ISO_LANGUAGE_CODE = 'pt'
 
   NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE
@@ -17,7 +21,7 @@ export default class PT implements LanguageBase {
 
   NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
 
-  WELCOME_MESSAGE = 'Bem vindo ao DinoAPP!'
+  WELCOME_MESSAGE = 'Bem vindo ao DinoApp!'
 
   LOGIN_BUTTON_TEXT = 'Entrar com o Google'
 

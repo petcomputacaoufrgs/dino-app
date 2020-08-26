@@ -293,4 +293,17 @@ export default class PT implements LanguageBase {
 
   EVENT_WEEKDAY_SELECT_LABEL = 'Selecione os dias:'
 
+  EVENT_ALERT_ALT = 'Adicionar alertas antes do evento'
+
+  EVENT_ADD_ALARM_LABEL = 'Tempo'
+
+  EVENT_ADD_ALARM_TYPE_LABEL = 'Medida de tempo'
+
+  EVENT_ADD_ALERT = 'Adicionar notificação'
+
+  EVENT_INVALID_ALARM_TYPE = 'tipo inválido'
+  
+  EVENT_ALARM_ZERO = 'Na hora do evento'
+
+  EVENT_ALARM_DELETE_ALT = 'Clique para excluir o alarme'
 }

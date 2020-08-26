@@ -35,6 +35,7 @@
 
 .week_day_picker__weekday_circle__button.selected {
     background-color: rgb(75, 75, 255);
+    color: white;
 }
 
 .week_day_picker__weekday_circle__button .MuiButton-text {

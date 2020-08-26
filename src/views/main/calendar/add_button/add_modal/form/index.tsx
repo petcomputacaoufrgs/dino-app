@@ -17,10 +17,14 @@ import TitleSVG from '../../../../../../assets/icons/title.svg'
 import HealingSVG from '../../../../../../assets/icons/healing.svg'
 import ScheduleSVG from '../../../../../../assets/icons/schedule.svg'
 import RepeatSVG from '../../../../../../assets/icons/repeat.svg'
+import AddAlertSVG from '../../../../../../assets/icons/add_alert.svg'
 import FormItem from './form_item'
-import './styles.css'
 import Week from '../../../../../../types/weekday_picker/Week'
 import Weekday from '../../../../../../types/weekday_picker/Weekday'
+import AddAlarmModal from './add_alarm_modal'
+import EventAlarm from '../../../../../../types/calendar/EventAlarm'
+import AlarmItem from './alarm_item'
+import './styles.css'
 
 const Form: React.FC = () => {
     const language = useLanguage().current
@@ -32,7 +36,17 @@ const Form: React.FC = () => {
     const [repeatType, setRepeatType] = useState(EventRepeatType.NOT_REPEAT)
     const [endRepeatDate, setEndRepeatDate] = useState<Date | undefined>()
     const [repeatModalOpen, setRepeatModalOpen] = useState(false)
-    const [week, setWeek] = useState(new Week(language))
+    const [weekdays, setWeekdays] = useState(new Week(language))
+    const [addAlarmModalOpen, setAddAlarmModalOpen] = useState(false)
+    const [alarms, setAlarms] = useState<EventAlarm[]>([])
+
+    const alarmDontExists = (time: number, type: number): boolean => {
+      if (time === 0) {
+        return alarms.filter((a) => a.time === time).length === 0
+      } else {
+        return alarms.filter((a) => a.time === time && a.type === type).length === 0
+      }
+    }
 
     const handleEventTypeChange = (
       event: React.ChangeEvent<HTMLInputElement>,
@@ -72,7 +86,7 @@ const Form: React.FC = () => {
       setRepeatModalOpen(false)
     }
 
-    const handleRepeatTypeChange = (repeatType: string) => {
+    const handleRepeatTypeChange = (repeatType: number) => {
       setRepeatType(repeatType)
       handleCloseEventRepeatModal()
     }
@@ -89,8 +103,37 @@ const Form: React.FC = () => {
     const handleWeekdayClick = (
       weekday: Weekday
     ) => {
-      week.updateWeekdayByIndex(weekday.index, !weekday.isSelected)
-      setWeek({...week})
+      weekdays.updateWeekdayByIndex(weekday.index, !weekday.isSelected)
+      setWeekdays({...weekdays})
+    }
+
+    const handleOpenEventAddAlertModal = () => {
+      setAddAlarmModalOpen(true)
+    }
+
+    const handleCloseAddAlarmModal = () => {
+      setAddAlarmModalOpen(false)
+    }
+
+    const handleSaveNewAlarm = (time: number, type: number) => {
+      const dontExists = alarmDontExists(time, type)
+
+      if (dontExists) {
+        alarms.push({
+          time: time,
+          type: type,
+        })
+
+        setAlarms([...alarms])
+      }
+
+      setAddAlarmModalOpen(false) 
+    }
+
+    const handleAlarmDelete = (alarm: EventAlarm) => {
+      const newAlarms = alarms.filter(a => a.time !== alarm.time || a.type !== alarm.type)
+
+      setAlarms(newAlarms)
     }
 
     const renderEventNameField = (): JSX.Element => (
@@ -250,12 +293,46 @@ const Form: React.FC = () => {
                 <p className='calendar__add_modal__form__weekday_picker__label'>
                   {language.EVENT_WEEKDAY_SELECT_LABEL}
                 </p>
-                <WeekDayPicker week={week} onWeekdayClick={handleWeekdayClick} />
+                <WeekDayPicker week={weekdays} onWeekdayClick={handleWeekdayClick} />
               </div>
             }
           />
         )}
       </>
+    )
+
+    const renderAlarmItens = (): JSX.Element => (
+      <>
+        {alarms.map((alarm, index) => (
+          <FormItem
+            iconSrc={index === 0 ? AddAlertSVG : undefined}
+            iconAlt={index === 0 ? language.EVENT_ALERT_ALT : undefined}
+            item={
+              <AlarmItem
+                key={index}
+                alarm={alarm}
+                onDelete={handleAlarmDelete}
+              />
+            }
+          />
+        ))}
+      </>
+    )
+
+    const renderAlarm = (): JSX.Element => (
+      <FormItem
+        iconSrc={alarms.length === 0 ? AddAlertSVG : undefined}
+        iconAlt={alarms.length === 0 ? language.EVENT_ALERT_ALT : undefined}
+        item={
+          <Button
+            color="primary"
+            className="calendar__add__modal__event_alert_button"
+            onClick={handleOpenEventAddAlertModal}
+          >
+            {language.EVENT_ADD_ALERT}
+          </Button>
+        }
+      />
     )
 
     return (
@@ -272,6 +349,9 @@ const Form: React.FC = () => {
             {renderWeekDaySelector()}
             {renderRepeatDataPicker()}
             <div className="calendar__add_modal__form__space_line" />
+            {renderAlarmItens()}
+            {renderAlarm()}
+            <div className="calendar__add_modal__form__space_line" />
           </MuiPickersUtilsProvider>
         </FormControl>
         <EventRepeatModal
@@ -279,6 +359,11 @@ const Form: React.FC = () => {
           onRepeatTypeChange={handleRepeatTypeChange}
           open={repeatModalOpen}
           repeatType={repeatType}
+        />
+        <AddAlarmModal
+          onClose={handleCloseAddAlarmModal}
+          onSave={handleSaveNewAlarm}
+          open={addAlarmModalOpen}
         />
       </div>
     )

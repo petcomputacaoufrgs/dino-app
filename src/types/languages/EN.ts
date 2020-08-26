@@ -290,4 +290,17 @@ export default class EN implements LanguageBase {
 
   EVENT_WEEKDAY_SELECT_LABEL = 'Select days:'
 
+  EVENT_ALERT_ALT = 'Add alerts before event'
+
+  EVENT_ADD_ALARM_LABEL = 'Time'
+
+  EVENT_ADD_ALARM_TYPE_LABEL = 'Time measure'
+
+  EVENT_ADD_ALERT = 'Add notification'
+
+  EVENT_INVALID_ALARM_TYPE = 'invalid type'
+
+  EVENT_ALARM_ZERO = 'At the time of the event'
+
+  EVENT_ALARM_DELETE_ALT = 'Click to delete alarm'
 }

@@ -139,4 +139,11 @@ export default interface LanguageBase {
   EVENT_REPEAT_ICON_ALT: string
   EVENT_REPEAT_END_DATE_LABEL: string
   EVENT_WEEKDAY_SELECT_LABEL: string
+  EVENT_ALERT_ALT: string
+  EVENT_ADD_ALARM_LABEL: string
+  EVENT_ADD_ALARM_TYPE_LABEL: string
+  EVENT_ADD_ALERT: string
+  EVENT_INVALID_ALARM_TYPE: string
+  EVENT_ALARM_ZERO: string
+  EVENT_ALARM_DELETE_ALT: string
 }

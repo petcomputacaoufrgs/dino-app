@@ -1,6 +1,6 @@
 export default interface EventRepeatModalProps {
   open: boolean
-  repeatType: string
-  onRepeatTypeChange: (eventRepeatType: string) => void
+  repeatType: number
+  onRepeatTypeChange: (eventRepeatType: number) => void
   onClose: () => void
 }

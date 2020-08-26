@@ -11,6 +11,7 @@ import { useLanguage } from '../../../../../../../context_provider/app_settings'
 import EventRepeatModalProps from './props'
 import EventRepeatType from '../../../../../../../constants/calendar/EventRepeatType'
 import './styles.css'
+import NumberUtils from '../../../../../../../utils/NumberUtils'
 
 const EventRepeatModal: React.FC<EventRepeatModalProps> = ({ open, onClose, repeatType: eventRepeatType, onRepeatTypeChange: onEventRepeatTypeChange }) => {
 
@@ -21,7 +22,7 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({ open, onClose, repe
 
     useEffect(() => {
       setDialogOpen(open)
-    }, [open, setDialogOpen])
+    }, [open])
 
     useEffect(() => {
       setRepeatType(eventRepeatType)
@@ -35,14 +36,13 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({ open, onClose, repe
       event: React.ChangeEvent<HTMLInputElement>,
       value: string
     ) => {
-      onEventRepeatTypeChange(value)
+      onEventRepeatTypeChange(NumberUtils.safeParseInt(value))
     }
 
     return (
       <Dialog
         open={dialogOpen}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
         className="calendar__add_modal__form__event_repeat_modal"
         maxWidth="sm"
         style={{ zIndex: 1200 }}

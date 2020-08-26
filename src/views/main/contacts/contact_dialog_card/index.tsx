@@ -16,7 +16,6 @@ const ContactCard = forwardRef(
         onClose={props.onClose}
         TransitionComponent={TransitionSlide}
         open={props.dialogOpen}
-        aria-labelledby="card with contact info"
       >
         <ContactCardHeader
           item={props.item}

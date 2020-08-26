@@ -1,12 +1,12 @@
-.calendar__add_modal__form label {
+.calendar__edit_event_modal__form label {
     margin-bottom: 0;
 }
 
-.calendar__add_modal.MuiDialog-root .MuiFormControl-root {
+.calendar__edit_event_modal.MuiDialog-root .MuiFormControl-root {
     width: 100%;
 }
 
-.calendar__add_modal__form__space_line {
+.calendar__edit_event_modal__form__space_line {
     width: 100%;
     height: 1px;
     background-color: rgba(200, 200, 200, 0.5);
@@ -14,21 +14,21 @@
     margin-top: 10px;
 }
 
-.calendar__add_modal__form__weekday_picker {
+.calendar__edit_event_modal__form__weekday_picker {
     display: flex;
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
 }
 
-.calendar__add_modal__form__weekday_picker__label {
+.calendar__edit_event_modal__form__weekday_picker__label {
     color: rgba(0, 0, 0, 0.54);
     padding: 0;
     font-size: 0.75rem;
     margin-bottom: 0;
 }
 
-.calendar__add_modal__event_name_text_field.MuiFormControl-root {
+.calendar__edit_event_modal__event_name_text_field.MuiFormControl-root {
     margin-bottom: 20px;
 }
 
@@ -48,4 +48,23 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+.calendar__edit_event_modal__form__color_selection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.calendar__edit_event_modal__form__color_selection__color_cicle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+.calendar__edit_event_modal__form__color_selection__label {
+    margin-bottom: 0;
+    text-transform: uppercase;
 }

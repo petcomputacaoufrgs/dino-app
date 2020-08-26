@@ -303,4 +303,21 @@ export default class EN implements LanguageBase {
   EVENT_ALARM_ZERO = 'At the time of the event'
 
   EVENT_ALARM_DELETE_ALT = 'Click to delete alarm'
+
+  CHANGE_COLOR_ARIA_LABEL = 'Click to select a random color'
+
+  ADD_PHONE_ARIA_LABEL= 'Click to add a new phone number'
+
+  RETURN_ARIA_LABEL = 'Return'
+
+  SEARCH_ARIA_LABEL = 'Search'
+
+  OPEN_MENU_ARIA_LABEL = 'Open menu'
+
+  ADD_ARIA_LABEL = 'Add'
+
+  OPTIONS_ARIA_LABEL = 'Options'
+
+  EVENT_COLOR_LABEL = 'Selected color'
+
 }

@@ -9,7 +9,7 @@ import AddModalProps from './props'
 import Form from './form'
 import './styles.css'
 
-const AddModal: React.FC<AddModalProps> = ({ open, onClose }) => {
+const EditEventModal: React.FC<AddModalProps> = ({ open, onClose }) => {
 
     const [dialogOpen, setDialogOpen] = useState(open)
 
@@ -25,8 +25,7 @@ const AddModal: React.FC<AddModalProps> = ({ open, onClose }) => {
       <Dialog
         open={dialogOpen}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        className="calendar__add_modal"
+        className="calendar__edit_event_modal"
         maxWidth="sm"
         style={{ zIndex: 1100 }}
       >
@@ -42,4 +41,4 @@ const AddModal: React.FC<AddModalProps> = ({ open, onClose }) => {
     )        
 }
 
-export default AddModal
+export default EditEventModal

@@ -7,11 +7,11 @@ import {
   FormControlLabel,
   Radio,
 } from '@material-ui/core'
-import { useLanguage } from '../../../../../../../context_provider/app_settings'
+import { useLanguage } from '../../../../../../context_provider/app_settings'
 import EventRepeatModalProps from './props'
-import EventRepeatType from '../../../../../../../constants/calendar/EventRepeatType'
+import EventRepeatType from '../../../../../../constants/calendar/EventRepeatType'
 import './styles.css'
-import NumberUtils from '../../../../../../../utils/NumberUtils'
+import NumberUtils from '../../../../../../utils/NumberUtils'
 
 const EventRepeatModal: React.FC<EventRepeatModalProps> = ({ open, onClose, repeatType: eventRepeatType, onRepeatTypeChange: onEventRepeatTypeChange }) => {
 
@@ -43,7 +43,7 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({ open, onClose, repe
       <Dialog
         open={dialogOpen}
         onClose={handleClose}
-        className="calendar__add_modal__form__event_repeat_modal"
+        className="calendar__edit_event_modal__form__event_repeat_modal"
         maxWidth="sm"
         style={{ zIndex: 1200 }}
       >

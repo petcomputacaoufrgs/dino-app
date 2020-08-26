@@ -32,7 +32,6 @@ const EventModal: React.FC<EventModalProps> = ({ open, onClose, event }) => {
       <Dialog
         open={dialogOpen}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
         className="calendar__event_modal"
         maxWidth="sm"
         style={{ zIndex: 6000 }}

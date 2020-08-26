@@ -6,7 +6,7 @@
     padding-right: 48px;
 }
 
-.calendar__add_modal__form__item__field {
+.calendar__edit_event_modal__form__item__field {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -14,7 +14,14 @@
     width: 100%;
 }
 
-.calendar__add_modal__form__item__icon {
+.calendar__edit_event_modal__form__item__icon__button.MuiButton-root {
+    outline: none !important;
+    border-radius: 50%;
+    width: 36px;
+    min-width: 36px;
+}
+
+.calendar__edit_event_modal__form__item__icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,3 +29,4 @@
     width: 36px;
     min-width: 36px;
 }
+

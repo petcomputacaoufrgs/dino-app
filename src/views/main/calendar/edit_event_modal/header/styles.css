@@ -1,10 +1,10 @@
-.calendar__add_modal__header {
+.calendar__edit_event_modal__header {
     width: 100%;
     display: flex;
     flex-direction: row;
 }
 
-.calendar__add_modal__header__right {
+.calendar__edit_event_modal__header__left {
     width: 50%;
     display: flex;
     justify-content: flex-start;

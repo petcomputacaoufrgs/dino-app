@@ -21,12 +21,15 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import { useLanguage } from '../../../context_provider/app_settings'
 import './styles.css'
 
 const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
   const classes = useStyles()
 
   const theme = useTheme()
+
+  const language = useLanguage().current
 
   const [open, setOpen] = useState(false)
 
@@ -99,7 +102,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
       <Toolbar>
         <IconButton
           color="inherit"
-          aria-label="open drawer"
+          aria-label={language.OPEN_MENU_ARIA_LABEL}
           onClick={handleDrawerOpen}
           edge="start"
           className={clsx(

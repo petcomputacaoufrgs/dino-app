@@ -5,6 +5,7 @@ import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
 import View from './view'
+import ColorConstants from '../../../../constants/ColorConstants'
 
 const ContactFormDialog = ({
   dialogOpen,
@@ -93,10 +94,9 @@ const ContactFormDialog = ({
   }
 
   const handleChangeColor = () => {
-    const colors = Object.values(Constants.COLORS)
-    colors.forEach((colorObj, i) => {
-      if (colorObj === color) setColor(colors[(i + 1) % colors.length])
-    })
+    const colors = ColorConstants.COLORS
+    const index = colors.findIndex((c) => c === color)
+    setColor(colors[(index + 1) % colors.length])
   }
 
   const handleAddPhone = () => {

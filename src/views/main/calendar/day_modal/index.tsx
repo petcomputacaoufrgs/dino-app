@@ -19,7 +19,6 @@ const DayModal = React.forwardRef<React.Ref<unknown>, DayModalProps>(
         style={{ zIndex: 990 }}
         onClose={onClose}
         TransitionComponent={TransitionSlide}
-        aria-labelledby="form-dialog"
         className={`calendar__day__modal ${isMobile ? `mobile` : `desktop`}`}
       >
         <Header day={day} onClose={onClose} />

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import AddAlarmModalProps from './props'
 import { Dialog, DialogContent, FormControl, RadioGroup, FormControlLabel, Radio, TextField, Button } from '@material-ui/core'
-import { useLanguage } from '../../../../../../../context_provider/app_settings'
+import { useLanguage } from '../../../../../../context_provider/app_settings'
+import StringUtils from '../../../../../../utils/StringUtils'
+import NumberUtils from '../../../../../../utils/NumberUtils'
+import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
 import './styles.css'
-import StringUtils from '../../../../../../../utils/StringUtils'
-import NumberUtils from '../../../../../../../utils/NumberUtils'
-import EventAlarmType from '../../../../../../../constants/calendar/EventAlarmType'
 
 const DEFAULT_TIME = 30
 const DEFAULT_ALARM_TYPE = EventAlarmType.MINUTE
@@ -92,17 +92,17 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
     <Dialog
       open={dialogOpen}
       onClose={handleClose}
-      className="calendar__add_modal__form__add_alarm_modal"
+      className="calendar__edit_event_modal__form__add_alarm_modal"
       maxWidth="sm"
       style={{ zIndex: 1200 }}
     >
       <DialogContent>
         <FormControl>
-          <div className="calendar__add_modal__form__add_alarm_modal__time">
+          <div className="calendar__edit_event_modal__form__add_alarm_modal__time">
             <TextField
               label={language.EVENT_ADD_ALARM_LABEL}
               value={time}
-              className="calendar__add_modal__form__add_alarm_modal__time__text_field"
+              className="calendar__edit_event_modal__form__add_alarm_modal__time__text_field"
               variant="outlined"
               onChange={handleTimeChange}
             />
@@ -139,7 +139,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
           </RadioGroup>
           <Button
             onClick={handleSave}
-            className="calendar__add_modal__form__add_alarm_modal__save_button"
+            className="calendar__edit_event_modal__form__add_alarm_modal__save_button"
             color="primary"
             autoFocus
           >

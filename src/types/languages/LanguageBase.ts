@@ -49,7 +49,6 @@ export default interface LanguageBase {
   NOTE_TAG_LABEL: string
   DIALOG_SAVE_BUTTON_LABEL: string
   DIALOG_SAVE_BUTTON_TEXT: string
-  DIALOG_CANCEL_BUTTON_LABEL: string
   DIALOG_CANCEL_BUTTON_TEXT: string
   SEARCH_BUTTON_LABEL: string
   ANSWER_DIALOG_LABEL: string
@@ -146,4 +145,12 @@ export default interface LanguageBase {
   EVENT_INVALID_ALARM_TYPE: string
   EVENT_ALARM_ZERO: string
   EVENT_ALARM_DELETE_ALT: string
+  CHANGE_COLOR_ARIA_LABEL: string
+  ADD_PHONE_ARIA_LABEL: string
+  RETURN_ARIA_LABEL: string
+  SEARCH_ARIA_LABEL: string
+  OPEN_MENU_ARIA_LABEL: string
+  ADD_ARIA_LABEL: string
+  OPTIONS_ARIA_LABEL: string
+  EVENT_COLOR_LABEL: string
 }

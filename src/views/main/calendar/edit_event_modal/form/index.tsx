@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
+import { useLanguage } from '../../../../../context_provider/app_settings'
 import { FormControl, RadioGroup, FormControlLabel, Radio, TextField, Grid, Button } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
 import {
@@ -9,22 +9,24 @@ import {
 } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import EventRepeatModal from './event_repeat_modal'
-import EventType from '../../../../../../constants/calendar/EventType'
-import CalendarService from '../../../../../../services/calendar/CalendarService'
-import EventRepeatType from '../../../../../../constants/calendar/EventRepeatType'
-import WeekDayPicker from '../../../../../../components/weekday_picker'
-import TitleSVG from '../../../../../../assets/icons/title.svg'
-import HealingSVG from '../../../../../../assets/icons/healing.svg'
-import ScheduleSVG from '../../../../../../assets/icons/schedule.svg'
-import RepeatSVG from '../../../../../../assets/icons/repeat.svg'
-import AddAlertSVG from '../../../../../../assets/icons/add_alert.svg'
+import EventType from '../../../../../constants/calendar/EventType'
+import CalendarService from '../../../../../services/calendar/CalendarService'
+import EventRepeatType from '../../../../../constants/calendar/EventRepeatType'
+import WeekDayPicker from '../../../../../components/weekday_picker'
+import TitleSVG from '../../../../../assets/icons/title.svg'
+import HealingSVG from '../../../../../assets/icons/healing.svg'
+import ScheduleSVG from '../../../../../assets/icons/schedule.svg'
+import RepeatSVG from '../../../../../assets/icons/repeat.svg'
+import AddAlertSVG from '../../../../../assets/icons/add_alert.svg'
+import ColorLensSVG from '../../../../../assets/icons/color_lens.svg' 
 import FormItem from './form_item'
-import Week from '../../../../../../types/weekday_picker/Week'
-import Weekday from '../../../../../../types/weekday_picker/Weekday'
+import Week from '../../../../../types/weekday_picker/Week'
+import Weekday from '../../../../../types/weekday_picker/Weekday'
 import AddAlarmModal from './add_alarm_modal'
-import EventAlarm from '../../../../../../types/calendar/EventAlarm'
+import EventAlarm from '../../../../../types/calendar/EventAlarm'
 import AlarmItem from './alarm_item'
 import './styles.css'
+import ColorConstants from '../../../../../constants/ColorConstants'
 
 const Form: React.FC = () => {
     const language = useLanguage().current
@@ -39,6 +41,7 @@ const Form: React.FC = () => {
     const [weekdays, setWeekdays] = useState(new Week(language))
     const [addAlarmModalOpen, setAddAlarmModalOpen] = useState(false)
     const [alarms, setAlarms] = useState<EventAlarm[]>([])
+    const [color, setColor] = useState(ColorConstants.COLORS[0])
 
     const alarmDontExists = (time: number, type: number): boolean => {
       if (time === 0) {
@@ -136,6 +139,12 @@ const Form: React.FC = () => {
       setAlarms(newAlarms)
     }
 
+    const handleColorChange = () => {
+      const colors = ColorConstants.COLORS
+      const index = colors.findIndex(c => c === color)
+      setColor(colors[(index + 1) % colors.length])
+    }
+
     const renderEventNameField = (): JSX.Element => (
       <FormItem
         iconSrc={TitleSVG}
@@ -145,7 +154,7 @@ const Form: React.FC = () => {
             label={language.EVENT_NAME_LABEL}
             value={eventName}
             variant="standard"
-            className="calendar__add_modal__event_name_text_field"
+            className="calendar__edit_event_modal__event_name_text_field"
             onChange={handleEventNameChange}
           />
         }
@@ -197,9 +206,6 @@ const Form: React.FC = () => {
                 format={language.DATE_PICKER_DAY_FORMAT}
                 value={initDate}
                 onChange={handleStartDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
               />
               <KeyboardTimePicker
                 margin="normal"
@@ -207,9 +213,6 @@ const Form: React.FC = () => {
                 label={language.EVENT_INIT_TIME_LABEL}
                 value={initDate}
                 onChange={handleStartDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
               />
             </Grid>
           }
@@ -224,9 +227,6 @@ const Form: React.FC = () => {
                 format={language.DATE_PICKER_DAY_FORMAT}
                 value={endDate}
                 onChange={handleEndDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
               />
               <KeyboardTimePicker
                 margin="normal"
@@ -234,9 +234,6 @@ const Form: React.FC = () => {
                 label={language.EVENT_END_TIME_LABEL}
                 value={initDate}
                 onChange={handleEndDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
               />
             </Grid>
           }
@@ -274,9 +271,6 @@ const Form: React.FC = () => {
                 format={language.DATE_PICKER_DAY_FORMAT}
                 value={endRepeatDate}
                 onChange={handleRepeatEndDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
               />
             }
           />
@@ -289,8 +283,8 @@ const Form: React.FC = () => {
         {repeatType === EventRepeatType.EVERY_WEEK && (
           <FormItem
             item={
-              <div className='calendar__add_modal__form__weekday_picker'>
-                <p className='calendar__add_modal__form__weekday_picker__label'>
+              <div className='calendar__edit_event_modal__form__weekday_picker'>
+                <p className='calendar__edit_event_modal__form__weekday_picker__label'>
                   {language.EVENT_WEEKDAY_SELECT_LABEL}
                 </p>
                 <WeekDayPicker week={weekdays} onWeekdayClick={handleWeekdayClick} />
@@ -307,13 +301,8 @@ const Form: React.FC = () => {
           <FormItem
             iconSrc={index === 0 ? AddAlertSVG : undefined}
             iconAlt={index === 0 ? language.EVENT_ALERT_ALT : undefined}
-            item={
-              <AlarmItem
-                key={index}
-                alarm={alarm}
-                onDelete={handleAlarmDelete}
-              />
-            }
+            key={index}
+            item={<AlarmItem alarm={alarm} onDelete={handleAlarmDelete} />}
           />
         ))}
       </>
@@ -335,23 +324,44 @@ const Form: React.FC = () => {
       />
     )
 
+    const renderColorSelection = (): JSX.Element => (
+      <FormItem
+        iconSrc={ColorLensSVG}
+        iconAlt={language.CHANGE_COLOR_ARIA_LABEL}
+        onIconClick={handleColorChange}
+        item={
+          <div className="calendar__edit_event_modal__form__color_selection">
+            <p className="calendar__edit_event_modal__form__color_selection__label">
+              {language.EVENT_COLOR_LABEL}:
+            </p>
+            <div
+              className="calendar__edit_event_modal__form__color_selection__color_cicle"
+              style={{ backgroundColor: color }}
+            />
+          </div>
+        }
+      />
+    )
+
     return (
-      <div className="calendar__add_modal__form">
+      <div className="calendar__edit_event_modal__form">
         <FormControl>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             {renderEventNameField()}
-            <div className="calendar__add_modal__form__space_line" />
+            <div className="calendar__edit_event_modal__form__space_line" />
             {renderEventTypeRadioGroup()}
-            <div className="calendar__add_modal__form__space_line" />
+            <div className="calendar__edit_event_modal__form__space_line" />
             {renderDatePicker()}
-            <div className="calendar__add_modal__form__space_line" />
+            <div className="calendar__edit_event_modal__form__space_line" />
             {renderEventRepeatPicker()}
             {renderWeekDaySelector()}
             {renderRepeatDataPicker()}
-            <div className="calendar__add_modal__form__space_line" />
+            <div className="calendar__edit_event_modal__form__space_line" />
             {renderAlarmItens()}
             {renderAlarm()}
-            <div className="calendar__add_modal__form__space_line" />
+            <div className="calendar__edit_event_modal__form__space_line" />
+            {renderColorSelection()}
+            <div className="calendar__edit_event_modal__form__space_line" />
           </MuiPickersUtilsProvider>
         </FormControl>
         <EventRepeatModal

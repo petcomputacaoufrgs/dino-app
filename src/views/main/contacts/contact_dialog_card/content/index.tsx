@@ -58,7 +58,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
   return (
     <CardContent className={classes.CardContent}>
       {getDescription()}
-      <List component="nav" aria-label="idk">
+      <List component="nav">
         <Divider className={classes.DividerMargin} />
         {phones.length ? (
           phones.map((phone, index) => (

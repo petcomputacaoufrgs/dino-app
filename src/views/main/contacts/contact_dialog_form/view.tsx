@@ -44,7 +44,6 @@ const View = React.forwardRef(
         fullWidth
         onClose={handleClose}
         TransitionComponent={TransitionSlide}
-        aria-labelledby="form-dialog"
       >
         <ContactFormDialogHeader
           action={action}
@@ -70,7 +69,6 @@ const View = React.forwardRef(
         </DialogContent>
         <DialogActions>
           <Button
-            aria-labelledby={language.DIALOG_CANCEL_BUTTON_LABEL}
             onClick={handleClose}
             color="primary"
           >
@@ -78,7 +76,6 @@ const View = React.forwardRef(
           </Button>
 
           <Button
-            aria-labelledby={language.DIALOG_SAVE_BUTTON_LABEL}
             onClick={handleSave}
             color="primary"
           >

@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ day, onClose }) => {
             {DateUtils.getDateStringFormated(day.date.getTime(), language)}
           </h1>
           <div className="calendar__day__modal__header__info__close">
-            <Fab color="primary" aria-label="add" onClick={onClose}>
+            <Fab color="primary" aria-label={language.ADD_ARIA_LABEL} onClick={onClose}>
               <ExpandMoreIcon />
             </Fab>
           </div>

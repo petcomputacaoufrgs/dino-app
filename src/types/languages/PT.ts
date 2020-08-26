@@ -306,4 +306,21 @@ export default class PT implements LanguageBase {
   EVENT_ALARM_ZERO = 'Na hora do evento'
 
   EVENT_ALARM_DELETE_ALT = 'Clique para excluir o alarme'
+
+  CHANGE_COLOR_ARIA_LABEL = 'Clique para selecionar uma cor aleatória'
+
+  ADD_PHONE_ARIA_LABEL= 'Clique para adicionar um novo telefone numérico'
+
+  RETURN_ARIA_LABEL = 'Retornar'
+
+  SEARCH_ARIA_LABEL = 'Pesquisar'
+
+  OPEN_MENU_ARIA_LABEL = 'Abrir menu'
+
+  ADD_ARIA_LABEL = 'Adicionar'
+
+  OPTIONS_ARIA_LABEL = 'Opções'
+
+  EVENT_COLOR_LABEL = 'Cor selecionada'
+
 }

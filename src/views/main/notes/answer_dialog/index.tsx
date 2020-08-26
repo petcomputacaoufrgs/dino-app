@@ -56,7 +56,6 @@ const AnswerDialog = (props: AnswerProps): JSX.Element => {
       open={open}
       className="note_card_dialog"
       onClose={props.onClose}
-      aria-labelledby={language.ANSWER_DIALOG_LABEL}
     >
       {renderDialogContent()}
       <DialogActions onSave={handleSave} />

@@ -41,6 +41,11 @@ class PathConstants {
    * @description Diretório das notas do usuário
    */
   NOTES: string = this.APP + '/notes'
+  
+  /**
+   * @description Diretório do FAQ
+   */
+  FAQ: string = this.APP + '/faq'
 }
 
 export default new PathConstants()

@@ -10,6 +10,7 @@ import { useContacts } from '../../../context_provider/contact'
 
 
 const Contacts = (): JSX.Element => {
+  
   const language = useLanguage().current
 
   const items = useContacts().items

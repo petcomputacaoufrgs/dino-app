@@ -62,6 +62,8 @@ export default class EN implements LanguageBase {
 
   MENU_CONTACTS = 'Contacts'
 
+  MENU_FAQ = 'FAQ'
+
   MENU_SETTINGS = 'Settings'
 
   MENU_LOGOUT = 'Logout'
@@ -69,6 +71,8 @@ export default class EN implements LanguageBase {
   SETTINGS_TITLE = 'Settings'
 
   SETTINGS_LANGUAGE = 'Choose Language'
+
+  SETTINGS_FAQ = 'Choose F.A.Q'
 
   SETTINGS_SAVE = 'Save'
 
@@ -185,4 +189,8 @@ export default class EN implements LanguageBase {
   CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
 
   DISCONNECTED = 'Disconnected'
+
+  SELECT_FAQ_BUTTON = 'Search FAQ'
+
+  SELECT_TREATMENT = 'Select Treatment'
 }

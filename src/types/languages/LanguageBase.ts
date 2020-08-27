@@ -26,10 +26,12 @@ export default interface LanguageBase {
   MENU_GAMES: string
   MENU_GLOSSARY: string
   MENU_CONTACTS: string
+  MENU_FAQ: string
   MENU_SETTINGS: string
   MENU_LOGOUT: string
   SETTINGS_TITLE: string
   SETTINGS_LANGUAGE: string
+  SETTINGS_FAQ: string
   SETTINGS_SAVE: string
   SETTINGS_SAVE_SUCCESS: string
   MENU_NOTES: string
@@ -87,4 +89,6 @@ export default interface LanguageBase {
   SYNC_CONNECTION_FAIL: string
   CANT_LOGIN_DISCONNECTED: string
   DISCONNECTED: string
+  SELECT_FAQ_BUTTON: string
+  SELECT_TREATMENT: string
 }

@@ -64,11 +64,15 @@ export default class PT implements LanguageBase {
 
   MENU_CONTACTS = 'Contatos'
 
+  MENU_FAQ = 'FAQ'
+
   MENU_LOGOUT = 'Sair'
 
   SETTINGS_TITLE = 'Configurações'
 
   SETTINGS_LANGUAGE = 'Escolher Idioma'
+
+  SETTINGS_FAQ = 'Escolher F.A.Q'
 
   SETTINGS_SAVE = 'Salvar'
 
@@ -188,4 +192,8 @@ export default class PT implements LanguageBase {
   CANT_LOGIN_DISCONNECTED = 'Conexão com a internet necessária para login'
 
   DISCONNECTED = 'Desconectado'
+
+  SELECT_FAQ_BUTTON = 'Busque FAQ'
+
+  SELECT_TREATMENT = 'Selecione Tratamento'
 }

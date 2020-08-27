@@ -11,6 +11,7 @@
 .settings__form {
   align-self: center;
   width: 90%;
+  margin-bottom: 20px !important;
 }
 
 .settings__title {

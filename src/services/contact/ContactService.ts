@@ -107,7 +107,6 @@ addContact = async (item: ContactModel) => {
 deleteContact = (deletedFrontID: number) => {
   const items = this.getItems()
   const index = items.findIndex(item => item.frontId === deletedFrontID)
-  console.log(index)
 
   if (index > -1) {
     const item = items.splice(index, 1)[0]
@@ -208,8 +207,6 @@ cleanDeleteQueue = () => LS.cleanDeleteQueue()
 removeUserData = () => LS.removeAllItems()
 
 shouldSync = (): boolean => {
-  console.log(this.getIdsToUpdate().length > 0 || this.getIdsToDelete().length > 0)
-
   return this.getIdsToUpdate().length > 0 || this.getIdsToDelete().length > 0
 }
 

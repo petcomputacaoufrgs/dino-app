@@ -91,4 +91,5 @@ export default interface LanguageBase {
   DISCONNECTED: string
   SELECT_FAQ_BUTTON: string
   SELECT_TREATMENT: string
+  FAQ_CONNECTION_ERROR: string
 }

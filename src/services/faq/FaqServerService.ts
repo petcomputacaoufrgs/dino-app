@@ -4,14 +4,11 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import HttpStatus from 'http-status-codes'
-import Service from './FaqService'
 import FaqSyncModel from '../../types/faq/FaqSyncModel'
 
 class FaqServerService {
 
-
   getUserFaq = async (): Promise<undefined | FaqModel> => {
-  
     const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_GET)
         
     if (request.canGo) {
@@ -20,9 +17,6 @@ class FaqServerService {
 
         if (response.status === HttpStatus.OK) {
           return response.body as FaqModel
-
-        } else if (response.status === HttpStatus.NO_CONTENT) {
-          Service.removeUserData()
         }
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -76,7 +70,9 @@ getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
       try {
         const response = await request.authenticate().go()
 
-        return response.body
+        if (response.status === HttpStatus.OK) {
+          return response.body
+        }
       } catch (e) {
         LogAppErrorService.saveError(e)
       }

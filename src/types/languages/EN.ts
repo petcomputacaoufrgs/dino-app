@@ -193,4 +193,7 @@ export default class EN implements LanguageBase {
   SELECT_FAQ_BUTTON = 'Search FAQ'
 
   SELECT_TREATMENT = 'Select Treatment'
+
+  FAQ_CONNECTION_ERROR = 'Internet connection required'
+
 }

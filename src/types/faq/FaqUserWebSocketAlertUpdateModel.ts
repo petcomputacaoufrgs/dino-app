@@ -1,3 +1,3 @@
 export default interface FaqUserWebSocketAlertUpdateModel {
-    newFaq: number
+  newVersion: number
 }

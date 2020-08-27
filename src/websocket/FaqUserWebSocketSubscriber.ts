@@ -9,7 +9,10 @@ class FaqUserWebSocketSubscriber implements BaseWebSocketSubscriber {
     {
       path: DinoAPIWebSocketConstants.ALERT_FAQ_USER_UPDATE,
       callback: (model: FaqUserWebSocketAlertUpdateModel) => {
-        if(Service.getUserFaqId() !== model.newFaq) {
+        if (
+          Service.getUserFaqId() === undefined ||
+          Service.getUserFaqId() !== model.newVersion
+        ) {
           Service.getUserFaqFromServer()
         }
       },

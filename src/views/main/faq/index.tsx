@@ -7,7 +7,7 @@ import FaqItemModel from '../../../types/faq/FaqItemModel'
 import FaqItems from './faq_items'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button} from '@material-ui/core'
 import TransitionSlide from '../../../components/slide_transition'
-import { useLanguage } from '../../../context_provider/app_settings'
+import { useLanguage, useCurrentFaq } from '../../../context_provider/app_settings'
 import SelectFaq from './select_faq'
 import FaqService from '../../../services/faq/FaqService'
 import { useFaq } from '../../../context_provider/faq'
@@ -16,9 +16,11 @@ const Faq = (): JSX.Element => {
     
   const language = useLanguage().current
 
+  const currentFaq = useCurrentFaq()
+
   const items = useFaq().items
 
-  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
+  const [selectedFaq, setSelectedFaq] = useState(currentFaq)
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([] as FaqItemModel[])
@@ -29,6 +31,10 @@ const Faq = (): JSX.Element => {
       StringUtils.contains(item.question, searchTerm))
     setSearchResults(results)
   }, [items, searchTerm])
+
+  useEffect(() => {
+    setSelectedFaq(currentFaq)
+  }, [currentFaq])
 
   const handleChangeOpenDialog = () => {
     setOpen(!open)

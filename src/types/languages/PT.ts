@@ -196,4 +196,7 @@ export default class PT implements LanguageBase {
   SELECT_FAQ_BUTTON = 'Busque FAQ'
 
   SELECT_TREATMENT = 'Selecione Tratamento'
+
+  FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
+
 }

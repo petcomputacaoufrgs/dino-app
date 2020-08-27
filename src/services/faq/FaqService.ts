@@ -4,16 +4,16 @@ import FaqContextUpdater from '../../context_updater/FaqContextUpdater'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import ServerService from './FaqServerService'
+import CurrentFaqContextUpdater from '../../context_updater/CurrentFaqContextUpdater'
 
 class FaqService {
-  
   getUserFaqFromServer = async () => {
     const response = await ServerService.getUserFaq()
-    if(response !== undefined) {
+    if (response !== undefined) {
       this.setFaq(response)
     }
   }
-  
+
   switchUserFaq = async (faqOption: FaqOptionsModel) => {
     await ServerService.saveUserFaqId(faqOption.id)
     await this.getUserFaqFromServer()
@@ -24,8 +24,10 @@ class FaqService {
 
     LS.setUserFaq({
       id: faq.id,
-      title: faq.title
+      title: faq.title,
     } as FaqOptionsModel)
+
+    CurrentFaqContextUpdater.update()
 
     this.setItems(faq.items)
   }
@@ -38,12 +40,12 @@ class FaqService {
   getItems = (): FaqItemModel[] => {
     return LS.getItems()
   }
-  
-  getUserFaqInfo = () => {
+
+  getUserFaqInfo = (): FaqOptionsModel | undefined => {
     return LS.getUserFaq()
   }
 
-  getUserFaqId = () => {
+  getUserFaqId = (): number | undefined => {
     const info = this.getUserFaqInfo()
     return info ? info.id : undefined
   }
@@ -52,12 +54,13 @@ class FaqService {
     return LS.getVersion()
   }
 
-  getFaqOptionsFromServer = async (): Promise<Array<FaqOptionsModel>> => {
-    return await ServerService.getFaqOptions() as FaqOptionsModel[]
+  getFaqOptionsFromServer = async (): Promise<
+    Array<FaqOptionsModel> | undefined
+  > => {
+    return await ServerService.getFaqOptions()
   }
-  
-  removeUserData = () => LS.removeUserData()
 
+  removeUserData = () => LS.removeUserData()
 }
 
 export default new FaqService()

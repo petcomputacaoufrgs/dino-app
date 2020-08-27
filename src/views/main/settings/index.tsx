@@ -16,23 +16,29 @@ import SelectFaq from '../faq/select_faq'
 import './styles.css'
 
 const Settings = (): JSX.Element => {
-  const appContext = useAppSettings()
+  const appSettings = useAppSettings()
 
-  const language = appContext.language.current
+  const language = appSettings.language.current
 
   const alert = useAlert()
 
-  const languageList = appContext.language.getLanguages()
+  const languageList = appSettings.language.getLanguages()
 
   const [selectedLanguage, setSelectedLanguage] = useState(
     language.NAVIGATOR_LANGUAGE_CODE
   )
 
-  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
+  const currentFaq = appSettings.selectedFaq.current
+
+  const [selectedFaq, setSelectedFaq] = useState(currentFaq)
 
   useEffect(() => {
     setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
   }, [language])
+
+  useEffect(() => {
+    setSelectedFaq(currentFaq)
+  }, [currentFaq])
 
   const handleSelectionChanged = (event: any) => {
     if (event && event.target && event.target.value) {
@@ -47,7 +53,7 @@ const Settings = (): JSX.Element => {
 
     AppSettingsService.set(model)
 
-    const currentLanguage = appContext.language.updateLanguage()
+    const currentLanguage = appSettings.language.updateLanguage()
 
     if(selectedFaq !== undefined) {
       FaqService.switchUserFaq(selectedFaq)

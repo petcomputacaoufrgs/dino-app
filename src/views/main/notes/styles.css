@@ -3,6 +3,11 @@
   padding-bottom: 10px;
   display: flex;
   justify-content: center;
+  position: relative;
+  width: 100%;
+  overflow-y: hidden;
+  height: 100%;
+  flex-direction: column;
 }
 
 .notes_desktop .sc-AxjAm {
@@ -11,15 +16,13 @@
 }
 
 .notes .sc-fzozJi {
-  position: absolute;
-  top: 150px;
   left: 0;
   right: 0;
   padding: 0;
-  bottom: 70px;
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100%;
-  padding-bottom: 70px;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .notes .sc-AxmLO {
@@ -34,10 +37,24 @@
   padding-right: 10px;
 }
 
-@media (orientation: landscape) {
-  .notes .sc-fzozJi {
-    bottom: 0px;
-  }
+.notes .hbVbBu {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.notes .sc-fzoLag.feoXx {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.notes .sc-AxmLO.kWYwZZ {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px; 
 }
 
 .notes_desktop .sc-fzozJi {

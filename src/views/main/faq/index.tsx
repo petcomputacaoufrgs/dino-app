@@ -11,31 +11,24 @@ import { useLanguage } from '../../../context_provider/app_settings'
 import SelectFaq from './select_faq'
 import FaqService from '../../../services/faq/FaqService'
 import { useFaq } from '../../../context_provider/faq'
-import FaqContextUpdater from '../../../context_updater/FaqContextUpdater'
 
 const Faq = (): JSX.Element => {
     
   const language = useLanguage().current
 
   const items = useFaq().items
-  //const [items, setItems] = useState(FaqService.getItems())
 
   const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([] as FaqItemModel[])
-  const [isFaqEmpty, setIsFaqEmpty] = useState(items.length === 0)
+  const isFaqEmpty = items.length === 0
 
   useEffect(() => {
     const results = items.filter(item =>
       StringUtils.contains(item.question, searchTerm))
     setSearchResults(results)
   }, [items, searchTerm])
-
-  useEffect(() => {
-    console.log(items.length === 0)
-    setIsFaqEmpty(items.length === 0)
-  }, [items])
 
   const handleChangeOpenDialog = () => {
     setOpen(!open)
@@ -48,8 +41,6 @@ const Faq = (): JSX.Element => {
   const handleSwitchUserFaq = async () => {
     if(selectedFaq !== undefined) {
       FaqService.switchUserFaq(selectedFaq)
-      FaqContextUpdater.update()
-      //setItems([...FaqService.getItems()])
     }
     handleChangeOpenDialog()
   }
@@ -100,7 +91,7 @@ const Faq = (): JSX.Element => {
           onChange={handleChangeValueSearchTerm}
           placeholder={language.SEARCH_HOLDER}
         />
-        {isFaqEmpty ? renderFaqOptions() : //isso aqui é o botão q deve desaparecer qnd carrega os itens
+        {isFaqEmpty ? renderFaqOptions() :
         <FaqItems 
           title={selectedFaq ? selectedFaq.title : ''} 
           items={searchResults} />}

@@ -10,27 +10,32 @@ import TransitionSlide from '../../../components/slide_transition'
 import { useLanguage } from '../../../context_provider/app_settings'
 import SelectFaq from './select_faq'
 import FaqService from '../../../services/faq/FaqService'
-//import { useFaq } from '../../../context_provider/faq'
-//import FaqContextUpdater from '../../../context_updater/FaqContextUpdater'
+import { useFaq } from '../../../context_provider/faq'
+import FaqContextUpdater from '../../../context_updater/FaqContextUpdater'
 
 const Faq = (): JSX.Element => {
     
-  //const items = useFaq().items
-  const [items, setItems] = useState(FaqService.getItems())
   const language = useLanguage().current
 
-  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
+  const items = useFaq().items
+  //const [items, setItems] = useState(FaqService.getItems())
 
+  const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([] as FaqItemModel[])
-  const isFaqEmpty = items.length === 0
+  const [isFaqEmpty, setIsFaqEmpty] = useState(items.length === 0)
 
   useEffect(() => {
     const results = items.filter(item =>
       StringUtils.contains(item.question, searchTerm))
     setSearchResults(results)
   }, [items, searchTerm])
+
+  useEffect(() => {
+    console.log(items.length === 0)
+    setIsFaqEmpty(items.length === 0)
+  }, [items])
 
   const handleChangeOpenDialog = () => {
     setOpen(!open)
@@ -42,9 +47,9 @@ const Faq = (): JSX.Element => {
 
   const handleSwitchUserFaq = async () => {
     if(selectedFaq !== undefined) {
-      await FaqService.switchUserFaq(selectedFaq)
-      //FaqContextUpdater.update()
-      setItems([...FaqService.getItems()])
+      FaqService.switchUserFaq(selectedFaq)
+      FaqContextUpdater.update()
+      //setItems([...FaqService.getItems()])
     }
     handleChangeOpenDialog()
   }
@@ -76,14 +81,15 @@ const Faq = (): JSX.Element => {
               {language.DIALOG_SAVE_BUTTON_TEXT}
             </Button>
           </DialogActions>
-        </Dialog>  
-        <Button 
-          className='select-faq__button' 
-          style={{margin: "auto",  display: "flex", marginTop: "50%"}} 
-          variant="outlined" color="primary" 
-          onClick={handleChangeOpenDialog}>
-            {language.SELECT_FAQ_BUTTON}
-        </Button>
+        </Dialog> 
+        <div className='select-faq__button' > 
+          <Button 
+            style={{margin: "auto",  display: "flex", marginTop: "50%"}} 
+            variant="outlined" color="primary" 
+            onClick={handleChangeOpenDialog}>
+              {language.SELECT_FAQ_BUTTON}
+          </Button>
+        </div>
       </div>)
     }
 
@@ -94,8 +100,7 @@ const Faq = (): JSX.Element => {
           onChange={handleChangeValueSearchTerm}
           placeholder={language.SEARCH_HOLDER}
         />
-        {isFaqEmpty ? renderFaqOptions() 
-        :
+        {isFaqEmpty ? renderFaqOptions() : //isso aqui é o botão q deve desaparecer qnd carrega os itens
         <FaqItems 
           title={selectedFaq ? selectedFaq.title : ''} 
           items={searchResults} />}

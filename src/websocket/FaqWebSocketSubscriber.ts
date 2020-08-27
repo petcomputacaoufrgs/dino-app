@@ -1,7 +1,7 @@
 import BaseWebSocketSubscriber from './BaseWebSocketSubscriber'
 import DinoAPIWebSocketConstants from '../constants/dino_api/DinoAPIWebSocketConstants'
 import FaqWebSocketAlertUpdateModel from '../types/faq/FaqWebSocketAlertUpdateModel'
-import FaqService from '../services/faq/FaqService'
+import Service from '../services/faq/FaqService'
 import SubscriberItem from '../types/web_socket/SubscriberItem'
 
 class FaqWebSocketSubscriber implements BaseWebSocketSubscriber {
@@ -9,7 +9,9 @@ class FaqWebSocketSubscriber implements BaseWebSocketSubscriber {
     {
       path: DinoAPIWebSocketConstants.ALERT_FAQ_UPDATE,
       callback: (model: FaqWebSocketAlertUpdateModel) => {
-        FaqService.updateFaq(model.newVersion)
+        if(Service.getVersion() !== model.newVersion) {
+          Service.getUserFaqFromServer()
+        }
       },
     },
   ]

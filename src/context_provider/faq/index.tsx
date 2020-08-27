@@ -9,13 +9,13 @@ const FaqContext = createContext({
 } as FaqContextType)
 
 const FaqContextProvider: React.FC = (props) => {
-  const [items, setItems] = useState([] as FaqItemModel[])
+  const [items, setItems] = useState([...FaqService.getItems()])
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
     const updateData = () => {
       const items = FaqService.getItems()
-      setItems(items)
+      setItems([...items])
     }
 
     if (firstLoad) {

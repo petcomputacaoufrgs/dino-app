@@ -20,25 +20,25 @@ const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element =
     const loading = open && faqOptions.length === 0;
 
     useEffect(() => {
-      if (!loading) {
-        return undefined
-      }
       const getFaqOptions = async () => {
         if(open) {
-          const response = await FaqService.getFaqOptionsFromServer() as FaqOptionsModel[]
+          const response = await FaqService.getFaqOptionsFromServer()
           if(response !== undefined) {
             setFaqOptions(response)
           }
         }
       }
+      if (!loading) {
+        return undefined
+      }
       getFaqOptions()
-    }, [loading])
+    }, [open, loading])
 
     useEffect(() => {
       if (value !== null) {
         setSelectedFaq(value)
       }
-    }, [value])
+    }, [value, setSelectedFaq])
 
     return (
       <>

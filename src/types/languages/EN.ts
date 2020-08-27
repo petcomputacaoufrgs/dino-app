@@ -190,7 +190,7 @@ export default class EN implements LanguageBase {
 
   DISCONNECTED = 'Disconnected'
 
-  SELECT_FAQ_BUTTON = 'SEARCH FAQ'
+  SELECT_FAQ_BUTTON = 'Search FAQ'
 
   SELECT_TREATMENT = 'Select Treatment'
 }

@@ -4,23 +4,25 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import HttpStatus from 'http-status-codes'
+import Service from './FaqService'
+import FaqSyncModel from '../../types/faq/FaqSyncModel'
 
 class FaqServerService {
 
 
-  getUserFaq = async (): Promise<FaqModel | undefined> => {
+  getUserFaq = async (): Promise<undefined | FaqModel> => {
   
     const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_GET)
         
     if (request.canGo) {
       try {
-        
         const response = await request.authenticate().go()
 
         if (response.status === HttpStatus.OK) {
-          const faqModel = response.body as FaqModel
+          return response.body as FaqModel
 
-          return faqModel
+        } else if (response.status === HttpStatus.NO_CONTENT) {
+          Service.removeUserData()
         }
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -53,7 +55,6 @@ getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
       try {
         const response = await request.authenticate().go()
   
-        console.log(response)
         if (response.status === HttpStatus.OK) {
           return response.body
         }
@@ -66,42 +67,23 @@ getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
   }
   
   
-    getUserFaqVersion = async (): Promise<number | undefined> => {
-      const request = await DinoAgentService.get(
-        DinoAPIURLConstants.FAQ_GET
-      )
-  
-      if (request.canGo) {
-        try {
-          const response = await request.authenticate().go()
-  
-          return response.body
-        } catch (e) {
-          LogAppErrorService.saveError(e)
-        }
+  getUserFaqVersion = async (): Promise<FaqSyncModel | undefined> => {
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.FAQ_GET_VERSION
+    )
+
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().go()
+
+        return response.body
+      } catch (e) {
+        LogAppErrorService.saveError(e)
       }
-  
-      return undefined
     }
 
-    getUserFaqsVersion = async (): Promise<number | undefined> => {
-      const request = await DinoAgentService.get(
-        DinoAPIURLConstants.FAQ_GET
-      )
-  
-      if (request.canGo) {
-        try {
-          const response = await request.authenticate().go()
-  
-          return response.body
-        } catch (e) {
-          LogAppErrorService.saveError(e)
-        }
-      }
-  
-      return undefined
-    }
-  
+    return undefined
+  }
 
 }
 

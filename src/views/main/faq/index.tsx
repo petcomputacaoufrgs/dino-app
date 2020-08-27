@@ -18,7 +18,6 @@ const Faq = (): JSX.Element => {
   const language = useLanguage().current
 
   const items = useFaq().items
-  //const [items, setItems] = useState(FaqService.getItems())
 
   const [selectedFaq, setSelectedFaq] = React.useState(FaqService.getUserFaqInfo())
   const [open, setOpen] = useState(false)
@@ -49,7 +48,6 @@ const Faq = (): JSX.Element => {
     if(selectedFaq !== undefined) {
       FaqService.switchUserFaq(selectedFaq)
       FaqContextUpdater.update()
-      //setItems([...FaqService.getItems()])
     }
     handleChangeOpenDialog()
   }
@@ -100,7 +98,7 @@ const Faq = (): JSX.Element => {
           onChange={handleChangeValueSearchTerm}
           placeholder={language.SEARCH_HOLDER}
         />
-        {isFaqEmpty ? renderFaqOptions() : //isso aqui é o botão q deve desaparecer qnd carrega os itens
+        {isFaqEmpty ? renderFaqOptions() :
         <FaqItems 
           title={selectedFaq ? selectedFaq.title : ''} 
           items={searchResults} />}

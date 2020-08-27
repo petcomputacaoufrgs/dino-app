@@ -52,6 +52,7 @@ export default interface LanguageBase {
   DIALOG_SAVE_BUTTON_LABEL: string
   DIALOG_SAVE_BUTTON_TEXT: string
   DIALOG_CANCEL_BUTTON_TEXT: string
+  DIALOG_CANCEL_BUTTON_LABEL: string
   SEARCH_BUTTON_LABEL: string
   ANSWER_DIALOG_LABEL: string
   FORM_NAME: string

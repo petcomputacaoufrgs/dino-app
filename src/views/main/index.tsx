@@ -24,6 +24,7 @@ import Notes from './notes'
 import NotFound from '../not_found/index'
 import NotesContextProvider from '../../context_provider/notes'
 import FaqContextProvider from '../../context_provider/faq'
+import GlossaryContextProvider from '../../context_provider/glossary'
 import ContactsContextProvider from '../../context_provider/contact'
 import Faq from './faq'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
@@ -126,9 +127,9 @@ const Main = (): JSX.Element => {
           exact
           path={PathConstants.GLOSSARY}
           component={() => (
-            <GlossaryContextProvider>
+            <FaqContextProvider>
               <Glossary />
-            </GlossaryContextProvider>
+            </FaqContextProvider>
           )}
         />
         <PrivateRoute

@@ -151,10 +151,17 @@ class UserService {
           125
         )
 
+        const savePictureWithError = this.getSavePictureWithError()
+
         if (
-          this.getSavePictureWithError() ||
+          savePictureWithError ||
           this.getPictureUrl() !== pictureURL
         ) {
+
+          if (savePictureWithError) {
+            this.setSavePictureWithError(false)
+          }
+          
           this.setPictureUrl(pictureURL)
           this.donwloadPicture(pictureURL)
           this.saveNewPhotoOnServer(pictureURL)
@@ -223,8 +230,6 @@ class UserService {
       this.setSavedPicture(base64Image)
       UserContextUpdater.update()
     }
-
-    this.setSavePictureWithError(!success)
   }
 
   removeUserData() {

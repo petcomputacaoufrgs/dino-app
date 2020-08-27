@@ -5,9 +5,10 @@ import AddIcon from '@material-ui/icons/Add'
 import './styles.css'
 import Contants from '../../../../constants/ContactsConstants'
 
-const ContactFormDialogButton = (props: 
-  { dialogOpen : number; 
-    setDialogOpen: React.Dispatch<React.SetStateAction<number>> }) : JSX.Element => {
+const ContactFormDialogButton = (props: {
+  dialogOpen: number
+  setDialogOpen: React.Dispatch<React.SetStateAction<number>>
+}): JSX.Element => {
   //o motivo de eu não usar booleanos eh pq o <ContactFormDialog /> tbm é usado ao editar items, e o operadores para abrí-lo são os seus ids (que aqui não existem)
 
   return (

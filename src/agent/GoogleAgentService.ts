@@ -26,10 +26,9 @@ class GoogleAgentService extends BaseAgent {
     return request
   }
 
-  private getGoogleAccessToken = (): string | null => (
+  private getGoogleAccessToken = (): string | null =>
     AuthService.getGoogleAccessToken()
-  )
-    
+
   private updateGoogleAccessTokenIfNecessary = async (): Promise<boolean> => {
     const expiresDate = AuthService.getGoogleExpiresDate()
 

@@ -8,6 +8,7 @@ import HomeSVG from '../../assets/icons/home.svg'
 import NotesSVG from '../../assets/icons/note.svg'
 import SettingsSVG from '../../assets/icons/settings.svg'
 import LogoutSVG from '../../assets/icons/logout.svg'
+import CalendarSVG from '../../assets/icons/calendar.svg'
 import AdaptableMenu from '../../components/menu/adaptable_menu'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
@@ -19,13 +20,14 @@ import HistoryService from '../../services/history/HistoryService'
 import Home from './home'
 import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
-import MenuItemViewModel from '../../components/menu/model/MenuItemViewModel'
 import Notes from './notes'
 import NotFound from '../not_found/index'
 import NotesContextProvider from '../../context_provider/notes'
-import GlossaryContextProvider from '../../context_provider/glossary'
+import FaqContextProvider from '../../context_provider/faq'
 import ContactsContextProvider from '../../context_provider/contact'
 import Faq from './faq'
+import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
+import Calendar from './calendar'
 
 /**
  * @description Tela principal da aplicação
@@ -67,6 +69,11 @@ const Main = (): JSX.Element => {
         image: NotesSVG,
         name: language.MENU_NOTES,
         onClick: () => HistoryService.push(PathConstants.NOTES),
+      },
+      {
+        image: CalendarSVG,
+        name: language.MENU_CALENDAR,
+        onClick: () => HistoryService.push(PathConstants.CALENDAR),
       },
     ],
     [
@@ -158,11 +165,12 @@ const Main = (): JSX.Element => {
         <PrivateRoute
           path={PathConstants.FAQ}
           component={() => (
-            //<GlossaryContextProvider>
+            <FaqContextProvider>
               <Faq />
-            //</GlossaryContextProvider>
+            </FaqContextProvider>
           )}
         />
+        <PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
         <PrivateRoute path={'/'} component={NotFound} />
       </Switch>
     )

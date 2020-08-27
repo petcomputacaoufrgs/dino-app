@@ -19,7 +19,7 @@ import {
 } from '@material-ui/icons'
 import PhoneModel from '../../../../../types/contact/PhoneModel'
 
-const ContactCardContent = ({item}:ContactCardContentProps) => {
+const ContactCardContent = ({ item }: ContactCardContentProps) => {
   const classes = useStyles()
   const [phones, setPhones] = useState(new Array<PhoneModel>())
 
@@ -58,7 +58,7 @@ const ContactCardContent = ({item}:ContactCardContentProps) => {
   return (
     <CardContent className={classes.CardContent}>
       {getDescription()}
-      <List component="nav" aria-label="idk">
+      <List component="nav">
         <Divider className={classes.DividerMargin} />
         {phones.length ? (
           phones.map((phone, index) => (

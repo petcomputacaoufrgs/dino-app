@@ -43,7 +43,7 @@ class DinoAgentService extends BaseAgent {
 
       if (this.needsUpdateToken(expiresDate)) {
         const model: AuthRefreshRequestModel = {
-          accessToken: AuthService.getAuthToken()
+          accessToken: AuthService.getAuthToken(),
         }
         const response = await Superagent.put(
           DinoAPIURLConstants.REFRESH_AUTH
@@ -62,7 +62,7 @@ class DinoAgentService extends BaseAgent {
 
       return true
     }
-    
+
     return true
   }
 

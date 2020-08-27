@@ -1,0 +1,14 @@
+.calendar__add_button .MuiFab-primary {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  bottom: 85px;
+  right: 10px;
+  background-color: #7abe2c;
+  color: white;
+  outline: none;
+}
+
+.calendar__add_button .MuiDialog-paper { 
+  margin: 0;
+}

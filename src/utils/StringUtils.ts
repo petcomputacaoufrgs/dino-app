@@ -1,4 +1,7 @@
 class StringUtils {
+  upperCaseFirstLetter = (str: string): string =>
+    `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+
   normalize = (str: string): string => {
     return str
       .normalize('NFD')

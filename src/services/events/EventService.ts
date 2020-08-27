@@ -6,6 +6,7 @@ import AppSettingsService from '../app_settings/AppSettingsService'
 import AuthService from '../auth/AuthService'
 import Synchronizer from '../../sync/Synchronizer'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
+import CalendarService from '../calendar/CalendarService'
 
 /**
  * Executa funções baseado em eventos da aplicação
@@ -22,6 +23,7 @@ class EventService {
   }
 
   whenLogin = () => {
+    CalendarService.addMocks()
     Synchronizer.receive()
     WebSocketConnector.connect()
     HistoryService.push(PathConstants.HOME)

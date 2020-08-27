@@ -81,6 +81,8 @@ class DinoAPIURLConstants {
 
   FAQ_GET = `${this.FAQ}`
 
+  FAQ_GET_VERSION = `${this.FAQ}version/`
+  
   FAQ_SAVE = `${this.FAQ}`
 
   FAQ_OPTIONS = `${this.URL}public/faq/options/`

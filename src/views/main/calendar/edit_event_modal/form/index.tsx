@@ -232,7 +232,7 @@ const Form: React.FC = () => {
                 margin="normal"
                 className="calendar__add__modal__form__date_picker second"
                 label={language.EVENT_END_TIME_LABEL}
-                value={initDate}
+                value={endDate}
                 onChange={handleEndDateChange}
               />
             </Grid>

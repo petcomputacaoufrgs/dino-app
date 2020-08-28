@@ -127,9 +127,9 @@ const Main = (): JSX.Element => {
           exact
           path={PathConstants.GLOSSARY}
           component={() => (
-            <FaqContextProvider>
+            <GlossaryContextProvider>
               <Glossary />
-            </FaqContextProvider>
+            </GlossaryContextProvider>
           )}
         />
         <PrivateRoute

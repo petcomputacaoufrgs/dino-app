@@ -23,18 +23,14 @@ const Faq = (): JSX.Element => {
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([] as FaqItemModel[])
-  const [isFaqEmpty, setIsFaqEmpty] = useState(items.length === 0)
+  const isFaqEmpty = items.length === 0
+
 
   useEffect(() => {
     const results = items.filter(item =>
       StringUtils.contains(item.question, searchTerm))
     setSearchResults(results)
   }, [items, searchTerm])
-
-  useEffect(() => {
-    console.log(items.length === 0)
-    setIsFaqEmpty(items.length === 0)
-  }, [items])
 
   const handleChangeOpenDialog = () => {
     setOpen(!open)
@@ -47,7 +43,6 @@ const Faq = (): JSX.Element => {
   const handleSwitchUserFaq = async () => {
     if(selectedFaq !== undefined) {
       FaqService.switchUserFaq(selectedFaq)
-      FaqContextUpdater.update()
     }
     handleChangeOpenDialog()
   }

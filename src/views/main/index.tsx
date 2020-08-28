@@ -6,6 +6,7 @@ import ContactsSVG from '../../assets/icons/phone.svg'
 import GamesSVG from '../../assets/icons/games.svg'
 import HomeSVG from '../../assets/icons/home.svg'
 import NotesSVG from '../../assets/icons/note.svg'
+import FaqSVG from '../../assets/icons/faq.svg'
 import SettingsSVG from '../../assets/icons/settings.svg'
 import LogoutSVG from '../../assets/icons/logout.svg'
 import CalendarSVG from '../../assets/icons/calendar.svg'
@@ -79,7 +80,7 @@ const Main = (): JSX.Element => {
     ],
     [
       {
-        image: NotesSVG,
+        image: FaqSVG,
         name: language.MENU_FAQ,
         onClick: () => HistoryService.push(PathConstants.FAQ),
       },

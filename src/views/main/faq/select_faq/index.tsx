@@ -14,25 +14,40 @@ const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element =
 
     const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
     const [open, setOpen] = useState(false)
+    const [loading, setLoading] = useState(open && faqOptions.length === 0)
     const [value, setValue] = React.useState<FaqOptionsModel | null>(selectedFaq || null);
-    const [inputValue, setInputValue] = React.useState(selectedFaq ? selectedFaq.title : '');
-    
-    const loading = open && faqOptions.length === 0;
+    const [inputValue, setInputValue] = useState(selectedFaq ? selectedFaq.title : '');
+    const [connectionError, setConnectionError] = useState(false)
 
     useEffect(() => {
       const getFaqOptions = async () => {
         if(open) {
           const response = await FaqService.getFaqOptionsFromServer()
-          if(response !== undefined) {
-            setFaqOptions(response)
-          }
+          updateFaqOptions(response)
         }
       }
-      if (!loading) {
-        return undefined
+
+      let updateFaqOptions = (response: FaqOptionsModel[] | undefined) => {
+        if (response !== undefined) {
+          setFaqOptions(response)
+          setLoading(false)
+          if (connectionError) {
+            setConnectionError(false)
+          }
+        } else {
+          setLoading(false)
+          setConnectionError(true)
+        }
       }
+
+      const cleanBeforeUpdate = () => {
+        updateFaqOptions = (response: FaqOptionsModel[] | undefined) => {}
+      }
+
       getFaqOptions()
-    }, [open, loading])
+
+      return cleanBeforeUpdate
+    }, [open, loading, connectionError])
 
     useEffect(() => {
       if (value !== null) {
@@ -42,38 +57,43 @@ const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element =
 
     return (
       <>
-      <Autocomplete
-        id="faq-select-label"
-        open={open}
-        onOpen={() => setOpen(true)}
-        onClose={() => setOpen(false)}
-        getOptionSelected={(option, value) => option.id === value.id}
-        getOptionLabel={(option) => option.title || ''}
-        options={faqOptions}
-        loading={loading}
-        inputValue={inputValue}
-        onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
-        value={value}
-        onChange={(event: any, newValue: FaqOptionsModel | null) => setValue(newValue)}
-        renderInput={params => (
-          <TextField
-            {...params}
-            label={language.SETTINGS_FAQ}
-            variant='standard'
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
-            }}
-          />
-        )}
-      />
-    </>
-  )
+        <Autocomplete
+          id="faq-select-label"
+          open={open}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+          getOptionSelected={(option, value) => option.id === value.id}
+          getOptionLabel={(option) => option.title || ''}
+          options={faqOptions}
+          loading={loading}
+          noOptionsText={connectionError ? language.FAQ_CONNECTION_ERROR : language.NO_OPTIONS}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
+          value={value}
+          onChange={(event: any, newValue: FaqOptionsModel | null) =>
+            setValue(newValue)
+          }
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={language.SETTINGS_FAQ}
+              variant="standard"
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {loading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
+          )}
+        />
+      </>
+    )
   }
 
   export default SelectFaq

@@ -328,4 +328,7 @@ export default class EN implements LanguageBase {
 
   EVENT_COLOR_LABEL = 'Selected color'
 
+
+  FAQ_CONNECTION_ERROR = 'Internet connection required'
+
 }

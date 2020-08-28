@@ -331,4 +331,7 @@ export default class PT implements LanguageBase {
 
   EVENT_COLOR_LABEL = 'Cor selecionada'
 
+
+  FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
+
 }

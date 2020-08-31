@@ -27,14 +27,13 @@ class FaqService {
       title: faq.title,
     } as FaqOptionsModel)
 
-    CurrentFaqContextUpdater.update()
-
     this.setItems(faq.items)
+    
+    CurrentFaqContextUpdater.update()
   }
 
   setItems = (items: FaqItemModel[]) => {
     LS.setItems(items)
-    FaqContextUpdater.update()
   }
 
   getItems = (): FaqItemModel[] => {
@@ -54,9 +53,7 @@ class FaqService {
     return LS.getVersion()
   }
 
-  getFaqOptionsFromServer = async (): Promise<
-    Array<FaqOptionsModel> | undefined
-  > => {
+  getFaqOptionsFromServer = async (): Promise<Array<FaqOptionsModel> | undefined> => {
     return await ServerService.getFaqOptions()
   }
 

@@ -1,4 +1,4 @@
-export default interface FaqSyncModel {
+export default interface FaqVersionModel {
     id: number,
     version: number
 }

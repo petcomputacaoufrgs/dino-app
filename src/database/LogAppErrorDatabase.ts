@@ -3,7 +3,7 @@ import DatabaseConstants from '../constants/DatabaseConstants'
 import LogAppErrorDoc from '../types/log_app_error/database/LogAppErrorDoc'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 
-class LogAppErrorDatabase extends BaseDatabase {
+class LogAppErrorDatabase extends BaseDatabase<LogAppErrorDoc> {
   constructor() {
     super(DatabaseConstants.LOG_APP_ERROR)
   }
@@ -18,7 +18,7 @@ class LogAppErrorDatabase extends BaseDatabase {
 
   getAll = async (): Promise<LogAppErrorDoc[]> => {
     try {
-      const responseIds: PouchDB.Core.AllDocsResponse<{}> = await this.db.allDocs()
+      const responseIds = await this.db.allDocs()
 
       const ids = responseIds.rows
         .filter((row) => !row.value.deleted)

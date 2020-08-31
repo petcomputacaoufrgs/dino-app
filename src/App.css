@@ -13,3 +13,7 @@
 .MuiButtonBase-root.MuiIconButton-root {
   outline: none;
 }
+
+.app {
+  font-family: 'Raleway', sans-serif;
+}

@@ -5,6 +5,10 @@ import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
  * @description Conjunto de textos em português brasileiro
  */
 export default class PT implements LanguageBase {
+  APP_NAME = 'DinoApp'
+
+  CURIOUS_DINO_ALT = 'Dinossauro curioso'
+
   ISO_LANGUAGE_CODE = 'pt'
 
   NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE
@@ -17,7 +21,7 @@ export default class PT implements LanguageBase {
 
   NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
 
-  WELCOME_MESSAGE = 'Bem vindo ao DinoAPP!'
+  WELCOME_MESSAGE = 'Bem vindo ao DinoApp!'
 
   LOGIN_BUTTON_TEXT = 'Entrar com o Google'
 
@@ -79,6 +83,8 @@ export default class PT implements LanguageBase {
   SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
 
   MENU_NOTES = 'Notas'
+
+  MENU_CALENDAR = 'Calendário'
 
   NOTES_HEADER_IMAGE_DESC =
     'Imagem com um caderno de anotações com uma mão escrevendo.'
@@ -196,6 +202,135 @@ export default class PT implements LanguageBase {
   SELECT_FAQ_BUTTON = 'Busque FAQ'
 
   SELECT_TREATMENT = 'Selecione Tratamento'
+
+  SUNDAY_NAME = 'Domingo'
+
+  MONDAY_NAME = 'Segunda'
+
+  TUESDAY_NAME = 'Terça'
+
+  WEDNESDAY_NAME = 'Quarta'
+
+  THURSDAY_NAME = 'Quinta'
+
+  FRIDAY_NAME = 'Sexta'
+
+  SATURDAY_NAME = 'Sabádo'
+
+  NEXT_BUTTON_TEXT = 'Próximo'
+
+  PREVIOUS_BUTTON_TEXT = 'Anterior'
+
+  CLOSE_ARIA_LABEL = 'Fechar'
+
+  DELETE_ARIA_LABEL = 'Deletar'
+  
+  EDIT_ARIA_LABEL = 'Editar'
+
+  INVALID_WEEKDAY = 'Dia da semana inválido.'
+
+  TODAY = 'Hoje'
+
+  DATE_FROM = 'De'
+
+  DATE_TO = 'Até'
+
+  MEDICAL_APPOINTMENT_TYPE = 'Consulta médica'
+
+  MEDICINE_TYPE = 'Medicamento'
+
+  INVALID_EVENT_TYPE = 'Tipo de evento inválido'
+
+  MINUTES = 'minutos '
+  
+  HOURS = 'horas'
+  
+  DAYS = 'dias'
+
+  AND = 'e'
+
+  BEFORE = 'antes'
+
+  MINUTE = 'minuto'
+
+  HOUR = 'hora'
+  
+  DAY = 'dia'
+
+  ADD_EVENT_TITLE = 'Novo Evento'
+
+  EVENT_TYPE_LABEL = 'Tipo de Evento'
+
+  EVENT_NAME_LABEL = 'Nome do Evento'
+  
+  EVENT_INIT_DATE_LABEL = 'Dia de início'
+
+  EVENT_INIT_TIME_LABEL = 'Horário de início'
+
+  EVENT_END_DATE_LABEL = 'Dia de termino'
+  
+  EVENT_END_TIME_LABEL = 'Horário de termino'
+
+  DATE_PICKER_DAY_FORMAT = 'dd/MM/yyyy'
+
+  EVENT_REPEAT_NOT_REPEAT = 'Náo se repete'
+
+  EVENT_REPEAT_EVERY_DAY = 'Todos os dias'
+
+  EVENT_REPEAT_EVERY_WEEK = 'Todas as semenas'
+
+  EVENT_REPEAT_EVERY_MONTH = 'Todos os meses'
+
+  EVENT_REPEAT_EVERY_YEAR = 'Todos os anos'
+
+  EVENT_REPEAT_EVERY_CUSTOMIZED = 'Personalizado'
+
+  EVENT_REPEAT_TYPE_LABEL = 'Tipo de repetição do evento'
+
+  INVALID_EVENT_REPEAT_TYPE = 'Tipo de repetição inválida'
+
+  EVENT_TITLE_ICON_ALT = 'Escolha o título do evento'
+
+  EVENT_TYPE_ICON_ALT = 'Escolha o tipo do evento'
+
+  EVENT_DATE_ICON_ALT = 'Escolha a data do evento'
+
+  EVENT_REPEAT_ICON_ALT = 'Escolha a repetição do evento'
+
+  EVENT_REPEAT_END_DATE_LABEL = 'Final da repetição'
+
+  EVENT_WEEKDAY_SELECT_LABEL = 'Selecione os dias:'
+
+  EVENT_ALERT_ALT = 'Adicionar alertas antes do evento'
+
+  EVENT_ADD_ALARM_LABEL = 'Tempo'
+
+  EVENT_ADD_ALARM_TYPE_LABEL = 'Medida de tempo'
+
+  EVENT_ADD_ALERT = 'Adicionar notificação'
+
+  EVENT_INVALID_ALARM_TYPE = 'tipo inválido'
+  
+  EVENT_ALARM_ZERO = 'Na hora do evento'
+
+  EVENT_ALARM_DELETE_ALT = 'Clique para excluir o alarme'
+
+  CHANGE_COLOR_ARIA_LABEL = 'Clique para selecionar uma cor aleatória'
+
+  ADD_PHONE_ARIA_LABEL= 'Clique para adicionar um novo telefone numérico'
+
+  RETURN_ARIA_LABEL = 'Retornar'
+
+  SEARCH_ARIA_LABEL = 'Pesquisar'
+
+  OPEN_MENU_ARIA_LABEL = 'Abrir menu'
+
+  ADD_ARIA_LABEL = 'Adicionar'
+
+  OPTIONS_ARIA_LABEL = 'Opções'
+
+  EVENT_COLOR_LABEL = 'Cor selecionada'
+
 
   FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
 

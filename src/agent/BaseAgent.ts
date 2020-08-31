@@ -12,7 +12,7 @@ export default class BaseAgent {
 
     return this.getAgentRequest({
       request: request,
-      canGo: await this.canGo()
+      canGo: await this.canGo(),
     })
   }
 
@@ -25,7 +25,7 @@ export default class BaseAgent {
 
     return this.getAgentRequest({
       request: request,
-      canGo: await this.canGo()
+      canGo: await this.canGo(),
     })
   }
 
@@ -38,7 +38,7 @@ export default class BaseAgent {
 
     return this.getAgentRequest({
       request: request,
-      canGo: await this.canGo()
+      canGo: await this.canGo(),
     })
   }
 
@@ -51,7 +51,7 @@ export default class BaseAgent {
 
     return this.getAgentRequest({
       request: request,
-      canGo: await this.canGo()
+      canGo: await this.canGo(),
     })
   }
 
@@ -76,12 +76,12 @@ export default class BaseAgent {
   protected onResponse = (response: Superagent.Response) => {}
 
   private canGo = async () => {
-    return ConnectionService.isConnected() && await this.filterBeforeCreate()
+    return ConnectionService.isConnected() && (await this.filterBeforeCreate())
   }
 
   private setBody = (
     info: AgentRequestInfo,
-    body: string | object,
+    body: string | object
   ): AgentRequest => {
     info.request.send(body)
     return this.getAgentRequest(info)
@@ -90,28 +90,25 @@ export default class BaseAgent {
   private addHeader = (
     info: AgentRequestInfo,
     key: string,
-    value: string,
+    value: string
   ): AgentRequest => {
     info.request.set(key, value)
     return this.getAgentRequest(info)
   }
 
-  private authenticate = (
-    info: AgentRequestInfo
-  ): AgentRequest => {
+  private authenticate = (info: AgentRequestInfo): AgentRequest => {
     info.request = this.addAuth(info.request)
     return this.getAgentRequest(info)
   }
 
-  private getAgentRequest = (
-    info: AgentRequestInfo
-  ): AgentRequest => {
+  private getAgentRequest = (info: AgentRequestInfo): AgentRequest => {
     return {
       go: async (): Promise<Superagent.Response> => await info.request,
       canGo: info.canGo,
       authenticate: () => this.authenticate(info),
       setBody: (body: string | object) => this.setBody(info, body),
-      addHeader: (key: string, value: string) => this.addHeader(info, key, value)
+      addHeader: (key: string, value: string) =>
+        this.addHeader(info, key, value),
     }
   }
 }

@@ -14,7 +14,7 @@
   height: 70px;
   display: flex;
   align-items: center;
-  z-index: 5001;
+  z-index: 1000;
 }
 
 .bottom_navigation .MuiBottomNavigationAction-root.Mui-selected {
@@ -24,9 +24,9 @@
 }
 
 .bottom_navigation__component {
+  position: relative;
   width: 100%;
   height: calc(100% - 55px - 70px);
-  overflow: scroll;
 }
 
 .bottom_navigation__component_without_bottom {
@@ -34,6 +34,7 @@
   height: calc(100% - 55px);
   overflow: scroll;
   -ms-overflow-style: none;
+  padding-left: 73px;
 }
 
 .bottom_navigation__component_without_bottom::-webkit-scrollbar {

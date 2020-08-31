@@ -26,6 +26,7 @@ const Faq = (): JSX.Element => {
   const [searchResults, setSearchResults] = useState([] as FaqItemModel[])
   const isFaqEmpty = items.length === 0
 
+
   useEffect(() => {
     const results = items.filter(item =>
       StringUtils.contains(item.question, searchTerm))

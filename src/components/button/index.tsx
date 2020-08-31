@@ -3,14 +3,7 @@ import MaterialButton from '@material-ui/core/Button'
 import ButtonProps from './props'
 import './styles.css'
 
-/**
- * @description Botão básico
- * @param props propriedades possíveis para este botão
- */
 const Button = (props: ButtonProps) => {
-  /**
-   * @description Retorna o nome da classe baseado nas props do botão
-   */
   const getClassName = (): string => {
     let className = 'button'
 
@@ -21,9 +14,6 @@ const Button = (props: ButtonProps) => {
     return className
   }
 
-  /**
-   * @description Retorna um Elemento JSX com a imagem do botão
-   */
   const getImageComponent = (): JSX.Element => {
     if (props.imageSrc) {
       if (props.imageAlt) {

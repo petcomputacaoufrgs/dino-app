@@ -6,7 +6,7 @@ import DatabaseConstants from '../constants/DatabaseConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import DatabaseDeleteWithoutID from '../error/DatabaseDeleteWithoutID'
 
-class NoteDatabase extends BaseDatabase {
+class NoteDatabase extends BaseDatabase<NoteDoc> {
   constructor() {
     super(DatabaseConstants.NOTE)
   }
@@ -50,7 +50,7 @@ class NoteDatabase extends BaseDatabase {
     const id = this.getId(question)
 
     try {
-      const doc: NoteDoc = await this.db.get(id)
+      const doc = await this.db.get(id)
 
       return doc
     } catch (e) {
@@ -61,7 +61,7 @@ class NoteDatabase extends BaseDatabase {
 
   getAll = async (): Promise<NoteDoc[]> => {
     try {
-      const responseIds: PouchDB.Core.AllDocsResponse<{}> = await this.db.allDocs()
+      const responseIds = await this.db.allDocs()
 
       const ids = responseIds.rows
         .filter((row) => !row.value.deleted)

@@ -38,7 +38,7 @@ class GlossaryService {
 
     if (request.canGo) {
       try {
-        const response = await request.authenticate().go()
+        const response = await request.go()
 
         return response.body
       } catch (e) {
@@ -56,7 +56,7 @@ class GlossaryService {
 
     if (request.canGo) {
       try {
-        const response = await request.authenticate().go()
+        const response = await request.go()
 
         return response.body
       } catch (e) {

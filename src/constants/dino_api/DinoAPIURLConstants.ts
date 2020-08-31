@@ -8,7 +8,7 @@ class DinoAPIURLConstants {
   private AUTH = `${this.URL}auth/`
   private PUBLIC_AUTH = `${this.URL}public/auth/`
   private USER = `${this.URL}user/`
-  private GLOSSARY = `${this.URL}glossary/`
+  private GLOSSARY = `${this.URL}public/glossary/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private NOTE = `${this.URL}note/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`

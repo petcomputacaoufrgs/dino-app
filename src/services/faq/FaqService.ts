@@ -1,11 +1,10 @@
 import FaqItemModel from '../../types/faq/FaqItemModel'
 import LS from '../../local_storage/FaqLocalStorage'
-import FaqContextUpdater from '../../context_updater/FaqContextUpdater'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import ServerService from './FaqServerService'
 import CurrentFaqContextUpdater from '../../context_updater/CurrentFaqContextUpdater'
-
+import strUtils from '../../utils/StringUtils'
 class FaqService {
   getUserFaqFromServer = async () => {
     const response = await ServerService.getUserFaq()
@@ -33,7 +32,7 @@ class FaqService {
   }
 
   setItems = (items: FaqItemModel[]) => {
-    LS.setItems(items)
+    LS.setItems(strUtils.sortByAttr(items, 'question'))
   }
 
   getItems = (): FaqItemModel[] => {

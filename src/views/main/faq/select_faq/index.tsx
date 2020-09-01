@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SelectFaqProps from './props'
+import strUtils from '../../../../utils/StringUtils'
 
 const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element => {
 
@@ -29,7 +30,7 @@ const SelectFaq = ({selectedFaq, setSelectedFaq}: SelectFaqProps): JSX.Element =
 
       let updateFaqOptions = (response: FaqOptionsModel[] | undefined) => {
         if (response !== undefined) {
-          setFaqOptions(response)
+          setFaqOptions(strUtils.sortByAttr(response, 'title'))
           setLoading(false)
           if (connectionError) {
             setConnectionError(false)

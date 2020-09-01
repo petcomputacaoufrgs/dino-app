@@ -1,0 +1,38 @@
+.calendar__day__modal.mobile .MuiDialog-container.MuiDialog-scrollPaper {
+    position: absolute;
+    top: 55px;
+    margin-bottom: 70px;
+    height: calc(100% - 125px);
+    left: 0;
+    right: 0;
+}
+
+
+.calendar__day__modal.desktop .MuiDialog-container.MuiDialog-scrollPaper {
+    position: absolute;
+    top: 55px;
+    bottom: 0px;
+    left: 73px;
+    right: 0;
+}
+
+.calendar__day__modal .MuiPaper-rounded {
+    border-radius: 0;
+}
+
+.calendar__day__modal .MuiDialog-paper {
+    margin: 0;
+}
+
+.calendar__day__modal .MuiDialog-paperWidthSm {
+    width: 100%;
+}
+
+.calendar__day__modal .MuiDialog-paperWidthSm {
+    max-width: 100%;
+}
+
+.calendar__day__modal .MuiDialog-paperScrollPaper {
+    max-height: 100%;
+    height: 100%;
+}

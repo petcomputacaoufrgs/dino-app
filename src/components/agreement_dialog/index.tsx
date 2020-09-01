@@ -38,8 +38,6 @@ const AgreementDialog = (
     <Dialog
       open={open}
       onClose={onDisagree}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">{props.question}</DialogTitle>
       <DialogContent>

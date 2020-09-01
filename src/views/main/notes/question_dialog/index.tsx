@@ -109,7 +109,6 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
       open={open}
       className="note_card_dialog"
       onClose={props.onClose}
-      aria-labelledby="form-dialog-title"
     >
       {renderDialogContent()}
       <DialogActions onSave={handleSave} />

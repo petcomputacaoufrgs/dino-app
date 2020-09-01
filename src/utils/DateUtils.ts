@@ -2,8 +2,46 @@ import StringUtils from './StringUtils'
 import { DateTime } from 'luxon'
 import DinoAPIGeneralConstants from '../constants/dino_api/DinoAPIGeneralConstants'
 import LanguageBase from '../types/languages/LanguageBase'
+import moment from 'moment'
 
 class DateUtils {
+
+  getStartOfDay = (date: Date): Date => (
+    moment(date).startOf('day').toDate()
+  )
+
+  getEndOfDay = (date: Date): Date => (
+    moment(date).endOf('day').toDate()
+  )
+
+  isToday = (date: Date): boolean => (
+    this.isEqualDay(date, new Date())
+  )
+
+  isEqualHour = (d1: Date, d2: Date): boolean => (
+    d1.getHours() === d2.getHours() && this.isEqualDay(d1, d2)
+  )
+
+  isEqualDay = (d1: Date, d2: Date): boolean => (
+    d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
+  )
+
+  isEqualMonth = (d1: Date, d2: Date): boolean => (
+    d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
+  )
+
+  getLastMonth = (date: Date): Date => {
+    return moment(date).add(-1, 'M').startOf('month').toDate()
+  }
+
+  getNextMonth = (date: Date): Date => {
+    return moment(date).add(1, 'M').startOf('month').toDate()
+  }
+
+  addMonth = (date: Date, diff: number): Date => {
+    return moment(date).add(diff, 'M').startOf('month').toDate()
+  }
+
   getDatetimeInMillis = (): number => {
     return DateTime.local()
       .setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE)
@@ -29,32 +67,53 @@ class DateUtils {
 
   getMonthName = (monthNumber: number, language: LanguageBase): string => {
     switch (monthNumber) {
-      case 1:
+      case 0:
         return language.JANUARY
-      case 2:
+      case 1:
         return language.FEBRUARY
-      case 3:
+      case 2:
         return language.MARCH
-      case 4:
+      case 3:
         return language.APRIL
-      case 5:
+      case 4:
         return language.MAY
-      case 6:
+      case 5:
         return language.JUNE
-      case 7:
+      case 6:
         return language.JULY
-      case 8:
+      case 7:
         return language.AUGUST
-      case 9:
+      case 8:
         return language.SEPTEMBER
-      case 10:
+      case 9:
         return language.OCTOBER
-      case 11:
+      case 10:
         return language.NOVEMBER
-      case 12:
+      case 11:
         return language.DECEMBER
       default:
         return language.INVALID_MONTH
+    }
+  }
+
+  getWeekDayName = (weekDayNumber: number, language: LanguageBase): string => {
+    switch (weekDayNumber) {
+      case 0:
+        return language.SUNDAY_NAME
+      case 1:
+        return language.MONDAY_NAME
+      case 2:
+        return language.TUESDAY_NAME
+      case 3:
+        return language.WEDNESDAY_NAME
+      case 4:
+        return language.THURSDAY_NAME
+      case 5:
+        return language.FRIDAY_NAME
+      case 6:
+        return language.SATURDAY_NAME
+      default:
+        return language.INVALID_WEEKDAY
     }
   }
 }

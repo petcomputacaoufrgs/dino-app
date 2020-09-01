@@ -41,7 +41,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
     <>
       <ListItem button onClick={handleOpen}>
         <ListItemAvatar>
-          <Avatar aria-label="recipe" className={classes[props.item.color]}>
+          <Avatar aria-label={language.AVATAR_ALT} className={classes[props.item.color]}>
             {props.item.name[0].toUpperCase()}
           </Avatar>
         </ListItemAvatar>
@@ -50,7 +50,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
           secondary={ContactsService.getPhoneTypes(props.item.phones)}
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="options" onClick={handleClick}>
+          <IconButton edge="end" aria-label={language.OPTIONS_ARIA_LABEL} onClick={handleClick}>
             <MoreVertIcon />
           </IconButton>
         </ListItemSecondaryAction>

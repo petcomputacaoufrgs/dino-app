@@ -8,11 +8,12 @@ class DinoAPIURLConstants {
   private AUTH = `${this.URL}auth/`
   private PUBLIC_AUTH = `${this.URL}public/auth/`
   private USER = `${this.URL}user/`
-  private GLOSSARY = `${this.URL}glossary/`
+  private GLOSSARY = `${this.URL}public/glossary/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private NOTE = `${this.URL}note/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
+  private FAQ = this.URL + 'faq/'
 
   AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 
@@ -52,7 +53,7 @@ class DinoAPIURLConstants {
 
   CONTACT_GET = `${this.CONTACT}`
 
-  CONTACT_SAVE = `${this.CONTACT}` 
+  CONTACT_SAVE = `${this.CONTACT}`
 
   CONTACT_EDIT = `${this.CONTACT}` 
 
@@ -61,9 +62,9 @@ class DinoAPIURLConstants {
   CONTACT_SAVE_ALL = `${this.CONTACT}all/`
 
   CONTACT_EDIT_ALL = `${this.CONTACT}all/`
-  
+
   CONTACT_DELETE_ALL = `${this.CONTACT}all/`
-  
+
   NOTE_DELETE_ALL = `${this.NOTE}all/`
 
   NOTE_UPDATE_QUESTION = `${this.NOTE}question/`
@@ -77,6 +78,15 @@ class DinoAPIURLConstants {
   SAVE_LOG_APP_ERROR = `${this.LOG_APP_ERROR}`
 
   SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
+
+  FAQ_GET = `${this.FAQ}`
+
+  FAQ_GET_VERSION = `${this.FAQ}version/`
+  
+  FAQ_SAVE = `${this.FAQ}`
+
+  FAQ_OPTIONS = `${this.URL}public/faq/options/`
+
 }
 
 export default new DinoAPIURLConstants()

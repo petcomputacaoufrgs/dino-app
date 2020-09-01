@@ -4,11 +4,13 @@ import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 
-const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Element => {
+const ContactFormDialogContent = (
+  props: ContactFormDialogContentProps
+): JSX.Element => {
   const language = useLanguage().current
 
   const isTheInvalidNumber = (number: string): boolean =>
-      props.helperText.number === number
+    props.helperText.number === number
 
   return (
     <>
@@ -43,7 +45,9 @@ const ContactFormDialogContent = (props: ContactFormDialogContentProps): JSX.Ele
             number={phone.number}
             onChangeNumber={(e) => props.handleChangeNumber(e, index)}
             error={isTheInvalidNumber(phone.number)}
-            helperText={isTheInvalidNumber(phone.number) ? props.helperText.text : ''}
+            helperText={
+              isTheInvalidNumber(phone.number) ? props.helperText.text : ''
+            }
             handleDeletePhone={() => props.handleDeletePhone(phone.number)}
           />
           <br />

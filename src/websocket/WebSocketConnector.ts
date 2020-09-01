@@ -6,6 +6,8 @@ import AppSettingsWebSocketSubscriber from './AppSettingsWebSocketSubscriber'
 import NoteWebSocketSubscriber from './NoteWebSocketSubscriber'
 import UserWebSocketSubscriber from './UserWebSocketSubscriber'
 import ContactWebSocketSubscriber from './ContactWebSocketSubscriber'
+import FaqWebSocketSubscriber from './FaqWebSocketSubscriber'
+import FaqUserWebSocketSubscriber from './FaqUserWebSocketSubscriber'
 import AuthService from '../services/auth/AuthService'
 import DinoAPIWebSocketConstants from '../constants/dino_api/DinoAPIWebSocketConstants'
 import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
@@ -19,6 +21,8 @@ class WebSocketConnector {
     NoteWebSocketSubscriber,
     UserWebSocketSubscriber,
     ContactWebSocketSubscriber,
+    FaqWebSocketSubscriber,
+    FaqUserWebSocketSubscriber
   ]
 
   connect = () => {

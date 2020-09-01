@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import { Router } from 'react-router'
-import { History, LocationState } from 'history'
+import { History } from 'history'
 import PrivateRouterContextType from '../../types/context_provider/PrivateRouterContextType'
 
 /**
@@ -19,7 +19,7 @@ const PrivateRouterContext = createContext({
 const PrivateRouterContextProvider: React.FC<PrivateRouterContextType> = (
   props
 ): JSX.Element => {
-  const getHistory = (): History<LocationState> => {
+  const getHistory = (): History => {
     if (props.browserHistory) {
       return props.browserHistory
     }

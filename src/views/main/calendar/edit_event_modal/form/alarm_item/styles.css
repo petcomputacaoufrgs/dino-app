@@ -1,0 +1,19 @@
+.calendar__add__modal__event_alert_item {
+    padding-bottom: 6px;
+    padding-top: 6px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-right: -48px;
+}
+
+.calendar__add__modal__event_alert_item__delete_button.MuiButtonBase-root.MuiButton-root {
+    margin-left: auto;
+    padding-right: 0;
+    outline: none !important;
+}
+
+.calendar__add__modal__event_alert_item__delete_button.MuiButtonBase-root.MuiButton-root .MuiButton-label {
+    display: flex;
+    justify-content: flex-end;
+}

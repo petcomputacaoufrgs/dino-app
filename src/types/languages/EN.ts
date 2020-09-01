@@ -5,6 +5,10 @@ import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
  * @description Conjunto de textos em inglês americano
  */
 export default class EN implements LanguageBase {
+  APP_NAME = 'DinoApp'
+
+  CURIOUS_DINO_ALT = 'Curious dino'
+
   ISO_LANGUAGE_CODE = 'en'
 
   NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.ENGLISH
@@ -17,7 +21,7 @@ export default class EN implements LanguageBase {
 
   NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
 
-  WELCOME_MESSAGE = 'Welcome to DinoAPP!'
+  WELCOME_MESSAGE = 'Welcome to DinoApp!'
 
   LOGIN_BUTTON_TEXT = 'Log in with Google'
 
@@ -62,13 +66,19 @@ export default class EN implements LanguageBase {
 
   MENU_CONTACTS = 'Contacts'
 
+  MENU_FAQ = 'FAQ'
+
   MENU_SETTINGS = 'Settings'
 
   MENU_LOGOUT = 'Logout'
 
+  MENU_CALENDAR = 'Calendar'
+
   SETTINGS_TITLE = 'Settings'
 
   SETTINGS_LANGUAGE = 'Choose Language'
+
+  SETTINGS_FAQ = 'Choose F.A.Q'
 
   SETTINGS_SAVE = 'Save'
 
@@ -185,4 +195,140 @@ export default class EN implements LanguageBase {
   CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
 
   DISCONNECTED = 'Disconnected'
+
+  SELECT_FAQ_BUTTON = 'Search FAQ'
+
+  SELECT_TREATMENT = 'Select Treatment'
+
+  SUNDAY_NAME = 'Sunday'
+
+  MONDAY_NAME = 'Monday'
+
+  TUESDAY_NAME = 'Tuesday'
+
+  WEDNESDAY_NAME = 'Webnesday'
+
+  THURSDAY_NAME = 'Thursday'
+
+  FRIDAY_NAME = 'Friday'
+
+  SATURDAY_NAME = 'Saturday'
+
+  NEXT_BUTTON_TEXT = 'Next'
+
+  PREVIOUS_BUTTON_TEXT = 'Previous'
+
+  CLOSE_ARIA_LABEL = 'Close'
+
+  DELETE_ARIA_LABEL = 'Delete'
+  
+  EDIT_ARIA_LABEL = 'Edit'
+
+  INVALID_WEEKDAY = 'Invalid weekday.'
+
+  TODAY = 'Today'
+
+  DATE_FROM = 'From'
+
+  DATE_TO = 'To'
+
+  MEDICAL_APPOINTMENT_TYPE = 'Medical appointment'
+
+  MEDICINE_TYPE = 'Medicine'
+
+  INVALID_EVENT_TYPE = 'Invalid event type'
+
+  MINUTES = 'minutes'
+  
+  HOURS = 'hours'
+  
+  DAYS = 'days'
+
+  AND = 'and'
+
+  BEFORE = 'before'
+
+  MINUTE = 'minute'
+
+  HOUR = 'hour'
+
+  DAY = 'day'
+
+  ADD_EVENT_TITLE = 'New Event'
+
+  EVENT_TYPE_LABEL = 'Event Type'
+
+  EVENT_NAME_LABEL = 'Event Name'
+
+  EVENT_INIT_DATE_LABEL = 'Start day'
+
+  EVENT_INIT_TIME_LABEL = 'Start time'
+
+  EVENT_END_DATE_LABEL = 'End day'
+  
+  EVENT_END_TIME_LABEL = 'End time'
+
+  DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
+
+  EVENT_REPEAT_NOT_REPEAT = 'Not repeat'
+
+  EVENT_REPEAT_EVERY_DAY = 'Everyday'
+
+  EVENT_REPEAT_EVERY_WEEK = 'Every week'
+
+  EVENT_REPEAT_EVERY_MONTH = 'Every month'
+
+  EVENT_REPEAT_EVERY_YEAR = 'Every year'
+
+  EVENT_REPEAT_EVERY_CUSTOMIZED = 'Customized'
+
+  EVENT_REPEAT_TYPE_LABEL = 'Event repeat type'
+
+  INVALID_EVENT_REPEAT_TYPE = 'Invalid event repeat'
+
+  EVENT_TITLE_ICON_ALT = 'Choose event title'
+
+  EVENT_TYPE_ICON_ALT = 'Choose event type'
+
+  EVENT_DATE_ICON_ALT = 'Choose event date'
+
+  EVENT_REPEAT_ICON_ALT = 'Choose event repetition'
+
+  EVENT_REPEAT_END_DATE_LABEL = 'Repetition end'
+
+  EVENT_WEEKDAY_SELECT_LABEL = 'Select days:'
+
+  EVENT_ALERT_ALT = 'Add alerts before event'
+
+  EVENT_ADD_ALARM_LABEL = 'Time'
+
+  EVENT_ADD_ALARM_TYPE_LABEL = 'Time measure'
+
+  EVENT_ADD_ALERT = 'Add notification'
+
+  EVENT_INVALID_ALARM_TYPE = 'invalid type'
+
+  EVENT_ALARM_ZERO = 'At the time of the event'
+
+  EVENT_ALARM_DELETE_ALT = 'Click to delete alarm'
+
+  CHANGE_COLOR_ARIA_LABEL = 'Click to select a random color'
+
+  ADD_PHONE_ARIA_LABEL= 'Click to add a new phone number'
+
+  RETURN_ARIA_LABEL = 'Return'
+
+  SEARCH_ARIA_LABEL = 'Search'
+
+  OPEN_MENU_ARIA_LABEL = 'Open menu'
+
+  ADD_ARIA_LABEL = 'Add'
+
+  OPTIONS_ARIA_LABEL = 'Options'
+
+  EVENT_COLOR_LABEL = 'Selected color'
+
+
+  FAQ_CONNECTION_ERROR = 'Internet connection required'
+
 }

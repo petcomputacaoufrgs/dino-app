@@ -1,14 +1,18 @@
 type filterCallback<T> = (value: T) => boolean
 
 class ArrayUtils {
-  removeRepeatedValues<T>(list: T[]): T[] {
+  removeRepeatedValues = <T>(list: T[]): T[] => {
     const uniqueList = new Set(list)
 
     return Array.from(uniqueList)
   }
 
-  remove<T>(list: T[], element: T): T[] {
+  remove = <T>(list: T[], element: T): T[] => {
     return list.filter((e) => e !== element)
+  }
+
+  merge = <T>(lists: T[]): T[] => {
+    return ([] as T[]).concat.apply([], lists)
   }
 
   /**
@@ -17,7 +21,7 @@ class ArrayUtils {
    *
    * @returns Lista com Lista de items que obedecem o filtro e lista de items que não
    */
-  separate<T>(list: T[], filterFn: filterCallback<T>): [T[], T[]] {
+  separate = <T>(list: T[], filterFn: filterCallback<T>): [T[], T[]] => {
     const _in: any[] = []
     const _out: any[] = []
     list.forEach((value) => {

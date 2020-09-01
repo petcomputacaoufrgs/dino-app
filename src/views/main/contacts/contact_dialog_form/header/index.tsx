@@ -6,7 +6,9 @@ import useStyles from '../../styles'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/ContactsConstants'
 
-const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Element => {
+const AddContactDialogHeader = (
+  props: ContactFormDialogHeaderProps
+): JSX.Element => {
   const classes = useStyles(props)
 
   const language = useLanguage().current
@@ -14,14 +16,17 @@ const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Elemen
   return (
     <CardHeader
       avatar={
-        <Avatar aria-label="avatar" className={classes[props.color]}>
+        <Avatar
+          aria-label={language.AVATAR_ALT}
+          className={classes[props.color]}
+        >
           {props.name ? props.name[0].toUpperCase() : '?'}
         </Avatar>
       }
       action={
         <>
           <IconButton
-            aria-label="color"
+            aria-label={language.CHANGE_COLOR_ARIA_LABEL}
             size="small"
             className={classes.iconButton}
             onClick={props.handleChangeColor}
@@ -29,7 +34,7 @@ const AddContactDialogHeader = (props: ContactFormDialogHeaderProps): JSX.Elemen
             <ColorLensIcon />
           </IconButton>
           <IconButton
-            aria-label="add_phone"
+            aria-label={language.ADD_PHONE_ARIA_LABEL}
             size="small"
             className={classes.iconButton}
             onClick={props.handleAddPhone}

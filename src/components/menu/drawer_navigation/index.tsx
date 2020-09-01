@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
-import MenuItemViewModel from '../model/MenuItemViewModel'
+import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import {
   createStyles,
   makeStyles,
@@ -21,55 +21,34 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import { useLanguage } from '../../../context_provider/app_settings'
 import './styles.css'
 
-/**
- * @description Menu lateral
- * @param props Propriedades definidas em MenuDrawerProps
- */
 const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
-  /** Classes definidas */
   const classes = useStyles()
 
-  /** Tema do menu: mini drawer esquerdo */
   const theme = useTheme()
 
-  /** Estado do menu de aberto e fechado */
+  const language = useLanguage().current
+
   const [open, setOpen] = useState(false)
 
-  /**
-   * @description Altera o estado do menu para abert
-   */
   const handleDrawerOpen = () => {
     setOpen(true)
   }
 
-  /**
-   * @description Altera o estado do menu para fechado
-   */
   const onClose = () => {
     setOpen(false)
   }
 
-  /**
-   * @description Chama a função correspondente ao item selecionado
-   * @param index Indice do item clicado na lista de items da props
-   */
   const onClick = (item: MenuItemViewModel) => {
+    onClose()
     item.onClick()
-    setTimeout(onClose, 100)
   }
 
-  /**
-   * @description Retorna se o indice dado pertence ao último item do groupedItems
-   * @param groupIndex Indice de um grupo dentro do vetor groupedItems
-   */
   const isLastGroup = (groupIndex: number): boolean =>
     props.groupedItems.length - 1 === groupIndex
 
-  /**
-   * @description Retorna o componente do item selecionado no menu atualmente
-   */
   const renderContent = (): JSX.Element => {
     if (props.component) {
       return (
@@ -93,9 +72,6 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
     return <></>
   }
 
-  /**
-   * @description rendeniza um grupo de itens
-   */
   const renderItems = (items: MenuItemViewModel[]): JSX.Element[] =>
     items.map((item, itemIndex) => (
       <ListItem button key={itemIndex} onClick={() => onClick(item)}>
@@ -106,9 +82,6 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
       </ListItem>
     ))
 
-  /**
-   * @description Rendeniza todos os itens do menu
-   */
   const renderGroupItems = (): JSX.Element[] =>
     props.groupedItems.map((items, groupIndex) => (
       <div key={groupIndex}>
@@ -117,9 +90,6 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
       </div>
     ))
 
-  /**
-   * @description Rendeniza a AppBar se necessário
-   */
   const renderAppBar = (): JSX.Element => (
     <AppBar
       className={clsx(
@@ -132,7 +102,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
       <Toolbar>
         <IconButton
           color="inherit"
-          aria-label="open drawer"
+          aria-label={language.OPEN_MENU_ARIA_LABEL}
           onClick={handleDrawerOpen}
           edge="start"
           className={clsx(
@@ -146,9 +116,6 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
     </AppBar>
   )
 
-  /**
-   * @description Rendeniza o menu completo
-   */
   const renderDrawer = (): JSX.Element => (
     <Drawer
       variant={props.mini ? 'permanent' : 'persistent'}
@@ -195,15 +162,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
   )
 }
 
-/**
- * @description Tamanho do drawer lateral
- * */
-
 const drawerWidth: number = 240
-
-/**
- * @description Estilos do Menu
- * */
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

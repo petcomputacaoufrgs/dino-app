@@ -1,0 +1,19 @@
+.calendar__day__modal__hours__hours_list__line__events__event_item {
+    font-size: 0.8em;
+    margin-left: 2px;
+    color: white;
+    padding: 2px;
+    padding-left: 6px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-weight: 700;
+    border: 1px white solid; 
+    border-radius: 4px;
+    overflow-wrap: anywhere;
+    pointer-events: visible;
+}
+
+.calendar__day__modal__hours__hours_list__line__events__event_item p {
+    margin-bottom: 0;
+}

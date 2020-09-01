@@ -46,13 +46,13 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     <>
       <CardHeader
         avatar={
-          <Avatar aria-label="avatar" className={classes[props.item.color]}>
+          <Avatar aria-label={language.AVATAR_ALT} className={classes[props.item.color]}>
             {props.item.name[0].toUpperCase()}
           </Avatar>
         }
         action={
           <>
-            <IconButton edge="end" aria-label="options" onClick={handleClick}>
+            <IconButton edge="end" aria-label={language.OPTIONS_ARIA_LABEL} onClick={handleClick}>
               <MoreVert />
             </IconButton>
           </>

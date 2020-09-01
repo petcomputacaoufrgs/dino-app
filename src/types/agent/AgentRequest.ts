@@ -1,7 +1,7 @@
 import Superagent from 'superagent'
 
 export interface AgentRequestInfo {
-  request: Superagent.SuperAgentRequest,
+  request: Superagent.SuperAgentRequest
   canGo: boolean
 }
 

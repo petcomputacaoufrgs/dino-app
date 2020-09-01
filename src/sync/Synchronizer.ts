@@ -6,6 +6,7 @@ import UserSync from './UserSync'
 import ContactSync from './ContactSync'
 import BaseSync from './BaseSync'
 import GlossarySync from './GlossarySync'
+import FaqSync from './FaqSync'
 
 class Syncronizer {
   private syncronizers: BaseSync[] = [
@@ -15,6 +16,7 @@ class Syncronizer {
     NoteSync,
     ContactSync,
     UserSync,
+    FaqSync,
   ]
 
   sync = async () => {

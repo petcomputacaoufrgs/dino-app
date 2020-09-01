@@ -1,6 +1,6 @@
 .drawer_menu {
   position: relative;
-  z-index: 5001;
+  z-index: 1000;
   height: 55px;
 }
 
@@ -15,4 +15,8 @@
 .drawer_menu .MuiAppBar-colorPrimary {
   background-color: #b32e55;
   height: 55px;
+}
+
+.drawer_menu .MuiList-root.MuiList-padding {
+  padding: 0;
 }

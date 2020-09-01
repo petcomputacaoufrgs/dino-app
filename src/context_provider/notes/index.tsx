@@ -35,15 +35,14 @@ const NotesContextProvider: React.FC = (props) => {
       updateData()
     }
 
-    let handleLocalDataChanged = () => {
+    const handleLocalDataChanged = () => {
       updateData()
     }
 
     NoteContextUpdater.setCallback(handleLocalDataChanged)
 
     const cleanBeforeUpdate = () => {
-      handleLocalDataChanged = () => {}
-      //saveData = () => {}
+      saveData = () => {}
     }
 
     return cleanBeforeUpdate

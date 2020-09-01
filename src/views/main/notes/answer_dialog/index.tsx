@@ -5,6 +5,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import AnswerProps from './props'
 import DialogActions from '../dialog_actions'
+import NoteConstants from '../../../../constants/NoteConstants'
 
 const AnswerDialog = (props: AnswerProps): JSX.Element => {
   const language = useLanguage().current
@@ -17,7 +18,9 @@ const AnswerDialog = (props: AnswerProps): JSX.Element => {
   }
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAnswer(event.target.value)
+    const value = event.target.value
+
+    setAnswer(value.substring(0, NoteConstants.ANSWER_MAX_LENGTH))
   }
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import QuestionDialogProps from './props'
 import StringUtils from '../../../../utils/StringUtils'
 import NoteService from '../../../../services/note/NoteService'
 import LogAppErrorService from '../../../../services/log_app_error/LogAppErrorService'
+import NoteConstants from '../../../../constants/NoteConstants'
 
 const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
   const language = useLanguage().current
@@ -18,10 +19,14 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
   const [question, setQuestion] = useState('')
   const [questionError, setQuestionError] = useState(false)
   const [errorHelper, setErrorHelper] = useState('')
-  const [tagList, setTagList] = useState([] as string[])
+  const [tagList, setTagList] = useState<string[]>([])
 
-  const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
-    setTagList(values)
+  const handleChange = (event: React.ChangeEvent<{}>, values: string[]) => {
+    const validValues = values.filter(value => value.length <= NoteConstants.TAG_MAX_LENGTH)
+
+    if (validValues.length <= NoteConstants.TAG_LIMIT) {
+      setTagList(validValues)
+    }
   }
 
   const handleSave = () => {
@@ -51,7 +56,9 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
   }
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion(event.target.value)
+    const value = event.target.value
+
+    setQuestion(value.substring(0, NoteConstants.QUESTION_MAX_LENGTH))
   }
 
   useEffect(() => {
@@ -77,7 +84,6 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
           autoFocus
           error={questionError}
           helperText={errorHelper}
-          id="text"
           label={language.QUESTION_NOTE_DIALOG_TITLE}
           type="text"
           multiline
@@ -89,14 +95,16 @@ const QuestionDialog = (props: QuestionDialogProps): JSX.Element => {
           multiple
           freeSolo
           value={tagList}
+          limitTags={1}
           onChange={handleChange}
           options={props.tagOptions}
           renderInput={(params) => (
             <TextField
               {...params}
               fullWidth
-              label={language.NOTE_TAG_LABEL}
+              label={`${language.NOTE_TAG_LABEL} (${language.MAX} ${NoteConstants.TAG_LIMIT})`}
               variant="outlined"
+              inputProps={{ ...params.inputProps, maxLength: NoteConstants.TAG_MAX_LENGTH}}
             />
           )}
         />

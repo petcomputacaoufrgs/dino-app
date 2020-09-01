@@ -159,4 +159,5 @@ export default interface LanguageBase {
   OPTIONS_ARIA_LABEL: string
   EVENT_COLOR_LABEL: string
   FAQ_CONNECTION_ERROR: string
+  MAX: string
 }

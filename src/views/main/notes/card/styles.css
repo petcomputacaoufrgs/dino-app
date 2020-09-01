@@ -60,6 +60,7 @@
   .MuiCardHeader-content
   .MuiTypography-root.MuiCardHeader-title {
   font-size: large;
+  word-break: break-word;
 }
 
 .react_kanban_card

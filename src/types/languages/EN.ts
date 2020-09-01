@@ -331,4 +331,6 @@ export default class EN implements LanguageBase {
 
   FAQ_CONNECTION_ERROR = 'Internet connection required'
 
+  MAX = 'Max.'
+
 }

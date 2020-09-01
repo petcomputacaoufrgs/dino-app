@@ -248,8 +248,6 @@ class NoteService {
 
       await NoteDatabase.putAll(noteDocs)
 
-      NoteContextUpdater.update()
-
       this.updateOrderOnServer(noteDocs)
     }
   }

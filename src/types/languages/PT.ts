@@ -334,4 +334,6 @@ export default class PT implements LanguageBase {
 
   FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
 
+  MAX = 'Máx.'
+
 }

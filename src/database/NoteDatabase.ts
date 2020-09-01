@@ -18,7 +18,12 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
       doc._id = this.getId(doc.question)
     }
 
-    this.db.put(doc)
+    try {
+      this.db.put(doc)
+    } catch(e) {
+      console.log(e)
+    }
+    
   }
 
   putAll = async (docs: NoteDoc[]) => {
@@ -28,7 +33,11 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
       }
     })
 
-    this.db.bulkDocs(docs)
+    try {
+      this.db.bulkDocs(docs)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   deleteByNoteDoc = async (doc: NoteDoc) => {

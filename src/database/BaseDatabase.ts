@@ -1,11 +1,9 @@
 import PouchDB from 'pouchdb'
 import findPlugin from 'pouchdb-find'
+import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 
 PouchDB.plugin(findPlugin)
 
-/**
- * @description Define a base para uma service de banco de dados PouchDB
- */
 export default class BaseDatabase<T> {
   db: PouchDB.Database<T>
   databaseName: string
@@ -18,7 +16,9 @@ export default class BaseDatabase<T> {
   removeAll = async () => {
     try {
       await this.db.destroy()
-    } catch (e) {}
+    } catch (e) {
+      LogAppErrorService.saveError(e)
+    }
 
     this.resetDatabase()
   }

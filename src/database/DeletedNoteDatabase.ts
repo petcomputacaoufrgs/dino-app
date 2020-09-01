@@ -16,22 +16,25 @@ class DeletedNoteDatabase extends BaseDatabase<NoteDoc> {
     doc._id = this.getId(doc.question)
     doc._rev = ''
 
-    this.db.put(doc)
+    try {
+      this.db.put(doc)
+    } catch(e) {
+      LogAppErrorService.saveError(e)
+    }
   }
 
   deleteByNoteDoc = async (doc: NoteDoc) => {
-    try {
       if (doc._id && doc._rev) {
         const id = doc._id
         const rev = doc._rev
-
-        this.db.remove(id, rev)
+        try {
+          this.db.remove(id, rev)
+        } catch (e) {
+          LogAppErrorService.saveError(e)
+        }
       } else {
-        throw new DatabaseDeleteWithoutID(DatabaseConstants.DELETED_NOTE, doc)
+        LogAppErrorService.saveError(new DatabaseDeleteWithoutID(DatabaseConstants.DELETED_NOTE, doc))
       }
-    } catch (e) {
-      LogAppErrorService.saveError(e)
-    }
   }
 
   getByQuestion = async (question: string): Promise<NoteDoc | null> => {

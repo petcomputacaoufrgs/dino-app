@@ -13,7 +13,11 @@ class LogAppErrorDatabase extends BaseDatabase<LogAppErrorDoc> {
       doc._id = new Date().getTime().toString()
     }
 
-    this.db.put(doc)
+    try {
+      this.db.put(doc)
+    } catch(e) {
+      LogAppErrorService.saveError(e)
+    }
   }
 
   getAll = async (): Promise<LogAppErrorDoc[]> => {

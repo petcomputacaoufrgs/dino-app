@@ -20,7 +20,11 @@ class CalendarDatabase extends BaseDatabase<EventDoc> {
       doc._id = new Date().getTime().toString()
     }
 
-    this.db.put(doc)
+    try {
+      this.db.put(doc)
+    } catch (e) {
+      LogAppErrorService.saveError(e)
+    }
   }
 
   putAll = async (docs: EventDoc[]) => {
@@ -33,7 +37,11 @@ class CalendarDatabase extends BaseDatabase<EventDoc> {
       }
     })
 
-    this.db.bulkDocs(docs)
+    try {
+      this.db.bulkDocs(docs)
+    } catch (e) {
+      LogAppErrorService.saveError(e)
+    }
   }
 
   deleteByDoc = async (doc: EventDoc) => {

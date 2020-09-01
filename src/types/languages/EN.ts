@@ -128,6 +128,14 @@ export default class EN implements LanguageBase {
 
   FORM_PHONE = 'Phone'
 
+  FORM_QUESTION = 'Question'
+
+  FORM_QUESTION_PLACEHOLDER = 'Question?'
+
+  FORM_QUESTION_TITLE = 'Send us your question!'
+
+  NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
+
   CONTACTS_ADD_CONTACT = 'New Contact'
 
   CONTACTS_MOBILE_PHONE = 'Mobile'

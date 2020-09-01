@@ -130,6 +130,14 @@ export default class PT implements LanguageBase {
 
   FORM_PHONE = 'Telefone'
 
+  FORM_QUESTION = 'Pergunta'
+
+  FORM_QUESTION_PLACEHOLDER = 'Castores gostam de castanhas?'
+
+  FORM_QUESTION_TITLE = 'Mande sua pergunta!'
+
+  NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
+
   CONTACTS_ADD_CONTACT = 'Novo Contato'
 
   CONTACTS_MOBILE_PHONE = 'Telefone Móvel'

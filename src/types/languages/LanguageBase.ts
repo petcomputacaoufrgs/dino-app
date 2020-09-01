@@ -59,6 +59,10 @@ export default interface LanguageBase {
   FORM_DESCRIPTION: string
   FORM_TYPE: string
   FORM_PHONE: string
+  FORM_QUESTION: string
+  FORM_QUESTION_PLACEHOLDER: string
+  FORM_QUESTION_TITLE: string
+  NOT_FOUND_QUESTION_FAQ: string
   CONTACTS_ADD_CONTACT: string
   CONTACTS_MOBILE_PHONE: string
   CONTACTS_RESIDENTIAL_PHONE: string

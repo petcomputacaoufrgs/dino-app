@@ -2,3 +2,23 @@
     margin: auto;
     display: flex;
 }
+
+button {
+    text-decoration: underline;
+    color:blue; 
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: block;
+    padding: 7px; 
+    margin:auto;
+    display:block;
+}
+  
+button:hover {
+    color: hotpink;
+}
+
+button:focus {
+    outline: none;
+}

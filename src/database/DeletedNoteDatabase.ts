@@ -13,6 +13,7 @@ class DeletedNoteDatabase extends BaseDatabase<NoteDoc> {
   private getId = (question: string) => StringUtils.normalize(question)
 
   putNew = async (doc: NoteDoc) => {
+    doc.lastUpdate = new Date().getTime()
     doc._id = this.getId(doc.question)
     doc._rev = ''
 

@@ -4,41 +4,33 @@ import NoteUpdateModel from '../types/note/NoteUpdateModel'
 
 class NoteSync implements BaseSync {
   send = async () => {
-    const serverVersion = await NoteService.getVersionFromServer()
-
-    if (serverVersion !== undefined) {
+    console.log('send...')
+      
+    if (NoteService.shouldSync()) {
       NoteService.setShouldSync(false)
 
-      const localVersion = NoteService.getVersion()
+      const noteDocs = await NoteService.getDatabaseNotes()
 
-      if (serverVersion > localVersion) {
-        NoteService.updateNotesFromServer(serverVersion)
-      } else if (NoteService.shouldSync()) {
-        const noteDocs = await NoteService.getDatabaseNotes()
+      const models = noteDocs
+        .filter((noteDoc) => !noteDoc.savedOnServer)
+        .map(
+          (doc) =>
+            ({
+              id: doc.external_id,
+              answer: doc.answer,
+              question: doc.question,
+              tagNames: doc.tagNames,
+              lastUpdate: doc.lastUpdate,
+              answered: doc.answered,
+            } as NoteUpdateModel)
+        )
 
-        const models = noteDocs
-          .filter((noteDoc) => !noteDoc.savedOnServer)
-          .map(
-            (doc) =>
-              ({
-                id: doc.external_id,
-                answer: doc.answer,
-                question: doc.question,
-                tagNames: doc.tagNames,
-                lastUpdate: doc.lastUpdate,
-                answered: doc.answered,
-              } as NoteUpdateModel)
-          )
+      await NoteService.updateNotes(models)
 
-        await NoteService.updateNotes(models)
+      await NoteService.deleteNotesOnServer()
 
-        await NoteService.deleteNotesOnServer()
-
-        NoteService.updateOrderOnServer(noteDocs)
-      }
+      NoteService.updateOrderOnServer(noteDocs)
     }
-
-    NoteService.setShouldSync(true)
   }
 
   receive = async () => {

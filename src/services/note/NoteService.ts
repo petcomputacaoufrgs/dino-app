@@ -17,6 +17,7 @@ import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteViewModel from '../../types/note/NoteViewModel'
 import { NoteContextType } from '../../types/context_provider/NotesContextType'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import StringUtils from '../../utils/StringUtils'
 
 class NoteService {
   //#region GET
@@ -418,25 +419,79 @@ class NoteService {
 
       if (request.canGo) {
         try {
+          let maxOrder = 0
+          const deletedNotes = await this.getDeletedNotes()
+
           const response = await request.authenticate().go()
-          const notes: NoteModel[] = response.body
-          const noteDocs: NoteDoc[] = notes.map(
-            (n) =>
-              ({
-                external_id: n.id,
-                order: n.order,
-                answer: n.answer,
-                answered: n.answered,
-                lastUpdate: n.lastUpdate,
-                question: n.question,
-                tagNames: n.tags,
+          const serverNotes: NoteModel[] = response.body
+          const serverNotesDocs: NoteDoc[] = [];
+
+          serverNotes.forEach(
+            (serverNote) => {
+              if (serverNote.order > maxOrder) {
+                maxOrder = serverNote.order
+              }
+
+              const localDeletedSearch = deletedNotes.filter(deletedNote => deletedNote.external_id === serverNote.id)
+
+              if (localDeletedSearch.length > 0) {
+                const localDeleted = localDeletedSearch[0]
+
+                if (localDeleted.lastUpdate > serverNote.lastUpdate) {
+                  return
+                } else {
+                  DeletedNoteDatabase.deleteByNoteDoc(localDeleted)
+                }
+              }
+ 
+              serverNotesDocs.push({
+                external_id: serverNote.id,
+                order: serverNote.order,
+                answer: serverNote.answer,
+                answered: serverNote.answered,
+                lastUpdate: serverNote.lastUpdate,
+                question: serverNote.question,
+                tagNames: serverNote.tags,
                 savedOnServer: true,
               } as NoteDoc)
+            }  
           )
+          
+          const localNotes = await this.getDatabaseNotes()
+
           await NoteDatabase.removeAll()
-          await NoteDatabase.putAll(noteDocs)
-          NoteContextUpdater.update()
+
+          const localUnsavedNotes = localNotes.filter((localDoc) => {
+            if (!localDoc.savedOnServer) {
+              const existsUpdatedOnServer = serverNotesDocs.some(serverDoc =>
+                StringUtils.areEqual(serverDoc.question, localDoc.question)
+                && serverDoc.lastUpdate >= localDoc.lastUpdate
+              )
+
+              return !existsUpdatedOnServer
+            }
+
+            return false
+          })
+
+          const newNotes = serverNotesDocs.concat(localUnsavedNotes.map(doc => {
+            maxOrder++
+
+            return {
+              answer: doc.answer,
+              answered: doc.answered,
+              lastUpdate: doc.lastUpdate,
+              question: doc.question,
+              tagNames: doc.tagNames,
+              savedOnServer: doc.savedOnServer,
+              order: maxOrder
+            } as NoteDoc
+          }))
+
+          await NoteDatabase.putAll(newNotes)
+
           this.setVersion(newVersion)
+          NoteContextUpdater.update()
           return
         } catch (e) {
           LogAppErrorService.saveError(e)

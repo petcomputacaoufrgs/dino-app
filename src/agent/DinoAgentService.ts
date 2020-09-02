@@ -69,9 +69,9 @@ class DinoAgentService extends BaseAgent {
   private needsUpdateToken = (expiresDate: number): boolean => {
     const expiresDateWithMargin = expiresDate - TIME_MARGIN_OF_ERROR_IN_MS
 
-    const nowInMS = new Date().getDate()
+    const nowInMS = new Date().getTime()
 
-    return expiresDateWithMargin <= nowInMS
+    return nowInMS >= expiresDateWithMargin
   }
 }
 

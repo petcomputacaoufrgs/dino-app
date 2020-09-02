@@ -8,9 +8,6 @@ import Synchronizer from '../../sync/Synchronizer'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
 
-/**
- * Executa funções baseado em eventos da aplicação
- */
 class EventService {
   constructor() {
     ConnectionService.addEventListener(this.connectionCallback)
@@ -51,9 +48,7 @@ class EventService {
     WebSocketConnector.disconnect()
   }
 
-  whenError = () => {
-    HistoryService.push(PathConstants.HOME)
-  }
+  whenError = () => {}
 
   private connectionCallback = (online: boolean) => {
     online ? this.whenConnectionReturn() : this.whenConnectionLost()

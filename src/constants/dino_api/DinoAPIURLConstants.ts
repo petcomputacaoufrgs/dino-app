@@ -87,6 +87,8 @@ class DinoAPIURLConstants {
 
   FAQ_OPTIONS = `${this.URL}public/faq/options/`
 
+  FAQ_SAVE_USER_QUESTION = `${this.FAQ}question/`
+
 }
 
 export default new DinoAPIURLConstants()

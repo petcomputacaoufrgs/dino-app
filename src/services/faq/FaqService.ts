@@ -18,6 +18,10 @@ class FaqService {
     await this.getUserFaqFromServer()
   }
 
+  saveUserQuestion = async (selectedFaq: FaqOptionsModel, question: string) => {
+    await ServerService.saveUserQuestion(selectedFaq.id, question)
+  }
+
   setFaq = (faq: FaqModel) => {
     LS.setVersion(faq.version)
 

@@ -45,6 +45,23 @@ class FaqServerService {
     }
     return undefined
   }
+
+  saveUserQuestion = async (id: number, question: string): Promise<void | undefined> => {
+    const request = await DinoAgentService.post(DinoAPIURLConstants.FAQ_SAVE_USER_QUESTION)
+
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().setBody({id, question}).go()
+
+        if (response.status === HttpStatus.OK) {
+          return
+        }
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    }
+    return undefined
+  }
     
 getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_OPTIONS)

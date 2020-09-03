@@ -2,18 +2,20 @@ import React from 'react'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import {
   Avatar,
-  IconButton,
   CardHeader,
   Menu,
   MenuItem,
 } from '@material-ui/core'
 import useStyles from '../../styles'
-import { MoreVert } from '@material-ui/icons'
 import ContactCardHeaderProps from './props'
 import ContactsService from '../../../../../services/contact/ContactService'
+import CloseComponent from '../../../../../components/close_component'
+import OptionsComponent from '../../../../../components/options_component'
 
-const ContactCardHeader = (props: ContactCardHeaderProps) => {
+const ContactCardHeader = ({item, setEdit, setDelete, onClose: handleCloseDialog}: ContactCardHeaderProps) => {
+
   const classes = useStyles()
+
   const language = useLanguage().current
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -22,23 +24,23 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null)
   }
 
   const handleEdit = () => {
-    handleClose()
-    props.onClose()
+    handleCloseMenu()
+    handleCloseDialog()
     setTimeout(() => {
-      props.setEdit(props.item.frontId)
+      setEdit(item.frontId)
     }, 300)
   }
 
   const handleDelete = () => {
-    handleClose()
-    props.onClose()
+    handleCloseMenu()
+    handleCloseDialog()
     setTimeout(() => {
-      props.setDelete(props.item.frontId)
+      setDelete(item.frontId)
     }, 300)
   }
 
@@ -46,21 +48,20 @@ const ContactCardHeader = (props: ContactCardHeaderProps) => {
     <>
       <CardHeader
         avatar={
-          <Avatar aria-label={language.AVATAR_ALT} className={classes[props.item.color]}>
-            {props.item.name[0].toUpperCase()}
+          <Avatar aria-label={language.AVATAR_ALT} className={classes[item.color]}>
+            {item.name[0].toUpperCase()}
           </Avatar>
         }
         action={
           <>
-            <IconButton edge="end" aria-label={language.OPTIONS_ARIA_LABEL} onClick={handleClick}>
-              <MoreVert />
-            </IconButton>
+            <OptionsComponent onClick={handleClick} />
+            <CloseComponent onClose={handleCloseDialog} />
           </>
         }
-        title={props.item.name}
-        subheader={ContactsService.getPhoneTypes(props.item.phones)}
+        title={item.name}
+        subheader={ContactsService.getPhoneTypes(item.phones)}
       />
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
         <MenuItem onClick={handleEdit}>{language.EDIT_OPTION_TEXT}</MenuItem>
         <MenuItem onClick={handleDelete}>
           {language.DELETE_OPTION_TEXT}

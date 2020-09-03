@@ -18,7 +18,11 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Collapse from '@material-ui/core/Collapse'
 import NoteCardProps from './props'
+import { Draggable } from 'react-beautiful-dnd'
+import styled from 'styled-components'
 import './styles.css'
+
+const Container = styled.div``;
 
 const NoteCard = (props: NoteCardProps): JSX.Element => {
   const language = useLanguage().current
@@ -26,7 +30,6 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
   const classes = useStyles()
 
   const [expanded, setExpanded] = useState(false)
-  const [dragging, setDragging] = useState(false)
   const [note, setNote] = useState(props.note)
 
   const handleEditQuestion = () => {
@@ -44,18 +47,12 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
   }
 
   const handleDelete = () => {
-    props.onDelete(note.id)
+    //props.onDelete(note.id)
   }
 
   useEffect(() => {
-    setDragging(props.dragging)
     setNote(props.note)
-
-    if (expanded && props.dragging) {
-      setExpanded(false)
-    }
   }, [
-    props.dragging,
     props.note.question,
     props.note.tagNames,
     props.note.answer,
@@ -137,23 +134,19 @@ const NoteCard = (props: NoteCardProps): JSX.Element => {
     </Collapse>
   )
 
-  const getMainClass = (): string => {
-    let main_class = 'react_kanban_card'
-
-    if (dragging) {
-      main_class = main_class + ' dragging'
-    }
-
-    return main_class
-  }
-
   return (
-    <MaterialCard className={getMainClass()}>
-      {renderHeader()}
-      {renderTags()}
-      {renderActions()}
-      {renderCollapse()}
-    </MaterialCard>
+    <Draggable draggableId={note.question} index={note.order}>
+      {(provided) => (
+        <Container {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+          <MaterialCard className="react_kanban_card">
+            {renderHeader()}
+            {renderTags()}
+            {renderActions()}
+            {renderCollapse()}
+          </MaterialCard>
+        </Container>
+      )}
+    </Draggable>
   )
 }
 

@@ -21,10 +21,6 @@
   }
 }
 
-.react_kanban_card.dragging {
-  width: 100%;
-}
-
 .react_kanban_card .MuiCardHeader-root {
   padding: 16px;
   padding-bottom: 0px;

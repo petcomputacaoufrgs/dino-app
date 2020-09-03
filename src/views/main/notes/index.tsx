@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { isMobile } from 'react-device-detect'
 import StringUtils from '../../../utils/StringUtils'
 import { NoteContextType } from '../../../types/context_provider/NotesContextType'
 import NoteViewModel from '../../../types/note/NoteViewModel'
@@ -10,15 +9,27 @@ import NoteBoard from './board'
 import NoteAddButton from './note_add_button'
 import { useTags, useNotes } from '../../../context_provider/notes'
 import './styles.css'
+import NoteDoc from '../../../types/note/database/NoteDoc'
 
-const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
+const convertNotesToNoteViews = (
+  notes: NoteDoc[],
+  tagSearch: string[],
+  textSearch: string
+): NoteViewModel[] => {
+  return notes.map((note) => ({
+    ...note,
+    showByTag: hasSomeTag(note.tagNames, tagSearch, textSearch),
+    showByQuestion: hasText(note.question, textSearch, tagSearch),
+  }))
+}
 
 const Notes = () => {
-  const [textSearch, setTextSearch] = useState('')
-  const [tagSearch, setTagSearch] = useState([] as string[])
   const tags = useTags()
   const notes = useNotes()
-  const [viewNotes, setViewNotes] = useState([] as NoteViewModel[])
+
+  const [textSearch, setTextSearch] = useState('')
+  const [tagSearch, setTagSearch] = useState<string[]>([])
+  const [viewNotes, setViewNotes] = useState(convertNotesToNoteViews(notes, tagSearch, textSearch))
 
   useEffect(() => {
     setViewNotes(
@@ -32,6 +43,7 @@ const Notes = () => {
       })
     )
   }, [notes, textSearch, tagSearch])
+
 
   const handleSaveNewNote = (newQuestion: string, newTagNames: string[]) => {
     const newId = viewNotes.length
@@ -67,27 +79,27 @@ const Notes = () => {
       editedNote.tagNames = newTagNames
       editedNote.lastUpdate = date
 
-      NoteService.updateNoteQuestion(oldQuestion, editedNote)
+      //NoteService.updateNoteQuestion(oldQuestion, editedNote)
     }
   }
 
   const handleSaveAnswer = (newAnswer: string, noteView: NoteViewModel) => {
-    const editedNote = notes.find((n) => n.id === noteView.id)
+    /*const editedNote = notes.find((n) => n.id === noteView.id)
 
     if (editedNote) {
       editedNote.answer = newAnswer
       editedNote.answered = true
 
       NoteService.updateNoteAnswer(editedNote)
-    }
+    }*/
   }
 
   const handleDeleteNote = (noteId: number) => {
-    const deletedNote = notes.find((note) => note.id === noteId)
+    /*const deletedNote = notes.find((note) => note.id === noteId)
 
     if (deletedNote) {
       NoteService.deleteNote(deletedNote)
-    }
+    }*/
   }
 
   const handleNotesOrderChanged = (viewNotes: NoteViewModel[]) => {
@@ -124,14 +136,13 @@ const Notes = () => {
 
   //#endregion
 
-  updateListMarginTop()
+  //updateListMarginTop()
 
   return (
-    <div className={getMainClass()}>
+    <div className="notes">
       <NoteHeader
-        handleTagSearch={handleTagSearch}
-        handleTextSearch={handleTextSearch}
-        headerClass={HEADER_TEXT_FIELD_CLASS}
+        onTagSearch={handleTagSearch}
+        onTextSearch={handleTextSearch}
         tags={tags}
       />
       <NoteBoard
@@ -173,38 +184,6 @@ const hasSomeTag = (
   }
 
   return true
-}
-
-const updateListMarginTop = () => {
-  const foundDivs = document.getElementsByClassName('notes__board')
-
-  if (foundDivs.length === 1) {
-    const noteListContainer = foundDivs[0]
-
-    setTimeout(() => {
-      const textField: HTMLElement | null = document.querySelector(
-        '.' + HEADER_TEXT_FIELD_CLASS
-      )
-
-      if (textField) {
-        const fixValue = isMobile ? 94 : 144
-
-        const value = (textField.offsetHeight + fixValue).toString() + 'px'
-
-        noteListContainer.setAttribute('style', 'top: ' + value + ';')
-      }
-    }, 0.1)
-  }
-}
-
-const getMainClass = () => {
-  const mainClass = 'notes'
-
-  if (isMobile) {
-    return mainClass
-  }
-
-  return mainClass + ' notes_desktop'
 }
 
 export default Notes

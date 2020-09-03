@@ -3,23 +3,14 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-content: center;
   padding: 20px;
-  padding-top: 10px;
-  padding-bottom: 0;
-}
-
-.notes__header_desktop {
-  position: fixed;
-  width: 70%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 20px;
-  padding-left: 80px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .notes__header__image {
-  width: 45px;
-  height: 45px;
-  margin-right: 20px;
+  width: 35px;
+  height: auto;
+  margin-right: 15px;
 }

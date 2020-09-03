@@ -5,16 +5,18 @@ import TextField from '@material-ui/core/TextField'
 import TagSearchBarProps from './props'
 import './styles.css'
 
-const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
+const TagSearchBar: React.FC<TagSearchBarProps> = ({
+  options, onTagSearch, onTextSearch
+}): JSX.Element => {
   const language = useLanguage().current
 
   const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
-    props.onTagSearch(values)
+    onTagSearch(values)
   }
 
   const handleInputChange = (event: React.ChangeEvent<{}>, value: string) => {
-    if (props.onTextSearch) {
-      props.onTextSearch(value)
+    if (onTextSearch) {
+      onTextSearch(value)
     }
   }
 
@@ -24,7 +26,7 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
       multiple
       loadingText={language.LOADING}
       noOptionsText={language.NO_OPTIONS}
-      options={props.options}
+      options={options}
       getOptionLabel={(option) => option}
       className="tag_search_bar"
       onChange={handleChange}
@@ -32,7 +34,7 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
       renderInput={(params) => (
         <TextField
           {...params}
-          className={props.textFieldClass}
+          className="tag_search_bar__text_field"
           label={language.SEARCH_BUTTON_LABEL}
           variant="outlined"
         />

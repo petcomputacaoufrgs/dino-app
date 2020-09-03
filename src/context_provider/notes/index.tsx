@@ -4,6 +4,7 @@ import NotesContextType, {
 } from '../../types/context_provider/NotesContextType'
 import NoteService from '../../services/note/NoteService'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
+import NoteDoc from '../../types/note/database/NoteDoc'
 
 const NotesContext = createContext({
   notes: [],
@@ -11,19 +12,19 @@ const NotesContext = createContext({
 } as NotesContextType)
 
 const NotesContextProvider: React.FC = (props) => {
-  const [notes, setNotes] = useState([] as NoteContextType[])
+  const [notes, setNotes] = useState([] as NoteDoc[])
   const [tags, setTags] = useState([] as string[])
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
     const updateData = async () => {
-      const notes = await NoteService.getNotes()
-      const tags = await NoteService.getTags()
+      const savedNotes = await NoteService.getNotes()
+      const savedTags = await NoteService.getTags()
 
-      saveData(notes, tags)
+      saveData(savedNotes, savedTags)
     }
 
-    let saveData = (notes: NoteContextType[], tags: string[]) => {
+    let saveData = (notes: NoteDoc[], tags: string[]) => {
       setNotes(notes)
       setTags(tags)
       if (firstLoad) {

@@ -12,11 +12,14 @@ import { useLanguage } from '../../../../context_provider/app_settings'
 import AgreementDialogProps from '../../../../components/agreement_dialog/props'
 import NoteViewModel from '../../../../types/note/NoteViewModel'
 import BoardProps from './props'
+import { DragDropContext, DropResult, ResponderProvided, Droppable } from 'react-beautiful-dnd'
+
+const NOTE_BOARD_ID = 'note_board'
 
 const NoteBoard = (props: BoardProps): JSX.Element => {
   const language = useLanguage().current
 
-  const [board, setBoard] = useState(createBoard([] as NoteViewModel[]))
+  const [notes, setNotes] = useState(props.viewNotes)
 
   const [note, setNote] = useState(undefined as NoteViewModel | undefined)
   const [idNoteToDelete, setIdNoteToDelete] = useState(
@@ -29,7 +32,7 @@ const NoteBoard = (props: BoardProps): JSX.Element => {
   const [questionDialogOpen, setQuestionDialogOpen] = useState(false)
 
   useEffect(() => {
-    setBoard(createBoard(props.viewNotes))
+    setNotes(props.viewNotes)
   }, [props.viewNotes])
 
   const handleOpenAnswerDialog = (noteView: NoteViewModel) => {
@@ -106,14 +109,16 @@ const NoteBoard = (props: BoardProps): JSX.Element => {
     />
   )
 
+  /*
   const handleCardMove = (card, source, destination) => {
     const newBoard: NoteBoardViewModel = moveCard(board, source, destination)
 
     NoteService.updateNotesOrder(newBoard.columns[0].cards)
 
     setBoard(newBoard)
-  }
+  }*/
 
+  /*
   const renderCard = (
     cardNote: NoteViewModel,
     dragging: boolean
@@ -129,8 +134,43 @@ const NoteBoard = (props: BoardProps): JSX.Element => {
         ></NoteCard>
       )}
     </>
+  )*/
+
+  const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {}
+
+  const renderCard = (note: NoteViewModel, index: number): JSX.Element => (
+    <>
+      {(note.showByTag || note.showByQuestion) && (
+        <NoteCard
+          key={index}
+          note={note}
+          onEditQuestion={handleOpenEditQuestionDialog}
+          onEditAnswer={handleOpenAnswerDialog}
+          onDelete={handleOpenDeleteNoteDialog}
+        ></NoteCard>
+      )}
+    </>
   )
 
+  return (
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="notes__board">
+        <Droppable droppableId={NOTE_BOARD_ID}>
+          {(provided) => (
+            <div
+              className="notes__board__container"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {notes.map((note, index) => renderCard(note, index))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </div>
+    </DragDropContext>
+  )
+  /*
   return (
     <>
       <Board
@@ -147,9 +187,9 @@ const NoteBoard = (props: BoardProps): JSX.Element => {
       {renderUpdateQuestionDialog()}
       <DeleteDialog />
     </>
-  )
+  )+*/
 }
-
+/*
 const createBoard = (cards: NoteViewModel[]) =>
   ({
     columns: [
@@ -158,6 +198,6 @@ const createBoard = (cards: NoteViewModel[]) =>
         cards: cards,
       } as NoteBoardColumnViewModel,
     ] as NoteBoardColumnViewModel[],
-  } as NoteBoardViewModel)
+  } as NoteBoardViewModel)*/
 
 export default NoteBoard

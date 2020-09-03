@@ -1,72 +1,9 @@
 .notes {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: center;
   position: relative;
-  width: 100%;
-  overflow-y: hidden;
-  height: 100%;
+  display: flex;
   flex-direction: column;
-}
-
-.notes_desktop .sc-AxjAm {
-  padding-left: 15%;
-  padding-right: 15%;
-}
-
-.notes .sc-fzozJi {
-  left: 0;
-  right: 0;
-  padding: 0;
-  overflow-y: scroll;
-  width: 100%;
-  padding-bottom: 5px;
-  padding-top: 5px;
-}
-
-.notes .sc-AxmLO {
-  background-color: inherit;
-}
-
-.notes .sc-AxjAm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.notes .hbVbBu {
-  position: relative;
   width: 100%;
   height: 100%;
-}
-
-.notes .sc-fzoLag.feoXx {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.notes .sc-AxmLO.kWYwZZ {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0px;
-  margin: 0px; 
-}
-
-.notes_desktop .sc-fzozJi {
-  left: 80px;
-  width: calc(100% - 80px);
-  bottom: 0;
-  -ms-overflow-style: none;
-  top: 200px;
-}
-
-.notes_desktop .sc-fzozJi::-webkit-scrollbar {
-  display: none;
 }
 
 .note_card_dialog.MuiDialog-root

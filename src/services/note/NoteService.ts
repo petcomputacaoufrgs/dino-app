@@ -22,25 +22,10 @@ import StringUtils from '../../utils/StringUtils'
 class NoteService {
   //#region GET
 
-  getNotes = async (): Promise<NoteContextType[]> => {
+  getNotes = async (): Promise<NoteDoc[]> => {
     const noteDocs = await NoteDatabase.getAll()
 
-    const notes = noteDocs
-      .sort((n1, n2) => n1.order - n2.order)
-      .map(
-        (note) =>
-          ({
-            id: note.order,
-            answer: note.answer,
-            answered: note.answered,
-            lastUpdate: note.lastUpdate,
-            question: note.question,
-            tagNames: note.tagNames,
-            savedOnServer: note.savedOnServer,
-          } as NoteContextType)
-      )
-
-    return notes
+    return noteDocs
   }
 
   getDatabaseNotes = async (): Promise<NoteDoc[]> => {

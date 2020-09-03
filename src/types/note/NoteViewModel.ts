@@ -1,6 +1,6 @@
-import { NoteContextType } from '../context_provider/NotesContextType'
+import NoteDoc from './database/NoteDoc';
 
-export default interface NoteViewModel extends NoteContextType {
+export default interface NoteViewModel extends NoteDoc {
   showByTag: boolean
   showByQuestion: boolean
 }

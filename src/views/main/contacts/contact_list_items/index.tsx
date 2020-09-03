@@ -9,6 +9,7 @@ import ContactsService from '../../../../services/contact/ContactService'
 import Constants from '../../../../constants/ContactsConstants'
 
 const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
+  
   const classes = useStyles()
 
   const [open, setOpen] = useState(0)
@@ -24,8 +25,8 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
 
   return (
     <List className={classes.list}>
-      {items.map((contact) => (
-        <div key={contact.frontId}>
+      {items.map((contact, index) => (
+        <div key={index}>
           <ContactItemList
             item={contact}
             setEdit={setEdit}
@@ -38,7 +39,6 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
               setEdit={setEdit}
               setDelete={setDelete}
               dialogOpen={open === contact.frontId}
-              setDialogOpen={setOpen}
             />
             <ContactFormDialog
               item={contact}

@@ -2,18 +2,9 @@ import React, { useState } from 'react'
 import useStyles from '../styles'
 import { useLanguage } from '../../../../context_provider/app_settings'
 import ContactItemListProps from './props'
-import {
-  Avatar,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  IconButton,
-  Menu,
-  MenuItem,
-} from '@material-ui/core'
+import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Menu, MenuItem,} from '@material-ui/core'
 import ContactsService from '../../../../services/contact/ContactService'
-import { MoreVert as MoreVertIcon } from '@material-ui/icons'
+import OptionsComponent from '../../../../components/options_component'
 
 const ContactItemList = (props: ContactItemListProps): JSX.Element => {
   const classes = useStyles(props)
@@ -50,9 +41,7 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
           secondary={ContactsService.getPhoneTypes(props.item.phones)}
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label={language.OPTIONS_ARIA_LABEL} onClick={handleClick}>
-            <MoreVertIcon />
-          </IconButton>
+          <OptionsComponent onClick={handleClick} />
         </ListItemSecondaryAction>
       </ListItem>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>

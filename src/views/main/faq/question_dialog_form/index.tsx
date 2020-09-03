@@ -33,7 +33,7 @@ const QuestionDialogForm = React.forwardRef(({
     }
 
     const handleSave = () => {
-      if(selectedFaq != undefined && question != '') {
+      if(selectedFaq !== undefined && question !== '') {
         FaqService.saveUserQuestion(selectedFaq, question)
         handleClose()
       }

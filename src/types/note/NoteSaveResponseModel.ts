@@ -1,5 +1,5 @@
 export default interface NoteSaveResponseModel {
-  version: number
+  userNoteVersion: number
 
-  noteId: number
+  id: number
 }

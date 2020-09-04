@@ -1,7 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import NotesContextType, {
-  NoteContextType,
-} from '../../types/context_provider/NotesContextType'
+import NotesContextType from '../../types/context_provider/NotesContextType'
 import NoteService from '../../services/note/NoteService'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteDoc from '../../types/note/database/NoteDoc'

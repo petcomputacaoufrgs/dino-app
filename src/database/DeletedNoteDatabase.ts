@@ -38,17 +38,18 @@ class DeletedNoteDatabase extends BaseDatabase<NoteDoc> {
       }
   }
 
-  getByQuestion = async (question: string): Promise<NoteDoc | null> => {
-    const id = this.getId(question)
+  getById = async (note: NoteDoc): Promise<NoteDoc | null> => {
+    if (note._id) {
+      try {
+        const doc = await this.db.get(note._id)
 
-    try {
-      const doc = await this.db.get(id)
-
-      return doc
-    } catch (e) {
-      LogAppErrorService.saveError(e)
-      return null
+        return doc
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
     }
+    
+    return null
   }
 
   getAll = async (): Promise<NoteDoc[]> => {

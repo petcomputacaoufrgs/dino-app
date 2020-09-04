@@ -21,7 +21,7 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
     try {
       this.db.put(doc)
     } catch(e) {
-      console.log(e)
+      LogAppErrorService.saveError(e)
     }
     
   }
@@ -36,7 +36,7 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
     try {
       this.db.bulkDocs(docs)
     } catch (e) {
-      console.log(e)
+      LogAppErrorService.saveError(e)
     }
   }
 

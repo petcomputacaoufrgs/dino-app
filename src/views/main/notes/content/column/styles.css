@@ -1,0 +1,8 @@
+.note__note_content__column {
+    border: 1px solid;
+    border-color: rgba(179, 46, 85);
+    background-color: rgb(233, 233, 233);
+    border-radius: 5px;
+    padding: 15px;
+    width: 80%;
+}

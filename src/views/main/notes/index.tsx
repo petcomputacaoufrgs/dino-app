@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import './styles.css'
 import StringUtils from '../../../utils/StringUtils'
-import { NoteContextType } from '../../../types/context_provider/NotesContextType'
 import NoteViewModel from '../../../types/note/NoteViewModel'
 import NoteService from '../../../services/note/NoteService'
-import DateUtils from '../../../utils/DateUtils'
 import NoteHeader from './header'
-import NoteBoard from './board'
+import NoteContent from './content'
 import NoteAddButton from './note_add_button'
 import { useTags, useNotes } from '../../../context_provider/notes'
-import './styles.css'
 import NoteDoc from '../../../types/note/database/NoteDoc'
 
 const convertNotesToNoteViews = (
@@ -45,65 +43,22 @@ const Notes = () => {
   }, [notes, textSearch, tagSearch])
 
 
-  const handleSaveNewNote = (newQuestion: string, newTagNames: string[]) => {
-    const newId = viewNotes.length
-
-    const date = DateUtils.getDatetimeInMillis()
-
-    const newNote: NoteContextType = {
-      answer: '',
-      answered: false,
-      question: newQuestion,
-      id: newId,
-      tagNames: newTagNames,
-      lastUpdate: date,
-      savedOnServer: false,
-    }
-
-    NoteService.saveNote(newNote)
+  const handleSaveNewNote = (question: string, tagNames: string[], answer: string) => {
+    const order = viewNotes.length
+    NoteService.createNote(question, tagNames, answer, order)
   }
 
-  const handleSaveQuestion = (
-    newQuestion: string,
-    newTagNames: string[],
-    noteViewValue: NoteViewModel
-  ) => {
-    const oldQuestion = noteViewValue.question
-
-    const editedNote = notes.find((n) => n.question === oldQuestion)
-
-    if (editedNote) {
-      const date = DateUtils.getDatetimeInMillis()
-
-      editedNote.question = newQuestion
-      editedNote.tagNames = newTagNames
-      editedNote.lastUpdate = date
-
-      //NoteService.updateNoteQuestion(oldQuestion, editedNote)
-    }
-  }
-
-  const handleSaveAnswer = (newAnswer: string, noteView: NoteViewModel) => {
-    /*const editedNote = notes.find((n) => n.id === noteView.id)
-
-    if (editedNote) {
-      editedNote.answer = newAnswer
-      editedNote.answered = true
-
-      NoteService.updateNoteAnswer(editedNote)
-    }*/
-  }
-
-  const handleDeleteNote = (noteId: number) => {
-    /*const deletedNote = notes.find((note) => note.id === noteId)
-
-    if (deletedNote) {
-      NoteService.deleteNote(deletedNote)
-    }*/
+  const handleSaveNote = (note: NoteDoc) => {
+    console.log(note)
+    NoteService.saveNote(note)
   }
 
   const handleNotesOrderChanged = (viewNotes: NoteViewModel[]) => {
     setViewNotes(viewNotes)
+  }
+
+  const handleDeleteNote = (note: NoteDoc) => {
+    NoteService.deleteNote(note)
   }
 
   //#region Searching
@@ -136,8 +91,6 @@ const Notes = () => {
 
   //#endregion
 
-  //updateListMarginTop()
-
   return (
     <div className="notes">
       <NoteHeader
@@ -145,10 +98,10 @@ const Notes = () => {
         onTextSearch={handleTextSearch}
         tags={tags}
       />
-      <NoteBoard
+      <NoteContent
         onBoardOrderChanged={handleNotesOrderChanged}
-        onSaveAnswer={handleSaveAnswer}
-        onSaveQuestion={handleSaveQuestion}
+        onSave={handleSaveNote}
+        onSaveNew={handleSaveNewNote}
         onDeleteNote={handleDeleteNote}
         tags={tags}
         viewNotes={viewNotes}

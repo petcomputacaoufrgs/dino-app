@@ -49,13 +49,17 @@ class DinoAPIURLConstants {
 
   NOTE_DELETE = `${this.NOTE}`
 
+  NOTE_DELETE_ALL = `${this.NOTE}all/`
+
+  NOTE_UPDATE_ALL = `${this.NOTE}all/`
+
   CONTACT_VERSION = `${this.CONTACT}version/`
 
   CONTACT_GET = `${this.CONTACT}`
 
   CONTACT_SAVE = `${this.CONTACT}`
 
-  CONTACT_EDIT = `${this.CONTACT}` 
+  CONTACT_EDIT = `${this.CONTACT}`
 
   CONTACT_DELETE = `${this.CONTACT}`
 
@@ -64,14 +68,6 @@ class DinoAPIURLConstants {
   CONTACT_EDIT_ALL = `${this.CONTACT}all/`
 
   CONTACT_DELETE_ALL = `${this.CONTACT}all/`
-
-  NOTE_DELETE_ALL = `${this.NOTE}all/`
-
-  NOTE_UPDATE_QUESTION = `${this.NOTE}question/`
-
-  NOTE_UPDATE_ANSWER = `${this.NOTE}answer/`
-
-  NOTE_UPDATE_ALL = `${this.NOTE}all/`
 
   TEST_CONNECTION = `${this.URL}public/test_connection/`
 
@@ -82,11 +78,10 @@ class DinoAPIURLConstants {
   FAQ_GET = `${this.FAQ}`
 
   FAQ_GET_VERSION = `${this.FAQ}version/`
-  
+
   FAQ_SAVE = `${this.FAQ}`
 
   FAQ_OPTIONS = `${this.URL}public/faq/options/`
-
 }
 
 export default new DinoAPIURLConstants()

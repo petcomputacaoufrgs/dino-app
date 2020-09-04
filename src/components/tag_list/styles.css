@@ -8,9 +8,10 @@
 }
 
 .tag_list.MuiPaper-root .MuiChip-root {
-  background-color: #b32e55;
-  color: white;
-  font-weight: 900;
+  border: 1px solid;
+  border-color: #b32e55;
+  color: #b32e55;
+  background-color: inherit;
   margin-right: 5px;
 }
 

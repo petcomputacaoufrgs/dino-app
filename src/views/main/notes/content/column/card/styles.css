@@ -1,0 +1,35 @@
+.note__note_content__column__column_card {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.note__note_content__column__column_card__card__tag_list {
+  overflow: scroll;
+  -ms-overflow-style: none;
+}
+
+.note__note_content__column__column_card__card__tag_list::-webkit-scrollbar {
+  display: none;
+}
+
+.note__note_content__column__column_card .MuiCardHeader-root {
+  padding: 16px;
+  padding-bottom: 0px;
+}
+
+.note__note_content__column__column_card
+  .MuiCardHeader-content
+  .MuiTypography-root.MuiCardHeader-title {
+  font-size: larger;
+  word-break: break-word;
+}
+
+.note__note_content__column__column_card
+  .MuiCardHeader-content
+  .MuiTypography-root.MuiCardHeader-subheader {
+  font-size: smaller;
+}
+
+.note__note_content__column__column_card.MuiPaper-rounded {
+  border-radius: 3px;
+}

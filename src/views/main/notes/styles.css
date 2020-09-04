@@ -21,34 +21,7 @@
   width: 100%;
 }
 
-.note_card_dialog.MuiDialog-root
-  .MuiOutlinedInput-root.Mui-focused
-  .MuiOutlinedInput-notchedOutline {
-  border-color: #b32e55;
-}
-
-.note_card_dialog.MuiDialog-root .MuiFormLabel-root.Mui-focused {
-  color: #b32e55;
-}
-
 .note_card_dialog.MuiDialog-root .MuiInputBase-input textarea {
   border: none;
   border-color: transparent;
-}
-
-.note_card_dialog__save {
-  padding: 0px;
-}
-
-.note_card_dialog__save.MuiDialogActions-root {
-  padding: 0px;
-}
-
-.note_card_dialog__save .MuiButtonBase-root.MuiButton-root {
-  width: 100%;
-  background-color: #b32e55;
-  font-size: medium;
-  height: 50px;
-  border-radius: 0;
-  outline: none;
 }

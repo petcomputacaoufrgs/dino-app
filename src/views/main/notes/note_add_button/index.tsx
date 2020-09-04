@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import QuestionDialog from '../question_dialog'
+import NoteAddButtonProps from './props'
+import './styles.css'
+import NoteDialog from '../note_dialog'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { useLanguage } from '../../../../context_provider/app_settings'
-import './styles.css'
 
-const NoteAddButton = (props: {
-  tags: string[]
-  onSave: (question: string, tags: string[]) => void
+const NoteAddButton: React.FC<NoteAddButtonProps> = ({
+  tags,
+  onSave
 }) => {
   const language = useLanguage().current
 
@@ -21,19 +22,22 @@ const NoteAddButton = (props: {
     setNewNoteDialogOpen(false)
   }
 
-  const handleSaveNewNote = (question: string, tags: string[]) => {
-    props.onSave(question, tags)
+  const handleSaveNewNote = (
+    question: string,
+    tagList: string[],
+    answer: string
+  ) => {
+    onSave(question, tagList, answer)
     setNewNoteDialogOpen(false)
   }
 
   return (
     <>
-      <QuestionDialog
+      <NoteDialog
         open={newNoteDialogOpen}
-        question={''}
-        tagList={[]}
-        tagOptions={props.tags}
-        onSave={handleSaveNewNote}
+        tagOptions={tags}
+        onSave={() => {}}
+        onSaveNew={handleSaveNewNote}
         onClose={handleCloseNewNoteDialog}
       />
       <Fab

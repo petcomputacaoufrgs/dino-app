@@ -1,11 +1,9 @@
 import BaseSync from './BaseSync'
 import NoteService from '../services/note/NoteService'
-import NoteUpdateModel from '../types/note/NoteUpdateModel'
+import NoteSaveModel from '../types/note/NoteSaveModel'
 
 class NoteSync implements BaseSync {
-  send = async () => {
-    console.log('send...')
-      
+  send = async () => {      
     if (NoteService.shouldSync()) {
       NoteService.setShouldSync(false)
 
@@ -21,11 +19,10 @@ class NoteSync implements BaseSync {
               question: doc.question,
               tagNames: doc.tagNames,
               lastUpdate: doc.lastUpdate,
-              answered: doc.answered,
-            } as NoteUpdateModel)
+            } as NoteSaveModel)
         )
 
-      await NoteService.updateNotes(models)
+      await NoteService.saveNotesOnServer(models)
 
       await NoteService.deleteNotesOnServer()
 

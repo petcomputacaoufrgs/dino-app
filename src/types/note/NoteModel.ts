@@ -7,8 +7,6 @@ export default interface NoteModel {
 
   answer: string
 
-  answered: boolean
-
   tags: string[]
 
   lastUpdate: number

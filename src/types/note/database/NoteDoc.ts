@@ -6,7 +6,6 @@ export default interface NoteDoc extends PouchDB.Core.GetMeta {
   order: number
   question: string
   answer: string
-  answered: boolean
   tagNames: string[]
   lastUpdate: number
   savedOnServer: boolean

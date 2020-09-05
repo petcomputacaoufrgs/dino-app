@@ -11,6 +11,7 @@ import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 import { ContactFormDialogViewProps } from './props'
 import { useLanguage } from '../../../../context_provider/app_settings'
+import './styles.css'
 
 const View = React.forwardRef(
   (
@@ -38,51 +39,56 @@ const View = React.forwardRef(
     const language = useLanguage().current
 
     return (
-      <Dialog
-        ref={ref}
-        open={open}
-        fullWidth
-        onClose={handleClose}
-        TransitionComponent={TransitionSlide}
-      >
-        <ContactFormDialogHeader
-          action={action}
-          name={name}
-          color={color}
-          handleChangeColor={handleChangeColor}
-          handleAddPhone={handleAddPhone}
-        />
-        <Divider />
-        <DialogContent>
-          <ContactFormDialogContent
+      <div className='contact-form'>
+        <Dialog
+          ref={ref}
+          style={{margin:'0px'}}
+          open={open}
+          maxWidth='xl'
+          fullWidth
+          onClose={handleClose}
+          TransitionComponent={TransitionSlide}
+        >
+          <ContactFormDialogHeader
+            action={action}
             name={name}
-            description={description}
-            phones={phones}
-            helperText={invalidPhone}
-            invalidName={invalidName}
-            handleChangeName={handleChangeName}
-            handleChangeDescription={handleChangeDescription}
-            handleChangeType={handleChangeType}
-            handleChangeNumber={handleChangeNumber}
-            handleDeletePhone={handleDeletePhone}
+            color={color}
+            handleChangeColor={handleChangeColor}
+            handleCloseDialog={handleClose}
           />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleClose}
-            color="primary"
-          >
-            {language.DIALOG_CANCEL_BUTTON_TEXT}
-          </Button>
+          <Divider />
+          <DialogContent>
+            <ContactFormDialogContent
+              name={name}
+              description={description}
+              phones={phones}
+              helperText={invalidPhone}
+              invalidName={invalidName}
+              handleChangeName={handleChangeName}
+              handleChangeDescription={handleChangeDescription}
+              handleChangeType={handleChangeType}
+              handleChangeNumber={handleChangeNumber}
+              handleDeletePhone={handleDeletePhone}
+              handleAddPhone={handleAddPhone}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleClose}
+              color="primary"
+            >
+              {language.DIALOG_CANCEL_BUTTON_TEXT}
+            </Button>
 
-          <Button
-            onClick={handleSave}
-            color="primary"
-          >
-            {language.DIALOG_SAVE_BUTTON_TEXT}
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <Button
+              onClick={handleSave}
+              color="primary"
+            >
+              {language.DIALOG_SAVE_BUTTON_TEXT}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     )
   }
 )

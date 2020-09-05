@@ -3,6 +3,10 @@ import TextField from '@material-ui/core/TextField'
 import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'
 import { useLanguage } from '../../../../../context_provider/app_settings'
+import { IconButton, Divider, ListItem } from '@material-ui/core'
+import { Add } from '@material-ui/icons'
+import Typography from '@material-ui/core/Typography';
+
 
 const ContactFormDialogContent = (
   props: ContactFormDialogContentProps
@@ -20,7 +24,6 @@ const ContactFormDialogContent = (
         value={props.name}
         onChange={props.handleChangeName}
         error={props.invalidName}
-        autoFocus
         margin="dense"
         id="name"
         label={language.FORM_NAME}
@@ -37,6 +40,7 @@ const ContactFormDialogContent = (
         type="text"
       />
       <br />
+      
       {props.phones.map((phone, index) => (
         <div key={index}>
           <PhoneFields
@@ -53,6 +57,12 @@ const ContactFormDialogContent = (
           <br />
         </div>
       ))}
+
+      <ListItem button onClick={props.handleAddPhone} alignItems='center' style={{justifyContent:"center"}}>
+        <Typography variant='body2' color='textSecondary' display='block'>
+          Adicionar Telefones
+          </Typography>
+        </ListItem>
     </>
   )
 }

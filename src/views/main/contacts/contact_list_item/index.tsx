@@ -6,39 +6,40 @@ import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction
 import ContactsService from '../../../../services/contact/ContactService'
 import OptionsComponent from '../../../../components/options_component'
 
-const ContactItemList = (props: ContactItemListProps): JSX.Element => {
-  const classes = useStyles(props)
+const ContactItemList = ({item, setEdit, setDelete, onClick, children}: ContactItemListProps): JSX.Element => {
+
+  const classes = useStyles()
+
   const language = useLanguage().current
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
-    setAnchorEl(event.currentTarget)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
 
-  const handleOpen = () => props.onClick(props.item.frontId)
+  const handleOpen = () => onClick(item.frontId)
 
   const handleClose = () => setAnchorEl(null)
 
   const handleEdit = () => {
-    props.setEdit(props.item.frontId)
+    setEdit(item.frontId)
     handleClose()
   }
   const handleDelete = () => {
-    props.setDelete(props.item.frontId)
+    setDelete(item.frontId)
     handleClose()
   }
 
   return (
-    <>
-      <ListItem button onClick={handleOpen}>
+    <div className='contact-list-item'>
+      <ListItem button divider onClick={handleOpen}>
         <ListItemAvatar>
-          <Avatar aria-label={language.AVATAR_ALT} className={classes[props.item.color]}>
-            {props.item.name[0].toUpperCase()}
+          <Avatar aria-label={language.AVATAR_ALT} className={classes[item.color]}>
+            {item.name[0].toUpperCase()}
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={props.item.name}
-          secondary={ContactsService.getPhoneTypes(props.item.phones)}
+          primary={item.name}
+          secondary={ContactsService.getPhoneTypes(item.phones)}
         />
         <ListItemSecondaryAction>
           <OptionsComponent onClick={handleClick} />
@@ -50,8 +51,8 @@ const ContactItemList = (props: ContactItemListProps): JSX.Element => {
           {language.DELETE_OPTION_TEXT}
         </MenuItem>
       </Menu>
-      {props.children}
-    </>
+      {children}
+    </div>
   )
 }
 

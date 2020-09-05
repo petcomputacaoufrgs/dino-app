@@ -27,6 +27,7 @@ const QuestionDialogForm = React.forwardRef(({
     const currentFaq = useCurrentFaq()
   
     const [selectedFaq, setSelectedFaq] = useState(currentFaq)
+    const [error, setError] = useState(false)
 
     const handleClose = () => {
         setDialogOpen(false)
@@ -36,6 +37,10 @@ const QuestionDialogForm = React.forwardRef(({
       if(selectedFaq !== undefined && question !== '') {
         FaqService.saveUserQuestion(selectedFaq, question)
         handleClose()
+      } else {
+        if (question === '') {
+          setError(true)
+        }
       }
     }
 
@@ -46,6 +51,7 @@ const QuestionDialogForm = React.forwardRef(({
             return () => {
                 setQuestion('')
                 setSelectedFaq(currentFaq)
+                setError(false)
             }
         }
     }, [dialogOpen, currentFaq])
@@ -87,7 +93,7 @@ const QuestionDialogForm = React.forwardRef(({
                 type="question"
                 inputProps={{maxLength: CHARACTER_LIMIT}}
                 helperText={`${question.length}/${CHARACTER_LIMIT}`} 
-                error={question.length === CHARACTER_LIMIT} 
+                error={question.length === CHARACTER_LIMIT || error} 
                 
             />
         </DialogContent>

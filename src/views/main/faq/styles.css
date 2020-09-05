@@ -3,7 +3,7 @@
     display: flex;
 }
 
-button {
+.send-question__button {
     text-decoration: underline;
     color:blue; 
     border: none;
@@ -15,10 +15,10 @@ button {
     display:block;
 }
   
-button:hover {
-    color: hotpink;
+.send-question__button:hover {
+    color: lightblue;
 }
 
-button:focus {
+.send-question__button:focus {
     outline: none;
 }

@@ -110,8 +110,7 @@ const Faq = (): JSX.Element => {
             title={selectedFaq ? selectedFaq.title : ''} 
             items={searchResults} 
           />
-          <button
-            onClick={handleSendQuestion}>
+          <button className='send-question__button' onClick={handleSendQuestion}>
             {language.NOT_FOUND_QUESTION_FAQ}
           </button>
           <QuestionDialogForm 

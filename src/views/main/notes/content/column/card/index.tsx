@@ -38,6 +38,7 @@ const NoteBodyColumnCard: React.FC<NoteBodyColumnCardProps> = ({
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
+          {console.log(cardNote.question)}
           <MaterialCard
             className={'note__note_content__column__column_card'}
             onClick={handleCardClick}

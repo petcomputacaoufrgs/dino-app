@@ -1,7 +1,8 @@
 import NoteViewModel from '../../../../../types/note/NoteViewModel'
+import { NoteColumn } from '..';
 
 export default interface NoteBodyColumnProps {
-  notes: NoteViewModel[]
+  column: NoteColumn
   onClickNote: (note: NoteViewModel) => void
   onDelete: (note: NoteViewModel) => void
 }

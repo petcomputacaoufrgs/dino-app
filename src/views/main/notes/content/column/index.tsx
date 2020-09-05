@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import NoteBodyColumnProps from './props'
 import './styles.css'
 import { Droppable } from 'react-beautiful-dnd'
@@ -8,8 +8,10 @@ import NoteBodyColumnHeader from './header'
 
 const NOTE_BOARD_ID = 'Perguntas'
 
-const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({notes, onClickNote: onEditQuestion, onDelete}) => {
+const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({column, onClickNote: onEditQuestion, onDelete}) => {
 
+    const [viewColumn, setViewColumn] = useState(column)
+    
     const renderCard = (note: NoteViewModel, key: number): JSX.Element => {
         if (note.showByTag || note.showByQuestion) {
             return (
@@ -25,17 +27,21 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({notes, onClickNote: o
         }
     }
 
+    useEffect(() => {
+      setViewColumn(column)
+    }, [column])
+
     return (
       <div className="note__note_content__column">
-        <NoteBodyColumnHeader title={NOTE_BOARD_ID} />
-        <Droppable droppableId={NOTE_BOARD_ID}>
+        <NoteBodyColumnHeader title={viewColumn.title} />
+        <Droppable droppableId={viewColumn.id}>
           {(provided) => (
             <div
               className="notes__board__container"
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {notes.map((note, index) => renderCard(note, index))}
+              {viewColumn.notes.map((note, index) => renderCard(note, index))}
               {provided.placeholder}
             </div>
           )}

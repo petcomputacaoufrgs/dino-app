@@ -9,15 +9,34 @@ import NoteViewModel from '../../../../types/note/NoteViewModel'
 import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-dnd'
 import NoteContentColumn from './column'
 
+export interface NoteColumn {
+  id: string
+  title: string
+  notes: NoteViewModel[]
+}
+
 const NoteContent: React.FC<NoteBodyProps> = ({tags, viewNotes, onBoardOrderChanged, onDeleteNote, onSave, onSaveNew}): JSX.Element => {
   const language = useLanguage().current
 
-  const [notes, setNotes] = useState(viewNotes)
+  const [columns, setColumns] = useState<NoteColumn[]>([{
+    id: 'perguntas',
+    title: 'Perguntas',
+    notes: viewNotes
+  }])
+
+  const [columnsOrder, setColumnsOrder] = useState([columns[0].id])
+
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(undefined)
   const [noteDialogOpen, setNoteDialogOpen] = useState(false)
 
   useEffect(() => {
-    setNotes(viewNotes)
+    setColumns([
+      {
+        id: 'perguntas',
+        title: 'Perguntas',
+        notes: viewNotes,
+      },
+    ])
   }, [viewNotes])
 
   const handleCardClick = (noteView: NoteViewModel) => {
@@ -36,7 +55,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, viewNotes, onBoardOrderChan
     agreeOptionText: language.AGREEMENT_OPTION_TEXT,
     disagreeOptionText: language.DISAGREEMENT_OPTION_TEXT,
   }
-
+//https://egghead.io/lessons/react-create-and-style-a-list-of-data-with-react
   const [DeleteDialog, showDeleteDialog] = AgreementDialog(agreementDialogProps)
 
   const handleOpenDeleteNoteDialog = (note: NoteViewModel) => {
@@ -62,16 +81,36 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, viewNotes, onBoardOrderChan
     handleCloseCardDialog()
   }
 
-  const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {}
+  const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    const { destination, source, draggableId } = result
+
+    if (!destination) {
+      return
+    }
+
+    const dropedToSamePosition = destination.droppableId === source.droppableId && destination.index === source.index
+
+    if (dropedToSamePosition) {
+      return
+    }
+    
+    notes.splice(source.index, 1);
+    notes.splice(destination.index, 0 , )
+    
+
+    setNotes([...notes])
+  }
 
   return (
     <div className="note__note_content">
       <DragDropContext onDragEnd={handleDragEnd}>
-        <NoteContentColumn
-          notes={notes}
-          onClickNote={handleCardClick}
-          onDelete={handleOpenDeleteNoteDialog}
-        />
+        {columns.map(column => (
+          <NoteContentColumn
+            column={column}
+            onClickNote={handleCardClick}
+            onDelete={handleOpenDeleteNoteDialog}
+          />
+      ))}
       </DragDropContext>
       {currentNote &&
         <NoteDialog

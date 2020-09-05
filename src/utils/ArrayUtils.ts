@@ -2,9 +2,14 @@ type filterCallback<T> = (value: T) => boolean
 
 class ArrayUtils {
   removeRepeatedValues = <T>(list: T[]): T[] => {
-    const uniqueList = new Set(list)
+    
+    if(list.length > 1) {
 
-    return Array.from(uniqueList)
+      const uniqueList = new Set(list)
+
+      return Array.from(uniqueList)
+    }
+    return list
   }
 
   remove = <T>(list: T[], element: T): T[] => {

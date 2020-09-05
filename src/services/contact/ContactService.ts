@@ -266,25 +266,23 @@ class ContactsService {
   
   getPhoneTypes = (phones: Array<PhoneModel>): string => {
 
-      if (phones.length === 1) {
-        return this.getPhoneType(phones[0].type)
-      }
-      
-      const types = ArrayUtils.removeRepeatedValues(phones.map(phone => phone.type))
+      if(phones.length > 0) {
+        
+        const types = ArrayUtils.removeRepeatedValues(phones.map(phone => phone.type))
 
-      let result = this.getPhoneType(types[0])
+        return types.map(type => this.getPhoneType(type)).toString()
+        
+      } 
 
-      for(let i = 1; i < types.length; i++) {
-        result += `, ${this.getPhoneType(types[i])}`
-      }
-      
-      return result
+    return ''
   }
     
   getPhoneType = (type: number): string => {
+    
     const language = useLanguage().current
     
     switch (type) {
+      
       case ContactsConstants.PUBLIC_SERVICE: return language.CONTACTS_PUBLIC_SERVICE_PHONE
 
       case ContactsConstants.RESIDENTIAL: return language.CONTACTS_RESIDENTIAL_PHONE

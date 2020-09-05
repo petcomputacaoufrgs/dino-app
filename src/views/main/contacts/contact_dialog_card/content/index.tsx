@@ -22,7 +22,8 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 
   const Description = (): JSX.Element => {
     return item.description ?
-        <ListItem button className={classes.ListItem}>
+      <div className='contact-card-description'>
+        <ListItem divider className={classes.ListItem}>
           <ListItemIcon><PersonIcon /></ListItemIcon>
           <ListItemText
             primary={
@@ -37,7 +38,8 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
             }
           />
         </ListItem>
-    : <></>
+      </div>
+    : <Divider />
   }
 
   const Phones = () => {
@@ -45,7 +47,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
       <div>
         {item.phones.map((phone, index) => 
           <a href={`tel:${phone.number}`} style={{textDecoration:"none"}} key={index}>
-            <ListItem button className={classes.ListItem}>
+            <ListItem button divider className={classes.ListItem}>
               <ListItemIcon>{getTypePhoneIcon(phone)}</ListItemIcon>
               <ListItemText
                 primary={
@@ -69,7 +71,6 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
     <CardContent className={classes.CardContent}>
       <Description />
       <List component="nav">
-        <Divider className={classes.DividerMargin} />
         <Phones/>
       </List>
     </CardContent>

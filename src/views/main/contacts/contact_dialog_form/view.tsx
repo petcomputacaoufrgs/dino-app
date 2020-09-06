@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  Divider,
 } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
@@ -56,8 +55,7 @@ const View = React.forwardRef(
             handleChangeColor={handleChangeColor}
             handleCloseDialog={handleClose}
           />
-          <Divider />
-          <DialogContent>
+          <DialogContent dividers>
             <ContactFormDialogContent
               name={name}
               description={description}

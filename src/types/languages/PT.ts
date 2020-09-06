@@ -136,6 +136,8 @@ export default class PT implements LanguageBase {
 
   FORM_QUESTION_TITLE = 'Mande sua pergunta!'
 
+  FORM_ADD_PHONE = 'Adicionar Telefone'
+
   NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
   CONTACTS_ADD_CONTACT = 'Novo Contato'

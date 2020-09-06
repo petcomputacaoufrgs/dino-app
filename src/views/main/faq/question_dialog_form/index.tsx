@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   TextField,
-  DialogTitle,
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import QuestionDialogFormProps from './props'
@@ -13,7 +12,6 @@ import { useLanguage, useCurrentFaq } from '../../../../context_provider/app_set
 import SelectFaq from '../select_faq'
 import './styles.css'
 import FaqService from '../../../../services/faq/FaqService'
-
 
 const QuestionDialogForm = React.forwardRef(({
     dialogOpen,
@@ -70,32 +68,29 @@ const QuestionDialogForm = React.forwardRef(({
         onClose={handleClose}
         TransitionComponent={TransitionSlide}
       >
-        <DialogTitle>
-            {language.FORM_QUESTION_TITLE}
-        </DialogTitle>
-        <DialogContent>
-            <SelectFaq
-                selectedFaq={selectedFaq}
-                setSelectedFaq={setSelectedFaq}
-            />
-            <TextField
-                required
-                fullWidth
-                multiline
-                rowsMax={7}
-                value={question}
-                onChange={handleChangeQuestion}
-                autoFocus
-                margin="dense"
-                id="question"
-                label={language.FORM_QUESTION}
-                placeholder={language.FORM_QUESTION_PLACEHOLDER}
-                type="question"
-                inputProps={{maxLength: CHARACTER_LIMIT}}
-                helperText={`${question.length}/${CHARACTER_LIMIT}`} 
-                error={question.length === CHARACTER_LIMIT || error} 
-                
-            />
+        
+        <DialogContent dividers>
+          <SelectFaq
+              selectedFaq={selectedFaq}
+              setSelectedFaq={setSelectedFaq}
+          />
+          <TextField
+              required
+              fullWidth
+              multiline
+              rowsMax={7}
+              value={question}
+              onChange={handleChangeQuestion}
+              autoFocus
+              margin="dense"
+              id="question"
+              label={language.FORM_QUESTION}
+              placeholder={language.FORM_QUESTION_PLACEHOLDER}
+              type="question"
+              inputProps={{maxLength: CHARACTER_LIMIT}}
+              helperText={`${question.length}/${CHARACTER_LIMIT}`} 
+              error={question.length === CHARACTER_LIMIT || error} 
+          />
         </DialogContent>
         <DialogActions>
           <Button

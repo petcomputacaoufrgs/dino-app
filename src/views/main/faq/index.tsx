@@ -119,7 +119,6 @@ const Faq = (): JSX.Element => {
           />
         </div>
         }
-        
       </div>
     )
   }

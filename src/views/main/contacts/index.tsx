@@ -3,7 +3,6 @@ import { useLanguage } from '../../../context_provider/app_settings'
 import ContactModel from '../../../types/contact/ContactModel'
 import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
-import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import MuiSearchBar from '../../../components/mui_search_bar'
 
 import AddContactButton from './contact_button_add'

@@ -3,7 +3,6 @@ import { useLanguage } from '../../../context_provider/app_settings'
 import GlossaryItems from './glossary_items'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
-import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import MuiSearchBar from '../../../components/mui_search_bar'
 
 import { useGlossary } from '../../../context_provider/glossary'

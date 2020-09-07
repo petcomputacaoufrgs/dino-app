@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import StringUtils from '../../../utils/StringUtils'
-import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import './styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css'

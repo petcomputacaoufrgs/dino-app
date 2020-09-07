@@ -1,29 +1,13 @@
 import './styles.css'
 import React from 'react'
 import FaqItemsProps from './props'
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
-
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  }),
-);
+//import 'bootstrap/dist/css/bootstrap.min.css'
+import Card from 'react-bootstrap/Card'
+import Accordion from 'react-bootstrap/Accordion'
 
 const FaqItems = ({items, title}: FaqItemsProps): JSX.Element => {
-  const classes = useStyles();
 
   return(
       <div className='faq-items'>
@@ -31,22 +15,23 @@ const FaqItems = ({items, title}: FaqItemsProps): JSX.Element => {
           <Typography>{title}</Typography>
           <Divider/>
         </div>
-      {items.map(item => (
-            <Accordion key={item.id}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={classes.heading}>{item.question.toUpperCase()}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
+
+        <Accordion className="faq-items__accordion">
+          {items.map(item => (
+            <Card className="card" key={item.id}>
+              <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
                 <Typography>
-                  {item.answer}
+                  {item.question}
                 </Typography>
-              </AccordionDetails>
-            </Accordion>
-      ))}
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey={item.id.toString()}>
+                <Card.Body>
+                  <Card.Text>{item.answer}</Card.Text>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          ))}
+        </Accordion>
       </div>
   )
 }

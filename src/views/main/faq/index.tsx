@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
+import MuiSearchBar from '../../../components/mui_search_bar'
 import './styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FaqItemModel from '../../../types/faq/FaqItemModel'
@@ -11,6 +12,7 @@ import { useLanguage, useCurrentFaq } from '../../../context_provider/app_settin
 import SelectFaq from './select_faq'
 import FaqService from '../../../services/faq/FaqService'
 import { useFaq } from '../../../context_provider/faq'
+import QuestionDialogForm from './question_dialog_form'
 
 const Faq = (): JSX.Element => {
     
@@ -22,6 +24,7 @@ const Faq = (): JSX.Element => {
 
   const [selectedFaq, setSelectedFaq] = useState(currentFaq)
   const [open, setOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([] as FaqItemModel[])
   const isFaqEmpty = items.length === 0
@@ -50,6 +53,10 @@ const Faq = (): JSX.Element => {
       FaqService.switchUserFaq(selectedFaq)
     }
     handleChangeOpenDialog()
+  }
+
+  const handleSendQuestion = () => {
+    setDialogOpen(true)
   }
 
   const renderFaqOptions = () => {
@@ -93,15 +100,26 @@ const Faq = (): JSX.Element => {
 
     return (
       <div>
-        <BootstrapSearchBar
+        <MuiSearchBar
           value={searchTerm}
           onChange={handleChangeValueSearchTerm}
           placeholder={language.SEARCH_HOLDER}
         />
         {isFaqEmpty ? renderFaqOptions() :
-        <FaqItems 
-          title={selectedFaq ? selectedFaq.title : ''} 
-          items={searchResults} />}
+        <div>
+          <FaqItems 
+            title={selectedFaq ? selectedFaq.title : ''} 
+            items={searchResults} 
+          />
+          <button className='send-question__button' onClick={handleSendQuestion}>
+            {language.NOT_FOUND_QUESTION_FAQ}
+          </button>
+          <QuestionDialogForm 
+            dialogOpen={dialogOpen} 
+            setDialogOpen={setDialogOpen}
+          />
+        </div>
+        }
       </div>
     )
   }

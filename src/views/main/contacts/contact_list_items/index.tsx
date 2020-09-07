@@ -9,6 +9,7 @@ import ContactsService from '../../../../services/contact/ContactService'
 import Constants from '../../../../constants/ContactsConstants'
 
 const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
+  
   const classes = useStyles()
 
   const [open, setOpen] = useState(0)
@@ -23,33 +24,34 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
   }, [_delete, setItems])
 
   return (
-    <List className={classes.list}>
-      {items.map((contact) => (
-        <div key={contact.frontId}>
-          <ContactItemList
-            item={contact}
-            setEdit={setEdit}
-            setDelete={setDelete}
-            onClick={() => setOpen(contact.frontId)}
-          >
-            <ContactCard
+    <div className='contacts-list'>
+      <List className={classes.list}>
+        {items.map((contact, index) => (
+          <div key={index}>
+            <ContactItemList
               item={contact}
-              onClose={() => setOpen(0)}
               setEdit={setEdit}
               setDelete={setDelete}
-              dialogOpen={open === contact.frontId}
-              setDialogOpen={setOpen}
-            />
-            <ContactFormDialog
-              item={contact}
-              dialogOpen={edit === contact.frontId}
-              setDialogOpen={setEdit}
-              action={Constants.ACTION_EDIT}
-            />
-          </ContactItemList>
-        </div>
-      ))}
-    </List>
+              onClick={() => setOpen(contact.frontId)}
+            >
+              <ContactCard
+                item={contact}
+                onClose={() => setOpen(0)}
+                setEdit={setEdit}
+                setDelete={setDelete}
+                dialogOpen={open === contact.frontId}
+              />
+              <ContactFormDialog
+                item={contact}
+                dialogOpen={edit === contact.frontId}
+                setDialogOpen={setEdit}
+                action={Constants.ACTION_EDIT}
+              />
+            </ContactItemList>
+          </div>
+        ))}
+      </List>
+    </div>
   )
 }
 

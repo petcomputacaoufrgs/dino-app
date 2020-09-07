@@ -1,8 +1,12 @@
 .faq-items {
-    padding: 4px 8px 16px;
+    padding: 4px 8px 8px;
   }
 
   .faq-items__title {
-    margin: 5px 5px 15px;
+    margin: 5px 5px 10px;
+  }
+
+  .faq-items__accordion {
+    padding: 0px;
   }
   

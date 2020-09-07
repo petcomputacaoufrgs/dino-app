@@ -5,9 +5,9 @@
 .tag_search_bar
   .MuiOutlinedInput-root.Mui-focused
   .MuiOutlinedInput-notchedOutline {
-  border-color: #b32e55;
+  border-color:  rgba(0, 0, 0, 0.23)
 }
 
 .tag_search_bar .MuiFormLabel-root.Mui-focused {
-  color: #b32e55;
+  color:  rgba(0, 0, 0, 0.23);
 }

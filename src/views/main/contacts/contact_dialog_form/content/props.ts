@@ -7,6 +7,7 @@ export interface ContactFormDialogContentProps {
   invalidName: boolean
   helperText: { number: string; text: string }
 
+  handleAddPhone: () => void
   handleDeletePhone: (number: string) => void
   handleChangeName: (event: React.ChangeEvent<HTMLInputElement>) => void
   handleChangeDescription: (event: React.ChangeEvent<HTMLInputElement>) => void

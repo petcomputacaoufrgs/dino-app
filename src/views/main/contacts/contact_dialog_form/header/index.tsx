@@ -1,10 +1,11 @@
 import React from 'react'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import { Avatar, CardHeader, IconButton } from '@material-ui/core'
-import { ColorLens as ColorLensIcon, Add as AddIcon } from '@material-ui/icons'
+import { ColorLens as ColorLensIcon } from '@material-ui/icons'
 import useStyles from '../../styles'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/ContactsConstants'
+import CloseComponent from '../../../../../components/close_component'
 
 const AddContactDialogHeader = (
   props: ContactFormDialogHeaderProps
@@ -33,14 +34,7 @@ const AddContactDialogHeader = (
           >
             <ColorLensIcon />
           </IconButton>
-          <IconButton
-            aria-label={language.ADD_PHONE_ARIA_LABEL}
-            size="small"
-            className={classes.iconButton}
-            onClick={props.handleAddPhone}
-          >
-            <AddIcon />
-          </IconButton>
+          <CloseComponent onClose={props.handleCloseDialog}/>
         </>
       }
       title={

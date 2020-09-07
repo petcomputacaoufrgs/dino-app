@@ -11,6 +11,7 @@ import NoteAddButton from './note_add_button'
 import { useTags, useNotes } from '../../../context_provider/notes'
 import './styles.css'
 
+
 const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
 
 const Notes = () => {

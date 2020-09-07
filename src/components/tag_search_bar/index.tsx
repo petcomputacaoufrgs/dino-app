@@ -4,6 +4,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import TagSearchBarProps from './props'
 import './styles.css'
+import { Search } from '@material-ui/icons'
+import { InputAdornment, IconButton } from '@material-ui/core'
 
 const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
   const language = useLanguage().current
@@ -29,12 +31,26 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
       className="tag_search_bar"
       onChange={handleChange}
       onInputChange={handleInputChange}
+      size='small'
       renderInput={(params) => (
         <TextField
           {...params}
           className={props.textFieldClass}
-          label={language.SEARCH_BUTTON_LABEL}
+          placeholder={language.SEARCH_BUTTON_LABEL}
           variant="outlined"
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: (
+              <>
+                <InputAdornment position="start">
+                  <IconButton>
+                    <Search />
+                  </IconButton>
+                </InputAdornment>
+                {params.InputProps.startAdornment}
+              </>
+            )
+          }}
         />
       )}
     />

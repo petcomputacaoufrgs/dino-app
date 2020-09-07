@@ -4,6 +4,8 @@ import ContactModel from '../../../types/contact/ContactModel'
 import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
+import MuiSearchBar from '../../../components/mui_search_bar'
+
 import AddContactButton from './contact_button_add'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContacts } from '../../../context_provider/contact'
@@ -31,7 +33,7 @@ const Contacts = (): JSX.Element => {
 
   return (
     <div>
-      <BootstrapSearchBar
+      <MuiSearchBar
         value={searchTerm}
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}

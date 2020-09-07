@@ -116,7 +116,7 @@ export default class EN implements LanguageBase {
 
   DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
-  SEARCH_BUTTON_LABEL = 'Search'
+  SEARCH_BUTTON_LABEL = 'Search...'
 
   ANSWER_DIALOG_LABEL = 'Model for answer a question note'
 

@@ -4,6 +4,8 @@ import GlossaryItems from './glossary_items'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import BootstrapSearchBar from '../../../components/bootstrap_search_bar'
+import MuiSearchBar from '../../../components/mui_search_bar'
+
 import { useGlossary } from '../../../context_provider/glossary'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -27,7 +29,7 @@ const Glossary = (): JSX.Element => {
 
   return (
     <div className="glossary">
-      <BootstrapSearchBar
+      <MuiSearchBar
         value={searchTerm}
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}

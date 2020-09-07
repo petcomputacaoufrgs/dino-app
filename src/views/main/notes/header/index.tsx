@@ -15,11 +15,6 @@ const NoteHeader = (props: {
 
   return (
     <div className={isMobile ? 'notes__header' : 'notes__header_desktop'}>
-      <img
-        className="notes__header__image"
-        src={NoteSVG}
-        alt={language.NOTES_HEADER_IMAGE_DESC}
-      />
       <TagSearchBar
         options={props.tags}
         onTagSearch={props.handleTagSearch}

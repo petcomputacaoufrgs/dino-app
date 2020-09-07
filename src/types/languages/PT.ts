@@ -118,7 +118,7 @@ export default class PT implements LanguageBase {
 
   DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
 
-  SEARCH_BUTTON_LABEL = 'Pesquisar'
+  SEARCH_BUTTON_LABEL = 'Buscar...'
 
   ANSWER_DIALOG_LABEL = 'Tela para responder uma questão anotada.'
 

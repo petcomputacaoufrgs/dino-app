@@ -30,7 +30,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
     event: React.ChangeEvent<HTMLInputElement>,
     value: string
   ) => {
-    const newType = NumberUtils.safeParseInt(value)
+    const newType = NumberUtils.safeParseNumber(value)
     setAlarmType(newType)
 
     switch (newType) {
@@ -47,7 +47,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
   }
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = NumberUtils.safeParseInt(event.target.value)
+    const newTime = NumberUtils.safeParseNumber(event.target.value)
 
     switch(alarmType) {
       case EventAlarmType.DAY:

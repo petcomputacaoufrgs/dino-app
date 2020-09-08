@@ -4,5 +4,21 @@
     background-color: rgb(233, 233, 233);
     border-radius: 5px;
     padding: 15px;
-    width: 80%;
+    margin-right: 15px;
+    margin-left: 15px;
+    width: 70%;
+    height: calc(100% - 20px);
+    flex: 0 0 auto;
+}
+
+.note__note_content__column__title {
+    margin-bottom: 15px;
+}
+
+.note__note_content__column__droppable {
+    height: 90%;
+}
+
+.note__note_content__column.desktop {
+    width: 25%;
 }

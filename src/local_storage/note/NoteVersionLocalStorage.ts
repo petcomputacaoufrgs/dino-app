@@ -1,5 +1,5 @@
-import LS_Constants from '../constants/LocalStorageKeysConstants'
-import BaseLocalStorage from './BaseLocalStorage'
+import LS_Constants from '../../constants/LocalStorageKeysConstants'
+import BaseLocalStorage from '../BaseLocalStorage'
 
 class NoteVersionLocalStorage extends BaseLocalStorage {
   getVersion = (): number => {

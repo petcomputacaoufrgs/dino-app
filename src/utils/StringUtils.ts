@@ -9,6 +9,8 @@ class StringUtils {
       .toLowerCase()
   }
 
+  removeWhiteSpace = (str: string): string => str.replace(" ", "")
+
   /**
    * @param s1 String um
    * @param s2 String dois

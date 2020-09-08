@@ -1,5 +1,5 @@
-import BaseLocalStorage from './BaseLocalStorage'
-import LS_Constants from '../constants/LocalStorageKeysConstants'
+import BaseLocalStorage from '../BaseLocalStorage'
+import LS_Constants from '../../constants/LocalStorageKeysConstants'
 
 class NoteSyncLocalStorage extends BaseLocalStorage {
   getShouldSync = (): boolean => {

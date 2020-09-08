@@ -1,7 +1,6 @@
-import PouchDB from 'pouchdb'
+import BaseDoc from "../../database/BaseDoc";
 
-export default interface NoteDoc extends PouchDB.Core.GetMeta {
-  _id?: string
+export default interface NoteDoc extends BaseDoc {
   external_id?: number
   order: number
   question: string
@@ -9,4 +8,5 @@ export default interface NoteDoc extends PouchDB.Core.GetMeta {
   tagNames: string[]
   lastUpdate: number
   savedOnServer: boolean
+  columnTitle: string
 }

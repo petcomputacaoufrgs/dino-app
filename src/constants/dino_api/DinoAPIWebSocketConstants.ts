@@ -8,6 +8,7 @@ class DinoAPIWebSocketConstants {
   ALERT_GLOSSARY_UPDATE = '/topic/glossary/update'
   ALERT_APP_SETTINGS_UPDATE = '/user/queue/user_app_settings/update'
   ALERT_NOTE_UPDATE = '/user/queue/note/update'
+  ALERT_NOTE_COLUMN_UPDATE = '/user/queue/note_column/update'
   ALERT_USER_UPDATE = '/user/queue/user/update'
   ALERT_CONTACT_UPDATE = '/user/queue/contact/update'
   ALERT_FAQ_UPDATE = '/topic/faq/update'

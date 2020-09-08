@@ -23,13 +23,14 @@ import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
 import Notes from './notes'
 import NotFound from '../not_found/index'
-import NotesContextProvider from '../../context_provider/notes'
+import NoteContextProvider from '../../context_provider/note'
 import FaqContextProvider from '../../context_provider/faq'
 import GlossaryContextProvider from '../../context_provider/glossary'
 import ContactsContextProvider from '../../context_provider/contact'
 import Faq from './faq'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import Calendar from './calendar'
+import NoteColumnContextProvider from '../../context_provider/note_column'
 
 /**
  * @description Tela principal da aplicação
@@ -146,9 +147,11 @@ const Main = (): JSX.Element => {
           exact
           path={PathConstants.NOTES}
           component={() => (
-            <NotesContextProvider>
-              <Notes />
-            </NotesContextProvider>
+            <NoteColumnContextProvider>
+              <NoteContextProvider>
+                <Notes />
+              </NoteContextProvider>
+            </NoteColumnContextProvider>
           )}
         />
         <PrivateRoute

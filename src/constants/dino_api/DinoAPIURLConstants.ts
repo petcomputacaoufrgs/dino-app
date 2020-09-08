@@ -11,6 +11,7 @@ class DinoAPIURLConstants {
   private GLOSSARY = `${this.URL}public/glossary/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private NOTE = `${this.URL}note/`
+  private NOTE_COLUMN = `${this.URL}note/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
   private FAQ = this.URL + 'faq/'
@@ -52,6 +53,20 @@ class DinoAPIURLConstants {
   NOTE_DELETE_ALL = `${this.NOTE}all/`
 
   NOTE_UPDATE_ALL = `${this.NOTE}all/`
+
+  NOTE_COLUMN_GET = `${this.NOTE_COLUMN}`
+
+  NOTE_COLUMN_SAVE = `${this.NOTE_COLUMN}`
+
+  NOTE_COLUMN_DELETE = `${this.NOTE_COLUMN}`
+
+  NOTE_COLUMN_DELETE_ALL = `${this.NOTE_COLUMN}all/`
+
+  NOTE_COLUMN_UPDATE_ALL = `${this.NOTE_COLUMN}all/`
+
+  NOTE_COLUMN_ORDER = `${this.NOTE_COLUMN}order/`
+
+  NOTE_COLUMN_VERSION = `${this.NOTE_COLUMN}version/`
 
   CONTACT_VERSION = `${this.CONTACT}version/`
 

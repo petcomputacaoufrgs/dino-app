@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useLanguage } from '../../../../../../context_provider/app_settings'
 import DateUtils from '../../../../../../utils/DateUtils'
 import TagList from '../../../../../../components/tag_list/index'
@@ -11,50 +11,44 @@ import './styles.css'
 
 const NoteBodyColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
+  noteIndex,
   onDelete,
   onClickNote
 }) => {
   const language = useLanguage().current
 
-  const [cardNote, setCardNote] = useState(note)
-
   const handleDelete = () => {
-    onDelete(cardNote)
+    onDelete(note)
   }
 
   const handleCardClick = () => {
     onClickNote(note)
   }
 
-  useEffect(() => {
-    setCardNote(note)
-  }, [note])
-  
   return (
-    <Draggable draggableId={cardNote.question} index={cardNote.order}>
+    <Draggable
+      draggableId={note.columnTitle + noteIndex.toString()}
+      index={noteIndex}
+    >
       {(provided) => (
-        <div
+        <MaterialCard
+          className={'note__note_content__column__column_card'}
+          onClick={handleCardClick}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
+          {...provided.dragHandleProps}
         >
-          {console.log(cardNote.question)}
-          <MaterialCard
-            className={'note__note_content__column__column_card'}
-            onClick={handleCardClick}
-          >
-            <CardHeader
-              title={note.question}
-              subheader={DateUtils.getDateStringFormated(
-                cardNote.lastUpdate,
-                language
-              )}
-            />
-            <CardContent className="note__note_content__column__column_card__card__tag_list">
-              <TagList tagList={cardNote.tagNames} />
-            </CardContent>
-          </MaterialCard>
-        </div>
+          <CardHeader
+            title={note.question}
+            subheader={DateUtils.getDateStringFormated(
+              note.lastUpdate,
+              language
+            )}
+          />
+          <CardContent className="note__note_content__column__column_card__card__tag_list">
+            <TagList tagList={note.tagNames} />
+          </CardContent>
+        </MaterialCard>
       )}
     </Draggable>
   )

@@ -1,4 +1,4 @@
-export default interface NoteSaveModel {
+export default interface NoteSaveRequestModel {
   id?: number
 
   question: string
@@ -10,4 +10,6 @@ export default interface NoteSaveModel {
   answer: string
 
   order: number
+
+  columnTitle: string
 }

@@ -1,11 +1,12 @@
-import NoteViewModel from '../../../../types/note/NoteViewModel'
-import NoteDoc from '../../../../types/note/database/NoteDoc';
+import NoteDoc from '../../../../types/note/database/NoteDoc'
+import { DropResult } from 'react-beautiful-dnd'
+import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
 
 export default interface NoteBodyProps {
   onSave: (note: NoteDoc) => void
   onSaveNew: (question: string, tagList: string[], answer: string) => void
-  onBoardOrderChanged: (viewNotes: NoteViewModel[]) => void
+  onDragEnd: (result: DropResult) => void
   onDeleteNote: (note: NoteDoc) => void
-  viewNotes: NoteViewModel[]
+  columns: NoteColumnViewModel[]
   tags: string[]
 }

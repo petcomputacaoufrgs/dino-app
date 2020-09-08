@@ -20,14 +20,14 @@ const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
   }
 
   const getAllMonthDaysThatOccursInAWeekday = (dayOfWeek: number): DayViewModel[] => {
-    const monthDays = ArrayUtils.merge(
+    const monthDays = ArrayUtils.apply(
       calendar.monthDates(date.getFullYear(), date.getMonth())
     )
 
     if (monthDays.length < DAYS_IN_VIEW) {
       const nextMonthDate = DateUtils.getNextMonth(date)
 
-      const nextMonthDays = ArrayUtils.merge(
+      const nextMonthDays = ArrayUtils.apply(
         calendar.monthDates(
           nextMonthDate.getFullYear(),
           nextMonthDate.getMonth()

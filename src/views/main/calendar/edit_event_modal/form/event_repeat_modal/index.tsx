@@ -36,7 +36,7 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({ open, onClose, repe
       event: React.ChangeEvent<HTMLInputElement>,
       value: string
     ) => {
-      onEventRepeatTypeChange(NumberUtils.safeParseInt(value))
+      onEventRepeatTypeChange(NumberUtils.safeParseNumber(value))
     }
 
     return (

@@ -1,17 +1,17 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import NotesContextType from '../../types/context_provider/NotesContextType'
+import NoteContextType from '../../types/context_provider/NoteContextType'
 import NoteService from '../../services/note/NoteService'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteDoc from '../../types/note/database/NoteDoc'
 
-const NotesContext = createContext({
+const NoteContext =createContext <NoteContextType>({
   notes: [],
   tags: [],
-} as NotesContextType)
+})
 
-const NotesContextProvider: React.FC = (props) => {
-  const [notes, setNotes] = useState([] as NoteDoc[])
-  const [tags, setTags] = useState([] as string[])
+const NoteContextProvider: React.FC = (props) => {
+  const [notes, setNotes] = useState<NoteDoc[]>([])
+  const [tags, setTags] = useState<string[]>([])
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
@@ -53,13 +53,13 @@ const NotesContextProvider: React.FC = (props) => {
   }
 
   return (
-    <NotesContext.Provider value={value}>
+    <NoteContext.Provider value={value}>
       {props.children}
-    </NotesContext.Provider>
+    </NoteContext.Provider>
   )
 }
 
-export const useNotes = () => useContext(NotesContext).notes
-export const useTags = () => useContext(NotesContext).tags
+export const useNotes = () => useContext(NoteContext).notes
+export const useTags = () => useContext(NoteContext).tags
 
-export default NotesContextProvider
+export default NoteContextProvider

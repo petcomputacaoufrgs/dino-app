@@ -1,4 +1,4 @@
-import NoteDoc from './database/NoteDoc';
+import NoteDoc from "../database/NoteDoc"
 
 export default interface NoteViewModel extends NoteDoc {
   showByTag: boolean

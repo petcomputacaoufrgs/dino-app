@@ -11,8 +11,15 @@ class ArrayUtils {
     return list.filter((e) => e !== element)
   }
 
-  merge = <T>(lists: T[]): T[] => {
+  apply = <T>(lists: T[]): T[] => {
     return ([] as T[]).concat.apply([], lists)
+  }
+
+  merge = <T>(lists: T[][]): T[] => {
+    const newList: T[] = []
+    newList.concat(...lists)
+
+    return newList
   }
 
   /**

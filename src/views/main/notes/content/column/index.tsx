@@ -1,52 +1,61 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import NoteBodyColumnProps from './props'
 import './styles.css'
-import { Droppable } from 'react-beautiful-dnd'
-import NoteViewModel from '../../../../../types/note/NoteViewModel'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 import NoteBodyColumnCard from './card'
 import NoteBodyColumnHeader from './header'
+import NoteViewModel from '../../../../../types/note/view/NoteViewModel'
+import { isMobile } from 'react-device-detect'
+import NoteDraggableType from '../../../../../constants/NoteDroppableType'
 
-const NOTE_BOARD_ID = 'Perguntas'
-
-const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({column, onClickNote: onEditQuestion, onDelete}) => {
-
-    const [viewColumn, setViewColumn] = useState(column)
-    
-    const renderCard = (note: NoteViewModel, key: number): JSX.Element => {
+const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({column, columnIndex, onClickNote: onEditQuestion, onDelete}) => {
+  
+    const renderCard = (note: NoteViewModel, noteIndex: number): JSX.Element | undefined => {
         if (note.showByTag || note.showByQuestion) {
             return (
               <NoteBodyColumnCard
-                key={key}
                 note={note}
+                key={noteIndex}
+                noteIndex={noteIndex}
                 onClickNote={onEditQuestion}
                 onDelete={onDelete}
               ></NoteBodyColumnCard>
             )
-        } else {
-            return <></>
         }
     }
 
-    useEffect(() => {
-      setViewColumn(column)
-    }, [column])
-
     return (
-      <div className="note__note_content__column">
-        <NoteBodyColumnHeader title={viewColumn.title} />
-        <Droppable droppableId={viewColumn.id}>
-          {(provided) => (
+      <Draggable draggableId={columnIndex.toString()} index={columnIndex}>
+        {(provided) => (
+          <div
+            className={`note__note_content__column ${!isMobile && 'desktop'}`}
+            {...provided.draggableProps}
+            ref={provided.innerRef}
+          >
             <div
-              className="notes__board__container"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
+              className="note__note_content__column__title"
+              {...provided.dragHandleProps}
             >
-              {viewColumn.notes.map((note, index) => renderCard(note, index))}
-              {provided.placeholder}
+              <NoteBodyColumnHeader title={column.title} />
             </div>
-          )}
-        </Droppable>
-      </div>
+            <Droppable
+              droppableId={column.title}
+              type={NoteDraggableType.NOTE}
+            >
+              {(provided) => (
+                <div
+                  className="note__note_content__column__droppable"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {column.notes.map((note, index) => renderCard(note, index))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+        )}
+      </Draggable>
     )
 }
 

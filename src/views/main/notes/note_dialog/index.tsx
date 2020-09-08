@@ -10,7 +10,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import StringUtils from '../../../../utils/StringUtils'
 import NoteService from '../../../../services/note/NoteService'
 import NoteConstants from '../../../../constants/NoteConstants'
-import NoteViewModel from '../../../../types/note/NoteViewModel'
+import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 
 const NoteDialog: React.FC<NoteDialogProps> = ({
   onClose,

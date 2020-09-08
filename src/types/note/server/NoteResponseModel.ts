@@ -1,4 +1,4 @@
-export default interface NoteModel {
+export default interface NoteResponseModel {
   id: number
 
   order: number
@@ -10,4 +10,6 @@ export default interface NoteModel {
   tags: string[]
 
   lastUpdate: number
+
+  columnTitle: string
 }

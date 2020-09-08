@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   z-index: 1000;
+  bottom: 0;
 }
 
 .bottom_navigation .MuiBottomNavigationAction-root.Mui-selected {
@@ -26,7 +27,7 @@
 .bottom_navigation__component {
   position: relative;
   width: 100%;
-  height: calc(100% - 55px - 70px);
+  padding-bottom: 70px;
 }
 
 .bottom_navigation__component_without_bottom {

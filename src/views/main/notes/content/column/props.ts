@@ -6,4 +6,5 @@ export default interface NoteBodyColumnProps {
   columnIndex: number
   onClickNote: (note: NoteViewModel) => void
   onDelete: (note: NoteViewModel) => void
+  onColumnEdit: (column: NoteColumnViewModel) => void
 }

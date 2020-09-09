@@ -345,4 +345,6 @@ export default class PT implements LanguageBase {
   COLUMN_TITLE_LABEL = 'Título da coluna'
 
   COLUMN_MIN_LENGTH_ERROR = 'Mínimo 1 caractere.'
+
+  COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Título já existente'
 }

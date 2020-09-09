@@ -165,4 +165,5 @@ export default interface LanguageBase {
   COLUMN_EDIT_LABEL: string
   COLUMN_TITLE_LABEL: string
   COLUMN_MIN_LENGTH_ERROR: string
+  COLUMN_TITLE_ALREADY_EXISTS_ERROR: string
 }

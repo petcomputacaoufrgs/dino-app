@@ -42,7 +42,7 @@ export default class BaseDatabase<T extends BaseDoc> {
       LogAppErrorService.saveError(e)
     }
   }
-
+  
   putAll = async (docs: T[]) => {
     docs.forEach((doc) => {
       if (!doc._id) {
@@ -70,11 +70,9 @@ export default class BaseDatabase<T extends BaseDoc> {
 
   deleteByDoc = async (doc: T) => {
     try {
-      if (doc._id && doc._rev) {
-        const id = doc._id
-        const rev = doc._rev
-
-        this.db.remove(id, rev)
+      if (doc._id) {
+        const savedDoc = await this.db.get(doc._id)
+        this.db.remove(savedDoc)
       } else {
         throw new DatabaseDeleteWithoutID(this.dbName, doc)
       }

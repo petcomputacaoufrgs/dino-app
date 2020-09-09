@@ -34,10 +34,21 @@ class NoteColumnService {
   }
 
   saveColumn = async (doc: NoteColumnDoc) => {
-    doc.savedOnServer = false
-    doc.lastUpdate = new Date().getTime()
+    if (doc._id) {
+      console.log(doc)
+      await NoteColumnDatabase.deleteByDoc(doc)
+    }
+    
+    const newDoc: NoteColumnDoc = {
+      lastUpdate: new Date().getTime(),
+      order: doc.order,
+      savedOnServer: false,
+      title: doc.title,
+      external_id: doc.external_id,
+      _rev: ''
+    }
 
-    await NoteColumnDatabase.put(doc)
+    await NoteColumnDatabase.put(newDoc)
 
     NoteColumnContextUpdater.update()
 

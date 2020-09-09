@@ -9,13 +9,13 @@ const AddColumn: React.FC<AddColumnProps> = ({ onAddColumn }) => {
     const language = useLanguage().current
 
     return (
-        <>
-        <Button className={`note__note_content__columns__add_column${!isMobile ? ' desktop' : ''}`} onClick={onAddColumn}>
-            <p className="note__note_content__columns__add_column__text">
-                {language.ADD_COLUMN_TEXT}
-            </p>
-        </Button>
-        </>
+        <div className={`note__note_content__columns__add_column${!isMobile ? ' desktop' : ''}`}>
+            <Button className="note__note_content__columns__add_column__button" onClick={onAddColumn}>
+                <p className="note__note_content__columns__add_column__button__text">
+                    {language.ADD_COLUMN_TEXT}
+                </p>
+            </Button>
+        </div>
     )
 }
 

@@ -14,7 +14,15 @@ import NoteColumnDialog from '../column_dialog'
 import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
 
 
-const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoardOrderChanged, onDeleteNote, onSave, onSaveNew}): JSX.Element => {
+const NoteContent: React.FC<NoteBodyProps> = ({
+  tags, 
+  columns, 
+  onDragEnd, 
+  onDeleteNote, 
+  onSave, 
+  onSaveNew,
+  onSaveColumn
+}): JSX.Element => {
   const language = useLanguage().current
 
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(undefined)
@@ -22,6 +30,8 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
   const [noteDialogOpen, setNoteDialogOpen] = useState(false)
   const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
 
+  //#region COLUMN
+  
   const handleNoteColumnDialogClose = () => {
     setNoteColumnDialogOpen(false)
     setCurrentNoteColumn(undefined)
@@ -33,9 +43,19 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
 
   const handleSaveNoteColumn = (column: NoteColumnViewModel) => {
     setNoteColumnDialogOpen(false)
-    console.log("salvar")
-    console.log(column)
+    onSaveColumn(column)
   }
+
+  const handleColumnEdit = (column: NoteColumnViewModel) => {
+    setCurrentNoteColumn(column)
+    setNoteColumnDialogOpen(true)
+  }
+
+  const handleTitleAlreadyExists = (title: string): boolean => (
+    columns.some(column => column.title === title)
+  )
+
+  //#endregion
 
   const handleCardClick = (noteView: NoteViewModel) => {
     setCurrentNote(noteView)
@@ -80,7 +100,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
   }
 
   const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
-    onBoardOrderChanged(result)
+    onDragEnd(result)
   }
 
   const getColumnMaxOrder = (): number => (
@@ -108,6 +128,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
                   key={index}
                   onClickNote={handleCardClick}
                   onDelete={handleOpenDeleteNoteDialog}
+                  onColumnEdit={handleColumnEdit}
                 />
               ))}
               <AddColumn onAddColumn={handleAddColumn}  />
@@ -132,6 +153,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
         open={noteColumnDialogOpen}
         column={currentNoteColumn}
         order={getColumnMaxOrder()}
+        titleAlreadyExists={handleTitleAlreadyExists}
       />
       <DeleteDialog />
     </div>

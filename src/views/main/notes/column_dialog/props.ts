@@ -6,4 +6,5 @@ export default interface NoteColumnDialogProps {
     open: boolean
     order?: number
     column?: NoteColumnViewModel
+    titleAlreadyExists: (title: string) => boolean
 }

@@ -14,6 +14,7 @@ import { NoteColumnViewModel } from '../../../types/note/view/NoteColumnViewMode
 import { DropResult } from 'react-beautiful-dnd'
 import NoteDroppableType from '../../../constants/NoteDroppableType'
 import ArrayUtils from '../../../utils/ArrayUtils'
+import NoteColumnService from '../../../services/note/NoteColumnService'
 
 const convertNotesToNoteViews = (
   notes: NoteDoc[],
@@ -74,6 +75,10 @@ const Notes = () => {
       !changedColumn && destination.index === source.index
 
     return dropedToSamePosition
+  }
+
+  const handleSaveColumn = (column: NoteColumnViewModel) => {
+    NoteColumnService.saveColumn(column)
   }
 
   const handleSaveNewNote = (question: string, tagNames: string[], answer: string) => {
@@ -208,6 +213,7 @@ const Notes = () => {
         onDragEnd={handleDragEnd}
         onSave={handleSaveNote}
         onSaveNew={handleSaveNewNote}
+        onSaveColumn={handleSaveColumn}
         onDeleteNote={handleDeleteNote}
         tags={tags}
         columns={viewColumns}

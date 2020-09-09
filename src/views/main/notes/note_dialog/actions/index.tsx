@@ -3,7 +3,8 @@ import DialogActionsProps from './props'
 import './styles.css'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import MaterialDialogActions from '@material-ui/core/DialogActions'
-import DoneButton from '../../../../../components/button/done_button'
+import SVGButton from '../../../../../components/button/svg_button'
+import { ReactComponent as DoneIcon } from '../../../../../assets/icons/done.svg'
 
 const DialogActions: React.FC<DialogActionsProps> = (
   {
@@ -14,9 +15,11 @@ const DialogActions: React.FC<DialogActionsProps> = (
 
   return (
     <MaterialDialogActions className="note__note_dialog__actions">
-      <DoneButton
+      <SVGButton
         onClick={onSave}
         ariaLabel={language.DIALOG_SAVE_BUTTON_LABEL}
+        SVG={DoneIcon}
+        fab
       />
     </MaterialDialogActions>
   )

@@ -6,7 +6,8 @@ import { useLanguage } from '../../../../../context_provider/app_settings'
 const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
     onTitleChange,
     title,
-    invalidTitle
+    invalidTitle,
+    invalidMessage
 }) => {
     const language = useLanguage().current
 
@@ -21,7 +22,7 @@ const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
             value={title}
             onChange={handleTitleChange}
             error={invalidTitle}
-            helperText={language.COLUMN_MIN_LENGTH_ERROR}
+            helperText={invalidMessage}
             autoFocus
             margin="dense"
             label={language.COLUMN_TITLE_LABEL}

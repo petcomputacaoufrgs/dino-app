@@ -17,6 +17,7 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ContactService from '../contact/ContactService'
 import CalendarService from '../calendar/CalendarService'
 import FaqService from '../faq/FaqService'
+import NoteColumnService from '../note/NoteColumnService'
 
 class UserService {
   private setVersion = (version: number) => {
@@ -239,6 +240,7 @@ class UserService {
     AuthService.removeUserData()
     AppSettingsService.removeUserData()
     NoteService.removeUserData()
+    NoteColumnService.removeUserData()
     GlossaryService.removeUserData()
     LogAppErrorService.removeUserData()
     ContactService.removeUserData()

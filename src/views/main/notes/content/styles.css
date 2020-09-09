@@ -14,8 +14,5 @@
     overflow-x: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 0px;
 }

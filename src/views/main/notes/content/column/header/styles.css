@@ -1,7 +1,14 @@
 .note__note_content__column__column_header {
     margin-bottom: 15px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
 }
 
 .note__note_content__column__column_header h2 {
-    font-size: x-large;
+    font-size: large;
+}
+
+.note__note_content__column__column_header__button {
+    margin-left: auto;
 }

@@ -11,7 +11,7 @@ class DinoAPIURLConstants {
   private GLOSSARY = `${this.URL}public/glossary/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private NOTE = `${this.URL}note/`
-  private NOTE_COLUMN = `${this.URL}note/`
+  private NOTE_COLUMN = `${this.URL}note_column/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
   private FAQ = this.URL + 'faq/'

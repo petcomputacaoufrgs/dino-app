@@ -343,4 +343,6 @@ export default class EN implements LanguageBase {
 
   COLUMN_MIN_LENGTH_ERROR = 'Minimum one character.'
 
+  COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Title already exists'
+
 }

@@ -15,6 +15,7 @@ const NoteColumnDialog = forwardRef(
 
         const [newTitle, setNewTitle] = useState<string>(props.column ? props.column.title : '')
         const [invalidTitle, setInvalidTitle] = useState<boolean>(false)
+        const [invalidMessage, setInvalidMessage] = useState<string>('')
 
         useEffect(() => {
             setNewTitle(props.column ? props.column.title : '')
@@ -52,9 +53,27 @@ const NoteColumnDialog = forwardRef(
             setNewTitle(newTitle.substring(0, NoteColumnConstants.TITLE_MAX))
         }
 
-        const isTitleValid = (title: string): boolean => (
-            title.length >= NoteColumnConstants.TITLE_MIN
-        )
+        const isTitleValid = (title: string): boolean => {
+            const unchangedTitle = props.column && props.column.title === title
+            if (unchangedTitle) {
+                return true
+            }
+
+            const minLengthError = title.length < NoteColumnConstants.TITLE_MIN
+            if (minLengthError) {
+                setInvalidMessage(language.COLUMN_MIN_LENGTH_ERROR)
+                return false
+            }
+
+            const titleAlreadyExists = props.titleAlreadyExists(title)
+            if (titleAlreadyExists) {
+                setInvalidMessage(language.COLUMN_TITLE_ALREADY_EXISTS_ERROR)
+                return false
+            }
+
+            setInvalidMessage('')
+            return true
+        }
 
         return (
             <Dialog
@@ -73,6 +92,7 @@ const NoteColumnDialog = forwardRef(
                         title={newTitle}
                         onTitleChange={handleTitleChange}
                         invalidTitle={invalidTitle}
+                        invalidMessage={invalidMessage}
                     />
                 </DialogContent>
                 <DialogActions>

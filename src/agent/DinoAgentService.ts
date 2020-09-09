@@ -13,7 +13,7 @@ const TIME_MARGIN_OF_ERROR_IN_MS = 300000
 
 class DinoAgentService extends BaseAgent {
   protected filterBeforeCreate = async () => {
-    const success = this.updateGoogleAccessTokenIfNecessary()
+    const success = this.updateDinoAccessTokenIfNecessary()
 
     return success
   }
@@ -35,7 +35,7 @@ class DinoAgentService extends BaseAgent {
     }
   }
 
-  private updateGoogleAccessTokenIfNecessary = async (): Promise<boolean> => {
+  private updateDinoAccessTokenIfNecessary = async (): Promise<boolean> => {
     const isAuthenticated = AuthService.isAuthenticated()
 
     if (isAuthenticated) {

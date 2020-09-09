@@ -9,6 +9,7 @@ import { DragDropContext, DropResult, ResponderProvided, Droppable } from 'react
 import NoteContentColumn from './column'
 import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 import NoteDroppableType from '../../../../constants/NoteDroppableType'
+import AddColumn from './add_column'
 
 
 const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoardOrderChanged, onDeleteNote, onSave, onSaveNew}): JSX.Element => {
@@ -33,7 +34,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
     agreeOptionText: language.AGREEMENT_OPTION_TEXT,
     disagreeOptionText: language.DISAGREEMENT_OPTION_TEXT,
   }
-//https://egghead.io/lessons/react-create-and-style-a-list-of-data-with-react
+
   const [DeleteDialog, showDeleteDialog] = AgreementDialog(agreementDialogProps)
 
   const handleOpenDeleteNoteDialog = (note: NoteViewModel) => {
@@ -63,6 +64,10 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
     onBoardOrderChanged(result)
   }
 
+  const handleAddColumn = () => {
+    console.log("add column")
+  }
+
   return (
     <div className="note__note_content">
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -86,6 +91,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
                   onDelete={handleOpenDeleteNoteDialog}
                 />
               ))}
+              <AddColumn onAddColumn={handleAddColumn}  />
               {provided.placeholder}
             </div>
           )}

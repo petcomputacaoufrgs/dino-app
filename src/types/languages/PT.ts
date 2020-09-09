@@ -336,4 +336,6 @@ export default class PT implements LanguageBase {
 
   MAX = 'Máx.'
 
+  ADD_COLUMN_TEXT = 'Adicionar coluna'
+
 }

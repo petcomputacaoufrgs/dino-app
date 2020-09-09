@@ -333,4 +333,6 @@ export default class EN implements LanguageBase {
 
   MAX = 'Max.'
 
+  ADD_COLUMN_TEXT = 'Add column'
+
 }

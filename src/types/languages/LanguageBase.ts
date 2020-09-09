@@ -160,4 +160,5 @@ export default interface LanguageBase {
   EVENT_COLOR_LABEL: string
   FAQ_CONNECTION_ERROR: string
   MAX: string
+  ADD_COLUMN_TEXT: string
 }

@@ -17,7 +17,7 @@ class DeletedNoteDatabase extends BaseDatabase<NoteDoc> {
     doc._rev = ''
 
     try {
-      this.db.put(doc)
+      await this.db.put(doc)
     } catch(e) {
       LogAppErrorService.saveError(e)
     }

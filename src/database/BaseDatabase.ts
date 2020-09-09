@@ -37,7 +37,7 @@ export default class BaseDatabase<T extends BaseDoc> {
     }
 
     try {
-      this.db.put(doc)
+      await this.db.put(doc)
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
@@ -51,7 +51,7 @@ export default class BaseDatabase<T extends BaseDoc> {
     })
 
     try {
-      this.db.bulkDocs(docs)
+      await this.db.bulkDocs(docs)
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
@@ -72,7 +72,7 @@ export default class BaseDatabase<T extends BaseDoc> {
     try {
       if (doc._id) {
         const savedDoc = await this.db.get(doc._id)
-        this.db.remove(savedDoc)
+        await this.db.remove(savedDoc)
       } else {
         throw new DatabaseDeleteWithoutID(this.dbName, doc)
       }
@@ -120,5 +120,5 @@ export default class BaseDatabase<T extends BaseDoc> {
   }
 
   private getNewConnection = (): PouchDB.Database<T> =>
-    new PouchDB(this.dbName, { auto_compaction: true })
+    new PouchDB(this.dbName, { auto_compaction: true, revs_limit: 50 })
 }

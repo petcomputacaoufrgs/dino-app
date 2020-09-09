@@ -35,7 +35,6 @@ class NoteColumnService {
 
   saveColumn = async (doc: NoteColumnDoc) => {
     if (doc._id) {
-      console.log(doc)
       await NoteColumnDatabase.deleteByDoc(doc)
     }
     
@@ -52,7 +51,7 @@ class NoteColumnService {
 
     NoteColumnContextUpdater.update()
 
-    this.saveColumnOnServer(doc)
+    this.saveColumnOnServer(newDoc)
   }
 
   saveColumnOnServer = async (doc: NoteColumnDoc) => {
@@ -60,6 +59,7 @@ class NoteColumnService {
 
     if (newVersion) {
       this.setVersion(newVersion)
+      //console.log("update context")
       NoteContextUpdater.update()
     } else {
       this.setShouldSync(true)

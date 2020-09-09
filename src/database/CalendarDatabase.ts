@@ -27,7 +27,7 @@ class CalendarDatabase extends BaseDatabase<EventDoc> {
     })
 
     try {
-      this.db.bulkDocs(docs)
+      await this.db.bulkDocs(docs)
     } catch (e) {
       LogAppErrorService.saveError(e)
     }

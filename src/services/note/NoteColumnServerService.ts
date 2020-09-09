@@ -6,8 +6,8 @@ import LogAppErrorService from "../log_app_error/LogAppErrorService"
 import NoteColumnSaveRequestModel from "../../types/note/server/NoteColumnSaveRequestModel"
 import NoteColumnSaveResponseModel from "../../types/note/server/NoteColumnSaveResponseModel"
 import NoteColumnDatabase from "../../database/note/NoteColumnDatabase"
-import NoteColumnOrderRequestModel from "../../types/note/server/NoteColumnOrderRequestModel"
 import NoteColumnDeleteRequestModel from "../../types/note/server/NoteColumnDeleteRequestModel"
+import NoteColumnOrderAllRequestModel from "../../types/note/server/NoteColumnOrderAllRequestModel"
 
 class NoteColumnServerService {
 
@@ -70,6 +70,8 @@ class NoteColumnServerService {
         const noteColumnDoc = await NoteColumnDatabase.getByTitle(
           noteColumnModel.title
         )
+        //console.log("retornou")
+        //console.log(noteColumnDoc)
         if (noteColumnDoc) {
           noteColumnDoc.savedOnServer = true
           noteColumnDoc.external_id = body.id
@@ -119,15 +121,16 @@ class NoteColumnServerService {
   }
 
   saveOrder = async (docs: NoteColumnDoc[]): Promise<number | null> => {
-    const model: NoteColumnOrderRequestModel[] = []
+    const model: NoteColumnOrderAllRequestModel = {
+      items: []
+    }
 
     docs.forEach((doc) => {
-      if (doc.external_id) {
-        model.push({
-          id: doc.external_id,
-          order: doc.order,
-        })
-      }
+      model.items.push({
+        id: doc.external_id,
+        columnTitle: doc.title,
+        order: doc.order,
+      })
     })
 
     const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_COLUMN_ORDER)

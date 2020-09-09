@@ -1,5 +1,7 @@
 export default interface NoteColumnOrderRequestModel {
-  id: number
+  id?: number
+
+  columnTitle: string
 
   order: number
 }

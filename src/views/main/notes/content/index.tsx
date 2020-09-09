@@ -12,7 +12,7 @@ import NoteDroppableType from '../../../../constants/NoteDroppableType'
 import AddColumn from './add_column'
 import NoteColumnDialog from '../column_dialog'
 import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
-
+import StringUtils from '../../../../utils/StringUtils'
 
 const NoteContent: React.FC<NoteBodyProps> = ({
   tags, 
@@ -27,14 +27,16 @@ const NoteContent: React.FC<NoteBodyProps> = ({
 
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(undefined)
   const [currentNoteColumn, setCurrentNoteColumn] = useState<NoteColumnViewModel | undefined>(undefined)
-  const [noteDialogOpen, setNoteDialogOpen] = useState(false)
-  const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
+  const [noteDialogOpen, setNoteDialogOpen] = useState<boolean>(false)
+  const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState<boolean>(
+    false
+  )
+  const [dragging, setDragging] = useState<boolean>(false)
 
   //#region COLUMN
   
   const handleNoteColumnDialogClose = () => {
-    setNoteColumnDialogOpen(false)
-    setCurrentNoteColumn(undefined)
+    closeNoteColumnDialog()
   }
 
   const handleAddColumn = () => {
@@ -42,7 +44,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
   }
 
   const handleSaveNoteColumn = (column: NoteColumnViewModel) => {
-    setNoteColumnDialogOpen(false)
+    closeNoteColumnDialog()
     onSaveColumn(column)
   }
 
@@ -51,9 +53,16 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setNoteColumnDialogOpen(true)
   }
 
-  const handleTitleAlreadyExists = (title: string): boolean => (
-    columns.some(column => column.title === title)
-  )
+  const handleTitleAlreadyExists = (title: string): boolean =>
+    columns.some(
+      (column) =>
+        StringUtils.normalize(column.title) === StringUtils.normalize(title)
+    )
+
+  const closeNoteColumnDialog = () => {
+    setNoteColumnDialogOpen(false)
+    setCurrentNoteColumn(undefined)
+  }
 
   //#endregion
 
@@ -100,7 +109,12 @@ const NoteContent: React.FC<NoteBodyProps> = ({
   }
 
   const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    setDragging(false)
     onDragEnd(result)
+  }
+
+  const handleStartEnd = () => {
+    setDragging(true)
   }
 
   const getColumnMaxOrder = (): number => (
@@ -109,7 +123,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
 
   return (
     <div className="note__note_content">
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleStartEnd}>
         <Droppable
           droppableId="all-columns"
           direction="horizontal"
@@ -131,7 +145,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
                   onColumnEdit={handleColumnEdit}
                 />
               ))}
-              <AddColumn onAddColumn={handleAddColumn}  />
+              {!dragging && <AddColumn onAddColumn={handleAddColumn}  />}
               {provided.placeholder}
             </div>
           )}

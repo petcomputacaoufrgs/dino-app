@@ -16,10 +16,14 @@ const NoteColumnContextProvider: React.FC = (props) => {
     const updateData = async () => {
       const savedColumns = await NoteColumnService.getColumns()
 
+      //console.log("updateData")
+
       saveData(savedColumns)
     }
 
     let saveData = (columns: NoteColumnDoc[]) => {
+      //console.log("saving")
+      //console.log(columns)
       setColumns(columns)
 
       if (firstLoad) {
@@ -31,11 +35,7 @@ const NoteColumnContextProvider: React.FC = (props) => {
       updateData()
     }
 
-    const handleLocalDataChanged = () => {
-      updateData()
-    }
-
-    NoteColumnContextUpdater.setCallback(handleLocalDataChanged)
+    NoteColumnContextUpdater.setCallback(updateData)
 
     const cleanBeforeUpdate = () => {
       saveData = () => {}

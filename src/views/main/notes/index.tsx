@@ -58,6 +58,7 @@ const Notes = () => {
   )
 
   useEffect(() => {
+    //console.log("useEffect")
     setViewColumns(createViewColumns(columns, notes, tagSearch, textSearch))
   }, [columns, notes, textSearch, tagSearch])
 
@@ -149,6 +150,9 @@ const Notes = () => {
     viewColumns.splice(destination.index, 0, changedColumn)
 
     setViewColumns(Array.from(viewColumns))
+
+    //console.log(viewColumns)
+    NoteColumnService.saveColumnsOrder(viewColumns)
   }
 
   const handleDragEnd = (result: DropResult) => {

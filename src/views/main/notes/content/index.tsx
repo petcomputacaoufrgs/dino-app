@@ -10,13 +10,32 @@ import NoteContentColumn from './column'
 import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 import NoteDroppableType from '../../../../constants/NoteDroppableType'
 import AddColumn from './add_column'
+import NoteColumnDialog from '../column_dialog'
+import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
 
 
 const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoardOrderChanged, onDeleteNote, onSave, onSaveNew}): JSX.Element => {
   const language = useLanguage().current
 
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(undefined)
+  const [currentNoteColumn, setCurrentNoteColumn] = useState<NoteColumnViewModel | undefined>(undefined)
   const [noteDialogOpen, setNoteDialogOpen] = useState(false)
+  const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
+
+  const handleNoteColumnDialogClose = () => {
+    setNoteColumnDialogOpen(false)
+    setCurrentNoteColumn(undefined)
+  }
+
+  const handleAddColumn = () => {
+    setNoteColumnDialogOpen(true)
+  }
+
+  const handleSaveNoteColumn = (column: NoteColumnViewModel) => {
+    setNoteColumnDialogOpen(false)
+    console.log("salvar")
+    console.log(column)
+  }
 
   const handleCardClick = (noteView: NoteViewModel) => {
     setCurrentNote(noteView)
@@ -64,9 +83,9 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
     onBoardOrderChanged(result)
   }
 
-  const handleAddColumn = () => {
-    console.log("add column")
-  }
+  const getColumnMaxOrder = (): number => (
+    columns.length
+  )
 
   return (
     <div className="note__note_content">
@@ -107,6 +126,13 @@ const NoteContent: React.FC<NoteBodyProps> = ({tags, columns, onDragEnd: onBoard
           onClose={handleCloseCardDialog}
         />
       )}
+      <NoteColumnDialog 
+        onClose={handleNoteColumnDialogClose}
+        onSave={handleSaveNoteColumn}
+        open={noteColumnDialogOpen}
+        column={currentNoteColumn}
+        order={getColumnMaxOrder()}
+      />
       <DeleteDialog />
     </div>
   )

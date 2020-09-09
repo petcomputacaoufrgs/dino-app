@@ -336,6 +336,13 @@ export default class PT implements LanguageBase {
 
   MAX = 'Máx.'
 
-  ADD_COLUMN_TEXT = 'Adicionar coluna'
+  ADD_COLUMN_TEXT = '+ Adicionar coluna'
 
+  COLUMN_ADD_LABEL = 'Adicionar Coluna'
+
+  COLUMN_EDIT_LABEL = 'Editar Coluna'
+
+  COLUMN_TITLE_LABEL = 'Título da coluna'
+
+  COLUMN_MIN_LENGTH_ERROR = 'Mínimo 1 caractere.'
 }

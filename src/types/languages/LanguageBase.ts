@@ -161,4 +161,8 @@ export default interface LanguageBase {
   FAQ_CONNECTION_ERROR: string
   MAX: string
   ADD_COLUMN_TEXT: string
+  COLUMN_ADD_LABEL: string
+  COLUMN_EDIT_LABEL: string
+  COLUMN_TITLE_LABEL: string
+  COLUMN_MIN_LENGTH_ERROR: string
 }

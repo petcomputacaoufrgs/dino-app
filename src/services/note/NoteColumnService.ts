@@ -7,6 +7,7 @@ import NoteColumnSyncLocalStorage from "../../local_storage/note/NoteColumnSyncL
 import NoteColumnContextUpdater from "../../context_updater/NoteColumnContextUpdater"
 import StringUtils from "../../utils/StringUtils"
 import NoteContextUpdater from "../../context_updater/NoteContextUpdater"
+import { NoteColumnViewModel } from "../../types/note/view/NoteColumnViewModel"
 
 class NoteColumnService {
   //#region GET
@@ -246,6 +247,19 @@ class NoteColumnService {
     return false
   }
 
+  //#endregion
+
+  //#region CREATE
+
+  createNewNoteColumnView = (title: string, order: number): NoteColumnViewModel => ({
+    lastUpdate: new Date().getTime(),
+    notes: [],
+    order: order,
+    savedOnServer: false,
+    title: title,
+    _rev: ''
+  })
+  
   //#endregion
 }
 

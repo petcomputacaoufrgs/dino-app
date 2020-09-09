@@ -333,6 +333,14 @@ export default class EN implements LanguageBase {
 
   MAX = 'Max.'
 
-  ADD_COLUMN_TEXT = 'Add column'
+  ADD_COLUMN_TEXT = '+ Add column'
+
+  COLUMN_ADD_LABEL = 'Add Column'
+
+  COLUMN_EDIT_LABEL = 'Edit Column'
+
+  COLUMN_TITLE_LABEL = 'Column\'s title'
+
+  COLUMN_MIN_LENGTH_ERROR = 'Minimum one character.'
 
 }

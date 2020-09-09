@@ -28,7 +28,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({column, columnIndex, 
       <Draggable draggableId={columnIndex.toString()} index={columnIndex}>
         {(provided) => (
           <div
-            className={`note__note_content__column ${!isMobile && 'desktop'}`}
+            className={`note__note_content__column ${!isMobile ? 'desktop' : ''}`}
             {...provided.draggableProps}
             ref={provided.innerRef}
           >

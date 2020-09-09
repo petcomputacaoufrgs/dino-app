@@ -12,6 +12,7 @@ import { useLanguage, useCurrentFaq } from '../../../../context_provider/app_set
 import SelectFaq from '../select_faq'
 import './styles.css'
 import FaqService from '../../../../services/faq/FaqService'
+import Constants from '../../../../constants/FaqConstants'
 
 const QuestionDialogForm = React.forwardRef(({
     dialogOpen,
@@ -58,56 +59,55 @@ const QuestionDialogForm = React.forwardRef(({
         setQuestion(event.target.value as string)
     }
 
-    const CHARACTER_LIMIT = 200
-
     return (
-      <Dialog
-        ref={ref}
-        open={dialogOpen}
-        fullWidth
-        onClose={handleClose}
-        TransitionComponent={TransitionSlide}
-      >
-        
-        <DialogContent dividers>
-          <SelectFaq
-              selectedFaq={selectedFaq}
-              setSelectedFaq={setSelectedFaq}
-          />
-          <TextField
-              required
-              fullWidth
-              multiline
-              rowsMax={7}
-              value={question}
-              onChange={handleChangeQuestion}
-              autoFocus
-              margin="dense"
-              id="question"
-              label={language.FORM_QUESTION}
-              placeholder={language.FORM_QUESTION_PLACEHOLDER}
-              type="question"
-              inputProps={{maxLength: CHARACTER_LIMIT}}
-              helperText={`${question.length}/${CHARACTER_LIMIT}`} 
-              error={question.length === CHARACTER_LIMIT || error} 
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleClose}
-            color="primary"
-          >
-            {language.DIALOG_CANCEL_BUTTON_TEXT}
-          </Button>
+      <div className='dialog-form'>
+        <Dialog
+          ref={ref}
+          open={dialogOpen}
+          fullWidth
+          onClose={handleClose}
+          TransitionComponent={TransitionSlide}
+        >
+            <DialogContent dividers>
+              <SelectFaq
+                  selectedFaq={selectedFaq}
+                  setSelectedFaq={setSelectedFaq}
+              />
+              <TextField
+                  required
+                  fullWidth
+                  value={question}
+                  onChange={handleChangeQuestion}
+                  autoFocus
+                  margin="dense"
+                  id="question"
+                  label={language.FORM_QUESTION}
+                  placeholder={language.FORM_QUESTION_PLACEHOLDER}
+                  type="question"
+                  multiline
+                  rowsMax={7}
+                  inputProps={{maxLength: Constants.USER_QUESTION_MAX}}
+                  helperText={`${question.length}/${Constants.USER_QUESTION_MAX}`} 
+                  error={question.length === Constants.USER_QUESTION_MAX || error} 
+              />
+            </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleClose}
+              color="primary"
+            >
+              {language.DIALOG_CANCEL_BUTTON_TEXT}
+            </Button>
 
-          <Button
-            onClick={handleSave}
-            color="primary"
-          >
-            {language.DIALOG_SAVE_BUTTON_TEXT}
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <Button
+              onClick={handleSave}
+              color="primary"
+            >
+              {language.DIALOG_SAVE_BUTTON_TEXT}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     )
   }
 )

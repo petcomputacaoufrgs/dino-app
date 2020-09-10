@@ -8,6 +8,8 @@ import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import Constants from '../../../../../../constants/ContactsConstants'
+
 
 const PhoneFields = ({
   type, onChangeType, number,  onChangeNumber, error, helperText, handleDeletePhone
@@ -27,21 +29,15 @@ const PhoneFields = ({
     if (type === ContactsConstants.RESIDENTIAL) {
       return '(23)4567-2345'
     }
-    else if(type === ContactsConstants.MOBILE) {
+    if(type === ContactsConstants.MOBILE) {
       return '(89)89898-9898'
     }
     return ''
   }
 
   const getNumberMask = () => {
-
-    if (type === ContactsConstants.RESIDENTIAL) {
-      return strUtils.replaceDigits('(23)4567-2345', '#')
-    }
-    else if(type === ContactsConstants.MOBILE) {
-      return strUtils.replaceDigits('(89)89898-9898', '#')
-    }
-    return undefined
+    return type === ContactsConstants.PUBLIC_SERVICE ? 
+    '#'.repeat(Constants.NUMBER_MAX) : strUtils.replaceDigits(getNumberFormat(), '#')
   }
 
   return (
@@ -65,6 +61,7 @@ const PhoneFields = ({
         customInput={TextField}
         format={getNumberMask()}
         InputProps={{
+          maxLength: Constants.NUMBER_MAX, //n funciona
           endAdornment: (
             <InputAdornment position="end">
               <IconButton

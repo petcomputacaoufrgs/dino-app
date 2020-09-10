@@ -2,3 +2,7 @@
     text-align: right !important; 
     display: block;
 }
+
+.dialog-form .MuiDialogContent-root .MuiDialogContent-dividers {
+    padding: 8px 24px !important;
+}

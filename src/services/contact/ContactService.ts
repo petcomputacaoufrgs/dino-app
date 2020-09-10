@@ -95,7 +95,6 @@ class ContactsService {
     if(response !== undefined) {
       item.id = response.id
     }
-
     const items = this.getItems()
     items.push(item)
     this.setItems(items)

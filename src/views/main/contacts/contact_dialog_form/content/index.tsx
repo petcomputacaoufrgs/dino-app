@@ -5,6 +5,7 @@ import PhoneFields from './phone_fields'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import { ListItem } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
+import Constants from '../../../../../constants/ContactsConstants'
 
 
 const ContactFormDialogContent = (
@@ -12,8 +13,16 @@ const ContactFormDialogContent = (
 ): JSX.Element => {
   const language = useLanguage().current
 
-  const isTheInvalidNumber = (number: string): boolean =>
-    props.helperText.number === number
+  const isNumberTaken = (tel: string): boolean =>
+    props.helperText.number === tel
+
+  const isNumberInvalid = (tel: string) => {
+    return isNumberTaken(tel) || tel.length === Constants.NUMBER_MAX
+  }
+
+  const isNameInvalid = (name: string) => {
+    return name.length === Constants.NAME_MAX || props.invalidName
+  }
 
   return (
     <>
@@ -22,11 +31,12 @@ const ContactFormDialogContent = (
         fullWidth
         value={props.name}
         onChange={props.handleChangeName}
-        error={props.invalidName}
         margin="dense"
         id="name"
         label={language.FORM_NAME}
         type="name"
+        inputProps={{maxLength: Constants.NAME_MAX}}
+        error={isNameInvalid(props.name)}
       />
       <br />
       <TextField
@@ -37,6 +47,8 @@ const ContactFormDialogContent = (
         id="description"
         label={language.FORM_DESCRIPTION}
         type="text"
+        inputProps={{maxLength: Constants.DESCRIPTION_MAX}}
+        error={props.description.length === Constants.DESCRIPTION_MAX}
       />
       <br />
       
@@ -47,9 +59,9 @@ const ContactFormDialogContent = (
             onChangeType={(e) => props.handleChangeType(e, index)}
             number={phone.number}
             onChangeNumber={(e) => props.handleChangeNumber(e, index)}
-            error={isTheInvalidNumber(phone.number)}
+            error={isNumberInvalid(phone.number)}
             helperText={
-              isTheInvalidNumber(phone.number) ? props.helperText.text : ''
+              isNumberTaken(phone.number) ? props.helperText.text : ''
             }
             handleDeletePhone={() => props.handleDeletePhone(phone.number)}
           />

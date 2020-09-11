@@ -114,38 +114,13 @@ const Faq = (): JSX.Element => {
             {language.SELECT_FAQ_BUTTON}
           </Button>
         </div>
-      </div>)
-    }
-
-    return (
-      <div>
-        <MuiSearchBar
-          value={searchTerm}
-          onChange={handleChangeValueSearchTerm}
-          placeholder={language.SEARCH_HOLDER}
-        />
-        {isFaqEmpty ? renderFaqOptions() :
-        <div>
-          <FaqItems 
-            title={selectedFaq ? selectedFaq.title : ''} 
-            items={searchResults} 
-          />
-          <button className='send-question__button' onClick={handleSendQuestion}>
-            {language.NOT_FOUND_QUESTION_FAQ}
-          </button>
-          <QuestionDialogForm 
-            dialogOpen={dialogOpen} 
-            setDialogOpen={setDialogOpen}
-          />
-        </div>
-        }
       </div>
     )
   }
 
   return (
     <div>
-      <BootstrapSearchBar
+      <MuiSearchBar
         value={searchTerm}
         onChange={handleChangeValueSearchTerm}
         placeholder={language.SEARCH_HOLDER}
@@ -153,10 +128,22 @@ const Faq = (): JSX.Element => {
       {isFaqEmpty ? (
         renderFaqOptions()
       ) : (
-        <FaqItems
-          title={selectedFaq ? selectedFaq.title : ''}
-          items={searchResults}
-        />
+        <div>
+          <FaqItems
+            title={selectedFaq ? selectedFaq.title : ''}
+            items={searchResults}
+          />
+          <button
+            className="send-question__button"
+            onClick={handleSendQuestion}
+          >
+            {language.NOT_FOUND_QUESTION_FAQ}
+          </button>
+          <QuestionDialogForm
+            dialogOpen={dialogOpen}
+            setDialogOpen={setDialogOpen}
+          />
+        </div>
       )}
     </div>
   )

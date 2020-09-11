@@ -7,20 +7,16 @@ import './styles.css'
 import { Search } from '@material-ui/icons'
 import { InputAdornment, IconButton } from '@material-ui/core'
 
-const TagSearchBar: React.FC<TagSearchBarProps> = ({
-  options,
-  onTagSearch,
-  onTextSearch,
-}): JSX.Element => {
+const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
   const language = useLanguage().current
 
   const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
-    onTagSearch(values)
+    props.onTagSearch(values)
   }
 
   const handleInputChange = (event: React.ChangeEvent<{}>, value: string) => {
-    if (onTextSearch) {
-      onTextSearch(value)
+    if (props.onTextSearch) {
+      props.onTextSearch(value)
     }
   }
 
@@ -30,12 +26,12 @@ const TagSearchBar: React.FC<TagSearchBarProps> = ({
       multiple
       loadingText={language.LOADING}
       noOptionsText={language.NO_OPTIONS}
-      options={options}
+      options={props.options}
       getOptionLabel={(option) => option}
       className="tag_search_bar"
       onChange={handleChange}
       onInputChange={handleInputChange}
-      size='small'
+      size="small"
       renderInput={(params) => (
         <TextField
           {...params}
@@ -53,7 +49,7 @@ const TagSearchBar: React.FC<TagSearchBarProps> = ({
                 </InputAdornment>
                 {params.InputProps.startAdornment}
               </>
-            )
+            ),
           }}
         />
       )}

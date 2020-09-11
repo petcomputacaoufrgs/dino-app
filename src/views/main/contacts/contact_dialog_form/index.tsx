@@ -5,12 +5,21 @@ import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
 import ColorConstants from '../../../../constants/ColorConstants'
-import View from './view'
 
-const ContactFormDialog = ({ dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps): JSX.Element => {
+import Button from '@material-ui/core/Button'
+import { Dialog, DialogActions, DialogContent,} from '@material-ui/core'
+import ContactFormDialogHeader from './header'
+import ContactFormDialogContent from './content'
+import TransitionSlide from '../../../../components/slide_transition'
+import { useLanguage } from '../../../../context_provider/app_settings'
+import './styles.css'
+
+
+const ContactFormDialog = React.forwardRef(({ dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
+
+  const language = useLanguage().current
 
   const getContact = () => {
-    console.log("aaaa")
     return {
       name: item?.name || '',
       description: item?.description || '',
@@ -129,24 +138,49 @@ const ContactFormDialog = ({ dialogOpen, onClose: handleClose, action, item }: C
   }
 
   return (
-    <View
-      open={dialogOpen}
-      handleClose={handleClose}
-      action={action}
-      contact={contact}
-      phones={phones}
-      invalidName={invalidName}
-      invalidPhone={invalidPhone}
-      handleChangeName={handleChangeName}
-      handleChangeDescription={handleChangeDescription}
-      handleChangeNumber={handleChangeNumber}
-      handleChangeType={handleChangeType}
-      handleChangeColor={handleChangeColor}
-      handleAddPhone={handleAddPhone}
-      handleDeletePhone={handleDeletePhone}
-      handleSave={handleSave}
-    />
+    <div className='contact-form'>
+        <Dialog
+          ref={ref}
+          style={{margin:'0px'}}
+          open={dialogOpen}
+          maxWidth='xl'
+          fullWidth
+          onClose={handleClose}
+          TransitionComponent={TransitionSlide}
+        >
+          <ContactFormDialogHeader
+            action={action}
+            name={contact.name}
+            color={contact.color}
+            handleChangeColor={handleChangeColor}
+            handleCloseDialog={handleClose}
+          />
+          <DialogContent dividers>
+            <ContactFormDialogContent
+              name={contact.name}
+              description={contact.description}
+              phones={phones}
+              helperText={invalidPhone}
+              invalidName={invalidName}
+              handleChangeName={handleChangeName}
+              handleChangeDescription={handleChangeDescription}
+              handleChangeType={handleChangeType}
+              handleChangeNumber={handleChangeNumber}
+              handleDeletePhone={handleDeletePhone}
+              handleAddPhone={handleAddPhone}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              {language.DIALOG_CANCEL_BUTTON_TEXT}
+            </Button>
+            <Button onClick={handleSave} color="primary">
+              {language.DIALOG_SAVE_BUTTON_TEXT}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
   )
-}
+})
 
 export default ContactFormDialog

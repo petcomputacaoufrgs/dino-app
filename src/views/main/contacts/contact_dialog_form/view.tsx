@@ -18,10 +18,8 @@ const View = React.forwardRef(
       open,
       handleClose,
       action,
-      name,
+      contact,
       phones,
-      color,
-      description,
       invalidName,
       invalidPhone,
       handleChangeColor,
@@ -50,15 +48,15 @@ const View = React.forwardRef(
         >
           <ContactFormDialogHeader
             action={action}
-            name={name}
-            color={color}
+            name={contact.name}
+            color={contact.color}
             handleChangeColor={handleChangeColor}
             handleCloseDialog={handleClose}
           />
           <DialogContent dividers>
             <ContactFormDialogContent
-              name={name}
-              description={description}
+              name={contact.name}
+              description={contact.description}
               phones={phones}
               helperText={invalidPhone}
               invalidName={invalidName}

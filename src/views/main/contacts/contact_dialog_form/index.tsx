@@ -4,52 +4,42 @@ import Constants from '../../../../constants/ContactsConstants'
 import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
-import View from './view'
 import ColorConstants from '../../../../constants/ColorConstants'
+import View from './view'
 
-const ContactFormDialog = ({
-  dialogOpen,
-  setDialogOpen,
-  action,
-  item,
-}: ContactFormDialogProps): JSX.Element => {
-  const [name, setName] = useState(item?.name || '')
-  const [description, setDescription] = useState(item?.description || '')
-  const [color, setColor] = useState(item?.color || '')
-  const [invalidName, setInvalidName] = useState(false)
-  const [invalidPhone, setInvalidPhone] = useState(
-    JSON.parse(Constants.DEFAULT_INVALID_PHONE)
-  )
-  const [phones, setPhones] = useState(
-    item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
-  )
+const ContactFormDialog = ({ dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps): JSX.Element => {
+
+  const getContact = () => {
+    console.log("aaaa")
+    return {
+      name: item?.name || '',
+      description: item?.description || '',
+      color: item?.color || '',
+    }
+  }
+
+  const getPhones = () => {
+    return item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
+  }
 
   useEffect(() => {
-    setName(item?.name || '')
-    setDescription(item?.description || '')
-    setPhones(
-      item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
-    )
-    setColor(item?.color || '')
-    setInvalidName(false)
-    setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
-
-    return () => {
-      setName('')
-      setPhones([{ type: Constants.MOBILE, number: '' }])
-      setDescription('')
-      setColor('')
+    if(dialogOpen) {
+      setContact(getContact())
+      setPhones(getPhones())
       setInvalidName(false)
       setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
-    }
+    } 
   }, [dialogOpen, item])
 
-  const handleClose = () => setDialogOpen(0)
+  const [contact, setContact] = useState(getContact())
+  const [phones, setPhones] = useState(getPhones())
+  const [invalidName, setInvalidName] = useState(false)
+  const [invalidPhone, setInvalidPhone] = useState(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
 
   const handleSave = (): void => {
     function validInfo(): string {
-      setInvalidName(name === '')
-      return name
+      setInvalidName(contact.name === '')
+      return contact.name
     }
 
     function handleTakenNumber(item: ContactModel, exists: ContactModel) {
@@ -68,10 +58,10 @@ const ContactFormDialog = ({
       return {
         frontId,
         id: item?.id,
-        name,
-        description,
+        name: contact.name,
+        description: contact.description,
+        color: contact.color,
         phones: phones.filter((phone) => phone.number !== ''),
-        color,
       }
     }
 
@@ -95,8 +85,9 @@ const ContactFormDialog = ({
 
   const handleChangeColor = () => {
     const colors = ColorConstants.COLORS
-    const index = colors.findIndex((c) => c === color)
-    setColor(colors[(index + 1) % colors.length])
+    const index = colors.findIndex((c) => c === contact.color)
+    const color = colors[(index + 1) % colors.length]
+    setContact({...contact, color})
   }
 
   const handleAddPhone = () => {
@@ -111,13 +102,14 @@ const ContactFormDialog = ({
   }
 
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value as string)
+    const name = event.target.value as string
+    setContact({...contact, name})
   }
 
-  const handleChangeDescription = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDescription(event.target.value as string)
+  const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const description = event.target.value as string
+    setContact({...contact, description})
+
   }
 
   const handleChangeType = (
@@ -138,13 +130,11 @@ const ContactFormDialog = ({
 
   return (
     <View
-      open={Boolean(dialogOpen)}
+      open={dialogOpen}
       handleClose={handleClose}
       action={action}
-      name={name}
+      contact={contact}
       phones={phones}
-      color={color}
-      description={description}
       invalidName={invalidName}
       invalidPhone={invalidPhone}
       handleChangeName={handleChangeName}

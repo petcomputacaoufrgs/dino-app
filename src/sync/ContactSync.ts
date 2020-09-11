@@ -3,14 +3,12 @@ import ServerService from '../services/contact/ContactServerService'
 import BaseSync from './BaseSync'
 
 class ContactSync implements BaseSync {
-  
   send = async (): Promise<void> => {
-    if(Service.shouldSync()) {
+    if (Service.shouldSync()) {
       await ServerService.updateServer()
     }
   }
-  
-  
+
   receive = async (): Promise<void> => {
     const serverVersion = await ServerService.getVersion()
     if (serverVersion !== undefined) {
@@ -18,6 +16,5 @@ class ContactSync implements BaseSync {
     }
   }
 }
-
 
 export default new ContactSync()

@@ -1,29 +1,30 @@
-import NoteColumnResponseModel from "../../types/note/server/NoteColumnResponseModel"
-import NoteColumnDoc from "../../types/note/database/NoteColumnDoc"
-import DinoAgentService from "../../agent/DinoAgentService"
-import DinoAPIURLConstants from "../../constants/dino_api/DinoAPIURLConstants"
-import LogAppErrorService from "../log_app_error/LogAppErrorService"
-import NoteColumnSaveRequestModel from "../../types/note/server/NoteColumnSaveRequestModel"
-import NoteColumnSaveResponseModel from "../../types/note/server/NoteColumnSaveResponseModel"
-import NoteColumnDatabase from "../../database/note/NoteColumnDatabase"
-import NoteColumnDeleteRequestModel from "../../types/note/server/NoteColumnDeleteRequestModel"
-import NoteColumnOrderAllRequestModel from "../../types/note/server/NoteColumnOrderAllRequestModel"
+import NoteColumnResponseModel from '../../types/note/server/NoteColumnResponseModel'
+import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
+import DinoAgentService from '../../agent/DinoAgentService'
+import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import NoteColumnSaveRequestModel from '../../types/note/server/NoteColumnSaveRequestModel'
+import NoteColumnSaveResponseModel from '../../types/note/server/NoteColumnSaveResponseModel'
+import NoteColumnDatabase from '../../database/note/NoteColumnDatabase'
+import NoteColumnDeleteRequestModel from '../../types/note/server/NoteColumnDeleteRequestModel'
+import NoteColumnOrderAllRequestModel from '../../types/note/server/NoteColumnOrderAllRequestModel'
 
 class NoteColumnServerService {
-
   //#region GET
 
   get = async (): Promise<NoteColumnResponseModel[] | null> => {
-      const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_COLUMN_GET)
-      if (request.canGo) {
-        try {
-          const response = await request.authenticate().go()
-          return response.body
-        } catch (e) {
-          LogAppErrorService.saveError(e)
-        }
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.NOTE_COLUMN_GET
+    )
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().go()
+        return response.body
+      } catch (e) {
+        LogAppErrorService.saveError(e)
       }
-      return null
+    }
+    return null
   }
 
   getVersion = async (): Promise<number | undefined> => {
@@ -56,9 +57,12 @@ class NoteColumnServerService {
       lastUpdate: doc.lastUpdate,
       id: doc.external_id,
       order: doc.order,
+      oldTitle: doc.oldTitle,
     }
 
-    const request = await DinoAgentService.post(DinoAPIURLConstants.NOTE_COLUMN_SAVE)
+    const request = await DinoAgentService.post(
+      DinoAPIURLConstants.NOTE_COLUMN_SAVE
+    )
 
     if (request.canGo) {
       try {
@@ -67,11 +71,7 @@ class NoteColumnServerService {
           .setBody(noteColumnModel)
           .go()
         const body: NoteColumnSaveResponseModel = response.body
-        const noteColumnDoc = await NoteColumnDatabase.getByTitle(
-          noteColumnModel.title
-        )
-        //console.log("retornou")
-        //console.log(noteColumnDoc)
+        const noteColumnDoc = await NoteColumnDatabase.getByTitle(doc.title)
         if (noteColumnDoc) {
           noteColumnDoc.savedOnServer = true
           noteColumnDoc.external_id = body.id
@@ -87,11 +87,12 @@ class NoteColumnServerService {
   }
 
   saveAll = async (docs: NoteColumnDoc[]): Promise<number | null> => {
-    const models: NoteColumnSaveRequestModel[] = docs.map(doc => ({
+    const models: NoteColumnSaveRequestModel[] = docs.map((doc) => ({
       id: doc.external_id,
       title: doc.title,
       lastUpdate: doc.lastUpdate,
-      order: doc.order
+      order: doc.order,
+      oldTitle: doc.oldTitle,
     }))
 
     const request = await DinoAgentService.put(
@@ -122,7 +123,7 @@ class NoteColumnServerService {
 
   saveOrder = async (docs: NoteColumnDoc[]): Promise<number | null> => {
     const model: NoteColumnOrderAllRequestModel = {
-      items: []
+      items: [],
     }
 
     docs.forEach((doc) => {
@@ -133,7 +134,9 @@ class NoteColumnServerService {
       })
     })
 
-    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_COLUMN_ORDER)
+    const request = await DinoAgentService.put(
+      DinoAPIURLConstants.NOTE_COLUMN_ORDER
+    )
 
     if (request.canGo) {
       try {
@@ -153,12 +156,9 @@ class NoteColumnServerService {
   //#region DELETE
 
   deleteAll = async (docs: NoteColumnDoc[]): Promise<number | null> => {
-    const models: NoteColumnDeleteRequestModel[] = docs.map(
-      (doc) =>
-        ({
-          id: doc.external_id!
-        })
-    )
+    const models: NoteColumnDeleteRequestModel[] = docs.map((doc) => ({
+      id: doc.external_id!,
+    }))
 
     const request = await DinoAgentService.delete(
       DinoAPIURLConstants.NOTE_COLUMN_DELETE_ALL
@@ -198,7 +198,6 @@ class NoteColumnServerService {
   }
 
   //#endregion
-
 }
 
 export default new NoteColumnServerService()

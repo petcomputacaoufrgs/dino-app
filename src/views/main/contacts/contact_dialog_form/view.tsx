@@ -68,17 +68,11 @@ const View = React.forwardRef(
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={handleClose}
-            color="primary"
-          >
+          <Button onClick={handleClose} color="primary">
             {language.DIALOG_CANCEL_BUTTON_TEXT}
           </Button>
 
-          <Button
-            onClick={handleSave}
-            color="primary"
-          >
+          <Button onClick={handleSave} color="primary">
             {language.DIALOG_SAVE_BUTTON_TEXT}
           </Button>
         </DialogActions>

@@ -19,7 +19,9 @@ const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
     return weekDayName.charAt(0).toUpperCase()
   }
 
-  const getAllMonthDaysThatOccursInAWeekday = (dayOfWeek: number): DayViewModel[] => {
+  const getAllMonthDaysThatOccursInAWeekday = (
+    dayOfWeek: number
+  ): DayViewModel[] => {
     const monthDays = ArrayUtils.apply(
       calendar.monthDates(date.getFullYear(), date.getMonth())
     )
@@ -41,12 +43,11 @@ const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
       .filter((day: Date) => {
         return day.getDay() === dayOfWeek
       })
-      .map<DayViewModel>(day => ({
-          date: day,
-        })
-      )
+      .map<DayViewModel>((day) => ({
+        date: day,
+      }))
 
-      return days
+    return days
   }
 
   return (

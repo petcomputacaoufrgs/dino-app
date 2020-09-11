@@ -1,4 +1,4 @@
-import BaseLocalStorage from "../BaseLocalStorage"
+import BaseLocalStorage from '../BaseLocalStorage'
 import LS_Constants from '../../constants/LocalStorageKeysConstants'
 
 class NoteColumnVersionLocalStorage extends BaseLocalStorage {

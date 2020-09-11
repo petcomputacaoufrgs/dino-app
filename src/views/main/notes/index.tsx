@@ -37,7 +37,7 @@ const createViewColumns = (
   textSearch: string
 ): NoteColumnViewModel[] => {
   const noteViews = convertNotesToNoteViews(notes, tagSearch, textSearch)
-  
+
   return columns
     .map((column) => ({
       ...column,
@@ -58,11 +58,10 @@ const Notes = () => {
   )
 
   useEffect(() => {
-    //console.log("useEffect")
-    setViewColumns(createViewColumns(columns, notes, tagSearch, textSearch))
+    const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
+    setViewColumns(viewColumns)
   }, [columns, notes, textSearch, tagSearch])
 
-  
   const isUnchanged = (result: DropResult): boolean => {
     const { destination, source } = result
 
@@ -78,11 +77,25 @@ const Notes = () => {
     return dropedToSamePosition
   }
 
-  const handleSaveColumn = (column: NoteColumnViewModel) => {
-    NoteColumnService.saveColumn(column)
+  //#region Column
+
+  const handleSaveColumn = (column: NoteColumnViewModel, oldTitle?: string) => {
+    NoteColumnService.saveColumn(column, oldTitle)
   }
 
-  const handleSaveNewNote = (question: string, tagNames: string[], answer: string) => {
+  const handleDeleteColumn = (column: NoteColumnViewModel) => {
+    NoteColumnService.deleteColumn(column)
+  }
+
+  //#endregion
+
+  //#region Note
+
+  const handleSaveNewNote = (
+    question: string,
+    tagNames: string[],
+    answer: string
+  ) => {
     if (viewColumns.length > 0) {
       const order = viewColumns[0].notes.length
       NoteService.createNote(question, tagNames, answer, order)
@@ -91,6 +104,14 @@ const Notes = () => {
 
   const handleSaveNote = (note: NoteDoc) => {
     NoteService.saveNote(note)
+  }
+
+  //#endregion
+
+  //#region Drag&Drop
+
+  const handleDeleteNote = (note: NoteDoc) => {
+    NoteService.deleteNote(note)
   }
 
   const handleNoteDragEnd = (result: DropResult) => {
@@ -132,7 +153,9 @@ const Notes = () => {
 
     setViewColumns(Array.from(viewColumns))
 
-    NoteService.saveNotesOrder(ArrayUtils.merge(viewColumns.map(vColumn => vColumn.notes)))
+    NoteService.saveNotesOrder(
+      ArrayUtils.merge(viewColumns.map((vColumn) => vColumn.notes))
+    )
   }
 
   const handleNoteColumnDragEnd = (result: DropResult) => {
@@ -151,13 +174,12 @@ const Notes = () => {
 
     setViewColumns(Array.from(viewColumns))
 
-    //console.log(viewColumns)
     NoteColumnService.saveColumnsOrder(viewColumns)
   }
 
   const handleDragEnd = (result: DropResult) => {
     const { type } = result
-    
+
     if (type === NoteDroppableType.NOTE) {
       handleNoteDragEnd(result)
     } else if (type === NoteDroppableType.COLUMN) {
@@ -165,9 +187,7 @@ const Notes = () => {
     }
   }
 
-  const handleDeleteNote = (note: NoteDoc) => {
-    NoteService.deleteNote(note)
-  }
+  //#endregion
 
   //#region Searching
 
@@ -217,8 +237,9 @@ const Notes = () => {
         onDragEnd={handleDragEnd}
         onSave={handleSaveNote}
         onSaveNew={handleSaveNewNote}
-        onSaveColumn={handleSaveColumn}
         onDeleteNote={handleDeleteNote}
+        onSaveColumn={handleSaveColumn}
+        onDeleteColumn={handleDeleteColumn}
         tags={tags}
         columns={viewColumns}
       />
@@ -232,7 +253,7 @@ const hasText = (
   searchText: string,
   tagSearch: string[]
 ): boolean => {
-  if (searchText.trim()) {
+  if (searchText && searchText.length !== 0) {
     return StringUtils.contains(nodeText, searchText)
   }
 

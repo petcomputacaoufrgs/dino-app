@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import DayModalHour from "../../../../../types/calendar/DayModalHour"
+import DayModalHour from '../../../../../types/calendar/DayModalHour'
 import StringUtils from '../../../../../utils/StringUtils'
 import ContentProps from './props'
 import EventItem from './event_item'
@@ -13,15 +13,14 @@ const Content: React.FC<ContentProps> = ({ day, events }) => {
   const [updateCount, setUpdateCount] = useState(0)
   const isToday = DateUtils.isToday(day.date)
 
-  const getFormatedHour = (hour: DayModalHour): string => (
+  const getFormatedHour = (hour: DayModalHour): string =>
     `${StringUtils.toStringWithZeros(
       hour.hour,
       2
     )}:${StringUtils.toStringWithZeros(hour.min, 2)}`
-  ) 
 
   const getEventsByInitHour = (hour: DayModalHour): EventDoc[] => {
-    return events.filter(event => event.init_date.getHours() === hour.hour)
+    return events.filter((event) => event.init_date.getHours() === hour.hour)
   }
 
   const renderEventsByInitHour = (hour: DayModalHour): JSX.Element => {
@@ -30,7 +29,14 @@ const Content: React.FC<ContentProps> = ({ day, events }) => {
     return (
       <>
         {startedEvents.map((event, index) => {
-          return <EventItem key={index} day={day} event={event} totalEventsOnHour={startedEvents.length} />
+          return (
+            <EventItem
+              key={index}
+              day={day}
+              event={event}
+              totalEventsOnHour={startedEvents.length}
+            />
+          )
         })}
       </>
     )
@@ -41,9 +47,9 @@ const Content: React.FC<ContentProps> = ({ day, events }) => {
     const hours = now.getHours()
     const minutes = now.getMinutes()
 
-    const top = `${50 + 40 * hours + 40 / 60 * minutes}px` 
+    const top = `${50 + 40 * hours + (40 / 60) * minutes}px`
     return {
-      top: top
+      top: top,
     }
   }
 
@@ -74,11 +80,8 @@ const Content: React.FC<ContentProps> = ({ day, events }) => {
     }
 
     if (DateUtils.isToday(day.date)) {
-      setTimeout(
-        updateScreen,
-        DELAY_TO_UPDATE_SCREE_WITH_CURRENT_TIME_IN_MS
-      )
-    } 
+      setTimeout(updateScreen, DELAY_TO_UPDATE_SCREE_WITH_CURRENT_TIME_IN_MS)
+    }
 
     return cleanBeforeUpdate
   }, [updateCount, day.date])
@@ -142,6 +145,6 @@ const HOURS: DayModalHour[] = [
   { hour: 21, min: 0 },
   { hour: 22, min: 0 },
   { hour: 23, min: 0 },
-] 
+]
 
 export default Content

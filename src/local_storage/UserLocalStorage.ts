@@ -16,7 +16,8 @@ class UserLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.USER_VERSION)
   }
 
-  getEmail = (): string => this.convertStringOrNullToString(this.get(LS_Constants.EMAIL))
+  getEmail = (): string =>
+    this.convertStringOrNullToString(this.get(LS_Constants.EMAIL))
 
   setEmail = (email: string) => {
     this.set(LS_Constants.EMAIL, email)

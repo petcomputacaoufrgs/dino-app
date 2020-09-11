@@ -1,3 +1,5 @@
-.note__column_dialog__header.MuiCardHeader-root .MuiCardHeader-content .MuiTypography-root.MuiCardHeader-title {
-    font-size: 1.2rem;
+.note__column_dialog__header.MuiCardHeader-root
+  .MuiCardHeader-content
+  .MuiTypography-root.MuiCardHeader-title {
+  font-size: 1.2rem;
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation, Switch } from 'react-router'
 import { useLanguage } from '../../context_provider/app_settings'
 import GlossarySVG from '../../assets/icons/glossary.svg'
@@ -31,6 +31,7 @@ import Faq from './faq'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import Calendar from './calendar'
 import NoteColumnContextProvider from '../../context_provider/note_column'
+import AuthService from '../../services/auth/AuthService'
 
 /**
  * @description Tela principal da aplicação
@@ -41,7 +42,19 @@ const Main = (): JSX.Element => {
 
   const language = useLanguage().current
 
-  const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+
+  const handleLogoutClick = () => {
+    setOpenLogoutDialog(true)
+  }
+
+  const handleLogoutAgree = () => {
+    AuthService.googleLogout()
+  }
+
+  const handleLogoutDisagree = () => {
+    setOpenLogoutDialog(false)
+  }
 
   /** Itens do menu */
   const groupedItems: MenuItemViewModel[][] = [
@@ -97,7 +110,7 @@ const Main = (): JSX.Element => {
       {
         image: LogoutSVG,
         name: language.MENU_LOGOUT,
-        onClick: showLogoutDialog,
+        onClick: handleLogoutClick,
       },
     ],
   ]
@@ -189,7 +202,11 @@ const Main = (): JSX.Element => {
         component={renderMainContent()}
         topBarComponent={<TopBar />}
       />
-      <LogoutDialogElement />
+      <LogoutDialog
+        onAgree={handleLogoutAgree}
+        onDisagree={handleLogoutDisagree}
+        open={openLogoutDialog}
+      />
     </>
   )
 }

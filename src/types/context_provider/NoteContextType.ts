@@ -1,4 +1,4 @@
-import NoteDoc from "../note/database/NoteDoc"
+import NoteDoc from '../note/database/NoteDoc'
 
 export default interface NoteContextType {
   notes: NoteDoc[]

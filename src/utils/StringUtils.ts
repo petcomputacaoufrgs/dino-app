@@ -9,7 +9,7 @@ class StringUtils {
       .toLowerCase()
   }
 
-  removeWhiteSpace = (str: string): string => str.replace(" ", "")
+  removeWhiteSpace = (str: string): string => str.replace(' ', '')
 
   /**
    * @param s1 String um

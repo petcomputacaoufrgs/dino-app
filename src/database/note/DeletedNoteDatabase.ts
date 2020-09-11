@@ -6,9 +6,25 @@ import LogAppErrorService from '../../services/log_app_error/LogAppErrorService'
 
 const getId = (doc: NoteDoc) => StringUtils.normalize(doc.question)
 
+const applyChanges = (origin: NoteDoc, changed: NoteDoc): NoteDoc => {
+  const newDoc: NoteDoc = {
+    ...origin,
+    external_id: changed.external_id,
+    lastUpdate: changed.lastUpdate,
+    order: changed.order,
+    savedOnServer: changed.savedOnServer,
+    answer: changed.answer,
+    columnTitle: changed.columnTitle,
+    question: changed.question,
+    tagNames: changed.tagNames,
+  }
+
+  return newDoc
+}
+
 class DeletedNoteDatabase extends BaseDatabase<NoteDoc> {
   constructor() {
-    super(DatabaseConstants.DELETED_NOTE, getId)
+    super(DatabaseConstants.DELETED_NOTE, getId, applyChanges)
   }
 
   putNew = async (doc: NoteDoc) => {
@@ -18,7 +34,7 @@ class DeletedNoteDatabase extends BaseDatabase<NoteDoc> {
 
     try {
       await this.db.put(doc)
-    } catch(e) {
+    } catch (e) {
       LogAppErrorService.saveError(e)
     }
   }

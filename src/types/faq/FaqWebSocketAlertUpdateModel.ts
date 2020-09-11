@@ -1,4 +1,4 @@
 export default interface FaqWebSocketAlertUpdateModel {
-    newId: number,
-    newVersion: number
+  newId: number
+  newVersion: number
 }

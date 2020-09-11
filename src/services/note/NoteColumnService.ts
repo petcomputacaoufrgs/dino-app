@@ -1,13 +1,13 @@
-import NoteColumnDoc from "../../types/note/database/NoteColumnDoc"
-import NoteColumnDatabase from "../../database/note/NoteColumnDatabase"
-import DeletedNoteColumnDatabase from "../../database/note/DeletedNoteColumnDatabase"
-import NoteColumnVersionLocalStorage from "../../local_storage/note/NoteColumnVersionLocalStorage"
-import NoteColumnServerService from "./NoteColumnServerService"
-import NoteColumnSyncLocalStorage from "../../local_storage/note/NoteColumnSyncLocalStorage"
-import NoteColumnContextUpdater from "../../context_updater/NoteColumnContextUpdater"
-import StringUtils from "../../utils/StringUtils"
-import NoteContextUpdater from "../../context_updater/NoteContextUpdater"
-import { NoteColumnViewModel } from "../../types/note/view/NoteColumnViewModel"
+import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
+import NoteColumnDatabase from '../../database/note/NoteColumnDatabase'
+import DeletedNoteColumnDatabase from '../../database/note/DeletedNoteColumnDatabase'
+import NoteColumnVersionLocalStorage from '../../local_storage/note/NoteColumnVersionLocalStorage'
+import NoteColumnServerService from './NoteColumnServerService'
+import NoteColumnSyncLocalStorage from '../../local_storage/note/NoteColumnSyncLocalStorage'
+import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpdater'
+import StringUtils from '../../utils/StringUtils'
+import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
+import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
 
 class NoteColumnService {
   //#region GET
@@ -33,18 +33,19 @@ class NoteColumnService {
     NoteColumnVersionLocalStorage.setVersion(version)
   }
 
-  saveColumn = async (doc: NoteColumnDoc) => {
+  saveColumn = async (doc: NoteColumnDoc, oldTitle?: string) => {
     if (doc._id) {
       await NoteColumnDatabase.deleteByDoc(doc)
     }
-    
+
     const newDoc: NoteColumnDoc = {
       lastUpdate: new Date().getTime(),
       order: doc.order,
       savedOnServer: false,
       title: doc.title,
       external_id: doc.external_id,
-      _rev: ''
+      oldTitle: doc.oldTitle ? doc.oldTitle : oldTitle,
+      _rev: '',
     }
 
     await NoteColumnDatabase.put(newDoc)
@@ -59,8 +60,7 @@ class NoteColumnService {
 
     if (newVersion) {
       this.setVersion(newVersion)
-      //console.log("update context")
-      NoteContextUpdater.update()
+      NoteColumnContextUpdater.update()
     } else {
       this.setShouldSync(true)
     }
@@ -262,15 +262,18 @@ class NoteColumnService {
 
   //#region CREATE
 
-  createNewNoteColumnView = (title: string, order: number): NoteColumnViewModel => ({
+  createNewNoteColumnView = (
+    title: string,
+    order: number
+  ): NoteColumnViewModel => ({
     lastUpdate: new Date().getTime(),
     notes: [],
     order: order,
     savedOnServer: false,
     title: title,
-    _rev: ''
+    _rev: '',
   })
-  
+
   //#endregion
 }
 

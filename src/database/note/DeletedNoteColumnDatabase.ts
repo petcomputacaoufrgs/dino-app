@@ -6,9 +6,26 @@ import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
 
 const getId = (doc: NoteColumnDoc) => StringUtils.normalize(doc.title)
 
+const applyChanges = (
+  origin: NoteColumnDoc,
+  changed: NoteColumnDoc
+): NoteColumnDoc => {
+  const newDoc: NoteColumnDoc = {
+    ...origin,
+    external_id: changed.external_id,
+    lastUpdate: changed.lastUpdate,
+    order: changed.order,
+    title: changed.title,
+    oldTitle: changed.oldTitle,
+    savedOnServer: changed.savedOnServer,
+  }
+
+  return newDoc
+}
+
 class DeletedNoteColumnDatabase extends BaseDatabase<NoteColumnDoc> {
   constructor() {
-    super(DatabaseConstants.DELETED_NOTE_COLUMN, getId)
+    super(DatabaseConstants.DELETED_NOTE_COLUMN, getId, applyChanges)
   }
 
   putNew = async (doc: NoteColumnDoc) => {

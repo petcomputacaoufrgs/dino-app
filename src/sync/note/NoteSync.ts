@@ -3,7 +3,7 @@ import NoteService from '../../services/note/NoteService'
 import NoteSaveModel from '../../types/note/server/NoteSaveRequestModel'
 
 class NoteSync implements BaseSync {
-  send = async () => {      
+  send = async () => {
     if (NoteService.shouldSync()) {
       NoteService.setShouldSync(false)
 
@@ -19,7 +19,7 @@ class NoteSync implements BaseSync {
               question: doc.question,
               tagNames: doc.tagNames,
               lastUpdate: doc.lastUpdate,
-              columnTitle: doc.columnTitle
+              columnTitle: doc.columnTitle,
             } as NoteSaveModel)
         )
 

@@ -1,3 +1,3 @@
 export default interface HeaderProps {
-    onClose: () => void
+  onClose: () => void
 }

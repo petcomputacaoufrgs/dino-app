@@ -5,7 +5,12 @@ import NoteDialog from '../note_dialog'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context_provider/app_settings'
 import AgreementDialogProps from '../../../../components/agreement_dialog/props'
-import { DragDropContext, DropResult, ResponderProvided, Droppable } from 'react-beautiful-dnd'
+import {
+  DragDropContext,
+  DropResult,
+  ResponderProvided,
+  Droppable,
+} from 'react-beautiful-dnd'
 import NoteContentColumn from './column'
 import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 import NoteDroppableType from '../../../../constants/NoteDroppableType'
@@ -15,26 +20,47 @@ import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewM
 import StringUtils from '../../../../utils/StringUtils'
 
 const NoteContent: React.FC<NoteBodyProps> = ({
-  tags, 
-  columns, 
-  onDragEnd, 
-  onDeleteNote, 
-  onSave, 
+  tags,
+  columns,
+  onDragEnd,
+  onSave,
   onSaveNew,
-  onSaveColumn
+  onDeleteNote,
+  onSaveColumn,
+  onDeleteColumn,
 }): JSX.Element => {
   const language = useLanguage().current
 
-  const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(undefined)
-  const [currentNoteColumn, setCurrentNoteColumn] = useState<NoteColumnViewModel | undefined>(undefined)
-  const [noteDialogOpen, setNoteDialogOpen] = useState<boolean>(false)
-  const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState<boolean>(
-    false
+  const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(
+    undefined
   )
-  const [dragging, setDragging] = useState<boolean>(false)
+  const [noteDialogOpen, setNoteDialogOpen] = useState(false)
+  const [deleteNoteDialogOpen, setDeleteNoteDialogOpen] = useState(false)
+
+  const [currentNoteColumn, setCurrentNoteColumn] = useState<
+    NoteColumnViewModel | undefined
+  >(undefined)
+  const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
+  const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState<
+    boolean
+  >(false)
+  const [
+    deleteNoteColumnDialogQuestion,
+    setDeleteNoteColumnDialogQuestion,
+  ] = useState('')
+  const [
+    deleteNoteColumnDialogDescription,
+    setDeleteNoteColumnDialogDescription,
+  ] = useState('')
+  const [
+    deleteNoteColumnDialogAgreeText,
+    setDeleteNoteColumnDialogAgreeText,
+  ] = useState('')
+
+  const [dragging, setDragging] = useState(false)
 
   //#region COLUMN
-  
+
   const handleNoteColumnDialogClose = () => {
     closeNoteColumnDialog()
   }
@@ -43,14 +69,44 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setNoteColumnDialogOpen(true)
   }
 
-  const handleSaveNoteColumn = (column: NoteColumnViewModel) => {
+  const handleSaveNoteColumn = (
+    column: NoteColumnViewModel,
+    oldTitle?: string
+  ) => {
     closeNoteColumnDialog()
-    onSaveColumn(column)
+    onSaveColumn(column, oldTitle)
   }
 
-  const handleColumnEdit = (column: NoteColumnViewModel) => {
+  const handleEditColumn = (column: NoteColumnViewModel) => {
     setCurrentNoteColumn(column)
     setNoteColumnDialogOpen(true)
+  }
+
+  const handleDeleteColumn = (column: NoteColumnViewModel) => {
+    if (column.notes.length > 0) {
+      setDeleteNoteColumnDialogQuestion(
+        language.NOTE_COLUMN_CANT_DELETE_DIALOG_QUESTION
+      )
+      setDeleteNoteColumnDialogDescription(
+        language.NOTE_COLUMN_CANT_DELETE_DIALOG_DESC
+      )
+      setDeleteNoteColumnDialogAgreeText(
+        language.NOTE_COLUMN_CANT_DELETE_DIALOG_AGREE_TEXT
+      )
+    } else {
+      setDeleteNoteColumnDialogQuestion(
+        language.NOTE_COLUMN_DELETE_DIALOG_QUESTION
+      )
+      setDeleteNoteColumnDialogDescription(
+        language.NOTE_COLUMN_DELETE_DIALOG_DESC
+      )
+      setDeleteNoteColumnDialogAgreeText(
+        language.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT
+      )
+    }
+
+    setCurrentNoteColumn(column)
+    setDeleteNoteColumnDialogOpen(true)
   }
 
   const handleTitleAlreadyExists = (title: string): boolean =>
@@ -64,7 +120,35 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setCurrentNoteColumn(undefined)
   }
 
+  const handleDeleteColumnAgree = () => {
+    if (currentNoteColumn) {
+      onDeleteColumn(currentNoteColumn)
+    }
+    closeNoteColumnDeleteDialog()
+  }
+
+  const handleDeleteColumnDisagree = () => {
+    closeNoteColumnDeleteDialog()
+  }
+
+  const closeNoteColumnDeleteDialog = () => {
+    setDeleteNoteColumnDialogOpen(false)
+    setCurrentNoteColumn(undefined)
+  }
+
   //#endregion
+
+  const handleDeleteNoteAgree = () => {
+    if (currentNote) {
+      onDeleteNote(currentNote)
+    }
+
+    setDeleteNoteColumnDialogOpen(false)
+  }
+
+  const handleDeleteNoteDisagree = () => {
+    setDeleteNoteColumnDialogOpen(false)
+  }
 
   const handleCardClick = (noteView: NoteViewModel) => {
     setCurrentNote(noteView)
@@ -75,20 +159,10 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setNoteDialogOpen(false)
   }
 
-  const agreementDialogProps: AgreementDialogProps = {
-    onAgree: () => currentNote && onDeleteNote(currentNote),
-    question: language.DELETE_NOTE_ALERT_TITLE,
-    description: language.DELETE_NOTE_ALERT_TEXT,
-    agreeOptionText: language.AGREEMENT_OPTION_TEXT,
-    disagreeOptionText: language.DISAGREEMENT_OPTION_TEXT,
-  }
-
-  const [DeleteDialog, showDeleteDialog] = AgreementDialog(agreementDialogProps)
-
   const handleOpenDeleteNoteDialog = (note: NoteViewModel) => {
     setCurrentNote(note)
 
-    showDeleteDialog()
+    setDeleteNoteDialogOpen(true)
   }
 
   const handleSaveNote = (note: NoteViewModel) => {
@@ -117,9 +191,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setDragging(true)
   }
 
-  const getColumnMaxOrder = (): number => (
-    columns.length
-  )
+  const getColumnMaxOrder = (): number => columns.length
 
   return (
     <div className="note__note_content">
@@ -142,10 +214,11 @@ const NoteContent: React.FC<NoteBodyProps> = ({
                   key={index}
                   onClickNote={handleCardClick}
                   onDelete={handleOpenDeleteNoteDialog}
-                  onColumnEdit={handleColumnEdit}
+                  onEditColumn={handleEditColumn}
+                  onDeleteColumn={handleDeleteColumn}
                 />
               ))}
-              {!dragging && <AddColumn onAddColumn={handleAddColumn}  />}
+              {!dragging && <AddColumn onAddColumn={handleAddColumn} />}
               {provided.placeholder}
             </div>
           )}
@@ -161,7 +234,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
           onClose={handleCloseCardDialog}
         />
       )}
-      <NoteColumnDialog 
+      <NoteColumnDialog
         onClose={handleNoteColumnDialogClose}
         onSave={handleSaveNoteColumn}
         open={noteColumnDialogOpen}
@@ -169,7 +242,24 @@ const NoteContent: React.FC<NoteBodyProps> = ({
         order={getColumnMaxOrder()}
         titleAlreadyExists={handleTitleAlreadyExists}
       />
-      <DeleteDialog />
+      <AgreementDialog
+        onAgree={handleDeleteNoteAgree}
+        onDisagree={handleDeleteNoteDisagree}
+        question={language.DELETE_NOTE_ALERT_TITLE}
+        description={language.DELETE_NOTE_ALERT_TEXT}
+        agreeOptionText={language.AGREEMENT_OPTION_TEXT}
+        disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
+        open={deleteNoteDialogOpen}
+      />
+      <AgreementDialog
+        question={deleteNoteColumnDialogQuestion}
+        description={deleteNoteColumnDialogDescription}
+        disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
+        agreeOptionText={deleteNoteColumnDialogAgreeText}
+        onAgree={handleDeleteColumnAgree}
+        onDisagree={handleDeleteColumnDisagree}
+        open={deleteNoteColumnDialogOpen}
+      />
     </div>
   )
 }

@@ -23,7 +23,7 @@ const UserContextProvider: React.FC = (props) => {
         name: UserService.getName(),
         picture: UserService.getPicture(),
       }
-      
+
       saveData(value)
     }
 

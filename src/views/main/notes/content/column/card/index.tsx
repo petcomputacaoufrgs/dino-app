@@ -13,7 +13,7 @@ const NoteBodyColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
   noteIndex,
   onDelete,
-  onClickNote
+  onClickNote,
 }) => {
   const language = useLanguage().current
 

@@ -1,4 +1,4 @@
-import BaseDoc from "../../database/BaseDoc"
+import BaseDoc from '../../database/BaseDoc'
 
 export default interface NoteColumnDoc extends BaseDoc {
   external_id?: number
@@ -6,4 +6,5 @@ export default interface NoteColumnDoc extends BaseDoc {
   order: number
   lastUpdate: number
   savedOnServer: boolean
+  oldTitle?: string
 }

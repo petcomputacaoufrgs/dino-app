@@ -1,13 +1,29 @@
-import BaseDatabase from "./BaseDatabase"
-import DatabaseConstants from "../constants/DatabaseConstants"
-import EventDoc from "../types/calendar/database/EventDoc"
-import LogAppErrorService from "../services/log_app_error/LogAppErrorService"
+import BaseDatabase from './BaseDatabase'
+import DatabaseConstants from '../constants/DatabaseConstants'
+import EventDoc from '../types/calendar/database/EventDoc'
+import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 
 const getId = (doc?: EventDoc) => new Date().getTime().toString()
 
+const applyChanges = (origin: EventDoc, changed: EventDoc): EventDoc => {
+  const newDoc: EventDoc = {
+    ...origin,
+    color: origin.color,
+    description: origin.description,
+    end_date: origin.end_date,
+    external_id: origin.external_id,
+    init_date: origin.init_date,
+    name: origin.name,
+    reminder_alarm_ms: origin.reminder_alarm_ms,
+    type: origin.type,
+  }
+
+  return newDoc
+}
+
 class CalendarDatabase extends BaseDatabase<EventDoc> {
   constructor() {
-    super(DatabaseConstants.CALENDAR, getId)
+    super(DatabaseConstants.CALENDAR, getId, applyChanges)
 
     this.db.createIndex({
       index: {

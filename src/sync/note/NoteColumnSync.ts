@@ -1,6 +1,6 @@
-import BaseSync from "../BaseSync"
-import NoteColumnService from "../../services/note/NoteColumnService"
-import NoteColumnDoc from "../../types/note/database/NoteColumnDoc"
+import BaseSync from '../BaseSync'
+import NoteColumnService from '../../services/note/NoteColumnService'
+import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
 
 class NoteColumnSync implements BaseSync {
   send = async () => {
@@ -9,8 +9,9 @@ class NoteColumnSync implements BaseSync {
 
       const docs = await NoteColumnService.getColumns()
 
-      const notSavedDocs: NoteColumnDoc[] = docs
-        .filter((docs) => !docs.savedOnServer)
+      const notSavedDocs: NoteColumnDoc[] = docs.filter(
+        (docs) => !docs.savedOnServer
+      )
 
       await NoteColumnService.saveColumnsOnServer(notSavedDocs)
 

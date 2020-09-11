@@ -9,29 +9,36 @@ import { isMobile } from 'react-device-detect'
 import NoteDraggableType from '../../../../../constants/NoteDroppableType'
 
 const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
-  column, 
-  columnIndex, 
-  onClickNote, 
-  onDelete, 
-  onColumnEdit
+  column,
+  columnIndex,
+  onClickNote,
+  onDelete,
+  onEditColumn,
+  onDeleteColumn,
 }) => {
-  
-  const renderCard = (note: NoteViewModel, noteIndex: number): JSX.Element | undefined => {
-      if (note.showByTag || note.showByQuestion) {
-          return (
-            <NoteBodyColumnCard
-              note={note}
-              key={noteIndex}
-              noteIndex={noteIndex}
-              onClickNote={onClickNote}
-              onDelete={onDelete}
-            ></NoteBodyColumnCard>
-          )
-      }
+  const renderCard = (
+    note: NoteViewModel,
+    noteIndex: number
+  ): JSX.Element | undefined => {
+    if (note.showByTag || note.showByQuestion) {
+      return (
+        <NoteBodyColumnCard
+          note={note}
+          key={noteIndex}
+          noteIndex={noteIndex}
+          onClickNote={onClickNote}
+          onDelete={onDelete}
+        ></NoteBodyColumnCard>
+      )
+    }
   }
 
   const handleColumnEdit = () => {
-    onColumnEdit(column)
+    onEditColumn(column)
+  }
+
+  const handleColumnDelete = () => {
+    onDeleteColumn(column)
   }
 
   return (
@@ -46,12 +53,13 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
             className="note__note_content__column__title"
             {...provided.dragHandleProps}
           >
-            <NoteBodyColumnHeader title={column.title} onEdit={handleColumnEdit} />
+            <NoteBodyColumnHeader
+              title={column.title}
+              onEdit={handleColumnEdit}
+              onDelete={handleColumnDelete}
+            />
           </div>
-          <Droppable
-            droppableId={column.title}
-            type={NoteDraggableType.NOTE}
-          >
+          <Droppable droppableId={column.title} type={NoteDraggableType.NOTE}>
             {(provided) => (
               <div
                 className="note__note_content__column__droppable"

@@ -16,7 +16,8 @@
 }
 
 .calendar__month__content__week_day_column__content__day:hover {
-  background: white radial-gradient(circle, transparent 1%, white 1%) center/15000%;
+  background: white radial-gradient(circle, transparent 1%, white 1%)
+    center/15000%;
 }
 
 .calendar__month__content__week_day_column__content__day:active {
@@ -38,9 +39,8 @@
 }
 
 .calendar__month__content__week_day_column__content__day__box::-webkit-scrollbar {
-    width: 0px;
+  width: 0px;
 }
-
 
 .calendar__month__content__week_day_column__content__day__box__title {
   display: flex;

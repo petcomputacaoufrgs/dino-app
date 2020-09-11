@@ -156,15 +156,11 @@ class UserService {
 
         const savePictureWithError = this.getSavePictureWithError()
 
-        if (
-          savePictureWithError ||
-          this.getPictureUrl() !== pictureURL
-        ) {
-
+        if (savePictureWithError || this.getPictureUrl() !== pictureURL) {
           if (savePictureWithError) {
             this.setSavePictureWithError(false)
           }
-          
+
           this.setPictureUrl(pictureURL)
           this.donwloadPicture(pictureURL)
           this.saveNewPhotoOnServer(pictureURL)

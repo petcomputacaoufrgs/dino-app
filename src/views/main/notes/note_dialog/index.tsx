@@ -18,7 +18,7 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
   onSaveNew,
   open,
   tagOptions,
-  note
+  note,
 }): JSX.Element => {
   const language = useLanguage().current
 
@@ -37,7 +37,9 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
   const [tagList, setTagList] = useState(note ? note.tagNames : [])
 
   const handleChange = (event: React.ChangeEvent<{}>, values: string[]) => {
-    const validValues = values.filter(value => value.length <= NoteConstants.TAG_MAX_LENGTH)
+    const validValues = values.filter(
+      (value) => value.length <= NoteConstants.TAG_MAX_LENGTH
+    )
 
     if (validValues.length <= NoteConstants.TAG_LIMIT) {
       setTagList(validValues)

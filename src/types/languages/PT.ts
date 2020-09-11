@@ -224,7 +224,7 @@ export default class PT implements LanguageBase {
   CLOSE_ARIA_LABEL = 'Fechar'
 
   DELETE_ARIA_LABEL = 'Deletar'
-  
+
   EDIT_ARIA_LABEL = 'Editar'
 
   INVALID_WEEKDAY = 'Dia da semana inválido.'
@@ -242,9 +242,9 @@ export default class PT implements LanguageBase {
   INVALID_EVENT_TYPE = 'Tipo de evento inválido'
 
   MINUTES = 'minutos '
-  
+
   HOURS = 'horas'
-  
+
   DAYS = 'dias'
 
   AND = 'e'
@@ -254,7 +254,7 @@ export default class PT implements LanguageBase {
   MINUTE = 'minuto'
 
   HOUR = 'hora'
-  
+
   DAY = 'dia'
 
   ADD_EVENT_TITLE = 'Novo Evento'
@@ -262,13 +262,13 @@ export default class PT implements LanguageBase {
   EVENT_TYPE_LABEL = 'Tipo de Evento'
 
   EVENT_NAME_LABEL = 'Nome do Evento'
-  
+
   EVENT_INIT_DATE_LABEL = 'Dia de início'
 
   EVENT_INIT_TIME_LABEL = 'Horário de início'
 
   EVENT_END_DATE_LABEL = 'Dia de termino'
-  
+
   EVENT_END_TIME_LABEL = 'Horário de termino'
 
   DATE_PICKER_DAY_FORMAT = 'dd/MM/yyyy'
@@ -310,14 +310,14 @@ export default class PT implements LanguageBase {
   EVENT_ADD_ALERT = 'Adicionar notificação'
 
   EVENT_INVALID_ALARM_TYPE = 'tipo inválido'
-  
+
   EVENT_ALARM_ZERO = 'Na hora do evento'
 
   EVENT_ALARM_DELETE_ALT = 'Clique para excluir o alarme'
 
   CHANGE_COLOR_ARIA_LABEL = 'Clique para selecionar uma cor aleatória'
 
-  ADD_PHONE_ARIA_LABEL= 'Clique para adicionar um novo telefone numérico'
+  ADD_PHONE_ARIA_LABEL = 'Clique para adicionar um novo telefone numérico'
 
   RETURN_ARIA_LABEL = 'Retornar'
 
@@ -330,7 +330,6 @@ export default class PT implements LanguageBase {
   OPTIONS_ARIA_LABEL = 'Opções'
 
   EVENT_COLOR_LABEL = 'Cor selecionada'
-
 
   FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
 
@@ -347,4 +346,19 @@ export default class PT implements LanguageBase {
   COLUMN_MIN_LENGTH_ERROR = 'Mínimo 1 caractere.'
 
   COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Título já existente'
+
+  NOTE_COLUMN_DELETE_DIALOG_QUESTION =
+    'Tem certeza que deseja remover esta coluna?'
+
+  NOTE_COLUMN_CANT_DELETE_DIALOG_QUESTION = 'Você não pode remover esta coluna'
+
+  NOTE_COLUMN_DELETE_DIALOG_DESC =
+    'Caso responda "SIM" esta coluna será removida permanentemente.'
+
+  NOTE_COLUMN_CANT_DELETE_DIALOG_DESC =
+    'A coluna não pode possuir anotações para ser removida.'
+
+  NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'SIM'
+
+  NOTE_COLUMN_CANT_DELETE_DIALOG_AGREE_TEXT = 'OK'
 }

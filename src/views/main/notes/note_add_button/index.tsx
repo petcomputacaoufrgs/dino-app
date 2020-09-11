@@ -6,10 +6,7 @@ import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { useLanguage } from '../../../../context_provider/app_settings'
 
-const NoteAddButton: React.FC<NoteAddButtonProps> = ({
-  tags,
-  onSave
-}) => {
+const NoteAddButton: React.FC<NoteAddButtonProps> = ({ tags, onSave }) => {
   const language = useLanguage().current
 
   const [newNoteDialogOpen, setNewNoteDialogOpen] = useState(false)

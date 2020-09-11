@@ -1,25 +1,25 @@
 .note__note_content__columns__add_column {
-    padding-right: 14px;
-    margin-left: 7px;
-    width: 70%;
-    flex: 0 0 auto;
+  padding-right: 14px;
+  margin-left: 7px;
+  width: 70%;
+  flex: 0 0 auto;
 }
 
 .note__note_content__columns__add_column__button.MuiButtonBase-root.MuiButton-root {
-    border: 1px solid;
-    border-color: rgba(179, 46, 85);
-    background-color: rgb(245, 245, 245);
-    border-radius: 5px;
-    width: 100%;
-    height: 30px;
+  border: 1px solid;
+  border-color: rgba(179, 46, 85);
+  background-color: rgb(245, 245, 245);
+  border-radius: 5px;
+  width: 100%;
+  height: 30px;
 }
 
 .note__note_content__columns__add_column.MuiButtonBase-root.MuiButton-root.desktop {
-    width: 25%;
+  width: 25%;
 }
 
 .note__note_content__columns__add_column__button__text {
-    font-size: 0.8rem;
-    margin-bottom: 0;
-    line-height: initial;
+  font-size: 0.8rem;
+  margin-bottom: 0;
+  line-height: initial;
 }

@@ -1,6 +1,6 @@
 export default interface NoteColumnDialogContentProps {
-    onTitleChange: (newTitle: string ) => void
-    title: string
-    invalidTitle: boolean
-    invalidMessage: string
+  onTitleChange: (newTitle: string) => void
+  title: string
+  invalidTitle: boolean
+  invalidMessage: string
 }

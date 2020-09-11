@@ -1,17 +1,16 @@
-import DinoAgentService from "../../agent/DinoAgentService"
-import DinoAPIURLConstants from "../../constants/dino_api/DinoAPIURLConstants"
-import LogAppErrorService from "../log_app_error/LogAppErrorService"
-import NoteDoc from "../../types/note/database/NoteDoc"
-import NoteSaveModel from "../../types/note/server/NoteSaveRequestModel"
-import NoteSaveResponseModel from "../../types/note/server/NoteSaveResponseModel"
-import NoteDatabase from "../../database/note/NoteDatabase"
-import NoteContextUpdater from "../../context_updater/NoteContextUpdater"
-import NoteDeleteModel from "../../types/note/server/NoteDeleteModel"
-import NoteOrderAPIModel from "../../types/note/server/NoteOrderRequestModel"
-import NoteResponseModel from "../../types/note/server/NoteResponseModel"
+import DinoAgentService from '../../agent/DinoAgentService'
+import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import NoteDoc from '../../types/note/database/NoteDoc'
+import NoteSaveModel from '../../types/note/server/NoteSaveRequestModel'
+import NoteSaveResponseModel from '../../types/note/server/NoteSaveResponseModel'
+import NoteDatabase from '../../database/note/NoteDatabase'
+import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
+import NoteDeleteModel from '../../types/note/server/NoteDeleteModel'
+import NoteOrderAPIModel from '../../types/note/server/NoteOrderRequestModel'
+import NoteResponseModel from '../../types/note/server/NoteResponseModel'
 
 class NoteServerService {
-  
   //#region GET
 
   get = async (): Promise<NoteResponseModel[] | null> => {
@@ -61,7 +60,7 @@ class NoteServerService {
       tagNames: noteModel.tagNames,
       id: noteModel.external_id,
       order: noteModel.order,
-      columnTitle: noteModel.columnTitle
+      columnTitle: noteModel.columnTitle,
     }
 
     const request = await DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
@@ -125,7 +124,7 @@ class NoteServerService {
         model.push({
           id: note.external_id,
           order: note.order,
-          columnTitle: note.columnTitle
+          columnTitle: note.columnTitle,
         } as NoteOrderAPIModel)
       }
     })

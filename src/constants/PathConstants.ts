@@ -17,7 +17,7 @@ class PathConstants {
    * @description Diretório do FAQ
    */
   FAQ: string = this.APP + '/faq'
-  
+
   NOTES: string = `${this.APP}/notes`
 
   CALENDAR = `${this.APP}/calendar`

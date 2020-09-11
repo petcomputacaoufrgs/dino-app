@@ -4,7 +4,7 @@ import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
 import NoteColumnService from '../../services/note/NoteColumnService'
 import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpdater'
 
-const NoteColumnContext = createContext <NoteColumnContextType>({
+const NoteColumnContext = createContext<NoteColumnContextType>({
   columns: [],
 })
 
@@ -16,14 +16,10 @@ const NoteColumnContextProvider: React.FC = (props) => {
     const updateData = async () => {
       const savedColumns = await NoteColumnService.getColumns()
 
-      //console.log("updateData")
-
       saveData(savedColumns)
     }
 
     let saveData = (columns: NoteColumnDoc[]) => {
-      //console.log("saving")
-      //console.log(columns)
       setColumns(columns)
 
       if (firstLoad) {

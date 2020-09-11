@@ -9,9 +9,25 @@ const getIdByQuestion = (question: string) => StringUtils.normalize(question)
 
 const getId = (doc: NoteDoc) => getIdByQuestion(doc.question)
 
+const applyChanges = (origin: NoteDoc, changed: NoteDoc): NoteDoc => {
+  const newDoc: NoteDoc = {
+    ...origin,
+    external_id: changed.external_id,
+    lastUpdate: changed.lastUpdate,
+    order: changed.order,
+    savedOnServer: changed.savedOnServer,
+    columnTitle: changed.columnTitle,
+    answer: changed.answer,
+    question: changed.question,
+    tagNames: changed.tagNames,
+  }
+
+  return newDoc
+}
+
 class NoteDatabase extends BaseDatabase<NoteDoc> {
   constructor() {
-    super(DatabaseConstants.NOTE, getId)
+    super(DatabaseConstants.NOTE, getId, applyChanges)
   }
 
   getByQuestion = async (question: string): Promise<NoteDoc | null> => {

@@ -15,17 +15,17 @@ class FaqLocalStorage extends BaseLocalStorage {
 
   getUserFaq = (): FaqOptionsModel | undefined => {
     const faq = this.get(LS_Constants.FAQ_USER_INFO)
-    
+
     return faq ? JSON.parse(faq) : undefined
   }
-  
+
   setUserFaq = (faq: FaqOptionsModel) => {
     this.set(LS_Constants.FAQ_USER_INFO, JSON.stringify(faq))
   }
 
   getVersion = (): number => {
     const version = this.get(LS_Constants.FAQ_USER_VERSION)
-    
+
     return version ? JSON.parse(version) : 0
   }
 

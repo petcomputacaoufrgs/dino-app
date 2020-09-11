@@ -5,9 +5,10 @@ import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewM
 export default interface NoteBodyProps {
   onSave: (note: NoteDoc) => void
   onSaveNew: (question: string, tagList: string[], answer: string) => void
-  onSaveColumn: (column: NoteColumnViewModel) => void
-  onDragEnd: (result: DropResult) => void
   onDeleteNote: (note: NoteDoc) => void
+  onSaveColumn: (column: NoteColumnViewModel, oldTitle?: string) => void
+  onDeleteColumn: (column: NoteColumnViewModel) => void
+  onDragEnd: (result: DropResult) => void
   columns: NoteColumnViewModel[]
   tags: string[]
 }

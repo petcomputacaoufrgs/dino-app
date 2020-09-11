@@ -6,7 +6,9 @@ import TagSearchBarProps from './props'
 import './styles.css'
 
 const TagSearchBar: React.FC<TagSearchBarProps> = ({
-  options, onTagSearch, onTextSearch
+  options,
+  onTagSearch,
+  onTextSearch,
 }): JSX.Element => {
   const language = useLanguage().current
 

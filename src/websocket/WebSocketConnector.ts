@@ -24,7 +24,7 @@ class WebSocketConnector {
     UserWebSocketSubscriber,
     ContactWebSocketSubscriber,
     FaqWebSocketSubscriber,
-    FaqUserWebSocketSubscriber
+    FaqUserWebSocketSubscriber,
   ]
 
   connect = () => {

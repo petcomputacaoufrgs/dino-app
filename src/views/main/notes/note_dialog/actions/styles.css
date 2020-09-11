@@ -1,7 +1,7 @@
 .note__note_dialog__actions {
-    display: flex;
-    align-content: center;
-    width: 100%;
+  display: flex;
+  align-content: center;
+  width: 100%;
 }
 
 .note__note_dialog__actions .MuiButtonBase-root.MuiButton-root {
@@ -14,5 +14,5 @@
 }
 
 .note__note_dialog__actions.MuiDialogActions-root {
-   padding: 10px 24px;
+  padding: 10px 24px;
 }

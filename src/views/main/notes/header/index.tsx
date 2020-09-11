@@ -6,7 +6,9 @@ import NoteHeaderProps from './props'
 import './styles.css'
 
 const NoteHeader: React.FC<NoteHeaderProps> = ({
-  tags, onTagSearch, onTextSearch
+  tags,
+  onTagSearch,
+  onTextSearch,
 }) => {
   const language = useLanguage().current
 

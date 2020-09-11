@@ -3,15 +3,14 @@ import BaseLocalStorage from './BaseLocalStorage'
 
 // Só a classe de Serviços do Contatos manipula!
 class ContactsLocalStorage extends BaseLocalStorage {
-
   getVersion = (): string | null => {
     return this.get(LS_Constants.CONTACTS_VERSION)
   }
 
-  setVersion = (version : string) => {
+  setVersion = (version: string) => {
     this.set(LS_Constants.CONTACTS_VERSION, version)
   }
-  
+
   getItems = (): string | null => {
     return this.get(LS_Constants.CONTACTS)
   }
@@ -58,9 +57,11 @@ class ContactsLocalStorage extends BaseLocalStorage {
   }
 
   setLastId = (lastId: number) => {
-    return localStorage.setItem(LS_Constants.CONTACTS_LAST_ID, JSON.stringify(lastId))
+    return localStorage.setItem(
+      LS_Constants.CONTACTS_LAST_ID,
+      JSON.stringify(lastId)
+    )
   }
-  
 }
 
 export default new ContactsLocalStorage()

@@ -44,7 +44,7 @@ export default class EN implements LanguageBase {
   LOGOUT_DIALOG_QUESTION = 'Are you sure you want to log out?'
 
   LOGOUT_DIALOG_DESCRIPTION =
-    "If you say 'YES' all your account data will be removed from this device"
+    'If you answer "YES" all your account data will be removed from this device'
 
   AGREEMENT_OPTION_TEXT = 'YES'
 
@@ -221,7 +221,7 @@ export default class EN implements LanguageBase {
   CLOSE_ARIA_LABEL = 'Close'
 
   DELETE_ARIA_LABEL = 'Delete'
-  
+
   EDIT_ARIA_LABEL = 'Edit'
 
   INVALID_WEEKDAY = 'Invalid weekday.'
@@ -239,9 +239,9 @@ export default class EN implements LanguageBase {
   INVALID_EVENT_TYPE = 'Invalid event type'
 
   MINUTES = 'minutes'
-  
+
   HOURS = 'hours'
-  
+
   DAYS = 'days'
 
   AND = 'and'
@@ -265,7 +265,7 @@ export default class EN implements LanguageBase {
   EVENT_INIT_TIME_LABEL = 'Start time'
 
   EVENT_END_DATE_LABEL = 'End day'
-  
+
   EVENT_END_TIME_LABEL = 'End time'
 
   DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
@@ -314,7 +314,7 @@ export default class EN implements LanguageBase {
 
   CHANGE_COLOR_ARIA_LABEL = 'Click to select a random color'
 
-  ADD_PHONE_ARIA_LABEL= 'Click to add a new phone number'
+  ADD_PHONE_ARIA_LABEL = 'Click to add a new phone number'
 
   RETURN_ARIA_LABEL = 'Return'
 
@@ -328,7 +328,6 @@ export default class EN implements LanguageBase {
 
   EVENT_COLOR_LABEL = 'Selected color'
 
-
   FAQ_CONNECTION_ERROR = 'Internet connection required'
 
   MAX = 'Max.'
@@ -339,10 +338,24 @@ export default class EN implements LanguageBase {
 
   COLUMN_EDIT_LABEL = 'Edit Column'
 
-  COLUMN_TITLE_LABEL = 'Column\'s title'
+  COLUMN_TITLE_LABEL = "Column's title"
 
   COLUMN_MIN_LENGTH_ERROR = 'Minimum one character.'
 
   COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Title already exists'
 
+  NOTE_COLUMN_DELETE_DIALOG_QUESTION =
+    'Are you sure you want to delete this column?'
+
+  NOTE_COLUMN_CANT_DELETE_DIALOG_QUESTION = 'You can not remove this column.'
+
+  NOTE_COLUMN_DELETE_DIALOG_DESC =
+    'If you answer "YES" this column will be removed permanently.'
+
+  NOTE_COLUMN_CANT_DELETE_DIALOG_DESC =
+    'A column can not have notes to be removed.'
+
+  NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
+
+  NOTE_COLUMN_CANT_DELETE_DIALOG_AGREE_TEXT = 'OK'
 }

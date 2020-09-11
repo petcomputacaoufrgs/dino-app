@@ -6,11 +6,7 @@ import MaterialDialogActions from '@material-ui/core/DialogActions'
 import SVGButton from '../../../../../components/button/svg_button'
 import { ReactComponent as DoneIcon } from '../../../../../assets/icons/done.svg'
 
-const DialogActions: React.FC<DialogActionsProps> = (
-  {
-    onSave
-  }
-) => {
+const DialogActions: React.FC<DialogActionsProps> = ({ onSave }) => {
   const language = useLanguage().current
 
   return (

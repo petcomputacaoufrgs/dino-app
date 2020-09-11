@@ -10,11 +10,17 @@ export default class BaseDatabase<T extends BaseDoc> {
   db: PouchDB.Database<T>
   dbName: string
   getId: (doc: T) => string
+  applyChanges: (origin: T, changed: T) => T
 
-  constructor(dbName: string, getId: (doc: T) => string) {
+  constructor(
+    dbName: string,
+    getId: (doc: T) => string,
+    applyChanges: (origin: T, changed: T) => T
+  ) {
     this.dbName = dbName
     this.db = this.getNewConnection()
     this.getId = getId
+    this.applyChanges = applyChanges
   }
 
   getByDoc = async (doc: T): Promise<T | null> => {
@@ -27,22 +33,30 @@ export default class BaseDatabase<T extends BaseDoc> {
         LogAppErrorService.saveError(e)
       }
     }
-    
+
     return null
   }
 
   put = async (doc: T) => {
-    if (!doc._id) {
-      doc._id = this.getId(doc)
-    }
-
     try {
-      await this.db.put(doc)
+      if (doc._id) {
+        const savedDoc = await this.getByDoc(doc)
+
+        if (savedDoc) {
+          const newDoc = this.applyChanges(savedDoc, doc)
+
+          await this.db.put(newDoc)
+        }
+      } else {
+        doc._id = this.getId(doc)
+
+        await this.db.put(doc)
+      }
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
   }
-  
+
   putAll = async (docs: T[]) => {
     docs.forEach((doc) => {
       if (!doc._id) {
@@ -56,7 +70,6 @@ export default class BaseDatabase<T extends BaseDoc> {
       LogAppErrorService.saveError(e)
     }
   }
-
 
   removeAll = async () => {
     try {
@@ -101,7 +114,7 @@ export default class BaseDatabase<T extends BaseDoc> {
           return {
             _id: r.id,
             _rev: r.value.rev,
-            ...doc
+            ...doc,
           } as T
         }
 

@@ -11,4 +11,3 @@ export default interface EventDoc extends PouchDB.Core.GetMeta {
   reminder_alarm_ms: number
   type: number
 }
-

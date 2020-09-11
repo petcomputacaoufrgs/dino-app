@@ -4,7 +4,7 @@ import NoteService from '../../services/note/NoteService'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteDoc from '../../types/note/database/NoteDoc'
 
-const NoteContext =createContext <NoteContextType>({
+const NoteContext = createContext<NoteContextType>({
   notes: [],
   tags: [],
 })
@@ -53,9 +53,7 @@ const NoteContextProvider: React.FC = (props) => {
   }
 
   return (
-    <NoteContext.Provider value={value}>
-      {props.children}
-    </NoteContext.Provider>
+    <NoteContext.Provider value={value}>{props.children}</NoteContext.Provider>
   )
 }
 

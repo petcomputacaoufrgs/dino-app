@@ -8,17 +8,15 @@ import FaqVersionModel from '../../types/faq/FaqSyncModel'
 import Service from './FaqService'
 
 class FaqServerService {
-
   getUserFaq = async (): Promise<undefined | FaqModel> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_GET)
-        
+
     if (request.canGo) {
       try {
         const response = await request.authenticate().go()
 
         if (response.status === HttpStatus.OK) {
           return response.body as FaqModel
-        
         } else if (response.status === HttpStatus.NO_CONTENT) {
           Service.removeUserData()
         }
@@ -34,7 +32,7 @@ class FaqServerService {
 
     if (request.canGo) {
       try {
-        const response = await request.authenticate().setBody({id}).go()
+        const response = await request.authenticate().setBody({ id }).go()
 
         if (response.status === HttpStatus.OK) {
           return response.body
@@ -45,14 +43,14 @@ class FaqServerService {
     }
     return undefined
   }
-    
-getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
+
+  getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_OPTIONS)
-  
+
     if (request.canGo) {
       try {
         const response = await request.authenticate().go()
-  
+
         if (response.status === HttpStatus.OK) {
           return response.body
         }
@@ -60,11 +58,10 @@ getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
         LogAppErrorService.saveError(e)
       }
     }
-  
+
     return undefined
   }
-  
-  
+
   getUserFaqVersion = async (): Promise<FaqVersionModel | undefined> => {
     const request = await DinoAgentService.get(
       DinoAPIURLConstants.FAQ_GET_VERSION
@@ -84,7 +81,6 @@ getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
 
     return undefined
   }
-
 }
 
 export default new FaqServerService()

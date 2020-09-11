@@ -1,4 +1,4 @@
-import BaseDoc from "../../database/BaseDoc";
+import BaseDoc from '../../database/BaseDoc'
 
 export default interface NoteDoc extends BaseDoc {
   external_id?: number

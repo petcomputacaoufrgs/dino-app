@@ -118,7 +118,7 @@ export default class PT implements LanguageBase {
 
   DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
 
-  SEARCH_BUTTON_LABEL = 'Pesquisar'
+  SEARCH_BUTTON_LABEL = 'Buscar...'
 
   ANSWER_DIALOG_LABEL = 'Tela para responder uma questão anotada.'
 
@@ -130,13 +130,23 @@ export default class PT implements LanguageBase {
 
   FORM_PHONE = 'Telefone'
 
+  FORM_QUESTION = 'Pergunta'
+
+  FORM_QUESTION_PLACEHOLDER = 'Castores gostam de castanhas?'
+
+  FORM_QUESTION_TITLE = 'Mande sua pergunta!'
+
+  FORM_ADD_PHONE = 'Adicionar Telefone'
+
+  NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
+
   CONTACTS_ADD_CONTACT = 'Novo Contato'
 
-  CONTACTS_MOBILE_PHONE = 'Telefone Móvel'
+  CONTACTS_MOBILE_PHONE = 'Móvel'
 
-  CONTACTS_RESIDENTIAL_PHONE = 'Telefone Fixo'
+  CONTACTS_RESIDENTIAL_PHONE = 'Fixo'
 
-  CONTACTS_PUBLIC_SERVICE_PHONE = 'Serviço Público'
+  CONTACTS_PUBLIC_SERVICE_PHONE = 'Serviço'
 
   NO_AVAILABLE_TEXT = 'Sem Texto Disponível'
 

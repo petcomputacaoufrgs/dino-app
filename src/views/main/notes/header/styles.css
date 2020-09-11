@@ -14,3 +14,11 @@
   height: auto;
   margin-right: 15px;
 }
+
+.notes__header .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"][class*="MuiOutlinedInput-marginDense"] {
+  padding: 6px 0px;
+}
+
+.notes__header .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"][class*="MuiOutlinedInput-marginDense"] .MuiAutocomplete-input {
+  padding: 4.5px 0px;
+}

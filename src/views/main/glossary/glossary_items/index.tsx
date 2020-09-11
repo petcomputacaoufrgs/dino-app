@@ -8,7 +8,6 @@ import PathConstants from '../../../../constants/PathConstants'
 import { Link } from 'react-router-dom'
 import GlossaryItemProps from './props'
 
-//(props: {  items: Array<GlossaryItemModel> })
 const GlossaryItems = (props: GlossaryItemProps): JSX.Element => {
   const language = useLanguage().current
 

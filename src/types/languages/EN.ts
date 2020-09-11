@@ -116,7 +116,7 @@ export default class EN implements LanguageBase {
 
   DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
-  SEARCH_BUTTON_LABEL = 'Search'
+  SEARCH_BUTTON_LABEL = 'Search...'
 
   ANSWER_DIALOG_LABEL = 'Model for answer a question note'
 
@@ -127,6 +127,16 @@ export default class EN implements LanguageBase {
   FORM_TYPE = 'Type'
 
   FORM_PHONE = 'Phone'
+
+  FORM_QUESTION = 'Question'
+
+  FORM_QUESTION_PLACEHOLDER = 'Question?'
+
+  FORM_QUESTION_TITLE = 'Send us your question!'
+
+  FORM_ADD_PHONE = 'Add Phone'
+
+  NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
   CONTACTS_ADD_CONTACT = 'New Contact'
 

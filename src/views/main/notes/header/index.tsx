@@ -10,7 +10,6 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
   onTagSearch,
   onTextSearch,
 }) => {
-  const language = useLanguage().current
 
   return (
     <div className="notes__header">

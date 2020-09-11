@@ -5,10 +5,10 @@ import APIConfig from '../../environment/api_config.json'
  */
 class DinoAPIURLConstants {
   URL = APIConfig.URL
+  GLOSSARY = `${this.URL}public/glossary/`
   private AUTH = `${this.URL}auth/`
   private PUBLIC_AUTH = `${this.URL}public/auth/`
   private USER = `${this.URL}user/`
-  private GLOSSARY = `${this.URL}public/glossary/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private NOTE = `${this.URL}note/`
   private NOTE_COLUMN = `${this.URL}note_column/`
@@ -29,8 +29,6 @@ class DinoAPIURLConstants {
   USER_PUT_PHOTO = `${this.USER}photo/`
 
   LOGOUT = `${this.AUTH}logout/`
-
-  GLOSSARY_LIST = `${this.GLOSSARY}get/`
 
   GLOSSARY_VERSION = `${this.GLOSSARY}version/`
 
@@ -97,6 +95,9 @@ class DinoAPIURLConstants {
   FAQ_SAVE = `${this.FAQ}`
 
   FAQ_OPTIONS = `${this.URL}public/faq/options/`
+
+  FAQ_SAVE_USER_QUESTION = `${this.FAQ}question/`
+
 }
 
 export default new DinoAPIURLConstants()

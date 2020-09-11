@@ -33,7 +33,7 @@ class GlossaryService {
 
   getAPIItems = async (): Promise<Array<GlossaryItemModel> | undefined> => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.GLOSSARY_LIST
+      DinoAPIURLConstants.GLOSSARY
     )
 
     if (request.canGo) {

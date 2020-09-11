@@ -4,7 +4,7 @@ import { useLanguage } from '../../../../context_provider/app_settings'
 import ContactItemListProps from './props'
 import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Menu, MenuItem,} from '@material-ui/core'
 import ContactsService from '../../../../services/contact/ContactService'
-import OptionsComponent from '../../../../components/options_component'
+import OptionsComponent from '../../../../components/icon_buttons/options_component'
 
 const ContactItemList = ({item, setEdit, setDelete, onClick, children}: ContactItemListProps): JSX.Element => {
 

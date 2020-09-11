@@ -9,8 +9,8 @@ import {
 import useStyles from '../../styles'
 import ContactCardHeaderProps from './props'
 import ContactsService from '../../../../../services/contact/ContactService'
-import CloseComponent from '../../../../../components/close_component'
-import OptionsComponent from '../../../../../components/options_component'
+import CloseComponent from '../../../../../components/icon_buttons/close_component'
+import OptionsComponent from '../../../../../components/icon_buttons/options_component'
 
 const ContactCardHeader = ({item, setEdit, setDelete, onClose: handleCloseDialog}: ContactCardHeaderProps) => {
 

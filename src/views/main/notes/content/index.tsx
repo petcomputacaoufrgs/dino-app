@@ -4,7 +4,6 @@ import './styles.css'
 import NoteDialog from '../note_dialog'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context_provider/app_settings'
-import AgreementDialogProps from '../../../../components/agreement_dialog/props'
 import {
   DragDropContext,
   DropResult,

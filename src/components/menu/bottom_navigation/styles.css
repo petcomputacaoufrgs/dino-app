@@ -27,7 +27,7 @@
 .bottom_navigation__component {
   position: relative;
   width: 100%;
-  padding-bottom: 70px;
+  height: calc(100% - 55px - 70px);
 }
 
 .bottom_navigation__component_without_bottom {

@@ -30,13 +30,7 @@ const NoteAddButton: React.FC<NoteAddButtonProps> = ({ tags, onSave }) => {
 
   return (
     <>
-      <NoteDialog
-        open={newNoteDialogOpen}
-        tagOptions={tags}
-        onSave={() => {}}
-        onSaveNew={handleSaveNewNote}
-        onClose={handleCloseNewNoteDialog}
-      />
+c
       <Fab
         onClick={handleOpenNewQuestionDialog}
         className="notes__add"

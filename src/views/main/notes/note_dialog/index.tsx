@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import NoteDialogProps from './props'
-import './styles.css'
 import { useLanguage } from '../../../../context_provider/app_settings'
-import DialogActions from './actions'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -11,6 +9,8 @@ import StringUtils from '../../../../utils/StringUtils'
 import NoteService from '../../../../services/note/NoteService'
 import NoteConstants from '../../../../constants/NoteConstants'
 import NoteViewModel from '../../../../types/note/view/NoteViewModel'
+import { DialogTitle, DialogActions, Button } from '@material-ui/core'
+import TransitionSlide from '../../../../components/slide_transition'
 
 const NoteDialog: React.FC<NoteDialogProps> = ({
   onClose,
@@ -18,11 +18,9 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
   onSaveNew,
   open,
   tagOptions,
-  note,
+  note
 }): JSX.Element => {
   const language = useLanguage().current
-
-  const [openDialog, setOpenDialog] = useState(open)
 
   const [originalQuestion, setOriginalQuestion] = useState(
     note ? note.question : ''
@@ -106,8 +104,6 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
   }
 
   useEffect(() => {
-    setOpenDialog(open)
-
     if (open) {
       setTagList(note ? note.tagNames : [])
       setQuestion(note ? note.question : '')
@@ -160,11 +156,23 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
       </DialogContent>
     )
   }
-
   return (
-    <Dialog open={openDialog} className="note_card_dialog" onClose={onClose}>
+    <Dialog 
+      open={open} 
+      className="note_card_dialog" 
+      onClose={onClose}
+      TransitionComponent={TransitionSlide}
+    >
+      <DialogTitle>{language.NOTE_COLUMN_NOTE_DIALOG_TITLE}</DialogTitle>
       {renderDialogContent()}
-      <DialogActions onSave={handleSave} />
+      <DialogActions className="note__note_dialog__actions">
+        <Button onClick={onClose} color="primary">
+          {language.DIALOG_CANCEL_BUTTON_TEXT}
+        </Button>
+        <Button onClick={handleSave} color="primary">
+          {language.DIALOG_SAVE_BUTTON_TEXT}
+        </Button>
+      </DialogActions>
     </Dialog>
   )
 }

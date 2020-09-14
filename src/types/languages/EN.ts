@@ -368,4 +368,9 @@ export default class EN implements LanguageBase {
   NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
 
   NOTE_COLUMN_CANT_DELETE_DIALOG_AGREE_TEXT = 'OK'
+
+  NOTE_COLUMN_ADD_NOTE_TEXT = 'Add note'
+
+  NOTE_COLUMN_NOTE_DIALOG_TITLE = 'Note'
+  
 }

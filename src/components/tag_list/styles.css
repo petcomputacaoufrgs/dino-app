@@ -13,6 +13,13 @@
   color: #b32e55;
   background-color: inherit;
   margin-right: 5px;
+  font-size: smaller;
+  height: 26px;
+}
+
+.tag_list.MuiPaper-root .MuiChip-root .MuiChip-label {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .tag_list.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {

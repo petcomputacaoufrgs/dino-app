@@ -8,6 +8,14 @@
   -ms-overflow-style: none;
 }
 
+.note__note_content__column__column_card__card__tag_list.MuiCardContent-root {
+  padding-top: 16px;
+}
+
+.note__note_content__column__column_card__card__tag_list:last-child {
+  padding-bottom: 16px;
+}
+
 .note__note_content__column__column_card__card__tag_list::-webkit-scrollbar {
   display: none;
 }
@@ -20,14 +28,14 @@
 .note__note_content__column__column_card
   .MuiCardHeader-content
   .MuiTypography-root.MuiCardHeader-title {
-  font-size: larger;
+  font-size: medium;
   word-break: break-word;
 }
 
 .note__note_content__column__column_card
   .MuiCardHeader-content
   .MuiTypography-root.MuiCardHeader-subheader {
-  font-size: smaller;
+  font-size: x-small;
 }
 
 .note__note_content__column__column_card.MuiPaper-rounded {

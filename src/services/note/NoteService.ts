@@ -7,6 +7,7 @@ import NoteSyncLocalStorage from '../../local_storage/note/NoteSyncLocalStorage'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import StringUtils from '../../utils/StringUtils'
 import NoteServerService from './NoteServerService'
+import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
 
 class NoteService {
   //#region GET
@@ -14,7 +15,7 @@ class NoteService {
   getNotes = async (): Promise<NoteDoc[]> => {
     const docs = await NoteDatabase.getAll()
 
-    return docs.map((doc) => ({ ...doc, columnTitle: 'Perguntas' }))
+    return docs
   }
 
   getDeletedNotes = async (): Promise<NoteDoc[]> => {
@@ -54,7 +55,7 @@ class NoteService {
     question: string,
     tagNames: string[],
     answer: string,
-    order: number
+    colunm: NoteColumnViewModel
   ) => {
     const date = new Date().getTime()
 
@@ -64,9 +65,9 @@ class NoteService {
       tagNames: tagNames,
       lastUpdate: date,
       savedOnServer: false,
-      order: order,
+      order: colunm.notes.length,
       _rev: '',
-      columnTitle: 'Perguntas',
+      columnTitle: colunm.title,
     }
 
     await NoteDatabase.put(note)

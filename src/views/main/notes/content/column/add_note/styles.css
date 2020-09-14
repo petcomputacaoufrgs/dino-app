@@ -1,0 +1,14 @@
+.note__note_content__column__add_note {
+    width: 100%;
+}
+
+.note__note_content__column__add_note:focus {
+    outline: none;
+}
+
+.note__note_content__column__add_note h3 {
+    font-size: small;
+    margin-bottom: 0;
+    font-weight: bold;
+    color: #b32e55;
+}

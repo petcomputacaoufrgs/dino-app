@@ -27,6 +27,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
   onDeleteNote,
   onSaveColumn,
   onDeleteColumn,
+  onAddNote
 }): JSX.Element => {
   const language = useLanguage().current
 
@@ -215,6 +216,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
                   onDelete={handleOpenDeleteNoteDialog}
                   onEditColumn={handleEditColumn}
                   onDeleteColumn={handleDeleteColumn}
+                  onAddNote={onAddNote}
                 />
               ))}
               {!dragging && <AddColumn onAddColumn={handleAddColumn} />}

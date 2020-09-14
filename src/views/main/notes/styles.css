@@ -1,9 +1,9 @@
 .notes {
   position: relative;
+  width: 100%;
+  height: calc(100vh - 125px);
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
 }
 
 .note_card_dialog.MuiDialog-root

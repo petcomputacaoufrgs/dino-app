@@ -7,6 +7,7 @@ import NoteBodyColumnHeader from './header'
 import NoteViewModel from '../../../../../types/note/view/NoteViewModel'
 import { isMobile } from 'react-device-detect'
 import NoteDraggableType from '../../../../../constants/NoteDroppableType'
+import NotesContentColumnAddNote from './add_note'
 
 const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   column,
@@ -15,6 +16,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   onDelete,
   onEditColumn,
   onDeleteColumn,
+  onAddNote
 }) => {
   const renderCard = (
     note: NoteViewModel,
@@ -39,6 +41,10 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
 
   const handleColumnDelete = () => {
     onDeleteColumn(column)
+  }
+
+  const handleAddNote = () => {
+    onAddNote(column)
   }
 
   return (
@@ -67,6 +73,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
                 {...provided.droppableProps}
               >
                 {column.notes.map((note, index) => renderCard(note, index))}
+                <NotesContentColumnAddNote onAdd={handleAddNote}/>
                 {provided.placeholder}
               </div>
             )}

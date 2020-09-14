@@ -8,4 +8,5 @@ export default interface NoteBodyColumnProps {
   onDelete: (note: NoteViewModel) => void
   onEditColumn: (column: NoteColumnViewModel) => void
   onDeleteColumn: (column: NoteColumnViewModel) => void
+  onAddNote: (column: NoteColumnViewModel) => void
 }

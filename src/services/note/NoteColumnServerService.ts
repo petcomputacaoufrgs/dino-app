@@ -18,7 +18,7 @@ class NoteColumnServerService {
     )
     if (request.canGo) {
       try {
-        const response = await request.authenticate().go()
+        const response = await request.authenticate().go() 
         return response.body
       } catch (e) {
         LogAppErrorService.saveError(e)

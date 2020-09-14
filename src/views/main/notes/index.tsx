@@ -4,7 +4,6 @@ import StringUtils from '../../../utils/StringUtils'
 import NoteService from '../../../services/note/NoteService'
 import NoteHeader from './header'
 import NoteContent from './content'
-import NoteAddButton from './note_add_button'
 import { useTags, useNotes } from '../../../context_provider/note'
 import NoteDoc from '../../../types/note/database/NoteDoc'
 import NoteViewModel from '../../../types/note/view/NoteViewModel'
@@ -15,6 +14,9 @@ import { DropResult } from 'react-beautiful-dnd'
 import NoteDroppableType from '../../../constants/NoteDroppableType'
 import ArrayUtils from '../../../utils/ArrayUtils'
 import NoteColumnService from '../../../services/note/NoteColumnService'
+import NoteDialog from './note_dialog'
+import LogAppErrorService from '../../../services/log_app_error/LogAppErrorService'
+import ViewAddNoteOpenedWIthoutColumnError from '../../../error/ViewAddNoteOpenedWIthoutColumnError'
 
 const convertNotesToNoteViews = (
   notes: NoteDoc[],
@@ -57,6 +59,10 @@ const Notes = () => {
     createViewColumns(columns, notes, tagSearch, textSearch)
   )
 
+  const [noteDialogOpen, setNoteDialogOpen] = useState(false)
+  const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>()
+  const [currentColumn, setCurrentColumn] = useState<NoteColumnViewModel | undefined>()
+
   useEffect(() => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
     setViewColumns(viewColumns)
@@ -96,14 +102,26 @@ const Notes = () => {
     tagNames: string[],
     answer: string
   ) => {
-    if (viewColumns.length > 0) {
-      const order = viewColumns[0].notes.length
-      NoteService.createNote(question, tagNames, answer, order)
+    setNoteDialogOpen(false)
+    
+    if (currentColumn) {
+      NoteService.createNote(question, tagNames, answer, currentColumn)
+    } else {
+      LogAppErrorService.saveError(new ViewAddNoteOpenedWIthoutColumnError())
     }
   }
 
   const handleSaveNote = (note: NoteDoc) => {
     NoteService.saveNote(note)
+  }
+
+  const handleAddNewNote = (column: NoteColumnViewModel) => {
+    setCurrentColumn(column)
+    setNoteDialogOpen(true)
+  }
+
+  const handleCloseNoteDialog = () => {
+    setNoteDialogOpen(false)
   }
 
   //#endregion
@@ -240,10 +258,18 @@ const Notes = () => {
         onDeleteNote={handleDeleteNote}
         onSaveColumn={handleSaveColumn}
         onDeleteColumn={handleDeleteColumn}
+        onAddNote={handleAddNewNote}
         tags={tags}
         columns={viewColumns}
       />
-      <NoteAddButton onSave={handleSaveNewNote} tags={tags} />
+      <NoteDialog
+        note={currentNote}
+        open={noteDialogOpen}
+        tagOptions={tags}
+        onSave={() => { }}
+        onSaveNew={handleSaveNewNote}
+        onClose={handleCloseNoteDialog}
+      />
     </div>
   )
 }

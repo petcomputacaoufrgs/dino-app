@@ -104,8 +104,6 @@ export default class PT implements LanguageBase {
 
   NOTE_DELETE_BUTTON = 'Clique aqui para apagar está anotação.'
 
-  QUESTION_NOTE_DIALOG_TITLE = 'Pergunta'
-
   ANSWER_NOTE_DIALOG_TITLE = 'Resposta'
 
   NOTE_TAG_LABEL = 'Tags'
@@ -360,19 +358,25 @@ export default class PT implements LanguageBase {
   NOTE_COLUMN_DELETE_DIALOG_QUESTION =
     'Tem certeza que deseja remover esta coluna?'
 
-  NOTE_COLUMN_CANT_DELETE_DIALOG_QUESTION = 'Você não pode remover esta coluna'
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION = 'Esta coluna possui anotações!'
 
   NOTE_COLUMN_DELETE_DIALOG_DESC =
     'Caso responda "SIM" esta coluna será removida permanentemente.'
 
-  NOTE_COLUMN_CANT_DELETE_DIALOG_DESC =
-    'A coluna não pode possuir anotações para ser removida.'
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
+    'Ao remover esta coluna você irá remover as anotações pertencentes a ela também.'
 
   NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'SIM'
 
-  NOTE_COLUMN_CANT_DELETE_DIALOG_OK_TEXT = 'OK'
-
   NOTE_COLUMN_ADD_NOTE_TEXT = 'Adicionar anotação'
 
-  NOTE_COLUMN_NOTE_DIALOG_TITLE = 'Anotação'
+  NOTE_EDIT_DIALOG_EDIT_TITLE = 'Editar anotação'
+
+  NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'Nova anotação'
+
+  QUESTION_NOTE_DIALOG_TITLE = 'Pergunta'
+  
+  NOTE_INFO_DIALOG_LAST_UPDATE_TITLE = 'Última atualização:'
+
+  NOTE_INFO_DIALOG_COLUMN_TITLE = 'Coluna:'
 }

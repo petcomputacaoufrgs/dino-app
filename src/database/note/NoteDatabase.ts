@@ -28,6 +28,12 @@ const applyChanges = (origin: NoteDoc, changed: NoteDoc): NoteDoc => {
 class NoteDatabase extends BaseDatabase<NoteDoc> {
   constructor() {
     super(DatabaseConstants.NOTE, getId, applyChanges)
+
+    this.db.createIndex({
+      index: {
+        fields: ['columnTitle'],
+      },
+    })
   }
 
   getByQuestion = async (question: string): Promise<NoteDoc | null> => {
@@ -51,6 +57,25 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
     noteDocs.forEach((noteDoc) => tags.push.apply(tags, noteDoc.tagNames))
 
     return ArrayUtils.removeRepeatedValues(tags)
+  }
+
+  deleteByColumnTitle = async (columnTitle: string): Promise<void> => {
+    try {
+      const findResponse = await this.db.find({
+        selector: {
+          $and: [
+            {
+              columnTitle: {$eq: columnTitle },
+            },
+          ],
+        }
+      })
+
+      await this.deleteByDocs(findResponse.docs)
+
+    } catch (e) {
+      LogAppErrorService.saveError(e)
+    }
   }
 }
 

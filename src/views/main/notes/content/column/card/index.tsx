@@ -9,11 +9,11 @@ import NoteBodyColumnCardProps from './props'
 import { Draggable } from 'react-beautiful-dnd'
 import './styles.css'
 
-const NoteBodyColumnCard: React.FC<NoteBodyColumnCardProps> = ({
+const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
   noteIndex,
   onDelete,
-  onClickNote,
+  onClickNote
 }) => {
   const language = useLanguage().current
 
@@ -54,4 +54,4 @@ const NoteBodyColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   )
 }
 
-export default NoteBodyColumnCard
+export default NoteContentColumnCard

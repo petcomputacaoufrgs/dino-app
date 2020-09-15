@@ -1,6 +1,6 @@
 import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 
-export default interface NoteDialogProps {
+export default interface NoteEditDialogProps {
   open: boolean
   tagOptions: string[]
   onSave: (note: NoteViewModel) => void

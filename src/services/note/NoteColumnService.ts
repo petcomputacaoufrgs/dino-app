@@ -8,6 +8,7 @@ import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpd
 import StringUtils from '../../utils/StringUtils'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
+import NoteDatabase from '../../database/note/NoteDatabase'
 
 class NoteColumnService {
   //#region GET
@@ -111,6 +112,7 @@ class NoteColumnService {
   }
 
   deleteColumn = async (doc: NoteColumnDoc) => {
+    await NoteDatabase.deleteByColumnTitle(doc.title)
     await NoteColumnDatabase.deleteByDoc(doc)
 
     NoteColumnContextUpdater.update()

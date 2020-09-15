@@ -94,6 +94,16 @@ export default class BaseDatabase<T extends BaseDoc> {
     }
   }
 
+  deleteByDocs = async (docs: T[]) => {
+    try {
+      for (const doc of docs) {
+        await this.deleteByDoc(doc)
+      }
+    } catch (e) {
+      LogAppErrorService.saveError(e)
+    }
+  }
+
   getAll = async (): Promise<T[]> => {
     try {
       const responseIds = await this.db.allDocs()

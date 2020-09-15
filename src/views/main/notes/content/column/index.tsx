@@ -2,7 +2,7 @@ import React from 'react'
 import NoteBodyColumnProps from './props'
 import './styles.css'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
-import NoteBodyColumnCard from './card'
+import NoteContentColumnCard from './card'
 import NoteBodyColumnHeader from './header'
 import NoteViewModel from '../../../../../types/note/view/NoteViewModel'
 import { isMobile } from 'react-device-detect'
@@ -16,7 +16,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   onDelete,
   onEditColumn,
   onDeleteColumn,
-  onAddNote,
+  onAddNote
 }) => {
   const renderCard = (
     note: NoteViewModel,
@@ -24,13 +24,13 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   ): JSX.Element | undefined => {
     if (note.showByTag || note.showByQuestion) {
       return (
-        <NoteBodyColumnCard
+        <NoteContentColumnCard
           note={note}
           key={noteIndex}
           noteIndex={noteIndex}
           onClickNote={onClickNote}
           onDelete={onDelete}
-        ></NoteBodyColumnCard>
+        ></NoteContentColumnCard>
       )
     }
   }

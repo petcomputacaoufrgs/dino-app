@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import NoteAddButtonProps from './props'
 import './styles.css'
-import NoteDialog from '../note_dialog'
+import NoteEditDialog from '../note_edit_dialog'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { useLanguage } from '../../../../context_provider/app_settings'

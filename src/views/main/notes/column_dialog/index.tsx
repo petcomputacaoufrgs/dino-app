@@ -1,4 +1,5 @@
 import React, { forwardRef, useState, useEffect } from 'react'
+import './styles.css'
 import {
   Dialog,
   Divider,
@@ -94,6 +95,7 @@ const NoteColumnDialog = forwardRef(
         fullWidth
         onClose={props.onClose}
         TransitionComponent={TransitionSlide}
+        className="note__column_dialog"
       >
         <NoteColumnDialogHeader editing={Boolean(props.column)} />
         <Divider />

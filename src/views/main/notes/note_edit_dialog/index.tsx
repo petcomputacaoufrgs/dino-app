@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import NoteDialogProps from './props'
+import './styles.css'
+import NoteEditDialogProps from './props'
 import { useLanguage } from '../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -12,7 +13,7 @@ import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 import { DialogTitle, DialogActions, Button } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 
-const NoteDialog: React.FC<NoteDialogProps> = ({
+const NoteEditDialog: React.FC<NoteEditDialogProps> = ({
   onClose,
   onSave,
   onSaveNew,
@@ -34,7 +35,7 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
 
   const [tagList, setTagList] = useState(note ? note.tagNames : [])
 
-  const handleChange = (event: React.ChangeEvent<{}>, values: string[]) => {
+  const handleTagChange = (event: React.ChangeEvent<{}>, values: string[]) => {
     const validValues = values.filter(
       (value) => value.length <= NoteConstants.TAG_MAX_LENGTH
     )
@@ -138,7 +139,7 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
           freeSolo
           value={tagList}
           limitTags={1}
-          onChange={handleChange}
+          onChange={handleTagChange}
           options={tagOptions}
           renderInput={(params) => (
             <TextField
@@ -159,13 +160,13 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
   return (
     <Dialog
       open={open}
-      className="note_card_dialog"
+      className="note_edit_dialog"
       onClose={onClose}
       TransitionComponent={TransitionSlide}
     >
-      <DialogTitle>{language.NOTE_COLUMN_NOTE_DIALOG_TITLE}</DialogTitle>
+      <DialogTitle>{note ? language.NOTE_EDIT_DIALOG_EDIT_TITLE : language.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DialogTitle>
       {renderDialogContent()}
-      <DialogActions className="note__note_dialog__actions">
+      <DialogActions>
         <Button onClick={onClose} color="primary">
           {language.DIALOG_CANCEL_BUTTON_TEXT}
         </Button>
@@ -177,4 +178,4 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
   )
 }
 
-export default NoteDialog
+export default NoteEditDialog

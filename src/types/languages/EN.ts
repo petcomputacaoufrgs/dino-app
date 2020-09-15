@@ -102,8 +102,6 @@ export default class EN implements LanguageBase {
 
   NOTE_DELETE_BUTTON = 'Click here to delete this note.'
 
-  QUESTION_NOTE_DIALOG_TITLE = 'Question'
-
   ANSWER_NOTE_DIALOG_TITLE = 'Answer'
 
   NOTE_TAG_LABEL = 'Tags'
@@ -357,19 +355,25 @@ export default class EN implements LanguageBase {
   NOTE_COLUMN_DELETE_DIALOG_QUESTION =
     'Are you sure you want to delete this column?'
 
-  NOTE_COLUMN_CANT_DELETE_DIALOG_QUESTION = 'You can not remove this column.'
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION = 'This column has notes!'
 
   NOTE_COLUMN_DELETE_DIALOG_DESC =
     'If you answer "YES" this column will be removed permanently.'
 
-  NOTE_COLUMN_CANT_DELETE_DIALOG_DESC =
-    'A column can not have notes to be removed.'
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
+    'If you remove this column related notes will be deleted too.'
 
   NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
 
-  NOTE_COLUMN_CANT_DELETE_DIALOG_OK_TEXT = 'OK'
-
   NOTE_COLUMN_ADD_NOTE_TEXT = 'Add note'
 
-  NOTE_COLUMN_NOTE_DIALOG_TITLE = 'Note'
+  NOTE_EDIT_DIALOG_EDIT_TITLE = 'Edit note'
+
+  NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'New note'
+
+  QUESTION_NOTE_DIALOG_TITLE = 'Question'
+
+  NOTE_INFO_DIALOG_LAST_UPDATE_TITLE = 'Last update:'
+
+  NOTE_INFO_DIALOG_COLUMN_TITLE = 'Column:'
 }

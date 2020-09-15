@@ -7,7 +7,6 @@ import NoteSaveResponseModel from '../../types/note/server/NoteSaveResponseModel
 import NoteDatabase from '../../database/note/NoteDatabase'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteDeleteModel from '../../types/note/server/NoteDeleteModel'
-import NoteOrderAPIModel from '../../types/note/server/NoteOrderRequestModel'
 import NoteResponseModel from '../../types/note/server/NoteResponseModel'
 import NoteOrderAllRequestModel from '../../types/note/server/NoteOrderAllRequestModel'
 import NoteOrderRequestModel from '../../types/note/server/NoteOrderRequestModel'

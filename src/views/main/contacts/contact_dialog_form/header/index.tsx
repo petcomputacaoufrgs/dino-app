@@ -34,7 +34,7 @@ const AddContactDialogHeader = (
           >
             <ColorLensIcon />
           </IconButton>
-          <CloseComponent onClose={props.handleCloseDialog}/>
+          <CloseComponent onClose={props.handleCloseDialog} />
         </>
       }
       title={

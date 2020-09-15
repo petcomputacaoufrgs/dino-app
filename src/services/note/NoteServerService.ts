@@ -9,6 +9,8 @@ import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteDeleteModel from '../../types/note/server/NoteDeleteModel'
 import NoteOrderAPIModel from '../../types/note/server/NoteOrderRequestModel'
 import NoteResponseModel from '../../types/note/server/NoteResponseModel'
+import NoteOrderAllRequestModel from '../../types/note/server/NoteOrderAllRequestModel'
+import NoteOrderRequestModel from '../../types/note/server/NoteOrderRequestModel'
 
 class NoteServerService {
   //#region GET
@@ -117,17 +119,18 @@ class NoteServerService {
   }
 
   saveOrder = async (noteDocs: NoteDoc[]): Promise<number | null> => {
-    const model: NoteOrderAPIModel[] = []
-
-    noteDocs.forEach((note) => {
-      if (note.external_id) {
-        model.push({
-          id: note.external_id,
-          order: note.order,
-          columnTitle: note.columnTitle,
-        } as NoteOrderAPIModel)
-      }
-    })
+    const model: NoteOrderAllRequestModel = {
+      items: noteDocs
+        .filter((doc) => doc.external_id !== undefined)
+        .map(
+          (doc) =>
+            ({
+              id: doc.external_id,
+              order: doc.order,
+              columnTitle: doc.columnTitle,
+            } as NoteOrderRequestModel)
+        ),
+    }
 
     const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
 

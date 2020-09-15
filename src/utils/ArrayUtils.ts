@@ -2,9 +2,7 @@ type filterCallback<T> = (value: T) => boolean
 
 class ArrayUtils {
   removeRepeatedValues = <T>(list: T[]): T[] => {
-    
-    if(list.length > 1) {
-
+    if (list.length > 1) {
       const uniqueList = new Set(list)
 
       return Array.from(uniqueList)
@@ -22,9 +20,7 @@ class ArrayUtils {
 
   merge = <T>(lists: T[][]): T[] => {
     const newList: T[] = []
-    newList.concat(...lists)
-
-    return newList
+    return newList.concat(...lists)
   }
 
   /**

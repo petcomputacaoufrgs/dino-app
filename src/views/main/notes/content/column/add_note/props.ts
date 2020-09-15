@@ -1,3 +1,3 @@
 export default interface NotesContentColumnAddNoteProps {
-    onAdd: () => void
+  onAdd: () => void
 }

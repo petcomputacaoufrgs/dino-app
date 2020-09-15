@@ -61,7 +61,9 @@ const Notes = () => {
 
   const [noteDialogOpen, setNoteDialogOpen] = useState(false)
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>()
-  const [currentColumn, setCurrentColumn] = useState<NoteColumnViewModel | undefined>()
+  const [currentColumn, setCurrentColumn] = useState<
+    NoteColumnViewModel | undefined
+  >()
 
   useEffect(() => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
@@ -103,7 +105,7 @@ const Notes = () => {
     answer: string
   ) => {
     setNoteDialogOpen(false)
-    
+
     if (currentColumn) {
       NoteService.createNote(question, tagNames, answer, currentColumn)
     } else {
@@ -266,7 +268,7 @@ const Notes = () => {
         note={currentNote}
         open={noteDialogOpen}
         tagOptions={tags}
-        onSave={() => { }}
+        onSave={() => {}}
         onSaveNew={handleSaveNewNote}
         onClose={handleCloseNoteDialog}
       />

@@ -5,17 +5,17 @@
   flex: 0 0 auto;
 }
 
+.note__note_content__columns__add_column.desktop {
+  width: 15%;
+}
+
 .note__note_content__columns__add_column__button.MuiButtonBase-root.MuiButton-root {
   border: 1px solid;
   border-color: rgba(179, 46, 85);
   background-color: rgb(245, 245, 245);
   border-radius: 5px;
   width: 100%;
-  height: 30px;
-}
-
-.note__note_content__columns__add_column.MuiButtonBase-root.MuiButton-root.desktop {
-  width: 25%;
+  height: auto;
 }
 
 .note__note_content__columns__add_column__button__text {

@@ -1,3 +1,3 @@
 export default interface OptionsComponentProps {
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void 
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }

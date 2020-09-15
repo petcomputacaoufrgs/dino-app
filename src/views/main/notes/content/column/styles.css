@@ -1,28 +1,43 @@
 .note__note_content__column {
-  border: 1px solid;
-  border-color: rgba(179, 46, 85);
+  flex: 0 0 auto;
+  width: 70%;
+  height: 100%;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.note__note_content__column.desktop {
+  width: 15%;
+}
+
+.note__note_content__column__draggable {
+  border: 1px solid rgba(179, 46, 85);
   background-color: rgb(245, 245, 245);
   border-radius: 5px;
   padding: 10px 15px 10px 15px;
-  margin-right: 7px;
-  margin-left: 7px;
-  width: 70%;
   height: 95%;
-  flex: 0 0 auto;
+  max-height: 95%;
 }
 
 .note__note_content__column:first-of-type {
   margin-left: 14px;
 }
 
-.note__note_content__column__title {
+.note__note_content__column__draggable__title {
   margin-bottom: 15px;
+  height: 25px;
 }
 
-.note__note_content__column__droppable {
-  height: 90%;
+.note__note_content__column__draggable__droppable {
+  height: calc(100% - 40px - 27px);
+  max-height: calc(100% - 40px - 27px);
 }
 
-.note__note_content__column.desktop {
-  width: 25%;
+.note__note_content__column__draggable__droppable__scroll {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.note__note_content__column__draggable__add_button {
+  height: 27px;
 }

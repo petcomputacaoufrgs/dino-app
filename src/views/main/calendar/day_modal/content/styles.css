@@ -13,7 +13,7 @@
   width: 100%;
   height: 100%;
   padding-top: 50px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .calendar__day__modal__hours__hours_list__line {

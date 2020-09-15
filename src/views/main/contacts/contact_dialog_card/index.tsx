@@ -6,7 +6,10 @@ import ContactCardContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 
 const ContactCard = forwardRef(
-  ({item, dialogOpen, onClose, setEdit, setDelete}: ContactCardProps, ref: React.Ref<unknown>): JSX.Element => {
+  (
+    { item, dialogOpen, onClose, setEdit, setDelete }: ContactCardProps,
+    ref: React.Ref<unknown>
+  ): JSX.Element => {
     return (
       <Dialog
         ref={ref}

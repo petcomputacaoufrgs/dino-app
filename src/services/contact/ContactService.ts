@@ -76,7 +76,7 @@ class ContactsService {
 
   getItems = (): ContactModel[] => {
     const items = LS.getItems()
-    return items ? JSON.parse(items) as ContactModel[] : [] 
+    return items ? (JSON.parse(items) as ContactModel[]) : []
   }
 
   setItems = (items: ContactModel[]) => {
@@ -85,20 +85,19 @@ class ContactsService {
 
   getVersion = (): number | undefined => {
     const version = LS.getVersion()
-    return version ? JSON.parse(version) : undefined 
+    return version ? JSON.parse(version) : undefined
   }
 
-  setVersion = (version : number) => {
+  setVersion = (version: number) => {
     LS.setVersion(JSON.stringify(version))
   }
- 
+
   /// #MAIN FUNCTIONS
 
   addContact = async (item: ContactModel) => {
-    
     const response = await Server.saveContact(item)
 
-    if(response !== undefined) {
+    if (response !== undefined) {
       item.id = response.id
     }
     const items = this.getItems()
@@ -106,36 +105,33 @@ class ContactsService {
     this.setItems(items)
 
     ContactContextUpdater.update()
-
   }
 
   deleteContact = (deletedFrontID: number) => {
     const items = this.getItems()
-    const index = items.findIndex(item => item.frontId === deletedFrontID)
+    const index = items.findIndex((item) => item.frontId === deletedFrontID)
 
     if (index > -1) {
       const item = items.splice(index, 1)[0]
 
-      if(item.id)
-        Server.deleteContact(item.id)
+      if (item.id) Server.deleteContact(item.id)
       this.setItems(items)
 
       ContactContextUpdater.update()
     }
-    
   }
 
   editContact = async (edited: ContactModel) => {
     const items = this.getItems()
-    
-    const index = items.findIndex(item => item.frontId === edited.frontId)
-    
+
+    const index = items.findIndex((item) => item.frontId === edited.frontId)
+
     if (index > -1) {
       if (this.changed(items[index], edited)) {
-      items.splice(index, 1, edited)
-      this.setItems(items)
+        items.splice(index, 1, edited)
+        this.setItems(items)
 
-      Server.editContact(edited)
+        Server.editContact(edited)
       }
 
       ContactContextUpdater.update()
@@ -146,10 +142,10 @@ class ContactsService {
 
   getIdsToUpdate = (): number[] => {
     const items = LS.getIdsToUpdate()
-    return items ? JSON.parse(items) as number[] : [] 
+    return items ? (JSON.parse(items) as number[]) : []
   }
 
-  setIdsToUpdate = (ids: Array<number>) => { 
+  setIdsToUpdate = (ids: Array<number>) => {
     LS.setIdsToUpdate(JSON.stringify(ids))
   }
 
@@ -158,13 +154,20 @@ class ContactsService {
     this.setIdsToUpdate(this.pushId(frontId, ids))
   }
 
-  getContactsToUpdate = (contacts: ContactModel[], idsToUpdate: number[]): {toAdd: ContactModel[]; toEdit: ContactModel[];} => {
-    return contacts.filter(contact => idsToUpdate.includes(contact.frontId))
-    .reduce((acc, contact) => {
-      const toAddOrEdit = contact.id === undefined ? 'toAdd' : 'toEdit'
-      acc[toAddOrEdit].push(contact)
-      return acc
-    }, { toAdd: Array<ContactModel>(), toEdit: Array<ContactModel>()})
+  getContactsToUpdate = (
+    contacts: ContactModel[],
+    idsToUpdate: number[]
+  ): { toAdd: ContactModel[]; toEdit: ContactModel[] } => {
+    return contacts
+      .filter((contact) => idsToUpdate.includes(contact.frontId))
+      .reduce(
+        (acc, contact) => {
+          const toAddOrEdit = contact.id === undefined ? 'toAdd' : 'toEdit'
+          acc[toAddOrEdit].push(contact)
+          return acc
+        },
+        { toAdd: Array<ContactModel>(), toEdit: Array<ContactModel>() }
+      )
   }
 
   /// #DELETE QUEUE
@@ -174,32 +177,33 @@ class ContactsService {
     return ids ? JSON.parse(ids) : []
   }
 
-  setIdsToDelete = (ids: Array<number>) => { 
+  setIdsToDelete = (ids: Array<number>) => {
     LS.setIdsToDelete(JSON.stringify(ids))
   }
 
   pushToDelete = (deletedID: number) => {
-    
     const ids = this.getIdsToDelete()
     this.setIdsToDelete(this.pushId(deletedID, ids))
-    
+
     const idsToUpdate = this.getIdsToUpdate()
-    const idToUpdateIndex = idsToUpdate.findIndex(id => id === deletedID)
-    
-    if(idToUpdateIndex > -1) {
+    const idToUpdateIndex = idsToUpdate.findIndex((id) => id === deletedID)
+
+    if (idToUpdateIndex > -1) {
       idsToUpdate.splice(idToUpdateIndex, 1)
       this.setIdsToUpdate(idsToUpdate)
     }
   }
 
-  getContactsToDelete = ():{ id: number }[] => {
-    return this.getIdsToDelete().map(id => { return { id } }) 
+  getContactsToDelete = (): { id: number }[] => {
+    return this.getIdsToDelete().map((id) => {
+      return { id }
+    })
   }
 
   /// #QUEUE AUX
 
   pushId = (id: number, ids: Array<number>): Array<number> => {
-    const newIds = ids.filter(queueId => queueId !== id)
+    const newIds = ids.filter((queueId) => queueId !== id)
     newIds.push(id)
     return newIds
   }
@@ -221,9 +225,9 @@ class ContactsService {
     return lastId
   }
 
-  getLastFrontId =(): number => { 
-    const id = LS.getLastId() 
-    return id ? JSON.parse(id) : this.getLastItemId() 
+  getLastFrontId = (): number => {
+    const id = LS.getLastId()
+    return id ? JSON.parse(id) : this.getLastItemId()
   }
 
   getLastItemId = (): number => {
@@ -235,27 +239,29 @@ class ContactsService {
     return 0
   }
 
-  findItemByPhones = (newPhones: Array<PhoneModel>): ContactModel | undefined => {
-
+  findItemByPhones = (
+    newPhones: Array<PhoneModel>
+  ): ContactModel | undefined => {
     const items = this.getItems()
 
-    return items.find(item => {
-      return item.phones.some(phone =>
-        newPhones.some(newPhone => newPhone.number === phone.number)
+    return items.find((item) => {
+      return item.phones.some((phone) =>
+        newPhones.some((newPhone) => newPhone.number === phone.number)
       )
     })
   }
 
   changed = (item: ContactModel, edited: ContactModel): boolean => {
-
     let changed = false
-    
+
     if (item.phones.length === edited.phones.length) {
-      changed = item.phones.some((phone, index) => 
-        phone.number !== edited.phones[index].number || phone.type !== edited.phones[index].type
+      changed = item.phones.some(
+        (phone, index) =>
+          phone.number !== edited.phones[index].number ||
+          phone.type !== edited.phones[index].type
       )
     } else changed = true
-    
+
     if (item.name !== edited.name) {
       changed = true
     }
@@ -265,34 +271,34 @@ class ContactsService {
     if (item.color !== edited.color) {
       changed = true
     }
-    
+
     return changed
   }
-  
+
   getPhoneTypes = (phones: Array<PhoneModel>): string => {
+    if (phones.length > 0) {
+      const types = ArrayUtils.removeRepeatedValues(
+        phones.map((phone) => phone.type)
+      )
 
-      if(phones.length > 0) {
-        
-        const types = ArrayUtils.removeRepeatedValues(phones.map(phone => phone.type))
-
-        return types.map(type => this.getPhoneType(type)).toString()
-        
-      } 
+      return types.map((type) => this.getPhoneType(type)).toString()
+    }
 
     return ''
   }
-    
+
   getPhoneType = (type: number): string => {
-    
     const language = useLanguage().current
-    
+
     switch (type) {
-      
-      case ContactsConstants.PUBLIC_SERVICE: return language.CONTACTS_PUBLIC_SERVICE_PHONE
+      case ContactsConstants.PUBLIC_SERVICE:
+        return language.CONTACTS_PUBLIC_SERVICE_PHONE
 
-      case ContactsConstants.RESIDENTIAL: return language.CONTACTS_RESIDENTIAL_PHONE
+      case ContactsConstants.RESIDENTIAL:
+        return language.CONTACTS_RESIDENTIAL_PHONE
 
-      default: return language.CONTACTS_MOBILE_PHONE
+      default:
+        return language.CONTACTS_MOBILE_PHONE
     }
   }
 }

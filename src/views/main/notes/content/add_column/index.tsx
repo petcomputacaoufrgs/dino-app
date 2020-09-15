@@ -11,7 +11,7 @@ const AddColumn: React.FC<AddColumnProps> = ({ onAddColumn }) => {
   return (
     <div
       className={`note__note_content__columns__add_column${
-        !isMobile ? ' desktop' : ''
+        isMobile ? '' : ' desktop'
       }`}
     >
       <Button

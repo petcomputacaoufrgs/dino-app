@@ -149,7 +149,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
       </div>
       <Divider />
       {renderGroupItems()}
-      <button className='button__close-drawer' onClick={onClose}/>
+      <button className="button__close-drawer" onClick={onClose} />
     </Drawer>
   )
 

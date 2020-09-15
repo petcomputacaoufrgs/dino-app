@@ -4,7 +4,7 @@
 }
 
 .note__note_content__column__column_card__card__tag_list {
-  overflow: scroll;
+  overflow: auto;
   -ms-overflow-style: none;
 }
 

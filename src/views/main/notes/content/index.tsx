@@ -27,7 +27,7 @@ const NoteContent: React.FC<NoteBodyProps> = ({
   onDeleteNote,
   onSaveColumn,
   onDeleteColumn,
-  onAddNote
+  onAddNote,
 }): JSX.Element => {
   const language = useLanguage().current
 
@@ -57,6 +57,8 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setDeleteNoteColumnDialogAgreeText,
   ] = useState('')
 
+  const [canDeleteNoteColumn, setCanDeleteNoteColumn] = useState(false)
+
   const [dragging, setDragging] = useState(false)
 
   //#region COLUMN
@@ -84,25 +86,9 @@ const NoteContent: React.FC<NoteBodyProps> = ({
 
   const handleDeleteColumn = (column: NoteColumnViewModel) => {
     if (column.notes.length > 0) {
-      setDeleteNoteColumnDialogQuestion(
-        language.NOTE_COLUMN_CANT_DELETE_DIALOG_QUESTION
-      )
-      setDeleteNoteColumnDialogDescription(
-        language.NOTE_COLUMN_CANT_DELETE_DIALOG_DESC
-      )
-      setDeleteNoteColumnDialogAgreeText(
-        language.NOTE_COLUMN_CANT_DELETE_DIALOG_AGREE_TEXT
-      )
+      setCanDeleteNoteColumn(false)
     } else {
-      setDeleteNoteColumnDialogQuestion(
-        language.NOTE_COLUMN_DELETE_DIALOG_QUESTION
-      )
-      setDeleteNoteColumnDialogDescription(
-        language.NOTE_COLUMN_DELETE_DIALOG_DESC
-      )
-      setDeleteNoteColumnDialogAgreeText(
-        language.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT
-      )
+      setCanDeleteNoteColumn(true)
     }
 
     setCurrentNoteColumn(column)
@@ -207,19 +193,21 @@ const NoteContent: React.FC<NoteBodyProps> = ({
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {columns.map((column, index) => (
-                <NoteContentColumn
-                  column={column}
-                  columnIndex={index}
-                  key={index}
-                  onClickNote={handleCardClick}
-                  onDelete={handleOpenDeleteNoteDialog}
-                  onEditColumn={handleEditColumn}
-                  onDeleteColumn={handleDeleteColumn}
-                  onAddNote={onAddNote}
-                />
-              ))}
-              {!dragging && <AddColumn onAddColumn={handleAddColumn} />}
+              <div className="note__note_content__columns__scroll">
+                {columns.map((column, index) => (
+                  <NoteContentColumn
+                    column={column}
+                    columnIndex={index}
+                    key={index}
+                    onClickNote={handleCardClick}
+                    onDelete={handleOpenDeleteNoteDialog}
+                    onEditColumn={handleEditColumn}
+                    onDeleteColumn={handleDeleteColumn}
+                    onAddNote={onAddNote}
+                  />
+                ))}
+                {!dragging && <AddColumn onAddColumn={handleAddColumn} />}
+              </div>
               {provided.placeholder}
             </div>
           )}
@@ -253,11 +241,23 @@ const NoteContent: React.FC<NoteBodyProps> = ({
         open={deleteNoteDialogOpen}
       />
       <AgreementDialog
-        question={deleteNoteColumnDialogQuestion}
-        description={deleteNoteColumnDialogDescription}
-        disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
-        agreeOptionText={deleteNoteColumnDialogAgreeText}
-        onAgree={handleDeleteColumnAgree}
+        question={
+          canDeleteNoteColumn
+            ? language.NOTE_COLUMN_DELETE_DIALOG_QUESTION
+            : language.NOTE_COLUMN_CANT_DELETE_DIALOG_QUESTION
+        }
+        description={
+          canDeleteNoteColumn
+            ? language.NOTE_COLUMN_DELETE_DIALOG_DESC
+            : language.NOTE_COLUMN_CANT_DELETE_DIALOG_DESC
+        }
+        disagreeOptionText={
+          canDeleteNoteColumn
+            ? language.DISAGREEMENT_OPTION_TEXT
+            : language.NOTE_COLUMN_CANT_DELETE_DIALOG_OK_TEXT
+        }
+        agreeOptionText={language.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT}
+        onAgree={canDeleteNoteColumn ? handleDeleteColumnAgree : undefined}
         onDisagree={handleDeleteColumnDisagree}
         open={deleteNoteColumnDialogOpen}
       />

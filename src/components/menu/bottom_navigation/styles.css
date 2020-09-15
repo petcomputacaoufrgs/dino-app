@@ -33,8 +33,6 @@
 .bottom_navigation__component_without_bottom {
   width: 100%;
   height: calc(100% - 55px);
-  overflow: scroll;
-  -ms-overflow-style: none;
   padding-left: 73px;
 }
 

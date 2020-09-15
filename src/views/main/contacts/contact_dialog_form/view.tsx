@@ -1,10 +1,6 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-} from '@material-ui/core'
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
@@ -38,12 +34,12 @@ const View = React.forwardRef(
     const language = useLanguage().current
 
     return (
-      <div className='contact-form'>
+      <div className="contact-form">
         <Dialog
           ref={ref}
-          style={{margin:'0px'}}
+          style={{ margin: '0px' }}
           open={open}
-          maxWidth='xl'
+          maxWidth="xl"
           fullWidth
           onClose={handleClose}
           TransitionComponent={TransitionSlide}
@@ -71,17 +67,11 @@ const View = React.forwardRef(
             />
           </DialogContent>
           <DialogActions>
-            <Button
-              onClick={handleClose}
-              color="primary"
-            >
+            <Button onClick={handleClose} color="primary">
               {language.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
 
-            <Button
-              onClick={handleSave}
-              color="primary"
-            >
+            <Button onClick={handleSave} color="primary">
               {language.DIALOG_SAVE_BUTTON_TEXT}
             </Button>
           </DialogActions>

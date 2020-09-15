@@ -34,7 +34,7 @@
   height: calc(100%-5px);
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 

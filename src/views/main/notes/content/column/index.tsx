@@ -16,7 +16,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   onDelete,
   onEditColumn,
   onDeleteColumn,
-  onAddNote
+  onAddNote,
 }) => {
   const renderCard = (
     note: NoteViewModel,
@@ -48,39 +48,45 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   }
 
   return (
-    <Draggable draggableId={columnIndex.toString()} index={columnIndex}>
-      {(provided) => (
-        <div
-          className={`note__note_content__column ${!isMobile ? 'desktop' : ''}`}
-          {...provided.draggableProps}
-          ref={provided.innerRef}
-        >
+    <div className={`note__note_content__column${isMobile ? '' : ' desktop'}`}>
+      <Draggable draggableId={columnIndex.toString()} index={columnIndex}>
+        {(provided) => (
           <div
-            className="note__note_content__column__title"
-            {...provided.dragHandleProps}
+            className="note__note_content__column__draggable"
+            {...provided.draggableProps}
+            ref={provided.innerRef}
           >
-            <NoteBodyColumnHeader
-              title={column.title}
-              onEdit={handleColumnEdit}
-              onDelete={handleColumnDelete}
-            />
+            <div
+              className="note__note_content__column__draggable__title"
+              {...provided.dragHandleProps}
+            >
+              <NoteBodyColumnHeader
+                title={column.title}
+                onEdit={handleColumnEdit}
+                onDelete={handleColumnDelete}
+              />
+            </div>
+            <Droppable droppableId={column.title} type={NoteDraggableType.NOTE}>
+              {(provided) => (
+                <div
+                  className="note__note_content__column__draggable__droppable"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  <div className="note__note_content__column__draggable__droppable__scroll">
+                    {column.notes.map((note, index) => renderCard(note, index))}
+                  </div>
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+            <div className="note__note_content__column__draggable__add_button">
+              <NotesContentColumnAddNote onAdd={handleAddNote} />
+            </div>
           </div>
-          <Droppable droppableId={column.title} type={NoteDraggableType.NOTE}>
-            {(provided) => (
-              <div
-                className="note__note_content__column__droppable"
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {column.notes.map((note, index) => renderCard(note, index))}
-                <NotesContentColumnAddNote onAdd={handleAddNote}/>
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </div>
-      )}
-    </Draggable>
+        )}
+      </Draggable>
+    </div>
   )
 }
 

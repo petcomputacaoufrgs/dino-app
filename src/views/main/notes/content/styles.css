@@ -1,15 +1,18 @@
 .note__note_content {
   height: 100%;
+  overflow-y: hidden;
 }
 
 .note__note_content__columns {
   width: 100%;
   height: 100%;
+  padding: 0px;
+}
+
+.note__note_content__columns__scroll {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding: 0px;
 }

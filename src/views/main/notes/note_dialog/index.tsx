@@ -18,7 +18,7 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
   onSaveNew,
   open,
   tagOptions,
-  note
+  note,
 }): JSX.Element => {
   const language = useLanguage().current
 
@@ -157,9 +157,9 @@ const NoteDialog: React.FC<NoteDialogProps> = ({
     )
   }
   return (
-    <Dialog 
-      open={open} 
-      className="note_card_dialog" 
+    <Dialog
+      open={open}
+      className="note_card_dialog"
       onClose={onClose}
       TransitionComponent={TransitionSlide}
     >

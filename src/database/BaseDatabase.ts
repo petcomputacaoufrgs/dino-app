@@ -2,7 +2,6 @@ import PouchDB from 'pouchdb'
 import findPlugin from 'pouchdb-find'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import BaseDoc from '../types/database/BaseDoc'
-import DatabaseDeleteWithoutID from '../error/DatabaseDeleteWithoutID'
 
 PouchDB.plugin(findPlugin)
 
@@ -23,8 +22,12 @@ export default class BaseDatabase<T extends BaseDoc> {
     this.applyChanges = applyChanges
   }
 
+  hasValidId = (doc: T) => (
+   doc._id && doc._id.length !== 0
+  )
+
   getByDoc = async (doc: T): Promise<T | null> => {
-    if (doc._id) {
+    if (this.hasValidId(doc)) {
       try {
         const savedDoc = await this.db.get(doc._id)
 
@@ -39,7 +42,7 @@ export default class BaseDatabase<T extends BaseDoc> {
 
   put = async (doc: T) => {
     try {
-      if (doc._id) {
+      if (this.hasValidId(doc)) {
         const savedDoc = await this.getByDoc(doc)
 
         if (savedDoc) {
@@ -59,7 +62,7 @@ export default class BaseDatabase<T extends BaseDoc> {
 
   putAll = async (docs: T[]) => {
     docs.forEach((doc) => {
-      if (!doc._id) {
+      if (!this.hasValidId(doc)) {
         doc._id = this.getId(doc)
       }
     })
@@ -83,21 +86,9 @@ export default class BaseDatabase<T extends BaseDoc> {
 
   deleteByDoc = async (doc: T) => {
     try {
-      if (doc._id) {
+      if (this.hasValidId(doc)) {
         const savedDoc = await this.db.get(doc._id)
         await this.db.remove(savedDoc)
-      } else {
-        throw new DatabaseDeleteWithoutID(this.dbName, doc)
-      }
-    } catch (e) {
-      LogAppErrorService.saveError(e)
-    }
-  }
-
-  deleteByDocs = async (docs: T[]) => {
-    try {
-      for (const doc of docs) {
-        await this.deleteByDoc(doc)
       }
     } catch (e) {
       LogAppErrorService.saveError(e)

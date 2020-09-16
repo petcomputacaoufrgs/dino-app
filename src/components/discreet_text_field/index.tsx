@@ -6,7 +6,9 @@ import { TextField } from '@material-ui/core'
 const DiscreetTextField: React.FC<DiscreetTextFieldProps> = ({
     className,
     onChange,
-    text
+    text,
+    error,
+    helperText
 }) => {
     const [writing, setWriting] = useState(false)
 
@@ -26,6 +28,8 @@ const DiscreetTextField: React.FC<DiscreetTextFieldProps> = ({
 
     return (
         <TextField
+            error={error}
+            helperText={helperText}
             type="text"
             multiline
             variant="standard"

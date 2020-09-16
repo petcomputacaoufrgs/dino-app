@@ -11,6 +11,7 @@ import DinoAgentService from '../../agent/DinoAgentService'
 import Server from './ContactServerService'
 import ContactContextUpdater from '../../context_updater/ContactContextUpdater'
 import StringUtils from '../../utils/StringUtils'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class ContactsService {
   /// #SERVER SERVICE CONNECTION
@@ -44,8 +45,8 @@ class ContactsService {
 
           return
         }
-      } catch {
-        /**TO-DO Salvar log de erro */
+      } catch(e) {
+        LogAppErrorService.saveError(e)
       }
     }
   }

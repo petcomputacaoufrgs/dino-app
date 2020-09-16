@@ -358,19 +358,17 @@ export default class PT implements LanguageBase {
   NOTE_COLUMN_DELETE_DIALOG_QUESTION =
     'Tem certeza que deseja remover esta coluna?'
 
-  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION = 'Esta coluna possui anotações!'
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION = 'Esta coluna possui anotações, tem certeza que deseja removê-la?'
 
   NOTE_COLUMN_DELETE_DIALOG_DESC =
     'Caso responda "SIM" esta coluna será removida permanentemente.'
 
   NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
-    'Ao remover esta coluna você irá remover as anotações pertencentes a ela também.'
+    'Ao remover esta coluna você irá remover as anotações pertencentes a ela permanentemente.'
 
   NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'SIM'
 
   NOTE_COLUMN_ADD_NOTE_TEXT = 'Adicionar anotação'
-
-  NOTE_EDIT_DIALOG_EDIT_TITLE = 'Editar anotação'
 
   NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'Nova anotação'
 

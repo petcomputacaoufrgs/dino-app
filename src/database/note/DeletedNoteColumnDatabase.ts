@@ -1,10 +1,9 @@
 import BaseDatabase from '../BaseDatabase'
 import DatabaseConstants from '../../constants/DatabaseConstants'
-import StringUtils from '../../utils/StringUtils'
 import LogAppErrorService from '../../services/log_app_error/LogAppErrorService'
 import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
 
-const getId = (doc: NoteColumnDoc) => StringUtils.normalize(doc.title)
+const getId = (doc: NoteColumnDoc) => doc.title
 
 const applyChanges = (
   origin: NoteColumnDoc,

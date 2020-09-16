@@ -36,7 +36,7 @@ class CalendarDatabase extends BaseDatabase<EventDoc> {
     let timestamp = getId()
 
     docs.forEach((doc) => {
-      if (!doc._id) {
+      if (!this.hasValidId(doc)) {
         doc._id = timestamp.toString()
         timestamp = timestamp + 1
       }

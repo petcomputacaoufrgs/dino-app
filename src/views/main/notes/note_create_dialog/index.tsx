@@ -1,117 +1,77 @@
 import React, { useState, useEffect } from 'react'
 import './styles.css'
-import NoteEditDialogProps from './props'
+import NoteCreateDialogProps from './props'
 import { useLanguage } from '../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import StringUtils from '../../../../utils/StringUtils'
-import NoteService from '../../../../services/note/NoteService'
 import NoteConstants from '../../../../constants/NoteConstants'
-import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 import { DialogTitle, DialogActions, Button } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 
-const NoteEditDialog: React.FC<NoteEditDialogProps> = ({
+const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
   onClose,
   onSave,
-  onSaveNew,
   open,
   tagOptions,
-  note,
+  questionAlreadyExists
 }): JSX.Element => {
   const language = useLanguage().current
 
-  const [originalQuestion, setOriginalQuestion] = useState(
-    note ? note.question : ''
-  )
-
-  const [question, setQuestion] = useState(note ? note.question : '')
+  const [question, setQuestion] = useState('')
   const [questionWithError, setQuestionWithError] = useState(false)
   const [questionErrorHelper, setQuestionErrorHelper] = useState('')
 
-  const [answer, setAnswer] = useState(note && note.answer ? note.answer : '')
-
-  const [tagList, setTagList] = useState(note ? note.tagNames : [])
+  const [tagList, setTagList] = useState<string[]>([])
 
   const handleTagChange = (event: React.ChangeEvent<{}>, values: string[]) => {
-    const validValues = values.filter(
-      (value) => value.length <= NoteConstants.TAG_MAX_LENGTH
-    )
-
-    if (validValues.length <= NoteConstants.TAG_LIMIT) {
-      setTagList(validValues)
+    if (values.length <= NoteConstants.TAG_LIMIT) {
+      setTagList(values)
     }
   }
 
   const handleSave = () => {
-    if (note === undefined) {
-      saveNewNote()
-    } else {
-      saveNote(note)
-    }
-  }
+    const newQuestion = question.trim()
 
-  const handleQuestionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-
-    setQuestion(value.substring(0, NoteConstants.QUESTION_MAX_LENGTH))
-  }
-
-  const handleAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-
-    setAnswer(value.substring(0, NoteConstants.ANSWER_MAX_LENGTH))
-  }
-
-  const saveNote = async (updatedNote: NoteViewModel) => {
-    if (StringUtils.areNotEqual(question, originalQuestion)) {
-      const alreadyExists = await NoteService.questionAlreadyExists(question)
-
-      if (alreadyExists) {
-        setQuestionWithError(true)
-        setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
-
-        return
-      }
-    }
-
-    updatedNote.question = question
-    updatedNote.answer = answer
-    updatedNote.tagNames = tagList
-
-    onSave(updatedNote)
-  }
-
-  const saveNewNote = async () => {
-    if (question.length === 0) {
+    if (newQuestion.length === 0) {
       setQuestionWithError(true)
       setQuestionErrorHelper(language.EMPTY_FIELD_ERROR)
 
       return
     }
 
-    const alreadyExists = await NoteService.questionAlreadyExists(question)
-
-    if (alreadyExists) {
+    if (questionAlreadyExists(newQuestion)) {
       setQuestionWithError(true)
       setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
 
       return
     }
 
-    onSaveNew(question, tagList, answer)
+    onSave(newQuestion, tagList)
+  }
+
+  const handleQuestionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+
+    const newQuestion = value.substring(0, NoteConstants.QUESTION_MAX_LENGTH)
+
+    if (questionWithError) {
+      setQuestionWithError(false)
+      setQuestionErrorHelper('')
+    }
+
+    setQuestion(newQuestion)
   }
 
   useEffect(() => {
     if (open) {
-      setTagList(note ? note.tagNames : [])
-      setQuestion(note ? note.question : '')
-      setOriginalQuestion(note ? note.question : '')
-      setAnswer(note && note.answer ? note.answer : '')
+      setTagList([])
+      setQuestion('')
+      setQuestionWithError(false)
+      setQuestionErrorHelper('')
     }
-  }, [open, note])
+  }, [open])
 
   const renderDialogContent = (): JSX.Element => {
     return (
@@ -125,14 +85,6 @@ const NoteEditDialog: React.FC<NoteEditDialogProps> = ({
           variant="outlined"
           value={question}
           onChange={handleQuestionChange}
-        />
-        <TextField
-          label={language.ANSWER_NOTE_DIALOG_TITLE}
-          type="text"
-          multiline
-          variant="outlined"
-          value={answer}
-          onChange={handleAnswerChange}
         />
         <Autocomplete
           multiple
@@ -160,11 +112,11 @@ const NoteEditDialog: React.FC<NoteEditDialogProps> = ({
   return (
     <Dialog
       open={open}
-      className="note_edit_dialog"
+      className="note_create_dialog"
       onClose={onClose}
       TransitionComponent={TransitionSlide}
     >
-      <DialogTitle>{note ? language.NOTE_EDIT_DIALOG_EDIT_TITLE : language.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DialogTitle>
+      <DialogTitle>{language.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DialogTitle>
       {renderDialogContent()}
       <DialogActions>
         <Button onClick={onClose} color="primary">
@@ -178,4 +130,4 @@ const NoteEditDialog: React.FC<NoteEditDialogProps> = ({
   )
 }
 
-export default NoteEditDialog
+export default NoteCreateDialog

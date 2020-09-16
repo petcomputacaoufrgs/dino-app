@@ -4,5 +4,7 @@ export default interface NoteInfoDialogProps {
     note: NoteViewModel
     open: boolean
     tagOptions: string[]
+    onSave: (question: string, answer: string, tagList: string[]) => void
     onClose: () => void
+    questionAlreadyExists: (question: string) => boolean
 }

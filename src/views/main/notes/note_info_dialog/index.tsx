@@ -8,12 +8,15 @@ import { useLanguage } from '../../../../context_provider/app_settings'
 import NoteConstants from '../../../../constants/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
+import ArrayUtils from '../../../../utils/ArrayUtils'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
     note,
     open,
     tagOptions,
-    onClose
+    onSave,
+    onClose,
+    questionAlreadyExists
 }) => {
     const language = useLanguage().current
 
@@ -24,6 +27,9 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
     const [editedQuestion, setEditedQuestion] = useState(false)
     const [editedAnswer, setEditedAnswer] = useState(false)
     const [editedTagList, setEditedTagList] = useState(false)
+
+    const [questionWithError, setQuestionWithError] = useState(false)
+    const [questionErrorHelper, setQuestionErrorHelper] = useState('')
 
     useEffect(() => {
         setAnswer(note.answer)
@@ -36,42 +42,69 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
     const handleQuestionChange = (newQuestion: string) => {
         const validQuestion = newQuestion.substring(0, NoteConstants.QUESTION_MAX_LENGTH)
+        const questionChanged = note.question !== validQuestion.trim()
+
         setQuestion(validQuestion)
-        setEditedQuestion(note.question !== validQuestion)
+        setEditedQuestion(questionChanged)
+
+        if (questionWithError) {
+            setQuestionWithError(false)
+            setQuestionErrorHelper('')
+        }
     }
 
     const handleAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value
         const validAnswer = value.substring(0, NoteConstants.ANSWER_MAX_LENGTH)
+        const answerChanged = note.answer !== validAnswer.trim()
+
         setAnswer(validAnswer)
-        setEditedAnswer(note.answer !== validAnswer)
+        setEditedAnswer(answerChanged)
     }
 
     const handleTagChange = (event: React.ChangeEvent<{}>, values: string[]) => {
-        const validValues = values.filter(
-            (value) => value.length <= NoteConstants.TAG_MAX_LENGTH
-        )
-
-        if (validValues.length <= NoteConstants.TAG_LIMIT) {
-            const changed = validValues.some(value => note.tagNames.some(tag => tag === value))
-            setTagList(validValues)
+        if (values.length <= NoteConstants.TAG_LIMIT) {
+            const changed = ArrayUtils.notEqualIgnoreOrder(values, note.tagNames)
+            setTagList(values)
             setEditedTagList(changed)
         }
     }
 
     const handleSaveNote = () => {
+        console.log("salvando")
+        const newQuestion = question.trim()
 
+        if (editedQuestion && !validateQuestion(newQuestion)) {
+            return
+        }
+
+        onSave(question, answer, tagList)
     }
 
     const isEdited = () => (
         editedTagList || editedAnswer || editedQuestion
     )
 
-    /**
-     * TO-DO
-     * Diminuir notas no drag
-     * Permitir deletar coluna com notas dando warning
-     */
+    const validateQuestion = (newQuestion: string): boolean => {
+        if (!newQuestion) {
+            setQuestionWithError(true)
+            setQuestionErrorHelper(language.EMPTY_FIELD_ERROR)
+            return false
+        }
+
+        if (newQuestion !== note.question && questionAlreadyExists(newQuestion)) {
+            setQuestionWithError(true)
+            setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
+            return false
+        }
+
+        if(questionWithError) {
+            setQuestionWithError(false)
+            setQuestionErrorHelper('')
+        }
+
+        return true
+    }
 
     return (
         <Dialog
@@ -81,6 +114,8 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
         >
             <DialogTitle className='note_info_dialog__title'>
                 <DiscreetTextField 
+                    error={questionWithError}
+                    helperText={questionErrorHelper}
                     text={question}
                     onChange={handleQuestionChange}
                     className="note__info_dialog__title__question"

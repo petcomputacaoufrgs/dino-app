@@ -1,11 +1,10 @@
 import NoteDoc from '../../types/note/database/NoteDoc'
-import StringUtils from '../../utils/StringUtils'
 import BaseDatabase from '../BaseDatabase'
 import ArrayUtils from '../../utils/ArrayUtils'
 import DatabaseConstants from '../../constants/DatabaseConstants'
 import LogAppErrorService from '../../services/log_app_error/LogAppErrorService'
 
-const getIdByQuestion = (question: string) => StringUtils.normalize(question)
+const getIdByQuestion = (question: string) => question
 
 const getId = (doc: NoteDoc) => getIdByQuestion(doc.question)
 
@@ -59,20 +58,43 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
     return ArrayUtils.removeRepeatedValues(tags)
   }
 
-  deleteByColumnTitle = async (columnTitle: string): Promise<void> => {
+  getAllByColumnTitle = async (columnTitle: string): Promise<NoteDoc[]> => {
+    const findResponse = await this.db.find({
+      selector: {
+        $and: [
+          {
+            columnTitle: { $eq: columnTitle },
+          },
+        ],
+      }
+    })
+
+    return findResponse.docs
+  }
+
+  deleteByColumnTitle = async (columnTitle: string): Promise<number> => {
     try {
-      const findResponse = await this.db.find({
-        selector: {
-          $and: [
-            {
-              columnTitle: {$eq: columnTitle },
-            },
-          ],
-        }
-      })
+      const docs = await this.getAllByColumnTitle(columnTitle)
 
-      await this.deleteByDocs(findResponse.docs)
+      for (const doc of docs) {
+        await this.db.remove(doc)
+      }
 
+      return docs.length
+    } catch (e) {
+      LogAppErrorService.saveError(e)
+    }
+
+    return 0
+  }
+
+  updateColumnTitle = async (newTitle: string, oldTitle: string) => {
+    try {
+      const docs = await this.getAllByColumnTitle(oldTitle)
+
+      docs.forEach(doc => doc.columnTitle = newTitle)
+
+      await this.putAll(docs)
     } catch (e) {
       LogAppErrorService.saveError(e)
     }

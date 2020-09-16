@@ -14,10 +14,6 @@ import { DropResult } from 'react-beautiful-dnd'
 import NoteDroppableType from '../../../constants/NoteDroppableType'
 import ArrayUtils from '../../../utils/ArrayUtils'
 import NoteColumnService from '../../../services/note/NoteColumnService'
-import NoteEditDialog from './note_edit_dialog'
-import LogAppErrorService from '../../../services/log_app_error/LogAppErrorService'
-import ViewAddNoteOpenedWIthoutColumnError from '../../../error/ViewAddNoteOpenedWIthoutColumnError'
-import NoteInfoDialog from './note_info_dialog'
 
 const convertNotesToNoteViews = (
   notes: NoteDoc[],
@@ -60,14 +56,6 @@ const Notes = () => {
     createViewColumns(columns, notes, tagSearch, textSearch)
   )
 
-  const [noteEditDialogOpen, setNoteEditDialogOpen] = useState(false)
-  const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
-
-  const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>()
-  const [currentColumn, setCurrentColumn] = useState<
-    NoteColumnViewModel | undefined
-  >()
-
   useEffect(() => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
     setViewColumns(viewColumns)
@@ -102,50 +90,29 @@ const Notes = () => {
 
   //#region Note
 
+  const questionAlreadyExists = (question: string): boolean => (
+    notes.some(note => note.question === question)
+  )
+
   const handleSaveNewNote = (
     question: string,
     tagNames: string[],
-    answer: string
+    column: NoteColumnViewModel
   ) => {
-    setNoteEditDialogOpen(false)
-
-    if (currentColumn) {
-      NoteService.createNote(question, tagNames, answer, currentColumn)
-    } else {
-      LogAppErrorService.saveError(new ViewAddNoteOpenedWIthoutColumnError())
-    }
+    NoteService.createNote(question, tagNames, column)
   }
-
+  
   const handleSaveNote = (note: NoteDoc) => {
     NoteService.saveNote(note)
   }
 
-  const handleAddNewNote = (column: NoteColumnViewModel) => {
-    setCurrentColumn(column)
-    setNoteEditDialogOpen(true)
-  }
-
-  const handleCloseNoteEditDialog = () => {
-    setNoteEditDialogOpen(false)
-  }
-
-  const handleClickNote = (note: NoteViewModel) => {
-    setNoteInfoDialogOpen(true)
-    setCurrentNote(note)
-  }
-
-  const handleCloseNoteInfoDialog = () => {
-    setNoteInfoDialogOpen(false)
-    setCurrentNote(undefined)
+  const handleDeleteNote = (note: NoteDoc) => {
+    NoteService.deleteNote(note)
   }
 
   //#endregion
 
   //#region Drag&Drop
-
-  const handleDeleteNote = (note: NoteDoc) => {
-    NoteService.deleteNote(note)
-  }
 
   const handleNoteDragEnd = (result: DropResult) => {
     const { destination, source } = result
@@ -268,32 +235,15 @@ const Notes = () => {
       />
       <NoteContent
         onDragEnd={handleDragEnd}
-        onSave={handleSaveNote}
-        onSaveNew={handleSaveNewNote}
         onDeleteNote={handleDeleteNote}
         onSaveColumn={handleSaveColumn}
         onDeleteColumn={handleDeleteColumn}
-        onAddNote={handleAddNewNote}
-        onClickNote={handleClickNote}
-        tags={tags}
+        onSaveNewNote={handleSaveNewNote}
+        onSaveNote={handleSaveNote}
+        questionAlreadyExists={questionAlreadyExists}
         columns={viewColumns}
+        tags={tags}
       />
-      <NoteEditDialog
-        note={currentNote}
-        open={noteEditDialogOpen}
-        tagOptions={tags}
-        onSave={() => {}}
-        onSaveNew={handleSaveNewNote}
-        onClose={handleCloseNoteEditDialog}
-      />
-      {currentNote && 
-        <NoteInfoDialog
-          open={noteInfoDialogOpen}
-          note={currentNote}
-          tagOptions={tags}
-          onClose={handleCloseNoteInfoDialog}
-        />
-      }
     </div>
   )
 }

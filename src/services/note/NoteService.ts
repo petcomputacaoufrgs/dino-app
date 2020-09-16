@@ -5,7 +5,6 @@ import NoteDatabase from '../../database/note/NoteDatabase'
 import DeletedNoteDatabase from '../../database/note/DeletedNoteDatabase'
 import NoteSyncLocalStorage from '../../local_storage/note/NoteSyncLocalStorage'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
-import StringUtils from '../../utils/StringUtils'
 import NoteServerService from './NoteServerService'
 import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
 
@@ -54,20 +53,20 @@ class NoteService {
   createNote = async (
     question: string,
     tagNames: string[],
-    answer: string,
     colunm: NoteColumnViewModel
   ) => {
     const date = new Date().getTime()
 
     const note: NoteDoc = {
-      answer: answer,
+      answer: '',
       question: question,
       tagNames: tagNames,
       lastUpdate: date,
       savedOnServer: false,
       order: colunm.notes.length,
-      _rev: '',
       columnTitle: colunm.title,
+      _rev: '',
+      _id: ''
     }
 
     await NoteDatabase.put(note)
@@ -126,6 +125,14 @@ class NoteService {
     DeletedNoteDatabase.removeAll()
   }
 
+  deleteAllDatabaseNotesByColumnTitle = async (columnTitle: string): Promise<number> => {
+    const deletedNotes = await NoteDatabase.deleteByColumnTitle(columnTitle)
+
+    NoteContextUpdater.update()
+    
+    return deletedNotes
+  }
+
   deleteNote = async (note: NoteDoc) => {
     await NoteDatabase.deleteByDoc(note)
 
@@ -171,6 +178,11 @@ class NoteService {
   //#endregion
 
   //#region UPDATE
+
+  updateNoteColumnTitle = async (newTitle: string, oldTitle: string) => {
+    await NoteDatabase.updateColumnTitle(newTitle, oldTitle)
+    NoteContextUpdater.update()
+  }
 
   updateNotesFromServer = async (newVersion: number) => {
     const localVersion = this.getVersion()
@@ -219,7 +231,7 @@ class NoteService {
 
         const newNotes = localNotes.filter((doc) => {
           const serverVersionSearch = serverNotesDocs.filter((serverNote) =>
-            StringUtils.areEqual(serverNote.question, doc.question)
+            serverNote.question === doc.question
           )
           if (serverVersionSearch.length > 0) {
             const serverVersion = serverVersionSearch[0]

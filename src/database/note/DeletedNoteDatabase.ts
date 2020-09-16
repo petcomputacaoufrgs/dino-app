@@ -1,10 +1,9 @@
 import BaseDatabase from '../BaseDatabase'
 import DatabaseConstants from '../../constants/DatabaseConstants'
-import StringUtils from '../../utils/StringUtils'
 import NoteDoc from '../../types/note/database/NoteDoc'
 import LogAppErrorService from '../../services/log_app_error/LogAppErrorService'
 
-const getId = (doc: NoteDoc) => StringUtils.normalize(doc.question)
+const getId = (doc: NoteDoc) => doc.question
 
 const applyChanges = (origin: NoteDoc, changed: NoteDoc): NoteDoc => {
   const newDoc: NoteDoc = {

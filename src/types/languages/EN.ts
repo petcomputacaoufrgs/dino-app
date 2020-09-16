@@ -355,19 +355,17 @@ export default class EN implements LanguageBase {
   NOTE_COLUMN_DELETE_DIALOG_QUESTION =
     'Are you sure you want to delete this column?'
 
-  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION = 'This column has notes!'
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION = 'This column has notes, are you sure you want to delete it?'
 
   NOTE_COLUMN_DELETE_DIALOG_DESC =
     'If you answer "YES" this column will be removed permanently.'
 
   NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
-    'If you remove this column related notes will be deleted too.'
+    'If you remove this column related notes will be deleted permanently.'
 
   NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
 
   NOTE_COLUMN_ADD_NOTE_TEXT = 'Add note'
-
-  NOTE_EDIT_DIALOG_EDIT_TITLE = 'Edit note'
 
   NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'New note'
 

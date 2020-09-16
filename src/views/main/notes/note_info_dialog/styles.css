@@ -5,6 +5,10 @@
     color: white;
 }
 
+.note_info_dialog__title.MuiDialogTitle-root {
+    padding-bottom: 8px;
+}
+
 .note_info_dialog__last_update {
     padding: 0px 24px 16px 24px;
 }
@@ -18,7 +22,8 @@
 }
 
 .note__info_dialog__content.MuiDialogContent-root {
-    padding-top: 16px;
+    padding-top: 8px;
+    overflow-y: visible;
 }
 
 .note__info_dialog__actions .MuiButtonBase-root.MuiButton-root {

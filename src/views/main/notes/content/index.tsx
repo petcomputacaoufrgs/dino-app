@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import NoteBodyProps from './props'
+import NoteContentProps from './props'
 import './styles.css'
-import NoteEditDialog from '../note_edit_dialog'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context_provider/app_settings'
 import {
@@ -16,26 +15,27 @@ import NoteDroppableType from '../../../../constants/NoteDroppableType'
 import AddColumn from './add_column'
 import NoteColumnDialog from '../column_dialog'
 import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
-import StringUtils from '../../../../utils/StringUtils'
+import NoteCreateDialog from '../note_create_dialog'
+import NoteInfoDialog from '../note_info_dialog'
+import LogAppErrorService from '../../../../services/log_app_error/LogAppErrorService'
+import ViewAddNoteOpenedWIthoutColumnError from '../../../../error/ViewAddNoteOpenedWIthoutColumnError'
 
-const NoteContent: React.FC<NoteBodyProps> = ({
+const NoteContent: React.FC<NoteContentProps> = ({
   tags,
   columns,
   onDragEnd,
-  onSave,
-  onSaveNew,
   onDeleteNote,
   onSaveColumn,
+  onSaveNote,
   onDeleteColumn,
-  onAddNote,
-  onClickNote
+  onSaveNewNote,
+  questionAlreadyExists
 }): JSX.Element => {
   const language = useLanguage().current
 
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(
     undefined
   )
-  const [noteDialogOpen, setNoteDialogOpen] = useState(false)
   const [deleteNoteDialogOpen, setDeleteNoteDialogOpen] = useState(false)
 
   const [currentNoteColumn, setCurrentNoteColumn] = useState<
@@ -46,7 +46,9 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     boolean
   >(false)
 
-  const [dragging, setDragging] = useState(false)
+  const [noteEditDialogOpen, setNoteEditDialogOpen] = useState(false)
+  const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
+
 
   //#region COLUMN
 
@@ -76,11 +78,11 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setDeleteNoteColumnDialogOpen(true)
   }
 
-  const handleTitleAlreadyExists = (title: string): boolean =>
+  const handleTitleAlreadyExists = (title: string): boolean => (
     columns.some(
-      (column) =>
-        StringUtils.normalize(column.title) === StringUtils.normalize(title)
+      (column) => column.title === title
     )
+  )
 
   const closeNoteColumnDialog = () => {
     setNoteColumnDialogOpen(false)
@@ -105,6 +107,8 @@ const NoteContent: React.FC<NoteBodyProps> = ({
 
   //#endregion
 
+  //#region NOTE
+
   const handleDeleteNoteAgree = () => {
     if (currentNote) {
       onDeleteNote(currentNote)
@@ -117,88 +121,65 @@ const NoteContent: React.FC<NoteBodyProps> = ({
     setDeleteNoteColumnDialogOpen(false)
   }
 
-  const handleCloseCardDialog = () => {
-    setNoteDialogOpen(false)
-  }
-
   const handleOpenDeleteNoteDialog = (note: NoteViewModel) => {
     setCurrentNote(note)
 
     setDeleteNoteDialogOpen(true)
   }
 
-  const handleSaveNote = (note: NoteViewModel) => {
-    if (note) {
-      onSave(note)
-      setCurrentNote(undefined)
+  const handleSaveNewNote = (question: string, tagList: string[]) => {
+    setNoteEditDialogOpen(false)
+    if (currentNoteColumn) {
+      onSaveNewNote(question, tagList, currentNoteColumn)
+    } else {
+      LogAppErrorService.saveError(new ViewAddNoteOpenedWIthoutColumnError())
     }
-    handleCloseCardDialog()
   }
 
-  const handleSaveNewNote = (
-    question: string,
-    tagList: string[],
-    answer: string
-  ) => {
-    onSaveNew(question, tagList, answer)
-    handleCloseCardDialog()
+  const handleAddNote = (column: NoteColumnViewModel) => {
+    setCurrentNoteColumn(column)
+    setNoteEditDialogOpen(true)
   }
+
+  const handleClickNote = (note: NoteViewModel) => {
+    setCurrentNote(note)
+    setNoteInfoDialogOpen(true)
+  }
+
+  const handleSaveNote = (question: string, answer: string, tagList: string[]) => {
+    if (currentNote) {
+      currentNote.question = question
+      currentNote.answer = answer
+      currentNote.tagNames = tagList
+
+      onSaveNote(currentNote)
+    }
+
+    setCurrentNote(undefined)
+    setNoteInfoDialogOpen(false)
+  }
+
+  const handleCloseNoteEditDialog = () => {
+    setNoteEditDialogOpen(false)
+    setCurrentNoteColumn(undefined)
+    setCurrentNote(undefined)
+  }
+
+  const handleCloseNoteInfoDialog = () => {
+    setNoteInfoDialogOpen(false)
+    setCurrentNote(undefined)
+  }
+
+  //#endregion
 
   const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
-    setDragging(false)
     onDragEnd(result)
-  }
-
-  const handleStartEnd = () => {
-    setDragging(true)
   }
 
   const getColumnMaxOrder = (): number => columns.length
 
-  return (
-    <div className="note__note_content">
-      <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleStartEnd}>
-        <Droppable
-          droppableId="all-columns"
-          direction="horizontal"
-          type={NoteDroppableType.COLUMN}
-        >
-          {(provided) => (
-            <div
-              className="note__note_content__columns"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              <div className="note__note_content__columns__scroll">
-                {columns.map((column, index) => (
-                  <NoteContentColumn
-                    column={column}
-                    columnIndex={index}
-                    key={index}
-                    onClickNote={onClickNote}
-                    onDelete={handleOpenDeleteNoteDialog}
-                    onEditColumn={handleEditColumn}
-                    onDeleteColumn={handleDeleteColumn}
-                    onAddNote={onAddNote}
-                  />
-                ))}
-                <AddColumn onAddColumn={handleAddColumn} />
-              </div>
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      {currentNote && (
-        <NoteEditDialog
-          open={noteDialogOpen}
-          note={currentNote}
-          tagOptions={tags}
-          onSave={handleSaveNote}
-          onSaveNew={handleSaveNewNote}
-          onClose={handleCloseCardDialog}
-        />
-      )}
+  const renderDialogs = (): JSX.Element => (
+    <>
       <NoteColumnDialog
         onClose={handleNoteColumnDialogClose}
         onSave={handleSaveNoteColumn}
@@ -219,12 +200,12 @@ const NoteContent: React.FC<NoteBodyProps> = ({
       {currentNoteColumn &&
         <AgreementDialog
           question={
-            currentNoteColumn?.notes.length > 0
+            currentNoteColumn.notes.length === 0
               ? language.NOTE_COLUMN_DELETE_DIALOG_QUESTION
               : language.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION
           }
           description={
-            currentNoteColumn?.notes.length > 0
+            currentNoteColumn.notes.length === 0
               ? language.NOTE_COLUMN_DELETE_DIALOG_DESC
               : language.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
           }
@@ -235,6 +216,60 @@ const NoteContent: React.FC<NoteBodyProps> = ({
           open={deleteNoteColumnDialogOpen}
         />
       }
+      <NoteCreateDialog
+        open={noteEditDialogOpen}
+        tagOptions={tags}
+        onSave={handleSaveNewNote}
+        onClose={handleCloseNoteEditDialog}
+        questionAlreadyExists={questionAlreadyExists}
+      />
+      {currentNote &&
+        <NoteInfoDialog
+          note={currentNote}
+          open={noteInfoDialogOpen}
+          tagOptions={tags}
+          onSave={handleSaveNote}
+          onClose={handleCloseNoteInfoDialog}
+          questionAlreadyExists={questionAlreadyExists}
+        />
+      }
+    </>
+  )
+  return (
+    <div className="note__note_content">
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable
+          droppableId="all-columns"
+          direction="horizontal"
+          type={NoteDroppableType.COLUMN}
+        >
+          {(provided) => (
+            <div
+              className="note__note_content__columns"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              <div className="note__note_content__columns__scroll">
+                {columns.map((column, index) => (
+                  <NoteContentColumn
+                    column={column}
+                    columnIndex={index}
+                    key={index}
+                    onClickNote={handleClickNote}
+                    onDelete={handleOpenDeleteNoteDialog}
+                    onEditColumn={handleEditColumn}
+                    onDeleteColumn={handleDeleteColumn}
+                    onAddNote={handleAddNote}
+                  />
+                ))}
+                <AddColumn onAddColumn={handleAddColumn} />
+              </div>
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+      {renderDialogs()}
     </div>
   )
 }

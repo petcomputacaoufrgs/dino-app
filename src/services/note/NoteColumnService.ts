@@ -5,13 +5,13 @@ import NoteColumnVersionLocalStorage from '../../local_storage/note/NoteColumnVe
 import NoteColumnServerService from './NoteColumnServerService'
 import NoteColumnSyncLocalStorage from '../../local_storage/note/NoteColumnSyncLocalStorage'
 import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpdater'
-import StringUtils from '../../utils/StringUtils'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
-import NoteDatabase from '../../database/note/NoteDatabase'
+import NoteService from './NoteService'
 
 class NoteColumnService {
   //#region GET
+  
   getColumns = async (): Promise<NoteColumnDoc[]> => {
     return NoteColumnDatabase.getAll()
   }
@@ -35,9 +35,11 @@ class NoteColumnService {
   }
 
   saveColumn = async (doc: NoteColumnDoc, oldTitle?: string) => {
-    if (doc._id) {
-      await NoteColumnDatabase.deleteByDoc(doc)
+    if (oldTitle) {
+      await NoteService.updateNoteColumnTitle(doc.title, oldTitle)
     }
+
+    await NoteColumnDatabase.deleteByDoc(doc)
 
     const newDoc: NoteColumnDoc = {
       lastUpdate: new Date().getTime(),
@@ -47,6 +49,7 @@ class NoteColumnService {
       external_id: doc.external_id,
       oldTitle: doc.oldTitle ? doc.oldTitle : oldTitle,
       _rev: '',
+      _id: ''
     }
 
     await NoteColumnDatabase.put(newDoc)
@@ -112,10 +115,14 @@ class NoteColumnService {
   }
 
   deleteColumn = async (doc: NoteColumnDoc) => {
-    await NoteDatabase.deleteByColumnTitle(doc.title)
+    const deletedNotes = await NoteService.deleteAllDatabaseNotesByColumnTitle(doc.title)
     await NoteColumnDatabase.deleteByDoc(doc)
 
     NoteColumnContextUpdater.update()
+
+    if (deletedNotes > 0) {
+      NoteContextUpdater.update()
+    }
 
     if (doc.external_id) {
       const deletedNote = await DeletedNoteColumnDatabase.getByDoc(doc)
@@ -205,7 +212,7 @@ class NoteColumnService {
 
         const newColumns = localColumns.filter((doc) => {
           const serverVersionSearch = serverColumnsDocs.filter((serverColumn) =>
-            StringUtils.areEqual(serverColumn.title, doc.title)
+            serverColumn.title === doc.title
           )
           if (serverVersionSearch.length > 0) {
             const serverVersion = serverVersionSearch[0]
@@ -274,6 +281,7 @@ class NoteColumnService {
     savedOnServer: false,
     title: title,
     _rev: '',
+    _id: ''
   })
 
   //#endregion

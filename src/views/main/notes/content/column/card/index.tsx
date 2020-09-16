@@ -12,14 +12,9 @@ import './styles.css'
 const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
   noteIndex,
-  onDelete,
   onClickNote
 }) => {
   const language = useLanguage().current
-
-  const handleDelete = () => {
-    onDelete(note)
-  }
 
   const handleCardClick = () => {
     onClickNote(note)

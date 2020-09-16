@@ -13,7 +13,6 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   column,
   columnIndex,
   onClickNote,
-  onDelete,
   onEditColumn,
   onDeleteColumn,
   onAddNote
@@ -29,7 +28,6 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
           key={noteIndex}
           noteIndex={noteIndex}
           onClickNote={onClickNote}
-          onDelete={onDelete}
         ></NoteContentColumnCard>
       )
     }

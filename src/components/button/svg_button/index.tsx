@@ -7,17 +7,17 @@ const SVGButton: React.FC<SVGButtonProps> = ({
   onClick,
   ariaLabel,
   SVG,
-  fab,
+  fab
 }) => {
   return (
     <>
       {fab ? (
         <Fab onClick={onClick} className="svg_button" aria-label={ariaLabel}>
-          <SVG />
+          <SVG/>
         </Fab>
       ) : (
         <Button onClick={onClick} className="svg_button" aria-label={ariaLabel}>
-          <SVG />
+          <SVG/>
         </Button>
       )}
     </>

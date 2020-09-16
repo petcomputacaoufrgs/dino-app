@@ -36,8 +36,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(
     undefined
   )
-  const [deleteNoteDialogOpen, setDeleteNoteDialogOpen] = useState(false)
-
   const [currentNoteColumn, setCurrentNoteColumn] = useState<
     NoteColumnViewModel | undefined
   >(undefined)
@@ -109,24 +107,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   //#region NOTE
 
-  const handleDeleteNoteAgree = () => {
-    if (currentNote) {
-      onDeleteNote(currentNote)
-    }
-
-    setDeleteNoteColumnDialogOpen(false)
-  }
-
-  const handleDeleteNoteDisagree = () => {
-    setDeleteNoteColumnDialogOpen(false)
-  }
-
-  const handleOpenDeleteNoteDialog = (note: NoteViewModel) => {
-    setCurrentNote(note)
-
-    setDeleteNoteDialogOpen(true)
-  }
-
   const handleSaveNewNote = (question: string, tagList: string[]) => {
     setNoteEditDialogOpen(false)
     if (currentNoteColumn) {
@@ -155,6 +135,14 @@ const NoteContent: React.FC<NoteContentProps> = ({
       onSaveNote(currentNote)
     }
 
+    setCurrentNote(undefined)
+    setNoteInfoDialogOpen(false)
+  }
+
+  const handleDeleteNote = () => {
+    if (currentNote) {
+      onDeleteNote(currentNote)
+    }
     setCurrentNote(undefined)
     setNoteInfoDialogOpen(false)
   }
@@ -188,15 +176,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
         order={getColumnMaxOrder()}
         titleAlreadyExists={handleTitleAlreadyExists}
       />
-      <AgreementDialog
-        onAgree={handleDeleteNoteAgree}
-        onDisagree={handleDeleteNoteDisagree}
-        question={language.DELETE_NOTE_ALERT_TITLE}
-        description={language.DELETE_NOTE_ALERT_TEXT}
-        agreeOptionText={language.AGREEMENT_OPTION_TEXT}
-        disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
-        open={deleteNoteDialogOpen}
-      />
       {currentNoteColumn &&
         <AgreementDialog
           question={
@@ -229,6 +208,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
           open={noteInfoDialogOpen}
           tagOptions={tags}
           onSave={handleSaveNote}
+          onDelete={handleDeleteNote}
           onClose={handleCloseNoteInfoDialog}
           questionAlreadyExists={questionAlreadyExists}
         />
@@ -256,7 +236,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
                     columnIndex={index}
                     key={index}
                     onClickNote={handleClickNote}
-                    onDelete={handleOpenDeleteNoteDialog}
                     onEditColumn={handleEditColumn}
                     onDeleteColumn={handleDeleteColumn}
                     onAddNote={handleAddNote}

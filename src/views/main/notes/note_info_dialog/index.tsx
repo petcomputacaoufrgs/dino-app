@@ -9,6 +9,9 @@ import NoteConstants from '../../../../constants/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
 import ArrayUtils from '../../../../utils/ArrayUtils'
+import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete_outline.svg'
+import SVGButton from '../../../../components/button/svg_button'
+import AgreementDialog from '../../../../components/agreement_dialog'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
     note,
@@ -16,6 +19,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
     tagOptions,
     onSave,
     onClose,
+    onDelete,
     questionAlreadyExists
 }) => {
     const language = useLanguage().current
@@ -30,6 +34,8 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
     const [questionWithError, setQuestionWithError] = useState(false)
     const [questionErrorHelper, setQuestionErrorHelper] = useState('')
+
+    const [deleteNoteDialogOpen, setDeleteNoteDialogOpen] = useState(false)
 
     useEffect(() => {
         setAnswer(note.answer)
@@ -81,6 +87,20 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
         onSave(question, answer, tagList)
     }
 
+    const handleDeleteNoteAgree = () => {
+        onDelete()
+
+        setDeleteNoteDialogOpen(false)
+    }
+
+    const handleDeleteNoteDisagree = () => {
+        setDeleteNoteDialogOpen(false)
+    }
+
+    const handleDeleteNote = () => {
+        setDeleteNoteDialogOpen(true)
+    }
+
     const isEdited = () => (
         editedTagList || editedAnswer || editedQuestion
     )
@@ -112,13 +132,18 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
             onClose={onClose}
             TransitionComponent={TransitionSlide}
         >
-            <DialogTitle className='note_info_dialog__title'>
+            <DialogTitle disableTypography className='note_info_dialog__title'>
                 <DiscreetTextField 
                     error={questionWithError}
                     helperText={questionErrorHelper}
                     text={question}
                     onChange={handleQuestionChange}
                     className="note__info_dialog__title__question"
+                />
+                <SVGButton
+                    SVG={DeleteOutlineIcon}
+                    ariaLabel={language.DELETE_ARIA_LABEL}
+                    onClick={handleDeleteNote}
                 />
             </DialogTitle>
             <div className='note_info_dialog__last_update'>
@@ -165,6 +190,15 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
                 {isEdited() && <Button onClick={handleSaveNote}>{language.DIALOG_SAVE_BUTTON_TEXT}</Button>}
                 <Button onClick={onClose}>{language.CLOSE_ARIA_LABEL}</Button>
             </DialogActions>
+            <AgreementDialog
+                onAgree={handleDeleteNoteAgree}
+                onDisagree={handleDeleteNoteDisagree}
+                question={language.DELETE_NOTE_ALERT_TITLE}
+                description={language.DELETE_NOTE_ALERT_TEXT}
+                agreeOptionText={language.AGREEMENT_OPTION_TEXT}
+                disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
+                open={deleteNoteDialogOpen}
+            />
         </Dialog>
     )
 }

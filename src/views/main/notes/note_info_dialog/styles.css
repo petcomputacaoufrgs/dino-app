@@ -1,3 +1,8 @@
+.note_info_dialog__title {
+    display: flex;
+    flex-direction: row;
+}
+
 .note_info_dialog__title, .note_info_dialog__last_update {
     width: 100%;
     background-color: #b32e55;
@@ -36,7 +41,16 @@
 }
 
 .note__info_dialog__title__question .MuiInputBase-root {
-    font-size: larger;
+    font-size: 1.3rem;
     font-weight: bold;
     color: white;
+    height: 100%;
+}
+
+.note_info_dialog__title .svg_button.MuiButtonBase-root.MuiButton-root {
+    padding-top: 7px;
+}
+
+.note_info_dialog__title .svg_button.MuiButtonBase-root.MuiButton-root svg {
+    fill: white;
 }

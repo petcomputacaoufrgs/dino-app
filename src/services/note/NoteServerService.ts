@@ -53,15 +53,15 @@ class NoteServerService {
 
   //#region SAVE
 
-  save = async (noteModel: NoteDoc): Promise<number | null> => {
+  save = async (note: NoteDoc): Promise<number | null> => {
     const noteSaveModel: NoteSaveModel = {
-      answer: noteModel.answer,
-      question: noteModel.question,
-      lastUpdate: noteModel.lastUpdate,
-      tagNames: noteModel.tagNames,
-      id: noteModel.external_id,
-      order: noteModel.order,
-      columnTitle: noteModel.columnTitle,
+      answer: note.answer,
+      question: note.question,
+      lastUpdate: note.lastUpdate,
+      tagNames: note.tagNames,
+      id: note.external_id,
+      order: note.order,
+      columnTitle: note.columnTitle,
     }
 
     const request = await DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
@@ -73,7 +73,7 @@ class NoteServerService {
           .setBody(noteSaveModel)
           .go()
         const body: NoteSaveResponseModel = response.body
-        const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
+        const noteDoc = await NoteDatabase.getByQuestion(note.question)
         if (noteDoc) {
           noteDoc.savedOnServer = true
           noteDoc.external_id = body.id

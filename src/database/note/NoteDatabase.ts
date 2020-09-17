@@ -13,6 +13,7 @@ const applyChanges = (origin: NoteDoc, changed: NoteDoc): NoteDoc => {
     ...origin,
     external_id: changed.external_id,
     lastUpdate: changed.lastUpdate,
+    lastOrderUpdate: changed.lastOrderUpdate,
     order: changed.order,
     savedOnServer: changed.savedOnServer,
     columnTitle: changed.columnTitle,

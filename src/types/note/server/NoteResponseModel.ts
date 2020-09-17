@@ -11,5 +11,7 @@ export default interface NoteResponseModel {
 
   lastUpdate: number
 
+  lastOrderUpdate: number
+
   columnTitle: string
 }

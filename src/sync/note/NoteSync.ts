@@ -27,7 +27,9 @@ class NoteSync implements BaseSync {
 
       await NoteService.deleteNotesOnServer()
 
-      NoteService.saveOrderOnServer(noteDocs)
+      const docsOrder = await NoteService.getNotes()
+
+      NoteService.saveOrderOnServer(docsOrder)
     }
   }
 

@@ -62,6 +62,7 @@ class NoteService {
       question: question,
       tagNames: tagNames,
       lastUpdate: date,
+      lastOrderUpdate: date,
       savedOnServer: false,
       order: colunm.notes.length,
       columnTitle: colunm.title,
@@ -98,6 +99,10 @@ class NoteService {
 
   saveNotesOrder = async (noteDocs: NoteDoc[]) => {
     if (noteDocs.length > 0) {
+      noteDocs.forEach(noteDoc => {
+        noteDoc.lastOrderUpdate = new Date().getTime()
+      })
+
       await NoteDatabase.putAll(noteDocs)
 
       this.saveOrderOnServer(noteDocs)
@@ -138,13 +143,7 @@ class NoteService {
 
     NoteContextUpdater.update()
 
-    if (note.external_id) {
-      const deletedNote = await DeletedNoteDatabase.getByDoc(note)
-      if (!deletedNote) {
-        await DeletedNoteDatabase.putNew(note)
-        this.deleteNoteOnServer(note)
-      }
-    }
+    this.deleteNoteOnServer(note)
   }
 
   deleteNotesOnServer = async () => {
@@ -163,13 +162,16 @@ class NoteService {
   }
 
   private deleteNoteOnServer = async (noteDoc: NoteDoc) => {
-    if (noteDoc.external_id) {
+    const deletedNote = await DeletedNoteDatabase.getByDoc(noteDoc)
+
+    if (!deletedNote && noteDoc.external_id) {
       const newVersion = await NoteServerService.delete(noteDoc.external_id)
 
       if (newVersion) {
         DeletedNoteDatabase.deleteByDoc(noteDoc)
         this.setVersion(newVersion)
       } else {
+        await DeletedNoteDatabase.putNew(noteDoc)
         NoteSyncLocalStorage.setShouldSync(true)
       }
     }
@@ -221,6 +223,7 @@ class NoteService {
             order: serverNote.order,
             answer: serverNote.answer,
             lastUpdate: serverNote.lastUpdate,
+            lastOrderUpdate: serverNote.lastOrderUpdate,
             question: serverNote.question,
             tagNames: serverNote.tags,
             savedOnServer: true,
@@ -234,30 +237,39 @@ class NoteService {
 
         await NoteDatabase.putAll(serverNotesDocs)
 
-        const newNotes = localNotes.filter((doc) => {
+        const mergedNotes = localNotes.filter((doc) => {
           const serverVersionSearch = serverNotesDocs.filter((serverNote) =>
             serverNote.question === doc.question
           )
           if (serverVersionSearch.length > 0) {
             const serverVersion = serverVersionSearch[0]
+            const localOrderMoreUpdated = serverVersion.lastOrderUpdate < doc.lastOrderUpdate
+
             if (serverVersion.lastUpdate > doc.lastUpdate) {
+              if (localOrderMoreUpdated) {
+                serverVersion.order = doc.order
+                serverVersion.columnTitle = doc.columnTitle
+                serverVersion.lastOrderUpdate = doc.lastOrderUpdate
+              }
               return serverVersion
+            } else {
+              if (!localOrderMoreUpdated) {
+                doc.order = serverVersion.order
+                doc.columnTitle = serverVersion.columnTitle
+                doc.lastOrderUpdate = serverVersion.lastOrderUpdate
+              }
+              return doc
             }
+          } else {
+            maxOrder++
+
+            doc.order = maxOrder
+
+            return doc
           }
-          maxOrder++
-          return {
-            answer: doc.answer,
-            lastUpdate: doc.lastUpdate,
-            question: doc.question,
-            tagNames: doc.tagNames,
-            savedOnServer: doc.savedOnServer,
-            order: maxOrder,
-            external_id: doc.external_id,
-            columnTitle: doc.columnTitle,
-          } as NoteDoc
         })
 
-        await NoteDatabase.putAll(newNotes)
+        await NoteDatabase.putAll(mergedNotes)
 
         if (newVersion !== undefined) {
           this.setVersion(newVersion)

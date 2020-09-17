@@ -126,13 +126,7 @@ class NoteColumnService {
       NoteService.updateContext()
     }
 
-    if (doc.external_id) {
-      const deletedNote = await DeletedNoteColumnDatabase.getByDoc(doc)
-      if (!deletedNote) {
-        await DeletedNoteColumnDatabase.putNew(doc)
-        this.deleteColumnOnServer(doc)
-      }
-    }
+    this.deleteColumnOnServer(doc)
   }
 
   deleteColumnsOnServer = async () => {
@@ -151,7 +145,9 @@ class NoteColumnService {
   }
 
   private deleteColumnOnServer = async (doc: NoteColumnDoc) => {
-    if (doc.external_id) {
+    const deletedColumn = await DeletedNoteColumnDatabase.getByDoc(doc)
+
+    if (!deletedColumn && doc.external_id) {
       const newVersion = await NoteColumnServerService.delete(doc.external_id)
 
       if (newVersion) {
@@ -159,6 +155,7 @@ class NoteColumnService {
         this.setVersion(newVersion)
       } else {
         this.setShouldSync(true)
+        DeletedNoteColumnDatabase.putNew(doc)
       }
     }
   }

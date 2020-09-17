@@ -7,6 +7,7 @@ export default interface NoteDoc extends BaseDoc {
   answer: string
   tagNames: string[]
   lastUpdate: number
+  lastOrderUpdate: number
   savedOnServer: boolean
   columnTitle: string
 }

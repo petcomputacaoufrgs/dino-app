@@ -77,7 +77,6 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
     }
 
     const handleSaveNote = () => {
-        console.log("salvando")
         const newQuestion = question.trim()
 
         if (editedQuestion && !validateQuestion(newQuestion)) {

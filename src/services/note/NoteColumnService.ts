@@ -5,9 +5,11 @@ import NoteColumnVersionLocalStorage from '../../local_storage/note/NoteColumnVe
 import NoteColumnServerService from './NoteColumnServerService'
 import NoteColumnSyncLocalStorage from '../../local_storage/note/NoteColumnSyncLocalStorage'
 import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpdater'
-import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
 import NoteService from './NoteService'
+import NoteColumnWebSocketTitleUpdateModel from '../../types/note/server/NoteColumnWebSocketTitleUpdateModel'
+import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/server/NoteColumnWebSocketAlertUpdateOrderModel'
+import NoteColumnWebSocketAlertDeleteModel from '../../types/note/server/NoteColumnWebSocketAlertDeleteModel'
 
 class NoteColumnService {
   //#region GET
@@ -75,7 +77,7 @@ class NoteColumnService {
 
     if (newVersion) {
       this.setVersion(newVersion)
-      NoteContextUpdater.update()
+      NoteService.updateContext()
     } else {
       this.setShouldSync(true)
     }
@@ -121,7 +123,7 @@ class NoteColumnService {
     NoteColumnContextUpdater.update()
 
     if (deletedNotes > 0) {
-      NoteContextUpdater.update()
+      NoteService.updateContext()
     }
 
     if (doc.external_id) {
@@ -165,12 +167,70 @@ class NoteColumnService {
 
   //#region UPDATE
 
+  updateDeletedColumnsFromServer = async (model: NoteColumnWebSocketAlertDeleteModel) => { 
+    const localVersion = this.getVersion()
+
+    if (model.newVersion > localVersion) {
+      let hasDeletedNotes
+
+      for (const title of model.titleList) {
+        const deletedNotes = await NoteService.deleteAllDatabaseNotesByColumnTitle(title)
+
+        hasDeletedNotes = hasDeletedNotes || deletedNotes > 0
+      }
+
+      await NoteColumnDatabase.deleteByTitles(model.titleList)
+      
+      this.setVersion(model.newVersion)
+
+      NoteColumnContextUpdater.update()
+
+      if (hasDeletedNotes) {
+        NoteService.updateContext()
+      }
+    }
+  }
+  
+  updateColumnsOrderFromServer = async (model: NoteColumnWebSocketAlertUpdateOrderModel) => {
+    const localVersion = this.getVersion()
+
+    if (model.newVersion > localVersion) {
+      const docs = await NoteColumnDatabase.getAll()
+
+      docs.forEach(doc => {
+        const newOrderSearch = model.items.filter(item => item.title === doc.title)
+
+        if (newOrderSearch.length > 0) {
+          doc.order = newOrderSearch[0].order
+        }
+      })
+
+      await NoteColumnDatabase.putAll(docs)
+
+      this.setVersion(model.newVersion)
+
+      NoteColumnContextUpdater.update()
+    }
+  }
+
+  updateColumnTitleFromServer = async (model: NoteColumnWebSocketTitleUpdateModel) => {
+    const localVersion = this.getVersion()
+
+    if (model.newVersion > localVersion) {
+      await NoteColumnDatabase.updateTitle(model.newTitle, model.oldTitle, model.lastUpdate)
+
+      this.setVersion(model.newVersion)
+
+      NoteColumnContextUpdater.update()
+    }
+  }
+
   updateColumnsFromServer = async (newVersion: number) => {
     const localVersion = this.getVersion()
 
     if (newVersion > localVersion) {
       const serverColumns = await NoteColumnServerService.get()
-
+      
       if (serverColumns) {
         let maxOrder = 0
 

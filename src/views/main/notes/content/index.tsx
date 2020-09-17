@@ -44,7 +44,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
     boolean
   >(false)
 
-  const [noteEditDialogOpen, setNoteEditDialogOpen] = useState(false)
+  const [noteCreateDialogOpen, setNoteCreateDialogOpen] = useState(false)
   const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
 
 
@@ -108,7 +108,8 @@ const NoteContent: React.FC<NoteContentProps> = ({
   //#region NOTE
 
   const handleSaveNewNote = (question: string, tagList: string[]) => {
-    setNoteEditDialogOpen(false)
+    setNoteCreateDialogOpen(false)
+    setCurrentNoteColumn(undefined)
     if (currentNoteColumn) {
       onSaveNewNote(question, tagList, currentNoteColumn)
     } else {
@@ -118,7 +119,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const handleAddNote = (column: NoteColumnViewModel) => {
     setCurrentNoteColumn(column)
-    setNoteEditDialogOpen(true)
+    setNoteCreateDialogOpen(true)
   }
 
   const handleClickNote = (note: NoteViewModel) => {
@@ -135,20 +136,19 @@ const NoteContent: React.FC<NoteContentProps> = ({
       onSaveNote(currentNote)
     }
 
-    setCurrentNote(undefined)
-    setNoteInfoDialogOpen(false)
+    handleCloseNoteInfoDialog()
   }
 
   const handleDeleteNote = () => {
     if (currentNote) {
       onDeleteNote(currentNote)
     }
-    setCurrentNote(undefined)
-    setNoteInfoDialogOpen(false)
+    
+    handleCloseNoteInfoDialog()
   }
 
   const handleCloseNoteEditDialog = () => {
-    setNoteEditDialogOpen(false)
+    setNoteCreateDialogOpen(false)
     setCurrentNoteColumn(undefined)
     setCurrentNote(undefined)
   }
@@ -162,6 +162,10 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
     onDragEnd(result)
+  }
+
+  const handleDragStart = () => {
+    
   }
 
   const getColumnMaxOrder = (): number => columns.length
@@ -196,7 +200,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
         />
       }
       <NoteCreateDialog
-        open={noteEditDialogOpen}
+        open={noteCreateDialogOpen}
         tagOptions={tags}
         onSave={handleSaveNewNote}
         onClose={handleCloseNoteEditDialog}
@@ -217,7 +221,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
   )
   return (
     <div className="note__note_content">
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Droppable
           droppableId="all-columns"
           direction="horizontal"

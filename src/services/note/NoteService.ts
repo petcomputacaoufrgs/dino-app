@@ -179,8 +179,13 @@ class NoteService {
 
   //#region UPDATE
 
+  updateContext = () => {
+    NoteContextUpdater.update()
+  }
+
   updateNoteColumnTitle = async (newTitle: string, oldTitle: string) => {
     await NoteDatabase.updateColumnTitle(newTitle, oldTitle)
+    
     NoteContextUpdater.update()
   }
 
@@ -254,7 +259,9 @@ class NoteService {
 
         await NoteDatabase.putAll(newNotes)
 
-        this.setVersion(newVersion)
+        if (newVersion !== undefined) {
+          this.setVersion(newVersion)
+        } 
 
         NoteContextUpdater.update()
       } else {

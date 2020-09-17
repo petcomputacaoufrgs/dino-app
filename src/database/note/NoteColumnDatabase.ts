@@ -29,7 +29,7 @@ class NoteColumnDatabase extends BaseDatabase<NoteColumnDoc> {
     super(DatabaseConstants.NOTE_COLUMN, getId, applyChanges)
   }
 
-  getByTitle = async (title: string) => {
+  getByTitle = async (title: string): Promise<NoteColumnDoc | null> => {
     const id = getIdByTitle(title)
 
     try {
@@ -38,6 +38,41 @@ class NoteColumnDatabase extends BaseDatabase<NoteColumnDoc> {
     } catch (e) {
       LogAppErrorService.saveError(e)
       return null
+    }
+  }
+
+  deleteByTitles = async (titles: string[]) => {
+    const docs = await this.getAll()
+
+    const deletedDocs = docs.filter(doc => titles.includes(doc.title))
+
+    for (const deletedDoc of deletedDocs) {
+      await this.db.remove(deletedDoc)
+    }
+  }
+
+  updateTitle = async (newTitle: string, oldTitle: string, lastUpdate: number) => {
+    try {
+      const doc = await this.getByTitle(oldTitle)
+
+      if (doc) {
+        await this.db.remove(doc)
+
+        const newDoc: NoteColumnDoc = {
+          lastUpdate: doc.lastUpdate,
+          order: doc.order,
+          savedOnServer: doc.savedOnServer,
+          title: newTitle,
+          external_id: doc.external_id,
+          oldTitle: doc.oldTitle ? doc.oldTitle : oldTitle,
+          _rev: '',
+          _id: getIdByTitle(newTitle)
+        }
+
+        await this.db.put(newDoc)
+      }
+    } catch (e) {
+      LogAppErrorService.saveError(e)
     }
   }
 }

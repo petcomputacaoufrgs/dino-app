@@ -80,7 +80,7 @@ class NoteService {
   saveNoteOnServer = async (noteModel: NoteDoc) => {
     const newVersion = await NoteServerService.save(noteModel)
 
-    if (newVersion) {
+    if (newVersion !== null) {
       this.setVersion(newVersion)
     } else {
       NoteSyncLocalStorage.setShouldSync(true)
@@ -90,7 +90,7 @@ class NoteService {
   saveNotesOnServer = async (models: NoteSaveModel[]) => {
     const newVersion = await NoteServerService.saveAll(models)
 
-    if (newVersion) {
+    if (newVersion !== null) {
       this.setVersion(newVersion)
     } else {
       this.setShouldSync(true)
@@ -112,7 +112,7 @@ class NoteService {
   saveOrderOnServer = async (noteDocs: NoteDoc[]): Promise<void> => {
     const newVersion = await NoteServerService.saveOrder(noteDocs)
 
-    if (newVersion) {
+    if (newVersion !== null) {
       this.setVersion(newVersion)
     } else {
       NoteSyncLocalStorage.setShouldSync(true)
@@ -152,7 +152,7 @@ class NoteService {
     if (deletedDocs.length > 0) {
       const newVersion = await NoteServerService.deleteAll(deletedDocs)
 
-      if (newVersion) {
+      if (newVersion !== null) {
         DeletedNoteDatabase.removeAll()
         this.setVersion(newVersion)
       } else {
@@ -167,7 +167,7 @@ class NoteService {
     if (!deletedNote && noteDoc.external_id) {
       const newVersion = await NoteServerService.delete(noteDoc.external_id)
 
-      if (newVersion) {
+      if (newVersion !== null) {
         DeletedNoteDatabase.deleteByDoc(noteDoc)
         this.setVersion(newVersion)
       } else {
@@ -193,7 +193,7 @@ class NoteService {
 
   updateNotesFromServer = async (newVersion: number) => {
     const localVersion = this.getVersion()
-
+    
     if (newVersion > localVersion) {
       const serverNotes = await NoteServerService.get()
 
@@ -244,7 +244,6 @@ class NoteService {
           if (serverVersionSearch.length > 0) {
             const serverVersion = serverVersionSearch[0]
             const localOrderMoreUpdated = serverVersion.lastOrderUpdate < doc.lastOrderUpdate
-
             if (serverVersion.lastUpdate > doc.lastUpdate) {
               if (localOrderMoreUpdated) {
                 serverVersion.order = doc.order
@@ -271,7 +270,7 @@ class NoteService {
 
         await NoteDatabase.putAll(mergedNotes)
 
-        if (newVersion !== undefined) {
+        if (newVersion !== null) {
           this.setVersion(newVersion)
         } 
 

@@ -19,7 +19,6 @@ class NoteSync implements BaseSync {
               question: doc.question,
               tagNames: doc.tagNames,
               lastUpdate: doc.lastUpdate,
-              columnTitle: doc.columnTitle,
             } as NoteSaveModel)
         )
 
@@ -28,8 +27,8 @@ class NoteSync implements BaseSync {
       await NoteService.deleteNotesOnServer()
 
       const docsOrder = await NoteService.getNotes()
-
-      NoteService.saveOrderOnServer(docsOrder)
+      console.log(docsOrder)
+      await NoteService.saveOrderOnServer(docsOrder)
     }
   }
 
@@ -37,7 +36,7 @@ class NoteSync implements BaseSync {
     const serverVersion = await NoteService.getVersionFromServer()
 
     if (serverVersion !== undefined) {
-      NoteService.updateNotesFromServer(serverVersion)
+      await NoteService.updateNotesFromServer(serverVersion)
     }
   }
 }

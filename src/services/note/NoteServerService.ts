@@ -58,6 +58,7 @@ class NoteServerService {
       answer: note.answer,
       question: note.question,
       lastUpdate: note.lastUpdate,
+      lastOrderUpdate: note.lastOrderUpdate,
       tagNames: note.tagNames,
       id: note.external_id,
       order: note.order,
@@ -106,7 +107,6 @@ class NoteServerService {
           }
         })
         await Promise.all(promises)
-        NoteContextUpdater.update()
 
         return newVersion
       } catch (e) {
@@ -127,6 +127,7 @@ class NoteServerService {
               id: doc.external_id,
               order: doc.order,
               columnTitle: doc.columnTitle,
+              lastOrderUpdate: doc.lastOrderUpdate
             } as NoteOrderRequestModel)
         ),
     }

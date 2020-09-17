@@ -7,6 +7,8 @@ export default interface NoteSaveRequestModel {
 
   lastUpdate: number
 
+  lastOrderUpdate: number
+
   answer: string
 
   order: number

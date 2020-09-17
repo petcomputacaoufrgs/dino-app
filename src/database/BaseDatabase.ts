@@ -61,9 +61,19 @@ export default class BaseDatabase<T extends BaseDoc> {
   }
 
   putAll = async (docs: T[]) => {
+    const updatedDocs = await this.getAll()
+
     docs.forEach((doc) => {
       if (!this.hasValidId(doc)) {
         doc._id = this.getId(doc)
+      }
+
+      const updatedDocSearch = updatedDocs.filter(
+        (updatedDoc) => updatedDoc._id === doc._id
+      )
+
+      if (updatedDocSearch.length > 0) {
+        doc._rev = updatedDocSearch[0]._rev
       }
     })
 
@@ -97,30 +107,13 @@ export default class BaseDatabase<T extends BaseDoc> {
   
   getAll = async (): Promise<T[]> => {
     try {
-      const responseIds = await this.db.allDocs()
-
-      const ids = responseIds.rows
-        .filter((row) => !row.value.deleted)
-        .map((row) => row.id)
-
-      const responseNotes = await this.db.allDocs({
+      const allDocs = await this.db.allDocs(({
         include_docs: true,
-        keys: ids,
-      })
+      }))
 
-      const docs = responseNotes.rows.map((r) => {
-        const doc: any = r.doc
-
-        if (doc) {
-          return {
-            _id: r.id,
-            _rev: r.value.rev,
-            ...doc,
-          } as T
-        }
-
-        return {} as T
-      })
+      const docs = allDocs.rows
+        .filter((row) => !row.value.deleted && !row.key.startsWith('_design'))
+        .map((row) => row.doc as T)
 
       return docs
     } catch (e) {

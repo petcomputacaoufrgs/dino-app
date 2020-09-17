@@ -19,7 +19,6 @@ class NoteColumnWebSocketSubscriber implements BaseWebSocketSubscriber {
     {
       path: DinoAPIWebSocketConstants.ALERT_NOTE_COLUMN_TITLE_UPDATE,
       callback: (model: NoteColumnWebSocketTitleUpdateModel) => {
-        console.log(model)
         NoteColumnService.updateColumnTitleFromServer(model)
         NoteService.updateNoteColumnTitle(model.newTitle, model.oldTitle)
       },

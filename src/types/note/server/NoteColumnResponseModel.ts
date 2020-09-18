@@ -3,4 +3,5 @@ export default interface NoteColumnResponseModel {
   title: string
   order: number
   lastUpdate: number
+  lastOrderUpdate: number
 }

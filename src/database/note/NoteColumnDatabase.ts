@@ -60,6 +60,7 @@ class NoteColumnDatabase extends BaseDatabase<NoteColumnDoc> {
 
         const newDoc: NoteColumnDoc = {
           lastUpdate: doc.lastUpdate,
+          lastOrderUpdate: doc.lastOrderUpdate,
           order: doc.order,
           savedOnServer: doc.savedOnServer,
           title: newTitle,

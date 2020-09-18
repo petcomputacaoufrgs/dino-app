@@ -4,4 +4,6 @@ export default interface NoteColumnOrderRequestModel {
   columnTitle: string
 
   order: number
+
+  lastOrderUpdate: number
 }

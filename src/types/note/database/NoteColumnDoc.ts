@@ -5,6 +5,7 @@ export default interface NoteColumnDoc extends BaseDoc {
   title: string
   order: number
   lastUpdate: number
+  lastOrderUpdate: number
   savedOnServer: boolean
   oldTitle?: string
 }

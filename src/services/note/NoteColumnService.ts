@@ -45,6 +45,7 @@ class NoteColumnService {
 
     const newDoc: NoteColumnDoc = {
       lastUpdate: new Date().getTime(),
+      lastOrderUpdate: doc.lastOrderUpdate,
       order: doc.order,
       savedOnServer: false,
       title: doc.title,
@@ -77,7 +78,7 @@ class NoteColumnService {
 
     if (newVersion) {
       this.setVersion(newVersion)
-      NoteService.updateContext()
+      NoteColumnContextUpdater.update()
     } else {
       this.setShouldSync(true)
     }
@@ -87,6 +88,7 @@ class NoteColumnService {
     if (docs.length > 0) {
       docs.forEach((noteDoc, index) => {
         noteDoc.order = index
+        noteDoc.lastOrderUpdate = new Date().getTime()
       })
 
       await NoteColumnDatabase.putAll(docs)
@@ -251,11 +253,12 @@ class NoteColumnService {
               DeletedNoteColumnDatabase.deleteByDoc(localDeleted)
             }
           }
-
+          console.log(serverColumn)
           serverColumnsDocs.push({
             external_id: serverColumn.id,
             order: serverColumn.order,
             lastUpdate: serverColumn.lastUpdate,
+            lastOrderUpdate: serverColumn.lastOrderUpdate,
             title: serverColumn.title,
             savedOnServer: true,
           } as NoteColumnDoc)
@@ -267,27 +270,37 @@ class NoteColumnService {
 
         await NoteColumnDatabase.putAll(serverColumnsDocs)
 
-        const newColumns = localColumns.filter((doc) => {
+        const mwergedColumns = localColumns.filter((doc) => {
           const serverVersionSearch = serverColumnsDocs.filter((serverColumn) =>
             serverColumn.title === doc.title
           )
           if (serverVersionSearch.length > 0) {
             const serverVersion = serverVersionSearch[0]
+            const serverOrderMoreUpdated =
+              serverVersion.lastOrderUpdate > doc.lastOrderUpdate
             if (serverVersion.lastUpdate > doc.lastUpdate) {
+              if (!serverOrderMoreUpdated) {
+                serverVersion.order = doc.order
+                serverVersion.lastOrderUpdate = doc.lastOrderUpdate
+              }
               return serverVersion
+            } else {
+              if (serverOrderMoreUpdated) {
+                doc.order = serverVersion.order
+                doc.lastOrderUpdate = serverVersion.lastOrderUpdate
+              }
+              return doc
             }
+          } else {
+            maxOrder++
+
+            doc.order = maxOrder
+
+            return doc
           }
-          maxOrder++
-          return {
-            title: doc.title,
-            lastUpdate: doc.lastUpdate,
-            savedOnServer: doc.savedOnServer,
-            order: maxOrder,
-            external_id: doc.external_id,
-          } as NoteColumnDoc
         })
 
-        await NoteColumnDatabase.putAll(newColumns)
+        await NoteColumnDatabase.putAll(mwergedColumns)
 
         this.setVersion(newVersion)
 
@@ -333,6 +346,7 @@ class NoteColumnService {
     order: number
   ): NoteColumnViewModel => ({
     lastUpdate: new Date().getTime(),
+    lastOrderUpdate: new Date().getTime(),
     notes: [],
     order: order,
     savedOnServer: false,

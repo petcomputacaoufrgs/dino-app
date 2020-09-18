@@ -19,6 +19,7 @@ class NoteColumnServerService {
     if (request.canGo) {
       try {
         const response = await request.authenticate().go()
+        console.log(response)
         return response.body
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -55,6 +56,7 @@ class NoteColumnServerService {
     const noteColumnModel: NoteColumnSaveRequestModel = {
       title: doc.title,
       lastUpdate: doc.lastUpdate,
+      lastOrderUpdate: doc.lastOrderUpdate,
       id: doc.external_id,
       order: doc.order,
       oldTitle: doc.oldTitle,
@@ -131,6 +133,7 @@ class NoteColumnServerService {
         id: doc.external_id,
         columnTitle: doc.title,
         order: doc.order,
+        lastOrderUpdate: doc.lastOrderUpdate
       })
     })
 

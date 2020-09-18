@@ -83,7 +83,7 @@ class NoteService {
     if (newVersion !== null) {
       this.setVersion(newVersion)
     } else {
-      NoteSyncLocalStorage.setShouldSync(true)
+      this.setShouldSync(true)
     }
   }
 

@@ -2,25 +2,11 @@ import React, { useState } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  useTheme,
-} from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
+import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import Divider from '@material-ui/core/Divider'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
+import { Divider, IconButton, AppBar, Toolbar, Drawer } from '@material-ui/core'
+import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Menu as MenuIcon} from '@material-ui/icons'
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { useLanguage } from '../../../context_provider/app_settings'
 import './styles.css'
 
@@ -149,7 +135,11 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
       </div>
       <Divider />
       {renderGroupItems()}
-      <button className='button__close-drawer' onClick={onClose}/>
+      <button 
+        className={open ? 'button__close-drawer' 
+        : 'button__close-drawer__closed'} 
+        onClick={onClose}
+      />
     </Drawer>
   )
 

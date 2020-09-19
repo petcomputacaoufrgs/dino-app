@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import QuestionDialog from '../question_dialog'
-import { Fab } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
-import { useLanguage } from '../../../../context_provider/app_settings'
 import './styles.css'
+import ButtonAdd from '../../../../components/button_add'
 
 const NoteAddButton = (props: {
   tags: string[]
   onSave: (question: string, tags: string[]) => void
 }) => {
-  const language = useLanguage().current
 
   const [newNoteDialogOpen, setNewNoteDialogOpen] = useState(false)
 
@@ -36,13 +33,7 @@ const NoteAddButton = (props: {
         onSave={handleSaveNewNote}
         onClose={handleCloseNewNoteDialog}
       />
-      <Fab
-        onClick={handleOpenNewQuestionDialog}
-        className="notes__add"
-        aria-label={language.NOTES_ADD_BUTTON}
-      >
-        <AddIcon />
-      </Fab>
+      <ButtonAdd onClick={handleOpenNewQuestionDialog}/>
     </>
   )
 }

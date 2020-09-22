@@ -73,7 +73,7 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
     return findResponse.docs
   }
 
-  deleteByColumnTitle = async (columnTitle: string): Promise<number> => {
+  deleteByColumnTitle = async (columnTitle: string): Promise<NoteDoc[]> => {
     try {
       const docs = await this.getAllByColumnTitle(columnTitle)
 
@@ -81,12 +81,12 @@ class NoteDatabase extends BaseDatabase<NoteDoc> {
         await this.db.remove(doc)
       }
 
-      return docs.length
+      return docs
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
 
-    return 0
+    return []
   }
 
   updateColumnTitle = async (newTitle: string, oldTitle: string) => {

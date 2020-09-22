@@ -15,7 +15,6 @@ const applyChanges = (
     lastUpdate: changed.lastUpdate,
     order: changed.order,
     title: changed.title,
-    oldTitle: changed.oldTitle,
     savedOnServer: changed.savedOnServer,
   }
 

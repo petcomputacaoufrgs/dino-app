@@ -4,15 +4,19 @@ import GlossaryWebSocketAlertUpdateModel from '../types/glossary/GlossaryWebSock
 import GlossaryService from '../services/glossary/GlossaryService'
 import SubscriberItem from '../types/web_socket/SubscriberItem'
 
-class GlossaryWebSocketSubscriber implements BaseWebSocketSubscriber {
-  items: SubscriberItem[] = [
-    {
-      path: DinoAPIWebSocketConstants.ALERT_GLOSSARY_UPDATE,
-      callback: (model: GlossaryWebSocketAlertUpdateModel) => {
-        GlossaryService.update(model.newVersion)
+class GlossaryWebSocketSubscriber extends BaseWebSocketSubscriber {
+  constructor() {
+    const items: SubscriberItem[] = [
+      {
+        path: DinoAPIWebSocketConstants.ALERT_GLOSSARY_UPDATE,
+        callback: (model: GlossaryWebSocketAlertUpdateModel) => {
+          GlossaryService.update(model.newVersion)
+        },
       },
-    },
-  ]
+    ]
+
+    super(items)
+  }
 }
 
 export default new GlossaryWebSocketSubscriber()

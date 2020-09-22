@@ -60,7 +60,7 @@ const Notes = () => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
     setViewColumns(viewColumns)
   }, [columns, notes, textSearch, tagSearch])
-
+  
   const isUnchanged = (result: DropResult): boolean => {
     const { destination, source } = result
 

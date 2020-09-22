@@ -13,6 +13,10 @@ import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class AuthService {
+  cleanLoginGarbage = () => {
+    AuthLocalStorage.cleanLoginGarbage()
+  }
+  
   getDefaultScopes = (): string => {
     return (
       GoogleAuthConstants.SCOPE_CALENDAR +

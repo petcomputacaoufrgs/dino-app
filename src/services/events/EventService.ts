@@ -14,7 +14,7 @@ class EventService {
   }
 
   whenStart = () => {
-    AuthService.removeTempAuthToken()
+    AuthService.cleanLoginGarbage()
     Synchronizer.sync()
     WebSocketConnector.connect()
   }

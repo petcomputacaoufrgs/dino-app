@@ -4,5 +4,4 @@ export default interface NoteColumnSaveRequestModel {
   order?: number
   lastUpdate: number
   lastOrderUpdate?: number
-  oldTitle?: string
 }

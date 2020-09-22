@@ -16,9 +16,9 @@ const applyChanges = (
     external_id: changed.external_id,
     lastUpdate: changed.lastUpdate,
     order: changed.order,
+    lastOrderUpdate: changed.lastOrderUpdate,
     savedOnServer: changed.savedOnServer,
     title: changed.title,
-    oldTitle: changed.oldTitle,
   }
 
   return newDoc
@@ -29,7 +29,7 @@ class NoteColumnDatabase extends BaseDatabase<NoteColumnDoc> {
     super(DatabaseConstants.NOTE_COLUMN, getId, applyChanges)
   }
 
-  getByTitle = async (title: string): Promise<NoteColumnDoc | null> => {
+  getByTitle = async (title: string): Promise<NoteColumnDoc | undefined> => {
     const id = getIdByTitle(title)
 
     try {
@@ -37,43 +37,25 @@ class NoteColumnDatabase extends BaseDatabase<NoteColumnDoc> {
       return doc
     } catch (e) {
       LogAppErrorService.saveError(e)
-      return null
+      return undefined
+    }
+  }
+
+  deleteByTitle = async (title: string) => {
+    const doc = await this.getByTitle(title)
+
+    if (doc) {
+      try {
+        await this.db.remove(doc)
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
     }
   }
 
   deleteByTitles = async (titles: string[]) => {
-    const docs = await this.getAll()
-
-    const deletedDocs = docs.filter(doc => titles.includes(doc.title))
-
-    for (const deletedDoc of deletedDocs) {
-      await this.db.remove(deletedDoc)
-    }
-  }
-
-  updateTitle = async (newTitle: string, oldTitle: string, lastUpdate: number) => {
-    try {
-      const doc = await this.getByTitle(oldTitle)
-
-      if (doc) {
-        await this.db.remove(doc)
-
-        const newDoc: NoteColumnDoc = {
-          lastUpdate: doc.lastUpdate,
-          lastOrderUpdate: doc.lastOrderUpdate,
-          order: doc.order,
-          savedOnServer: doc.savedOnServer,
-          title: newTitle,
-          external_id: doc.external_id,
-          oldTitle: doc.oldTitle ? doc.oldTitle : oldTitle,
-          _rev: '',
-          _id: getIdByTitle(newTitle)
-        }
-
-        await this.db.put(newDoc)
-      }
-    } catch (e) {
-      LogAppErrorService.saveError(e)
+    for (const title of titles) {
+      await this.deleteByTitle(title)
     }
   }
 }

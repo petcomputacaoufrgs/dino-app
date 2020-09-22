@@ -10,6 +10,8 @@ import NoteDeleteModel from '../../types/note/server/NoteDeleteModel'
 import NoteResponseModel from '../../types/note/server/NoteResponseModel'
 import NoteOrderAllRequestModel from '../../types/note/server/NoteOrderAllRequestModel'
 import NoteOrderRequestModel from '../../types/note/server/NoteOrderRequestModel'
+import NoteDeleteAllRequestModel from '../../types/note/server/NoteDeleteAllRequestModel'
+import NoteUpdateAllRequestModel from '../../types/note/server/NoteUpdateAllRequestModel'
 
 class NoteServerService {
   //#region GET
@@ -90,16 +92,32 @@ class NoteServerService {
     return null
   }
 
-  saveAll = async (models: NoteSaveModel[]): Promise<number | null> => {
+  saveAll = async (docs: NoteDoc[]): Promise<number | null> => {
+    const model: NoteUpdateAllRequestModel = {
+      items: docs.map(
+        (doc) =>
+          ({
+            id: doc.external_id,
+            answer: doc.answer,
+            question: doc.question,
+            tagNames: doc.tagNames,
+            lastUpdate: doc.lastUpdate,
+            order: doc.order,
+            lastOrderUpdate: doc.lastOrderUpdate,
+            columnTitle: doc.columnTitle,
+          } as NoteSaveModel)
+      )
+    }
+
     const request = await DinoAgentService.put(
       DinoAPIURLConstants.NOTE_UPDATE_ALL
     )
 
     if (request.canGo) {
       try {
-        const response = await request.authenticate().setBody(models).go()
+        const response = await request.authenticate().setBody(model).go()
         const newVersion = response.body
-        const promises = models.map(async (model) => {
+        const promises = model.items.map(async (model) => {
           const noteDoc = await NoteDatabase.getByQuestion(model.question)
           if (noteDoc) {
             noteDoc.savedOnServer = true
@@ -117,7 +135,7 @@ class NoteServerService {
     return null
   }
 
-  saveOrder = async (noteDocs: NoteDoc[]): Promise<number | null> => {
+  saveOrder = async (noteDocs: NoteDoc[]): Promise<boolean> => {
     const model: NoteOrderAllRequestModel = {
       items: noteDocs
         .filter((doc) => doc.external_id !== undefined)
@@ -136,15 +154,15 @@ class NoteServerService {
 
     if (request.canGo) {
       try {
-        const response = await request.authenticate().setBody(model).go()
+        await request.authenticate().setBody(model).go()
 
-        return response.body
+        return true
       } catch (e) {
         LogAppErrorService.saveError(e)
       }
     }
 
-    return null
+    return false
   }
 
   //#endregion
@@ -152,12 +170,14 @@ class NoteServerService {
   //#region DELETE
 
   deleteAll = async (docs: NoteDoc[]): Promise<number | null> => {
-    const models = docs.map(
-      (doc) =>
-        ({
-          id: doc.external_id,
-        } as NoteDeleteModel)
-    )
+    const model: NoteDeleteAllRequestModel = {
+      items: docs.map(
+        (doc) =>
+          ({
+            id: doc.external_id,
+          } as NoteDeleteModel)
+      )
+    }
 
     const request = await DinoAgentService.delete(
       DinoAPIURLConstants.NOTE_DELETE_ALL
@@ -165,7 +185,7 @@ class NoteServerService {
 
     if (request.canGo) {
       try {
-        const response = await request.authenticate().setBody(models).go()
+        const response = await request.authenticate().setBody(model).go()
         const newVersion = response.body
 
         return newVersion

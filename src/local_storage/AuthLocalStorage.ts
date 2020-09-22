@@ -101,6 +101,7 @@ class AuthLocalStorage extends BaseLocalStorage {
 
   cleanLoginGarbage = () => {
     this.setRefreshRequiredToFalse()
+    this.removeTempAuthToken()
   }
 }
 

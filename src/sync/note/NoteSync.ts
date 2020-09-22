@@ -1,6 +1,5 @@
 import BaseSync from '../BaseSync'
 import NoteService from '../../services/note/NoteService'
-import NoteSaveModel from '../../types/note/server/NoteSaveRequestModel'
 
 class NoteSync implements BaseSync {
   send = async () => {
@@ -9,32 +8,19 @@ class NoteSync implements BaseSync {
 
       const noteDocs = await NoteService.getNotes()
 
-      const models = noteDocs
+      const unsavedNotes = noteDocs
         .filter((noteDoc) => !noteDoc.savedOnServer)
-        .map(
-          (doc) =>
-            ({
-              id: doc.external_id,
-              answer: doc.answer,
-              question: doc.question,
-              tagNames: doc.tagNames,
-              lastUpdate: doc.lastUpdate,
-            } as NoteSaveModel)
-        )
 
-      await NoteService.saveNotesOnServer(models)
+      await NoteService.saveNotesOnServer(unsavedNotes)
 
       await NoteService.deleteNotesOnServer()
 
-      const docsOrder = await NoteService.getNotes()
-      console.log(docsOrder)
-      await NoteService.saveOrderOnServer(docsOrder)
+      await NoteService.saveOrderOnServer()
     }
   }
 
   receive = async () => {
     const serverVersion = await NoteService.getVersionFromServer()
-
     if (serverVersion !== undefined) {
       await NoteService.updateNotesFromServer(serverVersion)
     }

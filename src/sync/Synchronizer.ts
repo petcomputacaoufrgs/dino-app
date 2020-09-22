@@ -1,6 +1,5 @@
 import AuthService from '../services/auth/AuthService'
 import AppSettingsSync from './AppSettingsSync'
-import NoteSync from './note/NoteSync'
 import LogAppErrorSync from './LogAppErrorSync'
 import UserSync from './UserSync'
 import ContactSync from './ContactSync'
@@ -14,7 +13,6 @@ class Syncronizer {
     AppSettingsSync,
     LogAppErrorSync,
     GlossarySync,
-    NoteSync,
     NoteColumnSync,
     ContactSync,
     UserSync,
@@ -23,7 +21,7 @@ class Syncronizer {
 
   sync = async () => {
     await this.receive()
-    this.send()
+    await this.send()
   }
 
   send = async () => {

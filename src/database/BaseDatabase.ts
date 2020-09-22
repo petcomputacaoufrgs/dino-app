@@ -26,12 +26,24 @@ export default class BaseDatabase<T extends BaseDoc> {
    doc._id && doc._id.length !== 0
   )
 
-  getByDoc = async (doc: T): Promise<T | null> => {
+  getById = async (id: string): Promise<T | undefined> => {
+    try {
+      const doc = await this.db.get(id)
+
+      return doc
+    } catch (e) {
+      LogAppErrorService.saveError(e)
+    }
+
+    return undefined
+  }
+
+  getUpdatedDocByDoc = async (doc: T): Promise<T | null> => {
     if (this.hasValidId(doc)) {
       try {
-        const savedDoc = await this.db.get(doc._id)
+        const updatedDoc = await this.db.get(doc._id)
 
-        return savedDoc
+        return updatedDoc
       } catch (e) {
         LogAppErrorService.saveError(e)
       }
@@ -43,42 +55,48 @@ export default class BaseDatabase<T extends BaseDoc> {
   put = async (doc: T) => {
     try {
       if (this.hasValidId(doc)) {
-        const savedDoc = await this.getByDoc(doc)
-
-        if (savedDoc) {
-          const newDoc = this.applyChanges(savedDoc, doc)
+        const updatedDoc = await this.getById(doc._id)
+        if (updatedDoc) {
+          const newDoc = this.applyChanges(updatedDoc, doc)
 
           await this.db.put(newDoc)
         }
       } else {
         doc._id = this.getId(doc)
-
         await this.db.put(doc)
       }
     } catch (e) {
+      console.log(e)
       LogAppErrorService.saveError(e)
     }
   }
 
   putAll = async (docs: T[]) => {
-    const updatedDocs = await this.getAll()
+    const updatedDocs = [...docs]
 
-    docs.forEach((doc) => {
-      if (!this.hasValidId(doc)) {
-        doc._id = this.getId(doc)
-      }
+    const savedDocs = await this.getAll()
 
-      const updatedDocSearch = updatedDocs.filter(
-        (updatedDoc) => updatedDoc._id === doc._id
-      )
+    const newDocs: T[] = []
 
-      if (updatedDocSearch.length > 0) {
-        doc._rev = updatedDocSearch[0]._rev
+    savedDocs.forEach(savedDoc => {
+      const updatedDocIndex = updatedDocs.findIndex(ud => ud._id === savedDoc._id)
+
+      if (updatedDocIndex >= 0) {
+        const newDoc = this.applyChanges(savedDoc, updatedDocs[updatedDocIndex])
+        newDocs.push(newDoc)
+        updatedDocs.splice(updatedDocIndex, 1)
       }
     })
 
+    updatedDocs.forEach(newDoc => {
+      if (!this.hasValidId(newDoc)) {
+        newDoc._id = this.getId(newDoc)
+      }
+      newDocs.push(newDoc)
+    })
+
     try {
-      await this.db.bulkDocs(docs)
+      await this.db.bulkDocs(newDocs)
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
@@ -127,5 +145,5 @@ export default class BaseDatabase<T extends BaseDoc> {
   }
 
   private getNewConnection = (): PouchDB.Database<T> =>
-    new PouchDB(this.dbName, { auto_compaction: true, revs_limit: 50 })
+    new PouchDB(this.dbName, { auto_compaction: true, revs_limit: 1 })
 }

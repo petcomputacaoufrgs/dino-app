@@ -7,5 +7,4 @@ export default interface NoteColumnDoc extends BaseDoc {
   lastUpdate: number
   lastOrderUpdate: number
   savedOnServer: boolean
-  oldTitle?: string
 }

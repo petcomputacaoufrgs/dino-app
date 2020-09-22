@@ -1,4 +1,5 @@
 export default interface NoteColumnWebSocketAlertUpdateOrderItemModel {
-    title: string
+    id: number
     order: number
+    lastOrderUpdate: number
 }

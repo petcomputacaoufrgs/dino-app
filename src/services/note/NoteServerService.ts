@@ -1,17 +1,17 @@
 import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import NoteDoc from '../../types/note/database/NoteDoc'
-import NoteSaveModel from '../../types/note/server/NoteSaveRequestModel'
-import NoteSaveResponseModel from '../../types/note/server/NoteSaveResponseModel'
-import NoteDatabase from '../../database/note/NoteDatabase'
-import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
-import NoteDeleteModel from '../../types/note/server/NoteDeleteModel'
-import NoteResponseModel from '../../types/note/server/NoteResponseModel'
-import NoteOrderAllRequestModel from '../../types/note/server/NoteOrderAllRequestModel'
-import NoteOrderRequestModel from '../../types/note/server/NoteOrderRequestModel'
-import NoteDeleteAllRequestModel from '../../types/note/server/NoteDeleteAllRequestModel'
-import NoteUpdateAllRequestModel from '../../types/note/server/NoteUpdateAllRequestModel'
+import NoteSaveModel from '../../types/note/server/save/NoteSaveRequestModel'
+import NoteSaveResponseModel from '../../types/note/server/save/NoteSaveResponseModel'
+import NoteDeleteModel from '../../types/note/server/delete/NoteDeleteModel'
+import NoteResponseModel from '../../types/note/server/get/NoteResponseModel'
+import NoteOrderAllRequestModel from '../../types/note/server/order/NoteOrderAllRequestModel'
+import NoteOrderRequestModel from '../../types/note/server/order/NoteOrderRequestModel'
+import NoteDeleteAllRequestModel from '../../types/note/server/delete/NoteDeleteAllRequestModel'
+import NoteUpdateAllRequestModel from '../../types/note/server/update_all/NoteUpdateAllRequestModel'
+import NoteEntity from '../../types/note/database/NoteEntity'
+import NoteUpdateAllResponseModel from '../../types/note/server/update_all/NoteUpdateAllResponseModel'
+import DeletedNoteEntity from '../../types/note/database/DeletedNoteEntity'
 
 class NoteServerService {
   //#region GET
@@ -55,7 +55,7 @@ class NoteServerService {
 
   //#region SAVE
 
-  save = async (note: NoteDoc): Promise<number | null> => {
+  save = async (note: NoteEntity): Promise<NoteSaveResponseModel | null> => {
     const noteSaveModel: NoteSaveModel = {
       answer: note.answer,
       question: note.question,
@@ -76,14 +76,8 @@ class NoteServerService {
           .setBody(noteSaveModel)
           .go()
         const body: NoteSaveResponseModel = response.body
-        const noteDoc = await NoteDatabase.getByQuestion(note.question)
-        if (noteDoc) {
-          noteDoc.savedOnServer = true
-          noteDoc.external_id = body.id
-          await NoteDatabase.put(noteDoc)
-          NoteContextUpdater.update()
-          return body.userNoteVersion
-        }
+
+        return body
       } catch (e) {
         LogAppErrorService.saveError(e)
       }
@@ -92,7 +86,9 @@ class NoteServerService {
     return null
   }
 
-  saveAll = async (docs: NoteDoc[]): Promise<number | null> => {
+  saveAll = async (
+    docs: NoteEntity[]
+  ): Promise<NoteUpdateAllResponseModel | null> => {
     const model: NoteUpdateAllRequestModel = {
       items: docs.map(
         (doc) =>
@@ -106,7 +102,7 @@ class NoteServerService {
             lastOrderUpdate: doc.lastOrderUpdate,
             columnTitle: doc.columnTitle,
           } as NoteSaveModel)
-      )
+      ),
     }
 
     const request = await DinoAgentService.put(
@@ -116,17 +112,7 @@ class NoteServerService {
     if (request.canGo) {
       try {
         const response = await request.authenticate().setBody(model).go()
-        const newVersion = response.body
-        const promises = model.items.map(async (model) => {
-          const noteDoc = await NoteDatabase.getByQuestion(model.question)
-          if (noteDoc) {
-            noteDoc.savedOnServer = true
-            NoteDatabase.put(noteDoc)
-          }
-        })
-        await Promise.all(promises)
-
-        return newVersion
+        return response.body
       } catch (e) {
         LogAppErrorService.saveError(e)
       }
@@ -135,17 +121,17 @@ class NoteServerService {
     return null
   }
 
-  saveOrder = async (noteDocs: NoteDoc[]): Promise<boolean> => {
+  saveOrder = async (notes: NoteEntity[]): Promise<boolean> => {
     const model: NoteOrderAllRequestModel = {
-      items: noteDocs
-        .filter((doc) => doc.external_id !== undefined)
+      items: notes
+        .filter((note) => note.external_id !== undefined)
         .map(
-          (doc) =>
+          (note) =>
             ({
-              id: doc.external_id,
-              order: doc.order,
-              columnTitle: doc.columnTitle,
-              lastOrderUpdate: doc.lastOrderUpdate
+              id: note.external_id,
+              order: note.order,
+              columnTitle: note.columnTitle,
+              lastOrderUpdate: note.lastOrderUpdate,
             } as NoteOrderRequestModel)
         ),
     }
@@ -155,7 +141,6 @@ class NoteServerService {
     if (request.canGo) {
       try {
         await request.authenticate().setBody(model).go()
-
         return true
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -169,14 +154,14 @@ class NoteServerService {
 
   //#region DELETE
 
-  deleteAll = async (docs: NoteDoc[]): Promise<number | null> => {
+  deleteAll = async (notes: DeletedNoteEntity[]): Promise<number | null> => {
     const model: NoteDeleteAllRequestModel = {
-      items: docs.map(
-        (doc) =>
+      items: notes.map(
+        (note) =>
           ({
-            id: doc.external_id,
+            id: note.external_id,
           } as NoteDeleteModel)
-      )
+      ),
     }
 
     const request = await DinoAgentService.delete(

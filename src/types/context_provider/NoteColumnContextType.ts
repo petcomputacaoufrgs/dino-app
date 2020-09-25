@@ -1,5 +1,5 @@
-import NoteColumnDoc from '../note/database/NoteColumnDoc'
+import NoteColumnEntity from "../note/database/NoteColumnEntity";
 
 export default interface NoteColumnContextType {
-  columns: NoteColumnDoc[]
+  columns: NoteColumnEntity[]
 }

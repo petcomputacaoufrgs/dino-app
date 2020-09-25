@@ -1,6 +1,6 @@
-import NoteColumnDoc from '../database/NoteColumnDoc'
 import NoteViewModel from './NoteViewModel'
+import NoteColumnEntity from '../database/NoteColumnEntity'
 
-export interface NoteColumnViewModel extends NoteColumnDoc {
+export interface NoteColumnViewModel extends NoteColumnEntity {
   notes: NoteViewModel[]
 }

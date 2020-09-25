@@ -1,25 +1,25 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import NoteColumnContextType from '../../types/context_provider/NoteColumnContextType'
-import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
 import NoteColumnService from '../../services/note/NoteColumnService'
 import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpdater'
+import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 
 const NoteColumnContext = createContext<NoteColumnContextType>({
   columns: [],
 })
 
 const NoteColumnContextProvider: React.FC = (props) => {
-  const [columns, setColumns] = useState<NoteColumnDoc[]>([])
+  const [columns, setColumns] = useState<NoteColumnEntity[]>([])
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
     const updateData = async () => {
-      const savedColumns = await NoteColumnService.getColumns()
+      const dbColumns = await NoteColumnService.getColumns()
 
-      saveData(savedColumns)
+      saveData(dbColumns)
     }
 
-    let saveData = (columns: NoteColumnDoc[]) => {
+    let saveData = (columns: NoteColumnEntity[]) => {
       setColumns(columns)
 
       if (firstLoad) {

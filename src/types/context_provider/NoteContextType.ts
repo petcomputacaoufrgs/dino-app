@@ -1,6 +1,6 @@
-import NoteDoc from '../note/database/NoteDoc'
+import NoteEntity from '../note/database/NoteEntity'
 
 export default interface NoteContextType {
-  notes: NoteDoc[]
+  notes: NoteEntity[]
   tags: string[]
 }

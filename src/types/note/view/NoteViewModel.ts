@@ -1,6 +1,7 @@
-import NoteDoc from '../database/NoteDoc'
+import NoteEntity from '../database/NoteEntity'
 
-export default interface NoteViewModel extends NoteDoc {
+export default interface NoteViewModel extends NoteEntity {
+  id: number
   showByTag: boolean
   showByQuestion: boolean
 }

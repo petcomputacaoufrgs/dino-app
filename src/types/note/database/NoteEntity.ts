@@ -1,6 +1,5 @@
-import BaseDoc from '../../database/BaseDoc'
-
-export default interface NoteDoc extends BaseDoc {
+export default interface NoteEntity {
+  id?: number
   external_id?: number
   order: number
   question: string

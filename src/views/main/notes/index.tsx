@@ -5,33 +5,40 @@ import NoteService from '../../../services/note/NoteService'
 import NoteHeader from './header'
 import NoteContent from './content'
 import { useTags, useNotes } from '../../../context_provider/note'
-import NoteDoc from '../../../types/note/database/NoteDoc'
 import NoteViewModel from '../../../types/note/view/NoteViewModel'
 import { useNoteColumns } from '../../../context_provider/note_column'
-import NoteColumnDoc from '../../../types/note/database/NoteColumnDoc'
 import { NoteColumnViewModel } from '../../../types/note/view/NoteColumnViewModel'
 import { DropResult } from 'react-beautiful-dnd'
 import NoteDroppableType from '../../../constants/NoteDroppableType'
 import ArrayUtils from '../../../utils/ArrayUtils'
 import NoteColumnService from '../../../services/note/NoteColumnService'
+import NoteEntity from '../../../types/note/database/NoteEntity'
+import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
 
 const convertNotesToNoteViews = (
-  notes: NoteDoc[],
+  notes: NoteEntity[],
   tagSearch: string[],
   textSearch: string
 ): NoteViewModel[] => {
-  return notes
-    .map((note) => ({
-      ...note,
-      showByTag: hasSomeTag(note.tagNames, tagSearch, textSearch),
-      showByQuestion: hasText(note.question, textSearch, tagSearch),
-    }))
-    .sort((a, b) => a.order - b.order)
+  const noteViewList: NoteViewModel[]  = []
+
+  notes.forEach(note => {
+    if (note.id !== undefined) {
+      noteViewList.push({
+          ...note,
+          id: note.id,
+          showByTag: hasSomeTag(note.tagNames, tagSearch, textSearch),
+          showByQuestion: hasText(note.question, textSearch, tagSearch),
+      })
+    }
+  })
+
+  return noteViewList
 }
 
 const createViewColumns = (
-  columns: NoteColumnDoc[],
-  notes: NoteDoc[],
+  columns: NoteColumnEntity[],
+  notes: NoteEntity[],
   tagSearch: string[],
   textSearch: string
 ): NoteColumnViewModel[] => {
@@ -102,11 +109,11 @@ const Notes = () => {
     NoteService.createNote(question, tagNames, column)
   }
   
-  const handleSaveNote = (note: NoteDoc) => {
+  const handleSaveNote = (note: NoteViewModel) => {
     NoteService.saveNote(note)
   }
 
-  const handleDeleteNote = (note: NoteDoc) => {
+  const handleDeleteNote = (note: NoteViewModel) => {
     NoteService.deleteNote(note)
   }
 

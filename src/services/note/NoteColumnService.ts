@@ -1,6 +1,3 @@
-import NoteColumnDoc from '../../types/note/database/NoteColumnDoc'
-import NoteColumnDatabase from '../../database/note/NoteColumnDatabase'
-import DeletedNoteColumnDatabase from '../../database/note/DeletedNoteColumnDatabase'
 import NoteColumnVersionLocalStorage from '../../local_storage/note/NoteColumnVersionLocalStorage'
 import NoteColumnServerService from './NoteColumnServerService'
 import NoteColumnSyncLocalStorage from '../../local_storage/note/NoteColumnSyncLocalStorage'
@@ -9,18 +6,24 @@ import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
 import NoteService from './NoteService'
 import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateOrderModel'
 import NoteColumnWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteColumnWebSocketAlertDeleteModel'
-import NoteDoc from '../../types/note/database/NoteDoc'
 import NoteColumnConstants from '../../constants/NoteColumnConstants'
+import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
+import NoteColumnDatabaseService from './NoteColumnDatabaseService'
+import DeletedNoteColumnDatabaseService from './DeletedNoteColumnDatabaseService'
+import NoteLocalStorageService from './NoteLocalStorageService'
+import NoteEntity from '../../types/note/database/NoteEntity'
+import NoteColumnLocalStorageService from './NoteColumnLocalStorageService'
+import DeletedNoteColumnEntity from '../../types/note/database/DeletedNoteColumnEntity'
 
 class NoteColumnService {
   //#region GET
   
-  getColumns = async (): Promise<NoteColumnDoc[]> => {
-    return NoteColumnDatabase.getAll()
+  getColumns = async (): Promise<NoteColumnEntity[]> => {
+    return NoteColumnDatabaseService.getAll()
   }
 
-  getDeletedColumns = async (): Promise<NoteColumnDoc[]> => {
-    return DeletedNoteColumnDatabase.getAll()
+  getDeletedColumns = async (): Promise<DeletedNoteColumnEntity[]> => {
+    return DeletedNoteColumnDatabaseService.getAll()
   }
 
   getVersion = (): number => NoteColumnVersionLocalStorage.getVersion()
@@ -31,84 +34,96 @@ class NoteColumnService {
 
   //#endregion
 
+  //#region SYNC
+  setShouldSync = (shoudSync: boolean) => {
+    NoteColumnLocalStorageService.setShouldSync(shoudSync)
+  }
+  //
+
   //#region SAVE
 
-  setVersion = (version: number) => {
-    NoteColumnVersionLocalStorage.setVersion(version)
-  }
+  saveColumn = async (changedColumn: NoteColumnEntity, oldTitle?: string) => {
+    if (oldTitle && changedColumn.id) {
+      await NoteService.updateNoteColumnTitle(changedColumn.title, oldTitle)
 
-  saveColumn = async (changedDoc: NoteColumnDoc, oldTitle?: string) => {
-    if (oldTitle) {
-      await NoteService.updateNoteColumnTitle(changedDoc.title, oldTitle)
+      const savedColumn = await NoteColumnDatabaseService.getById(changedColumn.id)
 
-      const savedColumn = await NoteColumnDatabase.getById(changedDoc._id)
-
-      console.log(savedColumn)
       if (savedColumn) {
-        await NoteColumnDatabase.deleteByTitle(oldTitle)
+        await NoteColumnDatabaseService.deleteByTitle(oldTitle)
 
-        const newDoc: NoteColumnDoc = {
+        const newColumn: NoteColumnEntity = {
           lastUpdate: new Date().getTime(),
           savedOnServer: false,
-          title: changedDoc.title,
+          title: changedColumn.title,
           lastOrderUpdate: savedColumn.lastOrderUpdate,
           order: savedColumn.order,
           external_id: savedColumn.external_id,
-          _id: '',
-          _rev: ''
         }
         
-        await NoteColumnDatabase.put(newDoc)
+        await NoteColumnDatabaseService.put(newColumn)
+        
         NoteService.updateContext()
-        this.saveColumnOnServer(newDoc)
+        this.saveColumnOnServer(newColumn)
       }
     } else {
-      const newDoc: NoteColumnDoc = {
+      const newColumn: NoteColumnEntity = {
         lastUpdate: new Date().getTime(),
         savedOnServer: false,
-        title: changedDoc.title,
+        title: changedColumn.title,
         lastOrderUpdate: new Date().getTime(),
-        order: changedDoc.order,
-        _id: '',
-        _rev: ''
+        order: changedColumn.order,
       }
 
-      await NoteColumnDatabase.put(newDoc)
-      this.saveColumnOnServer(newDoc)
+      await NoteColumnDatabaseService.put(newColumn)
+      this.saveColumnOnServer(newColumn)
     }
 
     NoteColumnContextUpdater.update()
   }
 
-  saveColumnOnServer = async (doc: NoteColumnDoc) => {
-    const newVersion = await NoteColumnServerService.save(doc)
-
-    if (newVersion) {
-      this.setVersion(newVersion)
-      NoteColumnContextUpdater.update()
+  saveColumnOnServer = async (column: NoteColumnEntity) => {
+    const response = await NoteColumnServerService.save(column)
+    
+    if (response && column.id) {
+      const savedColumn = await NoteColumnDatabaseService.getById(column.id)
+      if (savedColumn) {
+        savedColumn.savedOnServer = true
+        savedColumn.external_id = response.id
+        await NoteColumnDatabaseService.put(savedColumn)
+        NoteLocalStorageService.setVersion(response.version)
+        NoteColumnContextUpdater.update()
+      }
     } else {
-      this.setShouldSync(true)
+      NoteLocalStorageService.setShouldSync(true)
     }
   }
 
-  saveColumnsOnServer = async (docs: NoteColumnDoc[]) => {
-    if (docs.length > 0) {
-      const newVersion = await NoteColumnServerService.saveAll(docs)
-      if (newVersion) {
-        this.setVersion(newVersion)
+  saveColumnsOnServer = async (columns: NoteColumnEntity[]) => {
+    if (columns.length > 0) {
+      const response = await NoteColumnServerService.saveAll(columns)
+
+      if (response) {
+        for (const item of response.items) {
+          const savedNote = await NoteColumnDatabaseService.getByTitle(item.title)
+          if (savedNote) {
+            savedNote.savedOnServer = true
+            await NoteColumnDatabaseService.put(savedNote)
+          }
+        }
+        NoteColumnLocalStorageService.setVersion(response.newVersion)
         NoteColumnContextUpdater.update()
       } else {
-        this.setShouldSync(true)
+        NoteColumnLocalStorageService.setShouldSync(true)
       }
     }
   }
 
-  saveColumnsOrder = async (docs: NoteColumnDoc[]) => {
-    if (docs.length > 0) {
-      const updatedColumns = await this.getColumns()
+  saveColumnsOrder = async (columns: NoteColumnEntity[]) => {
+    if (columns.length > 0) {
+      const savedColumn = await this.getColumns()
 
-      docs.forEach((columnDoc, index) => {
-        const updatedColumn = updatedColumns.find(c => c.title === columnDoc.title)
+      columns.forEach((column, index) => {
+        const updatedColumn = savedColumn.find(c => c.title === column.title)
 
         if (updatedColumn) {
           updatedColumn.order = index
@@ -116,23 +131,23 @@ class NoteColumnService {
         }
       })
       
-      await NoteColumnDatabase.putAll(updatedColumns)
+      await NoteColumnDatabaseService.putAll(savedColumn)
 
-      this.saveColumnsOrderOnServer(updatedColumns)
+      this.saveColumnsOrderOnServer(savedColumn)
 
       NoteColumnContextUpdater.update()
     }
   }
 
-  saveColumnsOrderOnServer = async (docs?: NoteColumnDoc[]): Promise<void> => {
-    if (!docs) {
-      docs = await this.getColumns()
+  saveColumnsOrderOnServer = async (columns?: NoteColumnEntity[]): Promise<void> => {
+    if (!columns) {
+      columns = await this.getColumns()
     }
 
-    const success = await NoteColumnServerService.saveOrder(docs)
+    const success = await NoteColumnServerService.saveOrder(columns)
 
     if (!success) {
-      this.setShouldSync(true)
+      NoteLocalStorageService.setShouldSync(true)
     }
   }
 
@@ -143,46 +158,50 @@ class NoteColumnService {
   removeUserData = () => {
     NoteColumnVersionLocalStorage.removeUserData()
     NoteColumnSyncLocalStorage.removeUserData()
-    NoteColumnDatabase.removeAll()
-    DeletedNoteColumnDatabase.removeAll()
+    NoteColumnDatabaseService.deleteAll()
+    DeletedNoteColumnDatabaseService.deleteAll()
   }
 
-  deleteColumn = async (doc: NoteColumnDoc) => {
-    const updatedDoc = await NoteColumnDatabase.getById(doc._id)
-    if (updatedDoc) {
-      const deletedNotes = await NoteService.deleteAllDatabaseNotesByColumnTitle(updatedDoc.title)
-      await NoteColumnDatabase.deleteByDoc(updatedDoc)
-      NoteColumnContextUpdater.update()
+  deleteColumn = async (column: NoteColumnEntity) => {
+    if (column.id) {
+      const savedColumn = await NoteColumnDatabaseService.getById(column.id)
+      if (savedColumn) {
+        const deletedNotes = await NoteService.deleteAllDatabaseNotesByColumnTitle(savedColumn.title)
+        await NoteColumnDatabaseService.deleteById(column.id)
+        NoteColumnContextUpdater.update()
 
-      this.deleteColumnOnServer(updatedDoc, deletedNotes)
-    }
-  }
-
-  deleteColumnsOnServer = async () => {
-    const deletedDocs = await this.getDeletedColumns()
-    if (deletedDocs.length > 0) {
-      const newVersion = await NoteColumnServerService.deleteAll(deletedDocs)
-
-      if (newVersion) {
-        DeletedNoteColumnDatabase.removeAll()
-        this.setVersion(newVersion)
-      } else {
-        this.setShouldSync(true)
+        this.deleteColumnOnServer(savedColumn, deletedNotes)
       }
     }
   }
 
-  private deleteColumnOnServer = async (doc: NoteColumnDoc, deletedNotes: NoteDoc[]) => {
-    const deletedColumn = await DeletedNoteColumnDatabase.getById(doc._id)
-    if (!deletedColumn && doc && doc.external_id) {
-      const newVersion = await NoteColumnServerService.delete(doc.external_id)
+  deleteColumnsOnServer = async () => {
+    const deletedNotes = await this.getDeletedColumns()
+    if (deletedNotes.length > 0) {
+      const newVersion = await NoteColumnServerService.deleteAll(deletedNotes)
 
-      if (newVersion !== null) {
-        this.setVersion(newVersion)
+      if (newVersion) {
+        DeletedNoteColumnDatabaseService.deleteAll()
+        NoteColumnLocalStorageService.setVersion(newVersion)
       } else {
-        this.setShouldSync(true)
-        DeletedNoteColumnDatabase.putNew(doc)
-        NoteService.putAllDeletedNoteDatabase(deletedNotes)
+        NoteColumnLocalStorageService.setShouldSync(true)
+      }
+    }
+  }
+
+  private deleteColumnOnServer = async (column: NoteColumnEntity, deletedNotes: NoteEntity[]) => {
+    if (column.id) {
+      const deletedColumn = await DeletedNoteColumnDatabaseService.getById(column.id)
+      if (!deletedColumn && column && column.external_id) {
+        const newVersion = await NoteColumnServerService.delete(column.external_id)
+
+        if (newVersion !== null) {
+          NoteColumnLocalStorageService.setVersion(newVersion)
+        } else {
+          NoteColumnLocalStorageService.setShouldSync(true)
+          DeletedNoteColumnDatabaseService.add(column)
+          NoteService.addNotesInDeletedNoteDatabase(deletedNotes.filter(dNote => dNote.external_id !== undefined))
+        }
       }
     }
   }
@@ -191,7 +210,7 @@ class NoteColumnService {
 
   //#region UPDATE
 
-  checkTitleConflict = (localVersion: NoteColumnDoc, serverColumnsDocs: NoteColumnDoc[]): boolean => (
+  checkTitleConflict = (localVersion: NoteColumnEntity, serverColumnsDocs: NoteColumnEntity[]): boolean => (
     serverColumnsDocs.some(serverColumn =>
       serverColumn.title === localVersion.title &&
       serverColumn.lastUpdate !== localVersion.lastUpdate &&
@@ -200,7 +219,7 @@ class NoteColumnService {
   )
 
   updateColumnsFromServer = async (newVersion: number) => {
-    const localVersion = this.getVersion()
+    const localVersion = NoteLocalStorageService.getVersion()
 
     if (newVersion > localVersion) {
       const serverData = await NoteColumnServerService.get()
@@ -208,7 +227,7 @@ class NoteColumnService {
       if (serverData) {
         let maxOrder = 0
         const deletedColumns = await this.getDeletedColumns()
-        const serverColumns: NoteColumnDoc[] = []
+        const serverColumns: NoteColumnEntity[] = []
         serverData.forEach((column) => {
           if (column.order > maxOrder) {
             maxOrder = column.order
@@ -219,8 +238,8 @@ class NoteColumnService {
           if (localDeleted) {
             if (localDeleted.lastUpdate > column.lastUpdate) {
               return
-            } else {
-              DeletedNoteColumnDatabase.deleteByDoc(localDeleted)
+            } else if (localDeleted.id) {
+              DeletedNoteColumnDatabaseService.deleteById(localDeleted.id)
             }
           }
           serverColumns.push({
@@ -230,12 +249,12 @@ class NoteColumnService {
             lastOrderUpdate: column.lastOrderUpdate,
             title: column.title,
             savedOnServer: true,
-          } as NoteColumnDoc)
+          } as NoteColumnEntity)
         })
 
         const localColumns = await this.getColumns()
 
-        const mergedColumns: NoteColumnDoc[] = serverColumns
+        const mergedColumns: NoteColumnEntity[] = serverColumns
 
         for (const localVersion of localColumns) {
           const originalColumnTitle = localVersion.title
@@ -243,7 +262,6 @@ class NoteColumnService {
           let titleConflict = this.checkTitleConflict(localVersion, serverColumns)
           while (titleConflict) {
             localVersion.title = localVersion.title + NoteColumnConstants.SAME_TITLE_CONFLICT_DIFF
-            localVersion._id = NoteColumnDatabase.getId(localVersion)
             titleConflict = this.checkTitleConflict(localVersion, serverColumns)
           }
 
@@ -260,14 +278,17 @@ class NoteColumnService {
 
             const localDataMoreUpdated = localVersion.lastUpdate > serverVersion.lastUpdate
 
-            serverVersion._id = localVersion._id
+            serverVersion.id = localVersion.id
 
             if (localDataMoreUpdated) {
               serverVersion.title = localVersion.title
               serverVersion.lastUpdate = localVersion.lastUpdate
               serverVersion.savedOnServer = false
-            } else if (serverVersion.title !== localVersion.title) {
-              await NoteService.updateNoteColumnTitle(serverVersion.title, localVersion.title)
+            } else {
+              const serverTitleChanged = serverVersion.title !== localVersion.title
+              if (serverTitleChanged) {
+                await NoteService.updateNoteColumnTitle(serverVersion.title, localVersion.title)
+              }
             }
             
             if (localOrderMoreUpdated) {
@@ -287,35 +308,34 @@ class NoteColumnService {
           }
         }
 
-        await NoteColumnDatabase.removeAll()
-        await NoteColumnDatabase.putAll(mergedColumns)
+        await NoteColumnDatabaseService.putAll(mergedColumns)
         NoteService.updateContext()
         NoteColumnContextUpdater.update()
-        this.setVersion(newVersion)
+        NoteColumnLocalStorageService.setVersion(newVersion)
       } else {
-        this.setShouldSync(true)
+        NoteColumnLocalStorageService.setShouldSync(true)
       }
     }
   }
 
   updateColumnsOrderFromServer = async (model: NoteColumnWebSocketAlertUpdateOrderModel) => {
-    const docs = await this.getColumns()
+    const notes = await this.getColumns()
     let updated = false
 
-    docs.forEach(doc => {
-      const serverItem = model.items.find(item => item.id === doc.external_id)
+    notes.forEach(note => {
+      const serverItem = model.items.find(item => item.id === note.external_id)
       if (serverItem) {
-        const serverOrderMoreUpdated = serverItem.lastOrderUpdate > doc.lastOrderUpdate
+        const serverOrderMoreUpdated = serverItem.lastOrderUpdate > note.lastOrderUpdate
         if (serverOrderMoreUpdated) {
-          doc.order = serverItem.order
-          doc.lastOrderUpdate = serverItem.lastOrderUpdate
+          note.order = serverItem.order
+          note.lastOrderUpdate = serverItem.lastOrderUpdate
           updated = true
         }
       }
     })
 
     if (updated) {
-      await NoteColumnDatabase.putAll(docs)
+      await NoteColumnDatabaseService.putAll(notes)
 
       NoteColumnContextUpdater.update()
     }
@@ -327,15 +347,18 @@ class NoteColumnService {
     if (model.newVersion > localVersion) {
       let hasDeletedNotes: boolean = false
 
-      for (const title of model.titleList) {
-        const deletedNotes = await NoteService.deleteAllDatabaseNotesByColumnTitle(title)
+      for (const externalId of model.idList) {
+        const deletedColumn = await NoteColumnDatabaseService.deleteByExternalId(externalId)
+        if (deletedColumn) {
+          const deletedNotes = await NoteService.deleteAllDatabaseNotesByColumnTitle(deletedColumn.title)
 
-        hasDeletedNotes = hasDeletedNotes || deletedNotes.length > 0
+          if (!hasDeletedNotes && deletedNotes.length > 0) {
+            hasDeletedNotes = true
+          }
+        }
       }
 
-      await NoteColumnDatabase.deleteByTitles(model.titleList)
-
-      this.setVersion(model.newVersion)
+      NoteColumnLocalStorageService.setVersion(model.newVersion)
 
       NoteColumnContextUpdater.update()
 
@@ -353,18 +376,14 @@ class NoteColumnService {
     return NoteColumnSyncLocalStorage.getShouldSync()
   }
 
-  setShouldSync = (should: boolean) => {
-    NoteColumnSyncLocalStorage.setShouldSync(should)
-  }
-
   //#endregion
 
   //#region VALIDATION
 
   titleAlreadyExists = async (title: string): Promise<boolean> => {
-    const doc = await NoteColumnDatabase.getByTitle(title)
+    const column = await NoteColumnDatabaseService.getByTitle(title)
 
-    if (doc) {
+    if (column) {
       return true
     }
 
@@ -385,8 +404,6 @@ class NoteColumnService {
     order: order,
     savedOnServer: false,
     title: title,
-    _rev: '',
-    _id: ''
   })
 
   //#endregion

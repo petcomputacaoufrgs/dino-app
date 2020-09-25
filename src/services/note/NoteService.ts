@@ -86,32 +86,34 @@ class NoteService {
   }
 
   saveNoteOnServer = async (note: NoteEntity) => {
-    const responseBody = await NoteServerService.save(note)
+    const response = await NoteServerService.save(note)
 
-    if (responseBody) {
-      const dbNote = await NoteDatabaseService.getById(note.id!)
+    if (response) {
+      if (note.id) {
+        const dbNote = await NoteDatabaseService.getById(note.id)
 
-      if (dbNote) {
-        dbNote.savedOnServer = true
-        dbNote.external_id = responseBody.id
+        if (dbNote) {
+          dbNote.savedOnServer = true
+          dbNote.external_id = response.id
+          await NoteDatabaseService.saveExternalIdById(note.id, response.id)
+        }
       }
-
-      NoteLocalStorageService.setVersion(responseBody.userNoteVersion)
+      NoteLocalStorageService.setVersion(response.userNoteVersion)
     } else {
       NoteLocalStorageService.setShouldSync(true)
     }
   }
 
   saveNotesOnServer = async (notes: NoteEntity[]) => {
-    const responseBody = await NoteServerService.saveAll(notes)
+    const response = await NoteServerService.saveAll(notes)
 
-    if (responseBody) {
+    if (response) {
       const notesDb = await NoteDatabaseService.getAllById(
         notes.map((note) => note.id!)
       )
 
       notesDb.forEach((note) => {
-        const item = responseBody.items.find(
+        const item = response.items.find(
           (item) => item.question === note.question
         )
 
@@ -121,8 +123,7 @@ class NoteService {
       })
 
       await NoteDatabaseService.putAll(notesDb)
-
-      NoteLocalStorageService.setVersion(responseBody.newVersion)
+      NoteLocalStorageService.setVersion(response.newVersion)
     } else {
       NoteLocalStorageService.setShouldSync(true)
     }
@@ -250,9 +251,11 @@ class NoteService {
 
   updateNotesFromServer = async (newVersion: number) => {
     const localVersion = NoteLocalStorageService.getVersion()
+    console.log(localVersion)
+    console.log(newVersion)
     if (newVersion > localVersion) {
+      console.log("updating...")
       const serverData = await NoteServerService.get()
-
       if (serverData) {
         let maxOrder = 0
         const deletedNotes = await this.getDeletedNotes()
@@ -363,6 +366,7 @@ class NoteService {
       if (serverItem) {
         const serverOrderMoreUpdated =
           serverItem.lastOrderUpdate > note.lastOrderUpdate
+
         if (serverOrderMoreUpdated) {
           note.order = serverItem.order
           note.lastOrderUpdate = serverItem.lastOrderUpdate
@@ -386,7 +390,6 @@ class NoteService {
 
     if (model.newVersion > localVersion && model.idList) {
       await NoteDatabaseService.deleteByExternalIds(model.idList)
-
       NoteLocalStorageService.setVersion(model.newVersion)
 
       NoteContextUpdater.update()

@@ -27,6 +27,12 @@ class NoteDatabaseService {
         return ArrayUtils.removeRepeatedValues(tags)
     }
 
+    async saveExternalIdById(id: number, externalId: number) {
+        return DinoDatabase.note.where("id").equals(id).modify(note => {
+            note.external_id = externalId
+        })
+    }
+
     async put(entity: NoteEntity) {
         const id = await DinoDatabase.note.put(entity)
 
@@ -34,7 +40,7 @@ class NoteDatabaseService {
     }
 
     async putAll(entities: NoteEntity[]) {
-        const ids = await DinoDatabase.transaction('rw', DinoDatabase.note, () =>
+        const ids = await DinoDatabase.transaction('readwrite', DinoDatabase.note, () =>
             Promise.all(entities.map((entity) => DinoDatabase.note.put(entity)))
         )
 

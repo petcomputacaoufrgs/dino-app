@@ -21,7 +21,7 @@ class NoteColumnDatabaseService {
     }
 
     async putAll(columns: NoteColumnEntity[]) {
-        const ids = await DinoDatabase.transaction('rw', DinoDatabase.note, () =>
+        const ids = await DinoDatabase.transaction('readwrite', DinoDatabase.noteColumn, () =>
             Promise.all(columns.map((column) => DinoDatabase.noteColumn.put(column)))
         )
 

@@ -22,7 +22,7 @@ class DeletedNoteColumnDatabaseService {
     }
 
     async deleteById(id: number): Promise<number> {
-        return DinoDatabase.deletedNote.where("id").equals(id).delete()
+        return DinoDatabase.deletedNoteColumn.where("id").equals(id).delete()
     }
 
     async deleteAll() {

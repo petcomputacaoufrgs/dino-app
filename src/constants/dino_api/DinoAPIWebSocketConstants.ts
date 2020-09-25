@@ -9,7 +9,7 @@ class DinoAPIWebSocketConstants {
   ALERT_APP_SETTINGS_UPDATE = '/user/queue/user_app_settings/update'
   ALERT_NOTE_UPDATE = '/user/queue/note/update'
   ALERT_NOTE_ORDER_UPDATE = '/user/queue/note/order/update'
-  ALERT_NOTE_DELETE = '/user/queue/note_column/delete'
+  ALERT_NOTE_DELETE = '/user/queue/note/delete'
   ALERT_NOTE_COLUMN_UPDATE = '/user/queue/note_column/update'
   ALERT_NOTE_COLUMN_ORDER_UPDATE = '/user/queue/note_column/order/update'
   ALERT_NOTE_COLUMN_DELETE = '/user/queue/note_column/delete'

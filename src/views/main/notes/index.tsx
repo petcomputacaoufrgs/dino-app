@@ -33,7 +33,7 @@ const convertNotesToNoteViews = (
     }
   })
 
-  return noteViewList
+  return noteViewList.sort((a, b) => a.order - b.order)
 }
 
 const createViewColumns = (
@@ -65,6 +65,8 @@ const Notes = () => {
 
   useEffect(() => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
+    console.log("view")
+    console.log(viewColumns)
     setViewColumns(viewColumns)
   }, [columns, notes, textSearch, tagSearch])
   

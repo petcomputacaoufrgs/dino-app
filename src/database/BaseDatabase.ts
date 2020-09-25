@@ -66,7 +66,6 @@ export default class BaseDatabase<T extends BaseDoc> {
         await this.db.put(doc)
       }
     } catch (e) {
-      console.log(e)
       LogAppErrorService.saveError(e)
     }
   }

@@ -1,6 +1,6 @@
 import BaseWebSocketSubscriber from './BaseWebSocketSubscriber'
 import DinoAPIWebSocketConstants from '../constants/dino_api/DinoAPIWebSocketConstants'
-import FaqUserWebSocketAlertUpdateModel from '../types/faq/FaqUserWebSocketAlertUpdateModel'
+import FaqUserWebSocketAlertUpdateModel from '../types/web_socket/WebSocketAlertUpdateModel'
 import Service from '../services/faq/FaqService'
 import SubscriberItem from '../types/web_socket/SubscriberItem'
 

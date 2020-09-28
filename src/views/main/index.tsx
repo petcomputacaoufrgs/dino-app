@@ -49,11 +49,13 @@ const Main = (): JSX.Element => {
         name: language.MENU_HOME,
         onClick: () => HistoryService.push(PathConstants.HOME),
       },
+      /*
       {
         image: GamesSVG,
         name: language.MENU_GAMES,
         onClick: () => HistoryService.push(PathConstants.GAMES),
       },
+      */
       {
         image: GlossarySVG,
         name: language.MENU_GLOSSARY,
@@ -69,11 +71,13 @@ const Main = (): JSX.Element => {
         name: language.MENU_NOTES,
         onClick: () => HistoryService.push(PathConstants.NOTES),
       },
+      /*
       {
         image: CalendarSVG,
         name: language.MENU_CALENDAR,
         onClick: () => HistoryService.push(PathConstants.CALENDAR),
       },
+      */
       {
         image: FaqSVG,
         name: language.MENU_FAQ,

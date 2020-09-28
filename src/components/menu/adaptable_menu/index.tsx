@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import AdaptableMenuProps from './props'
-import BottomNavigation from '../bottom_navigation'
 import ScreenUtils from '../../../utils/ScreenUtils'
+import DrawerNavigation from '../drawer_navigation'
+import './styles.css'
 
 /**
  * @description Menu adaptável para mobile e desktop
@@ -28,11 +29,15 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
    */
   const renderAdaptableMenu = (): JSX.Element => {
     return (
-      <BottomNavigation
-        showMiniDrawer={isLandscape}
+      <div className="adaptable_menu">
+        <DrawerNavigation
+        mini={isLandscape}
         groupedItems={props.groupedItems}
-        component={props.component}
-      />
+        />
+        <div className={isLandscape ? 'adaptable_menu__component_with_mini' : 'adaptable_menu__component'}>
+          {props.component}
+        </div>
+      </div>
     )
   }
 

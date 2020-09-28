@@ -6,7 +6,7 @@ import HistoryService from '../../services/history/HistoryService'
 import { useLanguage } from '../../context_provider/app_settings'
 import './styles.css'
 
-const ArrowBack = (): JSX.Element => {
+const ArrowBack = (props: {color?: "inherit" | "disabled" | "action" | "primary" | "secondary" | "error" | undefined}): JSX.Element => {
   const language = useLanguage().current
 
   return (
@@ -15,7 +15,7 @@ const ArrowBack = (): JSX.Element => {
       aria-label={language.RETURN_ARIA_LABEL}
       onClick={() => HistoryService.goBack()}
     >
-      <ArrowBackIcon color="action" />
+      <ArrowBackIcon color={props.color} />
     </IconButton>
   )
 }

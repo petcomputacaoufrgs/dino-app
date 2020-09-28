@@ -9,6 +9,7 @@ import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Menu 
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { useLanguage } from '../../../context_provider/app_settings'
 import './styles.css'
+import ArrowBack from '../../arrow_back'
 
 const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
   const classes = useStyles()

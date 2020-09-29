@@ -13,8 +13,6 @@ class NoteColumnWebSocketSubscriber extends BaseWebSocketSubscriber {
       {
         path: DinoAPIWebSocketConstants.ALERT_NOTE_COLUMN_UPDATE,
         callback: (model: NoteColumnWebSocketAlertUpdateModel) => {
-          console.log("websocket columns")
-          console.log(model)
           this.conflictingMethodsQueue(async () => await NoteColumnService.updateColumnsFromServer(model.newVersion))
         },
       },

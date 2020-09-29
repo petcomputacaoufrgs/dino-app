@@ -19,6 +19,7 @@ import NoteCreateDialog from '../note_create_dialog'
 import NoteInfoDialog from '../note_info_dialog'
 import LogAppErrorService from '../../../../services/log_app_error/LogAppErrorService'
 import ViewAddNoteOpenedWIthoutColumnError from '../../../../error/ViewAddNoteOpenedWIthoutColumnError'
+import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 
 const NoteContent: React.FC<NoteContentProps> = ({
   tags,
@@ -59,7 +60,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
   }
 
   const handleSaveNoteColumn = (
-    column: NoteColumnViewModel,
+    column: NoteColumnEntity,
     oldTitle?: string
   ) => {
     closeNoteColumnDialog()
@@ -238,7 +239,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
                   <NoteContentColumn
                     column={column}
                     columnIndex={index}
-                    key={index}
+                    key={column.id}
                     onClickNote={handleClickNote}
                     onEditColumn={handleEditColumn}
                     onDeleteColumn={handleDeleteColumn}

@@ -70,7 +70,7 @@ const PhoneFields = ({
         customInput={TextField}
         format={getNumberMask()}
         InputProps={{
-          maxLength: Constants.NUMBER_MAX, //n funciona
+          maxLength: Constants.NUMBER_MAX,
           endAdornment: (
             <InputAdornment position="end">
               <IconButton

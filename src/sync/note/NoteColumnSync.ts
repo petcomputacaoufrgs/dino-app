@@ -28,7 +28,7 @@ class NoteColumnSync implements BaseSync {
     const serverVersion = await NoteColumnService.getVersionFromServer()
 
     if (serverVersion !== undefined) {
-      await NoteColumnService.updateColumnsFromServer(serverVersion)
+      await NoteColumnService.updateColumnsFromServer(serverVersion, true)
     }
 
     await NoteSync.receive()

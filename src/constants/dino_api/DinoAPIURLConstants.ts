@@ -22,6 +22,8 @@ class DinoAPIURLConstants {
 
   REFRESH_AUTH = `${this.PUBLIC_AUTH}refresh/`
 
+  WEB_SOCKET_AUTH = `${this.AUTH}web_socket/`
+
   USER_VERSION = `${this.USER}version/`
 
   USER_GET = this.USER

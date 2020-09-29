@@ -2,7 +2,6 @@ import NoteColumnVersionLocalStorage from '../../local_storage/note/NoteColumnVe
 import NoteColumnServerService from './NoteColumnServerService'
 import NoteColumnSyncLocalStorage from '../../local_storage/note/NoteColumnSyncLocalStorage'
 import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpdater'
-import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
 import NoteService from './NoteService'
 import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateOrderModel'
 import NoteColumnWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteColumnWebSocketAlertDeleteModel'
@@ -113,7 +112,6 @@ class NoteColumnService {
   saveColumnsOrder = async (columns: NoteColumnEntity[]) => {
     if (columns.length > 0) {
       const savedColumn = await this.getColumns()
-
       columns.forEach((column, index) => {
         const updatedColumn = savedColumn.find(c => c.title === column.title)
 
@@ -190,6 +188,7 @@ class NoteColumnService {
         if (newVersion !== null) {
           NoteColumnLocalStorageService.setVersion(newVersion)
         } else {
+          column.lastUpdate = new Date().getTime()
           NoteColumnLocalStorageService.setShouldSync(true)
           DeletedNoteColumnDatabaseService.add(column)
           NoteService.addNotesInDeletedNoteDatabase(deletedNotes.filter(dNote => dNote.external_id !== undefined))
@@ -210,11 +209,9 @@ class NoteColumnService {
     )
   )
 
-  updateColumnsFromServer = async (newVersion: number) => {
+  updateColumnsFromServer = async (newVersion: number, force?: boolean) => {
     const localVersion = NoteColumnLocalStorageService.getVersion()
-    console.log(localVersion)
-    if (newVersion > localVersion) {
-      console.log("updating...")
+    if (newVersion > localVersion || force) {
       const serverData = await NoteColumnServerService.get()
 
       if (serverData) {
@@ -248,6 +245,8 @@ class NoteColumnService {
         const localColumns = await this.getColumns()
 
         const mergedColumns: NoteColumnEntity[] = serverColumns
+
+        const idsOfDeletedColumnsOnServer: number[] = []
 
         for (const localVersion of localColumns) {
           const originalColumnTitle = localVersion.title
@@ -297,10 +296,12 @@ class NoteColumnService {
               localVersion.order = maxOrder
               
               mergedColumns.push(localVersion)
+            } else if (localVersion.id) {
+              idsOfDeletedColumnsOnServer.push(localVersion.id)
             }
           }
         }
-
+        await NoteColumnDatabaseService.deleteAllById(idsOfDeletedColumnsOnServer)
         await NoteColumnDatabaseService.putAll(mergedColumns)
         NoteService.updateContext()
         NoteColumnContextUpdater.update()
@@ -335,7 +336,6 @@ class NoteColumnService {
   }
 
   updateDeletedColumnsFromServer = async (model: NoteColumnWebSocketAlertDeleteModel) => {
-    console.log("deleted column")
     const localVersion = this.getVersion()
 
     if (model.newVersion > localVersion) {
@@ -388,13 +388,12 @@ class NoteColumnService {
 
   //#region CREATE
 
-  createNewNoteColumnView = (
+  createNewNoteColunmEntity = (
     title: string,
     order: number
-  ): NoteColumnViewModel => ({
+  ): NoteColumnEntity => ({
     lastUpdate: new Date().getTime(),
     lastOrderUpdate: new Date().getTime(),
-    notes: [],
     order: order,
     savedOnServer: false,
     title: title,

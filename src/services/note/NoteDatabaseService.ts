@@ -77,6 +77,10 @@ class NoteDatabaseService {
         return DinoDatabase.note.where("external_id").anyOf(ids).delete()
     }
 
+    async deleteAllById(ids: number[]) {
+        return DinoDatabase.note.where("id").anyOf(ids).delete()
+    }
+
     async deleteAll() {
         return DinoDatabase.note.clear()
     }

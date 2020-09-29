@@ -26,6 +26,10 @@ class NoteService {
     return NoteDatabaseService.getAllTags()
   }
 
+  getVersion = (): number => (
+    NoteLocalStorageService.getVersion()
+  )
+
   getVersionFromServer = async (): Promise<number | undefined> => {
     return NoteServerService.getVersion()
   }
@@ -57,7 +61,7 @@ class NoteService {
       this.saveNoteOnServer(dbNote)
     }
 
-    NoteContextUpdater.update()
+    this.updateContext()
   }
 
   createNote = async (
@@ -80,7 +84,7 @@ class NoteService {
 
     await NoteDatabaseService.put(note)
 
-    NoteContextUpdater.update()
+    this.updateContext()
 
     this.saveNoteOnServer(note)
   }
@@ -132,7 +136,6 @@ class NoteService {
   saveNotesOrder = async (notes: NoteEntity[]) => {
     if (notes.length > 0) {
       const databaseNotes = await this.getNotes()
-
       notes.forEach((note, index) => {
         const savedNote = databaseNotes.find(
           (savedNote) => savedNote.id === note.id
@@ -148,6 +151,8 @@ class NoteService {
       await NoteDatabaseService.putAll(databaseNotes)
 
       this.saveOrderOnServer(databaseNotes)
+
+      this.updateContext()
     }
   }
 
@@ -174,6 +179,7 @@ class NoteService {
   }
 
   addNotesInDeletedNoteDatabase = async (deletedNotes: NoteEntity[]) => {
+    deletedNotes.forEach(deletedNote => deletedNote.lastUpdate = new Date().getTime())
     return DeletedNoteDatabaseService.addAll(deletedNotes)
   }
 
@@ -182,7 +188,7 @@ class NoteService {
   ): Promise<NoteEntity[]> => {
     const deletedNotes = await NoteDatabaseService.deleteByColumnTitle(columnTitle)
 
-    NoteContextUpdater.update()
+    this.updateContext()
 
     return deletedNotes
   }
@@ -190,7 +196,7 @@ class NoteService {
   deleteNote = async (note: NoteViewModel) => {
     const deletedNote = await NoteDatabaseService.deleteById(note.id)
 
-    NoteContextUpdater.update()
+    this.updateContext()
 
     if (deletedNote) {
       this.deleteNoteOnServer(deletedNote)
@@ -199,7 +205,7 @@ class NoteService {
 
   deleteNotesOnServer = async () => {
     const deletedNotes = await this.getDeletedNotes()
-
+    console.log(deletedNotes)
     if (deletedNotes.length > 0) {
       const newVersion = await NoteServerService.deleteAll(deletedNotes)
 
@@ -219,8 +225,8 @@ class NoteService {
       if (newVersion !== null) {
         NoteLocalStorageService.setVersion(newVersion)
       } else {
+        note.lastUpdate = new Date().getTime()
         await DeletedNoteDatabaseService.add(note)
-        
         NoteLocalStorageService.setShouldSync(true)
       }
     }
@@ -249,17 +255,15 @@ class NoteService {
         serverNote.external_id !== localVersion.external_id
     )
 
-  updateNotesFromServer = async (newVersion: number) => {
-    const localVersion = NoteLocalStorageService.getVersion()
-    console.log(localVersion)
-    console.log(newVersion)
-    if (newVersion > localVersion) {
-      console.log("updating...")
+  updateNotesFromServer = async (newVersion: number, force?: boolean) => {
+    const localVersion = this.getVersion()
+    if (newVersion > localVersion || force) {
       const serverData = await NoteServerService.get()
       if (serverData) {
         let maxOrder = 0
         const deletedNotes = await this.getDeletedNotes()
         const serverNotes: NoteEntity[] = []
+      
         serverData.forEach((serverNote) => {
           if (serverNote.order > maxOrder) {
             maxOrder = serverNote.order
@@ -267,10 +271,13 @@ class NoteService {
           const localDeleted = deletedNotes.find(
             (deletedNote) => deletedNote.external_id === serverNote.id
           )
+
+          console.log(localDeleted)
+          console.log(serverNote)
           if (localDeleted) {
-            if (localDeleted.lastUpdate > serverNote.lastUpdate) {
-              return
-            } else {
+            const serverMoreUpdated = serverNote.lastUpdate >= localDeleted.lastUpdate 
+            console.log(serverMoreUpdated)
+            if (serverMoreUpdated) {
               if (localDeleted.id !== undefined) {
                 DeletedNoteDatabaseService.deleteById(localDeleted.id)
               }
@@ -292,6 +299,8 @@ class NoteService {
         const localNotes: NoteEntity[] = await this.getNotes()
 
         const mergedNotes: NoteEntity[] = serverNotes
+
+        const idsOfDeletedNotesOnServer: number[] = []
 
         for (const localVersion of localNotes) {
           let questionConflict = this.checkQuestionConflict(
@@ -344,12 +353,14 @@ class NoteService {
               localVersion.order = maxOrder
 
               mergedNotes.push(localVersion)
+            } else if (localVersion.id) {
+              idsOfDeletedNotesOnServer.push(localVersion.id)
             }
           }
         }
-
+        await NoteDatabaseService.deleteAllById(idsOfDeletedNotesOnServer)
         await NoteDatabaseService.putAll(mergedNotes)
-        NoteContextUpdater.update()
+        this.updateContext()
         NoteLocalStorageService.setVersion(newVersion)
       } else {
         NoteLocalStorageService.setShouldSync(true)
@@ -379,20 +390,20 @@ class NoteService {
     if (updated) {
       await NoteDatabaseService.putAll(notes)
 
-      NoteContextUpdater.update()
+      this.updateContext()
     }
   }
 
   updateDeletedNotesFromServer = async (
     model: NoteWebSocketAlertDeleteModel
   ) => {
-    const localVersion = NoteLocalStorageService.getVersion()
+    const localVersion = this.getVersion()
 
     if (model.newVersion > localVersion && model.idList) {
       await NoteDatabaseService.deleteByExternalIds(model.idList)
       NoteLocalStorageService.setVersion(model.newVersion)
 
-      NoteContextUpdater.update()
+      this.updateContext()
     }
   }
 

@@ -13,10 +13,10 @@ class EventService {
     ConnectionService.addEventListener(this.connectionCallback)
   }
 
-  whenStart = () => {
+  whenStart = async () => {
     AuthService.cleanLoginGarbage()
+    await WebSocketConnector.connect()
     Synchronizer.sync()
-    WebSocketConnector.connect()
   }
 
   whenLogin = () => {

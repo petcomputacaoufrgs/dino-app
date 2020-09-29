@@ -11,6 +11,7 @@ import UserService from '../user/UserService'
 import DinoAgentService from '../../agent/DinoAgentService'
 import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
 
 class AuthService {
   cleanLoginGarbage = () => {
@@ -66,6 +67,22 @@ class AuthService {
     }
 
     return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
+  }
+
+  requestWebSocketAuthToken = async (): Promise<WebSocketAuthResponseModel | undefined> => {
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.WEB_SOCKET_AUTH
+    )
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().go()
+        return response.body
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    } else {
+      return undefined
+    }
   }
 
   googleLogout = () => {

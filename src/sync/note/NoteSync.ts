@@ -1,5 +1,6 @@
 import BaseSync from '../BaseSync'
 import NoteService from '../../services/note/NoteService'
+import NoteEntity from '../../types/note/database/NoteEntity'
 
 class NoteSync implements BaseSync {
   send = async () => {
@@ -10,6 +11,8 @@ class NoteSync implements BaseSync {
 
       const unsavedNotes = noteDocs
         .filter((noteDoc) => !noteDoc.savedOnServer)
+        
+      this.removeExternalId(unsavedNotes)
 
       await NoteService.saveNotesOnServer(unsavedNotes)
 
@@ -22,8 +25,12 @@ class NoteSync implements BaseSync {
   receive = async () => {
     const serverVersion = await NoteService.getVersionFromServer()
     if (serverVersion !== undefined) {
-      await NoteService.updateNotesFromServer(serverVersion)
+      await NoteService.updateNotesFromServer(serverVersion, true)
     }
+  }
+
+  private removeExternalId(notes: NoteEntity[]) {
+    notes.forEach(noteDocs => noteDocs.external_id = undefined)
   }
 }
 

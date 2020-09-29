@@ -53,6 +53,10 @@ class NoteColumnDatabaseService {
         return column
     }
 
+    async deleteAllById(ids: number[]) {
+        return DinoDatabase.noteColumn.where("id").anyOf(ids).delete()
+    }
+
     async deleteAll() {
         return DinoDatabase.noteColumn.clear()
     }

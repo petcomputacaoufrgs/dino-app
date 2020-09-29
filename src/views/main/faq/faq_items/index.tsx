@@ -3,7 +3,6 @@ import React from 'react'
 import FaqItemsProps from './props'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-//import 'bootstrap/dist/css/bootstrap.min.css'
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 

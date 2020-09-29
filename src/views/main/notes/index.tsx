@@ -47,6 +47,7 @@ const createViewColumns = (
   return columns
     .map((column) => ({
       ...column,
+      id: column.id!,
       notes: noteViews.filter((note) => note.columnTitle === column.title),
     }))
     .sort((a, b) => a.order - b.order)
@@ -65,8 +66,6 @@ const Notes = () => {
 
   useEffect(() => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
-    console.log("view")
-    console.log(viewColumns)
     setViewColumns(viewColumns)
   }, [columns, notes, textSearch, tagSearch])
   
@@ -87,7 +86,7 @@ const Notes = () => {
 
   //#region Column
 
-  const handleSaveColumn = (column: NoteColumnViewModel, oldTitle?: string) => {
+  const handleSaveColumn = (column: NoteColumnEntity, oldTitle?: string) => {
     NoteColumnService.saveColumn(column, oldTitle)
   }
 
@@ -160,8 +159,6 @@ const Notes = () => {
 
     destinationColumn.notes.forEach((note, index) => (note.order = index))
 
-    setViewColumns(Array.from(viewColumns))
-
     NoteService.saveNotesOrder(
       ArrayUtils.merge(viewColumns.map((vColumn) => vColumn.notes))
     )
@@ -180,8 +177,6 @@ const Notes = () => {
 
     viewColumns.splice(source.index, 1)
     viewColumns.splice(destination.index, 0, changedColumn)
-
-    setViewColumns(Array.from(viewColumns))
 
     NoteColumnService.saveColumnsOrder(viewColumns)
   }

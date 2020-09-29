@@ -27,12 +27,16 @@ class WebSocketConnector {
     FaqUserWebSocketSubscriber,
   ]
 
-  connect = () => {
+  connect = async () => {
     if (AuthService.isAuthenticated()) {
-      this.socket = new SockJS(this.getSocketBaseURL())
-      this.stompClient = Stomp.over(this.socket)
-      this.muteConnectionLogs()
-      this.stompClient.connect({}, this.subscribe)
+      const response = await AuthService.requestWebSocketAuthToken()
+      if (response) {
+        const baseUrl = this.getSocketBaseURL(response.webSocketToken)
+        this.socket = new SockJS(baseUrl)
+        this.stompClient = Stomp.over(this.socket)
+        //this.muteConnectionLogs()
+        this.stompClient.connect({}, this.subscribe)
+      }
     }
   }
 
@@ -62,10 +66,10 @@ class WebSocketConnector {
     callback(JSON.parse(message.body))
   }
 
-  private getSocketBaseURL(): string {
+  private getSocketBaseURL(token: string): string {
     return `${DinoAPIWebSocketConstants.URL}?${
-      DinoAPIHeaderConstants.AUTHORIZATION
-    }=${AuthService.getAuthToken()}`
+      DinoAPIHeaderConstants.WS_AUTHORIZATION
+      }=${token}`
   }
 }
 

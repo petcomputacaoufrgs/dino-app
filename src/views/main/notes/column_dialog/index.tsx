@@ -48,7 +48,7 @@ const NoteColumnDialog = forwardRef(
           props.onClose()
         }
       } else if (props.order !== undefined) {
-        const newColumn = NoteColumnService.createNewNoteColumnView(
+        const newColumn = NoteColumnService.createNewNoteColunmEntity(
           newTitle,
           props.order
         )

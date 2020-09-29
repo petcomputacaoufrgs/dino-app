@@ -41,7 +41,7 @@ class DeletedNoteDatabaseService {
         if (note.external_id) {
             const deletedNote: DeletedNoteEntity = {
                 external_id: note.external_id,
-                lastUpdate: note.lastOrderUpdate
+                lastUpdate: note.lastUpdate
             }
 
             return deletedNote

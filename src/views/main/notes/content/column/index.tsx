@@ -25,7 +25,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
       return (
         <NoteContentColumnCard
           note={note}
-          key={noteIndex}
+          key={note.id}
           noteIndex={noteIndex}
           onClickNote={onClickNote}
         ></NoteContentColumnCard>
@@ -47,7 +47,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
 
   return (
     <div className={`note__note_content__column${isMobile ? '' : ' desktop'}`}>
-      <Draggable draggableId={columnIndex.toString()} index={columnIndex}>
+      <Draggable draggableId={column.id.toString()} index={columnIndex}>
         {(provided) => (
           <div
             className="note__note_content__column__draggable"

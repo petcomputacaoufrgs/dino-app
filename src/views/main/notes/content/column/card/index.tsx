@@ -22,7 +22,7 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
 
   return (
     <Draggable
-      draggableId={note.columnTitle + noteIndex.toString()}
+      draggableId={note.columnTitle + '_' + note.id.toString()}
       index={noteIndex}
     >
       {(provided) => (

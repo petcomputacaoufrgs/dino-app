@@ -92,17 +92,10 @@ class NoteService {
   saveNoteOnServer = async (note: NoteEntity) => {
     const response = await NoteServerService.save(note)
 
-    if (response) {
-      if (note.id) {
-        const dbNote = await NoteDatabaseService.getById(note.id)
-
-        if (dbNote) {
-          dbNote.savedOnServer = true
-          dbNote.external_id = response.id
-          await NoteDatabaseService.saveExternalIdById(note.id, response.id)
-        }
-      }
+    if (response && note.id) {
+      await NoteDatabaseService.saveExternalIdByIdAndSavedOnServer(note.id, response.id, true)
       NoteLocalStorageService.setVersion(response.userNoteVersion)
+      this.updateContext()
     } else {
       NoteLocalStorageService.setShouldSync(true)
     }
@@ -112,22 +105,11 @@ class NoteService {
     const response = await NoteServerService.saveAll(notes)
 
     if (response) {
-      const notesDb = await NoteDatabaseService.getAllById(
-        notes.map((note) => note.id!)
-      )
-
-      notesDb.forEach((note) => {
-        const item = response.items.find(
-          (item) => item.question === note.question
-        )
-
-        if (item) {
-          note.id = item.id
-        }
-      })
-
-      await NoteDatabaseService.putAll(notesDb)
+      for (const item of response.items) {
+        await NoteDatabaseService.saveExternalIdByQuestionAndSavedOnServer(item.question, item.id, true)
+      }
       NoteLocalStorageService.setVersion(response.newVersion)
+      this.updateContext()
     } else {
       NoteLocalStorageService.setShouldSync(true)
     }
@@ -205,11 +187,10 @@ class NoteService {
 
   deleteNotesOnServer = async () => {
     const deletedNotes = await this.getDeletedNotes()
-    console.log(deletedNotes)
     if (deletedNotes.length > 0) {
       const newVersion = await NoteServerService.deleteAll(deletedNotes)
 
-      if (newVersion !== null) {
+      if (newVersion !== undefined) {
         DeletedNoteDatabaseService.deleteAll()
         NoteLocalStorageService.setVersion(newVersion)
       } else {
@@ -271,16 +252,12 @@ class NoteService {
           const localDeleted = deletedNotes.find(
             (deletedNote) => deletedNote.external_id === serverNote.id
           )
-
-          console.log(localDeleted)
-          console.log(serverNote)
           if (localDeleted) {
             const serverMoreUpdated = serverNote.lastUpdate >= localDeleted.lastUpdate 
-            console.log(serverMoreUpdated)
-            if (serverMoreUpdated) {
-              if (localDeleted.id !== undefined) {
-                DeletedNoteDatabaseService.deleteById(localDeleted.id)
-              }
+            if (serverMoreUpdated && localDeleted.id !== undefined) {
+              DeletedNoteDatabaseService.deleteById(localDeleted.id)
+            } else {
+              return
             }
           }
           serverNotes.push({
@@ -346,7 +323,6 @@ class NoteService {
             }
           } else {
             const isUnsaved = !localVersion.savedOnServer
-
             if (isUnsaved) {
               maxOrder++
 

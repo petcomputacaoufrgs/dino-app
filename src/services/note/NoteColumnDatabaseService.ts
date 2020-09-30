@@ -14,6 +14,20 @@ class NoteColumnDatabaseService {
         return DinoDatabase.noteColumn.where("title").equals(title).first()
     }
 
+    async saveExternalIdByTitleAndSavedOnServer(title: string, externalId: number, savedOnServer: boolean): Promise<number> {
+        return DinoDatabase.noteColumn.where("title").equals(title).modify(column => {
+            column.external_id = externalId
+            column.savedOnServer = savedOnServer
+        })
+    }
+
+    async saveExternalIdByIdAndSavedOnServer(id: number, externalId: number, savedOnServer: boolean): Promise<number> {
+        return DinoDatabase.noteColumn.where("id").equals(id).modify(column => {
+            column.external_id = externalId
+            column.savedOnServer = savedOnServer
+        })
+    }
+
     async put(column: NoteColumnEntity) {
         const id = await DinoDatabase.noteColumn.put(column)
 

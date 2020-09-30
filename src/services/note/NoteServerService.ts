@@ -154,7 +154,7 @@ class NoteServerService {
 
   //#region DELETE
 
-  deleteAll = async (notes: DeletedNoteEntity[]): Promise<number | null> => {
+  deleteAll = async (notes: DeletedNoteEntity[]): Promise<number | undefined> => {
     const model: NoteDeleteAllRequestModel = {
       items: notes.map(
         (note) =>
@@ -179,7 +179,7 @@ class NoteServerService {
       }
     }
 
-    return null
+    return undefined
   }
 
   delete = async (externalId: number): Promise<number | null> => {

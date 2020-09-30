@@ -21,7 +21,7 @@ class EventService {
 
   whenLogin = () => {
     CalendarService.addMocks()
-    Synchronizer.receive()
+    Synchronizer.sync(true)
     WebSocketConnector.connect()
     HistoryService.push(PathConstants.HOME)
   }

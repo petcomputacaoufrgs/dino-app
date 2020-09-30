@@ -27,9 +27,17 @@ class NoteDatabaseService {
         return ArrayUtils.removeRepeatedValues(tags)
     }
 
-    async saveExternalIdById(id: number, externalId: number) {
+    async saveExternalIdByQuestionAndSavedOnServer(question: string, externalId: number, savedOnServer: boolean): Promise<number> {
+        return DinoDatabase.note.where("question").equals(question).modify(note => {
+            note.external_id = externalId
+            note.savedOnServer = savedOnServer
+        })
+    }
+
+    async saveExternalIdByIdAndSavedOnServer(id: number, externalId: number, savedOnServer: boolean): Promise<number> {
         return DinoDatabase.note.where("id").equals(id).modify(note => {
             note.external_id = externalId
+            note.savedOnServer = savedOnServer
         })
     }
 

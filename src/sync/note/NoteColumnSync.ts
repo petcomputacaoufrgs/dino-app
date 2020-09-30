@@ -1,6 +1,5 @@
 import BaseSync from '../BaseSync'
 import NoteColumnService from '../../services/note/NoteColumnService'
-import NoteSync from './NoteSync'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 
 class NoteColumnSync implements BaseSync {
@@ -8,20 +7,18 @@ class NoteColumnSync implements BaseSync {
     if (NoteColumnService.shouldSync()) {
       NoteColumnService.setShouldSync(false)
 
-      const docs = await NoteColumnService.getColumns()
+      const columns = await NoteColumnService.getColumns()
 
-      const unsavedDocs: NoteColumnEntity[] = docs.filter(
-        (docs) => !docs.savedOnServer
+      const unsavedColumns: NoteColumnEntity[] = columns.filter(
+        (column) => !column.savedOnServer
       )
 
-      await NoteColumnService.saveColumnsOnServer(unsavedDocs)
+      await NoteColumnService.saveColumnsOnServer(unsavedColumns)
 
       await NoteColumnService.deleteColumnsOnServer()
 
       await NoteColumnService.saveColumnsOrderOnServer()
     }
-
-    await NoteSync.send()
   }
 
   receive = async () => {
@@ -30,8 +27,6 @@ class NoteColumnSync implements BaseSync {
     if (serverVersion !== undefined) {
       await NoteColumnService.updateColumnsFromServer(serverVersion, true)
     }
-
-    await NoteSync.receive()
   }
 }
 

@@ -7,38 +7,39 @@ import BaseSync from './BaseSync'
 import GlossarySync from './GlossarySync'
 import FaqSync from './FaqSync'
 import NoteColumnSync from './note/NoteColumnSync'
+import NoteSync from './note/NoteSync'
 
 class Syncronizer {
-  private syncronizers: BaseSync[] = [
-    AppSettingsSync,
-    LogAppErrorSync,
-    GlossarySync,
-    NoteColumnSync,
-    ContactSync,
-    UserSync,
-    FaqSync,
+  private executionGrups: BaseSync[][] = [
+    [AppSettingsSync],
+    [LogAppErrorSync],
+    [GlossarySync],
+    [NoteColumnSync, NoteSync],
+    [ContactSync],
+    [UserSync],
+    [FaqSync],
   ]
 
-  sync = async () => {
-    await this.receive()
-    await this.send()
-  }
-
-  send = async () => {
+  sync = async (onlyReceive?: boolean) => {
     if (AuthService.isAuthenticated()) {
-      const executionList = this.syncronizers
-        .filter((sincronizer) => sincronizer.send)
-        .map((sincronizer) => sincronizer.send!())
-      await Promise.all(executionList)
+      await this.syncGroupsIndependently(onlyReceive)
     }
   }
 
-  receive = async () => {
-    if (AuthService.isAuthenticated()) {
-      const executionList = this.syncronizers
-        .filter((sincronizer) => sincronizer.receive)
-        .map((sincronizer) => sincronizer.receive!())
-      await Promise.all(executionList)
+  private syncGroupsIndependently = async (onlyReceive?: boolean) => {
+    const executionList = this.executionGrups
+      .map(syncronizerGroup => this.syncGroupInOrder(syncronizerGroup, onlyReceive))
+    await Promise.all(executionList)
+  }
+
+  private syncGroupInOrder = async (syncronizerGroup: BaseSync[], onlyReceive?: boolean) => {
+    for (const syncronizer of syncronizerGroup) {
+      if (syncronizer.receive) {
+        await syncronizer.receive()
+      }
+      if (syncronizer.send && !onlyReceive) {
+        await syncronizer.send()
+      }
     }
   }
 }

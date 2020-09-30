@@ -146,7 +146,7 @@ class NoteColumnServerService {
 
   //#region DELETE
 
-  deleteAll = async (deletedNotes: DeletedNoteColumnEntity[]): Promise<number | null> => {
+  deleteAll = async (deletedNotes: DeletedNoteColumnEntity[]): Promise<number | undefined> => {
     const model: NoteColumnDeleteAllRequestModel = {
       items: deletedNotes.map((deletedNote) => ({
         id: deletedNote.external_id!,
@@ -168,7 +168,7 @@ class NoteColumnServerService {
       }
     }
 
-    return null
+    return undefined
   }
 
   delete = async (externalId: number): Promise<number | null> => {

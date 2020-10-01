@@ -1,12 +1,16 @@
 .note__note_content__column__column_header {
-  margin-bottom: 15px;
   height: 20px;
   display: flex;
   flex-direction: row;
 }
 
 .note__note_content__column__column_header h2 {
+  width: 70%;
   font-size: large;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 0;
 }
 
 .note__note_content__column__column_header__button {

@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import NoteConstants from '../../../../constants/NoteConstants'
+import NoteConstants from '../../../../constants/note/NoteConstants'
 import { DialogTitle, DialogActions, Button } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 

@@ -11,7 +11,7 @@ import {
 } from 'react-beautiful-dnd'
 import NoteContentColumn from './column'
 import NoteViewModel from '../../../../types/note/view/NoteViewModel'
-import NoteDroppableType from '../../../../constants/NoteDroppableType'
+import NoteDroppableType from '../../../../constants/note/NoteDroppableType'
 import AddColumn from './add_column'
 import NoteColumnDialog from '../column_dialog'
 import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
@@ -47,6 +47,8 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const [noteCreateDialogOpen, setNoteCreateDialogOpen] = useState(false)
   const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
+
+  const [dragging, setDragging] = useState(false)
 
 
   //#region COLUMN
@@ -162,11 +164,12 @@ const NoteContent: React.FC<NoteContentProps> = ({
   //#endregion
 
   const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    setDragging(false)
     onDragEnd(result)
   }
 
   const handleDragStart = () => {
-    
+    setDragging(true)
   }
 
   const getColumnMaxOrder = (): number => columns.length
@@ -246,7 +249,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
                     onAddNote={handleAddNote}
                   />
                 ))}
-                <AddColumn onAddColumn={handleAddColumn} />
+                <AddColumn visible={!dragging} columnCount={columns.length} onAddColumn={handleAddColumn} />
               </div>
               {provided.placeholder}
             </div>

@@ -1,6 +1,5 @@
 .note__note_content__column {
   flex: 0 0 auto;
-  width: 70%;
   height: 100%;
   margin-right: 5px;
   margin-left: 5px;
@@ -17,6 +16,7 @@
   padding: 10px 15px 10px 15px;
   height: 90%;
   max-height: 90%;
+  width: 270px;
 }
 
 .note__note_content__column:first-of-type {
@@ -24,14 +24,14 @@
 }
 
 .note__note_content__column__draggable__title {
-  margin-bottom: 15px;
-  height: 25px;
+  margin-bottom: 10px;
+  height: 20px;
 }
 
 .note__note_content__column__draggable__droppable {
-  height: calc(100% - 40px - 27px - 8px);
-  max-height: calc(100% - 40px - 27px - 8px);
-  margin-bottom: 8px;
+  height: calc(100% - 30px - 27px - 10px);
+  max-height: calc(100% - 30px - 27px - 10px);
+  margin-bottom: 10px;
 }
 
 .note__note_content__column__draggable__droppable__scroll {
@@ -42,3 +42,4 @@
 .note__note_content__column__draggable__add_button {
   height: 27px;
 }
+

@@ -1,7 +1,7 @@
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteServerService from './NoteServerService'
 import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
-import NoteConstants from '../../constants/NoteConstants'
+import NoteConstants from '../../constants/note/NoteConstants'
 import NoteWebSocketOrderUpdateModel from '../../types/note/web_socket/NoteWebSocketOrderUpdateModel'
 import NoteWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteWebSocketAlertDeleteModel'
 import NoteEntity from '../../types/note/database/NoteEntity'

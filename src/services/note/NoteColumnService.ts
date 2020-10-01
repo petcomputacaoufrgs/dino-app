@@ -5,7 +5,7 @@ import NoteColumnContextUpdater from '../../context_updater/NoteColumnContextUpd
 import NoteService from './NoteService'
 import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateOrderModel'
 import NoteColumnWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteColumnWebSocketAlertDeleteModel'
-import NoteColumnConstants from '../../constants/NoteColumnConstants'
+import NoteColumnConstants from '../../constants/note/NoteColumnConstants'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteColumnDatabaseService from './NoteColumnDatabaseService'
 import DeletedNoteColumnDatabaseService from './DeletedNoteColumnDatabaseService'

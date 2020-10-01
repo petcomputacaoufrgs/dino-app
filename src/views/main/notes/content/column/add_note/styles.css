@@ -12,3 +12,7 @@
   font-weight: bold;
   color: #b32e55;
 }
+
+.note__note_content__column__add_note__max_notes {
+  color: red;
+}

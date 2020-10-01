@@ -5,7 +5,7 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } 
 import TransitionSlide from '../../../../components/slide_transition'
 import DateUtils from '../../../../utils/DateUtils'
 import { useLanguage } from '../../../../context_provider/app_settings'
-import NoteConstants from '../../../../constants/NoteConstants'
+import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
 import ArrayUtils from '../../../../utils/ArrayUtils'

@@ -14,7 +14,7 @@ import NoteColumnService from '../../../../services/note/NoteColumnService'
 import NoteColumnEditError from '../../../../error/NoteColumnEditError'
 import { useLanguage } from '../../../../context_provider/app_settings'
 import NoteColumnDialogContent from './content'
-import NoteColumnConstants from '../../../../constants/NoteColumnConstants'
+import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 
 const NoteColumnDialog = forwardRef(
   (props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {

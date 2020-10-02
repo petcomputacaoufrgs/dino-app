@@ -53,7 +53,7 @@ class CalendarService {
         reminder_alarm_ms: 9200000,
         type: 0,
         _rev: '',
-        _id: ''
+        _id: '',
       },
     ]
 

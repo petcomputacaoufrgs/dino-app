@@ -17,7 +17,7 @@ class AuthService {
   cleanLoginGarbage = () => {
     AuthLocalStorage.cleanLoginGarbage()
   }
-  
+
   getDefaultScopes = (): string => {
     return (
       GoogleAuthConstants.SCOPE_CALENDAR +
@@ -69,7 +69,9 @@ class AuthService {
     return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
   }
 
-  requestWebSocketAuthToken = async (): Promise<WebSocketAuthResponseModel | undefined> => {
+  requestWebSocketAuthToken = async (): Promise<
+    WebSocketAuthResponseModel | undefined
+  > => {
     const request = await DinoAgentService.get(
       DinoAPIURLConstants.WEB_SOCKET_AUTH
     )

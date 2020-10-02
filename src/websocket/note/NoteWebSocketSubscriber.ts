@@ -12,21 +12,28 @@ class NoteWebSocketSubscriber extends BaseWebSocketSubscriber {
       {
         path: DinoAPIWebSocketConstants.ALERT_NOTE_UPDATE,
         callback: (model: NoteWebSocketAlertUpdateModel) => {
-          this.conflictingMethodsQueue(async () => await NoteService.updateNotesFromServer(model.newVersion))
+          this.conflictingMethodsQueue(
+            async () =>
+              await NoteService.updateNotesFromServer(model.newVersion)
+          )
         },
-      }, 
+      },
       {
         path: DinoAPIWebSocketConstants.ALERT_NOTE_ORDER_UPDATE,
         callback: (model: NoteWebSocketOrderUpdateModel) => {
-          this.conflictingMethodsQueue(async () => await NoteService.updateNotesOrderFromServer(model))
+          this.conflictingMethodsQueue(
+            async () => await NoteService.updateNotesOrderFromServer(model)
+          )
         },
       },
       {
         path: DinoAPIWebSocketConstants.ALERT_NOTE_DELETE,
         callback: (model: NoteWebSocketAlertDeleteModel) => {
-          this.conflictingMethodsQueue(async () => await NoteService.updateDeletedNotesFromServer(model))
+          this.conflictingMethodsQueue(
+            async () => await NoteService.updateDeletedNotesFromServer(model)
+          )
         },
-      }
+      },
     ]
 
     super(items)

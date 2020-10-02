@@ -119,10 +119,10 @@ class NoteServerService {
 
   //#region SYNC
 
-  sync = async (model: NoteSyncRequestModel): Promise<NoteSyncResponseModel | undefined> => {
-    const request = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_SYNC
-    )
+  sync = async (
+    model: NoteSyncRequestModel
+  ): Promise<NoteSyncResponseModel | undefined> => {
+    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_SYNC)
 
     if (request.canGo) {
       try {

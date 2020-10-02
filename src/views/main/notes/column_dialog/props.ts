@@ -1,5 +1,5 @@
 import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
-import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity';
+import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 
 export default interface NoteColumnDialogProps {
   onClose: () => void

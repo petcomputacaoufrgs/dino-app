@@ -1,5 +1,5 @@
-import NoteVersionLocalStorage from "../../local_storage/note/NoteVersionLocalStorage"
-import NoteSyncLocalStorage from "../../local_storage/note/NoteSyncLocalStorage"
+import NoteVersionLocalStorage from '../../local_storage/note/NoteVersionLocalStorage'
+import NoteSyncLocalStorage from '../../local_storage/note/NoteSyncLocalStorage'
 
 class NoteLocalStorageService {
   setVersion = (version: number) => {

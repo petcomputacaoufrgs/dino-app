@@ -10,7 +10,11 @@ export default interface NoteContentProps {
   onDragEnd: (result: DropResult) => void
   onSaveColumn: (column: NoteColumnEntity, oldTitle?: string) => void
   onDeleteColumn: (column: NoteColumnViewModel) => void
-  onSaveNewNote: (question: string, tagList: string[], column: NoteColumnViewModel) => void
+  onSaveNewNote: (
+    question: string,
+    tagList: string[],
+    column: NoteColumnViewModel
+  ) => void
   onSaveNote: (note: NoteViewModel) => void
   onDeleteNote: (note: NoteViewModel) => void
   questionAlreadyExists: (question: string) => boolean

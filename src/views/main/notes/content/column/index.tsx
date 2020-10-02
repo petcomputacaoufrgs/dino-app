@@ -16,7 +16,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   onClickNote,
   onEditColumn,
   onDeleteColumn,
-  onAddNote
+  onAddNote,
 }) => {
   const renderCard = (
     note: NoteViewModel,
@@ -49,7 +49,11 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
 
   return (
     <div className={`note__note_content__column${isMobile ? '' : ' desktop'}`}>
-      <Draggable draggableId={column.id.toString()} index={columnIndex} isDragDisabled={searching}>
+      <Draggable
+        draggableId={column.id.toString()}
+        index={columnIndex}
+        isDragDisabled={searching}
+      >
         {(provided) => (
           <div
             className="note__note_content__column__draggable"
@@ -81,7 +85,10 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
               )}
             </Droppable>
             <div className="note__note_content__column__draggable__add_button">
-              <NotesContentColumnAddNote notesCount={column.notes.length} onAdd={handleAddNote} />
+              <NotesContentColumnAddNote
+                notesCount={column.notes.length}
+                onAdd={handleAddNote}
+              />
             </div>
           </div>
         )}

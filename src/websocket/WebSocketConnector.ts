@@ -67,9 +67,7 @@ class WebSocketConnector {
   }
 
   private getSocketBaseURL(token: string): string {
-    return `${DinoAPIWebSocketConstants.URL}?${
-      DinoAPIHeaderConstants.WS_AUTHORIZATION
-      }=${token}`
+    return `${DinoAPIWebSocketConstants.URL}?${DinoAPIHeaderConstants.WS_AUTHORIZATION}=${token}`
   }
 }
 

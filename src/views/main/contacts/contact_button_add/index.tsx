@@ -9,7 +9,6 @@ const ContactFormDialogButton = (props: {
   dialogOpen: number
   setDialogOpen: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
-  
   return (
     <div>
       <Fab onClick={() => props.setDialogOpen(1)} className="contact__add">

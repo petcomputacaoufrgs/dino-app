@@ -4,7 +4,9 @@ import NoteColumnLocalStorageService from '../../services/note/NoteColumnLocalSt
 
 class NoteColumnSync implements BaseSync {
   sync = async () => {
-    const shouldSync = NoteColumnLocalStorageService.shouldSync() || NoteColumnLocalStorageService.shouldSyncOrder()
+    const shouldSync =
+      NoteColumnLocalStorageService.shouldSync() ||
+      NoteColumnLocalStorageService.shouldSyncOrder()
     if (shouldSync) {
       await NoteColumnService.sync()
     } else {
@@ -12,7 +14,7 @@ class NoteColumnSync implements BaseSync {
 
       if (serverVersion !== undefined) {
         await NoteColumnService.updateColumnsFromServer(serverVersion)
-      }    
+      }
     }
   }
 }

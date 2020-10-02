@@ -1,18 +1,19 @@
-.note_create_dialog .MuiFormControl-root.MuiTextField-root{
-    margin-bottom: 16px;
-    width: 100%;
+.note_create_dialog .MuiFormControl-root.MuiTextField-root {
+  margin-bottom: 16px;
+  width: 100%;
 }
 
 .note_create_dialog .MuiDialogTitle-root {
-    background-color: #b32e55;
-    margin-bottom: 8px;
+  background-color: #b32e55;
+  margin-bottom: 8px;
 }
 
 .note_create_dialog .MuiTypography-root.MuiTypography-h6 {
-    color: white;
-    font-weight: bold;
+  color: white;
+  font-weight: bold;
 }
 
-.note_create_dialog .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
-    color: #b32e55;
+.note_create_dialog
+  .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+  color: #b32e55;
 }

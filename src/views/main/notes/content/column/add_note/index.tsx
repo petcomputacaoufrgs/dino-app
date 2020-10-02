@@ -7,21 +7,25 @@ import NoteConstants from '../../../../../../constants/note/NoteConstants'
 
 const NotesContentColumnAddNote: React.FC<NotesContentColumnAddNoteProps> = ({
   onAdd,
-  notesCount
+  notesCount,
 }) => {
   const language = useLanguage().current
 
   const maxNotes = notesCount >= NoteConstants.MAX_NOTES_PER_COLUMN
 
   return (
-    <Button 
-      className="note__note_content__column__add_note" 
+    <Button
+      className="note__note_content__column__add_note"
       onClick={onAdd}
       disabled={maxNotes}
     >
       <h3>
-        + {language.NOTE_COLUMN_ADD_NOTE_TEXT} ( 
-        <span className={maxNotes ? "note__note_content__column__add_note__max_notes" : ""} >
+        + {language.NOTE_COLUMN_ADD_NOTE_TEXT} (
+        <span
+          className={
+            maxNotes ? 'note__note_content__column__add_note__max_notes' : ''
+          }
+        >
           {notesCount}/{NoteConstants.MAX_NOTES_PER_COLUMN}
         </span>
         )

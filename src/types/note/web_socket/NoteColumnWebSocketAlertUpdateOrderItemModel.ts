@@ -1,5 +1,5 @@
 export default interface NoteColumnWebSocketAlertUpdateOrderItemModel {
-    id: number
-    order: number
-    lastOrderUpdate: number
+  id: number
+  order: number
+  lastOrderUpdate: number
 }

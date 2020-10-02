@@ -15,7 +15,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
   onSave,
   open,
   tagOptions,
-  questionAlreadyExists
+  questionAlreadyExists,
 }): JSX.Element => {
   const language = useLanguage().current
 

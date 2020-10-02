@@ -1,3 +1,3 @@
 export default interface WebSocketAuthResponseModel {
-    webSocketToken: string
+  webSocketToken: string
 }

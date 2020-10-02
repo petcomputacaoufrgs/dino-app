@@ -16,7 +16,6 @@ class AppSettingsWebSocketSubscriber extends BaseWebSocketSubscriber {
     ]
     super(items)
   }
-  
 }
 
 export default new AppSettingsWebSocketSubscriber()

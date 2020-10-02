@@ -1,4 +1,4 @@
-import NoteResponseModel from "../../get/NoteResponseModel";
+import NoteResponseModel from '../../get/NoteResponseModel'
 
 export default interface NoteSyncResponseModel {
   notes: NoteResponseModel[]

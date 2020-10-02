@@ -54,7 +54,9 @@ class NoteColumnServerService {
 
   //#region SAVE
 
-  save = async (column: NoteColumnEntity): Promise<NoteColumnSaveResponseModel | null> => {
+  save = async (
+    column: NoteColumnEntity
+  ): Promise<NoteColumnSaveResponseModel | null> => {
     const noteColumnModel: NoteColumnSaveRequestModel = {
       title: column.title,
       lastUpdate: column.lastUpdate,
@@ -92,7 +94,7 @@ class NoteColumnServerService {
         id: column.external_id,
         columnTitle: column.title,
         order: column.order,
-        lastOrderUpdate: column.lastOrderUpdate
+        lastOrderUpdate: column.lastOrderUpdate,
       })
     })
 
@@ -117,11 +119,13 @@ class NoteColumnServerService {
 
   //#region DELETE
 
-  deleteAll = async (deletedNotes: DeletedNoteColumnEntity[]): Promise<number | undefined> => {
+  deleteAll = async (
+    deletedNotes: DeletedNoteColumnEntity[]
+  ): Promise<number | undefined> => {
     const model: NoteColumnDeleteAllRequestModel = {
       items: deletedNotes.map((deletedNote) => ({
         id: deletedNote.external_id!,
-      }))
+      })),
     }
 
     const request = await DinoAgentService.delete(
@@ -165,7 +169,9 @@ class NoteColumnServerService {
 
   //#region SYNC
 
-  sync = async (model: NoteColumnSyncRequestModel): Promise<NoteColumnSyncResponse | undefined> => {
+  sync = async (
+    model: NoteColumnSyncRequestModel
+  ): Promise<NoteColumnSyncResponse | undefined> => {
     const request = await DinoAgentService.put(
       DinoAPIURLConstants.NOTE_COLUMN_SYNC
     )

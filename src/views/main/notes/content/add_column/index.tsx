@@ -9,8 +9,8 @@ import NoteConstants from '../../../../../constants/note/NoteConstants'
 const AddColumn: React.FC<AddColumnProps> = ({
   onAddColumn,
   visible,
-  columnCount
- }) => {
+  columnCount,
+}) => {
   const language = useLanguage().current
 
   const maxColumns = columnCount >= NoteConstants.MAX_COLUMNS
@@ -20,7 +20,7 @@ const AddColumn: React.FC<AddColumnProps> = ({
       className={`note__note_content__columns__add_column${
         isMobile ? '' : ' desktop'
       }`}
-      style={{ visibility: visible ? 'inherit' : 'hidden'}}
+      style={{ visibility: visible ? 'inherit' : 'hidden' }}
     >
       <Button
         className="note__note_content__columns__add_column__button"
@@ -29,9 +29,15 @@ const AddColumn: React.FC<AddColumnProps> = ({
       >
         <h2 className="note__note_content__columns__add_column__button__text">
           {language.ADD_COLUMN_TEXT} (
-          <span className={maxColumns ? "note__note_content__columns__add_column__button__text__max_columns" : ""}>
+          <span
+            className={
+              maxColumns
+                ? 'note__note_content__columns__add_column__button__text__max_columns'
+                : ''
+            }
+          >
             {columnCount}/{NoteConstants.MAX_COLUMNS}
-          </span> 
+          </span>
           )
         </h2>
       </Button>

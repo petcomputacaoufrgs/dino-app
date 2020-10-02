@@ -1,5 +1,6 @@
-import NoteSyncSaveRequestModel from "./NoteSyncSaveRequestModel";
+import NoteSyncSaveRequestModel from './NoteSyncSaveRequestModel'
 
-export default interface NoteSyncChangedRequestModel extends NoteSyncSaveRequestModel {
-    id: number
+export default interface NoteSyncChangedRequestModel
+  extends NoteSyncSaveRequestModel {
+  id: number
 }

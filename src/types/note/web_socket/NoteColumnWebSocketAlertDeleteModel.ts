@@ -1,4 +1,4 @@
 export default interface NoteColumnWebSocketAlertDeleteModel {
-    idList: number[]
-    newVersion: number
+  idList: number[]
+  newVersion: number
 }

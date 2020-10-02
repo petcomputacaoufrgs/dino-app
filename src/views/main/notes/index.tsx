@@ -20,15 +20,15 @@ const convertNotesToNoteViews = (
   tagSearch: string[],
   textSearch: string
 ): NoteViewModel[] => {
-  const noteViewList: NoteViewModel[]  = []
+  const noteViewList: NoteViewModel[] = []
 
-  notes.forEach(note => {
+  notes.forEach((note) => {
     if (note.id !== undefined) {
       noteViewList.push({
-          ...note,
-          id: note.id,
-          showByTag: showByTagSearch(note.tagNames, tagSearch, textSearch),
-          showByQuestion: showByTextSearch(note.question, textSearch, tagSearch),
+        ...note,
+        id: note.id,
+        showByTag: showByTagSearch(note.tagNames, tagSearch, textSearch),
+        showByQuestion: showByTextSearch(note.question, textSearch, tagSearch),
       })
     }
   })
@@ -44,16 +44,17 @@ const createViewColumns = (
 ): NoteColumnViewModel[] => {
   const noteViews = convertNotesToNoteViews(notes, tagSearch, textSearch)
 
-  
   return columns
     .map((column) => {
-      const columnNotes = noteViews.filter((note) => note.columnTitle === column.title)
+      const columnNotes = noteViews.filter(
+        (note) => note.columnTitle === column.title
+      )
 
-      return  {
+      return {
         ...column,
         id: column.id!,
         notes: columnNotes,
-        showBySearch: showColumnBySearch(columnNotes, textSearch, tagSearch)
+        showBySearch: showColumnBySearch(columnNotes, textSearch, tagSearch),
       }
     })
     .sort((a, b) => a.order - b.order)
@@ -75,7 +76,7 @@ const Notes = () => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
     setViewColumns(viewColumns)
   }, [columns, notes, textSearch, tagSearch])
-  
+
   const isUnchanged = (result: DropResult): boolean => {
     const { destination, source } = result
 
@@ -105,9 +106,8 @@ const Notes = () => {
 
   //#region Note
 
-  const questionAlreadyExists = (question: string): boolean => (
-    notes.some(note => note.question === question)
-  )
+  const questionAlreadyExists = (question: string): boolean =>
+    notes.some((note) => note.question === question)
 
   const handleSaveNewNote = (
     question: string,
@@ -116,7 +116,7 @@ const Notes = () => {
   ) => {
     NoteService.createNote(question, tagNames, column)
   }
-  
+
   const handleSaveNote = (note: NoteViewModel) => {
     NoteService.saveNote(note)
   }
@@ -214,8 +214,6 @@ const Notes = () => {
       })
     )
 
-    console.log(newTagSearch)
-
     if (newTagSearch.length > 0) {
       setSearching(true)
     } else if (newTagSearch.length === 0 && textSearch.length === 0) {
@@ -232,7 +230,11 @@ const Notes = () => {
       viewColumns.map((column) => {
         column.notes.forEach((n) => {
           n.showByTag = showByTagSearch(n.tagNames, tagSearch, newTextSearch)
-          n.showByQuestion = showByTextSearch(n.question, newTextSearch, tagSearch)
+          n.showByQuestion = showByTextSearch(
+            n.question,
+            newTextSearch,
+            tagSearch
+          )
         })
         return column
       })
@@ -298,18 +300,20 @@ const showByTagSearch = (
   }
 
   const notSearchingByText = !textSearch || textSearch.length === 0
-  
+
   return notSearchingByText
 }
 
 const showColumnBySearch = (
   notes: NoteViewModel[],
   textSearch: string,
-  tagsSearch: string[],
+  tagsSearch: string[]
 ): boolean => {
   const activeTagsSearch = tagsSearch.length > 0
   const activeTextSearch = textSearch && textSearch.length !== 0
-  const activeNotesCount = notes.filter(note => note.showByQuestion || note.showByTag).length
+  const activeNotesCount = notes.filter(
+    (note) => note.showByQuestion || note.showByTag
+  ).length
 
   if (activeTagsSearch || activeTextSearch) {
     return activeNotesCount !== 0

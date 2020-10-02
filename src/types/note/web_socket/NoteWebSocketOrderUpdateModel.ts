@@ -1,5 +1,5 @@
-import NoteWebScoketOrderItemUpdateModel from "./NoteWebScoketOrderItemUpdateModel";
+import NoteWebScoketOrderItemUpdateModel from './NoteWebScoketOrderItemUpdateModel'
 
 export default interface NoteWebSocketOrderUpdateModel {
-    items: NoteWebScoketOrderItemUpdateModel[]
+  items: NoteWebScoketOrderItemUpdateModel[]
 }

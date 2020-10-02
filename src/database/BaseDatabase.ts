@@ -22,9 +22,7 @@ export default class BaseDatabase<T extends BaseDoc> {
     this.applyChanges = applyChanges
   }
 
-  hasValidId = (doc: T) => (
-   doc._id && doc._id.length !== 0
-  )
+  hasValidId = (doc: T) => doc._id && doc._id.length !== 0
 
   getById = async (id: string): Promise<T | undefined> => {
     try {
@@ -77,8 +75,10 @@ export default class BaseDatabase<T extends BaseDoc> {
 
     const newDocs: T[] = []
 
-    savedDocs.forEach(savedDoc => {
-      const updatedDocIndex = updatedDocs.findIndex(ud => ud._id === savedDoc._id)
+    savedDocs.forEach((savedDoc) => {
+      const updatedDocIndex = updatedDocs.findIndex(
+        (ud) => ud._id === savedDoc._id
+      )
 
       if (updatedDocIndex >= 0) {
         const newDoc = this.applyChanges(savedDoc, updatedDocs[updatedDocIndex])
@@ -87,7 +87,7 @@ export default class BaseDatabase<T extends BaseDoc> {
       }
     })
 
-    updatedDocs.forEach(newDoc => {
+    updatedDocs.forEach((newDoc) => {
       if (!this.hasValidId(newDoc)) {
         newDoc._id = this.getId(newDoc)
       }
@@ -121,12 +121,12 @@ export default class BaseDatabase<T extends BaseDoc> {
       LogAppErrorService.saveError(e)
     }
   }
-  
+
   getAll = async (): Promise<T[]> => {
     try {
-      const allDocs = await this.db.allDocs(({
+      const allDocs = await this.db.allDocs({
         include_docs: true,
-      }))
+      })
 
       const docs = allDocs.rows
         .filter((row) => !row.value.deleted && !row.key.startsWith('_design'))

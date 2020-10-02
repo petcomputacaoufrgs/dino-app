@@ -1,4 +1,4 @@
-export type SyncFunction = () => Promise <void>
+export type SyncFunction = () => Promise<void>
 
 export default interface BaseSync {
   /**

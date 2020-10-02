@@ -1,5 +1,5 @@
-import NoteColumnDeleteRequestModel from "./NoteColumnDeleteRequestModel"
+import NoteColumnDeleteRequestModel from './NoteColumnDeleteRequestModel'
 
 export default interface NoteColumnDeleteAllRequestModel {
-    items: NoteColumnDeleteRequestModel[]
+  items: NoteColumnDeleteRequestModel[]
 }

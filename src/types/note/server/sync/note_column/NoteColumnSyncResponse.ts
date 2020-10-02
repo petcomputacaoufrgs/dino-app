@@ -1,5 +1,5 @@
-import NoteColumnResponseModel from "../../get/NoteColumnResponseModel";
-import ChangedTitleColumnModel from "./ChangedTitleColumnModel";
+import NoteColumnResponseModel from '../../get/NoteColumnResponseModel'
+import ChangedTitleColumnModel from './ChangedTitleColumnModel'
 
 export default interface NoteColumnSyncResponse {
   columns: NoteColumnResponseModel[]

@@ -42,7 +42,7 @@ class NoteService {
   sync = async () => {
     const shouldSync = NoteLocalStorageService.shouldSync()
 
-    const shouldSyncOrder = NoteLocalStorageService.shouldSyncOrder()  
+    const shouldSyncOrder = NoteLocalStorageService.shouldSyncOrder()
 
     const deletedNotes = await this.getDeletedNotes()
 
@@ -50,10 +50,17 @@ class NoteService {
 
     const localColumns = await NoteColumnService.getColumns()
 
-    const localNotesWithColumn: NoteWithColumn[] = localNotes.map((note) => ({
-      ...note,
-      column: localColumns.find((column) => column.title === note.columnTitle),
-    })).filter(note => note.column !== undefined && note.column.external_id !== undefined)
+    const localNotesWithColumn: NoteWithColumn[] = localNotes
+      .map((note) => ({
+        ...note,
+        column: localColumns.find(
+          (column) => column.title === note.columnTitle
+        ),
+      }))
+      .filter(
+        (note) =>
+          note.column !== undefined && note.column.external_id !== undefined
+      )
 
     const [savedNotes, unsavedNotes] = ArrayUtils.partition(
       localNotesWithColumn,
@@ -100,10 +107,10 @@ class NoteService {
             id: note.external_id!,
             columnId: note.column!.external_id!,
             lastOrderUpdate: note.lastOrderUpdate,
-            order: note.order
+            order: note.order,
           }))
         : [],
-    } 
+    }
 
     const response = await NoteServerService.sync(model)
 

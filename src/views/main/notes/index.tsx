@@ -69,6 +69,7 @@ const Notes = () => {
   const [viewColumns, setViewColumns] = useState(
     createViewColumns(columns, notes, tagSearch, textSearch)
   )
+  const [searching, setSearching] = useState(false)
 
   useEffect(() => {
     const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
@@ -213,6 +214,14 @@ const Notes = () => {
       })
     )
 
+    console.log(newTagSearch)
+
+    if (newTagSearch.length > 0) {
+      setSearching(true)
+    } else if (newTagSearch.length === 0 && textSearch.length === 0) {
+      setSearching(false)
+    }
+
     setTagSearch(newTagSearch)
 
     setViewColumns(newViewColumns)
@@ -228,6 +237,12 @@ const Notes = () => {
         return column
       })
     )
+
+    if (newTextSearch.length > 0) {
+      setSearching(true)
+    } else if (newTextSearch.length === 0 && tagSearch.length === 0) {
+      setSearching(false)
+    }
 
     setTextSearch(newTextSearch)
 
@@ -253,6 +268,7 @@ const Notes = () => {
         questionAlreadyExists={questionAlreadyExists}
         columns={viewColumns}
         tags={tags}
+        searching={searching}
       />
     </div>
   )

@@ -4,4 +4,5 @@ export default interface NoteBodyColumnCardProps {
   onClickNote: (note: NoteViewModel) => void
   note: NoteViewModel
   noteIndex: number
+  searching: boolean
 }

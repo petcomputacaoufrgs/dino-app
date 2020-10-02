@@ -12,6 +12,7 @@ import NotesContentColumnAddNote from './add_note'
 const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   column,
   columnIndex,
+  searching,
   onClickNote,
   onEditColumn,
   onDeleteColumn,
@@ -24,6 +25,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
     if (note.showByTag || note.showByQuestion) {
       return (
         <NoteContentColumnCard
+          searching={searching}
           note={note}
           key={note.id}
           noteIndex={noteIndex}
@@ -47,7 +49,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
 
   return (
     <div className={`note__note_content__column${isMobile ? '' : ' desktop'}`}>
-      <Draggable draggableId={column.id.toString()} index={columnIndex}>
+      <Draggable draggableId={column.id.toString()} index={columnIndex} isDragDisabled={searching}>
         {(provided) => (
           <div
             className="note__note_content__column__draggable"

@@ -12,6 +12,7 @@ import './styles.css'
 const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
   noteIndex,
+  searching,
   onClickNote
 }) => {
   const language = useLanguage().current
@@ -24,6 +25,7 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
     <Draggable
       draggableId={note.columnTitle + '_' + note.id.toString()}
       index={noteIndex}
+      isDragDisabled={searching}
     >
       {(provided) => (
         <MaterialCard

@@ -180,4 +180,5 @@ export default interface LanguageBase {
   QUESTION_NOTE_DIALOG_TITLE: string
   NOTE_INFO_DIALOG_LAST_UPDATE_TITLE: string
   NOTE_INFO_DIALOG_COLUMN_TITLE: string
+  NOTE_SEARCH_CLEAN: string
 }

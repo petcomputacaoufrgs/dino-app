@@ -374,4 +374,6 @@ export default class EN implements LanguageBase {
   NOTE_INFO_DIALOG_LAST_UPDATE_TITLE = 'Last update:'
 
   NOTE_INFO_DIALOG_COLUMN_TITLE = 'Column:'
+
+  NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
 }

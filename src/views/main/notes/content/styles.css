@@ -16,3 +16,10 @@
   flex-wrap: nowrap;
   flex-direction: row;
 }
+
+.note__note_content__columns__scroll__clean_search {
+  width: 100%;
+  text-align: center;
+  padding-left: 25%;
+  padding-right: 25%;
+}

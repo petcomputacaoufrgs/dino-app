@@ -24,6 +24,7 @@ import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 const NoteContent: React.FC<NoteContentProps> = ({
   tags,
   columns,
+  searching,
   onDragEnd,
   onDeleteNote,
   onSaveColumn,
@@ -223,8 +224,18 @@ const NoteContent: React.FC<NoteContentProps> = ({
       }
     </>
   )
+
+  const filteredColumns = columns.filter(column => column.showBySearch)
+
+  const invalidSearch = !searching && filteredColumns.length === 0 && columns.length !== 0;
+
   return (
     <div className="note__note_content">
+      {filteredColumns.length === 0 && (
+        <div className="note__note_content__columns__scroll__clean_search">
+          {language.NOTE_SEARCH_CLEAN}
+        </div>
+      )}
       <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Droppable
           droppableId="all-columns"
@@ -238,18 +249,25 @@ const NoteContent: React.FC<NoteContentProps> = ({
               ref={provided.innerRef}
             >
               <div className="note__note_content__columns__scroll">
-                {columns.filter(column => column.showBySearch).map((column, index) => (
+                {filteredColumns.map((column, index) => (
                   <NoteContentColumn
                     column={column}
                     columnIndex={index}
                     key={column.id}
+                    searching={searching}
                     onClickNote={handleClickNote}
                     onEditColumn={handleEditColumn}
                     onDeleteColumn={handleDeleteColumn}
                     onAddNote={handleAddNote}
                   />
                 ))}
-                <AddColumn visible={!dragging} columnCount={columns.length} onAddColumn={handleAddColumn} />
+                {!searching && !invalidSearch && (
+                  <AddColumn
+                    visible={!dragging}
+                    columnCount={columns.length}
+                    onAddColumn={handleAddColumn}
+                  />
+                )}
               </div>
               {provided.placeholder}
             </div>

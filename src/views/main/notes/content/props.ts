@@ -6,6 +6,7 @@ import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 export default interface NoteContentProps {
   tags: string[]
   columns: NoteColumnViewModel[]
+  searching: boolean
   onDragEnd: (result: DropResult) => void
   onSaveColumn: (column: NoteColumnEntity, oldTitle?: string) => void
   onDeleteColumn: (column: NoteColumnViewModel) => void

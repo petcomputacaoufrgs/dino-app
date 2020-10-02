@@ -78,6 +78,7 @@ class NoteColumnService {
     const response = await NoteColumnServerService.sync(model)
 
     if (response) {
+      DeletedNoteColumnDatabaseService.deleteAll()
       NoteColumnLocalStorageService.setShouldSync(false)
       NoteColumnLocalStorageService.setShouldSyncOrder(false)
 
@@ -139,25 +140,6 @@ class NoteColumnService {
       this.updateContext()
     } else {
       NoteColumnLocalStorageService.setShouldSync(true)
-    }
-  }
-
-  saveColumnsOnServer = async (columns: NoteColumnEntity[]) => {
-    if (columns.length > 0) {
-      const response = await NoteColumnServerService.saveAll(columns)
-
-      if (response) {
-        for (const item of response.items) {
-          const savedColumn = columns.find(column => column.title === item.title)
-          if (savedColumn && savedColumn.id) {
-            await NoteColumnDatabaseService.saveExternalIdByIdAndSavedOnServer(savedColumn.id, item.id, true)
-          }
-        }
-        NoteColumnLocalStorageService.setVersion(response.newVersion)
-        this.updateContext()
-      } else {
-        NoteColumnLocalStorageService.setShouldSync(true)
-      }
     }
   }
 

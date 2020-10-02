@@ -86,41 +86,6 @@ class NoteServerService {
     return null
   }
 
-  saveAll = async (
-    docs: NoteEntity[]
-  ): Promise<NoteUpdateAllResponseModel | null> => {
-    const model: NoteUpdateAllRequestModel = {
-      items: docs.map(
-        (doc) =>
-          ({
-            id: doc.external_id,
-            answer: doc.answer,
-            question: doc.question,
-            tagNames: doc.tagNames,
-            lastUpdate: doc.lastUpdate,
-            order: doc.order,
-            lastOrderUpdate: doc.lastOrderUpdate,
-            columnTitle: doc.columnTitle,
-          } as NoteSaveModel)
-      ),
-    }
-
-    const request = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_UPDATE_ALL
-    )
-
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().setBody(model).go()
-        return response.body
-      } catch (e) {
-        LogAppErrorService.saveError(e)
-      }
-    }
-
-    return null
-  }
-
   saveOrder = async (notes: NoteEntity[]): Promise<boolean> => {
     const model: NoteOrderAllRequestModel = {
       items: notes

@@ -82,35 +82,6 @@ class NoteColumnServerService {
     return null
   }
 
-  saveAll = async (columns: NoteColumnEntity[]): Promise<NoteColumnUpdateAllResponseModel | null> => {
-    const model: NoteColumnUpdateAllRequestModel = {
-      items: columns.map((column) => ({
-        id: column.external_id,
-        title: column.title,
-        lastUpdate: column.lastUpdate,
-        lastOrderUpdate: column.lastOrderUpdate,
-        order: column.order,
-      }))
-    }
-
-    const request = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_COLUMN_SYNC
-    )
-
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().setBody(model).go()
-        
-
-        return response.body
-      } catch (e) {
-        LogAppErrorService.saveError(e)
-      }
-    }
-
-    return null
-  }
-
   saveOrder = async (columns: NoteColumnEntity[]): Promise<boolean> => {
     const model: NoteColumnOrderAllRequestModel = {
       items: [],

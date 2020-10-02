@@ -1,7 +1,6 @@
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
 import NoteServerService from './NoteServerService'
 import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
-import NoteConstants from '../../constants/note/NoteConstants'
 import NoteWebSocketOrderUpdateModel from '../../types/note/web_socket/NoteWebSocketOrderUpdateModel'
 import NoteWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteWebSocketAlertDeleteModel'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -54,7 +53,7 @@ class NoteService {
     const localNotesWithColumn: NoteWithColumn[] = localNotes.map((note) => ({
       ...note,
       column: localColumns.find((column) => column.title === note.columnTitle),
-    })).filter(column => column !== undefined && column.external_id !== undefined)
+    })).filter(note => note.column !== undefined && note.column.external_id !== undefined)
 
     const [savedNotes, unsavedNotes] = ArrayUtils.partition(
       localNotesWithColumn,
@@ -98,7 +97,7 @@ class NoteService {
         : [],
       notesOrder: shouldSyncOrder
         ? savedNotes.map((note) => ({
-            id: note.id!,
+            id: note.external_id!,
             columnId: note.column!.external_id!,
             lastOrderUpdate: note.lastOrderUpdate,
             order: note.order
@@ -120,6 +119,7 @@ class NoteService {
         savedOnServer: true,
         columnTitle: note.columnTitle,
       }))
+      DeletedNoteDatabaseService.deleteAll()
       await NoteDatabaseService.deleteAll()
       await NoteDatabaseService.putAll(notes)
       this.updateContext()
@@ -184,24 +184,6 @@ class NoteService {
         true
       )
       NoteLocalStorageService.setVersion(response.userNoteVersion)
-      this.updateContext()
-    } else {
-      NoteLocalStorageService.setShouldSync(true)
-    }
-  }
-
-  saveNotesOnServer = async (notes: NoteEntity[]) => {
-    const response = await NoteServerService.saveAll(notes)
-
-    if (response) {
-      for (const item of response.items) {
-        await NoteDatabaseService.saveExternalIdByQuestionAndSavedOnServer(
-          item.question,
-          item.id,
-          true
-        )
-      }
-      NoteLocalStorageService.setVersion(response.newVersion)
       this.updateContext()
     } else {
       NoteLocalStorageService.setShouldSync(true)

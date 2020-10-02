@@ -27,8 +27,8 @@ const convertNotesToNoteViews = (
       noteViewList.push({
           ...note,
           id: note.id,
-          showByTag: hasSomeTag(note.tagNames, tagSearch, textSearch),
-          showByQuestion: hasText(note.question, textSearch, tagSearch),
+          showByTag: showByTagSearch(note.tagNames, tagSearch, textSearch),
+          showByQuestion: showByTextSearch(note.question, textSearch, tagSearch),
       })
     }
   })
@@ -44,12 +44,18 @@ const createViewColumns = (
 ): NoteColumnViewModel[] => {
   const noteViews = convertNotesToNoteViews(notes, tagSearch, textSearch)
 
+  
   return columns
-    .map((column) => ({
-      ...column,
-      id: column.id!,
-      notes: noteViews.filter((note) => note.columnTitle === column.title),
-    }))
+    .map((column) => {
+      const columnNotes = noteViews.filter((note) => note.columnTitle === column.title)
+
+      return  {
+        ...column,
+        id: column.id!,
+        notes: columnNotes,
+        showBySearch: showColumnBySearch(columnNotes, textSearch, tagSearch)
+      }
+    })
     .sort((a, b) => a.order - b.order)
 }
 
@@ -199,7 +205,7 @@ const Notes = () => {
     const newViewColumns = Array.from(
       viewColumns.map((column) => {
         column.notes.forEach((n) => {
-          n.showByTag = hasSomeTag(n.tagNames, newTagSearch, textSearch)
+          n.showByTag = showByTagSearch(n.tagNames, newTagSearch, textSearch)
           n.showByQuestion = false
         })
 
@@ -216,8 +222,8 @@ const Notes = () => {
     const newViewColumns = Array.from(
       viewColumns.map((column) => {
         column.notes.forEach((n) => {
-          n.showByTag = hasSomeTag(n.tagNames, tagSearch, newTextSearch)
-          n.showByQuestion = hasText(n.question, newTextSearch, tagSearch)
+          n.showByTag = showByTagSearch(n.tagNames, tagSearch, newTextSearch)
+          n.showByQuestion = showByTextSearch(n.question, newTextSearch, tagSearch)
         })
         return column
       })
@@ -252,32 +258,48 @@ const Notes = () => {
   )
 }
 
-const hasText = (
+const showByTextSearch = (
   nodeText: string,
-  searchText: string,
+  textSearch: string,
   tagSearch: string[]
 ): boolean => {
-  if (searchText && searchText.length !== 0) {
-    return StringUtils.contains(nodeText, searchText)
+  const searchingByText = textSearch && textSearch.length !== 0
+
+  if (searchingByText) {
+    return StringUtils.contains(nodeText, textSearch)
   }
 
   return tagSearch.length === 0
 }
 
-const hasSomeTag = (
+const showByTagSearch = (
   nodeTagNames: string[],
-  searchTags: string[],
+  tagsSearch: string[],
   textSearch: string
 ): boolean => {
-  if (searchTags.length > 0) {
-    return nodeTagNames.some((name) => searchTags.includes(name))
+  if (tagsSearch.length > 0) {
+    return nodeTagNames.some((name) => tagsSearch.includes(name))
   }
 
-  if (textSearch && textSearch.length !== 0) {
-    return false
-  }
+  const notSearchingByText = !textSearch || textSearch.length === 0
+  
+  return notSearchingByText
+}
 
-  return true
+const showColumnBySearch = (
+  notes: NoteViewModel[],
+  textSearch: string,
+  tagsSearch: string[],
+): boolean => {
+  const activeTagsSearch = tagsSearch.length > 0
+  const activeTextSearch = textSearch && textSearch.length !== 0
+  const activeNotesCount = notes.filter(note => note.showByQuestion || note.showByTag).length
+
+  if (activeTagsSearch || activeTextSearch) {
+    return activeNotesCount !== 0
+  } else {
+    return true
+  }
 }
 
 export default Notes

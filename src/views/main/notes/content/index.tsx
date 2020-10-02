@@ -238,7 +238,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
               ref={provided.innerRef}
             >
               <div className="note__note_content__columns__scroll">
-                {columns.map((column, index) => (
+                {columns.filter(column => column.showBySearch).map((column, index) => (
                   <NoteContentColumn
                     column={column}
                     columnIndex={index}

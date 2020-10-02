@@ -3,15 +3,15 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import NoteSaveModel from '../../types/note/server/save/NoteSaveRequestModel'
 import NoteSaveResponseModel from '../../types/note/server/save/NoteSaveResponseModel'
-import NoteDeleteModel from '../../types/note/server/delete/NoteDeleteModel'
+import NoteDeleteRequestModel from '../../types/note/server/delete/NoteDeleteRequestModel'
 import NoteResponseModel from '../../types/note/server/get/NoteResponseModel'
 import NoteOrderAllRequestModel from '../../types/note/server/order/NoteOrderAllRequestModel'
 import NoteOrderRequestModel from '../../types/note/server/order/NoteOrderRequestModel'
 import NoteDeleteAllRequestModel from '../../types/note/server/delete/NoteDeleteAllRequestModel'
-import NoteUpdateAllRequestModel from '../../types/note/server/update_all/NoteUpdateAllRequestModel'
 import NoteEntity from '../../types/note/database/NoteEntity'
-import NoteUpdateAllResponseModel from '../../types/note/server/update_all/NoteUpdateAllResponseModel'
 import DeletedNoteEntity from '../../types/note/database/DeletedNoteEntity'
+import NoteSyncRequestModel from '../../types/note/server/sync/note/NoteSyncRequestModel'
+import NoteSyncResponseModel from '../../types/note/server/sync/note/NoteSyncResponseModel'
 
 class NoteServerService {
   //#region GET
@@ -152,15 +152,37 @@ class NoteServerService {
 
   //#endregion
 
+  //#region SYNC
+
+  sync = async (model: NoteSyncRequestModel): Promise<NoteSyncResponseModel | undefined> => {
+    const request = await DinoAgentService.put(
+      DinoAPIURLConstants.NOTE_SYNC
+    )
+
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().setBody(model).go()
+        return response.body
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    }
+
+    return undefined
+  }
+
+  //#endregion
   //#region DELETE
 
-  deleteAll = async (notes: DeletedNoteEntity[]): Promise<number | undefined> => {
+  deleteAll = async (
+    notes: DeletedNoteEntity[]
+  ): Promise<number | undefined> => {
     const model: NoteDeleteAllRequestModel = {
       items: notes.map(
         (note) =>
           ({
             id: note.external_id,
-          } as NoteDeleteModel)
+          } as NoteDeleteRequestModel)
       ),
     }
 
@@ -183,7 +205,7 @@ class NoteServerService {
   }
 
   delete = async (externalId: number): Promise<number | null> => {
-    const model: NoteDeleteModel = { id: externalId }
+    const model: NoteDeleteRequestModel = { id: externalId }
 
     const request = await DinoAgentService.delete(
       DinoAPIURLConstants.NOTE_DELETE

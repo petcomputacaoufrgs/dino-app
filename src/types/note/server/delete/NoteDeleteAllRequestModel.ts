@@ -1,5 +1,5 @@
-import NoteDeleteModel from "./NoteDeleteModel";
+import NoteDeleteRequestModel from "./NoteDeleteRequestModel";
 
 export default interface NoteDeleteAllRequestModel {
-    items: NoteDeleteModel[]
+    items: NoteDeleteRequestModel[]
 }

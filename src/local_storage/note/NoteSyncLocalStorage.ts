@@ -20,8 +20,27 @@ class NoteSyncLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.NOTE_SHOULD_SYNC)
   }
 
+  getShouldSyncOrder = (): boolean => {
+    const should = this.get(LS_Constants.NOTE_ORDER_SHOULD_SYNC)
+
+    if (should) {
+      return JSON.parse(should)
+    }
+
+    return false
+  }
+
+  setShouldSyncOrder = (should: boolean) => {
+    this.set(LS_Constants.NOTE_ORDER_SHOULD_SYNC, JSON.stringify(should))
+  }
+
+  removeShouldSyncOrder = () => {
+    this.remove(LS_Constants.NOTE_ORDER_SHOULD_SYNC)
+  }
+
   removeUserData = () => {
     this.removeShouldSync()
+    this.removeShouldSyncOrder()
   }
 }
 

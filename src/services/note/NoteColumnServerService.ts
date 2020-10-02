@@ -7,12 +7,10 @@ import NoteColumnSaveResponseModel from '../../types/note/server/save/NoteColumn
 import NoteColumnOrderAllRequestModel from '../../types/note/server/order/NoteColumnOrderAllRequestModel'
 import NoteColumnDeleteAllRequestModel from '../../types/note/server/delete/NoteColumnDeleteAllRequestModel'
 import NoteColumnDeleteRequestModel from '../../types/note/server/delete/NoteColumnDeleteRequestModel'
-import NoteColumnUpdateAllRequestModel from '../../types/note/server/update_all/NoteColumnUpdateAllRequestModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
-import NoteColumnUpdateAllResponseModel from '../../types/note/server/update_all/NoteColumnUpdateAllResponseModel'
 import DeletedNoteColumnEntity from '../../types/note/database/DeletedNoteColumnEntity'
-import NoteColumnSyncRequestModel from '../../types/note/server/sync/NoteColumnSyncRequestModel'
-import NoteColumnSyncResponse from '../../types/note/server/sync/NoteColumnSyncResponse'
+import NoteColumnSyncRequestModel from '../../types/note/server/sync/note_column/NoteColumnSyncRequestModel'
+import NoteColumnSyncResponse from '../../types/note/server/sync/note_column/NoteColumnSyncResponse'
 
 class NoteColumnServerService {
   //#region GET
@@ -200,8 +198,6 @@ class NoteColumnServerService {
     const request = await DinoAgentService.put(
       DinoAPIURLConstants.NOTE_COLUMN_SYNC
     )
-
-    console.log(request)
 
     if (request.canGo) {
       try {

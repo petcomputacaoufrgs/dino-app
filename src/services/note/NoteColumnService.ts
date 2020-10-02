@@ -10,7 +10,7 @@ import NoteColumnDatabaseService from './NoteColumnDatabaseService'
 import DeletedNoteColumnDatabaseService from './DeletedNoteColumnDatabaseService'
 import NoteColumnLocalStorageService from './NoteColumnLocalStorageService'
 import DeletedNoteColumnEntity from '../../types/note/database/DeletedNoteColumnEntity'
-import NoteColumnSyncRequestModel from '../../types/note/server/sync/NoteColumnSyncRequestModel'
+import NoteColumnSyncRequestModel from '../../types/note/server/sync/note_column/NoteColumnSyncRequestModel'
 import ArrayUtils from '../../utils/ArrayUtils'
 import NoteColumnResponseModel from '../../types/note/server/get/NoteColumnResponseModel'
 
@@ -47,12 +47,8 @@ class NoteColumnService {
     const [savedColumns, unsavedColumns] = 
       ArrayUtils.partition(localColumns, column => column.savedOnServer && column.external_id !== undefined)
 
-    console.log(unsavedColumns)
-
     const [newColumns, changedColumns] = 
       ArrayUtils.partition(unsavedColumns, column => column.external_id === undefined)
-
-    console.log(changedColumns)
     
     const model: NoteColumnSyncRequestModel = {
       deletedColumns: shouldSync ? deletedColumns.map(column => ({
@@ -72,7 +68,7 @@ class NoteColumnService {
         lastOrderUpdate: shouldSyncOrder ? column.lastOrderUpdate : undefined,
         order: shouldSyncOrder ? column.order : undefined
       })) : [],
-      orderColumns: shouldSyncOrder ? savedColumns.map(column => ({
+      columnsOrder: shouldSyncOrder ? savedColumns.map(column => ({
         id: column.external_id!,
         lastOrderUpdate: column.lastOrderUpdate,
         order: column.order
@@ -82,9 +78,20 @@ class NoteColumnService {
     const response = await NoteColumnServerService.sync(model)
 
     if (response) {
-      this.saveColumnResponse(response.columns, response.version)
       NoteColumnLocalStorageService.setShouldSync(false)
       NoteColumnLocalStorageService.setShouldSyncOrder(false)
+
+      for (const changedColumnTitle of response.changedTitleColumnModels) {
+        await NoteService.updateNoteColumnTitle(
+          changedColumnTitle.newTitle,
+          changedColumnTitle.oldTitle
+        )
+      }
+
+      await this.saveColumnResponse(response.columns, response.version)
+      if (response.changedTitleColumnModels.length > 0) {
+        NoteService.updateContext()
+      }
     }
   }
 

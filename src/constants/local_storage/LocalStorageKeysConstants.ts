@@ -32,6 +32,7 @@ class LocalStorageKeys {
   NOTE_VERSION = 'nv'
   NOTE_COLUMN_VERSION = 'ncv'
   NOTE_SHOULD_SYNC = 'nss'
+  NOTE_ORDER_SHOULD_SYNC = 'noss'
   NOTE_COLUMN_SHOULD_SYNC = 'ncss'
   NOTE_COLUMN_ORDER_SHOULD_SYNC = 'ncoss'
   UPDATING_NOTES = 'un'

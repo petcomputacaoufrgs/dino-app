@@ -52,7 +52,7 @@ class DinoAPIURLConstants {
 
   NOTE_DELETE_ALL = `${this.NOTE}all/`
 
-  NOTE_UPDATE_ALL = `${this.NOTE}all/`
+  NOTE_SYNC = `${this.NOTE}sync/`
 
   NOTE_COLUMN_GET = `${this.NOTE_COLUMN}`
 

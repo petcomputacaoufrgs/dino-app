@@ -1,5 +1,5 @@
 import React from 'react'
-import ContactsConstants from '../../../../../constants/ContactsConstants'
+import ContactsConstants from '../../../../../constants/contact/ContactsConstants'
 import ContactCardContentProps from './props'
 import useStyles from '../../styles'
 import {

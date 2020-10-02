@@ -15,7 +15,7 @@ import {
 import SelectFaq from '../select_faq'
 import './styles.css'
 import FaqService from '../../../../services/faq/FaqService'
-import Constants from '../../../../constants/FaqConstants'
+import Constants from '../../../../constants/faq/FaqConstants'
 
 const QuestionDialogForm = React.forwardRef(
   (

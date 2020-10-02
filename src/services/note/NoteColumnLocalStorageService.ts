@@ -16,6 +16,14 @@ class NoteColumnLocalStorageService {
         return NoteColumnSyncLocalStorage.setShouldSync(should)
     }
 
+    setShouldSyncOrder = (should: boolean) => {
+        return NoteColumnSyncLocalStorage.setShouldSyncOrder(should)
+    }
+
+    shouldSyncOrder = (): boolean => {
+        return NoteColumnSyncLocalStorage.getShouldSyncOrder()
+    }
+
     removeUserData = () => {
         NoteColumnVersionLocalStorage.removeUserData()
         NoteColumnSyncLocalStorage.removeUserData()

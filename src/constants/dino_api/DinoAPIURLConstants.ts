@@ -62,7 +62,7 @@ class DinoAPIURLConstants {
 
   NOTE_COLUMN_DELETE_ALL = `${this.NOTE_COLUMN}all/`
 
-  NOTE_COLUMN_UPDATE_ALL = `${this.NOTE_COLUMN}all/`
+  NOTE_COLUMN_SYNC = `${this.NOTE_COLUMN}sync/`
 
   NOTE_COLUMN_ORDER = `${this.NOTE_COLUMN}order/`
 

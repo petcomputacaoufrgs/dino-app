@@ -1,5 +1,5 @@
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
+import LanguageCodeConstants from '../../constants/language/LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em português brasileiro

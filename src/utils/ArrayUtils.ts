@@ -1,4 +1,4 @@
-type filterCallback<T> = (value: T) => boolean
+type filter<T> = (value: T) => boolean
 
 class ArrayUtils {
   removeRepeatedValues = <T>(list: T[]): T[] => {
@@ -37,6 +37,20 @@ class ArrayUtils {
   notEqualIgnoreOrder = <T>(list1: T[], list2: T[]): boolean => (
     !this.equalIgnoreOrder(list1, list2)
   )
+
+  partition = <T>(list: T[], isValid: filter<T>): [T[], T[]] => {
+    const pass: any[] = []
+    const fail: any[] = []
+    list.forEach((value) => {
+      if (isValid(value)) {
+        pass.push(value)
+      } else {
+        fail.push(value)
+      }
+    })
+
+    return [pass, fail]
+  }
 }
 
 export default new ArrayUtils()

@@ -1,5 +1,5 @@
 import FaqItemModel from '../../types/faq/FaqItemModel'
-import LS from '../../local_storage/FaqLocalStorage'
+import LS from '../../local_storage/faq/FaqLocalStorage'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import ServerService from './FaqServerService'

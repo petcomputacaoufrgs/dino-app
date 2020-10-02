@@ -18,7 +18,7 @@ import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewM
 import NoteCreateDialog from '../note_create_dialog'
 import NoteInfoDialog from '../note_info_dialog'
 import LogAppErrorService from '../../../../services/log_app_error/LogAppErrorService'
-import ViewAddNoteOpenedWIthoutColumnError from '../../../../error/ViewAddNoteOpenedWIthoutColumnError'
+import ViewAddNoteOpenedWIthoutColumnError from '../../../../error/note/ViewAddNoteOpenedWIthoutColumnError'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 
 const NoteContent: React.FC<NoteContentProps> = ({

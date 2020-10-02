@@ -1,10 +1,10 @@
 import ConnectionService from '../connection/ConnectionService'
 import UserService from '../user/UserService'
 import HistoryService from '../history/HistoryService'
-import PathConstants from '../../constants/PathConstants'
+import PathConstants from '../../constants/app/PathConstants'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import AuthService from '../auth/AuthService'
-import Synchronizer from '../../sync/Synchronizer'
+import Synchronizer from '../../sync/SynchronizerService'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
 

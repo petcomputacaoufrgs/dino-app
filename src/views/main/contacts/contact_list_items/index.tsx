@@ -6,7 +6,7 @@ import { List } from '@material-ui/core'
 import useStyles from '../styles'
 import ContactFormDialog from '../contact_dialog_form'
 import ContactsService from '../../../../services/contact/ContactService'
-import Constants from '../../../../constants/ContactsConstants'
+import Constants from '../../../../constants/contact/ContactsConstants'
 
 const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
   const classes = useStyles()

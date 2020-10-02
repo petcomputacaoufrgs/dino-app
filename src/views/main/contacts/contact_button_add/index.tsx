@@ -3,7 +3,7 @@ import ContactFormDialog from '../contact_dialog_form'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import './styles.css'
-import Contants from '../../../../constants/ContactsConstants'
+import Contants from '../../../../constants/contact/ContactsConstants'
 
 const ContactFormDialogButton = (props: {
   dialogOpen: number

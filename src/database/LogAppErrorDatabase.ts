@@ -1,5 +1,5 @@
 import BaseDatabase from './BaseDatabase'
-import DatabaseConstants from '../constants/DatabaseConstants'
+import DatabaseConstants from '../constants/database/DatabaseConstants'
 import LogAppErrorDoc from '../types/log_app_error/database/LogAppErrorDoc'
 
 const getId = (doc?: LogAppErrorDoc): string => new Date().getTime().toString()

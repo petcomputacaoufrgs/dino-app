@@ -11,6 +11,8 @@ import NoteColumnUpdateAllRequestModel from '../../types/note/server/update_all/
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteColumnUpdateAllResponseModel from '../../types/note/server/update_all/NoteColumnUpdateAllResponseModel'
 import DeletedNoteColumnEntity from '../../types/note/database/DeletedNoteColumnEntity'
+import NoteColumnSyncRequestModel from '../../types/note/server/sync/NoteColumnSyncRequestModel'
+import NoteColumnSyncResponse from '../../types/note/server/sync/NoteColumnSyncResponse'
 
 class NoteColumnServerService {
   //#region GET
@@ -94,7 +96,7 @@ class NoteColumnServerService {
     }
 
     const request = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_COLUMN_UPDATE_ALL
+      DinoAPIURLConstants.NOTE_COLUMN_SYNC
     )
 
     if (request.canGo) {
@@ -188,6 +190,29 @@ class NoteColumnServerService {
       }
     }
     return null
+  }
+
+  //#endregion
+
+  //#region SYNC
+
+  sync = async (model: NoteColumnSyncRequestModel): Promise<NoteColumnSyncResponse | undefined> => {
+    const request = await DinoAgentService.put(
+      DinoAPIURLConstants.NOTE_COLUMN_SYNC
+    )
+
+    console.log(request)
+
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().setBody(model).go()
+        return response.body
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    }
+
+    return undefined
   }
 
   //#endregion

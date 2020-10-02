@@ -1,7 +1,7 @@
 import DinoDatabase from "../../database/DinoDatabase"
 import DeletedNoteColumnEntity from "../../types/note/database/DeletedNoteColumnEntity"
 import NoteColumnEntity from "../../types/note/database/NoteColumnEntity"
-import DeletedNoteColumnEntityWithoutExternalId from "../../error/DeletedNoteColumnEntityWithoutExternalId"
+import DeletedNoteColumnEntityWithoutExternalId from "../../error/note/DeletedNoteColumnEntityWithoutExternalId"
 
 class DeletedNoteColumnDatabaseService {
     async getAll(): Promise<DeletedNoteColumnEntity[]> {

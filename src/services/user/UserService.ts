@@ -1,4 +1,4 @@
-import UserLocalStorage from '../../local_storage/UserLocalStorage'
+import UserLocalStorage from '../../local_storage/user/UserLocalStorage'
 import AuthService from '../auth/AuthService'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { ContactFormDialogProps } from './props'
-import Constants from '../../../../constants/ContactsConstants'
+import Constants from '../../../../constants/contact/ContactsConstants'
 import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
 import View from './view'
-import ColorConstants from '../../../../constants/ColorConstants'
+import ColorConstants from '../../../../constants/app/ColorConstants'
 
 const ContactFormDialog = ({
   dialogOpen,

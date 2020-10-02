@@ -1,5 +1,5 @@
 import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
-import GlossaryLocalStorage from '../../local_storage/GlossaryLocalStorage'
+import GlossaryLocalStorage from '../../local_storage/glossary/GlossaryLocalStorage'
 import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import StringUtils from '../../utils/StringUtils'

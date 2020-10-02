@@ -3,12 +3,12 @@ import { useLanguage } from '../../../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import { MenuItem, IconButton } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'
-import ContactsConstants from '../../../../../../constants/ContactsConstants'
+import ContactsConstants from '../../../../../../constants/contact/ContactsConstants'
 import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
 import InputAdornment from '@material-ui/core/InputAdornment'
-import Constants from '../../../../../../constants/ContactsConstants'
+import Constants from '../../../../../../constants/contact/ContactsConstants'
 
 const PhoneFields = ({
   type,

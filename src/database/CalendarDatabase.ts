@@ -1,5 +1,5 @@
 import BaseDatabase from './BaseDatabase'
-import DatabaseConstants from '../constants/DatabaseConstants'
+import DatabaseConstants from '../constants/database/DatabaseConstants'
 import EventDoc from '../types/calendar/database/EventDoc'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 

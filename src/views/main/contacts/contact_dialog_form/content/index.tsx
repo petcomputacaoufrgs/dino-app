@@ -5,7 +5,7 @@ import PhoneFields from './phone_fields'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import { ListItem } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
-import Constants from '../../../../../constants/ContactsConstants'
+import Constants from '../../../../../constants/contact/ContactsConstants'
 
 const ContactFormDialogContent = (
   props: ContactFormDialogContentProps

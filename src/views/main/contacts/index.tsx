@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContacts } from '../../../context_provider/contact'
 
 import ContactFormDialog from './contact_dialog_form'
-import Contants from '../../../constants/ContactsConstants'
+import Contants from '../../../constants/contact/ContactsConstants'
 
 
 const Contacts = (): JSX.Element => {

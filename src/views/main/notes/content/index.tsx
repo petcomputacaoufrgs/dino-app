@@ -227,12 +227,9 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const filteredColumns = columns.filter((column) => column.showBySearch)
 
-  const invalidSearch =
-    !searching && filteredColumns.length === 0 && columns.length !== 0
-
   return (
     <div className="note__note_content">
-      {filteredColumns.length === 0 && (
+      {searching && filteredColumns.length === 0 && (
         <div className="note__note_content__columns__scroll__clean_search">
           {language.NOTE_SEARCH_CLEAN}
         </div>
@@ -262,7 +259,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
                     onAddNote={handleAddNote}
                   />
                 ))}
-                {!searching && !invalidSearch && (
+                {!searching && (
                   <AddColumn
                     visible={!dragging}
                     columnCount={columns.length}

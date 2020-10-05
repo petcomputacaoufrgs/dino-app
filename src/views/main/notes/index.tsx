@@ -77,6 +77,14 @@ const Notes = () => {
     setViewColumns(viewColumns)
   }, [columns, notes, textSearch, tagSearch])
 
+  useEffect(() => {
+    if (textSearch.length > 0 || tagSearch.length > 0) {
+      setSearching(true)
+    } else if (searching) {
+      setSearching(false)
+    } 
+  }, [searching, textSearch, tagSearch])
+
   const isUnchanged = (result: DropResult): boolean => {
     const { destination, source } = result
 
@@ -213,13 +221,7 @@ const Notes = () => {
         return column
       })
     )
-
-    if (newTagSearch.length > 0) {
-      setSearching(true)
-    } else if (newTagSearch.length === 0 && textSearch.length === 0) {
-      setSearching(false)
-    }
-
+    
     setTagSearch(newTagSearch)
 
     setViewColumns(newViewColumns)
@@ -239,12 +241,6 @@ const Notes = () => {
         return column
       })
     )
-
-    if (newTextSearch.length > 0) {
-      setSearching(true)
-    } else if (newTextSearch.length === 0 && tagSearch.length === 0) {
-      setSearching(false)
-    }
 
     setTextSearch(newTextSearch)
 

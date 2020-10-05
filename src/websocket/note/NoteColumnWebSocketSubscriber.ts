@@ -4,14 +4,14 @@ import SubscriberItem from '../../types/web_socket/SubscriberItem'
 import NoteColumnService from '../../services/note/NoteColumnService'
 import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateOrderModel'
 import NoteColumnWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteColumnWebSocketAlertDeleteModel'
-import NoteColumnWebSocketAlertUpdateModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateModel'
+import WebSocketAlertUpdateModel from '../../types/web_socket/WebSocketAlertUpdateModel'
 
 class NoteColumnWebSocketSubscriber extends BaseWebSocketSubscriber {
   constructor() {
     const items: SubscriberItem[] = [
       {
         path: DinoAPIWebSocketConstants.ALERT_NOTE_COLUMN_UPDATE,
-        callback: (model: NoteColumnWebSocketAlertUpdateModel) => {
+        callback: (model: WebSocketAlertUpdateModel) => {
           this.conflictingMethodsQueue(
             async () =>
               await NoteColumnService.updateColumnsFromServer(model.newVersion)

@@ -1,17 +1,17 @@
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
 import DinoAPIWebSocketConstants from '../../constants/dino_api/DinoAPIWebSocketConstants'
-import NoteWebSocketAlertUpdateModel from '../../types/note/web_socket/NoteWebSocketAlertUpdateModel'
 import NoteService from '../../services/note/NoteService'
 import SubscriberItem from '../../types/web_socket/SubscriberItem'
 import NoteWebSocketOrderUpdateModel from '../../types/note/web_socket/NoteWebSocketOrderUpdateModel'
 import NoteWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteWebSocketAlertDeleteModel'
+import WebSocketAlertUpdateModel from '../../types/web_socket/WebSocketAlertUpdateModel'
 
 class NoteWebSocketSubscriber extends BaseWebSocketSubscriber {
   constructor() {
     const items: SubscriberItem[] = [
       {
         path: DinoAPIWebSocketConstants.ALERT_NOTE_UPDATE,
-        callback: (model: NoteWebSocketAlertUpdateModel) => {
+        callback: (model: WebSocketAlertUpdateModel) => {
           this.conflictingMethodsQueue(
             async () =>
               await NoteService.updateNotesFromServer(model.newVersion)

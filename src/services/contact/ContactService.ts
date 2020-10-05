@@ -16,7 +16,7 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 class ContactsService {
   /// #SERVER SERVICE CONNECTION
 
-  updateLocal = async (version: number): Promise<void> => {
+  updateLocal = async (newVersion: number): Promise<void> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
 
     if (request.canGo) {
@@ -25,22 +25,16 @@ class ContactsService {
 
         if (response.status === HttpStatus.OK) {
           const serverContacts: ContactModel[] = response.body
-
-          this.setVersion(version)
-
-          const newLocalItens = this.getItems().filter(
-            (c) => c.id === undefined
-          )
-
-          this.setItems(
-            newLocalItens.concat(
-              serverContacts.map((c) => {
-                c.frontId = this.makeFrontId()
-                return c
-              })
-            )
-          )
-
+  
+          this.setVersion(newVersion)
+  
+          const newLocalItens = this.getItems().filter(c => c.id === undefined)
+  
+          this.setItems(newLocalItens.concat(
+            serverContacts.map(c => { c.frontId = this.makeFrontId() 
+              return c
+          })))
+  
           ContactContextUpdater.update()
 
           return

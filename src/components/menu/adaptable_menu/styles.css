@@ -1,0 +1,22 @@
+.adaptable_menu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.adaptable_menu__component {
+  position: relative;
+  width: 100%;
+}
+
+.adaptable_menu__component_with_mini {
+  width: 100%;
+  height: calc(100% - 55px);
+  padding-left: 73px;
+}
+
+.adaptable_menu__component_with_mini::-webkit-scrollbar {
+  display: none;
+}

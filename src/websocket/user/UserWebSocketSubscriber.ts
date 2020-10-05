@@ -1,15 +1,15 @@
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
 import DinoAPIWebSocketConstants from '../../constants/dino_api/DinoAPIWebSocketConstants'
-import UserAlertUpdateModel from '../../types/user/UserAlertUpdateModel'
 import UserService from '../../services/user/UserService'
 import SubscriberItem from '../../types/web_socket/SubscriberItem'
+import WebSocketAlertUpdateModel from '../../types/web_socket/WebSocketAlertUpdateModel'
 
 class UserWebSocketSubscriber extends BaseWebSocketSubscriber {
   constructor() {
     const items: SubscriberItem[] = [
       {
         path: DinoAPIWebSocketConstants.ALERT_USER_UPDATE,
-        callback: (model: UserAlertUpdateModel) => {
+        callback: (model: WebSocketAlertUpdateModel) => {
           UserService.update(model.newVersion)
         },
       },

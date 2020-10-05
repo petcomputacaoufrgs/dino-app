@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import { useLocation, Switch } from 'react-router'
+import { Switch } from 'react-router'
 import { useLanguage } from '../../context_provider/app_settings'
 import GlossarySVG from '../../assets/icons/glossary.svg'
 import ContactsSVG from '../../assets/icons/phone.svg'
-import GamesSVG from '../../assets/icons/games.svg'
 import HomeSVG from '../../assets/icons/home.svg'
 import NotesSVG from '../../assets/icons/note.svg'
 import FaqSVG from '../../assets/icons/faq.svg'
 import SettingsSVG from '../../assets/icons/settings.svg'
 import LogoutSVG from '../../assets/icons/logout.svg'
-import CalendarSVG from '../../assets/icons/calendar.svg'
 import AdaptableMenu from '../../components/menu/adaptable_menu'
 import PathConstants from '../../constants/app/PathConstants'
 import PrivateRoute from '../../components/private_route'
@@ -33,12 +31,7 @@ import Calendar from './calendar'
 import NoteColumnContextProvider from '../../context_provider/note_column'
 import AuthService from '../../services/auth/AuthService'
 
-/**
- * @description Tela principal da aplicação
- * @returns Elemento JSX com a tela principal do aplicativo
- **/
 const Main = (): JSX.Element => {
-  const location = useLocation()
 
   const language = useLanguage().current
 
@@ -56,18 +49,12 @@ const Main = (): JSX.Element => {
     setOpenLogoutDialog(false)
   }
 
-  /** Itens do menu */
   const groupedItems: MenuItemViewModel[][] = [
     [
       {
         image: HomeSVG,
         name: language.MENU_HOME,
         onClick: () => HistoryService.push(PathConstants.HOME),
-      },
-      {
-        image: GamesSVG,
-        name: language.MENU_GAMES,
-        onClick: () => HistoryService.push(PathConstants.GAMES),
       },
       {
         image: GlossarySVG,
@@ -79,27 +66,16 @@ const Main = (): JSX.Element => {
         name: language.MENU_CONTACTS,
         onClick: () => HistoryService.push(PathConstants.CONTACTS),
       },
-    ],
-    [
       {
         image: NotesSVG,
         name: language.MENU_NOTES,
         onClick: () => HistoryService.push(PathConstants.NOTES),
       },
       {
-        image: CalendarSVG,
-        name: language.MENU_CALENDAR,
-        onClick: () => HistoryService.push(PathConstants.CALENDAR),
-      },
-    ],
-    [
-      {
         image: FaqSVG,
         name: language.MENU_FAQ,
         onClick: () => HistoryService.push(PathConstants.FAQ),
       },
-    ],
-    [
       {
         image: SettingsSVG,
         name: language.MENU_SETTINGS,
@@ -114,20 +90,6 @@ const Main = (): JSX.Element => {
       },
     ],
   ]
-
-  const getSelectedItem = (): number => {
-    if (location.pathname === PathConstants.GAMES) {
-      return 1
-    } else if (location.pathname.includes(PathConstants.GLOSSARY)) {
-      return 2
-    } else if (location.pathname.includes(PathConstants.CONTACTS)) {
-      return 3
-    } else if (location.pathname === PathConstants.HOME) {
-      return 0
-    } else {
-      return -1
-    }
-  }
 
   const renderMainContent = (): JSX.Element => {
     return (
@@ -197,7 +159,6 @@ const Main = (): JSX.Element => {
   return (
     <>
       <AdaptableMenu
-        selectedItem={getSelectedItem()}
         groupedItems={groupedItems}
         component={renderMainContent()}
         topBarComponent={<TopBar />}

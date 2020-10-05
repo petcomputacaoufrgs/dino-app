@@ -4,8 +4,8 @@ import { Avatar, CardHeader, IconButton } from '@material-ui/core'
 import { ColorLens as ColorLensIcon } from '@material-ui/icons'
 import useStyles from '../../styles'
 import ContactFormDialogHeaderProps from './props'
-import Constants from '../../../../../constants/contact/ContactsConstants'
-import CloseComponent from '../../../../../components/close_component'
+import Constants from '../../../../../constants/ContactsConstants'
+import CloseComponent from '../../../../../components/icon_buttons/close_component'
 
 const AddContactDialogHeader = (
   props: ContactFormDialogHeaderProps

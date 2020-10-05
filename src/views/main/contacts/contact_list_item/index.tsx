@@ -12,7 +12,7 @@ import {
   MenuItem,
 } from '@material-ui/core'
 import ContactsService from '../../../../services/contact/ContactService'
-import OptionsComponent from '../../../../components/options_component'
+import OptionsComponent from '../../../../components/icon_buttons/options_component'
 
 const ContactItemList = ({
   item,

@@ -5,15 +5,19 @@ import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
 
-import AddContactButton from './contact_button_add'
+import ButtonAdd from '../../../components/button_add'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContacts } from '../../../context_provider/contact'
+
+import ContactFormDialog from './contact_dialog_form'
+import Contants from '../../../constants/ContactsConstants'
+
 
 const Contacts = (): JSX.Element => {
   const language = useLanguage().current
 
   const items = useContacts().items
-  const [add, setAdd] = useState(0)
+  const [add, setAdd] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([] as ContactModel[])
 
@@ -36,8 +40,13 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults} />
-      <AddContactButton dialogOpen={add} setDialogOpen={setAdd} />
-    </div>
+      <ButtonAdd onClick={() => setAdd(true)}/>
+      <ContactFormDialog
+          action={Contants.ACTION_ADD}
+          dialogOpen={add}
+          onClose={() => setAdd(false)}
+        />
+      </div>
   )
 }
 

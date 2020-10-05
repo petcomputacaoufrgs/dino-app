@@ -3,7 +3,7 @@ import PhoneModel from '../../../../types/contact/PhoneModel'
 
 export interface ContactFormDialogProps {
   dialogOpen: boolean
-  setDialogOpen: React.Dispatch<React.SetStateAction<number>>
+  onClose: () => void
   action: number
   item?: ContactModel
 }
@@ -12,10 +12,12 @@ export interface ContactFormDialogViewProps {
   open: boolean
   handleClose: () => void
   action: number
-  name: string
-  description: string
+  contact: {
+    name: string
+    description: string
+    color: string
+  }
   phones: PhoneModel[]
-  color: string
   invalidName: boolean
   invalidPhone: {
     number: string

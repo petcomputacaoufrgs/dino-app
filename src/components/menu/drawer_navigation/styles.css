@@ -31,3 +31,7 @@
   background: none;
   border: none;
 }
+
+.button__close-drawer__closed {
+  display: none;
+}

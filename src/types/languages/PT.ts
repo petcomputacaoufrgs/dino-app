@@ -89,7 +89,7 @@ export default class PT implements LanguageBase {
   NOTES_HEADER_IMAGE_DESC =
     'Imagem com um caderno de anotações com uma mão escrevendo.'
 
-  NOTES_ADD_BUTTON = 'Clique para adicionar uma nova anotação.'
+  ADD_BUTTON = 'Clique para adicionar um novo item.'
 
   NOTE_STATE_DONE = 'Anotação respondida.'
 

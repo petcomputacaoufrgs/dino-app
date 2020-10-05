@@ -39,7 +39,7 @@ export default interface LanguageBase {
   SETTINGS_SAVE_SUCCESS: string
   MENU_NOTES: string
   NOTES_HEADER_IMAGE_DESC: string
-  NOTES_ADD_BUTTON: string
+  ADD_BUTTON: string
   NOTE_STATE_DONE: string
   NOTE_STATE_NOT_DONE: string
   NOTE_SHOW_ANSWER: string

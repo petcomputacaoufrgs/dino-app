@@ -88,7 +88,7 @@ export default class EN implements LanguageBase {
 
   NOTES_HEADER_IMAGE_DESC = 'Image with a opened notebook and a hand writing.'
 
-  NOTES_ADD_BUTTON = 'Click to add a new note.'
+  ADD_BUTTON = 'Click to add a new item.'
 
   NOTE_STATE_DONE = 'Note has a answer.'
 

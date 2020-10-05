@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation, Switch } from 'react-router'
+import { Switch } from 'react-router'
 import { useLanguage } from '../../context_provider/app_settings'
 import GlossarySVG from '../../assets/icons/glossary.svg'
 import ContactsSVG from '../../assets/icons/phone.svg'
@@ -36,7 +36,6 @@ import Calendar from './calendar'
  * @returns Elemento JSX com a tela principal do aplicativo
  **/
 const Main = (): JSX.Element => {
-  const location = useLocation()
 
   const language = useLanguage().current
 
@@ -50,11 +49,13 @@ const Main = (): JSX.Element => {
         name: language.MENU_HOME,
         onClick: () => HistoryService.push(PathConstants.HOME),
       },
+      /*
       {
         image: GamesSVG,
         name: language.MENU_GAMES,
         onClick: () => HistoryService.push(PathConstants.GAMES),
       },
+      */
       {
         image: GlossarySVG,
         name: language.MENU_GLOSSARY,
@@ -65,27 +66,23 @@ const Main = (): JSX.Element => {
         name: language.MENU_CONTACTS,
         onClick: () => HistoryService.push(PathConstants.CONTACTS),
       },
-    ],
-    [
       {
         image: NotesSVG,
         name: language.MENU_NOTES,
         onClick: () => HistoryService.push(PathConstants.NOTES),
       },
+      /*
       {
         image: CalendarSVG,
         name: language.MENU_CALENDAR,
         onClick: () => HistoryService.push(PathConstants.CALENDAR),
       },
-    ],
-    [
+      */
       {
         image: FaqSVG,
         name: language.MENU_FAQ,
         onClick: () => HistoryService.push(PathConstants.FAQ),
       },
-    ],
-    [
       {
         image: SettingsSVG,
         name: language.MENU_SETTINGS,
@@ -100,20 +97,6 @@ const Main = (): JSX.Element => {
       },
     ],
   ]
-
-  const getSelectedItem = (): number => {
-    if (location.pathname === PathConstants.GAMES) {
-      return 1
-    } else if (location.pathname.includes(PathConstants.GLOSSARY)) {
-      return 2
-    } else if (location.pathname.includes(PathConstants.CONTACTS)) {
-      return 3
-    } else if (location.pathname === PathConstants.HOME) {
-      return 0
-    } else {
-      return -1
-    }
-  }
 
   const renderMainContent = (): JSX.Element => {
     return (
@@ -181,7 +164,6 @@ const Main = (): JSX.Element => {
   return (
     <>
       <AdaptableMenu
-        selectedItem={getSelectedItem()}
         groupedItems={groupedItems}
         component={renderMainContent()}
         topBarComponent={<TopBar />}

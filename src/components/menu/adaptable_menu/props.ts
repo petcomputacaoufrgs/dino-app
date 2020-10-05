@@ -16,11 +16,6 @@ export default interface AdaptableMenuProps {
   groupedItems: MenuItemViewModel[][]
 
   /**
-   * @description Indice do item selecionado na lista de itens
-   */
-  selectedItem: number
-
-  /**
    * @description Componente que será colocado na barra superior
    */
   topBarComponent?: JSX.Element

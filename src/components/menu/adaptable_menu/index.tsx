@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import AdaptableMenuProps from './props'
-import BottomNavigation from '../bottom_navigation'
 import ScreenUtils from '../../../utils/ScreenUtils'
+import DrawerNavigation from '../drawer_navigation'
+import './styles.css'
 
 /**
  * @description Menu adaptável para mobile e desktop
@@ -25,56 +25,19 @@ const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
 
   /**
    * @description Retorna o menu adaptavél com base no dispositivo utilizado e na horientação da tela
-   * @returns Elemento JSX com o menu
-   */
-  const renderAdaptableMenu = (): JSX.Element => {
-    if (isMobile) {
-      return renderMobileMenu()
-    } else {
-      return renderWithoutBottomMenu(true)
-    }
-  }
-
-  /**
-   * @description Retorna o menu adaptável para mobile com base na horientação da tela
-   * @returns Elemento JSX com o menu
-   */
-  const renderMobileMenu = (): JSX.Element => {
-    if (isLandscape) {
-      return renderWithoutBottomMenu(false)
-    } else {
-      return renderBottomNavigation()
-    }
-  }
-
-  /**
-   * @description Retorna o menu lateral
-   * @param mini Define o tipo do menu, se mini então ele manterá um mini menu lateral de ícones quando o menu estiver fechado
    * @returns Elemento JSX contendo o menu
    */
-  const renderWithoutBottomMenu = (mini: boolean): JSX.Element => {
+  const renderAdaptableMenu = (): JSX.Element => {
     return (
-      <BottomNavigation
-        hideBottomBar={true}
-        selectedItem={props.selectedItem}
-        showMiniDrawer={mini}
+      <div className="adaptable_menu">
+        <DrawerNavigation
+        mini={isLandscape}
         groupedItems={props.groupedItems}
-        component={props.component}
-      />
-    )
-  }
-
-  /**
-   * @description Retorna o menu inferior
-   * @returns Elemento JSX com o menu
-   */
-  const renderBottomNavigation = (): JSX.Element => {
-    return (
-      <BottomNavigation
-        selectedItem={props.selectedItem}
-        groupedItems={props.groupedItems}
-        component={props.component}
-      />
+        />
+        <div className={isLandscape ? 'adaptable_menu__component_with_mini' : 'adaptable_menu__component'}>
+          {props.component}
+        </div>
+      </div>
     )
   }
 

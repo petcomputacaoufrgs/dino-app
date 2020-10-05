@@ -7,6 +7,7 @@ import AuthService from '../auth/AuthService'
 import Synchronizer from '../../sync/Synchronizer'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
+import SyncService from '../sync/SyncService'
 
 /**
  * Executa funções baseado em eventos da aplicação
@@ -49,6 +50,7 @@ class EventService {
 
   whenConnectionLost = () => {
     WebSocketConnector.disconnect()
+    SyncService.setOffline()
   }
 
   whenError = () => {

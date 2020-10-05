@@ -7,6 +7,7 @@ import ContactSync from './ContactSync'
 import BaseSync from './BaseSync'
 import GlossarySync from './GlossarySync'
 import FaqSync from './FaqSync'
+import SyncService from '../services/sync/SyncService'
 
 class Syncronizer {
   private syncronizers: BaseSync[] = [
@@ -20,8 +21,10 @@ class Syncronizer {
   ]
 
   sync = async () => {
+    SyncService.setSynchronizing()
     await this.receive()
-    this.send()
+    await this.send()
+    SyncService.setSynced()
   }
 
   send = async () => {

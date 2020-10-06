@@ -1,42 +1,63 @@
 import React, { useState } from 'react'
 import AdaptableMenuProps from './props'
-import ScreenUtils from '../../../utils/ScreenUtils'
 import DrawerNavigation from '../drawer_navigation'
 import './styles.css'
 
-/**
- * @description Menu adaptável para mobile e desktop
- * @param props Propriedade com os itens utilizados no menu
- * @returns Elemento JSX com o menu correto
- */
-const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
-  /** Estado que registra a orientação da tela */
-  const [isLandscape, setIfIsLandscape] = useState(ScreenUtils.isLandscape())
+interface HorizontalTouch {
+  x: number
+}
 
-  /**
-   * @description Função invocada quando a orientação da tela muda
-   */
-  const onScreenOrientationChange = () => {
-    setIfIsLandscape(ScreenUtils.isLandscape())
+const drawerWidth: number = 240
+
+const getTouch = (event: React.TouchEvent<HTMLDivElement>): HorizontalTouch | undefined => {
+  const touches = event.touches
+  if (touches.length > 0) {
+    return {
+      x: touches[0].clientX,
+    }
   }
 
-  /** Configura a função onScreenOrientationChange para ser invocada quando houver mudança na horientação da tela */
-  ScreenUtils.setOnScreenOrientationChangeEvent(onScreenOrientationChange)
+  return undefined
+}
 
-  /**
-   * @description Retorna o menu adaptavél com base no dispositivo utilizado e na horientação da tela
-   * @returns Elemento JSX contendo o menu
-   */
+const AdaptableMenu = (props: AdaptableMenuProps): JSX.Element => {
+  const [startTouch, setStartTouch] = useState<HorizontalTouch | undefined>(undefined)
+  const [translateXMenu, setTranslateXMenu] = useState<number | undefined>(undefined)
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = getTouch(event)
+    setStartTouch(touch)
+  }
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    setStartTouch(undefined)
+    setTranslateXMenu(undefined)
+  }
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (startTouch) {
+      const currentTouch = getTouch(event)
+      if (currentTouch) {
+        const diff = currentTouch.x - startTouch.x
+        if (diff > drawerWidth) {
+          setTranslateXMenu(drawerWidth)
+        } else if (diff < 0) {
+          setTranslateXMenu(0)
+        } else {
+          setTranslateXMenu(diff)
+        }
+      }
+    }
+  }
+
   const renderAdaptableMenu = (): JSX.Element => {
     return (
-      <div className="adaptable_menu">
+      <div className="adaptable_menu" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove}>
         <DrawerNavigation
-        mini={isLandscape}
-        groupedItems={props.groupedItems}
+          component={props.component}
+          groupedItems={props.groupedItems}
+          translateMenuX={translateXMenu}
         />
-        <div className={isLandscape ? 'adaptable_menu__component_with_mini' : 'adaptable_menu__component'}>
-          {props.component}
-        </div>
       </div>
     )
   }

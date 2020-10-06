@@ -1,0 +1,60 @@
+.drawer__navigation__drawer {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.drawer__navigation__drawer__visible {
+    height: 100%;
+    width: 240px;
+    background-color: whitesmoke;
+}
+
+.drawer__navigation__drawer__invisible {
+    height: 100%;
+    width: calc(100% - 240px);
+    background-color: transparent;
+    border: none;
+}
+
+.drawer__navigation__drawer__invisible:focus {
+    outline: 0;
+}
+
+.drawer__navigation__drawer__header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.drawer__navigation__drawer__visible__item_image {
+    width: 30px;
+    height: 30px;
+}
+
+.drawer__navigation__drawer.drawer__navigation__drawer__open {
+    animation: drawer__nativation__drawer__open_animation 150ms linear 0s;
+}
+
+.drawer__navigation__drawer.drawer__navigation__drawer__close {
+    visibility: hidden;
+    animation: drawer__nativation__drawer__close_animation 150ms linear 0s;
+}
+
+@keyframes drawer__nativation__drawer__open_animation {
+  from {transform: translate3d(-240px, 0, 0);}
+  to {transform: translate3d(0, 0, 0);}
+}
+
+@keyframes drawer__nativation__drawer__close_animation {
+  from {
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+    }
+  to {
+      transform: translate3d(-240px, 0, 0);
+      visibility: hidden;
+    }
+}

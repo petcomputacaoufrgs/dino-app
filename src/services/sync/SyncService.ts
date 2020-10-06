@@ -20,7 +20,6 @@ class SyncService {
     }
 
     private setState = (state: SyncState) => {
-        console.log("setState")
         SyncLocalStorage.setState(state)
         SyncContextUpdater.update()
     }

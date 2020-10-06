@@ -40,7 +40,6 @@ const SyncContextProvider: React.FC = (props) => {
     state: state,
   }
 
-  console.log(value)
   return (
     <SyncContext.Provider value={value}>
         {props.children}

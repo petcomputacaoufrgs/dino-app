@@ -8,7 +8,6 @@ import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { useLanguage } from '../../../context_provider/app_settings'
 
 const DRAWER_WIDTH = 240
-const SWIPE_TOLERANCE = 10
 
 const Drawer: React.FC<DrawerProps> = ({
     open,
@@ -38,17 +37,15 @@ const Drawer: React.FC<DrawerProps> = ({
             if (currentTouch && startTouch) {
                 const diff = calcSwipeDiff(currentTouch)
 
-                if (diff > SWIPE_TOLERANCE) {
-                    if (diff > DRAWER_WIDTH / 2) {
-                        openDrawer(drawerEl)
-                        if (!open) {
-                            onOpen()
-                        }
-                    } else {
-                        closeDrawer(drawerEl)
-                        if (open) {
-                            onClose()
-                        }
+                if (diff > DRAWER_WIDTH / 2) {
+                    openDrawer(drawerEl)
+                    if (!open) {
+                        onOpen()
+                    }
+                } else {
+                    closeDrawer(drawerEl)
+                    if (open) {
+                        onClose()
                     }
                 }
             }
@@ -101,7 +98,7 @@ const Drawer: React.FC<DrawerProps> = ({
     }, [open])
 
     const calcSwipeDiff = (currentTouch: HorizontalTouch): number => {
-        const touchDiff = currentTouch.x - startTouch!.x - SWIPE_TOLERANCE 
+        const touchDiff = currentTouch.x - startTouch!.x 
 
         if (open) {
             return touchDiff + DRAWER_WIDTH

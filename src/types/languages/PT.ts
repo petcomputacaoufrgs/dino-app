@@ -335,6 +335,10 @@ export default class PT implements LanguageBase {
 
   OPEN_MENU_ARIA_LABEL = 'Abrir menu'
 
+  CLOSE_MENU_ARIA_LABEL = 'Fechar menu'
+
+  CLICK_TO_OPEN_MENU_ITEM = 'Clique para abrir '
+
   ADD_ARIA_LABEL = 'Adicionar'
 
   OPTIONS_ARIA_LABEL = 'Opções'

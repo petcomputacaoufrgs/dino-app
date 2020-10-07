@@ -332,6 +332,10 @@ export default class EN implements LanguageBase {
 
   OPEN_MENU_ARIA_LABEL = 'Open menu'
 
+  CLOSE_MENU_ARIA_LABEL = 'Close menu'
+
+  CLICK_TO_OPEN_MENU_ITEM = 'Click to open '
+
   ADD_ARIA_LABEL = 'Add'
 
   OPTIONS_ARIA_LABEL = 'Options'

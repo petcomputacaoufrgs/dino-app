@@ -5,6 +5,7 @@ import { Divider, IconButton } from '@material-ui/core'
 import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
+import { useLanguage } from '../../../context_provider/app_settings'
 
 const DRAWER_WIDTH = 240
 const SWIPE_TOLERANCE = 10
@@ -16,8 +17,12 @@ const Drawer: React.FC<DrawerProps> = ({
     onClose,
     onOpen
 }) => {
+    const language = useLanguage().current
+
     const drawerEl = useRef<HTMLDivElement | null>(null) 
+
     const [startTouch, setStartTouch] = useState<HorizontalTouch | undefined>(undefined)
+    
     useEffect(() => {
         function handleTouchStart(this: GlobalEventHandlers, event: TouchEvent) {
             const touch = getTouch(event)
@@ -118,7 +123,7 @@ const Drawer: React.FC<DrawerProps> = ({
 
     const renderItems = (items: MenuItemViewModel[]): JSX.Element[] =>
         items.map((item, itemIndex) => (
-            <ListItem button key={itemIndex} onClick={() => handleClick(item)}>
+            <ListItem button aria-label={language.CLICK_TO_OPEN_MENU_ITEM + item.name} key={itemIndex} onClick={() => handleClick(item)}>
                 <ListItemIcon>
                     <img className='drawer_navigation__drawer__visible__item_image' src={item.image} alt={item.name} />
                 </ListItemIcon>
@@ -144,7 +149,10 @@ const Drawer: React.FC<DrawerProps> = ({
                     className='drawer_navigation__drawer__visible' 
                 >
                     <div className='drawer_navigation__drawer__header'>
-                        <IconButton onClick={handleCloseClick}>
+                        <IconButton 
+                            onClick={handleCloseClick}
+                            aria-label={language.CLOSE_MENU_ARIA_LABEL}
+                        >
                             <ChevronLeftIcon />
                         </IconButton>
                     </div>
@@ -152,7 +160,7 @@ const Drawer: React.FC<DrawerProps> = ({
                     {renderGroupItems()}
                 </div>
             </div>
-            {open && <button className='drawer_navigation__drawer__invisible' onClick={handleCloseClick} />}
+            {open && <button className='drawer_navigation__drawer__invisible' onClick={handleCloseClick} aria-label={language.CLOSE_MENU_ARIA_LABEL} />}
         </>
     )
 }

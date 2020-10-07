@@ -10,13 +10,12 @@ import FaqSVG from '../../assets/icons/faq.svg'
 import SettingsSVG from '../../assets/icons/settings.svg'
 import LogoutSVG from '../../assets/icons/logout.svg'
 import CalendarSVG from '../../assets/icons/calendar.svg'
-import AdaptableMenu from '../../components/menu/adaptable_menu'
+import DrawerNavigation from '../../components/drawer_navigation'
 import PathConstants from '../../constants/PathConstants'
 import PrivateRoute from '../../components/private_route'
 import GlossaryItem from './glossary/glossary_item'
 import Glossary from './glossary'
 import Contacts from './contacts'
-import TopBar from '../../components/top_bar'
 import HistoryService from '../../services/history/HistoryService'
 import Home from './home'
 import Settings from './settings'
@@ -163,10 +162,9 @@ const Main = (): JSX.Element => {
 
   return (
     <>
-      <AdaptableMenu
+      <DrawerNavigation
         groupedItems={groupedItems}
         component={renderMainContent()}
-        topBarComponent={<TopBar />}
       />
       <LogoutDialogElement />
     </>

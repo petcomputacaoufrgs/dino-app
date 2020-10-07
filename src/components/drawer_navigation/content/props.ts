@@ -1,3 +1,3 @@
 export default interface ContentProps {
-    component: JSX.Element | undefined
+    component: JSX.Element
 }

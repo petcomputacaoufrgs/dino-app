@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import DrawerNavigationProps from './props'
 import './styles.css'
 import AppBar from './app_bar'
@@ -8,8 +8,8 @@ import Content from './content'
 const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
   groupedItems,
   component,
-  translateMenuX,
 }): JSX.Element => {
+  const drawerNavigationEl = useRef<HTMLDivElement|null>(null);
 
   const [open, setOpen] = useState(false)
 
@@ -22,7 +22,7 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
   }
 
   return (
-    <div className='drawer__navigation'>
+    <div className='drawer_navigation' ref={drawerNavigationEl}>
       <AppBar
         onDrawerOpen={handleDrawerOpen}
         open={open}
@@ -33,22 +33,10 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
       <Drawer
         groupedItems={groupedItems}
         onClose={handleDrawerClose}
+        onOpen={handleDrawerOpen}
         open={open}
-        translateX={translateMenuX}
+        swipeZoneEl={drawerNavigationEl}
       />
-      <div>
-        <div
-          style={
-            {
-              width: '10px',
-              height: '10px',
-              backgroundColor: 'black',
-              transform: translateMenuX !== undefined ? `translateX(${translateMenuX}px)` : ''
-            }
-          }>
-          {translateMenuX}
-        </div>
-      </div>
     </div>
   )
 }

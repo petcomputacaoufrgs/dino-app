@@ -1,6 +1,6 @@
 import React from 'react'
 import './styles.css'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useLanguage } from '../../../context_provider/app_settings'
 import AppBarProps from './props'
 import { Menu as MenuIcon } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'

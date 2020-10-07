@@ -11,6 +11,7 @@ import DinoAgentService from '../../agent/DinoAgentService'
 import Server from './ContactServerService'
 import ContactContextUpdater from '../../context_updater/ContactContextUpdater'
 import StringUtils from '../../utils/StringUtils'
+import LanguageBase from '../../constants/languages/LanguageBase'
 
 
 class ContactsService {
@@ -263,23 +264,20 @@ class ContactsService {
     return changed
   }
   
-  getPhoneTypes = (phones: Array<PhoneModel>): string => {
+  getPhoneTypes = (phones: Array<PhoneModel>, language: LanguageBase): string => {
 
       if(phones.length > 0) {
         
         const types = ArrayUtils.removeRepeatedValues(phones.map(phone => phone.type))
 
-        return types.map(type => this.getPhoneType(type)).toString()
+        return types.map(type => this.getPhoneType(type, language)).toString()
         
       } 
 
     return ''
   }
     
-  getPhoneType = (type: number): string => {
-    
-    const language = useLanguage().current
-    
+  getPhoneType = (type: number, language: LanguageBase): string => {
     switch (type) {
       
       case ContactsConstants.PUBLIC_SERVICE: return language.CONTACTS_PUBLIC_SERVICE_PHONE

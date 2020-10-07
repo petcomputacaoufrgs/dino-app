@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import ContactModel from '../../../types/contact/ContactModel'
 import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
-
 import ButtonAdd from '../../../components/button_add'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContacts } from '../../../context_provider/contact'
-
 import ContactFormDialog from './contact_dialog_form'
 import Contants from '../../../constants/ContactsConstants'
 
-
 const Contacts = (): JSX.Element => {
   
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const items = useContacts().items
   const [add, setAdd] = useState(false)

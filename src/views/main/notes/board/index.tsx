@@ -8,13 +8,13 @@ import NoteService from '../../../../services/note/NoteService'
 import AnswerDialog from '../answer_dialog'
 import QuestionDialog from '../question_dialog'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import AgreementDialogProps from '../../../../components/agreement_dialog/props'
 import NoteViewModel from '../../../../types/note/NoteViewModel'
 import BoardProps from './props'
 
 const NoteBoard = (props: BoardProps): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [board, setBoard] = useState(createBoard([] as NoteViewModel[]))
 

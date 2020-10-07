@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch } from 'react-router'
-import { useLanguage } from '../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../context_provider/app_settings'
 import GlossarySVG from '../../assets/icons/glossary.svg'
 import ContactsSVG from '../../assets/icons/phone.svg'
 import GamesSVG from '../../assets/icons/games.svg'
@@ -37,7 +37,7 @@ import Calendar from './calendar'
  **/
 const Main = (): JSX.Element => {
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [LogoutDialogElement, showLogoutDialog] = LogoutDialog()
 

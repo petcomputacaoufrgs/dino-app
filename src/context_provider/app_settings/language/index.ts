@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import LanguageBase from '../../../types/languages/LanguageBase'
+import LanguageBase from '../../../constants/languages/LanguageBase'
 import LanguageContextType, {
   Language,
 } from '../../../types/context_provider/LanguageContextType'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import {
   Avatar,
   CardHeader,
@@ -16,7 +16,7 @@ const ContactCardHeader = ({item, setEdit, setDelete, onClose: handleCloseDialog
 
   const classes = useStyles()
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -59,7 +59,7 @@ const ContactCardHeader = ({item, setEdit, setDelete, onClose: handleCloseDialog
           </>
         }
         title={item.name}
-        subheader={ContactsService.getPhoneTypes(item.phones)}
+        subheader={ContactsService.getPhoneTypes(item.phones, language)}
       />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
         <MenuItem onClick={handleEdit}>{language.EDIT_OPTION_TEXT}</MenuItem>

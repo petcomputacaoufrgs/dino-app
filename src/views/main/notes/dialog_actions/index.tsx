@@ -1,12 +1,12 @@
 import React from 'react'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import MaterialDialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import DialogActionsProps from './props'
 
 const DialogActions = (props: DialogActionsProps) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   return (
     <MaterialDialogActions className="note_card_dialog__save">

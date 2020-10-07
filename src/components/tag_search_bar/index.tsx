@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../context_provider/app_settings'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import TagSearchBarProps from './props'
@@ -8,7 +8,7 @@ import { Search } from '@material-ui/icons'
 import { InputAdornment, IconButton } from '@material-ui/core'
 
 const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
     props.onTagSearch(values)

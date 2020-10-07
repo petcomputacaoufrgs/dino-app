@@ -1,7 +1,7 @@
 import StringUtils from './StringUtils'
 import { DateTime } from 'luxon'
 import DinoAPIGeneralConstants from '../constants/dino_api/DinoAPIGeneralConstants'
-import LanguageBase from '../types/languages/LanguageBase'
+import LanguageBase from '../constants/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {

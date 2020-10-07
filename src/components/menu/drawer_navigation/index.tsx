@@ -7,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { Divider, IconButton, AppBar, Toolbar, Drawer } from '@material-ui/core'
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Menu as MenuIcon} from '@material-ui/icons'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { useLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import './styles.css'
 
 const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
@@ -15,7 +15,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
 
   const theme = useTheme()
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [open, setOpen] = useState(false)
 

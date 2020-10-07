@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -7,7 +7,7 @@ import AnswerProps from './props'
 import DialogActions from '../dialog_actions'
 
 const AnswerDialog = (props: AnswerProps): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [open, setOpen] = useState(false)
   const [answer, setAnswer] = useState('')

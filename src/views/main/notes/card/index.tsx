@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import clsx from 'clsx'
 import DateUtils from '../../../../utils/DateUtils'
 import TagList from '../../../../components/tag_list/index'
@@ -21,7 +21,7 @@ import NoteCardProps from './props'
 import './styles.css'
 
 const NoteCard = (props: NoteCardProps): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const classes = useStyles()
 

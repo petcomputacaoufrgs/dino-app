@@ -1,4 +1,4 @@
-import LanguageBase from "../../types/languages/LanguageBase"
+import LanguageBase from "../../constants/languages/LanguageBase"
 import EventDoc from "../../types/calendar/database/EventDoc"
 import CalendarDatabase from "../../database/CalendarDatabase"
 import DateUtils from "../../utils/DateUtils"

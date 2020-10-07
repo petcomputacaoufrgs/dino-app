@@ -3,10 +3,10 @@ import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import EditEventModal from '../edit_event_modal'
 import './styles.css'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 
 const AddButton: React.FC = () => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [openDialog, setOpenDialog] = useState(false)
 

@@ -7,7 +7,7 @@ import FaqItemModel from '../../../types/faq/FaqItemModel'
 import FaqItems from './faq_items'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button} from '@material-ui/core'
 import TransitionSlide from '../../../components/slide_transition'
-import { useLanguage, useCurrentFaq } from '../../../context_provider/app_settings'
+import { useCurrentLanguage, useCurrentFaq } from '../../../context_provider/app_settings'
 import SelectFaq from './select_faq'
 import FaqService from '../../../services/faq/FaqService'
 import { useFaq } from '../../../context_provider/faq'
@@ -15,7 +15,7 @@ import QuestionDialogForm from './question_dialog_form'
 
 const Faq = (): JSX.Element => {
     
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const currentFaq = useCurrentFaq()
 

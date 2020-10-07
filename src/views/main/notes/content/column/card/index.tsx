@@ -42,8 +42,11 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
               language
             )}
           />
-          <CardContent className="note__note_content__column__column_card__card__tag_list">
+          <CardContent className='note__note_content__column__column_card__card__card_content'>
             <TagList tagList={note.tagNames} />
+            <p className="note__note_content__column__column_card__card__card_content__answer">
+              {note.answer}
+            </p>
           </CardContent>
         </MaterialCard>
       )}

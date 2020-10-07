@@ -3,20 +3,20 @@
   margin-bottom: 10px;
 }
 
-.note__note_content__column__column_card__card__tag_list {
+.note__note_content__column__column_card__card__card_content {
   overflow: auto;
   -ms-overflow-style: none;
 }
 
-.note__note_content__column__column_card__card__tag_list.MuiCardContent-root {
+.note__note_content__column__column_card__card__card_content.MuiCardContent-root {
   padding-top: 16px;
 }
 
-.note__note_content__column__column_card__card__tag_list:last-child {
+.note__note_content__column__column_card__card__card_content:last-child {
   padding-bottom: 16px;
 }
 
-.note__note_content__column__column_card__card__tag_list::-webkit-scrollbar {
+.note__note_content__column__column_card__card__card_content::-webkit-scrollbar {
   display: none;
 }
 
@@ -40,4 +40,15 @@
 
 .note__note_content__column__column_card.MuiPaper-rounded {
   border-radius: 3px;
+}
+
+.note__note_content__column__column_card__card__card_content__answer {
+  margin-top: 8px;
+  margin-bottom: 0px;
+  font-size: smaller;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }

@@ -15,6 +15,7 @@ import { useAlert } from './context_provider/alert'
 import EventService from './services/events/EventService'
 import UserContextProvider from './context_provider/user'
 import './App.css'
+import Load from './views/load'
 
 const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
@@ -47,29 +48,33 @@ const App = (): JSX.Element => {
     }
   }, [language, firstLoad])
 
-  return (
-    <div className="app">
-      <PrivateRouterContextProvider
-        loginPath={PathConstants.LOGIN}
-        homePath={PathConstants.HOME}
-        isAuthenticated={AuthService.isAuthenticated}
-        browserHistory={HistoryService}
-      >
-        <Switch>
-          <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-          <PrivateRoute
-            path={PathConstants.APP}
-            component={() => (
-              <UserContextProvider>
-                <Main />
-              </UserContextProvider>
-            )}
-          />
-          <Route path={'/'} component={NotFound} />
-        </Switch>
-      </PrivateRouterContextProvider>
-    </div>
+  const renderApp = (): JSX.Element => (
+    <PrivateRouterContextProvider
+      loginPath={PathConstants.LOGIN}
+      homePath={PathConstants.HOME}
+      isAuthenticated={AuthService.isAuthenticated}
+      browserHistory={HistoryService}
+    >
+      <Switch>
+        <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
+        <PrivateRoute
+          path={PathConstants.APP}
+          component={() => (
+            <UserContextProvider>
+              <Main />
+            </UserContextProvider>
+          )}
+        />
+        <Route path={'/'} component={NotFound} />
+      </Switch>
+    </PrivateRouterContextProvider>
   )
+
+  const renderLoad = (): JSX.Element => (
+    <Load />
+  )
+
+  return <div className="app">{ firstLoad ? renderLoad() : renderApp() }</div>
 }
 
 export default App

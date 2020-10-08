@@ -5,7 +5,6 @@ import LanguageBase from '../types/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {
-
   getStartOfDay = (date: Date): Date => (
     moment(date).startOf('day').toDate()
   )

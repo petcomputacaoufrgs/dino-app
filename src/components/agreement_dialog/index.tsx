@@ -11,52 +11,45 @@ import DialogTitle from '@material-ui/core/DialogTitle'
  * Dialog genérica com duas opções
  * @param props Propriedades para especializar a Dialog
  */
-const AgreementDialog = (
-  props: AgreementDialogProps
-): [() => JSX.Element, () => void] => {
-  const [open, setOpen] = React.useState(false)
+const AgreementDialog: React.FC<AgreementDialogProps> = ({
+  agreeOptionText,
+  description,
+  disagreeOptionText,
+  question,
+  onAgree,
+  onDisagree,
+  open,
+}) => {
+  const handleDisagree = () => {
+    onDisagree()
+  }
 
-  const onDisagree = () => {
-    setOpen(false)
-    if (props.onDisagree) {
-      props.onDisagree()
+  const handleAgree = () => {
+    if (onAgree) {
+      onAgree()
     }
   }
 
-  const onAgree = () => {
-    setOpen(false)
-    if (props.onAgree) {
-      props.onAgree()
-    }
-  }
-
-  const show = () => {
-    setOpen(true)
-  }
-
-  const render = (): JSX.Element => (
-    <Dialog
-      open={open}
-      onClose={onDisagree}
-    >
-      <DialogTitle id="alert-dialog-title">{props.question}</DialogTitle>
+  return (
+    <Dialog open={open} onClose={handleDisagree}>
+      <DialogTitle id="alert-dialog-title">{question}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {props.description}
+          {description}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onDisagree} color="primary">
-          {props.disagreeOptionText}
+        <Button onClick={handleDisagree} color="primary">
+          {disagreeOptionText}
         </Button>
-        <Button onClick={onAgree} color="primary" autoFocus>
-          {props.agreeOptionText}
-        </Button>
+        {onAgree && (
+          <Button onClick={handleAgree} color="primary" autoFocus>
+            {agreeOptionText}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   )
-
-  return [render, show]
 }
 
 export default AgreementDialog

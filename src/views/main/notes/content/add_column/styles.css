@@ -1,0 +1,31 @@
+.note__note_content__columns__add_column {
+  padding-right: 14px;
+  margin-left: 7px;
+  width: 270px;
+  flex: 0 0 auto;
+}
+
+.note__note_content__columns__add_column.desktop {
+  width: 15%;
+}
+
+.note__note_content__columns__add_column__button.MuiButtonBase-root.MuiButton-root {
+  border: 1px solid;
+  border-color: rgba(179, 46, 85);
+  background-color: rgb(245, 245, 245);
+  border-radius: 5px;
+  width: 100%;
+  height: auto;
+}
+
+.note__note_content__columns__add_column__button__text {
+  line-height: initial;
+  font-size: small;
+  margin-bottom: 0;
+  font-weight: bold;
+  color: #b32e55;
+}
+
+.note__note_content__columns__add_column__button__text__max_columns {
+  color: red;
+}

@@ -1,30 +1,27 @@
 import ConnectionService from '../connection/ConnectionService'
 import UserService from '../user/UserService'
 import HistoryService from '../history/HistoryService'
-import PathConstants from '../../constants/PathConstants'
+import PathConstants from '../../constants/app/PathConstants'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import AuthService from '../auth/AuthService'
-import Synchronizer from '../../sync/Synchronizer'
+import Synchronizer from '../../sync/SynchronizerService'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
 
-/**
- * Executa funções baseado em eventos da aplicação
- */
 class EventService {
   constructor() {
     ConnectionService.addEventListener(this.connectionCallback)
   }
 
-  whenStart = () => {
-    AuthService.removeTempAuthToken()
+  whenStart = async () => {
+    AuthService.cleanLoginGarbage()
+    await WebSocketConnector.connect()
     Synchronizer.sync()
-    WebSocketConnector.connect()
   }
 
   whenLogin = () => {
     CalendarService.addMocks()
-    Synchronizer.receive()
+    Synchronizer.sync(true)
     WebSocketConnector.connect()
     HistoryService.push(PathConstants.HOME)
   }
@@ -51,9 +48,7 @@ class EventService {
     WebSocketConnector.disconnect()
   }
 
-  whenError = () => {
-    HistoryService.push(PathConstants.HOME)
-  }
+  whenError = () => {}
 
   private connectionCallback = (online: boolean) => {
     online ? this.whenConnectionReturn() : this.whenConnectionLost()

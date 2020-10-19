@@ -1,5 +1,5 @@
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
+import LanguageCodeConstants from '../../constants/language/LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em inglês americano
@@ -44,7 +44,7 @@ export default class EN implements LanguageBase {
   LOGOUT_DIALOG_QUESTION = 'Are you sure you want to log out?'
 
   LOGOUT_DIALOG_DESCRIPTION =
-    "If you say 'YES' all your account data will be removed from this device"
+    'If you answer "YES" all your account data will be removed from this device'
 
   AGREEMENT_OPTION_TEXT = 'YES'
 
@@ -101,8 +101,6 @@ export default class EN implements LanguageBase {
   NOTE_EDIT_QUESTION_BUTTON = 'Click here to edit the question of this note.'
 
   NOTE_DELETE_BUTTON = 'Click here to delete this note.'
-
-  QUESTION_NOTE_DIALOG_TITLE = 'Question'
 
   ANSWER_NOTE_DIALOG_TITLE = 'Answer'
 
@@ -231,7 +229,7 @@ export default class EN implements LanguageBase {
   CLOSE_ARIA_LABEL = 'Close'
 
   DELETE_ARIA_LABEL = 'Delete'
-  
+
   EDIT_ARIA_LABEL = 'Edit'
 
   INVALID_WEEKDAY = 'Invalid weekday.'
@@ -249,9 +247,9 @@ export default class EN implements LanguageBase {
   INVALID_EVENT_TYPE = 'Invalid event type'
 
   MINUTES = 'minutes'
-  
+
   HOURS = 'hours'
-  
+
   DAYS = 'days'
 
   AND = 'and'
@@ -275,7 +273,7 @@ export default class EN implements LanguageBase {
   EVENT_INIT_TIME_LABEL = 'Start time'
 
   EVENT_END_DATE_LABEL = 'End day'
-  
+
   EVENT_END_TIME_LABEL = 'End time'
 
   DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
@@ -324,7 +322,7 @@ export default class EN implements LanguageBase {
 
   CHANGE_COLOR_ARIA_LABEL = 'Click to select a random color'
 
-  ADD_PHONE_ARIA_LABEL= 'Click to add a new phone number'
+  ADD_PHONE_ARIA_LABEL = 'Click to add a new phone number'
 
   RETURN_ARIA_LABEL = 'Return'
 
@@ -338,7 +336,45 @@ export default class EN implements LanguageBase {
 
   EVENT_COLOR_LABEL = 'Selected color'
 
-
   FAQ_CONNECTION_ERROR = 'Internet connection required'
 
+  MAX = 'Max.'
+
+  ADD_COLUMN_TEXT = '+ Add column'
+
+  COLUMN_ADD_LABEL = 'Add Column'
+
+  COLUMN_EDIT_LABEL = 'Edit Column'
+
+  COLUMN_TITLE_LABEL = "Column's title"
+
+  COLUMN_MIN_LENGTH_ERROR = 'Minimum one character.'
+
+  COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Title already exists'
+
+  NOTE_COLUMN_DELETE_DIALOG_QUESTION =
+    'Are you sure you want to delete this column?'
+
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
+    'This column has notes, are you sure you want to delete it?'
+
+  NOTE_COLUMN_DELETE_DIALOG_DESC =
+    'If you answer "YES" this column will be removed permanently.'
+
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
+    'If you remove this column related notes will be deleted permanently.'
+
+  NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
+
+  NOTE_COLUMN_ADD_NOTE_TEXT = 'Add note'
+
+  NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'New note'
+
+  QUESTION_NOTE_DIALOG_TITLE = 'Question'
+
+  NOTE_INFO_DIALOG_LAST_UPDATE_TITLE = 'Last update:'
+
+  NOTE_INFO_DIALOG_COLUMN_TITLE = 'Column:'
+
+  NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
 }

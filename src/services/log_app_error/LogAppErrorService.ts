@@ -1,11 +1,11 @@
 import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
 import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import LogAppErrorSyncLocalStorage from '../../local_storage/LogAppErrorSyncLocalStorage'
+import LogAppErrorSyncLocalStorage from '../../local_storage/log_app_error/LogAppErrorSyncLocalStorage'
 import LogAppErrorDatabase from '../../database/LogAppErrorDatabase'
 import LogAppErrorDoc from '../../types/log_app_error/database/LogAppErrorDoc'
 import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
-import LogAppModelError from '../../error/LogAppModelError'
+import LogAppModelError from '../../error/log_app_error/LogAppModelError'
 
 class LogAppErrorService {
   shouldSync = (): boolean => {

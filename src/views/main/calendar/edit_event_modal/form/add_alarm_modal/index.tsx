@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import AddAlarmModalProps from './props'
-import { Dialog, DialogContent, FormControl, RadioGroup, FormControlLabel, Radio, TextField, Button } from '@material-ui/core'
+import {
+  Dialog,
+  DialogContent,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  TextField,
+  Button,
+} from '@material-ui/core'
 import { useLanguage } from '../../../../../../context_provider/app_settings'
 import StringUtils from '../../../../../../utils/StringUtils'
 import NumberUtils from '../../../../../../utils/NumberUtils'
@@ -30,7 +39,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
     event: React.ChangeEvent<HTMLInputElement>,
     value: string
   ) => {
-    const newType = NumberUtils.safeParseInt(value)
+    const newType = NumberUtils.safeParseNumber(value)
     setAlarmType(newType)
 
     switch (newType) {
@@ -47,9 +56,9 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
   }
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = NumberUtils.safeParseInt(event.target.value)
+    const newTime = NumberUtils.safeParseNumber(event.target.value)
 
-    switch(alarmType) {
+    switch (alarmType) {
       case EventAlarmType.DAY:
         setTime(newTime > 28 ? 28 : newTime)
         break
@@ -115,26 +124,17 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
             <FormControlLabel
               value={EventAlarmType.MINUTE}
               control={<Radio />}
-              label={getAlarmTypeLabel(
-                EventAlarmType.MINUTE,
-                language.MINUTES
-              )}
+              label={getAlarmTypeLabel(EventAlarmType.MINUTE, language.MINUTES)}
             />
             <FormControlLabel
               value={EventAlarmType.HOUR}
               control={<Radio />}
-              label={getAlarmTypeLabel(
-                EventAlarmType.HOUR,
-                language.HOURS
-              )}
+              label={getAlarmTypeLabel(EventAlarmType.HOUR, language.HOURS)}
             />
             <FormControlLabel
               value={EventAlarmType.DAY}
               control={<Radio />}
-              label={getAlarmTypeLabel(
-                EventAlarmType.DAY,
-                language.DAYS
-              )}
+              label={getAlarmTypeLabel(EventAlarmType.DAY, language.DAYS)}
             />
           </RadioGroup>
           <Button

@@ -4,10 +4,10 @@ import Paper from '@material-ui/core/Paper'
 import TagListProps from './props'
 import './styles.css'
 
-const TagList = (props: TagListProps): JSX.Element => {
+const TagList: React.FC<TagListProps> = ({ tagList }) => {
   return (
     <Paper className="tag_list" component="ul">
-      {props.tagList.map((tag, index) => (
+      {tagList.map((tag, index) => (
         <li key={index}>
           <Chip label={tag} />
         </li>

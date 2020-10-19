@@ -14,8 +14,6 @@
 .adaptable_menu__component_with_mini {
   width: 100%;
   height: calc(100% - 55px);
-  overflow: scroll;
-  -ms-overflow-style: none;
   padding-left: 73px;
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import './styles.css'
-import AppConstants from '../../constants/AppConstants'
+import AppConstants from '../../constants/app/AppConstants'
 
 const TopBar = () => (
   <div className="top_bar">

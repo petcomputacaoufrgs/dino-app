@@ -1,4 +1,4 @@
 export default interface SubscriberItem {
   path: string
-  callback: (data: any) => void
+  callback: (data: any) => any
 }

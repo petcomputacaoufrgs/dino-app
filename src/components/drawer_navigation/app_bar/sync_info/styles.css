@@ -1,20 +1,20 @@
 .drawer_menu__sync_info {
   margin-left: auto;
-  margin-right: 8px;
+  margin-right: 18px;
 }
 
 .drawer_menu__sync_info__cloud_icon {
   width: 45px;
   height: 45px;
-  fill: white;
+  fill: black;
 }
 
 .drawer_menu__sync_info__icon {
   width: 15px;
   height: 15px;
-  margin-left: -30px;
+  margin-left: -27.5px;
   margin-top: 6px;
-  fill: white;
+  fill: black;
 }
 
 .drawer_menu__sync_info__icon.offline {

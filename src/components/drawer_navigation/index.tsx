@@ -25,7 +25,6 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
     <div className='drawer_navigation' ref={drawerNavigationEl}>
       <AppBar
         onDrawerOpen={handleDrawerOpen}
-        open={open}
       />
       <Content
         component={component}

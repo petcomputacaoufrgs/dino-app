@@ -11,6 +11,7 @@ class DinoAPIURLConstants {
   private USER = `${this.URL}user/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private NOTE = `${this.URL}note/`
+  private NOTE_COLUMN = `${this.URL}note_column/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
   private FAQ = this.URL + 'faq/'
@@ -20,6 +21,8 @@ class DinoAPIURLConstants {
   REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`
 
   REFRESH_AUTH = `${this.PUBLIC_AUTH}refresh/`
+
+  WEB_SOCKET_AUTH = `${this.AUTH}web_socket/`
 
   USER_VERSION = `${this.USER}version/`
 
@@ -47,13 +50,31 @@ class DinoAPIURLConstants {
 
   NOTE_DELETE = `${this.NOTE}`
 
+  NOTE_DELETE_ALL = `${this.NOTE}all/`
+
+  NOTE_SYNC = `${this.NOTE}sync/`
+
+  NOTE_COLUMN_GET = `${this.NOTE_COLUMN}`
+
+  NOTE_COLUMN_SAVE = `${this.NOTE_COLUMN}`
+
+  NOTE_COLUMN_DELETE = `${this.NOTE_COLUMN}`
+
+  NOTE_COLUMN_DELETE_ALL = `${this.NOTE_COLUMN}all/`
+
+  NOTE_COLUMN_SYNC = `${this.NOTE_COLUMN}sync/`
+
+  NOTE_COLUMN_ORDER = `${this.NOTE_COLUMN}order/`
+
+  NOTE_COLUMN_VERSION = `${this.NOTE_COLUMN}version/`
+
   CONTACT_VERSION = `${this.CONTACT}version/`
 
   CONTACT_GET = `${this.CONTACT}`
 
   CONTACT_SAVE = `${this.CONTACT}`
 
-  CONTACT_EDIT = `${this.CONTACT}` 
+  CONTACT_EDIT = `${this.CONTACT}`
 
   CONTACT_DELETE = `${this.CONTACT}`
 
@@ -62,14 +83,6 @@ class DinoAPIURLConstants {
   CONTACT_EDIT_ALL = `${this.CONTACT}all/`
 
   CONTACT_DELETE_ALL = `${this.CONTACT}all/`
-
-  NOTE_DELETE_ALL = `${this.NOTE}all/`
-
-  NOTE_UPDATE_QUESTION = `${this.NOTE}question/`
-
-  NOTE_UPDATE_ANSWER = `${this.NOTE}answer/`
-
-  NOTE_UPDATE_ALL = `${this.NOTE}all/`
 
   TEST_CONNECTION = `${this.URL}public/test_connection/`
 
@@ -80,13 +93,12 @@ class DinoAPIURLConstants {
   FAQ_GET = `${this.FAQ}`
 
   FAQ_GET_VERSION = `${this.FAQ}version/`
-  
+
   FAQ_SAVE = `${this.FAQ}`
 
   FAQ_OPTIONS = `${this.URL}public/faq/options/`
 
   FAQ_SAVE_USER_QUESTION = `${this.FAQ}question/`
-
 }
 
 export default new DinoAPIURLConstants()

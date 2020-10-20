@@ -2,7 +2,7 @@ import React from 'react'
 import { useCurrentLanguage } from '../../context_provider/app_settings'
 import PageNotFound from '../../assets/images/page_not_found.svg'
 import HistoryService from '../../services/history/HistoryService'
-import PathConstants from '../../constants/PathConstants'
+import PathConstants from '../../constants/app/PathConstants'
 import './styles.css'
 
 const redirectTimeout = 2000

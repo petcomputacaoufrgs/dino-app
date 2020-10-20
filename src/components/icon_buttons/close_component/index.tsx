@@ -10,8 +10,8 @@ const CloseComponent = ({onClose}: CloseComponentProps): JSX.Element => {
 
   return (
     <IconButton
-      edge='end'
-      size='small'
+      edge="end"
+      size="small"
       aria-label={language.CLOSE_ARIA_LABEL}
       onClick={onClose}
     >

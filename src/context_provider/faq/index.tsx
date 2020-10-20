@@ -41,9 +41,7 @@ const FaqContextProvider: React.FC = (props) => {
   }
 
   return (
-    <FaqContext.Provider value={value}>
-      {props.children}
-    </FaqContext.Provider>
+    <FaqContext.Provider value={value}>{props.children}</FaqContext.Provider>
   )
 }
 

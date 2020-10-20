@@ -1,7 +1,4 @@
 import LogAppErrorModel from '../LogAppErrorModel'
+import BaseDoc from '../../database/BaseDoc'
 
-export default interface LogAppErrorDoc
-  extends PouchDB.Core.GetMeta,
-    LogAppErrorModel {
-  _id?: string
-}
+export default interface LogAppErrorDoc extends BaseDoc, LogAppErrorModel {}

@@ -9,7 +9,7 @@ class ErrorHandlerService {
   }
 
   log = (
-    event?: Event | string,
+    event: Event | string,
     source?: string,
     lineno?: number,
     colno?: number,
@@ -26,7 +26,7 @@ class ErrorHandlerService {
       EventService.whenError()
     }
 
-    return process.env.NODE_ENV === 'production' ? true : false
+    return process.env.NODE_ENV === 'production' ? true : true
   }
 }
 

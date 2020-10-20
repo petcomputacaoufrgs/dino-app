@@ -7,7 +7,8 @@ import { useCurrentLanguage } from '../../../../../context_provider/app_settings
 import HeaderProps from './props'
 import './styles.css'
 
-const Header: React.FC<HeaderProps> = ({onClose, onDelete, onEdit}) => {
+const Header: React.FC<HeaderProps> = ({ onClose, onDelete, onEdit }) => {
+  const language = useLanguage().current
 
     const language = useCurrentLanguage()
     
@@ -33,7 +34,16 @@ const Header: React.FC<HeaderProps> = ({onClose, onDelete, onEdit}) => {
             </IconButton>
         </div>
       </div>
-    )
+      <div className="calendar__event_modal__header__left">
+        <IconButton aria-label={language.DELETE_ARIA_LABEL} onClick={onDelete}>
+          <EditIcon fontSize="default" />
+        </IconButton>
+        <IconButton aria-label={language.EDIT_ARIA_LABEL} onClick={onEdit}>
+          <DeleteIcon fontSize="default" />
+        </IconButton>
+      </div>
+    </div>
+  )
 }
 
 export default Header

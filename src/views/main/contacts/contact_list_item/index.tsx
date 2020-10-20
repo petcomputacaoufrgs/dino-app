@@ -2,19 +2,33 @@ import React, { useState } from 'react'
 import useStyles from '../styles'
 import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import ContactItemListProps from './props'
-import { Avatar, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Menu, MenuItem,} from '@material-ui/core'
+import {
+  Avatar,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  ListItemSecondaryAction,
+  Menu,
+  MenuItem,
+} from '@material-ui/core'
 import ContactsService from '../../../../services/contact/ContactService'
 import OptionsComponent from '../../../../components/icon_buttons/options_component'
 
-const ContactItemList = ({item, setEdit, setDelete, onClick, children}: ContactItemListProps): JSX.Element => {
-
+const ContactItemList = ({
+  item,
+  setEdit,
+  setDelete,
+  onClick,
+  children,
+}: ContactItemListProps): JSX.Element => {
   const classes = useStyles()
 
   const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+    setAnchorEl(event.currentTarget)
 
   const handleOpen = () => onClick(item.frontId)
 
@@ -30,10 +44,13 @@ const ContactItemList = ({item, setEdit, setDelete, onClick, children}: ContactI
   }
 
   return (
-    <div className='contact-list-item'>
+    <div className="contact-list-item">
       <ListItem button divider onClick={handleOpen}>
         <ListItemAvatar>
-          <Avatar aria-label={language.AVATAR_ALT} className={classes[item.color]}>
+          <Avatar
+            aria-label={language.AVATAR_ALT}
+            className={classes[item.color]}
+          >
             {item.name[0].toUpperCase()}
           </Avatar>
         </ListItemAvatar>

@@ -20,7 +20,11 @@ const AddButton: React.FC = () => {
 
   return (
     <div className="calendar__add_button">
-      <Fab color="primary" aria-label={language.ADD_ARIA_LABEL} onClick={handleAddClick}>
+      <Fab
+        color="primary"
+        aria-label={language.ADD_ARIA_LABEL}
+        onClick={handleAddClick}
+      >
         <AddIcon />
       </Fab>
       <EditEventModal open={openDialog} onClose={handleCloseDialog} />

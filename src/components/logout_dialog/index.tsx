@@ -1,25 +1,30 @@
+import React from 'react'
 import AgreementDialog from '../agreement_dialog'
-import AgreementDialogProps from '../agreement_dialog/props'
+import LogoutDialogProps from './props'
 import './styles.css'
+import AgreementDialogProps from '../agreement_dialog/props'
 import { useLanguage } from '../../context_provider/app_settings'
-import AuthService from '../../services/auth/AuthService'
 
-const LogoutDialog = (): [() => JSX.Element, () => void] => {
+const LogoutDialog: React.FC<LogoutDialogProps> = ({
+  open,
+  onAgree,
+  onDisagree,
+}) => {
   const languageContext = useLanguage()
 
   const language = languageContext.current
 
   const agreementDialogProps: AgreementDialogProps = {
-    onAgree: AuthService.googleLogout,
+    onAgree: onAgree,
+    onDisagree: onDisagree,
     question: language.LOGOUT_DIALOG_QUESTION,
     description: language.LOGOUT_DIALOG_DESCRIPTION,
     agreeOptionText: language.AGREEMENT_OPTION_TEXT,
     disagreeOptionText: language.DISAGREEMENT_OPTION_TEXT,
+    open: open,
   }
 
-  const [Dialog, showAgreementDialog] = AgreementDialog(agreementDialogProps)
-
-  return [Dialog, showAgreementDialog]
+  return <AgreementDialog {...agreementDialogProps} />
 }
 
 export default LogoutDialog

@@ -1,16 +1,17 @@
 import SockJS from 'sockjs-client'
 import Stomp, { Message } from 'stompjs'
 import BaseWebSocketSubscriber from './BaseWebSocketSubscriber'
-import GlossaryWebSocketSubscriber from './GlossaryWebSocketSubscriber'
-import AppSettingsWebSocketSubscriber from './AppSettingsWebSocketSubscriber'
-import NoteWebSocketSubscriber from './NoteWebSocketSubscriber'
-import UserWebSocketSubscriber from './UserWebSocketSubscriber'
-import ContactWebSocketSubscriber from './ContactWebSocketSubscriber'
-import FaqWebSocketSubscriber from './FaqWebSocketSubscriber'
-import FaqUserWebSocketSubscriber from './FaqUserWebSocketSubscriber'
+import GlossaryWebSocketSubscriber from './glossary/GlossaryWebSocketSubscriber'
+import AppSettingsWebSocketSubscriber from './app_settings/AppSettingsWebSocketSubscriber'
+import NoteWebSocketSubscriber from './note/NoteWebSocketSubscriber'
+import UserWebSocketSubscriber from './user/UserWebSocketSubscriber'
+import ContactWebSocketSubscriber from './contact/ContactWebSocketSubscriber'
+import FaqWebSocketSubscriber from './faq/FaqWebSocketSubscriber'
+import FaqUserWebSocketSubscriber from './faq/FaqUserWebSocketSubscriber'
 import AuthService from '../services/auth/AuthService'
 import DinoAPIWebSocketConstants from '../constants/dino_api/DinoAPIWebSocketConstants'
 import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
+import NoteColumnWebSocketSubscriber from './note/NoteColumnWebSocketSubscriber'
 
 class WebSocketConnector {
   private socket?: WebSocket
@@ -18,19 +19,24 @@ class WebSocketConnector {
   private subscribers: BaseWebSocketSubscriber[] = [
     GlossaryWebSocketSubscriber,
     AppSettingsWebSocketSubscriber,
+    NoteColumnWebSocketSubscriber,
     NoteWebSocketSubscriber,
     UserWebSocketSubscriber,
     ContactWebSocketSubscriber,
     FaqWebSocketSubscriber,
-    FaqUserWebSocketSubscriber
+    FaqUserWebSocketSubscriber,
   ]
 
-  connect = () => {
+  connect = async () => {
     if (AuthService.isAuthenticated()) {
-      this.socket = new SockJS(this.getSocketBaseURL())
-      this.stompClient = Stomp.over(this.socket)
-      //this.muteConnectionLogs() //esconde os logs do socket
-      this.stompClient.connect({}, this.subscribe)
+      const response = await AuthService.requestWebSocketAuthToken()
+      if (response) {
+        const baseUrl = this.getSocketBaseURL(response.webSocketToken)
+        this.socket = new SockJS(baseUrl)
+        this.stompClient = Stomp.over(this.socket)
+        //this.muteConnectionLogs()
+        this.stompClient.connect({}, this.subscribe)
+      }
     }
   }
 
@@ -60,10 +66,8 @@ class WebSocketConnector {
     callback(JSON.parse(message.body))
   }
 
-  private getSocketBaseURL(): string {
-    return `${DinoAPIWebSocketConstants.URL}?${
-      DinoAPIHeaderConstants.AUTHORIZATION
-    }=${AuthService.getAuthToken()}`
+  private getSocketBaseURL(token: string): string {
+    return `${DinoAPIWebSocketConstants.URL}?${DinoAPIHeaderConstants.WS_AUTHORIZATION}=${token}`
   }
 }
 

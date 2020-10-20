@@ -6,6 +6,7 @@ import HeaderProps from './props'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ onClose }) => {
+  const language = useLanguage().current
 
   const language = useCurrentLanguage()
 
@@ -17,7 +18,8 @@ const Header: React.FC<HeaderProps> = ({ onClose }) => {
           </IconButton>
         </div>
       </div>
-    )
+    </div>
+  )
 }
 
 export default Header

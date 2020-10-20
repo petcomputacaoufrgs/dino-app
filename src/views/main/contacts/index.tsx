@@ -8,10 +8,9 @@ import ButtonAdd from '../../../components/button_add'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContacts } from '../../../context_provider/contact'
 import ContactFormDialog from './contact_dialog_form'
-import Contants from '../../../constants/ContactsConstants'
+import Contants from '../../../constants/contact/ContactsConstants'
 
 const Contacts = (): JSX.Element => {
-  
   const language = useCurrentLanguage()
 
   const items = useContacts().items
@@ -24,10 +23,10 @@ const Contacts = (): JSX.Element => {
   }
 
   useEffect(() => {
-      const results = items.filter((item) =>
-        StringUtils.contains(item.name, searchTerm)
-      )
-      setSearchResults(results)
+    const results = items.filter((item) =>
+      StringUtils.contains(item.name, searchTerm)
+    )
+    setSearchResults(results)
   }, [items, searchTerm])
 
   return (

@@ -1,0 +1,46 @@
+.drawer_navigation__drawer {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    height: 100%;
+    width: 240px;
+    display: flex;
+    flex-direction: row;
+    transform: translate3d(-240px, 0, 0);
+    transition: transform 250ms;
+}
+
+.drawer_navigation__drawer__visible {
+    height: 100%;
+    width: 240px;
+    background-color: whitesmoke;
+}
+
+.drawer_navigation__drawer__invisible {
+    position: fixed;
+    z-index: 888;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    border: none;
+}
+
+.drawer_navigation__drawer__invisible:focus {
+    outline: 0;
+}
+
+.drawer_navigation__drawer__header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.drawer_navigation__drawer__visible .MuiList-root.MuiList-padding {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.drawer_navigation__drawer__visible__item_image {
+    width: 30px;
+    height: 30px;
+}

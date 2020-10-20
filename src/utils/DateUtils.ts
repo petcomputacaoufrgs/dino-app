@@ -5,30 +5,20 @@ import LanguageBase from '../constants/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {
+  getStartOfDay = (date: Date): Date => moment(date).startOf('day').toDate()
 
-  getStartOfDay = (date: Date): Date => (
-    moment(date).startOf('day').toDate()
-  )
+  getEndOfDay = (date: Date): Date => moment(date).endOf('day').toDate()
 
-  getEndOfDay = (date: Date): Date => (
-    moment(date).endOf('day').toDate()
-  )
+  isToday = (date: Date): boolean => this.isEqualDay(date, new Date())
 
-  isToday = (date: Date): boolean => (
-    this.isEqualDay(date, new Date())
-  )
-
-  isEqualHour = (d1: Date, d2: Date): boolean => (
+  isEqualHour = (d1: Date, d2: Date): boolean =>
     d1.getHours() === d2.getHours() && this.isEqualDay(d1, d2)
-  )
 
-  isEqualDay = (d1: Date, d2: Date): boolean => (
+  isEqualDay = (d1: Date, d2: Date): boolean =>
     d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
-  )
 
-  isEqualMonth = (d1: Date, d2: Date): boolean => (
+  isEqualMonth = (d1: Date, d2: Date): boolean =>
     d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
-  )
 
   getLastMonth = (date: Date): Date => {
     return moment(date).add(-1, 'M').startOf('month').toDate()
@@ -40,12 +30,6 @@ class DateUtils {
 
   addMonth = (date: Date, diff: number): Date => {
     return moment(date).add(diff, 'M').startOf('month').toDate()
-  }
-
-  getDatetimeInMillis = (): number => {
-    return DateTime.local()
-      .setZone(DinoAPIGeneralConstants.DEFAULT_TIMEZONE)
-      .toMillis()
   }
 
   getDateStringFormated = (dateMS: number, language: LanguageBase): string => {

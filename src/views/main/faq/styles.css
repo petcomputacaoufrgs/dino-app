@@ -1,24 +1,24 @@
 .select-faq__button {
-    margin: auto;
-    display: flex;
+  margin: auto;
+  display: flex;
 }
 
 .send-question__button {
-    text-decoration: underline;
-    color:rgb(0, 102, 255); 
-    border: none;
-    background: none;
-    cursor: pointer;
-    display: block;
-    padding: 7px; 
-    margin:auto;
-    display:block;
+  text-decoration: underline;
+  color: rgb(0, 102, 255);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
+  padding: 7px;
+  margin: auto;
+  display: block;
 }
-  
+
 .send-question__button:hover {
-    color: lightblue;
+  color: lightblue;
 }
 
 .send-question__button:focus {
-    outline: none;
+  outline: none;
 }

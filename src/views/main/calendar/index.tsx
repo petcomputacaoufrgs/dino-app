@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Month from './month'
 import AddButton from './add_button'
-import DateUtils from '../../../utils/DateUtils' 
+import DateUtils from '../../../utils/DateUtils'
 import HorizontalPagination from '../../../components/horizontal_pagination'
 import './styles.css'
 
@@ -21,7 +21,7 @@ const Calendar: React.FC = () => {
     } else if (indexBasedInMainSlide < UPDATE_MARGIN * -1) {
       setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
       setSlide(HALF_MONTH_RANGE)
-    } 
+    }
   }
 
   const getMonthElementList = (): React.FC[] => {

@@ -9,12 +9,12 @@ const OptionsComponent = ({onClick}: OptionsComponentProps): JSX.Element => {
   const language = useCurrentLanguage()
 
   return (
-    <IconButton 
-      edge="end" 
-      aria-label={language.OPTIONS_ARIA_LABEL} 
+    <IconButton
+      edge="end"
+      aria-label={language.OPTIONS_ARIA_LABEL}
       onClick={onClick}
     >
-        <MoreVert />
+      <MoreVert />
     </IconButton>
   )
 }

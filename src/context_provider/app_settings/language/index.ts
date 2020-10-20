@@ -3,7 +3,7 @@ import LanguageBase from '../../../constants/languages/LanguageBase'
 import LanguageContextType, {
   Language,
 } from '../../../types/context_provider/LanguageContextType'
-import LanguageCodeConstants from '../../../constants/LanguageCodeConstants'
+import LanguageCodeConstants from '../../../constants/language/LanguageCodeConstants'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 
 const LanguageContextProvider = (): LanguageContextType => {

@@ -10,7 +10,6 @@ import {
   TextField,
   Button,
 } from '@material-ui/core'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
 import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import StringUtils from '../../../../../../utils/StringUtils'
 import NumberUtils from '../../../../../../utils/NumberUtils'

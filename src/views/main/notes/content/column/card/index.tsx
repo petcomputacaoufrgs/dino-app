@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import DateUtils from '../../../../../../utils/DateUtils'
 import TagList from '../../../../../../components/tag_list/index'
 import MaterialCard from '@material-ui/core/Card'
@@ -15,7 +15,7 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   searching,
   onClickNote,
 }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const handleCardClick = () => {
     onClickNote(note)

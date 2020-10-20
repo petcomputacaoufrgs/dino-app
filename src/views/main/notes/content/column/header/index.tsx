@@ -4,14 +4,14 @@ import './styles.css'
 import { ReactComponent as EditIcon } from '../../../../../../assets/icons/edit.svg'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../../../assets/icons/delete_outline.svg'
 import SVGButton from '../../../../../../components/button/svg_button'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 
 const NoteBodyColumnHeader: React.FC<NoteBodyColumnHeaderProps> = ({
   title,
   onEdit,
   onDelete,
 }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   return (
     <div className="note__note_content__column__column_header">

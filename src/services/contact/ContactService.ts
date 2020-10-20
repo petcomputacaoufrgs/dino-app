@@ -1,10 +1,8 @@
 import ContactsConstants from '../../constants/contact/ContactsConstants'
-import { useLanguage } from '../../context_provider/app_settings'
 import PhoneModel from '../../types/contact/PhoneModel'
 import ContactModel from '../../types/contact/ContactModel'
 import ContactResponseModel from '../../types/contact/ContactResponseModel'
 import LS from '../../local_storage/contact/ContactLocalStorage'
-import ArrayUtils from '../../utils/ArrayUtils'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import DinoAgentService from '../../agent/DinoAgentService'
@@ -13,6 +11,7 @@ import ContactContextUpdater from '../../context_updater/ContactContextUpdater'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import ArrayUtils from '../../utils/ArrayUtils'
 
 class ContactsService {
   /// #SERVER SERVICE CONNECTION
@@ -26,16 +25,22 @@ class ContactsService {
 
         if (response.status === HttpStatus.OK) {
           const serverContacts: ContactModel[] = response.body
-  
+
           this.setVersion(newVersion)
-  
-          const newLocalItens = this.getItems().filter(c => c.id === undefined)
-  
-          this.setItems(newLocalItens.concat(
-            serverContacts.map(c => { c.frontId = this.makeFrontId() 
-              return c
-          })))
-  
+
+          const newLocalItens = this.getItems().filter(
+            (c) => c.id === undefined
+          )
+
+          this.setItems(
+            newLocalItens.concat(
+              serverContacts.map((c) => {
+                c.frontId = this.makeFrontId()
+                return c
+              })
+            )
+          )
+
           ContactContextUpdater.update()
 
           return
@@ -270,19 +275,22 @@ class ContactsService {
 
     return changed
   }
-  
-  getPhoneTypes = (phones: Array<PhoneModel>, language: LanguageBase): string => {
 
-      return types.map((type) => this.getPhoneType(type)).toString()
+  getPhoneTypes = (
+    phones: Array<PhoneModel>,
+    language: LanguageBase
+  ): string => {
+    if (phones.length > 0) {
+      const types = ArrayUtils.removeRepeatedValues(
+        phones.map((phone) => phone.type)
+      )
+
+      return types.map((type) => this.getPhoneType(type, language)).toString()
     }
-
-        return types.map(type => this.getPhoneType(type, language)).toString()
-        
-      } 
 
     return ''
   }
-    
+
   getPhoneType = (type: number, language: LanguageBase): string => {
     switch (type) {
       case ContactsConstants.PUBLIC_SERVICE:

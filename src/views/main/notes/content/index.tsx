@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import NoteContentProps from './props'
 import './styles.css'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import {
   DragDropContext,
   DropResult,
@@ -33,7 +33,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
   onSaveNewNote,
   questionAlreadyExists,
 }): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(
     undefined

@@ -22,8 +22,6 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({
   const [dialogOpen, setDialogOpen] = useState(open)
   const [repeatType, setRepeatType] = useState(eventRepeatType)
 
-  const language = useLanguage().current
-
   const language = useCurrentLanguage()
 
   useEffect(() => {
@@ -32,6 +30,7 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({
 
   const handleClose = () => {
     onClose()
+    setDialogOpen(false)
   }
 
   const handleRepeatTypeChange = (

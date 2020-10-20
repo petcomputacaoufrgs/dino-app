@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './styles.css'
 import NoteCreateDialogProps from './props'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -17,7 +17,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
   tagOptions,
   questionAlreadyExists,
 }): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [question, setQuestion] = useState('')
   const [questionWithError, setQuestionWithError] = useState(false)

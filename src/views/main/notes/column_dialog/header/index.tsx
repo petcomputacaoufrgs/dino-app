@@ -2,12 +2,12 @@ import React from 'react'
 import NoteColumnDialogHeaderProps from './props'
 import './styles.css'
 import { CardHeader } from '@material-ui/core'
-import { useLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 
 const NoteColumnDialogHeader: React.FC<NoteColumnDialogHeaderProps> = ({
   editing,
 }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   return (
     <CardHeader

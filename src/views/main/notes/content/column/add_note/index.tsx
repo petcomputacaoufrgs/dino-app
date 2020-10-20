@@ -2,14 +2,14 @@ import React from 'react'
 import './styles.css'
 import NotesContentColumnAddNoteProps from './props'
 import { Button } from '@material-ui/core'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import NoteConstants from '../../../../../../constants/note/NoteConstants'
 
 const NotesContentColumnAddNote: React.FC<NotesContentColumnAddNoteProps> = ({
   onAdd,
   notesCount,
 }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const maxNotes = notesCount >= NoteConstants.MAX_NOTES_PER_COLUMN
 

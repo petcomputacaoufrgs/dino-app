@@ -8,6 +8,7 @@ import GlossarySync from './glossary/GlossarySync'
 import FaqSync from './faq/FaqSync'
 import NoteColumnSync from './note/NoteColumnSync'
 import NoteSync from './note/NoteSync'
+import SyncService from '../services/sync/SyncService'
 
 class SyncronizerService {
   private executionGrups: BaseSync[][] = [
@@ -22,7 +23,9 @@ class SyncronizerService {
 
   sync = async (onlyReceive?: boolean) => {
     if (AuthService.isAuthenticated()) {
+      SyncService.setSynchronizing()
       await this.syncGroupsIndependently(onlyReceive)
+      SyncService.setSynced()
     }
   }
 

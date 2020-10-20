@@ -4,9 +4,8 @@ import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'
 import { useLanguage } from '../../../../../context_provider/app_settings'
 import { ListItem } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography';
-import Constants from '../../../../../constants/ContactsConstants'
-
+import Typography from '@material-ui/core/Typography'
+import Constants from '../../../../../constants/contact/ContactsConstants'
 
 const ContactFormDialogContent = (
   props: ContactFormDialogContentProps
@@ -35,7 +34,7 @@ const ContactFormDialogContent = (
         id="name"
         label={language.FORM_NAME}
         type="name"
-        inputProps={{maxLength: Constants.NAME_MAX}}
+        inputProps={{ maxLength: Constants.NAME_MAX }}
         error={isNameInvalid(props.name)}
       />
       <br />
@@ -47,11 +46,11 @@ const ContactFormDialogContent = (
         id="description"
         label={language.FORM_DESCRIPTION}
         type="text"
-        inputProps={{maxLength: Constants.DESCRIPTION_MAX}}
+        inputProps={{ maxLength: Constants.DESCRIPTION_MAX }}
         error={props.description.length === Constants.DESCRIPTION_MAX}
       />
       <br />
-      
+
       {props.phones.map((phone, index) => (
         <div key={index}>
           <PhoneFields
@@ -69,11 +68,16 @@ const ContactFormDialogContent = (
         </div>
       ))}
 
-      <ListItem button onClick={props.handleAddPhone} alignItems='center' style={{justifyContent:"center"}}>
-        <Typography variant='body2' color='textSecondary' display='block'>
+      <ListItem
+        button
+        onClick={props.handleAddPhone}
+        alignItems="center"
+        style={{ justifyContent: 'center' }}
+      >
+        <Typography variant="body2" color="textSecondary" display="block">
           {language.FORM_ADD_PHONE}
-          </Typography>
-        </ListItem>
+        </Typography>
+      </ListItem>
     </>
   )
 }

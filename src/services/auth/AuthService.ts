@@ -2,17 +2,22 @@ import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestMod
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
-import AuthLocalStorage from '../../local_storage/AuthLocalStorage'
+import AuthLocalStorage from '../../local_storage/auth/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
-import LoginErrorConstants from '../../constants/LoginErrorConstants'
+import LoginErrorConstants from '../../constants/login/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../../agent/DinoAgentService'
 import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
 
 class AuthService {
+  cleanLoginGarbage = () => {
+    AuthLocalStorage.cleanLoginGarbage()
+  }
+
   getDefaultScopes = (): string => {
     return (
       GoogleAuthConstants.SCOPE_CALENDAR +
@@ -62,6 +67,24 @@ class AuthService {
     }
 
     return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
+  }
+
+  requestWebSocketAuthToken = async (): Promise<
+    WebSocketAuthResponseModel | undefined
+  > => {
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.WEB_SOCKET_AUTH
+    )
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().go()
+        return response.body
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+      }
+    } else {
+      return undefined
+    }
   }
 
   googleLogout = () => {

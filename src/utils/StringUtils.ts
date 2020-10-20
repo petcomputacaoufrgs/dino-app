@@ -3,11 +3,16 @@ class StringUtils {
     `${str.charAt(0).toUpperCase()}${str.slice(1)}`
 
   normalize = (str: string): string => {
+    if (str) {
+      return str
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+    }
     return str
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
   }
+
+  removeWhiteSpace = (str: string): string => str.replace(' ', '')
 
   /**
    * @param s1 String um

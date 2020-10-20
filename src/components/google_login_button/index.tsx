@@ -10,7 +10,7 @@ import GoogleLogin, {
 } from 'react-google-login'
 import GoogleLogo from '../../assets/logos/google.png'
 import LoginButtonProps from './props'
-import LoginErrorConstants from '../../constants/LoginErrorConstants'
+import LoginErrorConstants from '../../constants/login/LoginErrorConstants'
 import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import AuthService from '../../services/auth/AuthService'
 import { Typography } from '@material-ui/core'

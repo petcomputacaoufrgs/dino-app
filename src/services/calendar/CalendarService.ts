@@ -1,7 +1,7 @@
-import LanguageBase from "../../types/languages/LanguageBase"
-import EventDoc from "../../types/calendar/database/EventDoc"
-import CalendarDatabase from "../../database/CalendarDatabase"
-import DateUtils from "../../utils/DateUtils"
+import LanguageBase from '../../types/languages/LanguageBase'
+import EventDoc from '../../types/calendar/database/EventDoc'
+import CalendarDatabase from '../../database/CalendarDatabase'
+import DateUtils from '../../utils/DateUtils'
 
 class CalendarService {
   getEventTypeName = (type: number, language: LanguageBase) => {
@@ -53,7 +53,8 @@ class CalendarService {
         reminder_alarm_ms: 9200000,
         type: 0,
         _rev: '',
-      }
+        _id: '',
+      },
     ]
 
     CalendarDatabase.putAll(docs)

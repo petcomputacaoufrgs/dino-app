@@ -3,9 +3,9 @@ import LanguageBase from '../constants/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {
-  getStartOfDay = (date: Date): Date => (
-    moment(date).startOf('day').toDate()
-  )
+  getStartOfDay = (date: Date): Date => moment(date).startOf('day').toDate()
+
+  getEndOfDay = (date: Date): Date => moment(date).endOf('day').toDate()
 
   isToday = (date: Date): boolean => this.isEqualDay(date, new Date())
 

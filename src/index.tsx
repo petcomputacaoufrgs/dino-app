@@ -28,14 +28,14 @@ ErrorHandlerService.register()
 ReactDOM.render(
   <Suspense fallback={<Load />}>
     <AlertContextProvider>
-        <SyncContextProvider>
-            <AppSettingsContextProvider>
-                <App />
-            </AppSettingsContextProvider>
-        </SyncContextProvider>
+      <SyncContextProvider>
+        <AppSettingsContextProvider>
+          <App />
+        </AppSettingsContextProvider>
+      </SyncContextProvider>
     </AlertContextProvider>
   </Suspense>,
   document.getElementById('root')
 )
-
+ 
 ServiceWorker.unregister()

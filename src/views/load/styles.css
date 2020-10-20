@@ -1,0 +1,88 @@
+.load {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.load__dino_title {
+    animation: dino_title_in 750ms forwards;
+}
+
+.load__dino_title h1 {
+    font-size: 24px;
+    color: black;
+    font-weight: normal;
+    margin-top: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.load__dino_logo {
+    height: 125px;
+    width: 130px;
+    margin-top: calc(50% + 62.5px);
+    animation: dino_logo_in 750ms normal;
+}
+
+.load__team {
+    position: fixed;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.load__team img {
+    width: 0px;
+    height: auto;
+}
+
+.load__team img:not(:last-child) {
+    margin-right: 40px;
+}
+
+.load__team__pet {
+    animation: teams_logo_in 500ms forwards 1.5s;
+}
+
+.load__team__hc {
+    animation: teams_logo_in 750ms forwards 0.75s;
+}
+
+.load__team__ufrgs {
+    animation: teams_logo_in 500ms forwards 1.5s;
+
+}
+
+@keyframes dino_logo_in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dino_title_in {
+    from {
+        margin-top: calc(84.5%);
+    }
+    to {
+        margin-top: 0;
+    }
+}
+
+@keyframes teams_logo_in {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 80px;
+    }
+}

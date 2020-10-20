@@ -1,6 +1,6 @@
 {
-  "short_name": "Dino APP",
-  "name": "Dino APP",
+  "short_name": "DinoApp",
+  "name": "DinoApp",
   "icons": [
     {
       "src": "favicon.ico",
@@ -16,8 +16,8 @@
     { "src": "./logo/logo384.png", "type": "image/png", "sizes": "384x384" },
     { "src": "./logo/logo512.png", "type": "image/png", "sizes": "512x512" }
   ],
-  "theme_color": "#B32E55",
-  "background_color": "#B32E55",
+  "theme_color": "whitesmoke",
+  "background_color": "whitesmoke",
   "display": "standalone",
   "scope": "/",
   "start_url": "/"

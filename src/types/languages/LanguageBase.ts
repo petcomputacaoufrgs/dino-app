@@ -159,6 +159,8 @@ export default interface LanguageBase {
   RETURN_ARIA_LABEL: string
   SEARCH_ARIA_LABEL: string
   OPEN_MENU_ARIA_LABEL: string
+  CLOSE_MENU_ARIA_LABEL: string
+  CLICK_TO_OPEN_MENU_ITEM: string
   ADD_ARIA_LABEL: string
   OPTIONS_ARIA_LABEL: string
   EVENT_COLOR_LABEL: string

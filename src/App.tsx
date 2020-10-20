@@ -17,8 +17,11 @@ import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
 
+const LOAD_SCREEN_TIME = 2250
+
 const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
+  const [showLoadScreen, setShowLoadScreen] = useState(true)
 
   const alert = useAlert()
   const language = useLanguage()
@@ -48,6 +51,20 @@ const App = (): JSX.Element => {
     }
   }, [language, firstLoad])
 
+  useEffect(() => {
+    if (showLoadScreen) {
+      const interval = setInterval(
+        () => setShowLoadScreen(false),
+        LOAD_SCREEN_TIME
+      )
+      const cleanBeforeUpdate = () => {
+        clearInterval(interval)
+      }
+
+      return cleanBeforeUpdate
+    }
+  })
+
   const renderApp = (): JSX.Element => (
     <PrivateRouterContextProvider
       loginPath={PathConstants.LOGIN}
@@ -74,7 +91,9 @@ const App = (): JSX.Element => {
     <Load />
   )
 
-  return <div className="app">{ firstLoad ? renderLoad() : renderApp() }</div>
+  return (
+    <div className="app">{showLoadScreen ? renderLoad() : renderApp()}</div>
+  )
 }
 
 export default App

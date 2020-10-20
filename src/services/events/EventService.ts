@@ -7,6 +7,7 @@ import AuthService from '../auth/AuthService'
 import Synchronizer from '../../sync/SynchronizerService'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
+import SyncService from '../sync/SyncService'
 
 class EventService {
   constructor() {
@@ -46,6 +47,7 @@ class EventService {
 
   whenConnectionLost = () => {
     WebSocketConnector.disconnect()
+    SyncService.setOffline()
   }
 
   whenError = () => {}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import DrawerNavigationProps from './props'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
@@ -9,6 +9,7 @@ import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Menu 
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { useLanguage } from '../../../context_provider/app_settings'
 import './styles.css'
+import SyncInfo from './sync_info'
 
 const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
   const classes = useStyles()
@@ -19,9 +20,17 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
 
   const [open, setOpen] = useState(false)
 
+  const [sync, setSync] = useState(true)
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
+
+  useEffect(() => {
+    if (sync) {
+      setTimeout(() => setSync(false), 3000)
+    }
+  })
 
   const onClose = () => {
     setOpen(false)
@@ -98,6 +107,7 @@ const DrawerNavigation = (props: DrawerNavigationProps): JSX.Element => {
         >
           <MenuIcon />
         </IconButton>
+        <SyncInfo />
       </Toolbar>
     </AppBar>
   )

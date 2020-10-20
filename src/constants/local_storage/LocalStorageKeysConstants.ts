@@ -43,6 +43,7 @@ class LocalStorageKeys {
   FAQ_USER_VERSION = 'fuv'
   FAQ_USER_INFO = 'fui'
   FAQ_ITEMS = 'fi'
+  SYNC_STATE = 'ss'
 }
 
 export default new LocalStorageKeys()

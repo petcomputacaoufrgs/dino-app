@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Switch } from 'react-router'
-import { useLanguage } from '../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../context_provider/app_settings'
 import GlossarySVG from '../../assets/icons/glossary.svg'
 import ContactsSVG from '../../assets/icons/phone.svg'
 import HomeSVG from '../../assets/icons/home.svg'
@@ -32,7 +32,7 @@ import AuthService from '../../services/auth/AuthService'
 
 const Main = (): JSX.Element => {
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 

@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import DateUtils from '../../../../utils/DateUtils'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
@@ -29,7 +29,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
   onDelete,
   questionAlreadyExists,
 }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [question, setQuestion] = useState(note.question)
   const [answer, setAnswer] = useState(note.answer)

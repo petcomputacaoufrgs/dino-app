@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import { Avatar, CardHeader, IconButton } from '@material-ui/core'
 import { ColorLens as ColorLensIcon } from '@material-ui/icons'
 import useStyles from '../../styles'
@@ -12,7 +12,7 @@ const AddContactDialogHeader = (
 ): JSX.Element => {
   const classes = useStyles(props)
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   return (
     <CardHeader

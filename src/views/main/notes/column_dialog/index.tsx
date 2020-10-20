@@ -12,13 +12,13 @@ import NoteColumnDialogProps from './props'
 import NoteColumnDialogHeader from './header'
 import NoteColumnService from '../../../../services/note/NoteColumnService'
 import NoteColumnEditError from '../../../../error/note/NoteColumnEditError'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 
 const NoteColumnDialog = forwardRef(
   (props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
-    const language = useLanguage().current
+    const language = useCurrentLanguage()
 
     const [newTitle, setNewTitle] = useState<string>(
       props.column ? props.column.title : ''

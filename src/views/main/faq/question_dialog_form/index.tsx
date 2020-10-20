@@ -8,10 +8,7 @@ import {
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import QuestionDialogFormProps from './props'
-import {
-  useLanguage,
-  useCurrentFaq,
-} from '../../../../context_provider/app_settings'
+import { useCurrentLanguage, useCurrentFaq } from '../../../../context_provider/app_settings'
 import SelectFaq from '../select_faq'
 import './styles.css'
 import FaqService from '../../../../services/faq/FaqService'
@@ -22,7 +19,7 @@ const QuestionDialogForm = React.forwardRef(
     { dialogOpen, setDialogOpen }: QuestionDialogFormProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
-    const language = useLanguage().current
+    const language = useCurrentLanguage()
 
     const currentFaq = useCurrentFaq()
 

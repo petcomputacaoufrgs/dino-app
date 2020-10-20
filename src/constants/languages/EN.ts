@@ -1,5 +1,5 @@
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from '../../constants/language/LanguageCodeConstants'
+import LanguageCodeConstants from './LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em inglês americano
@@ -381,4 +381,5 @@ export default class EN implements LanguageBase {
   NOTE_INFO_DIALOG_COLUMN_TITLE = 'Column:'
 
   NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
+
 }

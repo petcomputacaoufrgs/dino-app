@@ -1,5 +1,5 @@
 import StringUtils from './StringUtils'
-import LanguageBase from '../types/languages/LanguageBase'
+import LanguageBase from '../constants/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {

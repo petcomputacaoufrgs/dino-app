@@ -11,7 +11,7 @@ import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import './styles.css'
 
 const getContact = (item: ContactModel | undefined) => {
@@ -33,7 +33,7 @@ const ContactFormDialog = React.forwardRef(
     { dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
-    const language = useLanguage().current
+  const language = useCurrentLanguage()
 
     useEffect(() => {
       if (dialogOpen) {

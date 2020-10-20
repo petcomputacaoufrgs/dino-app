@@ -10,7 +10,7 @@ import {
   TextField,
   Button,
 } from '@material-ui/core'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import StringUtils from '../../../../../../utils/StringUtils'
 import NumberUtils from '../../../../../../utils/NumberUtils'
 import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
@@ -24,7 +24,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
   open,
   onSave,
 }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [dialogOpen, setDialogOpen] = useState(open)
   const [alarmType, setAlarmType] = useState(DEFAULT_ALARM_TYPE)

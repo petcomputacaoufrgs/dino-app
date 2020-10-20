@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FaqService from '../../../../services/faq/FaqService'
 import FaqOptionsModel from '../../../../types/faq/FaqOptionsModel'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -13,18 +13,17 @@ const SelectFaq = ({
   selectedFaq,
   setSelectedFaq,
 }: SelectFaqProps): JSX.Element => {
-  const language = useLanguage().current
-
-  const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
-  const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(open && faqOptions.length === 0)
-  const [value, setValue] = React.useState<FaqOptionsModel | null>(
-    selectedFaq || null
-  )
-  const [inputValue, setInputValue] = useState(
-    selectedFaq ? selectedFaq.title : ''
-  )
-  const [connectionError, setConnectionError] = useState(false)
+    const language = useCurrentLanguage()
+    const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
+    const [open, setOpen] = useState(false)
+    const [loading, setLoading] = useState(open && faqOptions.length === 0)
+    const [value, setValue] = React.useState<FaqOptionsModel | null>(
+        selectedFaq || null
+    )
+    const [inputValue, setInputValue] = useState(
+        selectedFaq ? selectedFaq.title : ''
+    )
+    const [connectionError, setConnectionError] = useState(false)
 
   useEffect(() => {
     const getFaqOptions = async () => {

@@ -47,7 +47,8 @@ export const useAppSettings = () => useContext(AppSettingsContext)
 
 export const useLanguage = () => useContext(AppSettingsContext).language
 
-export const useCurrentFaq = () =>
-  useContext(AppSettingsContext).selectedFaq.current
+export const useCurrentLanguage = () => useContext(AppSettingsContext).language.current
+
+export const useCurrentFaq = () => useContext(AppSettingsContext).selectedFaq.current
 
 export default AppSettingsContextProvider

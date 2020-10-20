@@ -1,7 +1,7 @@
 import React from 'react'
 import NoteColumnDialogContentProps from './props'
 import { TextField } from '@material-ui/core'
-import { useLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 
 const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
   onTitleChange,
@@ -9,7 +9,7 @@ const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
   invalidTitle,
   invalidMessage,
 }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onTitleChange(event.target.value as string)

@@ -1,5 +1,5 @@
-import Weekday from './Weekday'
-import LanguageBase from '../languages/LanguageBase'
+import Weekday from "./Weekday"
+import LanguageBase from "../../constants/languages/LanguageBase"
 
 export default class Week {
   weekDays: Weekday[]

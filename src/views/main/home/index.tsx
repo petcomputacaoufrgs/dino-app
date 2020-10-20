@@ -1,11 +1,11 @@
 import React from 'react'
-import { useLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import { Avatar, Typography } from '@material-ui/core'
 import { useUser } from '../../../context_provider/user'
 import './styles.css'
 
 const Home = () => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const user = useUser()
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { useLanguage } from '../../../../../context_provider/app_settings'
 import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import useStyles from '../../styles'
 import ContactCardHeaderProps from './props'
 import ContactsService from '../../../../../services/contact/ContactService'
@@ -15,7 +15,7 @@ const ContactCardHeader = ({
 }: ContactCardHeaderProps) => {
   const classes = useStyles()
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -61,7 +61,7 @@ const ContactCardHeader = ({
           </>
         }
         title={item.name}
-        subheader={ContactsService.getPhoneTypes(item.phones)}
+        subheader={ContactsService.getPhoneTypes(item.phones, language)}
       />
       <Menu
         anchorEl={anchorEl}

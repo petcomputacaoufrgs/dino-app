@@ -7,7 +7,7 @@ import {
   FormControlLabel,
   Radio,
 } from '@material-ui/core'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import EventRepeatModalProps from './props'
 import EventRepeatType from '../../../../../../constants/calendar/EventRepeatType'
 import './styles.css'
@@ -22,11 +22,7 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({
   const [dialogOpen, setDialogOpen] = useState(open)
   const [repeatType, setRepeatType] = useState(eventRepeatType)
 
-  const language = useLanguage().current
-
-  useEffect(() => {
-    setDialogOpen(open)
-  }, [open])
+  const language = useCurrentLanguage()
 
   useEffect(() => {
     setRepeatType(eventRepeatType)
@@ -34,6 +30,7 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({
 
   const handleClose = () => {
     onClose()
+    setDialogOpen(false)
   }
 
   const handleRepeatTypeChange = (

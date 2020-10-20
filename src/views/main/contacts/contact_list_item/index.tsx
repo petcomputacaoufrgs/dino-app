@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import useStyles from '../styles'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import ContactItemListProps from './props'
 import {
   Avatar,
@@ -23,7 +23,7 @@ const ContactItemList = ({
 }: ContactItemListProps): JSX.Element => {
   const classes = useStyles()
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -56,7 +56,7 @@ const ContactItemList = ({
         </ListItemAvatar>
         <ListItemText
           primary={item.name}
-          secondary={ContactsService.getPhoneTypes(item.phones)}
+          secondary={ContactsService.getPhoneTypes(item.phones, language)}
         />
         <ListItemSecondaryAction>
           <OptionsComponent onClick={handleClick} />

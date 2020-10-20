@@ -1,8 +1,8 @@
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from '../../constants/language/LanguageCodeConstants'
+import LanguageCodeConstants from './LanguageCodeConstants'
 
 /**
- * @description Conjunto de textos em português brasileiro
+ * @description Conjunto de textos em português
  */
 export default class PT implements LanguageBase {
   APP_NAME = 'DinoApp'
@@ -384,4 +384,5 @@ export default class PT implements LanguageBase {
   NOTE_INFO_DIALOG_COLUMN_TITLE = 'Coluna:'
 
   NOTE_SEARCH_CLEAN = 'Nenhuma anotação corresponde a pesquisa atual.'
+
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../../../../../context_provider/app_settings'
 import {
   FormControl,
   RadioGroup,
@@ -9,6 +8,7 @@ import {
   Grid,
   Button,
 } from '@material-ui/core'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import DateFnsUtils from '@date-io/date-fns'
 import {
   MuiPickersUtilsProvider,
@@ -37,7 +37,7 @@ import './styles.css'
 import ColorConstants from '../../../../../constants/app/ColorConstants'
 
 const Form: React.FC = () => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage();
 
   const [eventType, setEventType] = useState(language.MEDICAL_APPOINTMENT_TYPE)
   const [eventName, setEventName] = useState<string>()

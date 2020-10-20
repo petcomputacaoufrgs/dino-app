@@ -5,7 +5,7 @@ import { Divider, IconButton } from '@material-ui/core'
 import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
-import { useLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context_provider/app_settings'
 
 const DRAWER_WIDTH = 240
 
@@ -16,7 +16,7 @@ const Drawer: React.FC<DrawerProps> = ({
     onClose,
     onOpen
 }) => {
-    const language = useLanguage().current
+    const language = useCurrentLanguage()
 
     const drawerEl = useRef<HTMLDivElement | null>(null) 
 

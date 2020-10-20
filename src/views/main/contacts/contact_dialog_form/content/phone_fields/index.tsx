@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import { MenuItem, IconButton } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'
@@ -19,7 +19,7 @@ const PhoneFields = ({
   helperText,
   handleDeletePhone,
 }: PhoneFieldsProps): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const types = [
     { label: language.CONTACTS_MOBILE_PHONE, id: ContactsConstants.MOBILE },

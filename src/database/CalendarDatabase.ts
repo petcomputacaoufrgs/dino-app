@@ -1,12 +1,29 @@
-import BaseDatabase from "./BaseDatabase";
-import DatabaseConstants from "../constants/DatabaseConstants";
-import EventDoc from "../types/calendar/database/EventDoc";
-import DatabaseDeleteWithoutID from "../error/DatabaseDeleteWithoutID";
-import LogAppErrorService from "../services/log_app_error/LogAppErrorService";
+import BaseDatabase from './BaseDatabase'
+import DatabaseConstants from '../constants/database/DatabaseConstants'
+import EventDoc from '../types/calendar/database/EventDoc'
+import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
+
+const getId = (doc?: EventDoc) => new Date().getTime().toString()
+
+const applyChanges = (origin: EventDoc, changed: EventDoc): EventDoc => {
+  const newDoc: EventDoc = {
+    ...origin,
+    color: origin.color,
+    description: origin.description,
+    end_date: origin.end_date,
+    external_id: origin.external_id,
+    init_date: origin.init_date,
+    name: origin.name,
+    reminder_alarm_ms: origin.reminder_alarm_ms,
+    type: origin.type,
+  }
+
+  return newDoc
+}
 
 class CalendarDatabase extends BaseDatabase<EventDoc> {
   constructor() {
-    super(DatabaseConstants.CALENDAR)
+    super(DatabaseConstants.CALENDAR, getId, applyChanges)
 
     this.db.createIndex({
       index: {
@@ -15,37 +32,18 @@ class CalendarDatabase extends BaseDatabase<EventDoc> {
     })
   }
 
-  put = async (doc: EventDoc) => {
-    if (!doc._id) {
-      doc._id = new Date().getTime().toString()
-    }
-
-    this.db.put(doc)
-  }
-
   putAll = async (docs: EventDoc[]) => {
-    let timestamp = new Date().getTime()
+    let timestamp = getId()
 
     docs.forEach((doc) => {
-      if (!doc._id) {
+      if (!this.hasValidId(doc)) {
         doc._id = timestamp.toString()
         timestamp = timestamp + 1
       }
     })
 
-    this.db.bulkDocs(docs)
-  }
-
-  deleteByDoc = async (doc: EventDoc) => {
     try {
-      if (doc._id && doc._rev) {
-        const id = doc._id
-        const rev = doc._rev
-
-        this.db.remove(id, rev)
-      } else {
-        throw new DatabaseDeleteWithoutID(DatabaseConstants.NOTE, doc)
-      }
+      await this.db.bulkDocs(docs)
     } catch (e) {
       LogAppErrorService.saveError(e)
     }

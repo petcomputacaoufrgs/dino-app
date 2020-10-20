@@ -1,7 +1,7 @@
-import DayViewModel from "../../../../../types/calendar/DayViewModel";
-import EventDoc from "../../../../../types/calendar/database/EventDoc";
+import DayViewModel from '../../../../../types/calendar/DayViewModel'
+import EventDoc from '../../../../../types/calendar/database/EventDoc'
 
 export default interface ContentProps {
-  day: DayViewModel,
+  day: DayViewModel
   events: EventDoc[]
 }

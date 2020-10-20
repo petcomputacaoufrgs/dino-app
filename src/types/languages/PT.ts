@@ -1,5 +1,5 @@
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
+import LanguageCodeConstants from '../../constants/language/LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em português brasileiro
@@ -103,8 +103,6 @@ export default class PT implements LanguageBase {
     'Clique aqui para editar a pergunta desta anotação.'
 
   NOTE_DELETE_BUTTON = 'Clique aqui para apagar está anotação.'
-
-  QUESTION_NOTE_DIALOG_TITLE = 'Pergunta'
 
   ANSWER_NOTE_DIALOG_TITLE = 'Resposta'
 
@@ -234,7 +232,7 @@ export default class PT implements LanguageBase {
   CLOSE_ARIA_LABEL = 'Fechar'
 
   DELETE_ARIA_LABEL = 'Deletar'
-  
+
   EDIT_ARIA_LABEL = 'Editar'
 
   INVALID_WEEKDAY = 'Dia da semana inválido.'
@@ -252,9 +250,9 @@ export default class PT implements LanguageBase {
   INVALID_EVENT_TYPE = 'Tipo de evento inválido'
 
   MINUTES = 'minutos '
-  
+
   HOURS = 'horas'
-  
+
   DAYS = 'dias'
 
   AND = 'e'
@@ -264,7 +262,7 @@ export default class PT implements LanguageBase {
   MINUTE = 'minuto'
 
   HOUR = 'hora'
-  
+
   DAY = 'dia'
 
   ADD_EVENT_TITLE = 'Novo Evento'
@@ -272,13 +270,13 @@ export default class PT implements LanguageBase {
   EVENT_TYPE_LABEL = 'Tipo de Evento'
 
   EVENT_NAME_LABEL = 'Nome do Evento'
-  
+
   EVENT_INIT_DATE_LABEL = 'Dia de início'
 
   EVENT_INIT_TIME_LABEL = 'Horário de início'
 
   EVENT_END_DATE_LABEL = 'Dia de termino'
-  
+
   EVENT_END_TIME_LABEL = 'Horário de termino'
 
   DATE_PICKER_DAY_FORMAT = 'dd/MM/yyyy'
@@ -320,14 +318,14 @@ export default class PT implements LanguageBase {
   EVENT_ADD_ALERT = 'Adicionar notificação'
 
   EVENT_INVALID_ALARM_TYPE = 'tipo inválido'
-  
+
   EVENT_ALARM_ZERO = 'Na hora do evento'
 
   EVENT_ALARM_DELETE_ALT = 'Clique para excluir o alarme'
 
   CHANGE_COLOR_ARIA_LABEL = 'Clique para selecionar uma cor aleatória'
 
-  ADD_PHONE_ARIA_LABEL= 'Clique para adicionar um novo telefone numérico'
+  ADD_PHONE_ARIA_LABEL = 'Clique para adicionar um novo telefone numérico'
 
   RETURN_ARIA_LABEL = 'Retornar'
 
@@ -341,7 +339,45 @@ export default class PT implements LanguageBase {
 
   EVENT_COLOR_LABEL = 'Cor selecionada'
 
-
   FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
 
+  MAX = 'Máx.'
+
+  ADD_COLUMN_TEXT = '+ Adicionar coluna'
+
+  COLUMN_ADD_LABEL = 'Adicionar Coluna'
+
+  COLUMN_EDIT_LABEL = 'Editar Coluna'
+
+  COLUMN_TITLE_LABEL = 'Título da coluna'
+
+  COLUMN_MIN_LENGTH_ERROR = 'Mínimo 1 caractere.'
+
+  COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Título já existente'
+
+  NOTE_COLUMN_DELETE_DIALOG_QUESTION =
+    'Tem certeza que deseja remover esta coluna?'
+
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
+    'Esta coluna possui anotações, tem certeza que deseja removê-la?'
+
+  NOTE_COLUMN_DELETE_DIALOG_DESC =
+    'Caso responda "SIM" esta coluna será removida permanentemente.'
+
+  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
+    'Ao remover esta coluna você irá remover as anotações pertencentes a ela permanentemente.'
+
+  NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'SIM'
+
+  NOTE_COLUMN_ADD_NOTE_TEXT = 'Adicionar anotação'
+
+  NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'Nova anotação'
+
+  QUESTION_NOTE_DIALOG_TITLE = 'Pergunta'
+
+  NOTE_INFO_DIALOG_LAST_UPDATE_TITLE = 'Última atualização:'
+
+  NOTE_INFO_DIALOG_COLUMN_TITLE = 'Coluna:'
+
+  NOTE_SEARCH_CLEAN = 'Nenhuma anotação corresponde a pesquisa atual.'
 }

@@ -1,4 +1,4 @@
-import ScreenOrientationConstants from '../constants/ScreenOrientationConstants'
+import ScreenOrientationConstants from '../constants/app/ScreenOrientationConstants'
 
 /**
  * @description Service que fornece informações e ações baseadas no estado de rotação da tela. ESTA SERVICE NÃO É SUPORTADA POR TODOS OS NAVEGADORES, VERIFIQUE NA FUNÇÃO ANTES DE UTILIZÁ-LA.

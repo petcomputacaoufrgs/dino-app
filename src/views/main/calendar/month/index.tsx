@@ -4,14 +4,15 @@ import Header from './header'
 import Content from './content'
 import './styles.css'
 
-const Month: React.FC<MonthProps> = ({ date, goToCurrentMonth, isCurrentMonth }) => {
+const Month: React.FC<MonthProps> = ({
+  date,
+  goToCurrentMonth,
+  isCurrentMonth,
+}) => {
   return (
     <div className="month">
       <Header date={date} goToCurrentMonth={goToCurrentMonth} />
-      <Content
-        date={date}
-        isCurrentMonth={isCurrentMonth}
-      />
+      <Content date={date} isCurrentMonth={isCurrentMonth} />
     </div>
   )
 }

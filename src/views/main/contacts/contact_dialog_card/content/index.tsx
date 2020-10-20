@@ -1,13 +1,25 @@
 import React from 'react'
-import ContactsConstants from '../../../../../constants/ContactsConstants'
+import ContactsConstants from '../../../../../constants/contact/ContactsConstants'
 import ContactCardContentProps from './props'
 import useStyles from '../../styles'
-import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, Divider,} from '@material-ui/core'
-import {Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospitalRounded as HospitalIcon,} from '@material-ui/icons'
+import {
+  Typography,
+  CardContent,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Divider,
+} from '@material-ui/core'
+import {
+  Person as PersonIcon,
+  Phone as PhoneIcon,
+  Home as HomeIcon,
+  LocalHospitalRounded as HospitalIcon,
+} from '@material-ui/icons'
 import PhoneModel from '../../../../../types/contact/PhoneModel'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
-
   const classes = useStyles()
 
   const getTypePhoneIcon = (phone: PhoneModel) => {
@@ -21,10 +33,12 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
   }
 
   const Description = (): JSX.Element => {
-    return item.description ?
-      <div className='contact-card-description'>
+    return item.description ? (
+      <div className="contact-card-description">
         <ListItem divider className={classes.ListItem}>
-          <ListItemIcon><PersonIcon /></ListItemIcon>
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
           <ListItemText
             primary={
               <Typography
@@ -39,14 +53,20 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
           />
         </ListItem>
       </div>
-    : <Divider />
+    ) : (
+      <Divider />
+    )
   }
 
   const Phones = () => {
-    return item.phones.length ? 
+    return item.phones.length ? (
       <div>
-        {item.phones.map((phone, index) => 
-          <a href={`tel:${phone.number}`} style={{textDecoration:"none"}} key={index}>
+        {item.phones.map((phone, index) => (
+          <a
+            href={`tel:${phone.number}`}
+            style={{ textDecoration: 'none' }}
+            key={index}
+          >
             <ListItem button divider className={classes.ListItem}>
               <ListItemIcon>{getTypePhoneIcon(phone)}</ListItemIcon>
               <ListItemText
@@ -62,16 +82,18 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
               />
             </ListItem>
           </a>
-        )}
+        ))}
       </div>
-    : <></>
+    ) : (
+      <></>
+    )
   }
 
   return (
     <CardContent className={classes.CardContent}>
       <Description />
       <List component="nav">
-        <Phones/>
+        <Phones />
       </List>
     </CardContent>
   )

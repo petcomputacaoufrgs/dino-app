@@ -1,139 +1,236 @@
-import NoteVersionLocalStorage from '../../local_storage/NoteVersionLocalStorage'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import NoteSaveModel from '../../types/note/NoteSaveModel'
-import NoteSaveResponseModel from '../../types/note/NoteSaveResponseModel'
-import NoteOrderAPIModel from '../../types/note/NoteOrderAPIModel'
-import NoteDeleteModel from '../../types/note/NoteDeleteModel'
-import NoteQuestionModel from '../../types/note/NoteQuestionModel'
-import NoteAPIAnswerModel from '../../types/note/NoteAnswerModel'
-import NoteDoc from '../../types/note/database/NoteDoc'
-import NoteDatabase from '../../database/NoteDatabase'
-import DeletedNoteDatabase from '../../database/DeletedNoteDatabase'
-import DinoAgentService from '../../agent/DinoAgentService'
-import NoteSyncLocalStorage from '../../local_storage/NoteSyncLocalStorage'
-import NoteUpdateModel from '../../types/note/NoteUpdateModel'
-import NoteModel from '../../types/note/NoteModel'
 import NoteContextUpdater from '../../context_updater/NoteContextUpdater'
-import NoteViewModel from '../../types/note/NoteViewModel'
-import { NoteContextType } from '../../types/context_provider/NotesContextType'
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import NoteServerService from './NoteServerService'
+import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
+import NoteWebSocketOrderUpdateModel from '../../types/note/web_socket/NoteWebSocketOrderUpdateModel'
+import NoteWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteWebSocketAlertDeleteModel'
+import NoteEntity from '../../types/note/database/NoteEntity'
+import NoteDatabaseService from './NoteDatabaseService'
+import NoteViewModel from '../../types/note/view/NoteViewModel'
+import NoteLocalStorageService from './NoteLocalStorageService'
+import DeletedNoteDatabaseService from './DeletedNoteDatabaseService'
+import DeletedNoteEntity from '../../types/note/database/DeletedNoteEntity'
+import ArrayUtils from '../../utils/ArrayUtils'
+import NoteSyncRequestModel from '../../types/note/server/sync/note/NoteSyncRequestModel'
+import NoteColumnService from './NoteColumnService'
+import NoteWithColumn from '../../types/note/server/sync/note/NoteWithColumn'
 
 class NoteService {
   //#region GET
 
-  getNotes = async (): Promise<NoteContextType[]> => {
-    const noteDocs = await NoteDatabase.getAll()
-
-    const notes = noteDocs
-      .sort((n1, n2) => n1.order - n2.order)
-      .map(
-        (note) =>
-          ({
-            id: note.order,
-            answer: note.answer,
-            answered: note.answered,
-            lastUpdate: note.lastUpdate,
-            question: note.question,
-            tagNames: note.tagNames,
-            savedOnServer: note.savedOnServer,
-          } as NoteContextType)
-      )
-
-    return notes
+  getNotes = async (): Promise<NoteEntity[]> => {
+    return NoteDatabaseService.getAll()
   }
 
-  getDatabaseNotes = async (): Promise<NoteDoc[]> => {
-    return NoteDatabase.getAll()
-  }
-
-  getDeletedNotes = async (): Promise<NoteDoc[]> => {
-    return DeletedNoteDatabase.getAll()
+  getDeletedNotes = async (): Promise<DeletedNoteEntity[]> => {
+    return DeletedNoteDatabaseService.getAll()
   }
 
   getTags = async (): Promise<string[]> => {
-    return NoteDatabase.getAllTags()
+    return NoteDatabaseService.getAllTags()
+  }
+
+  getVersion = (): number => NoteLocalStorageService.getVersion()
+
+  getVersionFromServer = async (): Promise<number | undefined> => {
+    return NoteServerService.getVersion()
+  }
+
+  //#endregion
+
+  //#region SYNC
+
+  sync = async () => {
+    const shouldSync = NoteLocalStorageService.shouldSync()
+
+    const shouldSyncOrder = NoteLocalStorageService.shouldSyncOrder()
+
+    const deletedNotes = await this.getDeletedNotes()
+
+    const localNotes = await this.getNotes()
+
+    const localColumns = await NoteColumnService.getColumns()
+
+    const localNotesWithColumn: NoteWithColumn[] = localNotes
+      .map((note) => ({
+        ...note,
+        column: localColumns.find(
+          (column) => column.title === note.columnTitle
+        ),
+      }))
+      .filter(
+        (note) =>
+          note.column !== undefined && note.column.external_id !== undefined
+      )
+
+    const [savedNotes, unsavedNotes] = ArrayUtils.partition(
+      localNotesWithColumn,
+      (note) => note.savedOnServer && note.external_id !== undefined
+    )
+
+    const [newNotes, changedNotes] = ArrayUtils.partition(
+      unsavedNotes,
+      (note) => note.external_id === undefined
+    )
+
+    const model: NoteSyncRequestModel = {
+      deletedNotes: shouldSync
+        ? deletedNotes.map((note) => ({
+            id: note.external_id,
+            lastUpdate: note.lastUpdate,
+          }))
+        : [],
+      changedNotes: shouldSync
+        ? changedNotes.map((note) => ({
+            id: note.external_id!,
+            lastUpdate: note.lastUpdate,
+            question: note.question,
+            answer: note.answer,
+            tagNames: note.tagNames,
+            columnId: note.column!.external_id!,
+            lastOrderUpdate: shouldSyncOrder ? note.lastOrderUpdate : undefined,
+            order: shouldSyncOrder ? note.order : undefined,
+          }))
+        : [],
+      newNotes: shouldSync
+        ? newNotes.map((note) => ({
+            answer: note.answer,
+            columnId: note.column!.external_id!,
+            lastUpdate: note.lastUpdate,
+            question: note.question,
+            tagNames: note.tagNames,
+            lastOrderUpdate: shouldSyncOrder ? note.lastOrderUpdate : undefined,
+            order: shouldSyncOrder ? note.order : undefined,
+          }))
+        : [],
+      notesOrder: shouldSyncOrder
+        ? savedNotes.map((note) => ({
+            id: note.external_id!,
+            columnId: note.column!.external_id!,
+            lastOrderUpdate: note.lastOrderUpdate,
+            order: note.order,
+          }))
+        : [],
+    }
+
+    const response = await NoteServerService.sync(model)
+
+    if (response) {
+      const notes: NoteEntity[] = response.notes.map((note) => ({
+        external_id: note.id,
+        order: note.order,
+        answer: note.answer,
+        lastUpdate: note.lastUpdate,
+        lastOrderUpdate: note.lastOrderUpdate,
+        question: note.question,
+        tagNames: note.tags,
+        savedOnServer: true,
+        columnTitle: note.columnTitle,
+      }))
+      DeletedNoteDatabaseService.deleteAll()
+      await NoteDatabaseService.deleteAll()
+      await NoteDatabaseService.putAll(notes)
+      this.updateContext()
+      NoteLocalStorageService.setVersion(response.version)
+    }
   }
 
   //#endregion
 
   //#region SAVE
 
-  getVersion = (): number => NoteVersionLocalStorage.getVersion()
+  saveNote = async (note: NoteViewModel) => {
+    const dbNote = await NoteDatabaseService.getById(note.id)
 
-  getVersionFromServer = async (): Promise<number | undefined> => {
-    const request = await DinoAgentService.get(
-      DinoAPIURLConstants.NOTE_GET_VERSION
-    )
+    if (dbNote) {
+      dbNote.answer = note.answer
+      dbNote.question = note.question
+      dbNote.tagNames = note.tagNames
+      dbNote.savedOnServer = false
+      dbNote.lastUpdate = new Date().getTime()
 
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().go()
+      await NoteDatabaseService.put(dbNote)
 
-        const serverVersion: number = response.body
-
-        return serverVersion
-      } catch (e) {
-        LogAppErrorService.saveError(e)
-      }
+      this.saveNoteOnServer(dbNote)
     }
 
-    return undefined
+    this.updateContext()
   }
 
-  setVersion = (version: number) => {
-    NoteVersionLocalStorage.setVersion(version)
-  }
+  createNote = async (
+    question: string,
+    tagNames: string[],
+    colunm: NoteColumnViewModel
+  ) => {
+    const date = new Date().getTime()
 
-  saveNote = async (noteModel: NoteContextType) => {
-    const noteDoc: NoteDoc = {
-      answer: noteModel.answer,
-      answered: noteModel.answered,
-      lastUpdate: noteModel.lastUpdate,
-      question: noteModel.question,
+    const note: NoteEntity = {
+      answer: '',
+      question: question,
+      tagNames: tagNames,
+      lastUpdate: date,
+      lastOrderUpdate: date,
       savedOnServer: false,
-      order: noteModel.id,
-      tagNames: noteModel.tagNames,
-      _rev: '',
+      order: colunm.notes.length,
+      columnTitle: colunm.title,
     }
 
-    await NoteDatabase.put(noteDoc)
+    await NoteDatabaseService.put(note)
 
-    NoteContextUpdater.update()
+    this.updateContext()
 
-    this.saveNoteOnServer(noteModel)
+    this.saveNoteOnServer(note)
   }
 
-  saveNoteOnServer = async (noteModel: NoteContextType) => {
-    const newNote: NoteSaveModel = {
-      order: noteModel.id,
-      question: noteModel.question,
-      lastUpdate: noteModel.lastUpdate,
-      tagNames: noteModel.tagNames,
-      answered: false,
-      id: 0,
+  saveNoteOnServer = async (note: NoteEntity) => {
+    const response = await NoteServerService.save(note)
+
+    if (response && note.id) {
+      await NoteDatabaseService.saveExternalIdByIdAndSavedOnServer(
+        note.id,
+        response.id,
+        true
+      )
+      NoteLocalStorageService.setVersion(response.userNoteVersion)
+      this.updateContext()
+    } else {
+      NoteLocalStorageService.setShouldSync(true)
     }
+  }
 
-    const request = await DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
+  saveNotesOrder = async (notes: NoteEntity[]) => {
+    if (notes.length > 0) {
+      const databaseNotes = await this.getNotes()
+      notes.forEach((note, index) => {
+        const savedNote = databaseNotes.find(
+          (savedNote) => savedNote.id === note.id
+        )
 
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().setBody(newNote).go()
-        const body: NoteSaveResponseModel = response.body
-        const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
-        if (noteDoc) {
-          noteDoc.savedOnServer = true
-          noteDoc.external_id = body.noteId
-          await NoteDatabase.put(noteDoc)
-          NoteContextUpdater.update()
-          this.setVersion(body.version)
-          return
+        if (savedNote) {
+          savedNote.order = index
+          savedNote.lastOrderUpdate = new Date().getTime()
+          savedNote.columnTitle = note.columnTitle
         }
-      } catch (e) {
-        LogAppErrorService.saveError(e)
-      }
+      })
+
+      await NoteDatabaseService.putAll(databaseNotes)
+
+      this.saveOrderOnServer(databaseNotes)
+
+      this.updateContext()
+    }
+  }
+
+  saveOrderOnServer = async (notes?: NoteEntity[]): Promise<void> => {
+    if (!notes) {
+      notes = await this.getNotes()
     }
 
-    NoteSyncLocalStorage.setShouldSync(true)
+    const success = await NoteServerService.saveOrder(notes)
+
+    if (!success) {
+      NoteLocalStorageService.setShouldSync(true)
+      NoteLocalStorageService.setShouldSyncOrder(true)
+    }
   }
 
   //#endregion
@@ -141,323 +238,161 @@ class NoteService {
   //#region DELETE
 
   removeUserData = () => {
-    NoteVersionLocalStorage.removeUserData()
-    NoteSyncLocalStorage.removeUserData()
-    NoteDatabase.removeAll()
-    DeletedNoteDatabase.removeAll()
+    NoteLocalStorageService.removeUserData()
+    NoteDatabaseService.deleteAll()
+    DeletedNoteDatabaseService.deleteAll()
   }
 
-  deleteNote = async (noteModel: NoteContextType) => {
-    const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
+  addNotesInDeletedNoteDatabase = async (deletedNotes: NoteEntity[]) => {
+    deletedNotes.forEach(
+      (deletedNote) => (deletedNote.lastUpdate = new Date().getTime())
+    )
+    return DeletedNoteDatabaseService.addAll(deletedNotes)
+  }
 
-    if (noteDoc) {
-      await NoteDatabase.deleteByNoteDoc(noteDoc)
+  deleteAllDatabaseNotesByColumnTitle = async (
+    columnTitle: string
+  ): Promise<NoteEntity[]> => {
+    const deletedNotes = await NoteDatabaseService.deleteByColumnTitle(
+      columnTitle
+    )
 
-      NoteContextUpdater.update()
+    this.updateContext()
 
-      if (noteDoc.external_id) {
-        const deletedNote = await DeletedNoteDatabase.getByQuestion(
-          noteDoc.question
-        )
+    return deletedNotes
+  }
 
-        if (!deletedNote) {
-          await DeletedNoteDatabase.putNew(noteDoc)
+  deleteNote = async (note: NoteViewModel) => {
+    const deletedNote = await NoteDatabaseService.deleteById(note.id)
 
-          this.deleteNoteOnServer(noteDoc)
-        }
-      }
+    this.updateContext()
+
+    if (deletedNote) {
+      this.deleteNoteOnServer(deletedNote)
     }
   }
 
   deleteNotesOnServer = async () => {
-    const deletedDocs = await this.getDeletedNotes()
+    const deletedNotes = await this.getDeletedNotes()
+    if (deletedNotes.length > 0) {
+      const newVersion = await NoteServerService.deleteAll(deletedNotes)
 
-    if (deletedDocs.length === 0) {
-      return
-    }
-
-    const models = deletedDocs.map(
-      (doc) =>
-        ({
-          id: doc.external_id,
-        } as NoteDeleteModel)
-    )
-
-    const request = await DinoAgentService.delete(
-      DinoAPIURLConstants.NOTE_DELETE_ALL
-    )
-
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().setBody(models).go()
-        const newVersion = response.body
-        DeletedNoteDatabase.removeAll()
-        NoteVersionLocalStorage.setVersion(newVersion)
-        return
-      } catch (e) {
-        LogAppErrorService.saveError(e)
+      if (newVersion !== undefined) {
+        DeletedNoteDatabaseService.deleteAll()
+        NoteLocalStorageService.setVersion(newVersion)
+      } else {
+        NoteLocalStorageService.setShouldSync(true)
       }
     }
-
-    NoteSyncLocalStorage.setShouldSync(true)
   }
 
-  private deleteNoteOnServer = async (noteDoc: NoteDoc) => {
-    if (noteDoc.external_id) {
-      const model: NoteDeleteModel = { id: noteDoc.external_id }
+  private deleteNoteOnServer = async (note: NoteEntity) => {
+    if (note.external_id) {
+      const newVersion = await NoteServerService.delete(note.external_id)
 
-      const request = await DinoAgentService.delete(
-        DinoAPIURLConstants.NOTE_DELETE
-      )
-
-      if (request.canGo) {
-        try {
-          const response = await request.authenticate().setBody(model).go()
-          const newVersion = response.body
-          const deletedNote = await DeletedNoteDatabase.getByQuestion(
-            noteDoc.question
-          )
-          if (deletedNote) {
-            DeletedNoteDatabase.deleteByNoteDoc(deletedNote)
-          }
-          NoteVersionLocalStorage.setVersion(newVersion)
-          return
-        } catch (e) {
-          LogAppErrorService.saveError(e)
-        }
+      if (newVersion !== null) {
+        NoteLocalStorageService.setVersion(newVersion)
+      } else {
+        note.lastUpdate = new Date().getTime()
+        await DeletedNoteDatabaseService.add(note)
+        NoteLocalStorageService.setShouldSync(true)
       }
-      NoteSyncLocalStorage.setShouldSync(true)
     }
   }
 
   //#endregion
 
-  //#region SAVE & UPDATE
+  //#region UPDATE
 
-  updateNotesOrder = async (viewNotes: NoteViewModel[]) => {
-    const noteDocs = await NoteDatabase.getAll()
-
-    if (noteDocs.length > 0) {
-      noteDocs.forEach((noteDoc) => {
-        const newOrder = viewNotes.findIndex(
-          (n) => n.question === noteDoc.question
-        )
-
-        noteDoc.order = newOrder
-      })
-
-      await NoteDatabase.putAll(noteDocs)
-
-      NoteContextUpdater.update()
-
-      this.updateOrderOnServer(noteDocs)
-    }
+  updateContext = () => {
+    NoteContextUpdater.update()
   }
 
-  updateOrderOnServer = async (noteDocs: NoteDoc[]): Promise<void> => {
-    const model: NoteOrderAPIModel[] = []
-
-    noteDocs.forEach((note) => {
-      if (note.external_id) {
-        model.push({
-          id: note.external_id,
-          order: note.order,
-        } as NoteOrderAPIModel)
-      }
-    })
-
-    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
-
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().setBody(model).go()
-        NoteVersionLocalStorage.setVersion(response.body)
-      } catch (e) {
-        LogAppErrorService.saveError(e)
-      }
-    }
-
-    NoteSyncLocalStorage.setShouldSync(true)
-  }
-
-  updateNotes = async (models: NoteUpdateModel[]) => {
-    const request = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_UPDATE_ALL
-    )
-
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().setBody(models).go()
-        const newVersion = response.body
-        const promises = models.map(async (model) => {
-          const noteDoc = await NoteDatabase.getByQuestion(model.question)
-          if (noteDoc) {
-            noteDoc.savedOnServer = true
-            NoteDatabase.put(noteDoc)
-          }
-        })
-        await Promise.all(promises)
-        NoteContextUpdater.update()
-        this.setVersion(newVersion)
-        return
-      } catch (e) {
-        LogAppErrorService.saveError(e)
-      }
-    }
-
-    this.setShouldSync(true)
-  }
-
-  updateNoteQuestion = async (
-    oldQuestion: string,
-    noteModel: NoteContextType
+  updateNoteColumnTitle = async (
+    newColumnTitle: string,
+    oldCclumnTitle: string
   ) => {
-    const noteDoc = await NoteDatabase.getByQuestion(oldQuestion)
-
-    if (noteDoc) {
-      noteDoc.question = noteModel.question
-      noteDoc.tagNames = noteModel.tagNames
-      noteDoc.lastUpdate = noteModel.lastUpdate
-      noteDoc.savedOnServer = false
-
-      await NoteDatabase.put(noteDoc)
-
-      NoteContextUpdater.update()
-
-      this.updateNoteQuestionOnServer(noteDoc)
-    }
+    return NoteDatabaseService.updateColumnTitle(newColumnTitle, oldCclumnTitle)
   }
 
-  private updateNoteQuestionOnServer = async (noteDoc: NoteDoc) => {
-    if (noteDoc.external_id) {
-      const model: NoteQuestionModel = {
-        id: noteDoc.external_id,
-        question: noteDoc.question,
-        tagNames: noteDoc.tagNames,
-        lastUpdate: noteDoc.lastUpdate,
-        answered: noteDoc.answered,
-      }
-
-      const request = await DinoAgentService.put(
-        DinoAPIURLConstants.NOTE_UPDATE_QUESTION
-      )
-
-      if (request.canGo) {
-        try {
-          const response = await request.authenticate().setBody(model).go()
-          const savedNoteDoc = await NoteDatabase.getByQuestion(
-            noteDoc.question
-          )
-          if (savedNoteDoc) {
-            savedNoteDoc.savedOnServer = true
-            NoteDatabase.put(savedNoteDoc)
-            NoteVersionLocalStorage.setVersion(response.body)
-          }
-          return
-        } catch (e) {
-          LogAppErrorService.saveError(e)
-        }
-      }
-    }
-
-    return NoteSyncLocalStorage.setShouldSync(true)
-  }
-
-  updateNoteAnswer = async (noteModel: NoteContextType) => {
-    const noteDoc = await NoteDatabase.getByQuestion(noteModel.question)
-
-    if (noteDoc) {
-      noteDoc.answer = noteModel.answer
-      noteDoc.answered = noteModel.answered
-      noteDoc.savedOnServer = false
-
-      await NoteDatabase.put(noteDoc)
-
-      NoteContextUpdater.update()
-
-      this.updateNoteAnswerOnServer(noteDoc)
-    }
-  }
-
-  updateNoteAnswerOnServer = async (noteDoc: NoteDoc) => {
-    if (noteDoc.external_id) {
-      const model: NoteAPIAnswerModel = {
-        id: noteDoc.external_id,
-        answer: noteDoc.answer,
-      }
-
-      const request = await DinoAgentService.put(
-        DinoAPIURLConstants.NOTE_UPDATE_ANSWER
-      )
-
-      if (request.canGo) {
-        try {
-          const response = await request.authenticate().setBody(model).go()
-          const savedNoteDoc = await NoteDatabase.getByQuestion(
-            noteDoc.question
-          )
-          if (savedNoteDoc) {
-            savedNoteDoc.savedOnServer = true
-            await NoteDatabase.put(savedNoteDoc)
-            NoteContextUpdater.update()
-            NoteVersionLocalStorage.setVersion(response.body)
-          }
-          return
-        } catch (e) {
-          LogAppErrorService.saveError(e)
-        }
-      }
-    }
-
-    NoteSyncLocalStorage.setShouldSync(true)
-  }
+  checkQuestionConflict = (
+    localVersion: NoteEntity,
+    serverNotesDocs: NoteEntity[]
+  ): boolean =>
+    serverNotesDocs.some(
+      (serverNote) =>
+        serverNote.question === localVersion.question &&
+        serverNote.lastUpdate !== localVersion.lastUpdate &&
+        serverNote.external_id !== localVersion.external_id
+    )
 
   updateNotesFromServer = async (newVersion: number) => {
     const localVersion = this.getVersion()
 
     if (newVersion > localVersion) {
-      const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
+      const response = await NoteServerService.get()
+      if (response) {
+        const notes: NoteEntity[] = response.map((note) => ({
+          external_id: note.id,
+          order: note.order,
+          answer: note.answer,
+          lastUpdate: note.lastUpdate,
+          lastOrderUpdate: note.lastOrderUpdate,
+          question: note.question,
+          tagNames: note.tags,
+          savedOnServer: true,
+          columnTitle: note.columnTitle,
+        }))
 
-      if (request.canGo) {
-        try {
-          const response = await request.authenticate().go()
-          const notes: NoteModel[] = response.body
-          const noteDocs: NoteDoc[] = notes.map(
-            (n) =>
-              ({
-                external_id: n.id,
-                order: n.order,
-                answer: n.answer,
-                answered: n.answered,
-                lastUpdate: n.lastUpdate,
-                question: n.question,
-                tagNames: n.tags,
-                savedOnServer: true,
-              } as NoteDoc)
-          )
-          await NoteDatabase.removeAll()
-          await NoteDatabase.putAll(noteDocs)
-          NoteContextUpdater.update()
-          this.setVersion(newVersion)
-          return
-        } catch (e) {
-          LogAppErrorService.saveError(e)
-        }
+        await NoteDatabaseService.deleteAll()
+
+        await NoteDatabaseService.putAll(notes)
+
+        this.updateContext()
+        NoteLocalStorageService.setVersion(newVersion)
       }
-      NoteSyncLocalStorage.setShouldSync(true)
     }
   }
 
-  //#endregion
+  updateNotesOrderFromServer = async (model: NoteWebSocketOrderUpdateModel) => {
+    const notes = await this.getNotes()
+    let updated = false
 
-  //#region SYNC
+    notes.forEach((note) => {
+      const serverItem = model.items.find(
+        (item) => item.id === note.external_id
+      )
+      if (serverItem) {
+        const serverOrderMoreUpdated =
+          serverItem.lastOrderUpdate > note.lastOrderUpdate
 
-  shouldSync = (): boolean => {
-    return NoteSyncLocalStorage.getShouldSync()
+        if (serverOrderMoreUpdated) {
+          note.order = serverItem.order
+          note.lastOrderUpdate = serverItem.lastOrderUpdate
+          note.columnTitle = serverItem.columnTitle
+          updated = true
+        }
+      }
+    })
+
+    if (updated) {
+      await NoteDatabaseService.putAll(notes)
+
+      this.updateContext()
+    }
   }
 
-  setShouldSync = (should: boolean) => {
-    return NoteSyncLocalStorage.setShouldSync(should)
+  updateDeletedNotesFromServer = async (
+    model: NoteWebSocketAlertDeleteModel
+  ) => {
+    const localVersion = this.getVersion()
+
+    if (model.newVersion > localVersion && model.idList) {
+      await NoteDatabaseService.deleteByExternalIds(model.idList)
+      NoteLocalStorageService.setVersion(model.newVersion)
+
+      this.updateContext()
+    }
   }
 
   //#endregion
@@ -465,7 +400,7 @@ class NoteService {
   //#region VALIDATE
 
   questionAlreadyExists = async (question: string): Promise<boolean> => {
-    const note = await NoteDatabase.getByQuestion(question)
+    const note = await NoteDatabaseService.getByQuestion(question)
 
     if (note) {
       return true

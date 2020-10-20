@@ -17,18 +17,24 @@ const UserContextProvider: React.FC = (props) => {
   } as UserContextType)
 
   useEffect(() => {
-    let handleLocalDataChanged = () => {
-      setValue({
+    const handleLocalDataChanged = () => {
+      const value: UserContextType = {
         email: UserService.getEmail(),
         name: UserService.getName(),
         picture: UserService.getPicture(),
-      } as UserContextType)
+      }
+
+      saveData(value)
+    }
+
+    let saveData = (value: UserContextType) => {
+      setValue(value)
     }
 
     UserContextUpdater.setCallback(handleLocalDataChanged)
 
     const cleanBeforeUpdate = () => {
-      handleLocalDataChanged = () => {}
+      saveData = () => {}
     }
 
     return cleanBeforeUpdate

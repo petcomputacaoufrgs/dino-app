@@ -31,7 +31,7 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
       className="tag_search_bar"
       onChange={handleChange}
       onInputChange={handleInputChange}
-      size='small'
+      size="small"
       renderInput={(params) => (
         <TextField
           {...params}
@@ -49,7 +49,7 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
                 </InputAdornment>
                 {params.InputProps.startAdornment}
               </>
-            )
+            ),
           }}
         />
       )}

@@ -1,3 +1,3 @@
 export default interface CloseComponentProps {
-    onClose: () => void
+  onClose: () => void
 }

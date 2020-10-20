@@ -6,18 +6,17 @@ import HeaderProps from './props'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ onClose }) => {
+  const language = useLanguage().current
 
-    const language = useLanguage().current
-
-    return (
-      <div className="calendar__edit_event_modal__header">
-        <div className="calendar__edit_event_modal__header__left">
-          <IconButton aria-label={language.CLOSE_ARIA_LABEL} onClick={onClose}>
-            <CloseIcon fontSize="default" />
-          </IconButton>
-        </div>
+  return (
+    <div className="calendar__edit_event_modal__header">
+      <div className="calendar__edit_event_modal__header__left">
+        <IconButton aria-label={language.CLOSE_ARIA_LABEL} onClick={onClose}>
+          <CloseIcon fontSize="default" />
+        </IconButton>
       </div>
-    )
+    </div>
+  )
 }
 
 export default Header

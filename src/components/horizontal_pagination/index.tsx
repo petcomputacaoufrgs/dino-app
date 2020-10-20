@@ -32,7 +32,7 @@ const HorizontalPagination: React.FC<HorizontalPagionationProps> = ({
           callback: handleSlideChange,
           startSlide: currentSlide,
           continuous: false,
-          speed: 250
+          speed: 250,
         }}
       >
         {pages.map((Page, index) => (

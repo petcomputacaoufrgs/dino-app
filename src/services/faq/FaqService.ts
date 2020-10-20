@@ -1,5 +1,5 @@
 import FaqItemModel from '../../types/faq/FaqItemModel'
-import LS from '../../local_storage/FaqLocalStorage'
+import LS from '../../local_storage/faq/FaqLocalStorage'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import ServerService from './FaqServerService'
@@ -31,7 +31,7 @@ class FaqService {
     } as FaqOptionsModel)
 
     this.setItems(faq.items)
-    
+
     CurrentFaqContextUpdater.update()
   }
 
@@ -56,7 +56,9 @@ class FaqService {
     return LS.getVersion()
   }
 
-  getFaqOptionsFromServer = async (): Promise<Array<FaqOptionsModel> | undefined> => {
+  getFaqOptionsFromServer = async (): Promise<
+    Array<FaqOptionsModel> | undefined
+  > => {
     return await ServerService.getFaqOptions()
   }
 

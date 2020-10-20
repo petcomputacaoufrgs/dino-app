@@ -1,5 +1,5 @@
 export default interface FaqItemModel {
-    id: number,
-    question: string,
-    answer: string,
+  id: number
+  question: string
+  answer: string
 }

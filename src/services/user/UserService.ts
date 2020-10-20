@@ -1,4 +1,4 @@
-import UserLocalStorage from '../../local_storage/UserLocalStorage'
+import UserLocalStorage from '../../local_storage/user/UserLocalStorage'
 import AuthService from '../auth/AuthService'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'
@@ -17,6 +17,7 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ContactService from '../contact/ContactService'
 import CalendarService from '../calendar/CalendarService'
 import FaqService from '../faq/FaqService'
+import NoteColumnService from '../note/NoteColumnService'
 
 class UserService {
   private setVersion = (version: number) => {
@@ -155,15 +156,11 @@ class UserService {
 
         const savePictureWithError = this.getSavePictureWithError()
 
-        if (
-          savePictureWithError ||
-          this.getPictureUrl() !== pictureURL
-        ) {
-
+        if (savePictureWithError || this.getPictureUrl() !== pictureURL) {
           if (savePictureWithError) {
             this.setSavePictureWithError(false)
           }
-          
+
           this.setPictureUrl(pictureURL)
           this.donwloadPicture(pictureURL)
           this.saveNewPhotoOnServer(pictureURL)
@@ -239,6 +236,7 @@ class UserService {
     AuthService.removeUserData()
     AppSettingsService.removeUserData()
     NoteService.removeUserData()
+    NoteColumnService.removeUserData()
     GlossaryService.removeUserData()
     LogAppErrorService.removeUserData()
     ContactService.removeUserData()

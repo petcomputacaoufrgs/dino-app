@@ -3,7 +3,7 @@ class NumberUtils {
 
   isOdd = (number: number) => !this.isEven(number)
 
-  safeParseInt = (str: string) => {
+  safeParseNumber = (str: string) => {
     const number = parseInt(str)
 
     if (isNaN(number)) {

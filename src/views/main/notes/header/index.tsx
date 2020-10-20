@@ -1,22 +1,28 @@
 import React from 'react'
 import TagSearchBar from '../../../../components/tag_search_bar'
-import { isMobile } from 'react-device-detect'
+import NoteSVG from '../../../../assets/icons/note.svg'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import NoteHeaderProps from './props'
 import './styles.css'
 
-const NoteHeader = (props: {
-  tags: string[]
-  handleTagSearch: (tags: string[]) => void
-  handleTextSearch: (text: string) => void
-  headerClass: string
+const NoteHeader: React.FC<NoteHeaderProps> = ({
+  tags,
+  onTagSearch,
+  onTextSearch,
 }) => {
+  const language = useCurrentLanguage()
 
   return (
-    <div className={isMobile ? 'notes__header' : 'notes__header_desktop'}>
+    <div className="notes__header">
+      <img
+        className="notes__header__image"
+        src={NoteSVG}
+        alt={language.NOTES_HEADER_IMAGE_DESC}
+      />
       <TagSearchBar
-        options={props.tags}
-        onTagSearch={props.handleTagSearch}
-        onTextSearch={props.handleTextSearch}
-        textFieldClass={props.headerClass}
+        options={tags}
+        onTagSearch={onTagSearch}
+        onTextSearch={onTextSearch}
       />
     </div>
   )

@@ -1,13 +1,13 @@
 import React from 'react'
 import HeaderProps from './props'
 import DateUtils from '../../../../../utils/DateUtils'
-import { useLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import TodayCalendarSVG from '../../../../../assets/icons/today_calendar.svg'
 import { IconButton } from '@material-ui/core'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   return (
     <div className="calendar__month__header">

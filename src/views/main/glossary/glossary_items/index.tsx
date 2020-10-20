@@ -1,15 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import './styles.css'
 import React from 'react'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
-import PathConstants from '../../../../constants/PathConstants'
+import PathConstants from '../../../../constants/app/PathConstants'
 import { Link } from 'react-router-dom'
 import GlossaryItemProps from './props'
 
 const GlossaryItems = (props: GlossaryItemProps): JSX.Element => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   return (
     <Accordion className="accordion">

@@ -1,4 +1,4 @@
-import LanguageBase from '../languages/LanguageBase'
+import LanguageBase from '../../constants/languages/LanguageBase'
 
 export interface Language {
   name: string

@@ -55,7 +55,7 @@ const Settings = (): JSX.Element => {
 
     const currentLanguage = appSettings.language.updateLanguage()
 
-    if(selectedFaq !== undefined) {
+    if (selectedFaq !== undefined) {
       FaqService.switchUserFaq(selectedFaq)
     }
 
@@ -98,10 +98,7 @@ const Settings = (): JSX.Element => {
   )
 
   const renderSelectFaq = (): JSX.Element => (
-    <SelectFaq 
-      selectedFaq={selectedFaq}
-      setSelectedFaq={setSelectedFaq}
-    />
+    <SelectFaq selectedFaq={selectedFaq} setSelectedFaq={setSelectedFaq} />
   )
 
   return (
@@ -116,9 +113,7 @@ const Settings = (): JSX.Element => {
       <FormControl className="settings__form">
         {renderSelectLanguage()}
       </FormControl>
-      <FormControl className="settings__form">
-        {renderSelectFaq()}
-      </FormControl>
+      <FormControl className="settings__form">{renderSelectFaq()}</FormControl>
       {renderSaveButton()}
     </div>
   )

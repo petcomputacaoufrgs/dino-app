@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../context_provider/app_settings'
 import { useAlert } from '../../context_provider/alert'
 import { Typography } from '@material-ui/core'
 import GoogleLoginButton from '../../components/google_login_button'
@@ -13,7 +13,7 @@ import './styles.css'
 const Login = (): JSX.Element => {
   const alert = useAlert()
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const showAlertDinoFail = () => {
     alert.showErrorAlert(language.LOGIN_FAIL_BY_API)
@@ -44,7 +44,11 @@ const Login = (): JSX.Element => {
 
   return (
     <div className="login">
-      <img className="login__curious" src={Dinosaur2} alt={language.CURIOUS_DINO_ALT} />
+      <img
+        className="login__curious"
+        src={Dinosaur2}
+        alt={language.CURIOUS_DINO_ALT}
+      />
       <img className="login__logo" src={Dinosaur1} alt={language.APP_NAME} />
       <Typography className="login__message" variant="h6" component="p">
         {language.WELCOME_MESSAGE}

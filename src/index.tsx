@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import * as ServiceWorker from './serviceWorker'
 import ErrorHandlerService from './services/error_handler/ErrorHandlerService'
+import SyncContextProvider from './context_provider/sync'
 import Load from './views/load'
 
 const AlertContextProvider = React.lazy(() =>
@@ -27,9 +28,11 @@ ErrorHandlerService.register()
 ReactDOM.render(
   <Suspense fallback={<Load />}>
     <AlertContextProvider>
-      <AppSettingsContextProvider>
-        <App />
-      </AppSettingsContextProvider>
+        <SyncContextProvider>
+            <AppSettingsContextProvider>
+                <App />
+            </AppSettingsContextProvider>
+        </SyncContextProvider>
     </AlertContextProvider>
   </Suspense>,
   document.getElementById('root')

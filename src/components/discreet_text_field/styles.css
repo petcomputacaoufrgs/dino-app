@@ -1,0 +1,3 @@
+.discreet_text_field.remove_underline ::before {
+  border-bottom: none;
+}

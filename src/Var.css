@@ -1,0 +1,32 @@
+:root{
+  --background-main: #F5F5F5;
+  --header-and-menu: #694E73;
+  --home-icons: #ADC2B9;
+  --header-and-menu-icons: #F5F5F5;
+  --column-and-selection-background: #ADC2B9;
+  --note-background: #F5F5F5;
+  --note-answer-background: #E1E1E1;
+  --selection-description: #CCDBD5;
+  --base-font-color: #000000;
+  --menu-font-color: #ffffff;
+  --selection-font-color: #000000;
+  --column-font-color: #274035;
+
+  --font-base:'Varela Round', sans-serif;
+  --font-secondary:'Poppins', sans-serif;
+}
+
+[data-theme="dark"]{
+  --background-main: #2F2E2C;
+  --header-and-menu: #121212;
+  --home-icons: #DDCE99;
+  --header-and-menu-icons: #2F2E2C;
+  --column-and-selection-background: #796980;
+  --note-background: #B4A3BA;
+  --note-answer-background:#A692AE;
+  --selection-description: #FFEAA3;
+  --base-font-color: #ffffff;
+  --menu-font-color: #ffffff;
+  --selection-font-color: #000000;
+  --column-font-color: #9E7B00;
+}

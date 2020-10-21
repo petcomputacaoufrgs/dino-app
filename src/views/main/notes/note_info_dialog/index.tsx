@@ -16,7 +16,7 @@ import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
 import ArrayUtils from '../../../../utils/ArrayUtils'
-import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete_outline.svg'
+import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
 import SVGButton from '../../../../components/button/svg_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
 

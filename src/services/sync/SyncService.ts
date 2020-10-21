@@ -1,25 +1,25 @@
-import SyncState from "../../types/sync/SyncState"
-import SyncLocalStorage from "../../local_storage/SyncLocalStorage"
+import SyncStateEnum from "../../types/sync/SyncStateEnum"
+import SyncLocalStorage from "../../local_storage/sync/SyncLocalStorage"
 import SyncContextUpdater from "../../context_updater/SyncContextUpdater"
 
 class SyncService {
-    getState = (): SyncState => {
+    getState = (): SyncStateEnum => {
         return SyncLocalStorage.getState()
     }
 
     setOffline = () => {
-        this.setState(SyncState.Offline)
+        this.setState(SyncStateEnum.OFFILINE)
     }
 
     setSynchronizing = () => {
-        this.setState(SyncState.Synchronizing)
+        this.setState(SyncStateEnum.SYNCHRONIZING)
     }
 
     setSynced = () => {
-        this.setState(SyncState.Synced)
+        this.setState(SyncStateEnum.SYNCED)
     }
 
-    private setState = (state: SyncState) => {
+    private setState = (state: SyncStateEnum) => {
         SyncLocalStorage.setState(state)
         SyncContextUpdater.update()
     }

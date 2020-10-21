@@ -183,4 +183,8 @@ export default interface LanguageBase {
   NOTE_INFO_DIALOG_LAST_UPDATE_TITLE: string
   NOTE_INFO_DIALOG_COLUMN_TITLE: string
   NOTE_SEARCH_CLEAN: string
+  CLASSIC_THEME_NAME: string
+  DARK_THEME_NAME: string
+  DALTONIAN_THEME_NAME: string
+  COLOR_THEME_SELECTION_TITLE: string
 }

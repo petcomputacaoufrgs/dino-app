@@ -1,8 +1,12 @@
 .drawer__navigation__app_bar {
     width: 100%;
     height: 50px;
-    background-color: whitesmoke;
+    background-color: var(--header-and-menu);
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.drawer__navigation__app_bar .MuiIconButton-label .MuiSvgIcon-root {
+    fill: var(--header-and-menu-icons);
 }

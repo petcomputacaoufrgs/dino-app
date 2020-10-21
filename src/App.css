@@ -3,7 +3,8 @@
 .app .MuiBottomNavigationAction-label,
 .app .MuiButton-label,
 .MuiFormLabel-root {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-base);
+  color: var(--base-font-color)
 }
 
 .MuiDialog-root {
@@ -15,8 +16,9 @@
 }
 
 .app {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-base);
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  color: var(--base-font-color)
 }

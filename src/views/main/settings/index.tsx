@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useAppSettings } from '../../../context_provider/app_settings'
 import { useAlert } from '../../../context_provider/alert'
+import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import SaveIcon from '@material-ui/icons/Save'
-import AppSettingsModel from '../../../types/app_settings/AppSettingsModel'
+import AppSettingsRequestAndResponseModel from '../../../types/app_settings/AppSettingsRequestAndResponseModel'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 import FaqService from '../../../services/faq/FaqService'
 import SelectFaq from '../faq/select_faq'
-
 import './styles.css'
 
 const Settings = (): JSX.Element => {
@@ -20,12 +19,20 @@ const Settings = (): JSX.Element => {
 
   const language = appSettings.language.current
 
+  const colorTheme = appSettings.colorTheme.current
+
   const alert = useAlert()
 
   const languageList = appSettings.language.getLanguages()
 
+  const colorThemeList = appSettings.colorTheme.getColorThemeOptions()
+
   const [selectedLanguage, setSelectedLanguage] = useState(
     language.NAVIGATOR_LANGUAGE_CODE
+  )
+
+  const [selectedColorTheme, setSelectedColorTheme] = useState(
+    colorTheme
   )
 
   const currentFaq = appSettings.selectedFaq.current
@@ -37,18 +44,29 @@ const Settings = (): JSX.Element => {
   }, [language])
 
   useEffect(() => {
+    setSelectedColorTheme(colorTheme)
+  }, [colorTheme])
+
+  useEffect(() => {
     setSelectedFaq(currentFaq)
   }, [currentFaq])
 
-  const handleSelectionChanged = (event: any) => {
+  const handleSelectedLanguageChanged = (event: any) => {
     if (event && event.target && event.target.value) {
       setSelectedLanguage(event.target.value as string)
     }
   }
 
+  const handleSelectedColorThemeChanged = (event: any) => {
+    if (event && event.target && event.target.value) {
+      setSelectedColorTheme(event.target.value as number)
+    }
+  }
+
   const onSave = () => {
-    const model: AppSettingsModel = {
+    const model: AppSettingsRequestAndResponseModel = {
       language: selectedLanguage,
+      colorTheme: selectedColorTheme
     }
 
     AppSettingsService.set(model)
@@ -71,7 +89,7 @@ const Settings = (): JSX.Element => {
         labelId="language-select-label"
         id="language-select"
         value={selectedLanguage}
-        onChange={handleSelectionChanged}
+        onChange={handleSelectedLanguageChanged}
       >
         {languageList.map((language, index) => (
           <MenuItem key={index} value={language.code}>
@@ -82,6 +100,30 @@ const Settings = (): JSX.Element => {
     </>
   )
 
+  const renderSelectColorTheme = (): JSX.Element => (
+    <>
+      <InputLabel id="color-theme--select-label">
+        {language.COLOR_THEME_SELECTION_TITLE}
+      </InputLabel>
+      <Select
+        labelId="color-theme--select-label"
+        id="color-theme--select"
+        value={selectedColorTheme}
+        onChange={handleSelectedColorThemeChanged}
+      >
+        {colorThemeList.map((option, index) => (
+          <MenuItem key={index} value={option.code}>
+            {option.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </>
+  )
+
+  const renderSelectFaq = (): JSX.Element => (
+    <SelectFaq selectedFaq={selectedFaq} setSelectedFaq={setSelectedFaq} />
+  )
+
   const renderSaveButton = (): JSX.Element => (
     <div className="settings__save_button_container">
       <Button
@@ -89,16 +131,12 @@ const Settings = (): JSX.Element => {
         color="primary"
         size="large"
         className="settings__save_button"
-        startIcon={<SaveIcon />}
+        startIcon={<SaveSVG className='settings__save_button__icon' />}
         onClick={onSave}
       >
         {language.SETTINGS_SAVE}
       </Button>
     </div>
-  )
-
-  const renderSelectFaq = (): JSX.Element => (
-    <SelectFaq selectedFaq={selectedFaq} setSelectedFaq={setSelectedFaq} />
   )
 
   return (
@@ -112,6 +150,9 @@ const Settings = (): JSX.Element => {
       </Typography>
       <FormControl className="settings__form">
         {renderSelectLanguage()}
+      </FormControl>
+      <FormControl className="settings__form">
+        {renderSelectColorTheme()}
       </FormControl>
       <FormControl className="settings__form">{renderSelectFaq()}</FormControl>
       {renderSaveButton()}

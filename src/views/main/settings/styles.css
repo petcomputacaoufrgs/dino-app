@@ -31,9 +31,20 @@
   margin-top: auto;
 }
 
+.settings__save_button__icon {
+  width: 18px;
+  height: 18px;
+  margin-left: -10px;
+  fill: var(--header-and-menu-icons);
+}
+
 .settings__save_button.MuiButtonBase-root {
   margin-top: 50px;
-  background-color: #36b344;
+  background-color: var(--header-and-menu);
+}
+
+.settings__save_button.MuiButtonBase-root .MuiButton-label {
+  color: var(--menu-font-color);
 }
 
 .settings__title.MuiTypography-root {

@@ -38,11 +38,11 @@ const LanguageContextProvider = (): LanguageContextType => {
       {
         code: LanguageCodeConstants.PORTUGUESE,
         name: language.LANGUAGE_PORTUGUESE,
-      } as Language,
+      },
       {
         code: LanguageCodeConstants.ENGLISH,
         name: language.LANGUAGE_ENGLISH,
-      } as Language,
+      },
     ]
   }
 

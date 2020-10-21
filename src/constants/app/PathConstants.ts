@@ -13,9 +13,6 @@ class PathConstants {
 
   SETTINGS: string = `${this.APP}/settings`
 
-  /**
-   * @description Diretório do FAQ
-   */
   FAQ: string = this.APP + '/faq'
 
   NOTES: string = `${this.APP}/notes`

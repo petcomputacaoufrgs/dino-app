@@ -2,4 +2,5 @@
     width: 100%;
     height: calc(100% - 50px);
     overflow-y: auto;
+    background-color: var(--background-main);
 }

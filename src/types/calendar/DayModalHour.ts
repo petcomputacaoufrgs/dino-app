@@ -1,4 +1,4 @@
 export default interface DayModalHour {
-    hour: number 
-    min: number
+  hour: number
+  min: number
 }

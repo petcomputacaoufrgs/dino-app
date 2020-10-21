@@ -1,14 +1,14 @@
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AppSettingsLocalStorage from '../../local_storage/AppSettingsLocalStorage'
+import AppSettingsLocalStorage from '../../local_storage/app_settings/AppSettingsLocalStorage'
 import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
 import DinoAgentService from '../../agent/DinoAgentService'
 import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
-import LanguageBase from '../../types/languages/LanguageBase'
-import LanguageCodeConstants from '../../constants/LanguageCodeConstants'
-import PT from '../../types/languages/PT'
-import EN from '../../types/languages/EN'
+import LanguageBase from '../../constants/languages/LanguageBase'
+import PT from '../../constants/languages/PT'
+import EN from '../../constants/languages/EN'
 import AppSettingsContextUpdater from '../../context_updater/AppSettingsContextUpdater'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import LanguageCodeConstants from '../../constants/languages/LanguageCodeConstants'
 
 class AppSettingsService {
   listenner = {}

@@ -1,149 +1,157 @@
 import React, { useState, useEffect } from 'react'
 import { ContactFormDialogProps } from './props'
-import Constants from '../../../../constants/ContactsConstants'
+import Constants from '../../../../constants/contact/ContactsConstants'
 import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
-import ColorConstants from '../../../../constants/ColorConstants'
+import ColorConstants from '../../../../constants/app/ColorConstants'
 
 import Button from '@material-ui/core/Button'
-import { Dialog, DialogActions, DialogContent,} from '@material-ui/core'
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import './styles.css'
 
-
-const ContactFormDialog = React.forwardRef(({ dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps, ref: React.Ref<unknown>): JSX.Element => {
-
-  const language = useLanguage().current
-
-  const getContact = () => {
-    return {
-      name: item?.name || '',
-      description: item?.description || '',
-      color: item?.color || '',
-    }
+const getContact = (item: ContactModel | undefined) => {
+  return {
+    name: item?.name || '',
+    description: item?.description || '',
+    color: item?.color || '',
   }
+}
 
-  const getPhones = () => {
-    return item ? item.phones : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
-  }
+const getPhones = (item: ContactModel | undefined) => {
+  return item
+    ? item.phones
+    : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
+}
 
-  useEffect(() => {
-    if(dialogOpen) {
-      setContact(getContact())
-      setPhones(getPhones())
-      setInvalidName(false)
-      setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
-    } 
-  }, [dialogOpen, item])
+const ContactFormDialog = React.forwardRef(
+  (
+    { dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps,
+    ref: React.Ref<unknown>
+  ): JSX.Element => {
+  const language = useCurrentLanguage()
 
-  const [contact, setContact] = useState(getContact())
-  const [phones, setPhones] = useState(getPhones())
-  const [invalidName, setInvalidName] = useState(false)
-  const [invalidPhone, setInvalidPhone] = useState(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
+    useEffect(() => {
+      if (dialogOpen) {
+        setContact(getContact(item))
+        setPhones(getPhones(item))
+        setInvalidName(false)
+        setInvalidPhone(JSON.parse(Constants.DEFAULT_INVALID_PHONE))
+      }
+    }, [dialogOpen, item])
 
-  const handleSave = (): void => {
-    function validInfo(): string {
-      setInvalidName(contact.name === '')
-      return contact.name
-    }
+    const [contact, setContact] = useState(getContact(item))
+    const [phones, setPhones] = useState(getPhones(item))
+    const [invalidName, setInvalidName] = useState(false)
+    const [invalidPhone, setInvalidPhone] = useState(
+      JSON.parse(Constants.DEFAULT_INVALID_PHONE)
+    )
 
-    function handleTakenNumber(item: ContactModel, exists: ContactModel) {
-      const phone = item.phones.find((phone) =>
-        exists.phones.map((phone) => phone.number).includes(phone.number)
-      )
-      if (phone)
-        setInvalidPhone({
-          number: phone.number,
-          text: `O número já está registrado no contato ${exists.name}`,
-        })
-    }
+    const handleSave = (): void => {
+      function validInfo(): string {
+        setInvalidName(contact.name === '')
+        return contact.name
+      }
 
-    function makeItem(): ContactModel {
-      const frontId = item !== undefined ? item.frontId : Service.makeFrontId()
-      return {
-        frontId,
-        id: item?.id,
-        name: contact.name,
-        description: contact.description,
-        color: contact.color,
-        phones: phones.filter((phone) => phone.number !== ''),
+      function handleTakenNumber(item: ContactModel, exists: ContactModel) {
+        const phone = item.phones.find((phone) =>
+          exists.phones.map((phone) => phone.number).includes(phone.number)
+        )
+        if (phone)
+          setInvalidPhone({
+            number: phone.number,
+            text: `O número já está registrado no contato ${exists.name}`,
+          })
+      }
+
+      function makeItem(): ContactModel {
+        const frontId =
+          item !== undefined ? item.frontId : Service.makeFrontId()
+        return {
+          frontId,
+          id: item?.id,
+          name: contact.name,
+          description: contact.description,
+          color: contact.color,
+          phones: phones.filter((phone) => phone.number !== ''),
+        }
+      }
+
+      if (validInfo()) {
+        const newItem = makeItem()
+        const exists = Service.findItemByPhones(newItem.phones)
+
+        if (action === Constants.ACTION_EDIT) {
+          if (!exists || exists.frontId === newItem.frontId) {
+            Service.editContact(newItem)
+            handleClose()
+          } else handleTakenNumber(newItem, exists)
+        } else {
+          if (!exists) {
+            Service.addContact(newItem)
+            handleClose()
+          } else handleTakenNumber(newItem, exists)
+        }
       }
     }
 
-    if (validInfo()) {
-      const newItem = makeItem()
-      const exists = Service.findItemByPhones(newItem.phones)
-
-      if (action === Constants.ACTION_EDIT) {
-        if (!exists || exists.frontId === newItem.frontId) {
-          Service.editContact(newItem)
-          handleClose()
-        } else handleTakenNumber(newItem, exists)
-      } else {
-        if (!exists) {
-          Service.addContact(newItem)
-          handleClose()
-        } else handleTakenNumber(newItem, exists)
-      }
+    const handleChangeColor = () => {
+      const colors = ColorConstants.COLORS
+      const index = colors.findIndex((c) => c === contact.color)
+      const color = colors[(index + 1) % colors.length]
+      setContact({ ...contact, color })
     }
-  }
 
-  const handleChangeColor = () => {
-    const colors = ColorConstants.COLORS
-    const index = colors.findIndex((c) => c === contact.color)
-    const color = colors[(index + 1) % colors.length]
-    setContact({...contact, color})
-  }
+    const handleAddPhone = () => {
+      phones.push(JSON.parse(Constants.DEFAULT_PHONE))
+      setPhones([...phones])
+    }
 
-  const handleAddPhone = () => {
-    phones.push(JSON.parse(Constants.DEFAULT_PHONE))
-    setPhones([...phones])
-  }
+    const handleDeletePhone = (number: string) => {
+      const indexPhone = phones.findIndex((phone) => phone.number === number)
+      phones.splice(indexPhone, 1)
+      setPhones([...phones])
+    }
 
-  const handleDeletePhone = (number: string) => {
-    const indexPhone = phones.findIndex((phone) => phone.number === number)
-    phones.splice(indexPhone, 1)
-    setPhones([...phones])
-  }
+    const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const name = event.target.value as string
+      setContact({ ...contact, name })
+    }
 
-  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.value as string
-    setContact({...contact, name})
-  }
+    const handleChangeDescription = (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const description = event.target.value as string
+      setContact({ ...contact, description })
+    }
 
-  const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const description = event.target.value as string
-    setContact({...contact, description})
+    const handleChangeType = (
+      event: React.ChangeEvent<HTMLInputElement>,
+      index: number
+    ) => {
+      phones[index].type = Number(event.target.value)
+      setPhones([...phones])
+    }
 
-  }
+    const handleChangeNumber = (
+      event: React.ChangeEvent<HTMLInputElement>,
+      index: number
+    ) => {
+      phones[index].number = event.target.value as string
+      setPhones([...phones])
+    }
 
-  const handleChangeType = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    phones[index].type = Number(event.target.value)
-    setPhones([...phones])
-  }
-
-  const handleChangeNumber = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    phones[index].number = event.target.value as string
-    setPhones([...phones])
-  }
-
-  return (
-    <div className='contact-form'>
+    return (
+      <div className="contact-form">
         <Dialog
           ref={ref}
-          style={{margin:'0px'}}
+          style={{ margin: '0px' }}
           open={dialogOpen}
-          maxWidth='xl'
+          maxWidth="xl"
           fullWidth
           onClose={handleClose}
           TransitionComponent={TransitionSlide}
@@ -180,7 +188,8 @@ const ContactFormDialog = React.forwardRef(({ dialogOpen, onClose: handleClose, 
           </DialogActions>
         </Dialog>
       </div>
-  )
-})
+    )
+  }
+)
 
 export default ContactFormDialog

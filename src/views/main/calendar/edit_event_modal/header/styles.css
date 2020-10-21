@@ -1,12 +1,12 @@
 .calendar__edit_event_modal__header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .calendar__edit_event_modal__header__left {
-    width: 50%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import { useParams } from 'react-router-dom'
 //import Card from 'react-bootstrap/Card'
 import { Divider, Card, CardContent, CardHeader, Typography } from '@material-ui/core'
@@ -15,7 +15,7 @@ const GlossaryItem = (): JSX.Element => {
 
   const { id } = useParams()
 
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const items = useGlossary().items
 

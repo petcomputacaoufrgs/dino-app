@@ -1,0 +1,57 @@
+.note_info_dialog__title {
+  display: flex;
+  flex-direction: row;
+}
+
+.note_info_dialog__title,
+.note_info_dialog__last_update {
+  width: 100%;
+  background-color: #b32e55;
+  font-weight: bold;
+  color: white;
+}
+
+.note_info_dialog__title.MuiDialogTitle-root {
+  padding-bottom: 8px;
+}
+
+.note_info_dialog__last_update {
+  padding: 0px 24px 16px 24px;
+}
+.note_info_dialog__last_update h3 {
+  font-size: small;
+}
+
+.note_info_dialog__last_update h4 {
+  font-size: smaller;
+  margin-bottom: 0;
+}
+
+.note__info_dialog__content.MuiDialogContent-root {
+  padding-top: 8px;
+  overflow-y: visible;
+}
+
+.note__info_dialog__actions .MuiButtonBase-root.MuiButton-root {
+  color: #b32e55;
+}
+
+.note__info_dialog__content__answer.MuiFormControl-root {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.note__info_dialog__title__question .MuiInputBase-root {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  height: 100%;
+}
+
+.note_info_dialog__title .svg_button.MuiButtonBase-root.MuiButton-root {
+  padding-top: 7px;
+}
+
+.note_info_dialog__title .svg_button.MuiButtonBase-root.MuiButton-root svg {
+  fill: white;
+}

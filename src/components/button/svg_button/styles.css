@@ -1,0 +1,31 @@
+.svg_button.MuiFab-root {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid;
+  border-color: #b32e55;
+}
+
+.svg_button.MuiButtonBase-root.MuiButton-root {
+  min-width: 0;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.svg_button {
+  outline: none !important;
+}
+
+.svg_button svg {
+  fill: #b32e55;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.svg_button.MuiButtonBase-root.MuiButton-root svg {
+  width: 20px;
+  height: 20px;
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import ContentProps from './props'
 import WeekDayColumn from './week_day_column'
-import { useLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import { Calendar } from 'calendar'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import DateUtils from '../../../../../utils/DateUtils'
@@ -11,7 +11,7 @@ import './styles.css'
 const DAYS_IN_VIEW = 42
 
 const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
-  const language = useLanguage().current
+  const language = useCurrentLanguage()
 
   const calendar = new Calendar()
 
@@ -19,15 +19,17 @@ const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
     return weekDayName.charAt(0).toUpperCase()
   }
 
-  const getAllMonthDaysThatOccursInAWeekday = (dayOfWeek: number): DayViewModel[] => {
-    const monthDays = ArrayUtils.merge(
+  const getAllMonthDaysThatOccursInAWeekday = (
+    dayOfWeek: number
+  ): DayViewModel[] => {
+    const monthDays = ArrayUtils.apply(
       calendar.monthDates(date.getFullYear(), date.getMonth())
     )
 
     if (monthDays.length < DAYS_IN_VIEW) {
       const nextMonthDate = DateUtils.getNextMonth(date)
 
-      const nextMonthDays = ArrayUtils.merge(
+      const nextMonthDays = ArrayUtils.apply(
         calendar.monthDates(
           nextMonthDate.getFullYear(),
           nextMonthDate.getMonth()
@@ -41,12 +43,11 @@ const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
       .filter((day: Date) => {
         return day.getDay() === dayOfWeek
       })
-      .map<DayViewModel>(day => ({
-          date: day,
-        })
-      )
+      .map<DayViewModel>((day) => ({
+        date: day,
+      }))
 
-      return days
+    return days
   }
 
   return (

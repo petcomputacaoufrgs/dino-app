@@ -1,211 +1,321 @@
 import React, { useState, useEffect } from 'react'
-import { isMobile } from 'react-device-detect'
-import StringUtils from '../../../utils/StringUtils'
-import { NoteContextType } from '../../../types/context_provider/NotesContextType'
-import NoteViewModel from '../../../types/note/NoteViewModel'
-import NoteService from '../../../services/note/NoteService'
-import DateUtils from '../../../utils/DateUtils'
-import NoteHeader from './header'
-import NoteBoard from './board'
-import NoteAddButton from './note_add_button'
-import { useTags, useNotes } from '../../../context_provider/notes'
 import './styles.css'
+import StringUtils from '../../../utils/StringUtils'
+import NoteService from '../../../services/note/NoteService'
+import NoteHeader from './header'
+import NoteContent from './content'
+import { useTags, useNotes } from '../../../context_provider/note'
+import NoteViewModel from '../../../types/note/view/NoteViewModel'
+import { useNoteColumns } from '../../../context_provider/note_column'
+import { NoteColumnViewModel } from '../../../types/note/view/NoteColumnViewModel'
+import { DropResult } from 'react-beautiful-dnd'
+import NoteDroppableType from '../../../constants/note/NoteDroppableType'
+import ArrayUtils from '../../../utils/ArrayUtils'
+import NoteColumnService from '../../../services/note/NoteColumnService'
+import NoteEntity from '../../../types/note/database/NoteEntity'
+import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
 
+const convertNotesToNoteViews = (
+  notes: NoteEntity[],
+  tagSearch: string[],
+  textSearch: string
+): NoteViewModel[] => {
+  const noteViewList: NoteViewModel[] = []
 
-const HEADER_TEXT_FIELD_CLASS = 'notes_header_text_field'
+  notes.forEach((note) => {
+    if (note.id !== undefined) {
+      noteViewList.push({
+        ...note,
+        id: note.id,
+        showByTag: showByTagSearch(note.tagNames, tagSearch, textSearch),
+        showByQuestion: showByTextSearch(note.question, textSearch, tagSearch),
+      })
+    }
+  })
+
+  return noteViewList.sort((a, b) => a.order - b.order)
+}
+
+const createViewColumns = (
+  columns: NoteColumnEntity[],
+  notes: NoteEntity[],
+  tagSearch: string[],
+  textSearch: string
+): NoteColumnViewModel[] => {
+  const noteViews = convertNotesToNoteViews(notes, tagSearch, textSearch)
+
+  return columns
+    .map((column) => {
+      const columnNotes = noteViews.filter(
+        (note) => note.columnTitle === column.title
+      )
+
+      return {
+        ...column,
+        id: column.id!,
+        notes: columnNotes,
+        showBySearch: showColumnBySearch(columnNotes, textSearch, tagSearch),
+      }
+    })
+    .sort((a, b) => a.order - b.order)
+}
 
 const Notes = () => {
-  const [textSearch, setTextSearch] = useState('')
-  const [tagSearch, setTagSearch] = useState([] as string[])
   const tags = useTags()
+  const columns = useNoteColumns()
   const notes = useNotes()
-  const [viewNotes, setViewNotes] = useState([] as NoteViewModel[])
+
+  const [textSearch, setTextSearch] = useState('')
+  const [tagSearch, setTagSearch] = useState<string[]>([])
+  const [viewColumns, setViewColumns] = useState(
+    createViewColumns(columns, notes, tagSearch, textSearch)
+  )
+  const [searching, setSearching] = useState(false)
 
   useEffect(() => {
-    setViewNotes(
-      notes.map((note) => {
-        const viewNote: NoteViewModel = {
-          ...note,
-          showByTag: hasSomeTag(note.tagNames, tagSearch, textSearch),
-          showByQuestion: hasText(note.question, textSearch, tagSearch),
-        }
-        return viewNote
-      })
-    )
-  }, [notes, textSearch, tagSearch])
+    const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
+    setViewColumns(viewColumns)
+  }, [columns, notes, textSearch, tagSearch])
 
-  const handleSaveNewNote = (newQuestion: string, newTagNames: string[]) => {
-    const newId = viewNotes.length
+  useEffect(() => {
+    if (textSearch.length > 0 || tagSearch.length > 0) {
+      setSearching(true)
+    } else if (searching) {
+      setSearching(false)
+    } 
+  }, [searching, textSearch, tagSearch])
 
-    const date = DateUtils.getDatetimeInMillis()
+  const isUnchanged = (result: DropResult): boolean => {
+    const { destination, source } = result
 
-    const newNote: NoteContextType = {
-      answer: '',
-      answered: false,
-      question: newQuestion,
-      id: newId,
-      tagNames: newTagNames,
-      lastUpdate: date,
-      savedOnServer: false,
+    if (!destination) {
+      return true
     }
 
-    NoteService.saveNote(newNote)
+    const changedColumn = source.droppableId !== destination.droppableId
+
+    const dropedToSamePosition =
+      !changedColumn && destination.index === source.index
+
+    return dropedToSamePosition
   }
 
-  const handleSaveQuestion = (
-    newQuestion: string,
-    newTagNames: string[],
-    noteViewValue: NoteViewModel
-  ) => {
-    const oldQuestion = noteViewValue.question
+  //#region Column
 
-    const editedNote = notes.find((n) => n.question === oldQuestion)
-
-    if (editedNote) {
-      const date = DateUtils.getDatetimeInMillis()
-
-      editedNote.question = newQuestion
-      editedNote.tagNames = newTagNames
-      editedNote.lastUpdate = date
-
-      NoteService.updateNoteQuestion(oldQuestion, editedNote)
-    }
+  const handleSaveColumn = (column: NoteColumnEntity, oldTitle?: string) => {
+    NoteColumnService.saveColumn(column, oldTitle)
   }
 
-  const handleSaveAnswer = (newAnswer: string, noteView: NoteViewModel) => {
-    const editedNote = notes.find((n) => n.id === noteView.id)
-
-    if (editedNote) {
-      editedNote.answer = newAnswer
-      editedNote.answered = true
-
-      NoteService.updateNoteAnswer(editedNote)
-    }
-  }
-
-  const handleDeleteNote = (noteId: number) => {
-    const deletedNote = notes.find((note) => note.id === noteId)
-
-    if (deletedNote) {
-      NoteService.deleteNote(deletedNote)
-    }
-  }
-
-  const handleNotesOrderChanged = (viewNotes: NoteViewModel[]) => {
-    setViewNotes(viewNotes)
-  }
-
-  //#region Searching
-
-  const handleTagSearch = (newTagSearch: string[]) => {
-    const newViewNotes = [...viewNotes]
-
-    setTagSearch(newTagSearch)
-
-    newViewNotes.forEach((n) => {
-      n.showByTag = hasSomeTag(n.tagNames, newTagSearch, textSearch)
-      n.showByQuestion = false
-    })
-
-    setViewNotes(newViewNotes)
-  }
-
-  const handleTextSearch = (newTextSearch: string) => {
-    const newViewNotes = [...viewNotes]
-
-    setTextSearch(newTextSearch)
-
-    newViewNotes.forEach((n) => {
-      n.showByTag = hasSomeTag(n.tagNames, tagSearch, newTextSearch)
-      n.showByQuestion = hasText(n.question, newTextSearch, tagSearch)
-    })
-
-    setViewNotes(newViewNotes)
+  const handleDeleteColumn = (column: NoteColumnViewModel) => {
+    NoteColumnService.deleteColumn(column)
   }
 
   //#endregion
 
-  updateListMarginTop()
+  //#region Note
+
+  const questionAlreadyExists = (question: string): boolean =>
+    notes.some((note) => note.question === question)
+
+  const handleSaveNewNote = (
+    question: string,
+    tagNames: string[],
+    column: NoteColumnViewModel
+  ) => {
+    NoteService.createNote(question, tagNames, column)
+  }
+
+  const handleSaveNote = (note: NoteViewModel) => {
+    NoteService.saveNote(note)
+  }
+
+  const handleDeleteNote = (note: NoteViewModel) => {
+    NoteService.deleteNote(note)
+  }
+
+  //#endregion
+
+  //#region Drag&Drop
+
+  const handleNoteDragEnd = (result: DropResult) => {
+    const { destination, source } = result
+
+    const isNoteUnchaged = isUnchanged(result)
+
+    if (!destination || isNoteUnchaged) {
+      return
+    }
+
+    const changedColumn = source.droppableId !== destination.droppableId
+
+    const sourceColumn = viewColumns.find(
+      (vColumn) => vColumn.title === source.droppableId
+    )
+
+    const destinationColumn = viewColumns.find(
+      (vColumn) => vColumn.title === destination.droppableId
+    )
+
+    if (!sourceColumn || !destinationColumn) {
+      return
+    }
+
+    const changedNote = sourceColumn.notes[source.index]
+
+    changedNote.columnTitle = destinationColumn.title
+
+    sourceColumn.notes.splice(source.index, 1)
+
+    destinationColumn.notes.splice(destination.index, 0, changedNote)
+
+    if (changedColumn) {
+      sourceColumn.notes.forEach((note, index) => (note.order = index))
+    }
+
+    destinationColumn.notes.forEach((note, index) => (note.order = index))
+
+    NoteService.saveNotesOrder(
+      ArrayUtils.merge(viewColumns.map((vColumn) => vColumn.notes))
+    )
+  }
+
+  const handleNoteColumnDragEnd = (result: DropResult) => {
+    const { destination, source } = result
+
+    const isColumnUnchaged = isUnchanged(result)
+
+    if (!destination || isColumnUnchaged) {
+      return
+    }
+
+    const changedColumn = viewColumns[source.index]
+
+    viewColumns.splice(source.index, 1)
+    viewColumns.splice(destination.index, 0, changedColumn)
+
+    NoteColumnService.saveColumnsOrder(viewColumns)
+  }
+
+  const handleDragEnd = (result: DropResult) => {
+    const { type } = result
+
+    if (type === NoteDroppableType.NOTE) {
+      handleNoteDragEnd(result)
+    } else if (type === NoteDroppableType.COLUMN) {
+      handleNoteColumnDragEnd(result)
+    }
+  }
+
+  //#endregion
+
+  //#region Searching
+
+  const handleTagSearch = (newTagSearch: string[]) => {
+    const newViewColumns = Array.from(
+      viewColumns.map((column) => {
+        column.notes.forEach((n) => {
+          n.showByTag = showByTagSearch(n.tagNames, newTagSearch, textSearch)
+          n.showByQuestion = false
+        })
+
+        return column
+      })
+    )
+    
+    setTagSearch(newTagSearch)
+
+    setViewColumns(newViewColumns)
+  }
+
+  const handleTextSearch = (newTextSearch: string) => {
+    const newViewColumns = Array.from(
+      viewColumns.map((column) => {
+        column.notes.forEach((n) => {
+          n.showByTag = showByTagSearch(n.tagNames, tagSearch, newTextSearch)
+          n.showByQuestion = showByTextSearch(
+            n.question,
+            newTextSearch,
+            tagSearch
+          )
+        })
+        return column
+      })
+    )
+
+    setTextSearch(newTextSearch)
+
+    setViewColumns(newViewColumns)
+  }
+
+  //#endregion
 
   return (
-    <div className={getMainClass()}>
+    <div className="notes">
       <NoteHeader
-        handleTagSearch={handleTagSearch}
-        handleTextSearch={handleTextSearch}
-        headerClass={HEADER_TEXT_FIELD_CLASS}
+        onTagSearch={handleTagSearch}
+        onTextSearch={handleTextSearch}
         tags={tags}
       />
-      <NoteBoard
-        onBoardOrderChanged={handleNotesOrderChanged}
-        onSaveAnswer={handleSaveAnswer}
-        onSaveQuestion={handleSaveQuestion}
+      <NoteContent
+        onDragEnd={handleDragEnd}
         onDeleteNote={handleDeleteNote}
+        onSaveColumn={handleSaveColumn}
+        onDeleteColumn={handleDeleteColumn}
+        onSaveNewNote={handleSaveNewNote}
+        onSaveNote={handleSaveNote}
+        questionAlreadyExists={questionAlreadyExists}
+        columns={viewColumns}
         tags={tags}
-        viewNotes={viewNotes}
+        searching={searching}
       />
-      <NoteAddButton onSave={handleSaveNewNote} tags={tags} />
     </div>
   )
 }
 
-const hasText = (
+const showByTextSearch = (
   nodeText: string,
-  searchText: string,
+  textSearch: string,
   tagSearch: string[]
 ): boolean => {
-  if (searchText.trim()) {
-    return StringUtils.contains(nodeText, searchText)
+  const searchingByText = textSearch && textSearch.length !== 0
+
+  if (searchingByText) {
+    return StringUtils.contains(nodeText, textSearch)
   }
 
   return tagSearch.length === 0
 }
 
-const hasSomeTag = (
+const showByTagSearch = (
   nodeTagNames: string[],
-  searchTags: string[],
+  tagsSearch: string[],
   textSearch: string
 ): boolean => {
-  if (searchTags.length > 0) {
-    return nodeTagNames.some((name) => searchTags.includes(name))
+  if (tagsSearch.length > 0) {
+    return nodeTagNames.some((name) => tagsSearch.includes(name))
   }
 
-  if (textSearch && textSearch.length !== 0) {
-    return false
-  }
+  const notSearchingByText = !textSearch || textSearch.length === 0
 
-  return true
+  return notSearchingByText
 }
 
-const updateListMarginTop = () => {
-  const foundDivs = document.getElementsByClassName('notes__board')
+const showColumnBySearch = (
+  notes: NoteViewModel[],
+  textSearch: string,
+  tagsSearch: string[]
+): boolean => {
+  const activeTagsSearch = tagsSearch.length > 0
+  const activeTextSearch = textSearch && textSearch.length !== 0
+  const activeNotesCount = notes.filter(
+    (note) => note.showByQuestion || note.showByTag
+  ).length
 
-  if (foundDivs.length === 1) {
-    const noteListContainer = foundDivs[0]
-
-    setTimeout(() => {
-      const textField: HTMLElement | null = document.querySelector(
-        '.' + HEADER_TEXT_FIELD_CLASS
-      )
-
-      if (textField) {
-        const fixValue = isMobile ? 94 : 144
-
-        const value = (textField.offsetHeight + fixValue).toString() + 'px'
-
-        noteListContainer.setAttribute('style', 'top: ' + value + ';')
-      }
-    }, 0.1)
+  if (activeTagsSearch || activeTextSearch) {
+    return activeNotesCount !== 0
+  } else {
+    return true
   }
-}
-
-const getMainClass = () => {
-  const mainClass = 'notes'
-
-  if (isMobile) {
-    return mainClass
-  }
-
-  return mainClass + ' notes_desktop'
 }
 
 export default Notes

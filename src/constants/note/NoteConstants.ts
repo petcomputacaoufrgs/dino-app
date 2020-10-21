@@ -1,0 +1,11 @@
+class NoteConstants {
+  TAG_LIMIT = 10
+  TAG_MAX_LENGTH = 50
+  QUESTION_MAX_LENGTH = 250
+  ANSWER_MAX_LENGTH = 500
+  SAME_QUESTION_CONFLICT_DIFF = '*'
+  MAX_NOTES_PER_COLUMN = 30
+  MAX_COLUMNS = 10
+}
+
+export default new NoteConstants()

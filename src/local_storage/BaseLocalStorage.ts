@@ -1,4 +1,4 @@
-import LocalStorageEmpyKeyError from '../error/LocalStorageEmpyKeyError'
+import LocalStorageEmpyKeyError from '../error/local_storage/LocalStorageEmpyKeyError'
 
 /**
  * @description Define uma base para gravar e ler dados do LocalStorage

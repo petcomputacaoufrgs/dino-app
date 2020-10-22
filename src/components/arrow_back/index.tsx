@@ -1,21 +1,20 @@
 import React from 'react'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import ArrowBackIcon from '@material-ui/icons/ArrowUpward'
 import IconButton from '@material-ui/core/IconButton'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import HistoryService from '../../services/history/HistoryService'
 import { useCurrentLanguage } from '../../context_provider/app_settings'
-import './styles.css'
 
-const ArrowBack = (props: {color?: "inherit" | "disabled" | "action" | "primary" | "secondary" | "error" | undefined}): JSX.Element => {
+const ArrowBack = (): JSX.Element => {
   const language = useCurrentLanguage()
 
   return (
     <IconButton
-      className="arrow-back"
+      color="inherit"
       aria-label={language.RETURN_ARIA_LABEL}
       onClick={() => HistoryService.goBack()}
     >
-      <ArrowBackIcon color={props.color} />
+      <ArrowBackIcon  />
     </IconButton>
   )
 }

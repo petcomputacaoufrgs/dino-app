@@ -38,7 +38,7 @@
 .home .home__grid__paper__g {
   width: 100%;
   height: calc(50vw - 18px);
-  background: #ADC2B9 url(../../../assets/icons/menu_icons/glossary.svg);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/glossary.svg);
   display: grid;
   place-items: center;
 }
@@ -46,7 +46,7 @@
 .home .home__grid__paper__s {
   width: 100%;
   height: calc(50vw - 18px);
-  background: #ADC2B9 url(../../../assets/icons/menu_icons/settings.svg);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/settings.svg);
   display: grid;
   place-items: center;
 }
@@ -54,7 +54,7 @@
 .home .home__grid__paper__c {
   width: 100%;
   height: calc(50vw - 18px);
-  background: #ADC2B9 url(../../../assets/icons/menu_icons/phone.svg);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/phone.svg);
   display: grid;
   place-items: center;
   font-size: large;
@@ -63,7 +63,7 @@
 .home .home__grid__paper__f {
   width: 100%;
   height: calc(50vw - 18px);
-  background: #ADC2B9 url(../../../assets/icons/menu_icons/faq.svg);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/faq.svg);
   display: grid;
   place-items: center;
 }
@@ -71,7 +71,7 @@
 .home .home__grid__paper__n {
   width: 100%;
   height: calc(50vw - 18px);
-  background: #ADC2B9 url(../../../assets/icons/menu_icons/note.svg);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/note.svg);
   display: grid;
   place-items: center;
 }

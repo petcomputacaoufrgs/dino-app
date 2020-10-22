@@ -25,18 +25,35 @@
   grid-gap: 12px;
 }
 
-.home .home__paper {
+.home .home__grid__paper {
   width: 100%;
   height: calc(50vw - 18px);
-  background-image: url(https://s2.glbimg.com/z_gIOSUdsxyNGClgVLYVBHBziyw=/0x0:400x400/400x400/s.glbimg.com/po/tt2/f/original/2016/05/20/new-google-favicon-logo.png);
+  /* background-image: url(../../../assets/icons/menu_icons/glossary.svg); */
   background-size: cover;
   display: grid;
   place-items: center;
 }
 
-.home .home__paper .home__paper__string {
+
+.home .home__grid__button {
+  width: 100%;
+  padding: 0px;
+}
+
+.home .home__grid__paper .img {
+  position: absolute;
+  /* left: 0;
+  top: 0;
+  width: 100%;
+  height: auto; */
+  opacity: 0.6;
+}
+
+.home .home__grid__paper .home__paper__string {
   font-size: 5.5vmin;
   font-weight: bold;
+  position: relative;
+  z-index: 2;
 }
 
 @media (orientation: landscape) {

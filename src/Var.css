@@ -16,7 +16,7 @@
   --font-secondary:'Poppins', sans-serif;
 }
 
-[data-theme="dark"]{
+[data-theme="dark"] {
   --background-main: #2F2E2C;
   --header-and-menu: #121212;
   --home-icons: #DDCE99;

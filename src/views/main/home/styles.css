@@ -25,35 +25,26 @@
   grid-gap: 12px;
 }
 
-.home .home__grid__paper {
-  width: 100%;
-  height: calc(50vw - 18px);
-  /* background-image: url(../../../assets/icons/menu_icons/glossary.svg); */
-  background-size: cover;
-  display: grid;
-  place-items: center;
-}
-
-
 .home .home__grid__button {
   width: 100%;
   padding: 0px;
+  border-radius: 8px;
 }
 
-.home .home__grid__paper .img {
-  position: absolute;
-  /* left: 0;
-  top: 0;
+.home .home__grid__button .MuiPaper-rounded {
+  border-radius: 8px;
+}
+
+.home .home__grid__paper {
   width: 100%;
-  height: auto; */
-  opacity: 0.6;
-}
-
-.home .home__grid__paper .home__paper__string {
+  height: calc(50vw - 18px);
+  background-image: url(../../../assets/icons/menu_icons/glossary.svg);
+  background-size: cover;
+  background-color: #ADC2B9;
+  display: grid;
+  place-items: center;
   font-size: 5.5vmin;
   font-weight: bold;
-  position: relative;
-  z-index: 2;
 }
 
 @media (orientation: landscape) {

@@ -5,7 +5,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #b32e55;
+  background-color: var(--header-and-menu);
   display: flex;
   flex-direction: column;
   align-items: center;

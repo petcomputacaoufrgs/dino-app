@@ -9,8 +9,7 @@
 
 .tag_list.MuiPaper-root .MuiChip-root {
   border: 1px solid;
-  border-color: #b32e55;
-  color: #b32e55;
+  border-color: var(--column-font-color);
   background-color: inherit;
   margin-right: 5px;
   font-size: smaller;

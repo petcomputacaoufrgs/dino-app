@@ -1,5 +1,5 @@
 .note__column_dialog__header.MuiCardHeader-root {
-  background-color: #b32e55;
+  background-color: var(--header-and-menu);
   color: white;
 }
 

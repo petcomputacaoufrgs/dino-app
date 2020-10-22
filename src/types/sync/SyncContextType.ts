@@ -1,5 +1,5 @@
-import SyncState from "./SyncState";
+import SyncStateEnum from "./SyncStateEnum";
 
 export default interface SyncContextType {
-    state: SyncState
+    state: SyncStateEnum
 }

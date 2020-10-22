@@ -385,4 +385,12 @@ export default class PT implements LanguageBase {
 
   NOTE_SEARCH_CLEAN = 'Nenhuma anotação corresponde a pesquisa atual.'
 
+  CLASSIC_THEME_NAME = 'Clássico'
+
+  DARK_THEME_NAME = 'Escuro'
+
+  DALTONIAN_THEME_NAME = 'Alto contraste'
+
+  COLOR_THEME_SELECTION_TITLE = 'Escolher Tema de Cores'
+
 }

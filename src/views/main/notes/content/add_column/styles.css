@@ -11,8 +11,8 @@
 
 .note__note_content__columns__add_column__button.MuiButtonBase-root.MuiButton-root {
   border: 1px solid;
-  border-color: rgba(179, 46, 85);
-  background-color: rgb(245, 245, 245);
+  border-color: var(--column-font-color);
+  background-color: var(--column-and-selection-background);
   border-radius: 5px;
   width: 100%;
   height: auto;
@@ -23,7 +23,7 @@
   font-size: small;
   margin-bottom: 0;
   font-weight: bold;
-  color: #b32e55;
+  color: var(--column-font-color);
 }
 
 .note__note_content__columns__add_column__button__text__max_columns {

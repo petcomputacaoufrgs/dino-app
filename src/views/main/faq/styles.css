@@ -3,9 +3,13 @@
   display: flex;
 }
 
+.select-faq__button .MuiButton-outlinedPrimary {
+  border-color: var(--column-font-color);
+}
+
 .send-question__button {
   text-decoration: underline;
-  color: rgb(0, 102, 255);
+  color: var(--header-and-menu);
   border: none;
   background: none;
   cursor: pointer;

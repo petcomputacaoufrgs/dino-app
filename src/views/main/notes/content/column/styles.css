@@ -10,8 +10,8 @@
 }
 
 .note__note_content__column__draggable {
-  border: 1px solid rgba(179, 46, 85);
-  background-color: rgb(245, 245, 245);
+  border: 1px solid var(--column-font-color);
+  background-color: var(--column-and-selection-background);
   border-radius: 5px;
   padding: 10px 15px 10px 15px;
   height: 95%;
@@ -28,14 +28,15 @@
 }
 
 .note__note_content__column__draggable__droppable {
-  height: calc(100% - 30px - 27px - 10px);
-  max-height: calc(100% - 30px - 27px - 10px);
+  height: calc(100% - 30px - 27px - 10px - 24px);
+  max-height: calc(100% - 30px - 27px - 10px - 24px);
   margin-bottom: 10px;
 }
 
 .note__note_content__column__draggable__droppable__scroll {
-  height: 100%;
+  height: calc(100% - 24px);
   overflow-y: auto;
+  margin-top: 24px;
 }
 
 .note__note_content__column__draggable__add_button {

@@ -1,19 +1,19 @@
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AppSettingsLocalStorage from '../../local_storage/app_settings/AppSettingsLocalStorage'
-import AppSettingsModel from '../../types/app_settings/AppSettingsModel'
 import DinoAgentService from '../../agent/DinoAgentService'
-import AppSettingsResponseModel from '../../types/app_settings/AppSettingsResponseModel'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import PT from '../../constants/languages/PT'
 import EN from '../../constants/languages/EN'
 import AppSettingsContextUpdater from '../../context_updater/AppSettingsContextUpdater'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LanguageCodeConstants from '../../constants/languages/LanguageCodeConstants'
+import AppSettingsRequestAndResponseModel from '../../types/app_settings/AppSettingsRequestAndResponseModel'
+import ColorThemeEnum from '../../types/app_settings/ColorThemeEnum'
 
 class AppSettingsService {
   listenner = {}
 
-  get = (): AppSettingsModel => {
+  get = (): AppSettingsRequestAndResponseModel => {
     const savedVersion = AppSettingsLocalStorage.getAppSettingsVersion()
 
     const savedAppSettings = AppSettingsLocalStorage.getAppSettings()
@@ -27,7 +27,7 @@ class AppSettingsService {
     return savedAppSettings ? savedAppSettings : this.getDefaultAppSettings()
   }
 
-  set = (appSettings: AppSettingsModel) => {
+  set = (appSettings: AppSettingsRequestAndResponseModel) => {
     this.updateLocalAppSettings(appSettings)
 
     this.saveOnServer(appSettings)
@@ -68,7 +68,7 @@ class AppSettingsService {
     return undefined
   }
 
-  getServer = async (): Promise<AppSettingsResponseModel | undefined> => {
+  getServer = async (): Promise<AppSettingsRequestAndResponseModel | undefined> => {
     const request = await DinoAgentService.get(
       DinoAPIURLConstants.APP_SETTINGS_GET
     )
@@ -76,7 +76,7 @@ class AppSettingsService {
     if (request.canGo) {
       try {
         const response = await request.authenticate().go()
-        const appSettings: AppSettingsResponseModel = response.body
+        const appSettings: AppSettingsRequestAndResponseModel = response.body
         return appSettings
       } catch (e) {
         LogAppErrorService.saveError(e)
@@ -90,9 +90,10 @@ class AppSettingsService {
     AppSettingsLocalStorage.removeUserData()
   }
 
-  getDefaultAppSettings = (): AppSettingsModel => {
-    const defaultAppSettings: AppSettingsModel = {
+  getDefaultAppSettings = (): AppSettingsRequestAndResponseModel => {
+    const defaultAppSettings: AppSettingsRequestAndResponseModel = {
       language: navigator.language.slice(0, 2),
+      colorTheme: ColorThemeEnum.CLASSIC
     }
 
     return defaultAppSettings
@@ -104,7 +105,7 @@ class AppSettingsService {
     AppSettingsLocalStorage.setShouldSync(should)
   }
 
-  saveOnServer = async (model: AppSettingsModel): Promise<void> => {
+  saveOnServer = async (model: AppSettingsRequestAndResponseModel): Promise<void> => {
     const request = await DinoAgentService.post(
       DinoAPIURLConstants.APP_SETTINGS_SAVE
     )
@@ -129,12 +130,31 @@ class AppSettingsService {
     return this.getLanguageBaseByCode(language)
   }
 
+  getColorTheme = (): number => {
+    const colorTheme = this.get().colorTheme
+
+    return colorTheme
+  }
+
+  getColorThemeName = (code: number): string => {
+    switch (code) {
+      case 1:
+        return 'classic'
+      case 2: 
+        return 'dark'
+      case 3:
+        return 'high_contrast'
+      default:
+        return 'classic'
+    }
+  }
+
   returnAppSettingsToDefault = (): void => {
     const appSettings = this.getDefaultAppSettings()
     this.updateLocalAppSettings(appSettings)
   }
 
-  private updateLocalAppSettings = (appSettings: AppSettingsModel) => {
+  private updateLocalAppSettings = (appSettings: AppSettingsRequestAndResponseModel) => {
     AppSettingsLocalStorage.setAppSettings(appSettings)
     AppSettingsContextUpdater.update()
   }

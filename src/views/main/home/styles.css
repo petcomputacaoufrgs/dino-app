@@ -17,6 +17,22 @@
   font-size: large;
 }
 
+.home .home__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 12px;
+  grid-gap: 12px;
+}
+
+.home .home__paper {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background-image: url(https://s2.glbimg.com/z_gIOSUdsxyNGClgVLYVBHBziyw=/0x0:400x400/400x400/s.glbimg.com/po/tt2/f/original/2016/05/20/new-google-favicon-logo.png);
+  background-size: cover;
+  display: grid;
+  place-items: center;
+}
+
 @media (orientation: landscape) {
   .home .home__avatar {
     margin-top: 40px;

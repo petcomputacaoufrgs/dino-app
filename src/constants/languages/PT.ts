@@ -68,7 +68,7 @@ export default class PT implements LanguageBase {
 
   MENU_CONTACTS = 'Contatos'
 
-  MENU_FAQ = 'FAQ'
+  MENU_FAQ = 'F.A.Q.'
 
   MENU_LOGOUT = 'Sair'
 

@@ -2,27 +2,50 @@ import React from 'react'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import './styles.css'
 import { ListItem, Paper } from '@material-ui/core'
+import PathConstants from '../../../constants/app/PathConstants'
+import HistoryService from '../../../services/history/HistoryService'
+import homeItemProps from './props'
+
 
 const Home = () => {
+
   const language = useCurrentLanguage()
+
+  const items: homeItemProps[] = [
+    { 
+      class: '__n',
+      label: language.MENU_NOTES,
+      onClick: () => HistoryService.push(PathConstants.NOTES),
+    }, 
+    { 
+      class: '__c',
+      label: language.MENU_CONTACTS,
+      onClick: () => HistoryService.push(PathConstants.CONTACTS),
+    }, 
+    { 
+      class: '__g',
+      label: language.MENU_GLOSSARY,
+      onClick: () => HistoryService.push(PathConstants.GLOSSARY),
+    }, 
+    { 
+      class: '__f',
+      label: language.MENU_FAQ,
+      onClick: () => HistoryService.push(PathConstants.FAQ),
+    }, 
+    { 
+      class: '__s',
+      label: language.MENU_SETTINGS,
+      onClick: () => HistoryService.push(PathConstants.SETTINGS),
+    }
+  ]
 
   return (
     <div className="home">
         <div className='home__grid'>
-              {[language.MENU_NOTES, language.MENU_GLOSSARY, language.MENU_FAQ, language.MENU_SETTINGS].map((item) => (
+              {items.map(item => (
                     <ListItem button className='home__grid__button'>
-                        <Paper elevation={2} style={{
-                            width: '100%',
-                            height: 'calc(50vw - 18px)',
-                            backgroundImage: 'url(../../../assets/icons/menu_icons/glossary.svg)',
-                            backgroundSize: 'cover',
-                            backgroundColor: '#ADC2B9',
-                            display: 'grid',
-                            placeItems: 'center',
-                            fontSize: '5.5vmin',
-                            fontWeight: 'bold',
-                        }}>
-                              <p className='home__paper__string'>{item}</p>
+                        <Paper elevation={2} className={`home__grid__paper${item.class}`} onClick={item.onClick}>
+                          <p className='home__paper__string'>{item.label}</p>
                         </Paper>
                     </ListItem>
               ))}

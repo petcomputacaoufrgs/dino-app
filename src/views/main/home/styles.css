@@ -35,16 +35,52 @@
   border-radius: 8px;
 }
 
-.home .home__grid__paper {
+.home .home__grid__paper__g {
   width: 100%;
   height: calc(50vw - 18px);
-  background-image: url(../../../assets/icons/menu_icons/glossary.svg);
-  background-size: cover;
-  background-color: #ADC2B9;
+  background: #ADC2B9 url(../../../assets/icons/menu_icons/glossary.svg);
   display: grid;
   place-items: center;
+}
+
+.home .home__grid__paper__s {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: #ADC2B9 url(../../../assets/icons/menu_icons/settings.svg);
+  display: grid;
+  place-items: center;
+}
+
+.home .home__grid__paper__c {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: #ADC2B9 url(../../../assets/icons/menu_icons/phone.svg);
+  display: grid;
+  place-items: center;
+  font-size: large;
+}
+
+.home .home__grid__paper__f {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: #ADC2B9 url(../../../assets/icons/menu_icons/faq.svg);
+  display: grid;
+  place-items: center;
+}
+
+.home .home__grid__paper__n {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: #ADC2B9 url(../../../assets/icons/menu_icons/note.svg);
+  display: grid;
+  place-items: center;
+}
+
+.home .home__paper__string {
   font-size: 5.5vmin;
   font-weight: bold;
+  color: white;
+  text-shadow: 0 0 2px black;
 }
 
 @media (orientation: landscape) {

@@ -6,6 +6,7 @@ import SyncContextProvider from './context_provider/sync'
 import AlertContextProvider from './context_provider/alert'
 import AppSettingsContextProvider from './context_provider/app_settings'
 import App from './App'
+import './Var.css'
 
 ErrorHandlerService.register()
 

@@ -2,6 +2,7 @@
   height: 20px;
   display: flex;
   flex-direction: row;
+  color: var(--column-font-color);
 }
 
 .note__note_content__column__column_header h2 {

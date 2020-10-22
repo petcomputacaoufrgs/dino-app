@@ -5,7 +5,9 @@ interface MenuItemViewModel {
   /**
    * @description Define o icone que será exibido no menu
    */
-  image: any
+  image: React.FunctionComponent<React.SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+  }>
 
   /**
    * @description Define o texto que será exibido no menu aberto

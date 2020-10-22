@@ -19,7 +19,7 @@
 }
 
 .svg_button svg {
-  fill: #b32e55;
+  fill: var(--column-font-color);
   display: flex;
   justify-content: center;
   align-items: center;

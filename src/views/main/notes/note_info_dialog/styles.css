@@ -6,7 +6,7 @@
 .note_info_dialog__title,
 .note_info_dialog__last_update {
   width: 100%;
-  background-color: #b32e55;
+  background-color: var(--column-font-color);
   font-weight: bold;
   color: white;
 }
@@ -33,7 +33,7 @@
 }
 
 .note__info_dialog__actions .MuiButtonBase-root.MuiButton-root {
-  color: #b32e55;
+  color: var(--column-font-color);
 }
 
 .note__info_dialog__content__answer.MuiFormControl-root {

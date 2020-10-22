@@ -1,4 +1,3 @@
-.note__column_dialog
-  .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
-  color: #b32e55;
+.note__column_dialog .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+  color: var(--column-font-color);
 }

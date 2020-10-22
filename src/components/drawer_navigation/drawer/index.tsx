@@ -118,15 +118,27 @@ const Drawer: React.FC<DrawerProps> = ({
     const isLastGroup = (groupIndex: number): boolean =>
         groupedItems.length - 1 === groupIndex
 
-    const renderItems = (items: MenuItemViewModel[]): JSX.Element[] =>
-        items.map((item, itemIndex) => (
+    const renderItems = (items: MenuItemViewModel[]): JSX.Element[] => {
+        console.log(items)
+   
+        return items.map((item, itemIndex) => (
             <ListItem button aria-label={language.CLICK_TO_OPEN_MENU_ITEM + item.name} key={itemIndex} onClick={() => handleClick(item)}>
                 <ListItemIcon>
-                    <img className='drawer_navigation__drawer__visible__item_image' src={item.image} alt={item.name} />
+                    {renderItemImage(item.image)}
                 </ListItemIcon>
                 <ListItemText primary={item.name} />
             </ListItem>
         ))
+    }
+
+    const renderItemImage = (image: React.FunctionComponent<React.SVGProps<SVGSVGElement> & {
+        title?: string | undefined;
+    }>) => {
+        const Image = image
+
+        return <Image className="drawer_navigation__drawer__visible__menu__icon" />
+    }
+        
         
     const renderGroupItems = (): JSX.Element[] =>
         groupedItems.map((items, groupIndex) => (

@@ -10,7 +10,7 @@ import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import ConnectionService from './services/connection/ConnectionService'
-import { useLanguage } from './context_provider/app_settings'
+import { useLanguage, useColorThemeName } from './context_provider/app_settings'
 import { useAlert } from './context_provider/alert'
 import EventService from './services/events/EventService'
 import UserContextProvider from './context_provider/user'
@@ -25,6 +25,7 @@ const App = (): JSX.Element => {
 
   const alert = useAlert()
   const language = useLanguage()
+  const colorThemeName = useColorThemeName()
 
   useEffect(() => {
     const updateConnectionState = (isConnected: boolean) => {
@@ -92,7 +93,9 @@ const App = (): JSX.Element => {
   )
 
   return (
-    <div className="app">{showLoadScreen ? renderLoad() : renderApp()}</div>
+    <div className="app" data-theme={colorThemeName}>
+      {showLoadScreen ? renderLoad() : renderApp()}
+    </div>
   )
 }
 

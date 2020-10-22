@@ -1,8 +1,8 @@
 import React from 'react'
 import NoteBodyColumnHeaderProps from './props'
 import './styles.css'
-import { ReactComponent as EditIcon } from '../../../../../../assets/icons/edit.svg'
-import { ReactComponent as DeleteOutlineIcon } from '../../../../../../assets/icons/delete_outline.svg'
+import { ReactComponent as EditIcon } from '../../../../../../assets/icons/pen.svg'
+import { ReactComponent as DeleteOutlineIcon } from '../../../../../../assets/icons/delete.svg'
 import SVGButton from '../../../../../../components/button/svg_button'
 import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 

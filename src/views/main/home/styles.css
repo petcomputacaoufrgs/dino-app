@@ -18,6 +18,7 @@
 }
 
 .home .home__grid {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 12px;
@@ -31,6 +32,11 @@
   background-size: cover;
   display: grid;
   place-items: center;
+}
+
+.home .home__paper .home__paper__string {
+  font-size: 5.5vmin;
+  font-weight: bold;
 }
 
 @media (orientation: landscape) {

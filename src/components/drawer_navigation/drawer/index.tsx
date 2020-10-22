@@ -6,6 +6,8 @@ import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
+import { Avatar, Typography } from '@material-ui/core'
+import { useUser } from '../../../context_provider/user'
 
 const DRAWER_WIDTH = 240
 
@@ -17,6 +19,8 @@ const Drawer: React.FC<DrawerProps> = ({
     onOpen
 }) => {
     const language = useCurrentLanguage()
+
+    const user = useUser()
 
     const drawerEl = useRef<HTMLDivElement | null>(null) 
 
@@ -139,6 +143,15 @@ const Drawer: React.FC<DrawerProps> = ({
         return <Image className="drawer_navigation__drawer__visible__menu__icon" />
     }
         
+    const renderUser = (): JSX.Element => 
+        <div className="user">
+            <Avatar
+            src={user.picture}
+            alt={language.AVATAR_ALT}
+            className="avatar"
+            />
+            <p className="username">{user.name}</p>
+        </div>
         
     const renderGroupItems = (): JSX.Element[] =>
         groupedItems.map((items, groupIndex) => (
@@ -166,6 +179,7 @@ const Drawer: React.FC<DrawerProps> = ({
                         </IconButton>
                     </div>
                     <Divider />
+                    {renderUser()}
                     {renderGroupItems()}
                 </div>
             </div>

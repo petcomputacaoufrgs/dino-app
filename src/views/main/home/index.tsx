@@ -15,27 +15,27 @@ const Home = () => {
     { 
       class: '__n',
       label: language.MENU_NOTES,
-      onClick: () => HistoryService.push(PathConstants.NOTES),
+      onClick: () => setTimeout(() => HistoryService.push(PathConstants.NOTES), 300),
     }, 
     { 
       class: '__c',
       label: language.MENU_CONTACTS,
-      onClick: () => HistoryService.push(PathConstants.CONTACTS),
+      onClick: () => setTimeout(() => HistoryService.push(PathConstants.CONTACTS), 300),
     }, 
     { 
       class: '__g',
       label: language.MENU_GLOSSARY,
-      onClick: () => HistoryService.push(PathConstants.GLOSSARY),
+      onClick: () => setTimeout(() => HistoryService.push(PathConstants.GLOSSARY), 300),
     }, 
     { 
       class: '__f',
       label: language.MENU_FAQ,
-      onClick: () => HistoryService.push(PathConstants.FAQ),
+      onClick: () => setTimeout(() => HistoryService.push(PathConstants.FAQ), 300),
     }, 
     { 
       class: '__s',
       label: language.MENU_SETTINGS,
-      onClick: () => HistoryService.push(PathConstants.SETTINGS),
+      onClick: () => setTimeout(() => HistoryService.push(PathConstants.SETTINGS), 300),
     }
   ]
 

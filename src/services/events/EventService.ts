@@ -16,7 +16,7 @@ class EventService {
 
   whenStart = async () => {
     AuthService.cleanLoginGarbage()
-    await WebSocketConnector.connect()
+    WebSocketConnector.connect()
     Synchronizer.sync()
   }
 
@@ -41,12 +41,11 @@ class EventService {
   }
 
   whenConnectionReturn = () => {
-    Synchronizer.sync()
     WebSocketConnector.connect()
+    Synchronizer.sync()
   }
 
   whenConnectionLost = () => {
-    WebSocketConnector.disconnect()
     SyncService.setOffline()
   }
 

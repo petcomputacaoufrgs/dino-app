@@ -6,7 +6,7 @@ import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
-import { Avatar, Typography } from '@material-ui/core'
+import { Avatar } from '@material-ui/core'
 import { useUser } from '../../../context_provider/user'
 
 const DRAWER_WIDTH = 240

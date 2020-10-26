@@ -42,11 +42,9 @@ class EventService {
 
   whenConnectionReturn = () => {
     Synchronizer.sync()
-    WebSocketConnector.connect()
   }
 
   whenConnectionLost = () => {
-    WebSocketConnector.disconnect()
     SyncService.setOffline()
   }
 

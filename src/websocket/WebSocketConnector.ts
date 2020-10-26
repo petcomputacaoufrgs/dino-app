@@ -12,6 +12,9 @@ import AuthService from '../services/auth/AuthService'
 import DinoAPIWebSocketConstants from '../constants/dino_api/DinoAPIWebSocketConstants'
 import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
 import NoteColumnWebSocketSubscriber from './note/NoteColumnWebSocketSubscriber'
+import WebSocketConstants from '../constants/websocket/WebSocketConstants'
+import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
+import ConnectionService from '../services/connection/ConnectionService'
 
 class WebSocketConnector {
   private socket?: WebSocket
@@ -26,23 +29,69 @@ class WebSocketConnector {
     FaqWebSocketSubscriber,
     FaqUserWebSocketSubscriber,
   ]
+  private delayTimeout: NodeJS.Timeout | undefined
 
-  connect = async () => {
+  connect = async (): Promise<boolean> => {
     if (AuthService.isAuthenticated()) {
-      const response = await AuthService.requestWebSocketAuthToken()
-      if (response) {
-        const baseUrl = this.getSocketBaseURL(response.webSocketToken)
-        this.socket = new SockJS(baseUrl)
-        this.stompClient = Stomp.over(this.socket)
-        //this.muteConnectionLogs()
-        this.stompClient.connect({}, this.subscribe)
+      try {
+        const response = await AuthService.requestWebSocketAuthToken()
+        if (response) {
+          const baseUrl = this.getSocketBaseURL(response.webSocketToken)
+          this.socket = new SockJS(baseUrl)
+          //this.muteConnectionLogs()
+
+          this.stompClient = Stomp.over(this.socket)
+          this.stompClient.connect({}, this.subscribe)
+          this.socket.onclose = () => {
+            this.handleWebSocketClosed()
+          }
+          this.socket.onerror = () => {
+            this.handleWebSocketError()
+          }
+
+          return true
+        }
+      } catch (e) {
+        LogAppErrorService.save(e)
       }
     }
+
+    return false
   }
 
   disconnect = () => {
     if (this.stompClient && this.stompClient.connected) {
       this.stompClient.disconnect(() => {}, {})
+    }
+  }
+
+  private handleWebSocketClosed = () => {
+    ConnectionService.verify()
+    this.tryToReconnect()
+  }
+
+  private handleWebSocketError = () => {
+    LogAppErrorService.save({
+      date: new Date().getTime(),
+      error: WebSocketConstants.ERROR_MESSAGE,
+      title: WebSocketConstants.ERROR_TITLE,
+      file: ""
+    })
+    
+    this.disconnect()
+
+    this.tryToReconnect()
+  }
+
+  private tryToReconnect = () => {
+    if (!this.delayTimeout) {
+      this.delayTimeout = setTimeout(async () => {
+        this.delayTimeout = undefined
+        const success = await this.connect()
+        if (!success) {
+          this.tryToReconnect()
+        }
+      }, WebSocketConstants.DELAY_TO_RECONNECT)
     }
   }
 

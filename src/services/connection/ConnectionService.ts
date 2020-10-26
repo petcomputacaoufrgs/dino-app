@@ -35,6 +35,14 @@ class ConnectionService {
     return ConnectionLocalStorage.isDisconnected()
   }
 
+  verify = () => {
+    if (navigator.onLine) {
+      this.awaitForDinoConnection()
+    } else {
+      this.setDisconnected()
+    }
+  }
+
   private start = () => {
     if (navigator.onLine) {
       ConnectionLocalStorage.setConnected()
@@ -59,7 +67,9 @@ class ConnectionService {
       const isDinoConnected = await this.isDinoConnected()
 
       if (isDinoConnected) {
-        this.setConnected()
+        if (!isConnected) {
+          this.setConnected()
+        }
         break
       } else if (isConnected) {
         isConnected = false

@@ -5,7 +5,7 @@
 }
 
 .home .home__avatar {
-  margin-top: 60px;
+  margin-top: 128px;
   width: 125px;
   height: 125px;
 }
@@ -35,50 +35,40 @@
   border-radius: 8px;
 }
 
-.home .home__grid__paper__g {
+.home .home__grid__paper {
   width: 100%;
   height: calc(50vw - 18px);
-  background: var(--home-icons) url(../../../assets/icons/menu_icons/glossary.svg);
-  display: grid;
+  background-color: var(--home-icons);
   place-items: center;
+  display: grid;
+}
+
+.home .home__grid__paper .img {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  place-items: inherit;
   background-size: cover;
 }
 
-.home .home__grid__paper__s {
-  width: 100%;
-  height: calc(50vw - 18px);
-  background: var(--home-icons) url(../../../assets/icons/menu_icons/settings.svg);
-  display: grid;
-  place-items: center;
-  background-size: cover;
+.home .home__grid__paper .img.__g {
+  background-image: url(../../../assets/icons/menu_icons/glossary.svg);
 }
 
-.home .home__grid__paper__c {
-  width: 100%;
-  height: calc(50vw - 18px);
-  background: var(--home-icons) url(../../../assets/icons/menu_icons/phone.svg);
-  display: grid;
-  place-items: center;
-  background-size: cover;
+.home .home__grid__paper .img.__n {
+  background-image: url(../../../assets/icons/menu_icons/note.svg);
 }
 
-.home .home__grid__paper__f {
-  width: 100%;
-  height: calc(50vw - 18px);
-  background: var(--home-icons) url(../../../assets/icons/menu_icons/faq.svg);
-  display: grid;
-  place-items: center;
-  background-size: cover;
-
+.home .home__grid__paper .img.__c {
+  background-image: url(../../../assets/icons/menu_icons/phone.svg);
 }
 
-.home .home__grid__paper__n {
-  width: 100%;
-  height: calc(50vw - 18px);
-  background: var(--home-icons) url(../../../assets/icons/menu_icons/note.svg);
-  display: grid;
-  place-items: center;
-  background-size: cover;
+.home .home__grid__paper .img.__f {
+  background-image: url(../../../assets/icons/menu_icons/faq.svg);
+}
+
+.home .home__grid__paper .img.__s {
+  background-image: url(../../../assets/icons/menu_icons/settings.svg);
 }
 
 .home .home__paper__string {

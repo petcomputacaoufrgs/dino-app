@@ -44,8 +44,10 @@ const Home = () => {
         <div className='home__grid'>
               {items.map(item => (
                     <ListItem button className='home__grid__button'>
-                        <Paper elevation={2} className={`home__grid__paper${item.class}`} onClick={item.onClick}>
-                          <p className='home__paper__string'>{item.label}</p>
+                        <Paper elevation={2} className="home__grid__paper" onClick={item.onClick}>
+                          <div className={"img " + item.class}>
+                            <p className='home__paper__string'>{item.label}</p>
+                          </div>
                         </Paper>
                     </ListItem>
               ))}

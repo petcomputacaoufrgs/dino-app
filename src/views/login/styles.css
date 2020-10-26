@@ -12,7 +12,7 @@
 }
 
 .login__logo {
-  margin-top: 70px;
+  margin-top: 25vh;
   width: 150px;
 }
 
@@ -25,13 +25,13 @@
 }
 
 .login__button {
-  margin-top: 50px;
+  margin-top: 64px;
 }
 
 .login__message {
-  font-size: large;
+  margin-top: 8px;
+  font-size: x-large;
   color: white;
-  font-weight: 700;
 }
 
 @media (orientation: landscape) {

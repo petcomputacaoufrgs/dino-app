@@ -1,7 +1,6 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../context_provider/app_settings'
 import { useAlert } from '../../context_provider/alert'
-import { Typography } from '@material-ui/core'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'
 import Dinosaur2 from '../../assets/images/dinosaur_2.svg'
@@ -50,9 +49,9 @@ const Login = (): JSX.Element => {
         alt={language.CURIOUS_DINO_ALT}
       />
       <img className="login__logo" src={Dinosaur1} alt={language.APP_NAME} />
-      <Typography className="login__message" variant="h6" component="p">
+      <h1 className="login__message">
         {language.WELCOME_MESSAGE}
-      </Typography>
+      </h1>
       <div className="login__button">{renderLoginButton()}</div>
     </div>
   )

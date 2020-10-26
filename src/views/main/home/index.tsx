@@ -1,56 +1,58 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
-import './styles.css'
 import { ListItem, Paper } from '@material-ui/core'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
-import homeItemProps from './props'
-
+import HomeItemProps from './props'
+import './styles.css'
 
 const Home = () => {
 
   const language = useCurrentLanguage()
 
-  const items: homeItemProps[] = [
+  const items: HomeItemProps[] = [
     { 
       class: '__n',
       label: language.MENU_NOTES,
-      onClick: () => setTimeout(() => HistoryService.push(PathConstants.NOTES), 300),
+      path: PathConstants.NOTES,
     }, 
     { 
       class: '__c',
       label: language.MENU_CONTACTS,
-      onClick: () => setTimeout(() => HistoryService.push(PathConstants.CONTACTS), 300),
+      path: PathConstants.CONTACTS,
     }, 
     { 
       class: '__g',
       label: language.MENU_GLOSSARY,
-      onClick: () => setTimeout(() => HistoryService.push(PathConstants.GLOSSARY), 300),
+      path: PathConstants.GLOSSARY,
     }, 
     { 
       class: '__f',
       label: language.MENU_FAQ,
-      onClick: () => setTimeout(() => HistoryService.push(PathConstants.FAQ), 300),
+      path: PathConstants.FAQ,
     }, 
     { 
       class: '__s',
       label: language.MENU_SETTINGS,
-      onClick: () => setTimeout(() => HistoryService.push(PathConstants.SETTINGS), 300),
+      path: PathConstants.SETTINGS,
     }
   ]
 
   return (
     <div className="home">
         <div className='home__grid'>
-              {items.map(item => (
-                    <ListItem button className='home__grid__button'>
-                        <Paper elevation={2} className="home__grid__paper" onClick={item.onClick}>
-                          <div className={"img " + item.class}>
-                            <p className='home__paper__string'>{item.label}</p>
-                          </div>
-                        </Paper>
-                    </ListItem>
-              ))}
+            {items.map(item => (
+              <ListItem button className='home__grid__button'>
+                  <Paper 
+                    elevation={2} 
+                    className="home__grid__paper" 
+                    onClick={() => setTimeout(() => HistoryService.push(item.path), 150)}>
+                      <div className={"img " + item.class}>
+                        <p className='home__paper__string'>{item.label}</p>
+                      </div>
+                  </Paper>
+              </ListItem>
+            ))}
         </div>
     </div>
   )

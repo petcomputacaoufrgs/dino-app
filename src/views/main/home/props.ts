@@ -1,5 +1,5 @@
-export default interface homeItem { 
+export default interface HomeItemProps { 
   class: string,
   label: string,
-  onClick: () => void,
+  path: string,
 }

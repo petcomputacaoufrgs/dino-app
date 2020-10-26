@@ -63,6 +63,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
             <div
               className="note__note_content__column__draggable__title"
               {...provided.dragHandleProps}
+              data-dino-draggable={true}
             >
               <NoteBodyColumnHeader
                 title={column.title}

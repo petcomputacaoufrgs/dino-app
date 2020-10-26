@@ -25,15 +25,32 @@ const Drawer: React.FC<DrawerProps> = ({
     const drawerEl = useRef<HTMLDivElement | null>(null) 
 
     const [startTouch, setStartTouch] = useState<HorizontalTouch | undefined>(undefined)
+
+    const [menuScrollBlocked, setMenuScrollBlocked] = useState(false)
     
     useEffect(() => {
         function handleTouchStart(this: GlobalEventHandlers, event: TouchEvent) {
+            if (menuScrollBlocked) {
+                return
+            }
+            
             const touch = getTouch(event)
-            setStartTouch(touch)
-            disableDivTransition(drawerEl)
+            if (touch) {
+                if (scrollingAnotherElement(event)) {
+                    setMenuScrollBlocked(true)
+                } else {
+                    setStartTouch(touch)
+                    disableDivTransition(drawerEl)
+                }
+            }
         }
 
         function handleTouchEnd(this: GlobalEventHandlers, event: TouchEvent) {
+            if (menuScrollBlocked) {
+                setMenuScrollBlocked(false)
+                return
+            }
+
             enableDivTransition(drawerEl)
 
             const currentTouch = getTouch(event)
@@ -123,7 +140,6 @@ const Drawer: React.FC<DrawerProps> = ({
         groupedItems.length - 1 === groupIndex
 
     const renderItems = (items: MenuItemViewModel[]): JSX.Element[] => {
-        console.log(items)
    
         return items.map((item, itemIndex) => (
             <ListItem button aria-label={language.CLICK_TO_OPEN_MENU_ITEM + item.name} key={itemIndex} onClick={() => handleClick(item)}>
@@ -208,6 +224,25 @@ const getTouch = (event: TouchEvent): HorizontalTouch | undefined => {
     }
 
     return undefined
+}
+
+const scrollingAnotherElement = (event: TouchEvent): boolean => {
+    if (event.composedPath) {
+        const path = event.composedPath()
+        
+        return path.some(target => {
+            const el = target as HTMLElement
+
+            //Dataset used to define draggable elements that can conflict with drawer
+            if (el.getAttribute && el.getAttribute('data-dino-draggable')) {
+                return true
+            }
+
+            return el.scrollLeft !== undefined && el.scrollLeft > 0
+        })
+    }
+    
+    return false
 }
 
 const openDrawer = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {

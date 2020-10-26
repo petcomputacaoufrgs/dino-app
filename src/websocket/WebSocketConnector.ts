@@ -84,10 +84,10 @@ class WebSocketConnector {
   }
 
   private tryToReconnect = () => {
-    if (!this.delayTimeout) {
+    if (!this.delayTimeout && ConnectionService.isConnected()) {
       this.delayTimeout = setTimeout(async () => {
-        this.delayTimeout = undefined
         const success = await this.connect()
+        this.delayTimeout = undefined
         if (!success) {
           this.tryToReconnect()
         }

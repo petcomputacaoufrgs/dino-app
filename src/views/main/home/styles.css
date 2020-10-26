@@ -17,6 +17,77 @@
   font-size: large;
 }
 
+.home .home__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 12px;
+  grid-gap: 12px;
+}
+
+.home .home__grid__button {
+  width: 100%;
+  padding: 0px;
+  border-radius: 8px;
+}
+
+.home .home__grid__button .MuiPaper-rounded {
+  border-radius: 8px;
+}
+
+.home .home__grid__paper__g {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/glossary.svg);
+  display: grid;
+  place-items: center;
+  background-size: cover;
+}
+
+.home .home__grid__paper__s {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/settings.svg);
+  display: grid;
+  place-items: center;
+  background-size: cover;
+}
+
+.home .home__grid__paper__c {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/phone.svg);
+  display: grid;
+  place-items: center;
+  background-size: cover;
+}
+
+.home .home__grid__paper__f {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/faq.svg);
+  display: grid;
+  place-items: center;
+  background-size: cover;
+
+}
+
+.home .home__grid__paper__n {
+  width: 100%;
+  height: calc(50vw - 18px);
+  background: var(--home-icons) url(../../../assets/icons/menu_icons/note.svg);
+  display: grid;
+  place-items: center;
+  background-size: cover;
+}
+
+.home .home__paper__string {
+  font-size: 5.5vmin;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 2px black;
+}
+
 @media (orientation: landscape) {
   .home .home__avatar {
     margin-top: 40px;

@@ -62,3 +62,33 @@
     width: 30px;
     height: 30px;
 }
+
+.drawer_navigation__drawer__visible .user {
+    color: var(--menu-font-color);
+    padding: 8px 16px;
+}
+
+.drawer_navigation__drawer__visible .user .avatar {
+    width: 140px;
+    height: 140px;
+}
+
+.drawer_navigation__drawer__visible .user .username {
+    font-weight: 700;
+    font-size: large;
+    color: inherit;
+    margin-top: 1rem
+}
+
+@media (orientation: landscape) {
+.drawer_navigation__drawer__visible .user .avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.drawer_navigation__drawer__visible .user .username {
+    font-size: x-large;
+    color: inherit
+}
+}
+  

@@ -4,7 +4,7 @@
   height: 50px;
   bottom: 30px;
   right: 20px;
-  background-color: #7abe2c;
+  background-color: var(--add-button-background-color);
   color: white;
   outline: none;
 }

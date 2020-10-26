@@ -5,6 +5,8 @@ import { Menu as MenuIcon } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
 import SyncInfo from './sync_info'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
+import ArrowBack from '../../arrow_back'
+
 
 const AppBar: React.FC<AppBarProps> = ({
     onDrawerOpen
@@ -20,6 +22,7 @@ const AppBar: React.FC<AppBarProps> = ({
         >
           <MenuIcon />
         </IconButton>
+        <ArrowBack />
         <SyncInfo />
       </div>
     )

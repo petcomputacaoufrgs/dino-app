@@ -9,9 +9,7 @@ import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import ConnectionService from './services/connection/ConnectionService'
 import { useLanguage, useColorThemeName } from './context_provider/app_settings'
-import { useAlert } from './context_provider/alert'
 import EventService from './services/events/EventService'
 import UserContextProvider from './context_provider/user'
 import './App.css'
@@ -23,27 +21,8 @@ const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [showLoadScreen, setShowLoadScreen] = useState(true)
 
-  const alert = useAlert()
   const language = useLanguage()
   const colorThemeName = useColorThemeName()
-
-  useEffect(() => {
-    const updateConnectionState = (isConnected: boolean) => {
-      if (isConnected) {
-        alert.showSuccessAlert(language.current.CONNECTED_MESSAGE)
-      } else {
-        alert.showInfoAlert(language.current.DISCONNECTED_MESSAGE)
-      }
-    }
-
-    ConnectionService.addEventListener(updateConnectionState)
-
-    const cleanBeforeUpdate = () => {
-      ConnectionService.removeEventListener(updateConnectionState)
-    }
-
-    return cleanBeforeUpdate
-  }, [alert, language])
 
   useEffect(() => {
     if (firstLoad) {

@@ -34,6 +34,7 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
           {...provided.draggableProps}
           ref={provided.innerRef}
           {...provided.dragHandleProps}
+          data-dino-draggable={true}
         >
           <CardHeader
             title={note.question}

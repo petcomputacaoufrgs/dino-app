@@ -15,7 +15,6 @@ const SyncContextProvider: React.FC = (props) => {
   useEffect(() => {
     const updateData = () => {
       const state = SyncService.getState()
-      console.log(state)
       setState(state)
     }
 

@@ -23,9 +23,6 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
 
   return (
     <div className='drawer_navigation' ref={drawerNavigationEl}>
-      <AppBar
-        onDrawerOpen={handleDrawerOpen}
-      />
       <Content
         component={component}
       />
@@ -35,6 +32,9 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
         onOpen={handleDrawerOpen}
         open={open}
         swipeZoneEl={drawerNavigationEl}
+      />
+      <AppBar
+        onDrawerOpen={handleDrawerOpen}
       />
     </div>
   )

@@ -9,7 +9,7 @@ import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import { useLanguage, useColorThemeName } from './context_provider/app_settings'
+import { useColorThemeName } from './context_provider/app_settings'
 import EventService from './services/events/EventService'
 import UserContextProvider from './context_provider/user'
 import './App.css'
@@ -21,15 +21,15 @@ const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [showLoadScreen, setShowLoadScreen] = useState(true)
 
-  const language = useLanguage()
   const colorThemeName = useColorThemeName()
 
   useEffect(() => {
     if (firstLoad) {
+      adjustViewport()
       setFirstLoad(false)
       EventService.whenStart()
     }
-  }, [language, firstLoad])
+  }, [firstLoad])
 
   useEffect(() => {
     if (showLoadScreen) {
@@ -76,6 +76,15 @@ const App = (): JSX.Element => {
       {showLoadScreen ? renderLoad() : renderApp()}
     </div>
   )
+}
+
+const adjustViewport = () => {
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  let viewport = document.querySelector("meta[name=viewport]");
+  if (viewport) {
+    viewport.setAttribute("content", "height=" + vh + ", width=" + vw + ", initial-scale=1.0");
+  }
 }
 
 export default App

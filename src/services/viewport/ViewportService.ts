@@ -1,8 +1,8 @@
-import { isMobile } from "react-device-detect"
+import { isMobile, isTablet } from "react-device-detect"
 
 class ViewportService {
     autoResizeViewport() {
-        if (isMobile) {
+        if (isTablet || isMobile) {
             this.resizeViewportToMax()
             window.onorientationchange = this.resizeViewportToMax
         }

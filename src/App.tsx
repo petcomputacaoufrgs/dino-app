@@ -14,6 +14,7 @@ import EventService from './services/events/EventService'
 import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
+import ViewportService from './services/viewport/ViewportService'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -25,8 +26,8 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     if (firstLoad) {
-      adjustViewport()
       setFirstLoad(false)
+      ViewportService.autoResizeViewport()
       EventService.whenStart()
     }
   }, [firstLoad])
@@ -76,15 +77,6 @@ const App = (): JSX.Element => {
       {showLoadScreen ? renderLoad() : renderApp()}
     </div>
   )
-}
-
-const adjustViewport = () => {
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  let viewport = document.querySelector("meta[name=viewport]");
-  if (viewport) {
-    viewport.setAttribute("content", "height=" + vh + ", width=" + vw + ", initial-scale=1.0");
-  }
 }
 
 export default App

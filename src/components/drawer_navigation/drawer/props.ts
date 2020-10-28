@@ -5,6 +5,4 @@ export default interface DrawerProps {
     open: boolean,
     groupedItems: MenuItemViewModel[][]
     onClose: () => void
-    onOpen: () => void
-    swipeZoneEl: React.MutableRefObject<HTMLDivElement | null>
 }

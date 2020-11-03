@@ -31,9 +31,7 @@ const Settings = (): JSX.Element => {
     language.NAVIGATOR_LANGUAGE_CODE
   )
 
-  const [selectedColorTheme, setSelectedColorTheme] = useState(
-    colorTheme
-  )
+  const [selectedColorTheme, setSelectedColorTheme] = useState(colorTheme)
 
   const currentFaq = appSettings.selectedFaq.current
 
@@ -66,7 +64,7 @@ const Settings = (): JSX.Element => {
   const onSave = () => {
     const model: AppSettingsRequestAndResponseModel = {
       language: selectedLanguage,
-      colorTheme: selectedColorTheme
+      colorTheme: selectedColorTheme,
     }
 
     AppSettingsService.set(model)
@@ -131,7 +129,7 @@ const Settings = (): JSX.Element => {
         color="primary"
         size="large"
         className="settings__save_button"
-        startIcon={<SaveSVG className='settings__save_button__icon' />}
+        startIcon={<SaveSVG className="settings__save_button__icon" />}
         onClick={onSave}
       >
         {language.SETTINGS_SAVE}

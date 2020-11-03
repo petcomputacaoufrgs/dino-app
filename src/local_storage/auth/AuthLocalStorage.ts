@@ -108,13 +108,16 @@ class AuthLocalStorage extends BaseLocalStorage {
 
     if (value === null) {
       return true
-    } 
+    }
 
     return JSON.parse(value)
   }
 
   setSuccessRefreshingAccessToken = (value: boolean) => {
-    this.set(LS_Constants.SUCCESS_REFRESHING_ACCESS_TOKEN, JSON.stringify(value))
+    this.set(
+      LS_Constants.SUCCESS_REFRESHING_ACCESS_TOKEN,
+      JSON.stringify(value)
+    )
   }
 
   removeSuccessRefreshingAccessToken = () => {
@@ -132,7 +135,10 @@ class AuthLocalStorage extends BaseLocalStorage {
   }
 
   setRefreshingGoogleAccessToken = (value: boolean) => {
-    this.set(LS_Constants.IS_REFRESHING_GOOGLE_ACCESS_TOKEN, JSON.stringify(value))
+    this.set(
+      LS_Constants.IS_REFRESHING_GOOGLE_ACCESS_TOKEN,
+      JSON.stringify(value)
+    )
   }
 
   removeRefreshingGoogleAccessToken = () => {
@@ -150,7 +156,10 @@ class AuthLocalStorage extends BaseLocalStorage {
   }
 
   setSuccessRefreshingGoogleAccessToken = (value: boolean) => {
-    this.set(LS_Constants.SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN, JSON.stringify(value))
+    this.set(
+      LS_Constants.SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN,
+      JSON.stringify(value)
+    )
   }
 
   removeSuccessRefreshingGoogleAccessToken = () => {

@@ -7,11 +7,8 @@ import DeleteSVG from '../../../../../../assets/icons/delete.svg'
 import { Button } from '@material-ui/core'
 import './styles.css'
 
-const AlarmItem: React.FC<AlarmItemProps> = ({
-    alarm,
-    onDelete
-}) => {
-    const language = useCurrentLanguage()
+const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
+  const language = useCurrentLanguage()
 
   const handleDelete = () => {
     onDelete(alarm)

@@ -82,7 +82,7 @@ const Notes = () => {
       setSearching(true)
     } else if (searching) {
       setSearching(false)
-    } 
+    }
   }, [searching, textSearch, tagSearch])
 
   const isUnchanged = (result: DropResult): boolean => {
@@ -221,7 +221,7 @@ const Notes = () => {
         return column
       })
     )
-    
+
     setTagSearch(newTagSearch)
 
     setViewColumns(newViewColumns)

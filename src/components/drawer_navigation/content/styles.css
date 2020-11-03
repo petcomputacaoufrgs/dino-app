@@ -1,16 +1,16 @@
 .drawer__navigation__content {
-    width: 100vw;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .drawer__navigation__content__component {
-    height: calc(100% - 45px);
-    background-color: var(--background-main);
-    overflow-y: auto;
+  height: calc(100% - 45px);
+  background-color: var(--background-main);
+  overflow-y: auto;
 }
 
 .drawer__navigation__content__app_bar {
-    height: 50px;
+  height: 50px;
 }

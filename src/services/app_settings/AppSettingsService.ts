@@ -68,7 +68,9 @@ class AppSettingsService {
     return undefined
   }
 
-  getServer = async (): Promise<AppSettingsRequestAndResponseModel | undefined> => {
+  getServer = async (): Promise<
+    AppSettingsRequestAndResponseModel | undefined
+  > => {
     const request = await DinoAgentService.get(
       DinoAPIURLConstants.APP_SETTINGS_GET
     )
@@ -93,7 +95,7 @@ class AppSettingsService {
   getDefaultAppSettings = (): AppSettingsRequestAndResponseModel => {
     const defaultAppSettings: AppSettingsRequestAndResponseModel = {
       language: navigator.language.slice(0, 2),
-      colorTheme: ColorThemeEnum.CLASSIC
+      colorTheme: ColorThemeEnum.CLASSIC,
     }
 
     return defaultAppSettings
@@ -105,7 +107,9 @@ class AppSettingsService {
     AppSettingsLocalStorage.setShouldSync(should)
   }
 
-  saveOnServer = async (model: AppSettingsRequestAndResponseModel): Promise<void> => {
+  saveOnServer = async (
+    model: AppSettingsRequestAndResponseModel
+  ): Promise<void> => {
     const request = await DinoAgentService.post(
       DinoAPIURLConstants.APP_SETTINGS_SAVE
     )
@@ -140,7 +144,7 @@ class AppSettingsService {
     switch (code) {
       case 1:
         return 'classic'
-      case 2: 
+      case 2:
         return 'dark'
       case 3:
         return 'high_contrast'
@@ -154,7 +158,9 @@ class AppSettingsService {
     this.updateLocalAppSettings(appSettings)
   }
 
-  private updateLocalAppSettings = (appSettings: AppSettingsRequestAndResponseModel) => {
+  private updateLocalAppSettings = (
+    appSettings: AppSettingsRequestAndResponseModel
+  ) => {
     AppSettingsLocalStorage.setAppSettings(appSettings)
     AppSettingsContextUpdater.update()
   }

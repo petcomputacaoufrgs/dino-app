@@ -41,9 +41,7 @@ const SyncContextProvider: React.FC = (props) => {
   }
 
   return (
-    <SyncContext.Provider value={value}>
-        {props.children}
-    </SyncContext.Provider>
+    <SyncContext.Provider value={value}>{props.children}</SyncContext.Provider>
   )
 }
 

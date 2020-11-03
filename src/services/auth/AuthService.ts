@@ -158,9 +158,8 @@ class AuthService {
 
   isRefreshRequired = (): boolean => AuthLocalStorage.isRefreshRequired()
 
-  isRefreshingAccessToken = (): boolean => (
+  isRefreshingAccessToken = (): boolean =>
     AuthLocalStorage.isRefreshingAccessToken()
-  )
 
   startRefreshingAccessToken = () => {
     AuthLocalStorage.removeSuccessRefreshingAccessToken()
@@ -176,9 +175,8 @@ class AuthService {
     AuthLocalStorage.setRefreshingAccessToken(false)
   }
 
-  isRefreshingGoogleAccessToken = (): boolean => (
+  isRefreshingGoogleAccessToken = (): boolean =>
     AuthLocalStorage.isRefreshingGoogleAccessToken()
-  )
 
   startRefreshingGoogleAccessToken = () => {
     AuthLocalStorage.removeSuccessRefreshingGoogleAccessToken()

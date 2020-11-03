@@ -37,9 +37,9 @@ class GoogleAgentService extends BaseAgent {
     if (expiresDate) {
       if (this.needsUpdateToken(expiresDate)) {
         //if (AuthService.isRefreshingAccessToken()) {
-          return this.awaitForRefreshedToken()
+        return this.awaitForRefreshedToken()
       } else {
-          return this.refreshAuthToken()
+        return this.refreshAuthToken()
       }
     }
 

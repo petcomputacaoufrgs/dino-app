@@ -22,7 +22,7 @@
 }
 
 .drawer_menu__sync_info__synchronizing_icon {
-  animation:spin 4s linear 4s infinite, spin_in 4s linear 0s;
+  animation: spin 4s linear 4s infinite, spin_in 4s linear 0s;
   margin-left: -15px;
 }
 
@@ -36,41 +36,41 @@
   margin-left: -15px;
 }
 
-@keyframes spin { 
-  100% { 
-    transform: rotate(360deg); 
-  } 
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-@keyframes spin_in { 
-  0% { 
-    transform: scale(0) rotate(0deg); 
+@keyframes spin_in {
+  0% {
+    transform: scale(0) rotate(0deg);
   }
   12.5% {
     transform: scale(1) rotate(45deg);
   }
-  100% { 
-    transform: scale(1) rotate(360deg); 
+  100% {
+    transform: scale(1) rotate(360deg);
   }
 }
 
-@keyframes spin_out { 
+@keyframes spin_out {
   0% {
     transform: scale(1);
   }
-  100% { 
+  100% {
     transform: scale(0) rotate(45deg);
   }
 }
 
-@keyframes show_in { 
-  0% { 
-    transform: scale(0); 
+@keyframes show_in {
+  0% {
+    transform: scale(0);
   }
   50% {
     transform: scale(0);
   }
-  100% { 
+  100% {
     transform: scale(1);
   }
 }

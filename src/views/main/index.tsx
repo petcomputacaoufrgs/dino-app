@@ -31,7 +31,6 @@ import NoteColumnContextProvider from '../../context_provider/note_column'
 import AuthService from '../../services/auth/AuthService'
 
 const Main = (): JSX.Element => {
-
   const language = useCurrentLanguage()
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)

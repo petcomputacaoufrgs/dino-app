@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
-import ColorThemeContextType, { ColorThemeOption } from '../../../types/context_provider/ColorThemeContextType'
+import ColorThemeContextType, {
+  ColorThemeOption,
+} from '../../../types/context_provider/ColorThemeContextType'
 import ColorThemeEnum from '../../../types/app_settings/ColorThemeEnum'
 
 const ColorThemeContextProvider = (): ColorThemeContextType => {
@@ -37,7 +39,7 @@ const ColorThemeContextProvider = (): ColorThemeContextType => {
     current: currentColorTheme,
     currentName: AppSettingsService.getColorThemeName(currentColorTheme),
     updateColorTheme: updateColorTheme,
-    getColorThemeOptions: getColorThemeOptions
+    getColorThemeOptions: getColorThemeOptions,
   }
 
   return value

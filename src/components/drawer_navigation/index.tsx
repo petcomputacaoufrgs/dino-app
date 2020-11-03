@@ -12,7 +12,9 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
 }): JSX.Element => {
   const drawerEl = useRef<HTMLDivElement | null>(null)
 
-  const [startTouch, setStartTouch] = useState<HorizontalTouch | undefined>(undefined)
+  const [startTouch, setStartTouch] = useState<HorizontalTouch | undefined>(
+    undefined
+  )
 
   const [menuScrollBlocked, setMenuScrollBlocked] = useState(false)
 
@@ -83,16 +85,30 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
     }
 
     if (drawerEl && drawerEl.current) {
-      drawerEl.current.addEventListener('touchstart', handleTouchStart, { passive: true })
-      drawerEl.current.addEventListener('touchend', handleTouchEnd, { passive: true })
-      drawerEl.current.addEventListener('touchmove', handleTouchMove, { passive: true })
+      drawerEl.current.addEventListener('touchstart', handleTouchStart, {
+        passive: true,
+      })
+      drawerEl.current.addEventListener('touchend', handleTouchEnd, {
+        passive: true,
+      })
+      drawerEl.current.addEventListener('touchmove', handleTouchMove, {
+        passive: true,
+      })
     }
 
     const cleanBeforeUpdate = () => {
       if (drawerEl && drawerEl.current) {
-        drawerEl.current.removeEventListener('touchstart', handleTouchStart, false)
+        drawerEl.current.removeEventListener(
+          'touchstart',
+          handleTouchStart,
+          false
+        )
         drawerEl.current.removeEventListener('touchend', handleTouchEnd, false)
-        drawerEl.current.removeEventListener('touchmove', handleTouchMove, false)
+        drawerEl.current.removeEventListener(
+          'touchmove',
+          handleTouchMove,
+          false
+        )
       }
     }
 
@@ -117,7 +133,7 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
     }
     return touchDiff
   }
-  
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -127,17 +143,14 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
   }
 
   return (
-    <div className='drawer_navigation'>
-      <div className='drawer_navigation__box' ref={drawerEl}>
+    <div className="drawer_navigation">
+      <div className="drawer_navigation__box" ref={drawerEl}>
         <Drawer
           groupedItems={groupedItems}
           onClose={handleDrawerClose}
           open={open}
         />
-        <Content
-          component={component}
-          onDrawerOpen={handleDrawerOpen}
-        />
+        <Content component={component} onDrawerOpen={handleDrawerOpen} />
       </div>
     </div>
   )
@@ -171,7 +184,7 @@ const scrollingAnotherElement = (event: TouchEvent): boolean => {
   if (event.composedPath) {
     const path = event.composedPath()
 
-    return path.some(target => {
+    return path.some((target) => {
       const el = target as HTMLElement
 
       //Dataset used to define draggable elements that can conflict with drawer
@@ -194,22 +207,27 @@ const closeDrawer = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
   changeDivTransform(divEl, 'translate3d(0px, 0, 0)')
 }
 
-const enableDivTransition = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
+const enableDivTransition = (
+  divEl: React.MutableRefObject<HTMLDivElement | null>
+) => {
   if (divEl && divEl.current) {
     divEl.current.style.transition = 'transform 250ms'
   }
 }
 
-const disableDivTransition = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
+const disableDivTransition = (
+  divEl: React.MutableRefObject<HTMLDivElement | null>
+) => {
   if (divEl && divEl.current) {
     divEl.current.style.transition = 'transform 0ms'
   }
 }
 
-
-const changeDivTransform = (divEl: React.MutableRefObject<HTMLDivElement | null>, value: string) => {
+const changeDivTransform = (
+  divEl: React.MutableRefObject<HTMLDivElement | null>,
+  value: string
+) => {
   if (divEl && divEl.current) {
     divEl.current.style.transform = value
   }
 }
-

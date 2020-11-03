@@ -9,7 +9,7 @@ import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ onClose, onDelete, onEdit }) => {
   const language = useCurrentLanguage()
-    
+
   return (
     <div className="calendar__event_modal__header">
       <div className="calendar__event_modal__header__right">

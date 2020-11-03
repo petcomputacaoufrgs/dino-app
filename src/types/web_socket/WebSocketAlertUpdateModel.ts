@@ -1,4 +1,4 @@
 export default interface WebSocketAlertUpdateModel {
-    newId: number,
-    newVersion: number
+  newId: number
+  newVersion: number
 }

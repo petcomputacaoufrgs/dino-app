@@ -73,7 +73,7 @@ class DinoAgentService extends BaseAgent {
     const response = await Superagent.put(
       DinoAPIURLConstants.REFRESH_AUTH
     ).send(model)
-    
+
     const isAuthenticated = AuthService.isAuthenticated()
 
     if (isAuthenticated) {

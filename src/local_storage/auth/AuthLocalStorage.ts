@@ -121,12 +121,51 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.SUCCESS_REFRESHING_ACCESS_TOKEN)
   }
 
+  isRefreshingGoogleAccessToken = (): boolean => {
+    const value = this.get(LS_Constants.IS_REFRESHING_GOOGLE_ACCESS_TOKEN)
+
+    if (value !== null) {
+      return JSON.parse(value)
+    }
+
+    return false
+  }
+
+  setRefreshingGoogleAccessToken = (value: boolean) => {
+    this.set(LS_Constants.IS_REFRESHING_GOOGLE_ACCESS_TOKEN, JSON.stringify(value))
+  }
+
+  removeRefreshingGoogleAccessToken = () => {
+    this.remove(LS_Constants.IS_REFRESHING_GOOGLE_ACCESS_TOKEN)
+  }
+
+  successRefreshingGoogleAccessToken = (): boolean => {
+    const value = this.get(LS_Constants.SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN)
+
+    if (value === null) {
+      return true
+    }
+
+    return JSON.parse(value)
+  }
+
+  setSuccessRefreshingGoogleAccessToken = (value: boolean) => {
+    this.set(LS_Constants.SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN, JSON.stringify(value))
+  }
+
+  removeSuccessRefreshingGoogleAccessToken = () => {
+    this.remove(LS_Constants.SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN)
+  }
+
   removeUserData = () => {
     this.removeAuthToken()
     this.removeAuthTokenExpiresDate()
     this.removeGoogleAccessToken()
     this.removeGoogleExpiresDate()
+    this.removeRefreshingAccessToken()
     this.removeSuccessRefreshingAccessToken()
+    this.removeRefreshingGoogleAccessToken()
+    this.removeSuccessRefreshingGoogleAccessToken()
   }
 
   cleanLoginGarbage = () => {

@@ -176,6 +176,24 @@ class AuthService {
     AuthLocalStorage.setRefreshingAccessToken(false)
   }
 
+  isRefreshingGoogleAccessToken = (): boolean => (
+    AuthLocalStorage.isRefreshingGoogleAccessToken()
+  )
+
+  startRefreshingGoogleAccessToken = () => {
+    AuthLocalStorage.removeSuccessRefreshingGoogleAccessToken()
+    AuthLocalStorage.setRefreshingGoogleAccessToken(true)
+  }
+
+  successRefreshingGoogleAccessToken = (): boolean => {
+    return AuthLocalStorage.successRefreshingGoogleAccessToken()
+  }
+
+  stopRefreshingGoogleAccessToken = (success: boolean) => {
+    AuthLocalStorage.setSuccessRefreshingGoogleAccessToken(success)
+    AuthLocalStorage.setRefreshingGoogleAccessToken(false)
+  }
+
   private saveGoogleAuthDataFromRequestBody(
     responseBody: GoogleAuthResponseModel
   ) {

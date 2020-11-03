@@ -69,8 +69,9 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
       if (startTouch && currentTouch) {
         const diff = calcSwipeDiff(currentTouch)
         if (diff > 0) {
-          const translateX = diff - DRAWER_WIDTH
-          if (translateX > 0) {
+          const translateX = diff
+
+          if (translateX >= DRAWER_WIDTH) {
             openDrawer(drawerEl)
             disableDivTransition(drawerEl)
           } else {
@@ -127,7 +128,7 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
 
   return (
     <div className='drawer_navigation'>
-      <div className='drawer_navigation__variable_content' ref={drawerEl}>
+      <div className='drawer_navigation__box' ref={drawerEl}>
         <Drawer
           groupedItems={groupedItems}
           onClose={handleDrawerClose}
@@ -186,11 +187,11 @@ const scrollingAnotherElement = (event: TouchEvent): boolean => {
 }
 
 const openDrawer = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
-  changeDivTransform(divEl, 'translate3d(0px, 0, 0)')
+  changeDivTransform(divEl, 'translate3d(240px, 0, 0)')
 }
 
 const closeDrawer = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
-  changeDivTransform(divEl, 'translate3d(-240px, 0, 0)')
+  changeDivTransform(divEl, 'translate3d(0px, 0, 0)')
 }
 
 const enableDivTransition = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {

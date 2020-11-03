@@ -5,11 +5,10 @@
   overflow: hidden;
 }
 
-.drawer_navigation__variable_content {
+.drawer_navigation__box {
   width: calc(100% + 240px);
   height: 100%;
   display: flex;
   flex-direction: row;
-  overflow: auto;
-  transform: translate3d(-240px, 0, 0);
+  overflow: visible;
 }

@@ -5,6 +5,7 @@
     flex-direction: row;
     overflow: scroll;
     background-color: var(--header-and-menu);
+    margin-left: -240px;
 }
 
 .drawer_navigation__drawer__visible {
@@ -30,7 +31,7 @@
     position: fixed;
     z-index: 888;
     top: 0;
-    left: 240px;
+    left: 0px;
     height: 100%;
     width: 100vw;
     background-color: rgba(0,0,0,0.3);
@@ -78,14 +79,14 @@
 }
 
 @media (orientation: landscape) {
-.drawer_navigation__drawer__visible .user .avatar {
-    width: 100px;
-    height: 100px;
-}
+    .drawer_navigation__drawer__visible .user .avatar {
+        width: 100px;
+        height: 100px;
+    }
 
-.drawer_navigation__drawer__visible .user .username {
-    font-size: x-large;
-    color: inherit
-}
+    .drawer_navigation__drawer__visible .user .username {
+        font-size: x-large;
+        color: inherit
+    }
 }
   

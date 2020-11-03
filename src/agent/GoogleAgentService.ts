@@ -8,6 +8,7 @@ import GoogleRefreshAuthResponseModel from '../types/auth/google/GoogleRefreshAu
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 
 const TIME_MARGIN_OF_ERROR_IN_MS = 300000
+const TIME_TO_AWAIT_FOR_REFRESHED_TOKEN = 500
 
 class GoogleAgentService extends BaseAgent {
   protected filterBeforeCreate = async () => {

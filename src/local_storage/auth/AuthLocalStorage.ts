@@ -34,20 +34,6 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.AUTH_TOKEN_EXPIRES_DATE)
   }
 
-  getTempAuthToken = (): string => {
-    const authToken = this.get(LS_Constants.TEMP_AUTH_TOKEN)
-
-    return this.convertStringOrNullToString(authToken)
-  }
-
-  setTempAuthToken = (accessToken: string) => {
-    this.set(LS_Constants.TEMP_AUTH_TOKEN, accessToken)
-  }
-
-  removeTempAuthToken = () => {
-    this.remove(LS_Constants.TEMP_AUTH_TOKEN)
-  }
-
   getGoogleAccessToken = (): string | null => {
     return this.get(LS_Constants.GOOGLE_ACCESS_TOKEN)
   }
@@ -81,15 +67,58 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.GOOGLE_EXPIRES_DATE)
   }
 
-  isRefreshRequired = (): boolean =>
-    Boolean(this.get(LS_Constants.REFRESH_TOKEN_REQUIRED))
+  isRefreshRequired = (): boolean => {
+    const value = this.get(LS_Constants.REFRESH_TOKEN_REQUIRED)
+
+    if (value !== null) {
+      return JSON.parse(value)
+    }
+
+    return false
+  }
 
   setRefreshRequiredToTrue = () => {
-    this.set(LS_Constants.REFRESH_TOKEN_REQUIRED, 't')
+    this.set(LS_Constants.REFRESH_TOKEN_REQUIRED, JSON.stringify(true))
   }
 
   setRefreshRequiredToFalse = () => {
     this.remove(LS_Constants.REFRESH_TOKEN_REQUIRED)
+  }
+
+  isRefreshingAccessToken = (): boolean => {
+    const value = this.get(LS_Constants.IS_REFRESHING_ACCESS_TOKEN)
+
+    if (value !== null) {
+      return JSON.parse(value)
+    }
+
+    return false
+  }
+
+  setRefreshingAccessToken = (value: boolean) => {
+    this.set(LS_Constants.IS_REFRESHING_ACCESS_TOKEN, JSON.stringify(value))
+  }
+
+  removeRefreshingAccessToken = () => {
+    this.remove(LS_Constants.IS_REFRESHING_ACCESS_TOKEN)
+  }
+
+  successRefreshingAccessToken = (): boolean => {
+    const value = this.get(LS_Constants.SUCCESS_REFRESHING_ACCESS_TOKEN)
+
+    if (value === null) {
+      return true
+    } 
+
+    return JSON.parse(value)
+  }
+
+  setSuccessRefreshingAccessToken = (value: boolean) => {
+    this.set(LS_Constants.SUCCESS_REFRESHING_ACCESS_TOKEN, JSON.stringify(value))
+  }
+
+  removeSuccessRefreshingAccessToken = () => {
+    this.remove(LS_Constants.SUCCESS_REFRESHING_ACCESS_TOKEN)
   }
 
   removeUserData = () => {
@@ -97,11 +126,11 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.removeAuthTokenExpiresDate()
     this.removeGoogleAccessToken()
     this.removeGoogleExpiresDate()
+    this.removeSuccessRefreshingAccessToken()
   }
 
   cleanLoginGarbage = () => {
     this.setRefreshRequiredToFalse()
-    this.removeTempAuthToken()
   }
 }
 

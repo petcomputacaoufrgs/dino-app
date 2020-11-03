@@ -97,22 +97,16 @@ class AuthService {
 
   serverLogout = async (authToken: string): Promise<boolean> => {
     try {
-      this.setTempAuthToken(authToken)
-
       const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
 
       if (request.canGo) {
         await request.authenticate().go()
-
-        this.removeTempAuthToken()
 
         return true
       }
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
-
-    this.removeTempAuthToken()
 
     return false
   }
@@ -136,12 +130,6 @@ class AuthService {
   }
 
   getAuthToken = (): string => {
-    const tempAuthToken = AuthLocalStorage.getTempAuthToken()
-
-    if (tempAuthToken && tempAuthToken.trim() !== '') {
-      return tempAuthToken
-    }
-
     return AuthLocalStorage.getAuthToken()
   }
 
@@ -154,14 +142,6 @@ class AuthService {
 
   setAuthTokenExpiresDate = (authTokenExpiresDate: number) => {
     AuthLocalStorage.setAuthTokenExpiresDate(authTokenExpiresDate)
-  }
-
-  setTempAuthToken = (tempToken: string) => {
-    AuthLocalStorage.setTempAuthToken(tempToken)
-  }
-
-  removeTempAuthToken = () => {
-    AuthLocalStorage.removeTempAuthToken()
   }
 
   removeUserData = () => {
@@ -177,6 +157,24 @@ class AuthService {
   }
 
   isRefreshRequired = (): boolean => AuthLocalStorage.isRefreshRequired()
+
+  isRefreshingAccessToken = (): boolean => (
+    AuthLocalStorage.isRefreshingAccessToken()
+  )
+
+  startRefreshingAccessToken = () => {
+    AuthLocalStorage.removeSuccessRefreshingAccessToken()
+    AuthLocalStorage.setRefreshingAccessToken(true)
+  }
+
+  successRefreshingAccessToken = (): boolean => {
+    return AuthLocalStorage.successRefreshingAccessToken()
+  }
+
+  stopRefreshingAccessToken = (success: boolean) => {
+    AuthLocalStorage.setSuccessRefreshingAccessToken(success)
+    AuthLocalStorage.setRefreshingAccessToken(false)
+  }
 
   private saveGoogleAuthDataFromRequestBody(
     responseBody: GoogleAuthResponseModel

@@ -44,6 +44,8 @@ class LocalStorageKeys {
   FAQ_USER_INFO = 'fui'
   FAQ_ITEMS = 'fi'
   SYNC_STATE = 'ss'
+  IS_REFRESHING_ACCESS_TOKEN = 'irat'
+  SUCCESS_REFRESHING_ACCESS_TOKEN = 'srat'
 }
 
 export default new LocalStorageKeys()

@@ -3,16 +3,18 @@ import DeletedNoteEntity from '../../../types/note/database/DeletedNoteEntity'
 import NoteEntity from '../../../types/note/database/NoteEntity'
 import DeletedNoteEntityWithoutExternalId from '../../../error/note/DeletedNoteEntityWithoutExternalId'
 
-class DeletedNoteDatabase {
+class DeletedNoteRepository {
+  private table = DinoDatabase.deletedNote
+
   async getAll(): Promise<DeletedNoteEntity[]> {
-    return DinoDatabase.deletedNote.toArray()
+    return this.table.toArray()
   }
 
   async add(note: NoteEntity) {
     const deletedNote = this.createDeletedNoteEntity(note)
 
     if (deletedNote) {
-      const id = await DinoDatabase.deletedNote.add(deletedNote)
+      const id = await this.table.add(deletedNote)
       deletedNote.id = id
     }
   }
@@ -20,11 +22,11 @@ class DeletedNoteDatabase {
   async addAll(notes: NoteEntity[]): Promise<number> {
     const deletedNotes = notes.map((note) => this.createDeletedNoteEntity(note))
 
-    return DinoDatabase.deletedNote.bulkAdd(deletedNotes)
+    return this.table.bulkAdd(deletedNotes)
   }
 
   async deleteById(id: number): Promise<DeletedNoteEntity | undefined> {
-    const query = DinoDatabase.deletedNote.where('id').equals(id)
+    const query = this.table.where('id').equals(id)
 
     const note = await query.first()
 
@@ -34,7 +36,7 @@ class DeletedNoteDatabase {
   }
 
   async deleteAll() {
-    return DinoDatabase.deletedNote.clear()
+    return this.table.clear()
   }
 
   private createDeletedNoteEntity(note: NoteEntity): DeletedNoteEntity {
@@ -51,4 +53,4 @@ class DeletedNoteDatabase {
   }
 }
 
-export default new DeletedNoteDatabase()
+export default new DeletedNoteRepository()

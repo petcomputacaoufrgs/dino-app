@@ -6,8 +6,8 @@ import NoteService from './NoteService'
 import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateOrderModel'
 import NoteColumnWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteColumnWebSocketAlertDeleteModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
-import NoteColumnDatabase from '../../storage/database/note/NoteColumnDatabase'
-import DeletedNoteColumnDatabase from '../../storage/database/note/DeletedNoteColumnDatabase'
+import NoteColumnRepository from '../../storage/database/note/NoteColumnRepository'
+import DeletedNoteColumnDatabase from '../../storage/database/note/DeletedNoteColumnRepository'
 import DeletedNoteColumnEntity from '../../types/note/database/DeletedNoteColumnEntity'
 import NoteColumnSyncRequestModel from '../../types/note/server/sync/note_column/NoteColumnSyncRequestModel'
 import ArrayUtils from '../../utils/ArrayUtils'
@@ -17,7 +17,7 @@ class NoteColumnService {
   //#region GET
 
   getColumns = async (): Promise<NoteColumnEntity[]> => {
-    return NoteColumnDatabase.getAll()
+    return NoteColumnRepository.getAll()
   }
 
   getDeletedColumns = async (): Promise<DeletedNoteColumnEntity[]> => {
@@ -119,7 +119,7 @@ class NoteColumnService {
     if (oldTitle && changedColumn.id) {
       await NoteService.updateNoteColumnTitle(changedColumn.title, oldTitle)
 
-      const savedColumn = await NoteColumnDatabase.getById(
+      const savedColumn = await NoteColumnRepository.getById(
         changedColumn.id
       )
 
@@ -128,7 +128,7 @@ class NoteColumnService {
         savedColumn.savedOnServer = false
         savedColumn.title = changedColumn.title
 
-        await NoteColumnDatabase.put(savedColumn)
+        await NoteColumnRepository.put(savedColumn)
 
         this.saveColumnOnServer(savedColumn)
       }
@@ -142,7 +142,7 @@ class NoteColumnService {
         order: changedColumn.order,
       }
 
-      await NoteColumnDatabase.put(newColumn)
+      await NoteColumnRepository.put(newColumn)
       this.saveColumnOnServer(newColumn)
     }
 
@@ -152,7 +152,7 @@ class NoteColumnService {
   saveColumnOnServer = async (column: NoteColumnEntity) => {
     const response = await NoteColumnServerService.save(column)
     if (response && column.id) {
-      await NoteColumnDatabase.saveExternalIdByIdAndSavedOnServer(
+      await NoteColumnRepository.saveExternalIdByIdAndSavedOnServer(
         column.id,
         response.id,
         true
@@ -176,7 +176,7 @@ class NoteColumnService {
         }
       })
 
-      await NoteColumnDatabase.putAll(savedColumn)
+      await NoteColumnRepository.putAll(savedColumn)
 
       this.saveColumnsOrderOnServer(savedColumn)
 
@@ -214,8 +214,8 @@ class NoteColumnService {
         } as NoteColumnEntity)
     )
 
-    await NoteColumnDatabase.deleteAll()
-    await NoteColumnDatabase.putAll(serverColumns)
+    await NoteColumnRepository.deleteAll()
+    await NoteColumnRepository.putAll(serverColumns)
     NoteColumnVersionLocalStorage.setVersion(newVersion)
     this.updateContext()
   }
@@ -227,16 +227,16 @@ class NoteColumnService {
   removeUserData = () => {
     NoteColumnVersionLocalStorage.removeUserData()
     NoteColumnSyncLocalStorage.removeUserData()
-    NoteColumnDatabase.deleteAll()
+    NoteColumnRepository.deleteAll()
     DeletedNoteColumnDatabase.deleteAll()
   }
 
   deleteColumn = async (column: NoteColumnEntity) => {
     if (column.id) {
-      const savedColumn = await NoteColumnDatabase.getById(column.id)
+      const savedColumn = await NoteColumnRepository.getById(column.id)
       if (savedColumn) {
         await NoteService.deleteAllDatabaseNotesByColumnTitle(savedColumn.title)
-        await NoteColumnDatabase.deleteById(column.id)
+        await NoteColumnRepository.deleteById(column.id)
         this.updateContext()
 
         this.deleteColumnOnServer(savedColumn)
@@ -320,7 +320,7 @@ class NoteColumnService {
     })
 
     if (updated) {
-      await NoteColumnDatabase.putAll(notes)
+      await NoteColumnRepository.putAll(notes)
 
       this.updateContext()
     }
@@ -335,7 +335,7 @@ class NoteColumnService {
       let hasDeletedNotes: boolean = false
 
       for (const externalId of model.idList) {
-        const deletedColumn = await NoteColumnDatabase.deleteByExternalId(
+        const deletedColumn = await NoteColumnRepository.deleteByExternalId(
           externalId
         )
         if (deletedColumn) {
@@ -364,7 +364,7 @@ class NoteColumnService {
   //#region VALIDATION
 
   titleAlreadyExists = async (title: string): Promise<boolean> => {
-    const column = await NoteColumnDatabase.getByTitle(title)
+    const column = await NoteColumnRepository.getByTitle(title)
 
     if (column) {
       return true

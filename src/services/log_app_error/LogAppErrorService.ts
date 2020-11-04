@@ -4,7 +4,7 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import LogAppErrorSyncLocalStorage from '../../storage/local_storage/log_app_error/LogAppErrorSyncLocalStorage'
 import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
 import LogAppModelError from '../../error/log_app_error/LogAppModelError'
-import LogAppErrorDatabase from '../../storage/database/log_app_error/LogAppErrorDatabase'
+import LogAppErrorRepository from '../../storage/database/log_app_error/LogAppErrorRepository'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 
 class LogAppErrorService {
@@ -13,7 +13,7 @@ class LogAppErrorService {
   }
 
   getSavedLogs = (): Promise<LogAppErrorEntity[]> => {
-    return LogAppErrorDatabase.getAll()
+    return LogAppErrorRepository.getAll()
   }
 
   saveError = (error: Error) => {
@@ -57,7 +57,7 @@ class LogAppErrorService {
       try {
         await request.authenticate().setBody(models).go()
         this.setShouldSync(false)
-        LogAppErrorDatabase.deleteAll()
+        LogAppErrorRepository.deleteAll()
       } catch {
         this.setShouldSync(true)
       }
@@ -68,11 +68,11 @@ class LogAppErrorService {
 
   removeUserData = () => {
     LogAppErrorSyncLocalStorage.removeUserData()
-    LogAppErrorDatabase.deleteAll()
+    LogAppErrorRepository.deleteAll()
   }
 
   private saveLocalLog = (model: LogAppErrorModel) => {
-    LogAppErrorDatabase.put(model)
+    LogAppErrorRepository.put(model)
   }
 
   private setShouldSync = (should: boolean) => {

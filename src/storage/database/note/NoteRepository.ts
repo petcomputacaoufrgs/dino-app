@@ -2,21 +2,23 @@ import DinoDatabase from '../DinoDatabase'
 import NoteEntity from '../../../types/note/database/NoteEntity'
 import ArrayUtils from '../../../utils/ArrayUtils'
 
-class NoteDatabase {
+class NoteRepository {
+  private table = DinoDatabase.note
+
   async getById(id: number): Promise<NoteEntity | undefined> {
-    return DinoDatabase.note.where('id').equals(id).first()
+    return this.table.where('id').equals(id).first()
   }
 
   async getByQuestion(question: string): Promise<NoteEntity | undefined> {
-    return DinoDatabase.note.where('question').equals(question).first()
+    return this.table.where('question').equals(question).first()
   }
 
   async getAllById(ids: number[]): Promise<NoteEntity[]> {
-    return DinoDatabase.note.where('id').anyOf(ids).toArray()
+    return this.table.where('id').anyOf(ids).toArray()
   }
 
   async getAll(): Promise<NoteEntity[]> {
-    return DinoDatabase.note.toArray()
+    return this.table.toArray()
   }
 
   async getAllTags(): Promise<string[]> {
@@ -32,7 +34,7 @@ class NoteDatabase {
     externalId: number,
     savedOnServer: boolean
   ): Promise<number> {
-    return DinoDatabase.note
+    return this.table
       .where('question')
       .equals(question)
       .modify((note) => {
@@ -46,7 +48,7 @@ class NoteDatabase {
     externalId: number,
     savedOnServer: boolean
   ): Promise<number> {
-    return DinoDatabase.note
+    return this.table
       .where('id')
       .equals(id)
       .modify((note) => {
@@ -56,7 +58,7 @@ class NoteDatabase {
   }
 
   async put(entity: NoteEntity) {
-    const id = await DinoDatabase.note.put(entity)
+    const id = await this.table.put(entity)
 
     entity.id = id
   }
@@ -64,15 +66,15 @@ class NoteDatabase {
   async putAll(entities: NoteEntity[]) {
     const ids = await DinoDatabase.transaction(
       'readwrite',
-      DinoDatabase.note,
-      () => Promise.all(entities.map((entity) => DinoDatabase.note.put(entity)))
+      this.table,
+      () => Promise.all(entities.map((entity) => this.table.put(entity)))
     )
 
     entities.forEach((entity, index) => (entity.id = ids[index]))
   }
 
   async updateColumnTitle(newColumnTitle: string, oldCclumnTitle: string) {
-    return DinoDatabase.note
+    return this.table
       .where('columnTitle')
       .equals(oldCclumnTitle)
       .modify((note) => {
@@ -81,7 +83,7 @@ class NoteDatabase {
   }
 
   async deleteByColumnTitle(columnTitle: string): Promise<NoteEntity[]> {
-    const query = DinoDatabase.note.where('columnTitle').equals(columnTitle)
+    const query = this.table.where('columnTitle').equals(columnTitle)
 
     const notes = await query.toArray()
 
@@ -91,7 +93,7 @@ class NoteDatabase {
   }
 
   async deleteById(id: number): Promise<NoteEntity | undefined> {
-    const query = DinoDatabase.note.where('id').equals(id)
+    const query = this.table.where('id').equals(id)
 
     const note = await query.first()
 
@@ -101,16 +103,16 @@ class NoteDatabase {
   }
 
   async deleteByExternalIds(ids: number[]): Promise<number> {
-    return DinoDatabase.note.where('external_id').anyOf(ids).delete()
+    return this.table.where('external_id').anyOf(ids).delete()
   }
 
   async deleteAllById(ids: number[]) {
-    return DinoDatabase.note.where('id').anyOf(ids).delete()
+    return this.table.where('id').anyOf(ids).delete()
   }
 
   async deleteAll() {
-    return DinoDatabase.note.clear()
+    return this.table.clear()
   }
 }
 
-export default new NoteDatabase()
+export default new NoteRepository()

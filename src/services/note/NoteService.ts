@@ -4,9 +4,9 @@ import { NoteColumnViewModel } from '../../types/note/view/NoteColumnViewModel'
 import NoteWebSocketOrderUpdateModel from '../../types/note/web_socket/NoteWebSocketOrderUpdateModel'
 import NoteWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteWebSocketAlertDeleteModel'
 import NoteEntity from '../../types/note/database/NoteEntity'
-import NoteDatabase from '../../storage/database/note/NoteDatabase'
+import NoteRepository from '../../storage/database/note/NoteRepository'
 import NoteViewModel from '../../types/note/view/NoteViewModel'
-import DeletedNoteDatabase from '../../storage/database/note/DeletedNoteDatabase'
+import DeletedNoteRepository from '../../storage/database/note/DeletedNoteRepository'
 import DeletedNoteEntity from '../../types/note/database/DeletedNoteEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
 import NoteSyncRequestModel from '../../types/note/server/sync/note/NoteSyncRequestModel'
@@ -19,15 +19,15 @@ class NoteService {
   //#region GET
 
   getNotes = async (): Promise<NoteEntity[]> => {
-    return NoteDatabase.getAll()
+    return NoteRepository.getAll()
   }
 
   getDeletedNotes = async (): Promise<DeletedNoteEntity[]> => {
-    return DeletedNoteDatabase.getAll()
+    return DeletedNoteRepository.getAll()
   }
 
   getTags = async (): Promise<string[]> => {
-    return NoteDatabase.getAllTags()
+    return NoteRepository.getAllTags()
   }
 
   getVersion = (): number => NoteVersionLocalStorage.getVersion()
@@ -127,9 +127,9 @@ class NoteService {
         savedOnServer: true,
         columnTitle: note.columnTitle,
       }))
-      DeletedNoteDatabase.deleteAll()
-      await NoteDatabase.deleteAll()
-      await NoteDatabase.putAll(notes)
+      DeletedNoteRepository.deleteAll()
+      await NoteRepository.deleteAll()
+      await NoteRepository.putAll(notes)
       this.updateContext()
       NoteVersionLocalStorage.setVersion(response.version)
     }
@@ -140,7 +140,7 @@ class NoteService {
   //#region SAVE
 
   saveNote = async (note: NoteViewModel) => {
-    const dbNote = await NoteDatabase.getById(note.id)
+    const dbNote = await NoteRepository.getById(note.id)
 
     if (dbNote) {
       dbNote.answer = note.answer
@@ -149,7 +149,7 @@ class NoteService {
       dbNote.savedOnServer = false
       dbNote.lastUpdate = new Date().getTime()
 
-      await NoteDatabase.put(dbNote)
+      await NoteRepository.put(dbNote)
 
       this.saveNoteOnServer(dbNote)
     }
@@ -175,7 +175,7 @@ class NoteService {
       columnTitle: colunm.title,
     }
 
-    await NoteDatabase.put(note)
+    await NoteRepository.put(note)
 
     this.updateContext()
 
@@ -186,7 +186,7 @@ class NoteService {
     const response = await NoteServerService.save(note)
 
     if (response && note.id) {
-      await NoteDatabase.saveExternalIdByIdAndSavedOnServer(
+      await NoteRepository.saveExternalIdByIdAndSavedOnServer(
         note.id,
         response.id,
         true
@@ -213,7 +213,7 @@ class NoteService {
         }
       })
 
-      await NoteDatabase.putAll(databaseNotes)
+      await NoteRepository.putAll(databaseNotes)
 
       this.saveOrderOnServer(databaseNotes)
 
@@ -241,21 +241,21 @@ class NoteService {
   removeUserData = () => {
     NoteVersionLocalStorage.removeUserData()
     NoteSyncLocalStorage.removeUserData()
-    NoteDatabase.deleteAll()
-    DeletedNoteDatabase.deleteAll()
+    NoteRepository.deleteAll()
+    DeletedNoteRepository.deleteAll()
   }
 
   addNotesInDeletedNoteDatabase = async (deletedNotes: NoteEntity[]) => {
     deletedNotes.forEach(
       (deletedNote) => (deletedNote.lastUpdate = new Date().getTime())
     )
-    return DeletedNoteDatabase.addAll(deletedNotes)
+    return DeletedNoteRepository.addAll(deletedNotes)
   }
 
   deleteAllDatabaseNotesByColumnTitle = async (
     columnTitle: string
   ): Promise<NoteEntity[]> => {
-    const deletedNotes = await NoteDatabase.deleteByColumnTitle(
+    const deletedNotes = await NoteRepository.deleteByColumnTitle(
       columnTitle
     )
 
@@ -265,7 +265,7 @@ class NoteService {
   }
 
   deleteNote = async (note: NoteViewModel) => {
-    const deletedNote = await NoteDatabase.deleteById(note.id)
+    const deletedNote = await NoteRepository.deleteById(note.id)
 
     this.updateContext()
 
@@ -280,7 +280,7 @@ class NoteService {
       const newVersion = await NoteServerService.deleteAll(deletedNotes)
 
       if (newVersion !== undefined) {
-        DeletedNoteDatabase.deleteAll()
+        DeletedNoteRepository.deleteAll()
         NoteVersionLocalStorage.setVersion(newVersion)
       } else {
         NoteSyncLocalStorage.setShouldSync(true)
@@ -296,7 +296,7 @@ class NoteService {
         NoteVersionLocalStorage.setVersion(newVersion)
       } else {
         note.lastUpdate = new Date().getTime()
-        await DeletedNoteDatabase.add(note)
+        await DeletedNoteRepository.add(note)
         NoteSyncLocalStorage.setShouldSync(true)
       }
     }
@@ -314,7 +314,7 @@ class NoteService {
     newColumnTitle: string,
     oldCclumnTitle: string
   ) => {
-    return NoteDatabase.updateColumnTitle(newColumnTitle, oldCclumnTitle)
+    return NoteRepository.updateColumnTitle(newColumnTitle, oldCclumnTitle)
   }
 
   checkQuestionConflict = (
@@ -346,9 +346,9 @@ class NoteService {
           columnTitle: note.columnTitle,
         }))
 
-        await NoteDatabase.deleteAll()
+        await NoteRepository.deleteAll()
 
-        await NoteDatabase.putAll(notes)
+        await NoteRepository.putAll(notes)
 
         this.updateContext()
         NoteVersionLocalStorage.setVersion(newVersion)
@@ -378,7 +378,7 @@ class NoteService {
     })
 
     if (updated) {
-      await NoteDatabase.putAll(notes)
+      await NoteRepository.putAll(notes)
 
       this.updateContext()
     }
@@ -390,7 +390,7 @@ class NoteService {
     const localVersion = this.getVersion()
 
     if (model.newVersion > localVersion && model.idList) {
-      await NoteDatabase.deleteByExternalIds(model.idList)
+      await NoteRepository.deleteByExternalIds(model.idList)
       NoteVersionLocalStorage.setVersion(model.newVersion)
 
       this.updateContext()
@@ -402,7 +402,7 @@ class NoteService {
   //#region VALIDATE
 
   questionAlreadyExists = async (question: string): Promise<boolean> => {
-    const note = await NoteDatabase.getByQuestion(question)
+    const note = await NoteRepository.getByQuestion(question)
 
     if (note) {
       return true

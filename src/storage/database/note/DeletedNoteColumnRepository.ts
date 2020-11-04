@@ -3,30 +3,32 @@ import DeletedNoteColumnEntity from '../../../types/note/database/DeletedNoteCol
 import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
 import DeletedNoteColumnEntityWithoutExternalId from '../../../error/note/DeletedNoteColumnEntityWithoutExternalId'
 
-class DeletedNoteColumnDatabase {
+class DeletedNoteColumnRepository {
+  private table = DinoDatabase.deletedNoteColumn
+
   async getAll(): Promise<DeletedNoteColumnEntity[]> {
-    return DinoDatabase.deletedNoteColumn.toArray()
+    return this.table.toArray()
   }
 
   async getById(id: number): Promise<DeletedNoteColumnEntity | undefined> {
-    return DinoDatabase.deletedNoteColumn.where('id').equals(id).first()
+    return this.table.where('id').equals(id).first()
   }
 
   async add(deletedColumn: NoteColumnEntity) {
     const newDeletedColumn = this.createDeletedNoteColumn(deletedColumn)
 
     if (newDeletedColumn) {
-      const id = await DinoDatabase.deletedNoteColumn.add(newDeletedColumn)
+      const id = await this.table.add(newDeletedColumn)
       newDeletedColumn.id = id
     }
   }
 
   async deleteById(id: number): Promise<number> {
-    return DinoDatabase.deletedNoteColumn.where('id').equals(id).delete()
+    return this.table.where('id').equals(id).delete()
   }
 
   async deleteAll() {
-    return DinoDatabase.deletedNoteColumn.clear()
+    return this.table.clear()
   }
 
   private createDeletedNoteColumn(
@@ -45,4 +47,4 @@ class DeletedNoteColumnDatabase {
   }
 }
 
-export default new DeletedNoteColumnDatabase()
+export default new DeletedNoteColumnRepository()

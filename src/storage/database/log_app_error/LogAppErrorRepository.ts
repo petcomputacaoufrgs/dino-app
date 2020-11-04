@@ -1,23 +1,22 @@
 import DinoDatabase from '../DinoDatabase'
 import LogAppErrorEntity from '../../../types/log_app_error/database/LogAppErrorEntity'
 
-class LogAppErrorDatabase {
-    private database = DinoDatabase.logAppError
+class LogAppErrorRepository {
+    private table = DinoDatabase.logAppError
 
     async getAll(): Promise<LogAppErrorEntity[]> {
-        return this.database.toArray()
+        return this.table.toArray()
     }
 
     async put(entity: LogAppErrorEntity) {
-        const id = await this.database.put(entity)
+        const id = await this.table.put(entity)
 
         entity.id = id
     }
 
     async deleteAll() {
-        console.log("clear")
-        return this.database.clear()
+        return this.table.clear()
     }
 }
 
-export default new LogAppErrorDatabase()
+export default new LogAppErrorRepository()

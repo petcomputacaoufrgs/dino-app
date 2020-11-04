@@ -8,18 +8,16 @@ const Content: React.FC<ContentProps> = ({
     onDrawerOpen,
 }) => {
     return (
-        <main
-            className='drawer__navigation__content'
-        >
-            <div className='drawer__navigation__content__app_bar'>
-                <AppBar
-                    onDrawerOpen={onDrawerOpen}
-                />
-            </div>
-            <div className='drawer__navigation__content__component'>
-                {component}
-            </div>
-        </main>
+      <main className="drawer__navigation__content">
+        <div className="drawer__navigation__content__app_bar">
+          <AppBar onDrawerOpen={onDrawerOpen} />
+        </div>
+        <div className="drawer__navigation__content__component">
+          <div className="drawer__navigation__content__component__scrollable">
+            {component}
+          </div>
+        </div>
+      </main>
     )
 }
 

@@ -15,7 +15,7 @@ import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
 
-const LOAD_SCREEN_TIME = 2250
+const LOAD_SCREEN_TIME = 225000000
 
 const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)

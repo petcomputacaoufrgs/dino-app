@@ -2,7 +2,7 @@ import React from 'react'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import './styles.css'
-import { useCurrentLanguage } from '../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../context/provider/app_settings'
 
 const ButtonAdd = (props: { onClick: () => void }): JSX.Element => {
   const language = useCurrentLanguage()

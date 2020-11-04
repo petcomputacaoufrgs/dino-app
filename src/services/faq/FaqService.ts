@@ -1,9 +1,9 @@
 import FaqItemModel from '../../types/faq/FaqItemModel'
-import LS from '../../local_storage/faq/FaqLocalStorage'
+import LS from '../../storage/local_storage/faq/FaqLocalStorage'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import ServerService from './FaqServerService'
-import CurrentFaqContextUpdater from '../../context_updater/CurrentFaqContextUpdater'
+import CurrentFaqContextUpdater from '../../context/updater/CurrentFaqContextUpdater'
 import strUtils from '../../utils/StringUtils'
 class FaqService {
   getUserFaqFromServer = async () => {

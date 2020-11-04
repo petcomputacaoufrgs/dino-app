@@ -1,6 +1,6 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../context_provider/app_settings'
-import { useAlert } from '../../context_provider/alert'
+import { useCurrentLanguage } from '../../context/provider/app_settings'
+import { useAlert } from '../../context/provider/alert'
 import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'
 import Dinosaur2 from '../../assets/images/dinosaur_2.svg'

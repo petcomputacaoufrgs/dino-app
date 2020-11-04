@@ -1,12 +1,12 @@
 import BaseSync from '../BaseSync'
 import NoteColumnService from '../../services/note/NoteColumnService'
-import NoteColumnLocalStorageService from '../../services/note/NoteColumnLocalStorageService'
+import NoteColumnSyncLocalStorage from '../../storage/local_storage/note/NoteColumnSyncLocalStorage'
 
 class NoteColumnSync implements BaseSync {
   sync = async () => {
     const shouldSync =
-      NoteColumnLocalStorageService.shouldSync() ||
-      NoteColumnLocalStorageService.shouldSyncOrder()
+      NoteColumnSyncLocalStorage.getShouldSync() ||
+      NoteColumnSyncLocalStorage.getShouldSyncOrder()
     if (shouldSync) {
       await NoteColumnService.sync()
     } else {

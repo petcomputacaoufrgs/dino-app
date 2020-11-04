@@ -1,11 +1,11 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { useParams } from 'react-router-dom'
 import { Divider, Card, CardContent, CardHeader, Typography } from '@material-ui/core'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
-import { useGlossary } from '../../../../context_provider/glossary'
+import { useGlossary } from '../../../../context/provider/glossary'
 
 const GlossaryItem = (): JSX.Element => {
 

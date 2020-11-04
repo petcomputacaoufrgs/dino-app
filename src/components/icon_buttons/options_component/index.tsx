@@ -2,7 +2,7 @@ import React from 'react'
 import MoreVert from '@material-ui/icons/MoreVert'
 import IconButton from '@material-ui/core/IconButton'
 import OptionsComponentProps from './props'
-import { useCurrentLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context/provider/app_settings'
 
 
 const OptionsComponent = ({onClick}: OptionsComponentProps): JSX.Element => {

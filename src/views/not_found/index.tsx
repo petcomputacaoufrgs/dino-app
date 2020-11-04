@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../context/provider/app_settings'
 import PageNotFound from '../../assets/images/page_not_found.svg'
 import HistoryService from '../../services/history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
@@ -16,7 +16,7 @@ const NotFound = (): JSX.Element => {
   const redirectToHome = () => {
     HistoryService.push(PathConstants.HOME)
   }
-
+  
   setTimeout(redirectToHome, redirectTimeout)
 
   return (

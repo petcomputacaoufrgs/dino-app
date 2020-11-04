@@ -11,7 +11,7 @@ import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import './styles.css'
 
 const getContact = (item: ContactModel | undefined) => {

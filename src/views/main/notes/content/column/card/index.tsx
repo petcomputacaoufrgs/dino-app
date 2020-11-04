@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import DateUtils from '../../../../../../utils/DateUtils'
 import TagList from '../../../../../../components/tag_list/index'
 import MaterialCard from '@material-ui/core/Card'

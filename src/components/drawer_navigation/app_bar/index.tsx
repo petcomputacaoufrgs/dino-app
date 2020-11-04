@@ -4,7 +4,7 @@ import AppBarProps from './props'
 import { Menu as MenuIcon } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
 import SyncInfo from './sync_info'
-import { useCurrentLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import ArrowBack from '../../arrow_back'
 
 

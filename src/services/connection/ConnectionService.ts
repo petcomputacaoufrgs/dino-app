@@ -2,7 +2,7 @@ import Superagent from 'superagent'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
-import ConnectionLocalStorage from '../../local_storage/connection/ConnectionLocalStorage'
+import ConnectionLocalStorage from '../../storage/local_storage/connection/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 

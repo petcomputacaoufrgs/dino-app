@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useCurrentLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import GlossaryItems from './glossary_items'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
 
-import { useGlossary } from '../../../context_provider/glossary'
+import { useGlossary } from '../../../context/provider/glossary'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Glossary = (): JSX.Element => {

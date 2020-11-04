@@ -2,7 +2,7 @@ import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestMod
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import { GoogleLoginResponseOffline } from 'react-google-login'
-import AuthLocalStorage from '../../local_storage/auth/AuthLocalStorage'
+import AuthLocalStorage from '../../storage/local_storage/auth/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
 import LoginErrorConstants from '../../constants/login/LoginErrorConstants'

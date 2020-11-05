@@ -7,14 +7,19 @@
     background-color: whitesmoke;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 
-.load__dino_title {
-    animation: dino_title_in 750ms forwards;
+.load_header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 125px;
+    animation: dino_header_in 750ms forwards;
 }
 
-.load__dino_title h1 {
+.load__dino_title {
     font-size: 24px;
     color: black;
     font-weight: normal;
@@ -24,8 +29,8 @@
 .load__dino_logo {
     height: 125px;
     width: 130px;
-    margin-top: calc(50% + 62.5px);
-    animation: dino_logo_in 750ms normal;
+    opacity: 0;
+    animation: dino_logo_in 750ms 750ms forwards;
 }
 
 .load__team {
@@ -68,12 +73,12 @@
     }
 }
 
-@keyframes dino_title_in {
+@keyframes dino_header_in {
     from {
-        margin-top: calc(84.5%);
+        padding-top: 82.5%;
     }
     to {
-        margin-top: 0;
+        padding-top: 0;
     }
 }
 

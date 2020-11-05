@@ -6,11 +6,16 @@
 }
 
 .drawer__navigation__content__component {
-  height: calc(100% - 45px);
-  background-color: var(--background-main);
-  overflow-y: auto;
+    position: relative;
+    height: calc(100% - 45px);
+    background-color: var(--background-main);
+}
+
+.drawer__navigation__content__component__scrollable {
+    height: 100%;
+    overflow-y: auto;
 }
 
 .drawer__navigation__content__app_bar {
-  height: 50px;
+    height: 45px;
 }

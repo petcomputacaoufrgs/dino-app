@@ -68,9 +68,7 @@ const App = (): JSX.Element => {
     </PrivateRouterContextProvider>
   )
 
-  const renderLoad = (): JSX.Element => (
-    <Load />
-  )
+  const renderLoad = (): JSX.Element => <Load />
 
   return (
     <div className="app" data-theme={colorThemeName}>

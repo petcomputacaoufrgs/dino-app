@@ -4,8 +4,7 @@ import IconButton from '@material-ui/core/IconButton'
 import OptionsComponentProps from './props'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
 
-
-const OptionsComponent = ({onClick}: OptionsComponentProps): JSX.Element => {
+const OptionsComponent = ({ onClick }: OptionsComponentProps): JSX.Element => {
   const language = useCurrentLanguage()
 
   return (

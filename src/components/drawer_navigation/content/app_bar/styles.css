@@ -1,19 +1,19 @@
 .drawer__navigation__app_bar {
-    width: 100%;
-    height: 45px;
-    background-color: var(--header-and-menu);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  width: 100%;
+  height: 45px;
+  background-color: var(--header-and-menu);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .drawer__navigation__app_bar .MuiIconButton-label .MuiSvgIcon-root {
-    fill: var(--header-and-menu-icons);
+  fill: var(--header-and-menu-icons);
 }
 
 .drawer__navigation__app_bar__button svg {
-    width: 60px;
-    height: 60px;
-    transform: translate3d(-40px, 0, 0);
-    z-index: 999;
+  width: 60px;
+  height: 60px;
+  transform: translate3d(-40px, 0, 0);
+  z-index: 999;
 }

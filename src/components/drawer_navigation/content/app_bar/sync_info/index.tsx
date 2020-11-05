@@ -8,61 +8,59 @@ import { useSync } from '../../../../../context_provider/sync'
 import SyncStateEnum from '../../../../../types/sync/SyncStateEnum'
 
 const SyncInfo: React.FC = () => {
-    const sync = useSync()
+  const sync = useSync()
 
-    const [wasSyncronizing, setWasSincronizing] = useState(false)
+  const [wasSyncronizing, setWasSincronizing] = useState(false)
 
-    useEffect(() => {
-      if (sync.state === SyncStateEnum.SYNCHRONIZING) {
-        setWasSincronizing(true)
-        const interval = setInterval(() => setWasSincronizing(false), 500)
-        const cleanBeforeUpdate = () => {
-          clearInterval(interval)
-        }
-
-        return cleanBeforeUpdate
+  useEffect(() => {
+    if (sync.state === SyncStateEnum.SYNCHRONIZING) {
+      setWasSincronizing(true)
+      const interval = setInterval(() => setWasSincronizing(false), 500)
+      const cleanBeforeUpdate = () => {
+        clearInterval(interval)
       }
-    }, [sync])
-    
-    const getSyncSymbol = (): JSX.Element => {
-      if (sync.state === SyncStateEnum.OFFILINE) {
-        return (
-          <>
-            <OnlineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__out_icon" />
-            <OfflineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__main_icon offline" />
-          </>
-        )
-      } else if (sync.state === SyncStateEnum.SYNCHRONIZING) {
-        return (
-          <>
-            <OfflineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__out_icon offline" />
-            <SyncSVG
-              className={
-                'drawer_menu__sync_info__icon drawer_menu__sync_info__synchronizing_icon'
-              }
-            />
-          </>
-        )
-      } else if (wasSyncronizing) {
-        return (
-          <>
-            <SyncSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__out_icon" />
-            <OnlineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__main_icon" />
-          </>
-        )
-      } else {
-        return (
-          <OnlineSVG className="drawer_menu__sync_info__icon" />
-        )
-      }
+
+      return cleanBeforeUpdate
     }
+  }, [sync])
 
-    return (
-      <div className="drawer_menu__sync_info">
-        <CloudSVG className="drawer_menu__sync_info__cloud_icon" />
-        {getSyncSymbol()}
-      </div>
-    )
+  const getSyncSymbol = (): JSX.Element => {
+    if (sync.state === SyncStateEnum.OFFILINE) {
+      return (
+        <>
+          <OnlineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__out_icon" />
+          <OfflineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__main_icon offline" />
+        </>
+      )
+    } else if (sync.state === SyncStateEnum.SYNCHRONIZING) {
+      return (
+        <>
+          <OfflineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__out_icon offline" />
+          <SyncSVG
+            className={
+              'drawer_menu__sync_info__icon drawer_menu__sync_info__synchronizing_icon'
+            }
+          />
+        </>
+      )
+    } else if (wasSyncronizing) {
+      return (
+        <>
+          <SyncSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__out_icon" />
+          <OnlineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__main_icon" />
+        </>
+      )
+    } else {
+      return <OnlineSVG className="drawer_menu__sync_info__icon" />
+    }
+  }
+
+  return (
+    <div className="drawer_menu__sync_info">
+      <CloudSVG className="drawer_menu__sync_info__cloud_icon" />
+      {getSyncSymbol()}
+    </div>
+  )
 }
 
 export default SyncInfo

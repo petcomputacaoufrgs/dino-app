@@ -75,9 +75,9 @@ class WebSocketConnector {
       date: new Date().getTime(),
       error: WebSocketConstants.ERROR_MESSAGE,
       title: WebSocketConstants.ERROR_TITLE,
-      file: ""
+      file: '',
     })
-    
+
     this.disconnect()
 
     this.tryToReconnect()

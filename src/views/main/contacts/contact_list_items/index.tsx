@@ -10,11 +10,11 @@ import Constants from '../../../../constants/contact/ContactsConstants'
 
 const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
   const classes = useStyles()
-  
+
   const [cardOpen, setCardOpen] = useState(0)
   const [edit, setEdit] = useState(0)
   const [_delete, setDelete] = useState(0)
-  
+
   useEffect(() => {
     if (_delete) {
       ContactsService.deleteContact(_delete)

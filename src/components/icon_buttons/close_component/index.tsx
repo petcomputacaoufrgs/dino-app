@@ -4,8 +4,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseComponentProps from './props'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
 
-
-const CloseComponent = ({onClose}: CloseComponentProps): JSX.Element => {
+const CloseComponent = ({ onClose }: CloseComponentProps): JSX.Element => {
   const language = useCurrentLanguage()
 
   return (

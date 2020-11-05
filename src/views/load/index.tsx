@@ -26,7 +26,21 @@ const Load: React.FC = () => {
           />
         </div>
       </div>
-    )
+      <div className="load__team">
+        <img src={PetLogo} className="load__team__pet" alt="PET Computação" />
+        <img
+          src={HCLogo}
+          className="load__team__hc"
+          alt="Hospital de Clínicas"
+        />
+        <img
+          className="load__team__ufrgs"
+          src={UFRGSLogo}
+          alt="UFRGS - Universidade Federal do Rio Grande do Sul"
+        />
+      </div>
+    </div>
+  )
 }
 
 export default Load

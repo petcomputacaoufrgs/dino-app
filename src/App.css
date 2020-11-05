@@ -4,7 +4,7 @@
 .app .MuiButton-label,
 .MuiFormLabel-root {
   font-family: var(--font-base);
-  color: var(--base-font-color)
+  color: var(--base-font-color);
 }
 
 .MuiDialog-root {
@@ -23,5 +23,5 @@
   right: 0;
   font-family: var(--font-base);
   overflow: hidden;
-  color: var(--base-font-color)
+  color: var(--base-font-color);
 }

@@ -7,25 +7,22 @@ import SyncInfo from './sync_info'
 import ArrowBack from '../../../arrow_back'
 import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 
+const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
+  const language = useCurrentLanguage()
 
-const AppBar: React.FC<AppBarProps> = ({
-    onDrawerOpen
-}) => {
-    const language = useCurrentLanguage()
-
-    return (
-      <div className='drawer__navigation__app_bar'>
-        <IconButton
-          color="inherit"
-          aria-label={language.OPEN_MENU_ARIA_LABEL}
-          onClick={onDrawerOpen}
-        >
-          <MenuIcon />
-        </IconButton>
-        <ArrowBack />
-        <SyncInfo />
-      </div>
-    )
+  return (
+    <div className="drawer__navigation__app_bar">
+      <IconButton
+        color="inherit"
+        aria-label={language.OPEN_MENU_ARIA_LABEL}
+        onClick={onDrawerOpen}
+      >
+        <MenuIcon />
+      </IconButton>
+      <ArrowBack />
+      <SyncInfo />
+    </div>
+  )
 }
 
 export default AppBar

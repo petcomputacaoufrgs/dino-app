@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import DrawerProps from './props'
 import './styles.css'
 import { Divider, IconButton } from '@material-ui/core'
@@ -9,123 +9,14 @@ import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import { Avatar } from '@material-ui/core'
 import { useUser } from '../../../context_provider/user'
 
-const DRAWER_WIDTH = 240
-
 const Drawer: React.FC<DrawerProps> = ({
     open,
     groupedItems,
-    swipeZoneEl,
     onClose,
-    onOpen
 }) => {
     const language = useCurrentLanguage()
 
     const user = useUser()
-
-    const drawerEl = useRef<HTMLDivElement | null>(null) 
-
-    const [startTouch, setStartTouch] = useState<HorizontalTouch | undefined>(undefined)
-
-    const [menuScrollBlocked, setMenuScrollBlocked] = useState(false)
-    
-    useEffect(() => {
-        function handleTouchStart(this: GlobalEventHandlers, event: TouchEvent) {
-            if (menuScrollBlocked) {
-                return
-            }
-            
-            const touch = getTouch(event)
-            if (touch) {
-                if (scrollingAnotherElement(event)) {
-                    setMenuScrollBlocked(true)
-                } else {
-                    setStartTouch(touch)
-                    disableDivTransition(drawerEl)
-                }
-            }
-        }
-
-        function handleTouchEnd(this: GlobalEventHandlers, event: TouchEvent) {
-            if (menuScrollBlocked) {
-                setMenuScrollBlocked(false)
-                return
-            }
-
-            enableDivTransition(drawerEl)
-
-            const currentTouch = getTouch(event)
-
-            if (currentTouch && startTouch) {
-                const diff = calcSwipeDiff(currentTouch)
-
-                if (diff > DRAWER_WIDTH / 2) {
-                    openDrawer(drawerEl)
-                    if (!open) {
-                        onOpen()
-                    }
-                } else {
-                    closeDrawer(drawerEl)
-                    if (open) {
-                        onClose()
-                    }
-                }
-            }
-
-            setStartTouch(undefined)
-        }
-
-        function handleTouchMove(this: GlobalEventHandlers, event: TouchEvent) {
-            const currentTouch = getTouch(event)
-            if (startTouch && currentTouch) {
-                const diff = calcSwipeDiff(currentTouch)
-                if (diff > 0) {
-                    const translateX = diff - DRAWER_WIDTH
-                    if (translateX > 0) {
-                        openDrawer(drawerEl)
-                        disableDivTransition(drawerEl)
-                    } else {
-                        changeDivTransform(drawerEl, `translate3d(${translateX}px, 0, 0)`)
-                        disableDivTransition(drawerEl)
-                    }
-                }
-            }
-        }
-
-        if (swipeZoneEl && swipeZoneEl.current) {
-            swipeZoneEl.current.addEventListener('touchstart', handleTouchStart, {passive: true})
-            swipeZoneEl.current.addEventListener('touchend', handleTouchEnd, { passive: true })
-            swipeZoneEl.current.addEventListener('touchmove', handleTouchMove, { passive: true })
-        }
-
-        const cleanBeforeUpdate = () => {
-            if (swipeZoneEl && swipeZoneEl.current) {
-                swipeZoneEl.current.removeEventListener('touchstart', handleTouchStart, false)
-                swipeZoneEl.current.removeEventListener('touchend', handleTouchEnd, false)
-                swipeZoneEl.current.removeEventListener('touchmove', handleTouchMove, false)
-            }
-        }
-
-        return cleanBeforeUpdate
-    })
-
-    useEffect(() => {
-        enableDivTransition(drawerEl)
-        
-        if (open) {
-            openDrawer(drawerEl)
-        } else {
-            closeDrawer(drawerEl)
-        }
-    }, [open])
-
-    const calcSwipeDiff = (currentTouch: HorizontalTouch): number => {
-        const touchDiff = currentTouch.x - startTouch!.x 
-
-        if (open) {
-            return touchDiff + DRAWER_WIDTH
-        }
-        return touchDiff
-    }
 
     const handleClick = (item: MenuItemViewModel) => {
         onClose()
@@ -181,7 +72,6 @@ const Drawer: React.FC<DrawerProps> = ({
         <>
             <div 
                 className={'drawer_navigation__drawer'}
-                ref={drawerEl}
             >
                 <div
                     className='drawer_navigation__drawer__visible' 
@@ -202,74 +92,6 @@ const Drawer: React.FC<DrawerProps> = ({
             {open && <button className='drawer_navigation__drawer__invisible' onClick={handleCloseClick} aria-label={language.CLOSE_MENU_ARIA_LABEL} />}
         </>
     )
-}
-                
-interface HorizontalTouch {
-    x: number
-}
-
-const getTouch = (event: TouchEvent): HorizontalTouch | undefined => {
-    const touches = event.touches
-    if (touches.length > 0) {
-        return {
-            x: touches[0].clientX,
-        }
-    } else {
-        const changedTouches = event.changedTouches
-        if (changedTouches.length > 0) {
-            return {
-                x: changedTouches[0].clientX,
-            }
-        } 
-    }
-
-    return undefined
-}
-
-const scrollingAnotherElement = (event: TouchEvent): boolean => {
-    if (event.composedPath) {
-        const path = event.composedPath()
-        
-        return path.some(target => {
-            const el = target as HTMLElement
-
-            //Dataset used to define draggable elements that can conflict with drawer
-            if (el.getAttribute && el.getAttribute('data-dino-draggable')) {
-                return true
-            }
-
-            return el.scrollLeft !== undefined && el.scrollLeft > 0
-        })
-    }
-    
-    return false
-}
-
-const openDrawer = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
-    changeDivTransform(divEl, 'translate3d(0px, 0, 0)')
-}
-
-const closeDrawer = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
-    changeDivTransform(divEl, 'translate3d(-240px, 0, 0)')
-}
-
-const enableDivTransition = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
-    if (divEl && divEl.current) {
-        divEl.current.style.transition = 'transform 250ms'
-    }
-}
-
-const disableDivTransition = (divEl: React.MutableRefObject<HTMLDivElement | null>) => {
-    if (divEl && divEl.current) {
-        divEl.current.style.transition = 'transform 0ms'
-    }
-}
-
-
-const changeDivTransform = (divEl: React.MutableRefObject<HTMLDivElement | null>, value: string) => {
-    if (divEl && divEl.current) {
-        divEl.current.style.transform = value
-    }
 }
 
 export default Drawer

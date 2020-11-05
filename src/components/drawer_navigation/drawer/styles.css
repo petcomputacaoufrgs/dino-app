@@ -1,19 +1,16 @@
 .drawer_navigation__drawer {
-    position: fixed;
-    z-index: 999;
-    top: 0;
     height: 100%;
     width: 240px;
     display: flex;
     flex-direction: row;
-    transform: translate3d(-240px, 0, 0);
-    transition: transform 250ms;
+    overflow: scroll;
+    background-color: var(--header-and-menu);
+    margin-left: -240px;
 }
 
 .drawer_navigation__drawer__visible {
     height: 100%;
     width: 240px;
-    background-color: var(--header-and-menu);
 }
 
 .drawer_navigation__drawer__visible__menu__icon {
@@ -34,8 +31,9 @@
     position: fixed;
     z-index: 888;
     top: 0;
+    left: 0px;
     height: 100%;
-    width: 100%;
+    width: 100vw;
     background-color: rgba(0,0,0,0.3);
     border: none;
 }
@@ -81,14 +79,14 @@
 }
 
 @media (orientation: landscape) {
-.drawer_navigation__drawer__visible .user .avatar {
-    width: 100px;
-    height: 100px;
-}
+    .drawer_navigation__drawer__visible .user .avatar {
+        width: 100px;
+        height: 100px;
+    }
 
-.drawer_navigation__drawer__visible .user .username {
-    font-size: x-large;
-    color: inherit
-}
+    .drawer_navigation__drawer__visible .user .username {
+        font-size: x-large;
+        color: inherit
+    }
 }
   

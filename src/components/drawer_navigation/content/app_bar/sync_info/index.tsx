@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './styles.css'
-import { ReactComponent as CloudSVG } from '../../../../assets/icons/sync/cloud.svg'
-import { ReactComponent as SyncSVG } from '../../../../assets/icons/sync/sync.svg'
-import { ReactComponent as OnlineSVG } from '../../../../assets/icons/sync/check.svg'
-import { ReactComponent as OfflineSVG } from '../../../../assets/icons/sync/close.svg'
-import { useSync } from '../../../../context_provider/sync'
-import SyncStateEnum from '../../../../types/sync/SyncStateEnum'
+import { ReactComponent as CloudSVG } from '../../../../../assets/icons/sync/cloud.svg'
+import { ReactComponent as SyncSVG } from '../../../../../assets/icons/sync/sync.svg'
+import { ReactComponent as OnlineSVG } from '../../../../../assets/icons/sync/check.svg'
+import { ReactComponent as OfflineSVG } from '../../../../../assets/icons/sync/close.svg'
+import { useSync } from '../../../../../context_provider/sync'
+import SyncStateEnum from '../../../../../types/sync/SyncStateEnum'
 
 const SyncInfo: React.FC = () => {
     const sync = useSync()

@@ -14,7 +14,6 @@ import EventService from './services/events/EventService'
 import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
-import ViewportService from './services/viewport/ViewportService'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -27,7 +26,6 @@ const App = (): JSX.Element => {
   useEffect(() => {
     if (firstLoad) {
       setFirstLoad(false)
-      ViewportService.autoResizeViewport()
       EventService.whenStart()
     }
   }, [firstLoad])

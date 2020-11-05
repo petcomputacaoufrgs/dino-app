@@ -1,29 +1,18 @@
-import { isMobile, isTablet } from 'react-device-detect'
+import OrientationUtils from "../../utils/OrientationUtils"
+import OrientationEnum from "../../types/system/OrientationEnum"
 
 class ViewportService {
-  autoResizeViewport() {
-    if (isMobile) {
-      this.resizeViewportToMaxMobile()
-      window.onorientationchange = this.resizeViewportToMaxMobile
-    } else if (isTablet) {
-      this.resizeViewportToMaxTablet()
-      window.onorientationchange = this.resizeViewportToMaxTablet
+  maximizeViewport = () => {
+    window.removeEventListener('orientationchange', this.maximizeViewport)
+    const currentOrientation = OrientationUtils.getCurrentOrientation()
+    if (currentOrientation === OrientationEnum.PORTRAIT) {
+      this.maximize()
+    } else {
+      window.addEventListener('orientationchange', this.maximizeViewport)
     }
   }
 
-  private resizeViewportToMaxMobile = () => {
-    if (window.matchMedia('(orientation: portrait)').matches) {
-      this.resizeViewportToMax()
-    }
-  }
-
-  private resizeViewportToMaxTablet = () => {
-    if (window.matchMedia('(orientation: landscape)').matches) {
-      this.resizeViewportToMax()
-    }
-  }
-
-  private resizeViewportToMax() {
+  private maximize = () => {
     const vw = Math.max(
       document.documentElement.clientWidth || 0,
       window.innerWidth || 0
@@ -32,7 +21,7 @@ class ViewportService {
       document.documentElement.clientHeight || 0,
       window.innerHeight || 0
     )
-    let viewport = document.querySelector('meta[name=viewport]')
+    const viewport = document.querySelector('meta[name=viewport]')
     if (viewport) {
       viewport.setAttribute(
         'content',

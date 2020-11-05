@@ -40,8 +40,8 @@ const Home = () => {
   return (
     <div className="home">
       <div className="home__grid">
-        {items.map((item) => (
-          <ListItem button className="home__grid__button">
+        {items.map((item, index) => (
+          <ListItem button className="home__grid__button" key={index}>
             <Paper
               elevation={2}
               className="home__grid__paper"

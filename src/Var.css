@@ -10,6 +10,8 @@
   --selection-description: #ccdbd5;
   --base-font-color: #000000;
   --menu-font-color: #ffffff;
+  --button-font-color: #694E73;
+  --button-selected-font-color: #b054d1;
   --selection-font-color: #000000;
   --column-font-color: #274035;
   --font-base: 'Poppins', sans-serif;
@@ -27,6 +29,8 @@
   --selection-description: #ffeaa3;
   --base-font-color: #ffffff;
   --menu-font-color: #ffffff;
+  --button-font-color: #796980;
+  --button-selected-font-color: #b054d1;
   --selection-font-color: #000000;
   --column-font-color: #9e7b00;
 }

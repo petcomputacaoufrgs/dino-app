@@ -6,5 +6,5 @@ export default interface ContactModel {
   name: string
   phones: Array<PhoneModel>
   description?: string
-  color: string
+  color?: number
 }

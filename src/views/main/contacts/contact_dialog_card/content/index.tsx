@@ -1,7 +1,6 @@
 import React from 'react'
 import ContactsConstants from '../../../../../constants/contact/ContactsConstants'
 import ContactCardContentProps from './props'
-import useStyles from '../../styles'
 import {
   Typography,
   CardContent,
@@ -20,7 +19,6 @@ import {
 import PhoneModel from '../../../../../types/contact/PhoneModel'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
-  const classes = useStyles()
 
   const getTypePhoneIcon = (phone: PhoneModel) => {
     if (phone.type === ContactsConstants.MOBILE) {
@@ -34,25 +32,18 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 
   const Description = (): JSX.Element => {
     return item.description ? (
-      <div className="contact-card-description">
-        <ListItem divider className={classes.ListItem}>
+        <ListItem divider className="contacts__list__item">
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
           <ListItemText
             primary={
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.TextContact}
-              >
+              <div className='contacts__list__item__text'>             
                 {item.description}
-              </Typography>
+              </div>
             }
           />
         </ListItem>
-      </div>
     ) : (
       <Divider />
     )
@@ -67,7 +58,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
             style={{ textDecoration: 'none' }}
             key={index}
           >
-            <ListItem button divider className={classes.ListItem}>
+            <ListItem button divider className="contacts__list__item__content__phones">
               <ListItemIcon>{getTypePhoneIcon(phone)}</ListItemIcon>
               <ListItemText
                 primary={
@@ -90,7 +81,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
   }
 
   return (
-    <CardContent className={classes.CardContent}>
+    <CardContent className="contacts__list__item__content">
       <Description />
       <List component="nav">
         <Phones />

@@ -3,13 +3,11 @@ import ContactItemsProps from './props'
 import ContactCard from '../contact_dialog_card'
 import ContactItemList from '../contact_list_item'
 import { List } from '@material-ui/core'
-import useStyles from '../styles'
 import ContactFormDialog from '../contact_dialog_form'
 import ContactsService from '../../../../services/contact/ContactService'
 import Constants from '../../../../constants/contact/ContactsConstants'
 
 const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
-  const classes = useStyles()
 
   const [cardOpen, setCardOpen] = useState(0)
   const [edit, setEdit] = useState(0)
@@ -23,8 +21,7 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
   }, [_delete, setItems])
 
   return (
-    <div className="contacts-list">
-      <List className={classes.list}>
+      <List className="contacts__list">
         {items.map((contact, index) => (
           <div key={index}>
             <ContactItemList
@@ -50,7 +47,6 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
           </div>
         ))}
       </List>
-    </div>
   )
 }
 

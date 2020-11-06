@@ -1,5 +1,5 @@
 class ColorConstants {
-  COLORS = ['blue', 'red', 'purple', 'green', 'pink', 'gray']
+  COLORS = [undefined, 1, 2, 3, 4, 5]
 }
 
 export default new ColorConstants()

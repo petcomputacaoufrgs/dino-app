@@ -16,6 +16,11 @@
   --column-font-color: #274035;
   --font-base: 'Poppins', sans-serif;
   --font-secondary: 'Poppins', sans-serif;
+  --avatar-color-1: #f44336;
+  --avatar-color-2: #e91e63;
+  --avatar-color-3: #9c27b0;
+  --avatar-color-4: #2196f3;
+  --avatar-color-5: #4caf50;
 }
 
 [data-theme='dark'] {

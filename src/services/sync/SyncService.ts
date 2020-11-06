@@ -3,26 +3,26 @@ import SyncLocalStorage from "../../storage/local_storage/sync/SyncLocalStorage"
 import SyncContextUpdater from "../../context/updater/SyncContextUpdater"
 
 class SyncService {
-    getState = (): SyncStateEnum => {
-        return SyncLocalStorage.getState()
-    }
+  getState = (): SyncStateEnum => {
+    return SyncLocalStorage.getState()
+  }
 
-    setOffline = () => {
-        this.setState(SyncStateEnum.OFFILINE)
-    }
+  setOffline = () => {
+    this.setState(SyncStateEnum.OFFILINE)
+  }
 
-    setSynchronizing = () => {
-        this.setState(SyncStateEnum.SYNCHRONIZING)
-    }
+  setSynchronizing = () => {
+    this.setState(SyncStateEnum.SYNCHRONIZING)
+  }
 
-    setSynced = () => {
-        this.setState(SyncStateEnum.SYNCED)
-    }
+  setSynced = () => {
+    this.setState(SyncStateEnum.SYNCED)
+  }
 
-    private setState = (state: SyncStateEnum) => {
-        SyncLocalStorage.setState(state)
-        SyncContextUpdater.update()
-    }
+  private setState = (state: SyncStateEnum) => {
+    SyncLocalStorage.setState(state)
+    SyncContextUpdater.update()
+  }
 }
 
 export default new SyncService()

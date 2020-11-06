@@ -37,13 +37,13 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults} />
-      <ButtonAdd onClick={() => setAdd(true)}/>
+      <ButtonAdd onClick={() => setAdd(true)} />
       <ContactFormDialog
-          action={Contants.ACTION_ADD}
-          dialogOpen={add}
-          onClose={() => setAdd(false)}
-        />
-      </div>
+        action={Contants.ACTION_ADD}
+        dialogOpen={add}
+        onClose={() => setAdd(false)}
+      />
+    </div>
   )
 }
 

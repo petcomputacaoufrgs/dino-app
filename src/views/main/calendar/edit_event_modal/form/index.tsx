@@ -37,7 +37,7 @@ import './styles.css'
 import ColorConstants from '../../../../../constants/app/ColorConstants'
 
 const Form: React.FC = () => {
-  const language = useCurrentLanguage();
+  const language = useCurrentLanguage()
 
   const [eventType, setEventType] = useState(language.MEDICAL_APPOINTMENT_TYPE)
   const [eventName, setEventName] = useState<string>()

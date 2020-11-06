@@ -9,11 +9,12 @@ import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import { useLanguage, useColorThemeName } from './context/provider/app_settings'
 import EventService from './services/events/EventService'
 import UserContextProvider from './context/provider/user'
 import './App.css'
 import Load from './views/load'
+import ViewportService from './services/viewport/ViewportService'
+import { useColorThemeName } from './context/provider/app_settings'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -21,15 +22,15 @@ const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [showLoadScreen, setShowLoadScreen] = useState(true)
 
-  const language = useLanguage()
   const colorThemeName = useColorThemeName()
 
   useEffect(() => {
     if (firstLoad) {
       setFirstLoad(false)
+      ViewportService.autoResizeViewport()
       EventService.whenStart()
     }
-  }, [language, firstLoad])
+  }, [firstLoad])
 
   useEffect(() => {
     if (showLoadScreen) {
@@ -67,9 +68,7 @@ const App = (): JSX.Element => {
     </PrivateRouterContextProvider>
   )
 
-  const renderLoad = (): JSX.Element => (
-    <Load />
-  )
+  const renderLoad = (): JSX.Element => <Load />
 
   return (
     <div className="app" data-theme={colorThemeName}>

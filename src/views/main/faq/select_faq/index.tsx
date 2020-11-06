@@ -13,17 +13,17 @@ const SelectFaq = ({
   selectedFaq,
   setSelectedFaq,
 }: SelectFaqProps): JSX.Element => {
-    const language = useCurrentLanguage()
-    const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
-    const [open, setOpen] = useState(false)
-    const [loading, setLoading] = useState(open && faqOptions.length === 0)
-    const [value, setValue] = React.useState<FaqOptionsModel | null>(
-        selectedFaq || null
-    )
-    const [inputValue, setInputValue] = useState(
-        selectedFaq ? selectedFaq.title : ''
-    )
-    const [connectionError, setConnectionError] = useState(false)
+  const language = useCurrentLanguage()
+  const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(open && faqOptions.length === 0)
+  const [value, setValue] = React.useState<FaqOptionsModel | null>(
+    selectedFaq || null
+  )
+  const [inputValue, setInputValue] = useState(
+    selectedFaq ? selectedFaq.title : ''
+  )
+  const [connectionError, setConnectionError] = useState(false)
 
   useEffect(() => {
     const getFaqOptions = async () => {

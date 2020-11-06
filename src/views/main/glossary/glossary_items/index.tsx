@@ -16,7 +16,7 @@ const GlossaryItems = (props: GlossaryItemProps): JSX.Element => {
       {props.items.map((item) => (
         <Card className="card" key={item.id}>
           <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
-            <Card.Title className="accordion-card-title">
+            <Card.Title className="card-title">
               {item.title}
             </Card.Title>
           </Accordion.Toggle>
@@ -26,7 +26,7 @@ const GlossaryItems = (props: GlossaryItemProps): JSX.Element => {
                 {item.subtitle}
               </Card.Subtitle>
               <Card.Text>{item.text || language.NO_AVAILABLE_TEXT}</Card.Text>
-              <Link to={`${PathConstants.GLOSSARY}/${item.id}`}>Leia Mais</Link>
+              <Link className ='card-link' to={`${PathConstants.GLOSSARY}/${item.id}`}>Leia Mais</Link>
             </Card.Body>
           </Accordion.Collapse>
         </Card>

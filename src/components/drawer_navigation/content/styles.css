@@ -1,6 +1,21 @@
 .drawer__navigation__content {
-    width: 100%;
-    height: calc(100% - 50px);
-    overflow-y: auto;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer__navigation__content__component {
+    position: relative;
+    height: calc(100% - 45px);
     background-color: var(--background-main);
+}
+
+.drawer__navigation__content__component__scrollable {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.drawer__navigation__content__app_bar {
+    height: 45px;
 }

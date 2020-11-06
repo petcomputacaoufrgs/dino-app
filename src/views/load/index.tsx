@@ -8,9 +8,9 @@ import UFRGSLogo from '../../assets/logos/ufrgs.png'
 const Load: React.FC = () => {
     return (
       <div className="load">
-        <DinoLogoSVG className="load__dino_logo" title="DinoApp" />
-        <div className="load__dino_title">
-          <h1>DinoApp</h1>
+        <div className="load_header">
+          <DinoLogoSVG className="load__dino_logo" title="DinoApp" />
+          <h1 className="load__dino_title">DinoApp</h1>
         </div>
         <div className="load__team">
           <img src={PetLogo} className="load__team__pet" alt="PET Computação" />
@@ -26,7 +26,7 @@ const Load: React.FC = () => {
           />
         </div>
       </div>
-    )
+  )
 }
 
 export default Load

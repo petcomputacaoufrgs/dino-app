@@ -20,5 +20,5 @@ ReactDOM.render(
   </AlertContextProvider>,
   document.getElementById('root')
 )
- 
+
 ServiceWorker.unregister()

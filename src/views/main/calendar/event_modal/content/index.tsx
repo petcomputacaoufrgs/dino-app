@@ -9,8 +9,8 @@ import StringUtils from '../../../../../utils/StringUtils'
 import CalendarService from '../../../../../services/calendar/CalendarService'
 import './styles.css'
 
-const Content: React.FC<ContentProps> = ({ event } ) => {
-    const language = useCurrentLanguage()
+const Content: React.FC<ContentProps> = ({ event }) => {
+  const language = useCurrentLanguage()
 
   const getHourString = (date: Date): string => {
     return `${StringUtils.toStringWithZeros(

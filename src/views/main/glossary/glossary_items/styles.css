@@ -2,6 +2,10 @@
   padding: 5px 10px 15px;
 }
 
-.accordion-card-title {
+.accordion .card .card-title {
   margin-bottom: 0.2rem;
+}
+
+.accordion .card .card-link {
+  color: var(--button-font-color);
 }

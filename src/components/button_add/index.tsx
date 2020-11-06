@@ -9,7 +9,11 @@ const ButtonAdd = (props: { onClick: () => void }): JSX.Element => {
 
   return (
     <div>
-      <Fab onClick={props.onClick} className="button-add" aria-label={language.ADD_BUTTON}>
+      <Fab
+        onClick={props.onClick}
+        className="button-add"
+        aria-label={language.ADD_BUTTON}
+      >
         <AddIcon />
       </Fab>
     </div>

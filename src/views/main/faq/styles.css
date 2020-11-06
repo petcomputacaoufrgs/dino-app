@@ -9,7 +9,7 @@
 
 .send-question__button {
   text-decoration: underline;
-  color: var(--header-and-menu);
+  color: var(--button-font-color);
   border: none;
   background: none;
   cursor: pointer;
@@ -19,10 +19,7 @@
   display: block;
 }
 
-.send-question__button:hover {
-  color: lightblue;
-}
-
-.send-question__button:focus {
+.send-question__button:hover,  .send-question__button:focus{
+  color: var(--button-selected-font-color);
   outline: none;
 }

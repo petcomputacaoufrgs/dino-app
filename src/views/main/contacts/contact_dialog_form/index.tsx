@@ -33,7 +33,7 @@ const ContactFormDialog = React.forwardRef(
     { dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
-  const language = useCurrentLanguage()
+    const language = useCurrentLanguage()
 
     useEffect(() => {
       if (dialogOpen) {

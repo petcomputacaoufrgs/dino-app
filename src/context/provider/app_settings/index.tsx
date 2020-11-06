@@ -16,7 +16,7 @@ const AppSettingsContextProvider: React.FC = (props) => {
   const value = {
     language: languageContextProvider,
     selectedFaq: currentFaqContextProvider,
-    colorTheme: colorThemeContextProvider
+    colorTheme: colorThemeContextProvider,
   } as AppSettingsContextType
 
   useEffect(() => {
@@ -51,12 +51,16 @@ export const useAppSettings = () => useContext(AppSettingsContext)
 
 export const useLanguage = () => useContext(AppSettingsContext).language
 
-export const useCurrentLanguage = () => useContext(AppSettingsContext).language.current
+export const useCurrentLanguage = () =>
+  useContext(AppSettingsContext).language.current
 
-export const useCurrentFaq = () => useContext(AppSettingsContext).selectedFaq.current
+export const useCurrentFaq = () =>
+  useContext(AppSettingsContext).selectedFaq.current
 
-export const useColorTheme = () => useContext(AppSettingsContext).colorTheme.current
+export const useColorTheme = () =>
+  useContext(AppSettingsContext).colorTheme.current
 
-export const useColorThemeName = () => useContext(AppSettingsContext).colorTheme.currentName
+export const useColorThemeName = () =>
+  useContext(AppSettingsContext).colorTheme.currentName
 
 export default AppSettingsContextProvider

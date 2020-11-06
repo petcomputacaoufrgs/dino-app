@@ -8,8 +8,10 @@ import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
 import AuthRefreshRequestModel from '../types/auth/AuthRefreshRequestModel'
 import AuthRefreshResponseModel from '../types/auth/AuthRefreshResponseModel'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
+import sleep from '../utils/SleepUtils'
 
 const TIME_MARGIN_OF_ERROR_IN_MS = 300000
+const TIME_TO_AWAIT_FOR_REFRESHED_TOKEN = 500
 
 class DinoAgentService extends BaseAgent {
   protected filterBeforeCreate = async () => {
@@ -42,28 +44,54 @@ class DinoAgentService extends BaseAgent {
       const expiresDate = AuthService.getAuthTokenExpiresDate()
 
       if (this.needsUpdateToken(expiresDate)) {
-        const model: AuthRefreshRequestModel = {
-          accessToken: AuthService.getAuthToken(),
-        }
-        const response = await Superagent.put(
-          DinoAPIURLConstants.REFRESH_AUTH
-        ).send(model)
-        if (response.status === HttpStatus.OK) {
-          try {
-            const refreshResponse: AuthRefreshResponseModel = response.body
-            AuthService.setAuthToken(refreshResponse.accessToken)
-            AuthService.setAuthTokenExpiresDate(refreshResponse.expiresDate)
-          } catch (e) {
-            LogAppErrorService.saveError(e)
-            return false
-          }
+        if (AuthService.isRefreshingAccessToken()) {
+          return this.awaitForRefreshedToken()
+        } else {
+          return this.refreshAuthToken()
         }
       }
-
-      return true
     }
 
     return true
+  }
+
+  private awaitForRefreshedToken = async (): Promise<boolean> => {
+    while (AuthService.isRefreshingAccessToken()) {
+      await sleep(TIME_TO_AWAIT_FOR_REFRESHED_TOKEN)
+    }
+
+    const success = AuthService.successRefreshingAccessToken()
+
+    return success
+  }
+
+  private refreshAuthToken = async (): Promise<boolean> => {
+    AuthService.startRefreshingAccessToken()
+    const model: AuthRefreshRequestModel = {
+      accessToken: AuthService.getAuthToken(),
+    }
+    const response = await Superagent.put(
+      DinoAPIURLConstants.REFRESH_AUTH
+    ).send(model)
+
+    const isAuthenticated = AuthService.isAuthenticated()
+
+    if (isAuthenticated) {
+      if (response.status === HttpStatus.OK) {
+        try {
+          const refreshResponse: AuthRefreshResponseModel = response.body
+          AuthService.setAuthToken(refreshResponse.accessToken)
+          AuthService.setAuthTokenExpiresDate(refreshResponse.expiresDate)
+          AuthService.stopRefreshingAccessToken(true)
+          return true
+        } catch (e) {
+          LogAppErrorService.saveError(e)
+        }
+      }
+    }
+
+    AuthService.stopRefreshingAccessToken(false)
+    return false
   }
 
   private needsUpdateToken = (expiresDate: number): boolean => {

@@ -1,3 +1,4 @@
 export default interface ContentProps {
-    component: JSX.Element
+  component: JSX.Element
+  onDrawerOpen: () => void
 }

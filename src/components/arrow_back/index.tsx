@@ -14,7 +14,7 @@ const ArrowBack = (): JSX.Element => {
       aria-label={language.RETURN_ARIA_LABEL}
       onClick={() => HistoryService.goBack()}
     >
-      <ArrowBackIcon  />
+      <ArrowBackIcon />
     </IconButton>
   )
 }

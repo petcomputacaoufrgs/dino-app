@@ -1,15 +1,12 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { useParams } from 'react-router-dom'
-import { Divider, Card, CardContent, CardHeader, Typography } from '@material-ui/core'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { Divider, Paper } from '@material-ui/core'
 import './styles.css'
-import ArrowBack from '../../../../components/arrow_back'
 import { useGlossary } from '../../../../context/provider/glossary'
 
 const GlossaryItem = (): JSX.Element => {
-
-  const { id } = useParams() 
+  const { id } = useParams()
 
   const language = useCurrentLanguage()
 
@@ -19,21 +16,22 @@ const GlossaryItem = (): JSX.Element => {
 
   return (
     <div className="glossary-item">
-      <Card raised>
-        <div style={{paddingTop:'10px', paddingLeft:'10px', marginTop:'8px'}}>
-          <ArrowBack />
+      <Paper elevation={5}>
+        <div className="card__header" >
+          <div className='card__header__title'>
+            {item ? item.title : language.NO_AVAILABLE_TEXT}
+          </div>
+          <div className='card__typography muted'>
+            {item ? item.subtitle : ''}
+          </div>
         </div>
-        <CardHeader 
-          title={item ? item.title : language.NO_AVAILABLE_TEXT} 
-          subheader={item ? item.subtitle : ''}
-        />
         <Divider/>
-        <CardContent>
-          <Typography paragraph component='text' variant='body1'>
+        <div className="card__content" >
+          <div className='card__typography'>
             {item?.fullText || language.NO_AVAILABLE_TEXT}
-          </Typography>
-        </CardContent>
-      </Card>
+          </div>
+        </div>
+      </Paper>
     </div>
   )
 }

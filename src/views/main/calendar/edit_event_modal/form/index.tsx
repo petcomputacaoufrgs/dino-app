@@ -49,7 +49,7 @@ const Form: React.FC = () => {
   const [weekdays, setWeekdays] = useState(new Week(language))
   const [addAlarmModalOpen, setAddAlarmModalOpen] = useState(false)
   const [alarms, setAlarms] = useState<EventAlarm[]>([])
-  const [color, setColor] = useState(ColorConstants.COLORS[0])
+  //const [color, setColor] = useState<string || undefined>("blue")
 
   const alarmDontExists = (time: number, type: number): boolean => {
     if (time === 0) {
@@ -151,11 +151,11 @@ const Form: React.FC = () => {
     setAlarms(newAlarms)
   }
 
-  const handleColorChange = () => {
-    const colors = ColorConstants.COLORS
-    const index = colors.findIndex((c) => c === color)
-    setColor(colors[(index + 1) % colors.length])
-  }
+  // const handleColorChange = () => {
+  //   const colors = ColorConstants.COLORS
+  //   const index = colors.findIndex((c) => c === color)
+  //   setColor(colors[(index + 1) % colors.length])
+  // }
 
   const renderEventNameField = (): JSX.Element => (
     <FormItem
@@ -340,7 +340,7 @@ const Form: React.FC = () => {
     <FormItem
       iconSrc={ColorLensSVG}
       iconAlt={language.CHANGE_COLOR_ARIA_LABEL}
-      onIconClick={handleColorChange}
+      //onIconClick={handleColorChange}
       item={
         <div className="calendar__edit_event_modal__form__color_selection">
           <p className="calendar__edit_event_modal__form__color_selection__label">
@@ -348,7 +348,7 @@ const Form: React.FC = () => {
           </p>
           <div
             className="calendar__edit_event_modal__form__color_selection__color_cicle"
-            style={{ backgroundColor: color }}
+            //style={{ backgroundColor: color }}
           />
         </div>
       }

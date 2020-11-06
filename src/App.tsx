@@ -10,7 +10,6 @@ import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
 import { useColorThemeName } from './context_provider/app_settings'
-import EventService from './services/events/EventService'
 import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
@@ -28,7 +27,6 @@ const App = (): JSX.Element => {
     if (firstLoad) {
       setFirstLoad(false)
       ViewportService.autoResizeViewport()
-      EventService.whenStart()
     }
   }, [firstLoad])
 

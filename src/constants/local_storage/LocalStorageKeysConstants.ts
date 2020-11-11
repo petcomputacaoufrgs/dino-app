@@ -48,6 +48,7 @@ class LocalStorageKeys {
   SUCCESS_REFRESHING_ACCESS_TOKEN = 'srat'
   IS_REFRESHING_GOOGLE_ACCESS_TOKEN = 'irgat'
   SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN = 'srgat'
+  ORIENTATION_STATE = 'os'
 }
 
 export default new LocalStorageKeys()

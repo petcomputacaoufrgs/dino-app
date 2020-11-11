@@ -14,7 +14,7 @@ const GlossaryItems = ({items}: GlossaryItemProps): JSX.Element => {
   return (
     <div className="glossary__items">
       <Accordion className="accordion">
-        {props.items.map((item) => (
+        {items.map(item => (
           <Card className="card" key={item.id}>
             <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
               <Card.Title className="card-title">

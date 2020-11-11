@@ -8,12 +8,12 @@ import PathConstants from '../../../../constants/app/PathConstants'
 import { Link } from 'react-router-dom'
 import GlossaryItemProps from './props'
 
-const GlossaryItems = (props: GlossaryItemProps): JSX.Element => {
+const GlossaryItems = ({items}: GlossaryItemProps): JSX.Element => {
   const language = useCurrentLanguage()
 
   return (
     <Accordion className="accordion">
-      {props.items.map((item) => (
+      {items.map(item => (
         <Card className="card" key={item.id}>
           <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
             <Card.Title className="card-title">

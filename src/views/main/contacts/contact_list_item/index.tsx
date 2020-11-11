@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import useStyles from '../styles'
 import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import ContactItemListProps from './props'
 import {
@@ -21,7 +20,6 @@ const ContactItemList = ({
   onClick,
   children,
 }: ContactItemListProps): JSX.Element => {
-  const classes = useStyles()
 
   const language = useCurrentLanguage()
 
@@ -44,13 +42,13 @@ const ContactItemList = ({
   }
 
   return (
-    <div className="contact-list-item">
+    <div className="contacts__list__item">
       <ListItem button divider onClick={handleOpen}>
         <ListItemAvatar>
           <Avatar
             aria-label={language.AVATAR_ALT}
-            className={classes[item.color]}
-          >
+            className={`avatar__color-${item.color}`}
+            >
             {item.name[0].toUpperCase()}
           </Avatar>
         </ListItemAvatar>

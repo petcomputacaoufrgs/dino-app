@@ -128,21 +128,23 @@ const Faq = (): JSX.Element => {
       {isFaqEmpty ? (
         renderFaqOptions()
       ) : (
-        <div>
-          <FaqItems
-            title={selectedFaq ? selectedFaq.title : ''}
-            items={searchResults}
-          />
-          <button
-            className="send-question__button"
-            onClick={handleSendQuestion}
-          >
-            {language.NOT_FOUND_QUESTION_FAQ}
-          </button>
-          <QuestionDialogForm
-            dialogOpen={dialogOpen}
-            setDialogOpen={setDialogOpen}
-          />
+        <div className="faq__content">
+          <div>
+            <FaqItems
+              title={selectedFaq ? selectedFaq.title : ''}
+              items={searchResults}
+            />
+            <button
+              className="send-question__button"
+              onClick={handleSendQuestion}
+            >
+              {language.NOT_FOUND_QUESTION_FAQ}
+            </button>
+            <QuestionDialogForm
+              dialogOpen={dialogOpen}
+              setDialogOpen={setDialogOpen}
+            />
+            </div>
         </div>
       )}
     </div>

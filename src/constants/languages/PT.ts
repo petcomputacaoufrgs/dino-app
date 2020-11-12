@@ -72,6 +72,8 @@ export default class PT implements LanguageBase {
 
   MENU_LOGOUT = 'Sair'
 
+  MENU_ABOUT_US = 'Sobre Nós'
+
   SETTINGS_TITLE = 'Configurações'
 
   SETTINGS_LANGUAGE = 'Escolher Idioma'

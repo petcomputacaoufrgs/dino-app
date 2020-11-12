@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import './App.css'
 import AuthService from './services/auth/AuthService'
 import Login from './views/login'
 import Main from './views/main'
@@ -9,9 +10,7 @@ import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import EventService from './services/events/EventService'
 import UserContextProvider from './context/provider/user'
-import './App.css'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
 import { useColorThemeName } from './context/provider/app_settings'
@@ -27,7 +26,7 @@ const App = (): JSX.Element => {
   useEffect(() => {
     if (firstLoad) {
       setFirstLoad(false)
-      ViewportService.autoResizeViewport()
+      ViewportService.maximizeViewport()
     }
   }, [firstLoad])
 

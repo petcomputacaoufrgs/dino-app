@@ -13,6 +13,7 @@ import { useColorThemeName } from './context_provider/app_settings'
 import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
+import ViewportService from './services/viewport/ViewportService'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -23,9 +24,17 @@ const App = (): JSX.Element => {
   const colorThemeName = useColorThemeName()
 
   useEffect(() => {
+      const body = document.getElementById('body')
+
+      if (body) {
+        body.setAttribute('data-theme', colorThemeName)
+      }
+  })
+
+  useEffect(() => {
     if (firstLoad) {
       setFirstLoad(false)
-      ViewportService.autoResizeViewport()
+      ViewportService.maximizeViewport()
     }
   }, [firstLoad])
 
@@ -68,7 +77,7 @@ const App = (): JSX.Element => {
   const renderLoad = (): JSX.Element => <Load />
 
   return (
-    <div className="app" data-theme={colorThemeName}>
+    <div className="app">
       {showLoadScreen ? renderLoad() : renderApp()}
     </div>
   )

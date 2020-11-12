@@ -3,7 +3,7 @@
   width: 240px;
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  overflow: auto;
   background-color: var(--header-and-menu);
   margin-left: -240px;
 }
@@ -67,9 +67,17 @@
   padding: 8px 16px;
 }
 
+.user__avatar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .drawer_navigation__drawer__visible .user .avatar {
-  width: 140px;
-  height: 140px;
+  width: 65%;
+  height: auto;
+  margin-bottom: 10px;
 }
 
 .drawer_navigation__drawer__visible .user .username {
@@ -77,16 +85,4 @@
   font-size: large;
   color: inherit;
   margin-top: 1rem;
-}
-
-@media (orientation: landscape) {
-  .drawer_navigation__drawer__visible .user .avatar {
-    width: 100px;
-    height: 100px;
-  }
-
-  .drawer_navigation__drawer__visible .user .username {
-    font-size: x-large;
-    color: inherit;
-  }
 }

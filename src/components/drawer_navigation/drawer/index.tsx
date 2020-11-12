@@ -54,7 +54,13 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 
   const renderUser = (): JSX.Element => (
     <div className="user">
-      <Avatar src={user.picture} alt={language.AVATAR_ALT} className="avatar" />
+      <div className="user__avatar">
+        <Avatar
+          src={user.picture}
+          alt={language.AVATAR_ALT}
+          className="avatar"
+        />
+      </div>
       <p className="username">{user.name}</p>
     </div>
   )

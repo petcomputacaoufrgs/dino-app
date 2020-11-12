@@ -1,10 +1,22 @@
-.app .MuiTypography-root,
-.app .MuiChip-label,
-.app .MuiBottomNavigationAction-label,
-.app .MuiButton-label,
-.MuiFormLabel-root {
+body .MuiTypography-root,
+body .MuiChip-label,
+body .MuiBottomNavigationAction-label,
+body .MuiButton-label,
+body .MuiFormLabel-root,
+body .MuiInputBase-root,
+body .MuiSelect-icon,
+body .MuiIconButton-root,
+body .MuiPaper-root {
   font-family: var(--font-base);
   color: var(--base-font-color);
+}
+
+body .MuiPaper-root {
+  background-color: var(--header-and-menu);
+}
+
+body .MuiInput-underline:before {
+  border-bottom: 2px solid var(--base-font-color);
 }
 
 .MuiDialog-root {

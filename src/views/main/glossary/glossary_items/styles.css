@@ -16,3 +16,7 @@
 .accordion .card .card-link {
   color: var(--button-font-color);
 }
+
+.accordion .card {
+  background-color: var(--header-and-menu);
+}

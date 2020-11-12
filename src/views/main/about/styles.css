@@ -1,0 +1,32 @@
+.glossary-item {
+  padding: 10px;
+}
+
+.card__header {
+  padding: 16px 16px 12px;
+  text-align: center;
+}
+
+.card__content {
+  padding: 16px;
+  text-align: justify;
+}
+
+ .card__header .card__header__title {
+  margin-bottom: 0.2rem;
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.334;
+  letter-spacing: 0em;
+}
+
+.glossary-item .card__typography {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+
+.glossary-item .card__typography.muted {
+  opacity: 0.7;
+}

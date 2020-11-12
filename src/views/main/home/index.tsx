@@ -15,6 +15,7 @@ const Home = () => {
     { class: '__g', label: language.MENU_GLOSSARY, path: PathConstants.GLOSSARY, },
     { class: '__f', label: language.MENU_FAQ, path: PathConstants.FAQ, },
     { class: '__s', label: language.MENU_SETTINGS, path: PathConstants.SETTINGS, },
+    { class: '__a', label: language.MENU_ABOUT_US, path: PathConstants.ABOUT_US, },
   ]
 
   return (

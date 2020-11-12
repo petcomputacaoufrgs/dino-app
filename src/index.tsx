@@ -6,11 +6,12 @@ import ViewportService from './services/viewport/ViewportService'
 import SyncContextProvider from './context_provider/sync'
 import AlertContextProvider from './context_provider/alert'
 import AppSettingsContextProvider from './context_provider/app_settings'
+import EventService from './services/events/EventService'
 import App from './App'
 import './Var.css'
 
 ErrorHandlerService.register()
-ViewportService.maximizeViewport()
+EventService.whenStart()
 
 ReactDOM.render(
   <AlertContextProvider>

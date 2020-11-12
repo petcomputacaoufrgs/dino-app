@@ -67,26 +67,26 @@ class DinoAgentService extends BaseAgent {
 
   private refreshAuthToken = async (): Promise<boolean> => {
     AuthService.startRefreshingAccessToken()
-    const model: AuthRefreshRequestModel = {
-      accessToken: AuthService.getAuthToken(),
-    }
-    const response = await Superagent.put(
-      DinoAPIURLConstants.REFRESH_AUTH
-    ).send(model)
 
     const isAuthenticated = AuthService.isAuthenticated()
 
     if (isAuthenticated) {
-      if (response.status === HttpStatus.OK) {
-        try {
+      try {
+        const model: AuthRefreshRequestModel = {
+          accessToken: AuthService.getAuthToken(),
+        }
+        const response = await Superagent.put(
+          DinoAPIURLConstants.REFRESH_AUTH
+        ).send(model)
+        if (response.status === HttpStatus.OK) {
           const refreshResponse: AuthRefreshResponseModel = response.body
           AuthService.setAuthToken(refreshResponse.accessToken)
           AuthService.setAuthTokenExpiresDate(refreshResponse.expiresDate)
           AuthService.stopRefreshingAccessToken(true)
           return true
-        } catch (e) {
-          LogAppErrorService.saveError(e)
         }
+      } catch (e) {
+        LogAppErrorService.saveError(e)
       }
     }
 

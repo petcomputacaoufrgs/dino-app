@@ -1,19 +1,17 @@
 import React from 'react'
 import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
 import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
-import useStyles from '../../styles'
 import ContactCardHeaderProps from './props'
 import ContactsService from '../../../../../services/contact/ContactService'
 import CloseComponent from '../../../../../components/icon_buttons/close_component'
 import OptionsComponent from '../../../../../components/icon_buttons/options_component'
-
+import '../../styles.css'
 const ContactCardHeader = ({
   item,
   setEdit,
   setDelete,
   onClose: handleCloseDialog,
 }: ContactCardHeaderProps) => {
-  const classes = useStyles()
 
   const language = useCurrentLanguage()
 
@@ -49,7 +47,7 @@ const ContactCardHeader = ({
         avatar={
           <Avatar
             aria-label={language.AVATAR_ALT}
-            className={classes[item.color]}
+            className={`avatar__color-${item.color}`}
           >
             {item.name[0].toUpperCase()}
           </Avatar>

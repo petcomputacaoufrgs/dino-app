@@ -28,7 +28,6 @@ const App = (): JSX.Element => {
     if (firstLoad) {
       setFirstLoad(false)
       ViewportService.autoResizeViewport()
-      EventService.whenStart()
     }
   }, [firstLoad])
 

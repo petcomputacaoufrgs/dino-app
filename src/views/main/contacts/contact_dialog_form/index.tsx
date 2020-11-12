@@ -18,7 +18,7 @@ const getContact = (item: ContactModel | undefined) => {
   return {
     name: item?.name || '',
     description: item?.description || '',
-    color: item?.color || '',
+    color: item?.color,
   }
 }
 
@@ -146,7 +146,7 @@ const ContactFormDialog = React.forwardRef(
     }
 
     return (
-      <div className="contact-form">
+      <div className="contact__form">
         <Dialog
           ref={ref}
           style={{ margin: '0px' }}

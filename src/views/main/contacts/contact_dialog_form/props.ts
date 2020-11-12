@@ -15,7 +15,7 @@ export interface ContactFormDialogViewProps {
   contact: {
     name: string
     description: string
-    color: string
+    color: number
   }
   phones: PhoneModel[]
   invalidName: boolean

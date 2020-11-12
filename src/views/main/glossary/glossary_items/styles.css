@@ -1,3 +1,10 @@
+.glossary__items {
+  position: absolute;
+  height: calc(100% - 60px);
+  width: 100%;
+  overflow-y: auto;
+}
+
 .accordion {
   padding: 5px 10px 15px;
 }

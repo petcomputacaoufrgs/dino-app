@@ -5,5 +5,5 @@ export default interface ContactResponseModel {
   name: string
   phones: Array<PhoneModel>
   description?: string
-  color: string
+  color?: number
 }

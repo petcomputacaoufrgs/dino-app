@@ -179,6 +179,10 @@ class AuthLocalStorage extends BaseLocalStorage {
 
   cleanLoginGarbage = () => {
     this.setRefreshRequiredToFalse()
+    this.removeRefreshingAccessToken()
+    this.removeSuccessRefreshingAccessToken()
+    this.removeRefreshingGoogleAccessToken()
+    this.removeSuccessRefreshingGoogleAccessToken()
   }
 }
 

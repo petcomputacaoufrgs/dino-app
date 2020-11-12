@@ -4,7 +4,6 @@ import GlossaryItems from './glossary_items'
 import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
-
 import { useGlossary } from '../../../context_provider/glossary'
 import 'bootstrap/dist/css/bootstrap.min.css'
 

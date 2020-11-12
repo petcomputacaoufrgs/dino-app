@@ -1,3 +1,10 @@
+.faq__content {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 60px);
+  overflow-y: auto;
+}
+
 .select-faq__button {
   margin: auto;
   display: flex;

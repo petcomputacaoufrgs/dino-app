@@ -1,0 +1,43 @@
+.contacts .contacts__list__item__content .MuiListItem-gutters .MuiListItem-divider {
+  padding: 8px;
+}
+
+.contacts .contacts__list__item__content .MuiCardContent-root {
+  padding: 8px;
+}
+
+.contacts .contacts__list__item__content__phones {
+  padding: 5px;
+}
+
+.contacts .contacts__list__item__text {
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+}
+
+
+.MuiAvatar-root.MuiAvatar-circle.avatar__color-1 {
+  background-color: Var(--avatar-color-1);
+}
+
+.MuiAvatar-root.MuiAvatar-circle.avatar__color-2 {
+  background-color: Var(--avatar-color-2);
+}
+
+.MuiAvatar-root.MuiAvatar-circle.avatar__color-3 {
+  background-color: Var(--avatar-color-3);
+}
+
+.MuiAvatar-root.MuiAvatar-circle.avatar__color-4 {
+  background-color: Var(--avatar-color-4);
+}
+
+.MuiAvatar-root.MuiAvatar-circle.avatar__color-5 {
+  background-color: Var(--avatar-color-5);
+}

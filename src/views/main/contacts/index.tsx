@@ -30,7 +30,7 @@ const Contacts = (): JSX.Element => {
   }, [items, searchTerm])
 
   return (
-    <div>
+    <div className='contacts'>
       <MuiSearchBar
         value={searchTerm}
         onChange={handleChange}

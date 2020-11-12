@@ -13,7 +13,6 @@ import { useColorThemeName } from './context_provider/app_settings'
 import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
-import ViewportService from './services/viewport/ViewportService'
 
 const LOAD_SCREEN_TIME = 2250
 

@@ -2,9 +2,15 @@
   padding-bottom: 32px
 }
 
-.section .img {
+.section__image {
   margin-left: auto;
   margin-right: auto;
   display: block;
   padding: 16px;
+}
+
+.section__footnote {
+  padding: 10px 20px;
+  text-align: center;
+  font-style: italic;
 }

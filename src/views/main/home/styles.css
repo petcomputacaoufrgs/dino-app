@@ -43,7 +43,7 @@
   display: grid;
 }
 
-.home .home__grid__paper .img {
+.home .home__grid__paper img {
   width: inherit;
   height: inherit;
   display: inherit;

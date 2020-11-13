@@ -3,16 +3,15 @@ body .MuiChip-label,
 body .MuiBottomNavigationAction-label,
 body .MuiButton-label,
 body .MuiFormLabel-root,
-body .MuiInputBase-root,
-body .MuiSelect-icon,
-body .MuiIconButton-root,
-body .MuiPaper-root {
+body .MuiInputBase-root {
   font-family: var(--font-base);
   color: var(--base-font-color);
 }
 
-body .MuiPaper-root {
-  background-color: var(--header-and-menu);
+body .MuiIconButton-root, 
+body .MuiSelect-icon,
+body .MuiSvgIcon-root {
+  fill: var(--constrast-icons)
 }
 
 body .MuiInput-underline:before {

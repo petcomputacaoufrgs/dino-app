@@ -1,6 +1,6 @@
 import React from 'react'
 import TagSearchBar from '../../../../components/tag_search_bar'
-import NoteSVG from '../../../../assets/icons/menu_icons/note.svg'
+import { ReactComponent as NoteSVG } from '../../../../assets/icons/menu_icons/note.svg'
 import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import NoteHeaderProps from './props'
 import './styles.css'
@@ -14,11 +14,7 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
 
   return (
     <div className="notes__header">
-      <img
-        className="notes__header__image"
-        src={NoteSVG}
-        alt={language.NOTES_HEADER_IMAGE_DESC}
-      />
+      <NoteSVG title={language.NOTES_HEADER_IMAGE_DESC} className='notes__header__image'/>
       <TagSearchBar
         options={tags}
         onTagSearch={onTagSearch}

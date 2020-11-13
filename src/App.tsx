@@ -9,11 +9,12 @@ import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import { useColorThemeName } from './context_provider/app_settings'
+import { useCurrentColorTheme } from './context_provider/app_settings'
 import UserContextProvider from './context_provider/user'
 import './App.css'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
+import DataThemeUtils from './utils/DataThemeUtils'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -21,14 +22,11 @@ const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [showLoadScreen, setShowLoadScreen] = useState(true)
 
-  const colorThemeName = useColorThemeName()
+  const colorThemeName = useCurrentColorTheme()
+  DataThemeUtils.setBodyDataTheme(colorThemeName)
 
   useEffect(() => {
-      const body = document.getElementById('body')
-
-      if (body) {
-        body.setAttribute('data-theme', colorThemeName)
-      }
+    DataThemeUtils.setBodyDataTheme(colorThemeName)
   })
 
   useEffect(() => {

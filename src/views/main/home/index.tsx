@@ -24,12 +24,13 @@ const Home = () => {
           <ListItem key={index} button className="home__grid__button">
             <Paper
               elevation={2}
-              className="home__grid__paper"
+              className={'home__grid__paper ' + item.class}
               onClick={() => setTimeout(() => HistoryService.push(item.path), 150)}
             >
-              <div className={'img ' + item.class}>
-                <p className="home__paper__string">{item.label}</p>
+              <div className={'img'}>
+                
               </div>
+              <p className="home__paper__string">{item.label}</p>
             </Paper>
           </ListItem>
         ))}

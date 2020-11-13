@@ -1,28 +1,9 @@
-.home {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.home .home__avatar {
-  margin-top: 128px;
-  width: 125px;
-  height: 125px;
-}
-
-.home .home__username,
-.home .home__welcome_message {
-  margin-top: 25px;
-  font-weight: 700;
-  font-size: large;
-}
-
 .home .home__grid {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 12px;
-  grid-gap: 12px;
+  padding: 16px;
+  grid-gap: 40px 32px;
 }
 
 .home .home__grid__button {
@@ -37,7 +18,7 @@
 
 .home .home__grid__paper {
   width: 100%;
-  height: calc(50vw - 18px);
+  height: calc(50vw - 24px);
   background-color: var(--home-icons);
   place-items: center;
   display: grid;
@@ -48,49 +29,44 @@
   height: inherit;
   display: inherit;
   place-items: inherit;
-  background-size: cover;
 }
 
-.home .home__grid__paper .img.__g {
+.home .home__grid__paper::before {
+  content: "";
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute; 
+}
+
+.home .home__grid__paper.__g::before {
   background-image: url(../../../assets/icons/menu_icons/glossary.svg);
 }
 
-.home .home__grid__paper .img.__n {
+.home .home__grid__paper.__n::before {
   background-image: url(../../../assets/icons/menu_icons/note.svg);
 }
 
-.home .home__grid__paper .img.__c {
+.home .home__grid__paper.__c::before {
   background-image: url(../../../assets/icons/menu_icons/phone.svg);
 }
 
-.home .home__grid__paper .img.__f {
+.home .home__grid__paper.__f::before {
   background-image: url(../../../assets/icons/menu_icons/faq.svg);
 }
 
-.home .home__grid__paper .img.__s {
+.home .home__grid__paper.__s::before {
   background-image: url(../../../assets/icons/menu_icons/settings.svg);
 }
 
 .home .home__paper__string {
   font-size: 5.5vmin;
   font-weight: bold;
-  color: white;
-  text-shadow: 0 0 2px black;
-}
-
-@media (orientation: landscape) {
-  .home .home__avatar {
-    margin-top: 40px;
-    width: 200px;
-    height: 200px;
-  }
-
-  .home .home__username {
-    font-size: x-large;
-  }
-
-  .home .home__welcome_message {
-    margin-top: 25px;
-    font-size: xx-large;
-  }
+  color: var(--constrast-font-color);
+  z-index: 2;  
 }

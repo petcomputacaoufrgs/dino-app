@@ -52,6 +52,10 @@
   fill: var(--header-and-menu-icons);
 }
 
+.drawer_navigation__drawer__header .MuiSvgIcon-root {
+  fill: var(--header-and-menu-icons);
+}
+
 .drawer_navigation__drawer__visible .MuiList-root.MuiList-padding {
   padding-top: 0px;
   padding-bottom: 0px;

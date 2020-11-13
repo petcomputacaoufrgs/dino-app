@@ -19,7 +19,7 @@ const Settings = (): JSX.Element => {
 
   const language = appSettings.language.current
 
-  const colorTheme = appSettings.colorTheme.current
+  const colorTheme = appSettings.colorTheme.currentCode
 
   const alert = useAlert()
 

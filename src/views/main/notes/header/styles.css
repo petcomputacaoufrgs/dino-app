@@ -10,9 +10,10 @@
 }
 
 .notes__header__image {
-  width: 35px;
+  width: 40px;
   height: auto;
-  margin-right: 15px;
+  margin-right: 8px;
+  fill: var(--constrast-icons);
 }
 
 .notes__header

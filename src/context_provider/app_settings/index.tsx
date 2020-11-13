@@ -57,10 +57,7 @@ export const useCurrentLanguage = () =>
 export const useCurrentFaq = () =>
   useContext(AppSettingsContext).selectedFaq.current
 
-export const useColorTheme = () =>
-  useContext(AppSettingsContext).colorTheme.current
-
-export const useColorThemeName = () =>
+export const useCurrentColorTheme = () =>
   useContext(AppSettingsContext).colorTheme.currentName
 
 export default AppSettingsContextProvider

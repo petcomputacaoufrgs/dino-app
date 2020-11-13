@@ -1,0 +1,10 @@
+.section {
+  padding-bottom: 32px
+}
+
+.section .img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding: 16px;
+}

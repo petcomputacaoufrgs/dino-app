@@ -1,38 +1,37 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import { ListItem, Paper } from '@material-ui/core'
-import PathConstants from '../../../constants/app/PathConstants'
-import HistoryService from '../../../services/history/HistoryService'
 import HomeItemProps from './props'
 import './styles.css'
+import MenuService from '../../../services/menu/MenuService'
+import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 
-const Home = () => {
+const Home: React.FC<HomeItemProps> = () => {
   const language = useCurrentLanguage()
 
-  const items: HomeItemProps[] = [
-    { class: '__n', label: language.MENU_NOTES, path: PathConstants.NOTES,},
-    { class: '__c', label: language.MENU_CONTACTS, path: PathConstants.CONTACTS, },
-    { class: '__g', label: language.MENU_GLOSSARY, path: PathConstants.GLOSSARY, },
-    { class: '__f', label: language.MENU_FAQ, path: PathConstants.FAQ, },
-    { class: '__s', label: language.MENU_SETTINGS, path: PathConstants.SETTINGS, },
-  ]
+  const items = MenuService.getMainPages(language).filter(item => item.name !== language.MENU_HOME)
 
+  const renderImage = (item: MenuItemViewModel) => {
+    const Image = item.image
+
+    return <Image className='img' /> 
+  }
+  
   return (
     <div className="home">
       <div className="home__grid">
         {items.map((item, index) => (
-          <ListItem key={index} button className="home__grid__button">
-            <Paper
-              elevation={2}
-              className={'home__grid__paper ' + item.class}
-              onClick={() => setTimeout(() => HistoryService.push(item.path), 150)}
-            >
-              <div className={'img'}>
-                
-              </div>
-              <p className="home__paper__string">{item.label}</p>
-            </Paper>
-          </ListItem>
+          <div className="home__grid__item" key={index}>
+            <ListItem button className="home__grid__button">
+              <Paper
+                className='home__grid__paper'
+                onClick={() => setTimeout(() => item.onClick(), 150)}
+              >
+                {renderImage(item)}
+              </Paper>
+            </ListItem>
+            <p className="home__grid__item__name">{item.name}</p>
+          </div>
         ))}
       </div>
     </div>

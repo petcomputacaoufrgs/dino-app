@@ -2,8 +2,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 16px;
-  grid-gap: 40px 32px;
+  padding: 24px;
+  grid-gap: 0px 16px;
 }
 
 .home .home__grid__button {
@@ -12,61 +12,64 @@
   border-radius: 8px;
 }
 
+.home__grid__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.home .home__grid__button {
+  width: 90%;
+  height: 90%;
+}
+
 .home .home__grid__button .MuiPaper-rounded {
   border-radius: 8px;
 }
 
+.home__grid__item__name {
+  height: 40px;
+  font-size: larger;
+  font-weight: bold;
+  color: var(--constrast-font-color);
+  margin-top: 4px;
+}
+
 .home .home__grid__paper {
   width: 100%;
-  height: calc(50vw - 24px);
+  height: 100%;
   background-color: var(--home-icons);
-  place-items: center;
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .home .home__grid__paper .img {
-  width: inherit;
-  height: inherit;
-  display: inherit;
-  place-items: inherit;
+  width: 90%;
+  padding: 8px;
+  height: auto;
 }
 
-.home .home__grid__paper::before {
-  content: "";
-  background-size: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.4;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute; 
-}
+@media(orientation: landscape) {
+  .home .home__grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 0px 8px;
+  }
 
-.home .home__grid__paper.__g::before {
-  background-image: url(../../../assets/icons/menu_icons/glossary.svg);
-}
+  .home .home__grid__button {
+    width: 90%;
+    height: 50%;
+  }
 
-.home .home__grid__paper.__n::before {
-  background-image: url(../../../assets/icons/menu_icons/note.svg);
-}
+  .home .home__grid__paper .img {
+    width: 90%;
+    height: 80%;
+  }
 
-.home .home__grid__paper.__c::before {
-  background-image: url(../../../assets/icons/menu_icons/phone.svg);
-}
-
-.home .home__grid__paper.__f::before {
-  background-image: url(../../../assets/icons/menu_icons/faq.svg);
-}
-
-.home .home__grid__paper.__s::before {
-  background-image: url(../../../assets/icons/menu_icons/settings.svg);
-}
-
-.home .home__paper__string {
-  font-size: 5.5vmin;
-  font-weight: bold;
-  color: var(--constrast-font-color);
-  z-index: 2;  
+  .home__grid__item {
+    height: calc(100% + 80px);
+  }
 }

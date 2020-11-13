@@ -2,6 +2,10 @@
   padding-bottom: 32px
 }
 
+.section__title {
+  margin-bottom: .8rem;
+}
+
 .section__image {
   margin-left: auto;
   margin-right: auto;
@@ -13,4 +17,8 @@
   padding: 10px 20px;
   text-align: center;
   font-style: italic;
+}
+
+.section__text {
+  white-space: pre-wrap;
 }

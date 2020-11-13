@@ -30,3 +30,7 @@
 .about-us .card__typography.muted {
   opacity: 0.8;
 }
+
+.h-divisor {
+  margin: 10px 24px;
+}

@@ -3,9 +3,17 @@
   margin-bottom: 10px;
 }
 
+.note__note_content__column__column_card .MuiTypography-root {
+  color: var(--dark-color);
+}
+
 .note__note_content__column__column_card__card__card_content {
   overflow: auto;
   -ms-overflow-style: none;
+}
+
+.note__note_content__column__column_card__card__card_content .MuiChip-label {
+  color: var(--dark-color);
 }
 
 .note__note_content__column__column_card__card__card_content.MuiCardContent-root {
@@ -39,17 +47,19 @@
 }
 
 .note__note_content__column__column_card.MuiPaper-rounded {
-  border-radius: 3px;
+  border-radius: 8px;
   background-color: var(--note-background);
 }
 
-.note__note_content__column__column_card__card__card_content__answer {
-  margin-top: 8px;
-  margin-bottom: 0px;
-  font-size: smaller;
-  text-overflow: ellipsis;
+.note__note_content__column__column_card__card__card_answer.MuiCardActions-root {
+  padding: 8px 16px 8px 16px;
+  background-color: var(--note-answer-background);
+}
+
+.note__note_content__column__column_card__card__card_answer.MuiCardActions-root p {
+  white-space: nowrap;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+  display: block;
+  text-overflow: ellipsis;
+  margin: 0;
 }

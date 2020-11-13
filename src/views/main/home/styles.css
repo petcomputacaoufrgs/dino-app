@@ -43,7 +43,7 @@
   display: grid;
 }
 
-.home .home__grid__paper img {
+.home .home__grid__paper .paper__img {
   width: inherit;
   height: inherit;
   display: inherit;
@@ -51,23 +51,23 @@
   background-size: cover;
 }
 
-.home .home__grid__paper .img.__g {
+.home .home__grid__paper .paper__img.__g {
   background-image: url(../../../assets/icons/menu_icons/glossary.svg);
 }
 
-.home .home__grid__paper .img.__n {
+.home .home__grid__paper .paper__img.__n {
   background-image: url(../../../assets/icons/menu_icons/note.svg);
 }
 
-.home .home__grid__paper .img.__c {
+.home .home__grid__paper .paper__img.__c {
   background-image: url(../../../assets/icons/menu_icons/phone.svg);
 }
 
-.home .home__grid__paper .img.__f {
+.home .home__grid__paper .paper__img.__f {
   background-image: url(../../../assets/icons/menu_icons/faq.svg);
 }
 
-.home .home__grid__paper .img.__s {
+.home .home__grid__paper .paper__img.__s {
   background-image: url(../../../assets/icons/menu_icons/settings.svg);
 }
 

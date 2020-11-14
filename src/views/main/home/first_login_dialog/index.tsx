@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Dialog, DialogContentText,DialogContent,DialogTitle,DialogActions, Button, Checkbox, FormControlLabel } from '@material-ui/core'
 import FirstLoginDialogProps from './props'
-//import './styles.css'
+import './styles.css'
 
 const FirstLoginDialog = ({open, dialog, dialogId, totalDialogs, handleNextDialog}: FirstLoginDialogProps) => {
     
@@ -10,13 +10,14 @@ const FirstLoginDialog = ({open, dialog, dialogId, totalDialogs, handleNextDialo
     const handleChecked = () => setChecked(!checked)
 
     return (
-      <Dialog open={open}>
-        <DialogTitle id="alert-dialog-slide-title">{`${dialog.title}`}</DialogTitle>
-          <DialogContent dividers>
-            <DialogContentText id="alert-dialog-slide-description">
+      <Dialog className='dialog' open={open}>
+        <DialogTitle>{`${dialog.title}`}</DialogTitle>
+          <DialogContent dividers className='dialog__content'>
+            <DialogContentText className='dialog__content__text'>
               {dialog.text}
             </DialogContentText>
             <FormControlLabel
+                  className='dialog__content__checkbox'
                   control={
                     <Checkbox
                     checked={checked}
@@ -29,7 +30,7 @@ const FirstLoginDialog = ({open, dialog, dialogId, totalDialogs, handleNextDialo
             <br />
           </DialogContent>
           <DialogActions>
-            <div style={{ marginLeft: "8px", marginRight: "auto"}}>
+            <div className='dialog__number-of-total'>
               {`${dialogId}/${totalDialogs}`}
             </div>
             <Button onClick={handleNextDialog} color="primary">

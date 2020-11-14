@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react'
-//import './styles.css'
+import React, {useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {
   Dialog,
@@ -25,8 +24,6 @@ const FaqOptions = ({open, handleChangeOpenDialog, checkboxAskAgain}: FaqOptions
   const [selectedFaq, setSelectedFaq] = useState(useCurrentFaq())
   
   const [checked, setChecked] = useState(false)
-
-  //useEffect(() => setSelectedFaq(currentFaq), [currentFaq])
 
   const handleSwitchUserFaq = async () => {
     if (selectedFaq !== undefined) {

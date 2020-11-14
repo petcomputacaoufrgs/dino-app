@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
-import { ListItem, Paper, Dialog, DialogContentText,DialogContent,DialogTitle,DialogActions, Button, Checkbox } from '@material-ui/core'
+import { ListItem, Paper, Button } from '@material-ui/core'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import HomeItemProps from './props'
 import './styles.css'
 import FirstLoginDialog from './first_login_dialog'
+import FaqOptions from '../faq/faq_options_dialog'
 
 const Home = () => {
 
@@ -44,7 +45,12 @@ const Home = () => {
         ))}
       </div>
       <Button onClick={handleFirstLogin}>Click Me!</Button>
-      {
+      <FaqOptions 
+        open={open === 0}
+        handleChangeOpenDialog={handleNextDialog}
+        checkboxAskAgain
+      />
+      {/* {
         [{
           title:"AAAAAAAAAAAAAAA?",
           text:"AAAAAAA Lorem ipsum dolor sit amet",
@@ -66,7 +72,7 @@ const Home = () => {
             key={index}
           />
           )
-      }
+      } */}
 
     </div>
   )

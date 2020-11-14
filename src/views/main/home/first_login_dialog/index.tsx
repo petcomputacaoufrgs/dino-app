@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { Dialog, DialogContentText,DialogContent,DialogTitle,DialogActions, Button, Checkbox, FormControlLabel } from '@material-ui/core'
+import { Dialog, DialogContentText,DialogContent,DialogTitle,DialogActions, Button } from '@material-ui/core'
 import FirstLoginDialogProps from './props'
 import './styles.css'
+import DontAskCheckbox from '../../../../components/dont_ask_checkbox'
 
 const FirstLoginDialog = ({open, dialog, dialogId, totalDialogs, handleNextDialog}: FirstLoginDialogProps) => {
     
     const [checked, setChecked] = useState(false)
-
-    const handleChecked = () => setChecked(!checked)
 
     return (
       <Dialog className='dialog' open={open}>
@@ -16,18 +15,9 @@ const FirstLoginDialog = ({open, dialog, dialogId, totalDialogs, handleNextDialo
             <DialogContentText className='dialog__content__text'>
               {dialog.text}
             </DialogContentText>
-            <FormControlLabel
-                  className='dialog__content__checkbox'
-                  control={
-                    <Checkbox
-                    checked={checked}
-                    onChange={handleChecked}
-                    inputProps={{ 'aria-label': 'primary checkbox' }}
-                    />}
-                    label="Não me pergunte novamente"
-                    labelPlacement="end"
-                    />
-            <br />
+            <DontAskCheckbox 
+              checked={checked} 
+              handleChecked={() => setChecked(!checked)}/>
           </DialogContent>
           <DialogActions>
             <div className='dialog__number-of-total'>

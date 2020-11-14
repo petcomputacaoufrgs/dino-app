@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
-import { ListItem, Paper, Dialog, DialogContentText,DialogContent,DialogTitle,DialogActions, Button } from '@material-ui/core'
+import { ListItem, Paper, Dialog, DialogContentText,DialogContent,DialogTitle,DialogActions, Button, Checkbox } from '@material-ui/core'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import HomeItemProps from './props'
 import './styles.css'
+import FirstLoginDialog from './first_login_dialog'
 
 const Home = () => {
 
@@ -44,25 +45,27 @@ const Home = () => {
       </div>
       <Button onClick={handleFirstLogin}>Click Me!</Button>
       {
-        [1,2,3].map((e,index,array) => { return (
-            <Dialog open={open === index}>
-              <DialogTitle id="alert-dialog-slide-title">{`${index + 1}/${array.length}: Use Google's location service?`}</DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-slide-description">
-                    Let Google help apps determine location. This means sending anonymous location data to
-                    Google, even when no apps are running.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleNextDialog} color="primary">
-                    Disagree
-                  </Button>
-                  <Button onClick={handleNextDialog} color="primary">
-                    Agree
-                  </Button>
-                </DialogActions>
-            </Dialog>
-        )})
+        [{
+          title:"AAAAAAAAAAAAAAA?",
+          text:"AAAAAAA Lorem ipsum dolor sit amet",
+        },
+        {
+          title:"BBBBBBBBBBBB?",
+          text: "BBBBBBBB Lorem ipsum dolor sit amet",
+        },
+        {
+          title:"CCCCCCCCCCC?",
+          text:"CCCCCCCC Lorem ipsum dolor sit amet",
+        }].map((dialog, index, array) => 
+          <FirstLoginDialog
+            open={open === index}
+            dialog={dialog}
+            dialogId={index + 1}
+            totalDialogs={array.length}
+            handleNextDialog={handleNextDialog}
+            key={index}
+          />
+          )
       }
 
     </div>

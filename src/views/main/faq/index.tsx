@@ -5,7 +5,6 @@ import './styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FaqItemModel from '../../../types/faq/FaqItemModel'
 import FaqItems from './faq_items'
-import TransitionSlide from '../../../components/slide_transition'
 import {
   useCurrentLanguage,
   useCurrentFaq,

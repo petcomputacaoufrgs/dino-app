@@ -34,7 +34,7 @@ import AddAlarmModal from './add_alarm_modal'
 import EventAlarm from '../../../../../types/calendar/EventAlarm'
 import AlarmItem from './alarm_item'
 import './styles.css'
-import ColorConstants from '../../../../../constants/app/ColorConstants'
+//import ColorConstants from '../../../../../constants/app/ColorConstants'
 
 const Form: React.FC = () => {
   const language = useCurrentLanguage()

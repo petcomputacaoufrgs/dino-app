@@ -2,6 +2,11 @@
 .app .MuiChip-label,
 .app .MuiBottomNavigationAction-label,
 .app .MuiButton-label,
+.app .MuiInputBase-root, 
+.app .MuiFormLabel-root {
+  font-family: inherit;
+}
+
 .MuiFormLabel-root {
   font-family: var(--font-base);
   color: var(--base-font-color);

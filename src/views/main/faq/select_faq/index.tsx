@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import SelectFaqProps from './props'
+import './styles.css'
 import strUtils from '../../../../utils/StringUtils'
 
 const SelectFaq = ({
@@ -65,7 +66,7 @@ const SelectFaq = ({
   return (
     <>
       <Autocomplete
-        id="faq-select-label"
+        className="select-faq__autocomplete"
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}

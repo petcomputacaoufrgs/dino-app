@@ -1,0 +1,9 @@
+.form-group {
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+.form-control__checkbox .MuiTypography-body1{
+  font-size: 0.9rem;
+  font-family: inherit;
+  letter-spacing: 0em;
+}

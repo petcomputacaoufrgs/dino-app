@@ -1,23 +1,28 @@
 import React from 'react'
-import { Checkbox, FormControlLabel } from '@material-ui/core'
-import DontAskCheckboxProps from './props'
+import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core'
+import DontAskCheckboxFormProps from './props'
+import './styles.css'
 
-const DontAskCheckbox = ({checked, handleChecked, label, labelPlacement}: DontAskCheckboxProps) => {
+const DontAskCheckboxForm = ({children, labelPlacement, dontAskOption, dontAskChecked, handleDontAskChecked}: DontAskCheckboxFormProps) => {
+
   return (
-  <>
-    <FormControlLabel
-      className='dialog__content__checkbox'
-      control={
-        <Checkbox
-        checked={checked}
-        onChange={handleChecked}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-        />}
-      label={label || "Não me pergunte novamente"}
-      labelPlacement={labelPlacement || "end"}
-    />
-    <br />
-  </>)
+    <FormGroup className='form-group'>
+        {children}
+        {dontAskOption ? 
+          <FormControlLabel
+            className='form-control__checkbox'
+            control={
+              <Checkbox
+              checked={dontAskChecked}
+              onChange={handleDontAskChecked}
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+              />}
+            label={"Não me pergunte novamente"}
+            labelPlacement={labelPlacement || "end"}
+          /> : <></>
+        }
+    </FormGroup>
+  )
 }
 
-export default DontAskCheckbox
+export default DontAskCheckboxForm

@@ -13,15 +13,19 @@ const Load: React.FC = () => {
           <h1 className="load__dino_title">DinoApp</h1>
         </div>
         <div className="load__team">
-          <img src={PetLogo} className="load__team__pet" alt="PET Computação" />
+          <img 
+            src={PetLogo} 
+            className="load__team__pet" 
+            alt="PET Computação" 
+          />
           <img
             src={HCLogo}
             className="load__team__hc"
             alt="Hospital de Clínicas"
           />
           <img
-            className="load__team__ufrgs"
             src={UFRGSLogo}
+            className="load__team__ufrgs"
             alt="UFRGS - Universidade Federal do Rio Grande do Sul"
           />
         </div>

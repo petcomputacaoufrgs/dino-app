@@ -19,6 +19,7 @@ import ContactsContextProvider from '../../context_provider/contact'
 import Faq from './faq'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import Calendar from './calendar'
+import AboutUs from './about'
 import NoteColumnContextProvider from '../../context_provider/note_column'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
@@ -99,6 +100,12 @@ const Main = (): JSX.Element => {
             <FaqContextProvider>
               <Faq />
             </FaqContextProvider>
+          )}
+        />
+        <PrivateRoute
+          path={PathConstants.ABOUT_US}
+          component={() => (
+            <AboutUs />
           )}
         />
         <PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />

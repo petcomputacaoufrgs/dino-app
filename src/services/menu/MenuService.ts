@@ -5,6 +5,7 @@ import { ReactComponent as HomeSVG } from '../../assets/icons/menu_icons/home.sv
 import { ReactComponent as NotesSVG } from '../../assets/icons/menu_icons/note.svg'
 import { ReactComponent as FaqSVG } from '../../assets/icons/menu_icons/faq.svg'
 import { ReactComponent as SettingsSVG } from '../../assets/icons/menu_icons/settings.svg'
+import { ReactComponent as AboutUsSVG } from '../../assets/icons/menu_icons/about_us.svg'
 import { ReactComponent as LogoutSVG } from '../../assets/icons/menu_icons/logout.svg'
 import LanguageBase from "../../constants/languages/LanguageBase"
 import HistoryService from "../history/HistoryService"
@@ -42,6 +43,11 @@ class MenuService {
                 image: SettingsSVG,
                 name: language.MENU_SETTINGS,
                 onClick: () => HistoryService.push(PathConstants.SETTINGS),
+            },
+            {
+                image: AboutUsSVG,
+                name: language.MENU_ABOUT_US,
+                onClick: () => HistoryService.push(PathConstants.ABOUT_US),
             },
         ]
     )

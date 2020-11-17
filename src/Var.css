@@ -16,6 +16,7 @@
   --button-font-color: #694E73;
   --button-selected-font-color: #b054d1;
   --column-font-color: #274035;
+  --other-details: #f5f5f5;
   --avatar-color-1: #f44336;
   --avatar-color-2: #e91e63;
   --avatar-color-3: #9c27b0;
@@ -43,4 +44,5 @@
   --button-selected-font-color: #b054d1;
   --column-font-color: #f5f5f5;
   --constrast-color: #f5f5f5;
+  --other-details: #474747;
 }

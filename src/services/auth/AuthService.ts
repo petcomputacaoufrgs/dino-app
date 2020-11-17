@@ -87,28 +87,22 @@ class AuthService {
     }
   }
 
-  googleLogout = () => {
-    const authToken = this.getAuthToken()
-
-    this.serverLogout(authToken)
+  googleLogout = async () => {
+    await this.serverLogout()
 
     EventService.whenLogout()
   }
 
-  serverLogout = async (authToken: string): Promise<boolean> => {
+  serverLogout = async () => {
     try {
       const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
 
       if (request.canGo) {
         await request.authenticate().go()
-
-        return true
       }
     } catch (e) {
       LogAppErrorService.saveError(e)
     }
-
-    return false
   }
 
   isAuthenticated = (): boolean => Boolean(AuthLocalStorage.getAuthToken())

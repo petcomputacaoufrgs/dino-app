@@ -9,8 +9,6 @@ import Section from './section'
 import DinoLogo from '../../../assets/logos/dinosaur_1.svg'
 
 const AboutUs = (): JSX.Element => {
-
-  //const language = useCurrentLanguage()
   const sections = [
     { 
       title: "PET Computação", 

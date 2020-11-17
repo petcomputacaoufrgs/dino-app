@@ -14,6 +14,7 @@
   --button-selected-font-color: #b054d1;
   --selection-font-color: #000000;
   --column-font-color: #274035;
+  --other-details: #f5f5f5;
   --font-base: 'Poppins', sans-serif;
   --font-secondary: 'Poppins', sans-serif;
   --avatar-color-1: #f44336;
@@ -38,4 +39,5 @@
   --button-selected-font-color: #b054d1;
   --selection-font-color: #000000;
   --column-font-color: #9e7b00;
+  --other-details: #474747;
 }

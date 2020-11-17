@@ -27,5 +27,14 @@
 }
 
 .MuiPaper-root.MuiMenu-paper {
-  background-color: #474747;
+  background-color:var(--other-details);
+}
+
+.MuiPaper-root.MuiDialog-paper{
+  background-color:var(--other-details);
+  color: var(--base-font-color:);
+}
+
+.MuiTypography-root.MuiDialogContentText-root {
+  color: var(--base-font-color:);
 }

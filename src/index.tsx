@@ -5,10 +5,12 @@ import ErrorHandlerService from './services/error_handler/ErrorHandlerService'
 import SyncContextProvider from './context_provider/sync'
 import AlertContextProvider from './context_provider/alert'
 import AppSettingsContextProvider from './context_provider/app_settings'
+import EventService from './services/events/EventService'
 import App from './App'
 import './Var.css'
 
 ErrorHandlerService.register()
+EventService.whenStart()
 
 ReactDOM.render(
   <AlertContextProvider>

@@ -48,7 +48,11 @@ const Login = (): JSX.Element => {
         src={Dinosaur2}
         alt={language.CURIOUS_DINO_ALT}
       />
-      <img className="login__logo" src={Dinosaur1} alt={language.APP_NAME} />
+      <img 
+        className="login__logo" 
+        src={Dinosaur1} 
+        alt={language.APP_NAME} 
+      />
       <h1 className="login__message">{language.WELCOME_MESSAGE}</h1>
       <div className="login__button">{renderLoginButton()}</div>
     </div>

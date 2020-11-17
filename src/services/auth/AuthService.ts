@@ -98,7 +98,7 @@ class AuthService {
       const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
 
       if (request.canGo) {
-        await request.authenticate().go()
+        request.authenticate().go()
       }
     } catch (e) {
       LogAppErrorService.saveError(e)

@@ -27,6 +27,7 @@ import ContactsContextProvider from '../../context_provider/contact'
 import Faq from './faq'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import Calendar from './calendar'
+import AboutUs from './about'
 import NoteColumnContextProvider from '../../context_provider/note_column'
 import AuthService from '../../services/auth/AuthService'
 
@@ -78,6 +79,11 @@ const Main = (): JSX.Element => {
         image: SettingsSVG,
         name: language.MENU_SETTINGS,
         onClick: () => HistoryService.push(PathConstants.SETTINGS),
+      },
+      {
+        image: NotesSVG,
+        name: language.MENU_ABOUT_US,
+        onClick: () => HistoryService.push(PathConstants.ABOUT_US),
       },
     ],
     [
@@ -146,6 +152,12 @@ const Main = (): JSX.Element => {
             <FaqContextProvider>
               <Faq />
             </FaqContextProvider>
+          )}
+        />
+        <PrivateRoute
+          path={PathConstants.ABOUT_US}
+          component={() => (
+            <AboutUs />
           )}
         />
         <PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />

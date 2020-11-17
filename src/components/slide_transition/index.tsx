@@ -4,7 +4,7 @@ import { TransitionProps } from '@material-ui/core/transitions'
 
 const TransitionSlide = forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
-  ref: React.Ref<unknown>
+  ref: React.Ref<unknown>,
 ) {
   return (
     <Slide direction="up" ref={ref} mountOnEnter unmountOnExit {...props} />

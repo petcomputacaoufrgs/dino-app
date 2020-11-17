@@ -5,7 +5,6 @@ import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
 import ColorConstants from '../../../../constants/app/ColorConstants'
-
 import Button from '@material-ui/core/Button'
 import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'

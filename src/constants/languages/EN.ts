@@ -74,6 +74,8 @@ export default class EN implements LanguageBase {
 
   MENU_CALENDAR = 'Calendar'
 
+  MENU_ABOUT_US = 'About Us'
+
   SETTINGS_TITLE = 'Settings'
 
   SETTINGS_LANGUAGE = 'Choose Language'

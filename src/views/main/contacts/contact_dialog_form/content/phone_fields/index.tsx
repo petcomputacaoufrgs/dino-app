@@ -60,8 +60,8 @@ const PhoneFields = ({
         value={type}
         onChange={onChangeType}
       >
-        {types.map((option) => (
-          <MenuItem key={option.id} value={option.id}>
+        {types.map((option, index) => (
+          <MenuItem key={index} value={option.id}>
             {option.label}
           </MenuItem>
         ))}

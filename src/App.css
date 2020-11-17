@@ -25,3 +25,7 @@
   overflow: hidden;
   color: var(--base-font-color);
 }
+
+.MuiPaper-root.MuiMenu-paper {
+  background-color: #474747;
+}

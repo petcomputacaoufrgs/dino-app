@@ -34,6 +34,7 @@ import Weekday from '../../../../../types/weekday_picker/Weekday'
 import AddAlarmModal from './add_alarm_modal'
 import EventAlarm from '../../../../../types/calendar/EventAlarm'
 import AlarmItem from './alarm_item'
+import './styles.css'
 
 const Form: React.FC = () => {
   const language = useCurrentLanguage()
@@ -48,7 +49,6 @@ const Form: React.FC = () => {
   const [weekdays, setWeekdays] = useState(new Week(language))
   const [addAlarmModalOpen, setAddAlarmModalOpen] = useState(false)
   const [alarms, setAlarms] = useState<EventAlarm[]>([])
-  //const [color, setColor] = useState<string || undefined>("blue")
 
   const alarmDontExists = (time: number, type: number): boolean => {
     if (time === 0) {

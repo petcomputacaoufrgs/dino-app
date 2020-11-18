@@ -394,4 +394,6 @@ export default class PT implements LanguageBase {
   DALTONIAN_THEME_NAME = 'Alto contraste'
 
   COLOR_THEME_SELECTION_TITLE = 'Escolher Tema de Cores'
+
+  CONTACT_DIALOG_FORM_SUBTITLE = 'Contato'
 }

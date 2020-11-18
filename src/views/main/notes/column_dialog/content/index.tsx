@@ -2,7 +2,6 @@ import React from 'react'
 import NoteColumnDialogContentProps from './props'
 import { TextField } from '@material-ui/core'
 import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
-import NoteConstants from '../../../../../constants/note/NoteConstants'
 import NoteColumnConstants from '../../../../../constants/note/NoteColumnConstants'
 
 const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({

@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core'
 import ContactsService from '../../../../services/contact/ContactService'
 import OptionsComponent from '../../../../components/icon_buttons/options_component'
+import './styles.css'
 
 const ContactItemList = ({
   item,

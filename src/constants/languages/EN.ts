@@ -391,4 +391,6 @@ export default class EN implements LanguageBase {
   DALTONIAN_THEME_NAME = 'High contrast'
 
   COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
+
+  CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
 }

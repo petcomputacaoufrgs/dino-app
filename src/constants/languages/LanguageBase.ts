@@ -188,4 +188,5 @@ export default interface LanguageBase {
   DARK_THEME_NAME: string
   DALTONIAN_THEME_NAME: string
   COLOR_THEME_SELECTION_TITLE: string
+  CONTACT_DIALOG_FORM_SUBTITLE: string
 }

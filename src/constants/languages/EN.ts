@@ -344,7 +344,7 @@ export default class EN implements LanguageBase {
 
   FAQ_CONNECTION_ERROR = 'Internet connection required'
 
-  MAX = 'Max.'
+  MAX = 'max. '
 
   ADD_COLUMN_TEXT = '+ Add column'
 

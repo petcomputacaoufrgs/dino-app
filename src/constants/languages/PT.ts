@@ -347,7 +347,7 @@ export default class PT implements LanguageBase {
 
   FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
 
-  MAX = 'Máx.'
+  MAX = 'máx. '
 
   ADD_COLUMN_TEXT = '+ Adicionar coluna'
 

@@ -157,7 +157,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
       </div>
       <DialogContent className="note__info_dialog__content">
         <TextField
-          label={language.ANSWER_NOTE_DIALOG_TITLE}
+          label={`${language.ANSWER_NOTE_DIALOG_TITLE} (${language.MAX} ${NoteConstants.ANSWER_MAX_LENGTH})`}
           type="text"
           multiline
           variant="standard"

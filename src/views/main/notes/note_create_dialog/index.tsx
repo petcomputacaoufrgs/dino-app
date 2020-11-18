@@ -79,7 +79,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
         <TextField
           error={questionWithError}
           helperText={questionErrorHelper}
-          label={language.QUESTION_NOTE_DIALOG_TITLE}
+          label={language.QUESTION_NOTE_DIALOG_TITLE + ' (' + language.MAX + NoteConstants.ANSWER_MAX_LENGTH + ')'}
           type="text"
           multiline
           variant="outlined"

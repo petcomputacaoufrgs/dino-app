@@ -396,4 +396,6 @@ export default class PT implements LanguageBase {
   COLOR_THEME_SELECTION_TITLE = 'Escolher Tema de Cores'
 
   CONTACT_DIALOG_FORM_SUBTITLE = 'Contato'
+
+  CONTACT_NUMBER_ALREADY_EXISTS = 'Este número já está registrado no contato'
 }

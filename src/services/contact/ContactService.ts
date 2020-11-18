@@ -96,16 +96,16 @@ class ContactsService {
   /// #MAIN FUNCTIONS
 
   addContact = async (item: ContactModel) => {
+    const items = this.getItems()
+    items.push(item)
+    this.setItems(items)
+    ContactContextUpdater.update()
+
     const response = await Server.saveContact(item)
 
     if (response !== undefined) {
       item.id = response.id
     }
-    const items = this.getItems()
-    items.push(item)
-    this.setItems(items)
-
-    ContactContextUpdater.update()
   }
 
   deleteContact = (deletedFrontID: number) => {
@@ -244,7 +244,8 @@ class ContactsService {
     newPhones: Array<PhoneModel>
   ): ContactModel | undefined => {
     const items = this.getItems()
-
+    console.log(items)
+    console.log(newPhones)
     return items.find((item) => {
       return item.phones.some((phone) =>
         newPhones.some((newPhone) => newPhone.number === phone.number)

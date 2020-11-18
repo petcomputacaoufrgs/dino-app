@@ -393,4 +393,6 @@ export default class EN implements LanguageBase {
   COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
 
   CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
+
+  CONTACT_NUMBER_ALREADY_EXISTS = 'This number is already created in the contact'
 }

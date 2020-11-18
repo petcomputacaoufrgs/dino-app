@@ -16,8 +16,12 @@ class EventService {
 
   whenStart = async () => {
     AuthService.cleanLoginGarbage()
-    WebSocketConnector.connect()
-    Synchronizer.sync()
+    const isDinoConnected = await ConnectionService.isDinoConnected()
+
+    if (isDinoConnected) {
+      WebSocketConnector.connect()
+      Synchronizer.sync()
+    }
   }
 
   whenLogin = () => {

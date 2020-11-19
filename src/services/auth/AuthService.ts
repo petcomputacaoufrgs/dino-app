@@ -1,10 +1,9 @@
 import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import { GoogleLoginResponseOffline } from 'react-google-login'
 import AuthLocalStorage from '../../local_storage/auth/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
-import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
+import GoogleAuthScopes from '../../constants/google/GoogleAuthScopes'
 import LoginErrorConstants from '../../constants/login/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
@@ -12,6 +11,7 @@ import DinoAgentService from '../../agent/DinoAgentService'
 import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
+import GoogleAPIService from '../google_api/GoogleAPIService'
 
 class AuthService {
   cleanLoginGarbage = () => {
@@ -19,54 +19,13 @@ class AuthService {
   }
 
   getDefaultScopes = (): string => {
-    return (
-      GoogleAuthConstants.SCOPE_CALENDAR +
-      ' ' +
-      GoogleAuthConstants.SCOPE_PROFILE
-    )
+    return GoogleAuthScopes.SCOPE_PROFILE
   }
 
-  googleLogin = async (
-    loginResponse: GoogleLoginResponseOffline
-  ): Promise<number> => {
-    if (loginResponse.code) {
-      const authRequestModel = new GoogleAuthRequestModel(loginResponse.code)
-
-      try {
-        const request = await DinoAgentService.post(
-          DinoAPIURLConstants.AUTH_GOOGLE
-        )
-
-        if (request.canGo) {
-          const response = await request.setBody(authRequestModel).go()
-
-          if (response.status === HttpStatus.OK) {
-            AuthLocalStorage.cleanLoginGarbage()
-            this.setRefreshRequiredToFalse()
-
-            this.saveGoogleAuthDataFromRequestBody(
-              response.body as GoogleAuthResponseModel
-            )
-
-            EventService.whenLogin()
-
-            return LoginErrorConstants.SUCCESS
-          }
-
-          if (response?.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
-            this.setRefreshRequiredToTrue()
-            return LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY
-          }
-        }
-
-        return LoginErrorConstants.DISCONNECTED
-      } catch (e) {
-        LogAppErrorService.saveError(e)
-        return LoginErrorConstants.UNKNOW_API_ERROR
-      }
-    }
-
-    return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
+  requestGoogleLogin = async (callback: (result: number) => void) => {
+    GoogleAPIService.requestLogin((code: string) =>
+      this.googleLoginCallback(code, callback)
+    )
   }
 
   requestWebSocketAuthToken = async (): Promise<
@@ -190,6 +149,50 @@ class AuthService {
   stopRefreshingGoogleAccessToken = (success: boolean) => {
     AuthLocalStorage.setSuccessRefreshingGoogleAccessToken(success)
     AuthLocalStorage.setRefreshingGoogleAccessToken(false)
+  }
+
+  private googleLoginCallback = async (
+    code: string,
+    callback: (result: number) => void
+  ) => {
+    if (code) {
+      const authRequestModel = new GoogleAuthRequestModel(code)
+
+      try {
+        const request = await DinoAgentService.post(
+          DinoAPIURLConstants.AUTH_GOOGLE
+        )
+
+        if (request.canGo) {
+          const response = await request.setBody(authRequestModel).go()
+
+          if (response.status === HttpStatus.OK) {
+            AuthLocalStorage.cleanLoginGarbage()
+            this.setRefreshRequiredToFalse()
+
+            this.saveGoogleAuthDataFromRequestBody(
+              response.body as GoogleAuthResponseModel
+            )
+
+            EventService.whenLogin()
+
+            callback(LoginErrorConstants.SUCCESS)
+          }
+
+          if (response?.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+            this.setRefreshRequiredToTrue()
+            callback(LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY) 
+          }
+        }
+
+        callback(LoginErrorConstants.DISCONNECTED)
+      } catch (e) {
+        LogAppErrorService.saveError(e)
+        callback(LoginErrorConstants.UNKNOW_API_ERROR)
+      }
+    }
+
+    return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
   }
 
   private saveGoogleAuthDataFromRequestBody(

@@ -1,12 +1,16 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useGlossary } from '../../../../context_provider/glossary'
 import { useParams } from 'react-router-dom'
 import { Divider, Paper } from '@material-ui/core'
 import './styles.css'
-import { useGlossary } from '../../../../context_provider/glossary'
 
-const GlossaryItem = (): JSX.Element => {
-  const { id } = useParams()
+interface RouterParams {
+  id: string
+}
+
+const GlossaryItem: React.FC = () => {
+  const { id } = useParams<RouterParams>()
 
   const language = useCurrentLanguage()
 

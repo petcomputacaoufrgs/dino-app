@@ -40,6 +40,7 @@ const Button = (props: ButtonProps) => {
         variant="contained"
         disabled={props.disabled}
         size={props.size}
+        id={props.id ? props.id : undefined}
       >
         {props.children}
       </MaterialButton>

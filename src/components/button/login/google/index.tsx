@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../context_provider/app_settings'
-import { useAlert } from '../../context_provider/alert'
-import Button from '../button'
-import Loader from '../loader'
-import GoogleLogo from '../../assets/logos/google.png'
+import { useLanguage } from '../../../../context_provider/app_settings'
+import { useAlert } from '../../../../context_provider/alert'
+import Button from '../..'
+import Loader from '../../../loader'
+import GoogleLogo from '../../../../assets/logos/google.png'
 import LoginButtonProps from './props'
-import LoginErrorConstants from '../../constants/login/LoginErrorConstants'
-import AuthService from '../../services/auth/AuthService'
+import LoginStatusConstants from '../../../../constants/login/LoginErrorConstants'
+import AuthService from '../../../../services/auth/AuthService'
 import { Typography } from '@material-ui/core'
-import ConnectionService from '../../services/connection/ConnectionService'
+import ConnectionService from '../../../../services/connection/ConnectionService'
 import './styles.css'
+import { useGoogleAuth2 } from '../../../../context_provider/google_auth2'
 
 const GoogleLoginButton = (props: LoginButtonProps) => {
   const languageContext = useLanguage()
   const language = languageContext.current
   const alert = useAlert()
+  const googleAuth2 = useGoogleAuth2()
+
   const [loading, setLoading] = useState(false)
 
   const [isConnected, setIsConnected] = useState(
@@ -35,22 +38,23 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     return cleanBeforeUpdate
   })
 
-  const handleLoginButtonClick = () => {
+  const handleLoginButtonClick = async () => {
     setLoading(true)
-    AuthService.requestGoogleLogin(googleLoginListener)
-  }
+    console.log(googleAuth2)
+    const status = await AuthService.requestGoogleLogin(googleAuth2)
 
-  const googleLoginListener = async (result: number) => {
-    if (result === LoginErrorConstants.SUCCESS) {
+    if (status === LoginStatusConstants.SUCCESS) {
       return
     }
 
-    if (result === LoginErrorConstants.UNKNOW_API_ERROR) {
+    if (status === LoginStatusConstants.UNKNOW_API_ERROR) {
       props.onDinoAPIFail && props.onDinoAPIFail()
-    } else if (result === LoginErrorConstants.EXTERNAL_SERVICE_ERROR) {
+    } else if (status === LoginStatusConstants.EXTERNAL_SERVICE_ERROR) {
       props.onGoogleFail && props.onGoogleFail()
-    } else if (result === LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY) {
+    } else if (status === LoginStatusConstants.REFRESH_TOKEN_REFRESH_NECESSARY) {
       props.onRefreshTokenLostError && props.onRefreshTokenLostError()
+    } else if (status === LoginStatusConstants.DISCONNECTED) {
+      showOfflineMessage()
     }
 
     setLoading(false)
@@ -69,7 +73,7 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
           imageAlt={props.buttonText}
           className="google_login_button__button"
           onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
-          disabled={!isConnected}
+          disabled={!isConnected || googleAuth2 === undefined}
         >
           <Typography component="p">{props.buttonText}</Typography>
         </Button>

@@ -4,14 +4,15 @@ import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import AuthLocalStorage from '../../local_storage/auth/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import GoogleAuthScopes from '../../constants/google/GoogleAuthScopes'
-import LoginErrorConstants from '../../constants/login/LoginErrorConstants'
+import LoginStatusConstants from '../../constants/login/LoginErrorConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../../agent/DinoAgentService'
 import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
-import GoogleAPIService from '../google_api/GoogleAPIService'
+import GoogleOAuth2Service from './google/GoogleOAuth2Service'
+import GoogleAuth2ContextType from '../../types/context_provider/GoogleAuth2ContextType'
 
 class AuthService {
   cleanLoginGarbage = () => {
@@ -22,10 +23,9 @@ class AuthService {
     return GoogleAuthScopes.SCOPE_PROFILE
   }
 
-  requestGoogleLogin = async (callback: (result: number) => void) => {
-    GoogleAPIService.requestLogin((code: string) =>
-      this.googleLoginCallback(code, callback)
-    )
+  requestGoogleLogin = async (googleAuth2: GoogleAuth2ContextType): Promise<number> => {
+    const authCode = await GoogleOAuth2Service.requestLogin(googleAuth2)
+    return this.googleLoginOnDinoAPI(authCode)
   }
 
   requestWebSocketAuthToken = async (): Promise<
@@ -151,10 +151,9 @@ class AuthService {
     AuthLocalStorage.setRefreshingGoogleAccessToken(false)
   }
 
-  private googleLoginCallback = async (
-    code: string,
-    callback: (result: number) => void
-  ) => {
+  private googleLoginOnDinoAPI = async (
+    code: string
+  ): Promise<number> => {
     if (code) {
       const authRequestModel = new GoogleAuthRequestModel(code)
 
@@ -176,23 +175,23 @@ class AuthService {
 
             EventService.whenLogin()
 
-            callback(LoginErrorConstants.SUCCESS)
+            return LoginStatusConstants.SUCCESS
           }
 
           if (response?.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
             this.setRefreshRequiredToTrue()
-            callback(LoginErrorConstants.REFRESH_TOKEN_REFRESH_NECESSARY) 
+            return LoginStatusConstants.REFRESH_TOKEN_REFRESH_NECESSARY
           }
         }
 
-        callback(LoginErrorConstants.DISCONNECTED)
+        return LoginStatusConstants.DISCONNECTED
       } catch (e) {
         LogAppErrorService.saveError(e)
-        callback(LoginErrorConstants.UNKNOW_API_ERROR)
+        return LoginStatusConstants.UNKNOW_API_ERROR
       }
     }
 
-    return LoginErrorConstants.EXTERNAL_SERVICE_ERROR
+    return LoginStatusConstants.EXTERNAL_SERVICE_ERROR
   }
 
   private saveGoogleAuthDataFromRequestBody(

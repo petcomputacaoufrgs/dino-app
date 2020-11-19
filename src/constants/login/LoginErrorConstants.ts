@@ -1,7 +1,7 @@
 /**
  * @description Tipos de erros retornados no serviço de login
  */
-class LoginErrorConstants {
+class LoginStatusConstants {
   SUCCESS = -1
 
   EXTERNAL_SERVICE_ERROR = 0
@@ -13,4 +13,4 @@ class LoginErrorConstants {
   DISCONNECTED = 3
 }
 
-export default new LoginErrorConstants()
+export default new LoginStatusConstants()

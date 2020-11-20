@@ -24,8 +24,12 @@ class AuthService {
   }
 
   requestGoogleLogin = async (googleAuth2: GoogleAuth2ContextType): Promise<number> => {
-    const authCode = await GoogleOAuth2Service.requestLogin(googleAuth2)
-    return this.googleLoginOnDinoAPI(authCode)
+    try {
+      const authCode = await GoogleOAuth2Service.requestLogin(googleAuth2)
+      return this.googleLoginOnDinoAPI(authCode)
+    } catch (e) {
+      return LoginStatusConstants.LOGIN_CANCELED
+    }
   }
 
   requestWebSocketAuthToken = async (): Promise<

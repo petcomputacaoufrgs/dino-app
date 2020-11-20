@@ -11,6 +11,8 @@ class LoginStatusConstants {
   REFRESH_TOKEN_REFRESH_NECESSARY = 2
 
   DISCONNECTED = 3
+
+  LOGIN_CANCELED = 4
 }
 
 export default new LoginStatusConstants()

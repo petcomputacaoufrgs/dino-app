@@ -12,7 +12,14 @@ import ConnectionService from '../../../../services/connection/ConnectionService
 import './styles.css'
 import { useGoogleAuth2 } from '../../../../context_provider/google_auth2'
 
-const GoogleLoginButton = (props: LoginButtonProps) => {
+const GoogleLoginButton: React.FC<LoginButtonProps> = ({
+  onCancel,
+  onDinoAPIFail,
+  onGoogleFail,
+  onRefreshTokenLostError,
+  text,
+  size
+}) => {
   const languageContext = useLanguage()
   const language = languageContext.current
   const alert = useAlert()
@@ -40,19 +47,21 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
 
   const handleLoginButtonClick = async () => {
     setLoading(true)
-    console.log(googleAuth2)
+
     const status = await AuthService.requestGoogleLogin(googleAuth2)
 
     if (status === LoginStatusConstants.SUCCESS) {
       return
     }
 
-    if (status === LoginStatusConstants.UNKNOW_API_ERROR) {
-      props.onDinoAPIFail && props.onDinoAPIFail()
+    if (status === LoginStatusConstants.LOGIN_CANCELED) {
+      onCancel && onCancel()
+    } else if (status === LoginStatusConstants.UNKNOW_API_ERROR) {
+      onDinoAPIFail && onDinoAPIFail()
     } else if (status === LoginStatusConstants.EXTERNAL_SERVICE_ERROR) {
-      props.onGoogleFail && props.onGoogleFail()
+      onGoogleFail && onGoogleFail()
     } else if (status === LoginStatusConstants.REFRESH_TOKEN_REFRESH_NECESSARY) {
-      props.onRefreshTokenLostError && props.onRefreshTokenLostError()
+      onRefreshTokenLostError && onRefreshTokenLostError()
     } else if (status === LoginStatusConstants.DISCONNECTED) {
       showOfflineMessage()
     }
@@ -68,14 +77,14 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
     <Loader loading={loading}>
       <div className="google_login_button">
         <Button
-          size={props.size}
+          size={size}
           imageSrc={GoogleLogo}
-          imageAlt={props.buttonText}
+          imageAlt={text}
           className="google_login_button__button"
           onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
           disabled={!isConnected || googleAuth2 === undefined}
         >
-          <Typography component="p">{props.buttonText}</Typography>
+          <Typography component="p">{text}</Typography>
         </Button>
         {!isConnected && (
           <Typography className="google_login_button__error" component="p">

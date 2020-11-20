@@ -37,7 +37,7 @@ const Login = (): JSX.Element => {
       onDinoAPIFail={showAlertDinoFail}
       onGoogleFail={showAlertGoogleFail}
       onRefreshTokenLostError={showAlertRefreshError}
-      buttonText={language.LOGIN_BUTTON_TEXT}
+      text={language.LOGIN_BUTTON_TEXT}
     />
   )
 

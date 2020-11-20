@@ -10,7 +10,7 @@
 }
 
 .note__note_content__column__draggable {
-  border: 1px solid var(--constrast-color);
+  border: 1px solid var(--column-border);
   background-color: var(--board-background);
   border-radius: 8px;
   padding: 10px 15px 10px 15px;

@@ -24,3 +24,7 @@
 .tag_list.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {
   box-shadow: none;
 }
+
+.MuiChip-root.MuiAutocomplete-tag {
+  background-color: var(--tag-color);
+}

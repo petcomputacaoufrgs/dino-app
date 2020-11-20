@@ -39,13 +39,30 @@ body .MuiInput-underline:before {
 
 .MuiPaper-root.MuiMenu-paper {
   background-color:var(--other-details);
+  color: var(--base-font-color);
 }
 
 .MuiPaper-root.MuiDialog-paper{
   background-color:var(--other-details);
-  color: var(--base-font-color:);
+  color: var(--base-font-color);
 }
 
 .MuiTypography-root.MuiDialogContentText-root {
-  color: var(--base-font-color:);
+  color: var(--base-font-color);
+}
+
+.MuiAutocomplete-popper {
+  background-color: var(--other-details);
+}
+
+.MuiFormLabel-root.MuiFormLabel-root.MuiInputLabel-formControl.Mui-focused.Mui-focused {
+  color: var(--selection);
+}
+
+.PrivateNotchedOutline-root-1.MuiOutlinedInput-notchedOutline {
+  border-color: var(--other-details);
+}
+
+.button-add.MuiButtonBase-root.MuiFab-root {
+  background-color: var(--home-icons);
 }

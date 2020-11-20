@@ -15,8 +15,10 @@
   --menu-font-color: #ffffff;
   --button-font-color: #694E73;
   --button-selected-font-color: #b054d1;
+  --column-border: #274035;
   --column-font-color: #274035;
   --other-details: #f5f5f5;
+  --tag-color: #D1A300;
   --avatar-color-1: #f44336;
   --avatar-color-2: #e91e63;
   --avatar-color-3: #9c27b0;
@@ -25,13 +27,14 @@
   --dark-color: #121212;
   --light-color: #f5f5f5;
   --constrast-color: #121212;
+  --selection:#adc2b9;
 }
 
 [data-theme='dark'] {
   --background-main: #2f2e2c;
   --header-and-menu: #121212;
   --login-background: #2f2e2c;
-  --home-icons: #ddce99;
+  --home-icons: #FFEAA3;
   --header-and-menu-icons: #f5f5f5;
   --constrast-font-color: #f5f5f5;
   --constrast-icons: #f5f5f5;
@@ -41,8 +44,11 @@
   --base-font-color: #f5f5f5;
   --menu-font-color: #f5f5f5;
   --button-font-color: #442950;
+  --column-border: #2D1B35;
   --button-selected-font-color: #b054d1;
   --column-font-color: #f5f5f5;
   --constrast-color: #f5f5f5;
   --other-details: #474747;
+  --tag-color: #D1A300;
+  --selection: #a594ab;
 }

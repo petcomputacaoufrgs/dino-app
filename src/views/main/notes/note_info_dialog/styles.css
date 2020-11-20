@@ -6,9 +6,9 @@
 .note_info_dialog__title,
 .note_info_dialog__last_update {
   width: 100%;
-  background-color: var(--column-font-color);
+  background-color: var(--header-and-menu);
   font-weight: bold;
-  color: var(--dark-color);
+  color: var(--column-font-color);
 }
 
 .note_info_dialog__title.MuiDialogTitle-root {
@@ -44,7 +44,7 @@
 .note__info_dialog__title__question .MuiInputBase-root {
   font-size: 1.3rem;
   font-weight: bold;
-  color: var(--dark-color);
+  color: var(--column-font-color);
   height: 100%;
 }
 

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import MaterialButton from '@material-ui/core/Button'
 import ButtonProps from './props'
 import './styles.css'
 
 const Button = (props: ButtonProps) => {
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const getClassName = (): string => {
     let className = 'button'
 
@@ -31,15 +32,30 @@ const Button = (props: ButtonProps) => {
 
     return <></>
   }
+  
+  useEffect(() => {
+    if(props.inputRef && props.inputRef.current){
+      props.inputRef.current.addEventListener("keyup", (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault()
+          if(buttonRef.current){
+            buttonRef.current.click()
+            buttonRef.current.focus()
+          }
+        }})
+    }
+  })
 
   return (
-    <div className={getClassName()} onClick={props.onClick}>
+    <div className={getClassName()}>
       <MaterialButton
         startIcon={getImageComponent()}
         className="button__material_button"
         variant="contained"
         disabled={props.disabled}
         size={props.size}
+        onClick={props.onClick}
+        ref = {buttonRef}
       >
         {props.children}
       </MaterialButton>

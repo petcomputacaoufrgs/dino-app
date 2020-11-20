@@ -5,6 +5,7 @@ import { MouseEventHandler } from 'react'
  */
 export default interface ButtonProps {
   onClick: MouseEventHandler<any>
+  inputRef?: React.RefObject<HTMLInputElement>
   className?: string
   imageSrc?: string
   imageAlt?: string

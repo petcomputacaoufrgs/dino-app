@@ -4,7 +4,6 @@
   --header-and-menu: #694e73;
   --login-background: #694e73;
   --home-icons: #adc2b9;
-  --add-button-background-color: #adc2b9;
   --header-and-menu-icons: #f5f5f5;
   --constrast-icons: #2f2e2c;
   --constrast-font-color: #2f2e2c;
@@ -51,4 +50,27 @@
   --other-details: #474747;
   --tag-color: #D1A300;
   --selection: #a594ab;
+}
+
+[data-theme='high-contrast'] {
+  --background-main: #f5f5f5;
+  --header-and-menu: #694e73;
+  --login-background: #694e73;
+  --home-icons: #F1D881;
+  --header-and-menu-icons: #f5f5f5;
+  --constrast-font-color: #2f2e2c;
+  --constrast-icons:#2f2e2c;
+  --board-background: #F1D881;
+  --note-background: #FFF3CB;
+  --note-answer-background: #EFE1B1;
+  --base-font-color: #000000;
+  --menu-font-color: #f5f5f5;
+  --button-font-color: #442950;
+  --column-border: #D1A300;
+  --button-selected-font-color: #b054d1;
+  --column-font-color: #D1A300;
+  --constrast-color: #121212;
+  --other-details: #f5f5f5;
+  --tag-color: #442950;
+  --selection: #F1D881;
 }

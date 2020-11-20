@@ -62,7 +62,3 @@ body .MuiInput-underline:before {
 .PrivateNotchedOutline-root-1.MuiOutlinedInput-notchedOutline {
   border-color: var(--other-details);
 }
-
-.button-add.MuiButtonBase-root.MuiFab-root {
-  background-color: var(--home-icons);
-}

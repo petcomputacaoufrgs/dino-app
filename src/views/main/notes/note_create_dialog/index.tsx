@@ -119,10 +119,10 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
       <DialogTitle>{language.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DialogTitle>
       {renderDialogContent()}
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose}>
           {language.DIALOG_CANCEL_BUTTON_TEXT}
         </Button>
-        <Button onClick={handleSave} color="primary">
+        <Button onClick={handleSave}>
           {language.DIALOG_SAVE_BUTTON_TEXT}
         </Button>
       </DialogActions>

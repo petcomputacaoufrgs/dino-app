@@ -8,6 +8,7 @@ const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
   title,
   invalidTitle,
   invalidMessage,
+  inputRef
 }) => {
   const language = useCurrentLanguage()
 
@@ -27,6 +28,7 @@ const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
       margin="dense"
       label={language.COLUMN_TITLE_LABEL}
       type="name"
+      ref = {inputRef}
     />
   )
 }

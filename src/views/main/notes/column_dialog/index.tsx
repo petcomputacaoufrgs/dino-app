@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from 'react'
+import React, { forwardRef, useState, useEffect, useRef } from 'react'
 import './styles.css'
 import {
   Dialog,
@@ -16,9 +16,13 @@ import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 
+import ButtonVic from '../../../../components/button'
+
 const NoteColumnDialog = forwardRef(
   (props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
     const language = useCurrentLanguage()
+
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const [newTitle, setNewTitle] = useState<string>(
       props.column ? props.column.title : ''
@@ -105,15 +109,16 @@ const NoteColumnDialog = forwardRef(
             onTitleChange={handleTitleChange}
             invalidTitle={invalidTitle}
             invalidMessage={invalidMessage}
+            inputRef={inputRef}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onClose} color="primary">
+          <ButtonVic onClick={props.onClose}>
             {language.DIALOG_CANCEL_BUTTON_TEXT}
-          </Button>
-          <Button onClick={handleSave} color="primary">
+          </ButtonVic>
+          <ButtonVic onClick={handleSave} inputRef={inputRef}>
             {language.DIALOG_SAVE_BUTTON_TEXT}
-          </Button>
+          </ButtonVic>
         </DialogActions>
       </Dialog>
     )

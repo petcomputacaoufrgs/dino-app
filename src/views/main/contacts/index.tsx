@@ -4,11 +4,13 @@ import ContactModel from '../../../types/contact/ContactModel'
 import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
-import ButtonAdd from '../../../components/button_add'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContacts } from '../../../context_provider/contact'
 import ContactFormDialog from './contact_dialog_form'
 import Contants from '../../../constants/contact/ContactsConstants'
+import Button from '../../../components/button/circular_button'
+
+import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 
 const Contacts = (): JSX.Element => {
   const language = useCurrentLanguage()
@@ -37,7 +39,7 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults} />
-      <ButtonAdd onClick={() => setAdd(true)} />
+      <Button className= 'add_contact_button' icon={AddIconSVG} onClick={() => setAdd(true)}/>
       <ContactFormDialog
         action={Contants.ACTION_ADD}
         dialogOpen={add}

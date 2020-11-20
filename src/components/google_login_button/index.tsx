@@ -8,7 +8,6 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login'
-import GoogleLogo from '../../assets/logos/google.png'
 import LoginButtonProps from './props'
 import LoginErrorConstants from '../../constants/login/LoginErrorConstants'
 import GoogleAuthConstants from '../../constants/google/GoogleAuthConstants'
@@ -110,9 +109,6 @@ const GoogleLoginButton = (props: LoginButtonProps) => {
           prompt={getPrompt()}
           render={(renderProps) => (
             <Button
-              size={props.size}
-              imageSrc={GoogleLogo}
-              imageAlt={props.buttonText}
               className="google_login_button__button"
               onClick={isConnected ? renderProps.onClick : showOfflineMessage}
               disabled={!isConnected}

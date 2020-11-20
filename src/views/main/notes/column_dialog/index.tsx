@@ -4,8 +4,7 @@ import {
   Dialog,
   Divider,
   DialogContent,
-  DialogActions,
-  Button,
+  DialogActions
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import NoteColumnDialogProps from './props'
@@ -16,7 +15,7 @@ import { useCurrentLanguage } from '../../../../context_provider/app_settings'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 
-import ButtonVic from '../../../../components/button'
+import Button from '../../../../components/button/text_button'
 
 const NoteColumnDialog = forwardRef(
   (props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
@@ -113,12 +112,12 @@ const NoteColumnDialog = forwardRef(
           />
         </DialogContent>
         <DialogActions>
-          <ButtonVic onClick={props.onClose}>
+          <Button onClick={props.onClose}>
             {language.DIALOG_CANCEL_BUTTON_TEXT}
-          </ButtonVic>
-          <ButtonVic onClick={handleSave} inputRef={inputRef}>
+          </Button>
+          <Button onClick={handleSave} inputRef={inputRef}>
             {language.DIALOG_SAVE_BUTTON_TEXT}
-          </ButtonVic>
+          </Button>
         </DialogActions>
       </Dialog>
     )

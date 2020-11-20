@@ -1,12 +1,24 @@
 .button {
   cursor: pointer;
+  border-radius: 8px;
+  border: 0px;
+  padding: 6px 16px;
+  font: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  background-color: var(--header-and-menu);
+  color: var(--light-color);
+  text-decoration: none;
 }
 
-.button__material_button {
-  text-transform: none !important;
+.button:focus {
+  outline: none;
 }
 
-.button__start_icon {
-  width: 15px;
-  height: 15px;
+.button:active {
+  outline: none;
+}
+
+.button:hover {
+  outline: none;
 }

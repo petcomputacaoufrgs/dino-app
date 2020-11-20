@@ -53,5 +53,5 @@
 }
 
 .note_info_dialog__title .svg_button.MuiButtonBase-root.MuiButton-root svg {
-  fill: var(--header-and-menu-icons);
+  fill: var(--light-color);
 }

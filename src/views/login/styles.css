@@ -31,7 +31,7 @@
 .login__message {
   margin-top: 8px;
   font-size: x-large;
-  color: var(--header-and-menu-icons);
+  color: var(--light-color);
 }
 
 @media (orientation: landscape) {

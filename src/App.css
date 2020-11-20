@@ -11,7 +11,7 @@ body .MuiInputBase-root {
 body .MuiIconButton-root, 
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-  fill: var(--constrast-icons)
+  fill: var(--constrast-color);
 }
 
 body .MuiInput-underline:before {

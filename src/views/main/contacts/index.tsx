@@ -9,7 +9,6 @@ import { useContacts } from '../../../context_provider/contact'
 import ContactFormDialog from './contact_dialog_form'
 import Contants from '../../../constants/contact/ContactsConstants'
 import Button from '../../../components/button/circular_button'
-
 import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 
 const Contacts = (): JSX.Element => {

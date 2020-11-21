@@ -1,0 +1,8 @@
+.icon_button {
+    height: 56px;
+    width: 56px;
+}
+
+.svg_icon {
+    fill: var(--light-color);
+}

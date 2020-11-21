@@ -8,13 +8,13 @@ import AppSettingsContextProvider from './context_provider/app_settings'
 import EventService from './services/events/EventService'
 import App from './App'
 import './Var.css'
-import GoogleAuth2ContextProvider from './context_provider/google_auth2'
+import GoogleOAuth2ContextProvider from './context_provider/google_oauth2'
 
 ErrorHandlerService.register()
 EventService.whenStart()
 
 ReactDOM.render(
-  <GoogleAuth2ContextProvider>
+  <GoogleOAuth2ContextProvider>
     <AlertContextProvider>
       <SyncContextProvider>
         <AppSettingsContextProvider>
@@ -22,7 +22,7 @@ ReactDOM.render(
         </AppSettingsContextProvider>
       </SyncContextProvider>
     </AlertContextProvider>
-  </GoogleAuth2ContextProvider>,
+  </GoogleOAuth2ContextProvider>,
   document.getElementById('root')
 )
 

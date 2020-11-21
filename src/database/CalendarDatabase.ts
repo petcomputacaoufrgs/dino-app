@@ -45,7 +45,7 @@ class CalendarDatabase extends BaseDatabase<EventDoc> {
     try {
       await this.db.bulkDocs(docs)
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
   }
 
@@ -72,7 +72,7 @@ class CalendarDatabase extends BaseDatabase<EventDoc> {
 
       return findResponse.docs
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
       return []
     }
   }

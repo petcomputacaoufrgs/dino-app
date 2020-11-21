@@ -5,11 +5,13 @@ import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import HomeItemProps from './props'
 import './styles.css'
-import GoogleOAuth2Service from '../../../services/auth/google/GoogleOAuth2Service'
-import GoogleAuthScopes from '../../../constants/google/GoogleAuthScopes'
+import { useGoogleOAuth2 } from '../../../context_provider/google_oauth2'
+import AuthService from '../../../services/auth/AuthService'
+import GoogleScope from '../../../types/auth/google/GoogleScope'
 
 const Home = () => {
   const language = useCurrentLanguage()
+  const googleOAuth2 = useGoogleOAuth2()
 
   const items: HomeItemProps[] = [
     { class: '__n', label: language.MENU_NOTES, path: PathConstants.NOTES,},
@@ -20,8 +22,8 @@ const Home = () => {
     { class: '__a', label: language.MENU_ABOUT_US, path: PathConstants.ABOUT_US, },
   ]
 
-  const handleGrand = () => {
-    GoogleOAuth2Service.requestGrant([GoogleAuthScopes.SCOPE_CONTACT])
+  const handleGrand = async () => {
+    console.log(await AuthService.requestGoogleGrant(googleOAuth2, [GoogleScope.SCOPE_CONTACT]))
   }
 
   return (

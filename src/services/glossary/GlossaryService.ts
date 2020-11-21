@@ -40,7 +40,7 @@ class GlossaryService {
 
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -58,7 +58,7 @@ class GlossaryService {
 
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

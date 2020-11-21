@@ -87,7 +87,7 @@ class UserService {
         const version: number = response.body
         return version
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -103,7 +103,7 @@ class UserService {
         const user: UserModel = response.body
         return user
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -183,7 +183,7 @@ class UserService {
         const newVersion: number = response.body
         this.setVersion(newVersion)
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
   }
@@ -204,7 +204,7 @@ class UserService {
         const response = await request.authenticate().go()
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -220,7 +220,7 @@ class UserService {
       )
     } catch (e) {
       this.setSavePictureWithError(true)
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
   }
 

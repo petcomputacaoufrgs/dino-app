@@ -30,7 +30,7 @@ export default class BaseDatabase<T extends BaseDoc> {
 
       return doc
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
 
     return undefined
@@ -43,7 +43,7 @@ export default class BaseDatabase<T extends BaseDoc> {
 
         return updatedDoc
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -64,7 +64,7 @@ export default class BaseDatabase<T extends BaseDoc> {
         await this.db.put(doc)
       }
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
   }
 
@@ -97,7 +97,7 @@ export default class BaseDatabase<T extends BaseDoc> {
     try {
       await this.db.bulkDocs(newDocs)
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
   }
 
@@ -105,7 +105,7 @@ export default class BaseDatabase<T extends BaseDoc> {
     try {
       await this.db.destroy()
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
 
     this.resetDatabase()
@@ -118,7 +118,7 @@ export default class BaseDatabase<T extends BaseDoc> {
         await this.db.remove(savedDoc)
       }
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
   }
 
@@ -134,7 +134,7 @@ export default class BaseDatabase<T extends BaseDoc> {
 
       return docs
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
       return []
     }
   }

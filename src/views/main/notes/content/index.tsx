@@ -113,7 +113,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
     if (currentNoteColumn) {
       onSaveNewNote(question, tagList, currentNoteColumn)
     } else {
-      LogAppErrorService.saveError(new ViewAddNoteOpenedWIthoutColumnError())
+      LogAppErrorService.logError(new ViewAddNoteOpenedWIthoutColumnError())
     }
   }
 

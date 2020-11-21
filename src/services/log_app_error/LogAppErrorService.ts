@@ -16,9 +16,9 @@ class LogAppErrorService {
     return LogAppErrorDatabase.getAll()
   }
 
-  saveError = (error: Error) => {
+  logError = (error: Error) => {
     if (error) {
-      this.save({
+      this.logModel({
         date: new Date().getTime(),
         error: error.stack,
         title: error.message,
@@ -26,7 +26,7 @@ class LogAppErrorService {
     }
   }
 
-  save = async (model: LogAppErrorModel) => {
+  logModel = async (model: LogAppErrorModel) => {
     if (model.date && model.error) {
       const request = await DinoAgentService.post(
         DinoAPIURLConstants.SAVE_LOG_APP_ERROR
@@ -44,7 +44,7 @@ class LogAppErrorService {
         this.setShouldSync(true)
       }
     } else {
-      this.saveError(new LogAppModelError(model))
+      this.logError(new LogAppModelError(model))
     }
   }
 

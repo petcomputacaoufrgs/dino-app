@@ -71,7 +71,7 @@ class GoogleAgentService extends BaseAgent {
         AuthService.setGoogleExpiresDate(googleAuth.googleExpiresDate)
         AuthService.stopRefreshingGoogleAccessToken(true)
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

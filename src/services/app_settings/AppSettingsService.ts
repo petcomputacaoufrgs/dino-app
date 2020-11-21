@@ -61,7 +61,7 @@ class AppSettingsService {
         const version: number = response.body
         return version
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -81,7 +81,7 @@ class AppSettingsService {
         const appSettings: AppSettingsRequestAndResponseModel = response.body
         return appSettings
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -121,7 +121,7 @@ class AppSettingsService {
         AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
         return
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

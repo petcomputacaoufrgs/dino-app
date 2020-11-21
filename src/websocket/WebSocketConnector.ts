@@ -52,7 +52,7 @@ class WebSocketConnector {
           return true
         }
       } catch (e) {
-        LogAppErrorService.save(e)
+        LogAppErrorService.logModel(e)
       }
     }
 
@@ -71,7 +71,7 @@ class WebSocketConnector {
   }
 
   private handleWebSocketError = () => {
-    LogAppErrorService.save({
+    LogAppErrorService.logModel({
       date: new Date().getTime(),
       error: WebSocketConstants.ERROR_MESSAGE,
       title: WebSocketConstants.ERROR_TITLE,

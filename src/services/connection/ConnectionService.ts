@@ -88,7 +88,7 @@ class ConnectionService {
 
       return response.status === HttpStatus.OK
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
 
     return false

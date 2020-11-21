@@ -46,7 +46,7 @@ class ContactsService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
   }

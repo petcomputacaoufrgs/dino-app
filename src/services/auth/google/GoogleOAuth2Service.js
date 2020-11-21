@@ -3,45 +3,51 @@ import GoogleSecrets from '../../../environment/client_secret.json'
 /* eslint-disable no-undef */
 
 class GoogleOAuth2Service {
-  initClient = async (callback) => {
+  init = async (callback) => {
     gapi.load('auth2', () => {
       try {
-        const auth2 = gapi.auth2.init({
-          client_id: GoogleSecrets.client_id,
-        })
-
-        callback(auth2)
+        callback(true)
       } catch (e) {
-        console.log(e)
-        callback(undefined)
+        callback(false)
       }
     })
   }
 
-  requestLogin = async (googleAuth2) => {
-    console.log(googleAuth2)
-    const response = await googleAuth2.client.grantOfflineAccess()
-    
-    return response.code
+  requestLogin = async () => {
+    return new Promise((resolve, reject) => {
+      gapi.auth2.authorize({
+        client_id: GoogleSecrets.client_id,
+        scope: 'email profile openid',
+        response_type: 'code'
+      }, response => {
+          if (response.error) {
+            reject(response.error)
+          } else {
+            resolve(response.code)
+          }
+      });
+    });
   }
 
-  requestGrant = async (scopeList) => {
-    const authInstance = gapi.auth2.getAuthInstance()
+  requestGrant = async (googleAuth2, scopeList, email) => {
+    const scopeString = scopeList.join(' ')
 
-    if (authInstance && authInstance.currentUser) {
-      const currentUser = authInstance.currentUser.get()
-      const scopeString = scopeList.join(' ')
-
-      const response = await currentUser.grant({
+    return new Promise((resolve, reject) => {
+      gapi.auth2.authorize({
+        client_id: GoogleSecrets.client_id,
         scope: scopeString,
-        prompt: "consent",
-        approval_prompt: 'force'
-      })
-
-      console.log(response)
-    }
-  } 
-
+        response_type: 'code',
+        login_hint: email,
+        include_granted_scopes: true
+      }, response => {
+        if (response.error) {
+          reject(response.error)
+        } else {
+          resolve(response.code)
+        }
+      });
+    });
+  }
 }
 
 export default new GoogleOAuth2Service()

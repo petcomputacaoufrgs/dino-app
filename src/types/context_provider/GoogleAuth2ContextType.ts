@@ -1,3 +1,3 @@
 export default interface GoogleAuth2ContextType {
-  client: any | undefined;
+ loaded: boolean
 }

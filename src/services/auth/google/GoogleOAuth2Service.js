@@ -13,31 +13,37 @@ class GoogleOAuth2Service {
     })
   }
 
-  requestLogin = async () => {
+  requestLogin = async (forceConsent) => {
+    const options = {
+      client_id: GoogleSecrets.client_id,
+      scope: 'email profile openid',
+      response_type: 'code',
+      include_granted_scopes: true,
+    }
+
+    if (forceConsent) {
+      options.prompt = 'consent'
+    }
+
     return new Promise((resolve, reject) => {
-      gapi.auth2.authorize({
-        client_id: GoogleSecrets.client_id,
-        scope: 'email profile openid',
-        response_type: 'code',
-        include_granted_scopes: true
-      }, response => {
+      gapi.auth2.authorize(options, response => {
           if (response.error) {
             reject(undefined)
           } else {
-            resolve(response)
+            resolve(response.code)
           }
       });
     });
   }
 
-  requestGrant = async (googleAuth2, scopeList, email) => {
+  requestGrant = async (scopeList, email) => {
     const scopeString = scopeList.join(' ')
 
     return new Promise((resolve, reject) => {
       gapi.auth2.authorize({
         client_id: GoogleSecrets.client_id,
         scope: scopeString,
-        response_type: 'code id_token',
+        response_type: 'code',
         login_hint: email,
         include_granted_scopes: true
       }, response => {

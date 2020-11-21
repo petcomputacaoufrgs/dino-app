@@ -21,23 +21,22 @@ class AuthService {
     AuthLocalStorage.cleanLoginGarbage()
   }
 
-  requestGoogleLogin = async (): Promise<number> => {
+  requestGoogleLogin = async (forceConsent: boolean): Promise<number> => {
     try {
-      const response = await GoogleOAuth2Service.requestLogin()
-      if (response) {
-        return this.requestGoogleLoginOnDinoAPI(response.code, response.scope)
+      const code = await GoogleOAuth2Service.requestLogin(forceConsent)
+      if (code) {
+        return this.requestGoogleLoginOnDinoAPI(code)
       }
       return LoginStatusConstants.EXTERNAL_SERVICE_ERROR
     } catch(e) {
-      console.log(e)
       return LoginStatusConstants.REQUEST_CANCELED
     }
   }
 
-  requestGoogleGrant = async (googleAuth2: any, scopeList: GoogleScope[]): Promise<number> => {
+  requestGoogleGrant = async (scopeList: GoogleScope[]): Promise<number> => {
     const email = UserService.getEmail()
     try {
-      const authCode = await GoogleOAuth2Service.requestGrant(googleAuth2, scopeList, email)
+      const authCode = await GoogleOAuth2Service.requestGrant(scopeList, email)
       if (authCode) {
         return this.requestGoogleGrantOnDinoAPI(authCode, scopeList)
       }
@@ -209,12 +208,10 @@ class AuthService {
   }
 
   private requestGoogleLoginOnDinoAPI = async (
-    code: string,
-    scope: string
+    code: string
   ): Promise<number> => {
     const authRequestModel: GoogleAuthRequestModel = {
-      code: code,
-      scopeList: scope.split(' ')
+      code: code
     }
 
     try {
@@ -223,7 +220,6 @@ class AuthService {
       )
       if (request.canGo) {
         const response = await request.setBody(authRequestModel).go()
-        console.log("foi")
 
         if (response.status === HttpStatus.OK) {
           AuthLocalStorage.cleanLoginGarbage()

@@ -48,9 +48,9 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   const handleLoginButtonClick = async () => {
     setLoading(true)
 
-    const status = await AuthService.requestGoogleLogin()
+    const refreshTokenRequired = AuthService.isRefreshRequired()
 
-    console.log(status)
+    const status = await AuthService.requestGoogleLogin(refreshTokenRequired)
 
     if (status === LoginStatusConstants.SUCCESS) {
       return

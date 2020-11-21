@@ -18,12 +18,13 @@ class GoogleOAuth2Service {
       gapi.auth2.authorize({
         client_id: GoogleSecrets.client_id,
         scope: 'email profile openid',
-        response_type: 'code'
+        response_type: 'code',
+        include_granted_scopes: true
       }, response => {
           if (response.error) {
-            reject(response.error)
+            reject(undefined)
           } else {
-            resolve(response.code)
+            resolve(response)
           }
       });
     });
@@ -36,7 +37,7 @@ class GoogleOAuth2Service {
       gapi.auth2.authorize({
         client_id: GoogleSecrets.client_id,
         scope: scopeString,
-        response_type: 'code',
+        response_type: 'code id_token',
         login_hint: email,
         include_granted_scopes: true
       }, response => {

@@ -11,7 +11,6 @@ import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
 import GoogleOAuth2Service from './google/GoogleOAuth2Service'
-import GoogleAuth2ContextType from '../../types/context_provider/GoogleAuth2ContextType'
 import GoogleGrantRequestModel from '../../types/auth/google/GoogleGrantRequestModel'
 import GoogleGrantResponseModel from '../../types/auth/google/GoogleGrantResponseModel'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
@@ -22,11 +21,11 @@ class AuthService {
     AuthLocalStorage.cleanLoginGarbage()
   }
 
-  requestGoogleLogin = async (googleAuth2: GoogleAuth2ContextType): Promise<number> => {
+  requestGoogleLogin = async (): Promise<number> => {
     try {
-      const authCode = await GoogleOAuth2Service.requestLogin()
-      if (authCode) {
-        return this.requestGoogleLoginOnDinoAPI(authCode)
+      const response = await GoogleOAuth2Service.requestLogin()
+      if (response) {
+        return this.requestGoogleLoginOnDinoAPI(response.code, response.scope)
       }
       return LoginStatusConstants.EXTERNAL_SERVICE_ERROR
     } catch(e) {
@@ -210,17 +209,22 @@ class AuthService {
   }
 
   private requestGoogleLoginOnDinoAPI = async (
-    code: string
+    code: string,
+    scope: string
   ): Promise<number> => {
     const authRequestModel: GoogleAuthRequestModel = {
-      code: code
+      code: code,
+      scopeList: scope.split(' ')
     }
+
     try {
       const request = await DinoAgentService.post(
         DinoAPIURLConstants.AUTH_GOOGLE
       )
       if (request.canGo) {
         const response = await request.setBody(authRequestModel).go()
+        console.log("foi")
+
         if (response.status === HttpStatus.OK) {
           AuthLocalStorage.cleanLoginGarbage()
           this.setRefreshRequiredToFalse()
@@ -230,7 +234,7 @@ class AuthService {
           EventService.whenLogin()
           return LoginStatusConstants.SUCCESS
         }
-        if (response.status === HttpStatus.CONTINUE) {
+        if (response.status === HttpStatus.ACCEPTED) {
           this.setRefreshRequiredToTrue()
           return LoginStatusConstants.REFRESH_TOKEN_NECESSARY
         }

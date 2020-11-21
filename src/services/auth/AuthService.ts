@@ -28,6 +28,7 @@ class AuthService {
       const authCode = await GoogleOAuth2Service.requestLogin(googleAuth2)
       return this.googleLoginOnDinoAPI(authCode)
     } catch (e) {
+      console.log(e)
       return LoginStatusConstants.LOGIN_CANCELED
     }
   }

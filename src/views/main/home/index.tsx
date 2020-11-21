@@ -5,6 +5,8 @@ import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import HomeItemProps from './props'
 import './styles.css'
+import GoogleOAuth2Service from '../../../services/auth/google/GoogleOAuth2Service'
+import GoogleAuthScopes from '../../../constants/google/GoogleAuthScopes'
 
 const Home = () => {
   const language = useCurrentLanguage()
@@ -18,9 +20,14 @@ const Home = () => {
     { class: '__a', label: language.MENU_ABOUT_US, path: PathConstants.ABOUT_US, },
   ]
 
+  const handleGrand = () => {
+    GoogleOAuth2Service.requestGrant([GoogleAuthScopes.SCOPE_CONTACT])
+  }
+
   return (
     <div className="home">
       <div className="home__grid">
+        <button onClick={handleGrand}>Teste</button>
         {items.map((item, index) => (
           <ListItem key={index} button className="home__grid__button">
             <Paper

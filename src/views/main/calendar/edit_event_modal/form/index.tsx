@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
+import Button from '../../../../../components/button/text_button'
 import {
   FormControl,
   RadioGroup,
   FormControlLabel,
   Radio,
   TextField,
-  Grid,
-  Button,
+  Grid
 } from '@material-ui/core'
 import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import DateFnsUtils from '@date-io/date-fns'
@@ -258,7 +258,6 @@ const Form: React.FC = () => {
       iconAlt={language.EVENT_REPEAT_ICON_ALT}
       item={
         <Button
-          color="primary"
           className="calendar__add__modal__event_repeat_button"
           onClick={handleOpenEventRepeatModal}
         >
@@ -325,7 +324,6 @@ const Form: React.FC = () => {
       iconAlt={alarms.length === 0 ? language.EVENT_ALERT_ALT : undefined}
       item={
         <Button
-          color="primary"
           className="calendar__add__modal__event_alert_button"
           onClick={handleOpenEventAddAlertModal}
         >

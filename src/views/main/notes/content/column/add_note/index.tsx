@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.css'
 import NotesContentColumnAddNoteProps from './props'
-import { Button } from '@material-ui/core'
+import Button from '../../../../../../components/button/text_button'
 import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import NoteConstants from '../../../../../../constants/note/NoteConstants'
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Button from '../../../../components/button/text_button'
 import './styles.css'
 import NoteInfoDialogProps from './props'
 import {
@@ -6,8 +7,7 @@ import {
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
-  Button,
+  DialogActions
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import DateUtils from '../../../../utils/DateUtils'

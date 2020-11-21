@@ -1,6 +1,6 @@
 import React from 'react'
 import FormItemProps from './props'
-import { Button } from '@material-ui/core'
+import Button from '../../../../../../components/button'
 import './styles.css'
 
 const FormItem: React.FC<FormItemProps> = ({
@@ -20,7 +20,6 @@ const FormItem: React.FC<FormItemProps> = ({
       if (onIconClick) {
         return (
           <Button
-            color="primary"
             onClick={handleIconClick}
             className="calendar__edit_event_modal__form__item__icon__button"
           >

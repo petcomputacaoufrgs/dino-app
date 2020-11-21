@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import Button from '../../../components/button'
 import AppSettingsRequestAndResponseModel from '../../../types/app_settings/AppSettingsRequestAndResponseModel'
 import AppSettingsService from '../../../services/app_settings/AppSettingsService'
 import FaqService from '../../../services/faq/FaqService'
@@ -125,11 +125,7 @@ const Settings = (): JSX.Element => {
   const renderSaveButton = (): JSX.Element => (
     <div className="settings__save_button_container">
       <Button
-        variant="contained"
-        color="primary"
-        size="large"
         className="settings__save_button"
-        startIcon={<SaveSVG className="settings__save_button__icon" />}
         onClick={onSave}
       >
         {language.SETTINGS_SAVE}

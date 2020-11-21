@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AddAlarmModalProps from './props'
+import Button from '../../../../../../components/button/text_button'
 import {
   Dialog,
   DialogContent,
@@ -7,8 +8,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  TextField,
-  Button,
+  TextField
 } from '@material-ui/core'
 import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import StringUtils from '../../../../../../utils/StringUtils'
@@ -140,8 +140,6 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
           <Button
             onClick={handleSave}
             className="calendar__edit_event_modal__form__add_alarm_modal__save_button"
-            color="primary"
-            autoFocus
           >
             Salvar
           </Button>

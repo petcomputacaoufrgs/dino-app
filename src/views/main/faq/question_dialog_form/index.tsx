@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Button from '@material-ui/core/Button'
+import Button from '../../../../components/button/text_button'
 import {
   Dialog,
   DialogActions,
@@ -95,11 +95,11 @@ const QuestionDialogForm = React.forwardRef(
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose}>
               {language.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
 
-            <Button onClick={handleSave} color="primary">
+            <Button onClick={handleSave}>
               {language.DIALOG_SAVE_BUTTON_TEXT}
             </Button>
           </DialogActions>

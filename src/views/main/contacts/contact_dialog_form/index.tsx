@@ -5,7 +5,7 @@ import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
 import ColorConstants from '../../../../constants/app/ColorConstants'
-import Button from '@material-ui/core/Button'
+import Button from '../../../../components/button/text_button'
 import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
@@ -178,10 +178,10 @@ const ContactFormDialog = React.forwardRef(
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose}>
               {language.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
-            <Button onClick={handleSave} color="primary">
+            <Button onClick={handleSave}>
               {language.DIALOG_SAVE_BUTTON_TEXT}
             </Button>
           </DialogActions>

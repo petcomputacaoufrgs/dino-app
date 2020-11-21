@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Button from '../../../../components/button/text_button'
 import './styles.css'
 import NoteCreateDialogProps from './props'
 import { useCurrentLanguage } from '../../../../context_provider/app_settings'
@@ -7,7 +8,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import NoteConstants from '../../../../constants/note/NoteConstants'
-import { DialogTitle, DialogActions, Button } from '@material-ui/core'
+import { DialogTitle, DialogActions } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 
 const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({

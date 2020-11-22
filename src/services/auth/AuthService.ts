@@ -12,9 +12,9 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
 import GoogleOAuth2Service from './google/GoogleOAuth2Service'
 import GoogleGrantRequestModel from '../../types/auth/google/GoogleGrantRequestModel'
-import GoogleGrantResponseModel from '../../types/auth/google/GoogleGrantResponseModel'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleScope from '../../types/auth/google/GoogleScope'
+import GoogleRefreshAuthResponseModel from '../../types/auth/google/GoogleRefreshAuthResponseModel'
 
 class AuthService {
   cleanLoginGarbage = () => {
@@ -28,7 +28,7 @@ class AuthService {
         return this.requestGoogleLoginOnDinoAPI(code)
       }
       return LoginStatusConstants.EXTERNAL_SERVICE_ERROR
-    } catch(e) {
+    } catch (e) {
       return LoginStatusConstants.REQUEST_CANCELED
     }
   }
@@ -89,6 +89,25 @@ class AuthService {
     return false
   }
 
+  refreshGoogleAccessToken = async (): Promise<boolean> => {
+    this.startRefreshingGoogleAccessToken()
+    const request = await DinoAgentService.get(
+      DinoAPIURLConstants.REFRESH_AUTH_GOOGLE
+    )
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().go()
+        this.saveGoogleRefreshAuthData(response.body)
+        this.stopRefreshingGoogleAccessToken(true)
+        return true
+      } catch (e) {
+        LogAppErrorService.logError(e)
+      }
+    }
+    this.stopRefreshingGoogleAccessToken(false)
+    return false
+  }
+
   isAuthenticated = (): boolean => Boolean(AuthLocalStorage.getAuthToken())
 
   getGoogleAccessToken = (): string | null => {
@@ -105,6 +124,14 @@ class AuthService {
 
   setGoogleExpiresDate = (tokenExpiresDate: number) => {
     AuthLocalStorage.setGoogleExpiresDate(tokenExpiresDate)
+  }
+
+  getGoogleAuthScopes = (): string[] | null => {
+    return AuthLocalStorage.getGoogleAuthScopes()
+  }
+
+  setGoogleAuthScopes = (scopeList: string[]) => {
+    AuthLocalStorage.setGoogleAuthScopes(scopeList)
   }
 
   getAuthToken = (): string => {
@@ -176,19 +203,20 @@ class AuthService {
   ): Promise<number> => {
     const grantRequestModel: GoogleGrantRequestModel = {
       code: code,
-      scopeList: scopeList
+      scopeList: scopeList,
     }
-    
+
     try {
       const request = await DinoAgentService.post(
         DinoAPIURLConstants.GRANT_GOOGLE
       )
       if (request.canGo) {
-        const response = await request.authenticate().setBody(grantRequestModel).go()
+        const response = await request
+          .authenticate()
+          .setBody(grantRequestModel)
+          .go()
         if (response.status === HttpStatus.OK) {
-          this.saveGoogleGrantData(
-            response.body as GoogleGrantResponseModel
-          )
+          this.saveGoogleRefreshAuthData(response.body)
           return GrantStatusConstants.SUCCESS
         }
 
@@ -211,7 +239,7 @@ class AuthService {
     code: string
   ): Promise<number> => {
     const authRequestModel: GoogleAuthRequestModel = {
-      code: code
+      code: code,
     }
 
     try {
@@ -224,9 +252,7 @@ class AuthService {
         if (response.status === HttpStatus.OK) {
           AuthLocalStorage.cleanLoginGarbage()
           this.setRefreshRequiredToFalse()
-          this.saveGoogleAuthData(
-            response.body as GoogleAuthResponseModel
-          )
+          this.saveGoogleAuthData(response.body)
           EventService.whenLogin()
           return LoginStatusConstants.SUCCESS
         }
@@ -242,18 +268,16 @@ class AuthService {
     }
   }
 
-  private saveGoogleGrantData(
-    responseBody: GoogleGrantResponseModel
-  ) {
+  private saveGoogleRefreshAuthData(responseBody: GoogleRefreshAuthResponseModel) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
+    this.setGoogleAuthScopes(responseBody.scopeList)
   }
 
-  private saveGoogleAuthData(
-    responseBody: GoogleAuthResponseModel
-  ) {
+  private saveGoogleAuthData(responseBody: GoogleAuthResponseModel) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
+    this.setGoogleAuthScopes(responseBody.scopeList)
     this.saveUserAuthData(responseBody)
   }
 

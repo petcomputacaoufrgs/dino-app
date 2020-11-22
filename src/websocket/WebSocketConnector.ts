@@ -15,6 +15,7 @@ import NoteColumnWebSocketSubscriber from './note/NoteColumnWebSocketSubscriber'
 import WebSocketConstants from '../constants/websocket/WebSocketConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import ConnectionService from '../services/connection/ConnectionService'
+import GoogleAuthWebSocketSubscriber from './auth/GoogleAuthWebSocketSubscriber'
 
 class WebSocketConnector {
   private socket?: WebSocket
@@ -28,7 +29,9 @@ class WebSocketConnector {
     ContactWebSocketSubscriber,
     FaqWebSocketSubscriber,
     FaqUserWebSocketSubscriber,
+    GoogleAuthWebSocketSubscriber
   ]
+
   private delayTimeout: NodeJS.Timeout | undefined
 
   connect = async (): Promise<boolean> => {
@@ -112,7 +115,11 @@ class WebSocketConnector {
   }
 
   private filterCallback(callback: (data: any) => void, message: Message) {
-    callback(JSON.parse(message.body))
+    if (message.body) {
+      callback(JSON.parse(message.body))
+    } else {
+      callback(null)
+    }
   }
 
   private getSocketBaseURL(token: string): string {

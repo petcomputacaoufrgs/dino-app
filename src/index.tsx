@@ -5,10 +5,10 @@ import ErrorHandlerService from './services/error_handler/ErrorHandlerService'
 import SyncContextProvider from './context_provider/sync'
 import AlertContextProvider from './context_provider/alert'
 import AppSettingsContextProvider from './context_provider/app_settings'
-import EventService from './services/events/EventService'
 import App from './App'
 import './Var.css'
 import GoogleOAuth2ContextProvider from './context_provider/google_oauth2'
+import EventService from './services/events/EventService'
 
 ErrorHandlerService.register()
 EventService.whenStart()

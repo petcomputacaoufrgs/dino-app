@@ -16,6 +16,9 @@ class EventService {
 
   whenStart = async () => {
     AuthService.cleanLoginGarbage()
+    if (AuthService.isAuthenticated()) {
+      AuthService.refreshGoogleAccessToken()
+    }
     WebSocketConnector.connect()
     Synchronizer.sync()
   }

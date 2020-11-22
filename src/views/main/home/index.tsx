@@ -1,12 +1,10 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
-import { ListItem, Paper } from '@material-ui/core'
 import PathConstants from '../../../constants/app/PathConstants'
-import HistoryService from '../../../services/history/HistoryService'
 import HomeItemProps from './props'
+import { ListItem, Paper } from '@material-ui/core'
+import HistoryService from '../../../services/history/HistoryService'
 import './styles.css'
-import AuthService from '../../../services/auth/AuthService'
-import GoogleScope from '../../../types/auth/google/GoogleScope'
 
 const Home = () => {
   const language = useCurrentLanguage()
@@ -20,14 +18,9 @@ const Home = () => {
     { class: '__a', label: language.MENU_ABOUT_US, path: PathConstants.ABOUT_US, },
   ]
 
-  const handleGrand = async () => {
-    console.log(await AuthService.requestGoogleGrant([GoogleScope.SCOPE_CONTACT]))
-  }
-
   return (
     <div className="home">
       <div className="home__grid">
-        <button onClick={handleGrand}>Teste</button>
         {items.map((item, index) => (
           <ListItem key={index} button className="home__grid__button">
             <Paper

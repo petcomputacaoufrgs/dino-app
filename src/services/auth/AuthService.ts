@@ -33,15 +33,17 @@ class AuthService {
     }
   }
 
-  requestGoogleGrant = async (scopeList: GoogleScope[]): Promise<number> => {
-    const email = UserService.getEmail()
+  requestGoogleGrant = async (scopeList: GoogleScope[], refreshTokenNecessary: boolean): Promise<number> => {
     try {
-      const authCode = await GoogleOAuth2Service.requestGrant(scopeList, email)
+      const email = UserService.getEmail()
+
+      const authCode = await GoogleOAuth2Service.requestGrant(scopeList, email, refreshTokenNecessary)
       if (authCode) {
         return this.requestGoogleGrantOnDinoAPI(authCode, scopeList)
       }
       return GrantStatusConstants.EXTERNAL_SERVICE_ERROR
     } catch (e) {
+      console.log(e)
       LogAppErrorService.logError(e)
       return GrantStatusConstants.REQUEST_CANCELED
     }

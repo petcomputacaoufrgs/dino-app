@@ -394,4 +394,21 @@ export default class PT implements LanguageBase {
   DALTONIAN_THEME_NAME = 'Alto contraste'
 
   COLOR_THEME_SELECTION_TITLE = 'Escolher Tema de Cores'
+
+  DIALOG_AGREE_TEXT = 'Aceito'
+
+  DIALOG_DECLINE_BUTTON_TEXT = 'Declino'
+
+  GRANT_FAIL_BY_EXTERNAL_ERROR = 'Desculpe, aconteceu algo errado. Por favor, tente novamente.'
+
+  GRANT_CANCELED = 'Permissão cancelada. Por favor, tente novamente.'
+
+  GRANT_FAIL_BY_INVALID_ACCOUNT = 'Conta inválida. Por favor, selecione a conta que está logada.'
+
+  GRANT_RESFRESH_TOKEN_NECESSARY = 'Desculpe, erro nosso. Por favor, tente novamente.'
+
+  GRANT_FAIL_BY_DISCONNECTION = 'Desculpe, aconteceu um erro de conexão. Tente novamente assim que a conexão voltar.'
+
+  GRANT_FAIL_BY_UNKNOW_ERROR = 'Desculpe, aconteceu um erro desconhecido. Por favor, tente novamente.'
+
 }

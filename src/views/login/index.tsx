@@ -6,9 +6,6 @@ import Dinosaur2 from '../../assets/images/dinosaur_2.svg'
 import './styles.css'
 import GoogleLoginButton from '../../components/button/login/google'
 
-/**
- * @description Tela de login com o Google
- */
 const Login = (): JSX.Element => {
   const alert = useAlert()
 

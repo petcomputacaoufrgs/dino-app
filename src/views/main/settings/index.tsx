@@ -128,6 +128,7 @@ const Settings = (): JSX.Element => {
         className="settings__save_button"
         onClick={onSave}
       >
+        <SaveSVG className='settings__save_button__icon'/>
         {language.SETTINGS_SAVE}
       </Button>
     </div>

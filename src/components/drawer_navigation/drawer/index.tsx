@@ -1,13 +1,14 @@
 import React from 'react'
 import DrawerProps from './props'
 import './styles.css'
-import { Divider, IconButton } from '@material-ui/core'
-import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons'
+import { Divider } from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import { Avatar } from '@material-ui/core'
 import { useUser } from '../../../context_provider/user'
+import IconButton from '../../button/icon_button'
+import {ReactComponent as ChevronLeftIconSVG} from '../../../assets/icons/chevron_left.svg'
 
 const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
   const language = useCurrentLanguage()
@@ -72,12 +73,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
       <div className={'drawer_navigation__drawer'}>
         <div className="drawer_navigation__drawer__visible">
           <div className="drawer_navigation__drawer__header">
-            <IconButton
-              onClick={handleCloseClick}
-              aria-label={language.CLOSE_MENU_ARIA_LABEL}
-            >
-              <ChevronLeftIcon />
-            </IconButton>
+            <IconButton icon={ChevronLeftIconSVG} onClick={handleCloseClick} />
           </div>
           <Divider />
           {renderUser()}

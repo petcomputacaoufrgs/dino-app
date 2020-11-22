@@ -6,10 +6,7 @@ import {ReactComponent as ArrowBackIconSVG} from '../../assets/icons/arrow_back.
 
 const ArrowBack = (): JSX.Element => {
   return (
-    <IconButton
-      icon={ArrowBackIconSVG}
-      onClick={() => HistoryService.goBack()}
-    />
+    <IconButton icon={ArrowBackIconSVG} onClick={() => HistoryService.goBack()} />
   )
 }
 

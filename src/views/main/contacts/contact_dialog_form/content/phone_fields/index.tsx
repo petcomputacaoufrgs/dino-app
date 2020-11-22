@@ -1,14 +1,16 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
 import TextField from '@material-ui/core/TextField'
-import { MenuItem, IconButton } from '@material-ui/core'
-import { Clear } from '@material-ui/icons'
+import { MenuItem } from '@material-ui/core'
+import IconButton from '../../../../../../components/button/icon_button'
+import {ReactComponent as ClearIconSVG} from '../../../../../../assets/icons/close.svg'
 import ContactsConstants from '../../../../../../constants/contact/ContactsConstants'
 import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Constants from '../../../../../../constants/contact/ContactsConstants'
+import './style.css'
 
 const PhoneFields = ({
   type,
@@ -73,12 +75,7 @@ const PhoneFields = ({
           maxLength: Constants.NUMBER_MAX,
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton
-                size="small"
-                onClick={() => handleDeletePhone(number)}
-              >
-                <Clear />
-              </IconButton>
+              <IconButton icon={ClearIconSVG} className='clear_button' onClick={() => handleDeletePhone(number)} />
             </InputAdornment>
           ),
         }}

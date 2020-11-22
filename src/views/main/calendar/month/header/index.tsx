@@ -2,8 +2,8 @@ import React from 'react'
 import HeaderProps from './props'
 import DateUtils from '../../../../../utils/DateUtils'
 import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
-import TodayCalendarSVG from '../../../../../assets/icons/today_calendar.svg'
-import { IconButton } from '@material-ui/core'
+import {ReactComponent as TodayCalendarSVG} from '../../../../../assets/icons/today_calendar.svg'
+import IconButton from '../../../../../components/button/icon_button'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
@@ -17,13 +17,7 @@ const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
       </h1>
       <div className="calendar__month__header_buttons">
         <div className="calendar__month__header_buttons__today_button">
-          <IconButton onClick={goToCurrentMonth} color="primary">
-            <img
-              src={TodayCalendarSVG}
-              alt=""
-              className="calendar__month__header_buttons__today_button__image"
-            />
-          </IconButton>
+          <IconButton icon={TodayCalendarSVG} onClick={goToCurrentMonth} />
         </div>
       </div>
     </div>

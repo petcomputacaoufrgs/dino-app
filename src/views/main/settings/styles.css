@@ -34,7 +34,7 @@
 .settings__save_button__icon {
   width: 18px;
   height: 18px;
-  margin-left: -10px;
+  margin-right:7px;
   fill: var(--header-and-menu-icons);
 }
 
@@ -52,3 +52,4 @@
   font-size: large;
   margin-bottom: 40px;
 }
+

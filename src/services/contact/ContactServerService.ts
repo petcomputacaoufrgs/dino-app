@@ -13,20 +13,23 @@ import ContactGoogleService from './ContactGoogleService'
 
 class ContactServerService {
   updateServer = async () => {
+    console.log("update server")
     let sucessfulAdd = true
     let sucessfulEdit = true
     let idsToUpdate = Service.getIdsToUpdate()
 
     if (idsToUpdate.length > 0) {
-      const contacts = Service.getItems()
+      let contacts = Service.getItems()
       const contactsToUpdate = Service.getContactsToUpdate(
         contacts,
         idsToUpdate
       )
 
       if (contactsToUpdate.toAdd.length > 0) {
+        const updatedContactsToAdd = await ContactGoogleService.saveContacts(contactsToUpdate.toAdd)
+        
         const responseSaveModel = await this.saveContacts(
-          contactsToUpdate.toAdd
+          updatedContactsToAdd
         )
 
         if (responseSaveModel !== undefined) {
@@ -35,17 +38,18 @@ class ContactServerService {
 
           if (version !== undefined && responseContactModels !== undefined) {
             Service.setVersion(version)
-            Service.updateContactIds(responseContactModels, contacts)
-            ContactGoogleService.createNewsContacts(responseContactModels)
+            contacts = Service.updateContactIds(responseContactModels, contacts)
           }
         } else sucessfulAdd = false
       }
 
       if (contactsToUpdate.toEdit.length > 0) {
-        const version = await this.editContacts(contactsToUpdate.toEdit)
+        const updatedContactsToEdit = await ContactGoogleService.saveContacts(contactsToUpdate.toEdit)
+        const version = await this.editContacts(updatedContactsToEdit)
 
         if (version !== undefined) {
           Service.setVersion(version)
+          Service.updateLocalContact(updatedContactsToEdit, contacts)
         } else sucessfulEdit = false
       }
 
@@ -114,6 +118,7 @@ class ContactServerService {
   }
 
   editContact = async (contactModel: ContactModel) => {
+    console.log("EDIT")
     const request = await DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT)
 
     if (request.canGo) {
@@ -128,7 +133,7 @@ class ContactServerService {
         LogAppErrorService.logError(e)
       }
     }
-
+    console.log("PUSHED")
     Service.pushToUpdate(contactModel.frontId)
   }
 

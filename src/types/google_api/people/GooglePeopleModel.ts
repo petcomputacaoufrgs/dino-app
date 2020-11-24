@@ -16,4 +16,5 @@ export default interface GooglePeopleModel {
     phoneNumbers: GooglePeoplePhoneNumberModel[],
     biographies?: GooglePeopleBiographiesModel[],
     resourceName?: string
+    etag?: string
 }

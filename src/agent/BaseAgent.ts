@@ -16,6 +16,19 @@ export default class BaseAgent {
     })
   }
 
+  patch = async (url: string): Promise<AgentRequest> => {
+    const request = this.filterWhileCreating(
+      Superagent.patch(url)
+        .on('error', this.onError)
+        .on('response', this.onResponse)
+    )
+
+    return this.getAgentRequest({
+      request: request,
+      canGo: await this.canGo(),
+    })
+  }
+
   post = async (url: string): Promise<AgentRequest> => {
     const request = this.filterWhileCreating(
       Superagent.post(url)

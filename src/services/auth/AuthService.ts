@@ -43,7 +43,6 @@ class AuthService {
       }
       return GrantStatusConstants.EXTERNAL_SERVICE_ERROR
     } catch (e) {
-      console.log(e)
       LogAppErrorService.logError(e)
       return GrantStatusConstants.REQUEST_CANCELED
     }

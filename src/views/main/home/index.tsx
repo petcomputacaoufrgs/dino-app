@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import PathConstants from '../../../constants/app/PathConstants'
 import HomeItemProps from './props'
 import { ListItem, Paper } from '@material-ui/core'
 import HistoryService from '../../../services/history/HistoryService'
 import './styles.css'
+import GoogleGrantDialog from '../../../components/google_grant_dialog'
+import GoogleScope from '../../../types/auth/google/GoogleScope'
 
 const Home = () => {
+  const [open, setOpen] = useState(false)
   const language = useCurrentLanguage()
 
   const items: HomeItemProps[] = [
@@ -18,9 +21,22 @@ const Home = () => {
     { class: '__a', label: language.MENU_ABOUT_US, path: PathConstants.ABOUT_US, },
   ]
 
+  const handleClick = () => {
+    setOpen(true)
+  }
+
+  const handleAccept = () => {
+    setOpen(false)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <div className="home">
       <div className="home__grid">
+        <button onClick={handleClick}>Teste</button>
         {items.map((item, index) => (
           <ListItem key={index} button className="home__grid__button">
             <Paper
@@ -35,6 +51,14 @@ const Home = () => {
           </ListItem>
         ))}
       </div>
+      <GoogleGrantDialog
+        onAccept={handleAccept}
+        onClose={handleClose}
+        open={open}
+        scopes={[GoogleScope.SCOPE_CONTACT]}
+        text={"Teste"}
+        title={"Teste"}
+      />
     </div>
   )
 }

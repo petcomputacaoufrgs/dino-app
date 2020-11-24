@@ -1,9 +1,13 @@
 class GoogleAPIURLConstants {
   private BASE_URL = 'https://people.googleapis.com/v1/'
 
-  private BASE_ME_URL = `${this.BASE_URL}people/me`
+  private BASE_PEOPLE_URL = `${this.BASE_URL}people`
 
-  GET_USER_PHOTOS = `${this.BASE_ME_URL}?personFields=photos`
+  private BASE_PEOPLE_ME_URL = `${this.BASE_PEOPLE_URL}/me`
+
+  GET_USER_PHOTOS = `${this.BASE_PEOPLE_ME_URL}?personFields=photos`
+
+  CREATE_CONTACT = `${this.BASE_PEOPLE_URL}:createContact`
 }
 
 export default new GoogleAPIURLConstants()

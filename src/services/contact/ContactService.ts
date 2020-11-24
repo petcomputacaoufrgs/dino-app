@@ -12,8 +12,9 @@ import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ArrayUtils from '../../utils/ArrayUtils'
+import ContactGoogleService from './ContactGoogleService'
 
-class ContactsService {
+class ContactService {
   /// #SERVER SERVICE CONNECTION
 
   updateLocal = async (newVersion: number): Promise<void> => {
@@ -96,10 +97,13 @@ class ContactsService {
   /// #MAIN FUNCTIONS
 
   addContact = async (item: ContactModel) => {
+    ContactGoogleService.createNewContact(item)
+    
     const response = await Server.saveContact(item)
 
     if (response !== undefined) {
       item.id = response.id
+      ContactGoogleService.createNewContact(item)
     }
     const items = this.getItems()
     items.push(item)
@@ -305,4 +309,4 @@ class ContactsService {
   }
 }
 
-export default new ContactsService()
+export default new ContactService()

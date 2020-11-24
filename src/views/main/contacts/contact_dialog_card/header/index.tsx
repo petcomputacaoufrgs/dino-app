@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
 import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import ContactCardHeaderProps from './props'
-import ContactsService from '../../../../../services/contact/ContactService'
+import ContactService from '../../../../../services/contact/ContactService'
 import CloseComponent from '../../../../../components/icon_buttons/close_component'
 import OptionsComponent from '../../../../../components/icon_buttons/options_component'
 import '../../styles.css'
@@ -59,7 +59,7 @@ const ContactCardHeader = ({
           </>
         }
         title={item.name}
-        subheader={ContactsService.getPhoneTypes(item.phones, language)}
+        subheader={ContactService.getPhoneTypes(item.phones, language)}
       />
       <Menu
         anchorEl={anchorEl}

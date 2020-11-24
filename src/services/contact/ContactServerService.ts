@@ -7,6 +7,9 @@ import HttpStatus from 'http-status-codes'
 import DinoAgentService from '../../agent/DinoAgentService'
 import Service from './ContactService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import ContactGoogleResourceNameModel from '../../types/contact/ContactGoogleResourceNameModel'
+import ContactGoogleResourceNamesModel from '../../types/contact/ContactGoogleResourceNamesModel'
+import ContactGoogleService from './ContactGoogleService'
 
 class ContactServerService {
   updateServer = async () => {
@@ -33,6 +36,7 @@ class ContactServerService {
           if (version !== undefined && responseContactModels !== undefined) {
             Service.setVersion(version)
             Service.updateContactIds(responseContactModels, contacts)
+            ContactGoogleService.createNewsContacts(responseContactModels)
           }
         } else sucessfulAdd = false
       }
@@ -216,6 +220,34 @@ class ContactServerService {
     }
 
     return undefined
+  }
+
+  saveGoogleResourceName = async (model: ContactGoogleResourceNameModel) => {
+    const request = await DinoAgentService.post(
+      DinoAPIURLConstants.CONTACT_GOOGLE_RESOURCE_NAME_SAVE
+    )
+
+    if (request.canGo) {
+      try {
+        await request.authenticate().setBody(model).go()
+      } catch (e) {
+        LogAppErrorService.logError(e)
+      }
+    }
+  }
+
+  saveGoogleResourceNames = async (model: ContactGoogleResourceNamesModel) => {
+    const request = await DinoAgentService.post(
+      DinoAPIURLConstants.CONTACT_GOOGLE_RESOURCE_NAMES_SAVE
+    )
+
+    if (request.canGo) {
+      try {
+        await request.authenticate().setBody(model).go()
+      } catch (e) {
+        LogAppErrorService.logError(e)
+      }
+    }
   }
 }
 

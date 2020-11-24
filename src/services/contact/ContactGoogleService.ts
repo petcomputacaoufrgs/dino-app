@@ -5,6 +5,7 @@ import GooglePeopleModel from "../../types/google_api/people/GooglePeopleModel"
 import ContactModel from "../../types/contact/ContactModel"
 import AuthService from "../auth/AuthService"
 import GoogleScope from "../../types/auth/google/GoogleScope"
+import ContactService from "./ContactService"
 
 class ContactGoogleService {
 
@@ -16,26 +17,50 @@ class ContactGoogleService {
         return await Promise.all(contacts.map(contact => this.saveContactOnGoogleAPI(contact)))
     }
 
-    private saveContactOnGoogleAPI = async (contact: ContactModel): Promise<ContactModel> => {
-        try {
-            if (this.hasContactGrant()) {
-                const peopleModel = this.createPeopleFromContactModel(contact)
-                
-                const etag = await this.getCurrentEtag(contact)
+    deleteContact = async (contact: ContactModel) => {
+        if (contact.resourceName) {
+            await this.deleteContactOnGoogleAPI(contact.resourceName)
+        }
+    }
 
+    deleteContacts = async (resourceNames: string[]) => {
+        await Promise.all(resourceNames.map(resourceName => this.deleteContactOnGoogleAPI(resourceName)))
+    }
+
+    private saveContactOnGoogleAPI = async (contact: ContactModel): Promise<ContactModel> => {
+        if (this.hasContactGrant()) {
+            const peopleModel = this.createPeopleFromContactModel(contact)
+            
+            try {
+                const etag = await this.getCurrentEtag(contact)
+                
                 const response = etag && contact.resourceName ?
                     await this.updateContactRequest(peopleModel, contact.resourceName, etag)
                     : await this.createContactRequest(peopleModel)
-
                 if (response && response.resourceName) {
                     contact.resourceName = response.resourceName
                 }
+            } catch (e) {
+                LogAppErrorService.logError(e)
             }
-        } catch(e) {
-            LogAppErrorService.logError(e)
         }
 
         return contact
+    }
+
+    private deleteContactOnGoogleAPI = async (resourceName: string) => {
+        if (this.hasContactGrant()) {
+            try {
+                const success = await this.deleteContactRequest(resourceName)
+
+                if (!success) {
+                    ContactService.pushToResourceNamesToDelete(resourceName)
+                }
+            } catch (e) {
+                LogAppErrorService.logError(e)
+                ContactService.pushToResourceNamesToDelete(resourceName)
+            }
+        }
     }
 
     private hasContactGrant = (): boolean => {
@@ -48,22 +73,18 @@ class ContactGoogleService {
         return false
     }
 
-    private createContactRequest = async (model: GooglePeopleModel): Promise<GooglePeopleModel | null> => {
+    private createContactRequest = async (model: GooglePeopleModel): Promise<GooglePeopleModel | undefined> => {
         const request = await GoogleAgentService.post(
             GooglePeopleAPIURLConstants.CREATE_CONTACT
         )
 
         if (request.canGo) {
-            try {
-                const response = await request.authenticate().setBody(model).go()
+            const response = await request.authenticate().setBody(model).go()
                 
-                return response.body
-            } catch (e) {
-                LogAppErrorService.logError(e)
-            }
+            return response.body
         }
 
-        return null
+        return undefined
     }
 
     private getContactRequest = async (resourceName: string): Promise<GooglePeopleModel | undefined> => {
@@ -71,50 +92,38 @@ class ContactGoogleService {
             GooglePeopleAPIURLConstants.GET_CONTACT(resourceName)
         )
         if (request.canGo) {
-            try {
-                const response = await request.authenticate().go()
-                return response.body
-            } catch (e) {
-                LogAppErrorService.logError(e)
-            }
+            const response = await request.authenticate().go()
+            return response.body
         }
 
         return undefined
     }
 
-    private updateContactRequest = async (model: GooglePeopleModel, resourceName: string, etag: string): Promise<GooglePeopleModel | null> => {
+    private updateContactRequest = async (model: GooglePeopleModel, resourceName: string, etag: string): Promise<GooglePeopleModel | undefined> => {
         const request = await GoogleAgentService.patch(
             GooglePeopleAPIURLConstants.UPDATE_CONTACT(resourceName)
         )
         if (request.canGo) {
-            try {
-                model.resourceName = resourceName
-                model.etag = etag
-                const response = await request.authenticate().setBody(model).go()
-                return response.body
-            } catch (e) {
-                LogAppErrorService.logError(e)
-            }
+            model.resourceName = resourceName
+            model.etag = etag
+            const response = await request.authenticate().setBody(model).go()
+            return response.body
         }
 
-        return null
+        return undefined
     }
 
-    private deleteContactRequest = async (resourceName: string, etag: string): Promise<GooglePeopleModel | null> => {
+    private deleteContactRequest = async (resourceName: string): Promise<boolean> => {
         const request = await GoogleAgentService.delete(
             GooglePeopleAPIURLConstants.DELETE_CONTACT(resourceName)
         )
 
         if (request.canGo) {
-            try {
-                const response = await request.authenticate().go()
-                return response.body
-            } catch (e) {
-                LogAppErrorService.logError(e)
-            }
+            await request.authenticate().go()
+            return true
         }
 
-        return null
+        return false
     }
 
     private createPeopleFromContactModel = (contact: ContactModel): GooglePeopleModel => {

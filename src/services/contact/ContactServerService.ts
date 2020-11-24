@@ -13,7 +13,6 @@ import ContactGoogleService from './ContactGoogleService'
 
 class ContactServerService {
   updateServer = async () => {
-    console.log("update server")
     let sucessfulAdd = true
     let sucessfulEdit = true
     let idsToUpdate = Service.getIdsToUpdate()
@@ -65,6 +64,13 @@ class ContactServerService {
         Service.setVersion(version)
         Service.cleanDeleteQueue()
       }
+    }
+
+    const resourceNamesToDelete = Service.getResourceNamesToDelete()
+
+    if (resourceNamesToDelete.length > 0) {
+      await ContactGoogleService.deleteContacts(resourceNamesToDelete)
+      Service.cleanDeleteGoogleQueue()
     }
   }
 
@@ -118,7 +124,6 @@ class ContactServerService {
   }
 
   editContact = async (contactModel: ContactModel) => {
-    console.log("EDIT")
     const request = await DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT)
 
     if (request.canGo) {
@@ -133,7 +138,6 @@ class ContactServerService {
         LogAppErrorService.logError(e)
       }
     }
-    console.log("PUSHED")
     Service.pushToUpdate(contactModel.frontId)
   }
 

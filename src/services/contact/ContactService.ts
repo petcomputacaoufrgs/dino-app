@@ -18,7 +18,6 @@ class ContactService {
   //#region SERVER SERVICE CONNECTION
 
   updateLocal = async (newVersion: number): Promise<void> => {
-    console.log("update local")
     const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
 
     if (request.canGo) {
@@ -146,7 +145,10 @@ class ContactService {
     if (index > -1) {
       const item = items.splice(index, 1)[0]
 
+      ContactGoogleService.deleteContact(item)
+      
       if (item.id) Server.deleteContact(item.id)
+      
       this.setItems(items)
 
       ContactContextUpdater.update()
@@ -240,6 +242,25 @@ class ContactService {
     })
   }
 
+  getResourceNamesToDelete = (): string[] => {
+    const items = LS.getResourceNamesToDelete()
+    return items ? JSON.parse(items) : []
+  }
+
+  setResourceNamesToDelete = (items: string[]) => {
+    LS.setResourceNamesToDelete(JSON.stringify(items))
+  }
+
+  pushToResourceNamesToDelete = (item: string) => {
+    const items = this.getResourceNamesToDelete()
+
+    if (!items.some(n => n === item)) {
+      items.push(item)
+      this.setResourceNamesToDelete(items)
+    }
+    console.log(items)
+  }
+
   //#endregion
 
   //#region QUEUE AUX
@@ -252,7 +273,7 @@ class ContactService {
 
   cleanUpdateQueue = () => LS.cleanUpdateQueue()
   cleanDeleteQueue = () => LS.cleanDeleteQueue()
-
+  cleanDeleteGoogleQueue = () => LS.cleanDeleteGoogleQueue()
   //#endregion
 
   //#region AUX

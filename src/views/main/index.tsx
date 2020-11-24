@@ -8,6 +8,7 @@ import { ReactComponent as NotesSVG } from '../../assets/icons/menu_icons/note.s
 import { ReactComponent as FaqSVG } from '../../assets/icons/menu_icons/faq.svg'
 import { ReactComponent as SettingsSVG } from '../../assets/icons/menu_icons/settings.svg'
 import { ReactComponent as LogoutSVG } from '../../assets/icons/menu_icons/logout.svg'
+import { ReactComponent as AboutUsSVG } from '../../assets/icons/menu_icons/about_us.svg'
 import PathConstants from '../../constants/app/PathConstants'
 import DrawerNavigation from '../../components/drawer_navigation'
 import PrivateRoute from '../../components/private_route'
@@ -81,7 +82,7 @@ const Main = (): JSX.Element => {
         onClick: () => HistoryService.push(PathConstants.SETTINGS),
       },
       {
-        image: NotesSVG,
+        image: AboutUsSVG,
         name: language.MENU_ABOUT_US,
         onClick: () => HistoryService.push(PathConstants.ABOUT_US),
       },

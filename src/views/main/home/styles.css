@@ -71,6 +71,10 @@
   background-image: url(../../../assets/icons/menu_icons/settings.svg);
 }
 
+.home .home__grid__paper .paper__img.__a {
+  background-image: url(../../../assets/icons/menu_icons/about_us.svg);
+}
+
 .home .home__paper__string {
   font-size: 5.5vmin;
   font-weight: bold;

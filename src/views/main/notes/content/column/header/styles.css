@@ -14,6 +14,21 @@
   margin-bottom: 0;
 }
 
-.note__note_content__column__column_header__button {
+.note__note_content__column__column_header__button_div {
   margin-left: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.note__note_content__column__column_header__button_div__button {
+  height: 18px;
+  width: 18px;
+  padding: 0;
+  margin: 8px;
+}
+
+.note__note_content__column__column_header__button_div__button svg {
+  fill: var(--column-font-color);
+  height: 18px;
+  width: 18px;
 }

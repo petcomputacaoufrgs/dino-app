@@ -1,0 +1,33 @@
+name: Format source code and compress images
+on: pull_request
+
+jobs: 
+  run:
+    name: Format source code and compress images
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Format source code
+      run: yarn prettier
+    
+    - name: Compress images
+      run: yarn compress-images
+
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v5
+      with:
+        author_name: DinoApp
+        message: "Refactor(Code & Images): Format code and compress images"
+        add: "."
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

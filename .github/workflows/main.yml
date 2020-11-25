@@ -1,5 +1,5 @@
 name: Format source code and compress images
-on: pull_request
+on: push
 
 jobs: 
   run:

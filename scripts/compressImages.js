@@ -92,4 +92,4 @@ const init = async () => {
 }
 
 
-init()
+return init()

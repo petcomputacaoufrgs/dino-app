@@ -15,6 +15,7 @@ import GoogleGrantRequestModel from '../../types/auth/google/GoogleGrantRequestM
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleScope from '../../types/auth/google/GoogleScope'
 import GoogleRefreshAuthResponseModel from '../../types/auth/google/GoogleRefreshAuthResponseModel'
+import GoogleContactGrantContextUpdater from '../../context_updater/GoogleContactGrantContextUpdater'
 
 class AuthService {
   cleanLoginGarbage = () => {
@@ -109,6 +110,16 @@ class AuthService {
     return false
   }
 
+  hasGoogleContactsGrant = () => {
+    const scopes = this.getGoogleAuthScopes()
+
+    if (scopes) {
+      return scopes.some(scope => scope === GoogleScope.SCOPE_CONTACT)
+    }
+
+    return false
+  }
+
   isAuthenticated = (): boolean => Boolean(AuthLocalStorage.getAuthToken())
 
   getGoogleAccessToken = (): string | null => {
@@ -133,6 +144,15 @@ class AuthService {
 
   setGoogleAuthScopes = (scopeList: string[]) => {
     AuthLocalStorage.setGoogleAuthScopes(scopeList)
+    GoogleContactGrantContextUpdater.update()
+  }
+
+  getDeclinedContactsGrant = (): boolean => {
+    return AuthLocalStorage.getDeclinedContactsGrant()
+  }
+
+  setDeclinedContactsGrant = (declined: boolean) => {
+    AuthLocalStorage.setDeclinedContactsGrant(declined)
   }
 
   getAuthToken = (): string => {
@@ -273,6 +293,7 @@ class AuthService {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
     this.setGoogleAuthScopes(responseBody.scopeList)
+    this.setDeclinedContactsGrant(responseBody.declinedContatsGrant)
   }
 
   private saveGoogleAuthData(responseBody: GoogleAuthResponseModel) {
@@ -280,6 +301,7 @@ class AuthService {
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
     this.setGoogleAuthScopes(responseBody.scopeList)
     this.saveUserAuthData(responseBody)
+    this.setDeclinedContactsGrant(responseBody.declinedContatsGrant)
   }
 
   private saveUserAuthData(responseBody: AuthResponseModel) {

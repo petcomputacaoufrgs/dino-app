@@ -8,6 +8,8 @@ import { ReactComponent as DinoAuthSVG } from '../../assets/icons/dino_auth.svg'
 import './styles.css'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import { useAlert } from '../../context_provider/alert'
+import GoogleContactGrantContextUpdater from '../../context_updater/GoogleContactGrantContextUpdater'
+import ContactServerService from '../../services/contact/ContactServerService'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> ((
     {
@@ -15,7 +17,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> 
         title,
         text,
         open,
-        onClose,
+        onDecline: onClose,
         onAccept
     },
     ref
@@ -32,6 +34,8 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> 
         setRefreshNecessary(false)
         
         if (response === GrantStatusConstants.SUCCESS) {
+            alert.showSuccessAlert(language.GRANT_FAIL_BY_EXTERNAL_SUCCESS)
+            GoogleContactGrantContextUpdater.update()
             onAccept()
         } else if (response === GrantStatusConstants.EXTERNAL_SERVICE_ERROR) {
             alert.showErrorAlert(language.GRANT_FAIL_BY_EXTERNAL_ERROR)
@@ -50,7 +54,9 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> 
         }
     }
 
-    const handleCancelClick = async () => {
+    const handleDecline = async () => {
+        alert.showInfoAlert(language.GRANT_DECLINED)
+        ContactServerService.declineGoogleContacts()
         onClose()
     }
 
@@ -73,7 +79,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> 
                 <p>{text}</p>
             </div>
             <div className="google_grant_dialog__buttons">
-                <Button onClick={handleCancelClick}>
+                <Button onClick={handleDecline}>
                     {language.DIALOG_DECLINE_BUTTON_TEXT}
                 </Button>
                 <Button autoFocus onClick={handleAcceptClick} className="google_grant_dialog__buttons__accept_button">

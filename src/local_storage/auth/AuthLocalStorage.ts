@@ -180,6 +180,24 @@ class AuthLocalStorage extends BaseLocalStorage {
     )
   }
 
+  getDeclinedContactsGrant = (): boolean => {
+    const value = this.get(LS_Constants.DECLINED_CONTACTS_GRANT)
+
+    if (value === null) {
+      return false
+    }
+
+    return JSON.parse(value)
+  }
+
+  setDeclinedContactsGrant = (declined: boolean) => {
+    this.set(
+      LS_Constants.DECLINED_CONTACTS_GRANT,
+      JSON.stringify(declined)
+    )
+  }
+
+
   removeSuccessRefreshingGoogleAccessToken = () => {
     this.remove(LS_Constants.SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN)
   }

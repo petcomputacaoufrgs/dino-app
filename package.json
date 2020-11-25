@@ -62,7 +62,7 @@
     "server": "node scripts/server.js",
     "eject": "react-scripts eject"
   },
-  "pre-commit": [
+  "pre-push": [
     "compress-images",
     "prettier"
   ],
@@ -91,7 +91,7 @@
     "imagemin-pngquant": "^9.0.1",
     "imagemin-svgo": "^8.0.0",
     "path": "^0.12.7",
-    "pre-commit": "^1.2.2",
+    "pre-push": "^0.1.1",
     "prettier": "2.0.5"
   }
 }

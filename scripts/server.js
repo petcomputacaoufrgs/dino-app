@@ -15,11 +15,10 @@ app.use((req, res) => {
   }
 })
 
-
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '../build', 'index.html'))
 })
 
-console.log("SERVER PORT: " + port)
+console.log('SERVER PORT: ' + port)
 
 app.listen(port)

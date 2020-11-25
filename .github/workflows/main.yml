@@ -28,5 +28,3 @@ jobs:
       with:
         message: "Refactor(Code & Images): Format code and compress images"
         add: "."
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -258,7 +258,6 @@ class ContactService {
       items.push(item)
       this.setResourceNamesToDelete(items)
     }
-    console.log(items)
   }
 
   //#endregion

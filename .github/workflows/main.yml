@@ -1,5 +1,5 @@
 name: Format source code and compress images
-on: pull_request
+on: push
 
 jobs: 
   run:
@@ -26,7 +26,6 @@ jobs:
     - name: Commit changes
       uses: EndBug/add-and-commit@v5
       with:
-        author_name: DinoApp
         message: "Refactor(Code & Images): Format code and compress images"
         add: "."
       env:

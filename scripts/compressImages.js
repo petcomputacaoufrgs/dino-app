@@ -81,9 +81,13 @@ const init = async () => {
           console.log(`      ${compressImage}`)
         )
         console.log('------------------------------------------------------')
+
+        return 0
     } catch (e) {
         console.log('COMPRESSION FAIL')
         console.log(e)
+
+        return 1
     }
 }
 

@@ -73,6 +73,9 @@
     "server": "node scripts/server.js",
     "eject": "react-scripts eject"
   },
+  "pre-commit": [
+    "compress-images"
+  ],
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -89,6 +92,7 @@
     ]
   },
   "devDependencies": {
+    "pre-commit": "^1.2.2",
     "prettier": "2.0.5"
   }
 }

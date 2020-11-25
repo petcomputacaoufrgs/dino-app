@@ -69,7 +69,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier": "prettier --write .",
-    "compress-images": "echo \"fooo\" && exit 1",
+    "compress-images": "node scripts/compressImages.js && exit 0",
     "server": "node scripts/server.js",
     "eject": "react-scripts eject"
   },

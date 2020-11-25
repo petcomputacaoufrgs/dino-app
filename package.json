@@ -93,6 +93,7 @@
     ]
   },
   "devDependencies": {
+    "pre-commit": "^1.2.2",
     "prettier": "2.0.5"
   }
 }

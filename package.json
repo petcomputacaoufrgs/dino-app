@@ -38,6 +38,10 @@
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "http-status-codes": "^1.4.0",
+    "imagemin": "^7.0.1",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-pngquant": "^9.0.1",
+    "imagemin-svgo": "^8.0.0",
     "moment": "^2.27.0",
     "path": "^0.12.7",
     "pouchdb": "^7.2.1",
@@ -62,10 +66,11 @@
   },
   "scripts": {
     "start": "react-scripts start --ssl",
-    "server": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier": "prettier --write .",
+    "compress": "node compress.js",
+    "server": "node server.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

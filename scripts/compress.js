@@ -36,6 +36,7 @@ const getDirectoriesWithImagesAux = (dirPath, arrayOfFiles, dirWithImages) => {
 }
 
 const compressImages = async (dirs) => {
+    const compressedImages = []
     const filesTypes = supportedImageTypes.join(',')
 
     const promises = dirs.map(async (dir) => {
@@ -54,24 +55,36 @@ const compressImages = async (dirs) => {
             ],
         })
 
-        console.log("--------------------")
-        console.log("Arquivos compridos: ")
-        compressedFiles.forEach(compressedFile => {
-            console.log(compressedFile.sourcePath)
-        })
-        console.log('--------------------')
+        compressedImages.push(
+          ...compressedFiles.map((compressedFile) => compressedFile.sourcePath)
+        )
     })
 
-    return Promise.all(promises)
+    await Promise.all(promises)
+
+    return compressedImages
 }
 
 
 const init = async () => {
-    console.log("COMPRESSING FILES...")
-    const dirsWithImage = getDirectoriesWithImages()
+    console.log('-------------------IMAGE COMPRESSOR-------------------')
+    console.log('COMPRESSING FILES...')
 
-    await compressImages(dirsWithImage)
-    console.log('COMPRESSION ENDED SUCCESSFULLY')
+    try {
+        const dirsWithImage = getDirectoriesWithImages()
+
+        const compressedImages = await compressImages(dirsWithImage)
+
+        console.log('COMPRESSION ENDED SUCCESSFULLY')        
+        console.log('   FILES: ')
+        compressedImages.forEach((compressImage) =>
+          console.log(`      ${compressImage}`)
+        )
+        console.log('------------------------------------------------------')
+    } catch (e) {
+        console.log('COMPRESSION FAIL')
+        console.log(e)
+    }
 }
 
 

@@ -69,8 +69,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier": "prettier --write .",
-    "compress": "node compress.js",
-    "server": "node server.js",
+    "compress": "node scripts/compress.js",
+    "server": "node scripts/server.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

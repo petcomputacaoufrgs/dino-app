@@ -95,7 +95,7 @@ class AppSettingsService {
   getDefaultAppSettings = (): AppSettingsRequestAndResponseModel => {
     const defaultAppSettings: AppSettingsRequestAndResponseModel = {
       language: navigator.language.slice(0, 2),
-      colorTheme: ColorThemeEnum.CLASSIC,
+      colorTheme: ColorThemeEnum.DEVICE,
     }
 
     return defaultAppSettings
@@ -143,14 +143,25 @@ class AppSettingsService {
   getColorThemeName = (code: number): string => {
     switch (code) {
       case 1:
-        return 'classic'
+        return 'light'
       case 2:
         return 'dark'
       case 3:
         return 'high_contrast'
+      case 4:
+        return this.getSystemColorThemeName()
       default:
-        return 'classic'
+        return 'light'
     }
+  }
+
+  getSystemColorThemeName = (): string => {
+    const matchDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+    if (matchDarkMode && matchDarkMode.matches) {
+      return 'dark'
+    }
+
+    return 'light'
   }
 
   returnAppSettingsToDefault = (): void => {

@@ -384,11 +384,13 @@ export default class EN implements LanguageBase {
 
   NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
 
-  CLASSIC_THEME_NAME = 'Classic'
+  LIGHT_THEME_NAME = 'Light'
 
   DARK_THEME_NAME = 'Dark'
 
   DALTONIAN_THEME_NAME = 'High contrast'
+
+  DEVICE_DEFAULT_THEME_NAME = 'System default'
 
   COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
 }

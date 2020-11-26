@@ -19,8 +19,12 @@ const ColorThemeContextProvider = (): ColorThemeContextType => {
 
     return [
       {
-        code: ColorThemeEnum.CLASSIC,
-        name: language.CLASSIC_THEME_NAME,
+        code: ColorThemeEnum.DEVICE,
+        name: language.DEVICE_DEFAULT_THEME_NAME,
+      },
+      {
+        code: ColorThemeEnum.LIGHT,
+        name: language.LIGHT_THEME_NAME,
       },
       {
         code: ColorThemeEnum.DARK,
@@ -34,7 +38,7 @@ const ColorThemeContextProvider = (): ColorThemeContextType => {
   }
 
   const value: ColorThemeContextType = {
-    current: currentColorTheme,
+    currentCode: currentColorTheme,
     currentName: AppSettingsService.getColorThemeName(currentColorTheme),
     updateColorTheme: updateColorTheme,
     getColorThemeOptions: getColorThemeOptions

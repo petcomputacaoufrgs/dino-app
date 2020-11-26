@@ -1,20 +1,12 @@
 import React, { useState } from 'react'
 import { Switch } from 'react-router'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
-import { ReactComponent as GlossarySVG } from '../../assets/icons/menu_icons/glossary.svg'
-import { ReactComponent as ContactsSVG } from '../../assets/icons/menu_icons/phone.svg'
-import { ReactComponent as HomeSVG } from '../../assets/icons/menu_icons/home.svg'
-import { ReactComponent as NotesSVG } from '../../assets/icons/menu_icons/note.svg'
-import { ReactComponent as FaqSVG } from '../../assets/icons/menu_icons/faq.svg'
-import { ReactComponent as SettingsSVG } from '../../assets/icons/menu_icons/settings.svg'
-import { ReactComponent as LogoutSVG } from '../../assets/icons/menu_icons/logout.svg'
 import PathConstants from '../../constants/app/PathConstants'
 import DrawerNavigation from '../../components/drawer_navigation'
 import PrivateRoute from '../../components/private_route'
 import GlossaryItem from './glossary/glossary_item'
 import Glossary from './glossary'
 import Contacts from './contacts'
-import HistoryService from '../../services/history/HistoryService'
 import Home from './home'
 import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
@@ -30,6 +22,7 @@ import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import Calendar from './calendar'
 import AboutUs from './about'
 import AuthService from '../../services/auth/AuthService'
+import MenuService from '../../services/menu/MenuService'
 
 const Main = (): JSX.Element => {
   const language = useCurrentLanguage()
@@ -48,52 +41,7 @@ const Main = (): JSX.Element => {
     setOpenLogoutDialog(false)
   }
 
-  const groupedItems: MenuItemViewModel[][] = [
-    [
-      {
-        image: HomeSVG,
-        name: language.MENU_HOME,
-        onClick: () => HistoryService.push(PathConstants.HOME),
-      },
-      {
-        image: GlossarySVG,
-        name: language.MENU_GLOSSARY,
-        onClick: () => HistoryService.push(PathConstants.GLOSSARY),
-      },
-      {
-        image: ContactsSVG,
-        name: language.MENU_CONTACTS,
-        onClick: () => HistoryService.push(PathConstants.CONTACTS),
-      },
-      {
-        image: NotesSVG,
-        name: language.MENU_NOTES,
-        onClick: () => HistoryService.push(PathConstants.NOTES),
-      },
-      {
-        image: FaqSVG,
-        name: language.MENU_FAQ,
-        onClick: () => HistoryService.push(PathConstants.FAQ),
-      },
-      {
-        image: SettingsSVG,
-        name: language.MENU_SETTINGS,
-        onClick: () => HistoryService.push(PathConstants.SETTINGS),
-      },
-      {
-        image: NotesSVG,
-        name: language.MENU_ABOUT_US,
-        onClick: () => HistoryService.push(PathConstants.ABOUT_US),
-      },
-    ],
-    [
-      {
-        image: LogoutSVG,
-        name: language.MENU_LOGOUT,
-        onClick: handleLogoutClick,
-      },
-    ],
-  ]
+  const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(language, handleLogoutClick)
 
   const renderMainContent = (): JSX.Element => {
     return (

@@ -13,7 +13,8 @@ import NotFound from './views/not_found/index'
 import UserContextProvider from './context/provider/user'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
-import { useColorThemeName } from './context/provider/app_settings'
+import DataThemeUtils from './utils/DataThemeUtils'
+import { useCurrentColorTheme } from './context/provider/app_settings'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -21,7 +22,12 @@ const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [showLoadScreen, setShowLoadScreen] = useState(true)
 
-  const colorThemeName = useColorThemeName()
+  const colorThemeName = useCurrentColorTheme()
+  DataThemeUtils.setBodyDataTheme(colorThemeName)
+
+  useEffect(() => {
+    DataThemeUtils.setBodyDataTheme(colorThemeName)
+  })
 
   useEffect(() => {
     if (firstLoad) {
@@ -69,7 +75,7 @@ const App = (): JSX.Element => {
   const renderLoad = (): JSX.Element => <Load />
 
   return (
-    <div className="app" data-theme={colorThemeName}>
+    <div className="app">
       {showLoadScreen ? renderLoad() : renderApp()}
     </div>
   )

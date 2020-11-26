@@ -1,5 +1,5 @@
+import MenuItemViewModel from "../../../types/menu/MenuItemViewModel"
+
 export default interface HomeItemProps {
-  class: string
-  label: string
-  path: string
+  
 }

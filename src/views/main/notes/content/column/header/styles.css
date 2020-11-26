@@ -2,7 +2,7 @@
   height: 20px;
   display: flex;
   flex-direction: row;
-  color: var(--dark-color);
+  color: var(--column-border);
 }
 
 .note__note_content__column__column_header h2 {
@@ -19,5 +19,5 @@
 }
 
 .note__note_content__column__column_header__button .svg_button svg {
-  fill: var(--dark-color);
+  fill: var(--column-border);
 }

@@ -3,7 +3,7 @@ import AgreementDialog from '../agreement_dialog'
 import LogoutDialogProps from './props'
 import './styles.css'
 import AgreementDialogProps from '../agreement_dialog/props'
-import { useLanguage } from '../../context_provider/app_settings'
+import { useLanguage } from '../../context/provider/app_settings'
 
 const LogoutDialog: React.FC<LogoutDialogProps> = ({
   open,

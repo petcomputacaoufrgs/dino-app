@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import ContactItemListProps from './props'
 import {
   Avatar,

@@ -3,7 +3,7 @@ import { IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import HeaderProps from './props'
 import './styles.css'
 

@@ -9,7 +9,6 @@ import FaqSync from './faq/FaqSync'
 import NoteColumnSync from './note/NoteColumnSync'
 import NoteSync from './note/NoteSync'
 import SyncService from '../services/sync/SyncService'
-import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import ConnectionService from '../services/connection/ConnectionService'
 
 class Synchronizer {

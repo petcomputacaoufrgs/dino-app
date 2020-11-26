@@ -244,8 +244,6 @@ class ContactsService {
     newPhones: Array<PhoneModel>
   ): ContactModel | undefined => {
     const items = this.getItems()
-    console.log(items)
-    console.log(newPhones)
     return items.find((item) => {
       return item.phones.some((phone) =>
         newPhones.some((newPhone) => newPhone.number === phone.number)

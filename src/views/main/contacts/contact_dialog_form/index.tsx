@@ -81,11 +81,8 @@ const ContactFormDialog = React.forwardRef(
       }
 
       if (validInfo()) {
-        console.log("válido")
         const newItem = makeItem()
         const exists = Service.findItemByPhones(newItem.phones)
-
-        console.log(exists)
 
         if (action === Constants.ACTION_EDIT) {
           if (!exists || exists.frontId === newItem.frontId) {

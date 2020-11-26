@@ -43,7 +43,7 @@ class ConnectionService {
 
       return response.status === HttpStatus.OK
     } catch (e) {
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
 
     return false
@@ -86,20 +86,6 @@ class ConnectionService {
 
       await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
     }
-  }
-
-  private isDinoConnected = async (): Promise<Boolean> => {
-    try {
-      const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
-
-      const response = await request
-
-      return response.status === HttpStatus.OK
-    } catch (e) {
-      LogAppErrorService.logError(e)
-    }
-
-    return false
   }
 
   private setConnected = () => {

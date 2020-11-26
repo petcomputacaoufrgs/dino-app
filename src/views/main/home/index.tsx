@@ -2,11 +2,9 @@ import React from 'react'
 import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import { ListItem, Paper } from '@material-ui/core'
 import HomeItemProps from './props'
-import { ListItem, Paper } from '@material-ui/core'
-import HistoryService from '../../../services/history/HistoryService'
-import './styles.css'
 import MenuService from '../../../services/menu/MenuService'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
+import './styles.css'
 
 const Home: React.FC<HomeItemProps> = () => {
   const language = useCurrentLanguage()

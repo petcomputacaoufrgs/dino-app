@@ -14,7 +14,7 @@ import UserContextProvider from './context/provider/user'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
 import DataThemeUtils from './utils/DataThemeUtils'
-import { useColorThemeName } from './context/provider/app_settings'
+import { useCurrentColorTheme } from './context/provider/app_settings'
 
 const LOAD_SCREEN_TIME = 2250
 

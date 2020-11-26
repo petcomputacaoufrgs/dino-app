@@ -1,9 +1,9 @@
 import React from 'react'
 import HeaderProps from './props'
 import DateUtils from '../../../../../utils/DateUtils'
-import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
 import {ReactComponent as TodayCalendarSVG} from '../../../../../assets/icons/today_calendar.svg'
 import IconButton from '../../../../../components/button/icon_button'
+import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {

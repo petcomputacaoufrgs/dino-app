@@ -18,6 +18,8 @@ class DinoAPIURLConstants {
 
   AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 
+  GRANT_GOOGLE = `${this.AUTH}google/grant/`
+
   REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`
 
   REFRESH_AUTH = `${this.PUBLIC_AUTH}refresh/`

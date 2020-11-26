@@ -2,7 +2,7 @@ import Superagent from 'superagent'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
-import ConnectionLocalStorage from '../../local_storage/connection/ConnectionLocalStorage'
+import ConnectionLocalStorage from '../../storage/local_storage/connection/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
@@ -35,6 +35,20 @@ class ConnectionService {
     return ConnectionLocalStorage.isDisconnected()
   }
 
+  isDinoConnected = async (): Promise<Boolean> => {
+    try {
+      const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
+
+      const response = await request
+
+      return response.status === HttpStatus.OK
+    } catch (e) {
+      LogAppErrorService.logError(e)
+    }
+
+    return false
+  }
+
   verify = () => {
     if (navigator.onLine) {
       this.awaitForDinoConnection()
@@ -61,37 +75,17 @@ class ConnectionService {
   }
 
   private awaitForDinoConnection = async () => {
-    let isConnected = this.isConnected()
-
     while (navigator.onLine) {
       const isDinoConnected = await this.isDinoConnected()
-
       if (isDinoConnected) {
-        if (!isConnected) {
-          this.setConnected()
-        }
+        this.setConnected()
         break
-      } else if (isConnected) {
-        isConnected = false
+      } else {
         this.setDisconnected()
       }
 
       await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
     }
-  }
-
-  private isDinoConnected = async (): Promise<Boolean> => {
-    try {
-      const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
-
-      const response = await request
-
-      return response.status === HttpStatus.OK
-    } catch (e) {
-      LogAppErrorService.saveError(e)
-    }
-
-    return false
   }
 
   private setConnected = () => {

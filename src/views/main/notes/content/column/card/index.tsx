@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import DateUtils from '../../../../../../utils/DateUtils'
 import TagList from '../../../../../../components/tag_list/index'
 import MaterialCard from '@material-ui/core/Card'
@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent'
 import NoteBodyColumnCardProps from './props'
 import { Draggable } from 'react-beautiful-dnd'
 import './styles.css'
+import { CardActions } from '@material-ui/core'
 
 const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
@@ -45,10 +46,12 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
           />
           <CardContent className="note__note_content__column__column_card__card__card_content">
             <TagList tagList={note.tagNames} />
-            <p className="note__note_content__column__column_card__card__card_content__answer">
-              {note.answer}
-            </p>
           </CardContent>
+          {note.answer && note.answer.length > 0 &&
+            <CardActions className="note__note_content__column__column_card__card__card_answer">
+              <p>{note.answer}</p>
+            </CardActions>
+          }
         </MaterialCard>
       )}
     </Draggable>

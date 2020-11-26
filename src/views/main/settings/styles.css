@@ -44,7 +44,7 @@
 }
 
 .settings__save_button.MuiButtonBase-root .MuiButton-label {
-  color: var(--menu-font-color);
+  color: var(--light-color);
 }
 
 .settings__title.MuiTypography-root {

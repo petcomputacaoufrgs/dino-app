@@ -4,12 +4,12 @@ import DayViewModel from '../../../../../../../../types/calendar/DayViewModel'
 import DayModal from '../../../../../day_modal'
 import CalendarService from '../../../../../../../../services/calendar/CalendarService'
 import DateUtils from '../../../../../../../../utils/DateUtils'
-import EventDoc from '../../../../../../../../types/calendar/database/EventDoc'
 import './styles.css'
+import CalendarEventEntity from '../../../../../../../../types/calendar/database/CalendarEventEntity'
 
 const Day: React.FC<DayProps> = ({ day }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [events, setEvents] = useState<EventDoc[]>([])
+  const [events, setEvents] = useState<CalendarEventEntity[]>([])
   const isToday = DateUtils.isToday(day.date)
 
   const getBoxClass = (): string =>
@@ -31,7 +31,7 @@ const Day: React.FC<DayProps> = ({ day }) => {
       updateEvents(events)
     }
 
-    let updateEvents = (events: EventDoc[]) => {
+    let updateEvents = (events: CalendarEventEntity[]) => {
       setEvents(events)
     }
 
@@ -40,7 +40,7 @@ const Day: React.FC<DayProps> = ({ day }) => {
     }
 
     const cleanBeforeUpdate = () => {
-      updateEvents = (events: EventDoc[]) => {}
+      updateEvents = (events: CalendarEventEntity[]) => {}
     }
 
     return cleanBeforeUpdate

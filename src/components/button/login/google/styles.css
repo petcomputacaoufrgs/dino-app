@@ -1,0 +1,24 @@
+.google_login_button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.google_login_button .google_login_button__error {
+  color: #ff0000;
+  padding: 2px;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}
+
+.google_login_button__button button {
+  background-color: var(--note-background);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.google_login_button__button .MuiTypography-root {
+  color: var(--dark-font-color);
+}

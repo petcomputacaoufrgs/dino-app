@@ -24,7 +24,7 @@ class NoteColumnServerService {
         const response = await request.authenticate().go()
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
     return null
@@ -43,7 +43,7 @@ class NoteColumnServerService {
 
         return serverVersion
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -77,7 +77,7 @@ class NoteColumnServerService {
           .go()
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -108,7 +108,7 @@ class NoteColumnServerService {
 
         return true
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -139,7 +139,7 @@ class NoteColumnServerService {
 
         return newVersion
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -159,7 +159,7 @@ class NoteColumnServerService {
         const newVersion = response.body
         return newVersion
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
     return null
@@ -181,7 +181,7 @@ class NoteColumnServerService {
         const response = await request.authenticate().setBody(model).go()
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

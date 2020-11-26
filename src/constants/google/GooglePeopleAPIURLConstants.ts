@@ -1,6 +1,3 @@
-/**
- * @description Valores de URL da Google API para conexão
- */
 class GoogleAPIURLConstants {
   private BASE_URL = 'https://people.googleapis.com/v1/'
 

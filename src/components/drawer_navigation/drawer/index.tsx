@@ -4,9 +4,9 @@ import './styles.css'
 import { Divider } from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
-import { useCurrentLanguage } from '../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import { Avatar } from '@material-ui/core'
-import { useUser } from '../../../context_provider/user'
+import { useUser } from '../../../context/provider/user'
 import IconButton from '../../button/icon_button'
 import {ReactComponent as ChevronLeftIconSVG} from '../../../assets/icons/chevron_left.svg'
 
@@ -55,7 +55,13 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 
   const renderUser = (): JSX.Element => (
     <div className="user">
-      <Avatar src={user.picture} alt={language.AVATAR_ALT} className="avatar" />
+      <div className="user__avatar">
+        <Avatar
+          src={user.picture}
+          alt={language.AVATAR_ALT}
+          className="avatar"
+        />
+      </div>
       <p className="username">{user.name}</p>
     </div>
   )

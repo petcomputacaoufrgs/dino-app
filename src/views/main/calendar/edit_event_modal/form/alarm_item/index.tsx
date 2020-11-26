@@ -1,6 +1,6 @@
 import React from 'react'
 import AlarmItemProps from './props'
-import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
 import LogAppErrorService from '../../../../../../services/log_app_error/LogAppErrorService'
 import DeleteSVG from '../../../../../../assets/icons/delete.svg'
@@ -23,7 +23,7 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
       case EventAlarmType.DAY:
         return alarm.time === 1 ? language.DAYS : language.DAYS
       default:
-        LogAppErrorService.save({
+        LogAppErrorService.logModel({
           date: new Date().getTime(),
           error: 'Invalid alarm type saved: ' + alarm.type,
           title: 'Event Alarm Type',

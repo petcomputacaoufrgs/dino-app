@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Button from '../../../../components/button/text_button'
 import './styles.css'
 import NoteCreateDialogProps from './props'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -80,7 +80,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
         <TextField
           error={questionWithError}
           helperText={questionErrorHelper}
-          label={language.QUESTION_NOTE_DIALOG_TITLE}
+          label={language.QUESTION_NOTE_DIALOG_TITLE + ' (' + language.MAX + NoteConstants.ANSWER_MAX_LENGTH + ')'}
           type="text"
           multiline
           variant="outlined"

@@ -8,7 +8,7 @@
 }
 
 .drawer__navigation__app_bar .MuiIconButton-label .MuiSvgIcon-root {
-  fill: var(--header-and-menu-icons);
+  fill: var(--light-color);
 }
 
 .drawer__navigation__app_bar__button svg {

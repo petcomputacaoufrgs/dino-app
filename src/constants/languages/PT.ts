@@ -347,7 +347,7 @@ export default class PT implements LanguageBase {
 
   FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
 
-  MAX = 'Máx.'
+  MAX = 'máx. '
 
   ADD_COLUMN_TEXT = '+ Adicionar coluna'
 
@@ -396,4 +396,8 @@ export default class PT implements LanguageBase {
   DEVICE_DEFAULT_THEME_NAME = 'Padrão do sistema'
 
   COLOR_THEME_SELECTION_TITLE = 'Escolher Tema de Cores'
+
+  CONTACT_DIALOG_FORM_SUBTITLE = 'Contato'
+
+  CONTACT_NUMBER_ALREADY_EXISTS = 'Este número já está registrado no contato'
 }

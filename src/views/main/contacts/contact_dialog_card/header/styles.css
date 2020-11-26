@@ -1,0 +1,7 @@
+.contact_dialog_content_header .MuiTypography-root.MuiCardHeader-title{
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    overflow-x: hidden;
+}

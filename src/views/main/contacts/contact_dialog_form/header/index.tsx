@@ -6,6 +6,7 @@ import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
 import CloseComponent from '../../../../../components/icon_buttons/close_component'
 import '../../styles.css'
+import './styles.css'
 
 const AddContactDialogHeader = (
   props: ContactFormDialogHeaderProps
@@ -41,7 +42,8 @@ const AddContactDialogHeader = (
           ? props.name || language.CONTACTS_ADD_CONTACT
           : props.name
       }
-      subheader="Contato"
+      subheader={language.CONTACT_DIALOG_FORM_SUBTITLE}
+      className='contact_dialog_form_header'
     />
   )
 }

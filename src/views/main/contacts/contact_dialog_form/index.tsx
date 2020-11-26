@@ -63,7 +63,7 @@ const ContactFormDialog = React.forwardRef(
         if (phone)
           setInvalidPhone({
             number: phone.number,
-            text: `O número já está registrado no contato ${exists.name}`,
+            text: `${language.CONTACT_NUMBER_ALREADY_EXISTS} ${exists.name}`,
           })
       }
 

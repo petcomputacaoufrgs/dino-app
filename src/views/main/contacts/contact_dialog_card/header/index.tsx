@@ -6,6 +6,8 @@ import ContactsService from '../../../../../services/contact/ContactService'
 import CloseComponent from '../../../../../components/icon_buttons/close_component'
 import OptionsComponent from '../../../../../components/icon_buttons/options_component'
 import '../../styles.css'
+import './styles.css'
+
 const ContactCardHeader = ({
   item,
   setEdit,
@@ -60,6 +62,7 @@ const ContactCardHeader = ({
         }
         title={item.name}
         subheader={ContactsService.getPhoneTypes(item.phones, language)}
+        className='contact_dialog_content_header'
       />
       <Menu
         anchorEl={anchorEl}

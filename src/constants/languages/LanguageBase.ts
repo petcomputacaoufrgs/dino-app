@@ -189,4 +189,6 @@ export default interface LanguageBase {
   DALTONIAN_THEME_NAME: string
   DEVICE_DEFAULT_THEME_NAME: string
   COLOR_THEME_SELECTION_TITLE: string
+  CONTACT_DIALOG_FORM_SUBTITLE: string
+  CONTACT_NUMBER_ALREADY_EXISTS: string
 }

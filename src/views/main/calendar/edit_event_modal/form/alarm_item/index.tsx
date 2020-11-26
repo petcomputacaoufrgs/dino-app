@@ -1,6 +1,6 @@
 import React from 'react'
 import AlarmItemProps from './props'
-import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
 import LogAppErrorService from '../../../../../../services/log_app_error/LogAppErrorService'
 import DeleteSVG from '../../../../../../assets/icons/delete.svg'

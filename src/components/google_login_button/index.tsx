@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../context_provider/app_settings'
-import { useAlert } from '../../context_provider/alert'
+import { useLanguage } from '../../context/provider/app_settings'
+import { useAlert } from '../../context/provider/alert'
 import Button from '../button'
 import Loader from '../loader'
 import GoogleSecret from '../../environment/client_secret.json'

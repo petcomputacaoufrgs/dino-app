@@ -1,7 +1,7 @@
 import React from 'react'
 import TagSearchBar from '../../../../components/tag_search_bar'
 import NoteSVG from '../../../../assets/icons/menu_icons/note.svg'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import NoteHeaderProps from './props'
 import './styles.css'
 

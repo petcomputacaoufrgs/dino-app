@@ -1,9 +1,9 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { useParams } from 'react-router-dom'
 import { Divider, Paper } from '@material-ui/core'
 import './styles.css'
-import { useGlossary } from '../../../../context_provider/glossary'
+import { useGlossary } from '../../../../context/provider/glossary'
 
 const GlossaryItem = (): JSX.Element => {
   const { id } = useParams()

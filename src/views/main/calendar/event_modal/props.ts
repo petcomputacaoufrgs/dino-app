@@ -1,7 +1,7 @@
-import EventDoc from '../../../../types/calendar/database/EventDoc'
+import CalendarEventEntity from "../../../../types/calendar/database/CalendarEventEntity"
 
 export default interface EventModalProps {
-  event: EventDoc
+  event: CalendarEventEntity
   open: boolean
   onClose: () => void
 }

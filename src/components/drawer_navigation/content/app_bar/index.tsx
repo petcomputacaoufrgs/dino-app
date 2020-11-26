@@ -5,7 +5,7 @@ import { Menu as MenuIcon } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
 import SyncInfo from './sync_info'
 import ArrowBack from '../../../arrow_back'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 
 const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
   const language = useCurrentLanguage()

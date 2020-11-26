@@ -344,7 +344,7 @@ export default class EN implements LanguageBase {
 
   FAQ_CONNECTION_ERROR = 'Internet connection required'
 
-  MAX = 'Max.'
+  MAX = 'max. '
 
   ADD_COLUMN_TEXT = '+ Add column'
 
@@ -384,13 +384,19 @@ export default class EN implements LanguageBase {
 
   NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
 
-  CLASSIC_THEME_NAME = 'Classic'
+  LIGHT_THEME_NAME = 'Light'
 
   DARK_THEME_NAME = 'Dark'
 
   DALTONIAN_THEME_NAME = 'High contrast'
 
+  DEVICE_DEFAULT_THEME_NAME = 'System default'
+
   COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
+
+  CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
+
+  CONTACT_NUMBER_ALREADY_EXISTS = 'This number is already created in the contact'
 
   DIALOG_AGREE_TEXT = 'Accept'
 

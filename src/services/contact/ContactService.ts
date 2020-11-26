@@ -2,12 +2,12 @@ import ContactsConstants from '../../constants/contact/ContactsConstants'
 import PhoneModel from '../../types/contact/PhoneModel'
 import ContactModel from '../../types/contact/ContactModel'
 import ContactResponseModel from '../../types/contact/ContactResponseModel'
-import LS from '../../local_storage/contact/ContactLocalStorage'
+import LS from '../../storage/local_storage/contact/ContactLocalStorage'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import DinoAgentService from '../../agent/DinoAgentService'
 import Server from './ContactServerService'
-import ContactContextUpdater from '../../context_updater/ContactContextUpdater'
+import ContactContextUpdater from '../../context/updater/ContactContextUpdater'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
@@ -96,16 +96,16 @@ class ContactsService {
   /// #MAIN FUNCTIONS
 
   addContact = async (item: ContactModel) => {
+    const items = this.getItems()
+    items.push(item)
+    this.setItems(items)
+    ContactContextUpdater.update()
+
     const response = await Server.saveContact(item)
 
     if (response !== undefined) {
       item.id = response.id
     }
-    const items = this.getItems()
-    items.push(item)
-    this.setItems(items)
-
-    ContactContextUpdater.update()
   }
 
   deleteContact = (deletedFrontID: number) => {
@@ -244,7 +244,6 @@ class ContactsService {
     newPhones: Array<PhoneModel>
   ): ContactModel | undefined => {
     const items = this.getItems()
-
     return items.find((item) => {
       return item.phones.some((phone) =>
         newPhones.some((newPhone) => newPhone.number === phone.number)

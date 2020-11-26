@@ -15,12 +15,12 @@ class LogAppErrorSync implements BaseSync {
             error: log.error,
             file: log.file,
             date: log.date,
-          } as LogAppErrorModel)
+          })
       )
 
-      const model = {
+      const model: LogAppErrorListModel = {
         items: items,
-      } as LogAppErrorListModel
+      }
 
       LogAppErrorService.saveAll(model)
     }

@@ -35,7 +35,7 @@
   width: 18px;
   height: 18px;
   margin-left: -10px;
-  fill: var(--header-and-menu-icons);
+  fill: var(--light-color);
 }
 
 .settings__save_button.MuiButtonBase-root {
@@ -44,7 +44,7 @@
 }
 
 .settings__save_button.MuiButtonBase-root .MuiButton-label {
-  color: var(--menu-font-color);
+  color: var(--light-color);
 }
 
 .settings__title.MuiTypography-root {

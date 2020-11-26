@@ -3,7 +3,7 @@
   width: 240px;
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  overflow: auto;
   background-color: var(--header-and-menu);
   margin-left: -240px;
 }
@@ -16,7 +16,7 @@
 .drawer_navigation__drawer__visible__menu__icon {
   width: 25px;
   height: 25px;
-  fill: var(--header-and-menu-icons);
+  fill: var(--light-color);
 }
 
 .drawer_navigation__drawer__visible .MuiListItemIcon-root {
@@ -25,7 +25,7 @@
 
 .drawer_navigation__drawer__visible
   .MuiTypography-root.MuiListItemText-primary {
-  color: var(--menu-font-color);
+  color: var(--light-color);
 }
 
 .drawer_navigation__drawer__invisible {
@@ -49,7 +49,11 @@
 }
 
 .drawer_navigation__drawer__header svg {
-  fill: var(--header-and-menu-icons);
+  fill: var(--light-color);
+}
+
+.drawer_navigation__drawer__header .MuiSvgIcon-root {
+  fill: var(--light-color);
 }
 
 .drawer_navigation__drawer__visible .MuiList-root.MuiList-padding {
@@ -63,13 +67,21 @@
 }
 
 .drawer_navigation__drawer__visible .user {
-  color: var(--menu-font-color);
+  color: var(--light-color);
   padding: 8px 16px;
 }
 
+.user__avatar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .drawer_navigation__drawer__visible .user .avatar {
-  width: 120px;
-  height: 120px;
+  width: 65%;
+  height: auto;
+  margin-bottom: 10px;
 }
 
 .drawer_navigation__drawer__visible .user .username {
@@ -77,16 +89,5 @@
   font-size: large;
   color: inherit;
   margin-top: 1rem;
-}
-
-@media (orientation: landscape) {
-  .drawer_navigation__drawer__visible .user .avatar {
-    width: 100px;
-    height: 100px;
-  }
-
-  .drawer_navigation__drawer__visible .user .username {
-    font-size: x-large;
-    color: inherit;
-  }
+  text-align: center;
 }

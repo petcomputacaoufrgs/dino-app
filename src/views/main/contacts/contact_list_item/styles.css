@@ -1,0 +1,5 @@
+.contacts__list__item .MuiTypography-root {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

@@ -4,7 +4,7 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import AuthService from '../auth/AuthService'
-import Synchronizer from '../../sync/SynchronizerService'
+import Synchronizer from '../../sync/Synchronizer'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
 import SyncService from '../sync/SyncService'
@@ -16,11 +16,12 @@ class EventService {
 
   whenStart = async () => {
     AuthService.cleanLoginGarbage()
-    if (AuthService.isAuthenticated()) {
-      AuthService.refreshGoogleAccessToken()
+    const isDinoConnected = await ConnectionService.isDinoConnected()
+    if (isDinoConnected && AuthService.isAuthenticated()) {
+        AuthService.refreshGoogleAccessToken()
+        WebSocketConnector.connect()
+        Synchronizer.sync()
     }
-    WebSocketConnector.connect()
-    Synchronizer.sync()
   }
 
   whenLogin = () => {

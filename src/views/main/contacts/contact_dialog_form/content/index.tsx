@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'
-import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import { ListItem } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Constants from '../../../../../constants/contact/ContactsConstants'
@@ -22,7 +22,6 @@ const ContactFormDialogContent = (
 
   const isNameInvalid = (name: string) => 
     name.length === Constants.NAME_MAX || props.invalidName
-  
 
   return (
     <div className="dialog-form__content">
@@ -33,7 +32,7 @@ const ContactFormDialogContent = (
         onChange={props.handleChangeName}
         margin="dense"
         id="name"
-        label={language.FORM_NAME}
+        label={`${language.FORM_NAME} (${language.MAX} ${Constants.NAME_MAX})`}
         type="name"
         inputProps={{ maxLength: Constants.NAME_MAX }}
         error={isNameInvalid(props.name)}
@@ -45,7 +44,7 @@ const ContactFormDialogContent = (
         onChange={props.handleChangeDescription}
         margin="dense"
         id="description"
-        label={language.FORM_DESCRIPTION}
+        label={`${language.FORM_DESCRIPTION} (${language.MAX} ${Constants.DESCRIPTION_MAX})`}
         type="text"
         inputProps={{ maxLength: Constants.DESCRIPTION_MAX }}
         error={props.description.length === Constants.DESCRIPTION_MAX}

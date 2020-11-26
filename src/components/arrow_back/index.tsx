@@ -3,7 +3,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowUpward'
 import IconButton from '@material-ui/core/IconButton'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import HistoryService from '../../services/history/HistoryService'
-import { useCurrentLanguage } from '../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../context/provider/app_settings'
 
 const ArrowBack = (): JSX.Element => {
   const language = useCurrentLanguage()

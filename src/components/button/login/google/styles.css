@@ -12,10 +12,13 @@
 }
 
 .google_login_button__button button {
-  color: black;
-  background-color: white;
+  background-color: var(--note-background);
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 25px;
   padding-right: 25px;
+}
+
+.google_login_button__button .MuiTypography-root {
+  color: var(--dark-font-color);
 }

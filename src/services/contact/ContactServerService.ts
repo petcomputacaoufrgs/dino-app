@@ -27,9 +27,7 @@ class ContactServerService {
       if (contactsToUpdate.toAdd.length > 0) {
         const updatedContactsToAdd = await ContactGoogleService.saveContacts(contactsToUpdate.toAdd)
         
-        const responseSaveModel = await this.saveContacts(
-          updatedContactsToAdd
-        )
+        const responseSaveModel = await this.saveContacts(updatedContactsToAdd)
 
         if (responseSaveModel !== undefined) {
           const version = responseSaveModel.version

@@ -3,6 +3,7 @@ import GoogleSecrets from '../../../environment/client_secret.json'
 /* eslint-disable no-undef */
 
 class GoogleOAuth2Service {
+
   init = async (callback) => {
     gapi.load('auth2', () => {
       try {

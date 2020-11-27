@@ -6,7 +6,7 @@ const TermsOfUse: React.FC = () => {
     return (
         <div className='terms_of_use'>
             <h1>Termos de Serviço</h1>
-            <p>Em vigor a partir de 30 de novembro de 2020.</p>
+            <span>Em vigor a partir de 30 de novembro de 2020.</span>
 
             <p>Nós entendemos como é importante o usuário estar a par da forma como o produto que está utilizando funciona e de sua segurança. 
                 Nosso termo de serviço tem como objetivo trazer tais esclarecimentos e mostrar nosso comprometimento.

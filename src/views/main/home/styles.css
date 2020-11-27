@@ -51,16 +51,7 @@
   width: 90%;
   padding: 8px;
   height: auto;
-}
-
-@media(orientation: landscape) {
-  .home .home__grid {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 0px 8px;
-  }
-
-.home .home__grid__paper .paper__img.__a {
-  background-image: url(../../../assets/icons/menu_icons/about_us.svg);
+  fill: var(--dark-color);
 }
 
 .home .home__paper__string {

@@ -45,6 +45,7 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
         )}
       </div>
       <Button
+        ariaLabel={language.CALENDAR_DELETE_BUTTON_ARIA_LABEL}
         onClick={handleDelete}
         className="calendar__add__modal__event_alert_item__delete_button"
       >

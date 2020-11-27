@@ -7,7 +7,8 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   children,
   disabled,
-  inputRef
+  inputRef,
+  ariaLabel
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const getClassName = (): string => {
@@ -40,6 +41,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
       ref={buttonRef}
+      aria-label={ariaLabel}
     >
       {children}
     </button>

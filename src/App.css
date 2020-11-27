@@ -15,7 +15,7 @@ body .MuiSvgIcon-root {
 }
 
 body .MuiInput-underline:before {
-  border-bottom: 2px solid var(--base-font-color);
+  border-bottom: 1px solid var(--base-font-color);
 }
 
 .MuiDialog-root {

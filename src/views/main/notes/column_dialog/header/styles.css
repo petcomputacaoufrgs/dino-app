@@ -3,11 +3,7 @@
 }
 
 .note__column_dialog__header .MuiTypography-root.MuiCardHeader-title {
-  color: var(--constrast-color);
-}
-
-.note__column_dialog__header.MuiCardHeader-root .MuiTypography-h5 {
-  font-weight: bold;
+  color: var(--inv-constrast-color);
 }
 
 .note__column_dialog__header.MuiCardHeader-root

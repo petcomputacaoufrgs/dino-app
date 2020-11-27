@@ -79,11 +79,17 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
       <div className={'drawer_navigation__drawer'}>
         <div className="drawer_navigation__drawer__visible">
           <div className="drawer_navigation__drawer__header">
-            <IconButton icon={ChevronLeftIconSVG} onClick={handleCloseClick} />
+            <IconButton
+              ariaLabel={language.CLOSE_MENU_BUTTON_ARIA_LABEL}
+              icon={ChevronLeftIconSVG}
+              onClick={handleCloseClick}
+            />
           </div>
           <Divider />
-          {renderUser()}
-          {renderGroupItems()}
+          <div className="drawer_navigation__drawer__content">
+            {renderUser()}
+            {renderGroupItems()}
+          </div>
         </div>
       </div>
       {open && (

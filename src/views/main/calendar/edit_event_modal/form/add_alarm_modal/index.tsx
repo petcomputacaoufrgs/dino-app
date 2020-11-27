@@ -138,6 +138,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
             />
           </RadioGroup>
           <Button
+            ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
             onClick={handleSave}
             className="calendar__edit_event_modal__form__add_alarm_modal__save_button"
           >

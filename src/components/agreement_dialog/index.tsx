@@ -6,11 +6,9 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import { useCurrentLanguage } from '../../context/provider/app_settings'
+import './styles.css'
 
-/**
- * Dialog genérica com duas opções
- * @param props Propriedades para especializar a Dialog
- */
 const AgreementDialog: React.FC<AgreementDialogProps> = ({
   agreeOptionText,
   description,
@@ -20,6 +18,8 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
   onDisagree,
   open,
 }) => {
+  const language = useCurrentLanguage()
+
   const handleDisagree = () => {
     onDisagree()
   }
@@ -32,18 +32,26 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
 
   return (
     <Dialog open={open} onClose={handleDisagree}>
-      <DialogTitle id="alert-dialog-title">{question}</DialogTitle>
+      <DialogTitle className="alert__dialog_title" id="alert-dialog-title">
+        {question}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           {description}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleDisagree}>
+        <Button
+          ariaLabel={language.AGREEMENT_BUTTON_ARIA_LABEL}
+          onClick={handleDisagree}
+        >
           {disagreeOptionText}
         </Button>
         {onAgree && (
-          <Button onClick={handleAgree}>
+          <Button
+            ariaLabel={language.DISAGREEMENT_BUTTON_ARIA_LABEL}
+            onClick={handleAgree}
+          >
             {agreeOptionText}
           </Button>
         )}

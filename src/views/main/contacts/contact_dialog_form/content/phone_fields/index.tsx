@@ -75,7 +75,11 @@ const PhoneFields = ({
           maxLength: Constants.NUMBER_MAX,
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton icon={ClearIconSVG} className='clear_button' onClick={() => handleDeletePhone(number)} />
+              <IconButton 
+                ariaLabel={language.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
+                icon={ClearIconSVG} 
+                className='clear_button' 
+                onClick={() => handleDeletePhone(number)} />
             </InputAdornment>
           ),
         }}

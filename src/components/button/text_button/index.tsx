@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '..'
 import ButtonProps from '../props'
-
 import './style.css'
 
 const TextButton:React.FC<ButtonProps> = (props) => {
@@ -16,7 +15,10 @@ const TextButton:React.FC<ButtonProps> = (props) => {
     }
     
     return(
-        <Button {...props} className={getClassName()}/>
+        <Button {...props} className={getClassName()}>
+            {props.children}
+            <p>{props.text}</p>
+        </Button>
     )
 }
 

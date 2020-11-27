@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../..'
-import Loader from '../../../loader'
-import GoogleLogo from '../../../../assets/logos/google.png'
+import Loader from '../../loader'
+import { ReactComponent as GoogleLogoSVG } from '../../../assets/logos/google.svg'
 import LoginButtonProps from './props'
-import LoginStatusConstants from '../../../../constants/login/LoginStatusConstants'
-import AuthService from '../../../../services/auth/AuthService'
+import LoginStatusConstants from '../../../constants/login/LoginStatusConstants'
+import AuthService from '../../../services/auth/AuthService'
 import { Typography } from '@material-ui/core'
-import ConnectionService from '../../../../services/connection/ConnectionService'
+import ConnectionService from '../../../services/connection/ConnectionService'
+import { useGoogleOAuth2 } from '../../../context_provider/google_oauth2'
+import { useCurrentLanguage } from '../../../context/provider/app_settings'
+import { useAlert } from '../../../context/provider/alert'
+import TextIconButton from '../icon_text_button'
 import './styles.css'
-import { useGoogleOAuth2 } from '../../../../context_provider/google_oauth2'
-import { useLanguage } from '../../../../context/provider/app_settings'
-import { useAlert } from '../../../../context/provider/alert'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   onCancel,
@@ -18,10 +18,8 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   onGoogleFail,
   onRefreshTokenLostError,
   text,
-  size
 }) => {
-  const languageContext = useLanguage()
-  const language = languageContext.current
+  const language = useCurrentLanguage()
   const alert = useAlert()
   const googleOAuth2 = useGoogleOAuth2()
 
@@ -76,18 +74,18 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   }
 
   return (
-    <Loader loading={loading}>
+    <Loader className="google_login_button__loader" loading={loading}>
       <div className="google_login_button">
-        <Button
-          size={size}
-          imageSrc={GoogleLogo}
-          imageAlt={text}
-          className="google_login_button__button"
+        <TextIconButton
+          ariaLabel={language.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
+          text={text}
+          icon={GoogleLogoSVG}
+          className={'google_login_button__text_button'}
           onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
           disabled={!isConnected || !googleOAuth2.loaded}
         >
           <Typography component="p">{text}</Typography>
-        </Button>
+        </TextIconButton>
         {!isConnected && (
           <Typography className="google_login_button__error" component="p">
             {language.DISCONNECTED}

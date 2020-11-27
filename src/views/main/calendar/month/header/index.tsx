@@ -17,7 +17,11 @@ const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
       </h1>
       <div className="calendar__month__header_buttons">
         <div className="calendar__month__header_buttons__today_button">
-          <IconButton icon={TodayCalendarSVG} onClick={goToCurrentMonth} />
+          <IconButton
+            ariaLabel={language.CALENDAR_CURRENT_MONTH_ARIA_LABEL}
+            icon={TodayCalendarSVG}
+            onClick={goToCurrentMonth}
+          />
         </div>
       </div>
     </div>

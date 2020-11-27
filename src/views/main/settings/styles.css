@@ -35,7 +35,7 @@
   width: 18px;
   height: 18px;
   margin-right:7px;
-  fill: var(--header-and-menu-icons);
+  fill: var(--inv-constrast-color);
 }
 
 .settings__save_button.MuiButtonBase-root {

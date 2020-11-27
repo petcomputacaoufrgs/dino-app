@@ -11,6 +11,7 @@
 .drawer_navigation__drawer__visible {
   height: 100%;
   width: 240px;
+  overflow: hidden;
 }
 
 .drawer_navigation__drawer__visible__menu__icon {
@@ -46,6 +47,14 @@
 .drawer_navigation__drawer__header {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  height: 45px;
+}
+
+.drawer_navigation__drawer__content {
+  overflow-y: auto;
+  height: calc(100% - 45px);
+  padding: 8px;
 }
 
 .drawer_navigation__drawer__header svg {

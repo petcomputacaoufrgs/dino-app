@@ -257,6 +257,7 @@ const Form: React.FC = () => {
       iconAlt={language.EVENT_REPEAT_ICON_ALT}
       item={
         <Button
+          ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
           className="calendar__add__modal__event_repeat_button"
           onClick={handleOpenEventRepeatModal}
         >
@@ -323,6 +324,7 @@ const Form: React.FC = () => {
       iconAlt={alarms.length === 0 ? language.EVENT_ALERT_ALT : undefined}
       item={
         <Button
+          ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
           className="calendar__add__modal__event_alert_button"
           onClick={handleOpenEventAddAlertModal}
         >

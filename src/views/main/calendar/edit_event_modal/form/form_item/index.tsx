@@ -2,6 +2,7 @@ import React from 'react'
 import FormItemProps from './props'
 import Button from '../../../../../../components/button'
 import './styles.css'
+import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 
 const FormItem: React.FC<FormItemProps> = ({
   iconSrc,
@@ -9,6 +10,8 @@ const FormItem: React.FC<FormItemProps> = ({
   onIconClick,
   item,
 }) => {
+  const language = useCurrentLanguage()
+
   const handleIconClick = () => {
     if (onIconClick) {
       onIconClick()
@@ -20,6 +23,7 @@ const FormItem: React.FC<FormItemProps> = ({
       if (onIconClick) {
         return (
           <Button
+            ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
             onClick={handleIconClick}
             className="calendar__edit_event_modal__form__item__icon__button"
           >

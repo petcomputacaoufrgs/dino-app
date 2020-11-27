@@ -38,7 +38,7 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults} />
-      <Button className= 'add_contact_button' icon={AddIconSVG} onClick={() => setAdd(true)}/>
+      <Button ariaLabel={language.CONTACTS_ADD_CONTACT}className='add_contact_button' icon={AddIconSVG} onClick={() => setAdd(true)}/>
       <ContactFormDialog
         action={Contants.ACTION_ADD}
         dialogOpen={add}

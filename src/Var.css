@@ -39,6 +39,7 @@
 
   /* Outros */
   --constrast-color: #2f2e2c;
+  --inv-constrast-color: #f5f5f5;
   --other-details: #f5f5f5;
   --font-base: 'Poppins', sans-serif;
   --font-secondary: 'Poppins', sans-serif;
@@ -80,6 +81,7 @@
 
   /* Outros */
   --constrast-color: #f5f5f5;
+  --inv-constrast-color: #2f2e2c;
   --other-details: #474747;
   --tag-color: #D1A300;  
 }
@@ -113,6 +115,7 @@
 
   /* Outros */
   --constrast-color:#2f2e2c;
+  --inv-constrast-color: #f5f5f5;
   --other-details: #f5f5f5;
   --tag-color: #a594ab;
 }

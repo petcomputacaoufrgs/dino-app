@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './styles.css'
 import {
   FormControl,
   RadioGroup,
@@ -8,7 +9,7 @@ import {
   Grid,
   Button,
 } from '@material-ui/core'
-import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import DateFnsUtils from '@date-io/date-fns'
 import {
   MuiPickersUtilsProvider,
@@ -48,7 +49,6 @@ const Form: React.FC = () => {
   const [weekdays, setWeekdays] = useState(new Week(language))
   const [addAlarmModalOpen, setAddAlarmModalOpen] = useState(false)
   const [alarms, setAlarms] = useState<EventAlarm[]>([])
-  //const [color, setColor] = useState<string || undefined>("blue")
 
   const alarmDontExists = (time: number, type: number): boolean => {
     if (time === 0) {

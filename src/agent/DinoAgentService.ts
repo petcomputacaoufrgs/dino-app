@@ -86,7 +86,7 @@ class DinoAgentService extends BaseAgent {
           return true
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

@@ -1,10 +1,10 @@
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AppSettingsLocalStorage from '../../local_storage/app_settings/AppSettingsLocalStorage'
+import AppSettingsLocalStorage from '../../storage/local_storage/app_settings/AppSettingsLocalStorage'
 import DinoAgentService from '../../agent/DinoAgentService'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import PT from '../../constants/languages/PT'
 import EN from '../../constants/languages/EN'
-import AppSettingsContextUpdater from '../../context_updater/AppSettingsContextUpdater'
+import AppSettingsContextUpdater from '../../context/updater/AppSettingsContextUpdater'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LanguageCodeConstants from '../../constants/languages/LanguageCodeConstants'
 import AppSettingsRequestAndResponseModel from '../../types/app_settings/AppSettingsRequestAndResponseModel'
@@ -61,7 +61,7 @@ class AppSettingsService {
         const version: number = response.body
         return version
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -81,7 +81,7 @@ class AppSettingsService {
         const appSettings: AppSettingsRequestAndResponseModel = response.body
         return appSettings
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -95,7 +95,7 @@ class AppSettingsService {
   getDefaultAppSettings = (): AppSettingsRequestAndResponseModel => {
     const defaultAppSettings: AppSettingsRequestAndResponseModel = {
       language: navigator.language.slice(0, 2),
-      colorTheme: ColorThemeEnum.CLASSIC,
+      colorTheme: ColorThemeEnum.DEVICE,
     }
 
     return defaultAppSettings
@@ -121,7 +121,7 @@ class AppSettingsService {
         AppSettingsLocalStorage.setAppSettingsVersion(newVersion)
         return
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -143,14 +143,25 @@ class AppSettingsService {
   getColorThemeName = (code: number): string => {
     switch (code) {
       case 1:
-        return 'classic'
+        return 'light'
       case 2:
         return 'dark'
       case 3:
         return 'high_contrast'
+      case 4:
+        return this.getSystemColorThemeName()
       default:
-        return 'classic'
+        return 'light'
     }
+  }
+
+  getSystemColorThemeName = (): string => {
+    const matchDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+    if (matchDarkMode && matchDarkMode.matches) {
+      return 'dark'
+    }
+
+    return 'light'
   }
 
   returnAppSettingsToDefault = (): void => {

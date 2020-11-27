@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import DateUtils from '../../../../utils/DateUtils'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
@@ -157,7 +157,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
       </div>
       <DialogContent className="note__info_dialog__content">
         <TextField
-          label={language.ANSWER_NOTE_DIALOG_TITLE}
+          label={`${language.ANSWER_NOTE_DIALOG_TITLE} (${language.MAX} ${NoteConstants.ANSWER_MAX_LENGTH})`}
           type="text"
           multiline
           variant="standard"

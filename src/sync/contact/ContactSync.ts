@@ -1,6 +1,7 @@
 import Service from '../../services/contact/ContactService'
 import ServerService from '../../services/contact/ContactServerService'
 import BaseSync from '../BaseSync'
+import ContactService from '../../services/contact/ContactService'
 
 class ContactSync implements BaseSync {
   send = async (): Promise<void> => {
@@ -11,8 +12,11 @@ class ContactSync implements BaseSync {
 
   receive = async (): Promise<void> => {
     const serverVersion = await ServerService.getVersion()
+    const localVersion = ContactService.getVersion()
     if (serverVersion !== undefined) {
-      await Service.updateLocal(serverVersion)
+      if (localVersion === undefined || serverVersion > localVersion) {
+        await Service.updateLocal(serverVersion)
+      }
     }
   }
 }

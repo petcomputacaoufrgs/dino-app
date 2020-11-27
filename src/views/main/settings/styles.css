@@ -35,7 +35,7 @@
   width: 18px;
   height: 18px;
   margin-left: -10px;
-  fill: var(--header-and-menu-icons);
+  fill: var(--light-color);
 }
 
 .settings__save_button.MuiButtonBase-root {
@@ -44,11 +44,37 @@
 }
 
 .settings__save_button.MuiButtonBase-root .MuiButton-label {
-  color: var(--menu-font-color);
+  color: var(--light-color);
 }
 
 .settings__title.MuiTypography-root {
   font-weight: 700;
   font-size: large;
   margin-bottom: 40px;
+}
+
+.settings__grant {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.settings__grant p {
+  margin: 0;
+}
+
+.settings__grant__switch {
+  margin-left: auto;
+}
+
+.settings__grant__switch .MuiSwitch-track {
+  height: 18px;
+  border-radius: 18px;
+}
+
+.MuiSwitch-root.settings__grant__switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

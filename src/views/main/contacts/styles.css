@@ -10,8 +10,7 @@
   padding: 5px;
 }
 
-.contacts .contacts__list__item__text {
-  display: flex;
+.contacts__list__item__text {
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: start;

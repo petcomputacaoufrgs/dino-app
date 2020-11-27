@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import ContactItemListProps from './props'
 import {
   Avatar,
@@ -10,8 +10,9 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core'
-import ContactsService from '../../../../services/contact/ContactService'
+import ContactService from '../../../../services/contact/ContactService'
 import OptionsComponent from '../../../../components/icon_buttons/options_component'
+import './styles.css'
 
 const ContactItemList = ({
   item,
@@ -54,7 +55,7 @@ const ContactItemList = ({
         </ListItemAvatar>
         <ListItemText
           primary={item.name}
-          secondary={ContactsService.getPhoneTypes(item.phones, language)}
+          secondary={ContactService.getPhoneTypes(item.phones, language)}
         />
         <ListItemSecondaryAction>
           <OptionsComponent onClick={handleClick} />

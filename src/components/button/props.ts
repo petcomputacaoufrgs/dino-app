@@ -11,4 +11,5 @@ export default interface ButtonProps {
   disabled?: boolean | undefined
   children?: any
   size?: 'small' | 'medium' | 'large'
+  id?: string
 }

@@ -10,9 +10,10 @@
 }
 
 .notes__header__image {
-  width: 35px;
+  width: 40px;
   height: auto;
-  margin-right: 15px;
+  margin-right: 8px;
+  fill: var(--constrast-color);
 }
 
 .notes__header
@@ -23,5 +24,5 @@
 .notes__header
   .MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'][class*='MuiOutlinedInput-marginDense']
   .MuiAutocomplete-input {
-  padding: 4.5px 0px;
+  padding: 4.5px 32px 4.5px 0px;
 }

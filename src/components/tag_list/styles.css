@@ -9,7 +9,7 @@
 
 .tag_list.MuiPaper-root .MuiChip-root {
   border: 1px solid;
-  border-color: var(--column-font-color);
+  border-color: var(--dark-color);
   background-color: inherit;
   margin-right: 5px;
   font-size: smaller;
@@ -23,4 +23,8 @@
 
 .tag_list.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {
   box-shadow: none;
+}
+
+.MuiChip-root.MuiAutocomplete-tag {
+  background-color: var(--tag-color);
 }

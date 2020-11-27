@@ -4,7 +4,7 @@ import './styles.css'
 import { ReactComponent as EditIcon } from '../../../../../../assets/icons/pen.svg'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../../../assets/icons/delete.svg'
 import SVGButton from '../../../../../../components/button/svg_button'
-import { useCurrentLanguage } from '../../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 
 const NoteBodyColumnHeader: React.FC<NoteBodyColumnHeaderProps> = ({
   title,

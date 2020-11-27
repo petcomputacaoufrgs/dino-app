@@ -16,7 +16,7 @@ class ErrorHandlerService {
     error?: Error
   ) => {
     if (error && AuthService.isAuthenticated()) {
-      LogAppErrorService.save({
+      LogAppErrorService.logModel({
         error: error.stack,
         file: source,
         title: event && typeof event === 'string' ? event : null,

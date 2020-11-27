@@ -1,11 +1,12 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import { Avatar, CardHeader, IconButton } from '@material-ui/core'
 import { ColorLens as ColorLensIcon } from '@material-ui/icons'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
 import CloseComponent from '../../../../../components/icon_buttons/close_component'
 import '../../styles.css'
+import './styles.css'
 
 const AddContactDialogHeader = (
   props: ContactFormDialogHeaderProps
@@ -41,7 +42,8 @@ const AddContactDialogHeader = (
           ? props.name || language.CONTACTS_ADD_CONTACT
           : props.name
       }
-      subheader="Contato"
+      subheader={language.CONTACT_DIALOG_FORM_SUBTITLE}
+      className='contact_dialog_form_header'
     />
   )
 }

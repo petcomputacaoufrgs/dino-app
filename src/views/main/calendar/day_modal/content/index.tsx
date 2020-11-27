@@ -3,9 +3,9 @@ import DayModalHour from '../../../../../types/calendar/DayModalHour'
 import StringUtils from '../../../../../utils/StringUtils'
 import ContentProps from './props'
 import EventItem from './event_item'
-import EventDoc from '../../../../../types/calendar/database/EventDoc'
 import DateUtils from '../../../../../utils/DateUtils'
 import './styles.css'
+import CalendarEventEntity from '../../../../../types/calendar/database/CalendarEventEntity'
 
 const DELAY_TO_UPDATE_SCREE_WITH_CURRENT_TIME_IN_MS = 60000
 
@@ -19,7 +19,7 @@ const Content: React.FC<ContentProps> = ({ day, events }) => {
       2
     )}:${StringUtils.toStringWithZeros(hour.min, 2)}`
 
-  const getEventsByInitHour = (hour: DayModalHour): EventDoc[] => {
+  const getEventsByInitHour = (hour: DayModalHour): CalendarEventEntity[] => {
     return events.filter((event) => event.init_date.getHours() === hour.hour)
   }
 

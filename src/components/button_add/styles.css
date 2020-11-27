@@ -4,7 +4,7 @@
   height: 50px;
   bottom: 30px;
   right: 20px;
-  background-color: var(--add-button-background-color);
+  background-color: var(--home-icons);
   color: white;
   outline: none;
 }

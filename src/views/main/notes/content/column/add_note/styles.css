@@ -10,7 +10,7 @@
   font-size: small;
   margin-bottom: 0;
   font-weight: bold;
-  color: var(--column-font-color);
+  color: var(--column-border);
 }
 
 .note__note_content__column__add_note__max_notes {

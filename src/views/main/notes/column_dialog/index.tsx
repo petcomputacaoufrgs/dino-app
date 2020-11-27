@@ -12,7 +12,7 @@ import NoteColumnDialogProps from './props'
 import NoteColumnDialogHeader from './header'
 import NoteColumnService from '../../../../services/note/NoteColumnService'
 import NoteColumnEditError from '../../../../error/note/NoteColumnEditError'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 

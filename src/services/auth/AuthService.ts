@@ -15,7 +15,7 @@ import GoogleGrantRequestModel from '../../types/auth/google/GoogleGrantRequestM
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleScope from '../../types/auth/google/GoogleScope'
 import GoogleRefreshAuthResponseModel from '../../types/auth/google/GoogleRefreshAuthResponseModel'
-import GoogleContactGrantContextUpdater from '../../context_updater/GoogleContactGrantContextUpdater'
+import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
 
 class AuthService {
   cleanLoginGarbage = () => {

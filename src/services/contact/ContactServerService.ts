@@ -9,7 +9,7 @@ import Service from './ContactService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ContactGoogleService from './ContactGoogleService'
 import AuthService from '../auth/AuthService'
-import GoogleContactGrantContextUpdater from '../../context_updater/GoogleContactGrantContextUpdater'
+import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
 
 class ContactServerService {
   updateServer = async () => {

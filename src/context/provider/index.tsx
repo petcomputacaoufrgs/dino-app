@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import GoogleAuth2ContextType from '../../types/context_provider/GoogleAuth2ContextType'
 import GoogleOAuth2Service from '../../services/auth/google/GoogleOAuth2Service'
-import GoogleContactGrantContextUpdater from '../../context_updater/GoogleContactGrantContextUpdater'
+import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
 import AuthService from '../../services/auth/AuthService'
 
 const GoogleAuth2Context = createContext({

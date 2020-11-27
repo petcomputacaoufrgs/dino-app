@@ -8,7 +8,7 @@ import AuthService from '../../../../services/auth/AuthService'
 import { Typography } from '@material-ui/core'
 import ConnectionService from '../../../../services/connection/ConnectionService'
 import './styles.css'
-import { useGoogleOAuth2 } from '../../../../context_provider/google_oauth2'
+import { useGoogleOAuth2 } from '../../../../context/provider'
 import { useLanguage } from '../../../../context/provider/app_settings'
 import { useAlert } from '../../../../context/provider/alert'
 

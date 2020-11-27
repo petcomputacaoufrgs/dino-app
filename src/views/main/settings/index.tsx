@@ -16,7 +16,7 @@ import './styles.css'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import { Switch } from '@material-ui/core'
-import { useGoogleOAuth2 } from '../../../context_provider/google_oauth2'
+import { useGoogleOAuth2 } from '../../../context/provider'
 
 const Settings = (): JSX.Element => {
   const appSettings = useAppSettings()

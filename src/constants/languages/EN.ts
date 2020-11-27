@@ -397,4 +397,21 @@ export default class EN implements LanguageBase {
   CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
 
   CONTACT_NUMBER_ALREADY_EXISTS = 'This number is already created in the contact'
+
+  DIALOG_AGREE_TEXT = 'Accept'
+
+  DIALOG_DECLINE_BUTTON_TEXT = 'Decline'
+
+  GRANT_FAIL_BY_EXTERNAL_ERROR = 'Sorry, something went wrong. Please, try again.'
+
+  GRANT_CANCELED = 'Permission canceled. Please, try again.'
+
+  GRANT_FAIL_BY_INVALID_ACCOUNT = 'Invalid account. Please, use the logged account.'
+
+  GRANT_RESFRESH_TOKEN_NECESSARY = 'Sorry, our mistake. Please, try again.'
+
+  GRANT_FAIL_BY_DISCONNECTION = 'Sorry, connection error. Please, try again when connection return.'
+
+  GRANT_FAIL_BY_UNKNOW_ERROR = 'Sorry, an unknow error happened. Please, trye again.'
+
 }

@@ -20,6 +20,7 @@ class LocalStorageKeys {
   NAME = 'n'
   GOOGLE_ACCESS_TOKEN = 'gat'
   GOOGLE_EXPIRES_DATE = 'ged'
+  GOOGLE_SCOPES = 'gs'
   AUTH_TOKEN = 'at'
   AUTH_TOKEN_EXPIRES_DATE = 'ated'
   TEMP_AUTH_TOKEN = 'tat'

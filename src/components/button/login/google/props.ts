@@ -2,7 +2,7 @@
  * @description Propriedades do botão de login
  */
 export default interface LoginButtonProps {
-  buttonText: string
+  text: string
   onGoogleFail?: () => void
   onDinoAPIFail?: () => void
   onRefreshTokenLostError?: () => void

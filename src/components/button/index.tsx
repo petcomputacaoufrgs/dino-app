@@ -33,13 +33,15 @@ const Button = (props: ButtonProps) => {
   }
 
   return (
-    <div className={getClassName()} onClick={props.onClick}>
+    <div className={getClassName()}>
       <MaterialButton
         startIcon={getImageComponent()}
         className="button__material_button"
         variant="contained"
         disabled={props.disabled}
         size={props.size}
+        id={props.id ? props.id : undefined}
+        onClick={props.onClick}
       >
         {props.children}
       </MaterialButton>

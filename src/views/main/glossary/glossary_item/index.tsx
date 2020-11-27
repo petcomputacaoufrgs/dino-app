@@ -5,8 +5,12 @@ import { Divider, Paper } from '@material-ui/core'
 import './styles.css'
 import { useGlossary } from '../../../../context/provider/glossary'
 
-const GlossaryItem = (): JSX.Element => {
-  const { id } = useParams()
+interface RouterParams {
+  id: string
+}
+
+const GlossaryItem: React.FC = () => {
+  const { id } = useParams<RouterParams>()
 
   const language = useCurrentLanguage()
 

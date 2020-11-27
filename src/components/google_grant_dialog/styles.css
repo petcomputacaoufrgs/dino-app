@@ -1,0 +1,39 @@
+.google_grant_dialog__header {
+    background-color: var(--header-and-menu);
+    color: var(--menu-font-color);
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+}
+
+.google_grant_dialog__header svg {
+    margin-left: auto;
+    width: 4rem;
+}
+
+.google_grant_dialog__header__title {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.google_grant_dialog__header__title h1 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.google_grant_dialog__content {
+    padding: 1rem;
+    padding-bottom: 0;
+}
+
+.google_grant_dialog__buttons {
+    margin-left: auto;
+    padding: 0.5rem;
+}
+
+.google_grant_dialog__buttons__accept_button.MuiButtonBase-root {
+    background-color: var(--header-and-menu);
+    color: var(--menu-font-color);
+    margin-left: 0.5rem;
+}

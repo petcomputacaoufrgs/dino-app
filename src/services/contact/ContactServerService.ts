@@ -78,7 +78,7 @@ class ContactServerService {
           return responseSaveModel.contactResponseModel
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
     Service.pushToUpdate(contactModel.frontId)
@@ -103,7 +103,7 @@ class ContactServerService {
           return response.body as SaveResponseModelAll
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
       return undefined
     }
@@ -121,7 +121,7 @@ class ContactServerService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -146,7 +146,7 @@ class ContactServerService {
           return response.body
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
 
       return undefined
@@ -170,7 +170,7 @@ class ContactServerService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
     Service.pushToDelete(contactId)
@@ -191,7 +191,7 @@ class ContactServerService {
           return response.body
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
 
       return undefined
@@ -211,7 +211,7 @@ class ContactServerService {
 
         return version
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

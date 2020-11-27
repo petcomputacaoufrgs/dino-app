@@ -1,14 +1,11 @@
 import React from 'react'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
 import { useAlert } from '../../context/provider/alert'
-import GoogleLoginButton from '../../components/google_login_button'
 import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'
 import Dinosaur2 from '../../assets/images/dinosaur_2.svg'
 import './styles.css'
+import GoogleLoginButton from '../../components/button/login/google'
 
-/**
- * @description Tela de login com o Google
- */
 const Login = (): JSX.Element => {
   const alert = useAlert()
 
@@ -37,7 +34,7 @@ const Login = (): JSX.Element => {
       onDinoAPIFail={showAlertDinoFail}
       onGoogleFail={showAlertGoogleFail}
       onRefreshTokenLostError={showAlertRefreshError}
-      buttonText={language.LOGIN_BUTTON_TEXT}
+      text={language.LOGIN_BUTTON_TEXT}
     />
   )
 

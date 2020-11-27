@@ -19,7 +19,7 @@ export default class BaseContextUpdater {
   /**
    * @description Atualiza o contexto pelo callback
    */
-  update: () => void = () => {
+  update = () => {
     if (this.callback) {
       this.callback()
     }

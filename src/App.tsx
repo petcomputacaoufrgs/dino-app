@@ -31,8 +31,8 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     if (firstLoad) {
-      setFirstLoad(false)
       ViewportService.maximizeViewport()
+      setFirstLoad(false)
     }
   }, [firstLoad])
 

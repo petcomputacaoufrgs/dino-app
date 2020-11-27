@@ -20,8 +20,6 @@ class PathConstants {
   CALENDAR = `${this.APP}/calendar`
 
   ABOUT_US = `${this.APP}/about-us`
-
-  TESTE = `${this.APP}/teste`
 }
 
 export default new PathConstants()

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useLanguage } from '../../../../context_provider/app_settings'
-import { useAlert } from '../../../../context_provider/alert'
 import Button from '../..'
 import Loader from '../../../loader'
 import GoogleLogo from '../../../../assets/logos/google.png'
@@ -11,6 +9,8 @@ import { Typography } from '@material-ui/core'
 import ConnectionService from '../../../../services/connection/ConnectionService'
 import './styles.css'
 import { useGoogleOAuth2 } from '../../../../context_provider/google_oauth2'
+import { useLanguage } from '../../../../context/provider/app_settings'
+import { useAlert } from '../../../../context/provider/alert'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   onCancel,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useAppSettings } from '../../../context_provider/app_settings'
-import { useAlert } from '../../../context_provider/alert'
+import { useAppSettings } from '../../../context/provider/app_settings'
+import { useAlert } from '../../../context/provider/alert'
 import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -25,7 +25,7 @@ const Settings = (): JSX.Element => {
 
   const language = appSettings.language.current
 
-  const colorTheme = appSettings.colorTheme.current
+  const colorTheme = appSettings.colorTheme.currentCode
 
   const alert = useAlert()
 

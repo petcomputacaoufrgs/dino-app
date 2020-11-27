@@ -1,7 +1,7 @@
 import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import AuthLocalStorage from '../../local_storage/auth/AuthLocalStorage'
+import AuthLocalStorage from '../../storage/local_storage/auth/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import LoginStatusConstants from '../../constants/login/LoginStatusConstants'
 import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
@@ -67,28 +67,22 @@ class AuthService {
     }
   }
 
-  googleLogout = () => {
-    const authToken = this.getAuthToken()
-
-    this.serverLogout(authToken)
+  googleLogout = async () => {
+    await this.serverLogout()
 
     EventService.whenLogout()
   }
 
-  serverLogout = async (authToken: string): Promise<boolean> => {
+  serverLogout = async () => {
     try {
       const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
 
       if (request.canGo) {
-        await request.authenticate().go()
-
-        return true
+        request.authenticate().go()
       }
     } catch (e) {
       LogAppErrorService.logError(e)
     }
-
-    return false
   }
 
   refreshGoogleAccessToken = async (): Promise<boolean> => {

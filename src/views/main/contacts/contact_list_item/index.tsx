@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import ContactItemListProps from './props'
 import {
   Avatar,
@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core'
 import ContactService from '../../../../services/contact/ContactService'
 import OptionsComponent from '../../../../components/icon_buttons/options_component'
+import './styles.css'
 
 const ContactItemList = ({
   item,

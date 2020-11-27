@@ -1,10 +1,21 @@
-.app .MuiTypography-root,
-.app .MuiChip-label,
-.app .MuiBottomNavigationAction-label,
-.app .MuiButton-label,
-.MuiFormLabel-root {
+body .MuiTypography-root,
+body .MuiChip-label,
+body .MuiBottomNavigationAction-label,
+body .MuiButton-label,
+body .MuiFormLabel-root,
+body .MuiInputBase-root {
   font-family: var(--font-base);
   color: var(--base-font-color);
+}
+
+body .MuiIconButton-root, 
+body .MuiSelect-icon,
+body .MuiSvgIcon-root {
+  fill: var(--constrast-color);
+}
+
+body .MuiInput-underline:before {
+  border-bottom: 2px solid var(--base-font-color);
 }
 
 .MuiDialog-root {
@@ -28,13 +39,26 @@
 
 .MuiPaper-root.MuiMenu-paper {
   background-color:var(--other-details);
+  color: var(--base-font-color);
 }
 
 .MuiPaper-root.MuiDialog-paper{
   background-color:var(--other-details);
-  color: var(--base-font-color:);
+  color: var(--base-font-color);
 }
 
 .MuiTypography-root.MuiDialogContentText-root {
-  color: var(--base-font-color:);
+  color: var(--base-font-color);
+}
+
+.MuiAutocomplete-popper {
+  background-color: var(--other-details);
+}
+
+.MuiFormLabel-root.MuiFormLabel-root.MuiInputLabel-formControl.Mui-focused.Mui-focused {
+  color: var(--selection);
+}
+
+.PrivateNotchedOutline-root-1.MuiOutlinedInput-notchedOutline {
+  border-color: var(--other-details);
 }

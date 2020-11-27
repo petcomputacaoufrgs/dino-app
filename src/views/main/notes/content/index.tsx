@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import NoteContentProps from './props'
 import './styles.css'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import {
   DragDropContext,
   DropResult,

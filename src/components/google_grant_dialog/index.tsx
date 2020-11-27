@@ -3,13 +3,13 @@ import GoogleGrantDialogProps from './props'
 import { Dialog, Button } from '@material-ui/core'
 import TransitionSlide from '../slide_transition'
 import AuthService from '../../services/auth/AuthService'
-import { useCurrentLanguage } from '../../context_provider/app_settings'
 import { ReactComponent as DinoAuthSVG } from '../../assets/icons/dino_auth.svg'
-import './styles.css'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
-import { useAlert } from '../../context_provider/alert'
 import GoogleContactGrantContextUpdater from '../../context_updater/GoogleContactGrantContextUpdater'
 import ContactServerService from '../../services/contact/ContactServerService'
+import { useAlert } from '../../context/provider/alert'
+import { useCurrentLanguage } from '../../context/provider/app_settings'
+import './styles.css'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> ((
     {

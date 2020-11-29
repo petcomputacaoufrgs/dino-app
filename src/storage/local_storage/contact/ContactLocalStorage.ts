@@ -36,6 +36,10 @@ class ContactsLocalStorage extends BaseLocalStorage {
     this.set(LS_Constants.CONTACTS_UPDATE, ids)
   }
 
+  setResourceNamesToDelete = (resourceNames: string) => {
+    this.set(LS_Constants.CONTACTS_RESOURCE_NAMES_DEL, resourceNames)
+  }
+
   getIdsToDelete = (): string | null => {
     return this.get(LS_Constants.CONTACTS_DEL)
   }
@@ -44,12 +48,20 @@ class ContactsLocalStorage extends BaseLocalStorage {
     return this.get(LS_Constants.CONTACTS_UPDATE)
   }
 
+  getResourceNamesToDelete = (): string | null => {
+    return this.get(LS_Constants.CONTACTS_RESOURCE_NAMES_DEL)
+  }
+
   cleanUpdateQueue = () => {
     localStorage.removeItem(LS_Constants.CONTACTS_UPDATE)
   }
 
   cleanDeleteQueue = () => {
     localStorage.removeItem(LS_Constants.CONTACTS_DEL)
+  }
+
+  cleanDeleteGoogleQueue = () => {
+    localStorage.removeItem(LS_Constants.CONTACTS_RESOURCE_NAMES_DEL)
   }
 
   getLastId = (): string | null => {

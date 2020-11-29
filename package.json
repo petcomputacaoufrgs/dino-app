@@ -33,8 +33,6 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.0.8",
-    "express": "^4.17.1",
-    "express-favicon": "^2.0.1",
     "http-status-codes": "^1.4.0",
     "moment": "^2.27.0",
     "react": "^16.13.0",
@@ -51,17 +49,20 @@
     "sockjs-client": "^1.4.0",
     "stompjs": "^2.3.3",
     "superagent": "^5.2.2",
-    "ts-node": "^8.10.2",
-    "typescript": "4.0"
+    "typescript": "~3.7.2"
   },
   "scripts": {
     "start": "react-scripts start --ssl",
-    "server": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier": "prettier --write .",
+    "compress-images": "node scripts/compressImages.js",
+    "server": "node scripts/server.js",
     "eject": "react-scripts eject"
   },
+  "pre-push": [
+    "prettier"
+  ],
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -78,6 +79,15 @@
     ]
   },
   "devDependencies": {
+    "compression": "^1.7.4",
+    "depcheck": "^1.3.1",
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
+    "imagemin": "^7.0.1",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-pngquant": "^9.0.1",
+    "imagemin-svgo": "^8.0.0",
+    "pre-push": "^0.1.1",
     "prettier": "2.0.5"
   }
 }

@@ -83,6 +83,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
               ariaLabel={language.CLOSE_MENU_BUTTON_ARIA_LABEL}
               icon={ChevronLeftIconSVG}
               onClick={handleCloseClick}
+              bigger
             />
           </div>
           <Divider />

@@ -34,8 +34,8 @@
 .settings__save_button__icon {
   width: 18px;
   height: 18px;
-  margin-left: -10px;
-  fill: var(--light-color);
+  margin-right:7px;
+  fill: var(--inv-constrast-color);
 }
 
 .settings__save_button.MuiButtonBase-root {

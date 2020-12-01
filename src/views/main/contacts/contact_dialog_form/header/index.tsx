@@ -1,10 +1,11 @@
 import React from 'react'
+import IconButton from '../../../../../components/button/icon_button' 
+import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/color_lens.svg'
 import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
-import { Avatar, CardHeader, IconButton } from '@material-ui/core'
-import { ColorLens as ColorLensIcon } from '@material-ui/icons'
+import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
-import CloseComponent from '../../../../../components/icon_buttons/close_component'
+import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
 import '../../styles.css'
 import './styles.css'
 
@@ -26,15 +27,8 @@ const AddContactDialogHeader = (
       }
       action={
         <>
-          <IconButton
-            aria-label={language.CHANGE_COLOR_ARIA_LABEL}
-            size="small"
-            className={"icon-button"}
-            onClick={props.handleChangeColor}
-          >
-            <ColorLensIcon />
-          </IconButton>
-          <CloseComponent onClose={props.handleCloseDialog} />
+          <IconButton ariaLabel={language.COLOR_THEME_SELECTION_ARIA_LABEL} icon={ChangeColorIconSVG} dark onClick={props.handleChangeColor} />
+          <CloseIconButton dark onClose={props.handleCloseDialog} />
         </>
       }
       title={

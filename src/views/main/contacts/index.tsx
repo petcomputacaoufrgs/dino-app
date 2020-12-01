@@ -4,7 +4,6 @@ import ContactModel from '../../../types/contact/ContactModel'
 import ContactItems from './contact_list_items'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
-import ButtonAdd from '../../../components/button_add'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContacts } from '../../../context/provider/contact'
 import ContactFormDialog from './contact_dialog_form'
@@ -12,6 +11,8 @@ import Contants from '../../../constants/contact/ContactsConstants'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import AuthService from '../../../services/auth/AuthService'
+import Button from '../../../components/button/circular_button'
+import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 
 const Contacts = (): JSX.Element => {
   const language = useCurrentLanguage()
@@ -62,7 +63,7 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults} />
-      <ButtonAdd onClick={handleAddContact} />
+      <Button ariaLabel={language.CONTACTS_ADD_CONTACT}className='add_contact_button' icon={AddIconSVG} onClick={handleAddContact}/>
       <ContactFormDialog
         action={Contants.ACTION_ADD}
         dialogOpen={add}

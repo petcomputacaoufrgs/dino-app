@@ -41,6 +41,14 @@
   --constrast-color: #2f2e2c;
   --inv-constrast-color: #f5f5f5;
   --other-details: #f5f5f5;
+  --font-base: 'Poppins', sans-serif;
+  --font-secondary: 'Poppins', sans-serif;
+  --avatar-color-1: #f44336;
+  --avatar-color-2: #e91e63;
+  --avatar-color-3: #9c27b0;
+  --avatar-color-4: #2196f3;
+  --avatar-color-5: #4caf50;
+  --light-color: #f5f5f5;
   --tag-color: #D1A300;
 }
 
@@ -72,8 +80,8 @@
   --button-selected-font-color: #b054d1;
 
   /* Outros */
-  --constrast-color: #f5f5f5;
-  --inv-constrast-color: #2f2e2c;
+  --contrast-color: #f5f5f5;
+  --inv-contrast-color: #2f2e2c;
   --other-details: #474747;
   --tag-color: #D1A300;  
 }
@@ -106,7 +114,8 @@
   --button-selected-font-color: #b054d1;
 
   /* Outros */
-  --constrast-color:#2f2e2c;
+  --contrast-color:#2f2e2c;
+  --inv-contrast-color: #f5f5f5;
   --other-details: #f5f5f5;
   --tag-color: #a594ab;
 }

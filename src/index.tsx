@@ -8,7 +8,7 @@ import AppSettingsContextProvider from './context/provider/app_settings'
 import EventService from './services/events/EventService'
 import App from './App'
 import './Var.css'
-import GoogleOAuth2ContextProvider from './context/provider'
+import GoogleOAuth2ContextProvider from './context/provider/google_oauth2'
 
 ErrorHandlerService.register()
 EventService.whenStart()

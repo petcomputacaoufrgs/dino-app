@@ -23,7 +23,7 @@ const AboutUs = (): JSX.Element => {
 
   return (
     <div className="about-us">
-      <Paper elevation={5}>
+      <Paper elevation={1}>
         <div className="card__header" >
           <img className='card__header__image' src={DinoLogo} alt="Logo DinoApp" width='20%' height='20%'></img>
           <h3 className='card__header__title'>

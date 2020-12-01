@@ -1,9 +1,6 @@
 import LanguageBase from './LanguageBase'
 import LanguageCodeConstants from './LanguageCodeConstants'
 
-/**
- * @description Conjunto de textos em inglês americano
- */
 export default class EN implements LanguageBase {
   APP_NAME = 'DinoApp'
 
@@ -48,7 +45,11 @@ export default class EN implements LanguageBase {
 
   AGREEMENT_OPTION_TEXT = 'YES'
 
+  AGREEMENT_BUTTON_ARIA_LABEL = 'Click here to agree'
+
   DISAGREEMENT_OPTION_TEXT = 'NO'
+
+  DISAGREEMENT_BUTTON_ARIA_LABEL = 'Click here to disagree'
 
   ADD_OPTION_TEXT = 'ADD'
 
@@ -398,6 +399,10 @@ export default class EN implements LanguageBase {
 
   CONTACT_NUMBER_ALREADY_EXISTS = 'This number is already created in the contact'
 
+  CONTACT_CLEAR_BUTTON_ARIA_LABEL = "Click here to clean"
+
+  COLOR_THEME_SELECTION_ARIA_LABEL = "Click here to change the contact color"
+
   DIALOG_AGREE_TEXT = 'Accept'
 
   DIALOG_DECLINE_BUTTON_TEXT = 'Decline'
@@ -421,5 +426,21 @@ export default class EN implements LanguageBase {
   GOOGLE_CONTACT_GRANT_TEXT = 'We would like permissions to save and edit your DinoApp\'s contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp\'s contacts.'
 
   GOOGLE_CONTACT_GRANT_TITLE = 'Your contacts anywhere'
+
+  ARROW_BACK_ARIA_LABEL = "Return to last page"
+
+  GOOGLE_LOGIN_BUTTON_ARIA_LABEL = "Click here to login with your Google account"
+
+  OPEN_DRAWER_BUTTON_ARIA_LABEL = "Click here to open menu"
+
+  CLOSE_MENU_BUTTON_ARIA_LABEL = "Click here to close menu"
+
+  CALENDAR_EDIT_BUTTON_ARIA_LABEL = "Click here to edit"
+
+  CALENDAR_DELETE_BUTTON_ARIA_LABEL = "Click here to delete"
+
+  CALENDAR_CLOSE_BUTTON_ARIA_LABEL = "Click here to close the page"
+
+  CALENDAR_CURRENT_MONTH_ARIA_LABEL = "Click here to go to the current month"
 
 }

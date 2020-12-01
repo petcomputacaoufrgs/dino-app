@@ -1,10 +1,10 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import GoogleAuth2ContextType from '../../types/context_provider/GoogleAuth2ContextType'
-import GoogleOAuth2Service from '../../services/auth/google/GoogleOAuth2Service'
-import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
-import AuthService from '../../services/auth/AuthService'
+import GoogleAuth2ContextType from '../../../types/context_provider/GoogleAuth2ContextType'
+import GoogleOAuth2Service from '../../../services/auth/google/GoogleOAuth2Service'
+import GoogleContactGrantContextUpdater from '../../updater/GoogleContactGrantContextUpdater'
+import AuthService from '../../../services/auth/AuthService'
 
-const GoogleAuth2Context = createContext({
+const GoogleOAuth2Context = createContext({
   loaded: false
 } as GoogleAuth2ContextType)
 
@@ -51,12 +51,12 @@ const GoogleOAuth2ContextProvider: React.FC = (props) => {
   }, [context, firstLoad])
 
   return (
-    <GoogleAuth2Context.Provider value={context}>
+    <GoogleOAuth2Context.Provider value={context}>
       {props.children}
-    </GoogleAuth2Context.Provider>
+    </GoogleOAuth2Context.Provider>
   )
 }
 
-export const useGoogleOAuth2 = () => useContext(GoogleAuth2Context)
+export const useGoogleOAuth2 = () => useContext(GoogleOAuth2Context)
 
 export default GoogleOAuth2ContextProvider

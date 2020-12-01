@@ -2,12 +2,21 @@
   width: 100%;
 }
 
-.tag_search_bar
-  .MuiOutlinedInput-root.Mui-focused
-  .MuiOutlinedInput-notchedOutline {
-  border-color: rgba(0, 0, 0, 0.23);
-}
-
 .tag_search_bar .MuiFormLabel-root.Mui-focused {
   color: rgba(0, 0, 0, 0.23);
+}
+
+.tag_search_bar .MuiOutlinedInput-notchedOutline {
+  border-color: var(--constrast-color);
+  border-width: 0.05rem;
+  border-radius: 10px;
+}
+
+.tag_search_bar .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-width: 0.1rem !important;
+}
+
+.tag_search_bar .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--constrast-color);
+  border-width: 0.05rem;
 }

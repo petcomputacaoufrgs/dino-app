@@ -1,51 +1,55 @@
-import React from 'react'
-import MaterialButton from '@material-ui/core/Button'
+import React, { useEffect, useRef } from 'react'
 import ButtonProps from './props'
 import './styles.css'
 
-const Button = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = ({
+  className,
+  onClick,
+  children,
+  disabled,
+  inputRef,
+  ariaLabel,
+  outline
+}) => {
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const getClassName = (): string => {
-    let className = 'button'
+    let mainClass = 'button'
 
-    if (props.className) {
-      className = className.concat(' ').concat(props.className)
+    if (className) {
+      mainClass = mainClass.concat(' ' + className)
     }
 
-    return className
-  }
-
-  const getImageComponent = (): JSX.Element => {
-    if (props.imageSrc) {
-      if (props.imageAlt) {
-        return (
-          <img
-            className="button__start_icon"
-            src={props.imageSrc}
-            alt={props.imageAlt}
-          />
-        )
-      } else {
-        throw Error('Image without alt property!')
-      }
+    if (outline) {
+      mainClass = mainClass.concat(' button__outline')
     }
 
-    return <></>
+    return mainClass
   }
+
+  useEffect(() => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.addEventListener("keyup", (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault()
+          if (buttonRef.current) {
+            buttonRef.current.click()
+            buttonRef.current.focus()
+          }
+        }
+      })
+    }
+  })
 
   return (
-    <div className={getClassName()}>
-      <MaterialButton
-        startIcon={getImageComponent()}
-        className="button__material_button"
-        variant="contained"
-        disabled={props.disabled}
-        size={props.size}
-        id={props.id ? props.id : undefined}
-        onClick={props.onClick}
-      >
-        {props.children}
-      </MaterialButton>
-    </div>
+    <button
+      className={getClassName()}
+      disabled={disabled}
+      onClick={onClick}
+      ref={buttonRef}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </button>
   )
 }
 

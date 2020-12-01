@@ -40,3 +40,9 @@
 .MuiAvatar-root.MuiAvatar-circle.avatar__color-5 {
   background-color: Var(--avatar-color-5);
 }
+
+.add_contact_button {
+  position: absolute;
+  bottom:30px;
+  right:30px;
+}

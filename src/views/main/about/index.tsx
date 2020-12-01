@@ -1,5 +1,4 @@
 import React from 'react'
-//import { useCurrentLanguage } from '../../../context_provider/app_settings'
 import { Paper } from '@material-ui/core'
 import './styles.css'
 import PetLogo from '../../../assets/logos/pet.png'
@@ -13,10 +12,9 @@ const AboutUs = (): JSX.Element => {
     { 
       title: "PET Computação", 
       img: PetLogo, 
-      text: `
-      \tO PET (Programa de Educação Tutorial) Computação, criado em 1988, é um grupo composto por estudantes de graduação dos cursos de Ciência da Computação e Engenharia da Computação. Coordenado pela professora Érika Cota, o projeto é formado por uma equipe diversa, voltada ao desenvolvimento individual de seus estudantes e também ao fortalecimento da comunidade acadêmica, tanto do Instituto de Informática, quanto externa e interPETs.
-      \tO PET Computação é baseado na Tríade Acadêmica de Ensino, Pesquisa e Extensão, e tem como objetivo providenciar a oportunidade dos membros explorarem áreas de interesse além do currículo de seus cursos.
-      \tOs projetos desenvolvidos pelo grupo abrangem o desenvolvimento de softwares e aplicações mobile; ministração de minicursos relacionados à computação; projetos de pesquisa e desenvolvimento de artigos acadêmicos; organização de eventos para a comunidade do Instituto, dentre outros. Também são realizados projetos em parceria com outros grupos PET da UFRGS (PETelos).`,
+      text: `\tO PET (Programa de Educação Tutorial) Computação, criado em 1988, é um grupo composto por estudantes de graduação dos cursos de Ciência da Computação e Engenharia da Computação. Coordenado pela professora Érika Cota, o projeto é formado por uma equipe diversa, voltada ao desenvolvimento individual de seus estudantes e também ao fortalecimento da comunidade acadêmica, tanto do Instituto de Informática, quanto externa e interPETs.
+\tO PET Computação é baseado na Tríade Acadêmica de Ensino, Pesquisa e Extensão, e tem como objetivo providenciar a oportunidade dos membros explorarem áreas de interesse além do currículo de seus cursos.
+\tOs projetos desenvolvidos pelo grupo abrangem o desenvolvimento de softwares e aplicações mobile; ministração de minicursos relacionados à computação; projetos de pesquisa e desenvolvimento de artigos acadêmicos; organização de eventos para a comunidade do Instituto, dentre outros. Também são realizados projetos em parceria com outros grupos PET da UFRGS (PETelos).`,
       footnote: `Instituto de Informática - UFRGS\nAv. Bento Gonçalves, 9500\nCampus do Vale - Prédio 43424\n2° Pavimento - Sala 201`
     },
     { title: "Hospital de Clínicas", img: HCLogo,},
@@ -25,7 +23,7 @@ const AboutUs = (): JSX.Element => {
 
   return (
     <div className="about-us">
-      <Paper elevation={5}>
+      <Paper elevation={1}>
         <div className="card__header" >
           <img className='card__header__image' src={DinoLogo} alt="Logo DinoApp" width='20%' height='20%'></img>
           <h3 className='card__header__title'>

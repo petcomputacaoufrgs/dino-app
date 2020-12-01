@@ -34,8 +34,8 @@
 .settings__save_button__icon {
   width: 18px;
   height: 18px;
-  margin-left: -10px;
-  fill: var(--light-color);
+  margin-right:7px;
+  fill: var(--inv-constrast-color);
 }
 
 .settings__save_button.MuiButtonBase-root {
@@ -51,4 +51,30 @@
   font-weight: 700;
   font-size: large;
   margin-bottom: 40px;
+}
+
+.settings__grant {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.settings__grant p {
+  margin: 0;
+}
+
+.settings__grant__switch {
+  margin-left: auto;
+}
+
+.settings__grant__switch .MuiSwitch-track {
+  height: 18px;
+  border-radius: 18px;
+}
+
+.MuiSwitch-root.settings__grant__switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

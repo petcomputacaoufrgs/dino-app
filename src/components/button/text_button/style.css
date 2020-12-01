@@ -1,0 +1,13 @@
+.text_button{
+    background-color: transparent;
+    color: var(--base-font-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+}
+
+.text_button p {
+    margin: 0;
+}

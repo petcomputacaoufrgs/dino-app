@@ -1,24 +1,23 @@
 import React from 'react'
 import './styles.css'
 import AppBarProps from './props'
-import { Menu as MenuIcon } from '@material-ui/icons'
-import { IconButton } from '@material-ui/core'
+import IconButton from '../../../button/icon_button'
 import SyncInfo from './sync_info'
 import ArrowBack from '../../../arrow_back'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import {ReactComponent as MenuIconSVG} from '../../../../assets/icons/menu.svg'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 
 const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
   const language = useCurrentLanguage()
-
+  
   return (
     <div className="drawer__navigation__app_bar">
       <IconButton
-        color="inherit"
-        aria-label={language.OPEN_MENU_ARIA_LABEL}
+        ariaLabel={language.OPEN_DRAWER_BUTTON_ARIA_LABEL}
+        icon={MenuIconSVG}
         onClick={onDrawerOpen}
-      >
-        <MenuIcon />
-      </IconButton>
+        className="drawer__navigation__app_bar__button"
+      />
       <ArrowBack />
       <SyncInfo />
     </div>

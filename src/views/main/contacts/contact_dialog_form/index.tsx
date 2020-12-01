@@ -5,12 +5,12 @@ import Service from '../../../../services/contact/ContactService'
 import ContactModel from '../../../../types/contact/ContactModel'
 import PhoneModel from '../../../../types/contact/PhoneModel'
 import ColorConstants from '../../../../constants/app/ColorConstants'
-import Button from '@material-ui/core/Button'
+import Button from '../../../../components/button/text_button'
 import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import { useCurrentLanguage } from '../../../../context_provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import './styles.css'
 
 const getContact = (item: ContactModel | undefined) => {
@@ -63,7 +63,7 @@ const ContactFormDialog = React.forwardRef(
         if (phone)
           setInvalidPhone({
             number: phone.number,
-            text: `O número já está registrado no contato ${exists.name}`,
+            text: `${language.CONTACT_NUMBER_ALREADY_EXISTS} ${exists.name}`,
           })
       }
 
@@ -178,10 +178,12 @@ const ContactFormDialog = React.forwardRef(
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button
+              onClick={handleClose}
+            >
               {language.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
-            <Button onClick={handleSave} color="primary">
+            <Button onClick={handleSave}>
               {language.DIALOG_SAVE_BUTTON_TEXT}
             </Button>
           </DialogActions>

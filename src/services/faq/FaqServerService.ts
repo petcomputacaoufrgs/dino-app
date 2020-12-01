@@ -21,7 +21,7 @@ class FaqServerService {
           Service.removeUserData()
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
     return undefined
@@ -38,7 +38,7 @@ class FaqServerService {
           return response.body
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
     return undefined
@@ -63,7 +63,7 @@ class FaqServerService {
           return
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
     return undefined
@@ -80,7 +80,7 @@ class FaqServerService {
           return response.body
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -100,7 +100,7 @@ class FaqServerService {
           return response.body
         }
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

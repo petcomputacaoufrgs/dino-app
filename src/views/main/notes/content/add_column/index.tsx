@@ -1,8 +1,8 @@
 import React from 'react'
 import AddColumnProps from './props'
 import './styles.css'
-import { useCurrentLanguage } from '../../../../../context_provider/app_settings'
-import { Button } from '@material-ui/core'
+import Button from '../../../../../components/button'
+import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import { isMobile } from 'react-device-detect'
 import NoteConstants from '../../../../../constants/note/NoteConstants'
 

@@ -4,10 +4,13 @@
 }
 
 .mui-search-bar .MuiOutlinedInput-adornedStart {
+  border: solid 0.05rem var(--constrast-color);
   padding-left: 0px;
+  border-radius: 10px;
 }
 
 .mui-search-bar .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
 .MuiOutlinedInput-root:focus {
-  border-color: rgba(0, 0, 0, 0.23);
+  border-color: var(--constrast-color);
+  border-width: 0.05rem;
 }

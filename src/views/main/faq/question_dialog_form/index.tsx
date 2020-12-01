@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Button from '@material-ui/core/Button'
+import Button from '../../../../components/button/text_button'
 import {
   Dialog,
   DialogActions,
@@ -8,10 +8,7 @@ import {
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import QuestionDialogFormProps from './props'
-import {
-  useCurrentLanguage,
-  useCurrentFaq,
-} from '../../../../context_provider/app_settings'
+import { useCurrentLanguage, useCurrentFaq } from '../../../../context/provider/app_settings'
 import SelectFaq from '../select_faq'
 import './styles.css'
 import FaqService from '../../../../services/faq/FaqService'
@@ -95,11 +92,11 @@ const QuestionDialogForm = React.forwardRef(
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose}>
               {language.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
 
-            <Button onClick={handleSave} color="primary">
+            <Button onClick={handleSave}>
               {language.DIALOG_SAVE_BUTTON_TEXT}
             </Button>
           </DialogActions>

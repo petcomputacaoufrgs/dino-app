@@ -9,7 +9,7 @@
   width: 15%;
 }
 
-.note__note_content__columns__add_column__button.MuiButtonBase-root.MuiButton-root {
+.note__note_content__columns__add_column__button {
   border: 1px solid;
   border-color: var(--column-border);
   background-color: var(--board-background);

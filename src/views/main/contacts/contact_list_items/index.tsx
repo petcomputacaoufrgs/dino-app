@@ -4,7 +4,7 @@ import ContactCard from '../contact_dialog_card'
 import ContactItemList from '../contact_list_item'
 import { List } from '@material-ui/core'
 import ContactFormDialog from '../contact_dialog_form'
-import ContactsService from '../../../../services/contact/ContactService'
+import ContactService from '../../../../services/contact/ContactService'
 import Constants from '../../../../constants/contact/ContactsConstants'
 
 const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
@@ -15,7 +15,7 @@ const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
 
   useEffect(() => {
     if (_delete) {
-      ContactsService.deleteContact(_delete)
+      ContactService.deleteContact(_delete)
       setDelete(0)
     }
   }, [_delete, setItems])

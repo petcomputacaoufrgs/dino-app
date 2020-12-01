@@ -1,35 +1,25 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../context_provider/app_settings'
-import { ListItem, Paper } from '@material-ui/core'
+import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import HomeItemProps from './props'
-import './styles.css'
 import MenuService from '../../../services/menu/MenuService'
-import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
+import IconButton from '../../../components/button/icon_button'
+import './styles.css'
 
 const Home: React.FC<HomeItemProps> = () => {
   const language = useCurrentLanguage()
 
   const items = MenuService.getMainPages(language).filter(item => item.name !== language.MENU_HOME)
-
-  const renderImage = (item: MenuItemViewModel) => {
-    const Image = item.image
-
-    return <Image className='img' /> 
-  }
   
   return (
     <div className="home">
       <div className="home__grid">
         {items.map((item, index) => (
           <div className="home__grid__item" key={index}>
-            <ListItem button className="home__grid__button">
-              <Paper
-                className='home__grid__paper'
-                onClick={() => setTimeout(() => item.onClick(), 150)}
-              >
-                {renderImage(item)}
-              </Paper>
-            </ListItem>
+            <IconButton
+              icon={item.image}
+              className="home__grid__button"
+              onClick={() => setTimeout(() => item.onClick(), 150)}
+            />
             <p className="home__grid__item__name">{item.name}</p>
           </div>
         ))}

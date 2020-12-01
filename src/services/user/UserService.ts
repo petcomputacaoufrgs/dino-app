@@ -1,4 +1,4 @@
-import UserLocalStorage from '../../local_storage/user/UserLocalStorage'
+import UserLocalStorage from '../../storage/local_storage/user/UserLocalStorage'
 import AuthService from '../auth/AuthService'
 import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'
@@ -7,7 +7,7 @@ import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
-import UserContextUpdater from '../../context_updater/UserContextUpdater'
+import UserContextUpdater from '../../context/updater/UserContextUpdater'
 import GoogleAgentService from '../../agent/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
@@ -87,7 +87,7 @@ class UserService {
         const version: number = response.body
         return version
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -103,7 +103,7 @@ class UserService {
         const user: UserModel = response.body
         return user
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -183,7 +183,7 @@ class UserService {
         const newVersion: number = response.body
         this.setVersion(newVersion)
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
   }
@@ -204,7 +204,7 @@ class UserService {
         const response = await request.authenticate().go()
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -220,7 +220,7 @@ class UserService {
       )
     } catch (e) {
       this.setSavePictureWithError(true)
-      LogAppErrorService.saveError(e)
+      LogAppErrorService.logError(e)
     }
   }
 

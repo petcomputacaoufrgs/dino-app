@@ -1,6 +1,6 @@
-import SyncStateEnum from '../../types/sync/SyncStateEnum'
-import SyncLocalStorage from '../../local_storage/sync/SyncLocalStorage'
-import SyncContextUpdater from '../../context_updater/SyncContextUpdater'
+import SyncStateEnum from "../../types/sync/SyncStateEnum"
+import SyncLocalStorage from "../../storage/local_storage/sync/SyncLocalStorage"
+import SyncContextUpdater from "../../context/updater/SyncContextUpdater"
 
 class SyncService {
   getState = (): SyncStateEnum => {

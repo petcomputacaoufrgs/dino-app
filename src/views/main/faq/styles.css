@@ -30,3 +30,8 @@
   color: var(--button-selected-font-color);
   outline: none;
 }
+
+.select_faq_button{
+  margin: auto;
+  margin-top: 50%;
+}

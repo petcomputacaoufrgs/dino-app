@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import TextButton from '../../../components/button/text_button'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import './styles.css'
@@ -9,17 +10,13 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Button,
+  DialogTitle
 } from '@material-ui/core'
 import TransitionSlide from '../../../components/slide_transition'
-import {
-  useCurrentLanguage,
-  useCurrentFaq,
-} from '../../../context_provider/app_settings'
+import { useCurrentLanguage, useCurrentFaq } from '../../../context/provider/app_settings'
 import SelectFaq from './select_faq'
 import FaqService from '../../../services/faq/FaqService'
-import { useFaq } from '../../../context_provider/faq'
+import { useFaq } from '../../../context/provider/faq'
 import QuestionDialogForm from './question_dialog_form'
 
 const Faq = (): JSX.Element => {
@@ -88,31 +85,28 @@ const Faq = (): JSX.Element => {
             />
           </DialogContent>
           <DialogActions>
-            <Button
+            <TextButton
               onClick={handleChangeOpenDialog}
-              color="primary"
               aria-labelledby={language.DIALOG_CANCEL_BUTTON_LABEL}
             >
               {language.DIALOG_CANCEL_BUTTON_TEXT}
-            </Button>
-            <Button
+            </TextButton>
+            <TextButton
               onClick={handleSwitchUserFaq}
-              color="primary"
               aria-labelledby={language.DIALOG_SAVE_BUTTON_LABEL}
             >
               {language.DIALOG_SAVE_BUTTON_TEXT}
-            </Button>
+            </TextButton>
           </DialogActions>
         </Dialog>
         <div className="select-faq__button">
-          <Button
-            style={{ margin: 'auto', display: 'flex', marginTop: '50%' }}
-            variant="outlined"
-            color="primary"
+          <TextButton
+            className = 'select_faq_button'
+            outline
             onClick={handleChangeOpenDialog}
           >
             {language.SELECT_FAQ_BUTTON}
-          </Button>
+          </TextButton>
         </div>
       </div>
     )

@@ -1,9 +1,9 @@
 import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
-import GlossaryLocalStorage from '../../local_storage/glossary/GlossaryLocalStorage'
+import GlossaryLocalStorage from '../../storage/local_storage/glossary/GlossaryLocalStorage'
 import DinoAgentService from '../../agent/DinoAgentService'
 import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
 import StringUtils from '../../utils/StringUtils'
-import GlossaryContextUpdater from '../../context_updater/GlossaryContextUpdater'
+import GlossaryContextUpdater from '../../context/updater/GlossaryContextUpdater'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class GlossaryService {
@@ -40,7 +40,7 @@ class GlossaryService {
 
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 
@@ -58,7 +58,7 @@ class GlossaryService {
 
         return response.body
       } catch (e) {
-        LogAppErrorService.saveError(e)
+        LogAppErrorService.logError(e)
       }
     }
 

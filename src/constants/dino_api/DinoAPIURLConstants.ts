@@ -18,6 +18,8 @@ class DinoAPIURLConstants {
 
   AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 
+  GRANT_GOOGLE = `${this.AUTH}google/grant/`
+
   REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`
 
   REFRESH_AUTH = `${this.PUBLIC_AUTH}refresh/`
@@ -83,6 +85,8 @@ class DinoAPIURLConstants {
   CONTACT_EDIT_ALL = `${this.CONTACT}all/`
 
   CONTACT_DELETE_ALL = `${this.CONTACT}all/`
+  
+  CONTACT_GOOGLE_DECLINE = `${this.CONTACT}google/decline_contacts/` 
 
   TEST_CONNECTION = `${this.URL}public/test_connection/`
 

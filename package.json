@@ -61,7 +61,7 @@
     "eject": "react-scripts eject"
   },
   "pre-push": [
-    "prettier"
+    "compress-images"
   ],
   "eslintConfig": {
     "extends": "react-app"

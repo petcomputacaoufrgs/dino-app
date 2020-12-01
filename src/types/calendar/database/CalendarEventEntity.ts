@@ -1,19 +1,19 @@
 export default interface CalendarEventEntity {
-    id?: number
+  id?: number
 
-    external_id?: number
+  external_id?: number
 
-    name: string
+  name: string
 
-    description: string
+  description: string
 
-    color: string
+  color: string
 
-    init_date: Date
+  init_date: Date
 
-    end_date: Date
+  end_date: Date
 
-    reminder_alarm_ms: number
+  reminder_alarm_ms: number
 
-    type: number
+  type: number
 }

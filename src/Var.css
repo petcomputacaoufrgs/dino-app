@@ -14,17 +14,17 @@
   /* Fundos */
   --login-background: #694e73;
   --background-main: #f5f5f5;
-  
+
   /* Fontes */
   --base-font-color: #121212;
-  --selection:#adc2b9;
+  --selection: #adc2b9;
 
   /* Menu e cabecalho */
   --header-and-menu: #694e73;
 
   /* Home */
   --home-icons: #adc2b9;
-  
+
   /* Notas */
   --board-background: #adc2b9;
   --column-border: #274035;
@@ -34,7 +34,7 @@
   --note-answer-background: #c2c2c2;
 
   /* Botoes */
-  --button-font-color: #694E73;
+  --button-font-color: #694e73;
   --button-selected-font-color: #b054d1;
 
   /* Outros */
@@ -49,14 +49,14 @@
   --avatar-color-4: #2196f3;
   --avatar-color-5: #4caf50;
   --light-color: #f5f5f5;
-  --tag-color: #D1A300;
+  --tag-color: #d1a300;
 }
 
 [data-theme='dark'] {
   /* Fundos */
   --login-background: #2f2e2c;
   --background-main: #2f2e2c;
-  
+
   /* Fontes */
   --base-font-color: #f5f5f5;
   --selection: #a594ab;
@@ -65,11 +65,11 @@
   --header-and-menu: #121212;
 
   /* Home */
-  --home-icons: #FFEAA3;
-  
+  --home-icons: #ffeaa3;
+
   /* Notas */
   --board-background: #694e73;
-  --column-border: #2D1B35;
+  --column-border: #2d1b35;
   --column-font-color: #f5f5f5;
 
   --note-background: #a594ab;
@@ -83,38 +83,38 @@
   --contrast-color: #f5f5f5;
   --inv-contrast-color: #2f2e2c;
   --other-details: #474747;
-  --tag-color: #D1A300;  
+  --tag-color: #d1a300;
 }
 
 [data-theme='high_contrast'] {
   /* Fundos */
   --login-background: #694e73;
   --background-main: #f5f5f5;
-  
+
   /* Fontes */
   --base-font-color: #121212;
-  --selection: #F1D881;
+  --selection: #f1d881;
 
   /* Menu e cabecalho */
   --header-and-menu: #694e73;
 
   /* Home */
-  --home-icons: #F1D881;
-  
-  /* Notas */
-  --board-background: #F1D881;
-  --column-border: #D1A300;
-  --column-font-color:  #f5f5f5;
+  --home-icons: #f1d881;
 
-  --note-background: #FFF3CB;
-  --note-answer-background: #EFE1B1;
+  /* Notas */
+  --board-background: #f1d881;
+  --column-border: #d1a300;
+  --column-font-color: #f5f5f5;
+
+  --note-background: #fff3cb;
+  --note-answer-background: #efe1b1;
 
   /* Botoes */
   --button-font-color: #442950;
   --button-selected-font-color: #b054d1;
 
   /* Outros */
-  --contrast-color:#2f2e2c;
+  --contrast-color: #2f2e2c;
   --inv-contrast-color: #f5f5f5;
   --other-details: #f5f5f5;
   --tag-color: #a594ab;

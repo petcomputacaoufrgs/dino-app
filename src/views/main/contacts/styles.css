@@ -1,4 +1,7 @@
-.contacts .contacts__list__item__content .MuiListItem-gutters .MuiListItem-divider {
+.contacts
+  .contacts__list__item__content
+  .MuiListItem-gutters
+  .MuiListItem-divider {
   padding: 8px;
 }
 
@@ -19,7 +22,6 @@
   line-height: 1.43;
   letter-spacing: 0.01071em;
 }
-
 
 .MuiAvatar-root.MuiAvatar-circle.avatar__color-1 {
   background-color: Var(--avatar-color-1);
@@ -43,6 +45,6 @@
 
 .add_contact_button {
   position: absolute;
-  bottom:1.2rem;
-  right:1.2rem;
+  bottom: 1.2rem;
+  right: 1.2rem;
 }

@@ -1,7 +1,7 @@
-import LanguageBase from "../../constants/languages/LanguageBase"
-import DateUtils from "../../utils/DateUtils"
-import CalendarEventEntity from "../../types/calendar/database/CalendarEventEntity"
-import CalendarEventRepository from "../../storage/database/calendar/CalendarEventRepository"
+import LanguageBase from '../../constants/languages/LanguageBase'
+import DateUtils from '../../utils/DateUtils'
+import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
+import CalendarEventRepository from '../../storage/database/calendar/CalendarEventRepository'
 
 class CalendarService {
   getEventTypeName = (type: number, language: LanguageBase) => {

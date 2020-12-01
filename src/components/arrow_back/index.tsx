@@ -7,7 +7,7 @@ import { useCurrentLanguage } from '../../context/provider/app_settings'
 
 const ArrowBack = (): JSX.Element => {
   const language = useCurrentLanguage()
-  
+
   return (
     <IconButton
       ariaLabel={language.ARROW_BACK_ARIA_LABEL}

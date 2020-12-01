@@ -1,11 +1,11 @@
 export default interface LogAppErrorEntity {
-    id?: number
+  id?: number
 
-    title: string
+  title: string
 
-    file: string
+  file: string
 
-    error: string
+  error: string
 
-    date: number
+  date: number
 }

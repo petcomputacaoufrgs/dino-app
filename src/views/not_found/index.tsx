@@ -16,7 +16,7 @@ const NotFound = (): JSX.Element => {
   const redirectToHome = () => {
     HistoryService.push(PathConstants.HOME)
   }
-  
+
   setTimeout(redirectToHome, redirectTimeout)
 
   return (

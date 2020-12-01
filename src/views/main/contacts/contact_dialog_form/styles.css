@@ -2,7 +2,8 @@
   margin: 20px;
 }
 
-.dialog-form__content .MuiFormHelperText-root.Mui-error.MuiFormHelperText-filled {
+.dialog-form__content
+  .MuiFormHelperText-root.Mui-error.MuiFormHelperText-filled {
   overflow: hidden;
   text-overflow: ellipsis;
 }

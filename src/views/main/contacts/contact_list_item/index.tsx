@@ -21,7 +21,6 @@ const ContactItemList = ({
   onClick,
   children,
 }: ContactItemListProps): JSX.Element => {
-
   const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -49,7 +48,7 @@ const ContactItemList = ({
           <Avatar
             aria-label={language.AVATAR_ALT}
             className={`avatar__color-${item.color}`}
-            >
+          >
             {item.name[0].toUpperCase()}
           </Avatar>
         </ListItemAvatar>

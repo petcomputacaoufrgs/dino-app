@@ -1,20 +1,20 @@
 export interface GooglePeopleNameModel {
-    givenName: string
+  givenName: string
 }
 
 export interface GooglePeoplePhoneNumberModel {
-    value: string
+  value: string
 }
 
 export interface GooglePeopleBiographiesModel {
-    value: string
-    contentType: string
+  value: string
+  contentType: string
 }
- 
+
 export default interface GooglePeopleModel {
-    names: GooglePeopleNameModel[],
-    phoneNumbers: GooglePeoplePhoneNumberModel[],
-    biographies?: GooglePeopleBiographiesModel[],
-    resourceName?: string
-    etag?: string
+  names: GooglePeopleNameModel[]
+  phoneNumbers: GooglePeoplePhoneNumberModel[]
+  biographies?: GooglePeopleBiographiesModel[]
+  resourceName?: string
+  etag?: string
 }

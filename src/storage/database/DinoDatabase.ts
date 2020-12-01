@@ -27,7 +27,8 @@ class DinoDatabase extends Dexie {
       noteColumn: '++id,external_id',
       deletedNoteColumn: '++id,external_id',
       logAppError: '++id,title,file,error,date',
-      calendarEvent: '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
+      calendarEvent:
+        '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
     })
 
     this.note = this.table('note')

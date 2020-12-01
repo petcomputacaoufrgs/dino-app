@@ -3,7 +3,11 @@ import RingLoader from 'react-spinners/RingLoader'
 import LoaderProps from './props'
 import './styles.css'
 
-const Loader: React.FC<LoaderProps> = ({ loading, children, className }): ReactElement => {
+const Loader: React.FC<LoaderProps> = ({
+  loading,
+  children,
+  className,
+}): ReactElement => {
   const [showLoader, setShowLoader] = useState(false)
 
   useEffect(() => {

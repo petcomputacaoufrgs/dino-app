@@ -14,7 +14,6 @@ const ContactCardHeader = ({
   setDelete,
   onClose: handleCloseDialog,
 }: ContactCardHeaderProps) => {
-
   const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -62,7 +61,7 @@ const ContactCardHeader = ({
         }
         title={item.name}
         subheader={ContactService.getPhoneTypes(item.phones, language)}
-        className='contact_dialog_content_header'
+        className="contact_dialog_content_header"
       />
       <Menu
         anchorEl={anchorEl}

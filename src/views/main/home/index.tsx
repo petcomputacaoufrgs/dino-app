@@ -8,8 +8,10 @@ import './styles.css'
 const Home: React.FC<HomeItemProps> = () => {
   const language = useCurrentLanguage()
 
-  const items = MenuService.getMainPages(language).filter(item => item.name !== language.MENU_HOME)
-  
+  const items = MenuService.getMainPages(language).filter(
+    (item) => item.name !== language.MENU_HOME
+  )
+
   return (
     <div className="home">
       <div className="home__grid">

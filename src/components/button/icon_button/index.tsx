@@ -12,7 +12,7 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
     if (props.className) {
       mainClass = mainClass.concat(' ').concat(props.className)
     }
-    
+
     if (props.dark) {
       mainClass = mainClass.concat(' button_dark')
     }

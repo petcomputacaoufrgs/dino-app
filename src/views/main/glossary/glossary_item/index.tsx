@@ -21,17 +21,17 @@ const GlossaryItem: React.FC = () => {
   return (
     <div className="glossary-item">
       <Paper elevation={5}>
-        <div className="card__header" >
-          <div className='card__header__title'>
+        <div className="card__header">
+          <div className="card__header__title">
             {item ? item.title : language.NO_AVAILABLE_TEXT}
           </div>
-          <div className='card__typography muted'>
+          <div className="card__typography muted">
             {item ? item.subtitle : ''}
           </div>
         </div>
-        <Divider/>
-        <div className="card__content" >
-          <div className='card__typography'>
+        <Divider />
+        <div className="card__content">
+          <div className="card__typography">
             {item?.fullText || language.NO_AVAILABLE_TEXT}
           </div>
         </div>

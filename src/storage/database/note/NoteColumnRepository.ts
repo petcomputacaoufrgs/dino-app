@@ -51,13 +51,8 @@ class NoteColumnRepository {
   }
 
   async putAll(columns: NoteColumnEntity[]) {
-    const ids = await DinoDatabase.transaction(
-      'readwrite',
-      this.table,
-      () =>
-        Promise.all(
-          columns.map((column) => this.table.put(column))
-        )
+    const ids = await DinoDatabase.transaction('readwrite', this.table, () =>
+      Promise.all(columns.map((column) => this.table.put(column)))
     )
 
     columns.forEach((column, index) => (column.id = ids[index]))
@@ -80,9 +75,7 @@ class NoteColumnRepository {
   async deleteByExternalId(
     externalId: number
   ): Promise<NoteColumnEntity | undefined> {
-    const query = this.table
-      .where('external_id')
-      .equals(externalId)
+    const query = this.table.where('external_id').equals(externalId)
 
     const column = await query.first()
 

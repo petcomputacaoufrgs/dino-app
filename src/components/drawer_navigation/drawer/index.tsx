@@ -8,7 +8,7 @@ import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import { Avatar } from '@material-ui/core'
 import { useUser } from '../../../context/provider/user'
 import IconButton from '../../button/icon_button'
-import {ReactComponent as ChevronLeftIconSVG} from '../../../assets/icons/chevron_left.svg'
+import { ReactComponent as ChevronLeftIconSVG } from '../../../assets/icons/chevron_left.svg'
 
 const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
   const language = useCurrentLanguage()

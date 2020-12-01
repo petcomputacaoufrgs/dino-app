@@ -8,15 +8,12 @@ class LogAppErrorSync implements BaseSync {
     if (LogAppErrorService.shouldSync()) {
       const logs = await LogAppErrorService.getSavedLogs()
 
-      const items: LogAppErrorModel[] = logs.map(
-        (log) =>
-          ({
-            title: log.title,
-            error: log.error,
-            file: log.file,
-            date: log.date,
-          })
-      )
+      const items: LogAppErrorModel[] = logs.map((log) => ({
+        title: log.title,
+        error: log.error,
+        file: log.file,
+        date: log.date,
+      }))
 
       const model: LogAppErrorListModel = {
         items: items,

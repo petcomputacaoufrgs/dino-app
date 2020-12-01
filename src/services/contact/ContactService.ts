@@ -67,7 +67,7 @@ class ContactService {
             phones: response.phones,
             description: response.description,
             color: response.color,
-            resourceName: response.resourceName
+            resourceName: response.resourceName,
           } as ContactModel
         })
       )
@@ -81,17 +81,17 @@ class ContactService {
     responseModels: ContactModel[],
     contacts: ContactModel[]
   ) => {
-    const updatedContacts = contacts
-      .map(contact => {
-        const serverModel = responseModels
-          .find(model => model.id !== undefined && model.id === contact.id)
+    const updatedContacts = contacts.map((contact) => {
+      const serverModel = responseModels.find(
+        (model) => model.id !== undefined && model.id === contact.id
+      )
 
-        if (serverModel) {
-          return serverModel
-        }
+      if (serverModel) {
+        return serverModel
+      }
 
-        return contact
-      })
+      return contact
+    })
 
     this.setItems(updatedContacts)
 
@@ -123,7 +123,7 @@ class ContactService {
   //#endregion
 
   //#region MAIN FUNCTIONS
-  
+
   addContact = async (item: ContactModel) => {
     const updatedItem = await ContactGoogleService.saveContact(item)
     const response = await Server.saveContact(updatedItem)
@@ -137,7 +137,7 @@ class ContactService {
 
     ContactContextUpdater.update()
   }
-  
+
   deleteContact = (deletedFrontID: number) => {
     const items = this.getItems()
     const index = items.findIndex((item) => item.frontId === deletedFrontID)
@@ -146,9 +146,9 @@ class ContactService {
       const item = items.splice(index, 1)[0]
 
       ContactGoogleService.deleteContact(item)
-      
+
       if (item.id) Server.deleteContact(item.id)
-      
+
       this.setItems(items)
 
       ContactContextUpdater.update()
@@ -254,7 +254,7 @@ class ContactService {
   pushToResourceNamesToDelete = (item: string) => {
     const items = this.getResourceNamesToDelete()
 
-    if (!items.some(n => n === item)) {
+    if (!items.some((n) => n === item)) {
       items.push(item)
       this.setResourceNamesToDelete(items)
     }
@@ -367,7 +367,6 @@ class ContactService {
   }
 
   //#endregion
-
 }
 
 export default new ContactService()

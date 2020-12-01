@@ -139,28 +139,23 @@ const Settings = (): JSX.Element => {
   const renderSelectFaq = (): JSX.Element => (
     <SelectFaq selectedFaq={selectedFaq} setSelectedFaq={setSelectedFaq} />
   )
-  
+
   const renderContactGrant = (): JSX.Element => (
     <div className="settings__grant">
-      <p>
-        Permissão de contatos
-      </p>
-      <Switch 
-        size="medium" 
+      <p>Permissão de contatos</p>
+      <Switch
+        size="medium"
         className="settings__grant__switch"
-        checked={googleOAuth2.hasContactGrant} 
-        onClick={handleActiveOrDeclineGoogleGrant} 
+        checked={googleOAuth2.hasContactGrant}
+        onClick={handleActiveOrDeclineGoogleGrant}
       />
     </div>
   )
 
   const renderSaveButton = (): JSX.Element => (
     <div className="settings__save_button_container">
-      <Button
-        className="settings__save_button"
-        onClick={onSave}
-      >
-        <SaveSVG className='settings__save_button__icon'/>
+      <Button className="settings__save_button" onClick={onSave}>
+        <SaveSVG className="settings__save_button__icon" />
         {language.SETTINGS_SAVE}
       </Button>
     </div>
@@ -194,9 +189,7 @@ const Settings = (): JSX.Element => {
       <FormControl className="settings__form">
         {renderSelectColorTheme()}
       </FormControl>
-      <FormControl className="settings__form">
-        {renderSelectFaq()}
-      </FormControl>
+      <FormControl className="settings__form">{renderSelectFaq()}</FormControl>
       <FormControl className="settings__form">
         {renderContactGrant()}
       </FormControl>

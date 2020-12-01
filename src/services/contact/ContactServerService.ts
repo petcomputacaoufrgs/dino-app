@@ -25,8 +25,10 @@ class ContactServerService {
       )
 
       if (contactsToUpdate.toAdd.length > 0) {
-        const updatedContactsToAdd = await ContactGoogleService.saveContacts(contactsToUpdate.toAdd)
-        
+        const updatedContactsToAdd = await ContactGoogleService.saveContacts(
+          contactsToUpdate.toAdd
+        )
+
         const responseSaveModel = await this.saveContacts(updatedContactsToAdd)
 
         if (responseSaveModel !== undefined) {
@@ -41,7 +43,9 @@ class ContactServerService {
       }
 
       if (contactsToUpdate.toEdit.length > 0) {
-        const updatedContactsToEdit = await ContactGoogleService.saveContacts(contactsToUpdate.toEdit)
+        const updatedContactsToEdit = await ContactGoogleService.saveContacts(
+          contactsToUpdate.toEdit
+        )
         const version = await this.editContacts(updatedContactsToEdit)
 
         if (version !== undefined) {

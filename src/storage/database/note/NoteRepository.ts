@@ -64,10 +64,8 @@ class NoteRepository {
   }
 
   async putAll(entities: NoteEntity[]) {
-    const ids = await DinoDatabase.transaction(
-      'readwrite',
-      this.table,
-      () => Promise.all(entities.map((entity) => this.table.put(entity)))
+    const ids = await DinoDatabase.transaction('readwrite', this.table, () =>
+      Promise.all(entities.map((entity) => this.table.put(entity)))
     )
 
     entities.forEach((entity, index) => (entity.id = ids[index]))

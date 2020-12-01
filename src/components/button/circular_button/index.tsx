@@ -4,24 +4,24 @@ import CircularButtonProps from './props'
 
 import './style.css'
 
-const CircularButton:React.FC<CircularButtonProps> = (props) => {
-    const Icon = props.icon
+const CircularButton: React.FC<CircularButtonProps> = (props) => {
+  const Icon = props.icon
 
-    const getClassName = (): string => {
-        let mainClass = 'circular_button'
-    
-        if (props.className) {
-          mainClass = mainClass.concat(' ').concat(props.className)
-        }
-    
-        return mainClass
+  const getClassName = (): string => {
+    let mainClass = 'circular_button'
+
+    if (props.className) {
+      mainClass = mainClass.concat(' ').concat(props.className)
     }
-    
-    return(
-        <Button {...props} className={getClassName()}>
-            <Icon />
-        </Button>
-    )
+
+    return mainClass
+  }
+
+  return (
+    <Button {...props} className={getClassName()}>
+      <Icon />
+    </Button>
+  )
 }
 
 export default CircularButton

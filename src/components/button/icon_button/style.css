@@ -1,18 +1,18 @@
 .icon_button {
-    background-color: transparent; 
-    padding: 0;
+  background-color: transparent;
+  padding: 0;
 }
 
 .icon_button svg {
-    fill: var(--light-color);
-    margin: 0;
+  fill: var(--light-color);
+  margin: 0;
 }
 
-.icon_button.button_dark svg{
-    fill: var(--contrast-color)
+.icon_button.button_dark svg {
+  fill: var(--contrast-color);
 }
-  
-.icon_button.button_bigger svg{
-    height: 35px;
-    width: 35px;
+
+.icon_button.button_bigger svg {
+  height: 35px;
+  width: 35px;
 }

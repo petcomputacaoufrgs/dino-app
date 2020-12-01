@@ -11,17 +11,8 @@ import { useAlert } from '../../context/provider/alert'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
 import './styles.css'
 
-const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> ((
-    {
-        scopes,
-        title,
-        text,
-        open,
-        onDecline: onClose,
-        onAccept
-    },
-    ref
-) => {
+const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
+  ({ scopes, title, text, open, onDecline: onClose, onAccept }, ref) => {
     const alert = useAlert()
 
     const language = useCurrentLanguage()
@@ -29,65 +20,73 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps> 
     const [refreshNecessary, setRefreshNecessary] = useState(false)
 
     const handleAcceptClick = async () => {
-        const response = await AuthService.requestGoogleGrant(scopes, refreshNecessary)
+      const response = await AuthService.requestGoogleGrant(
+        scopes,
+        refreshNecessary
+      )
 
-        setRefreshNecessary(false)
-        
-        if (response === GrantStatusConstants.SUCCESS) {
-            alert.showSuccessAlert(language.GRANT_FAIL_BY_EXTERNAL_SUCCESS)
-            GoogleContactGrantContextUpdater.update()
-            onAccept()
-        } else if (response === GrantStatusConstants.EXTERNAL_SERVICE_ERROR) {
-            alert.showErrorAlert(language.GRANT_FAIL_BY_EXTERNAL_ERROR)
-        } else if (response === GrantStatusConstants.REQUEST_CANCELED) {
-            alert.showInfoAlert(language.GRANT_CANCELED)
-        } else if (response === GrantStatusConstants.INVALID_ACCOUNT) {
-            alert.showInfoAlert(language.GRANT_FAIL_BY_INVALID_ACCOUNT)
-        } else if (response === GrantStatusConstants.REFRESH_TOKEN_NECESSARY) {
-            setRefreshNecessary(true)
-            alert.showInfoAlert(language.GRANT_RESFRESH_TOKEN_NECESSARY)
-        } else if (response === GrantStatusConstants.DISCONNECTED) {
-            alert.showErrorAlert(language.GRANT_FAIL_BY_DISCONNECTION)
-            onClose()
-        } else if (response === GrantStatusConstants.UNKNOW_API_ERROR) {
-            alert.showErrorAlert(language.GRANT_FAIL_BY_UNKNOW_ERROR)
-        }
+      setRefreshNecessary(false)
+
+      if (response === GrantStatusConstants.SUCCESS) {
+        alert.showSuccessAlert(language.GRANT_FAIL_BY_EXTERNAL_SUCCESS)
+        GoogleContactGrantContextUpdater.update()
+        onAccept()
+      } else if (response === GrantStatusConstants.EXTERNAL_SERVICE_ERROR) {
+        alert.showErrorAlert(language.GRANT_FAIL_BY_EXTERNAL_ERROR)
+      } else if (response === GrantStatusConstants.REQUEST_CANCELED) {
+        alert.showInfoAlert(language.GRANT_CANCELED)
+      } else if (response === GrantStatusConstants.INVALID_ACCOUNT) {
+        alert.showInfoAlert(language.GRANT_FAIL_BY_INVALID_ACCOUNT)
+      } else if (response === GrantStatusConstants.REFRESH_TOKEN_NECESSARY) {
+        setRefreshNecessary(true)
+        alert.showInfoAlert(language.GRANT_RESFRESH_TOKEN_NECESSARY)
+      } else if (response === GrantStatusConstants.DISCONNECTED) {
+        alert.showErrorAlert(language.GRANT_FAIL_BY_DISCONNECTION)
+        onClose()
+      } else if (response === GrantStatusConstants.UNKNOW_API_ERROR) {
+        alert.showErrorAlert(language.GRANT_FAIL_BY_UNKNOW_ERROR)
+      }
     }
 
     const handleDecline = async () => {
-        alert.showInfoAlert(language.GRANT_DECLINED)
-        ContactServerService.declineGoogleContacts()
-        onClose()
+      alert.showInfoAlert(language.GRANT_DECLINED)
+      ContactServerService.declineGoogleContacts()
+      onClose()
     }
 
     return (
-        <Dialog
-            ref={ref}
-            fullWidth
-            maxWidth="xs"
-            onClose={onClose}
-            TransitionComponent={TransitionSlide}
-            open={open}
-        >
-            <div className="google_grant_dialog__header">
-                <div className="google_grant_dialog__header__title">
-                    <h1>{title}</h1>
-                </div>
-                <DinoAuthSVG />
-            </div>
-            <div className="google_grant_dialog__content">
-                <p>{text}</p>
-            </div>
-            <div className="google_grant_dialog__buttons">
-                <Button onClick={handleDecline}>
-                    {language.DIALOG_DECLINE_BUTTON_TEXT}
-                </Button>
-                <Button autoFocus onClick={handleAcceptClick} className="google_grant_dialog__buttons__accept_button">
-                    {language.DIALOG_AGREE_TEXT}
-                </Button>
-            </div>
-        </Dialog>
+      <Dialog
+        ref={ref}
+        fullWidth
+        maxWidth="xs"
+        onClose={onClose}
+        TransitionComponent={TransitionSlide}
+        open={open}
+      >
+        <div className="google_grant_dialog__header">
+          <div className="google_grant_dialog__header__title">
+            <h1>{title}</h1>
+          </div>
+          <DinoAuthSVG />
+        </div>
+        <div className="google_grant_dialog__content">
+          <p>{text}</p>
+        </div>
+        <div className="google_grant_dialog__buttons">
+          <Button onClick={handleDecline}>
+            {language.DIALOG_DECLINE_BUTTON_TEXT}
+          </Button>
+          <Button
+            autoFocus
+            onClick={handleAcceptClick}
+            className="google_grant_dialog__buttons__accept_button"
+          >
+            {language.DIALOG_AGREE_TEXT}
+          </Button>
+        </div>
+      </Dialog>
     )
-})
+  }
+)
 
 export default GoogleGrantDialog

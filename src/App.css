@@ -12,7 +12,7 @@ body .MuiDialogActions-spacing > :not(:first-child) {
   margin-left: 0;
 }
 
-body .MuiIconButton-root, 
+body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
   fill: var(--constrast-color);
@@ -42,12 +42,12 @@ body .MuiInput-underline:before {
 }
 
 .MuiPaper-root.MuiMenu-paper {
-  background-color:var(--other-details);
+  background-color: var(--other-details);
   color: var(--base-font-color);
 }
 
-.MuiPaper-root.MuiDialog-paper{
-  background-color:var(--other-details);
+.MuiPaper-root.MuiDialog-paper {
+  background-color: var(--other-details);
   color: var(--base-font-color);
 }
 

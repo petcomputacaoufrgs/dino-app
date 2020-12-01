@@ -23,7 +23,6 @@ const Contacts = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([] as ContactModel[])
 
-
   useEffect(() => {
     const results = items.filter((item) =>
       StringUtils.contains(item.name, searchTerm)
@@ -56,18 +55,19 @@ const Contacts = (): JSX.Element => {
   }
 
   return (
-    <div className='contacts'>
+    <div className="contacts">
       <MuiSearchBar
         value={searchTerm}
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults} />
-      <CircularButton 
+      <CircularButton
         ariaLabel={language.CONTACTS_ADD_CONTACT}
-        className='add_contact_button' 
-        icon={AddIconSVG} 
-        onClick={handleAddContact}/>
+        className="add_contact_button"
+        icon={AddIconSVG}
+        onClick={handleAddContact}
+      />
       <ContactFormDialog
         action={Contants.ACTION_ADD}
         dialogOpen={add}

@@ -1,5 +1,5 @@
-import ButtonProps from "../props";
+import ButtonProps from '../props'
 
 export default interface CircularButtonProps extends ButtonProps {
-    icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
+  icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
 }

@@ -68,7 +68,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
 
     setLoading(false)
   }
-  
+
   const showOfflineMessage = () => {
     alert.showInfoAlert(language.CANT_LOGIN_DISCONNECTED)
   }

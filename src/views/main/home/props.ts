@@ -1,5 +1,3 @@
-import MenuItemViewModel from "../../../types/menu/MenuItemViewModel"
+import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 
-export default interface HomeItemProps {
-  
-}
+export default interface HomeItemProps {}

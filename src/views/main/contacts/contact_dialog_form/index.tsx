@@ -178,9 +178,7 @@ const ContactFormDialog = React.forwardRef(
             />
           </DialogContent>
           <DialogActions>
-            <Button
-              onClick={handleClose}
-            >
+            <Button onClick={handleClose}>
               {language.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
             <Button onClick={handleSave}>

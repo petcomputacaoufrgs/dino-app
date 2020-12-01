@@ -79,9 +79,7 @@ const App = (): JSX.Element => {
   const renderLoad = (): JSX.Element => <Load />
 
   return (
-    <div className="app">
-      {showLoadScreen ? renderLoad() : renderApp()}
-    </div>
+    <div className="app">{showLoadScreen ? renderLoad() : renderApp()}</div>
   )
 }
 

@@ -10,10 +10,13 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
 } from '@material-ui/core'
 import TransitionSlide from '../../../components/slide_transition'
-import { useCurrentLanguage, useCurrentFaq } from '../../../context/provider/app_settings'
+import {
+  useCurrentLanguage,
+  useCurrentFaq,
+} from '../../../context/provider/app_settings'
 import SelectFaq from './select_faq'
 import FaqService from '../../../services/faq/FaqService'
 import { useFaq } from '../../../context/provider/faq'
@@ -101,7 +104,7 @@ const Faq = (): JSX.Element => {
         </Dialog>
         <div className="select-faq__button">
           <TextButton
-            className = 'select_faq_button'
+            className="select_faq_button"
             outline
             onClick={handleChangeOpenDialog}
           >
@@ -138,7 +141,7 @@ const Faq = (): JSX.Element => {
               dialogOpen={dialogOpen}
               setDialogOpen={setDialogOpen}
             />
-            </div>
+          </div>
         </div>
       )}
     </div>

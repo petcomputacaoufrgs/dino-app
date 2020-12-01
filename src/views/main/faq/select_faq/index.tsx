@@ -13,7 +13,6 @@ const SelectFaq = ({
   selectedFaq,
   setSelectedFaq,
 }: SelectFaqProps): JSX.Element => {
-  
   const language = useCurrentLanguage()
   const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
   const [open, setOpen] = useState(false)

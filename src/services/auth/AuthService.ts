@@ -34,11 +34,18 @@ class AuthService {
     }
   }
 
-  requestGoogleGrant = async (scopeList: GoogleScope[], refreshTokenNecessary: boolean): Promise<number> => {
+  requestGoogleGrant = async (
+    scopeList: GoogleScope[],
+    refreshTokenNecessary: boolean
+  ): Promise<number> => {
     try {
       const email = UserService.getEmail()
 
-      const authCode = await GoogleOAuth2Service.requestGrant(scopeList, email, refreshTokenNecessary)
+      const authCode = await GoogleOAuth2Service.requestGrant(
+        scopeList,
+        email,
+        refreshTokenNecessary
+      )
       if (authCode) {
         return this.requestGoogleGrantOnDinoAPI(authCode, scopeList)
       }
@@ -108,7 +115,7 @@ class AuthService {
     const scopes = this.getGoogleAuthScopes()
 
     if (scopes) {
-      return scopes.some(scope => scope === GoogleScope.SCOPE_CONTACT)
+      return scopes.some((scope) => scope === GoogleScope.SCOPE_CONTACT)
     }
 
     return false
@@ -283,7 +290,9 @@ class AuthService {
     }
   }
 
-  private saveGoogleRefreshAuthData(responseBody: GoogleRefreshAuthResponseModel) {
+  private saveGoogleRefreshAuthData(
+    responseBody: GoogleRefreshAuthResponseModel
+  ) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
     this.setGoogleAuthScopes(responseBody.scopeList)

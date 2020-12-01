@@ -56,7 +56,8 @@
   background-color: var(--note-answer-background);
 }
 
-.note__note_content__column__column_card__card__card_answer.MuiCardActions-root p {
+.note__note_content__column__column_card__card__card_answer.MuiCardActions-root
+  p {
   white-space: nowrap;
   overflow: hidden;
   display: block;

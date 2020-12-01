@@ -4,7 +4,7 @@ import {
   Dialog,
   Divider,
   DialogContent,
-  DialogActions
+  DialogActions,
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import NoteColumnDialogProps from './props'

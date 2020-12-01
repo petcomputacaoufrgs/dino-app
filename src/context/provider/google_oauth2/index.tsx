@@ -5,13 +5,13 @@ import GoogleContactGrantContextUpdater from '../../updater/GoogleContactGrantCo
 import AuthService from '../../../services/auth/AuthService'
 
 const GoogleOAuth2Context = createContext({
-  loaded: false
+  loaded: false,
 } as GoogleAuth2ContextType)
 
 const GoogleOAuth2ContextProvider: React.FC = (props) => {
   const [context, setContext] = useState<GoogleAuth2ContextType>({
     loaded: false,
-    hasContactGrant: false
+    hasContactGrant: false,
   })
 
   const [firstLoad, setFirstLoad] = useState(true)
@@ -20,14 +20,14 @@ const GoogleOAuth2ContextProvider: React.FC = (props) => {
     let handleInitUpdate = (loaded: boolean) => {
       setContext({
         loaded: loaded,
-        hasContactGrant: context.hasContactGrant
+        hasContactGrant: context.hasContactGrant,
       })
     }
 
     let handleContactGrantUpdate = () => {
       setContext({
         loaded: context.loaded,
-        hasContactGrant: AuthService.hasGoogleContactsGrant()
+        hasContactGrant: AuthService.hasGoogleContactsGrant(),
       })
     }
 

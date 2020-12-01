@@ -26,12 +26,13 @@
   display: block;
 }
 
-.send-question__button:hover,  .send-question__button:focus{
+.send-question__button:hover,
+.send-question__button:focus {
   color: var(--button-selected-font-color);
   outline: none;
 }
 
-.select_faq_button{
+.select_faq_button {
   margin: auto;
   margin-top: 50%;
 }

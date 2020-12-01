@@ -3,7 +3,7 @@ import { useCurrentLanguage } from '../../../../../../context/provider/app_setti
 import TextField from '@material-ui/core/TextField'
 import { MenuItem } from '@material-ui/core'
 import IconButton from '../../../../../../components/button/icon_button'
-import {ReactComponent as ClearIconSVG} from '../../../../../../assets/icons/close.svg'
+import { ReactComponent as ClearIconSVG } from '../../../../../../assets/icons/close.svg'
 import ContactsConstants from '../../../../../../constants/contact/ContactsConstants'
 import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
@@ -75,11 +75,12 @@ const PhoneFields = ({
           maxLength: Constants.NUMBER_MAX,
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton 
+              <IconButton
                 ariaLabel={language.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
-                icon={ClearIconSVG} 
-                className='clear_button' 
-                onClick={() => handleDeletePhone(number)} />
+                icon={ClearIconSVG}
+                className="clear_button"
+                onClick={() => handleDeletePhone(number)}
+              />
             </InputAdornment>
           ),
         }}

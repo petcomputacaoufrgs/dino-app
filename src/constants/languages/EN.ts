@@ -397,50 +397,56 @@ export default class EN implements LanguageBase {
 
   CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
 
-  CONTACT_NUMBER_ALREADY_EXISTS = 'This number is already created in the contact'
+  CONTACT_NUMBER_ALREADY_EXISTS =
+    'This number is already created in the contact'
 
-  CONTACT_CLEAR_BUTTON_ARIA_LABEL = "Click here to clean"
+  CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Click here to clean'
 
-  COLOR_THEME_SELECTION_ARIA_LABEL = "Click here to change the contact color"
+  COLOR_THEME_SELECTION_ARIA_LABEL = 'Click here to change the contact color'
 
   DIALOG_AGREE_TEXT = 'Accept'
 
   DIALOG_DECLINE_BUTTON_TEXT = 'Decline'
 
-  GRANT_FAIL_BY_EXTERNAL_ERROR = 'Sorry, something went wrong. Please, try again.'
+  GRANT_FAIL_BY_EXTERNAL_ERROR =
+    'Sorry, something went wrong. Please, try again.'
 
   GRANT_CANCELED = 'Permission canceled. Please, try again.'
 
-  GRANT_FAIL_BY_INVALID_ACCOUNT = 'Invalid account. Please, use the logged account.'
+  GRANT_FAIL_BY_INVALID_ACCOUNT =
+    'Invalid account. Please, use the logged account.'
 
   GRANT_RESFRESH_TOKEN_NECESSARY = 'Sorry, our mistake. Please, try again.'
 
-  GRANT_FAIL_BY_DISCONNECTION = 'Sorry, connection error. Please, try again when connection return.'
+  GRANT_FAIL_BY_DISCONNECTION =
+    'Sorry, connection error. Please, try again when connection return.'
 
-  GRANT_FAIL_BY_UNKNOW_ERROR = 'Sorry, an unknow error happened. Please, trye again.'
+  GRANT_FAIL_BY_UNKNOW_ERROR =
+    'Sorry, an unknow error happened. Please, trye again.'
 
   GRANT_FAIL_BY_EXTERNAL_SUCCESS = 'Success! Enjoy your advantages.'
-  
+
   GRANT_DECLINED = 'You can active this feature in settings.'
 
-  GOOGLE_CONTACT_GRANT_TEXT = 'We would like permissions to save and edit your DinoApp\'s contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp\'s contacts.'
+  GOOGLE_CONTACT_GRANT_TEXT =
+    "We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."
 
   GOOGLE_CONTACT_GRANT_TITLE = 'Your contacts anywhere'
 
-  ARROW_BACK_ARIA_LABEL = "Return to last page"
+  ARROW_BACK_ARIA_LABEL = 'Return to last page'
 
-  GOOGLE_LOGIN_BUTTON_ARIA_LABEL = "Click here to login with your Google account"
+  GOOGLE_LOGIN_BUTTON_ARIA_LABEL =
+    'Click here to login with your Google account'
 
-  OPEN_DRAWER_BUTTON_ARIA_LABEL = "Click here to open menu"
+  OPEN_DRAWER_BUTTON_ARIA_LABEL = 'Click here to open menu'
 
-  CLOSE_MENU_BUTTON_ARIA_LABEL = "Click here to close menu"
+  CLOSE_MENU_BUTTON_ARIA_LABEL = 'Click here to close menu'
 
-  CALENDAR_EDIT_BUTTON_ARIA_LABEL = "Click here to edit"
+  CALENDAR_EDIT_BUTTON_ARIA_LABEL = 'Click here to edit'
 
-  CALENDAR_DELETE_BUTTON_ARIA_LABEL = "Click here to delete"
+  CALENDAR_DELETE_BUTTON_ARIA_LABEL = 'Click here to delete'
 
-  CALENDAR_CLOSE_BUTTON_ARIA_LABEL = "Click here to close the page"
+  CALENDAR_CLOSE_BUTTON_ARIA_LABEL = 'Click here to close the page'
 
-  CALENDAR_CURRENT_MONTH_ARIA_LABEL = "Click here to go to the current month"
-
+  CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Click here to go to the current month'
 }

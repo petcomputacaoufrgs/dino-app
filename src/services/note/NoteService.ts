@@ -255,9 +255,7 @@ class NoteService {
   deleteAllDatabaseNotesByColumnTitle = async (
     columnTitle: string
   ): Promise<NoteEntity[]> => {
-    const deletedNotes = await NoteRepository.deleteByColumnTitle(
-      columnTitle
-    )
+    const deletedNotes = await NoteRepository.deleteByColumnTitle(columnTitle)
 
     this.updateContext()
 

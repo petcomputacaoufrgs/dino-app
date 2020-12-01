@@ -9,7 +9,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   inputRef,
   ariaLabel,
-  outline
+  outline,
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const getClassName = (): string => {
@@ -28,7 +28,7 @@ const Button: React.FC<ButtonProps> = ({
 
   useEffect(() => {
     if (inputRef && inputRef.current) {
-      inputRef.current.addEventListener("keyup", (event) => {
+      inputRef.current.addEventListener('keyup', (event) => {
         if (event.keyCode === 13) {
           event.preventDefault()
           if (buttonRef.current) {

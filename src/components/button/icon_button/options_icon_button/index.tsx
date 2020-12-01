@@ -5,11 +5,11 @@ import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { ReactComponent as MoreSVG } from '../../../../assets/icons/more_vert.svg'
 import IconButton from '..'
 
-const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({ 
-  onClick, 
-  dark, 
-  bigger 
-})=> {
+const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
+  onClick,
+  dark,
+  bigger,
+}) => {
   const language = useCurrentLanguage()
 
   return (

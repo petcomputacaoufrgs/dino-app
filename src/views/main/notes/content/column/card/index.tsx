@@ -47,11 +47,11 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
           <CardContent className="note__note_content__column__column_card__card__card_content">
             <TagList tagList={note.tagNames} />
           </CardContent>
-          {note.answer && note.answer.length > 0 &&
+          {note.answer && note.answer.length > 0 && (
             <CardActions className="note__note_content__column__column_card__card__card_answer">
               <p>{note.answer}</p>
             </CardActions>
-          }
+          )}
         </MaterialCard>
       )}
     </Draggable>

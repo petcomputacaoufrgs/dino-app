@@ -93,6 +93,7 @@
   text-align: center;
 }
 
-.drawer_navigation__drawer__visible .MuiTypography-root.MuiListItemText-primary {
+.drawer_navigation__drawer__visible
+  .MuiTypography-root.MuiListItemText-primary {
   text-align: justify;
 }

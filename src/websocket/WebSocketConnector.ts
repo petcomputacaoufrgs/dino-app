@@ -29,7 +29,7 @@ class WebSocketConnector {
     ContactWebSocketSubscriber,
     FaqWebSocketSubscriber,
     FaqUserWebSocketSubscriber,
-    GoogleAuthWebSocketSubscriber
+    GoogleAuthWebSocketSubscriber,
   ]
 
   private delayTimeout: NodeJS.Timeout | undefined

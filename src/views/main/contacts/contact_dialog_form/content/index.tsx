@@ -16,11 +16,10 @@ const ContactFormDialogContent = (
   const isNumberTaken = (tel: string): boolean =>
     props.helperText.number === tel
 
-  const isNumberInvalid = (tel: string) => 
+  const isNumberInvalid = (tel: string) =>
     isNumberTaken(tel) || tel.length === Constants.NUMBER_MAX
-  
 
-  const isNameInvalid = (name: string) => 
+  const isNameInvalid = (name: string) =>
     name.length === Constants.NAME_MAX || props.invalidName
 
   return (

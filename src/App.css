@@ -8,6 +8,10 @@ body .MuiInputBase-root {
   color: var(--base-font-color);
 }
 
+body .MuiDialogActions-spacing > :not(:first-child) {
+  margin-left: 0;
+}
+
 body .MuiIconButton-root, 
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {

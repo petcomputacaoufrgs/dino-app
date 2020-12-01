@@ -11,7 +11,7 @@ import {
   MenuItem,
 } from '@material-ui/core'
 import ContactService from '../../../../services/contact/ContactService'
-import OptionsComponent from '../../../../components/icon_buttons/options_component'
+import OptionsComponent from '../../../../components/button/icon_button/options_component'
 import './styles.css'
 
 const ContactItemList = ({

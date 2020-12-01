@@ -1,16 +1,16 @@
 import React from 'react'
 import CloseIcon from '@material-ui/icons/Close'
-import IconButton from '@material-ui/core/IconButton'
 import CloseComponentProps from './props'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
+import { ReactComponent as CloseSVG } from '../../../../assets/icons/close.svg'
+import IconButton from '..'
 
 const CloseComponent = ({ onClose }: CloseComponentProps): JSX.Element => {
   const language = useCurrentLanguage()
 
   return (
     <IconButton
-      edge="end"
-      size="small"
+      icon={CloseSVG}
       aria-label={language.CLOSE_ARIA_LABEL}
       onClick={onClose}
     >

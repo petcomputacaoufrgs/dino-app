@@ -16,6 +16,7 @@ const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
         ariaLabel={language.OPEN_DRAWER_BUTTON_ARIA_LABEL}
         icon={MenuIconSVG}
         onClick={onDrawerOpen}
+        className="drawer__navigation__app_bar__button"
       />
       <ArrowBack />
       <SyncInfo />

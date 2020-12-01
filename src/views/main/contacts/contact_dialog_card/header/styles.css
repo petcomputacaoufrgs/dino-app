@@ -13,3 +13,14 @@
     max-width: 200px;
     overflow-x: hidden;
 }
+
+.contact_dialog_content_header .MuiCardHeader-action {
+    display: flex;
+    flex-direction: row;
+}
+
+.contact_dialog_content_header .MuiCardHeader-action .svg_icon {
+    fill: black;
+    height: auto;
+    width: auto;
+}

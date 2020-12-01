@@ -5,7 +5,7 @@ import { useCurrentLanguage } from '../../../../../context/provider/app_settings
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
-import CloseComponent from '../../../../../components/icon_buttons/close_component'
+import CloseComponent from '../../../../../components/button/icon_button/close_component'
 import '../../styles.css'
 import './styles.css'
 

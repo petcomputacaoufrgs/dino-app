@@ -1,10 +1,9 @@
 .icon_button {
-    height: 56px;
-    width: 56px; 
     background-color: transparent; 
     padding: 0;
 }
 
 .svg_icon {
     fill: var(--light-color);
+    margin: 0;
 }

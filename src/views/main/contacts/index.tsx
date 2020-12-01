@@ -11,8 +11,8 @@ import Contants from '../../../constants/contact/ContactsConstants'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import AuthService from '../../../services/auth/AuthService'
-import Button from '../../../components/button/circular_button'
 import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
+import CircularButton from '../../../components/button/circular_button'
 
 const Contacts = (): JSX.Element => {
   const language = useCurrentLanguage()
@@ -63,7 +63,11 @@ const Contacts = (): JSX.Element => {
         placeholder={language.SEARCH_HOLDER}
       />
       <ContactItems items={searchResults} setItems={setSearchResults} />
-      <Button ariaLabel={language.CONTACTS_ADD_CONTACT}className='add_contact_button' icon={AddIconSVG} onClick={handleAddContact}/>
+      <CircularButton 
+        ariaLabel={language.CONTACTS_ADD_CONTACT}
+        className='add_contact_button' 
+        icon={AddIconSVG} 
+        onClick={handleAddContact}/>
       <ContactFormDialog
         action={Contants.ACTION_ADD}
         dialogOpen={add}

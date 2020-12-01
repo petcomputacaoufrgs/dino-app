@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect } from 'react'
 import LanguageContextProvider from './language'
-import AppSettingsContextType from '../../../types/context_provider/AppSettingsContextType'
 import AppSettingsContextUpdater from '../../updater/AppSettingsContextUpdater'
 import SelectedFaqContextProvider from './selected_faq'
 import CurrentFaqContextUpdater from '../../updater/CurrentFaqContextUpdater'
 import ColorThemeContextProvider from './color_theme'
+import AppSettingsContextType from '../../../types/context_provider/AppSettingsContextType'
 
 const AppSettingsContext = createContext({} as AppSettingsContextType)
 

@@ -58,11 +58,3 @@ body .MuiInput-underline:before {
 .MuiAutocomplete-popper {
   background-color: var(--other-details);
 }
-
-.MuiFormLabel-root.MuiFormLabel-root.MuiInputLabel-formControl.Mui-focused.Mui-focused {
-  color: var(--selection);
-}
-
-.PrivateNotchedOutline-root-1.MuiOutlinedInput-notchedOutline {
-  border-color: var(--other-details);
-}

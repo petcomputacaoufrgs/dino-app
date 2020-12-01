@@ -41,7 +41,10 @@ const Main = (): JSX.Element => {
     setOpenLogoutDialog(false)
   }
 
-  const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(language, handleLogoutClick)
+  const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
+    language,
+    handleLogoutClick
+  )
 
   const renderMainContent = (): JSX.Element => {
     return (
@@ -104,9 +107,7 @@ const Main = (): JSX.Element => {
         />
         <PrivateRoute
           path={PathConstants.ABOUT_US}
-          component={() => (
-            <AboutUs />
-          )}
+          component={() => <AboutUs />}
         />
         <PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
         <PrivateRoute path={'/'} component={NotFound} />

@@ -3,4 +3,5 @@ export default interface NoteColumnDialogContentProps {
   title: string
   invalidTitle: boolean
   invalidMessage: string
+  inputRef: React.RefObject<HTMLInputElement>
 }

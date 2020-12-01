@@ -18,7 +18,7 @@ class GoogleOAuth2Service {
       client_id: GoogleSecrets.client_id,
       scope: 'email profile openid',
       response_type: 'code',
-      include_granted_scopes: true
+      include_granted_scopes: true,
     }
 
     if (forceConsent) {
@@ -26,14 +26,14 @@ class GoogleOAuth2Service {
     }
 
     return new Promise((resolve, reject) => {
-      gapi.auth2.authorize(options, response => {
-          if (response.error) {
-            reject(undefined)
-          } else {
-            resolve(response.code)
-          }
-      });
-    });
+      gapi.auth2.authorize(options, (response) => {
+        if (response.error) {
+          reject(undefined)
+        } else {
+          resolve(response.code)
+        }
+      })
+    })
   }
 
   requestGrant = async (scopeList, email, refreshTokenNecessary) => {
@@ -44,7 +44,7 @@ class GoogleOAuth2Service {
       scope: scopeString,
       response_type: 'code',
       login_hint: email,
-      include_granted_scopes: true
+      include_granted_scopes: true,
     }
 
     if (refreshTokenNecessary) {
@@ -52,14 +52,14 @@ class GoogleOAuth2Service {
     }
 
     return new Promise((resolve, reject) => {
-      gapi.auth2.authorize(options, response => {
+      gapi.auth2.authorize(options, (response) => {
         if (response.error) {
           reject(response.error)
         } else {
           resolve(response.code)
         }
-      });
-    });
+      })
+    })
   }
 }
 

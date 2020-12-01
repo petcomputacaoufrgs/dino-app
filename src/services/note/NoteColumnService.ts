@@ -119,9 +119,7 @@ class NoteColumnService {
     if (oldTitle && changedColumn.id) {
       await NoteService.updateNoteColumnTitle(changedColumn.title, oldTitle)
 
-      const savedColumn = await NoteColumnRepository.getById(
-        changedColumn.id
-      )
+      const savedColumn = await NoteColumnRepository.getById(changedColumn.id)
 
       if (savedColumn) {
         savedColumn.lastUpdate = new Date().getTime()
@@ -260,9 +258,7 @@ class NoteColumnService {
 
   private deleteColumnOnServer = async (column: NoteColumnEntity) => {
     if (column.id) {
-      const deletedColumn = await DeletedNoteColumnDatabase.getById(
-        column.id
-      )
+      const deletedColumn = await DeletedNoteColumnDatabase.getById(column.id)
       if (!deletedColumn && column && column.external_id) {
         const newVersion = await NoteColumnServerService.delete(
           column.external_id

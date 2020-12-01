@@ -1,7 +1,12 @@
-.contact_dialog_form_header .MuiTypography-root.MuiCardHeader-title{
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 200px;
-    overflow-x: hidden;
+.contact_dialog_form_header .MuiTypography-root.MuiCardHeader-title {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  overflow-x: hidden;
+}
+
+.contact_dialog_form_header .MuiCardHeader-action {
+  display: flex;
+  flex-direction: row;
 }

@@ -14,13 +14,15 @@ import UserContextProvider from './context/provider/user'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
 import DataThemeUtils from './utils/DataThemeUtils'
+import TermsOfUse from './views/terms_of_use'
+import PrivacyPolicy from './views/privacy_policy'
 import { useCurrentColorTheme } from './context/provider/app_settings'
 
 const LOAD_SCREEN_TIME = 2250
 
 const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
-  const [showLoadScreen, setShowLoadScreen] = useState(true)
+  const [showLoadScreen, setShowLoadScreen] = useState(false)
 
   const colorThemeName = useCurrentColorTheme()
   DataThemeUtils.setBodyDataTheme(colorThemeName)
@@ -60,13 +62,15 @@ const App = (): JSX.Element => {
       <Switch>
         <LoginRoute exact path={PathConstants.LOGIN} component={Login} />
         <PrivateRoute
-          path={PathConstants.APP}
+          path={PathConstants.USER}
           component={() => (
             <UserContextProvider>
               <Main />
             </UserContextProvider>
           )}
         />
+        <Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
+        <Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
         <Route path={'/'} component={NotFound} />
       </Switch>
     </PrivateRouterContextProvider>
@@ -75,9 +79,7 @@ const App = (): JSX.Element => {
   const renderLoad = (): JSX.Element => <Load />
 
   return (
-    <div className="app">
-      {showLoadScreen ? renderLoad() : renderApp()}
-    </div>
+    <div className="app">{showLoadScreen ? renderLoad() : renderApp()}</div>
   )
 }
 

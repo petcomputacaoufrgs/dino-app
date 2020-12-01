@@ -1,9 +1,9 @@
 .section {
-  padding-bottom: 32px
+  padding-bottom: 32px;
 }
 
 .section__title {
-  margin-bottom: .8rem;
+  margin-bottom: 0.8rem;
 }
 
 .section__image {

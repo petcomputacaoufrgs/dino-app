@@ -86,6 +86,8 @@ class DinoAPIURLConstants {
 
   CONTACT_DELETE_ALL = `${this.CONTACT}all/`
 
+  CONTACT_GOOGLE_DECLINE = `${this.CONTACT}google/decline_contacts/`
+
   TEST_CONNECTION = `${this.URL}public/test_connection/`
 
   SAVE_LOG_APP_ERROR = `${this.LOG_APP_ERROR}`

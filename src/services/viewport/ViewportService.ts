@@ -1,5 +1,5 @@
-import OrientationUtils from "../../utils/OrientationUtils"
-import OrientationEnum from "../../types/system/OrientationEnum"
+import OrientationUtils from '../../utils/OrientationUtils'
+import OrientationEnum from '../../types/system/OrientationEnum'
 
 class ViewportService {
   maximizeViewport = () => {

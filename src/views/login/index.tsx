@@ -4,7 +4,7 @@ import { useAlert } from '../../context/provider/alert'
 import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'
 import Dinosaur2 from '../../assets/images/dinosaur_2.svg'
 import './styles.css'
-import GoogleLoginButton from '../../components/button/login/google'
+import GoogleLoginButton from '../../components/button/google_login'
 
 const Login = (): JSX.Element => {
   const alert = useAlert()
@@ -29,7 +29,6 @@ const Login = (): JSX.Element => {
 
   const renderLoginButton = (): JSX.Element => (
     <GoogleLoginButton
-      size="large"
       onCancel={showAlertCancel}
       onDinoAPIFail={showAlertDinoFail}
       onGoogleFail={showAlertGoogleFail}
@@ -45,11 +44,7 @@ const Login = (): JSX.Element => {
         src={Dinosaur2}
         alt={language.CURIOUS_DINO_ALT}
       />
-      <img 
-        className="login__logo" 
-        src={Dinosaur1} 
-        alt={language.APP_NAME} 
-      />
+      <img className="login__logo" src={Dinosaur1} alt={language.APP_NAME} />
       <h1 className="login__message">{language.WELCOME_MESSAGE}</h1>
       <div className="login__button">{renderLoginButton()}</div>
     </div>

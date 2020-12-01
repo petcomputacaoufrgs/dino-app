@@ -1,0 +1,9 @@
+.clear_button {
+  width: 40px;
+  height: 40px;
+}
+
+.clear_button svg {
+  fill: #474747;
+  width: 24px;
+}

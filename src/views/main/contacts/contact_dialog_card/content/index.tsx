@@ -19,7 +19,6 @@ import {
 import PhoneModel from '../../../../../types/contact/PhoneModel'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
-
   const getTypePhoneIcon = (phone: PhoneModel) => {
     if (phone.type === ContactsConstants.MOBILE) {
       return <PhoneIcon />
@@ -32,18 +31,16 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 
   const Description = (): JSX.Element => {
     return item.description ? (
-        <ListItem divider className="contacts__list__item">
-          <ListItemIcon>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <div className='contacts__list__item__text'>             
-                {item.description}
-              </div>
-            }
-          />
-        </ListItem>
+      <ListItem divider className="contacts__list__item">
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText
+          primary={
+            <div className="contacts__list__item__text">{item.description}</div>
+          }
+        />
+      </ListItem>
     ) : (
       <Divider />
     )
@@ -58,7 +55,11 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
             style={{ textDecoration: 'none' }}
             key={index}
           >
-            <ListItem button divider className="contacts__list__item__content__phones">
+            <ListItem
+              button
+              divider
+              className="contacts__list__item__content__phones"
+            >
               <ListItemIcon>{getTypePhoneIcon(phone)}</ListItemIcon>
               <ListItemText
                 primary={

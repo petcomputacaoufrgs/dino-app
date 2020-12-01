@@ -7,6 +7,9 @@ import HttpStatus from 'http-status-codes'
 import DinoAgentService from '../../agent/DinoAgentService'
 import Service from './ContactService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import ContactGoogleService from './ContactGoogleService'
+import AuthService from '../auth/AuthService'
+import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
 
 class ContactServerService {
   updateServer = async () => {
@@ -15,16 +18,18 @@ class ContactServerService {
     let idsToUpdate = Service.getIdsToUpdate()
 
     if (idsToUpdate.length > 0) {
-      const contacts = Service.getItems()
+      let contacts = Service.getItems()
       const contactsToUpdate = Service.getContactsToUpdate(
         contacts,
         idsToUpdate
       )
 
       if (contactsToUpdate.toAdd.length > 0) {
-        const responseSaveModel = await this.saveContacts(
+        const updatedContactsToAdd = await ContactGoogleService.saveContacts(
           contactsToUpdate.toAdd
         )
+
+        const responseSaveModel = await this.saveContacts(updatedContactsToAdd)
 
         if (responseSaveModel !== undefined) {
           const version = responseSaveModel.version
@@ -32,16 +37,20 @@ class ContactServerService {
 
           if (version !== undefined && responseContactModels !== undefined) {
             Service.setVersion(version)
-            Service.updateContactIds(responseContactModels, contacts)
+            contacts = Service.updateContactIds(responseContactModels, contacts)
           }
         } else sucessfulAdd = false
       }
 
       if (contactsToUpdate.toEdit.length > 0) {
-        const version = await this.editContacts(contactsToUpdate.toEdit)
+        const updatedContactsToEdit = await ContactGoogleService.saveContacts(
+          contactsToUpdate.toEdit
+        )
+        const version = await this.editContacts(updatedContactsToEdit)
 
         if (version !== undefined) {
           Service.setVersion(version)
+          Service.updateLocalContact(updatedContactsToEdit, contacts)
         } else sucessfulEdit = false
       }
 
@@ -57,6 +66,13 @@ class ContactServerService {
         Service.setVersion(version)
         Service.cleanDeleteQueue()
       }
+    }
+
+    const resourceNamesToDelete = Service.getResourceNamesToDelete()
+
+    if (resourceNamesToDelete.length > 0) {
+      await ContactGoogleService.deleteContacts(resourceNamesToDelete)
+      Service.cleanDeleteGoogleQueue()
     }
   }
 
@@ -124,7 +140,6 @@ class ContactServerService {
         LogAppErrorService.logError(e)
       }
     }
-
     Service.pushToUpdate(contactModel.frontId)
   }
 
@@ -216,6 +231,22 @@ class ContactServerService {
     }
 
     return undefined
+  }
+
+  declineGoogleContacts = async () => {
+    const request = await DinoAgentService.put(
+      DinoAPIURLConstants.CONTACT_GOOGLE_DECLINE
+    )
+
+    if (request.canGo) {
+      try {
+        await request.authenticate().go()
+        AuthService.setDeclinedContactsGrant(true)
+        GoogleContactGrantContextUpdater.update()
+      } catch (e) {
+        LogAppErrorService.logError(e)
+      }
+    }
   }
 }
 

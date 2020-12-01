@@ -18,9 +18,9 @@ class EventService {
     AuthService.cleanLoginGarbage()
     const isDinoConnected = await ConnectionService.isDinoConnected()
     if (isDinoConnected && AuthService.isAuthenticated()) {
-        AuthService.refreshGoogleAccessToken()
-        WebSocketConnector.connect()
-        Synchronizer.sync()
+      AuthService.refreshGoogleAccessToken()
+      WebSocketConnector.connect()
+      Synchronizer.sync()
     }
   }
 

@@ -1,7 +1,24 @@
-.contact_dialog_content_header .MuiTypography-root.MuiCardHeader-title{
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 200px;
-    overflow-x: hidden;
+.contact_dialog_content_header .MuiTypography-root {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  text-align: justify;
+}
+
+.contact_dialog_content_header .MuiCardHeader-content {
+  display: block;
+  max-width: 200px;
+  overflow-x: hidden;
+}
+
+.contact_dialog_content_header .MuiCardHeader-action {
+  display: flex;
+  flex-direction: row;
+}
+
+.contact_dialog_content_header .MuiCardHeader-action .svg_icon {
+  fill: black;
+  height: auto;
+  width: auto;
 }

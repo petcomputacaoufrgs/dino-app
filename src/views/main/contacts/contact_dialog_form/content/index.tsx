@@ -3,10 +3,10 @@ import TextField from '@material-ui/core/TextField'
 import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'
 import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
-import { ListItem } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Constants from '../../../../../constants/contact/ContactsConstants'
 import './styles.css'
+import TextButton from '../../../../../components/button/text_button'
 
 const ContactFormDialogContent = (
   props: ContactFormDialogContentProps
@@ -16,11 +16,10 @@ const ContactFormDialogContent = (
   const isNumberTaken = (tel: string): boolean =>
     props.helperText.number === tel
 
-  const isNumberInvalid = (tel: string) => 
+  const isNumberInvalid = (tel: string) =>
     isNumberTaken(tel) || tel.length === Constants.NUMBER_MAX
-  
 
-  const isNameInvalid = (name: string) => 
+  const isNameInvalid = (name: string) =>
     name.length === Constants.NAME_MAX || props.invalidName
 
   return (
@@ -59,22 +58,19 @@ const ContactFormDialogContent = (
             number={phone.number}
             onChangeNumber={(e) => props.handleChangeNumber(e, index)}
             error={isNumberInvalid(phone.number)}
-            helperText={isNumberTaken(phone.number) ? props.helperText.text : ''}
+            helperText={
+              isNumberTaken(phone.number) ? props.helperText.text : ''
+            }
             handleDeletePhone={() => props.handleDeletePhone(phone.number)}
           />
           <br />
         </div>
       ))}
-      <ListItem
-        className="add-phone__button"
-        button
-        onClick={props.handleAddPhone}
-        alignItems="center"
-      >
+      <TextButton className="add-phone__button" onClick={props.handleAddPhone}>
         <Typography variant="body2" color="textSecondary" display="block">
           {language.FORM_ADD_PHONE}
         </Typography>
-      </ListItem>
+      </TextButton>
     </div>
   )
 }

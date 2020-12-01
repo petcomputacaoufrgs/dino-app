@@ -8,8 +8,9 @@
 
 .note__note_content__column__add_note h3 {
   font-size: small;
+  font-style: normal;
   margin-bottom: 0;
-  font-weight: bold;
+  margin-top: 0;
   color: var(--column-border);
 }
 

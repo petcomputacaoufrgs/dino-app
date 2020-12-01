@@ -8,18 +8,16 @@ import PathConstants from '../../../../constants/app/PathConstants'
 import { Link } from 'react-router-dom'
 import GlossaryItemProps from './props'
 
-const GlossaryItems = ({items}: GlossaryItemProps): JSX.Element => {
+const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
   const language = useCurrentLanguage()
 
   return (
     <div className="glossary__items">
       <Accordion className="accordion">
-        {items.map(item => (
+        {items.map((item) => (
           <Card className="card" key={item.id}>
             <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
-              <Card.Title className="card-title">
-                {item.title}
-              </Card.Title>
+              <Card.Title className="card-title">{item.title}</Card.Title>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={item.id.toString()}>
               <Card.Body>
@@ -27,7 +25,12 @@ const GlossaryItems = ({items}: GlossaryItemProps): JSX.Element => {
                   {item.subtitle}
                 </Card.Subtitle>
                 <Card.Text>{item.text || language.NO_AVAILABLE_TEXT}</Card.Text>
-                <Link className ='card-link' to={`${PathConstants.GLOSSARY}/${item.id}`}>Leia Mais</Link>
+                <Link
+                  className="card-link"
+                  to={`${PathConstants.GLOSSARY}/${item.id}`}
+                >
+                  Leia Mais
+                </Link>
               </Card.Body>
             </Accordion.Collapse>
           </Card>

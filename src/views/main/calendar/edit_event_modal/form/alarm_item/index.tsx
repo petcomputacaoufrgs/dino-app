@@ -4,7 +4,7 @@ import { useCurrentLanguage } from '../../../../../../context/provider/app_setti
 import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
 import LogAppErrorService from '../../../../../../services/log_app_error/LogAppErrorService'
 import DeleteSVG from '../../../../../../assets/icons/delete.svg'
-import { Button } from '@material-ui/core'
+import Button from '../../../../../../components/button'
 import './styles.css'
 
 const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
@@ -45,10 +45,9 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
         )}
       </div>
       <Button
+        ariaLabel={language.CALENDAR_DELETE_BUTTON_ARIA_LABEL}
         onClick={handleDelete}
         className="calendar__add__modal__event_alert_item__delete_button"
-        color="primary"
-        autoFocus
       >
         <img
           src={DeleteSVG}

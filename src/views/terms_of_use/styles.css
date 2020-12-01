@@ -1,0 +1,69 @@
+.terms_of_use {
+  font-family: var(--font-base);
+  font-size: 14px;
+  text-align: justify;
+
+  background-color: var(--background-main);
+  color: var(--base-font-color);
+
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.terms_of_use h1 {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.terms_of_use h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 30px 0px 15px 0px;
+}
+
+.terms_of_use h3 {
+  font-size: 16px;
+  font-style: italic;
+  margin: 20px 0px 10px 0px;
+}
+
+.terms_of_use h4 {
+  font-size: 14px;
+  font-style: italic;
+  margin: 15px 0px 10px 0px;
+  color: #636363;
+}
+
+.terms_of_use p {
+  margin: 10px 0px;
+}
+
+.terms_of_use span {
+  font-size: 12px;
+  text-align: center;
+  color: #636363;
+}
+
+.terms_of_use ul {
+  list-style-type: square;
+}
+
+.terms_of_use a {
+  text-decoration: none;
+  color: var(--tag-color);
+}
+
+.terms_of_use a:hover {
+  text-decoration: none;
+  color: var(--board-background);
+}
+
+.terms_of_use a:active {
+  text-decoration: none;
+  color: var(--tag-color);
+}

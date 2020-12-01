@@ -1,25 +1,29 @@
 class PathConstants {
   LOGIN: string = `/`
 
-  APP: string = `/app`
+  USER: string = `/user`
 
-  HOME: string = `${this.APP}/home`
+  HOME: string = `${this.USER}/home`
 
-  GLOSSARY: string = `${this.APP}/glossary`
+  GLOSSARY: string = `${this.USER}/glossary`
 
-  CONTACTS: string = `${this.APP}/contacts`
+  CONTACTS: string = `${this.USER}/contacts`
 
-  GAMES: string = `${this.APP}/games`
+  GAMES: string = `${this.USER}/games`
 
-  SETTINGS: string = `${this.APP}/settings`
+  SETTINGS: string = `${this.USER}/settings`
 
-  FAQ: string = this.APP + '/faq'
+  FAQ: string = `${this.USER}/faq`
 
-  NOTES: string = `${this.APP}/notes`
+  NOTES: string = `${this.USER}/notes`
 
-  CALENDAR = `${this.APP}/calendar`
+  CALENDAR = `${this.USER}/calendar`
 
-  ABOUT_US = `${this.APP}/about-us`
+  ABOUT_US = `${this.USER}/about-us`
+
+  TERMS_OF_USE = '/terms_of_use'
+
+  PRIVACY_POLICY = '/privacy_policy'
 }
 
 export default new PathConstants()

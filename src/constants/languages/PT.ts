@@ -48,7 +48,11 @@ export default class PT implements LanguageBase {
 
   AGREEMENT_OPTION_TEXT = 'SIM'
 
+  AGREEMENT_BUTTON_ARIA_LABEL = 'Clique para concordar'
+
   DISAGREEMENT_OPTION_TEXT = 'NÃO'
+
+  DISAGREEMENT_BUTTON_ARIA_LABEL = 'Clique para negar'
 
   ADD_OPTION_TEXT = 'ADICIONAR'
 
@@ -401,20 +405,54 @@ export default class PT implements LanguageBase {
 
   CONTACT_NUMBER_ALREADY_EXISTS = 'Este número já está registrado no contato'
 
+  CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Clique aqui para limpar'
+
+  COLOR_THEME_SELECTION_ARIA_LABEL = 'Clique aqui para mudar a cor do contato'
+
   DIALOG_AGREE_TEXT = 'Aceito'
 
   DIALOG_DECLINE_BUTTON_TEXT = 'Declino'
 
-  GRANT_FAIL_BY_EXTERNAL_ERROR = 'Desculpe, aconteceu algo errado. Por favor, tente novamente.'
+  GRANT_FAIL_BY_EXTERNAL_ERROR =
+    'Desculpe, aconteceu algo errado. Por favor, tente novamente.'
 
   GRANT_CANCELED = 'Permissão cancelada. Por favor, tente novamente.'
 
-  GRANT_FAIL_BY_INVALID_ACCOUNT = 'Conta inválida. Por favor, selecione a conta que está logada.'
+  GRANT_FAIL_BY_INVALID_ACCOUNT =
+    'Conta inválida. Por favor, selecione a conta que está logada.'
 
-  GRANT_RESFRESH_TOKEN_NECESSARY = 'Desculpe, erro nosso. Por favor, tente novamente.'
+  GRANT_RESFRESH_TOKEN_NECESSARY =
+    'Desculpe, erro nosso. Por favor, tente novamente.'
 
-  GRANT_FAIL_BY_DISCONNECTION = 'Desculpe, aconteceu um erro de conexão. Tente novamente assim que a conexão voltar.'
+  GRANT_FAIL_BY_DISCONNECTION =
+    'Desculpe, aconteceu um erro de conexão. Tente novamente assim que a conexão voltar.'
 
-  GRANT_FAIL_BY_UNKNOW_ERROR = 'Desculpe, aconteceu um erro desconhecido. Por favor, tente novamente.'
+  GRANT_FAIL_BY_UNKNOW_ERROR =
+    'Desculpe, aconteceu um erro desconhecido. Por favor, tente novamente.'
 
+  GRANT_FAIL_BY_EXTERNAL_SUCCESS = 'Sucesso! Aproveite suas vantagens.'
+
+  GRANT_DECLINED = 'Você pode ativar esta função nas configurações.'
+
+  GOOGLE_CONTACT_GRANT_TEXT =
+    'Gostariamos de permissões para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. Nunca iremos ler ou modificar outros contatos fora dos contatos do DinoApp.'
+
+  GOOGLE_CONTACT_GRANT_TITLE = 'Seus contatos em qualquer lugar'
+
+  ARROW_BACK_ARIA_LABEL = 'Retorno para a última página'
+
+  GOOGLE_LOGIN_BUTTON_ARIA_LABEL =
+    'Clique aqui para entrar com a sua conta do Google'
+
+  OPEN_DRAWER_BUTTON_ARIA_LABEL = 'Clique aqui para abrir o menu'
+
+  CLOSE_MENU_BUTTON_ARIA_LABEL = 'Clique aqui para fechar o menu'
+
+  CALENDAR_EDIT_BUTTON_ARIA_LABEL = 'Clique aqui para editar'
+
+  CALENDAR_DELETE_BUTTON_ARIA_LABEL = 'Clique aqui para excluir'
+
+  CALENDAR_CLOSE_BUTTON_ARIA_LABEL = 'Clique aqui para fechar a tela'
+
+  CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Clique aqui para ir para o mês atual'
 }

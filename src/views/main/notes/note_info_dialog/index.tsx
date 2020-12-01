@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Button from '../../../../components/button/text_button'
 import './styles.css'
 import NoteInfoDialogProps from './props'
 import {
@@ -7,7 +8,6 @@ import {
   DialogContent,
   TextField,
   DialogActions,
-  Button,
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import DateUtils from '../../../../utils/DateUtils'
@@ -17,7 +17,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
 import ArrayUtils from '../../../../utils/ArrayUtils'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
-import SVGButton from '../../../../components/button/svg_button'
+import IconButton from '../../../../components/button/icon_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
@@ -143,11 +143,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
           onChange={handleQuestionChange}
           className="note__info_dialog__title__question"
         />
-        <SVGButton
-          SVG={DeleteOutlineIcon}
-          ariaLabel={language.DELETE_ARIA_LABEL}
-          onClick={handleDeleteNote}
-        />
+        <IconButton icon={DeleteOutlineIcon} onClick={handleDeleteNote} />
       </DialogTitle>
       <div className="note_info_dialog__last_update">
         <h4>

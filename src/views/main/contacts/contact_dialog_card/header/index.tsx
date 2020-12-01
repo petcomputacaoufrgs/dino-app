@@ -2,11 +2,11 @@ import React from 'react'
 import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
 import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import ContactCardHeaderProps from './props'
-import ContactsService from '../../../../../services/contact/ContactService'
-import CloseComponent from '../../../../../components/icon_buttons/close_component'
-import OptionsComponent from '../../../../../components/icon_buttons/options_component'
+import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
+import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import '../../styles.css'
 import './styles.css'
+import ContactService from '../../../../../services/contact/ContactService'
 
 const ContactCardHeader = ({
   item,
@@ -14,7 +14,6 @@ const ContactCardHeader = ({
   setDelete,
   onClose: handleCloseDialog,
 }: ContactCardHeaderProps) => {
-
   const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -56,13 +55,13 @@ const ContactCardHeader = ({
         }
         action={
           <>
-            <OptionsComponent onClick={handleClick} />
-            <CloseComponent onClose={handleCloseDialog} />
+            <OptionsIconButton dark onClick={handleClick} />
+            <CloseIconButton dark onClose={handleCloseDialog} />
           </>
         }
         title={item.name}
-        subheader={ContactsService.getPhoneTypes(item.phones, language)}
-        className='contact_dialog_content_header'
+        subheader={ContactService.getPhoneTypes(item.phones, language)}
+        className="contact_dialog_content_header"
       />
       <Menu
         anchorEl={anchorEl}

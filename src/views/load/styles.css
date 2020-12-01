@@ -1,36 +1,36 @@
 .load {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: whitesmoke;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .load_header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 125px;
-    animation: dino_header_in 750ms forwards;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 125px;
+  animation: dino_header_in 750ms forwards;
 }
 
 .load__dino_title {
-    font-size: 24px;
-    color: black;
-    font-weight: normal;
-    margin-top: 0;
+  font-size: 24px;
+  color: black;
+  font-weight: normal;
+  margin-top: 0;
 }
 
 .load__dino_logo {
-    height: 125px;
-    width: 130px;
-    opacity: 0;
-    animation: dino_logo_in 750ms 750ms forwards;
+  height: 125px;
+  width: 130px;
+  opacity: 0;
+  animation: dino_logo_in 750ms 750ms forwards;
 }
 
 .load__team {
@@ -73,12 +73,12 @@
 }
 
 @keyframes dino_header_in {
-    from {
-        padding-top: 82.5%;
-    }
-    to {
-        padding-top: 0;
-    }
+  from {
+    padding-top: 82.5%;
+  }
+  to {
+    padding-top: 0;
+  }
 }
 
 @keyframes teams_logo_in {

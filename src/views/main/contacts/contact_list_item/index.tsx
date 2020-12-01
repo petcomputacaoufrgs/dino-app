@@ -10,8 +10,8 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core'
-import ContactsService from '../../../../services/contact/ContactService'
-import OptionsComponent from '../../../../components/icon_buttons/options_component'
+import ContactService from '../../../../services/contact/ContactService'
+import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import './styles.css'
 
 const ContactItemList = ({
@@ -21,7 +21,6 @@ const ContactItemList = ({
   onClick,
   children,
 }: ContactItemListProps): JSX.Element => {
-
   const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -49,16 +48,16 @@ const ContactItemList = ({
           <Avatar
             aria-label={language.AVATAR_ALT}
             className={`avatar__color-${item.color}`}
-            >
+          >
             {item.name[0].toUpperCase()}
           </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={item.name}
-          secondary={ContactsService.getPhoneTypes(item.phones, language)}
+          secondary={ContactService.getPhoneTypes(item.phones, language)}
         />
         <ListItemSecondaryAction>
-          <OptionsComponent onClick={handleClick} />
+          <OptionsIconButton dark onClick={handleClick} />
         </ListItemSecondaryAction>
       </ListItem>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>

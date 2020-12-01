@@ -8,16 +8,20 @@ const Button: React.FC<ButtonProps> = ({
   children,
   disabled,
   inputRef,
-  ariaLabel
+  ariaLabel,
+  outline
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const getClassName = (): string => {
     let mainClass = 'button'
 
     if (className) {
-      mainClass = mainClass.concat(' ').concat(className)
+      mainClass = mainClass.concat(' ' + className)
     }
 
+    if (outline) {
+      mainClass = mainClass.concat(' button__outline')
+    }
     return mainClass
   }
 

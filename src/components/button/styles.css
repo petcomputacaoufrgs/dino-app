@@ -25,3 +25,8 @@
 .button:hover {
   outline: none;
 }
+
+.button__outline {
+  border: solid 1px;
+  border-color: var(--contrast-color);
+}

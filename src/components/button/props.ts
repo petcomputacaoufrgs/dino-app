@@ -5,6 +5,7 @@ export default interface ButtonProps {
   ariaLabel?: string
   inputRef?: React.RefObject<HTMLInputElement>
   className?: string
-  disabled?: boolean | undefined
+  disabled?: boolean
   text?: string
+  outline?: boolean 
 }

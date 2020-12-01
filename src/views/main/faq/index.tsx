@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../../../components/button'
 import TextButton from '../../../components/button/text_button'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
@@ -101,12 +100,13 @@ const Faq = (): JSX.Element => {
           </DialogActions>
         </Dialog>
         <div className="select-faq__button">
-          <Button
+          <TextButton
             className = 'select_faq_button'
+            outline
             onClick={handleChangeOpenDialog}
           >
             {language.SELECT_FAQ_BUTTON}
-          </Button>
+          </TextButton>
         </div>
       </div>
     )

@@ -7,8 +7,9 @@ class LocalStorageKeys {
   GLOSSARY_SHOULD_SYNC = 'G_shouldSync'
   CONTACTS = 'c'
   CONTACTS_LAST_ID = 'c_l_id'
-  CONTACTS_UPDATE: string = 'c_updt'
-  CONTACTS_DEL: string = 'c_del'
+  CONTACTS_UPDATE = 'c_updt'
+  CONTACTS_DEL = 'c_del'
+  CONTACTS_RESOURCE_NAMES_DEL = 'c_rn_del'
   CONTACTS_VERSION = 'cv'
   CONTACTS_SHOULD_SYNC = 'css'
   USER_VERSION = 'uv'
@@ -50,6 +51,7 @@ class LocalStorageKeys {
   IS_REFRESHING_GOOGLE_ACCESS_TOKEN = 'irgat'
   SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN = 'srgat'
   ORIENTATION_STATE = 'os'
+  DECLINED_CONTACTS_GRANT = 'dcg'
 }
 
 export default new LocalStorageKeys()

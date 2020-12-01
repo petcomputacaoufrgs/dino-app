@@ -425,6 +425,14 @@ export default class PT implements LanguageBase {
 
   GRANT_FAIL_BY_UNKNOW_ERROR = 'Desculpe, aconteceu um erro desconhecido. Por favor, tente novamente.'
 
+  GRANT_FAIL_BY_EXTERNAL_SUCCESS = 'Sucesso! Aproveite suas vantagens.'
+
+  GRANT_DECLINED = 'Você pode ativar esta função nas configurações.'
+
+  GOOGLE_CONTACT_GRANT_TEXT = 'Gostariamos de permissões para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. Nunca iremos ler ou modificar outros contatos fora dos contatos do DinoApp.'
+
+  GOOGLE_CONTACT_GRANT_TITLE = 'Seus contatos em qualquer lugar'
+
   ARROW_BACK_ARIA_LABEL = "Retorno para a última página"
 
   GOOGLE_LOGIN_BUTTON_ARIA_LABEL = "Clique aqui para entrar com a sua conta do Google"

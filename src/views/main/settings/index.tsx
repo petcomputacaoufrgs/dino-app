@@ -13,9 +13,15 @@ import AppSettingsService from '../../../services/app_settings/AppSettingsServic
 import FaqService from '../../../services/faq/FaqService'
 import SelectFaq from '../faq/select_faq'
 import './styles.css'
+import GoogleGrantDialog from '../../../components/google_grant_dialog'
+import GoogleScope from '../../../types/auth/google/GoogleScope'
+import { Switch } from '@material-ui/core'
+import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2'
 
 const Settings = (): JSX.Element => {
   const appSettings = useAppSettings()
+
+  const googleOAuth2 = useGoogleOAuth2()
 
   const language = appSettings.language.current
 
@@ -26,6 +32,8 @@ const Settings = (): JSX.Element => {
   const languageList = appSettings.language.getLanguages()
 
   const colorThemeList = appSettings.colorTheme.getColorThemeOptions()
+
+  const [openContactsGrantDialog, setOpenContactsGrantDialog] = useState(false)
 
   const [selectedLanguage, setSelectedLanguage] = useState(
     language.NAVIGATOR_LANGUAGE_CODE
@@ -58,6 +66,16 @@ const Settings = (): JSX.Element => {
   const handleSelectedColorThemeChanged = (event: any) => {
     if (event && event.target && event.target.value) {
       setSelectedColorTheme(event.target.value as number)
+    }
+  }
+
+  const handleAcceptOrDeclineGoogleGrant = () => {
+    setOpenContactsGrantDialog(false)
+  }
+
+  const handleActiveOrDeclineGoogleGrant = () => {
+    if (!googleOAuth2.hasContactGrant) {
+      setOpenContactsGrantDialog(true)
     }
   }
 
@@ -121,6 +139,20 @@ const Settings = (): JSX.Element => {
   const renderSelectFaq = (): JSX.Element => (
     <SelectFaq selectedFaq={selectedFaq} setSelectedFaq={setSelectedFaq} />
   )
+  
+  const renderContactGrant = (): JSX.Element => (
+    <div className="settings__grant">
+      <p>
+        Permissão de contatos
+      </p>
+      <Switch 
+        size="medium" 
+        className="settings__grant__switch"
+        checked={googleOAuth2.hasContactGrant} 
+        onClick={handleActiveOrDeclineGoogleGrant} 
+      />
+    </div>
+  )
 
   const renderSaveButton = (): JSX.Element => (
     <div className="settings__save_button_container">
@@ -132,6 +164,19 @@ const Settings = (): JSX.Element => {
         {language.SETTINGS_SAVE}
       </Button>
     </div>
+  )
+
+  const renderDialogs = (): JSX.Element => (
+    <>
+      <GoogleGrantDialog
+        onAccept={handleAcceptOrDeclineGoogleGrant}
+        onDecline={handleAcceptOrDeclineGoogleGrant}
+        open={openContactsGrantDialog}
+        scopes={[GoogleScope.SCOPE_CONTACT]}
+        text={language.GOOGLE_CONTACT_GRANT_TEXT}
+        title={language.GOOGLE_CONTACT_GRANT_TITLE}
+      />
+    </>
   )
 
   return (
@@ -149,8 +194,14 @@ const Settings = (): JSX.Element => {
       <FormControl className="settings__form">
         {renderSelectColorTheme()}
       </FormControl>
-      <FormControl className="settings__form">{renderSelectFaq()}</FormControl>
+      <FormControl className="settings__form">
+        {renderSelectFaq()}
+      </FormControl>
+      <FormControl className="settings__form">
+        {renderContactGrant()}
+      </FormControl>
       {renderSaveButton()}
+      {renderDialogs()}
     </div>
   )
 }

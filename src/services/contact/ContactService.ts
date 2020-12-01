@@ -12,9 +12,10 @@ import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ArrayUtils from '../../utils/ArrayUtils'
+import ContactGoogleService from './ContactGoogleService'
 
-class ContactsService {
-  /// #SERVER SERVICE CONNECTION
+class ContactService {
+  //#region SERVER SERVICE CONNECTION
 
   updateLocal = async (newVersion: number): Promise<void> => {
     const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
@@ -32,14 +33,14 @@ class ContactsService {
             (c) => c.id === undefined
           )
 
-          this.setItems(
-            newLocalItens.concat(
-              serverContacts.map((c) => {
-                c.frontId = this.makeFrontId()
-                return c
-              })
-            )
+          const merge = newLocalItens.concat(
+            serverContacts.map((c) => {
+              c.frontId = this.makeFrontId()
+              return c
+            })
           )
+
+          this.setItems(merge)
 
           ContactContextUpdater.update()
 
@@ -54,7 +55,7 @@ class ContactsService {
   updateContactIds = (
     responseModels: ContactResponseModel[],
     contacts: ContactModel[]
-  ) => {
+  ): ContactModel[] => {
     const updatedContacts = contacts
       .filter((c) => c.id !== undefined)
       .concat(
@@ -66,14 +67,40 @@ class ContactsService {
             phones: response.phones,
             description: response.description,
             color: response.color,
+            resourceName: response.resourceName
           } as ContactModel
         })
       )
 
     this.setItems(updatedContacts)
+
+    return updatedContacts
   }
 
-  /// #ITEMS & VERSION
+  updateLocalContact = (
+    responseModels: ContactModel[],
+    contacts: ContactModel[]
+  ) => {
+    const updatedContacts = contacts
+      .map(contact => {
+        const serverModel = responseModels
+          .find(model => model.id !== undefined && model.id === contact.id)
+
+        if (serverModel) {
+          return serverModel
+        }
+
+        return contact
+      })
+
+    this.setItems(updatedContacts)
+
+    return updatedContacts
+  }
+
+  //#endregion
+
+  //#region ITEMS & VERSION
 
   getItems = (): ContactModel[] => {
     const items = LS.getItems()
@@ -93,21 +120,24 @@ class ContactsService {
     LS.setVersion(JSON.stringify(version))
   }
 
-  /// #MAIN FUNCTIONS
+  //#endregion
 
+  //#region MAIN FUNCTIONS
+  
   addContact = async (item: ContactModel) => {
-    const items = this.getItems()
-    items.push(item)
-    this.setItems(items)
-    ContactContextUpdater.update()
-
-    const response = await Server.saveContact(item)
-
+    const updatedItem = await ContactGoogleService.saveContact(item)
+    const response = await Server.saveContact(updatedItem)
     if (response !== undefined) {
-      item.id = response.id
+      updatedItem.id = response.id
     }
-  }
 
+    const items = this.getItems()
+    items.push(updatedItem)
+    this.setItems(items)
+
+    ContactContextUpdater.update()
+  }
+  
   deleteContact = (deletedFrontID: number) => {
     const items = this.getItems()
     const index = items.findIndex((item) => item.frontId === deletedFrontID)
@@ -115,7 +145,10 @@ class ContactsService {
     if (index > -1) {
       const item = items.splice(index, 1)[0]
 
+      ContactGoogleService.deleteContact(item)
+      
       if (item.id) Server.deleteContact(item.id)
+      
       this.setItems(items)
 
       ContactContextUpdater.update()
@@ -129,21 +162,27 @@ class ContactsService {
 
     if (index > -1) {
       if (this.changed(items[index], edited)) {
-        items.splice(index, 1, edited)
+        edited.resourceName = items[index].resourceName
+
+        const updatedItem = await ContactGoogleService.saveContact(edited)
+
+        items.splice(index, 1, updatedItem)
         this.setItems(items)
 
-        Server.editContact(edited)
+        Server.editContact(updatedItem)
       }
 
       ContactContextUpdater.update()
     }
   }
 
-  /// #UPDATE QUEUE
+  //#endregion
+
+  //#region UPDATE QUEUE
 
   getIdsToUpdate = (): number[] => {
     const items = LS.getIdsToUpdate()
-    return items ? (JSON.parse(items) as number[]) : []
+    return items ? JSON.parse(items) : []
   }
 
   setIdsToUpdate = (ids: Array<number>) => {
@@ -171,7 +210,9 @@ class ContactsService {
       )
   }
 
-  /// #DELETE QUEUE
+  //#endregion
+
+  //#region DELETE QUEUE
 
   getIdsToDelete = (): number[] => {
     const ids = LS.getIdsToDelete()
@@ -201,7 +242,27 @@ class ContactsService {
     })
   }
 
-  /// #QUEUE AUX
+  getResourceNamesToDelete = (): string[] => {
+    const items = LS.getResourceNamesToDelete()
+    return items ? JSON.parse(items) : []
+  }
+
+  setResourceNamesToDelete = (items: string[]) => {
+    LS.setResourceNamesToDelete(JSON.stringify(items))
+  }
+
+  pushToResourceNamesToDelete = (item: string) => {
+    const items = this.getResourceNamesToDelete()
+
+    if (!items.some(n => n === item)) {
+      items.push(item)
+      this.setResourceNamesToDelete(items)
+    }
+  }
+
+  //#endregion
+
+  //#region QUEUE AUX
 
   pushId = (id: number, ids: Array<number>): Array<number> => {
     const newIds = ids.filter((queueId) => queueId !== id)
@@ -211,8 +272,10 @@ class ContactsService {
 
   cleanUpdateQueue = () => LS.cleanUpdateQueue()
   cleanDeleteQueue = () => LS.cleanDeleteQueue()
+  cleanDeleteGoogleQueue = () => LS.cleanDeleteGoogleQueue()
+  //#endregion
 
-  /// #AUX
+  //#region AUX
 
   removeUserData = () => LS.removeAllItems()
 
@@ -302,6 +365,9 @@ class ContactsService {
         return language.CONTACTS_MOBILE_PHONE
     }
   }
+
+  //#endregion
+
 }
 
-export default new ContactsService()
+export default new ContactService()

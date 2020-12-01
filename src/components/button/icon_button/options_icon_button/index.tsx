@@ -5,6 +5,8 @@ import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { ReactComponent as MoreSVG } from '../../../../assets/icons/more_vert.svg'
 import IconButton from '..'
 
+console.log('nhoi')
+
 const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
   onClick,
   dark,

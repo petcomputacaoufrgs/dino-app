@@ -7,5 +7,5 @@ export default interface ButtonProps {
   className?: string
   disabled?: boolean
   text?: string
-  outline?: boolean 
+  outline?: boolean
 }

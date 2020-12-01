@@ -12,13 +12,21 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
     if (props.className) {
       mainClass = mainClass.concat(' ').concat(props.className)
     }
+    
+    if (props.dark) {
+      mainClass = mainClass.concat(' button_dark')
+    }
+
+    if (props.bigger) {
+      mainClass = mainClass.concat(' button_bigger')
+    }
 
     return mainClass
   }
 
   return (
     <Button {...props} className={getClassName()}>
-      <Icon className='svg_icon'/>
+      <Icon />
     </Button>
   )
 }

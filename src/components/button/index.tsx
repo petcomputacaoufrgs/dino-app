@@ -22,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
     if (outline) {
       mainClass = mainClass.concat(' button__outline')
     }
+
     return mainClass
   }
 

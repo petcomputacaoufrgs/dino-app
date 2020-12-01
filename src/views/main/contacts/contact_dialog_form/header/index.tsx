@@ -5,7 +5,7 @@ import { useCurrentLanguage } from '../../../../../context/provider/app_settings
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
-import CloseComponent from '../../../../../components/button/icon_button/close_component'
+import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
 import '../../styles.css'
 import './styles.css'
 
@@ -27,8 +27,8 @@ const AddContactDialogHeader = (
       }
       action={
         <>
-          <IconButton ariaLabel={language.COLOR_THEME_SELECTION_ARIA_LABEL} icon={ChangeColorIconSVG} className='change_color_button' onClick={props.handleChangeColor} />
-          <CloseComponent onClose={props.handleCloseDialog} />
+          <IconButton ariaLabel={language.COLOR_THEME_SELECTION_ARIA_LABEL} icon={ChangeColorIconSVG} dark onClick={props.handleChangeColor} />
+          <CloseIconButton dark onClose={props.handleCloseDialog} />
         </>
       }
       title={

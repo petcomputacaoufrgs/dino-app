@@ -11,7 +11,7 @@ import {
   MenuItem,
 } from '@material-ui/core'
 import ContactService from '../../../../services/contact/ContactService'
-import OptionsComponent from '../../../../components/button/icon_button/options_component'
+import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import './styles.css'
 
 const ContactItemList = ({
@@ -58,7 +58,7 @@ const ContactItemList = ({
           secondary={ContactService.getPhoneTypes(item.phones, language)}
         />
         <ListItemSecondaryAction>
-          <OptionsComponent onClick={handleClick} />
+          <OptionsIconButton dark onClick={handleClick} />
         </ListItemSecondaryAction>
       </ListItem>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>

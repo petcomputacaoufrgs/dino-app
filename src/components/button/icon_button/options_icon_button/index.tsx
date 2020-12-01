@@ -1,11 +1,15 @@
 import React from 'react'
 import MoreVert from '@material-ui/icons/MoreVert'
-import OptionsComponentProps from './props'
+import OptionsIconButtonProps from './props'
 import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { ReactComponent as MoreSVG } from '../../../../assets/icons/more_vert.svg'
 import IconButton from '..'
 
-const OptionsComponent = ({ onClick }: OptionsComponentProps): JSX.Element => {
+const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({ 
+  onClick, 
+  dark, 
+  bigger 
+})=> {
   const language = useCurrentLanguage()
 
   return (
@@ -13,10 +17,12 @@ const OptionsComponent = ({ onClick }: OptionsComponentProps): JSX.Element => {
       icon={MoreSVG}
       ariaLabel={language.OPTIONS_ARIA_LABEL}
       onClick={onClick}
+      dark={dark}
+      bigger={bigger}
     >
       <MoreVert />
     </IconButton>
   )
 }
 
-export default OptionsComponent
+export default OptionsIconButton

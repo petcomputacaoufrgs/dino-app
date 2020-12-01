@@ -3,7 +3,16 @@
     padding: 0;
 }
 
-.svg_icon {
+.icon_button svg {
     fill: var(--light-color);
     margin: 0;
+}
+
+.icon_button.button_dark svg{
+    fill: var(--contrast-color)
+}
+  
+.icon_button.button_bigger svg{
+    height: 50px;
+    width: 50px;
 }

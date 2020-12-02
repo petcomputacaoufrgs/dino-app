@@ -4,6 +4,12 @@
   --dark-color: #121212;
   --light-color: #f5f5f5;
 
+  --very-small-font: 0.65rem;
+  --small-font: 0.875rem;
+  --default-font: 1rem;
+  --large-font:1.2rem;
+  --very-large-font:1.4rem;
+
   /* // Light Mode // */
   /* Fundos */
   --login-background: #694e73;

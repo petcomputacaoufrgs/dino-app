@@ -62,6 +62,10 @@ export default class PT implements LanguageBase {
 
   DELETE_OPTION_TEXT = 'Deletar'
 
+  DELETE_CONTACT_QUESTION = 'Deletar contato?'
+
+  DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato permanentemente.'
+
   MENU_HOME = 'Home'
 
   MENU_GAMES = 'Jogos'

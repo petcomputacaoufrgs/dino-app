@@ -15,7 +15,7 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-  fill: var(--constrast-color);
+  fill: var(--contrast-color);
 }
 
 body .MuiInput-underline:before {
@@ -42,6 +42,11 @@ body .MuiInput-underline:before {
 }
 
 .MuiPaper-root.MuiMenu-paper {
+  background-color: var(--other-details);
+  color: var(--base-font-color);
+}
+
+.app .MuiPaper-root {
   background-color: var(--other-details);
   color: var(--base-font-color);
 }

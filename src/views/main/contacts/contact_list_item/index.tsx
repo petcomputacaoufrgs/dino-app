@@ -16,10 +16,9 @@ import './styles.css'
 
 const ContactItemList = ({
   item,
-  setEdit,
-  setDelete,
+  onEdit,
+  onDelete,
   onClick,
-  children,
 }: ContactItemListProps): JSX.Element => {
   const language = useCurrentLanguage()
 
@@ -33,11 +32,11 @@ const ContactItemList = ({
   const handleClose = () => setAnchorEl(null)
 
   const handleEdit = () => {
-    setEdit(item.frontId)
+    onEdit()
     handleClose()
   }
   const handleDelete = () => {
-    setDelete(item.frontId)
+    onDelete()
     handleClose()
   }
 
@@ -66,7 +65,6 @@ const ContactItemList = ({
           {language.DELETE_OPTION_TEXT}
         </MenuItem>
       </Menu>
-      {children}
     </div>
   )
 }

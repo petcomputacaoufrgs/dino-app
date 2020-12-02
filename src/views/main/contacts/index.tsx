@@ -61,7 +61,7 @@ const Contacts = (): JSX.Element => {
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}
       />
-      <ContactItems items={searchResults} setItems={setSearchResults} />
+      <ContactItems items={searchResults} />
       <CircularButton
         ariaLabel={language.CONTACTS_ADD_CONTACT}
         className="add_contact_button"

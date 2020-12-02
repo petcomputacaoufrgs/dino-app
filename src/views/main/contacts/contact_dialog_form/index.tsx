@@ -13,26 +13,27 @@ import TransitionSlide from '../../../../components/slide_transition'
 import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import './styles.css'
 
-const getContact = (item: ContactModel | undefined) => {
-  return {
-    name: item?.name || '',
-    description: item?.description || '',
-    color: item?.color,
-  }
-}
-
-const getPhones = (item: ContactModel | undefined) => {
-  return item
-    ? item.phones
-    : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
-}
-
 const ContactFormDialog = React.forwardRef(
   (
     { dialogOpen, onClose: handleClose, action, item }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
+    
     const language = useCurrentLanguage()
+
+    const getContact = (item: ContactModel | undefined) => {
+      return {
+        name: item?.name || '',
+        description: item?.description || '',
+        color: item?.color,
+      }
+    }
+    
+    const getPhones = (item: ContactModel | undefined) => {
+      return item
+        ? item.phones
+        : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
+    }    
 
     useEffect(() => {
       if (dialogOpen) {

@@ -8,7 +8,7 @@
 
 .note__note_content__column__column_header h2 {
   width: 70%;
-  font-size: large;
+  font-size: var(--large-font);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

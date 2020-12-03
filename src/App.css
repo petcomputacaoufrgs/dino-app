@@ -41,17 +41,13 @@ body .MuiInput-underline:before {
   color: var(--base-font-color);
 }
 
-.MuiPaper-root.MuiMenu-paper {
+.MuiPaper-root.MuiMenu-paper, 
+.MuiPaper-root.MuiDialog-paper {
   background-color: var(--other-details);
   color: var(--base-font-color);
 }
 
 .app .MuiPaper-root {
-  background-color: var(--other-details);
-  color: var(--base-font-color);
-}
-
-.MuiPaper-root.MuiDialog-paper {
   background-color: var(--other-details);
   color: var(--base-font-color);
 }

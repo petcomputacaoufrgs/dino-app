@@ -52,6 +52,7 @@ class LocalStorageKeys {
   SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN = 'srgat'
   ORIENTATION_STATE = 'os'
   DECLINED_CONTACTS_GRANT = 'dcg'
+  IS_FIRST_LOGIN = 'ifl'
 }
 
 export default new LocalStorageKeys()

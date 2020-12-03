@@ -1,13 +1,21 @@
+/*
+
+ --very-small-font: 0.65rem;
+  --small-font: 0.75rem;
+  --default-font: 1rem;
+  --large-font:1.4rem;
+*/
+
 :root {
   /* Definicoes gerais */
   --font-base: 'Poppins', sans-serif;
   --dark-color: #121212;
   --light-color: #f5f5f5;
 
-  --very-small-font: 0.65rem;
-  --small-font: 0.75rem;
-  --default-font: 1rem;
-  --large-font:1.4rem;
+  --very-small-font: 1.1375rem;
+  --small-font: 1.3125rem;
+  --default-font: 1.75rem;
+  --large-font:2.45rem;
 
   /* // Light Mode // */
   /* Fundos */
@@ -67,12 +75,12 @@
   --home-icons: #ffeaa3;
 
   /* Notas */
-  --board-background: #694e73;
+  --board-background: #796980;
   --column-border: #2d1b35;
   --column-font-color: #f5f5f5;
 
-  --note-background: #a594ab;
-  --note-answer-background: #a08aa8;
+  --note-background: #B4A3BA;
+  --note-answer-background: #A692AE;
 
   /* Botoes */
   --button-font-color: #442950;
@@ -122,4 +130,18 @@
   --inv-contrast-color: #f5f5f5;
   --other-details: #f5f5f5;
   --tag-color: #a594ab;
+}
+
+[data-font-size='large'] {
+  --very-small-font: 0.9425rem;
+  --small-font: 1.0875rem;
+  --default-font: 1.45rem;
+  --large-font:2.03rem;
+}
+
+[data-font-size='big boi'] {
+  --very-small-font: 1.1375rem;
+  --small-font: 1.3125rem;
+  --default-font: 1.75rem;
+  --large-font:2.45rem;
 }

@@ -30,7 +30,6 @@
 .note__note_content__column__draggable__droppable {
   height: calc(100% - 30px - 27px - 10px - 24px);
   max-height: calc(100% - 30px - 27px - 10px - 24px);
-  margin-bottom: 10px;
 }
 
 .note__note_content__column__draggable__droppable__scroll {

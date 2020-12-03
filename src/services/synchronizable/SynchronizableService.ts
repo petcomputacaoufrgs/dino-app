@@ -79,32 +79,48 @@ export default abstract class SynchronizableService<
   //TODO: Delete
   //TODO: Save
 
-  public sync = async () => {
+  public sync = async (): Promise<boolean> => {
+    const needSync = await this.needSync()
+    if (needSync) {
+      return await this.doSync()
+    }
+
+    return true
+  }
+
+  //#endregion
+
+  //#region SYNC METHODS
+
+  protected needSync = async (): Promise<boolean> => {
+    return this.repository.needSync()
+  }
+
+  protected doSync = async (): Promise<boolean> => {
     const entities = await this.repository.getAll()
 
     const successDeleting = await this.syncDeleteAll()
 
     if (!successDeleting) {
-      return
+      return false
     }
 
     const successSaving = await this.syncSaveAll()
 
     if (!successSaving) {
-      return
+      return false
     }
 
     const successGetting = await this.apiGetAll()
 
     if (successGetting) {
       //TODO: Update context
-      //TODO: Save sync true
+
+      return true
     }
+
+    return false
   }
-
-  //#endregion
-
-  //#region SYNC METHODS
 
   protected syncDeleteAll = async (): Promise<boolean> => {
     const deletedEntities = await this.localGetAllDeleted()

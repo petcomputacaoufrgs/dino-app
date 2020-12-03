@@ -20,6 +20,13 @@ export default abstract class SynchronizableRepository<
     this.table = table
   }
 
+  public needSync = async (): Promise<boolean> => {
+    const unsynchronizedCount = await this.table.where(['savedOnAPI', 'deleted'])
+      .equals([0, 1]).count()
+
+    return unsynchronizedCount > 0
+  }
+
   async getByLocalId(localId: LOCAL_ID): Promise<ENTITY | undefined> {
     return this.table.where('localId').equals(localId).first()
   }

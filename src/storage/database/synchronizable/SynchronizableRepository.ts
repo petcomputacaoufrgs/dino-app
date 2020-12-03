@@ -1,5 +1,5 @@
 import Dexie, { IndexableType } from 'dexie'
-import DinoDatabase from "../DinoDatabase"
+import DinoDatabase from '../DinoDatabase'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
 
 //TODO: Remover métodos não utilizados
@@ -10,14 +10,14 @@ import SynchronizableEntity from '../../../types/synchronizable/database/Synchro
  * @param ENTITY local synchronizable entity
  */
 export default abstract class SynchronizableRepository<
-  ID extends IndexableType, 
-  LOCAL_ID extends IndexableType, 
+  ID extends IndexableType,
+  LOCAL_ID extends IndexableType,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>
-  > {
-  private table: Dexie.Table<ENTITY, LOCAL_ID> 
+> {
+  private table: Dexie.Table<ENTITY, LOCAL_ID>
 
   constructor(table: Dexie.Table<ENTITY, LOCAL_ID>) {
-      this.table = table
+    this.table = table
   }
 
   async getByLocalId(localId: LOCAL_ID): Promise<ENTITY | undefined> {
@@ -44,10 +44,7 @@ export default abstract class SynchronizableRepository<
     return this.table.where('savedOnAPI').equals(0).toArray()
   }
 
-  async saveId(
-    localId: LOCAL_ID,
-    id: ID,
-  ): Promise<number> {
+  async saveId(localId: LOCAL_ID, id: ID): Promise<number> {
     return await this.table
       .where('localId')
       .equals(localId)
@@ -65,8 +62,10 @@ export default abstract class SynchronizableRepository<
   }
 
   async saveAll(entities: ENTITY[]): Promise<ENTITY[]> {
-    const localIds = await DinoDatabase.transaction('readwrite', this.table, () =>
-      Promise.all(entities.map((entity) => this.table.put(entity)))
+    const localIds = await DinoDatabase.transaction(
+      'readwrite',
+      this.table,
+      () => Promise.all(entities.map((entity) => this.table.put(entity)))
     )
 
     entities.forEach((entity, index) => (entity.localId = localIds[index]))
@@ -76,7 +75,7 @@ export default abstract class SynchronizableRepository<
 
   async delete(entity: ENTITY): Promise<number> {
     if (entity.localId) {
-        return await this.deleteByLocalId(entity.localId)
+      return await this.deleteByLocalId(entity.localId)
     }
 
     return 0
@@ -84,7 +83,7 @@ export default abstract class SynchronizableRepository<
 
   async deleteByLocalId(localId: LOCAL_ID): Promise<number> {
     if (localId) {
-        return this.table.where('localId').equals(localId).delete()
+      return this.table.where('localId').equals(localId).delete()
     }
 
     return 0
@@ -112,12 +111,12 @@ export default abstract class SynchronizableRepository<
 
   async fakeDelete(entity: ENTITY): Promise<number> {
     if (entity.localId) {
-        return await this.table
-          .where('localId')
-          .equals(entity.localId)
-          .modify((item) => {
-            item.deleted = 1
-          })
+      return await this.table
+        .where('localId')
+        .equals(entity.localId)
+        .modify((item) => {
+          item.deleted = 1
+        })
     }
 
     return 0

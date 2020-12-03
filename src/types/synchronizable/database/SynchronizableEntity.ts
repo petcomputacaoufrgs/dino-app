@@ -1,5 +1,5 @@
-import { IndexableType } from "dexie"
-import SynchronizableDataModel from "../api/SynchronizableDataModel"
+import { IndexableType } from 'dexie'
+import SynchronizableDataModel from '../api/SynchronizableDataModel'
 
 /**
  * Base with attributes for local synchronizable entity

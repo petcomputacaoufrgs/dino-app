@@ -37,7 +37,7 @@ const Faq = (): JSX.Element => {
   const isFaqEmpty = items.length === 0
 
   useEffect(() => {
-    const results = items.filter(item =>
+    const results = items.filter((item) =>
       StringUtils.contains(item.question, searchTerm)
     )
     setSearchResults(results)

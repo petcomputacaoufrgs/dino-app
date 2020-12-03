@@ -29,6 +29,13 @@ export default abstract class SynchronizableRepository<
     return unsynchronizedCount > 0
   }
 
+  async getAllById(entities: ENTITY[]): Promise<ENTITY[]> {
+    const ids = entities
+      .filter((entity) => entity.id !== undefined)
+      .map((entity) => entity.id!)
+    return this.table.where('id').anyOf(ids).toArray()
+  }
+
   async getAllNotFakeDeleted(): Promise<ENTITY[]> {
     return this.table
       .where('localState')
@@ -64,7 +71,7 @@ export default abstract class SynchronizableRepository<
       this.table,
       () =>
         Promise.all(
-          entities.map((entity) => {
+          entities.map(async (entity) => {
             return this.table.put(entity)
           })
         )
@@ -113,6 +120,10 @@ export default abstract class SynchronizableRepository<
       .where('localState')
       .equals(SynchronizableLocalState.DELETED_LOCAL)
       .delete()
+  }
+
+  async deleteAllById(ids: ID[]): Promise<number> {
+    return this.table.where('ids').anyOf(ids).delete()
   }
 
   async clear() {

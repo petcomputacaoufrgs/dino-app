@@ -13,6 +13,8 @@ import SynchronizableEntity from '../../types/synchronizable/database/Synchroniz
 import SynchronizableRepository from '../../storage/database/synchronizable/SynchronizableRepository'
 import SynchronizableGenericResponseModel from '../../types/synchronizable/api/response/SynchronizableGenericResponseModel'
 import SynchronizableLocalState from '../../types/synchronizable/database/SynchronizableLocalState'
+import SynchronizableWSUpdateModel from '../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
+import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
 
 /**
  * Generic service with basic methods for synchronizable entity
@@ -29,12 +31,21 @@ export default abstract class SynchronizableService<
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
   REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>
 > {
+  protected webSocketUpdatePath: string
+  protected webSocketDeletePath: string
   protected requestMapping: string
   protected repository: REPOSITORY
 
-  constructor(repository: REPOSITORY, requestMapping: string) {
-    this.requestMapping = requestMapping
+  constructor(
+    repository: REPOSITORY,
+    requestMapping: string,
+    webSocketUpdatePath: string,
+    webSocketDeletePath: string
+  ) {
     this.repository = repository
+    this.requestMapping = requestMapping
+    this.webSocketUpdatePath = webSocketUpdatePath
+    this.webSocketDeletePath = webSocketDeletePath
   }
 
   //#region CONVERSION (MODEL <-> ENTITY)
@@ -67,6 +78,57 @@ export default abstract class SynchronizableService<
   private saveAllRequestURL: string = `${this.saveRequestURL}all/`
 
   private deleteAllRequestURL: string = `${this.deleteRequestURL}all/`
+
+  //#endregion
+
+  //#region WEB SOCKET
+
+  public getUpdateWebSocketPath = (): string => {
+    return this.webSocketUpdatePath
+  }
+
+  public getDeleteWebSocketPath = (): string => {
+    return this.webSocketDeletePath
+  }
+
+  public webSocketUpdate = async (
+    model: SynchronizableWSUpdateModel<ID, DATA_MODEL>
+  ) => {
+    if (model && model.data && model.data.length > 0) {
+      const entities = this.convertModelsToEntities(model.data)
+        .filter((entity) => entity.id !== undefined)
+        .sort(this.sortEntityById)
+
+      const dbEntities = await this.localGetAllById(entities)
+
+      const orderedDbEntities = dbEntities.sort(this.sortEntityById)
+
+      let count = 0
+
+      const entitiesToSave = entities.map((entity) => {
+        const dbEntity = orderedDbEntities[count]
+
+        entity.localState = SynchronizableLocalState.SAVED_ON_API
+
+        if (entity.id === dbEntity.id) {
+          entity.localId = dbEntity.localId
+          count++
+        }
+
+        return entity
+      })
+
+      await this.localSaveAll(entitiesToSave)
+      this.updateContext()
+    }
+  }
+
+  public webSockeDelete = (model: SynchronizableWSDeleteModel<ID>) => {
+    if (model && model.data && model.data.length > 0) {
+      this.localDeleteAllById(model.data)
+      this.updateContext()
+    }
+  }
 
   //#endregion
 
@@ -182,24 +244,7 @@ export default abstract class SynchronizableService<
       return false
     }
 
-    const response = await this.apiGetAll()
-
-    if (response) {
-      if (response.success) {
-        const models = response.data
-        const entities = this.convertModelsToEntities(models)
-
-        const dbEntities = await this.localSaveAll(entities)
-
-        this.setContext(dbEntities)
-
-        return true
-      } else {
-        LogAppErrorService.logSyncAPIError(response.error)
-      }
-    }
-
-    return false
+    return await this.syncGetAll()
   }
 
   protected syncDeleteAll = async (): Promise<boolean> => {
@@ -239,7 +284,9 @@ export default abstract class SynchronizableService<
 
       await this.localClear()
 
-      await this.localSaveAll(entities)
+      const dbEntities = await this.localSaveAll(entities)
+
+      this.setContext(dbEntities)
     }
 
     return success
@@ -260,7 +307,11 @@ export default abstract class SynchronizableService<
 
   //#endregion
 
-  //#region DATABASE PROTECTED REQUESTS
+  //#region DATABASE REQUESTS
+
+  protected localGetAllById = async (entities: ENTITY[]): Promise<ENTITY[]> => {
+    return await this.repository.getAllById(entities)
+  }
 
   protected localDelete = async (entity: ENTITY) => {
     await this.repository.delete(entity)
@@ -270,6 +321,10 @@ export default abstract class SynchronizableService<
     const deletedItens = await this.repository.fakeDelete(entity)
 
     return deletedItens === 1
+  }
+
+  protected localDeleteAllById = async (ids: ID[]) => {
+    await this.repository.deleteAllById(ids)
   }
 
   protected localSave = async (entity: ENTITY): Promise<ENTITY> => {
@@ -424,6 +479,18 @@ export default abstract class SynchronizableService<
     }
 
     return undefined
+  }
+
+  //#endregion
+
+  //#region UTILS
+
+  public sortEntityById = (a: ENTITY, b: ENTITY): number => {
+    if (a.id! > b.id!) {
+      return 1
+    } else {
+      return -1
+    }
   }
 
   //#endregion

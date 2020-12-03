@@ -36,7 +36,7 @@ const AppSettingsContextProvider: React.FC = (props) => {
       handleAppSettingsChanged = () => {}
       handleCurrentFaqChanged = () => {}
     }
-
+    
     return cleanBeforeUpdate
   })
 

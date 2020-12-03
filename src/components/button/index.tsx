@@ -38,7 +38,7 @@ const Button: React.FC<ButtonProps> = ({
         }
       })
     }
-  })
+  }, [inputRef])
 
   return (
     <button

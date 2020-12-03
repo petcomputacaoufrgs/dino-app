@@ -29,7 +29,7 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     DataThemeUtils.setBodyDataTheme(colorThemeName)
-  })
+  }, [colorThemeName])
 
   useEffect(() => {
     if (firstLoad) {
@@ -50,7 +50,7 @@ const App = (): JSX.Element => {
 
       return cleanBeforeUpdate
     }
-  })
+  }, [showLoadScreen])
 
   const renderApp = (): JSX.Element => (
     <PrivateRouterContextProvider

@@ -1,6 +1,6 @@
 .google_grant_dialog__header {
   background-color: var(--header-and-menu);
-  color: var(--inv-constrast-color);
+  color: var(--inv-contrast-color);
   display: flex;
   flex-direction: row;
   padding: 1rem;
@@ -39,5 +39,5 @@
 
 .google_grant_dialog__buttons__accept_button.MuiButtonBase-root
   .MuiButton-label {
-  color: var(--inv-constrast-color);
+  color: var(--inv-contrast-color);
 }

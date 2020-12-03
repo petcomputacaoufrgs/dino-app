@@ -34,7 +34,7 @@ const ContactContextProvider: React.FC = (props) => {
     }
 
     return cleanBeforeUpdate
-  }, [items, firstLoad])
+  }, [firstLoad])
 
   const value = {
     items: items,

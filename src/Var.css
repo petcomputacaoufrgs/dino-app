@@ -4,12 +4,6 @@
   --dark-color: #121212;
   --light-color: #f5f5f5;
 
-  --avatar-color-1: #f44336;
-  --avatar-color-2: #e91e63;
-  --avatar-color-3: #9c27b0;
-  --avatar-color-4: #2196f3;
-  --avatar-color-5: #4caf50;
-
   /* // Light Mode // */
   /* Fundos */
   --login-background: #694e73;
@@ -38,8 +32,8 @@
   --button-selected-font-color: #b054d1;
 
   /* Outros */
-  --constrast-color: #2f2e2c;
-  --inv-constrast-color: #f5f5f5;
+  --contrast-color: #2f2e2c;
+  --inv-contrast-color: #f5f5f5;
   --other-details: #f5f5f5;
   --font-base: 'Poppins', sans-serif;
   --font-secondary: 'Poppins', sans-serif;
@@ -83,6 +77,11 @@
   --contrast-color: #f5f5f5;
   --inv-contrast-color: #2f2e2c;
   --other-details: #474747;
+  --avatar-color-1: #6e1f1a;
+  --avatar-color-2: #682552;
+  --avatar-color-3: #53195e;
+  --avatar-color-4: #0c3d64;
+  --avatar-color-5: #255727;
   --tag-color: #d1a300;
 }
 

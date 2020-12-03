@@ -41,7 +41,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
     }
 
     return cleanBeforeUpdate
-  })
+  }, [])
 
   const handleLoginButtonClick = async () => {
     setLoading(true)

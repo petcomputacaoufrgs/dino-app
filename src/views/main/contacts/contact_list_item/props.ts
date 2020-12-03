@@ -2,8 +2,7 @@ import ContactItemModel from '../../../../types/contact/ContactModel'
 
 export default interface ContactItemListProps {
   item: ContactItemModel
-  setEdit: React.Dispatch<React.SetStateAction<number>>
-  setDelete: React.Dispatch<React.SetStateAction<number>>
+  onEdit: () => void
+  onDelete: () => void
   onClick: (id: number) => void
-  children?: JSX.Element | Array<JSX.Element>
 }

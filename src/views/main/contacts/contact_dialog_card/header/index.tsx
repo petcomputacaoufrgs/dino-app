@@ -10,8 +10,8 @@ import ContactService from '../../../../../services/contact/ContactService'
 
 const ContactCardHeader = ({
   item,
-  setEdit,
-  setDelete,
+  onEdit,
+  onDelete,
   onClose: handleCloseDialog,
 }: ContactCardHeaderProps) => {
   const language = useCurrentLanguage()
@@ -30,7 +30,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      setEdit(item.frontId)
+      onEdit()
     }, 300)
   }
 
@@ -38,7 +38,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      setDelete(item.frontId)
+      onDelete()
     }, 300)
   }
 

@@ -1,8 +1,8 @@
 import Dexie, { IndexableType } from 'dexie'
 import DinoDatabase from '../DinoDatabase'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
+import SynchronizableLocalState from '../../../types/synchronizable/database/SynchronizableLocalState'
 
-//TODO: Remover métodos não utilizados
 /**
  * Generic repository of synchronizable entity
  * @param ID API synchronizable entity's id
@@ -21,43 +21,33 @@ export default abstract class SynchronizableRepository<
   }
 
   public needSync = async (): Promise<boolean> => {
-    const unsynchronizedCount = await this.table.where(['savedOnAPI', 'deleted'])
-      .equals([0, 1]).count()
+    const unsynchronizedCount = await this.table
+      .where(['localState'])
+      .notEqual(SynchronizableLocalState.SAVED_ON_API)
+      .count()
 
     return unsynchronizedCount > 0
   }
 
-  async getByLocalId(localId: LOCAL_ID): Promise<ENTITY | undefined> {
-    return this.table.where('localId').equals(localId).first()
+  async getAllNotFakeDeleted(): Promise<ENTITY[]> {
+    return this.table
+      .where('localState')
+      .notEqual(SynchronizableLocalState.DELETED_LOCAL)
+      .toArray()
   }
 
-  async getAllByLocalId(localIds: LOCAL_ID[]): Promise<ENTITY[]> {
-    return this.table.where('localId').anyOf(localIds).toArray()
-  }
-
-  async getAll(): Promise<ENTITY[]> {
-    return this.table.toArray()
-  }
-
-  async getAllNotDeleted(): Promise<ENTITY[]> {
-    return this.table.where('deleted').equals(0).toArray()
-  }
-
-  async getAllDeleted(): Promise<ENTITY[]> {
-    return this.table.where('deleted').equals(1).toArray()
+  async getAllFakeDeleted(): Promise<ENTITY[]> {
+    return this.table
+      .where('localState')
+      .equals(SynchronizableLocalState.DELETED_LOCAL)
+      .toArray()
   }
 
   async getAllNotSavedOnAPI(): Promise<ENTITY[]> {
-    return this.table.where('savedOnAPI').equals(0).toArray()
-  }
-
-  async saveId(localId: LOCAL_ID, id: ID): Promise<number> {
-    return await this.table
-      .where('localId')
-      .equals(localId)
-      .modify((item) => {
-        item.id = id
-      })
+    return this.table
+      .where('localState')
+      .equals(SynchronizableLocalState.SAVED_LOCAL)
+      .toArray()
   }
 
   async save(entity: ENTITY): Promise<ENTITY> {
@@ -72,7 +62,12 @@ export default abstract class SynchronizableRepository<
     const localIds = await DinoDatabase.transaction(
       'readwrite',
       this.table,
-      () => Promise.all(entities.map((entity) => this.table.put(entity)))
+      () =>
+        Promise.all(
+          entities.map((entity) => {
+            return this.table.put(entity)
+          })
+        )
     )
 
     entities.forEach((entity, index) => (entity.localId = localIds[index]))
@@ -100,50 +95,24 @@ export default abstract class SynchronizableRepository<
     return this.table.where('localId').anyOf(localIds).delete()
   }
 
-  async deleteById(id: ID): Promise<number> {
-    return this.table.where('id').equals(id).delete()
-  }
-
-  async deleteByIds(ids: ID[]): Promise<number> {
-    return this.table.where('id').anyOf(ids).delete()
-  }
-
-  async deleteAll(entities: ENTITY[]): Promise<number> {
-    const ids: LOCAL_ID[] = entities
-      .filter((entity) => entity.localId)
-      .map((entity) => entity.localId!)
-
-    return await this.deleteByLocalIds(ids)
-  }
-
   async fakeDelete(entity: ENTITY): Promise<number> {
     if (entity.localId) {
       return await this.table
         .where('localId')
         .equals(entity.localId)
         .modify((item) => {
-          item.deleted = 1
+          item.localState = SynchronizableLocalState.DELETED_LOCAL
         })
     }
 
     return 0
   }
 
-  async fakeDeleteAll(entities: ENTITY[]): Promise<number> {
-    const localIds = entities
-      .filter((entity) => entity.localId)
-      .map((entity) => entity.localId!)
-
-    return await this.table
-      .where('localId')
-      .anyOf(localIds)
-      .modify((item) => {
-        item.deleted = 1
-      })
-  }
-
   async deleteAllFakeDeleteds(): Promise<number> {
-    return this.table.where('deleted').equals(1).delete()
+    return this.table
+      .where('localState')
+      .equals(SynchronizableLocalState.DELETED_LOCAL)
+      .delete()
   }
 
   async clear() {

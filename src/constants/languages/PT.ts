@@ -385,8 +385,6 @@ export default class PT implements LanguageBase {
 
   QUESTION_NOTE_DIALOG_TITLE = 'Pergunta'
 
-  NOTE_INFO_DIALOG_LAST_UPDATE_TITLE = 'Última atualização:'
-
   NOTE_INFO_DIALOG_COLUMN_TITLE = 'Coluna:'
 
   NOTE_SEARCH_CLEAN = 'Nenhuma anotação corresponde a pesquisa atual.'

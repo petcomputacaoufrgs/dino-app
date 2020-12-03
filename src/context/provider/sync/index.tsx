@@ -10,17 +10,16 @@ const SyncContext = createContext({
 
 const SyncContextProvider: React.FC = (props) => {
   const [state, setState] = useState(SyncStateEnum.SYNCED)
-  const [firstLoad, setFirstLoad] = useState(true)
+
+  useEffect(() => {
+    const state = SyncService.getState()
+    setState(state)
+  }, [])
 
   useEffect(() => {
     const updateData = () => {
       const state = SyncService.getState()
       setState(state)
-    }
-
-    if (firstLoad) {
-      updateData()
-      setFirstLoad(false)
     }
 
     let handleLocalDataChanged = () => {
@@ -34,7 +33,7 @@ const SyncContextProvider: React.FC = (props) => {
     }
 
     return cleanBeforeUpdate
-  }, [state, firstLoad])
+  }, [state])
 
   const value = {
     state: state,

@@ -143,13 +143,14 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
           onChange={handleQuestionChange}
           className="note__info_dialog__title__question"
         />
-        <IconButton icon={DeleteOutlineIcon} onClick={handleDeleteNote} />
+        <IconButton
+          className="note_info_dialog__delete_icon"
+          icon={DeleteOutlineIcon}
+          onClick={handleDeleteNote}
+        />
       </DialogTitle>
       <div className="note_info_dialog__last_update">
-        <h4>
-          {language.NOTE_INFO_DIALOG_LAST_UPDATE_TITLE + ' '}
-          {DateUtils.getDateStringFormated(note.lastUpdate, language)}
-        </h4>
+        <h4>{DateUtils.getDateStringFormated(note.lastUpdate, language)}</h4>
       </div>
       <DialogContent className="note__info_dialog__content">
         <TextField

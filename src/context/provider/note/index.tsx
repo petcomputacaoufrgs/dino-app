@@ -9,13 +9,13 @@ const NoteContext = createContext<NoteContextType>({
   tags: [],
 })
 
-const NoteContextProvider: React.FC = (props) => {
+function NoteContextProvider(props): JSX.Element {
   const [notes, setNotes] = useState<NoteEntity[]>([])
   const [tags, setTags] = useState<string[]>([])
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
-    const updateData = async () => {
+    let updateData = async () => {
       const dbNotes = await NoteService.getNotes()
       const dbTags = await NoteService.getTags()
 
@@ -41,6 +41,7 @@ const NoteContextProvider: React.FC = (props) => {
     NoteContextUpdater.setCallback(handleLocalDataChanged)
 
     const cleanBeforeUpdate = () => {
+      updateData = async () => {}
       saveData = () => {}
     }
 

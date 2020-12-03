@@ -28,13 +28,12 @@
 }
 
 .note__note_content__column__draggable__droppable {
-  height: calc(100% - 30px - 27px - 10px - 24px);
-  max-height: calc(100% - 30px - 27px - 10px - 24px);
-  margin-bottom: 10px;
+  height: calc(100% - 80px);
+  max-height: calc(100% - 80px);
 }
 
 .note__note_content__column__draggable__droppable__scroll {
-  height: calc(100% - 24px);
+  height: calc(100% - 10px);
   overflow-y: auto;
   margin-top: 24px;
 }

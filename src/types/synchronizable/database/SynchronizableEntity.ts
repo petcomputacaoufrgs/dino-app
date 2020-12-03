@@ -1,5 +1,6 @@
 import { IndexableType } from 'dexie'
 import SynchronizableDataModel from '../api/SynchronizableDataModel'
+import SynchronizableLocalState from './SynchronizableLocalState'
 
 /**
  * Base with attributes for local synchronizable entity
@@ -9,6 +10,5 @@ export default interface SynchronizableEntity<
   LOCAL_ID extends IndexableType
 > extends SynchronizableDataModel<ID> {
   localId?: LOCAL_ID
-  savedOnAPI: 0 | 1
-  deleted: 0 | 1
+  localState: SynchronizableLocalState
 }

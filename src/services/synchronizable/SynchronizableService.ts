@@ -12,8 +12,8 @@ import SynchronizableDeleteAllListModel from '../../types/synchronizable/api/req
 import SynchronizableEntity from '../../types/synchronizable/database/SynchronizableEntity'
 import SynchronizableRepository from '../../storage/database/synchronizable/SynchronizableRepository'
 import SynchronizableGenericResponseModel from '../../types/synchronizable/api/response/SynchronizableGenericResponseModel'
+import SynchronizableLocalState from '../../types/synchronizable/database/SynchronizableLocalState'
 
-//TODO: Remover métodos não utilizados
 /**
  * Generic service with basic methods for synchronizable entity
  * @param ID API synchronizable entity's id
@@ -73,11 +73,54 @@ export default abstract class SynchronizableService<
   //#region PUBLIC REQUESTS
 
   public getAll = async (): Promise<ENTITY[]> => {
-    return this.localGetAllNotDeleted()
+    return this.localGetAllNotFakeDeleted()
   }
 
-  //TODO: Delete
-  //TODO: Save
+  public delete = async (entity: ENTITY) => {
+    const deleted = await this.localFakeDelete(entity)
+
+    if (deleted) {
+      this.updateContext()
+
+      if (entity.id) {
+        const model = this.convertEntityToModel(entity)
+        const response = await this.apiDelete(model)
+
+        if (response) {
+          if (response.success) {
+            await this.localDelete(entity)
+          } else if (response.data) {
+            const apiEntity = this.convertModelToEntity(response.data)
+            apiEntity.localId = entity.localId
+            apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
+            await this.localSave(apiEntity)
+            this.updateContext()
+          }
+        }
+      }
+    }
+  }
+
+  public save = async (entity: ENTITY) => {
+    entity.localState = SynchronizableLocalState.SAVED_LOCAL
+
+    const dbEntity = await this.localSave(entity)
+
+    if (dbEntity.localId) {
+      this.updateContext()
+
+      const model = this.convertEntityToModel(entity)
+      const response = await this.apiSave(model)
+
+      if (response && response.success) {
+        const apiEntity = this.convertModelToEntity(response.data)
+        apiEntity.localId = dbEntity.localId
+        apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
+        await this.localSave(apiEntity)
+        this.updateContext()
+      }
+    }
+  }
 
   public sync = async (): Promise<boolean> => {
     const needSync = await this.needSync()
@@ -90,6 +133,36 @@ export default abstract class SynchronizableService<
 
   //#endregion
 
+  //#region CONTEXT PROVIDER
+
+  protected contextProviderCallback?: (data: ENTITY[]) => void
+
+  /**
+   * @description Set context provider function to update data
+   */
+  public setContextProviderCallback = (callback: (data: ENTITY[]) => void) => {
+    this.contextProviderCallback = callback
+  }
+
+  /**
+   * @description Update context provider with new data
+   */
+  protected setContext = (data: ENTITY[]) => {
+    if (this.contextProviderCallback) {
+      this.contextProviderCallback(data)
+    }
+  }
+
+  /**
+   * @description Get local data and update context provider
+   */
+  protected updateContext = async () => {
+    const data = await this.getAll()
+    this.setContext(data)
+  }
+
+  //#endregion
+
   //#region SYNC METHODS
 
   protected needSync = async (): Promise<boolean> => {
@@ -97,8 +170,6 @@ export default abstract class SynchronizableService<
   }
 
   protected doSync = async (): Promise<boolean> => {
-    const entities = await this.repository.getAll()
-
     const successDeleting = await this.syncDeleteAll()
 
     if (!successDeleting) {
@@ -111,19 +182,28 @@ export default abstract class SynchronizableService<
       return false
     }
 
-    const successGetting = await this.apiGetAll()
+    const response = await this.apiGetAll()
 
-    if (successGetting) {
-      //TODO: Update context
+    if (response) {
+      if (response.success) {
+        const models = response.data
+        const entities = this.convertModelsToEntities(models)
 
-      return true
+        const dbEntities = await this.localSaveAll(entities)
+
+        this.setContext(dbEntities)
+
+        return true
+      } else {
+        LogAppErrorService.logSyncAPIError(response.error)
+      }
     }
 
     return false
   }
 
   protected syncDeleteAll = async (): Promise<boolean> => {
-    const deletedEntities = await this.localGetAllDeleted()
+    const deletedEntities = await this.localGetAllFakeDeleted()
 
     const deletedModels = this.convertEntitiesToModels(deletedEntities)
 
@@ -182,20 +262,26 @@ export default abstract class SynchronizableService<
 
   //#region DATABASE PROTECTED REQUESTS
 
-  protected localFakeDelete = async (entity: ENTITY) => {
-    await this.repository.fakeDelete(entity)
+  protected localDelete = async (entity: ENTITY) => {
+    await this.repository.delete(entity)
+  }
+
+  protected localFakeDelete = async (entity: ENTITY): Promise<boolean> => {
+    const deletedItens = await this.repository.fakeDelete(entity)
+
+    return deletedItens === 1
   }
 
   protected localSave = async (entity: ENTITY): Promise<ENTITY> => {
     return await this.repository.save(entity)
   }
 
-  protected localGetAllNotDeleted = async (): Promise<ENTITY[]> => {
-    return await this.repository.getAllNotDeleted()
+  protected localGetAllNotFakeDeleted = async (): Promise<ENTITY[]> => {
+    return await this.repository.getAllNotFakeDeleted()
   }
 
-  protected localGetAllDeleted = async (): Promise<ENTITY[]> => {
-    return await this.repository.getAllDeleted()
+  protected localGetAllFakeDeleted = async (): Promise<ENTITY[]> => {
+    return await this.repository.getAllFakeDeleted()
   }
 
   protected localGetAllNotSavedOnAPI = async (): Promise<ENTITY[]> => {

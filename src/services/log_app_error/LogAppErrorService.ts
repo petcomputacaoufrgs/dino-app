@@ -48,6 +48,16 @@ class LogAppErrorService {
     }
   }
 
+  logSyncAPIError = (error: string) => {
+    if (error) {
+      this.logModel({
+        date: new Date().getTime(),
+        error: error,
+        title: 'API error',
+      } as LogAppErrorModel)
+    }
+  }
+
   saveAll = async (models: LogAppErrorListModel) => {
     const request = await DinoAgentService.post(
       DinoAPIURLConstants.SAVE_ALL_LOG_APP_ERROR

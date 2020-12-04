@@ -59,3 +59,14 @@ body .MuiInput-underline:before {
 .MuiAutocomplete-popper {
   background-color: var(--other-details);
 }
+
+.app .MuiSwitch-colorSecondary.Mui-checked {
+  color: var(--button-selected-font-color);
+}
+
+.app .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+  background-color: var(--button-selected-font-color);
+}
+.app .MuiSwitch-colorSecondary {
+  color: var(--button-font-color);
+}

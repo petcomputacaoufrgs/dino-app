@@ -14,12 +14,18 @@ class FaqService {
   }
 
   switchUserFaq = async (faqOption: FaqOptionsModel) => {
-    await ServerService.saveUserFaqId(faqOption.id)
-    await this.getUserFaqFromServer()
+    if(this.getUserFaqId() != faqOption.id) {
+      await ServerService.saveUserFaqId(faqOption.id)
+      await this.getUserFaqFromServer()
+    }
   }
 
   saveUserQuestion = async (selectedFaq: FaqOptionsModel, question: string) => {
     await ServerService.saveUserQuestion(selectedFaq.id, question)
+  }
+
+  getTreatmentEssentialContactsFromServer = async(selectedFaq: FaqOptionsModel) => {
+    await ServerService.getTreatmentEssentialContacts(selectedFaq.id)
   }
 
   setFaq = (faq: FaqModel) => {

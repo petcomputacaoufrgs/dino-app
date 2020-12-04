@@ -27,8 +27,11 @@ const FaqOptions = ({ open, handleChangeOpenDialog, dontAskAgainOption }: FaqOpt
   const handleSwitchUserFaq = async () => {
     if (selectedFaq !== undefined) {
       FaqService.switchUserFaq(selectedFaq)
+
+      if(loadContactsChecked) {
+        FaqService.getTreatmentEssentialContactsFromServer(selectedFaq)
+      }
     }
-    console.log("salvando dont ask again", dontAskAgainChecked, "e loadcontacts", loadContactsChecked)
     handleChangeOpenDialog()
   }
 

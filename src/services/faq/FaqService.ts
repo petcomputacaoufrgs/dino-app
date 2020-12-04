@@ -14,7 +14,7 @@ class FaqService {
   }
 
   switchUserFaq = async (faqOption: FaqOptionsModel) => {
-    if(this.getUserFaqId() != faqOption.id) {
+    if(this.getUserFaqId() !== faqOption.id) {
       await ServerService.saveUserFaqId(faqOption.id)
       await this.getUserFaqFromServer()
     }

@@ -25,7 +25,7 @@ const SyncInfo: React.FC = () => {
   }, [sync])
 
   const getSyncSymbol = (): JSX.Element => {
-    if (sync.state === SyncStateEnum.OFFILINE) {
+    if (sync.state === SyncStateEnum.OFFLINE) {
       return (
         <>
           <OnlineSVG className="drawer_menu__sync_info__icon drawer_menu__sync_info__out_icon" />

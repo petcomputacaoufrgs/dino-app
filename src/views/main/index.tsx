@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Switch } from 'react-router'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
 import PathConstants from '../../constants/app/PathConstants'
@@ -23,12 +23,19 @@ import Calendar from './calendar'
 import AboutUs from './about'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
+import FirstLoginDialog from './home/first_login_dialog'
 
 const Main = (): JSX.Element => {
   const language = useCurrentLanguage()
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+  const [openFirstLoginDialog, setOpenFirstLoginDialog] = useState(false)
 
+  useEffect(() => {
+    if(AuthService.isFirstLogin())
+      setOpenFirstLoginDialog(true)
+  }, [])
+  
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true)
   }
@@ -39,6 +46,11 @@ const Main = (): JSX.Element => {
 
   const handleLogoutDisagree = () => {
     setOpenLogoutDialog(false)
+  }
+
+  const handleCloseFirstLoginDialog = () => {
+    setOpenFirstLoginDialog(false)
+    AuthService.removeIsFirstLogin()
   }
 
   const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
@@ -126,6 +138,9 @@ const Main = (): JSX.Element => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
+      <FirstLoginDialog 
+        open={openFirstLoginDialog} 
+        onClose={handleCloseFirstLoginDialog} />
     </>
   )
 }

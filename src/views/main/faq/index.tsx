@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import TextButton from '../../../components/button/text_button'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import './styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FaqItemModel from '../../../types/faq/FaqItemModel'
 import FaqItems from './faq_items'
-import {
-  useCurrentLanguage,
-  useCurrentFaq,
-} from '../../../context_provider/app_settings'
-import { useFaq } from '../../../context_provider/faq'
+import { useCurrentLanguage, useCurrentFaq } from '../../../context/provider/app_settings'
+import { useFaq } from '../../../context/provider/faq'
 import QuestionDialogForm from './question_dialog_form'
 import FaqOptions from './faq_options_dialog'
 

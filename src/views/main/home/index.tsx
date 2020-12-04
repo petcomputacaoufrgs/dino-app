@@ -4,7 +4,6 @@ import HomeItemProps from './props'
 import MenuService from '../../../services/menu/MenuService'
 import IconButton from '../../../components/button/icon_button'
 import './styles.css'
-import FirstLoginDialog from './first_login_dialog'
 
 const Home: React.FC<HomeItemProps> = () => {
   const language = useCurrentLanguage()
@@ -27,8 +26,6 @@ const Home: React.FC<HomeItemProps> = () => {
           </div>
         ))}
       </div>
-      <Button onClick={handleFirstLogin}>My First Login!</Button>
-      <FirstLoginDialog open={open} handleClose={() => setOpen(false)} />
     </div>
   )
 }

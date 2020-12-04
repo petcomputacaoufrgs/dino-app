@@ -212,6 +212,10 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.set(LS_Constants.IS_FIRST_LOGIN, JSON.stringify(value))
   }
 
+  removeIsFirstLogin = () => {
+    this.remove(LS_Constants.IS_FIRST_LOGIN)
+  }
+
   removeUserData = () => {
     this.removeAuthToken()
     this.removeAuthTokenExpiresDate()

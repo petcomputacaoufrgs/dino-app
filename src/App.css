@@ -47,7 +47,7 @@ body .MuiInput-underline:before {
   color: var(--base-font-color);
 }
 
-.app .MuiPaper-root {
+.app .MuiPaper-root, .app .card {
   background-color: var(--other-details);
   color: var(--base-font-color);
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Switch } from 'react-router'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
 import PathConstants from '../../constants/app/PathConstants'
@@ -29,12 +29,7 @@ const Main = (): JSX.Element => {
   const language = useCurrentLanguage()
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
-  const [openFirstLoginDialog, setOpenFirstLoginDialog] = useState(false)
-
-  useEffect(() => {
-    if(AuthService.isFirstLogin())
-      setOpenFirstLoginDialog(true)
-  }, [])
+  const [openFirstLoginDialog, setOpenFirstLoginDialog] = useState(AuthService.isFirstLogin())
   
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true)

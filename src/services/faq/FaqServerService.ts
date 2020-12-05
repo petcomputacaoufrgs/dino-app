@@ -44,7 +44,7 @@ class FaqServerService {
     return undefined
   }
 
-  getTreatmentEssentialContacts = async (id: number): Promise<void | undefined> => {
+  getEssentialContacts = async (id: number): Promise<void | undefined> => {
     const request = await DinoAgentService.post(DinoAPIURLConstants.TREATMENT_ESSENTIAL_CONTACTS)
 
     if (request.canGo) {

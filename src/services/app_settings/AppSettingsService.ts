@@ -96,6 +96,7 @@ class AppSettingsService {
     const defaultAppSettings: AppSettingsRequestAndResponseModel = {
       language: navigator.language.slice(0, 2),
       colorTheme: ColorThemeEnum.DEVICE,
+      loadEssentialContactsGrant: false
     }
 
     return defaultAppSettings
@@ -167,6 +168,16 @@ class AppSettingsService {
   returnAppSettingsToDefault = (): void => {
     const appSettings = this.getDefaultAppSettings()
     this.updateLocalAppSettings(appSettings)
+  }
+
+  getLoadEContactsGrant = (): boolean => {
+    return this.get().loadEssentialContactsGrant
+  }
+
+  setLoadEContactsGrant = (value: boolean) => {
+    const savedAppSettings = this.get()
+    savedAppSettings.loadEssentialContactsGrant = value
+    this.set(savedAppSettings)
   }
 
   private updateLocalAppSettings = (

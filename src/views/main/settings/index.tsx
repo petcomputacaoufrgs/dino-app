@@ -45,6 +45,8 @@ const Settings = (): JSX.Element => {
 
   const [selectedFaq, setSelectedFaq] = useState(currentFaq)
 
+  const [selectedEContactsGrant, setSelectedEContactsGrant] = useState(AppSettingsService.getLoadEContactsGrant())
+
   useEffect(() => {
     setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
   }, [language])
@@ -79,10 +81,15 @@ const Settings = (): JSX.Element => {
     }
   }
 
+  const handleChangeEssentialContactsGrant = () => {
+    setSelectedEContactsGrant(!selectedEContactsGrant)
+  }
+
   const onSave = () => {
     const model: AppSettingsRequestAndResponseModel = {
       language: selectedLanguage,
       colorTheme: selectedColorTheme,
+      loadEssentialContactsGrant: selectedEContactsGrant
     }
 
     AppSettingsService.set(model)
@@ -152,6 +159,18 @@ const Settings = (): JSX.Element => {
     </div>
   )
 
+  const renderEssentialContactsGrant = (): JSX.Element => (
+    <div className="settings__grant">
+      <p>Carregar contatos referentes a meu tratamento</p>
+      <Switch
+        size="medium"
+        className="settings__grant__switch"
+        checked={selectedEContactsGrant}
+        onClick={handleChangeEssentialContactsGrant}
+      />
+    </div>
+  )
+
   const renderSaveButton = (): JSX.Element => (
     <div className="settings__save_button_container">
       <Button className="settings__save_button" onClick={onSave}>
@@ -192,6 +211,9 @@ const Settings = (): JSX.Element => {
       <FormControl className="settings__form">{renderSelectFaq()}</FormControl>
       <FormControl className="settings__form">
         {renderContactGrant()}
+      </FormControl>
+      <FormControl className="settings__form">
+        {renderEssentialContactsGrant()}
       </FormControl>
       {renderSaveButton()}
       {renderDialogs()}

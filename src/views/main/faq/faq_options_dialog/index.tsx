@@ -13,6 +13,7 @@ import SelectFaq from '../select_faq'
 import { useCurrentLanguage, useCurrentFaq } from '../../../../context/provider/app_settings'
 import FaqOptionsProps from './props'
 import FaqService from '../../../../services/faq/FaqService'
+import AppSettingsService from '../../../../services/app_settings/AppSettingsService'
 import './styles.css'
 import DontAskCheckboxForm from '../../../../components/dont_ask_checkbox'
 
@@ -22,15 +23,14 @@ const FaqOptions = ({ open, handleChangeOpenDialog, dontAskAgainOption }: FaqOpt
 
   const [selectedFaq, setSelectedFaq] = useState(useCurrentFaq())
   const [dontAskAgainChecked, setDontAskAgainChecked] = useState(false)
-  const [loadContactsChecked, setLoadContactsChecked] = useState(true)
+  const [loadContactsChecked, setLoadContactsChecked] = useState(AppSettingsService.getLoadEContactsGrant())
   
   const handleSwitchUserFaq = async () => {
+    
     if (selectedFaq !== undefined) {
-      FaqService.switchUserFaq(selectedFaq)
-
-      if(loadContactsChecked) {
-        FaqService.getTreatmentEssentialContactsFromServer(selectedFaq)
-      }
+      if(loadContactsChecked) 
+        AppSettingsService.setLoadEContactsGrant(true)
+      await FaqService.switchUserFaq(selectedFaq)
     }
     handleChangeOpenDialog()
   }

@@ -32,7 +32,7 @@ class Database extends Dexie {
       logAppError: '++id,title,file,error,date',
       calendarEvent:
         '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
-      glossary: generateSynchronizableTableString([])
+      glossary: generateSynchronizableTableString([]),
     })
 
     this.note = this.table('note')

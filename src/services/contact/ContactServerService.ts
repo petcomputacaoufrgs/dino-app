@@ -126,7 +126,9 @@ class ContactServerService {
   }
 
   editContact = async (contactModel: ContactModel) => {
-    const request = await DinoAgentService.put(APIRequestMappingConstants.CONTACT_EDIT)
+    const request = await DinoAgentService.put(
+      APIRequestMappingConstants.CONTACT_EDIT
+    )
 
     if (request.canGo) {
       try {

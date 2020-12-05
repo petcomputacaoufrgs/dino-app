@@ -5,7 +5,11 @@ import { GlossaryRepositoryImpl } from '../../storage/database/glossary/Glossary
 import SynchronizableSync from '../synchronizable/SynchronizableSync'
 
 class GlossarySync extends SynchronizableSync<
-  number, number, GlossaryItemDataModel, GlossaryItemEntity, GlossaryRepositoryImpl
+  number,
+  number,
+  GlossaryItemDataModel,
+  GlossaryItemEntity,
+  GlossaryRepositoryImpl
 > {}
 
 export default new GlossarySync(GlossaryService)

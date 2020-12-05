@@ -5,7 +5,12 @@ import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity
 import { GlossaryRepositoryImpl } from '../../storage/database/glossary/GlossaryRepository'
 
 class GlossaryWebSocketSubscriber extends SynchronizableWSSubscriber<
-  number, number, GlossaryItemDataModel, GlossaryItemEntity, GlossaryRepositoryImpl> {
+  number,
+  number,
+  GlossaryItemDataModel,
+  GlossaryItemEntity,
+  GlossaryRepositoryImpl
+> {
   constructor() {
     super(GlossaryService)
   }

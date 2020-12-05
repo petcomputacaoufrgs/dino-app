@@ -72,21 +72,25 @@ export default abstract class SynchronizableService<
 
   protected internalConvertEntityToModel(entity: ENTITY): DATA_MODEL {
     const model = this.convertEntityToModel(entity)
-    
+
     model.id = entity.id
     model.lastUpdate = entity.lastUpdate
 
     return model
   }
 
-  protected internalConvertModelsToEntities = (models: DATA_MODEL[]): ENTITY[] =>
+  protected internalConvertModelsToEntities = (
+    models: DATA_MODEL[]
+  ): ENTITY[] =>
     models.map((model) => {
       const entity = this.internalConvertModelToEntity(model)
       entity.localState = SynchronizableLocalState.SAVED_ON_API
       return entity
     })
 
-  protected internalConvertEntitiesToModels = (entities: ENTITY[]): DATA_MODEL[] =>
+  protected internalConvertEntitiesToModels = (
+    entities: ENTITY[]
+  ): DATA_MODEL[] =>
     entities.map((entity) => this.internalConvertEntityToModel(entity))
 
   //#endregion
@@ -101,7 +105,8 @@ export default abstract class SynchronizableService<
 
   protected saveRequestURL = (): string => `${this.getBaseRequestURL()}save/`
 
-  protected deleteRequestURL = (): string => `${this.getBaseRequestURL()}delete/`
+  protected deleteRequestURL = (): string =>
+    `${this.getBaseRequestURL()}delete/`
 
   protected getAllRequestURL = (): string => `${this.getRequestURL()}all/`
 
@@ -299,7 +304,9 @@ export default abstract class SynchronizableService<
       return true
     }
 
-    const notSavedModels = this.internalConvertEntitiesToModels(notSavedEntities)
+    const notSavedModels = this.internalConvertEntitiesToModels(
+      notSavedEntities
+    )
 
     const saveAllResponse = await this.apiSaveAll(notSavedModels)
 
@@ -387,7 +394,7 @@ export default abstract class SynchronizableService<
   protected localClear = async () => {
     await this.repository.clear()
   }
-  
+
   //#endregion
 
   //#region API REQUESTS

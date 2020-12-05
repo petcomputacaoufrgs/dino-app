@@ -9,7 +9,9 @@ import Service from './FaqService'
 
 class FaqServerService {
   getUserFaq = async (): Promise<undefined | FaqModel> => {
-    const request = await DinoAgentService.get(APIRequestMappingConstants.FAQ_GET)
+    const request = await DinoAgentService.get(
+      APIRequestMappingConstants.FAQ_GET
+    )
 
     if (request.canGo) {
       try {
@@ -28,7 +30,9 @@ class FaqServerService {
   }
 
   saveUserFaqId = async (id: number): Promise<number | undefined> => {
-    const request = await DinoAgentService.post(APIRequestMappingConstants.FAQ_SAVE)
+    const request = await DinoAgentService.post(
+      APIRequestMappingConstants.FAQ_SAVE
+    )
 
     if (request.canGo) {
       try {
@@ -70,7 +74,9 @@ class FaqServerService {
   }
 
   getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
-    const request = await DinoAgentService.get(APIRequestMappingConstants.FAQ_OPTIONS)
+    const request = await DinoAgentService.get(
+      APIRequestMappingConstants.FAQ_OPTIONS
+    )
 
     if (request.canGo) {
       try {

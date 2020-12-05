@@ -79,7 +79,9 @@ class UserService {
   }
 
   getServerVersion = async (): Promise<number | undefined> => {
-    const request = await DinoAgentService.get(APIRequestMappingConstants.USER_VERSION)
+    const request = await DinoAgentService.get(
+      APIRequestMappingConstants.USER_VERSION
+    )
 
     if (request.canGo) {
       try {
@@ -95,7 +97,9 @@ class UserService {
   }
 
   getServer = async (): Promise<UserModel | undefined> => {
-    const request = await DinoAgentService.get(APIRequestMappingConstants.USER_GET)
+    const request = await DinoAgentService.get(
+      APIRequestMappingConstants.USER_GET
+    )
 
     if (request.canGo) {
       try {

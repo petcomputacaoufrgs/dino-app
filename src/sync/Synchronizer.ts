@@ -11,7 +11,7 @@ import NoteSync from './note/NoteSync'
 import SyncService from '../services/sync/SyncService'
 import ConnectionService from '../services/connection/ConnectionService'
 
-//TODO: Se tudo for refatorado rever classes Sync 
+//TODO: Se tudo for refatorado rever classes Sync
 class Synchronizer {
   private executionGrups: BaseSync[][] = [
     [AppSettingsSync],

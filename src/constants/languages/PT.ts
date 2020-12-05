@@ -455,5 +455,4 @@ export default class PT implements LanguageBase {
   CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Clique aqui para ir para o mês atual'
 
   READ_MORE = 'Leia mais'
-
 }

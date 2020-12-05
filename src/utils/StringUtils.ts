@@ -65,7 +65,11 @@ class StringUtils {
     return array
   }
 
-  concatUndefinedSafe = (separator: string, s1: string, s2?: string): string => {
+  concatUndefinedSafe = (
+    separator: string,
+    s1: string,
+    s2?: string
+  ): string => {
     if (s2) {
       return s1.concat(separator).concat(s2)
     }

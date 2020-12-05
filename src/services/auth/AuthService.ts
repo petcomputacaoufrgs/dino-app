@@ -82,7 +82,9 @@ class AuthService {
 
   serverLogout = async () => {
     try {
-      const request = await DinoAgentService.put(APIRequestMappingConstants.LOGOUT)
+      const request = await DinoAgentService.put(
+        APIRequestMappingConstants.LOGOUT
+      )
 
       if (request.canGo) {
         request.authenticate().go()

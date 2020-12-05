@@ -23,10 +23,10 @@ class APIWebSocketDestConstants {
 
 const generateTopicDest = (dest: string) => {
   return '/topic/' + dest
-} 
+}
 
 const generateQueueDest = (dest: string) => {
   return '/user/queue/' + dest
-} 
+}
 
 export default new APIWebSocketDestConstants()

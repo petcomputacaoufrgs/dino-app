@@ -19,9 +19,9 @@ const Glossary = (): JSX.Element => {
   const handleChange = (event: any) => setSearchTerm(event.target.value)
 
   useEffect(() => {
-    const results = glossary.data.filter((item) =>
-      StringUtils.contains(item.title, searchTerm)
-    ).sort((a,b) => a.title >= b.title ? 1 : -1)
+    const results = glossary.data
+      .filter((item) => StringUtils.contains(item.title, searchTerm))
+      .sort((a, b) => (a.title >= b.title ? 1 : -1))
     setSearchResults(results)
   }, [glossary, searchTerm])
 
@@ -32,7 +32,11 @@ const Glossary = (): JSX.Element => {
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}
       />
-      <Loader className='glossary_loader' loading={glossary.loading} disableBackground>
+      <Loader
+        className="glossary_loader"
+        loading={glossary.loading}
+        disableBackground
+      >
         <GlossaryItems items={searchResults} />
       </Loader>
     </div>

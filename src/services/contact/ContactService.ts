@@ -18,7 +18,9 @@ class ContactService {
   //#region SERVER SERVICE CONNECTION
 
   updateLocal = async (newVersion: number): Promise<void> => {
-    const request = await DinoAgentService.get(APIRequestMappingConstants.CONTACT_GET)
+    const request = await DinoAgentService.get(
+      APIRequestMappingConstants.CONTACT_GET
+    )
 
     if (request.canGo) {
       try {

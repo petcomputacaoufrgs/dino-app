@@ -9,7 +9,7 @@ const Loader: React.FC<LoaderProps> = ({
   children,
   className,
   iconClassName,
-  disableBackground
+  disableBackground,
 }): ReactElement => {
   const [showLoader, setShowLoader] = useState(false)
 
@@ -18,7 +18,11 @@ const Loader: React.FC<LoaderProps> = ({
   }, [loading])
 
   const getIconClassName = (): string => {
-    const className = StringUtils.concatUndefinedSafe(' ', 'loader__screen', iconClassName)
+    const className = StringUtils.concatUndefinedSafe(
+      ' ',
+      'loader__screen',
+      iconClassName
+    )
 
     if (disableBackground) {
       return className.concat(' ').concat('disable_background')

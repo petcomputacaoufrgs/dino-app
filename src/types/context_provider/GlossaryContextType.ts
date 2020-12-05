@@ -1,4 +1,4 @@
-import GlossaryItemModel from '../glossary/GlossaryItemModel'
+import GlossaryItemModel from '../glossary/api/GlossaryItemModel'
 
 export default interface GlossaryContextType {
   items: GlossaryItemModel[]

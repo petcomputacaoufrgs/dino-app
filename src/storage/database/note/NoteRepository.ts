@@ -1,9 +1,9 @@
-import DinoDatabase from '../DinoDatabase'
+import Database from '../Database'
 import NoteEntity from '../../../types/note/database/NoteEntity'
 import ArrayUtils from '../../../utils/ArrayUtils'
 
 class NoteRepository {
-  private table = DinoDatabase.note
+  private table = Database.note
 
   async getById(id: number): Promise<NoteEntity | undefined> {
     return this.table.where('id').equals(id).first()
@@ -64,7 +64,7 @@ class NoteRepository {
   }
 
   async putAll(entities: NoteEntity[]) {
-    const ids = await DinoDatabase.transaction('readwrite', this.table, () =>
+    const ids = await Database.transaction('readwrite', this.table, () =>
       Promise.all(entities.map((entity) => this.table.put(entity)))
     )
 

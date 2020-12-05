@@ -1,6 +1,6 @@
 import NoteColumnResponseModel from '../../types/note/server/get/NoteColumnResponseModel'
 import DinoAgentService from '../../agent/DinoAgentService'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import NoteColumnSaveRequestModel from '../../types/note/server/save/NoteColumnSaveRequestModel'
 import NoteColumnSaveResponseModel from '../../types/note/server/save/NoteColumnSaveResponseModel'
@@ -17,7 +17,7 @@ class NoteColumnServerService {
 
   get = async (): Promise<NoteColumnResponseModel[] | null> => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.NOTE_COLUMN_GET
+      APIRequestMappingConstants.NOTE_COLUMN_GET
     )
     if (request.canGo) {
       try {
@@ -32,7 +32,7 @@ class NoteColumnServerService {
 
   getVersion = async (): Promise<number | undefined> => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.NOTE_COLUMN_VERSION
+      APIRequestMappingConstants.NOTE_COLUMN_VERSION
     )
 
     if (request.canGo) {
@@ -66,7 +66,7 @@ class NoteColumnServerService {
     }
 
     const request = await DinoAgentService.post(
-      DinoAPIURLConstants.NOTE_COLUMN_SAVE
+      APIRequestMappingConstants.NOTE_COLUMN_SAVE
     )
 
     if (request.canGo) {
@@ -99,7 +99,7 @@ class NoteColumnServerService {
     })
 
     const request = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_COLUMN_ORDER
+      APIRequestMappingConstants.NOTE_COLUMN_ORDER
     )
 
     if (request.canGo) {
@@ -129,7 +129,7 @@ class NoteColumnServerService {
     }
 
     const request = await DinoAgentService.delete(
-      DinoAPIURLConstants.NOTE_COLUMN_DELETE_ALL
+      APIRequestMappingConstants.NOTE_COLUMN_DELETE_ALL
     )
 
     if (request.canGo) {
@@ -150,7 +150,7 @@ class NoteColumnServerService {
     const model: NoteColumnDeleteRequestModel = { id: externalId }
 
     const request = await DinoAgentService.delete(
-      DinoAPIURLConstants.NOTE_COLUMN_DELETE
+      APIRequestMappingConstants.NOTE_COLUMN_DELETE
     )
 
     if (request.canGo) {
@@ -173,7 +173,7 @@ class NoteColumnServerService {
     model: NoteColumnSyncRequestModel
   ): Promise<NoteColumnSyncResponse | undefined> => {
     const request = await DinoAgentService.put(
-      DinoAPIURLConstants.NOTE_COLUMN_SYNC
+      APIRequestMappingConstants.NOTE_COLUMN_SYNC
     )
 
     if (request.canGo) {

@@ -1,5 +1,5 @@
 import DinoAgentService from '../../agent/DinoAgentService'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
@@ -9,7 +9,7 @@ import Service from './FaqService'
 
 class FaqServerService {
   getUserFaq = async (): Promise<undefined | FaqModel> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_GET)
+    const request = await DinoAgentService.get(APIRequestMappingConstants.FAQ_GET)
 
     if (request.canGo) {
       try {
@@ -28,7 +28,7 @@ class FaqServerService {
   }
 
   saveUserFaqId = async (id: number): Promise<number | undefined> => {
-    const request = await DinoAgentService.post(DinoAPIURLConstants.FAQ_SAVE)
+    const request = await DinoAgentService.post(APIRequestMappingConstants.FAQ_SAVE)
 
     if (request.canGo) {
       try {
@@ -49,7 +49,7 @@ class FaqServerService {
     question: string
   ): Promise<void | undefined> => {
     const request = await DinoAgentService.post(
-      DinoAPIURLConstants.FAQ_SAVE_USER_QUESTION
+      APIRequestMappingConstants.FAQ_SAVE_USER_QUESTION
     )
 
     if (request.canGo) {
@@ -70,7 +70,7 @@ class FaqServerService {
   }
 
   getFaqOptions = async (): Promise<Array<FaqOptionsModel> | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.FAQ_OPTIONS)
+    const request = await DinoAgentService.get(APIRequestMappingConstants.FAQ_OPTIONS)
 
     if (request.canGo) {
       try {
@@ -89,7 +89,7 @@ class FaqServerService {
 
   getUserFaqVersion = async (): Promise<FaqVersionModel | undefined> => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.FAQ_GET_VERSION
+      APIRequestMappingConstants.FAQ_GET_VERSION
     )
 
     if (request.canGo) {

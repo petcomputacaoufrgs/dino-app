@@ -1,10 +1,10 @@
-import DinoDatabase from '../DinoDatabase'
+import Database from '../Database'
 import DeletedNoteEntity from '../../../types/note/database/DeletedNoteEntity'
 import NoteEntity from '../../../types/note/database/NoteEntity'
 import DeletedNoteEntityWithoutExternalId from '../../../error/note/DeletedNoteEntityWithoutExternalId'
 
 class DeletedNoteRepository {
-  private table = DinoDatabase.deletedNote
+  private table = Database.deletedNote
 
   async getAll(): Promise<DeletedNoteEntity[]> {
     return this.table.toArray()

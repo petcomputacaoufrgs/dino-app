@@ -1,5 +1,5 @@
 import DinoAgentService from '../../agent/DinoAgentService'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import NoteSaveModel from '../../types/note/server/save/NoteSaveRequestModel'
 import NoteSaveResponseModel from '../../types/note/server/save/NoteSaveResponseModel'
@@ -17,7 +17,7 @@ class NoteServerService {
   //#region GET
 
   get = async (): Promise<NoteResponseModel[] | null> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.NOTE_GET)
+    const request = await DinoAgentService.get(APIRequestMappingConstants.NOTE_GET)
 
     if (request.canGo) {
       try {
@@ -33,7 +33,7 @@ class NoteServerService {
 
   getVersion = async (): Promise<number | undefined> => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.NOTE_GET_VERSION
+      APIRequestMappingConstants.NOTE_GET_VERSION
     )
 
     if (request.canGo) {
@@ -67,7 +67,7 @@ class NoteServerService {
       columnTitle: note.columnTitle,
     }
 
-    const request = await DinoAgentService.post(DinoAPIURLConstants.NOTE_SAVE)
+    const request = await DinoAgentService.post(APIRequestMappingConstants.NOTE_SAVE)
 
     if (request.canGo) {
       try {
@@ -101,7 +101,7 @@ class NoteServerService {
         ),
     }
 
-    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_ORDER)
+    const request = await DinoAgentService.put(APIRequestMappingConstants.NOTE_ORDER)
 
     if (request.canGo) {
       try {
@@ -122,7 +122,7 @@ class NoteServerService {
   sync = async (
     model: NoteSyncRequestModel
   ): Promise<NoteSyncResponseModel | undefined> => {
-    const request = await DinoAgentService.put(DinoAPIURLConstants.NOTE_SYNC)
+    const request = await DinoAgentService.put(APIRequestMappingConstants.NOTE_SYNC)
 
     if (request.canGo) {
       try {
@@ -152,7 +152,7 @@ class NoteServerService {
     }
 
     const request = await DinoAgentService.delete(
-      DinoAPIURLConstants.NOTE_DELETE_ALL
+      APIRequestMappingConstants.NOTE_DELETE_ALL
     )
 
     if (request.canGo) {
@@ -173,7 +173,7 @@ class NoteServerService {
     const model: NoteDeleteRequestModel = { id: externalId }
 
     const request = await DinoAgentService.delete(
-      DinoAPIURLConstants.NOTE_DELETE
+      APIRequestMappingConstants.NOTE_DELETE
     )
 
     if (request.canGo) {

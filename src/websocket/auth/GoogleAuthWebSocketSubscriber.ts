@@ -1,5 +1,5 @@
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
-import DinoAPIWebSocketConstants from '../../constants/dino_api/DinoAPIWebSocketConstants'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SubscriberItem from '../../types/web_socket/SubscriberItem'
 import AuthService from '../../services/auth/AuthService'
 
@@ -7,7 +7,7 @@ class GoogleAuthWebSocketSubscriber extends BaseWebSocketSubscriber {
   constructor() {
     const items: SubscriberItem[] = [
       {
-        path: DinoAPIWebSocketConstants.ALERT_AUTH_SCOPE_UPDATE,
+        path: APIWebSocketDestConstants.ALERT_AUTH_SCOPE_UPDATE,
         callback: () => {
           AuthService.refreshGoogleAccessToken()
         },

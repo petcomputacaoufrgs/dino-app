@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import GlossaryItems from './glossary_items'
-import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
-import { useGlossary } from '../../../context/provider/glossary'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
+import { useGlossary } from '../../../context/provider/glossary'
+import Loader from '../../../components/loader'
+import './styles.css'
 
 const Glossary = (): JSX.Element => {
   const language = useCurrentLanguage()
-  const items = useGlossary().items
+  const glossary = useGlossary()
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState(
-    new Array<GlossaryItemModel>()
-  )
+  const [searchResults, setSearchResults] = useState<GlossaryItemEntity[]>([])
 
-  const handleChange = (event) => setSearchTerm(event.target.value)
+  const handleChange = (event: any) => setSearchTerm(event.target.value)
 
   useEffect(() => {
-    const results = items.filter((item) =>
+    const results = glossary.data.filter((item) =>
       StringUtils.contains(item.title, searchTerm)
-    )
+    ).sort((a,b) => a.title >= b.title ? 1 : -1)
     setSearchResults(results)
-  }, [items, searchTerm])
+  }, [glossary, searchTerm])
 
   return (
     <div className="glossary">
@@ -32,7 +32,9 @@ const Glossary = (): JSX.Element => {
         onChange={handleChange}
         placeholder={language.SEARCH_HOLDER}
       />
-      <GlossaryItems items={searchResults} />
+      <Loader className='glossary_loader' loading={glossary.loading} disableBackground>
+        <GlossaryItems items={searchResults} />
+      </Loader>
     </div>
   )
 }

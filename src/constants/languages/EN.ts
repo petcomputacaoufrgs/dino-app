@@ -447,4 +447,6 @@ export default class EN implements LanguageBase {
   CALENDAR_CLOSE_BUTTON_ARIA_LABEL = 'Click here to close the page'
 
   CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Click here to go to the current month'
+
+  READ_MORE = 'Read more'
 }

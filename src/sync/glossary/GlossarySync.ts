@@ -1,14 +1,11 @@
 import GlossaryService from '../../services/glossary/GlossaryService'
-import BaseSync from '../BaseSync'
+import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemModel'
+import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
+import { GlossaryRepositoryImpl } from '../../storage/database/glossary/GlossaryRepository'
+import SynchronizableSync from '../synchronizable/SynchronizableSync'
 
-class GlossarySync implements BaseSync {
-  receive = async () => {
-    const newVersion = await GlossaryService.getAPIVersion()
+class GlossarySync extends SynchronizableSync<
+  number, number, GlossaryItemDataModel, GlossaryItemEntity, GlossaryRepositoryImpl
+> {}
 
-    if (newVersion !== undefined) {
-      GlossaryService.update(newVersion)
-    }
-  }
-}
-
-export default new GlossarySync()
+export default new GlossarySync(GlossaryService)

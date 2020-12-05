@@ -1,11 +1,12 @@
-import DinoAPIURLConstants from './DinoAPIURLConstants'
+import APIRequestMappingConstants from './APIRequestMappingConstants'
 
 /**
  * @description Valores de URL para conexão com o WebScoket da API
  */
-class DinoAPIWebSocketConstants {
-  URL = `${DinoAPIURLConstants.URL}websocket/`
-  ALERT_GLOSSARY_UPDATE = '/topic/glossary/update'
+class APIWebSocketDestConstants {
+  URL = `${APIRequestMappingConstants.URL}websocket/`
+  GLOSSARY_UPDATE = generateTopicDest('glossary/update/')
+  GLOSSARY_DELETE = generateTopicDest('glossary/delete/')
   ALERT_APP_SETTINGS_UPDATE = '/user/queue/user_app_settings/update'
   ALERT_NOTE_UPDATE = '/user/queue/note/update'
   ALERT_NOTE_ORDER_UPDATE = '/user/queue/note/order/update'
@@ -20,4 +21,12 @@ class DinoAPIWebSocketConstants {
   ALERT_AUTH_SCOPE_UPDATE = '/user/queue/auth/scope/update'
 }
 
-export default new DinoAPIWebSocketConstants()
+const generateTopicDest = (dest: string) => {
+  return '/topic/' + dest
+} 
+
+const generateQueueDest = (dest: string) => {
+  return '/user/queue/' + dest
+} 
+
+export default new APIWebSocketDestConstants()

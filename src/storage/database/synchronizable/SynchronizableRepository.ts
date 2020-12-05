@@ -1,32 +1,21 @@
-import Dexie, { IndexableType } from 'dexie'
-import DinoDatabase from '../DinoDatabase'
+import Dexie, { IndexableType, IndexableTypePart } from 'dexie'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
 import SynchronizableLocalState from '../../../types/synchronizable/database/SynchronizableLocalState'
 
 /**
  * Generic repository of synchronizable entity
  * @param ID API synchronizable entity's id
- * @param LOCAL_ID local synchronizable entity's id
  * @param ENTITY local synchronizable entity
  */
 export default abstract class SynchronizableRepository<
   ID extends IndexableType,
-  LOCAL_ID extends IndexableType,
+  LOCAL_ID extends IndexableTypePart,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>
 > {
   private table: Dexie.Table<ENTITY, LOCAL_ID>
 
   constructor(table: Dexie.Table<ENTITY, LOCAL_ID>) {
     this.table = table
-  }
-
-  public needSync = async (): Promise<boolean> => {
-    const unsynchronizedCount = await this.table
-      .where(['localState'])
-      .notEqual(SynchronizableLocalState.SAVED_ON_API)
-      .count()
-
-    return unsynchronizedCount > 0
   }
 
   async getAllById(entities: ENTITY[]): Promise<ENTITY[]> {
@@ -39,21 +28,21 @@ export default abstract class SynchronizableRepository<
   async getAllNotFakeDeleted(): Promise<ENTITY[]> {
     return this.table
       .where('localState')
-      .notEqual(SynchronizableLocalState.DELETED_LOCAL)
+      .notEqual(SynchronizableLocalState.DELETED_LOCALLY)
       .toArray()
   }
 
   async getAllFakeDeleted(): Promise<ENTITY[]> {
     return this.table
       .where('localState')
-      .equals(SynchronizableLocalState.DELETED_LOCAL)
+      .equals(SynchronizableLocalState.DELETED_LOCALLY)
       .toArray()
   }
 
   async getAllNotSavedOnAPI(): Promise<ENTITY[]> {
     return this.table
       .where('localState')
-      .equals(SynchronizableLocalState.SAVED_LOCAL)
+      .equals(SynchronizableLocalState.SAVED_LOCALLY)
       .toArray()
   }
 
@@ -65,41 +54,24 @@ export default abstract class SynchronizableRepository<
     return entity
   }
 
-  async saveAll(entities: ENTITY[]): Promise<ENTITY[]> {
-    const localIds = await DinoDatabase.transaction(
-      'readwrite',
-      this.table,
-      () =>
-        Promise.all(
-          entities.map(async (entity) => {
-            return this.table.put(entity)
-          })
-        )
-    )
-
-    entities.forEach((entity, index) => (entity.localId = localIds[index]))
-
-    return entities
+  async saveAll(entities: ENTITY[]) {
+    await this.table.bulkPut(entities)
   }
 
-  async delete(entity: ENTITY): Promise<number> {
+  async delete(entity: ENTITY) {
     if (entity.localId) {
-      return await this.deleteByLocalId(entity.localId)
+      await this.deleteByLocalId(entity.localId)
     }
-
-    return 0
   }
 
-  async deleteByLocalId(localId: LOCAL_ID): Promise<number> {
+  async deleteByLocalId(localId: LOCAL_ID) {
     if (localId) {
-      return this.table.where('localId').equals(localId).delete()
+      this.table.delete(localId)
     }
-
-    return 0
   }
 
-  async deleteByLocalIds(localIds: LOCAL_ID[]): Promise<number> {
-    return this.table.where('localId').anyOf(localIds).delete()
+  async deleteByLocalIds(localIds: LOCAL_ID[]) {
+    await this.table.bulkDelete(localIds)
   }
 
   async fakeDelete(entity: ENTITY): Promise<number> {
@@ -108,22 +80,23 @@ export default abstract class SynchronizableRepository<
         .where('localId')
         .equals(entity.localId)
         .modify((item) => {
-          item.localState = SynchronizableLocalState.DELETED_LOCAL
+          item.localState = SynchronizableLocalState.DELETED_LOCALLY
+          item.lastUpdate = entity.lastUpdate
         })
     }
 
     return 0
   }
 
-  async deleteAllFakeDeleteds(): Promise<number> {
-    return this.table
+  async deleteAllFakeDeleteds() {
+    return await this.table
       .where('localState')
-      .equals(SynchronizableLocalState.DELETED_LOCAL)
+      .equals(SynchronizableLocalState.DELETED_LOCALLY)
       .delete()
   }
 
-  async deleteAllById(ids: ID[]): Promise<number> {
-    return this.table.where('ids').anyOf(ids).delete()
+  async deleteAllById(ids: ID[]) {
+    return this.table.where('id').anyOf(ids).delete()
   }
 
   async clear() {

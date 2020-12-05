@@ -1,73 +1,37 @@
-import GlossaryItemModel from '../../types/glossary/GlossaryItemModel'
-import GlossaryLocalStorage from '../../storage/local_storage/glossary/GlossaryLocalStorage'
-import DinoAgentService from '../../agent/DinoAgentService'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import StringUtils from '../../utils/StringUtils'
-import GlossaryContextUpdater from '../../context/updater/GlossaryContextUpdater'
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import GlossaryItemModel from '../../types/glossary/api/GlossaryItemModel'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import SynchronizableService from '../synchronizable/SynchronizableService'
+import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemModel'
+import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
+import GlossaryRepository, { GlossaryRepositoryImpl } from '../../storage/database/glossary/GlossaryRepository'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 
-class GlossaryService {
-  setItems = (items: GlossaryItemModel[]) => {
-    GlossaryLocalStorage.setItems(items)
-  }
+class GlossaryService extends SynchronizableService<number, number, GlossaryItemDataModel, GlossaryItemEntity, GlossaryRepositoryImpl> {
+    convertModelToEntity(model: GlossaryItemModel): GlossaryItemEntity {
+        const entity: GlossaryItemEntity = {
+            title: model.title,
+            fullText: model.fullText,
+            subtitle: model.subtitle,
+            text: model.text,
+        }
 
-  getItems = (): GlossaryItemModel[] => GlossaryLocalStorage.getItems()
-
-  getVersion = (): number => GlossaryLocalStorage.getVersion()
-
-  setVersion = (version: number) => {
-    GlossaryLocalStorage.setVersion(version)
-  }
-
-  update = async (newVersion: number) => {
-    if (newVersion !== this.getVersion()) {
-      const newItens = await this.getAPIItems()
-
-      if (newItens === undefined) return
-
-      this.setVersion(newVersion)
-      this.setItems(StringUtils.sortByAttr(newItens, 'title'))
-      GlossaryContextUpdater.update()
-    }
-  }
-
-  getAPIItems = async (): Promise<Array<GlossaryItemModel> | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.GLOSSARY)
-
-    if (request.canGo) {
-      try {
-        const response = await request.go()
-
-        return response.body
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
+        return entity
     }
 
-    return undefined
-  }
-
-  getAPIVersion = async (): Promise<number | undefined> => {
-    const request = await DinoAgentService.get(
-      DinoAPIURLConstants.GLOSSARY_VERSION
-    )
-
-    if (request.canGo) {
-      try {
-        const response = await request.go()
-
-        return response.body
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
+    convertEntityToModel(entity: GlossaryItemEntity): GlossaryItemModel {
+        const model: GlossaryItemModel = {
+            title: entity.title,
+            fullText: entity.fullText,
+            subtitle: entity.subtitle,
+            text: entity.text,
+        }
+        
+        return model
     }
-
-    return undefined
-  }
-
-  removeUserData = () => {
-    GlossaryLocalStorage.removeUserData()
-  }
 }
 
-export default new GlossaryService()
+export default new GlossaryService(
+    GlossaryRepository, 
+    APIRequestMappingConstants.GLOSSARY,
+    APIWebSocketDestConstants.GLOSSARY_UPDATE,
+    APIWebSocketDestConstants.GLOSSARY_DELETE)

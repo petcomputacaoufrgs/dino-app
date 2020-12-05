@@ -1,6 +1,6 @@
 import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import AuthLocalStorage from '../../storage/local_storage/auth/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import LoginStatusConstants from '../../constants/login/LoginStatusConstants'
@@ -60,7 +60,7 @@ class AuthService {
     WebSocketAuthResponseModel | undefined
   > => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.WEB_SOCKET_AUTH
+      APIRequestMappingConstants.WEB_SOCKET_AUTH
     )
     if (request.canGo) {
       try {
@@ -82,7 +82,7 @@ class AuthService {
 
   serverLogout = async () => {
     try {
-      const request = await DinoAgentService.put(DinoAPIURLConstants.LOGOUT)
+      const request = await DinoAgentService.put(APIRequestMappingConstants.LOGOUT)
 
       if (request.canGo) {
         request.authenticate().go()
@@ -95,7 +95,7 @@ class AuthService {
   refreshGoogleAccessToken = async (): Promise<boolean> => {
     this.startRefreshingGoogleAccessToken()
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.REFRESH_AUTH_GOOGLE
+      APIRequestMappingConstants.REFRESH_AUTH_GOOGLE
     )
     if (request.canGo) {
       try {
@@ -230,7 +230,7 @@ class AuthService {
 
     try {
       const request = await DinoAgentService.post(
-        DinoAPIURLConstants.GRANT_GOOGLE
+        APIRequestMappingConstants.GRANT_GOOGLE
       )
       if (request.canGo) {
         const response = await request
@@ -266,7 +266,7 @@ class AuthService {
 
     try {
       const request = await DinoAgentService.post(
-        DinoAPIURLConstants.AUTH_GOOGLE
+        APIRequestMappingConstants.AUTH_GOOGLE
       )
       if (request.canGo) {
         const response = await request.setBody(authRequestModel).go()

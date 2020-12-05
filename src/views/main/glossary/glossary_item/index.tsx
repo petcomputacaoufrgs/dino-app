@@ -14,13 +14,13 @@ const GlossaryItem: React.FC = () => {
 
   const language = useCurrentLanguage()
 
-  const items = useGlossary().items
+  const glossary = useGlossary()
 
-  const item = items.find((item) => item.id === Number(id))
+  const item = glossary.data.find((item) => item.id === Number(id))
 
   return (
     <div className="glossary-item">
-      <Paper elevation={5}>
+      <Paper elevation={1}>
         <div className="card__header">
           <div className="card__header__title">
             {item ? item.title : language.NO_AVAILABLE_TEXT}

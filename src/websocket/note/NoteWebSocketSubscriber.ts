@@ -1,5 +1,5 @@
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
-import DinoAPIWebSocketConstants from '../../constants/dino_api/DinoAPIWebSocketConstants'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import NoteService from '../../services/note/NoteService'
 import SubscriberItem from '../../types/web_socket/SubscriberItem'
 import NoteWebSocketOrderUpdateModel from '../../types/note/web_socket/NoteWebSocketOrderUpdateModel'
@@ -10,7 +10,7 @@ class NoteWebSocketSubscriber extends BaseWebSocketSubscriber {
   constructor() {
     const items: SubscriberItem[] = [
       {
-        path: DinoAPIWebSocketConstants.ALERT_NOTE_UPDATE,
+        path: APIWebSocketDestConstants.ALERT_NOTE_UPDATE,
         callback: (model: WebSocketAlertUpdateModel) => {
           this.conflictingMethodsQueue(
             async () =>
@@ -19,7 +19,7 @@ class NoteWebSocketSubscriber extends BaseWebSocketSubscriber {
         },
       },
       {
-        path: DinoAPIWebSocketConstants.ALERT_NOTE_ORDER_UPDATE,
+        path: APIWebSocketDestConstants.ALERT_NOTE_ORDER_UPDATE,
         callback: (model: NoteWebSocketOrderUpdateModel) => {
           this.conflictingMethodsQueue(
             async () => await NoteService.updateNotesOrderFromServer(model)
@@ -27,7 +27,7 @@ class NoteWebSocketSubscriber extends BaseWebSocketSubscriber {
         },
       },
       {
-        path: DinoAPIWebSocketConstants.ALERT_NOTE_DELETE,
+        path: APIWebSocketDestConstants.ALERT_NOTE_DELETE,
         callback: (model: NoteWebSocketAlertDeleteModel) => {
           this.conflictingMethodsQueue(
             async () => await NoteService.updateDeletedNotesFromServer(model)

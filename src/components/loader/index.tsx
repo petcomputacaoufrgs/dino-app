@@ -2,11 +2,14 @@ import React, { useState, ReactElement, useEffect } from 'react'
 import RingLoader from 'react-spinners/RingLoader'
 import LoaderProps from './props'
 import './styles.css'
+import StringUtils from '../../utils/StringUtils'
 
 const Loader: React.FC<LoaderProps> = ({
   loading,
   children,
   className,
+  iconClassName,
+  disableBackground
 }): ReactElement => {
   const [showLoader, setShowLoader] = useState(false)
 
@@ -14,22 +17,26 @@ const Loader: React.FC<LoaderProps> = ({
     setShowLoader(loading)
   }, [loading])
 
-  const getClassName = (): string => {
-    let mainClass = 'loader__screen'
+  const getIconClassName = (): string => {
+    const className = StringUtils.concatUndefinedSafe(' ', 'loader__screen', iconClassName)
 
-    if (className) {
-      mainClass = mainClass.concat(' ').concat(className)
+    if (disableBackground) {
+      return className.concat(' ').concat('disable_background')
     }
 
-    return mainClass
+    return className
+  }
+
+  const getClassName = (): string => {
+    return StringUtils.concatUndefinedSafe(' ', 'loader', className)
   }
 
   return (
     <>
       {showLoader ? (
-        <div className="loader">
+        <div className={getClassName()}>
           {children}
-          <div className={getClassName()}>
+          <div className={getIconClassName()}>
             <RingLoader size={40} color={'#B32E55'} loading={loading} />
           </div>
         </div>

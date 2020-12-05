@@ -1,4 +1,4 @@
-import { IndexableType } from 'dexie'
+import { IndexableType, IndexableTypePart } from 'dexie'
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
 import SubscriberItem from '../../types/web_socket/SubscriberItem'
 import SynchronizableDataModel from '../../types/synchronizable/api/SynchronizableDataModel'
@@ -10,7 +10,7 @@ import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_sock
 
 export default abstract class SynchronizableWSSubscriber<
   ID extends IndexableType,
-  LOCAL_ID extends IndexableType,
+  LOCAL_ID extends IndexableTypePart,
   DATA_MODEL extends SynchronizableDataModel<ID>,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
   REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>

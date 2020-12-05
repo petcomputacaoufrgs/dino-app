@@ -4,11 +4,13 @@ import SynchronizableLocalState from './SynchronizableLocalState'
 
 /**
  * Base with attributes for local synchronizable entity
+ * @param ID entity's api id
+ * @param LOCAL_ID entity's local id
  */
 export default interface SynchronizableEntity<
   ID extends IndexableType,
   LOCAL_ID extends IndexableType
 > extends SynchronizableDataModel<ID> {
   localId?: LOCAL_ID
-  localState: SynchronizableLocalState
+  localState?: SynchronizableLocalState
 }

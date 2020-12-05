@@ -74,7 +74,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   }
 
   return (
-    <Loader className="google_login_button__loader" loading={loading}>
+    <Loader iconClassName="google_login_button__loader" loading={loading}>
       <div className="google_login_button">
         <TextIconButton
           ariaLabel={language.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}

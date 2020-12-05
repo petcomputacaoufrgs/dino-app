@@ -1,4 +1,4 @@
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import AppSettingsLocalStorage from '../../storage/local_storage/app_settings/AppSettingsLocalStorage'
 import DinoAgentService from '../../agent/DinoAgentService'
 import LanguageBase from '../../constants/languages/LanguageBase'
@@ -52,7 +52,7 @@ class AppSettingsService {
 
   getServerVersion = async (): Promise<number | undefined> => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.APP_SETTINGS_VERSION
+      APIRequestMappingConstants.APP_SETTINGS_VERSION
     )
 
     if (request.canGo) {
@@ -72,7 +72,7 @@ class AppSettingsService {
     AppSettingsRequestAndResponseModel | undefined
   > => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.APP_SETTINGS_GET
+      APIRequestMappingConstants.APP_SETTINGS_GET
     )
 
     if (request.canGo) {
@@ -111,7 +111,7 @@ class AppSettingsService {
     model: AppSettingsRequestAndResponseModel
   ): Promise<void> => {
     const request = await DinoAgentService.post(
-      DinoAPIURLConstants.APP_SETTINGS_SAVE
+      APIRequestMappingConstants.APP_SETTINGS_SAVE
     )
 
     if (request.canGo) {

@@ -1,6 +1,6 @@
 import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
 import DinoAgentService from '../../agent/DinoAgentService'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import LogAppErrorSyncLocalStorage from '../../storage/local_storage/log_app_error/LogAppErrorSyncLocalStorage'
 import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
 import LogAppModelError from '../../error/log_app_error/LogAppModelError'
@@ -29,7 +29,7 @@ class LogAppErrorService {
   logModel = async (model: LogAppErrorModel) => {
     if (model.date && model.error) {
       const request = await DinoAgentService.post(
-        DinoAPIURLConstants.SAVE_LOG_APP_ERROR
+        APIRequestMappingConstants.SAVE_LOG_APP_ERROR
       )
 
       if (request.canGo) {
@@ -60,7 +60,7 @@ class LogAppErrorService {
 
   saveAll = async (models: LogAppErrorListModel) => {
     const request = await DinoAgentService.post(
-      DinoAPIURLConstants.SAVE_ALL_LOG_APP_ERROR
+      APIRequestMappingConstants.SAVE_ALL_LOG_APP_ERROR
     )
 
     if (request.canGo) {

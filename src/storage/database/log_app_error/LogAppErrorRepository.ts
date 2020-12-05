@@ -1,8 +1,8 @@
-import DinoDatabase from '../DinoDatabase'
+import Database from '../Database'
 import LogAppErrorEntity from '../../../types/log_app_error/database/LogAppErrorEntity'
 
 class LogAppErrorRepository {
-  private table = DinoDatabase.logAppError
+  private table = Database.logAppError
 
   async getAll(): Promise<LogAppErrorEntity[]> {
     return this.table.toArray()

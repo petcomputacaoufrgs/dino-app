@@ -2,7 +2,7 @@ import ContactModel from '../../types/contact/ContactModel'
 import SaveResponseModelAll from '../../types/contact/SaveResponseModelAll'
 import SaveResponseModel from '../../types/contact/SaveResponseModel'
 import ContactResponseModel from '../../types/contact/ContactResponseModel'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import HttpStatus from 'http-status-codes'
 import DinoAgentService from '../../agent/DinoAgentService'
 import Service from './ContactService'
@@ -80,7 +80,7 @@ class ContactServerService {
     contactModel: ContactModel
   ): Promise<ContactResponseModel | undefined> => {
     const request = await DinoAgentService.post(
-      DinoAPIURLConstants.CONTACT_SAVE
+      APIRequestMappingConstants.CONTACT_SAVE
     )
 
     if (request.canGo) {
@@ -105,7 +105,7 @@ class ContactServerService {
     contactModels: Array<ContactModel>
   ): Promise<SaveResponseModelAll | undefined> => {
     const request = await DinoAgentService.post(
-      DinoAPIURLConstants.CONTACT_SAVE_ALL
+      APIRequestMappingConstants.CONTACT_SAVE_ALL
     )
 
     if (request.canGo) {
@@ -126,7 +126,7 @@ class ContactServerService {
   }
 
   editContact = async (contactModel: ContactModel) => {
-    const request = await DinoAgentService.put(DinoAPIURLConstants.CONTACT_EDIT)
+    const request = await DinoAgentService.put(APIRequestMappingConstants.CONTACT_EDIT)
 
     if (request.canGo) {
       try {
@@ -147,7 +147,7 @@ class ContactServerService {
     contactModels: Array<ContactModel>
   ): Promise<number | undefined> => {
     const request = await DinoAgentService.put(
-      DinoAPIURLConstants.CONTACT_EDIT_ALL
+      APIRequestMappingConstants.CONTACT_EDIT_ALL
     )
 
     if (request.canGo) {
@@ -170,7 +170,7 @@ class ContactServerService {
 
   deleteContact = async (contactId: number) => {
     const request = await DinoAgentService.delete(
-      DinoAPIURLConstants.CONTACT_DELETE
+      APIRequestMappingConstants.CONTACT_DELETE
     )
 
     if (request.canGo) {
@@ -195,7 +195,7 @@ class ContactServerService {
     contactIds: { id: number }[]
   ): Promise<number | undefined> => {
     const request = await DinoAgentService.delete(
-      DinoAPIURLConstants.CONTACT_DELETE_ALL
+      APIRequestMappingConstants.CONTACT_DELETE_ALL
     )
 
     if (request.canGo) {
@@ -215,7 +215,7 @@ class ContactServerService {
 
   getVersion = async (): Promise<number | undefined> => {
     const request = await DinoAgentService.get(
-      DinoAPIURLConstants.CONTACT_VERSION
+      APIRequestMappingConstants.CONTACT_VERSION
     )
 
     if (request.canGo) {
@@ -235,7 +235,7 @@ class ContactServerService {
 
   declineGoogleContacts = async () => {
     const request = await DinoAgentService.put(
-      DinoAPIURLConstants.CONTACT_GOOGLE_DECLINE
+      APIRequestMappingConstants.CONTACT_GOOGLE_DECLINE
     )
 
     if (request.canGo) {

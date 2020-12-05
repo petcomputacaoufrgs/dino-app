@@ -1,5 +1,5 @@
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
-import DinoAPIWebSocketConstants from '../../constants/dino_api/DinoAPIWebSocketConstants'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SubscriberItem from '../../types/web_socket/SubscriberItem'
 import NoteColumnService from '../../services/note/NoteColumnService'
 import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateOrderModel'
@@ -10,7 +10,7 @@ class NoteColumnWebSocketSubscriber extends BaseWebSocketSubscriber {
   constructor() {
     const items: SubscriberItem[] = [
       {
-        path: DinoAPIWebSocketConstants.ALERT_NOTE_COLUMN_UPDATE,
+        path: APIWebSocketDestConstants.ALERT_NOTE_COLUMN_UPDATE,
         callback: (model: WebSocketAlertUpdateModel) => {
           this.conflictingMethodsQueue(
             async () =>
@@ -19,7 +19,7 @@ class NoteColumnWebSocketSubscriber extends BaseWebSocketSubscriber {
         },
       },
       {
-        path: DinoAPIWebSocketConstants.ALERT_NOTE_COLUMN_ORDER_UPDATE,
+        path: APIWebSocketDestConstants.ALERT_NOTE_COLUMN_ORDER_UPDATE,
         callback: (model: NoteColumnWebSocketAlertUpdateOrderModel) => {
           this.conflictingMethodsQueue(
             async () =>
@@ -28,7 +28,7 @@ class NoteColumnWebSocketSubscriber extends BaseWebSocketSubscriber {
         },
       },
       {
-        path: DinoAPIWebSocketConstants.ALERT_NOTE_COLUMN_DELETE,
+        path: APIWebSocketDestConstants.ALERT_NOTE_COLUMN_DELETE,
         callback: (model: NoteColumnWebSocketAlertDeleteModel) => {
           this.conflictingMethodsQueue(
             async () =>

@@ -214,4 +214,5 @@ export default interface LanguageBase {
   CALENDAR_DELETE_BUTTON_ARIA_LABEL: string
   CALENDAR_CLOSE_BUTTON_ARIA_LABEL: string
   CALENDAR_CURRENT_MONTH_ARIA_LABEL: string
+  READ_MORE: string
 }

@@ -1,11 +1,11 @@
-import DinoDatabase from '../DinoDatabase'
+import Database from '../Database'
 import CalendarEventEntity from '../../../types/calendar/database/CalendarEventEntity'
 
 class CalendarEventRepository {
-  private table = DinoDatabase.calendarEvent
+  private table = Database.calendarEvent
 
   putAll = async (entities: CalendarEventEntity[]) => {
-    const ids = await DinoDatabase.transaction('readwrite', this.table, () =>
+    const ids = await Database.transaction('readwrite', this.table, () =>
       Promise.all(entities.map((entity) => this.table.put(entity)))
     )
 

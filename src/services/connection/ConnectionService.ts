@@ -1,5 +1,5 @@
 import Superagent from 'superagent'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
 import ConnectionLocalStorage from '../../storage/local_storage/connection/ConnectionLocalStorage'
@@ -37,7 +37,7 @@ class ConnectionService {
 
   isDinoConnected = async (): Promise<Boolean> => {
     try {
-      const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
+      const request = Superagent.get(APIRequestMappingConstants.TEST_CONNECTION)
 
       const response = await request
 

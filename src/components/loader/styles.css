@@ -13,3 +13,7 @@
   width: 100%;
   height: 100%;
 }
+
+.loader__screen.disable_background {
+  background-color: transparent;
+}

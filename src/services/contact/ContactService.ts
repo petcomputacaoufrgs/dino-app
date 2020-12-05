@@ -4,7 +4,7 @@ import ContactModel from '../../types/contact/ContactModel'
 import ContactResponseModel from '../../types/contact/ContactResponseModel'
 import LS from '../../storage/local_storage/contact/ContactLocalStorage'
 import HttpStatus from 'http-status-codes'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import DinoAgentService from '../../agent/DinoAgentService'
 import Server from './ContactServerService'
 import ContactContextUpdater from '../../context/updater/ContactContextUpdater'
@@ -18,7 +18,7 @@ class ContactService {
   //#region SERVER SERVICE CONNECTION
 
   updateLocal = async (newVersion: number): Promise<void> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.CONTACT_GET)
+    const request = await DinoAgentService.get(APIRequestMappingConstants.CONTACT_GET)
 
     if (request.canGo) {
       try {

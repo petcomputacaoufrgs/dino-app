@@ -1,8 +1,8 @@
-import DinoDatabase from '../DinoDatabase'
+import Database from '../Database'
 import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
 
 class NoteColumnRepository {
-  private table = DinoDatabase.noteColumn
+  private table = Database.noteColumn
 
   async getAll(): Promise<NoteColumnEntity[]> {
     return this.table.toArray()
@@ -51,7 +51,7 @@ class NoteColumnRepository {
   }
 
   async putAll(columns: NoteColumnEntity[]) {
-    const ids = await DinoDatabase.transaction('readwrite', this.table, () =>
+    const ids = await Database.transaction('readwrite', this.table, () =>
       Promise.all(columns.map((column) => this.table.put(column)))
     )
 

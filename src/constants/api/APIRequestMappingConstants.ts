@@ -3,7 +3,7 @@ import APIConfig from '../../environment/api_config.json'
 /**
  * @description Valores de URL da API para conexão
  */
-class DinoAPIURLConstants {
+class APIRequestMappingConstants {
   URL = APIConfig.URL
   GLOSSARY = `${this.URL}public/glossary/`
   private AUTH = `${this.URL}auth/`
@@ -105,4 +105,4 @@ class DinoAPIURLConstants {
   FAQ_SAVE_USER_QUESTION = `${this.FAQ}question/`
 }
 
-export default new DinoAPIURLConstants()
+export default new APIRequestMappingConstants()

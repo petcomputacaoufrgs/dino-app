@@ -14,12 +14,12 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
   return (
     <div className="glossary__items">
       <Accordion className="accordion">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <Card className="card" key={item.id}>
-            <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
+            <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
               <Card.Title className="card-title">{item.title}</Card.Title>
             </Accordion.Toggle>
-            <Accordion.Collapse eventKey={item.id.toString()}>
+            <Accordion.Collapse eventKey={index.toString()}>
               <Card.Body>
                 <Card.Subtitle className="mb-2 text-muted">
                   {item.subtitle}
@@ -29,7 +29,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
                   className="card-link"
                   to={`${PathConstants.GLOSSARY}/${item.id}`}
                 >
-                  Leia Mais
+                  {language.READ_MORE}
                 </Link>
               </Card.Body>
             </Accordion.Collapse>

@@ -4,7 +4,7 @@ import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'
 import UserModel from '../../types/user/UserModel'
 import DinoAgentService from '../../agent/DinoAgentService'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import UserContextUpdater from '../../context/updater/UserContextUpdater'
@@ -79,7 +79,7 @@ class UserService {
   }
 
   getServerVersion = async (): Promise<number | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
+    const request = await DinoAgentService.get(APIRequestMappingConstants.USER_VERSION)
 
     if (request.canGo) {
       try {
@@ -95,7 +95,7 @@ class UserService {
   }
 
   getServer = async (): Promise<UserModel | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_GET)
+    const request = await DinoAgentService.get(APIRequestMappingConstants.USER_GET)
 
     if (request.canGo) {
       try {
@@ -171,7 +171,7 @@ class UserService {
 
   saveNewPhotoOnServer = async (pictureURL: string) => {
     const request = await DinoAgentService.put(
-      DinoAPIURLConstants.USER_PUT_PHOTO
+      APIRequestMappingConstants.USER_PUT_PHOTO
     )
 
     if (request.canGo) {
@@ -237,7 +237,7 @@ class UserService {
     AppSettingsService.removeUserData()
     NoteService.removeUserData()
     NoteColumnService.removeUserData()
-    GlossaryService.removeUserData()
+    GlossaryService.removeData()
     LogAppErrorService.removeUserData()
     ContactService.removeUserData()
     FaqService.removeUserData()

@@ -9,8 +9,8 @@ import ContactWebSocketSubscriber from './contact/ContactWebSocketSubscriber'
 import FaqWebSocketSubscriber from './faq/FaqWebSocketSubscriber'
 import FaqUserWebSocketSubscriber from './faq/FaqUserWebSocketSubscriber'
 import AuthService from '../services/auth/AuthService'
-import DinoAPIWebSocketConstants from '../constants/dino_api/DinoAPIWebSocketConstants'
-import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
+import APIWebSocketDestConstants from '../constants/api/APIWebSocketDestConstants'
+import DinoAPIHeaderConstants from '../constants/api/APIHeaderConstants'
 import NoteColumnWebSocketSubscriber from './note/NoteColumnWebSocketSubscriber'
 import WebSocketConstants from '../constants/websocket/WebSocketConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
@@ -123,7 +123,7 @@ class WebSocketConnector {
   }
 
   private getSocketBaseURL(token: string): string {
-    return `${DinoAPIWebSocketConstants.URL}?${DinoAPIHeaderConstants.WS_AUTHORIZATION}=${token}`
+    return `${APIWebSocketDestConstants.URL}?${DinoAPIHeaderConstants.WS_AUTHORIZATION}=${token}`
   }
 }
 

@@ -1,6 +1,6 @@
 import LS_Constants from '../../../constants/local_storage/LocalStorageKeysConstants'
 import BaseLocalStorage from '../BaseLocalStorage'
-import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
+import GlossaryItemModel from '../../../types/glossary/api/GlossaryItemModel'
 
 class GlossaryLocalStorage extends BaseLocalStorage {
   getItems = (): Array<GlossaryItemModel> => {

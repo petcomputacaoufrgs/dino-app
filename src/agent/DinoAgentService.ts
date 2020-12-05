@@ -1,10 +1,10 @@
 import Superagent from 'superagent'
 import HttpStatus from 'http-status-codes'
-import DinoAPIHeaderConstants from '../constants/dino_api/DinoAPIHeaderConstants'
+import DinoAPIHeaderConstants from '../constants/api/APIHeaderConstants'
 import AuthService from '../services/auth/AuthService'
 import EventService from '../services/events/EventService'
 import BaseAgent from './BaseAgent'
-import DinoAPIURLConstants from '../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../constants/api/APIRequestMappingConstants'
 import AuthRefreshRequestModel from '../types/auth/AuthRefreshRequestModel'
 import AuthRefreshResponseModel from '../types/auth/AuthRefreshResponseModel'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
@@ -76,7 +76,7 @@ class DinoAgentService extends BaseAgent {
           accessToken: AuthService.getAuthToken(),
         }
         const response = await Superagent.put(
-          DinoAPIURLConstants.REFRESH_AUTH
+          APIRequestMappingConstants.REFRESH_AUTH
         ).send(model)
         if (response.status === HttpStatus.OK) {
           const refreshResponse: AuthRefreshResponseModel = response.body

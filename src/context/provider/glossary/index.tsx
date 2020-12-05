@@ -1,52 +1,30 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
-import GlossaryContextType from '../../../types/context_provider/GlossaryContextType'
-import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
-import GlossaryService from '../../../services/glossary/GlossaryService'
-import GlossaryContextUpdater from '../../updater/GlossaryContextUpdater'
+import React, { createContext, useContext } from 'react'
+import GlossaryItemDataModel from "../../../types/glossary/api/GlossaryItemModel"
+import GlossaryItemEntity from "../../../types/glossary/database/GlossaryItemEntity"
+import SynchronizableContextType from "../synchronizable/context"
+import SynchronizableProvider from "../synchronizable"
+import GlossaryService from "../../../services/glossary/GlossaryService"
+import { GlossaryRepositoryImpl } from "../../../storage/database/glossary/GlossaryRepository"
 
-const GlossaryContext = createContext({
-  items: [] as GlossaryItemModel[],
-} as GlossaryContextType)
-
-const GlossaryContextProvider: React.FC = (props) => {
-  const [items, setItems] = useState([] as GlossaryItemModel[])
-  const [firstLoad, setFirstLoad] = useState(true)
-
-  useEffect(() => {
-    const updateData = () => {
-      const items = GlossaryService.getItems()
-      setItems(items)
-    }
-
-    if (firstLoad) {
-      updateData()
-      setFirstLoad(false)
-    }
-
-    let handleLocalDataChanged = () => {
-      updateData()
-    }
-
-    GlossaryContextUpdater.setCallback(handleLocalDataChanged)
-
-    const cleanBeforeUpdate = () => {
-      handleLocalDataChanged = () => {}
-    }
-
-    return cleanBeforeUpdate
-  }, [items, firstLoad])
-
-  const value = {
-    items: items,
-  }
-
-  return (
-    <GlossaryContext.Provider value={value}>
-      {props.children}
-    </GlossaryContext.Provider>
-  )
+export interface GlossaryContextType extends
+    SynchronizableContextType<number, number, GlossaryItemDataModel, GlossaryItemEntity, GlossaryRepositoryImpl> {
 }
+
+const GlossaryContext = createContext<GlossaryContextType>({
+    service: GlossaryService,
+    loading: true,
+    data: []
+})
+
+const GlossaryProvider: React.FC = ({
+    children
+}): JSX.Element => SynchronizableProvider<number, number, GlossaryItemDataModel, GlossaryItemEntity,
+                GlossaryRepositoryImpl>({
+                    children: children,
+                    context: GlossaryContext,
+                    service: GlossaryService
+                })
 
 export const useGlossary = () => useContext(GlossaryContext)
 
-export default GlossaryContextProvider
+export default GlossaryProvider

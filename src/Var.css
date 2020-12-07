@@ -7,7 +7,11 @@
   --very-small-font: 0.65rem;
   --small-font: 0.75rem;
   --default-font: 1rem;
+  --big-font: 1.25rem;
   --large-font:1.4rem;
+  --very-large-font: 1.75rem;
+
+  --svg-size: 18px;
 
   /* // Light Mode // */
   /* Fundos */
@@ -128,12 +132,20 @@
   --very-small-font: 0.9425rem;
   --small-font: 1.0875rem;
   --default-font: 1.45rem;
+  --big-font: 1.8125rem;
   --large-font:2.03rem;
+  --very-large-font: 2.5375rem;
+
+  --svg-size: 26px;
 }
 
 [data-font-size='big boi'] {
   --very-small-font: 1.1375rem;
   --small-font: 1.3125rem;
   --default-font: 1.75rem;
+  --big-font: 2.1875rem;
   --large-font:2.45rem;
+  --very-large-font: 3.0625rem;
+
+  --svg-size: 30px;
 }

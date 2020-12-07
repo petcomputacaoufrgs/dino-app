@@ -25,7 +25,8 @@
 }
 
 .google_login_button__text_button {
-  background-color: var(--background-main);
+  background-color: var(--contrast-color);
+  color: var(--inv-contrast-color);
   border-radius: 2rem;
 }
 

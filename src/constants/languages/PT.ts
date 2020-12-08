@@ -221,6 +221,10 @@ export default class PT implements LanguageBase {
 
   SELECT_TREATMENT = 'Selecione Tratamento'
 
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Carregar contatos essenciais referentes ao meu tratamento'
+
+  SAVE_CONTACT_ON_GOOGLE_GRANT = 'Salvar contatos do DinoApp em minha conta Google'
+
   SUNDAY_NAME = 'Domingo'
 
   MONDAY_NAME = 'Segunda'
@@ -238,6 +242,10 @@ export default class PT implements LanguageBase {
   NEXT_BUTTON_TEXT = 'Próximo'
 
   PREVIOUS_BUTTON_TEXT = 'Anterior'
+
+  NEXT_BUTTON_TEXT_LABEL = 'Clique para avançar para o próximo elemento'
+  
+  PREVIOUS_BUTTON_TEXT_LABEL =  'Clique para retornar ao elemento anterior'
 
   CLOSE_ARIA_LABEL = 'Fechar'
 

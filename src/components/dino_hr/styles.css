@@ -1,0 +1,10 @@
+.dino_hr {
+  margin: 10px 24px;
+  border-color: var(--contrast-color);
+  opacity: 0.1;
+}
+
+.dino_hr--inv {
+  margin: 10px 24px;
+  border-top: 0px;
+}

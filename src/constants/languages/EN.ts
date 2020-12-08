@@ -215,6 +215,10 @@ export default class EN implements LanguageBase {
 
   SELECT_TREATMENT = 'Select Treatment'
 
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Load essential contacts related to my treatment.'
+
+  SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
+
   SUNDAY_NAME = 'Sunday'
 
   MONDAY_NAME = 'Monday'
@@ -232,6 +236,10 @@ export default class EN implements LanguageBase {
   NEXT_BUTTON_TEXT = 'Next'
 
   PREVIOUS_BUTTON_TEXT = 'Previous'
+
+  NEXT_BUTTON_TEXT_LABEL = 'Click to go to the next element'
+  
+  PREVIOUS_BUTTON_TEXT_LABEL =  'Click to return to the previous element'
 
   CLOSE_ARIA_LABEL = 'Close'
 

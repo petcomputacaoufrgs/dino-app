@@ -62,9 +62,14 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
         onClose={onClose}
         TransitionComponent={TransitionSlide}
         open={open}
+        disableBackdropClick
       >
-        <DinoDialogHeader title={title} />
-        <DinoDialogContent text={text} />
+        <DinoDialogHeader>
+          <h1>{title}</h1>
+        </DinoDialogHeader>
+        <DinoDialogContent>
+          <p>{text}</p>
+        </DinoDialogContent>
         <div className="google_grant_dialog__buttons">
           <Button onClick={handleDecline}>
             {language.DIALOG_DECLINE_BUTTON_TEXT}

@@ -1,7 +1,3 @@
-export interface DinoDialogHeaderProps {
-  title: string
-}
-
-export interface DinoDialogContentProps {
-  text: string
+export default interface DinoDialogProps {
+  children: JSX.Element | JSX.Element[]
 }

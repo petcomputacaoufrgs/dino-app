@@ -5,7 +5,6 @@ import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import { useGlossary } from '../../../context/provider/glossary'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Glossary = (): JSX.Element => {
   const language = useCurrentLanguage()

@@ -6,6 +6,7 @@ import HCLogo from '../../../assets/logos/hc.png'
 import UfrgsLogo from '../../../assets/logos/ufrgs.png'
 import Section from './section'
 import DinoLogo from '../../../assets/logos/dinosaur_1.svg'
+import DinoHr from '../../../components/dino_hr'
 
 const AboutUs = (): JSX.Element => {
   const sections = [
@@ -36,7 +37,7 @@ const AboutUs = (): JSX.Element => {
           <div className="card__typography muted">
             Programa de Educação Tutorial
           </div>
-          <hr className="h-divisor" />
+          <DinoHr />
         </div>
         <div className="card__content">
           <div className="card__typography">

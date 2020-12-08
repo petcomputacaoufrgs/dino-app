@@ -1,8 +1,6 @@
 import React from 'react'
-import './styles.css'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useAppSettings } from '../../../../context/provider/app_settings/'
-
 
 const SelectLanguage = ({language, setLanguage}) => {
 
@@ -17,14 +15,15 @@ const SelectLanguage = ({language, setLanguage}) => {
 
   return (
     <>
-      <InputLabel id="language-select-label">
-        {language.SETTINGS_LANGUAGE}
+      <InputLabel shrink id="language-select-label">
+        {appSettings.language.current.SETTINGS_LANGUAGE}
       </InputLabel>
       <Select
         labelId="language-select-label"
         id="language-select"
         value={language}
         onChange={handleSelectedLanguageChanged}
+        fullWidth
       >
         {languageList.map((language, index) => (
           <MenuItem key={index} value={language.code}>

@@ -1,6 +1,5 @@
 import React from 'react'
 import IconButton from '../../components/button/icon_button'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import HistoryService from '../../services/history/HistoryService'
 import { ReactComponent as ArrowBackIconSVG } from '../../assets/icons/arrow_back.svg'
 import { useCurrentLanguage } from '../../context/provider/app_settings'

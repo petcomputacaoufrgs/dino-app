@@ -13,6 +13,7 @@ import strUtils from '../../../../utils/StringUtils'
 const SelectFaq = ({
   faq,
   setFaq,
+  children,
 }: SelectFaqProps): JSX.Element => {
   const language = useCurrentLanguage()
   const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
@@ -101,6 +102,11 @@ const SelectFaq = ({
           />
         )}
       />
+      
+      { children ? 
+      <div className='select-faq__children'>
+        {children}
+      </div> : <></>}
     </>
   )
 }

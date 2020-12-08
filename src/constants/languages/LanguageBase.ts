@@ -105,6 +105,8 @@ export default interface LanguageBase {
   DISCONNECTED: string
   SELECT_FAQ_BUTTON: string
   SELECT_TREATMENT: string
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT: string
+  SAVE_CONTACT_ON_GOOGLE_GRANT: string
   SUNDAY_NAME: string
   MONDAY_NAME: string
   TUESDAY_NAME: string
@@ -115,6 +117,8 @@ export default interface LanguageBase {
   INVALID_WEEKDAY: string
   NEXT_BUTTON_TEXT: string
   PREVIOUS_BUTTON_TEXT: string
+  NEXT_BUTTON_TEXT_LABEL: string
+  PREVIOUS_BUTTON_TEXT_LABEL: string
   CLOSE_ARIA_LABEL: string
   DELETE_ARIA_LABEL: string
   EDIT_ARIA_LABEL: string

@@ -5,49 +5,33 @@ import {
   DialogContent,
   DialogTitle,
   Button,
-  FormControlLabel,
-  Checkbox,
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
-import SelectFaq from '../select_faq'
+import SelectFaq from '../../settings/select_faq'
 import { useCurrentLanguage, useCurrentFaq } from '../../../../context/provider/app_settings'
 import FaqOptionsProps from './props'
 import FaqService from '../../../../services/faq/FaqService'
 import AppSettingsService from '../../../../services/app_settings/AppSettingsService'
 import './styles.css'
-import DontAskCheckboxForm from '../../../../components/dont_ask_checkbox'
+import DinoSwitch from '../../../../components/switch'
 
 const FaqOptions = ({ open, handleChangeOpenDialog }: FaqOptionsProps ) => {
 
   const language = useCurrentLanguage()
 
   const [selectedFaq, setSelectedFaq] = useState(useCurrentFaq())
-  const [loadContactsChecked, setLoadContactsChecked] = useState(AppSettingsService.getLoadEContactsGrant())
+  const [essentialContactGrantChecked, setEssentialContactGrantChecked] = useState(AppSettingsService.getEssentialContactGrant())
   
   const handleSwitchUserFaq = () => {
     // resolução de BUG para posterioridade: isso como função await renderizava 2 vezes o negócio
     if (selectedFaq !== undefined) {
-      if(loadContactsChecked) {
-        AppSettingsService.setLoadEContactsGrant(true)
+      if(essentialContactGrantChecked) {
+        AppSettingsService.setEssentialContactGrant(true)
       }
       FaqService.switchUserFaq(selectedFaq)
     }
     handleChangeOpenDialog()
   }
-
-  const renderLoadContactsCheckbox = (): JSX.Element => { 
-    return(
-      <FormControlLabel
-        className='form-control__checkbox'
-        control={
-          <Checkbox
-            checked={loadContactsChecked}
-            onChange={() => setLoadContactsChecked(!loadContactsChecked)}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />}
-        label={"Carregar contatos referentes ao meu tratamento"}
-      />
-  )}
 
   return (
     <div className="select-faq">
@@ -57,7 +41,7 @@ const FaqOptions = ({ open, handleChangeOpenDialog }: FaqOptionsProps ) => {
         open={open}
         fullWidth
         onClose={handleChangeOpenDialog}
-        //TransitionComponent={TransitionSlide}
+        TransitionComponent={TransitionSlide}
         aria-labelledby="form-dialog"
       >
         <DialogTitle>{language.SELECT_TREATMENT}</DialogTitle>
@@ -65,10 +49,13 @@ const FaqOptions = ({ open, handleChangeOpenDialog }: FaqOptionsProps ) => {
           <SelectFaq
             faq={selectedFaq}
             setFaq={setSelectedFaq}
-          />
-          <DontAskCheckboxForm>
-            {renderLoadContactsCheckbox()}
-          </DontAskCheckboxForm>
+          >
+            <DinoSwitch
+              selected={essentialContactGrantChecked}
+              setSelected={setEssentialContactGrantChecked}
+              label={language.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
+            />
+          </SelectFaq>
         </DialogContent>
         <DialogActions>
           <Button

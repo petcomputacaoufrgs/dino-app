@@ -5,4 +5,6 @@ export default interface SelectFaqProps {
   setFaq: React.Dispatch<
     React.SetStateAction<FaqOptionsModel | undefined>
   >
+  children?: JSX.Element
+
 }

@@ -20,7 +20,7 @@ class FaqService {
       
       await ServerService.saveUserFaqId(faqOption.id)
       await this.getUserFaqFromServer()
-      if(AppSettingsService.get().loadEssentialContactsGrant) {
+      if(AppSettingsService.get().essentialContactGrant) {
         await ServerService.getEssentialContacts(faqOption.id)      
       }
     }

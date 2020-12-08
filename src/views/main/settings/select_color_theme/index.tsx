@@ -1,8 +1,6 @@
 import React from 'react'
-import './styles.css'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useAppSettings } from '../../../../context/provider/app_settings/'
-
 
 const SelectColorTheme = ({colorTheme, setColorTheme}) => {
 
@@ -17,8 +15,8 @@ const SelectColorTheme = ({colorTheme, setColorTheme}) => {
   }
 
   return (
-    <>
-      <InputLabel id="color-theme--select-label">
+    <div className="select-color-theme">
+      <InputLabel shrink id="color-theme--select-label">
         {language.COLOR_THEME_SELECTION_TITLE}
       </InputLabel>
       <Select
@@ -26,6 +24,7 @@ const SelectColorTheme = ({colorTheme, setColorTheme}) => {
         id="color-theme--select"
         value={colorTheme}
         onChange={handleSelectedColorThemeChanged}
+        fullWidth
       >
         {colorThemeList.map((option, index) => (
           <MenuItem key={index} value={option.code}>
@@ -33,7 +32,7 @@ const SelectColorTheme = ({colorTheme, setColorTheme}) => {
           </MenuItem>
         ))}
       </Select>
-    </>
+    </div>
   )
 }
 

@@ -3,7 +3,8 @@ body .MuiChip-label,
 body .MuiBottomNavigationAction-label,
 body .MuiButton-label,
 body .MuiFormLabel-root,
-body .MuiInputBase-root {
+body .MuiInputBase-root,
+.dino_dialog__header, .dino_dialog__content {
   font-family: var(--font-base);
   color: var(--base-font-color);
 }

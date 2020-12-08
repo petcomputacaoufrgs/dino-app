@@ -3,13 +3,13 @@ import GoogleGrantDialogProps from './props'
 import { Dialog, Button } from '@material-ui/core'
 import TransitionSlide from '../slide_transition'
 import AuthService from '../../services/auth/AuthService'
-import { ReactComponent as DinoAuthSVG } from '../../assets/icons/dino_auth.svg'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
 import ContactServerService from '../../services/contact/ContactServerService'
 import { useAlert } from '../../context/provider/alert'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
 import './styles.css'
+import { DinoDialogContent, DinoDialogHeader } from '../dino_dialog'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
   ({ scopes, title, text, open, onDecline: onClose, onAccept }, ref) => {
@@ -63,15 +63,8 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
         TransitionComponent={TransitionSlide}
         open={open}
       >
-        <div className="google_grant_dialog__header">
-          <div className="google_grant_dialog__header__title">
-            <h1>{title}</h1>
-          </div>
-          <DinoAuthSVG />
-        </div>
-        <div className="google_grant_dialog__content">
-          <p>{text}</p>
-        </div>
+        <DinoDialogHeader title={title} />
+        <DinoDialogContent text={text} />
         <div className="google_grant_dialog__buttons">
           <Button onClick={handleDecline}>
             {language.DIALOG_DECLINE_BUTTON_TEXT}

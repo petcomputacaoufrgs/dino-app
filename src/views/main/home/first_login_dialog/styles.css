@@ -1,4 +1,32 @@
-.dialog__number-of-total {
-  margin-left: 8px;
-  margin-right: auto;
+.first-login__dialog {
+  min-width: 80%;
+  min-height: 50%;
+}
+
+.first-login__dialog .MuiMobileStepper-root {
+  background: var(--other-details);
+  color: var(--base-font-color);
+  width: 100%;
+}
+
+.first-login__dialog .MuiMobileStepper-dotActive {
+  background-color: #c2740f
+}
+
+.first-login__dialog .next__button  {
+  margin-left: 20px;
+}
+
+.first-login__dialog .back__button  {
+  margin-right: 20px;
+}
+
+.first-login__dialog .save__button {
+  margin-right: 24px;
+  margin-left: 20px;
+}
+
+.first-login__dialog .cancel__button {
+  margin-left: 24px;
+  margin-right: 20px;
 }

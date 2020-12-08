@@ -1,16 +1,55 @@
 import React, { useState } from 'react'
 import './styles.css'
-import FaqOptions from '../../faq/faq_options_dialog'
 import AuthService from '../../../../services/auth/AuthService'
+import { Button, Dialog, DialogActions, MobileStepper } from '@material-ui/core'
+import TransitionSlide from '../../../../components/slide_transition'
+import { useAppSettings } from '../../../../context/provider/app_settings'
+import AppSettingsService from '../../../../services/app_settings/AppSettingsService'
+import FaqService from '../../../../services/faq/FaqService'
+import SelectFaq from '../../settings/select_faq'
+import DinoSwitch from '../../../../components/switch'
+import SelectLanguage from '../../settings/select_language'
+import SelectColorTheme from '../../settings/select_color_theme'
+import { useGoogleOAuth2 } from '../../../../context/provider/google_oauth2'
+import { useAlert } from '../../../../context/provider/alert'
+import DinoDialogHeader, { DinoDialogContent } from '../../../../components/dino_dialog'
+import { KeyboardArrowLeft, KeyboardArrowRight, Save } from '@material-ui/icons'
 
 const FirstLoginDialog = () => {
 
-  const [dialogOpen, setDialogOpen] = useState(AuthService.isFirstLogin() ? 1 : 0)
+  const FIRST_DIALOG = 1
+  const LAST_DIALOG = 3
 
-  const handleCloseFirstLoginDialog = () => {
-    setDialogOpen(0)
-    //AuthService.removeIsFirstLogin()
+  const alert = useAlert()
+
+  const appSettings = useAppSettings()
+
+  const googleOAuth2 = useGoogleOAuth2()
+
+  const language = appSettings.language.current
+
+  const colorTheme = appSettings.colorTheme.currentCode
+
+  const [dialogOpen, setDialogOpen] = useState(AuthService.isFirstLogin() ? FIRST_DIALOG : 0)
+
+  const [selectedFaq, setSelectedFaq] = useState(appSettings.selectedFaq.current)
+  
+  const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
+
+  const [selectedColorTheme, setSelectedColorTheme] = useState(colorTheme)
+
+  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(AppSettingsService.getEssentialContactGrant())
+
+  
+  const handleSwitchUserFaq = () => {
+    if (selectedFaq !== undefined) {
+      if(selectedEssentialContactGrant) {
+        AppSettingsService.setEssentialContactGrant(true)
+      }
+      FaqService.switchUserFaq(selectedFaq)
+    }
   }
+
   const handleNext = () => {
     setDialogOpen(dialogOpen + 1);
   }
@@ -19,16 +58,147 @@ const FirstLoginDialog = () => {
     setDialogOpen(dialogOpen - 1);
   }
 
+  const handleSave = () => {
+    // const model: AppSettingsRequestAndResponseModel = {
+    //   language: selectedLanguage,
+    //   colorTheme: selectedColorTheme,
+    //   essentialContactGrant: selectedEssentialContactGrant
+    // }
+
+    // AppSettingsService.set(model)
+
+    // const currentLanguage = appSettings.language.updateLanguage()
+
+    // if (selectedFaq !== undefined) {
+    //   FaqService.switchUserFaq(selectedFaq)
+    // }
+
+    // alert.showSuccessAlert(currentLanguage.SETTINGS_SAVE_SUCCESS)
+
+    setDialogOpen(0)
+  }
+
+  const handleCancel = () => {
+    setDialogOpen(0)
+  }
+
+
+  const renderButtons = () => {
+
+    return (
+      <MobileStepper
+        variant="dots"
+        steps={LAST_DIALOG}
+        position="static"
+        activeStep={dialogOpen - 1}
+        nextButton={
+          dialogOpen === LAST_DIALOG ?
+          <Button 
+            className="next__button"
+            aria-label={language.DIALOG_SAVE_BUTTON_LABEL} 
+            onClick={handleSave}
+            >
+              {language.DIALOG_SAVE_BUTTON_TEXT}
+              <KeyboardArrowRight />
+          </Button> 
+          :
+          <Button 
+            className="next__button"
+            aria-label={language.NEXT_BUTTON_TEXT_LABEL}  
+            onClick={handleNext}
+            >
+              {language.NEXT_BUTTON_TEXT}
+              <KeyboardArrowRight />
+          </Button>
+        }
+        backButton={
+          dialogOpen === FIRST_DIALOG ?
+          <Button 
+            className="back__button" 
+            aria-label={language.DIALOG_CANCEL_BUTTON_LABEL} 
+            onClick={handleCancel}
+            >
+              <KeyboardArrowLeft />
+              {language.DIALOG_CANCEL_BUTTON_TEXT}
+          </Button> 
+          :
+          <Button 
+            className="back__button" 
+            aria-label={language.PREVIOUS_BUTTON_TEXT_LABEL} 
+            onClick={handleBack}
+            >
+              <KeyboardArrowLeft />
+              {language.PREVIOUS_BUTTON_TEXT}
+          </Button>
+        }
+      />
+    )
+  }
+
+  const renderSelectFaqDialogContent = () => {
+    return (
+      <SelectFaq
+        faq={selectedFaq}
+        setFaq={setSelectedFaq}
+      >
+        <DinoSwitch
+          selected={selectedEssentialContactGrant}
+          setSelected={setSelectedEssentialContactGrant}
+          label={language.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
+        />
+      </SelectFaq>
+    )
+  }
+
+  const renderSelectColorThemeDialogContent = () => {
+    return (
+      <SelectColorTheme 
+        colorTheme={selectedColorTheme} 
+        setColorTheme={setSelectedColorTheme}
+      />
+    )
+  }
+
+  const renderSelectLanguageDialogContent = () => {
+    return (
+      <SelectLanguage 
+        language={selectedLanguage}
+        setLanguage={setSelectedLanguage}
+      />
+    )
+  }
+
+  const firstLoginDialogs = [
+    { title: "Escolha sua Idioma", component: renderSelectLanguageDialogContent },
+    { title: "Escolha seu Tratamento", component: renderSelectFaqDialogContent },
+    { title: "Escolha seu Tema de Cores", component: renderSelectColorThemeDialogContent },
+  ]
 
     return (
       <>
-        <FaqOptions 
-          open={dialogOpen === 1} 
-          handleChangeOpenDialog={handleNext} 
-        />
-        
+        {firstLoginDialogs.map((e, index) => 
+            <Dialog
+              key={index}
+              className="first-login__dialog"
+              disableBackdropClick
+              disableEscapeKeyDown
+              open={dialogOpen === index + 1}
+              fullWidth
+              onClose={handleNext}
+              TransitionComponent={TransitionSlide}
+              aria-labelledby="form-dialog"
+            >
+              <DinoDialogHeader><h1>{e.title}</h1></DinoDialogHeader>
+              <DinoDialogContent>
+                {e.component()}
+              </DinoDialogContent>
+              <DialogActions>
+                {renderButtons()}
+              </DialogActions>
+            </Dialog>
+          )
+        }
       </>
-      // é pra add mais coisa aqui depois por isso o espaço
     )
 }
 

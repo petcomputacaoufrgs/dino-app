@@ -17,12 +17,11 @@ import AppSettingsService from '../../../../services/app_settings/AppSettingsSer
 import './styles.css'
 import DontAskCheckboxForm from '../../../../components/dont_ask_checkbox'
 
-const FaqOptions = ({ open, handleChangeOpenDialog, dontAskAgainOption }: FaqOptionsProps ) => {
+const FaqOptions = ({ open, handleChangeOpenDialog }: FaqOptionsProps ) => {
 
   const language = useCurrentLanguage()
 
   const [selectedFaq, setSelectedFaq] = useState(useCurrentFaq())
-  const [dontAskAgainChecked, setDontAskAgainChecked] = useState(false)
   const [loadContactsChecked, setLoadContactsChecked] = useState(AppSettingsService.getLoadEContactsGrant())
   
   const handleSwitchUserFaq = () => {
@@ -58,7 +57,7 @@ const FaqOptions = ({ open, handleChangeOpenDialog, dontAskAgainOption }: FaqOpt
         open={open}
         fullWidth
         onClose={handleChangeOpenDialog}
-        TransitionComponent={TransitionSlide}
+        //TransitionComponent={TransitionSlide}
         aria-labelledby="form-dialog"
       >
         <DialogTitle>{language.SELECT_TREATMENT}</DialogTitle>
@@ -67,11 +66,7 @@ const FaqOptions = ({ open, handleChangeOpenDialog, dontAskAgainOption }: FaqOpt
             selectedFaq={selectedFaq}
             setSelectedFaq={setSelectedFaq}
           />
-          <DontAskCheckboxForm 
-            dontAskOption={dontAskAgainOption}
-            dontAskChecked={dontAskAgainChecked}
-            handleDontAskChecked={() => setDontAskAgainChecked(!dontAskAgainChecked)}
-          >
+          <DontAskCheckboxForm>
             {renderLoadContactsCheckbox()}
           </DontAskCheckboxForm>
         </DialogContent>

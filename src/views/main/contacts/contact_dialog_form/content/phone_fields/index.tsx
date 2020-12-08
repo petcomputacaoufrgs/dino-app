@@ -36,19 +36,15 @@ const PhoneFields = ({
   ]
 
   const getNumberFormat = () => {
-    if (type === ContactsConstants.RESIDENTIAL) {
-      return '(23)4567-2345'
-    }
-    if (type === ContactsConstants.MOBILE) {
-      return '(89)89898-9898'
-    }
-    return ''
+    return type === ContactsConstants.RESIDENTIAL 
+    ? '(23)4567-2345'
+    : '(89)89898-9898'
   }
 
   const getNumberMask = () => {
-    return type === ContactsConstants.PUBLIC_SERVICE
-      ? '#'.repeat(Constants.NUMBER_MAX)
-      : strUtils.replaceDigits(getNumberFormat(), '#')
+    return type !== ContactsConstants.PUBLIC_SERVICE 
+    ? strUtils.replaceDigits(getNumberFormat(), '#')
+    : '#'.repeat(Constants.NUMBER_MAX)
   }
 
   return (

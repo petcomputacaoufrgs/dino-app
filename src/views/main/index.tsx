@@ -29,7 +29,6 @@ const Main = (): JSX.Element => {
   const language = useCurrentLanguage()
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
-  const [openFirstLoginDialog, setOpenFirstLoginDialog] = useState(AuthService.isFirstLogin())
   
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true)
@@ -41,11 +40,6 @@ const Main = (): JSX.Element => {
 
   const handleLogoutDisagree = () => {
     setOpenLogoutDialog(false)
-  }
-
-  const handleCloseFirstLoginDialog = () => {
-    setOpenFirstLoginDialog(false)
-    AuthService.removeIsFirstLogin()
   }
 
   const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
@@ -133,9 +127,7 @@ const Main = (): JSX.Element => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
-      <FirstLoginDialog 
-        open={openFirstLoginDialog} 
-        onClose={handleCloseFirstLoginDialog} />
+      <FirstLoginDialog/>
     </>
   )
 }

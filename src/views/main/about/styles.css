@@ -26,4 +26,7 @@
 
 .h-divisor {
   margin: 10px 24px;
+  border-color: var(--contrast-color);
+  opacity: 10%;
+
 }

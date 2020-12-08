@@ -25,12 +25,13 @@ const FaqOptions = ({ open, handleChangeOpenDialog, dontAskAgainOption }: FaqOpt
   const [dontAskAgainChecked, setDontAskAgainChecked] = useState(false)
   const [loadContactsChecked, setLoadContactsChecked] = useState(AppSettingsService.getLoadEContactsGrant())
   
-  const handleSwitchUserFaq = async () => {
-    
+  const handleSwitchUserFaq = () => {
+    // resolução de BUG para posterioridade: isso como função await renderizava 2 vezes o negócio
     if (selectedFaq !== undefined) {
-      if(loadContactsChecked) 
+      if(loadContactsChecked) {
         AppSettingsService.setLoadEContactsGrant(true)
-      await FaqService.switchUserFaq(selectedFaq)
+      }
+      FaqService.switchUserFaq(selectedFaq)
     }
     handleChangeOpenDialog()
   }

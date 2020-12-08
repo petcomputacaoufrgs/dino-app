@@ -17,6 +17,8 @@ import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import { Switch } from '@material-ui/core'
 import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2'
+import SelectColorTheme from './select_color_theme'
+import SelectLanguage from './select_language'
 
 const Settings = (): JSX.Element => {
   const appSettings = useAppSettings()
@@ -29,15 +31,9 @@ const Settings = (): JSX.Element => {
 
   const alert = useAlert()
 
-  const languageList = appSettings.language.getLanguages()
-
-  const colorThemeList = appSettings.colorTheme.getColorThemeOptions()
-
   const [openContactsGrantDialog, setOpenContactsGrantDialog] = useState(false)
 
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    language.NAVIGATOR_LANGUAGE_CODE
-  )
+  const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
 
   const [selectedColorTheme, setSelectedColorTheme] = useState(colorTheme)
 
@@ -58,18 +54,6 @@ const Settings = (): JSX.Element => {
   useEffect(() => {
     setSelectedFaq(currentFaq)
   }, [currentFaq])
-
-  const handleSelectedLanguageChanged = (event: any) => {
-    if (event && event.target && event.target.value) {
-      setSelectedLanguage(event.target.value as string)
-    }
-  }
-
-  const handleSelectedColorThemeChanged = (event: any) => {
-    if (event && event.target && event.target.value) {
-      setSelectedColorTheme(event.target.value as number)
-    }
-  }
 
   const handleAcceptOrDeclineGoogleGrant = () => {
     setOpenContactsGrantDialog(false)
@@ -102,50 +86,6 @@ const Settings = (): JSX.Element => {
 
     alert.showSuccessAlert(currentLanguage.SETTINGS_SAVE_SUCCESS)
   }
-
-  const renderSelectLanguage = (): JSX.Element => (
-    <>
-      <InputLabel id="language-select-label">
-        {language.SETTINGS_LANGUAGE}
-      </InputLabel>
-      <Select
-        labelId="language-select-label"
-        id="language-select"
-        value={selectedLanguage}
-        onChange={handleSelectedLanguageChanged}
-      >
-        {languageList.map((language, index) => (
-          <MenuItem key={index} value={language.code}>
-            {language.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </>
-  )
-
-  const renderSelectColorTheme = (): JSX.Element => (
-    <>
-      <InputLabel id="color-theme--select-label">
-        {language.COLOR_THEME_SELECTION_TITLE}
-      </InputLabel>
-      <Select
-        labelId="color-theme--select-label"
-        id="color-theme--select"
-        value={selectedColorTheme}
-        onChange={handleSelectedColorThemeChanged}
-      >
-        {colorThemeList.map((option, index) => (
-          <MenuItem key={index} value={option.code}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </>
-  )
-
-  const renderSelectFaq = (): JSX.Element => (
-    <SelectFaq selectedFaq={selectedFaq} setSelectedFaq={setSelectedFaq} />
-  )
 
   const renderContactGrant = (): JSX.Element => (
     <div className="settings__grant">
@@ -203,12 +143,23 @@ const Settings = (): JSX.Element => {
         {language.SETTINGS_TITLE}
       </Typography>
       <FormControl className="settings__form">
-        {renderSelectLanguage()}
+        <SelectLanguage 
+          language={selectedLanguage}
+          setLanguage={setSelectedLanguage}
+        />
       </FormControl>
       <FormControl className="settings__form">
-        {renderSelectColorTheme()}
+        <SelectColorTheme 
+          colorTheme={selectedColorTheme} 
+          setColorTheme={setSelectedColorTheme}
+        />
       </FormControl>
-      <FormControl className="settings__form">{renderSelectFaq()}</FormControl>
+      <FormControl className="settings__form">
+        <SelectFaq 
+          faq={selectedFaq} 
+          setFaq={setSelectedFaq} 
+        />
+      </FormControl>
       <FormControl className="settings__form">
         {renderContactGrant()}
       </FormControl>

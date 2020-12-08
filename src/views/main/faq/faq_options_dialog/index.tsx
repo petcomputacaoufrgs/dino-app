@@ -63,8 +63,8 @@ const FaqOptions = ({ open, handleChangeOpenDialog }: FaqOptionsProps ) => {
         <DialogTitle>{language.SELECT_TREATMENT}</DialogTitle>
         <DialogContent dividers>
           <SelectFaq
-            selectedFaq={selectedFaq}
-            setSelectedFaq={setSelectedFaq}
+            faq={selectedFaq}
+            setFaq={setSelectedFaq}
           />
           <DontAskCheckboxForm>
             {renderLoadContactsCheckbox()}

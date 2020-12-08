@@ -11,18 +11,18 @@ import './styles.css'
 import strUtils from '../../../../utils/StringUtils'
 
 const SelectFaq = ({
-  selectedFaq,
-  setSelectedFaq,
+  faq,
+  setFaq,
 }: SelectFaqProps): JSX.Element => {
   const language = useCurrentLanguage()
   const [faqOptions, setFaqOptions] = useState([] as FaqOptionsModel[])
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(open && faqOptions.length === 0)
   const [value, setValue] = React.useState<FaqOptionsModel | null>(
-    selectedFaq || null
+    faq || null
   )
   const [inputValue, setInputValue] = useState(
-    selectedFaq ? selectedFaq.title : ''
+    faq ? faq.title : ''
   )
   const [connectionError, setConnectionError] = useState(false)
 
@@ -58,9 +58,9 @@ const SelectFaq = ({
 
   useEffect(() => {
     if (value !== null) {
-      setSelectedFaq(value)
+      setFaq(value)
     }
-  }, [value, setSelectedFaq])
+  }, [value, setFaq])
 
   return (
     <>

@@ -73,8 +73,8 @@ const QuestionDialogForm = React.forwardRef(
         >
           <DialogContent dividers>
             <SelectFaq
-              selectedFaq={selectedFaq}
-              setSelectedFaq={setSelectedFaq}
+              faq={selectedFaq}
+              setFaq={setSelectedFaq}
             />
             <TextField
               required

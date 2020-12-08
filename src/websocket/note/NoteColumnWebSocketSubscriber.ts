@@ -1,44 +1,18 @@
-import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
-import SubscriberItem from '../../types/web_socket/SubscriberItem'
-import NoteColumnService from '../../services/note/NoteColumnService'
-import NoteColumnWebSocketAlertUpdateOrderModel from '../../types/note/web_socket/NoteColumnWebSocketAlertUpdateOrderModel'
-import NoteColumnWebSocketAlertDeleteModel from '../../types/note/web_socket/NoteColumnWebSocketAlertDeleteModel'
-import WebSocketAlertUpdateModel from '../../types/web_socket/WebSocketAlertUpdateModel'
+import NoteColumnService from "../../services/note/NoteColumnService"
+import { NoteColumnRepositoryImpl } from "../../storage/database/note/NoteColumnRepository"
+import NoteColumnDataModel from "../../types/note/api/NoteColumnDataModel"
+import NoteColumnEntity from "../../types/note/database/NoteColumnEntity"
+import SynchronizableWSSubscriber from "../synchronizable/SynchronizableWSSubscriber"
 
-class NoteColumnWebSocketSubscriber extends BaseWebSocketSubscriber {
+class NoteColumnWebSocketSubscriber extends SynchronizableWSSubscriber<
+  number,
+  number,
+  NoteColumnDataModel,
+  NoteColumnEntity,
+  NoteColumnRepositoryImpl
+> {
   constructor() {
-    const items: SubscriberItem[] = [
-      {
-        path: APIWebSocketDestConstants.ALERT_NOTE_COLUMN_UPDATE,
-        callback: (model: WebSocketAlertUpdateModel) => {
-          this.conflictingMethodsQueue(
-            async () =>
-              await NoteColumnService.updateColumnsFromServer(model.newVersion)
-          )
-        },
-      },
-      {
-        path: APIWebSocketDestConstants.ALERT_NOTE_COLUMN_ORDER_UPDATE,
-        callback: (model: NoteColumnWebSocketAlertUpdateOrderModel) => {
-          this.conflictingMethodsQueue(
-            async () =>
-              await NoteColumnService.updateColumnsOrderFromServer(model)
-          )
-        },
-      },
-      {
-        path: APIWebSocketDestConstants.ALERT_NOTE_COLUMN_DELETE,
-        callback: (model: NoteColumnWebSocketAlertDeleteModel) => {
-          this.conflictingMethodsQueue(
-            async () =>
-              await NoteColumnService.updateDeletedColumnsFromServer(model)
-          )
-        },
-      },
-    ]
-
-    super(items)
+    super(NoteColumnService)
   }
 }
 

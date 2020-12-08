@@ -116,12 +116,12 @@ const Content: React.FC<ContentProps> = ({ event }) => {
       <div className="calendar__event_modal__content__date_info">
         <p>
           {language.DATE_FROM}: {day},{' '}
-          {DateUtils.getDateStringFormated(event.init_date.getTime(), language)}{' '}
+          {DateUtils.getDateStringFormated(event.init_date, language)}{' '}
           - {getHourString(event.init_date)}
         </p>
         <p>
           {language.DATE_TO}: {day},{' '}
-          {DateUtils.getDateStringFormated(event.end_date.getTime(), language)}{' '}
+          {DateUtils.getDateStringFormated(event.end_date, language)}{' '}
           - {getHourString(event.end_date)}
         </p>
       </div>

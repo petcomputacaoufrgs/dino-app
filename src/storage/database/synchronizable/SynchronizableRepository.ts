@@ -12,7 +12,7 @@ export default abstract class SynchronizableRepository<
   LOCAL_ID extends IndexableTypePart,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>
 > {
-  private table: Dexie.Table<ENTITY, LOCAL_ID>
+  protected table: Dexie.Table<ENTITY, LOCAL_ID>
 
   constructor(table: Dexie.Table<ENTITY, LOCAL_ID>) {
     this.table = table

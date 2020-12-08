@@ -1,7 +1,7 @@
 import UserLocalStorage from '../../storage/local_storage/user/UserLocalStorage'
 import AuthService from '../auth/AuthService'
 import AppSettingsService from '../app_settings/AppSettingsService'
-import NoteService from '../note/NoteService'
+import NoteServiceImpl from '../note/NoteService'
 import UserModel from '../../types/user/UserModel'
 import DinoAgentService from '../../agent/DinoAgentService'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
@@ -11,7 +11,7 @@ import UserContextUpdater from '../../context/updater/UserContextUpdater'
 import GoogleAgentService from '../../agent/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
-import GlossaryService from '../glossary/GlossaryService'
+import GlossaryServiceImpl from '../glossary/GlossaryService'
 import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import ContactService from '../contact/ContactService'
@@ -239,9 +239,9 @@ class UserService {
     UserLocalStorage.removeUserData()
     AuthService.removeUserData()
     AppSettingsService.removeUserData()
-    NoteService.removeUserData()
-    NoteColumnService.removeUserData()
-    GlossaryService.removeData()
+    NoteServiceImpl.removeData()
+    NoteColumnService.removeData()
+    GlossaryServiceImpl.removeData()
     LogAppErrorService.removeUserData()
     ContactService.removeUserData()
     FaqService.removeUserData()

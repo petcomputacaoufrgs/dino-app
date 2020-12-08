@@ -6,12 +6,12 @@ import APIConfig from '../../environment/api_config.json'
 class APIRequestMappingConstants {
   URL = APIConfig.URL
   GLOSSARY = `${this.URL}public/glossary/`
+  NOTE = `${this.URL}note/`
+  NOTE_COLUMN = `${this.URL}note_column/`
   private AUTH = `${this.URL}auth/`
   private PUBLIC_AUTH = `${this.URL}public/auth/`
   private USER = `${this.URL}user/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
-  private NOTE = `${this.URL}note/`
-  private NOTE_COLUMN = `${this.URL}note_column/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
   private FAQ = this.URL + 'faq/'

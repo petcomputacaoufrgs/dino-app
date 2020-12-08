@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from 'react'
-import GlossaryItemDataModel from '../../../types/glossary/api/GlossaryItemModel'
+import GlossaryItemDataModel from '../../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
 import SynchronizableContextType from '../synchronizable/context'
 import SynchronizableProvider from '../synchronizable'
-import GlossaryService from '../../../services/glossary/GlossaryService'
+import GlossaryService, { GlossaryServiceImpl } from '../../../services/glossary/GlossaryService'
 import { GlossaryRepositoryImpl } from '../../../storage/database/glossary/GlossaryRepository'
 
 export interface GlossaryContextType
@@ -12,7 +12,8 @@ export interface GlossaryContextType
     number,
     GlossaryItemDataModel,
     GlossaryItemEntity,
-    GlossaryRepositoryImpl
+    GlossaryRepositoryImpl,
+    GlossaryServiceImpl
   > {}
 
 const GlossaryContext = createContext<GlossaryContextType>({
@@ -27,7 +28,8 @@ const GlossaryProvider: React.FC = ({ children }): JSX.Element =>
     number,
     GlossaryItemDataModel,
     GlossaryItemEntity,
-    GlossaryRepositoryImpl
+    GlossaryRepositoryImpl,
+    GlossaryServiceImpl
   >({
     children: children,
     context: GlossaryContext,

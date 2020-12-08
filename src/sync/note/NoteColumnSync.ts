@@ -1,22 +1,15 @@
-import BaseSync from '../BaseSync'
-import NoteColumnService from '../../services/note/NoteColumnService'
-import NoteColumnSyncLocalStorage from '../../storage/local_storage/note/NoteColumnSyncLocalStorage'
+import NoteColumnService from "../../services/note/NoteColumnService"
+import { NoteColumnRepositoryImpl } from "../../storage/database/note/NoteColumnRepository"
+import NoteColumnDataModel from "../../types/note/api/NoteColumnDataModel"
+import NoteColumnEntity from "../../types/note/database/NoteColumnEntity"
+import SynchronizableSync from "../synchronizable/SynchronizableSync"
 
-class NoteColumnSync implements BaseSync {
-  sync = async () => {
-    const shouldSync =
-      NoteColumnSyncLocalStorage.getShouldSync() ||
-      NoteColumnSyncLocalStorage.getShouldSyncOrder()
-    if (shouldSync) {
-      await NoteColumnService.sync()
-    } else {
-      const serverVersion = await NoteColumnService.getVersionFromServer()
+class NoteColumnSync extends SynchronizableSync<
+  number,
+  number,
+  NoteColumnDataModel,
+  NoteColumnEntity,
+  NoteColumnRepositoryImpl
+> {}
 
-      if (serverVersion !== undefined) {
-        await NoteColumnService.updateColumnsFromServer(serverVersion)
-      }
-    }
-  }
-}
-
-export default new NoteColumnSync()
+export default new NoteColumnSync(NoteColumnService)

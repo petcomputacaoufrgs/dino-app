@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({ day, onClose }) => {
   return (
     <div className="calendar__day__modal__header">
       <div className="calendar__day__modal__header__info">
-        <h1>{DateUtils.getDateStringFormated(day.date.getTime(), language)}</h1>
+        <h1>{DateUtils.getDateStringFormated(day.date, language)}</h1>
         <div className="calendar__day__modal__header__info__close">
           <Fab
             color="primary"

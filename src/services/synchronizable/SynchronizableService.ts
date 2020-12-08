@@ -14,6 +14,7 @@ import SynchronizableGenericResponseModel from '../../types/synchronizable/api/r
 import SynchronizableLocalState from '../../types/synchronizable/database/SynchronizableLocalState'
 import SynchronizableWSUpdateModel from '../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
+import SynchronizableConstants from '../../constants/synchronizable/SynchronizableConstants'
 
 /**
  * @description Generic service with basic methods for synchronizable entity,
@@ -54,44 +55,57 @@ export default abstract class SynchronizableService<
    * @description Remember to transform model booleans into number (0,1) to save on database
    * @param model api data_model
    */
-  abstract convertModelToEntity(model: DATA_MODEL): ENTITY
+  abstract async convertModelToEntity(model: DATA_MODEL): Promise<ENTITY | undefined>
 
   /**
    * @param entity local entity
    */
-  abstract convertEntityToModel(entity: ENTITY): DATA_MODEL
+  abstract async convertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined>
 
-  protected internalConvertModelToEntity(model: DATA_MODEL): ENTITY {
-    const entity = this.convertModelToEntity(model)
+  protected async internalConvertModelToEntity(model: DATA_MODEL): Promise<ENTITY | undefined> {
+    const entity = await this.convertModelToEntity(model)
 
-    entity.id = model.id
-    entity.lastUpdate = model.lastUpdate
-
-    return entity
-  }
-
-  protected internalConvertEntityToModel(entity: ENTITY): DATA_MODEL {
-    const model = this.convertEntityToModel(entity)
-
-    model.id = entity.id
-    model.lastUpdate = entity.lastUpdate
-
-    return model
-  }
-
-  protected internalConvertModelsToEntities = (
-    models: DATA_MODEL[]
-  ): ENTITY[] =>
-    models.map((model) => {
-      const entity = this.internalConvertModelToEntity(model)
-      entity.localState = SynchronizableLocalState.SAVED_ON_API
+    if (entity) {
+      entity.id = model.id
+      entity.lastUpdate = model.lastUpdate
+  
       return entity
-    })
+    }
+  }
 
-  protected internalConvertEntitiesToModels = (
+  protected async internalConvertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined> {
+    const model = await this.convertEntityToModel(entity)
+
+    if (model) {
+      model.id = entity.id
+      model.lastUpdate = entity.lastUpdate
+  
+      return model
+    }
+  }
+
+  protected internalConvertModelsToEntities = async (
+    models: DATA_MODEL[]
+  ): Promise<ENTITY[]> => {
+    const result = await Promise.all(models.map(async (model) => {
+      const entity = await this.internalConvertModelToEntity(model)
+
+      if (entity) {
+        entity.localState = SynchronizableLocalState.SAVED_ON_API
+        return entity
+      }
+    }))
+
+    return result.filter(model => model !== undefined) as ENTITY[]
+  }
+
+  protected internalConvertEntitiesToModels = async (
     entities: ENTITY[]
-  ): DATA_MODEL[] =>
-    entities.map((entity) => this.internalConvertEntityToModel(entity))
+  ): Promise<DATA_MODEL[]> => {
+    const result = await Promise.all(entities.map((entity) => this.internalConvertEntityToModel(entity)))
+
+    return result.filter(entity => entity !== undefined) as DATA_MODEL[]
+  }
 
   //#endregion
 
@@ -130,7 +144,7 @@ export default abstract class SynchronizableService<
     model: SynchronizableWSUpdateModel<ID, DATA_MODEL>
   ) => {
     if (model && model.data && model.data.length > 0) {
-      const entities = this.internalConvertModelsToEntities(model.data)
+      const entities = (await this.internalConvertModelsToEntities(model.data))
         .filter((entity) => entity.id !== undefined)
         .sort(this.sortEntityById)
 
@@ -179,19 +193,28 @@ export default abstract class SynchronizableService<
       this.updateContext()
 
       if (entity.id) {
-        const model = this.internalConvertEntityToModel(entity)
-        const response = await this.apiDelete(model)
+        const model = await this.internalConvertEntityToModel(entity)
 
-        if (response) {
-          if (response.success) {
-            await this.localDelete(entity)
-          } else if (response.data) {
-            const apiEntity = this.internalConvertModelToEntity(response.data)
-            apiEntity.localId = entity.localId
-            apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
-            await this.localSave(apiEntity)
-            this.updateContext()
+        if (model) {
+          const response = await this.apiDelete(model)
+
+          if (response) {
+            if (response.success) {
+              await this.localDelete(entity)
+            } else if (response.data) {
+              const apiEntity = await this.internalConvertModelToEntity(response.data)
+              if (apiEntity) {
+                apiEntity.localId = entity.localId
+                apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
+                await this.localSave(apiEntity)
+                this.updateContext()
+              } else {
+                LogAppErrorService.logMessage(JSON.stringify(response.data), SynchronizableConstants.CONVERT_MODEL_TO_ENTITY_ERROR)
+              }
+            }
           }
+        } else {
+          LogAppErrorService.logMessage(JSON.stringify(entity), SynchronizableConstants.CONVERT_ENTITY_TO_MODEL_ERROR)
         }
       }
     }
@@ -206,15 +229,25 @@ export default abstract class SynchronizableService<
     if (dbEntity.localId) {
       this.updateContext()
 
-      const model = this.internalConvertEntityToModel(entity)
-      const response = await this.apiSave(model)
+      const model = await this.internalConvertEntityToModel(entity)
 
-      if (response && response.success) {
-        const apiEntity = this.internalConvertModelToEntity(response.data)
-        apiEntity.localId = dbEntity.localId
-        apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
-        await this.localSave(apiEntity)
-        this.updateContext()
+      if (model) {
+        const response = await this.apiSave(model)
+
+        if (response && response.success) {
+          const apiEntity = await this.internalConvertModelToEntity(response.data)
+
+          if (apiEntity) {
+            apiEntity.localId = dbEntity.localId
+            apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
+            await this.localSave(apiEntity)
+            this.updateContext()
+          } else {
+            LogAppErrorService.logMessage(JSON.stringify(response.data), SynchronizableConstants.CONVERT_MODEL_TO_ENTITY_ERROR)
+          }
+        }
+      } else {
+        LogAppErrorService.logMessage(JSON.stringify(entity), SynchronizableConstants.CONVERT_ENTITY_TO_MODEL_ERROR)
       }
     }
   }
@@ -284,7 +317,7 @@ export default abstract class SynchronizableService<
       return true
     }
 
-    const deletedModels = this.internalConvertEntitiesToModels(deletedEntities)
+    const deletedModels = await this.internalConvertEntitiesToModels(deletedEntities)
 
     const deleteAllResponse = await this.apiDeleteAll(deletedModels)
 
@@ -304,7 +337,7 @@ export default abstract class SynchronizableService<
       return true
     }
 
-    const notSavedModels = this.internalConvertEntitiesToModels(
+    const notSavedModels = await this.internalConvertEntitiesToModels(
       notSavedEntities
     )
 
@@ -320,7 +353,7 @@ export default abstract class SynchronizableService<
     if (success && getAllResponse) {
       const models = getAllResponse.data
 
-      const entities = this.internalConvertModelsToEntities(models)
+      const entities = await this.internalConvertModelsToEntities(models)
 
       await this.localClear()
 

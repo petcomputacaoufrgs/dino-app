@@ -1,9 +1,6 @@
-export default interface NoteColumnEntity {
-  id?: number
-  external_id?: number
-  title: string
-  order: number
-  lastUpdate: number
-  lastOrderUpdate: number
-  savedOnServer: boolean
+import SynchronizableEntity from '../../synchronizable/database/SynchronizableEntity'
+
+export default interface NoteColumnEntity extends SynchronizableEntity<number, number> {
+    order: number
+    title: string
 }

@@ -30,9 +30,7 @@ class DateUtils {
     return moment(date).add(diff, 'M').startOf('month').toDate()
   }
 
-  getDateStringFormated = (dateMS: number, language: LanguageBase): string => {
-    const date = new Date(dateMS)
-
+  getDateStringFormated = (date: Date, language: LanguageBase): string => {
     const stringDate = language.STRING_DATE_FORMAT
 
     const stringDay = StringUtils.toStringWithZeros(date.getDate(), 2)

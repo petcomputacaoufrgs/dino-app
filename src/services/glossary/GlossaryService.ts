@@ -1,21 +1,21 @@
-import GlossaryItemModel from '../../types/glossary/api/GlossaryItemModel'
+import GlossaryItemModel from '../../types/glossary/api/GlossaryItemDataModel'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import SynchronizableService from '../synchronizable/SynchronizableService'
-import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemModel'
+import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
 import GlossaryRepository, {
   GlossaryRepositoryImpl,
 } from '../../storage/database/glossary/GlossaryRepository'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 
-class GlossaryService extends SynchronizableService<
+export class GlossaryServiceImpl extends SynchronizableService<
   number,
   number,
   GlossaryItemDataModel,
   GlossaryItemEntity,
   GlossaryRepositoryImpl
 > {
-  convertModelToEntity(model: GlossaryItemModel): GlossaryItemEntity {
+  async convertModelToEntity(model: GlossaryItemModel): Promise<GlossaryItemEntity> {
     const entity: GlossaryItemEntity = {
       title: model.title,
       fullText: model.fullText,
@@ -26,7 +26,7 @@ class GlossaryService extends SynchronizableService<
     return entity
   }
 
-  convertEntityToModel(entity: GlossaryItemEntity): GlossaryItemModel {
+  async convertEntityToModel(entity: GlossaryItemEntity): Promise<GlossaryItemModel> {
     const model: GlossaryItemModel = {
       title: entity.title,
       fullText: entity.fullText,
@@ -38,7 +38,7 @@ class GlossaryService extends SynchronizableService<
   }
 }
 
-export default new GlossaryService(
+export default new GlossaryServiceImpl(
   GlossaryRepository,
   APIRequestMappingConstants.GLOSSARY,
   APIWebSocketDestConstants.GLOSSARY_UPDATE,

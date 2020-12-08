@@ -1,56 +1,41 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
-import NoteColumnContextType from '../../../types/context_provider/NoteColumnContextType'
-import NoteColumnService from '../../../services/note/NoteColumnService'
-import NoteColumnContextUpdater from '../../updater/NoteColumnContextUpdater'
+import React, { createContext, useContext } from 'react'
+import NoteColumnService, { NoteColumnServiceImpl } from '../../../services/note/NoteColumnService'
+import { NoteColumnRepositoryImpl } from '../../../storage/database/note/NoteColumnRepository'
+import NoteColumnDataModel from '../../../types/note/api/NoteColumnDataModel'
 import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
+import SynchronizableProvider from '../synchronizable'
+import SynchronizableContextType from '../synchronizable/context'
+
+export interface NoteColumnContextType
+  extends SynchronizableContextType<
+    number,
+    number,
+    NoteColumnDataModel,
+    NoteColumnEntity,
+    NoteColumnRepositoryImpl,
+    NoteColumnServiceImpl
+  > {}
 
 const NoteColumnContext = createContext<NoteColumnContextType>({
-  columns: [],
+  service: NoteColumnService,
+  loading: true,
+  data: [],
 })
 
-const NoteColumnContextProvider: React.FC = (props) => {
-  const [columns, setColumns] = useState<NoteColumnEntity[]>([])
-  const [firstLoad, setFirstLoad] = useState(true)
+const NoteColumnProvider: React.FC = ({ children }): JSX.Element =>
+  SynchronizableProvider<
+    number,
+    number,
+    NoteColumnDataModel,
+    NoteColumnEntity,
+    NoteColumnRepositoryImpl,
+    NoteColumnServiceImpl
+  >({
+    children: children,
+    context: NoteColumnContext,
+    service: NoteColumnService,
+  })
 
-  useEffect(() => {
-    const updateData = async () => {
-      const dbColumns = await NoteColumnService.getColumns()
+export const useNoteColumn = () => useContext(NoteColumnContext)
 
-      saveData(dbColumns)
-    }
-
-    let saveData = (columns: NoteColumnEntity[]) => {
-      setColumns(columns)
-
-      if (firstLoad) {
-        setFirstLoad(false)
-      }
-    }
-
-    if (firstLoad) {
-      updateData()
-    }
-
-    NoteColumnContextUpdater.setCallback(updateData)
-
-    const cleanBeforeUpdate = () => {
-      saveData = () => {}
-    }
-
-    return cleanBeforeUpdate
-  }, [firstLoad])
-
-  const value: NoteColumnContextType = {
-    columns: columns,
-  }
-
-  return (
-    <NoteColumnContext.Provider value={value}>
-      {props.children}
-    </NoteColumnContext.Provider>
-  )
-}
-
-export const useNoteColumns = () => useContext(NoteColumnContext).columns
-
-export default NoteColumnContextProvider
+export default NoteColumnProvider

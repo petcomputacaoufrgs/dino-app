@@ -58,6 +58,16 @@ class LogAppErrorService {
     }
   }
 
+  logMessage = (message: string, title: string) => {
+    if (message) {
+      this.logModel({
+        date: new Date().getTime(),
+        error: message,
+        title: title,
+      } as LogAppErrorModel)
+    }
+  }
+
   saveAll = async (models: LogAppErrorListModel) => {
     const request = await DinoAgentService.post(
       APIRequestMappingConstants.SAVE_ALL_LOG_APP_ERROR

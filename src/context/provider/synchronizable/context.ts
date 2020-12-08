@@ -9,9 +9,10 @@ export default interface SynchronizableContextType<
   LOCAL_ID extends IndexableTypePart,
   DATA_MODEL extends SynchronizableDataModel<ID>,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
-  REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>
+  REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>,
+  SERVICE extends SynchronizableService<ID, LOCAL_ID, DATA_MODEL, ENTITY, REPOSITORY>
 > {
   data: ENTITY[]
   loading: boolean
-  service?: SynchronizableService<ID, LOCAL_ID, DATA_MODEL, ENTITY, REPOSITORY>
+  service: SERVICE
 }

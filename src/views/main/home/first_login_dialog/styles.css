@@ -30,3 +30,16 @@
   margin-left: 24px;
   margin-right: 20px;
 }
+
+.first-login__dialog .citation {
+  text-align: end;
+  font-style: italic;
+}
+
+.first-login__dialog .message_dialog .dino_header {
+  margin-bottom: 24px;
+}
+
+.first-login__dialog .message_dialog .dino_hr {
+  margin: 12px 8px;
+}

@@ -7,18 +7,17 @@
 
 .dino_dialog__header svg {
   margin-left: auto;
-  width: 4rem;
+  width: 3rem;
 }
 
-.dino_dialog__header__title {
+.dino_dialog__header .dino_dialog__header__title {
   display: flex;
   align-items: center;
   margin-right: 8px;
 }
 
-.dino_dialog__header__title h1 {
-  font-size: 1.25rem;
-  margin: 0;
+.dino_dialog__header h5, .dino_dialog__header h3 {
+  margin-bottom: 0px;
 }
 
 .dino_dialog__content {

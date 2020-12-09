@@ -7,6 +7,7 @@ import UfrgsLogo from '../../../assets/logos/ufrgs.png'
 import Section from './section'
 import DinoLogo from '../../../assets/logos/dinosaur_1.svg'
 import DinoHr from '../../../components/dino_hr'
+import DinoLogoHeader from '../../../components/dino_logo_header'
 
 const AboutUs = (): JSX.Element => {
   const sections = [
@@ -26,18 +27,10 @@ const AboutUs = (): JSX.Element => {
     <div className="about-us">
       <Paper elevation={1}>
         <div className="card__header">
-          <img
-            className="card__header__image"
-            src={DinoLogo}
-            alt="Logo DinoApp"
-            width="20%"
-            height="20%"
-          ></img>
-          <h3 className="card__header__title">Sobre Nós</h3>
-          <div className="card__typography muted">
-            Programa de Educação Tutorial
-          </div>
-          <DinoHr />
+          <DinoLogoHeader 
+            title={"Sobre Nós"} 
+            subtitle={"Programa de Educação Tutorial"} 
+          />
         </div>
         <div className="card__content">
           <div className="card__typography">

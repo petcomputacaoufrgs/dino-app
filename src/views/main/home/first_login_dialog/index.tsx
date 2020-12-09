@@ -14,10 +14,11 @@ import { useGoogleOAuth2 } from '../../../../context/provider/google_oauth2'
 import { useAlert } from '../../../../context/provider/alert'
 import DinoDialogHeader, { DinoDialogContent } from '../../../../components/dino_dialog'
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from '@material-ui/icons'
+import DinoLogoHeader from '../../../../components/dino_logo_header'
 
 const FirstLoginDialog = () => {
 
-  const FIRST_DIALOG = 1
+  const FIRST_DIALOG = 0
   const LAST_DIALOG = 3
 
   const alert = useAlert()
@@ -30,7 +31,7 @@ const FirstLoginDialog = () => {
 
   const colorTheme = appSettings.colorTheme.currentCode
 
-  const [dialogOpen, setDialogOpen] = useState(AuthService.isFirstLogin() ? FIRST_DIALOG : 0)
+  const [dialogOpen, setDialogOpen] = useState(AuthService.isFirstLogin() ? FIRST_DIALOG : -1)
 
   const [selectedFaq, setSelectedFaq] = useState(appSettings.selectedFaq.current)
   
@@ -58,6 +59,10 @@ const FirstLoginDialog = () => {
     setDialogOpen(dialogOpen - 1);
   }
 
+  const handleCloseDialogs = () => {
+    setDialogOpen(-1);
+  }
+
   const handleSave = () => {
     // const model: AppSettingsRequestAndResponseModel = {
     //   language: selectedLanguage,
@@ -75,22 +80,21 @@ const FirstLoginDialog = () => {
 
     // alert.showSuccessAlert(currentLanguage.SETTINGS_SAVE_SUCCESS)
 
-    setDialogOpen(0)
+    handleCloseDialogs()
   }
 
   const handleCancel = () => {
-    setDialogOpen(0)
+    handleCloseDialogs()
   }
-
 
   const renderButtons = () => {
 
     return (
       <MobileStepper
         variant="dots"
-        steps={LAST_DIALOG}
+        steps={LAST_DIALOG + 1}
         position="static"
-        activeStep={dialogOpen - 1}
+        activeStep={dialogOpen}
         nextButton={
           dialogOpen === LAST_DIALOG ?
           <Button 
@@ -168,8 +172,23 @@ const FirstLoginDialog = () => {
     )
   }
 
+  const renderMessageDialog = () => {
+    return (
+    <div className="message_dialog">
+      <DinoLogoHeader title={"Bem-vindo(a)!"} size='small' />
+      <p>
+        Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        Nisi illum officiis vero debitis quia nam iusto. 
+        Necessitatibus repudiandae ut labore!
+      </p>
+      <h6 className="citation">— Equipe DinoApp</h6>
+    </div>
+    )
+  }
+
   const firstLoginDialogs = [
-    { title: "Escolha sua Idioma", component: renderSelectLanguageDialogContent },
+    { title: "", component: renderMessageDialog },
+    { title: "Escolha seu Idioma", component: renderSelectLanguageDialogContent },
     { title: "Escolha seu Tratamento", component: renderSelectFaqDialogContent },
     { title: "Escolha seu Tema de Cores", component: renderSelectColorThemeDialogContent },
   ]
@@ -182,13 +201,17 @@ const FirstLoginDialog = () => {
               className="first-login__dialog"
               disableBackdropClick
               disableEscapeKeyDown
-              open={dialogOpen === index + 1}
+              open={dialogOpen === index}
               fullWidth
               onClose={handleNext}
               TransitionComponent={TransitionSlide}
               aria-labelledby="form-dialog"
             >
-              <DinoDialogHeader><h1>{e.title}</h1></DinoDialogHeader>
+              {index === FIRST_DIALOG ? 
+              <></> :
+              <DinoDialogHeader>
+                <h5>{e.title}</h5>
+              </DinoDialogHeader>}
               <DinoDialogContent>
                 {e.component()}
               </DinoDialogContent>

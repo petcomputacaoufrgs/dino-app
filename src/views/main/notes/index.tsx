@@ -9,6 +9,7 @@ import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
 import { useNote } from '../../../context/provider/note'
 import NoteView from '../../../types/note/view/NoteView'
 import './styles.css'
+import Loader from '../../../components/loader'
 
 const Notes = () => {
   const column = useNoteColumn()
@@ -179,24 +180,26 @@ const Notes = () => {
 
   return (
     <div className="notes">
-      <NoteHeader
-        onTagSearch={handleTagSearch}
-        onTextSearch={handleTextSearch}
-        tags={tags}
-      />
-      <NoteContent
-        onDragEnd={handleDragEnd}
-        onDeleteNote={handleDeleteNote}
-        onSaveColumn={handleSaveColumn}
-        onDeleteColumn={handleDeleteColumn}
-        onSaveNewNote={handleSaveNewNote}
-        onSaveNote={handleSaveNote}
-        questionAlreadyExists={questionAlreadyExists}
-        noteView={noteView}
-        column={column}
-        tags={tags}
-        searching={searching}
-      />
+      <Loader className="notes__loader" loading={note.loading || column.loading}>
+        <NoteHeader
+          onTagSearch={handleTagSearch}
+          onTextSearch={handleTextSearch}
+          tags={tags}
+        />
+        <NoteContent
+          onDragEnd={handleDragEnd}
+          onDeleteNote={handleDeleteNote}
+          onSaveColumn={handleSaveColumn}
+          onDeleteColumn={handleDeleteColumn}
+          onSaveNewNote={handleSaveNewNote}
+          onSaveNote={handleSaveNote}
+          questionAlreadyExists={questionAlreadyExists}
+          noteView={noteView}
+          column={column}
+          tags={tags}
+          searching={searching}
+        />
+        </Loader>
     </div>
   )
 }

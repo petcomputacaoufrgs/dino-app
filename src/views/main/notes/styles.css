@@ -25,3 +25,12 @@
   border: none;
   border-color: transparent;
 }
+
+.notes__loader {
+  height: 100%;
+  background-color: transparent;
+}
+
+.note__loader_icon {
+  background-color: transparent;
+}

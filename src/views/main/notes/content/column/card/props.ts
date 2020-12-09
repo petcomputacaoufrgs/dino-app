@@ -1,8 +1,9 @@
-import NoteViewModel from '../../../../../../types/note/view/NoteViewModel'
+import NoteEntity from "../../../../../../types/note/database/NoteEntity"
 
 export default interface NoteBodyColumnCardProps {
-  onClickNote: (note: NoteViewModel) => void
-  note: NoteViewModel
+  onClickNote: (note: NoteEntity) => void
+  note: NoteEntity
   noteIndex: number
+  columnIndex: number
   searching: boolean
 }

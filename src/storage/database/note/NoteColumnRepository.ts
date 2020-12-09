@@ -7,8 +7,8 @@ export class NoteColumnRepositoryImpl extends SynchronizableRepository<
   number,
   NoteColumnEntity
 > {
-  getLocalColumnIdByColumnId = async (columnId: number): Promise<NoteColumnEntity | undefined> => {
-    return this.table.where('columnId').equals(columnId).first()
+  getByColumnId = async (columnId: number): Promise<NoteColumnEntity | undefined> => {
+    return this.table.where('id').equals(columnId).first()
   }
 }
 

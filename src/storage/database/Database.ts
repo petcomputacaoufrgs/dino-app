@@ -22,9 +22,9 @@ class Database extends Dexie {
      * Add only attributes that you will use in where clause
     **/
     this.version(DATABASE_VERSION).stores({
-      glossary: generateSynchronizableTableString([]),
-      note: generateSynchronizableTableString(['columnId']),
-      noteColumn: generateSynchronizableTableString([]),
+      glossary: generateSynchronizableTableString(),
+      note: generateSynchronizableTableString(['columnId', 'localColumnId']),
+      noteColumn: generateSynchronizableTableString(),
       logAppError: '++id,title,file,error,date',
       calendarEvent:
         '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
@@ -42,8 +42,8 @@ class Database extends Dexie {
  * Return param index concatenated with synchronizable basic indexes
  * @param attributes attributes to index
  */
-const generateSynchronizableTableString = (attributes: string[]): string => {
-  if (attributes.length > 0) {
+const generateSynchronizableTableString = (attributes?: string[]): string => {
+  if (attributes && attributes.length > 0) {
     return '++localId,localState,id,' + attributes.join(',')
   }
 

@@ -4,13 +4,13 @@ import './styles.css'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import NoteContentColumnCard from './card'
 import NoteBodyColumnHeader from './header'
-import NoteViewModel from '../../../../../types/note/view/NoteViewModel'
 import { isMobile } from 'react-device-detect'
 import NoteDraggableType from '../../../../../constants/note/NoteDroppableType'
 import NotesContentColumnAddNote from './add_note'
+import NoteEntity from '../../../../../types/note/database/NoteEntity'
 
 const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
-  column,
+  noteView,
   columnIndex,
   searching,
   onClickNote,
@@ -19,38 +19,38 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
   onAddNote,
 }) => {
   const renderCard = (
-    note: NoteViewModel,
+    note: NoteEntity,
+    columnIndex: number,
     noteIndex: number
   ): JSX.Element | undefined => {
-    if (note.showByTag || note.showByQuestion) {
-      return (
-        <NoteContentColumnCard
-          searching={searching}
-          note={note}
-          key={note.id}
-          noteIndex={noteIndex}
-          onClickNote={onClickNote}
-        ></NoteContentColumnCard>
-      )
-    }
+    return (
+      <NoteContentColumnCard
+        searching={searching}
+        note={note}
+        key={noteIndex}
+        noteIndex={noteIndex}
+        columnIndex={columnIndex}
+        onClickNote={onClickNote}
+      ></NoteContentColumnCard>
+    )
   }
 
   const handleColumnEdit = () => {
-    onEditColumn(column)
+    onEditColumn(noteView.column)
   }
 
   const handleColumnDelete = () => {
-    onDeleteColumn(column)
+    onDeleteColumn(noteView.column)
   }
 
   const handleAddNote = () => {
-    onAddNote(column)
+    onAddNote(noteView.column)
   }
 
   return (
     <div className={`note__note_content__column${isMobile ? '' : ' desktop'}`}>
       <Draggable
-        draggableId={column.id.toString()}
+        draggableId={columnIndex.toString()}
         index={columnIndex}
         isDragDisabled={searching}
       >
@@ -66,12 +66,12 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
               data-dino-draggable={true}
             >
               <NoteBodyColumnHeader
-                title={column.title}
+                title={noteView.column.title}
                 onEdit={handleColumnEdit}
                 onDelete={handleColumnDelete}
               />
             </div>
-            <Droppable droppableId={column.title} type={NoteDraggableType.NOTE}>
+            <Droppable droppableId={noteView.column.title} type={NoteDraggableType.NOTE}>
               {(provided) => (
                 <div
                   className="note__note_content__column__draggable__droppable"
@@ -79,7 +79,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
                   {...provided.droppableProps}
                 >
                   <div className="note__note_content__column__draggable__droppable__scroll">
-                    {column.notes.map((note, index) => renderCard(note, index))}
+                    {noteView.notes.map((note, index) => renderCard(note, columnIndex, index))}
                   </div>
                   {provided.placeholder}
                 </div>
@@ -87,7 +87,7 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
             </Droppable>
             <div className="note__note_content__column__draggable__add_button">
               <NotesContentColumnAddNote
-                notesCount={column.notes.length}
+                notesCount={noteView.notes.length}
                 onAdd={handleAddNote}
               />
             </div>

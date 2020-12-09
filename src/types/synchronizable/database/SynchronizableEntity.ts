@@ -1,5 +1,5 @@
 import { IndexableType } from 'dexie'
-import SynchronizableDataModel from '../api/SynchronizableDataModel'
+import SynchronizableIdModel from '../api/SynchronizableIdModel'
 import SynchronizableLocalState from './SynchronizableLocalState'
 
 /**
@@ -10,7 +10,8 @@ import SynchronizableLocalState from './SynchronizableLocalState'
 export default interface SynchronizableEntity<
   ID extends IndexableType,
   LOCAL_ID extends IndexableType
-> extends SynchronizableDataModel<ID> {
+> extends SynchronizableIdModel<ID> {
   localId?: LOCAL_ID
   localState?: SynchronizableLocalState
+  lastUpdate?: Date
 }

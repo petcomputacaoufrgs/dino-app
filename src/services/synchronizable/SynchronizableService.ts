@@ -67,7 +67,7 @@ export default abstract class SynchronizableService<
 
     if (entity) {
       entity.id = model.id
-      entity.lastUpdate = model.lastUpdate
+      entity.lastUpdate = this.convertStringDateToDate(model.lastUpdate!)
   
       return entity
     }
@@ -78,7 +78,7 @@ export default abstract class SynchronizableService<
 
     if (model) {
       model.id = entity.id
-      model.lastUpdate = entity.lastUpdate
+      model.lastUpdate = this.convertDateToStringDate(entity.lastUpdate!)
   
       return model
     }
@@ -89,7 +89,6 @@ export default abstract class SynchronizableService<
   ): Promise<ENTITY[]> => {
     const result = await Promise.all(models.map(async (model) => {
       const entity = await this.internalConvertModelToEntity(model)
-
       if (entity) {
         entity.localState = SynchronizableLocalState.SAVED_ON_API
         return entity
@@ -252,6 +251,44 @@ export default abstract class SynchronizableService<
     }
   }
 
+  public saveAll = async (entities: ENTITY[]) => {
+    entities.forEach(entity => {
+      this.updateLastUpdate(entity)
+      entity.localState = SynchronizableLocalState.SAVED_LOCALLY
+    })
+    
+    await this.localSaveAll(entities)
+
+    const models = await this.internalConvertEntitiesToModels(
+      entities
+    )
+
+    await this.apiSaveAll(models)
+
+    this.updateContext()
+  }
+
+  public deleteAll = async (entities: ENTITY[]) => {
+    const deleted = await this.localFakeDeleteAll(entities)
+
+    if (deleted) {
+      const models = await this.internalConvertEntitiesToModels(
+        entities
+      )
+      const deleteAllResponse = await this.apiDeleteAll(models)
+      const success = this.processGenericResponse(deleteAllResponse)
+
+      if (success) {
+        await this.localDeleteAllByLocalId(entities)
+        this.updateContext()
+      }
+
+      return success
+    }
+
+    return false
+  }
+
   public sync = async (): Promise<boolean> => {
     return this.doSync()
   }
@@ -321,7 +358,7 @@ export default abstract class SynchronizableService<
 
     const deleteAllResponse = await this.apiDeleteAll(deletedModels)
 
-    const success = this.syncProcessGenericResponse(deleteAllResponse)
+    const success = this.processGenericResponse(deleteAllResponse)
 
     if (success) {
       await this.localDeleteAllFakeDeleteds()
@@ -343,18 +380,18 @@ export default abstract class SynchronizableService<
 
     const saveAllResponse = await this.apiSaveAll(notSavedModels)
 
-    return this.syncProcessGenericResponse(saveAllResponse)
+    return this.processGenericResponse(saveAllResponse)
   }
 
   protected syncGetAll = async (): Promise<boolean> => {
     const getAllResponse = await this.apiGetAll()
-    const success = this.syncProcessGenericResponse(getAllResponse)
+    const success = this.processGenericResponse(getAllResponse)
 
     if (success && getAllResponse) {
       const models = getAllResponse.data
 
       const entities = await this.internalConvertModelsToEntities(models)
-
+      
       await this.localClear()
 
       await this.localSaveAll(entities)
@@ -365,7 +402,7 @@ export default abstract class SynchronizableService<
     return success
   }
 
-  protected syncProcessGenericResponse = (
+  protected processGenericResponse = (
     response: SynchronizableGenericResponseModel | undefined
   ): boolean => {
     if (response) {
@@ -394,6 +431,17 @@ export default abstract class SynchronizableService<
     const deletedItens = await this.repository.fakeDelete(entity)
 
     return deletedItens === 1
+  }
+
+  protected localFakeDeleteAll = async (entities: ENTITY[]): Promise<boolean> => {
+    const deletedItens = await this.repository.fakeDeleteAll(entities, this.getLastUpdate())
+
+    return deletedItens > 0
+  }
+
+  protected localDeleteAllByLocalId = async (entities: ENTITY[]) => {
+    const localIds = entities.filter(entity => entity.localId !== undefined).map(entity => entity.localId!)
+    await this.repository.deleteAllByLocalIds(localIds)
   }
 
   protected localDeleteAllById = async (ids: ID[]) => {
@@ -557,8 +605,24 @@ export default abstract class SynchronizableService<
 
   //#region UTILS
 
+  protected convertStringDateToDate(date: string) {
+    if (date.endsWith('Z')) {
+      return new Date(date)
+    }
+
+    return new Date(date + 'Z')
+  }
+
+  protected convertDateToStringDate(date: Date) {
+    return date.toISOString()
+  }
+
+  protected getLastUpdate = () => {
+    return new Date()
+  }
+
   protected updateLastUpdate = (entity: ENTITY) => {
-    entity.lastUpdate = new Date()
+    entity.lastUpdate = this.getLastUpdate()
   }
 
   public sortEntityById = (a: ENTITY, b: ENTITY): number => {

@@ -7,11 +7,6 @@
   color: var(--dark-color);
 }
 
-.note__note_content__column__column_card__card__card_content {
-  overflow: auto;
-  -ms-overflow-style: none;
-}
-
 .note__note_content__column__column_card__card__card_content .MuiChip-label {
   color: var(--dark-color);
 }

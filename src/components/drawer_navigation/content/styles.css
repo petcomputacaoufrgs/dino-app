@@ -13,7 +13,6 @@
 
 .drawer__navigation__content__component__scrollable {
   height: 100%;
-  overflow-y: auto;
 }
 
 .drawer__navigation__content__app_bar {

@@ -7,12 +7,13 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import NoteBodyColumnCardProps from './props'
 import { Draggable } from 'react-beautiful-dnd'
-import './styles.css'
 import { CardActions } from '@material-ui/core'
+import './styles.css'
 
 const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
   noteIndex,
+  columnIndex,
   searching,
   onClickNote,
 }) => {
@@ -21,10 +22,9 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   const handleCardClick = () => {
     onClickNote(note)
   }
-
   return (
     <Draggable
-      draggableId={note.columnTitle + '_' + note.id.toString()}
+      draggableId={columnIndex.toString() + '_' + noteIndex}
       index={noteIndex}
       isDragDisabled={searching}
     >
@@ -40,12 +40,12 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
           <CardHeader
             title={note.question}
             subheader={DateUtils.getDateStringFormated(
-              note.lastUpdate,
+              note.lastUpdate!,
               language
             )}
           />
           <CardContent className="note__note_content__column__column_card__card__card_content">
-            <TagList tagList={note.tagNames} />
+            <TagList tagList={note.tags} />
           </CardContent>
           {note.answer && note.answer.length > 0 && (
             <CardActions className="note__note_content__column__column_card__card__card_answer">

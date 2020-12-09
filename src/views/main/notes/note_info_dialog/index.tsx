@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../../../components/button/text_button'
-import './styles.css'
 import NoteInfoDialogProps from './props'
 import {
   Dialog,
@@ -19,6 +18,7 @@ import ArrayUtils from '../../../../utils/ArrayUtils'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
 import IconButton from '../../../../components/button/icon_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
+import './styles.css'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
   note,
@@ -33,7 +33,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
   const [question, setQuestion] = useState(note.question)
   const [answer, setAnswer] = useState(note.answer)
-  const [tagList, setTagList] = useState(note.tagNames)
+  const [tagList, setTagList] = useState(note.tags)
 
   const [editedQuestion, setEditedQuestion] = useState(false)
   const [editedAnswer, setEditedAnswer] = useState(false)
@@ -47,7 +47,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
   useEffect(() => {
     setAnswer(note.answer)
     setQuestion(note.question)
-    setTagList(note.tagNames)
+    setTagList(note.tags)
     setEditedQuestion(false)
     setEditedAnswer(false)
     setEditedTagList(false)
@@ -80,13 +80,13 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
   const handleTagChange = (event: React.ChangeEvent<{}>, values: string[]) => {
     if (values.length <= NoteConstants.TAG_LIMIT) {
-      const changed = ArrayUtils.notEqualIgnoreOrder(values, note.tagNames)
+      const changed = ArrayUtils.notEqualIgnoreOrder(values, note.tags)
       setTagList(values)
       setEditedTagList(changed)
     }
   }
 
-  const handleSaveNote = () => {
+  const handleSaveNote = async () => {
     const newQuestion = question.trim()
 
     if (editedQuestion && !validateQuestion(newQuestion)) {
@@ -112,17 +112,21 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
   const isEdited = () => editedTagList || editedAnswer || editedQuestion
 
-  const validateQuestion = (newQuestion: string): boolean => {
+  const validateQuestion = async (newQuestion: string): Promise<boolean> => {
     if (!newQuestion) {
       setQuestionWithError(true)
       setQuestionErrorHelper(language.EMPTY_FIELD_ERROR)
       return false
     }
 
-    if (newQuestion !== note.question && questionAlreadyExists(newQuestion)) {
-      setQuestionWithError(true)
-      setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
-      return false
+    if (newQuestion !== note.question) {
+      const questionConflict = questionAlreadyExists(newQuestion)
+
+      if (questionConflict) {
+        setQuestionWithError(true)
+        setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
+        return false
+      }
     }
 
     if (questionWithError) {
@@ -150,7 +154,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
         />
       </DialogTitle>
       <div className="note_info_dialog__last_update">
-        <h4>{DateUtils.getDateStringFormated(note.lastUpdate, language)}</h4>
+        <h4>{DateUtils.getDateStringFormated(note.lastUpdate!, language)}</h4>
       </div>
       <DialogContent className="note__info_dialog__content">
         <TextField

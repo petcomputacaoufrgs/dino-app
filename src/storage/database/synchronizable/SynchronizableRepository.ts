@@ -88,6 +88,17 @@ export default abstract class SynchronizableRepository<
     return 0
   }
 
+  async fakeDeleteAll(entities: ENTITY[], lastUpdate: Date): Promise<number> {
+    const entitiesIds = entities.filter(entity => entity.localId !== undefined).map(entity => entity.localId!)
+    return await this.table
+      .where('localId')
+      .anyOf(entitiesIds)
+      .modify((item) => {
+        item.localState = SynchronizableLocalState.DELETED_LOCALLY
+        item.lastUpdate = lastUpdate
+      })
+  }
+
   async deleteAllFakeDeleteds() {
     return await this.table
       .where('localState')
@@ -97,6 +108,10 @@ export default abstract class SynchronizableRepository<
 
   async deleteAllById(ids: ID[]) {
     return this.table.where('id').anyOf(ids).delete()
+  }
+
+  async deleteAllByLocalIds(ids: LOCAL_ID[]) {
+    return this.table.where('localId').anyOf(ids).delete()
   }
 
   async clear() {

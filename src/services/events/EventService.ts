@@ -51,6 +51,7 @@ class EventService {
 
   whenConnectionLost = () => {
     SyncService.setOffline()
+    WebSocketConnector.disconnect()
   }
 
   whenError = () => {}

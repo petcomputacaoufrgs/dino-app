@@ -10,20 +10,21 @@ import {
   Droppable,
 } from 'react-beautiful-dnd'
 import NoteContentColumn from './column'
-import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 import NoteDroppableType from '../../../../constants/note/NoteDroppableType'
 import AddColumn from './add_column'
 import NoteColumnDialog from '../column_dialog'
-import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
 import NoteCreateDialog from '../note_create_dialog'
 import NoteInfoDialog from '../note_info_dialog'
 import LogAppErrorService from '../../../../services/log_app_error/LogAppErrorService'
 import ViewAddNoteOpenedWIthoutColumnError from '../../../../error/note/ViewAddNoteOpenedWIthoutColumnError'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
+import NoteEntity from '../../../../types/note/database/NoteEntity'
+import NoteView from '../../../../types/note/view/NoteView'
 
 const NoteContent: React.FC<NoteContentProps> = ({
+  column,
   tags,
-  columns,
+  noteView,
   searching,
   onDragEnd,
   onDeleteNote,
@@ -34,12 +35,11 @@ const NoteContent: React.FC<NoteContentProps> = ({
   questionAlreadyExists,
 }): JSX.Element => {
   const language = useCurrentLanguage()
-
-  const [currentNote, setCurrentNote] = useState<NoteViewModel | undefined>(
+  const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(
     undefined
   )
-  const [currentNoteColumn, setCurrentNoteColumn] = useState<
-    NoteColumnViewModel | undefined
+  const [currentNoteView, setCurrentNoteView] = useState<
+    NoteView | undefined
   >(undefined)
   const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
   const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState<
@@ -52,6 +52,17 @@ const NoteContent: React.FC<NoteContentProps> = ({
   const [dragging, setDragging] = useState(false)
 
   //#region COLUMN
+
+  const updateCurrentNoteView = (column: NoteColumnEntity): boolean => {
+    const current = noteView.find(item => item.column.localId === column.localId)
+    
+    if (current) {
+      setCurrentNoteView(current)
+      return true
+    }
+
+    return false
+  }
 
   const handleNoteColumnDialogClose = () => {
     closeNoteColumnDialog()
@@ -69,27 +80,34 @@ const NoteContent: React.FC<NoteContentProps> = ({
     onSaveColumn(column, oldTitle)
   }
 
-  const handleEditColumn = (column: NoteColumnViewModel) => {
-    setCurrentNoteColumn(column)
-    setNoteColumnDialogOpen(true)
+  const handleEditColumn = (column: NoteColumnEntity) => {
+    const success = updateCurrentNoteView(column)
+    
+    if (success) {
+      setNoteColumnDialogOpen(true)
+    }
   }
 
-  const handleDeleteColumn = (column: NoteColumnViewModel) => {
-    setCurrentNoteColumn(column)
-    setDeleteNoteColumnDialogOpen(true)
+  const handleDeleteColumn = (column: NoteColumnEntity) => {
+    const success = updateCurrentNoteView(column)
+
+    if (success) {
+      setDeleteNoteColumnDialogOpen(true)
+    }
   }
 
-  const handleTitleAlreadyExists = (title: string): boolean =>
-    columns.some((column) => column.title === title)
+  const handleTitleAlreadyExists = (title: string): boolean => {
+    return column.data.some(item => item.title === title)
+  }
 
   const closeNoteColumnDialog = () => {
     setNoteColumnDialogOpen(false)
-    setCurrentNoteColumn(undefined)
+    setCurrentNoteView(undefined)
   }
 
   const handleDeleteColumnAgree = () => {
-    if (currentNoteColumn) {
-      onDeleteColumn(currentNoteColumn)
+    if (currentNoteView) {
+      onDeleteColumn(currentNoteView.column)
     }
     closeNoteColumnDeleteDialog()
   }
@@ -100,7 +118,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const closeNoteColumnDeleteDialog = () => {
     setDeleteNoteColumnDialogOpen(false)
-    setCurrentNoteColumn(undefined)
+    setCurrentNoteView(undefined)
   }
 
   //#endregion
@@ -109,20 +127,23 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const handleSaveNewNote = (question: string, tagList: string[]) => {
     setNoteCreateDialogOpen(false)
-    setCurrentNoteColumn(undefined)
-    if (currentNoteColumn) {
-      onSaveNewNote(question, tagList, currentNoteColumn)
+    setCurrentNoteView(undefined)
+    if (currentNoteView) {
+      onSaveNewNote(question, tagList, currentNoteView)
     } else {
       LogAppErrorService.logError(new ViewAddNoteOpenedWIthoutColumnError())
     }
   }
 
-  const handleAddNote = (column: NoteColumnViewModel) => {
-    setCurrentNoteColumn(column)
-    setNoteCreateDialogOpen(true)
+  const handleAddNote = (column: NoteColumnEntity) => {
+    const success = updateCurrentNoteView(column)
+
+    if (success) {
+      setNoteCreateDialogOpen(true)
+    }
   }
 
-  const handleClickNote = (note: NoteViewModel) => {
+  const handleClickNote = (note: NoteEntity) => {
     setCurrentNote(note)
     setNoteInfoDialogOpen(true)
   }
@@ -135,7 +156,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
     if (currentNote) {
       currentNote.question = question
       currentNote.answer = answer
-      currentNote.tagNames = tagList
+      currentNote.tags = tagList
 
       onSaveNote(currentNote)
     }
@@ -153,7 +174,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const handleCloseNoteEditDialog = () => {
     setNoteCreateDialogOpen(false)
-    setCurrentNoteColumn(undefined)
+    setCurrentNoteView(undefined)
     setCurrentNote(undefined)
   }
 
@@ -173,7 +194,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
     setDragging(true)
   }
 
-  const getColumnMaxOrder = (): number => columns.length
+  const getColumnMaxOrder = (): number => noteView.length
 
   const renderDialogs = (): JSX.Element => (
     <>
@@ -181,19 +202,19 @@ const NoteContent: React.FC<NoteContentProps> = ({
         onClose={handleNoteColumnDialogClose}
         onSave={handleSaveNoteColumn}
         open={noteColumnDialogOpen}
-        column={currentNoteColumn}
+        column={currentNoteView?.column}
         order={getColumnMaxOrder()}
         titleAlreadyExists={handleTitleAlreadyExists}
       />
-      {currentNoteColumn && (
+      {currentNoteView && (
         <AgreementDialog
           question={
-            currentNoteColumn.notes.length === 0
+            currentNoteView.notes.length === 0
               ? language.NOTE_COLUMN_DELETE_DIALOG_QUESTION
               : language.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION
           }
           description={
-            currentNoteColumn.notes.length === 0
+            currentNoteView.notes.length === 0
               ? language.NOTE_COLUMN_DELETE_DIALOG_DESC
               : language.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
           }
@@ -225,11 +246,9 @@ const NoteContent: React.FC<NoteContentProps> = ({
     </>
   )
 
-  const filteredColumns = columns.filter((column) => column.showBySearch)
-
   return (
     <div className="note__note_content">
-      {searching && filteredColumns.length === 0 && (
+      {searching && noteView.length === 0 && (
         <div className="note__note_content__columns__scroll__clean_search">
           {language.NOTE_SEARCH_CLEAN}
         </div>
@@ -247,11 +266,11 @@ const NoteContent: React.FC<NoteContentProps> = ({
               ref={provided.innerRef}
             >
               <div className="note__note_content__columns__scroll">
-                {filteredColumns.map((column, index) => (
+                {noteView.map((item, index) => (
                   <NoteContentColumn
-                    column={column}
+                    noteView={item}
                     columnIndex={index}
-                    key={column.id}
+                    key={index}
                     searching={searching}
                     onClickNote={handleClickNote}
                     onEditColumn={handleEditColumn}
@@ -262,7 +281,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
                 {!searching && (
                   <AddColumn
                     visible={!dragging}
-                    columnCount={columns.length}
+                    columnCount={noteView.length}
                     onAddColumn={handleAddColumn}
                   />
                 )}

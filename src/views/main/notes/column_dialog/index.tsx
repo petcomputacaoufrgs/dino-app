@@ -9,13 +9,12 @@ import {
 import TransitionSlide from '../../../../components/slide_transition'
 import NoteColumnDialogProps from './props'
 import NoteColumnDialogHeader from './header'
-import NoteColumnService from '../../../../services/note/NoteColumnService'
 import NoteColumnEditError from '../../../../error/note/NoteColumnEditError'
 import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
-
 import Button from '../../../../components/button/text_button'
+import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 
 const NoteColumnDialog = forwardRef(
   (props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
@@ -34,13 +33,13 @@ const NoteColumnDialog = forwardRef(
       setInvalidTitle(false)
     }, [props.open, props.column])
 
-    const handleSave = () => {
-      if (!isTitleValid(newTitle)) {
-        setInvalidTitle(true)
+    const handleSave = async () => {
+      const invalidTitle = ! await isTitleValid(newTitle)
+      setInvalidTitle(invalidTitle)
+      
+      if (invalidTitle) {
         return
-      } else {
-        setInvalidTitle(false)
-      }
+      } 
 
       if (props.column) {
         if (props.column.title !== newTitle) {
@@ -51,10 +50,10 @@ const NoteColumnDialog = forwardRef(
           props.onClose()
         }
       } else if (props.order !== undefined) {
-        const newColumn = NoteColumnService.createNewNoteColunmEntity(
-          newTitle,
-          props.order
-        )
+        const newColumn: NoteColumnEntity = {
+          title: newTitle,
+          order: props.order
+        }
         props.onSave(newColumn)
       } else {
         throw new NoteColumnEditError()
@@ -62,10 +61,6 @@ const NoteColumnDialog = forwardRef(
     }
 
     const handleTitleChange = (newTitle: string) => {
-      if (invalidTitle && isTitleValid(newTitle)) {
-        setInvalidTitle(false)
-      }
-
       setNewTitle(newTitle.substring(0, NoteColumnConstants.TITLE_MAX))
     }
 
@@ -81,8 +76,8 @@ const NoteColumnDialog = forwardRef(
         return false
       }
 
-      const titleAlreadyExists = props.titleAlreadyExists(title)
-      if (titleAlreadyExists) {
+      const titleConflict = props.titleAlreadyExists(title)
+      if (titleConflict) {
         setInvalidMessage(language.COLUMN_TITLE_ALREADY_EXISTS_ERROR)
         return false
       }

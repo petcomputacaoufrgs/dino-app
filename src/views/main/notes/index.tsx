@@ -1,81 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import './styles.css'
-import StringUtils from '../../../utils/StringUtils'
-import NoteService from '../../../services/note/NoteService'
 import NoteHeader from './header'
 import NoteContent from './content'
-import { useTags, useNotes } from '../../../context/provider/note'
-import NoteViewModel from '../../../types/note/view/NoteViewModel'
-import { useNoteColumns } from '../../../context/provider/note_column'
-import { NoteColumnViewModel } from '../../../types/note/view/NoteColumnViewModel'
+import { useNoteColumn } from '../../../context/provider/note_column'
 import { DropResult } from 'react-beautiful-dnd'
 import NoteDroppableType from '../../../constants/note/NoteDroppableType'
-import ArrayUtils from '../../../utils/ArrayUtils'
-import NoteColumnService from '../../../services/note/NoteColumnService'
 import NoteEntity from '../../../types/note/database/NoteEntity'
 import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
-
-const convertNotesToNoteViews = (
-  notes: NoteEntity[],
-  tagSearch: string[],
-  textSearch: string
-): NoteViewModel[] => {
-  const noteViewList: NoteViewModel[] = []
-
-  notes.forEach((note) => {
-    if (note.id !== undefined) {
-      noteViewList.push({
-        ...note,
-        id: note.id,
-        showByTag: showByTagSearch(note.tagNames, tagSearch, textSearch),
-        showByQuestion: showByTextSearch(note.question, textSearch, tagSearch),
-      })
-    }
-  })
-
-  return noteViewList.sort((a, b) => a.order - b.order)
-}
-
-const createViewColumns = (
-  columns: NoteColumnEntity[],
-  notes: NoteEntity[],
-  tagSearch: string[],
-  textSearch: string
-): NoteColumnViewModel[] => {
-  const noteViews = convertNotesToNoteViews(notes, tagSearch, textSearch)
-
-  return columns
-    .map((column) => {
-      const columnNotes = noteViews.filter(
-        (note) => note.columnTitle === column.title
-      )
-
-      return {
-        ...column,
-        id: column.id!,
-        notes: columnNotes,
-        showBySearch: showColumnBySearch(columnNotes, textSearch, tagSearch),
-      }
-    })
-    .sort((a, b) => a.order - b.order)
-}
+import { useNote } from '../../../context/provider/note'
+import NoteView from '../../../types/note/view/NoteView'
+import './styles.css'
 
 const Notes = () => {
-  const tags = useTags()
-  const columns = useNoteColumns()
-  const notes = useNotes()
+  const column = useNoteColumn()
+  const note = useNote()
+  const tags = note.service.getAllTags(note.data)
 
   const [textSearch, setTextSearch] = useState('')
   const [tagSearch, setTagSearch] = useState<string[]>([])
-  const [viewColumns, setViewColumns] = useState(
-    createViewColumns(columns, notes, tagSearch, textSearch)
-  )
   const [searching, setSearching] = useState(false)
 
-  useEffect(() => {
-    const viewColumns = createViewColumns(columns, notes, tagSearch, textSearch)
-    setViewColumns(viewColumns)
-  }, [columns, notes, textSearch, tagSearch])
+  const noteView = column.service.getColumnsByFilter(note.data, column.data, tagSearch, textSearch)
 
   useEffect(() => {
     if (textSearch.length > 0 || tagSearch.length > 0) {
@@ -102,35 +46,45 @@ const Notes = () => {
 
   //#region Column
 
-  const handleSaveColumn = (column: NoteColumnEntity, oldTitle?: string) => {
-    NoteColumnService.saveColumn(column, oldTitle)
+  const handleSaveColumn = (item: NoteColumnEntity) => {
+    column.service.save(item)
   }
 
-  const handleDeleteColumn = (column: NoteColumnViewModel) => {
-    NoteColumnService.deleteColumn(column)
+  const handleDeleteColumn = async (item: NoteColumnEntity) => {
+    await note.service.deleteNotesByColumn(item)
+    column.service.delete(item)
   }
 
   //#endregion
 
   //#region Note
 
-  const questionAlreadyExists = (question: string): boolean =>
-    notes.some((note) => note.question === question)
+  const questionAlreadyExists = (question: string): boolean => 
+    note.data.some((note) => note.question === question)
 
   const handleSaveNewNote = (
     question: string,
-    tagNames: string[],
-    column: NoteColumnViewModel
+    tagList: string[],
+    noteView: NoteView
   ) => {
-    NoteService.createNote(question, tagNames, column)
+    if (noteView.column.localId) {
+      note.service.save({
+        answer: "",
+        question: question,
+        tags: tagList,
+        columnId: noteView.column.id,
+        localColumnId: noteView.column.localId,
+        order: noteView.notes.length
+      })
+    }
   }
 
-  const handleSaveNote = (note: NoteViewModel) => {
-    NoteService.saveNote(note)
+  const handleSaveNote = (item: NoteEntity) => {
+    note.service.save(item)
   }
 
-  const handleDeleteNote = (note: NoteViewModel) => {
-    NoteService.deleteNote(note)
+  const handleDeleteNote = (item: NoteEntity) => {
+    note.service.delete(item)
   }
 
   //#endregion
@@ -148,35 +102,36 @@ const Notes = () => {
 
     const changedColumn = source.droppableId !== destination.droppableId
 
-    const sourceColumn = viewColumns.find(
-      (vColumn) => vColumn.title === source.droppableId
+    const sourceViewNote = noteView.find(
+      item => item.column.title === source.droppableId
     )
 
-    const destinationColumn = viewColumns.find(
-      (vColumn) => vColumn.title === destination.droppableId
+    const destinationViewNote = noteView.find(
+      item => item.column.title === destination.droppableId
     )
 
-    if (!sourceColumn || !destinationColumn) {
+    if (!sourceViewNote || !destinationViewNote) {
       return
     }
 
-    const changedNote = sourceColumn.notes[source.index]
+    const changedNote = sourceViewNote.notes[source.index]
 
-    changedNote.columnTitle = destinationColumn.title
+    sourceViewNote.notes.splice(source.index, 1)
 
-    sourceColumn.notes.splice(source.index, 1)
+    destinationViewNote.notes.splice(destination.index, 0, changedNote)
 
-    destinationColumn.notes.splice(destination.index, 0, changedNote)
+    destinationViewNote.notes.forEach((note, index) => {
+      note.order = index
+      note.localColumnId = destinationViewNote.column.localId
+      note.columnId = destinationViewNote.column.id
+    })
 
     if (changedColumn) {
-      sourceColumn.notes.forEach((note, index) => (note.order = index))
+      sourceViewNote.notes.forEach((note, index) => (note.order = index))
+      note.service.saveAll(destinationViewNote.notes.concat(sourceViewNote.notes))
+    } else {
+      note.service.saveAll(destinationViewNote.notes)
     }
-
-    destinationColumn.notes.forEach((note, index) => (note.order = index))
-
-    NoteService.saveNotesOrder(
-      ArrayUtils.merge(viewColumns.map((vColumn) => vColumn.notes))
-    )
   }
 
   const handleNoteColumnDragEnd = (result: DropResult) => {
@@ -188,12 +143,14 @@ const Notes = () => {
       return
     }
 
-    const changedColumn = viewColumns[source.index]
+    const changedColumn = noteView[source.index]
 
-    viewColumns.splice(source.index, 1)
-    viewColumns.splice(destination.index, 0, changedColumn)
+    noteView.splice(source.index, 1)
+    noteView.splice(destination.index, 0, changedColumn)
 
-    NoteColumnService.saveColumnsOrder(viewColumns)
+    noteView.forEach((item, index) => item.column.order = index)
+
+    column.service.saveAll(noteView.map(item => item.column))
   }
 
   const handleDragEnd = (result: DropResult) => {
@@ -211,40 +168,11 @@ const Notes = () => {
   //#region Searching
 
   const handleTagSearch = (newTagSearch: string[]) => {
-    const newViewColumns = Array.from(
-      viewColumns.map((column) => {
-        column.notes.forEach((n) => {
-          n.showByTag = showByTagSearch(n.tagNames, newTagSearch, textSearch)
-          n.showByQuestion = false
-        })
-
-        return column
-      })
-    )
-
     setTagSearch(newTagSearch)
-
-    setViewColumns(newViewColumns)
   }
 
   const handleTextSearch = (newTextSearch: string) => {
-    const newViewColumns = Array.from(
-      viewColumns.map((column) => {
-        column.notes.forEach((n) => {
-          n.showByTag = showByTagSearch(n.tagNames, tagSearch, newTextSearch)
-          n.showByQuestion = showByTextSearch(
-            n.question,
-            newTextSearch,
-            tagSearch
-          )
-        })
-        return column
-      })
-    )
-
     setTextSearch(newTextSearch)
-
-    setViewColumns(newViewColumns)
   }
 
   //#endregion
@@ -264,58 +192,13 @@ const Notes = () => {
         onSaveNewNote={handleSaveNewNote}
         onSaveNote={handleSaveNote}
         questionAlreadyExists={questionAlreadyExists}
-        columns={viewColumns}
+        noteView={noteView}
+        column={column}
         tags={tags}
         searching={searching}
       />
     </div>
   )
-}
-
-const showByTextSearch = (
-  nodeText: string,
-  textSearch: string,
-  tagSearch: string[]
-): boolean => {
-  const searchingByText = textSearch && textSearch.length !== 0
-
-  if (searchingByText) {
-    return StringUtils.contains(nodeText, textSearch)
-  }
-
-  return tagSearch.length === 0
-}
-
-const showByTagSearch = (
-  nodeTagNames: string[],
-  tagsSearch: string[],
-  textSearch: string
-): boolean => {
-  if (tagsSearch.length > 0) {
-    return nodeTagNames.some((name) => tagsSearch.includes(name))
-  }
-
-  const notSearchingByText = !textSearch || textSearch.length === 0
-
-  return notSearchingByText
-}
-
-const showColumnBySearch = (
-  notes: NoteViewModel[],
-  textSearch: string,
-  tagsSearch: string[]
-): boolean => {
-  const activeTagsSearch = tagsSearch.length > 0
-  const activeTextSearch = textSearch && textSearch.length !== 0
-  const activeNotesCount = notes.filter(
-    (note) => note.showByQuestion || note.showByTag
-  ).length
-
-  if (activeTagsSearch || activeTextSearch) {
-    return activeNotesCount !== 0
-  } else {
-    return true
-  }
 }
 
 export default Notes

@@ -16,6 +16,8 @@ import WebSocketConstants from '../constants/websocket/WebSocketConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import ConnectionService from '../services/connection/ConnectionService'
 import GoogleAuthWebSocketSubscriber from './auth/GoogleAuthWebSocketSubscriber'
+import SyncService from '../services/sync/SyncService'
+import Synchronizer from '../sync/Synchronizer'
 
 class WebSocketConnector {
   private socket?: WebSocket
@@ -41,9 +43,8 @@ class WebSocketConnector {
         if (response) {
           const baseUrl = this.getSocketBaseURL(response.webSocketToken)
           this.socket = new SockJS(baseUrl)
-          //this.muteConnectionLogs()
-
           this.stompClient = Stomp.over(this.socket)
+          this.muteConnectionLogs()
           this.stompClient.connect({}, this.subscribe)
           this.socket.onclose = () => {
             this.handleWebSocketClosed()
@@ -69,6 +70,7 @@ class WebSocketConnector {
   }
 
   private handleWebSocketClosed = () => {
+    SyncService.setOffline()
     ConnectionService.verify()
     this.tryToReconnect()
   }
@@ -93,6 +95,8 @@ class WebSocketConnector {
         this.delayTimeout = undefined
         if (!success) {
           this.tryToReconnect()
+        } else {
+          Synchronizer.sync()
         }
       }, WebSocketConstants.DELAY_TO_RECONNECT)
     }

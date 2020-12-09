@@ -4,7 +4,7 @@ export default interface NoteEntity extends SynchronizableEntity<number, number>
     order: number
     question: string
     answer: string
-    tags: string
-    columnId: number
+    tags: string[]
+    columnId?: number
     localColumnId?: number
 }

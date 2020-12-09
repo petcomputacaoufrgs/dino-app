@@ -32,7 +32,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
     }
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const newQuestion = question.trim()
 
     if (newQuestion.length === 0) {
@@ -42,7 +42,8 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
       return
     }
 
-    if (questionAlreadyExists(newQuestion)) {
+    const questionConflict = questionAlreadyExists(newQuestion)
+    if (questionConflict) {
       setQuestionWithError(true)
       setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
 

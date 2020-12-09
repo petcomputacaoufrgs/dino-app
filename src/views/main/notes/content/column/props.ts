@@ -1,12 +1,13 @@
-import NoteViewModel from '../../../../../types/note/view/NoteViewModel'
-import { NoteColumnViewModel } from '../../../../../types/note/view/NoteColumnViewModel'
+import NoteView from '../../../../../types/note/view/NoteView'
+import NoteColumnEntity from '../../../../../types/note/database/NoteColumnEntity'
+import NoteEntity from '../../../../../types/note/database/NoteEntity'
 
 export default interface NoteBodyColumnProps {
-  column: NoteColumnViewModel
+  noteView: NoteView
   columnIndex: number
   searching: boolean
-  onClickNote: (note: NoteViewModel) => void
-  onEditColumn: (column: NoteColumnViewModel) => void
-  onDeleteColumn: (column: NoteColumnViewModel) => void
-  onAddNote: (column: NoteColumnViewModel) => void
+  onClickNote: (note: NoteEntity) => void
+  onEditColumn: (column: NoteColumnEntity) => void
+  onDeleteColumn: (column: NoteColumnEntity) => void
+  onAddNote: (column: NoteColumnEntity) => void
 }

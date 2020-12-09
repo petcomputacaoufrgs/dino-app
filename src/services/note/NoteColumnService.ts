@@ -33,8 +33,8 @@ export class NoteColumnServiceImpl extends SynchronizableService<
     return model
   }
 
-  async getLocalColumnIdByColumnId(columnId: number): Promise<NoteColumnEntity | undefined> {
-    return this.repository.getLocalColumnIdByColumnId(columnId)
+  async getLocalColumnByColumnId(columnId: number): Promise<NoteColumnEntity | undefined> {
+    return this.repository.getByColumnId(columnId)
   }
 
   hasNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {
@@ -45,37 +45,19 @@ export class NoteColumnServiceImpl extends SynchronizableService<
     return notes.filter(note => note.localColumnId === column.localId)
   } 
 
-  private getNotesInColumnByFilter(notes: NoteEntity[], column: NoteColumnEntity, tagsSearch: string[], textSearch: string) {
-    const activeTagsSearch = tagsSearch.length > 0
-    const activeTextSearch = textSearch && textSearch.length !== 0
-
-    return notes.filter(note => {
-      let valid = true
-
-      if (activeTagsSearch) {
-        const tags = NoteService.getTags(note)
-        const inSearch = tags.some(tag => tagsSearch.some(tagSearch => tagSearch === tag))
-        valid = inSearch
-      }
-
-      if (!valid && activeTextSearch) {
-        const inSearch = note.question.includes(textSearch)
-        valid = inSearch
-      }
-
-      return valid
-    })
-  } 
-
   getColumnsByFilter(notes: NoteEntity[], columns: NoteColumnEntity[], tagsSearch: string[], textSearch: string): NoteView[] {
     const filteredColumns: NoteView[] = [] 
-    columns.forEach(column => {
-      const filteredNotes = this.getNotesInColumnByFilter(notes, column, tagsSearch, textSearch)
+    const activeTagsSearch = tagsSearch.length > 0
+    const activeTextSearch = textSearch !== undefined && textSearch.length !== 0
+    const showAllColumns = !activeTagsSearch && !activeTextSearch
 
-      if (filteredNotes.length > 0) {
+    columns.sort((c1,c2) => c1.order - c2.order).forEach(column => {
+      const filteredNotes = NoteService.getNotesInColumnByFilter(notes, column, tagsSearch, textSearch, activeTagsSearch, activeTextSearch)
+
+      if (filteredNotes.length > 0 || showAllColumns) {
         filteredColumns.push({
           column: column,
-          notes: filteredNotes
+          notes: filteredNotes.sort((n1, n2) => n1.order - n2.order)
         })
       }
     })

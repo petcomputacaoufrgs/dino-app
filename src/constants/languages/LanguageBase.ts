@@ -1,5 +1,6 @@
 export default interface LanguageBase {
   APP_NAME: string
+  DINOAPP_TEAM: string
   CURIOUS_DINO_ALT: string
   ISO_LANGUAGE_CODE: string
   NAVIGATOR_LANGUAGE_CODE: string
@@ -8,6 +9,12 @@ export default interface LanguageBase {
   NOT_FOUND_MESSAGE: string
   NOT_FROND_REDIRECT_MESSAGE: string
   WELCOME_MESSAGE: string
+  FIRST_LOGIN_DIALOG_LABEL: string
+  FIRST_LOGIN_WELCOME_MESSAGE: string
+  FIRST_LOGIN_DONE_MESSAGE: string
+  FIRST_LOGIN_CHOOSE_TREATMENT: string
+  FIRST_LOGIN_CHOOSE_COLOR_THEME: string
+  FIRST_LOGIN_CHOOSE_LANGUAGE: string
   LOGIN_BUTTON_TEXT: string
   LOGOUT_BUTTON_DESCRIPTION: string
   SEARCH_HOLDER: string

@@ -5,8 +5,6 @@ import PetLogo from '../../../assets/logos/pet.png'
 import HCLogo from '../../../assets/logos/hc.png'
 import UfrgsLogo from '../../../assets/logos/ufrgs.png'
 import Section from './section'
-import DinoLogo from '../../../assets/logos/dinosaur_1.svg'
-import DinoHr from '../../../components/dino_hr'
 import DinoLogoHeader from '../../../components/dino_logo_header'
 
 const AboutUs = (): JSX.Element => {

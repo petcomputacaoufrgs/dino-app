@@ -5,7 +5,7 @@ import MenuService from '../../../services/menu/MenuService'
 import IconButton from '../../../components/button/icon_button'
 import './styles.css'
 
-const Home: React.FC<HomeItemProps> = () => {
+const Home: React.FC<void> = () => {
   const language = useCurrentLanguage()
 
   const items = MenuService.getMainPages(language).filter(

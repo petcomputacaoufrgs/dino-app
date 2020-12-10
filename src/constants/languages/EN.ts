@@ -4,6 +4,8 @@ import LanguageCodeConstants from './LanguageCodeConstants'
 export default class EN implements LanguageBase {
   APP_NAME = 'DinoApp'
 
+  DINOAPP_TEAM = 'DinoApp Team'
+
   CURIOUS_DINO_ALT = 'Curious dino'
 
   ISO_LANGUAGE_CODE = 'en'
@@ -19,6 +21,18 @@ export default class EN implements LanguageBase {
   NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
 
   WELCOME_MESSAGE = 'Welcome to DinoApp!'
+
+  FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
+
+  FIRST_LOGIN_WELCOME_MESSAGE = 'Welcome!'
+
+  FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
+
+  FIRST_LOGIN_CHOOSE_TREATMENT = "Select your Treatment"
+
+  FIRST_LOGIN_CHOOSE_COLOR_THEME = "Select your Color Theme"
+
+  FIRST_LOGIN_CHOOSE_LANGUAGE = "Select your Language"
 
   LOGIN_BUTTON_TEXT = 'Log in with Google'
 

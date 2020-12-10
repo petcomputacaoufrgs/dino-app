@@ -7,6 +7,8 @@ import LanguageCodeConstants from './LanguageCodeConstants'
 export default class PT implements LanguageBase {
   APP_NAME = 'DinoApp'
 
+  DINOAPP_TEAM = 'Equipe DinoApp'
+
   CURIOUS_DINO_ALT = 'Dinossauro curioso'
 
   ISO_LANGUAGE_CODE = 'pt'
@@ -21,7 +23,19 @@ export default class PT implements LanguageBase {
 
   NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
 
-  WELCOME_MESSAGE = 'Bem vindo ao DinoApp!'
+  WELCOME_MESSAGE = 'Bem vindo(a) ao DinoApp!'
+
+  FIRST_LOGIN_DIALOG_LABEL = 'Diálogo de Configurações Iniciais'
+
+  FIRST_LOGIN_WELCOME_MESSAGE = 'Bem vindo(a)!'
+
+  FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
+
+  FIRST_LOGIN_CHOOSE_TREATMENT = "Escolha seu Tratamento"
+
+  FIRST_LOGIN_CHOOSE_COLOR_THEME = "Escolha seu Tema de Cores"
+
+  FIRST_LOGIN_CHOOSE_LANGUAGE = "Escolha seu Idioma"
 
   LOGIN_BUTTON_TEXT = 'Entrar com o Google'
 

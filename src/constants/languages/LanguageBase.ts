@@ -206,6 +206,7 @@ export default interface LanguageBase {
   DALTONIAN_THEME_NAME: string
   DEVICE_DEFAULT_THEME_NAME: string
   COLOR_THEME_SELECTION_TITLE: string
+  FONT_SIZE_SELECTION_TITLE: string
   DEFAULT_FONT_SIZE_NAME: string
   LARGE_FONT_SIZE_NAME: string
   LARGER_FONT_SIZE_NAME: string

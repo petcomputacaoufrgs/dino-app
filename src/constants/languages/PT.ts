@@ -427,6 +427,8 @@ export default class PT implements LanguageBase {
 
   COLOR_THEME_SELECTION_TITLE = 'Escolher Tema de Cores'
 
+  FONT_SIZE_SELECTION_TITLE = 'Escolher Tamanho da Fonte'
+
   DEFAULT_FONT_SIZE_NAME = 'Padrão'
   
   LARGE_FONT_SIZE_NAME = 'Grande'

@@ -421,6 +421,8 @@ export default class EN implements LanguageBase {
 
   COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
 
+  FONT_SIZE_SELECTION_TITLE = 'Choose Font Size'
+
   DEFAULT_FONT_SIZE_NAME = 'Default'
   
   LARGE_FONT_SIZE_NAME = 'Large'

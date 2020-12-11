@@ -14,6 +14,7 @@ import DinoDialogHeader, { DinoDialogContent } from '../../../../components/dino
 import DinoLogoHeader from '../../../../components/dino_logo_header'
 import DinoStepper from '../../../../components/dino_stepper'
 import AppSettingsRequestAndResponseModel from '../../../../types/app_settings/AppSettingsRequestAndResponseModel'
+import SelectFontSize from '../../settings/select_font_size'
 
 const FirstLoginDialog = () => {
 
@@ -99,10 +100,16 @@ const FirstLoginDialog = () => {
 
   const renderSelectLanguageDialogContent = () => {
     return (
+      <>
       <SelectLanguage 
         language={selectedLanguage}
         setLanguage={setSelectedLanguage}
       />
+      <SelectFontSize 
+        fontSize={selectedFontSize}
+        setFontSize={setSelectedFontSize}
+      />
+      </>
     )
   }
 

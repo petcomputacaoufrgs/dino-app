@@ -1,8 +1,9 @@
 import React from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useAppSettings } from '../../../../context/provider/app_settings/'
+import SelectColorThemeProps from './props'
 
-const SelectColorTheme = ({colorTheme, setColorTheme}) => {
+const SelectColorTheme = ({ colorTheme, setColorTheme }: SelectColorThemeProps) => {
 
   const appSettings = useAppSettings()
   const colorThemeList = appSettings.colorTheme.getColorThemeOptions()

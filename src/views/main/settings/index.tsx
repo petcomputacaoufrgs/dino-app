@@ -17,6 +17,7 @@ import SelectColorTheme from './select_color_theme'
 import SelectLanguage from './select_language'
 import DinoSwitch from '../../../components/switch'
 import DinoHr from '../../../components/dino_hr'
+import SelectFontSize from './select_font_size'
 
 const Settings = (): JSX.Element => {
   const appSettings = useAppSettings()
@@ -117,6 +118,12 @@ const Settings = (): JSX.Element => {
         <SelectLanguage 
           language={selectedLanguage}
           setLanguage={setSelectedLanguage}
+        />
+      </FormControl>
+      <FormControl className="settings__form">
+        <SelectFontSize 
+          fontSize={selectedFontSize}
+          setFontSize={setSelectedFontSize}
         />
       </FormControl>
       <FormControl className="settings__form">

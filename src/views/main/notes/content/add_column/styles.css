@@ -20,7 +20,7 @@
 
 .note__note_content__columns__add_column__button__text {
   line-height: initial;
-  font-size: small;
+  font-size: var(--small-font);
   margin-bottom: 0;
   margin-top: 0;
   font-weight: bold;

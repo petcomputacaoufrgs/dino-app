@@ -7,7 +7,7 @@
 }
 
 .note__note_content__column__add_note h3 {
-  font-size: small;
+  font-size: var(--small-font);
   font-style: normal;
   margin-bottom: 0;
   margin-top: 0;

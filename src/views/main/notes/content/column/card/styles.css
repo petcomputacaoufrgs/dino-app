@@ -14,6 +14,7 @@
 
 .note__note_content__column__column_card__card__card_content .MuiChip-label {
   color: var(--dark-color);
+  font-size: var(--small-font);
 }
 
 .note__note_content__column__column_card__card__card_content.MuiCardContent-root {
@@ -36,14 +37,14 @@
 .note__note_content__column__column_card
   .MuiCardHeader-content
   .MuiTypography-root.MuiCardHeader-title {
-  font-size: medium;
+  font-size: var(--default-font);
   word-break: break-word;
 }
 
 .note__note_content__column__column_card
   .MuiCardHeader-content
   .MuiTypography-root.MuiCardHeader-subheader {
-  font-size: x-small;
+  font-size: var(--very-small-font);
 }
 
 .note__note_content__column__column_card.MuiPaper-rounded {
@@ -63,4 +64,5 @@
   display: block;
   text-overflow: ellipsis;
   margin: 0;
+  font-size: var(--default-font);
 }

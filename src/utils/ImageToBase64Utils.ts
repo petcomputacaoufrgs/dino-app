@@ -1,9 +1,12 @@
 type ImageFormat = 'jpeg' | 'png'
 
+type ImageProcessItemCallback = (base64: string, success: boolean, data?: any) => void
+
 interface ImageProcessItem {
   src: string
   type: ImageFormat
-  callback: (base64: string, success: boolean) => void
+  callback: ImageProcessItemCallback
+  data?: any
 }
 
 /**
@@ -21,7 +24,6 @@ class ImageToBase64Utils {
 
   constructor() {
     this.image = new Image()
-    this.image.setAttribute('crossorigin', 'true')
     this.canvas = document.createElement('canvas')
     this.queue = [] as ImageProcessItem[]
     this.processing = false
@@ -30,20 +32,23 @@ class ImageToBase64Utils {
   getBase64FromImageSource(
     src: string,
     type: ImageFormat,
-    callback: (base64: string, success: boolean) => void
+    callback: ImageProcessItemCallback, 
+    data?: any
   ) {
-    this.addToQueue(src, type, callback)
+    this.addToQueue(src, type, callback, data)
   }
 
   private addToQueue(
     src: string,
     type: ImageFormat,
-    callback: (base64: string, success: boolean) => void
+    callback: ImageProcessItemCallback,
+    data?: any
   ) {
     const item: ImageProcessItem = {
       src: src,
       callback: callback,
       type: type,
+      data: data
     }
 
     this.queue.push(item)
@@ -57,9 +62,9 @@ class ImageToBase64Utils {
     this.processing = true
 
     const item = this.queue.pop()
-
     if (item) {
       this.image.src = item.src
+      this.image.setAttribute('crossorigin', 'true')
       this.currentItem = item
       this.image.onload = () => {
         this.genereCanvas()
@@ -86,7 +91,8 @@ class ImageToBase64Utils {
         ctx.drawImage(this.image, 0, 0)
         this.currentItem.callback(
           this.canvas.toDataURL(`image/${this.currentItem.type}`),
-          true
+          true,
+          this.currentItem.data
         )
       }
     }

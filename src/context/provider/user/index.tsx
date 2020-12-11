@@ -1,50 +1,41 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
-import UserContextType from '../../../types/context_provider/UserContextType'
-import UserService from '../../../services/user/UserService'
-import UserContextUpdater from '../../updater/UserContextUpdater'
+import React, { createContext, useContext } from 'react'
+import UserService, { UserServiceImpl } from '../../../services/user/UserService'
+import { UserRepositoryImpl } from '../../../storage/database/user/UserRepository'
+import UserModel from '../../../types/user/api/UserModel'
+import UserEntity from '../../../types/user/database/UserEntity'
+import SynchronizableProvider from '../synchronizable'
+import SynchronizableContextType from '../synchronizable/context'
 
-const UserContext = createContext({
-  email: '',
-  name: '',
-  picture: '',
-} as UserContextType)
+export interface UserContextType
+  extends SynchronizableContextType<
+    number,
+    number,
+    UserModel,
+    UserEntity,
+    UserRepositoryImpl,
+    UserServiceImpl
+  > {}
 
-const UserContextProvider: React.FC = (props) => {
-  const [value, setValue] = useState({
-    email: UserService.getEmail(),
-    name: UserService.getName(),
-    picture: UserService.getPicture(),
-  } as UserContextType)
+const UserContext = createContext<UserContextType>({
+  service: UserService,
+  loading: true,
+  data: [],
+})
 
-  useEffect(() => {
-    const handleLocalDataChanged = () => {
-      const value: UserContextType = {
-        email: UserService.getEmail(),
-        name: UserService.getName(),
-        picture: UserService.getPicture(),
-      }
-
-      saveData(value)
-    }
-
-    let saveData = (value: UserContextType) => {
-      setValue(value)
-    }
-
-    UserContextUpdater.setCallback(handleLocalDataChanged)
-
-    const cleanBeforeUpdate = () => {
-      saveData = () => {}
-    }
-
-    return cleanBeforeUpdate
-  }, [value])
-
-  return (
-    <UserContext.Provider value={value}>{props.children}</UserContext.Provider>
-  )
-}
+const UserProvider: React.FC = ({ children }): JSX.Element =>
+  SynchronizableProvider<
+    number,
+    number,
+    UserModel,
+    UserEntity,
+    UserRepositoryImpl,
+    UserServiceImpl
+  >({
+    children: children,
+    context: UserContext,
+    service: UserService,
+  })
 
 export const useUser = () => useContext(UserContext)
 
-export default UserContextProvider
+export default UserProvider

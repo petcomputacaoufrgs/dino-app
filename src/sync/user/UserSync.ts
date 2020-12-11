@@ -1,13 +1,15 @@
-import BaseSync from '../BaseSync'
 import UserService from '../../services/user/UserService'
+import SynchronizableSync from '../synchronizable/SynchronizableSync'
+import UserModel from '../../types/user/api/UserModel'
+import UserEntity from '../../types/user/database/UserEntity'
+import { UserRepositoryImpl } from '../../storage/database/user/UserRepository'
 
-class UserSync implements BaseSync {
-  receive = async () => {
-    const updatedVersion = await UserService.getServerVersion()
-    if (updatedVersion !== undefined) {
-      UserService.update(updatedVersion)
-    }
-  }
-}
+class UserSync extends SynchronizableSync<
+  number,
+  number,
+  UserModel,
+  UserEntity,
+  UserRepositoryImpl
+> {}
 
-export default new UserSync()
+export default new UserSync(UserService)

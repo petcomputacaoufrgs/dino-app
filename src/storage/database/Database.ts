@@ -4,6 +4,7 @@ import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
+import UserEntity from '../../types/user/database/UserEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 2
@@ -14,6 +15,7 @@ class Database extends Dexie {
   logAppError: Dexie.Table<LogAppErrorEntity, number>
   calendarEvent: Dexie.Table<CalendarEventEntity, number>
   glossary: Dexie.Table<GlossaryItemEntity, number>
+  user: Dexie.Table<UserEntity, number>
 
   constructor() {
     super(DATABASE_NAME)
@@ -25,11 +27,13 @@ class Database extends Dexie {
       glossary: generateSynchronizableTableString(),
       note: generateSynchronizableTableString(['columnId', 'localColumnId']),
       noteColumn: generateSynchronizableTableString(),
+      user: generateSynchronizableTableString(),
       logAppError: '++id,title,file,error,date',
       calendarEvent:
         '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
     })
 
+    this.user = this.table('user')
     this.glossary = this.table('glossary')
     this.note = this.table('note')
     this.noteColumn = this.table('noteColumn')

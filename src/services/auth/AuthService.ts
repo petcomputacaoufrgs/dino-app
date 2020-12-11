@@ -39,15 +39,19 @@ class AuthService {
     refreshTokenNecessary: boolean
   ): Promise<number> => {
     try {
-      const email = UserService.getEmail()
+      const users = await UserService.getAll()
 
-      const authCode = await GoogleOAuth2Service.requestGrant(
-        scopeList,
-        email,
-        refreshTokenNecessary
-      )
-      if (authCode) {
-        return this.requestGoogleGrantOnDinoAPI(authCode, scopeList)
+      if (users.length > 0) {
+        const user = users[0]
+
+        const authCode = await GoogleOAuth2Service.requestGrant(
+          scopeList,
+          user.email,
+          refreshTokenNecessary
+        )
+        if (authCode) {
+          return this.requestGoogleGrantOnDinoAPI(authCode, scopeList)
+        }
       }
       return GrantStatusConstants.EXTERNAL_SERVICE_ERROR
     } catch (e) {
@@ -75,25 +79,9 @@ class AuthService {
   }
 
   googleLogout = async () => {
-    await this.serverLogout()
-
     EventService.whenLogout()
   }
-
-  serverLogout = async () => {
-    try {
-      const request = await DinoAgentService.put(
-        APIRequestMappingConstants.LOGOUT
-      )
-
-      if (request.canGo) {
-        request.authenticate().go()
-      }
-    } catch (e) {
-      LogAppErrorService.logError(e)
-    }
-  }
-
+  
   refreshGoogleAccessToken = async (): Promise<boolean> => {
     this.startRefreshingGoogleAccessToken()
     const request = await DinoAgentService.get(
@@ -312,7 +300,7 @@ class AuthService {
   private saveUserAuthData(responseBody: AuthResponseModel) {
     AuthLocalStorage.setAuthToken(responseBody.accessToken)
     AuthLocalStorage.setAuthTokenExpiresDate(responseBody.expiresDate)
-    UserService.saveUserDataFromModel(responseBody.user)
+    UserService.updateUser(responseBody.user)
   }
 }
 

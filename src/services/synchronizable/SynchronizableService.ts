@@ -49,6 +49,21 @@ export default abstract class SynchronizableService<
     this.webSocketDeletePath = webSocketDeletePath
   }
 
+  //#region EVENT METHODS TO OVERRIDE
+  
+  /**
+   * Override this function to do something before save entity on local database 
+   * @param entity entity that will be saved
+   */
+  protected async onSaveEntity(entity: ENTITY) {  }
+
+  /**
+   * Override this function to do something after a success on sync 
+   */
+  protected async onSyncSuccess() { }
+
+  //#endregion
+
   //#region CONVERSION (MODEL <-> ENTITY)
 
   /**
@@ -144,7 +159,7 @@ export default abstract class SynchronizableService<
   ) => {
     if (model && model.data && model.data.length > 0) {
       const entities = (await this.internalConvertModelsToEntities(model.data))
-        .filter((entity) => entity.id !== undefined)
+        .filter((entity) => entity.id !== undefined && entity.id !== null)
         .sort(this.sortEntityById)
 
       const dbEntities = await this.localGetAllById(entities)
@@ -160,6 +175,8 @@ export default abstract class SynchronizableService<
           entity.localId = dbEntity.localId
           count++
         }
+
+        this.onSaveEntity(entity)
 
         return entity
       })
@@ -234,12 +251,12 @@ export default abstract class SynchronizableService<
         const response = await this.apiSave(model)
 
         if (response && response.success) {
-          const apiEntity = await this.internalConvertModelToEntity(response.data)
+          const newEntity = await this.internalConvertModelToEntity(response.data)
 
-          if (apiEntity) {
-            apiEntity.localId = dbEntity.localId
-            apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
-            await this.localSave(apiEntity)
+          if (newEntity) {
+            newEntity.localId = dbEntity.localId
+            newEntity.localState = SynchronizableLocalState.SAVED_ON_API
+            await this.localSave(newEntity)
             this.updateContext()
           } else {
             LogAppErrorService.logMessage(JSON.stringify(response.data), SynchronizableConstants.CONVERT_MODEL_TO_ENTITY_ERROR)
@@ -290,7 +307,13 @@ export default abstract class SynchronizableService<
   }
 
   public sync = async (): Promise<boolean> => {
-    return this.doSync()
+    const success = await this.doSync()
+
+    if (success) {
+      this.onSyncSuccess()
+    }
+
+    return success
   }
 
   public removeData = async () => {
@@ -390,13 +413,7 @@ export default abstract class SynchronizableService<
     if (success && getAllResponse) {
       const models = getAllResponse.data
 
-      const entities = await this.internalConvertModelsToEntities(models)
-      
-      await this.localClear()
-
-      await this.localSaveAll(entities)
-
-      this.updateContext()
+      await this.localClearAndSaveAllFromModels(models)
     }
 
     return success
@@ -466,6 +483,18 @@ export default abstract class SynchronizableService<
 
   protected localSaveAll = async (entities: ENTITY[]) => {
     return this.repository.saveAll(entities)
+  }
+
+  protected async localClearAndSaveAllFromModels(models: DATA_MODEL[]) {
+    const entities = await this.internalConvertModelsToEntities(models)
+
+    entities.forEach(entity => this.onSaveEntity(entity))
+
+    await this.localClear()
+
+    await this.localSaveAll(entities)
+
+    this.updateContext()
   }
 
   protected localDeleteAllFakeDeleteds = async () => {

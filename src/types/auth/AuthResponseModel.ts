@@ -1,4 +1,4 @@
-import UserModel from '../user/UserModel'
+import UserModel from '../user/api/UserModel'
 
 export default interface AuthResponseModel {
   accessToken: string

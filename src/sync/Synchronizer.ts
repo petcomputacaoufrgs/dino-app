@@ -14,12 +14,12 @@ import ConnectionService from '../services/connection/ConnectionService'
 //TODO: Se tudo for refatorado rever classes Sync
 class Synchronizer {
   private executionGrups: BaseSync[][] = [
+    [UserSync],
     [AppSettingsSync],
     [LogAppErrorSync],
     [GlossarySync],
     [NoteColumnSync, NoteSync],
     [ContactSync],
-    [UserSync],
     [FaqSync],
   ]
 

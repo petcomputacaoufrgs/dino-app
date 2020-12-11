@@ -1,21 +1,18 @@
-import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import UserService from '../../services/user/UserService'
-import SubscriberItem from '../../types/web_socket/SubscriberItem'
-import WebSocketAlertUpdateModel from '../../types/web_socket/WebSocketAlertUpdateModel'
+import SynchronizableWSSubscriber from '../synchronizable/SynchronizableWSSubscriber'
+import UserModel from '../../types/user/api/UserModel'
+import UserEntity from '../../types/user/database/UserEntity'
+import { UserRepositoryImpl } from '../../storage/database/user/UserRepository'
 
-class UserWebSocketSubscriber extends BaseWebSocketSubscriber {
+class UserWebSocketSubscriber extends SynchronizableWSSubscriber<
+  number,
+  number,
+  UserModel,
+  UserEntity,
+  UserRepositoryImpl
+> {
   constructor() {
-    const items: SubscriberItem[] = [
-      {
-        path: APIWebSocketDestConstants.ALERT_USER_UPDATE,
-        callback: (model: WebSocketAlertUpdateModel) => {
-          UserService.update(model.newVersion)
-        },
-      },
-    ]
-
-    super(items)
+    super(UserService)
   }
 }
 

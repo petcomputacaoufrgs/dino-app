@@ -6,9 +6,10 @@ import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import { Avatar } from '@material-ui/core'
-import { useUser } from '../../../context/provider/user'
 import IconButton from '../../button/icon_button'
 import { ReactComponent as ChevronLeftIconSVG } from '../../../assets/icons/chevron_left.svg'
+import { useUser } from '../../../context/provider/user'
+import Loader from '../../loader'
 
 const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
   const language = useCurrentLanguage()
@@ -56,13 +57,15 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
   const renderUser = (): JSX.Element => (
     <div className="user">
       <div className="user__avatar">
-        <Avatar
-          src={user.picture}
-          alt={language.AVATAR_ALT}
-          className="avatar"
-        />
+        <Loader className="user__avatar__loader" loading={user.loading}>
+          <Avatar
+            src={user.service.getPicture(user.data)}
+            alt={language.AVATAR_ALT}
+            className="avatar"
+          />
+        </Loader>
       </div>
-      <p className="username">{user.name}</p>
+      <p className="username">{user.service.getName(user.data)}</p>
     </div>
   )
 

@@ -8,9 +8,9 @@ class APIRequestMappingConstants {
   GLOSSARY = `${this.URL}public/glossary/`
   NOTE = `${this.URL}note/`
   NOTE_COLUMN = `${this.URL}note_column/`
+  USER = `${this.URL}user/`
   private AUTH = `${this.URL}auth/`
   private PUBLIC_AUTH = `${this.URL}public/auth/`
-  private USER = `${this.URL}user/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
   private CONTACT = this.URL + 'contacts/'
@@ -26,12 +26,6 @@ class APIRequestMappingConstants {
 
   WEB_SOCKET_AUTH = `${this.AUTH}web_socket/`
 
-  USER_VERSION = `${this.USER}version/`
-
-  USER_GET = this.USER
-
-  USER_PUT_PHOTO = `${this.USER}photo/`
-
   LOGOUT = `${this.AUTH}logout/`
 
   GLOSSARY_VERSION = `${this.GLOSSARY}version/`
@@ -41,34 +35,6 @@ class APIRequestMappingConstants {
   APP_SETTINGS_GET = `${this.APP_SETTINGS}`
 
   APP_SETTINGS_SAVE = `${this.APP_SETTINGS}`
-
-  NOTE_GET_VERSION = `${this.NOTE}version/`
-
-  NOTE_GET = `${this.NOTE}`
-
-  NOTE_SAVE = `${this.NOTE}`
-
-  NOTE_ORDER = `${this.NOTE}order/`
-
-  NOTE_DELETE = `${this.NOTE}`
-
-  NOTE_DELETE_ALL = `${this.NOTE}all/`
-
-  NOTE_SYNC = `${this.NOTE}sync/`
-
-  NOTE_COLUMN_GET = `${this.NOTE_COLUMN}`
-
-  NOTE_COLUMN_SAVE = `${this.NOTE_COLUMN}`
-
-  NOTE_COLUMN_DELETE = `${this.NOTE_COLUMN}`
-
-  NOTE_COLUMN_DELETE_ALL = `${this.NOTE_COLUMN}all/`
-
-  NOTE_COLUMN_SYNC = `${this.NOTE_COLUMN}sync/`
-
-  NOTE_COLUMN_ORDER = `${this.NOTE_COLUMN}order/`
-
-  NOTE_COLUMN_VERSION = `${this.NOTE_COLUMN}version/`
 
   CONTACT_VERSION = `${this.CONTACT}version/`
 

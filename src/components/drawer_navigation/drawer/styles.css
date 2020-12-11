@@ -79,10 +79,14 @@
   justify-content: center;
 }
 
-.drawer_navigation__drawer__visible .user .avatar {
-  width: 65%;
-  height: auto;
+.user__avatar__loader, .user__avatar .avatar {
+  width: 8rem;
+  height: 8rem;
   margin-bottom: 10px;
+}
+
+.user__avatar__loader .loader__screen {
+  border-radius: 50%;
 }
 
 .drawer_navigation__drawer__visible .user .username {

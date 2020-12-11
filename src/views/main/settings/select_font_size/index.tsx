@@ -16,7 +16,7 @@ const SelectFontSize = ({ fontSize, setFontSize }: SelectFontSizeProps) => {
   }
 
   return (
-    <div className="font-size-theme">
+    <div className="font-size__selector">
       <InputLabel shrink id="font-size--select-label">
         {language.FONT_SIZE_SELECTION_TITLE}
       </InputLabel>

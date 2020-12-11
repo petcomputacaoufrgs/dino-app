@@ -3,34 +3,6 @@
   min-height: 50%;
 }
 
-.first-login__dialog .MuiMobileStepper-root {
-  background: var(--other-details);
-  color: var(--base-font-color);
-  width: 100%;
-}
-
-.first-login__dialog .MuiMobileStepper-dotActive {
-  background-color: #c2740f
-}
-
-.first-login__dialog .next__button  {
-  margin-left: 20px;
-}
-
-.first-login__dialog .back__button  {
-  margin-right: 20px;
-}
-
-.first-login__dialog .save__button {
-  margin-right: 24px;
-  margin-left: 20px;
-}
-
-.first-login__dialog .cancel__button {
-  margin-left: 24px;
-  margin-right: 20px;
-}
-
 .first-login__dialog .citation {
   text-align: end;
   font-style: italic;
@@ -43,3 +15,7 @@
 .first-login__dialog .message_dialog .dino_hr {
   margin: 12px 8px;
 }
+.first-login__dialog .font-size__selector {
+  margin-top: 20px;
+}
+

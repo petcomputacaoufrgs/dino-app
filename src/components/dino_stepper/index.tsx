@@ -3,6 +3,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
 import React from 'react'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
 import DinoStepperProps from './props'
+import './styles.css'
 
 const DinoStepper = ({ steps, activeStep, setActiveStep, onSave, onCancel }: DinoStepperProps) => {
 
@@ -18,6 +19,7 @@ const DinoStepper = ({ steps, activeStep, setActiveStep, onSave, onCancel }: Din
 
   return (
     <MobileStepper
+      className="dino_stepper"
       variant="dots"
       steps={steps}
       position="static"

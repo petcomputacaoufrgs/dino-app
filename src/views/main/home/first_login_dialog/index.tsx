@@ -21,15 +21,15 @@ const FirstLoginDialog = () => {
 
   const language = appSettings.language.current
 
-  const colorTheme = appSettings.colorTheme.currentCode
-
   const [dialogOpen, setDialogOpen] = useState(AuthService.isFirstLogin() ? 0 : -1)
 
   const [selectedFaq, setSelectedFaq] = useState(appSettings.selectedFaq.current)
   
   const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
 
-  const [selectedColorTheme, setSelectedColorTheme] = useState(colorTheme)
+  const [selectedFontSize, setSelectedFontSize] = useState(appSettings.fontSize.currentCode)
+
+  const [selectedColorTheme, setSelectedColorTheme] = useState(appSettings.colorTheme.currentCode)
 
   const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(AppSettingsService.getEssentialContactGrant())
 
@@ -45,6 +45,7 @@ const FirstLoginDialog = () => {
   const handleSwitchInitialConfig = () => {
     const model: AppSettingsRequestAndResponseModel = {
       language: selectedLanguage,
+      fontSize: selectedFontSize,
       colorTheme: selectedColorTheme,
       essentialContactGrant: selectedEssentialContactGrant
     }

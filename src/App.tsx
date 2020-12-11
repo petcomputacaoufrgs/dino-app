@@ -16,7 +16,8 @@ import ViewportService from './services/viewport/ViewportService'
 import DataThemeUtils from './utils/DataThemeUtils'
 import TermsOfUse from './views/terms_of_use'
 import PrivacyPolicy from './views/privacy_policy'
-import { useCurrentColorTheme } from './context/provider/app_settings'
+import { useCurrentColorTheme, useCurrentFontSize } from './context/provider/app_settings'
+import DataFontSizeUtils from './utils/DataFontSizeUtils'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -27,9 +28,16 @@ const App = (): JSX.Element => {
   const colorThemeName = useCurrentColorTheme()
   DataThemeUtils.setBodyDataTheme(colorThemeName)
 
+  const fontSizeName = useCurrentFontSize()
+  DataFontSizeUtils.setBodyDataFontSize(fontSizeName)
+
   useEffect(() => {
     DataThemeUtils.setBodyDataTheme(colorThemeName)
   }, [colorThemeName])
+
+  useEffect(() => {
+    DataFontSizeUtils.setBodyDataFontSize(fontSizeName)
+  }, [fontSizeName])
 
   useEffect(() => {
     if (firstLoad) {

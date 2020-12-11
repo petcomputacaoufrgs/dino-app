@@ -167,8 +167,10 @@ class AppSettingsService {
   getFontSizeName = (code: number): string => {
     switch (code) {
       case 1:
-        return 'large'
+        return 'default'
       case 2:
+        return 'large'
+      case 3:
         return 'larger'
       default:
         return 'default'

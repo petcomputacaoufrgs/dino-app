@@ -35,6 +35,8 @@ const Settings = (): JSX.Element => {
 
   const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
 
+  const [selectedFontSize, setSelectedFontSize] = useState(appSettings.fontSize.currentCode)
+
   const [selectedColorTheme, setSelectedColorTheme] = useState(colorTheme)
 
   const currentFaq = appSettings.selectedFaq.current
@@ -64,6 +66,7 @@ const Settings = (): JSX.Element => {
   const onSave = () => {
     const model: AppSettingsRequestAndResponseModel = {
       language: selectedLanguage,
+      fontSize: selectedFontSize,
       colorTheme: selectedColorTheme,
       essentialContactGrant: selectedEssentialContactGrant
     }

@@ -35,7 +35,7 @@ const FontSizeContextProvider = (): FontSizeContextType => {
 
   const value: FontSizeContextType = {
     currentCode: currentFontSize,
-    currentName: AppSettingsService.getColorThemeName(currentFontSize),
+    currentName: AppSettingsService.getFontSizeName(currentFontSize),
     updateFontSize: updateFontSize,
     getFontSizeOptions: getFontSizeOptions,
   }

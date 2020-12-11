@@ -139,7 +139,7 @@
   --svg-size: 26px;
 }
 
-[data-font-size='big boi'] {
+[data-font-size='larger'] {
   --very-small-font: 1.1375rem;
   --small-font: 1.3125rem;
   --default-font: 1.75rem;

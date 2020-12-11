@@ -34,13 +34,13 @@ const FirstLoginDialog = () => {
   const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(AppSettingsService.getEssentialContactGrant())
 
   const handleCloseDialogs = () => {
-    setDialogOpen(-1);
+    setDialogOpen(-1)
   }
 
   useEffect(() => {
     if(dialogOpen > 0)
       handleSwitchInitialConfig()
-  }, [selectedLanguage, selectedColorTheme])
+  }, [selectedLanguage])
 
   const handleSwitchInitialConfig = () => {
     const model: AppSettingsRequestAndResponseModel = {
@@ -54,14 +54,18 @@ const FirstLoginDialog = () => {
 
   const handleSave = () => {
 
-    AppSettingsService.setEssentialContactGrant(selectedEssentialContactGrant)
+    handleCloseDialogs()
+
+    AuthService.removeIsFirstLogin()
+
+    //comparar se algo mudou do default config
+    
+    handleSwitchInitialConfig()
 
     if (selectedFaq !== undefined) {
       AppSettingsService.setEssentialContactGrant(selectedEssentialContactGrant)
       FaqService.switchUserFaq(selectedFaq)
     }    
-
-    handleCloseDialogs()
   }
 
   const handleCancel = () => {
@@ -129,8 +133,8 @@ const FirstLoginDialog = () => {
   const firstLoginDialogs = [
     { title: "", component: renderWelcomeMessageDialog },
     { title: language.FIRST_LOGIN_CHOOSE_LANGUAGE, component: renderSelectLanguageDialogContent },
-    { title: language.FIRST_LOGIN_CHOOSE_TREATMENT, component: renderSelectFaqDialogContent },
     { title: language.FIRST_LOGIN_CHOOSE_COLOR_THEME, component: renderSelectColorThemeDialogContent },
+    { title: language.FIRST_LOGIN_CHOOSE_TREATMENT, component: renderSelectFaqDialogContent },
     { title: "", component: renderFinalMessageDialog },
   ]
 

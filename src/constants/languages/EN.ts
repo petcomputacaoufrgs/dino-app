@@ -229,7 +229,7 @@ export default class EN implements LanguageBase {
 
   SELECT_TREATMENT = 'Select Treatment'
 
-  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Load essential contacts related to my treatment.'
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Load essential contacts related to my treatment'
 
   SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
 
@@ -420,6 +420,12 @@ export default class EN implements LanguageBase {
   DEVICE_DEFAULT_THEME_NAME = 'System default'
 
   COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
+
+  DEFAULT_FONT_SIZE_NAME = 'Default'
+  
+  LARGE_FONT_SIZE_NAME = 'Large'
+
+  LARGER_FONT_SIZE_NAME = 'Larger'
 
   CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
 

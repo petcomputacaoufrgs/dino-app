@@ -9,6 +9,7 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LanguageCodeConstants from '../../constants/languages/LanguageCodeConstants'
 import AppSettingsRequestAndResponseModel from '../../types/app_settings/AppSettingsRequestAndResponseModel'
 import ColorThemeEnum from '../../types/app_settings/ColorThemeEnum'
+import FontSizeEnum from '../../types/app_settings/FontSizeEnum'
 
 class AppSettingsService {
   listenner = {}
@@ -95,6 +96,7 @@ class AppSettingsService {
   getDefaultAppSettings = (): AppSettingsRequestAndResponseModel => {
     const defaultAppSettings: AppSettingsRequestAndResponseModel = {
       language: navigator.language.slice(0, 2),
+      fontSize: FontSizeEnum.DEFAULT,
       colorTheme: ColorThemeEnum.DEVICE,
       essentialContactGrant: true
     }
@@ -141,6 +143,12 @@ class AppSettingsService {
     return colorTheme
   }
 
+  getFontSize = (): number => {
+    const fontSize = this.get().fontSize
+
+    return fontSize
+  }
+
   getColorThemeName = (code: number): string => {
     switch (code) {
       case 1:
@@ -153,6 +161,17 @@ class AppSettingsService {
         return this.getSystemColorThemeName()
       default:
         return 'light'
+    }
+  }
+
+  getFontSizeName = (code: number): string => {
+    switch (code) {
+      case 1:
+        return 'large'
+      case 2:
+        return 'larger'
+      default:
+        return 'default'
     }
   }
 

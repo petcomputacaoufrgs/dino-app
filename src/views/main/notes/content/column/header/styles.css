@@ -8,12 +8,12 @@
 
 .note__note_content__column__column_header h2 {
   width: 70%;
-  font-size: large;
+  font-size: var(--large-font);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: 0;
-  margin-top: 0;
+  margin-top: 10px;
   font-weight: normal;
 }
 
@@ -32,9 +32,9 @@
 }
 
 .note__note_content__column__column_header__button_div__button svg {
-  fill: var(--column-font-color);
-  height: 18px;
-  width: 18px;
+  fill: var(--column-border);
+  height: var(--svg-size);
+  width: var(--svg-size);
   margin-left: auto;
   margin-right: 0;
 }

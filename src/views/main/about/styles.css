@@ -14,7 +14,7 @@
 
 .card__header .card__header__title {
   margin-bottom: 0.2rem;
-  font-size: 1.75rem;
+  font-size: var(--very-large-font);
   font-weight: 400;
   line-height: 1.334;
   letter-spacing: 0em;

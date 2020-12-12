@@ -5,6 +5,9 @@ import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEnt
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
 import UserEntity from '../../types/user/database/UserEntity'
+import ContactEntity from '../../types/contact/database/ContactEntity'
+import PhoneEntity from '../../types/contact/database/PhoneEntity'
+import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 2
@@ -15,6 +18,9 @@ class Database extends Dexie {
   logAppError: Dexie.Table<LogAppErrorEntity, number>
   calendarEvent: Dexie.Table<CalendarEventEntity, number>
   glossary: Dexie.Table<GlossaryItemEntity, number>
+  contact: Dexie.Table<ContactEntity, number>
+  googleContact: Dexie.Table<GoogleContactEntity, number>
+  phone: Dexie.Table<PhoneEntity, number>
   user: Dexie.Table<UserEntity, number>
 
   constructor() {
@@ -25,6 +31,9 @@ class Database extends Dexie {
     **/
     this.version(DATABASE_VERSION).stores({
       glossary: generateSynchronizableTableString(),
+      contact: generateSynchronizableTableString(),
+      googleContact: generateSynchronizableTableString(),
+      phone: generateSynchronizableTableString(),
       note: generateSynchronizableTableString(['columnId', 'localColumnId']),
       noteColumn: generateSynchronizableTableString(),
       user: generateSynchronizableTableString(),
@@ -35,6 +44,9 @@ class Database extends Dexie {
 
     this.user = this.table('user')
     this.glossary = this.table('glossary')
+    this.contact = this.table('contact')
+    this.googleContact = this.table('googleContact')
+    this.phone = this.table('phone')
     this.note = this.table('note')
     this.noteColumn = this.table('noteColumn')
     this.logAppError = this.table('logAppError')

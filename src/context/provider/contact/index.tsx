@@ -1,52 +1,41 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
-import ContactContextType from '../../../types/context_provider/ContactContextType'
-import Service from '../../../services/contact/ContactService'
-import ContactContextUpdater from '../../updater/ContactContextUpdater'
-import ContactModel from '../../../types/contact/ContactModel'
+import React, { createContext, useContext } from 'react'
+import ContactService, { ContactServiceImpl } from '../../../services/contact/ContactService'
+import { ContactRepositoryImpl } from '../../../storage/database/contact/ContactRepository'
+import ContactModel from '../../../types/contact/api/ContactModel'
+import ContactEntity from '../../../types/contact/database/ContactEntity'
+import SynchronizableProvider from '../synchronizable'
+import SynchronizableContextType from '../synchronizable/context'
 
-const ContactContext = createContext({
-  items: [] as ContactModel[],
-} as ContactContextType)
+export interface ContactContextType
+  extends SynchronizableContextType<
+    number,
+    number,
+    ContactModel,
+    ContactEntity,
+    ContactRepositoryImpl,
+    ContactServiceImpl
+  > {}
 
-const ContactContextProvider: React.FC = (props) => {
-  const [items, setItems] = useState([] as ContactModel[])
-  const [firstLoad, setFirstLoad] = useState(true)
+const ContactContext = createContext<ContactContextType>({
+  service: ContactService,
+  loading: true,
+  data: [],
+})
 
-  useEffect(() => {
-    const updateData = () => {
-      const items = Service.getItems()
-      setItems(items)
-    }
+const ContactProvider: React.FC = ({ children }): JSX.Element =>
+  SynchronizableProvider<
+    number,
+    number,
+    ContactModel,
+    ContactEntity,
+    ContactRepositoryImpl,
+    ContactServiceImpl
+  >({
+    children: children,
+    context: ContactContext,
+    service: ContactService,
+  })
 
-    if (firstLoad) {
-      updateData()
-      setFirstLoad(false)
-    }
+  export const useContact = () => useContext(ContactContext)
 
-    let handleLocalDataChanged = () => {
-      updateData()
-    }
-
-    ContactContextUpdater.setCallback(handleLocalDataChanged)
-
-    const cleanBeforeUpdate = () => {
-      handleLocalDataChanged = () => {}
-    }
-
-    return cleanBeforeUpdate
-  }, [items, firstLoad])
-
-  const value = {
-    items: items,
-  }
-
-  return (
-    <ContactContext.Provider value={value}>
-      {props.children}
-    </ContactContext.Provider>
-  )
-}
-
-export const useContacts = () => useContext(ContactContext)
-
-export default ContactContextProvider
+  export default ContactProvider

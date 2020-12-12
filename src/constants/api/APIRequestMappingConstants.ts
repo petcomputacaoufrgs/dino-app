@@ -13,7 +13,9 @@ class APIRequestMappingConstants {
   private PUBLIC_AUTH = `${this.URL}public/auth/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
-  private CONTACT = this.URL + 'contacts/'
+  CONTACT = this.URL + 'contacts/'
+  PHONE = this.URL + 'phones/'
+  GOOGLE_CONTACT = this.URL + 'google_contacts/'
   private FAQ = this.URL + 'faq/'
 
   AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`

@@ -7,6 +7,12 @@ class APIWebSocketDestConstants {
   URL = `${APIRequestMappingConstants.URL}websocket/`
   GLOSSARY_UPDATE = generateTopicDest('glossary/update/')
   GLOSSARY_DELETE = generateTopicDest('glossary/delete/')
+  CONTACT_UPDATE = generateTopicDest('contact/update/')
+  CONTACT_DELETE = generateTopicDest('contact/delete/')
+  PHONE_UPDATE = generateTopicDest('phone/update/')
+  PHONE_DELETE = generateTopicDest('phone/delete/')
+  GOOGLE_CONTACT_UPDATE = generateTopicDest('google/contact/update/')
+  GOOGLE_CONTACT_DELETE = generateTopicDest('google/contact/delete/')
   NOTE_UPDATE = generateQueueDest('note/update/')
   NOTE_DELETE = generateQueueDest('note/delete/')
   NOTE_COLUMN_UPDATE = generateQueueDest('note_column/update/')

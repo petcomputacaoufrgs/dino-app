@@ -6,8 +6,39 @@ import ContactModel from '../../types/contact/ContactModel'
 import AuthService from '../auth/AuthService'
 import GoogleScope from '../../types/auth/google/GoogleScope'
 import ContactService from './ContactService'
+import GoogleContactRepository, { GoogleContactRepositoryImpl } from '../../storage/database/contact/GoogleContactRepository'
+import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
+import GoogleContactModel from '../../types/contact/api/GoogleContactModel'
+import SynchronizableService from '../synchronizable/SynchronizableService'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 
-class ContactGoogleService {
+class GoogleContactServiceImpl extends SynchronizableService<
+number,
+number,
+GoogleContactModel,
+GoogleContactEntity,
+GoogleContactRepositoryImpl
+> {
+
+  async convertModelToEntity(model: GoogleContactModel): Promise<GoogleContactEntity> {
+    const entity: GoogleContactEntity = {
+      resourceName: model.resourceName,
+      contactId: model.contactId,
+    }
+
+    return entity  
+  }
+
+  async convertEntityToModel(entity: GoogleContactEntity): Promise<GoogleContactModel> {
+    const model: GoogleContactModel = {
+      resourceName: entity.resourceName,
+      contactId: entity.contactId,
+    }
+
+    return model
+  }
+
   saveContact = async (contact: ContactModel): Promise<ContactModel> => {
     return await this.saveContactOnGoogleAPI(contact)
   }
@@ -191,4 +222,9 @@ class ContactGoogleService {
   }
 }
 
-export default new ContactGoogleService()
+export default new GoogleContactServiceImpl(
+  GoogleContactRepository,
+  APIRequestMappingConstants.GOOGLE_CONTACT,
+  APIWebSocketDestConstants.GOOGLE_CONTACT_UPDATE,
+  APIWebSocketDestConstants.GOOGLE_CONTACT_DELETE
+)

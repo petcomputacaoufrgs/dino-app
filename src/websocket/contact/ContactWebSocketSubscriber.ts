@@ -1,20 +1,18 @@
-import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import SynchronizableWSSubscriber from '../synchronizable/SynchronizableWSSubscriber'
+import ContactModel from '../../types/contact/api/ContactModel'
+import ContactEntity from '../../types/contact/database/ContactEntity'
+import { ContactRepositoryImpl } from '../../storage/database/contact/ContactRepository'
 import ContactService from '../../services/contact/ContactService'
-import SubscriberItem from '../../types/web_socket/SubscriberItem'
-import WebSocketAlertUpdateModel from '../../types/web_socket/WebSocketAlertUpdateModel'
 
-class ContactWebSocketSubscriber extends BaseWebSocketSubscriber {
+class ContactWebSocketSubscriber extends SynchronizableWSSubscriber<
+  number,
+  number,
+  ContactModel,
+  ContactEntity,
+  ContactRepositoryImpl
+> {
   constructor() {
-    const items: SubscriberItem[] = [
-      {
-        path: APIWebSocketDestConstants.ALERT_CONTACT_UPDATE,
-        callback: (model: WebSocketAlertUpdateModel) => {
-          ContactService.updateLocal(model.newVersion)
-        },
-      },
-    ]
-    super(items)
+    super(ContactService)
   }
 }
 

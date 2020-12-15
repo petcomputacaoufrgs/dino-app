@@ -18,17 +18,21 @@ import ConnectionService from '../services/connection/ConnectionService'
 import GoogleAuthWebSocketSubscriber from './auth/GoogleAuthWebSocketSubscriber'
 import SyncService from '../services/sync/SyncService'
 import Synchronizer from '../sync/Synchronizer'
+import GoogleContactWebSocketSubscriber from './contact/GoogleContactWebSocketSubscriber'
+import PhoneWebSocketSubscriber from './contact/PhoneWebSocketSubscriber'
 
 class WebSocketConnector {
   private socket?: WebSocket
   private stompClient?: Stomp.Client
   private subscribers: BaseWebSocketSubscriber[] = [
     GlossaryWebSocketSubscriber,
-    AppSettingsWebSocketSubscriber,
     NoteColumnWebSocketSubscriber,
     NoteWebSocketSubscriber,
     UserWebSocketSubscriber,
     ContactWebSocketSubscriber,
+    GoogleContactWebSocketSubscriber,
+    PhoneWebSocketSubscriber,
+    AppSettingsWebSocketSubscriber,
     FaqWebSocketSubscriber,
     FaqUserWebSocketSubscriber,
     GoogleAuthWebSocketSubscriber,
@@ -44,7 +48,7 @@ class WebSocketConnector {
           const baseUrl = this.getSocketBaseURL(response.webSocketToken)
           this.socket = new SockJS(baseUrl)
           this.stompClient = Stomp.over(this.socket)
-          this.muteConnectionLogs()
+         //this.muteConnectionLogs()
           this.stompClient.connect({}, this.subscribe)
           this.socket.onclose = () => {
             this.handleWebSocketClosed()

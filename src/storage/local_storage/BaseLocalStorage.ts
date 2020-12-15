@@ -1,5 +1,3 @@
-import LocalStorageEmpyKeyError from '../../error/local_storage/LocalStorageEmpyKeyError'
-
 /**
  * @description Define uma base para gravar e ler dados do LocalStorage
  * Atenção: Quando o objeto não for uma string é necessário utilizar JSON.stringify
@@ -9,17 +7,13 @@ export default class BaseLocalStorage {
   protected get = (key: string): string | null => localStorage.getItem(key)
 
   protected set = (key: string, value: string) => {
-    if (!key) {
-      throw new LocalStorageEmpyKeyError()
-    } else {
+    if (key) {
       return localStorage.setItem(key, value)
     }
   }
 
   protected remove = (key: string) => {
-    if (!key) {
-      throw new LocalStorageEmpyKeyError()
-    } else {
+    if (key) {
       return localStorage.removeItem(key)
     }
   }

@@ -11,7 +11,7 @@ import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import sleep from '../utils/SleepUtils'
 
 const TIME_MARGIN_OF_ERROR_IN_MS = 300000
-const TIME_TO_AWAIT_FOR_REFRESHED_TOKEN = 500
+const TIME_TO_AWAIT_FOR_REFRESHED_TOKEN = 1000
 
 class DinoAgentService extends BaseAgent {
   protected filterBeforeCreate = async () => {
@@ -84,6 +84,10 @@ class DinoAgentService extends BaseAgent {
           AuthService.setAuthTokenExpiresDate(refreshResponse.expiresDate)
           AuthService.stopRefreshingAccessToken(true)
           return true
+        }
+        if (response.status === HttpStatus.NON_AUTHORITATIVE_INFORMATION) {
+          AuthService.logout()
+          return false
         }
       } catch (e) {
         LogAppErrorService.logError(e)

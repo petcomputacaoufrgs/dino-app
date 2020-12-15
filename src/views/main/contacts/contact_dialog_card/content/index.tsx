@@ -16,10 +16,10 @@ import {
   Home as HomeIcon,
   LocalHospitalRounded as HospitalIcon,
 } from '@material-ui/icons'
-import PhoneModel from '../../../../../types/contact/PhoneModel'
+import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
-  const getTypePhoneIcon = (phone: PhoneModel) => {
+  const getTypePhoneIcon = (phone: PhoneEntity) => {
     if (phone.type === ContactsConstants.MOBILE) {
       return <PhoneIcon />
     }
@@ -30,14 +30,14 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
   }
 
   const Description = (): JSX.Element => {
-    return item.description ? (
+    return item.contact.description ? (
       <ListItem divider className="contacts__list__item">
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
         <ListItemText
           primary={
-            <div className="contacts__list__item__text">{item.description}</div>
+            <div className="contacts__list__item__text">{item.contact.description}</div>
           }
         />
       </ListItem>

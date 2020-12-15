@@ -6,6 +6,11 @@ import SynchronizableEntity from '../../../types/synchronizable/database/Synchro
 import SynchronizableRepository from '../../../storage/database/synchronizable/SynchronizableRepository'
 import SynchronizableService from '../../../services/synchronizable/SynchronizableService'
 
+interface SynchronizableStateType<ENTITY> {
+  loading: boolean
+  data: ENTITY[]
+}
+
 function SynchronizableProvider<
   ID extends IndexableType,
   LOCAL_ID extends IndexableTypePart,
@@ -25,8 +30,10 @@ function SynchronizableProvider<
   REPOSITORY,
   SERVICE
 >): JSX.Element {
-  const [data, setData] = useState<ENTITY[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
+  const [state, setState] = useState<SynchronizableStateType<ENTITY>>({
+    data: [],
+    loading: true
+  })
 
   useEffect(() => {
     const getData = async () => {
@@ -36,10 +43,10 @@ function SynchronizableProvider<
     }
 
     let updateData = (data: ENTITY[]) => {
-      setData(data)
-      if (loading) {
-        setLoading(false)
-      }
+      setState({
+        data: data,
+        loading: false
+      })
     }
 
     const handleLocalDataChanged = (data: ENTITY[]) => {
@@ -49,19 +56,21 @@ function SynchronizableProvider<
     service.setContextProviderCallback(handleLocalDataChanged)
 
     const cleanBeforeUpdate = () => {
-      updateData = async () => {}
+      updateData = () => {}
     }
 
-    getData()
+    if (state.loading) {
+      getData()
+    }
 
     return cleanBeforeUpdate
-  }, [loading, service])
+  }, [state.loading, service])
 
   return (
     <context.Provider
       value={{
-        data: data,
-        loading: loading,
+        data: state.data,
+        loading: state.loading,
         service: service,
       }}
     >

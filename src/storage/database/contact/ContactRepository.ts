@@ -6,6 +6,14 @@ export class ContactRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   ContactEntity
-> {}
+> {
+  async getByLocalId(localId: number): Promise<ContactEntity | undefined> {
+    return this.table.where('localId').equals(localId).first()
+  }
+
+  async getById(id: number): Promise<ContactEntity | undefined> {
+    return this.table.where('id').equals(id).first()
+  }
+}
 
 export default new ContactRepositoryImpl(Database.contact)

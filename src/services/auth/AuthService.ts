@@ -78,7 +78,7 @@ class AuthService {
     }
   }
 
-  googleLogout = async () => {
+  logout = async () => {
     EventService.whenLogout()
   }
   

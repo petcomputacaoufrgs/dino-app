@@ -1,3 +1,7 @@
+.contacts {
+  height: 100%;
+}
+
 .contacts
   .contacts__list__item__content
   .MuiListItem-gutters
@@ -47,4 +51,8 @@
   position: absolute;
   bottom: 1.2rem;
   right: 1.2rem;
+}
+
+.contacts__loader {
+  height: 100%;
 }

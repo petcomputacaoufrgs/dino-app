@@ -9,13 +9,13 @@ class APIRequestMappingConstants {
   NOTE = `${this.URL}note/`
   NOTE_COLUMN = `${this.URL}note_column/`
   USER = `${this.URL}user/`
+  CONTACT = this.URL + 'contact/'
+  PHONE = this.URL + 'phone/'
+  GOOGLE_CONTACT = this.URL + 'google_contact/'
   private AUTH = `${this.URL}auth/`
   private PUBLIC_AUTH = `${this.URL}public/auth/`
   private APP_SETTINGS = `${this.URL}user_app_settings/`
   private LOG_APP_ERROR = `${this.URL}log_app_error/`
-  CONTACT = this.URL + 'contacts/'
-  PHONE = this.URL + 'phones/'
-  GOOGLE_CONTACT = this.URL + 'google_contacts/'
   private FAQ = this.URL + 'faq/'
 
   AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
@@ -37,22 +37,6 @@ class APIRequestMappingConstants {
   APP_SETTINGS_GET = `${this.APP_SETTINGS}`
 
   APP_SETTINGS_SAVE = `${this.APP_SETTINGS}`
-
-  CONTACT_VERSION = `${this.CONTACT}version/`
-
-  CONTACT_GET = `${this.CONTACT}`
-
-  CONTACT_SAVE = `${this.CONTACT}`
-
-  CONTACT_EDIT = `${this.CONTACT}`
-
-  CONTACT_DELETE = `${this.CONTACT}`
-
-  CONTACT_SAVE_ALL = `${this.CONTACT}all/`
-
-  CONTACT_EDIT_ALL = `${this.CONTACT}all/`
-
-  CONTACT_DELETE_ALL = `${this.CONTACT}all/`
 
   CONTACT_GOOGLE_DECLINE = `${this.CONTACT}google/decline_contacts/`
 

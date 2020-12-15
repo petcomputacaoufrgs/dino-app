@@ -1,8 +1,6 @@
 import GoogleAgentService from '../../agent/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import GooglePeopleModel from '../../types/google_api/people/GooglePeopleModel'
-import ContactModel from '../../types/contact/ContactModel'
 import AuthService from '../auth/AuthService'
 import GoogleScope from '../../types/auth/google/GoogleScope'
 import ContactService from './ContactService'
@@ -12,8 +10,9 @@ import GoogleContactModel from '../../types/contact/api/GoogleContactModel'
 import SynchronizableService from '../synchronizable/SynchronizableService'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import ContactEntity from '../../types/contact/database/ContactEntity'
 
-class GoogleContactServiceImpl extends SynchronizableService<
+export class GoogleContactServiceImpl extends SynchronizableService<
 number,
 number,
 GoogleContactModel,
@@ -21,24 +20,41 @@ GoogleContactEntity,
 GoogleContactRepositoryImpl
 > {
 
-  async convertModelToEntity(model: GoogleContactModel): Promise<GoogleContactEntity> {
-    const entity: GoogleContactEntity = {
-      resourceName: model.resourceName,
-      contactId: model.contactId,
-    }
+  async convertModelToEntity(model: GoogleContactModel): Promise<GoogleContactEntity | undefined> {
+    const contact = await ContactService.getById(model.contactId)
 
-    return entity  
+    if (contact) {
+      const entity: GoogleContactEntity = {
+        resourceName: model.resourceName,
+        localContactId: contact.localId
+      }
+  
+      return entity  
+    }
   }
 
-  async convertEntityToModel(entity: GoogleContactEntity): Promise<GoogleContactModel> {
-    const model: GoogleContactModel = {
-      resourceName: entity.resourceName,
-      contactId: entity.contactId,
-    }
+  async convertEntityToModel(entity: GoogleContactEntity): Promise<GoogleContactModel | undefined> {
+    if (entity.localContactId) {
+      const contact = await ContactService.getByLocalId(entity.localContactId)
 
-    return model
+      if (contact && contact.id) {
+        const model: GoogleContactModel = {
+          resourceName: entity.resourceName,
+          contactId: contact.id,
+        }
+      
+        return model
+      }
+    }
   }
 
+  getByContact(contact: ContactEntity, googleContacts: GoogleContactEntity[]): GoogleContactEntity | undefined {
+    if (contact.localId) {
+      return googleContacts.find(googleContact => googleContact.localContactId === contact.localId)
+    }
+  }
+
+  /*
   saveContact = async (contact: ContactModel): Promise<ContactModel> => {
     return await this.saveContactOnGoogleAPI(contact)
   }
@@ -61,25 +77,26 @@ GoogleContactRepositoryImpl
         this.deleteContactOnGoogleAPI(resourceName)
       )
     )
-  }
+  }*/
 
+  /*
   private saveContactOnGoogleAPI = async (
     contact: ContactModel
   ): Promise<ContactModel> => {
     if (this.hasContactGrant()) {
-      const peopleModel = this.createPeopleFromContactModel(contact)
+      const peopleModel = this.createGooglePeopleFromContactModel(contact)
 
       try {
-        const etag = await this.getCurrentEtag(contact)
+        const etag = await this.getCurrentGooglePeopleEtag(contact)
 
         const response =
           etag && contact.resourceName
-            ? await this.updateContactRequest(
+            ? await this.updateContactOnGoogleAPIRequest(
                 peopleModel,
                 contact.resourceName,
                 etag
               )
-            : await this.createContactRequest(peopleModel)
+            : await this.createContactOnGoogleAPIRequest(peopleModel)
         if (response && response.resourceName) {
           contact.resourceName = response.resourceName
         }
@@ -90,22 +107,7 @@ GoogleContactRepositoryImpl
 
     return contact
   }
-
-  private deleteContactOnGoogleAPI = async (resourceName: string) => {
-    if (this.hasContactGrant()) {
-      try {
-        const success = await this.deleteContactRequest(resourceName)
-
-        if (!success) {
-          ContactService.pushToResourceNamesToDelete(resourceName)
-        }
-      } catch (e) {
-        LogAppErrorService.logError(e)
-        ContactService.pushToResourceNamesToDelete(resourceName)
-      }
-    }
-  }
-
+  */
   private hasContactGrant = (): boolean => {
     const scopes = AuthService.getGoogleAuthScopes()
 
@@ -116,7 +118,7 @@ GoogleContactRepositoryImpl
     return false
   }
 
-  private createContactRequest = async (
+  private createContactOnGoogleAPIRequest = async (
     model: GooglePeopleModel
   ): Promise<GooglePeopleModel | undefined> => {
     const request = await GoogleAgentService.post(
@@ -132,7 +134,7 @@ GoogleContactRepositoryImpl
     return undefined
   }
 
-  private getContactRequest = async (
+  private getContactOnGoogleAPIRequest = async (
     resourceName: string
   ): Promise<GooglePeopleModel | undefined> => {
     const request = await GoogleAgentService.get(
@@ -146,7 +148,7 @@ GoogleContactRepositoryImpl
     return undefined
   }
 
-  private updateContactRequest = async (
+  private updateContactOnGoogleAPIRequest = async (
     model: GooglePeopleModel,
     resourceName: string,
     etag: string
@@ -164,7 +166,7 @@ GoogleContactRepositoryImpl
     return undefined
   }
 
-  private deleteContactRequest = async (
+  private deleteContactOnGoogleAPIRequest = async (
     resourceName: string
   ): Promise<boolean> => {
     const request = await GoogleAgentService.delete(
@@ -179,7 +181,8 @@ GoogleContactRepositoryImpl
     return false
   }
 
-  private createPeopleFromContactModel = (
+  /*
+  private createGooglePeopleFromContactModel = (
     contact: ContactModel
   ): GooglePeopleModel => {
     const model: GooglePeopleModel = {
@@ -205,11 +208,11 @@ GoogleContactRepositoryImpl
     return model
   }
 
-  private getCurrentEtag = async (
+  private getCurrentGooglePeopleEtag = async (
     contact: ContactModel
   ): Promise<string | undefined> => {
     if (contact.resourceName) {
-      const googleSavedContact = await this.getContactRequest(
+      const googleSavedContact = await this.getContactOnGoogleAPIRequest(
         contact.resourceName
       )
 
@@ -220,6 +223,7 @@ GoogleContactRepositoryImpl
 
     return undefined
   }
+  */
 }
 
 export default new GoogleContactServiceImpl(

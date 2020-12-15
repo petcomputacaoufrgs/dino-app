@@ -73,7 +73,6 @@ const Notes = () => {
         answer: "",
         question: question,
         tags: tagList,
-        columnId: noteView.column.id,
         localColumnId: noteView.column.localId,
         order: noteView.notes.length
       })
@@ -124,7 +123,6 @@ const Notes = () => {
     destinationViewNote.notes.forEach((note, index) => {
       note.order = index
       note.localColumnId = destinationViewNote.column.localId
-      note.columnId = destinationViewNote.column.id
     })
 
     if (changedColumn) {

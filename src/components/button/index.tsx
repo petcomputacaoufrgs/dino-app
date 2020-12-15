@@ -23,6 +23,10 @@ const Button: React.FC<ButtonProps> = ({
       mainClass = mainClass.concat(' button__outline')
     }
 
+    if (disabled) {
+      mainClass = mainClass.concat(' disabled')
+    }
+
     return mainClass
   }
 

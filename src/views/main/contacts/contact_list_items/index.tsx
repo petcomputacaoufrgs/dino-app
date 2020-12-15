@@ -4,47 +4,58 @@ import ContactCard from '../contact_dialog_card'
 import ContactItemList from '../contact_list_item'
 import { List } from '@material-ui/core'
 import ContactFormDialog from '../contact_dialog_form'
-import ContactService from '../../../../services/contact/ContactService'
 import Constants from '../../../../constants/contact/ContactsConstants'
+import ContactView from '../../../../types/contact/view/ContactView'
 
-const ContactItems = ({ items, setItems }: ContactItemsProps): JSX.Element => {
+const ContactItems: React.FC<ContactItemsProps> = ({
+  items,
+  contactService,
+  googleContactService,
+  phoneService
+}) => {
   const [cardOpen, setCardOpen] = useState(0)
-  const [edit, setEdit] = useState(0)
-  const [_delete, setDelete] = useState(0)
+  const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(undefined)
+  const [contactToDelete, setContactToDelete] = useState<ContactView | undefined>(undefined)
 
   useEffect(() => {
-    if (_delete) {
-      ContactService.deleteContact(_delete)
-      setDelete(0)
+    if (contactToDelete) {
+      phoneService.deleteAll(contactToDelete.phones)
+      contactService.delete(contactToDelete.contact)
+      setContactToDelete(undefined)
     }
-  }, [_delete, setItems])
+  }, [contactToDelete, contactService, phoneService])
 
   return (
     <List className="contacts__list">
-      {items.map((contact, index) => (
+      {items.map((item, index) => (
         <div key={index}>
           <ContactItemList
-            item={contact}
-            setEdit={setEdit}
-            setDelete={setDelete}
-            onClick={() => setCardOpen(contact.frontId)}
+            item={item}
+            phoneService={phoneService}
+            setEdit={setContactToEdit}
+            setDelete={setContactToDelete}
+            onClick={() => setCardOpen(item.contact.localId!)}
           >
             <ContactCard
-              item={contact}
+              item={item}
+              phoneService={phoneService}
               onClose={() => setCardOpen(0)}
-              setEdit={setEdit}
-              setDelete={setDelete}
-              dialogOpen={cardOpen === contact.frontId}
-            />
-            <ContactFormDialog
-              item={contact}
-              dialogOpen={edit === contact.frontId}
-              onClose={() => setEdit(0)}
-              action={Constants.ACTION_EDIT}
+              setEdit={setContactToEdit}
+              setDelete={setContactToDelete}
+              dialogOpen={cardOpen === item.contact.localId}
             />
           </ContactItemList>
         </div>
       ))}
+      <ContactFormDialog
+        item={contactToEdit}
+        contactService={contactService}
+        phoneService={phoneService}
+        items={items}
+        dialogOpen={contactToEdit !== undefined}
+        onClose={() => setContactToEdit(undefined)}
+        action={Constants.ACTION_EDIT}
+      />
     </List>
   )
 }

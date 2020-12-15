@@ -26,7 +26,11 @@
   outline: none;
 }
 
-.button__outline {
+.button.button__outline {
   border: solid 1px;
   border-color: var(--contrast-color);
+}
+
+.button.disabled {
+  opacity: 0.5;
 }

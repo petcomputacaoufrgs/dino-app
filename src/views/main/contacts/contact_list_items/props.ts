@@ -1,6 +1,12 @@
-import ContactModel from '../../../../types/contact/ContactModel'
+import ContactView from '../../../../types/contact/view/ContactView'
+import { ContactServiceImpl } from '../../../../services/contact/ContactService'
+import { GoogleContactServiceImpl } from '../../../../services/contact/GoogleContactService'
+import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
+import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
 
 export default interface ContactItemsProps {
-  items: Array<ContactModel>
-  setItems: React.Dispatch<React.SetStateAction<ContactModel[]>>
+  items: Array<ContactView>,
+  contactService: ContactServiceImpl,
+  googleContactService: GoogleContactServiceImpl,
+  phoneService: PhoneServiceImpl
 }

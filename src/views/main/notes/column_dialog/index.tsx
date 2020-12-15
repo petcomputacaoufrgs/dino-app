@@ -9,7 +9,6 @@ import {
 import TransitionSlide from '../../../../components/slide_transition'
 import NoteColumnDialogProps from './props'
 import NoteColumnDialogHeader from './header'
-import NoteColumnEditError from '../../../../error/note/NoteColumnEditError'
 import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
@@ -55,8 +54,6 @@ const NoteColumnDialog = forwardRef(
           order: props.order
         }
         props.onSave(newColumn)
-      } else {
-        throw new NoteColumnEditError()
       }
     }
 

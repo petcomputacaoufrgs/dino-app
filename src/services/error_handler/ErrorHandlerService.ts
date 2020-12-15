@@ -1,5 +1,5 @@
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
+import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import EventService from '../events/EventService'
 import AuthService from '../auth/AuthService'
 

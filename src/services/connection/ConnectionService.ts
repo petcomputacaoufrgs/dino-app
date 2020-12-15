@@ -4,11 +4,10 @@ import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
 import ConnectionLocalStorage from '../../storage/local_storage/connection/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 export type ConnectionListennerCallback = (online: boolean) => void
 
-const DELAY_TO_VERIFY_DINO_CONNECTION = 2500
+const DELAY_TO_VERIFY_DINO_CONNECTION = 2000
 
 class ConnectionService {
   callbacks = [] as ConnectionListennerCallback[]
@@ -36,17 +35,13 @@ class ConnectionService {
   }
 
   isDinoConnected = async (): Promise<Boolean> => {
-    try {
-      const request = Superagent.get(APIRequestMappingConstants.TEST_CONNECTION)
+    const isConnected = await this.internalIsDinoConnected()
 
-      const response = await request
-
-      return response.status === HttpStatus.OK
-    } catch (e) {
-      LogAppErrorService.logError(e)
+    if (!isConnected) {
+      this.verify()
     }
 
-    return false
+    return isConnected
   }
 
   verify = () => {
@@ -54,6 +49,18 @@ class ConnectionService {
       this.awaitForDinoConnection()
     } else {
       this.setDisconnected()
+    }
+  }
+
+  private internalIsDinoConnected = async (): Promise<Boolean> => {
+    try {
+      const request = Superagent.get(APIRequestMappingConstants.TEST_CONNECTION)
+
+      const response = await request
+
+      return response.status === HttpStatus.OK
+    } catch (e) {
+      return false
     }
   }
 

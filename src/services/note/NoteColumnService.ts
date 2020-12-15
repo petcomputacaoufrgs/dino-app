@@ -33,8 +33,12 @@ export class NoteColumnServiceImpl extends SynchronizableService<
     return model
   }
 
-  async getLocalColumnByColumnId(columnId: number): Promise<NoteColumnEntity | undefined> {
-    return this.repository.getByColumnId(columnId)
+  async getById(id: number): Promise<NoteColumnEntity | undefined> {
+    return this.repository.getById(id)
+  }
+
+  async getByLocalId(localId: number): Promise<NoteColumnEntity | undefined> {
+    return this.repository.getByLocalId(localId)
   }
 
   hasNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {

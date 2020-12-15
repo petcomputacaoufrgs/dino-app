@@ -1,9 +1,8 @@
-import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
+import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import DinoAgentService from '../../agent/DinoAgentService'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import LogAppErrorSyncLocalStorage from '../../storage/local_storage/log_app_error/LogAppErrorSyncLocalStorage'
-import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
-import LogAppModelError from '../../error/log_app_error/LogAppModelError'
+import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListModel'
 import LogAppErrorRepository from '../../storage/database/log_app_error/LogAppErrorRepository'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 
@@ -27,24 +26,24 @@ class LogAppErrorService {
   }
 
   logModel = async (model: LogAppErrorModel) => {
-    if (model.date && model.error) {
-      const request = await DinoAgentService.post(
-        APIRequestMappingConstants.SAVE_LOG_APP_ERROR
-      )
+    if (!model.date) {
+      model.date = new Date().getTime()
+    }
 
-      if (request.canGo) {
-        try {
-          await request.authenticate().setBody(model).go()
-        } catch {
-          this.saveLocalLog(model)
-          this.setShouldSync(true)
-        }
-      } else {
+    const request = await DinoAgentService.post(
+      APIRequestMappingConstants.SAVE_LOG_APP_ERROR
+    )
+
+    if (request.canGo) {
+      try {
+        await request.authenticate().setBody(model).go()
+      } catch {
         this.saveLocalLog(model)
         this.setShouldSync(true)
       }
     } else {
-      this.logError(new LogAppModelError(model))
+      this.saveLocalLog(model)
+      this.setShouldSync(true)
     }
   }
 

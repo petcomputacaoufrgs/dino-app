@@ -1,9 +1,9 @@
-import PhoneModel from '../../../../../types/contact/PhoneModel'
+import PhoneEntity from "../../../../../types/contact/database/PhoneEntity"
 
 export interface ContactFormDialogContentProps {
   name: string
   description: string
-  phones: PhoneModel[]
+  phones: PhoneEntity[]
   invalidName: boolean
   helperText: { number: string; text: string }
 

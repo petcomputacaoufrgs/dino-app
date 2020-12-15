@@ -32,10 +32,10 @@ class Database extends Dexie {
     this.version(DATABASE_VERSION).stores({
       glossary: generateSynchronizableTableString(),
       contact: generateSynchronizableTableString(),
-      googleContact: generateSynchronizableTableString(),
-      phone: generateSynchronizableTableString(),
-      note: generateSynchronizableTableString(['columnId', 'localColumnId']),
+      googleContact: generateSynchronizableTableString('localContactId'),
+      phone: generateSynchronizableTableString('localContactId'),
       noteColumn: generateSynchronizableTableString(),
+      note: generateSynchronizableTableString('columnId', 'localColumnId'),
       user: generateSynchronizableTableString(),
       logAppError: '++id,title,file,error,date',
       calendarEvent:
@@ -58,9 +58,9 @@ class Database extends Dexie {
  * Return param index concatenated with synchronizable basic indexes
  * @param attributes attributes to index
  */
-const generateSynchronizableTableString = (attributes?: string[]): string => {
+const generateSynchronizableTableString = (...attributes: string[]): string => {
   if (attributes && attributes.length > 0) {
-    return '++localId,localState,id,' + attributes.join(',')
+    //return '++localId,localState,id,' + attributes.join(',')
   }
 
   return '++localId,localState,id'

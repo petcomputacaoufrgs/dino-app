@@ -22,7 +22,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   const language = useCurrentLanguage()
   const alert = useAlert()
   const googleOAuth2 = useGoogleOAuth2()
-
+  
   const [loading, setLoading] = useState(false)
 
   const [isConnected, setIsConnected] = useState(
@@ -30,7 +30,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   )
 
   useEffect(() => {
-    const updateConnectionState = (connected) => {
+    const updateConnectionState = (connected: boolean) => {
       setIsConnected(connected)
     }
 
@@ -41,10 +41,18 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
     }
 
     return cleanBeforeUpdate
-  }, [])
+  })
 
   const handleLoginButtonClick = async () => {
     setLoading(true)
+
+    const connected = await ConnectionService.isDinoConnected()
+
+    if (!connected) {
+      setLoading(false)
+      setIsConnected(false)
+      return
+    }
 
     const refreshTokenRequired = AuthService.isRefreshRequired()
 

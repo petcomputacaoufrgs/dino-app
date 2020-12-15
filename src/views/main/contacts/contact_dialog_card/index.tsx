@@ -7,7 +7,7 @@ import TransitionSlide from '../../../../components/slide_transition'
 
 const ContactCard = forwardRef(
   (
-    { item, dialogOpen, onClose, setEdit, setDelete }: ContactCardProps,
+    { item, phoneService, dialogOpen, onClose, setEdit, setDelete }: ContactCardProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
     return (
@@ -22,6 +22,7 @@ const ContactCard = forwardRef(
       >
         <ContactCardHeader
           item={item}
+          phoneService={phoneService}
           setEdit={setEdit}
           setDelete={setDelete}
           onClose={onClose}

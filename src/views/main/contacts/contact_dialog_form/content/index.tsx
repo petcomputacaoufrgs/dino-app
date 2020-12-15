@@ -17,13 +17,13 @@ const ContactFormDialogContent = (
     props.helperText.number === tel
 
   const isNumberInvalid = (tel: string) =>
-    isNumberTaken(tel) || tel.length === Constants.NUMBER_MAX
+    tel !== '' && (isNumberTaken(tel) || tel.length === Constants.NUMBER_MAX)
 
   const isNameInvalid = (name: string) =>
     name.length === Constants.NAME_MAX || props.invalidName
 
   return (
-    <div className="dialog-form__content">
+    <div className="dialog_form__content">
       <TextField
         required
         fullWidth

@@ -1,6 +1,6 @@
 import LogAppErrorService from '../../services/log_app_error/LogAppErrorService'
-import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
-import LogAppErrorListModel from '../../types/log_app_error/LogAppErrorListModel'
+import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
+import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListModel'
 import BaseSync from '../BaseSync'
 
 class LogAppErrorSync implements BaseSync {

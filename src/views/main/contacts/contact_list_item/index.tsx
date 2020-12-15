@@ -10,17 +10,17 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core'
-import ContactService from '../../../../services/contact/ContactService'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import './styles.css'
 
-const ContactItemList = ({
+const ContactItemList: React.FC<ContactItemListProps> = ({
   item,
+  phoneService,
   setEdit,
   setDelete,
   onClick,
   children,
-}: ContactItemListProps): JSX.Element => {
+}) => {
   const language = useCurrentLanguage()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -28,16 +28,16 @@ const ContactItemList = ({
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget)
 
-  const handleOpen = () => onClick(item.frontId)
+  const handleOpen = () => onClick(item.contact.localId!)
 
   const handleClose = () => setAnchorEl(null)
 
   const handleEdit = () => {
-    setEdit(item.frontId)
+    setEdit(item)
     handleClose()
   }
   const handleDelete = () => {
-    setDelete(item.frontId)
+    setDelete(item)
     handleClose()
   }
 
@@ -47,14 +47,14 @@ const ContactItemList = ({
         <ListItemAvatar>
           <Avatar
             aria-label={language.AVATAR_ALT}
-            className={`avatar__color-${item.color}`}
+            className={`avatar__color-${item.contact.color}`}
           >
-            {item.name[0].toUpperCase()}
+            {item.contact.name[0].toUpperCase()}
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={item.name}
-          secondary={ContactService.getPhoneTypes(item.phones, language)}
+          primary={item.contact.name}
+          secondary={phoneService.getPhoneTypes(item.phones, language)}
         />
         <ListItemSecondaryAction>
           <OptionsIconButton dark onClick={handleClick} />

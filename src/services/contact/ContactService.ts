@@ -1,13 +1,15 @@
-import ContactsConstants from '../../constants/contact/ContactsConstants'
-import PhoneModel from '../../types/contact/api/GoogleContactModel'
 import ContactModel from '../../types/contact/api/ContactModel'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import LanguageBase from '../../constants/languages/LanguageBase'
-import ArrayUtils from '../../utils/ArrayUtils'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import ContactRepository, { ContactRepositoryImpl } from '../../storage/database/contact/ContactRepository'
 import SynchronizableService from '../synchronizable/SynchronizableService'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import PhoneEntity from '../../types/contact/database/PhoneEntity'
+import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
+import StringUtils from '../../utils/StringUtils'
+import ContactView from '../../types/contact/view/ContactView'
+import PhoneService from './PhoneService'
+import GoogleContactService from './GoogleContactService'
 
 export class ContactServiceImpl extends SynchronizableService<
 number,
@@ -21,7 +23,7 @@ ContactRepositoryImpl
     const entity: ContactEntity = {
       name: model.name,
       description: model.description,
-      color: model.color,
+      color: model.color
     }
 
     return entity
@@ -37,29 +39,18 @@ ContactRepositoryImpl
     return model
   }
 
-  //#region UPDATE QUEUE
-
-  // getContactsToUpdate = (contacts: ContactEntity[], idsToUpdate: number[]): { toAdd: ContactEntity[]; toEdit: ContactEntity[] } => {
-  //   return contacts
-  //     .filter((contact) => idsToUpdate.includes(contact.localId))
-  //     .reduce((acc, contact) => {
-  //         const toAddOrEdit = contact.id === undefined ? 'toAdd' : 'toEdit'
-  //         acc[toAddOrEdit].push(contact)
-  //         return acc
-  //       }, { toAdd: Array<ContactEntity>(), toEdit: Array<ContactEntity>() }
-  //     )
-  // }
-
   changed = (item: ContactEntity, edited: ContactEntity): boolean => {
     let changed = false
 
-    // if (item.phones.length === edited.phones.length) {
-    //   changed = item.phones.some(
-    //     (phone, index) => 
-    //     phone.number !== edited.phones[index].number 
-    //     || phone.type !== edited.phones[index].type
-    //   )
-    // } else changed = true
+    /*
+    if (item.phones.length === edited.phones.length) {
+       changed = item.phones.some(
+         (phone, index) => 
+         phone.number !== edited.phones[index].number 
+         || phone.type !== edited.phones[index].type
+       )
+    } else changed = true
+    */
 
     if (item.name !== edited.name) changed = true
     if (item.description !== edited.description) changed = true
@@ -68,28 +59,24 @@ ContactRepositoryImpl
     return changed
   }
 
-  getPhoneTypes = (phones: Array<PhoneModel>, language: LanguageBase): string => {
-    if (phones.length > 0) {
-      const types = ArrayUtils.removeRepeatedValues(
-        phones.map((phone) => phone.type)
-      )
-
-      return types.map((type) => this.getPhoneType(type, language)).toString()
-    }
-    return ''
+  getByLocalId = (localId: number): Promise<ContactEntity | undefined> => {
+    return this.repository.getByLocalId(localId)
   }
 
-  getPhoneType = (type: number, language: LanguageBase): string => {
-    switch (type) {
-      case ContactsConstants.PUBLIC_SERVICE:
-        return language.CONTACTS_PUBLIC_SERVICE_PHONE
+  getById = (id: number): Promise<ContactEntity | undefined> => {
+    return this.repository.getById(id)
+  }
 
-      case ContactsConstants.RESIDENTIAL:
-        return language.CONTACTS_RESIDENTIAL_PHONE
+  getViewContactByFilter = (contacts: ContactEntity[], phones: PhoneEntity[], googleContacts: GoogleContactEntity[], searchTerm: string): ContactView[] => {
+    const contactsFiltered = contacts.filter((item) =>
+      StringUtils.contains(item.name, searchTerm)
+    )
 
-      default:
-        return language.CONTACTS_MOBILE_PHONE
-    }
+    return contactsFiltered.map((contact) => ({
+      contact: contact,
+      phones: PhoneService.getByContact(contact, phones),
+      googleContact: GoogleContactService.getByContact(contact, googleContacts)
+    } as ContactView))
   }
 }
 

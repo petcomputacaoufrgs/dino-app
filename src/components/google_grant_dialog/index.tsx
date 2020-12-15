@@ -6,7 +6,6 @@ import AuthService from '../../services/auth/AuthService'
 import { ReactComponent as DinoAuthSVG } from '../../assets/icons/dino_auth.svg'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
-import ContactServerService from '../../services/contact/ContactServerService'
 import { useAlert } from '../../context/provider/alert'
 import { useCurrentLanguage } from '../../context/provider/app_settings'
 import './styles.css'
@@ -50,7 +49,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 
     const handleDecline = async () => {
       alert.showInfoAlert(language.GRANT_DECLINED)
-      ContactServerService.declineGoogleContacts()
+      //contact.service.declineGoogleContacts()
       onClose()
     }
 

@@ -1,9 +1,11 @@
-import ContactModel from '../../../../types/contact/ContactModel'
+import ContactView from '../../../../types/contact/view/ContactView';
+import { PhoneServiceImpl } from '../../../../services/contact/PhoneService';
 
 export default interface ContactCardProps {
-  item: ContactModel
+  item: ContactView
+  phoneService: PhoneServiceImpl
   dialogOpen: boolean
   onClose: () => void
-  setEdit: React.Dispatch<React.SetStateAction<number>>
-  setDelete: React.Dispatch<React.SetStateAction<number>>
+  setEdit: React.Dispatch<React.SetStateAction<ContactView | undefined>>
+  setDelete: React.Dispatch<React.SetStateAction<ContactView | undefined>>
 }

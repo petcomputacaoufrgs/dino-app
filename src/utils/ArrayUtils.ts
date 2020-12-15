@@ -35,18 +35,12 @@ class ArrayUtils {
   notEqualIgnoreOrder = <T>(list1: T[], list2: T[]): boolean =>
     !this.equalIgnoreOrder(list1, list2)
 
-  partition = <T>(list: T[], isValid: filter<T>): [T[], T[]] => {
-    const pass: any[] = []
-    const fail: any[] = []
-    list.forEach((value) => {
-      if (isValid(value)) {
-        pass.push(value)
-      } else {
-        fail.push(value)
-      }
-    })
-
-    return [pass, fail]
+  partition = <T>(list: T[], isValid: filter<T>): { valid: T[]; invalid: T[]; } => {
+    return list.reduce((acc, value) => {
+      const listName = isValid(value) ? 'valid' : 'invalid'
+      acc[listName].push(value)
+      return acc
+    }, {valid: Array<T>(), invalid: Array<T>()})
   }
 }
 

@@ -6,10 +6,10 @@ import CloseIconButton from '../../../../../components/button/icon_button/close_
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import '../../styles.css'
 import './styles.css'
-import ContactService from '../../../../../services/contact/ContactService'
 
 const ContactCardHeader = ({
   item,
+  phoneService,
   setEdit,
   setDelete,
   onClose: handleCloseDialog,
@@ -30,7 +30,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      setEdit(item.frontId)
+      setEdit(item)
     }, 300)
   }
 
@@ -38,7 +38,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      setDelete(item.frontId)
+      setDelete(item)
     }, 300)
   }
 
@@ -48,9 +48,9 @@ const ContactCardHeader = ({
         avatar={
           <Avatar
             aria-label={language.AVATAR_ALT}
-            className={`avatar__color-${item.color}`}
+            className={`avatar__color-${item.contact.color}`}
           >
-            {item.name[0].toUpperCase()}
+            {item.contact.name[0].toUpperCase()}
           </Avatar>
         }
         action={
@@ -59,8 +59,8 @@ const ContactCardHeader = ({
             <CloseIconButton dark onClose={handleCloseDialog} />
           </>
         }
-        title={item.name}
-        subheader={ContactService.getPhoneTypes(item.phones, language)}
+        title={item.contact.name}
+        subheader={phoneService.getPhoneTypes(item.phones, language)}
         className="contact_dialog_content_header"
       />
       <Menu

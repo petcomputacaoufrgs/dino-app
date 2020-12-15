@@ -1,8 +1,10 @@
-import ContactModel from '../../../../../types/contact/ContactModel'
+import ContactView from "../../../../../types/contact/view/ContactView"
+import { PhoneServiceImpl } from '../../../../../services/contact/PhoneService'
 
 export default interface ContactCardHeaderProps {
-  item: ContactModel
-  setEdit: React.Dispatch<React.SetStateAction<number>>
-  setDelete: React.Dispatch<React.SetStateAction<number>>
+  item: ContactView
+  phoneService: PhoneServiceImpl
+  setEdit: React.Dispatch<React.SetStateAction<ContactView | undefined>>
+  setDelete: React.Dispatch<React.SetStateAction<ContactView | undefined>>
   onClose: () => void
 }

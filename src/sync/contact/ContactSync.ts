@@ -1,24 +1,15 @@
-import Service from '../../services/contact/ContactService'
-import ServerService from '../../services/contact/ContactServerService'
-import BaseSync from '../BaseSync'
-import ContactService from '../../services/contact/ContactService'
+import ContactService from "../../services/contact/ContactService"
+import { ContactRepositoryImpl } from "../../storage/database/contact/ContactRepository"
+import ContactModel from "../../types/contact/api/ContactModel"
+import ContactEntity from "../../types/contact/database/ContactEntity"
+import SynchronizableSync from "../synchronizable/SynchronizableSync"
 
-class ContactSync implements BaseSync {
-  send = async (): Promise<void> => {
-    if (Service.shouldSync()) {
-      await ServerService.updateServer()
-    }
-  }
+class ContactSync extends SynchronizableSync<
+  number,
+  number,
+  ContactModel,
+  ContactEntity,
+  ContactRepositoryImpl
+> {}
 
-  receive = async (): Promise<void> => {
-    const serverVersion = await ServerService.getVersion()
-    const localVersion = ContactService.getVersion()
-    if (serverVersion !== undefined) {
-      if (localVersion === undefined || serverVersion > localVersion) {
-        await Service.updateLocal(serverVersion)
-      }
-    }
-  }
-}
-
-export default new ContactSync()
+export default new ContactSync(ContactService)

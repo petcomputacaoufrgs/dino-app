@@ -70,12 +70,12 @@ export default abstract class SynchronizableService<
    * @description Remember to transform model booleans into number (0,1) to save on database
    * @param model api data_model
    */
-  abstract async convertModelToEntity(model: DATA_MODEL): Promise<ENTITY | undefined>
+  abstract convertModelToEntity(model: DATA_MODEL): Promise<ENTITY | undefined>
 
   /**
    * @param entity local entity
    */
-  abstract async convertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined>
+  abstract convertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined>
 
   protected async internalConvertModelToEntity(model: DATA_MODEL): Promise<ENTITY | undefined> {
     const entity = await this.convertModelToEntity(model)
@@ -236,7 +236,7 @@ export default abstract class SynchronizableService<
     }
   }
 
-  public save = async (entity: ENTITY) => {
+  public save = async (entity: ENTITY): Promise<ENTITY | undefined> => {
     this.updateLastUpdate(entity)
     entity.localState = SynchronizableLocalState.SAVED_LOCALLY
 
@@ -258,6 +258,8 @@ export default abstract class SynchronizableService<
             newEntity.localState = SynchronizableLocalState.SAVED_ON_API
             await this.localSave(newEntity)
             this.updateContext()
+
+            return newEntity
           } else {
             LogAppErrorService.logMessage(JSON.stringify(response.data), SynchronizableConstants.CONVERT_MODEL_TO_ENTITY_ERROR)
           }
@@ -265,6 +267,8 @@ export default abstract class SynchronizableService<
       } else {
         LogAppErrorService.logMessage(JSON.stringify(entity), SynchronizableConstants.CONVERT_ENTITY_TO_MODEL_ERROR)
       }
+
+      return dbEntity
     }
   }
 

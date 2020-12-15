@@ -15,8 +15,6 @@ import AddColumn from './add_column'
 import NoteColumnDialog from '../column_dialog'
 import NoteCreateDialog from '../note_create_dialog'
 import NoteInfoDialog from '../note_info_dialog'
-import LogAppErrorService from '../../../../services/log_app_error/LogAppErrorService'
-import ViewAddNoteOpenedWIthoutColumnError from '../../../../error/note/ViewAddNoteOpenedWIthoutColumnError'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../../../types/note/database/NoteEntity'
 import NoteView from '../../../../types/note/view/NoteView'
@@ -130,8 +128,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
     setCurrentNoteView(undefined)
     if (currentNoteView) {
       onSaveNewNote(question, tagList, currentNoteView)
-    } else {
-      LogAppErrorService.logError(new ViewAddNoteOpenedWIthoutColumnError())
     }
   }
 

@@ -10,16 +10,18 @@ import NoteColumnSync from './note/NoteColumnSync'
 import NoteSync from './note/NoteSync'
 import SyncService from '../services/sync/SyncService'
 import ConnectionService from '../services/connection/ConnectionService'
+import PhoneSync from './contact/PhoneSync'
+import GoogleContactSync from './contact/GoogleContactSync'
 
 //TODO: Se tudo for refatorado rever classes Sync
 class Synchronizer {
   private executionGrups: BaseSync[][] = [
     [UserSync],
-    [AppSettingsSync],
-    [LogAppErrorSync],
     [GlossarySync],
     [NoteColumnSync, NoteSync],
-    [ContactSync],
+    [ContactSync, PhoneSync, GoogleContactSync],
+    [AppSettingsSync],
+    [LogAppErrorSync],
     [FaqSync],
   ]
 

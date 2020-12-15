@@ -17,11 +17,10 @@ export class NoteServiceImpl extends SynchronizableService<
   NoteRepositoryImpl
 > {
   async convertModelToEntity(model: NoteDataModel): Promise<NoteEntity | undefined> {
-    const noteColumn = await NoteColumnService.getLocalColumnByColumnId(model.columnId)
+    const noteColumn = await NoteColumnService.getById(model.columnId)
     if (noteColumn) {
       const entity: NoteEntity = {
         answer: model.answer,
-        columnId: model.columnId,
         order: model.order,
         question: model.question,
         tags: model.tags === "" ? [] : model.tags.split(NoteConstants.TAG_SEPARATOR),
@@ -30,24 +29,24 @@ export class NoteServiceImpl extends SynchronizableService<
   
       return entity
     }
-
-    return undefined
   }
 
   async convertEntityToModel(entity: NoteEntity): Promise<NoteDataModel | undefined> {
-    if (entity.columnId) {
-      const model: NoteDataModel = {
-        answer: entity.answer,
-        columnId: entity.columnId,
-        order: entity.order,
-        question: entity.question,
-        tags: entity.tags.join(NoteConstants.TAG_SEPARATOR)
-      }
-  
-      return model
-    }
+    if (entity.localColumnId) {
+      const noteColumn = await NoteColumnService.getByLocalId(entity.localColumnId)
 
-    return undefined
+      if (noteColumn && noteColumn.id) {
+        const model: NoteDataModel = {
+          answer: entity.answer,
+          columnId: noteColumn.id,
+          order: entity.order,
+          question: entity.question,
+          tags: entity.tags.join(NoteConstants.TAG_SEPARATOR)
+        }
+    
+        return model
+      }
+    }
   }
 
   getAllTags(notes: NoteEntity[]): string[] {

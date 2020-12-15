@@ -17,6 +17,8 @@ import CalendarService from '../calendar/CalendarService'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
+import PhoneService from '../contact/PhoneService'
+import GoogleContactService from '../contact/GoogleContactService'
 
 export class UserServiceImpl extends SynchronizableService<
   number,
@@ -109,12 +111,14 @@ export class UserServiceImpl extends SynchronizableService<
   removeUserData() {
     this.removeData()
     AuthService.removeUserData()
-    AppSettingsService.removeUserData()
     NoteService.removeData()
     NoteColumnService.removeData()
     GlossaryService.removeData()
     LogAppErrorService.removeUserData()
-    ContactService.removeUserData()
+    ContactService.removeData()
+    PhoneService.removeData()
+    GoogleContactService.removeData()
+    AppSettingsService.removeUserData()
     FaqService.removeUserData()
     CalendarService.removeUserData()
   }

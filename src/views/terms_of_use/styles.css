@@ -13,27 +13,26 @@
   overflow-x: hidden;
 }
 
-.terms_of_use h1 {
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 5px;
+.terms_of_use .arrow-back {
+  padding: 0px;
+  margin-bottom: 10px;
+}
+
+.terms_of_use .icon_button.arrow-back svg {
+  fill: var(--contrast-color);
 }
 
 .terms_of_use h2 {
-  font-size: 18px;
   font-weight: 600;
-  margin: 30px 0px 15px 0px;
-}
-
-.terms_of_use h3 {
-  font-size: 16px;
-  font-style: italic;
-  margin: 20px 0px 10px 0px;
+  margin: 20px 0px 15px 0px;
 }
 
 .terms_of_use h4 {
-  font-size: 14px;
+  margin: 15px 0px 10px 0px;
+  color: #636363;
+}
+
+.terms_of_use h5 {
   font-style: italic;
   margin: 15px 0px 10px 0px;
   color: #636363;

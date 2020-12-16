@@ -1,20 +1,21 @@
 import React from 'react'
+import ArrowBack from '../../components/arrow_back'
 
 import './styles.css'
 
 const PrivacyPolicy: React.FC = () => {
   return (
     <div className="privacy_policy">
-      <h1>Política de Privacidade</h1>
+      <ArrowBack />
+      <h2>Política de Privacidade</h2>
       <span>Em vigor a partir de 30 de novembro de 2020.</span>
-
       <p>
         O DinoApp se preocupa com a segurança das informações de seus usuários,
         entendemos a importância de sua proteção e segurança e a confia que você
         deposita em nós.
       </p>
 
-      <h2>Acesso de multiplos dispositivos</h2>
+      <h5>Acesso de múltiplos dispositivos</h5>
       <p>
         O DinoApp armazena informações do aplicativo no dispositivo e em seu
         servidor na nuvem para oferecer um melhor serviço para seus usuários.
@@ -31,13 +32,13 @@ const PrivacyPolicy: React.FC = () => {
         para o próprio usuário.
       </p>
 
-      <h2>Serviços externos</h2>
+      <h5>Serviços externos</h5>
       <p>
         Dados associados a contas externas do usuário como a conta do Google
         estão sujeitos às políticas de privacidade da prestadora do serviço.
       </p>
 
-      <h2>Identificação do usuário</h2>
+      <h5>Identificação do usuário</h5>
       <p>
         Pelas restrições de funcionalidades do serviço não é possível utilizar
         todas as suas funcionalidades sem necessitar da identificação do
@@ -46,7 +47,7 @@ const PrivacyPolicy: React.FC = () => {
         privacidade da Google.
       </p>
 
-      <h2>Informações do dispositivo do usuário</h2>
+      <h5>Informações do dispositivo do usuário</h5>
       <p>
         Coletamos informações sobre os apps, navegadores e dispositivos que você
         usa para acessar os nossos serviços, o que nos ajuda a fornecer recursos
@@ -59,7 +60,7 @@ const PrivacyPolicy: React.FC = () => {
         o aplicativo com a sua conta de usuário.
       </p>
 
-      <h2>Usamos os dados para fornecer um serviço melhor</h2>
+      <h5>Usamos os dados para fornecer um serviço melhor</h5>
       <p>
         Todos os dados coletados pelo aplicativo tem como objetivo fornecer um
         produto mais completo para o usuário, desde de salvar dados
@@ -68,7 +69,7 @@ const PrivacyPolicy: React.FC = () => {
         sugestões para melhoria das funcionalidades dos nossos serviços.
       </p>
 
-      <h2>Personalizar sua experiência</h2>
+      <h5>Personalizar sua experiência</h5>
       <p>
         Permitimos que os usuários criem configurações personalizadas dentro dos
         nossos serviços para que este possua uma melhor experiência de uso, e
@@ -76,7 +77,7 @@ const PrivacyPolicy: React.FC = () => {
         que não se percam e possam ser acessados em diferentes dispositivos.
       </p>
 
-      <h2>Entrar em contato com você</h2>
+      <h5>Entrar em contato com você</h5>
       <p>
         Podemos entrar em contato com você através de notificações nos seus
         dispositivos com informações relevantes as funcionalidades dos nossos
@@ -84,7 +85,7 @@ const PrivacyPolicy: React.FC = () => {
         cada dispositivos utilizado.
       </p>
 
-      <h2>Uso desconectado</h2>
+      <h5>Uso desconectado</h5>
       <p>
         Muitos dos nossos serviços estão disponíveis para uso quando
         desconectado da internet, porém com limitações. Quando você voltar a
@@ -94,7 +95,7 @@ const PrivacyPolicy: React.FC = () => {
         manter os conteúdos mais atuais.
       </p>
 
-      <h2>Excluir informações</h2>
+      <h5>Excluir informações</h5>
       <p>
         Para garantir a privacidade do usuário, muitas das informações salvas
         por nossos serviços podem ser excluídas permanentemente pelo usuário e
@@ -102,7 +103,7 @@ const PrivacyPolicy: React.FC = () => {
         de alguma informação, não haverá como recuperar posteriormente.
       </p>
 
-      <h2>Compartilhamento de informações</h2>
+      <h5>Compartilhamento de informações</h5>
       <p>
         Muitos dos nossos serviços podem ser compartilhados com outros usuários
         através de grupos que você define ou opta por participar. Quando
@@ -110,7 +111,7 @@ const PrivacyPolicy: React.FC = () => {
         igual, e todos possuem os mesmo direitos sobre ele.
       </p>
 
-      <h2>Compartilhamento de informações por motivos legais</h2>
+      <h5>Compartilhamento de informações por motivos legais</h5>
       <p>
         Nós acreditamos, de boa-fé, que o acesso a informações seja necessário
         em determinados casos, como:
@@ -135,7 +136,7 @@ const PrivacyPolicy: React.FC = () => {
         </li>
       </ul>
 
-      <h2>Segurança das suas informações</h2>
+      <h5>Segurança das suas informações</h5>
       <p>
         Incorporamos e aprimoramos a segurança dos nossos serviços para proteger
         seus dados. Entendemos que a sua privacidade deve estar sempre em
@@ -145,14 +146,14 @@ const PrivacyPolicy: React.FC = () => {
         regras de confidencialidade para proteger suas informações.
       </p>
 
-      <h2>Retenção de dados</h2>
+      <h5>Retenção de dados</h5>
       <p>
         Alguns dados relacionados a autenticação e registros de dispositivos são
         mantidos em nossas bases de dados para futuras melhorias dos nossos
         serviços, porém muitos destes dados são anônimos.
       </p>
 
-      <h2>Armazenamento de informações</h2>
+      <h5>Armazenamento de informações</h5>
       <p>
         Nossos serviços, e as informações salvas por eles, podem ser hospedados
         em servidores externos pertencentes a diferentes empresas. Os dados e
@@ -161,7 +162,7 @@ const PrivacyPolicy: React.FC = () => {
         empresa(s) de hospedagem utilizada(s).
       </p>
 
-      <h2>Quando esta política se aplica</h2>
+      <h5>Quando esta política se aplica</h5>
       <p>
         Esta política se aplica a todos os serviços fornecidos pelo DinoApp e
         está sujeita aos regulamentos de proteção de dados do Brasil.
@@ -172,7 +173,7 @@ const PrivacyPolicy: React.FC = () => {
         políticas das empresa que fornece cada serviço.
       </p>
 
-      <h2>Alterações nesta política</h2>
+      <h5>Alterações nesta política</h5>
       <p>
         Estas políticas são alteradas periodicamente devido a motivos como
         mudanças nas legislações locais, adição de novas funcionalidades, entre
@@ -183,14 +184,14 @@ const PrivacyPolicy: React.FC = () => {
         mantemos disponível versões anteriores.
       </p>
 
-      <h2>Dados de contato</h2>
+      <h5>Dados de contato</h5>
       <p>
         Caso tenha ficado com alguma dúvida, pode nos contactar pelos e-mails{' '}
         <a href="mailto:petcompufrgs@gmail.com">petcompufrgs@gmail.com</a> e{' '}
         <a href="mailto:pet@inf.ufrgs.br">pet@inf.ufrgs.br</a>.
       </p>
 
-      <h2>Domínios</h2>
+      <h5>Domínios</h5>
       <p>
         Nossos serviços estão disponibilizados através de domínios na internet
         e, em casos extremos, os domínios utilizados para prestar nossos

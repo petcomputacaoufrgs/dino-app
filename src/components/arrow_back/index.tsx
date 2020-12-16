@@ -9,6 +9,7 @@ const ArrowBack = (): JSX.Element => {
 
   return (
     <IconButton
+      className="arrow-back"
       ariaLabel={language.ARROW_BACK_ARIA_LABEL}
       icon={ArrowBackIconSVG}
       onClick={() => HistoryService.goBack()}

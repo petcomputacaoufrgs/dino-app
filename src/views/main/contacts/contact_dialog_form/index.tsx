@@ -40,6 +40,7 @@ const ContactFormDialog = React.forwardRef(
 
     const [contact, setContact] = useState(getContact(item))
     const [contactPhones, setContactPhones] = useState(getPhones(item))
+    const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
     const [invalidName, setInvalidName] = useState(false)
     const [invalidPhone, setInvalidPhone] = useState({
       number: '',
@@ -81,31 +82,32 @@ const ContactFormDialog = React.forwardRef(
         if (viewWithSamePhone) {
           handleTakenNumber(viewWithSamePhone)
         } else {
-          saveNewContact()
+          saveContact()
           handleClose()
         }
       }
     }
 
-    const saveNewContact = async () => {
-      function savePhones(contact: ContactEntity) {
+    const saveContact = async () => {
+      const savePhones = async (contact: ContactEntity) => {
         const newPhones = contactPhones.filter(phone => phone.number !== '')
         newPhones.forEach(phone => phone.localContactId = contact.localId)
         if (newPhones.length > 0) {
+          await phoneService.deleteAll(phonesToDelete)
           phoneService.saveAll(newPhones)
         }
       }
       
       if (action === ContactsConstants.ACTION_EDIT) {
         if (item && item.contact.localId) {
-          contactService.save(contact)
-          savePhones(contact)
+          await contactService.save(contact)
+          await savePhones(contact)
         }
       } else if (action === ContactsConstants.ACTION_ADD) {
         const savedContact = await contactService.save(contact)
 
         if (savedContact) {
-          savePhones(savedContact)
+          await savePhones(savedContact)
         }
       }
     }
@@ -127,7 +129,9 @@ const ContactFormDialog = React.forwardRef(
 
     const handleDeletePhone = (number: string) => {
       const indexPhone = contactPhones.findIndex((phone) => phone.number === number)
+      phonesToDelete.push(contactPhones[indexPhone])
       contactPhones.splice(indexPhone, 1)
+      setPhonesToDelete([...phonesToDelete])
       setContactPhones([...contactPhones])
     }
 

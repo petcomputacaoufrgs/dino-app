@@ -3,7 +3,7 @@ import SynchronizableDataModel from '../../types/synchronizable/api/Synchronizab
 import DinoAgentService from '../../agent/DinoAgentService'
 import SynchronizableGetModel from '../../types/synchronizable/api/request/SynchronizableGetModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import SynchronizableDataResponseModel from '../../types/synchronizable/api/response/SynchronizableResponseModel'
+import SynchronizableDataResponseModel from '../../types/synchronizable/api/response/SynchronizableDataResponseModel'
 import SynchronizableDeleteModel from '../../types/synchronizable/api/request/SynchronizableDeleteModel'
 import SynchronizableListDataResponseModel from '../../types/synchronizable/api/response/SynchronizableListDataResponseModel'
 import SynchronizableSaveAllModel from '../../types/synchronizable/api/request/SynchronizableSaveAllModel'
@@ -15,6 +15,8 @@ import SynchronizableLocalState from '../../types/synchronizable/database/Synchr
 import SynchronizableWSUpdateModel from '../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
 import SynchronizableConstants from '../../constants/synchronizable/SynchronizableConstants'
+import SynchronizableGenericDataResponseModel from '../../types/synchronizable/api/response/SynchronizableGenericDataResponseModel'
+import ArrayUtils from '../../utils/ArrayUtils'
 
 /**
  * @description Generic service with basic methods for synchronizable entity,
@@ -277,14 +279,26 @@ export default abstract class SynchronizableService<
       this.updateLastUpdate(entity)
       entity.localState = SynchronizableLocalState.SAVED_LOCALLY
     })
-    
-    await this.localSaveAll(entities)
 
     const models = await this.internalConvertEntitiesToModels(
       entities
     )
 
-    await this.apiSaveAll(models)
+    const editedEntites = entities.filter(entity => entity.localId !== undefined)
+
+    await this.localDeleteAll(editedEntites)
+
+    const response = await this.apiSaveAll(models)
+
+    const success = this.processGenericResponse(response)
+
+    if (success && response) {
+      const models = response.data
+      const newEntities = await this.internalConvertModelsToEntities(models)
+      await this.localSaveAll(newEntities)
+    } else {
+      await this.localSaveAll(entities)
+    }
 
     this.updateContext()
   }
@@ -300,7 +314,7 @@ export default abstract class SynchronizableService<
       const success = this.processGenericResponse(deleteAllResponse)
 
       if (success) {
-        await this.localDeleteAllByLocalId(entities)
+        await this.localDeleteAll(entities)
         this.updateContext()
       }
 
@@ -405,6 +419,10 @@ export default abstract class SynchronizableService<
       notSavedEntities
     )
 
+    console.log(notSavedEntities)
+
+    console.log(notSavedModels)
+
     const saveAllResponse = await this.apiSaveAll(notSavedModels)
 
     return this.processGenericResponse(saveAllResponse)
@@ -455,12 +473,15 @@ export default abstract class SynchronizableService<
   }
 
   protected localFakeDeleteAll = async (entities: ENTITY[]): Promise<boolean> => {
-    const deletedItens = await this.repository.fakeDeleteAll(entities, this.getLastUpdate())
+    const partition = ArrayUtils.partition(entities, entity => entity.id !== undefined)
 
-    return deletedItens > 0
+    const realDeletedItens = await this.repository.deleteAll(partition.selected)
+    const deletedItens = await this.repository.fakeDeleteAll(partition.notSelected, this.getLastUpdate())
+
+    return realDeletedItens + deletedItens > 0
   }
 
-  protected localDeleteAllByLocalId = async (entities: ENTITY[]) => {
+  protected localDeleteAll = async (entities: ENTITY[]) => {
     const localIds = entities.filter(entity => entity.localId !== undefined).map(entity => entity.localId!)
     await this.repository.deleteAllByLocalIds(localIds)
   }
@@ -591,7 +612,7 @@ export default abstract class SynchronizableService<
 
   protected apiSaveAll = async (
     models: DATA_MODEL[]
-  ): Promise<SynchronizableGenericResponseModel | undefined> => {
+  ): Promise<SynchronizableListDataResponseModel<ID, DATA_MODEL> | undefined> => {
     const request = await DinoAgentService.post(this.saveAllRequestURL())
 
     if (request.canGo) {
@@ -612,7 +633,7 @@ export default abstract class SynchronizableService<
 
   protected apiDeleteAll = async (
     models: DATA_MODEL[]
-  ): Promise<SynchronizableGenericResponseModel | undefined> => {
+  ): Promise<SynchronizableGenericDataResponseModel<Array<ID>> | undefined> => {
     const request = await DinoAgentService.delete(this.deleteAllRequestURL())
 
     if (request.canGo) {

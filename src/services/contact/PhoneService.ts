@@ -36,6 +36,7 @@ PhoneRepositoryImpl
     if (entity.localContactId) {
       const contact = await ContactService.getByLocalId(entity.localContactId)
 
+      console.log(entity.localContactId)
       if (contact && contact.id) {
         const model: PhoneModel = {
           number: entity.number,

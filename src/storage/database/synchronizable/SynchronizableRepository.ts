@@ -55,7 +55,8 @@ export default abstract class SynchronizableRepository<
   }
 
   async saveAll(entities: ENTITY[]) {
-    await this.table.bulkPut(entities)
+    const ids = await this.table.bulkPut(entities)
+    entities.forEach((entity, index) => entity.localId = ids[index])
   }
 
   async delete(entity: ENTITY) {
@@ -112,6 +113,11 @@ export default abstract class SynchronizableRepository<
 
   async deleteAllByLocalIds(ids: LOCAL_ID[]) {
     return this.table.where('localId').anyOf(ids).delete()
+  }
+
+  async deleteAll(entities: ENTITY[]) {
+    const localIds = entities.filter(entity => entity.localId !== undefined).map(entity => entity.localId!)
+    return this.table.where('localId').anyOf(localIds).delete()
   }
 
   async clear() {

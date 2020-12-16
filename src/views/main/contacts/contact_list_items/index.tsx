@@ -18,11 +18,25 @@ const ContactItems: React.FC<ContactItemsProps> = ({
   const [contactToDelete, setContactToDelete] = useState<ContactView | undefined>(undefined)
 
   useEffect(() => {
-    if (contactToDelete) {
-      phoneService.deleteAll(contactToDelete.phones)
-      contactService.delete(contactToDelete.contact)
+    let updateState = () => {
       setContactToDelete(undefined)
     }
+
+    const deleteItems = async () => {
+      if (contactToDelete) {
+        await phoneService.deleteAll(contactToDelete.phones)
+        contactService.delete(contactToDelete.contact)
+        updateState()
+      }
+    }
+    
+    deleteItems()
+
+    const cleanBeforeUpdate = () => {
+      updateState = () => {}
+    }
+
+    return cleanBeforeUpdate
   }, [contactToDelete, contactService, phoneService])
 
   return (

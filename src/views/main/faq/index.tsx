@@ -8,6 +8,7 @@ import { useCurrentLanguage, useCurrentFaq } from '../../../context/provider/app
 import { useFaq } from '../../../context/provider/faq'
 import QuestionDialogForm from './question_dialog_form'
 import FaqOptions from './faq_options_dialog'
+import LinkButton from '../../../components/button/link_button'
 
 const Faq = (): JSX.Element => {
   const language = useCurrentLanguage()
@@ -58,12 +59,10 @@ const Faq = (): JSX.Element => {
             title={currentFaq ? currentFaq.title : ''}
             items={searchResults}
           />
-          <button
-            className="send-question__button"
-            onClick={handleSendQuestion}
-          >
-            {language.NOT_FOUND_QUESTION_FAQ}
-          </button>
+          <LinkButton 
+            text={language.NOT_FOUND_QUESTION_FAQ} 
+            onClick={handleSendQuestion} 
+          />
           <QuestionDialogForm
             dialogOpen={dialogOpen}
             setDialogOpen={setDialogOpen}

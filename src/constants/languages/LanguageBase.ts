@@ -35,6 +35,8 @@ export default interface LanguageBase {
   DELETE_OPTION_TEXT: string
   DELETE_CONTACT_QUESTION: string
   DELETE_CONTACT_OPTION_TEXT: string
+  TERMS_OF_USE: string
+  PRIVACY_POLICY: string
   MENU_HOME: string
   MENU_GAMES: string
   MENU_GLOSSARY: string

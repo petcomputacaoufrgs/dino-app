@@ -77,6 +77,10 @@ export default class EN implements LanguageBase {
 
   DELETE_CONTACT_OPTION_TEXT = 'This action will permanently delete your contact.'
 
+  TERMS_OF_USE = 'Terms of Use'
+  
+  PRIVACY_POLICY = 'Privacy Policy'
+
   MENU_HOME = 'Home'
 
   MENU_GAMES = 'Games'

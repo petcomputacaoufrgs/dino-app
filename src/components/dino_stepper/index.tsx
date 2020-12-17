@@ -5,8 +5,13 @@ import { useCurrentLanguage } from '../../context/provider/app_settings'
 import DinoStepperProps from './props'
 import './styles.css'
 
-const DinoStepper = ({ steps, activeStep, setActiveStep, onSave, onCancel }: DinoStepperProps) => {
-
+const DinoStepper: React.FC<DinoStepperProps> = ({ steps, 
+  activeStep, 
+  setActiveStep, 
+  onSave, 
+  onCancel 
+}) => {
+  
   const language = useCurrentLanguage()
 
   const handleNext = () => {

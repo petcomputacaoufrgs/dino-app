@@ -47,9 +47,10 @@ const Settings = (): JSX.Element => {
   const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(AppSettingsService.getEssentialContactGrant())
 
   useEffect(() => {
-    if(selectedContactGrant)
-      handleChangeContactsGrantDialog()
-  }, [selectedContactGrant])
+    if(selectedContactGrant) {
+      setOpenContactsGrantDialog(!openContactsGrantDialog)
+    }
+  }, [selectedContactGrant, openContactsGrantDialog])
 
   const handleAgreeContactsGrantDialog = () => {
     handleChangeContactsGrantDialog()

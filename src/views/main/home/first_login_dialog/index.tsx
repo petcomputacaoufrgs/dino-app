@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './styles.css'
 import AuthService from '../../../../services/auth/AuthService'
 import { Dialog, DialogActions } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
@@ -15,7 +14,7 @@ import DinoLogoHeader from '../../../../components/dino_logo_header'
 import DinoStepper from '../../../../components/dino_stepper'
 import AppSettingsRequestAndResponseModel from '../../../../types/app_settings/AppSettingsRequestAndResponseModel'
 import SelectFontSize from '../../settings/select_font_size'
-import DinoHr from '../../../../components/dino_hr'
+import './styles.css'
 
 const FirstLoginDialog = () => {
 
@@ -40,9 +39,25 @@ const FirstLoginDialog = () => {
   }
 
   useEffect(() => {
-    if(dialogOpen > 0)
-      handleSwitchInitialConfig()
-  }, [selectedLanguage])
+    const handleSwitchInitialConfig = () => {
+      const model: AppSettingsRequestAndResponseModel = {
+        language: selectedLanguage,
+        fontSize: selectedFontSize,
+        colorTheme: selectedColorTheme,
+        essentialContactGrant: selectedEssentialContactGrant
+      }
+  
+      AppSettingsService.set(model)
+    }
+
+    if(dialogOpen > 0) {
+      //handleSwitchInitialConfig()
+    }
+  }, [dialogOpen, selectedLanguage, selectedFontSize, selectedColorTheme, selectedEssentialContactGrant])
+
+  useEffect(() => {
+    console.log(dialogOpen)
+  }, [dialogOpen])
 
   const handleSwitchInitialConfig = () => {
     const model: AppSettingsRequestAndResponseModel = {
@@ -56,12 +71,9 @@ const FirstLoginDialog = () => {
   }
 
   const handleSave = () => {
-
     handleCloseDialogs()
 
     AuthService.removeIsFirstLogin()
-
-    //comparar se algo mudou do default config
     
     handleSwitchInitialConfig()
 
@@ -151,41 +163,41 @@ const FirstLoginDialog = () => {
 
   const isFirstOrLastDialog = (index: number) => index === 0 || index === NUMBER_DIALOGS - 1
 
-    return (
-      <>
-        {firstLoginDialogs.map((e, index) => 
-          <Dialog
-            key={index}
-            className="first-login__dialog"
-            aria-labelledby={language.FIRST_LOGIN_DIALOG_LABEL}
-            open={dialogOpen === index}
-            TransitionComponent={TransitionSlide}
-            disableEscapeKeyDown
-            disableBackdropClick
-            fullWidth
-          >
-            { isFirstOrLastDialog(index) ? 
-              <></> :
-              <DinoDialogHeader>
-                <h5>{e.title}</h5>
-              </DinoDialogHeader>
-            }
-            <DinoDialogContent>
-              {e.component()}
-            </DinoDialogContent>
-            <DialogActions>
-              <DinoStepper 
-                steps={NUMBER_DIALOGS}
-                activeStep={dialogOpen}
-                setActiveStep={setDialogOpen}
-                onSave={handleSave}
-                onCancel={handleCancel}
-              />
-            </DialogActions>
-          </Dialog>
-        )}
-      </>
-    )
+  return (
+    <>
+      {firstLoginDialogs.map((e, index) => 
+        <Dialog
+          key={index}
+          className="first-login__dialog"
+          aria-labelledby={language.FIRST_LOGIN_DIALOG_LABEL}
+          open={dialogOpen === index}
+          TransitionComponent={TransitionSlide}
+          disableEscapeKeyDown
+          disableBackdropClick
+          fullWidth
+        >
+          { isFirstOrLastDialog(index) ? 
+            <></> :
+            <DinoDialogHeader>
+              <h5>{e.title}</h5>
+            </DinoDialogHeader>
+          }
+          <DinoDialogContent>
+            {e.component()}
+          </DinoDialogContent>
+          <DialogActions>
+            <DinoStepper 
+              steps={NUMBER_DIALOGS}
+              activeStep={dialogOpen}
+              setActiveStep={setDialogOpen}
+              onSave={handleSave}
+              onCancel={handleCancel}
+            />
+          </DialogActions>
+        </Dialog>
+      )}
+    </>
+  )
 }
 
 export default FirstLoginDialog

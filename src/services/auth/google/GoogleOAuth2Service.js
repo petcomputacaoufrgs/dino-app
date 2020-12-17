@@ -1,4 +1,4 @@
-import GoogleSecrets from '../../../environment/client_secret.json'
+import GoogleSecrets from '../../../environment/google_config.json'
 
 /* eslint-disable no-undef */
 

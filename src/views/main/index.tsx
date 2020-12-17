@@ -23,12 +23,13 @@ import Calendar from './calendar'
 import AboutUs from './about'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
+import FirstLoginDialog from './home/first_login_dialog'
 
 const Main = (): JSX.Element => {
   const language = useCurrentLanguage()
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
-
+  
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true)
   }
@@ -126,6 +127,7 @@ const Main = (): JSX.Element => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
+      <FirstLoginDialog/>
     </>
   )
 }

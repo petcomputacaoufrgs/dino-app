@@ -2,9 +2,9 @@
  * @description Configuração de valores das chaves utilizadas para salvar valores no local storage
  */
 class LocalStorageKeys {
-  GLOSSARY_VERSION = 'G_version'
-  GLOSSARY_ITEMS = 'G_itemList'
-  GLOSSARY_SHOULD_SYNC = 'G_shouldSync'
+  GLOSSARY_VERSION = 'gv'
+  GLOSSARY_ITEMS = 'g'
+  GLOSSARY_SHOULD_SYNC = 'gss'
   CONTACTS = 'c'
   CONTACTS_LAST_ID = 'c_l_id'
   CONTACTS_UPDATE = 'c_updt'

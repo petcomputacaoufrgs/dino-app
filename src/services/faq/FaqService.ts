@@ -3,8 +3,10 @@ import LS from '../../storage/local_storage/faq/FaqLocalStorage'
 import FaqModel from '../../types/faq/FaqModel'
 import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
 import ServerService from './FaqServerService'
+import AppSettingsService from '../app_settings/AppSettingsService'
 import CurrentFaqContextUpdater from '../../context/updater/CurrentFaqContextUpdater'
 import strUtils from '../../utils/StringUtils'
+
 class FaqService {
   getUserFaqFromServer = async () => {
     const response = await ServerService.getUserFaq()
@@ -14,8 +16,14 @@ class FaqService {
   }
 
   switchUserFaq = async (faqOption: FaqOptionsModel) => {
-    await ServerService.saveUserFaqId(faqOption.id)
-    await this.getUserFaqFromServer()
+    if(this.getUserFaqId() !== faqOption.id) {
+      
+      await ServerService.saveUserFaqId(faqOption.id)
+      await this.getUserFaqFromServer()
+      if(AppSettingsService.get().essentialContactGrant) {
+        await ServerService.getEssentialContacts(faqOption.id)      
+      }
+    }
   }
 
   saveUserQuestion = async (selectedFaq: FaqOptionsModel, question: string) => {

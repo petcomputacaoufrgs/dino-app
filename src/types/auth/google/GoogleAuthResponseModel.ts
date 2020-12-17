@@ -5,4 +5,5 @@ export default interface GoogleAuthResponseModel extends AuthResponseModel {
   googleExpiresDate: number
   scopeList: string[]
   declinedContatsGrant: boolean
+  firstConfigDone: boolean
 }

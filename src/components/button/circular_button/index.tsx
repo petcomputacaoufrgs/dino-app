@@ -1,8 +1,7 @@
 import React from 'react'
 import Button from '..'
 import CircularButtonProps from './props'
-
-import './style.css'
+import './styles.css'
 
 const CircularButton: React.FC<CircularButtonProps> = (props) => {
   const Icon = props.icon

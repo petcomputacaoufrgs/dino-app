@@ -41,7 +41,7 @@ class WebSocketConnector {
         if (response) {
           const baseUrl = this.getSocketBaseURL(response.webSocketToken)
           this.socket = new SockJS(baseUrl)
-          //this.muteConnectionLogs()
+          this.muteConnectionLogs()
 
           this.stompClient = Stomp.over(this.socket)
           this.stompClient.connect({}, this.subscribe)

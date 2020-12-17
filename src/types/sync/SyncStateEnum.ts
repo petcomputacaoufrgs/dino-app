@@ -1,5 +1,5 @@
 enum SyncStateEnum {
-  OFFILINE = 0,
+  OFFLINE = 0,
   SYNCHRONIZING = 1,
   SYNCED = 2,
 }

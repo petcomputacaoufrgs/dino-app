@@ -8,7 +8,7 @@ class SyncService {
   }
 
   setOffline = () => {
-    this.setState(SyncStateEnum.OFFILINE)
+    this.setState(SyncStateEnum.OFFLINE)
   }
 
   setSynchronizing = () => {

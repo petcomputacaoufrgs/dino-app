@@ -7,6 +7,8 @@ import LanguageCodeConstants from './LanguageCodeConstants'
 export default class PT implements LanguageBase {
   APP_NAME = 'DinoApp'
 
+  DINOAPP_TEAM = 'Equipe DinoApp'
+
   CURIOUS_DINO_ALT = 'Dinossauro curioso'
 
   ISO_LANGUAGE_CODE = 'pt'
@@ -21,7 +23,19 @@ export default class PT implements LanguageBase {
 
   NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
 
-  WELCOME_MESSAGE = 'Bem vindo ao DinoApp!'
+  WELCOME_MESSAGE = 'Bem vindo(a) ao DinoApp!'
+
+  FIRST_LOGIN_DIALOG_LABEL = 'Diálogo de Configurações Iniciais'
+
+  FIRST_LOGIN_WELCOME_MESSAGE = 'Bem vindo(a)!'
+
+  FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
+
+  FIRST_LOGIN_CHOOSE_TREATMENT = "Escolha seu Tratamento"
+
+  FIRST_LOGIN_CHOOSE_COLOR_THEME = "Escolha seu Tema de Cores"
+
+  FIRST_LOGIN_CHOOSE_LANGUAGE = "Escolha seu Idioma"
 
   LOGIN_BUTTON_TEXT = 'Entrar com o Google'
 
@@ -65,6 +79,10 @@ export default class PT implements LanguageBase {
   DELETE_CONTACT_QUESTION = 'Deletar contato?'
 
   DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato permanentemente.'
+  
+  TERMS_OF_USE = 'Termos de Uso'
+  
+  PRIVACY_POLICY = 'Política de Privacidade'
 
   MENU_HOME = 'Home'
 
@@ -221,6 +239,10 @@ export default class PT implements LanguageBase {
 
   SELECT_TREATMENT = 'Selecione Tratamento'
 
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Carregar contatos essenciais referentes ao meu tratamento'
+
+  SAVE_CONTACT_ON_GOOGLE_GRANT = 'Salvar contatos do DinoApp em minha conta Google'
+
   SUNDAY_NAME = 'Domingo'
 
   MONDAY_NAME = 'Segunda'
@@ -238,6 +260,10 @@ export default class PT implements LanguageBase {
   NEXT_BUTTON_TEXT = 'Próximo'
 
   PREVIOUS_BUTTON_TEXT = 'Anterior'
+
+  NEXT_BUTTON_TEXT_LABEL = 'Clique para avançar para o próximo elemento'
+  
+  PREVIOUS_BUTTON_TEXT_LABEL =  'Clique para retornar ao elemento anterior'
 
   CLOSE_ARIA_LABEL = 'Fechar'
 
@@ -405,6 +431,14 @@ export default class PT implements LanguageBase {
 
   COLOR_THEME_SELECTION_TITLE = 'Escolher Tema de Cores'
 
+  FONT_SIZE_SELECTION_TITLE = 'Escolher Tamanho da Fonte'
+
+  DEFAULT_FONT_SIZE_NAME = 'Padrão'
+  
+  LARGE_FONT_SIZE_NAME = 'Grande'
+
+  LARGER_FONT_SIZE_NAME = 'Gigante'
+
   CONTACT_DIALOG_FORM_SUBTITLE = 'Contato'
 
   CONTACT_NUMBER_ALREADY_EXISTS = 'Este número já está registrado no contato'
@@ -439,7 +473,7 @@ export default class PT implements LanguageBase {
   GRANT_DECLINED = 'Você pode ativar esta função nas configurações.'
 
   GOOGLE_CONTACT_GRANT_TEXT =
-    'Gostariamos de permissões para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. Nunca iremos ler ou modificar outros contatos fora dos contatos do DinoApp.'
+    'Gostaríamos de permissão para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. \nNunca leremos nem modificaremos outros contatos fora dos contatos do DinoApp.'
 
   GOOGLE_CONTACT_GRANT_TITLE = 'Seus contatos em qualquer lugar'
 

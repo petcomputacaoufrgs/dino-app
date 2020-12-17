@@ -9,6 +9,7 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LanguageCodeConstants from '../../constants/languages/LanguageCodeConstants'
 import AppSettingsRequestAndResponseModel from '../../types/app_settings/AppSettingsRequestAndResponseModel'
 import ColorThemeEnum from '../../types/app_settings/ColorThemeEnum'
+import FontSizeEnum from '../../types/app_settings/FontSizeEnum'
 
 class AppSettingsService {
   listenner = {}
@@ -95,7 +96,9 @@ class AppSettingsService {
   getDefaultAppSettings = (): AppSettingsRequestAndResponseModel => {
     const defaultAppSettings: AppSettingsRequestAndResponseModel = {
       language: navigator.language.slice(0, 2),
+      fontSize: FontSizeEnum.DEFAULT,
       colorTheme: ColorThemeEnum.DEVICE,
+      essentialContactGrant: true
     }
 
     return defaultAppSettings
@@ -140,6 +143,12 @@ class AppSettingsService {
     return colorTheme
   }
 
+  getFontSize = (): number => {
+    const fontSize = this.get().fontSize
+
+    return fontSize
+  }
+
   getColorThemeName = (code: number): string => {
     switch (code) {
       case 1:
@@ -155,6 +164,19 @@ class AppSettingsService {
     }
   }
 
+  getFontSizeName = (code: number): string => {
+    switch (code) {
+      case 1:
+        return 'default'
+      case 2:
+        return 'large'
+      case 3:
+        return 'larger'
+      default:
+        return 'default'
+    }
+  }
+
   getSystemColorThemeName = (): string => {
     const matchDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
     if (matchDarkMode && matchDarkMode.matches) {
@@ -167,6 +189,16 @@ class AppSettingsService {
   returnAppSettingsToDefault = (): void => {
     const appSettings = this.getDefaultAppSettings()
     this.updateLocalAppSettings(appSettings)
+  }
+
+  getEssentialContactGrant = (): boolean => {
+    return this.get().essentialContactGrant
+  }
+
+  setEssentialContactGrant = (value: boolean) => {
+    const savedAppSettings = this.get()
+    savedAppSettings.essentialContactGrant = value
+    this.set(savedAppSettings)
   }
 
   private updateLocalAppSettings = (

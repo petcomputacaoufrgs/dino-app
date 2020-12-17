@@ -79,8 +79,8 @@
   --note-answer-background: #A692AE;
 
   /* Botoes */
-  --button-font-color: #442950;
-  --button-selected-font-color: #b054d1;
+  --button-font-color: #b054d1;
+  --button-selected-font-color: #694e73;
 
   /* Outros */
   --contrast-color: #f5f5f5;
@@ -139,7 +139,7 @@
   --svg-size: 26px;
 }
 
-[data-font-size='big boi'] {
+[data-font-size='larger'] {
   --very-small-font: 1.1375rem;
   --small-font: 1.3125rem;
   --default-font: 1.75rem;

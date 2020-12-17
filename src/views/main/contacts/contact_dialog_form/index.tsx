@@ -9,9 +9,11 @@ import TransitionSlide from '../../../../components/slide_transition'
 import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import ContactView from '../../../../types/contact/view/ContactView';
 import './styles.css'
-import ContactEntity from '../../../../types/contact/database/ContactEntity';
+import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
 import ContactsConstants from '../../../../constants/contact/ContactsConstants'
+import StringUtils from '../../../../utils/StringUtils'
+import Utils from '../../../../utils/Utils'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
   if (item) {
@@ -37,7 +39,6 @@ const ContactFormDialog = React.forwardRef(
     ref: React.Ref<unknown>
   ): JSX.Element => {
     const language = useCurrentLanguage()
-
     const [contact, setContact] = useState(getContact(item))
     const [contactPhones, setContactPhones] = useState(getPhones(item))
     const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
@@ -61,7 +62,7 @@ const ContactFormDialog = React.forwardRef(
 
     const handleSave = (): void => {
       function validInfo(): string {
-        setInvalidName(contact.name === '')
+        setInvalidName(StringUtils.isEmpty(contact.name))
         return contact.name
       }
 
@@ -75,7 +76,7 @@ const ContactFormDialog = React.forwardRef(
             text: `${language.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`,
           })
       }
-
+      
       if (validInfo()) {
         const viewWithSamePhone = phoneService.getContactWithSamePhone(itens, contactPhones, item)
 
@@ -85,21 +86,13 @@ const ContactFormDialog = React.forwardRef(
           saveContact()
           handleClose()
         }
+        
       }
     }
 
     const saveContact = async () => {
-      const savePhones = async (contact: ContactEntity) => {
-        const newPhones = contactPhones.filter(phone => phone.number !== '')
-        newPhones.forEach(phone => phone.localContactId = contact.localId)
-        if (newPhones.length > 0) {
-          await phoneService.deleteAll(phonesToDelete)
-          phoneService.saveAll(newPhones)
-        }
-      }
-      
       if (action === ContactsConstants.ACTION_EDIT) {
-        if (item && item.contact.localId) {
+        if (item && Utils.isNotEmpty(item.contact.localId)) {
           await contactService.save(contact)
           await savePhones(contact)
         }
@@ -109,6 +102,18 @@ const ContactFormDialog = React.forwardRef(
         if (savedContact) {
           await savePhones(savedContact)
         }
+      }
+    }
+
+    const savePhones = async (contact: ContactEntity) => {
+      const newPhones = contactPhones.filter(phone => phone.number !== '')
+      newPhones.forEach(phone => phone.localContactId = contact.localId)
+      if (newPhones.length > 0) {
+        await phoneService.saveAll(newPhones)
+      }
+
+      if (phonesToDelete.length > 0) {
+        await phoneService.deleteAll(phonesToDelete)
       }
     }
 

@@ -3,6 +3,19 @@ import LanguageBase from '../constants/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {
+
+  convertDinoAPIStringDateToDate(date: any) {
+    if (date.endsWith('Z')) {
+      return new Date(date)
+    }
+
+    return new Date(date + 'Z')
+  }
+
+  convertDateToDinoAPIStringDate(date: Date) {
+    return date.toISOString()
+  }
+
   getStartOfDay = (date: Date): Date => moment(date).startOf('day').toDate()
 
   getEndOfDay = (date: Date): Date => moment(date).endOf('day').toDate()

@@ -7,5 +7,5 @@ export default interface SynchronizableSyncModel<
     DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>>
 {
     save: Array<DATA_MODEL>
-    delete: SynchronizableDeleteModel<ID>
+    delete: Array<SynchronizableDeleteModel<ID>>
 }

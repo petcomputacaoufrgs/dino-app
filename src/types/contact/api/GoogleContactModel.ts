@@ -1,6 +1,6 @@
-import SynchronizableDataModel from "../../synchronizable/api/SynchronizableDataModel"
+import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
 
-export default interface ContactGoogleResourceNameModel  extends SynchronizableDataModel<number> {
+export default interface ContactGoogleResourceNameModel extends SynchronizableDataLocalIdModel<number, number> {
   resourceName: string
   contactId: number
 }

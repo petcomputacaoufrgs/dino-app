@@ -1,4 +1,10 @@
+import Utils from "./Utils"
+
 class StringUtils {
+  isEmpty(value: any | undefined): boolean {
+    return Utils.isEmpty(value) || value === '' || value === ' ' 
+  }
+
   upperCaseFirstLetter = (str: string): string =>
     `${str.charAt(0).toUpperCase()}${str.slice(1)}`
 

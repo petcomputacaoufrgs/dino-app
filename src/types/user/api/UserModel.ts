@@ -1,6 +1,6 @@
-import SynchronizableDataModel from "../../synchronizable/api/SynchronizableDataModel"
+import SynchronizableDataLocalIdModel from "../../synchronizable/api/SynchronizableDataLocalIdModel"
 
-export default interface UserModel extends SynchronizableDataModel<number> {
+export default interface UserModel extends SynchronizableDataLocalIdModel<number, number> {
   name: string
   email: string
   pictureURL: string

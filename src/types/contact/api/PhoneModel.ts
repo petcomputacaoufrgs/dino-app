@@ -1,6 +1,6 @@
-import SynchronizableDataModel from "../../synchronizable/api/SynchronizableDataModel"
+import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
 
-export default interface PhoneModel  extends SynchronizableDataModel<number> {
+export default interface PhoneModel  extends SynchronizableDataLocalIdModel<number, number> {
   contactId: number
   number: string
   type: number

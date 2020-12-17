@@ -1,6 +1,7 @@
 import Dexie, { IndexableType, IndexableTypePart } from 'dexie'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
 import SynchronizableLocalState from '../../../types/synchronizable/database/SynchronizableLocalState'
+import Utils from '../../../utils/Utils'
 
 /**
  * Generic repository of synchronizable entity
@@ -47,6 +48,8 @@ export default abstract class SynchronizableRepository<
   }
 
   async save(entity: ENTITY): Promise<ENTITY> {
+    this.removeNullLocalId(entity)
+
     const localId = await this.table.put(entity)
 
     entity.localId = localId
@@ -55,7 +58,8 @@ export default abstract class SynchronizableRepository<
   }
 
   async saveAll(entities: ENTITY[]) {
-    const ids = await this.table.bulkPut(entities)
+    this.removeNullLocalIds(entities)
+    const ids = await this.table.bulkPut(entities, undefined, {allKeys: true})
     entities.forEach((entity, index) => entity.localId = ids[index])
   }
 
@@ -122,5 +126,15 @@ export default abstract class SynchronizableRepository<
 
   async clear() {
     return this.table.clear()
+  }
+
+  removeNullLocalIds(entities: Array<ENTITY>) {
+    entities.forEach(entity => this.removeNullLocalId(entity))
+  }
+
+  removeNullLocalId(entity: ENTITY) {
+    if (Utils.isEmpty(entity.localId)) {
+      delete entity.localId
+    }
   }
 }

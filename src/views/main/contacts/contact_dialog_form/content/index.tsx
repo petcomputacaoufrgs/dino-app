@@ -17,7 +17,7 @@ const ContactFormDialogContent = (
     props.helperText.number === tel
 
   const isNumberInvalid = (tel: string) =>
-    tel !== '' && (isNumberTaken(tel) || tel.length === Constants.NUMBER_MAX)
+    isNumberTaken(tel)
 
   const isNameInvalid = (name: string) =>
     name.length === Constants.NAME_MAX || props.invalidName

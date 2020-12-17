@@ -48,6 +48,23 @@ class FaqServerService {
     return undefined
   }
 
+  getEssentialContacts = async (id: number): Promise<void | undefined> => {
+    const request = await DinoAgentService.post(DinoAPIURLConstants.TREATMENT_ESSENTIAL_CONTACTS)
+
+    if (request.canGo) {
+      try {
+        const response = await request.authenticate().setBody({ id }).go()
+
+        if (response.status === HttpStatus.OK) {
+          return
+        }
+      } catch (e) {
+        LogAppErrorService.logError(e)
+      }
+    }
+    return undefined
+  }
+
   saveUserQuestion = async (
     id: number,
     question: string

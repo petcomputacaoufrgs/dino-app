@@ -16,8 +16,8 @@ import './styles.css'
 const ContactItemList: React.FC<ContactItemListProps> = ({
   item,
   phoneService,
-  setEdit,
-  setDelete,
+  onEdit,
+  onDelete,
   onClick,
   children,
 }) => {
@@ -33,11 +33,11 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
   const handleClose = () => setAnchorEl(null)
 
   const handleEdit = () => {
-    setEdit(item)
+    onEdit(item)
     handleClose()
   }
   const handleDelete = () => {
-    setDelete(item)
+    onDelete(item)
     handleClose()
   }
 
@@ -66,7 +66,6 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
           {language.DELETE_OPTION_TEXT}
         </MenuItem>
       </Menu>
-      {children}
     </div>
   )
 }

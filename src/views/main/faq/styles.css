@@ -3,6 +3,7 @@
   width: 100%;
   height: calc(100% - 60px);
   overflow-y: auto;
+  font-size: var(--default-font);
 }
 
 .select-faq__button {
@@ -14,25 +15,11 @@
   border-color: var(--column-font-color);
 }
 
-.send-question__button {
-  text-decoration: underline;
-  color: var(--button-font-color);
-  border: none;
-  background: none;
-  cursor: pointer;
-  display: block;
-  padding: 7px;
-  margin: auto;
-  display: block;
-}
-
-.send-question__button:hover,
-.send-question__button:focus {
-  color: var(--button-selected-font-color);
-  outline: none;
-}
-
 .select_faq_button {
   margin: auto;
   margin-top: 50%;
+}
+
+.card-header .MuiTypography-body1 {
+  font-size: var(--default-font);
 }

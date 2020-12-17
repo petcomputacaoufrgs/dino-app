@@ -1,0 +1,14 @@
+.dino_header .header__title {
+  margin-bottom: 0.2rem;
+  font-weight: 400;
+  line-height: 1.334;
+  letter-spacing: 0em;
+}
+
+.dino_header .typography.muted {
+  opacity: 0.8;
+}
+
+.dino_header {
+  text-align: center;
+}

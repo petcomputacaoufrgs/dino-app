@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '..'
 import ButtonProps from '../props'
-import './style.css'
+import './styles.css'
 
 const TextButton: React.FC<ButtonProps> = (props) => {
   const getClassName = (): string => {

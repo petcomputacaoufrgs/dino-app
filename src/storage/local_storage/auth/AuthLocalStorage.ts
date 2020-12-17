@@ -198,6 +198,24 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.SUCCESS_REFRESHING_GOOGLE_ACCESS_TOKEN)
   }
 
+  getIsFirstLogin = (): boolean => {
+    const value = this.get(LS_Constants.IS_FIRST_LOGIN)
+
+    if (value === null) {
+      return false
+    }
+
+    return JSON.parse(value)
+  }
+
+  setIsFirstLogin = (value: boolean) => {
+    this.set(LS_Constants.IS_FIRST_LOGIN, JSON.stringify(value))
+  }
+
+  removeIsFirstLogin = () => {
+    this.remove(LS_Constants.IS_FIRST_LOGIN)
+  }
+
   removeUserData = () => {
     this.removeAuthToken()
     this.removeAuthTokenExpiresDate()

@@ -175,6 +175,12 @@ class AuthService {
 
   isRefreshRequired = (): boolean => AuthLocalStorage.isRefreshRequired()
 
+  isFirstLogin = (): boolean => AuthLocalStorage.getIsFirstLogin()
+  
+  setFirstLogin = (value: boolean) => AuthLocalStorage.setIsFirstLogin(value)
+
+  removeIsFirstLogin = () =>  AuthLocalStorage.removeIsFirstLogin()
+
   isRefreshingAccessToken = (): boolean =>
     AuthLocalStorage.isRefreshingAccessToken()
 
@@ -261,6 +267,7 @@ class AuthService {
       if (request.canGo) {
         const response = await request.setBody(authRequestModel).go()
 
+
         if (response.status === HttpStatus.OK) {
           AuthLocalStorage.cleanLoginGarbage()
           this.setRefreshRequiredToFalse()
@@ -295,6 +302,7 @@ class AuthService {
     this.setGoogleAuthScopes(responseBody.scopeList)
     this.saveUserAuthData(responseBody)
     this.setDeclinedContactsGrant(responseBody.declinedContatsGrant)
+    this.setFirstLogin(responseBody.firstConfigDone)
   }
 
   private saveUserAuthData(responseBody: AuthResponseModel) {

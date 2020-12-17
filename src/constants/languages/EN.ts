@@ -4,6 +4,8 @@ import LanguageCodeConstants from './LanguageCodeConstants'
 export default class EN implements LanguageBase {
   APP_NAME = 'DinoApp'
 
+  DINOAPP_TEAM = 'DinoApp Team'
+
   CURIOUS_DINO_ALT = 'Curious dino'
 
   ISO_LANGUAGE_CODE = 'en'
@@ -19,6 +21,18 @@ export default class EN implements LanguageBase {
   NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
 
   WELCOME_MESSAGE = 'Welcome to DinoApp!'
+
+  FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
+
+  FIRST_LOGIN_WELCOME_MESSAGE = 'Welcome!'
+
+  FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
+
+  FIRST_LOGIN_CHOOSE_TREATMENT = "Select your Treatment"
+
+  FIRST_LOGIN_CHOOSE_COLOR_THEME = "Select your Color Theme"
+
+  FIRST_LOGIN_CHOOSE_LANGUAGE = "Select your Language"
 
   LOGIN_BUTTON_TEXT = 'Log in with Google'
 
@@ -58,6 +72,14 @@ export default class EN implements LanguageBase {
   EDIT_OPTION_TEXT = 'Edit'
 
   DELETE_OPTION_TEXT = 'Delete'
+
+  DELETE_CONTACT_QUESTION = 'Delete contact?'
+
+  DELETE_CONTACT_OPTION_TEXT = 'This action will permanently delete your contact.'
+
+  TERMS_OF_USE = 'Terms of Use'
+  
+  PRIVACY_POLICY = 'Privacy Policy'
 
   MENU_HOME = 'Home'
 
@@ -211,6 +233,10 @@ export default class EN implements LanguageBase {
 
   SELECT_TREATMENT = 'Select Treatment'
 
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Load essential contacts related to my treatment'
+
+  SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
+
   SUNDAY_NAME = 'Sunday'
 
   MONDAY_NAME = 'Monday'
@@ -228,6 +254,10 @@ export default class EN implements LanguageBase {
   NEXT_BUTTON_TEXT = 'Next'
 
   PREVIOUS_BUTTON_TEXT = 'Previous'
+
+  NEXT_BUTTON_TEXT_LABEL = 'Click to go to the next element'
+  
+  PREVIOUS_BUTTON_TEXT_LABEL =  'Click to return to the previous element'
 
   CLOSE_ARIA_LABEL = 'Close'
 
@@ -392,6 +422,14 @@ export default class EN implements LanguageBase {
   DEVICE_DEFAULT_THEME_NAME = 'System default'
 
   COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
+
+  FONT_SIZE_SELECTION_TITLE = 'Choose Font Size'
+
+  DEFAULT_FONT_SIZE_NAME = 'Default'
+  
+  LARGE_FONT_SIZE_NAME = 'Large'
+
+  LARGER_FONT_SIZE_NAME = 'Larger'
 
   CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
 

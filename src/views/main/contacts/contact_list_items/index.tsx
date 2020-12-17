@@ -5,6 +5,8 @@ import ContactItemList from '../contact_list_item'
 import { List } from '@material-ui/core'
 import ContactFormDialog from '../contact_dialog_form'
 import Constants from '../../../../constants/contact/ContactsConstants'
+import AgreementDialog from '../../../../components/agreement_dialog'
+import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import ContactView from '../../../../types/contact/view/ContactView'
 
 const ContactItems: React.FC<ContactItemsProps> = ({
@@ -13,9 +15,11 @@ const ContactItems: React.FC<ContactItemsProps> = ({
   googleContactService,
   phoneService
 }) => {
-  const [cardOpen, setCardOpen] = useState(0)
+  const [cardOpen, setCardOpen] = useState(false)
   const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(undefined)
   const [contactToDelete, setContactToDelete] = useState<ContactView | undefined>(undefined)
+
+  const language = useCurrentLanguage()
 
   useEffect(() => {
     let updateState = () => {
@@ -39,28 +43,32 @@ const ContactItems: React.FC<ContactItemsProps> = ({
     return cleanBeforeUpdate
   }, [contactToDelete, contactService, phoneService])
 
-  return (
-    <List className="contacts__list">
+    const handleOpenCard = (index: number) => {
+        setCardOpen(true)
+        setContactToEdit(items[index])
+    }
+    return (
+    <>
+        <List className="contacts__list">
       {items.map((item, index) => (
-        <div key={index}>
           <ContactItemList
+            key={index}
             item={item}
             phoneService={phoneService}
-            setEdit={setContactToEdit}
-            setDelete={setContactToDelete}
-            onClick={() => setCardOpen(item.contact.localId!)}
-          >
-            <ContactCard
+            onEdit={setContactToEdit}
+            onDelete={setContactToDelete}
+            onClick={() => handleOpenCard(index)}
+          />
+      ))}
+    </List>
+           <ContactCard
               item={item}
               phoneService={phoneService}
               onClose={() => setCardOpen(0)}
               setEdit={setContactToEdit}
               setDelete={setContactToDelete}
-              dialogOpen={cardOpen === item.contact.localId}
-            />
-          </ContactItemList>
-        </div>
-      ))}
+              dialogOpen={cardOpen}
+         />
       <ContactFormDialog
         item={contactToEdit}
         contactService={contactService}
@@ -70,8 +78,17 @@ const ContactItems: React.FC<ContactItemsProps> = ({
         onClose={() => setContactToEdit(undefined)}
         action={Constants.ACTION_EDIT}
       />
-    </List>
-  )
+    <AgreementDialog 
+      open={Boolean(_delete)}
+      agreeOptionText={language.AGREEMENT_OPTION_TEXT}
+      disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
+      description={language.DELETE_CONTACT_OPTION_TEXT}
+      question={language.DELETE_CONTACT_QUESTION}
+      onAgree={() => setDeleteDialogAgreement(true)}
+      onDisagree={handleCloseDeleteDialog}
+            />
+        </>
+    )
 }
 
 export default ContactItems

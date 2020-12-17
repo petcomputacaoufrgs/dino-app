@@ -12,7 +12,7 @@ import {
   useCurrentLanguage,
   useCurrentFaq,
 } from '../../../../context/provider/app_settings'
-import SelectFaq from '../select_faq'
+import SelectFaq from '../../settings/select_faq'
 import './styles.css'
 import FaqService from '../../../../services/faq/FaqService'
 import Constants from '../../../../constants/faq/FaqConstants'
@@ -73,8 +73,8 @@ const QuestionDialogForm = React.forwardRef(
         >
           <DialogContent dividers>
             <SelectFaq
-              selectedFaq={selectedFaq}
-              setSelectedFaq={setSelectedFaq}
+              faq={selectedFaq}
+              setFaq={setSelectedFaq}
             />
             <TextField
               required

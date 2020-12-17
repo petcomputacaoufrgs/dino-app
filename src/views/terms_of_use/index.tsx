@@ -1,13 +1,13 @@
 import React from 'react'
-
+import ArrowBack from '../../components/arrow_back'
 import './styles.css'
 
 const TermsOfUse: React.FC = () => {
   return (
     <div className="terms_of_use">
-      <h1>Termos de Serviço</h1>
+      <ArrowBack />
+      <h2>Termos de Serviço</h2>
       <span>Em vigor a partir de 30 de novembro de 2020.</span>
-
       <p>
         Nós entendemos como é importante o usuário estar a par da forma como o
         produto que está utilizando funciona e de sua segurança. Nosso termo de
@@ -15,7 +15,7 @@ const TermsOfUse: React.FC = () => {
         comprometimento.
       </p>
 
-      <h2>Provedora de serviços</h2>
+      <h4>Provedora de serviços</h4>
       <p>
         Os serviços do DinoApp que você pode utilizar são fornecidos por: PET
         Computação UFRGS, Brasil, e são organização de acordo com as leis do
@@ -23,7 +23,7 @@ const TermsOfUse: React.FC = () => {
         do Sul 90650-001, Brasil.
       </p>
 
-      <h2>Restrições de idade</h2>
+      <h4>Restrições de idade</h4>
       <p>
         Se você possui uma idade menor que a maioridade legal brasileira é
         necessário a autorização de seus responsáveis legais para uso dos nossos
@@ -31,7 +31,7 @@ const TermsOfUse: React.FC = () => {
         junto com você.
       </p>
 
-      <h2>Nosso relacionamento</h2>
+      <h4>Nosso relacionamento</h4>
       <p>
         Estes termos ajudam a definir o relacionamento entre nós como
         prestadores de serviços e você como usuário. De forma geral permitimos
@@ -42,7 +42,7 @@ const TermsOfUse: React.FC = () => {
         Computação” estamos nos referindo ao PET Computação UFRGS.
       </p>
 
-      <h2>Produtos e serviços</h2>
+      <h4>Produtos e serviços</h4>
       <p>
         Nosso principal serviço é o DinoApp, nosso aplicativo fornecido para
         navegadores web. Porém também oferecemos uma Web API responsável por
@@ -69,7 +69,7 @@ const TermsOfUse: React.FC = () => {
         disponíveis na seção “Dados de contato” deste mesmo documento.
       </p>
 
-      <h2>Domínios</h2>
+      <h4>Domínios</h4>
       <p>
         Para nossos serviços que estão disponibilizados através de domínios na
         internet em casos extremos os domínios utilizados podem ser alterados, e
@@ -77,7 +77,7 @@ const TermsOfUse: React.FC = () => {
         cabíveis.
       </p>
 
-      <h2>Preços</h2>
+      <h4>Preços</h4>
       <p>
         Todos os serviços são disponibilizados de forma gratuita através da
         internet, basta acessar e utilizar. Nosso objetivo é o bem comum e não o
@@ -85,14 +85,14 @@ const TermsOfUse: React.FC = () => {
         usuários.
       </p>
 
-      <h2>O que esperar de nós</h2>
-      <h3>Serviços relacionados a área da saúde</h3>
+      <h4>O que esperar de nós</h4>
+      <h5>Serviços relacionados a área da saúde</h5>
       <p>
         Fornecemos diversos serviços relacionados focados em ajudar nossos
         usuários em tratamentos relacionados médicos. Nosso objetivo é
         acompanhar e auxiliar nesta etapa que nem sempre é fácil ou simples.
       </p>
-      <h3>Melhorias constantes</h3>
+      <h5>Melhorias constantes</h5>
       <p>
         Estamos constantemente desenvolvendo novas funcionalidades para tornar
         nossos serviços melhores, e contamos sempre com a opinião dos nossos
@@ -105,8 +105,8 @@ const TermsOfUse: React.FC = () => {
         com certa antecedência antes de aplicar ela.
       </p>
 
-      <h2>O que esperamos de você</h2>
-      <h3>Cumprimento destes termos</h3>
+      <h4>O que esperamos de você</h4>
+      <h5>Cumprimento destes termos</h5>
       <p>
         A permissão de uso dos nossos serviços permanecerá enquanto você cumprir
         estes termos de serviço. Também disponibilizamos outras políticas como
@@ -116,7 +116,7 @@ const TermsOfUse: React.FC = () => {
         Apesar de darmos a você permissão para usar nossos serviços, mantemos
         todos os direitos de propriedade intelectual que detemos sobre eles.
       </p>
-      <h4>Direitos de propriedade intelectual</h4>
+      <h5>Direitos de propriedade intelectual</h5>
       <p>
         Estes são direitos sobre as criações intelectuais individuais, como
         invenções (direitos de patente); obras literárias e artísticas (direitos
@@ -125,7 +125,7 @@ const TermsOfUse: React.FC = () => {
         intelectual podem pertencer a você, a outro indivíduo ou a uma
         organização.
       </p>
-      <h3>Respeito às outras pessoas</h3>
+      <h5>Respeito às outras pessoas</h5>
       <p>
         Alguns de nossos serviços permitem que você interaja e compartilhe dados
         com outras pessoas. Para manter um ambiente agradável e de respeito para
@@ -152,7 +152,7 @@ const TermsOfUse: React.FC = () => {
         </li>
         <li>Respeite a privacidade dos usuários.</li>
       </ul>
-      <h3>Permissão para utilizar o seu conteúdo</h3>
+      <h5>Permissão para utilizar o seu conteúdo</h5>
       <p>
         Nossos serviços permitem que você salve e compartilhe informações que
         julgar úteis, você pode armazenar qualquer tipo de texto desde que
@@ -161,7 +161,7 @@ const TermsOfUse: React.FC = () => {
         serviços e é livre para escolher o que fornecer.
       </p>
 
-      <h2>Licença</h2>
+      <h4>Licença</h4>
       <p>
         Seu conteúdo continua sendo seu, o que significa que você retém todos os
         direitos de propriedade intelectual relacionados a ele. Por exemplo,
@@ -175,12 +175,12 @@ const TermsOfUse: React.FC = () => {
         intelectual restringirem nosso uso do conteúdo. Você concede essa
         permissão ao PET Computação por meio desta licença.
       </p>
-      <h3>O que é coberto</h3>
+      <h5>O que é coberto</h5>
       <p>
         Esta licença cobre seu conteúdo se ele for protegido por direitos de
         propriedade intelectual.
       </p>
-      <h3>O que não é coberto</h3>
+      <h5>O que não é coberto</h5>
       <p>
         Esta licença não afeta seus direitos de privacidade. Ela trata apenas
         dos seus direitos de propriedade intelectual.
@@ -193,7 +193,7 @@ const TermsOfUse: React.FC = () => {
         Está licença também não cobre opiniões, critícas e ideias dadas por você
         como sugestões para melhorar nossos serviços.
       </p>
-      <h3>Escopo</h3>
+      <h5>Escopo</h5>
       <p>Esta licença é:</p>
       <ul>
         <li>Válida no Brasil;</li>
@@ -206,7 +206,7 @@ const TermsOfUse: React.FC = () => {
           ela.
         </li>
       </ul>
-      <h3>Direitos</h3>
+      <h5>Direitos</h5>
       <p>Esta licença permite que o PET:</p>
       <ul>
         <li>
@@ -224,7 +224,7 @@ const TermsOfUse: React.FC = () => {
           compartilhamento com outros usuários;
         </li>
       </ul>
-      <h3>Finalidade</h3>
+      <h5>Finalidade</h5>
       <p>Esta licença é destinada aos fins restritos de:</p>
       <ul>
         <li>
@@ -242,7 +242,7 @@ const TermsOfUse: React.FC = () => {
           Desenvolver novos serviços e tecnologias de acordo com estes termos.
         </li>
       </ul>
-      <h3>Duração</h3>
+      <h5>Duração</h5>
       <p>
         Esta licença dura enquanto seu conteúdo estiver protegido por direitos
         de propriedade intelectual.
@@ -267,8 +267,8 @@ const TermsOfUse: React.FC = () => {
         </li>
       </ul>
 
-      <h2>Usando nossos serviços</h2>
-      <h3>Sua conta de usuário</h3>
+      <h4>Usando nossos serviços</h4>
+      <h5>Sua conta de usuário</h5>
       <p>
         Alguns serviços e funcionalidades necessitarão que você possua uma
         autenticação vinculada para utilização da sua conta de usuário.
@@ -278,7 +278,7 @@ const TermsOfUse: React.FC = () => {
         nossos serviços, incluindo tomar as medidas necessárias para manter sua
         conta segura.
       </p>
-      <h3>Comunicações relacionadas a serviços</h3>
+      <h5>Comunicações relacionadas a serviços</h5>
       <p>
         Para oferecer a você nossos serviços, às vezes enviamos avisos sobre o
         serviço e outras informações. Para saber mais sobre como nos comunicamos
@@ -290,8 +290,8 @@ const TermsOfUse: React.FC = () => {
         compromisso com você.
       </p>
 
-      <h2>Conteúdos nos nossos serviços</h2>
-      <h3>Seu conteúdo</h3>
+      <h4>Conteúdos nos nossos serviços</h4>
+      <h5>Seu conteúdo</h5>
       <p>
         Alguns dos nossos serviços permitem que você deixe seu conteúdo
         disponível para outros usuários ou publicamente. Por exemplo, é possível
@@ -303,7 +303,7 @@ const TermsOfUse: React.FC = () => {
         intelectual, pode nos enviar um aviso sobre a violação para tomarmos as
         providências necessárias.
       </p>
-      <h3>Nosso conteúdo</h3>
+      <h5>Nosso conteúdo</h5>
       <p>
         Alguns dos nossos serviços incluem conteúdo que pertence a PET
         Computação. Você pode usar esse conteúdo de acordo com o permitido
@@ -311,7 +311,7 @@ const TermsOfUse: React.FC = () => {
         intelectual relacionados ao nosso conteúdo. Não remova, oculte ou mude
         nenhum dos nossos logotipos, marcas ou avisos legais.
       </p>
-      <h3>Outros conteúdos</h3>
+      <h5>Outros conteúdos</h5>
       <p>
         Por fim, alguns dos nossos serviços dão a você acesso a conteúdos que
         pertencem a outras pessoas ou organizações. Não use esse conteúdo sem a
@@ -320,7 +320,7 @@ const TermsOfUse: React.FC = () => {
         ou organizações não refletem necessariamente as opiniões do PET
         Computação.
       </p>
-      <h2>Nossos softwares</h2>
+      <h4>Nossos softwares</h4>
       <p>
         Nossos serviços se baseiam em sua maioria em softwares disponíveis para
         download. Nós damos a você permissão para usar esses softwares como
@@ -368,7 +368,7 @@ const TermsOfUse: React.FC = () => {
         disponibilizados na internet.
       </p>
 
-      <h2>Em caso de problemas ou discordâncias</h2>
+      <h4>Em caso de problemas ou discordâncias</h4>
       <p>
         Por lei, você tem direito a determinada qualidade de serviço e maneiras
         de resolver problemas se algo der errado. Estes termos não limitam nem
@@ -377,7 +377,7 @@ const TermsOfUse: React.FC = () => {
         consumidores de acordo com a legislação local.
       </p>
 
-      <h2>Garantia</h2>
+      <h4>Garantia</h4>
       <p>
         Fornecemos nossos serviços usando um nível razoável de habilidade e
         cuidado. Tentamos evitar que nossos serviços possuam problemas ou erros,
@@ -386,7 +386,7 @@ const TermsOfUse: React.FC = () => {
         trabalhar juntos de modo a resolver o problema.
       </p>
 
-      <h2>Exonerações de responsabilidade</h2>
+      <h4>Exonerações de responsabilidade</h4>
       <p>
         Os únicos compromissos que assumimos com relação aos nossos serviços,
         incluindo o conteúdo deles, as funções específicas, disponibilidade ou
@@ -398,8 +398,8 @@ const TermsOfUse: React.FC = () => {
         específica e não violação.
       </p>
 
-      <h2>Responsabilidades</h2>
-      <h3>Para todos os usuários</h3>
+      <h4>Responsabilidades</h4>
+      <h5>Para todos os usuários</h5>
       <p>
         Estes termos apenas limitam nossas responsabilidades de acordo com o
         permitido pela legislação aplicável.Salvo os direitos e
@@ -407,7 +407,7 @@ const TermsOfUse: React.FC = () => {
         discordâncias”, nós não nos responsabilizamos por quaisquer perdas.
       </p>
 
-      <h2>Tomando providências em caso de problemas</h2>
+      <h4>Tomando providências em caso de problemas</h4>
       <p>
         Em caso de descomprimentos de qualquer um de nossos termos nos
         reservamos no direito de:
@@ -417,7 +417,7 @@ const TermsOfUse: React.FC = () => {
         <li>Suspender ou encerrar sua conta de usuário;</li>
       </ul>
 
-      <h2>Sobre estes termos</h2>
+      <h4>Sobre estes termos</h4>
       <p>
         Por lei, você tem certos direitos que não podem ser limitados por um
         contrato como estes Termos de Serviço. Estes termos não têm, de forma
@@ -439,7 +439,7 @@ const TermsOfUse: React.FC = () => {
         modificações.
       </p>
 
-      <h2>Dados de contato</h2>
+      <h4>Dados de contato</h4>
       <p>
         Caso tenha ficado com alguma dúvida pode nos contactar pelos e-mails{' '}
         <a href="mailto:petcompufrgs@gmail.com">petcompufrgs@gmail.com</a> e{' '}

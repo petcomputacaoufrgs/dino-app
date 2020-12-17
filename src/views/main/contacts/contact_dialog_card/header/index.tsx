@@ -10,8 +10,8 @@ import './styles.css'
 const ContactCardHeader = ({
   item,
   phoneService,
-  setEdit,
-  setDelete,
+  onEdit,
+  onDelete,
   onClose: handleCloseDialog,
 }: ContactCardHeaderProps) => {
   const language = useCurrentLanguage()
@@ -30,7 +30,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      setEdit(item)
+      onEdit()
     }, 300)
   }
 
@@ -38,7 +38,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      setDelete(item)
+      onDelete()
     }, 300)
   }
 

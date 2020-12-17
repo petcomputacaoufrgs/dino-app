@@ -6,6 +6,6 @@ export default interface ContactCardProps {
   phoneService: PhoneServiceImpl
   dialogOpen: boolean
   onClose: () => void
-  setEdit: React.Dispatch<React.SetStateAction<ContactView | undefined>>
-  setDelete: React.Dispatch<React.SetStateAction<ContactView | undefined>>
+  onEdit: React.Dispatch<React.SetStateAction<number>>
+  onDelete: React.Dispatch<React.SetStateAction<number>>
 }

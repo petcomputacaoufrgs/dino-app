@@ -1,5 +1,6 @@
 export default interface LanguageBase {
   APP_NAME: string
+  DINOAPP_TEAM: string
   CURIOUS_DINO_ALT: string
   ISO_LANGUAGE_CODE: string
   NAVIGATOR_LANGUAGE_CODE: string
@@ -8,6 +9,12 @@ export default interface LanguageBase {
   NOT_FOUND_MESSAGE: string
   NOT_FROND_REDIRECT_MESSAGE: string
   WELCOME_MESSAGE: string
+  FIRST_LOGIN_DIALOG_LABEL: string
+  FIRST_LOGIN_WELCOME_MESSAGE: string
+  FIRST_LOGIN_DONE_MESSAGE: string
+  FIRST_LOGIN_CHOOSE_TREATMENT: string
+  FIRST_LOGIN_CHOOSE_COLOR_THEME: string
+  FIRST_LOGIN_CHOOSE_LANGUAGE: string
   LOGIN_BUTTON_TEXT: string
   LOGOUT_BUTTON_DESCRIPTION: string
   SEARCH_HOLDER: string
@@ -26,6 +33,10 @@ export default interface LanguageBase {
   CANCEL_OPTION_TEXT: string
   EDIT_OPTION_TEXT: string
   DELETE_OPTION_TEXT: string
+  DELETE_CONTACT_QUESTION: string
+  DELETE_CONTACT_OPTION_TEXT: string
+  TERMS_OF_USE: string
+  PRIVACY_POLICY: string
   MENU_HOME: string
   MENU_GAMES: string
   MENU_GLOSSARY: string
@@ -103,6 +114,8 @@ export default interface LanguageBase {
   DISCONNECTED: string
   SELECT_FAQ_BUTTON: string
   SELECT_TREATMENT: string
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT: string
+  SAVE_CONTACT_ON_GOOGLE_GRANT: string
   SUNDAY_NAME: string
   MONDAY_NAME: string
   TUESDAY_NAME: string
@@ -113,6 +126,8 @@ export default interface LanguageBase {
   INVALID_WEEKDAY: string
   NEXT_BUTTON_TEXT: string
   PREVIOUS_BUTTON_TEXT: string
+  NEXT_BUTTON_TEXT_LABEL: string
+  PREVIOUS_BUTTON_TEXT_LABEL: string
   CLOSE_ARIA_LABEL: string
   DELETE_ARIA_LABEL: string
   EDIT_ARIA_LABEL: string
@@ -192,6 +207,10 @@ export default interface LanguageBase {
   DALTONIAN_THEME_NAME: string
   DEVICE_DEFAULT_THEME_NAME: string
   COLOR_THEME_SELECTION_TITLE: string
+  FONT_SIZE_SELECTION_TITLE: string
+  DEFAULT_FONT_SIZE_NAME: string
+  LARGE_FONT_SIZE_NAME: string
+  LARGER_FONT_SIZE_NAME: string
   CONTACT_DIALOG_FORM_SUBTITLE: string
   CONTACT_NUMBER_ALREADY_EXISTS: string
   DIALOG_AGREE_TEXT: string

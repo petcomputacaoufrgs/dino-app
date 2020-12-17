@@ -4,6 +4,7 @@
   width: 100%;
   overflow-y: auto;
   color:var(--contrast-color)
+  font-size: var(--default-font);
 }
 
 .accordion {
@@ -16,6 +17,14 @@
 
 .glossary__items .card.card {
   background-color: var(--inv-ontrast-color);
+}
+
+.glossary__items .h5{
+  font-size: var(--big-font);
+}
+
+.glossary__items .h6 {
+  font-size: var(--default-font);
 }
 
 .glossary__items .card-body .card-subtitle {

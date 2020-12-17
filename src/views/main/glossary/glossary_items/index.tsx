@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import './styles.css'
 import React from 'react'

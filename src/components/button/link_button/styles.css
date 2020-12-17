@@ -1,0 +1,16 @@
+button.link-button {
+  text-decoration: underline;
+  color: var(--button-font-color);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
+  padding: 7px;
+  margin: auto;
+}
+
+button.link-button:hover,
+button.link-button:focus {
+  color: var(--button-selected-font-color);
+  outline: none;
+}

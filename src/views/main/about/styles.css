@@ -12,18 +12,6 @@
   text-align: justify;
 }
 
-.card__header .card__header__title {
-  margin-bottom: 0.2rem;
-  font-size: 1.75rem;
-  font-weight: 400;
-  line-height: 1.334;
-  letter-spacing: 0em;
-}
-
-.about-us .card__typography.muted {
-  opacity: 0.8;
-}
-
-.h-divisor {
+.about-us .dino_hr {
   margin: 10px 24px;
 }

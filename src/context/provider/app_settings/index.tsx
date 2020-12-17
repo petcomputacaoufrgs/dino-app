@@ -5,16 +5,19 @@ import SelectedFaqContextProvider from './selected_faq'
 import CurrentFaqContextUpdater from '../../updater/CurrentFaqContextUpdater'
 import ColorThemeContextProvider from './color_theme'
 import AppSettingsContextType from '../../../types/context_provider/AppSettingsContextType'
+import FontSizeContextProvider from './font_size'
 
 const AppSettingsContext = createContext({} as AppSettingsContextType)
 
 const AppSettingsContextProvider: React.FC = (props) => {
   const languageContextProvider = LanguageContextProvider()
+  const fontSizeContextProvider = FontSizeContextProvider()
   const currentFaqContextProvider = SelectedFaqContextProvider()
   const colorThemeContextProvider = ColorThemeContextProvider()
 
   const value = {
     language: languageContextProvider,
+    fontSize: fontSizeContextProvider,
     selectedFaq: currentFaqContextProvider,
     colorTheme: colorThemeContextProvider,
   } as AppSettingsContextType
@@ -23,6 +26,7 @@ const AppSettingsContextProvider: React.FC = (props) => {
     let handleAppSettingsChanged = () => {
       languageContextProvider.updateLanguage()
       colorThemeContextProvider.updateColorTheme()
+      fontSizeContextProvider.updateFontSize()
     }
 
     let handleCurrentFaqChanged = () => {
@@ -59,5 +63,8 @@ export const useCurrentFaq = () =>
 
 export const useCurrentColorTheme = () =>
   useContext(AppSettingsContext).colorTheme.currentName
+
+export const useCurrentFontSize = () =>
+  useContext(AppSettingsContext).fontSize.currentName
 
 export default AppSettingsContextProvider

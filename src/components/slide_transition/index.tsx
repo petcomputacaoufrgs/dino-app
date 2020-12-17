@@ -7,7 +7,7 @@ const TransitionSlide = forwardRef(function Transition(
   ref: React.Ref<unknown>
 ) {
   return (
-    <Slide direction="up" ref={ref} mountOnEnter unmountOnExit {...props} />
+    <Slide direction="left" ref={ref} mountOnEnter unmountOnExit {...props} />
   )
 })
 

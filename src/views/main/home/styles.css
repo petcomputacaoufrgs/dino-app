@@ -2,8 +2,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 24px;
-  grid-gap: 0px 16px;
+  padding: 24px 24px 0px;
+  grid-gap: 0px 24px;
 }
 
 .home .home__grid__button {

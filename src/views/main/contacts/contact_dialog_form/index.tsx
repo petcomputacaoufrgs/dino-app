@@ -38,6 +38,7 @@ const ContactFormDialog = React.forwardRef(
     { dialogOpen, onClose: handleClose, action, item, items: itens, contactService, phoneService }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
+    
     const language = useCurrentLanguage()
     const [contact, setContact] = useState(getContact(item))
     const [contactPhones, setContactPhones] = useState(getPhones(item))
@@ -47,6 +48,20 @@ const ContactFormDialog = React.forwardRef(
       number: '',
       text: ''
     })
+
+    const getContact = (item: ContactModel | undefined) => {
+      return {
+        name: item?.name || '',
+        description: item?.description || '',
+        color: item?.color,
+      }
+    }
+    
+    const getPhones = (item: ContactModel | undefined) => {
+      return item
+        ? item.phones
+        : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
+    }    
 
     useEffect(() => {
       if (dialogOpen) {

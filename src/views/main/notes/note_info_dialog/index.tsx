@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import DateUtils from '../../../../utils/DateUtils'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
@@ -18,6 +17,7 @@ import ArrayUtils from '../../../../utils/ArrayUtils'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
 import IconButton from '../../../../components/button/icon_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 import './styles.css'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
@@ -29,7 +29,8 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
   onDelete,
   questionAlreadyExists,
 }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const [question, setQuestion] = useState(note.question)
   const [answer, setAnswer] = useState(note.answer)

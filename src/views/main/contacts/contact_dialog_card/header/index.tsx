@@ -1,9 +1,9 @@
 import React from 'react'
 import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import ContactCardHeaderProps from './props'
 import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import '../../styles.css'
 import './styles.css'
 
@@ -14,8 +14,9 @@ const ContactCardHeader = ({
   onDelete,
   onClose: handleCloseDialog,
 }: ContactCardHeaderProps) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,7 +31,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      onEdit()
+      onEdit(item)
     }, 300)
   }
 
@@ -38,7 +39,7 @@ const ContactCardHeader = ({
     handleCloseMenu()
     handleCloseDialog()
     setTimeout(() => {
-      onDelete()
+      onDelete(item)
     }, 300)
   }
 

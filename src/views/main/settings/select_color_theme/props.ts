@@ -1,4 +1,4 @@
 export default interface SelectColorThemeProps {
-  colorTheme: number
-  setColorTheme: React.Dispatch<React.SetStateAction<number>>
+  colorTheme: number | undefined
+  setColorTheme: (newColorTheme: number) => void
 }

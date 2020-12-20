@@ -33,20 +33,12 @@ export class NoteColumnServiceImpl extends SynchronizableService<
     return model
   }
 
-  async getById(id: number): Promise<NoteColumnEntity | undefined> {
-    return this.repository.getById(id)
-  }
-
-  async getByLocalId(localId: number): Promise<NoteColumnEntity | undefined> {
-    return this.repository.getByLocalId(localId)
-  }
-
   hasNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {
-    return notes.some(note => note.localColumnId === column.localId)
+    return notes.some(note => note.columnLocalId === column.localId)
   } 
 
   getNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {
-    return notes.filter(note => note.localColumnId === column.localId)
+    return notes.filter(note => note.columnLocalId === column.localId)
   } 
 
   getColumnsByFilter(notes: NoteEntity[], columns: NoteColumnEntity[], tagsSearch: string[], textSearch: string): NoteView[] {

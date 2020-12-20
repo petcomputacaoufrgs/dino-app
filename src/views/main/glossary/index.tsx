@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import GlossaryItems from './glossary_items'
 import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
@@ -7,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
 import { useGlossary } from '../../../context/provider/glossary'
 import Loader from '../../../components/loader'
+import { useUserSettings } from '../../../context/provider/user_settings'
 import './styles.css'
 
 const Glossary = (): JSX.Element => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
   const glossary = useGlossary()
 
   const [searchTerm, setSearchTerm] = useState('')

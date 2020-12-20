@@ -1,9 +1,9 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { useParams } from 'react-router-dom'
 import { Divider, Paper } from '@material-ui/core'
-import './styles.css'
 import { useGlossary } from '../../../../context/provider/glossary'
+import { useUserSettings } from '../../../../context/provider/user_settings'
+import './styles.css'
 
 interface RouterParams {
   id: string
@@ -12,8 +12,9 @@ interface RouterParams {
 const GlossaryItem: React.FC = () => {
   const { id } = useParams<RouterParams>()
 
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const glossary = useGlossary()
 
   const item = glossary.data.find((item) => item.id === Number(id))

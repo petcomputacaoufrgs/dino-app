@@ -1,17 +1,18 @@
 import React from 'react'
 import ContentProps from './props'
 import WeekDayColumn from './week_day_column'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import { Calendar } from 'calendar'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import DateUtils from '../../../../../utils/DateUtils'
 import DayViewModel from '../../../../../types/calendar/DayViewModel'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import './styles.css'
 
 const DAYS_IN_VIEW = 42
 
 const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const calendar = new Calendar()
 

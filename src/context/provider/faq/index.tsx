@@ -1,50 +1,41 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
-import FaqContextType from '../../../types/context_provider/FaqContextType'
-import FaqItemModel from '../../../types/faq/FaqItemModel'
-import FaqService from '../../../services/faq/FaqService'
-import FaqContextUpdater from '../../updater/FaqContextUpdater'
+import React, { createContext, useContext } from "react"
+import SynchronizableContextType from "../synchronizable/context"
+import FaqDataModel from '../../../types/faq/api/FaqDataModel'
+import FaqEntity from '../../../types/faq/database/FaqEntity'
+import { FaqRepositoryImpl } from '../../../storage/database/faq/FaqRepository'
+import FaqService, { FaqServiceImpl } from '../../../services/faq/FaqService'
+import SynchronizableProvider from "../synchronizable"
 
-const FaqContext = createContext({
-  items: [] as FaqItemModel[],
-} as FaqContextType)
+export interface FaqContextType
+  extends SynchronizableContextType<
+    number,
+    number,
+    FaqDataModel,
+    FaqEntity,
+    FaqRepositoryImpl,
+    FaqServiceImpl
+  > {}
 
-const FaqContextProvider: React.FC = (props) => {
-  const [items, setItems] = useState([...FaqService.getItems()])
-  const [firstLoad, setFirstLoad] = useState(true)
+const FaqContext = createContext<FaqContextType>({
+  service: FaqService,
+  loading: true,
+  data: [],
+})
 
-  useEffect(() => {
-    const updateData = () => {
-      const items = FaqService.getItems()
-      setItems([...items])
-    }
-
-    if (firstLoad) {
-      updateData()
-      setFirstLoad(false)
-    }
-
-    let handleLocalDataChanged = () => {
-      updateData()
-    }
-
-    FaqContextUpdater.setCallback(handleLocalDataChanged)
-
-    const cleanBeforeUpdate = () => {
-      handleLocalDataChanged = () => {}
-    }
-
-    return cleanBeforeUpdate
-  }, [items, firstLoad])
-
-  const value = {
-    items: items,
-  }
-
-  return (
-    <FaqContext.Provider value={value}>{props.children}</FaqContext.Provider>
-  )
-}
+const FaqProvider: React.FC = ({ children }): JSX.Element =>
+  SynchronizableProvider<
+    number,
+    number,
+    FaqDataModel,
+    FaqEntity,
+    FaqRepositoryImpl,
+    FaqServiceImpl
+  >({
+    children: children,
+    context: FaqContext,
+    service: FaqService,
+  })
 
 export const useFaq = () => useContext(FaqContext)
 
-export default FaqContextProvider
+export default FaqProvider

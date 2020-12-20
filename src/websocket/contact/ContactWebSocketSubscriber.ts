@@ -1,5 +1,5 @@
 import SynchronizableWSSubscriber from '../synchronizable/SynchronizableWSSubscriber'
-import ContactModel from '../../types/contact/api/ContactModel'
+import ContactDataModel from '../../types/contact/api/ContactDataModel'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import { ContactRepositoryImpl } from '../../storage/database/contact/ContactRepository'
 import ContactService from '../../services/contact/ContactService'
@@ -7,7 +7,7 @@ import ContactService from '../../services/contact/ContactService'
 class ContactWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
   number,
-  ContactModel,
+  ContactDataModel,
   ContactEntity,
   ContactRepositoryImpl
 > {

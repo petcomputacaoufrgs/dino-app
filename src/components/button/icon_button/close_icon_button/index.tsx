@@ -1,16 +1,17 @@
 import React from 'react'
 import CloseIconButtonProps from './props'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import { ReactComponent as CloseSVG } from '../../../../assets/icons/close.svg'
 import IconButton from '..'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const CloseIconButton: React.FC<CloseIconButtonProps> = ({
   onClose,
   dark,
   bigger,
 }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   return (
     <IconButton
       icon={CloseSVG}

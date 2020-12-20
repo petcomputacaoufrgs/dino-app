@@ -1,26 +1,20 @@
-import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
-import Service from '../../services/faq/FaqService'
-import SubscriberItem from '../../types/web_socket/SubscriberItem'
-import WebSocketAlertUpdateModel from '../../types/web_socket/WebSocketAlertUpdateModel'
+import SynchronizableWSSubscriber from '../synchronizable/SynchronizableWSSubscriber'
+import FaqDataModel from '../../types/faq/api/FaqDataModel'
+import FaqEntity from '../../types/faq/database/FaqEntity'
+import { FaqRepositoryImpl } from '../../storage/database/faq/FaqRepository'
+import FaqService from '../../services/faq/FaqService'
 
-class FaqWebSocketSubscriber extends BaseWebSocketSubscriber {
+class FaqWebSocketSubscriber extends SynchronizableWSSubscriber<
+  number,
+  number,
+  FaqDataModel,
+  FaqEntity,
+  FaqRepositoryImpl
+> {
   constructor() {
-    const items: SubscriberItem[] = [
-      {
-        path: APIWebSocketDestConstants.ALERT_FAQ_UPDATE,
-        callback: (model: WebSocketAlertUpdateModel) => {
-          if (Service.getUserFaqId() === model.newId) {
-            if (Service.getVersion() !== model.newVersion) {
-              Service.getUserFaqFromServer()
-            }
-          }
-        },
-      },
-    ]
-
-    super(items)
+    super(FaqService)
   }
 }
 
 export default new FaqWebSocketSubscriber()
+

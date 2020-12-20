@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import EditEventModal from '../edit_event_modal'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 import './styles.css'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 
 const AddButton: React.FC = () => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const [openDialog, setOpenDialog] = useState(false)
 
   const handleAddClick = () => {

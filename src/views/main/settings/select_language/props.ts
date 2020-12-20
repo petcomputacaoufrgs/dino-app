@@ -1,4 +1,4 @@
 export default interface SelectLanguageProps {
-  language: string
-  setLanguage: React.Dispatch<React.SetStateAction<string>>
+  languageName: string | undefined
+  setLanguage:  (newLanguage: string) => void
 }

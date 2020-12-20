@@ -2,12 +2,10 @@ import SockJS from 'sockjs-client'
 import Stomp, { Message } from 'stompjs'
 import BaseWebSocketSubscriber from './BaseWebSocketSubscriber'
 import GlossaryWebSocketSubscriber from './glossary/GlossaryWebSocketSubscriber'
-import AppSettingsWebSocketSubscriber from './app_settings/AppSettingsWebSocketSubscriber'
 import NoteWebSocketSubscriber from './note/NoteWebSocketSubscriber'
 import UserWebSocketSubscriber from './user/UserWebSocketSubscriber'
 import ContactWebSocketSubscriber from './contact/ContactWebSocketSubscriber'
 import FaqWebSocketSubscriber from './faq/FaqWebSocketSubscriber'
-import FaqUserWebSocketSubscriber from './faq/FaqUserWebSocketSubscriber'
 import AuthService from '../services/auth/AuthService'
 import APIWebSocketDestConstants from '../constants/api/APIWebSocketDestConstants'
 import DinoAPIHeaderConstants from '../constants/api/APIHeaderConstants'
@@ -20,11 +18,17 @@ import SyncService from '../services/sync/SyncService'
 import Synchronizer from '../sync/Synchronizer'
 import GoogleContactWebSocketSubscriber from './contact/GoogleContactWebSocketSubscriber'
 import PhoneWebSocketSubscriber from './contact/PhoneWebSocketSubscriber'
+import FaqItemWebSocketSubscriber from './faq/FaqItemWebSocketSubscriber'
+import FaqUserQuestionWebSocketSubscriber from './faq/FaqUserQuestionWebSocketSubscriber'
+import TreatmentWebSocketSubscriber from './treatment/TreatmentWebSocketSubscriber'
+import UserSettingsWebSocketSubscriber from './user/UserSettingsWebSocketSubscriber'
 
 class WebSocketConnector {
   private socket?: WebSocket
   private stompClient?: Stomp.Client
   private subscribers: BaseWebSocketSubscriber[] = [
+    UserSettingsWebSocketSubscriber,
+    TreatmentWebSocketSubscriber,
     GlossaryWebSocketSubscriber,
     NoteColumnWebSocketSubscriber,
     NoteWebSocketSubscriber,
@@ -32,9 +36,9 @@ class WebSocketConnector {
     ContactWebSocketSubscriber,
     GoogleContactWebSocketSubscriber,
     PhoneWebSocketSubscriber,
-    AppSettingsWebSocketSubscriber,
     FaqWebSocketSubscriber,
-    FaqUserWebSocketSubscriber,
+    FaqItemWebSocketSubscriber,
+    FaqUserQuestionWebSocketSubscriber,
     GoogleAuthWebSocketSubscriber,
   ]
 
@@ -48,7 +52,7 @@ class WebSocketConnector {
           const baseUrl = this.getSocketBaseURL(response.webSocketToken)
           this.socket = new SockJS(baseUrl)
           this.stompClient = Stomp.over(this.socket)
-         //this.muteConnectionLogs()
+          //this.muteConnectionLogs()
           this.stompClient.connect({}, this.subscribe)
           this.socket.onclose = () => {
             this.handleWebSocketClosed()

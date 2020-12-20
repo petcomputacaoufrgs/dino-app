@@ -1,6 +1,6 @@
-import ContactView from '../../../../types/contact/view/ContactView'
-import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
+import ContactView from "../../../../types/contact/view/ContactView"
 import { ContactServiceImpl } from '../../../../services/contact/ContactService'
+import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
 
 export interface ContactFormDialogProps {
   dialogOpen: boolean

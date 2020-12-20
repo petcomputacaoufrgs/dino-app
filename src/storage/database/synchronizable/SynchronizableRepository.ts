@@ -19,6 +19,19 @@ export default abstract class SynchronizableRepository<
     this.table = table
   }
 
+  async getFirst(): Promise<ENTITY | undefined> {
+    const entites = await this.table.toArray()
+    return entites.length > 0 ? entites[0] : undefined
+  }
+
+  async getById(id: number): Promise<ENTITY | undefined> {
+    return this.table.where('id').equals(id).first()
+  }
+
+  async getByLocalId(localId: number): Promise<ENTITY | undefined> {
+    return this.table.where('localId').equals(localId).first()
+  }
+
   async getAllById(entities: ENTITY[]): Promise<ENTITY[]> {
     const ids = entities
       .filter((entity) => entity.id !== undefined)

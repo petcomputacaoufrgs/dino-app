@@ -22,7 +22,7 @@ const GlossaryContext = createContext<GlossaryContextType>({
   data: [],
 })
 
-const GlossaryProvider: React.FC = ({ children }): JSX.Element =>
+const GlossaryProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

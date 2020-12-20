@@ -6,10 +6,10 @@ import LoginStatusConstants from '../../../constants/login/LoginStatusConstants'
 import AuthService from '../../../services/auth/AuthService'
 import { Typography } from '@material-ui/core'
 import ConnectionService from '../../../services/connection/ConnectionService'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2'
 import { useAlert } from '../../../context/provider/alert'
 import TextIconButton from '../icon_text_button'
+import { useUserSettings } from '../../../context/provider/user_settings'
 import './styles.css'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
@@ -19,7 +19,8 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   onRefreshTokenLostError,
   text,
 }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
   const alert = useAlert()
   const googleOAuth2 = useGoogleOAuth2()
   

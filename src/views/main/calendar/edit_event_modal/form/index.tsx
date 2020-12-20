@@ -8,7 +8,6 @@ import {
   TextField,
   Grid,
 } from '@material-ui/core'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import DateFnsUtils from '@date-io/date-fns'
 import {
   MuiPickersUtilsProvider,
@@ -33,11 +32,13 @@ import Weekday from '../../../../../types/weekday_picker/Weekday'
 import AddAlarmModal from './add_alarm_modal'
 import EventAlarm from '../../../../../types/calendar/EventAlarm'
 import AlarmItem from './alarm_item'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import './styles.css'
 
 const Form: React.FC = () => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const [eventType, setEventType] = useState(language.MEDICAL_APPOINTMENT_TYPE)
   const [eventName, setEventName] = useState<string>()
   const [initDate, setInitDate] = useState(new Date())

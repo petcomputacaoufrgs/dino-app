@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { useCurrentLanguage } from '../../context/provider/app_settings'
+import { useUserSettings } from '../../context/provider/user_settings'
 import './styles.css'
 
 const AgreementDialog: React.FC<AgreementDialogProps> = ({
@@ -18,7 +18,9 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
   onDisagree,
   open,
 }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+
+  const language = userSettings.service.getLanguage(userSettings)
 
   const handleDisagree = () => {
     onDisagree()

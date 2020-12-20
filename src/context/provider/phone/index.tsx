@@ -22,7 +22,7 @@ const PhoneContext = createContext<PhoneContextType>({
   data: [],
 })
 
-const PhoneProvider: React.FC = ({ children }): JSX.Element =>
+const PhoneProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

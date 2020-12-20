@@ -8,24 +8,25 @@ import {
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import QuestionDialogFormProps from './props'
-import {
-  useCurrentLanguage,
-  useCurrentFaq,
-} from '../../../../context/provider/app_settings'
-import SelectFaq from '../../settings/select_faq'
-import './styles.css'
-import FaqService from '../../../../services/faq/FaqService'
 import Constants from '../../../../constants/faq/FaqConstants'
+import FaqUserQuestionEntity from '../../../../types/faq/database/FaqUserQuestionEntity'
+import { useUserSettings } from '../../../../context/provider/user_settings'
+import { useFaq } from '../../../../context/provider/faq'
+import { useTreatment } from '../../../../context/provider/treatment/index'
+import './styles.css'
+import FaqUserQuestionService from '../../../../services/faq/FaqUserQuestionService'
 
 const QuestionDialogForm = React.forwardRef(
   (
     { dialogOpen, setDialogOpen }: QuestionDialogFormProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
-    const language = useCurrentLanguage()
-
-    const currentFaq = useCurrentFaq()
-
+    const userSettings = useUserSettings()
+    const language = userSettings.service.getLanguage(userSettings)
+    const treatment = useTreatment()
+    const faq = useFaq()
+    const currentTreatment = userSettings.service.getTreatment(userSettings, treatment.data)
+    const currentFaq = faq.service.getCurrentFaq(currentTreatment, faq.data)
     const [selectedFaq, setSelectedFaq] = useState(currentFaq)
     const [error, setError] = useState(false)
 
@@ -35,7 +36,13 @@ const QuestionDialogForm = React.forwardRef(
 
     const handleSave = () => {
       if (selectedFaq !== undefined && question !== '') {
-        FaqService.saveUserQuestion(selectedFaq, question)
+        const entity: FaqUserQuestionEntity = {
+          question: question,
+          localFaqId: selectedFaq.localId
+        }
+
+        FaqUserQuestionService.save(entity)
+
         handleClose()
       } else {
         if (question === '') {
@@ -72,10 +79,6 @@ const QuestionDialogForm = React.forwardRef(
           TransitionComponent={TransitionSlide}
         >
           <DialogContent dividers>
-            <SelectFaq
-              faq={selectedFaq}
-              setFaq={setSelectedFaq}
-            />
             <TextField
               required
               fullWidth

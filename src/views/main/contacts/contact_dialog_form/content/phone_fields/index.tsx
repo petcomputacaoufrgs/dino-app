@@ -1,5 +1,4 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import { MenuItem } from '@material-ui/core'
 import IconButton from '../../../../../../components/button/icon_button'
@@ -10,6 +9,7 @@ import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Constants from '../../../../../../constants/contact/ContactsConstants'
+import { useUserSettings } from '../../../../../../context/provider/user_settings'
 import './style.css'
 
 const PhoneFields = ({
@@ -21,8 +21,9 @@ const PhoneFields = ({
   helperText,
   handleDeletePhone,
 }: PhoneFieldsProps): JSX.Element => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const types = [
     { label: language.CONTACTS_MOBILE_PHONE, id: ContactsConstants.MOBILE },
     {

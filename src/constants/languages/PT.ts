@@ -104,11 +104,13 @@ export default class PT implements LanguageBase {
 
   SETTINGS_LANGUAGE = 'Escolher Idioma'
 
-  SETTINGS_FAQ = 'Escolher F.A.Q'
+  SETTINGS_TREATMENT = 'Escolha seu tratamento'
 
   SETTINGS_SAVE = 'Salvar'
 
   SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
+
+  SETTINGS_SAVE_ERROR = 'Erro salvando as novas configurações.'
 
   MENU_NOTES = 'Notas'
 
@@ -379,8 +381,6 @@ export default class PT implements LanguageBase {
 
   EVENT_COLOR_LABEL = 'Cor selecionada'
 
-  FAQ_CONNECTION_ERROR = 'Conexão com a internet necessária'
-
   MAX = 'máx. '
 
   ADD_COLUMN_TEXT = '+ Adicionar coluna'
@@ -493,4 +493,7 @@ export default class PT implements LanguageBase {
   CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Clique aqui para ir para o mês atual'
 
   READ_MORE = 'Leia mais'
+
+  NO_TREATMENTS_AVAILABLE = 'Nenhum tratamento disponível'
+
 }

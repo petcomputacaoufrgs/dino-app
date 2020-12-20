@@ -4,15 +4,16 @@ import './styles.css'
 import { Divider } from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import { Avatar } from '@material-ui/core'
 import IconButton from '../../button/icon_button'
 import { ReactComponent as ChevronLeftIconSVG } from '../../../assets/icons/chevron_left.svg'
 import { useUser } from '../../../context/provider/user'
 import Loader from '../../loader'
+import { useUserSettings } from '../../../context/provider/user_settings'
 
 const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const user = useUser()
 

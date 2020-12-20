@@ -9,15 +9,16 @@ import {
 import TransitionSlide from '../../../../components/slide_transition'
 import NoteColumnDialogProps from './props'
 import NoteColumnDialogHeader from './header'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 import Button from '../../../../components/button/text_button'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const NoteColumnDialog = forwardRef(
   (props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
-    const language = useCurrentLanguage()
+    const userSettings = useUserSettings()
+    const language = userSettings.service.getLanguage(userSettings)
 
     const inputRef = useRef<HTMLInputElement>(null)
 

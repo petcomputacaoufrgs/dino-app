@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import ContactItems from './contact_list_items'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import ContactFormDialog from './contact_dialog_form'
@@ -14,9 +13,13 @@ import { usePhone } from '../../../context/provider/phone'
 import { useGoogleContact } from '../../../context/provider/google_contact'
 import { useContact } from '../../../context/provider/contact'
 import Loader from '../../../components/loader'
+import { useUserSettings } from '../../../context/provider/user_settings'
 
 const Contacts = (): JSX.Element => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  const syncGoogleContact = userSettings.service.getSyncGoogleContact(userSettings)
+  const declinedSyncGoogleContact = userSettings.service.getDeclinedGoogleContact(userSettings)
   const contact = useContact()
   const phone = usePhone()
   const googleContact = useGoogleContact()
@@ -37,18 +40,17 @@ const Contacts = (): JSX.Element => {
   }
 
   const handleAddContact = () => {
-    const hasGoogleContactsGrant = AuthService.hasGoogleContactsGrant()
+    if (!declinedSyncGoogleContact) {
+      const hasGoogleContactsGrant = AuthService.hasGoogleContactsGrant()
 
-    if (!hasGoogleContactsGrant) {
-      const declinedGrant = AuthService.getDeclinedContactsGrant()
-      if (!declinedGrant) {
+      if (!hasGoogleContactsGrant && !syncGoogleContact) {
         setOpenGrantDialog(true)
-
+  
         return
       }
+  
+      setAdd(true)
     }
-
-    setAdd(true)
   }
 
   return (

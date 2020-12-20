@@ -1,5 +1,5 @@
-import ContactView from "../../../../../types/contact/view/ContactView"
 import { PhoneServiceImpl } from '../../../../../services/contact/PhoneService'
+import ContactView from '../../../../../types/contact/view/ContactView'
 
 export default interface ContactCardHeaderProps {
   item: ContactView

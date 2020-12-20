@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../../../components/button/text_button'
-import './styles.css'
 import NoteCreateDialogProps from './props'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -10,6 +8,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import { DialogTitle, DialogActions } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
+import './styles.css'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
   onClose,
@@ -18,7 +18,8 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
   tagOptions,
   questionAlreadyExists,
 }): JSX.Element => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const [question, setQuestion] = useState('')
   const [questionWithError, setQuestionWithError] = useState(false)

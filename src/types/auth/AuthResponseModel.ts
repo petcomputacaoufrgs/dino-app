@@ -1,7 +1,7 @@
-import UserModel from '../user/api/UserModel'
+import UserDataModel from '../user/api/UserModel'
 
 export default interface AuthResponseModel {
   accessToken: string
   expiresDate: number
-  user: UserModel
+  user: UserDataModel
 }

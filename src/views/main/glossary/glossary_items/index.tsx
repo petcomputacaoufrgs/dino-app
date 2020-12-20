@@ -1,14 +1,15 @@
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
-import './styles.css'
 import React from 'react'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { Link } from 'react-router-dom'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 import GlossaryItemProps from './props'
+import './styles.css'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   return (
     <div className="glossary__items">

@@ -103,11 +103,13 @@ export default class EN implements LanguageBase {
 
   SETTINGS_LANGUAGE = 'Choose Language'
 
-  SETTINGS_FAQ = 'Choose F.A.Q'
+  SETTINGS_TREATMENT = 'Choose treatment'
 
   SETTINGS_SAVE = 'Save'
 
   SETTINGS_SAVE_SUCCESS = 'Settings updated.'
+
+  SETTINGS_SAVE_ERROR = 'Error saving new settings.'
 
   MENU_NOTES = 'Notes'
 
@@ -373,8 +375,6 @@ export default class EN implements LanguageBase {
 
   EVENT_COLOR_LABEL = 'Selected color'
 
-  FAQ_CONNECTION_ERROR = 'Internet connection required'
-
   MAX = 'max. '
 
   ADD_COLUMN_TEXT = '+ Add column'
@@ -487,4 +487,6 @@ export default class EN implements LanguageBase {
   CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Click here to go to the current month'
 
   READ_MORE = 'Read more'
+
+  NO_TREATMENTS_AVAILABLE = 'No treatments available'
 }

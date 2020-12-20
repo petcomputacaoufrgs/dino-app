@@ -48,9 +48,10 @@ export default interface LanguageBase {
   MENU_ABOUT_US: string
   SETTINGS_TITLE: string
   SETTINGS_LANGUAGE: string
-  SETTINGS_FAQ: string
+  SETTINGS_TREATMENT: string
   SETTINGS_SAVE: string
   SETTINGS_SAVE_SUCCESS: string
+  SETTINGS_SAVE_ERROR: string
   MENU_NOTES: string
   NOTES_HEADER_IMAGE_DESC: string
   ADD_BUTTON: string
@@ -184,7 +185,6 @@ export default interface LanguageBase {
   ADD_ARIA_LABEL: string
   OPTIONS_ARIA_LABEL: string
   EVENT_COLOR_LABEL: string
-  FAQ_CONNECTION_ERROR: string
   MAX: string
   ADD_COLUMN_TEXT: string
   COLUMN_ADD_LABEL: string
@@ -234,4 +234,5 @@ export default interface LanguageBase {
   CALENDAR_CLOSE_BUTTON_ARIA_LABEL: string
   CALENDAR_CURRENT_MONTH_ARIA_LABEL: string
   READ_MORE: string
+  NO_TREATMENTS_AVAILABLE: string
 }

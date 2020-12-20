@@ -2,15 +2,16 @@ import React from 'react'
 import './styles.css'
 import NotesContentColumnAddNoteProps from './props'
 import Button from '../../../../../../components/button/text_button'
-import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import NoteConstants from '../../../../../../constants/note/NoteConstants'
+import { useUserSettings } from '../../../../../../context/provider/user_settings'
 
 const NotesContentColumnAddNote: React.FC<NotesContentColumnAddNoteProps> = ({
   onAdd,
   notesCount,
 }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const maxNotes = notesCount >= NoteConstants.MAX_NOTES_PER_COLUMN
 
   return (

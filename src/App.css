@@ -9,6 +9,11 @@ body .MuiInputBase-root,
   color: var(--base-font-color);
 }
 
+body .MuiFormControl-root.MuiTextField-root.MuiFormControl-fullWidth {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 body .MuiDialogActions-spacing > :not(:first-child) {
   margin-left: 0;
 }

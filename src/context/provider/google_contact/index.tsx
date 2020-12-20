@@ -22,7 +22,7 @@ const GoogleContactContext = createContext<GoogleContactContextType>({
   data: [],
 })
 
-const GoogleContactProvider: React.FC = ({ children }): JSX.Element =>
+const GoogleContactProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

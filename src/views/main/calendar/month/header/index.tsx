@@ -3,12 +3,13 @@ import HeaderProps from './props'
 import DateUtils from '../../../../../utils/DateUtils'
 import { ReactComponent as TodayCalendarSVG } from '../../../../../assets/icons/today_calendar.svg'
 import IconButton from '../../../../../components/button/icon_button'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   return (
     <div className="calendar__month__header">
       <h1>

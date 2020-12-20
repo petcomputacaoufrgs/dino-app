@@ -1,20 +1,15 @@
-import Service from '../../services/faq/FaqService'
-import ServerService from '../../services/faq/FaqServerService'
-import BaseSync from '../BaseSync'
+import SynchronizableSync from "../synchronizable/SynchronizableSync"
+import FaqDataModel from '../../types/faq/api/FaqDataModel'
+import FaqEntity from '../../types/faq/database/FaqEntity'
+import { FaqRepositoryImpl } from '../../storage/database/faq/FaqRepository'
+import FaqService from "../../services/faq/FaqService"
 
-class FaqSync implements BaseSync {
-  receive = async (): Promise<void> => {
-    const response = await ServerService.getUserFaqVersion()
+class FaqSync extends SynchronizableSync<
+  number,
+  number,
+  FaqDataModel,
+  FaqEntity,
+  FaqRepositoryImpl
+> {}
 
-    if (response !== undefined) {
-      if (response.id === Service.getUserFaqId()) {
-        if (response.version === Service.getVersion()) {
-          return
-        }
-      }
-      await Service.getUserFaqFromServer()
-    }
-  }
-}
-
-export default new FaqSync()
+export default new FaqSync(FaqService)

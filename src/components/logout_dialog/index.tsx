@@ -1,18 +1,18 @@
 import React from 'react'
 import AgreementDialog from '../agreement_dialog'
 import LogoutDialogProps from './props'
-import './styles.css'
 import AgreementDialogProps from '../agreement_dialog/props'
-import { useLanguage } from '../../context/provider/app_settings'
+import { useUserSettings } from '../../context/provider/user_settings'
+import './styles.css'
 
 const LogoutDialog: React.FC<LogoutDialogProps> = ({
   open,
   onAgree,
   onDisagree,
 }) => {
-  const languageContext = useLanguage()
-
-  const language = languageContext.current
+  const userSettings = useUserSettings()
+    
+  const language = userSettings.service.getLanguage(userSettings)
 
   const agreementDialogProps: AgreementDialogProps = {
     onAgree: onAgree,

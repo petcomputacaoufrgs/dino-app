@@ -10,10 +10,10 @@ import {
   Radio,
   TextField,
 } from '@material-ui/core'
-import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import StringUtils from '../../../../../../utils/StringUtils'
 import NumberUtils from '../../../../../../utils/NumberUtils'
 import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
+import { useUserSettings } from '../../../../../../context/provider/user_settings'
 import './styles.css'
 
 const DEFAULT_TIME = 30
@@ -24,8 +24,8 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
   open,
   onSave,
 }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
   const [dialogOpen, setDialogOpen] = useState(open)
   const [alarmType, setAlarmType] = useState(DEFAULT_ALARM_TYPE)
   const [time, setTime] = useState(DEFAULT_TIME)

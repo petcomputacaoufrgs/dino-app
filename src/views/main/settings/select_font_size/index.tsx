@@ -1,13 +1,12 @@
 import React from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
-import { useAppSettings } from '../../../../context/provider/app_settings/'
 import SelectFontSizeProps from './props'
+import { useUserSettings } from '../../../../context/provider/user_settings/index'
 
 const SelectFontSize = ({ fontSize, setFontSize }: SelectFontSizeProps) => {
-
-  const appSettings = useAppSettings()
-  const fontSizeList = appSettings.fontSize.getFontSizeOptions()
-  const language = appSettings.language.current
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  const fontSizeList = userSettings.service.getFontSizeOptions(language)
 
   const handleSelectedFontSizeChanged = (event: any) => {
     if (event && event.target && event.target.value) {

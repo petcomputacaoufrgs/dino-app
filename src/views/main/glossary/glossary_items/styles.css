@@ -3,7 +3,7 @@
   height: calc(100% - 60px);
   width: 100%;
   overflow-y: auto;
-  color:var(--contrast-color)
+  color:var(--contrast-color);
   font-size: var(--default-font);
 }
 

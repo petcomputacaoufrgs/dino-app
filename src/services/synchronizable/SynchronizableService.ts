@@ -213,6 +213,14 @@ export default abstract class SynchronizableService<
 
   //#region PUBLIC REQUESTS
 
+  public getById = async (id: number): Promise<ENTITY | undefined> => {
+    return this.repository.getById(id)
+  }
+
+  public getByLocalId = async (localId: number): Promise<ENTITY | undefined> => {
+    return this.repository.getByLocalId(localId)
+  }
+
   public getAll = async (): Promise<ENTITY[]> => {
     return this.localGetAllNotFakeDeleted()
   }
@@ -265,7 +273,6 @@ export default abstract class SynchronizableService<
 
       if (model) {
         const response = await this.apiSave(model)
-
         if (response && response.success) {
           const newEntity = await this.internalConvertModelToEntity(response.data)
 
@@ -299,9 +306,6 @@ export default abstract class SynchronizableService<
     const models = await this.internalConvertEntitiesToModels(entities)
 
     const response = await this.apiSaveAll(models)
-
-    console.log(models)
-    console.log(response)
 
     const success = this.processGenericResponse(response)
 

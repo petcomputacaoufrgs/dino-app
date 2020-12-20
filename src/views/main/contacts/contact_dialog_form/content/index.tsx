@@ -2,17 +2,18 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { ContactFormDialogContentProps } from './props'
 import PhoneFields from './phone_fields'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import Typography from '@material-ui/core/Typography'
 import Constants from '../../../../../constants/contact/ContactsConstants'
-import './styles.css'
 import TextButton from '../../../../../components/button/text_button'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
+import './styles.css'
 
 const ContactFormDialogContent = (
   props: ContactFormDialogContentProps
 ): JSX.Element => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const isNumberTaken = (tel: string): boolean =>
     props.helperText.number === tel
 

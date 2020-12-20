@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
-import { useCurrentLanguage } from '../../context/provider/app_settings'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import TagSearchBarProps from './props'
-import './styles.css'
 import { Search } from '@material-ui/icons'
 import { InputAdornment, IconButton } from '@material-ui/core'
+import { useUserSettings } from '../../context/provider/user_settings'
+import './styles.css'
 
 const MAX_TAGS = 5
 
 const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+
   const [tagList, setTagList] = useState<string[]>([])
 
   const handleChange = (event: React.ChangeEvent<{}>, values: any) => {

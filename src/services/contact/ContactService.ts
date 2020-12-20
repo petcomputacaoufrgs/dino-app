@@ -1,4 +1,4 @@
-import ContactModel from '../../types/contact/api/ContactModel'
+import ContactDataModel from '../../types/contact/api/ContactDataModel'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import ContactRepository, { ContactRepositoryImpl } from '../../storage/database/contact/ContactRepository'
@@ -14,12 +14,12 @@ import GoogleContactService from './GoogleContactService'
 export class ContactServiceImpl extends SynchronizableService<
 number,
 number,
-ContactModel,
+ContactDataModel,
 ContactEntity,
 ContactRepositoryImpl
 > {
 
-  async convertModelToEntity(model: ContactModel): Promise<ContactEntity> {
+  async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
     const entity: ContactEntity = {
       name: model.name,
       description: model.description,
@@ -29,42 +29,14 @@ ContactRepositoryImpl
     return entity
   }
 
-  async convertEntityToModel(entity: ContactEntity): Promise<ContactModel> {
-    const model: ContactModel = {
+  async convertEntityToModel(entity: ContactEntity): Promise<ContactDataModel> {
+    const model: ContactDataModel = {
       name: entity.name,
       description: entity.description,
       color: entity.color,
     }
 
     return model
-  }
-
-  changed = (item: ContactEntity, edited: ContactEntity): boolean => {
-    let changed = false
-
-    /*
-    if (item.phones.length === edited.phones.length) {
-       changed = item.phones.some(
-         (phone, index) => 
-         phone.number !== edited.phones[index].number 
-         || phone.type !== edited.phones[index].type
-       )
-    } else changed = true
-    */
-
-    if (item.name !== edited.name) changed = true
-    if (item.description !== edited.description) changed = true
-    if (item.color !== edited.color) changed = true
-
-    return changed
-  }
-
-  getByLocalId = (localId: number): Promise<ContactEntity | undefined> => {
-    return this.repository.getByLocalId(localId)
-  }
-
-  getById = (id: number): Promise<ContactEntity | undefined> => {
-    return this.repository.getById(id)
   }
 
   getViewContactByFilter = (contacts: ContactEntity[], phones: PhoneEntity[], googleContacts: GoogleContactEntity[], searchTerm: string): ContactView[] => {

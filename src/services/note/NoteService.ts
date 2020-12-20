@@ -24,7 +24,7 @@ export class NoteServiceImpl extends SynchronizableService<
         order: model.order,
         question: model.question,
         tags: model.tags === "" ? [] : model.tags.split(NoteConstants.TAG_SEPARATOR),
-        localColumnId: noteColumn.localId
+        columnLocalId: noteColumn.localId
       }
   
       return entity
@@ -32,8 +32,8 @@ export class NoteServiceImpl extends SynchronizableService<
   }
 
   async convertEntityToModel(entity: NoteEntity): Promise<NoteDataModel | undefined> {
-    if (entity.localColumnId) {
-      const noteColumn = await NoteColumnService.getByLocalId(entity.localColumnId)
+    if (entity.columnLocalId) {
+      const noteColumn = await NoteColumnService.getByLocalId(entity.columnLocalId)
 
       if (noteColumn && noteColumn.id) {
         const model: NoteDataModel = {
@@ -57,7 +57,7 @@ export class NoteServiceImpl extends SynchronizableService<
 
   getNotesInColumnByFilter(notes: NoteEntity[], column: NoteColumnEntity, tagsSearch: string[], textSearch: string, activeTagsSearch: boolean, activeTextSearch: boolean) {
     return notes.filter(note => {
-      if (note.localColumnId !== column.localId) {
+      if (note.columnLocalId !== column.localId) {
         return false
       }
 

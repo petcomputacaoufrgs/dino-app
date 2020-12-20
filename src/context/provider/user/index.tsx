@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import UserService, { UserServiceImpl } from '../../../services/user/UserService'
 import { UserRepositoryImpl } from '../../../storage/database/user/UserRepository'
-import UserModel from '../../../types/user/api/UserModel'
+import UserDataModel from '../../../types/user/api/UserModel'
 import UserEntity from '../../../types/user/database/UserEntity'
 import SynchronizableProvider from '../synchronizable'
 import SynchronizableContextType from '../synchronizable/context'
@@ -10,7 +10,7 @@ export interface UserContextType
   extends SynchronizableContextType<
     number,
     number,
-    UserModel,
+    UserDataModel,
     UserEntity,
     UserRepositoryImpl,
     UserServiceImpl
@@ -22,11 +22,11 @@ const UserContext = createContext<UserContextType>({
   data: [],
 })
 
-const UserProvider: React.FC = ({ children }): JSX.Element =>
+const UserProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,
-    UserModel,
+    UserDataModel,
     UserEntity,
     UserRepositoryImpl,
     UserServiceImpl

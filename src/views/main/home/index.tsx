@@ -1,14 +1,15 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import MenuService from '../../../services/menu/MenuService'
 import IconButton from '../../../components/button/icon_button'
-import './styles.css'
 import LinkButton from '../../../components/button/link_button'
 import HistoryService from '../../../services/history/HistoryService'
 import PathConstants from '../../../constants/app/PathConstants'
+import { useUserSettings } from '../../../context/provider/user_settings'
+import './styles.css'
 
 const Home: React.FC<void> = () => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const items = MenuService.getMainPages(language).filter(
     (item) => item.name !== language.MENU_HOME

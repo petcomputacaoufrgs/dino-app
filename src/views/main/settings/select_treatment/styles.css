@@ -1,0 +1,13 @@
+.select-treatment__autocomplete .MuiInputBase-root, 
+.select-treatment__autocomplete .MuiTypography-h6, 
+.select-treatment__autocomplete .MuiFormLabel-root {
+  font-family: inherit;
+}
+
+.select-treatment__autocomplete {
+  width: 100%;
+}
+
+.select-treatment__children {
+  margin: 28px 0px 0px;
+}

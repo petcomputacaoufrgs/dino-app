@@ -1,15 +1,16 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../context/provider/app_settings'
 import { useAlert } from '../../context/provider/alert'
 import Dinosaur1 from '../../assets/logos/dinosaur_1.svg'
 import Dinosaur2 from '../../assets/images/dinosaur_2.svg'
-import './styles.css'
 import GoogleLoginButton from '../../components/button/google_login'
+import { useUserSettings } from '../../context/provider/user_settings'
+import './styles.css'
 
 const Login = (): JSX.Element => {
   const alert = useAlert()
 
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const showAlertDinoFail = () => {
     alert.showErrorAlert(language.LOGIN_FAIL_BY_API)

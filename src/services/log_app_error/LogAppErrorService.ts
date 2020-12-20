@@ -85,7 +85,7 @@ class LogAppErrorService {
     }
   }
 
-  removeUserData = () => {
+  removeData = () => {
     LogAppErrorSyncLocalStorage.removeUserData()
     LogAppErrorRepository.deleteAll()
   }

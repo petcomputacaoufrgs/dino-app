@@ -1,76 +1,76 @@
-import FaqItemModel from '../../types/faq/FaqItemModel'
-import LS from '../../storage/local_storage/faq/FaqLocalStorage'
-import FaqModel from '../../types/faq/FaqModel'
-import FaqOptionsModel from '../../types/faq/FaqOptionsModel'
-import ServerService from './FaqServerService'
-import AppSettingsService from '../app_settings/AppSettingsService'
-import CurrentFaqContextUpdater from '../../context/updater/CurrentFaqContextUpdater'
-import strUtils from '../../utils/StringUtils'
+import SynchronizableService from "../synchronizable/SynchronizableService"
+import FaqDataModel from '../../types/faq/api/FaqDataModel'
+import FaqEntity from '../../types/faq/database/FaqEntity'
+import FaqRepository, { FaqRepositoryImpl } from '../../storage/database/faq/FaqRepository'
+import APIRequestMappingConstants from "../../constants/api/APIRequestMappingConstants"
+import APIWebSocketDestConstants from "../../constants/api/APIWebSocketDestConstants"
+import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
+import FaqView from '../../types/faq/view/FaqView'
+import FaqItemService from "./FaqItemService"
+import TreatmentEntity from "../../types/treatment/database/TreatmentEntity"
+import TreatmentService from "../treatment/TreatmentService"
 
-class FaqService {
-  getUserFaqFromServer = async () => {
-    const response = await ServerService.getUserFaq()
-    if (response !== undefined) {
-      this.setFaq(response)
+export class FaqServiceImpl extends SynchronizableService<
+number,
+number,
+FaqDataModel,
+FaqEntity,
+FaqRepositoryImpl
+> {
+  async convertModelToEntity(model: FaqDataModel): Promise<FaqEntity | undefined> {
+    const treatment = await TreatmentService.getById(model.treatmentId)
+    if (treatment) {
+      const entity: FaqEntity = {
+        title: model.title,
+        localTreatmentId: treatment.localId,
+      }
+
+      return entity
     }
   }
 
-  switchUserFaq = async (faqOption: FaqOptionsModel) => {
-    if(this.getUserFaqId() !== faqOption.id) {
-      
-      await ServerService.saveUserFaqId(faqOption.id)
-      await this.getUserFaqFromServer()
-      if(AppSettingsService.get().essentialContactGrant) {
-        await ServerService.getEssentialContacts(faqOption.id)      
+  async convertEntityToModel(entity: FaqEntity): Promise<FaqDataModel | undefined> {
+    if (entity.localTreatmentId) {
+      const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId)
+
+      if (treatment && treatment.id) {
+        const model: FaqDataModel = {
+          title: entity.title,
+          treatmentId: treatment.id
+        }
+    
+        return model
       }
     }
   }
 
-  saveUserQuestion = async (selectedFaq: FaqOptionsModel, question: string) => {
-    await ServerService.saveUserQuestion(selectedFaq.id, question)
+  public getFaqViewByFilter(treatment: TreatmentEntity | undefined, faqs: FaqEntity[], faqItem: FaqItemEntity[], searchTerm: string): FaqView | undefined {
+    const currentFaq = this.getCurrentFaq(treatment, faqs)
+
+    if (currentFaq) {
+      const view: FaqView = {
+        faq: currentFaq,
+        items: FaqItemService.getFaqItemByFilter(currentFaq, faqItem, searchTerm)
+      }
+      
+      return view
+    }
+
+    return undefined
   }
 
-  setFaq = (faq: FaqModel) => {
-    LS.setVersion(faq.version)
+  public getCurrentFaq(treatment: TreatmentEntity | undefined, faqs: FaqEntity[]): FaqEntity | undefined {
+    if (treatment) {
+      const currentFaq = faqs.find(faq => faq.localTreatmentId === treatment.localId)
+      return currentFaq
+    }
 
-    LS.setUserFaq({
-      id: faq.id,
-      title: faq.title,
-    } as FaqOptionsModel)
-
-    this.setItems(faq.items)
-
-    CurrentFaqContextUpdater.update()
+    return undefined
   }
-
-  setItems = (items: FaqItemModel[]) => {
-    LS.setItems(strUtils.sortByAttr(items, 'question'))
-  }
-
-  getItems = (): FaqItemModel[] => {
-    return LS.getItems()
-  }
-
-  getUserFaqInfo = (): FaqOptionsModel | undefined => {
-    return LS.getUserFaq()
-  }
-
-  getUserFaqId = (): number | undefined => {
-    const info = this.getUserFaqInfo()
-    return info ? info.id : undefined
-  }
-
-  getVersion = () => {
-    return LS.getVersion()
-  }
-
-  getFaqOptionsFromServer = async (): Promise<
-    Array<FaqOptionsModel> | undefined
-  > => {
-    return await ServerService.getFaqOptions()
-  }
-
-  removeUserData = () => LS.removeUserData()
 }
 
-export default new FaqService()
+export default new FaqServiceImpl(
+  FaqRepository, 
+  APIRequestMappingConstants.FAQ, 
+  APIWebSocketDestConstants.FAQ_UPDATE, 
+  APIWebSocketDestConstants.FAQ_DELETE)

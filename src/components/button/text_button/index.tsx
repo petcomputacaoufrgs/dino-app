@@ -17,7 +17,6 @@ const TextButton: React.FC<ButtonProps> = (props) => {
   return (
     <Button {...props} className={getClassName()}>
       {props.children}
-      <p>{props.text}</p>
     </Button>
   )
 }

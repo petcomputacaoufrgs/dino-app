@@ -22,7 +22,7 @@ const NoteColumnContext = createContext<NoteColumnContextType>({
   data: [],
 })
 
-const NoteColumnProvider: React.FC = ({ children }): JSX.Element =>
+const NoteColumnProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

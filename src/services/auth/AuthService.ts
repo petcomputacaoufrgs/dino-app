@@ -138,14 +138,6 @@ class AuthService {
     GoogleContactGrantContextUpdater.update()
   }
 
-  getDeclinedContactsGrant = (): boolean => {
-    return AuthLocalStorage.getDeclinedContactsGrant()
-  }
-
-  setDeclinedContactsGrant = (declined: boolean) => {
-    AuthLocalStorage.setDeclinedContactsGrant(declined)
-  }
-
   getAuthToken = (): string => {
     return AuthLocalStorage.getAuthToken()
   }
@@ -174,12 +166,6 @@ class AuthService {
   }
 
   isRefreshRequired = (): boolean => AuthLocalStorage.isRefreshRequired()
-
-  isFirstLogin = (): boolean => AuthLocalStorage.getIsFirstLogin()
-  
-  setFirstLogin = (value: boolean) => AuthLocalStorage.setIsFirstLogin(value)
-
-  removeIsFirstLogin = () =>  AuthLocalStorage.removeIsFirstLogin()
 
   isRefreshingAccessToken = (): boolean =>
     AuthLocalStorage.isRefreshingAccessToken()
@@ -293,7 +279,6 @@ class AuthService {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
     this.setGoogleAuthScopes(responseBody.scopeList)
-    this.setDeclinedContactsGrant(responseBody.declinedContatsGrant)
   }
 
   private saveGoogleAuthData(responseBody: GoogleAuthResponseModel) {
@@ -301,8 +286,6 @@ class AuthService {
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
     this.setGoogleAuthScopes(responseBody.scopeList)
     this.saveUserAuthData(responseBody)
-    this.setDeclinedContactsGrant(responseBody.declinedContatsGrant)
-    this.setFirstLogin(responseBody.firstConfigDone)
   }
 
   private saveUserAuthData(responseBody: AuthResponseModel) {

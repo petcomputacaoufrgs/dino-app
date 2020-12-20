@@ -5,11 +5,12 @@ import IconButton from '../../../button/icon_button'
 import SyncInfo from './sync_info'
 import ArrowBack from '../../../arrow_back'
 import { ReactComponent as MenuIconSVG } from '../../../../assets/icons/menu.svg'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   return (
     <div className="drawer__navigation__app_bar">
       <IconButton

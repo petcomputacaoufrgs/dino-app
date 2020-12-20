@@ -6,14 +6,14 @@ import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
-import ContactView from '../../../../types/contact/view/ContactView';
-import './styles.css'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
 import ContactsConstants from '../../../../constants/contact/ContactsConstants'
 import StringUtils from '../../../../utils/StringUtils'
+import ContactView from '../../../../types/contact/view/ContactView'
 import Utils from '../../../../utils/Utils'
+import { useUserSettings } from '../../../../context/provider/user_settings'
+import './styles.css'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
   if (item) {
@@ -39,7 +39,8 @@ const ContactFormDialog = React.forwardRef(
     ref: React.Ref<unknown>
   ): JSX.Element => {
     
-    const language = useCurrentLanguage()
+    const userSettings = useUserSettings()
+    const language = userSettings.service.getLanguage(userSettings)
     const [contact, setContact] = useState(getContact(item))
     const [contactPhones, setContactPhones] = useState(getPhones(item))
     const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
@@ -48,20 +49,6 @@ const ContactFormDialog = React.forwardRef(
       number: '',
       text: ''
     })
-
-    const getContact = (item: ContactModel | undefined) => {
-      return {
-        name: item?.name || '',
-        description: item?.description || '',
-        color: item?.color,
-      }
-    }
-    
-    const getPhones = (item: ContactModel | undefined) => {
-      return item
-        ? item.phones
-        : [JSON.parse(Constants.DEFAULT_PHONE) as PhoneModel]
-    }    
 
     useEffect(() => {
       if (dialogOpen) {

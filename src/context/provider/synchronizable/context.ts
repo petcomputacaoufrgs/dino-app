@@ -1,5 +1,4 @@
 import { IndexableType, IndexableTypePart } from 'dexie'
-import SynchronizableDataModel from '../../../types/synchronizable/api/SynchronizableDataModel'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
 import SynchronizableService from '../../../services/synchronizable/SynchronizableService'
 import SynchronizableRepository from '../../../storage/database/synchronizable/SynchronizableRepository'

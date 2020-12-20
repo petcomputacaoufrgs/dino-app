@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './App.css'
 import AuthService from './services/auth/AuthService'
 import Login from './views/login'
 import Main from './views/main'
@@ -13,31 +12,17 @@ import NotFound from './views/not_found/index'
 import UserContextProvider from './context/provider/user'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
-import DataThemeUtils from './utils/DataThemeUtils'
 import TermsOfUse from './views/terms_of_use'
 import PrivacyPolicy from './views/privacy_policy'
-import { useCurrentColorTheme, useCurrentFontSize } from './context/provider/app_settings'
-import DataFontSizeUtils from './utils/DataFontSizeUtils'
+import UserSettingsProvider from './context/provider/user_settings/index'
+import TreatmentProvider from './context/provider/treatment'
+import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
 
 const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [showLoadScreen, setShowLoadScreen] = useState(false)
-
-  const colorThemeName = useCurrentColorTheme()
-  DataThemeUtils.setBodyDataTheme(colorThemeName)
-
-  const fontSizeName = useCurrentFontSize()
-  DataFontSizeUtils.setBodyDataFontSize(fontSizeName)
-
-  useEffect(() => {
-    DataThemeUtils.setBodyDataTheme(colorThemeName)
-  }, [colorThemeName])
-
-  useEffect(() => {
-    DataFontSizeUtils.setBodyDataFontSize(fontSizeName)
-  }, [fontSizeName])
 
   useEffect(() => {
     if (firstLoad) {
@@ -73,7 +58,11 @@ const App = (): JSX.Element => {
           path={PathConstants.USER}
           component={() => (
             <UserContextProvider>
-              <Main />
+              <UserSettingsProvider>
+                <TreatmentProvider>
+                  <Main />
+                </TreatmentProvider>
+              </UserSettingsProvider>
             </UserContextProvider>
           )}
         />

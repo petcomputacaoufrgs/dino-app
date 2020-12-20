@@ -1,6 +1,5 @@
-import FaqItemModel from '../../../../types/faq/FaqItemModel'
+import FaqView from '../../../../types/faq/view/FaqView'
 
 export default interface FaqItemsProps {
-  items: FaqItemModel[]
-  title: string
+  data: FaqView | undefined
 }

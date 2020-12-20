@@ -1,5 +1,4 @@
 import React from 'react'
-import { useCurrentLanguage } from '../../../../../../context/provider/app_settings'
 import DateUtils from '../../../../../../utils/DateUtils'
 import TagList from '../../../../../../components/tag_list/index'
 import MaterialCard from '@material-ui/core/Card'
@@ -9,6 +8,7 @@ import NoteBodyColumnCardProps from './props'
 import { Draggable } from 'react-beautiful-dnd'
 import { CardActions } from '@material-ui/core'
 import './styles.css'
+import { useUserSettings } from '../../../../../../context/provider/user_settings'
 
 const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
@@ -17,8 +17,9 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   searching,
   onClickNote,
 }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const handleCardClick = () => {
     onClickNote(note)
   }

@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Switch } from 'react-router'
-import { useCurrentLanguage } from '../../context/provider/app_settings'
 import PathConstants from '../../constants/app/PathConstants'
 import DrawerNavigation from '../../components/drawer_navigation'
 import PrivateRoute from '../../components/private_route'
@@ -13,7 +12,6 @@ import LogoutDialog from '../../components/logout_dialog'
 import Notes from './notes'
 import NotFound from '../not_found/index'
 import NoteContextProvider from '../../context/provider/note'
-import FaqContextProvider from '../../context/provider/faq'
 import GlossaryProvider from '../../context/provider/glossary'
 import ContactProvider from '../../context/provider/contact'
 import NoteColumnProvider from '../../context/provider/note_column'
@@ -25,13 +23,35 @@ import Calendar from './calendar'
 import AboutUs from './about'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
-import FirstLoginDialog from './home/first_login_dialog'
-
+import FaqProvider from '../../context/provider/faq'
+import FaqItemProvider from '../../context/provider/faq_item'
+import FaqUserQuestionProvider from '../../context/provider/faq_user_question'
+import FirstSettingsDialog from './first_settings_dialog'
+import { useUserSettings } from '../../context/provider/user_settings'
+import DataThemeUtils from '../../utils/DataThemeUtils'
+import DataFontSizeUtils from '../../utils/DataFontSizeUtils'
 
 const Main = (): JSX.Element => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  const firstSettingsDone = userSettings.service.getFirstSettingsDone(userSettings)
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+  
+  const colorThemeName = userSettings.service.getColorTheme(userSettings)
+
+  DataThemeUtils.setBodyDataTheme(colorThemeName)
+
+  const fontSizeName = userSettings.service.getFontSize(userSettings)
+  DataFontSizeUtils.setBodyDataFontSize(fontSizeName)
+
+  useEffect(() => {
+    DataThemeUtils.setBodyDataTheme(colorThemeName)
+  }, [colorThemeName])
+
+  useEffect(() => {
+    DataFontSizeUtils.setBodyDataFontSize(fontSizeName)
+  }, [fontSizeName])
   
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true)
@@ -53,7 +73,10 @@ const Main = (): JSX.Element => {
   const renderMainContent = (): JSX.Element => {
     return (
       <Switch>
-        <PrivateRoute exact path={PathConstants.HOME} component={Home} />
+        <PrivateRoute 
+          exact 
+          path={PathConstants.HOME} 
+          component={Home} />
         <PrivateRoute
           exact
           path={PathConstants.GAMES}
@@ -95,7 +118,11 @@ const Main = (): JSX.Element => {
         <PrivateRoute
           exact
           path={PathConstants.SETTINGS}
-          component={Settings}
+          component={() => (
+            <FaqProvider>
+              <Settings/>
+            </FaqProvider>
+          )}
         />
         <PrivateRoute
           path={`${PathConstants.GLOSSARY}/:id`}
@@ -108,9 +135,13 @@ const Main = (): JSX.Element => {
         <PrivateRoute
           path={PathConstants.FAQ}
           component={() => (
-            <FaqContextProvider>
-              <Faq />
-            </FaqContextProvider>
+            <FaqProvider>
+              <FaqItemProvider>
+                <FaqUserQuestionProvider>
+                  <Faq />
+                </FaqUserQuestionProvider>
+              </FaqItemProvider>
+            </FaqProvider>
           )}
         />
         <PrivateRoute
@@ -134,7 +165,7 @@ const Main = (): JSX.Element => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
-      <FirstLoginDialog/>
+      {!firstSettingsDone && <FirstSettingsDialog/>}
     </>
   )
 }

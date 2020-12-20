@@ -1,13 +1,13 @@
 import React from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
-import { useAppSettings } from '../../../../context/provider/app_settings/'
 import SelectColorThemeProps from './props'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const SelectColorTheme = ({ colorTheme, setColorTheme }: SelectColorThemeProps) => {
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
-  const appSettings = useAppSettings()
-  const colorThemeList = appSettings.colorTheme.getColorThemeOptions()
-  const language = appSettings.language.current
+  const colorThemeList = userSettings.service.getColorThemeOptions(language)
 
   const handleSelectedColorThemeChanged = (event: any) => {
     if (event && event.target && event.target.value) {

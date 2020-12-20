@@ -6,15 +6,17 @@ import AuthService from '../../services/auth/AuthService'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
 import { useAlert } from '../../context/provider/alert'
-import { useCurrentLanguage } from '../../context/provider/app_settings'
-import './styles.css'
 import { DinoDialogContent, DinoDialogHeader } from '../dino_dialog'
+import { useUserSettings } from '../../context/provider/user_settings'
+import './styles.css'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
   ({ scopes, title, text, open, onDecline: onClose, onAccept }, ref) => {
     const alert = useAlert()
 
-    const language = useCurrentLanguage()
+    const userSettings = useUserSettings()
+    
+    const language = userSettings.service.getLanguage(userSettings)
 
     const [refreshNecessary, setRefreshNecessary] = useState(false)
 

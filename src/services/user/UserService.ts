@@ -1,4 +1,4 @@
-import UserModel from '../../types/user/api/UserModel'
+import UserDataModel from '../../types/user/api/UserModel'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import SynchronizableService from '../synchronizable/SynchronizableService'
@@ -7,7 +7,6 @@ import UserRepository, { UserRepositoryImpl } from '../../storage/database/user/
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import AuthService from '../auth/AuthService'
-import AppSettingsService from '../app_settings/AppSettingsService'
 import NoteService from '../note/NoteService'
 import NoteColumnService from '../note/NoteColumnService'
 import GlossaryService from '../glossary/GlossaryService'
@@ -19,11 +18,15 @@ import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import PhoneService from '../contact/PhoneService'
 import GoogleContactService from '../contact/GoogleContactService'
+import FaqItemService from '../faq/FaqItemService'
+import UserSettingsService from './UserSettingsService'
+import FaqUserQuestionService from '../faq/FaqUserQuestionService'
+import TreatmentService from '../treatment/TreatmentService'
 
 export class UserServiceImpl extends SynchronizableService<
   number,
   number,
-  UserModel,
+  UserDataModel,
   UserEntity,
   UserRepositoryImpl> {
 
@@ -35,11 +38,11 @@ export class UserServiceImpl extends SynchronizableService<
     return entities.length > 0 ? entities[0].name : ''
   }
  
-  async updateUser(model: UserModel) {
+  async updateUser(model: UserDataModel) {
     await this.localClearAndSaveAllFromModels([model])
   }
 
-  async convertModelToEntity(model: UserModel): Promise<UserEntity | undefined> {
+  async convertModelToEntity(model: UserDataModel): Promise<UserEntity | undefined> {
     const entity: UserEntity = {
       email: model.email,
       name: model.name,
@@ -49,8 +52,8 @@ export class UserServiceImpl extends SynchronizableService<
     return entity
   }
 
-  async convertEntityToModel(entity: UserEntity): Promise<UserModel | undefined> {
-    const model: UserModel = {
+  async convertEntityToModel(entity: UserEntity): Promise<UserDataModel | undefined> {
+    const model: UserDataModel = {
       email: entity.email,
       name: entity.name,
       pictureURL: entity.pictureURL
@@ -111,16 +114,19 @@ export class UserServiceImpl extends SynchronizableService<
   removeUserData() {
     this.removeData()
     AuthService.removeUserData()
+    UserSettingsService.removeData()
     NoteService.removeData()
     NoteColumnService.removeData()
     GlossaryService.removeData()
-    LogAppErrorService.removeUserData()
+    LogAppErrorService.removeData()
     ContactService.removeData()
     PhoneService.removeData()
     GoogleContactService.removeData()
-    AppSettingsService.removeUserData()
-    FaqService.removeUserData()
+    FaqService.removeData()
+    FaqItemService.removeData()
+    FaqUserQuestionService.removeData()
     CalendarService.removeUserData()
+    TreatmentService.removeData()
   }
 
   private donwloadPicture = (pictureURL: string, localId: number) => {

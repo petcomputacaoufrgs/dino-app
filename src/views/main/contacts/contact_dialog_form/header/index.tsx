@@ -1,19 +1,20 @@
 import React from 'react'
 import IconButton from '../../../../../components/button/icon_button'
 import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/color_lens.svg'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
 import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import '../../styles.css'
 import './styles.css'
 
 const AddContactDialogHeader = (
   props: ContactFormDialogHeaderProps
 ): JSX.Element => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   return (
     <CardHeader
       avatar={

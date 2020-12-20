@@ -1,14 +1,15 @@
 import React from 'react'
 import HeaderProps from './props'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import DateUtils from '../../../../../utils/DateUtils'
 import { Fab } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ day, onClose }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   return (
     <div className="calendar__day__modal__header">
       <div className="calendar__day__modal__header__info">

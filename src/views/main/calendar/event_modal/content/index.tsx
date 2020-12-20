@@ -4,13 +4,14 @@ import DateUtils from '../../../../../utils/DateUtils'
 import AlarmIcon from '@material-ui/icons/Alarm'
 import EventIcon from '@material-ui/icons/Event'
 import DescriptionIcon from '@material-ui/icons/Description'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import StringUtils from '../../../../../utils/StringUtils'
 import CalendarService from '../../../../../services/calendar/CalendarService'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import './styles.css'
 
 const Content: React.FC<ContentProps> = ({ event }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const getHourString = (date: Date): string => {
     return `${StringUtils.toStringWithZeros(

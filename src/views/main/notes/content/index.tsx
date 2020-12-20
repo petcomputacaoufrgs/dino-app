@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import NoteContentProps from './props'
 import './styles.css'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import {
   DragDropContext,
   DropResult,
@@ -18,6 +17,7 @@ import NoteInfoDialog from '../note_info_dialog'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../../../types/note/database/NoteEntity'
 import NoteView from '../../../../types/note/view/NoteView'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const NoteContent: React.FC<NoteContentProps> = ({
   column,
@@ -32,7 +32,8 @@ const NoteContent: React.FC<NoteContentProps> = ({
   onSaveNewNote,
   questionAlreadyExists,
 }): JSX.Element => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
   const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(
     undefined
   )

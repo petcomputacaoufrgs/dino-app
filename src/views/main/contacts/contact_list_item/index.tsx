@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
 import ContactItemListProps from './props'
 import {
   Avatar,
@@ -12,6 +11,7 @@ import {
 } from '@material-ui/core'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import './styles.css'
+import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const ContactItemList: React.FC<ContactItemListProps> = ({
   item,
@@ -19,9 +19,9 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
   onEdit,
   onDelete,
   onClick,
-  children,
 }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 

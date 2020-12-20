@@ -3,12 +3,13 @@ import IconButton from '../../../../../components/button/icon_button'
 import { ReactComponent as CloseIconSVG } from '../../../../../assets/icons/close.svg'
 import { ReactComponent as EditIconSVG } from '../../../../../assets/icons/pen.svg'
 import { ReactComponent as DeleteIconSVG } from '../../../../../assets/icons/delete.svg'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 import HeaderProps from './props'
 import './styles.css'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 
 const Header: React.FC<HeaderProps> = ({ onClose, onDelete, onEdit }) => {
-  const language = useCurrentLanguage()
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
 
   return (
     <div className="calendar__event_modal__header">

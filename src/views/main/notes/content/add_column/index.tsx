@@ -2,17 +2,18 @@ import React from 'react'
 import AddColumnProps from './props'
 import './styles.css'
 import Button from '../../../../../components/button'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
 import { isMobile } from 'react-device-detect'
 import NoteConstants from '../../../../../constants/note/NoteConstants'
+import { useUserSettings } from '../../../../../context/provider/user_settings'
 
 const AddColumn: React.FC<AddColumnProps> = ({
   onAddColumn,
   visible,
   columnCount,
 }) => {
-  const language = useCurrentLanguage()
-
+  const userSettings = useUserSettings()
+  const language = userSettings.service.getLanguage(userSettings)
+  
   const maxColumns = columnCount >= NoteConstants.MAX_COLUMNS
 
   return (

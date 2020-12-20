@@ -22,7 +22,7 @@ const NoteContext = createContext<NoteContextType>({
   data: [],
 })
 
-const NoteProvider: React.FC = ({ children }): JSX.Element =>
+const NoteProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

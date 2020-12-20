@@ -21,13 +21,13 @@ const ContactCard = forwardRef(
         open={dialogOpen}
       >
         <ContactCardHeader
-          item={item}
+          item={item!}
           phoneService={phoneService}
-          onEdit={setEdit}
-          onDelete={setDelete}
+          onEdit={onEdit}
+          onDelete={onDelete}
           onClose={onClose}
         />
-        <ContactCardContent item={item} />
+        <ContactCardContent item={item!} />
       </Dialog>
     )
   }

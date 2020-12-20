@@ -2,5 +2,5 @@ import SynchronizableEntity from "../../synchronizable/database/SynchronizableEn
 
 export default interface FaqEntity extends SynchronizableEntity<number, number> {
     title: string
-    treatmentId: number
+    localTreatmentId?: number
 }

@@ -33,3 +33,7 @@
 .google_login_button__loader {
   border-radius: 2rem;
 }
+
+.google_login_button__text_button__text {
+  margin: 0;
+}

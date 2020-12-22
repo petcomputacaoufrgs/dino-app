@@ -136,13 +136,13 @@ UserSettingsRepositoryImpl> {
       return userSettings.data.length > 0 ? userSettings.data[0] : undefined
     }
 
-    getEssentialContactGrant(userSettings: UserSettingsContextType): boolean {
+    getEssentialContactGrant(userSettings: UserSettingsContextType): boolean | undefined {
       const entity = this.getUserSettingsEntity(userSettings)
 
       if (entity) {
         return entity.includeEssentialContact
       } else {
-        return false
+        return undefined
       }
     }
 
@@ -159,13 +159,13 @@ UserSettingsRepositoryImpl> {
       return undefined
     }
 
-    getFirstSettingsDone(userSettings: UserSettingsContextType): boolean {
+    getFirstSettingsDone(userSettings: UserSettingsContextType): boolean | undefined {
       const entity = this.getUserSettingsEntity(userSettings)
 
       if (entity) {
         return entity.firstSettingsDone
       } else {
-        return true
+        return undefined
       }
     }
 

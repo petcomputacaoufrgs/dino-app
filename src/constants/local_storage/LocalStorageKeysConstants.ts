@@ -11,7 +11,6 @@ class LocalStorageKeys {
   CONTACTS_SHOULD_SYNC = 'css'
   GOOGLE_ACCESS_TOKEN = 'gat'
   GOOGLE_EXPIRES_DATE = 'ged'
-  GOOGLE_SCOPES = 'gs'
   AUTH_TOKEN = 'at'
   AUTH_TOKEN_EXPIRES_DATE = 'ated'
   REFRESH_TOKEN_REQUIRED = 'rtr'

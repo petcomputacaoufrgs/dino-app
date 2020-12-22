@@ -19,6 +19,7 @@ const TextIconButton: React.FC<IconButtonProps> = (props) => {
   return (
     <TextButton {...props} className={getClassName()}>
       <Icon className="svg_icon" />
+      {props.children}
     </TextButton>
   )
 }

@@ -15,13 +15,15 @@ import FaqItemSync from './faq/FaqItemSync'
 import FaqUserQuestionSync from './faq/FaqUserQuestionSync'
 import TreatmentSync from './treatment/TreatmentSync'
 import UserSettingsSync from './user/UserSettingsSync'
+import GoogleScopeSync from './auth/GoogleScopeSync'
 
 //TODO: Se tudo for refatorado rever classes Sync
 class Synchronizer {
   private executionGrups: BaseSync[][][] = [
-    [[UserSettingsSync], [FaqSync], [FaqItemSync, FaqUserQuestionSync]],
-    [[TreatmentSync], ],
     [[UserSync]],
+    [[UserSettingsSync]],
+    [[GoogleScopeSync]],
+    [[TreatmentSync], [FaqSync], [FaqItemSync, FaqUserQuestionSync]],
     [[GlossarySync]],
     [[NoteColumnSync], [NoteSync]],
     [[ContactSync], [PhoneSync, GoogleContactSync]],

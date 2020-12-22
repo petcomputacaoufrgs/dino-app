@@ -1,41 +1,41 @@
-.first-login__dialog {
+.first-settings__dialog {
   min-width: 80%;
   min-height: 50%;
 }
 
-.first-login__dialog h5 {
+.first-settings__dialog h5 {
   font-size: var(--big-font);
 }
 
-.first-login__dialog h6 {
+.first-settings__dialog h6 {
   font-size: var(--default-font);
 }
 
-.first-login__dialog p {
+.first-settings__dialog p {
   font-size: var(--default-font);
 }
 
-.first-login__dialog .MuiInputLabel-root {
+.first-settings__dialog .MuiInputLabel-root {
   font-size: var(--default-font);
 }
 
-.first-login__dialog .MuiInputBase-root {
+.first-settings__dialog .MuiInputBase-root {
   font-size: var(--default-font);
 }
 
-.first-login__dialog .citation {
+.first-settings__dialog .citation {
   text-align: end;
   font-style: italic;
 }
 
-.first-login__dialog .message_dialog .dino_header {
+.first-settings__dialog .message_dialog .dino_header {
   margin-bottom: 24px;
 }
 
-.first-login__dialog .message_dialog .dino_hr {
+.first-settings__dialog .message_dialog .dino_hr {
   margin: 12px 8px;
 }
-.first-login__dialog .font-size__selector {
+.first-settings__dialog .font-size__selector {
   margin-top: 20px;
 }
 

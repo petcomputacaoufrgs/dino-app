@@ -14,7 +14,6 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
   setTreatment,
   treatment
 }) => {
-
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
   const [open, setOpen] = useState(false)
@@ -33,7 +32,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
         noOptionsText={language.NO_TREATMENTS_AVAILABLE}
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
-        value={treatment}
+        value={treatment ? treatment : null}
         onChange={(event: any, newValue: TreatmentEntity | null) => {
           if (newValue) {
             setTreatment(newValue)

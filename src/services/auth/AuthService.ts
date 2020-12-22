@@ -1,21 +1,20 @@
-import GoogleAuthRequestModel from '../../types/auth/google/GoogleAuthRequestModel'
+import GoogleAuthRequestModel from '../../types/auth/google/api/GoogleAuthRequestModel'
 import HttpStatus from 'http-status-codes'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import AuthLocalStorage from '../../storage/local_storage/auth/AuthLocalStorage'
 import AuthResponseModel from '../../types/auth/AuthResponseModel'
 import LoginStatusConstants from '../../constants/login/LoginStatusConstants'
-import GoogleAuthResponseModel from '../../types/auth/google/GoogleAuthResponseModel'
+import GoogleAuthResponseModel from '../../types/auth/google/api/GoogleAuthResponseModel'
 import UserService from '../user/UserService'
 import DinoAgentService from '../../agent/DinoAgentService'
 import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
 import GoogleOAuth2Service from './google/GoogleOAuth2Service'
-import GoogleGrantRequestModel from '../../types/auth/google/GoogleGrantRequestModel'
+import GoogleGrantRequestModel from '../../types/auth/google/api/GoogleGrantRequestModel'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleScope from '../../types/auth/google/GoogleScope'
-import GoogleRefreshAuthResponseModel from '../../types/auth/google/GoogleRefreshAuthResponseModel'
-import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
+import GoogleRefreshAuthResponseModel from '../../types/auth/google/api/GoogleRefreshAuthResponseModel'
 
 class AuthService {
   cleanLoginGarbage = () => {
@@ -101,16 +100,6 @@ class AuthService {
     return false
   }
 
-  hasGoogleContactsGrant = () => {
-    const scopes = this.getGoogleAuthScopes()
-
-    if (scopes) {
-      return scopes.some((scope) => scope === GoogleScope.SCOPE_CONTACT)
-    }
-
-    return false
-  }
-
   isAuthenticated = (): boolean => Boolean(AuthLocalStorage.getAuthToken())
 
   getGoogleAccessToken = (): string | null => {
@@ -127,15 +116,6 @@ class AuthService {
 
   setGoogleExpiresDate = (tokenExpiresDate: number) => {
     AuthLocalStorage.setGoogleExpiresDate(tokenExpiresDate)
-  }
-
-  getGoogleAuthScopes = (): string[] | null => {
-    return AuthLocalStorage.getGoogleAuthScopes()
-  }
-
-  setGoogleAuthScopes = (scopeList: string[]) => {
-    AuthLocalStorage.setGoogleAuthScopes(scopeList)
-    GoogleContactGrantContextUpdater.update()
   }
 
   getAuthToken = (): string => {
@@ -278,13 +258,11 @@ class AuthService {
   ) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
-    this.setGoogleAuthScopes(responseBody.scopeList)
   }
 
   private saveGoogleAuthData(responseBody: GoogleAuthResponseModel) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
-    this.setGoogleAuthScopes(responseBody.scopeList)
     this.saveUserAuthData(responseBody)
   }
 

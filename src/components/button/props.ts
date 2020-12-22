@@ -6,6 +6,5 @@ export default interface ButtonProps {
   inputRef?: React.RefObject<HTMLInputElement>
   className?: string
   disabled?: boolean
-  text?: string
   outline?: boolean
 }

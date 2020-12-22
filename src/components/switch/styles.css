@@ -3,6 +3,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  font-size: var(--default-small-font);
 }
 
 .dino_switch__form p {

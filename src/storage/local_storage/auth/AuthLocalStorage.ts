@@ -67,24 +67,6 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.remove(LS_Constants.GOOGLE_EXPIRES_DATE)
   }
 
-  getGoogleAuthScopes = (): string[] | null => {
-    const scopes = this.get(LS_Constants.GOOGLE_SCOPES)
-
-    if (scopes) {
-      return JSON.parse(scopes)
-    }
-
-    return null
-  }
-
-  setGoogleAuthScopes = (scopes: string[]) => {
-    this.set(LS_Constants.GOOGLE_SCOPES, JSON.stringify(scopes))
-  }
-
-  removeGoogleAuthScopes = () => {
-    this.remove(LS_Constants.GOOGLE_SCOPES)
-  }
-
   isRefreshRequired = (): boolean => {
     const value = this.get(LS_Constants.REFRESH_TOKEN_REQUIRED)
 
@@ -189,7 +171,6 @@ class AuthLocalStorage extends BaseLocalStorage {
     this.removeAuthTokenExpiresDate()
     this.removeGoogleAccessToken()
     this.removeGoogleExpiresDate()
-    this.removeGoogleAuthScopes()
     this.removeRefreshingAccessToken()
     this.removeSuccessRefreshingAccessToken()
     this.removeRefreshingGoogleAccessToken()

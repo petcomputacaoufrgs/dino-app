@@ -13,14 +13,16 @@ import DinoSwitch from '../../../components/switch'
 import DinoHr from '../../../components/dino_hr'
 import SelectFontSize from './select_font_size'
 import { useUserSettings } from '../../../context/provider/user_settings'
-import './styles.css'
 import { useTreatment } from '../../../context/provider/treatment/index'
+import './styles.css'
 
 //TODO Adicionar seleção de tratamento
 const Settings = (): JSX.Element => {
   const userSettings = useUserSettings()
 
   const treatment = useTreatment()
+
+  const alert = useAlert()
 
   const language = userSettings.service.getLanguage(userSettings)
 
@@ -34,21 +36,26 @@ const Settings = (): JSX.Element => {
 
   const currentTreatment = userSettings.service.getTreatment(userSettings, treatment.data)
 
-  const alert = useAlert()
-  
   const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
 
   const [selectedFontSize, setSelectedFontSize] = useState(fontSizeCode)
 
   const [selectedColorTheme, setSelectedColorTheme] = useState(colorThemeCode)
 
-  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(essentialContactGrant)
+  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(
+    essentialContactGrant !== undefined ? essentialContactGrant : false)
 
   const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 
   const [selectedGoogleContactGrant, setSelectedGoogleContactGrant] = useState(syncGoogleContact)
 
   const [selectedTreatment, setSelectedTreatment] = useState(currentTreatment)
+
+  const handleOpenGoogleContactDialog = () => {
+    if (!selectedGoogleContactGrant) {
+      setOpenGoogleContactDialog(true)
+    }
+  }
 
   const handleAgreeContactsGrantDialog = () => {
     setSelectedGoogleContactGrant(true)
@@ -73,8 +80,9 @@ const Settings = (): JSX.Element => {
       userSettings.service.save(currentUserSettings)
     
       alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
+    } else {
+      alert.showErrorAlert(language.SETTINGS_SAVE_ERROR)
     }
-    alert.showErrorAlert(language.SETTINGS_SAVE_SUCCESS)
   }
 
   const renderSaveButton = (): JSX.Element => (
@@ -136,8 +144,8 @@ const Settings = (): JSX.Element => {
       <DinoHr invisible/>
       <FormControl className="settings__form">
         <DinoSwitch
-          selected={selectedEssentialContactGrant}
-          setSelected={setSelectedEssentialContactGrant}
+          selected={selectedGoogleContactGrant}
+          setSelected={handleOpenGoogleContactDialog}
           label={language.SAVE_CONTACT_ON_GOOGLE_GRANT}
         />
       </FormControl>

@@ -31,8 +31,8 @@ const FirstSettingsDialog: React.FC = () => {
 
   const [selectedColorTheme, setSelectedColorTheme] = useState<number | undefined>(undefined)
 
-  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(false)
-
+  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(true)
+  
   useEffect(() => {
     const userTreatment = userSettings.service.getTreatment(userSettings, treatment.data)
 
@@ -60,7 +60,11 @@ const FirstSettingsDialog: React.FC = () => {
   useEffect(() => {
     const essentialContactGrant = userSettings.service.getEssentialContactGrant(userSettings)
 
-    setSelectedEssentialContactGrant(essentialContactGrant)
+    console.log(essentialContactGrant)
+
+    if (essentialContactGrant !== undefined) {
+      setSelectedEssentialContactGrant(essentialContactGrant)
+    }
   }, [userSettings])
 
   const handleCloseDialogs = () => {
@@ -127,10 +131,20 @@ const FirstSettingsDialog: React.FC = () => {
 
   const handleEssentialContactGrantChange = (includeEssentialContact: boolean) => {
     setSelectedEssentialContactGrant(includeEssentialContact)
+
+    if (currentSettings && currentSettings.includeEssentialContact !== includeEssentialContact) {
+      currentSettings.includeEssentialContact = includeEssentialContact
+      userSettings.service.saveLocally(currentSettings)
+    }
   }
 
   const handleSelectedTreatmentChange = (newSelectedTreatment: TreatmentEntity) => {
     setSelectedTreatment(newSelectedTreatment)
+
+    if (currentSettings && currentSettings.treatmentLocalId !== newSelectedTreatment.localId) {
+      currentSettings.treatmentLocalId = newSelectedTreatment.localId
+      userSettings.service.saveLocally(currentSettings)
+    }
   }
 
   const handleSelectedColorThemeChange = (newColorTheme: number) => {
@@ -266,7 +280,7 @@ const FirstSettingsDialog: React.FC = () => {
   return (
     <>
           <Dialog
-            className="first-login__dialog"
+            className="first-settings__dialog"
             aria-labelledby={language.FIRST_LOGIN_DIALOG_LABEL}
             open={dialogOpen}
             disableEscapeKeyDown

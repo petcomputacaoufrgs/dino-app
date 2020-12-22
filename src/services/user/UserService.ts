@@ -22,6 +22,7 @@ import FaqItemService from '../faq/FaqItemService'
 import UserSettingsService from './UserSettingsService'
 import FaqUserQuestionService from '../faq/FaqUserQuestionService'
 import TreatmentService from '../treatment/TreatmentService'
+import GoogleScopeService from '../auth/google/GoogleScopeService'
 
 export class UserServiceImpl extends SynchronizableService<
   number,
@@ -114,6 +115,7 @@ export class UserServiceImpl extends SynchronizableService<
   removeUserData() {
     this.removeData()
     AuthService.removeUserData()
+    GoogleScopeService.removeData()
     UserSettingsService.removeData()
     NoteService.removeData()
     NoteColumnService.removeData()

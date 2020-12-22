@@ -13,7 +13,6 @@ import NoteColumnWebSocketSubscriber from './note/NoteColumnWebSocketSubscriber'
 import WebSocketConstants from '../constants/websocket/WebSocketConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import ConnectionService from '../services/connection/ConnectionService'
-import GoogleAuthWebSocketSubscriber from './auth/GoogleAuthWebSocketSubscriber'
 import SyncService from '../services/sync/SyncService'
 import Synchronizer from '../sync/Synchronizer'
 import GoogleContactWebSocketSubscriber from './contact/GoogleContactWebSocketSubscriber'
@@ -22,24 +21,25 @@ import FaqItemWebSocketSubscriber from './faq/FaqItemWebSocketSubscriber'
 import FaqUserQuestionWebSocketSubscriber from './faq/FaqUserQuestionWebSocketSubscriber'
 import TreatmentWebSocketSubscriber from './treatment/TreatmentWebSocketSubscriber'
 import UserSettingsWebSocketSubscriber from './user/UserSettingsWebSocketSubscriber'
+import GoogleScopeWebSocketSubscriber from './auth/GoogleScopeWebSocketSubscriber'
 
 class WebSocketConnector {
   private socket?: WebSocket
   private stompClient?: Stomp.Client
   private subscribers: BaseWebSocketSubscriber[] = [
-    UserSettingsWebSocketSubscriber,
-    TreatmentWebSocketSubscriber,
-    GlossaryWebSocketSubscriber,
-    NoteColumnWebSocketSubscriber,
-    NoteWebSocketSubscriber,
     UserWebSocketSubscriber,
-    ContactWebSocketSubscriber,
-    GoogleContactWebSocketSubscriber,
-    PhoneWebSocketSubscriber,
+    UserSettingsWebSocketSubscriber,
+    GoogleScopeWebSocketSubscriber,
+    TreatmentWebSocketSubscriber,
     FaqWebSocketSubscriber,
     FaqItemWebSocketSubscriber,
     FaqUserQuestionWebSocketSubscriber,
-    GoogleAuthWebSocketSubscriber,
+    GlossaryWebSocketSubscriber,
+    NoteColumnWebSocketSubscriber,
+    NoteWebSocketSubscriber,
+    ContactWebSocketSubscriber,
+    GoogleContactWebSocketSubscriber,
+    PhoneWebSocketSubscriber,
   ]
 
   private delayTimeout: NodeJS.Timeout | undefined

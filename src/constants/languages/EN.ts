@@ -462,7 +462,7 @@ export default class EN implements LanguageBase {
 
   GRANT_FAIL_BY_EXTERNAL_SUCCESS = 'Success! Enjoy your advantages.'
 
-  GRANT_DECLINED = 'You can active this feature in settings.'
+  GRANT_DECLINED = 'You can active this at any time.'
 
   GOOGLE_CONTACT_GRANT_TEXT =
     "We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."

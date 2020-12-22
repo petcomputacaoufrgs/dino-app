@@ -29,7 +29,8 @@ class APIWebSocketDestConstants {
   USER_DELETE = generateQueueDest('user/delete/')
   USER_SETTINGS_UPDATE = generateQueueDest('user_settings/update/')
   USER_SETTINGS_DELETE = generateQueueDest('user_settings/delete/')
-  ALERT_AUTH_SCOPE_UPDATE = '/user/queue/auth/scope/update'
+  GOOGLE_SCOPE_UPDATE = generateQueueDest('/auth/google/scope/update/')
+  GOOGLE_SCOPE_DELETE = generateQueueDest('/auth/google/scope/delete/')
 }
 
 const generateTopicDest = (dest: string) => {

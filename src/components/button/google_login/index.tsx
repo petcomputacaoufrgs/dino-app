@@ -4,13 +4,12 @@ import { ReactComponent as GoogleLogoSVG } from '../../../assets/logos/google.sv
 import LoginButtonProps from './props'
 import LoginStatusConstants from '../../../constants/login/LoginStatusConstants'
 import AuthService from '../../../services/auth/AuthService'
-import { Typography } from '@material-ui/core'
 import ConnectionService from '../../../services/connection/ConnectionService'
-import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2'
 import { useAlert } from '../../../context/provider/alert'
 import TextIconButton from '../icon_text_button'
 import { useUserSettings } from '../../../context/provider/user_settings'
 import './styles.css'
+import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2/index'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   onCancel,
@@ -83,22 +82,21 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   }
 
   return (
-    <Loader iconClassName="google_login_button__loader" loading={loading}>
+    <Loader iconClassName="google_login_button__loader" loading={loading || googleOAuth2.loading}>
       <div className="google_login_button">
         <TextIconButton
           ariaLabel={language.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
-          text={text}
           icon={GoogleLogoSVG}
           className={'google_login_button__text_button'}
           onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
-          disabled={!isConnected || !googleOAuth2.loaded}
+          disabled={!isConnected}
         >
-          <Typography component="p">{text}</Typography>
+          <p className='google_login_button__text_button__text'>{text}</p>
         </TextIconButton>
         {!isConnected && (
-          <Typography className="google_login_button__error" component="p">
+          <p className="google_login_button__error">
             {language.DISCONNECTED}
-          </Typography>
+          </p>
         )}
       </div>
     </Loader>

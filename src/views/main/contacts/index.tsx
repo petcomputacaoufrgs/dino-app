@@ -5,7 +5,6 @@ import ContactFormDialog from './contact_dialog_form'
 import Contants from '../../../constants/contact/ContactsConstants'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
-import AuthService from '../../../services/auth/AuthService'
 import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 import CircularButton from '../../../components/button/circular_button'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -14,6 +13,7 @@ import { useGoogleContact } from '../../../context/provider/google_contact'
 import { useContact } from '../../../context/provider/contact'
 import Loader from '../../../components/loader'
 import { useUserSettings } from '../../../context/provider/user_settings'
+import { useGoogleScope } from '../../../context/provider/google_scope'
 
 const Contacts = (): JSX.Element => {
   const userSettings = useUserSettings()
@@ -23,6 +23,7 @@ const Contacts = (): JSX.Element => {
   const contact = useContact()
   const phone = usePhone()
   const googleContact = useGoogleContact()
+  const googleScope = useGoogleScope()
 
   const [openGrantDialog, setOpenGrantDialog] = useState(false)
   const [add, setAdd] = useState(false)
@@ -41,7 +42,7 @@ const Contacts = (): JSX.Element => {
 
   const handleAddContact = () => {
     if (!declinedSyncGoogleContact) {
-      const hasGoogleContactsGrant = AuthService.hasGoogleContactsGrant()
+      const hasGoogleContactsGrant = googleScope.service.hasContactGrant(googleScope)
 
       if (!hasGoogleContactsGrant && !syncGoogleContact) {
         setOpenGrantDialog(true)

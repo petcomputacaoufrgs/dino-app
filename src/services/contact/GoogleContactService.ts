@@ -1,8 +1,6 @@
 import GoogleAgentService from '../../agent/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
 import GooglePeopleModel from '../../types/google_api/people/GooglePeopleModel'
-import AuthService from '../auth/AuthService'
-import GoogleScope from '../../types/auth/google/GoogleScope'
 import ContactService from './ContactService'
 import GoogleContactRepository, { GoogleContactRepositoryImpl } from '../../storage/database/contact/GoogleContactRepository'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
@@ -108,15 +106,6 @@ GoogleContactRepositoryImpl
     return contact
   }
   */
-  private hasContactGrant = (): boolean => {
-    const scopes = AuthService.getGoogleAuthScopes()
-
-    if (scopes) {
-      return scopes.some((scope) => scope === GoogleScope.SCOPE_CONTACT)
-    }
-
-    return false
-  }
 
   private createContactOnGoogleAPIRequest = async (
     model: GooglePeopleModel

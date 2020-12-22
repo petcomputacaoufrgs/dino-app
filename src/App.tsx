@@ -16,6 +16,7 @@ import TermsOfUse from './views/terms_of_use'
 import PrivacyPolicy from './views/privacy_policy'
 import UserSettingsProvider from './context/provider/user_settings/index'
 import TreatmentProvider from './context/provider/treatment'
+import GoogleScopeProvider from './context/provider/google_scope'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
@@ -58,11 +59,13 @@ const App = (): JSX.Element => {
           path={PathConstants.USER}
           component={() => (
             <UserContextProvider>
-              <UserSettingsProvider>
-                <TreatmentProvider>
-                  <Main />
-                </TreatmentProvider>
-              </UserSettingsProvider>
+              <GoogleScopeProvider>
+                <UserSettingsProvider>
+                  <TreatmentProvider>
+                    <Main />
+                  </TreatmentProvider>
+                </UserSettingsProvider>
+              </GoogleScopeProvider>
             </UserContextProvider>
           )}
         />

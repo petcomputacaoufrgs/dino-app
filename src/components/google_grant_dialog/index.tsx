@@ -4,7 +4,6 @@ import { Dialog, Button } from '@material-ui/core'
 import TransitionSlide from '../slide_transition'
 import AuthService from '../../services/auth/AuthService'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
-import GoogleContactGrantContextUpdater from '../../context/updater/GoogleContactGrantContextUpdater'
 import { useAlert } from '../../context/provider/alert'
 import { DinoDialogContent, DinoDialogHeader } from '../dino_dialog'
 import { useUserSettings } from '../../context/provider/user_settings'
@@ -30,7 +29,6 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 
       if (response === GrantStatusConstants.SUCCESS) {
         alert.showSuccessAlert(language.GRANT_FAIL_BY_EXTERNAL_SUCCESS)
-        GoogleContactGrantContextUpdater.update()
         onAccept()
       } else if (response === GrantStatusConstants.EXTERNAL_SERVICE_ERROR) {
         alert.showErrorAlert(language.GRANT_FAIL_BY_EXTERNAL_ERROR)
@@ -49,6 +47,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
       }
     }
 
+    //TODO DECLINE
     const handleDecline = async () => {
       alert.showInfoAlert(language.GRANT_DECLINED)
       //contact.service.declineGoogleContacts()
@@ -57,6 +56,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 
     return (
       <Dialog
+        className="google_grant_dialog"
         ref={ref}
         fullWidth
         maxWidth="xs"

@@ -468,7 +468,7 @@ export default class PT implements LanguageBase {
 
   GRANT_FAIL_BY_EXTERNAL_SUCCESS = 'Sucesso! Aproveite suas vantagens.'
 
-  GRANT_DECLINED = 'Você pode ativar esta função nas configurações.'
+  GRANT_DECLINED = 'Você pode ativar esta função futuramente.'
 
   GOOGLE_CONTACT_GRANT_TEXT =
     'Gostaríamos de permissão para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. \nNunca leremos nem modificaremos outros contatos fora dos contatos do DinoApp.'

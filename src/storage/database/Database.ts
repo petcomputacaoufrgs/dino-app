@@ -13,6 +13,7 @@ import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import FaqUserQuestionEntity from '../../types/faq/database/FaqUserQuestionEntity'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
+import GoogleScopeEntity from '../../types/auth/google/database/GoogleScopeEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 2
@@ -32,6 +33,7 @@ class Database extends Dexie {
   faqItem: Dexie.Table<FaqItemEntity, number>
   faqUserQuestion: Dexie.Table<FaqUserQuestionEntity, number>
   treatment: Dexie.Table<TreatmentEntity, number>
+  googleScope: Dexie.Table<GoogleScopeEntity, number>
 
   constructor() {
     super(DATABASE_NAME)
@@ -52,6 +54,7 @@ class Database extends Dexie {
       faqItem: generateSynchronizableTableString(),
       faqUserQuestion: generateSynchronizableTableString(),
       treatment: generateSynchronizableTableString(),
+      googleScope: generateSynchronizableTableString(),
       logAppError: '++id,title,file,error,date',
       calendarEvent:
         '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
@@ -71,6 +74,7 @@ class Database extends Dexie {
     this.logAppError = this.table('logAppError')
     this.calendarEvent = this.table('calendarEvent')
     this.treatment = this.table('treatment')
+    this.googleScope = this.table('googleScope')
   }
 }
 

@@ -3,8 +3,7 @@ import React from 'react'
 import SwitchProps from './props'
 import './styles.css'
 
-const DinoSwitch = ({selected, setSelected, label}: SwitchProps) => {
-
+const DinoSwitch = ({selected, setSelected, label}: SwitchProps) => {  
   const handleSwitch = () => {
     setSelected(!selected)
   }

@@ -1,57 +1,41 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import GoogleAuth2ContextType from '../../../types/context_provider/GoogleAuth2ContextType'
 import GoogleOAuth2Service from '../../../services/auth/google/GoogleOAuth2Service'
-import GoogleContactGrantContextUpdater from '../../updater/GoogleContactGrantContextUpdater'
-import AuthService from '../../../services/auth/AuthService'
+
+export interface GoogleAuth2ContextType {
+    loading: boolean
+}
 
 const GoogleOAuth2Context = createContext({
-  loaded: false,
+  loading: true,
 } as GoogleAuth2ContextType)
 
-const GoogleOAuth2ContextProvider: React.FC = (props) => {
-  const [context, setContext] = useState<GoogleAuth2ContextType>({
-    loaded: false,
-    hasContactGrant: false,
+const GoogleOAuth2Provider: React.FC = (props) => {
+  const [value, setValue] = useState<GoogleAuth2ContextType>({
+    loading: true,
   })
-
-  const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
     let handleInitUpdate = (loaded: boolean) => {
-      setContext({
-        loaded: loaded,
-        hasContactGrant: context.hasContactGrant,
-      })
-    }
-
-    let handleContactGrantUpdate = () => {
-      setContext({
-        loaded: context.loaded,
-        hasContactGrant: AuthService.hasGoogleContactsGrant(),
-      })
+        setValue({
+            loading: false,
+        })
     }
 
     const init = () => {
       GoogleOAuth2Service.init(handleInitUpdate)
     }
 
-    GoogleContactGrantContextUpdater.setCallback(handleContactGrantUpdate)
-
-    if (firstLoad) {
-      init()
-      setFirstLoad(false)
-    }
-
     const cleanBeforeUpdate = () => {
       handleInitUpdate = () => {}
-      handleContactGrantUpdate = () => {}
     }
 
+    init()
+
     return cleanBeforeUpdate
-  }, [context, firstLoad])
+  }, [])
 
   return (
-    <GoogleOAuth2Context.Provider value={context}>
+    <GoogleOAuth2Context.Provider value={value}>
       {props.children}
     </GoogleOAuth2Context.Provider>
   )
@@ -59,4 +43,4 @@ const GoogleOAuth2ContextProvider: React.FC = (props) => {
 
 export const useGoogleOAuth2 = () => useContext(GoogleOAuth2Context)
 
-export default GoogleOAuth2ContextProvider
+export default GoogleOAuth2Provider

@@ -67,6 +67,18 @@ export default abstract class SynchronizableService<
    */
   protected async onSyncSuccess() { }
 
+  /**
+   * Override this function to do something when a websocket update is received
+   * @param model 
+   */
+  protected async onWebSocketUpdate(model: SynchronizableWSUpdateModel<ID, DATA_MODEL>) { }
+
+    /**
+   * Override this function to do something when a websocket delete is received
+   * @param model 
+   */
+  protected async onWebSocketDelete(model: SynchronizableWSDeleteModel<ID>) { }
+
   //#endregion
 
   //#region CONVERSION (MODEL <-> ENTITY)
@@ -198,13 +210,17 @@ export default abstract class SynchronizableService<
       })
 
       await this.localSaveAll(entitiesToSave)
+
+      await this.onWebSocketUpdate(model)
+
       this.updateContext()
     }
   }
 
-  public webSockeDelete = (model: SynchronizableWSDeleteModel<ID>) => {
+  public webSockeDelete = async (model: SynchronizableWSDeleteModel<ID>) => {
     if (model && model.data && model.data.length > 0) {
-      this.localDeleteAllById(model.data)
+      await this.localDeleteAllById(model.data)
+      await this.onWebSocketDelete(model)
       this.updateContext()
     }
   }

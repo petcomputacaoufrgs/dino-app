@@ -82,16 +82,20 @@ class ConnectionService {
   }
 
   private awaitForDinoConnection = async () => {
-    while (navigator.onLine) {
-      const isDinoConnected = await this.isDinoConnected()
-      if (isDinoConnected) {
-        this.setConnected()
-        break
-      } else {
-        this.setDisconnected()
+    if (!ConnectionLocalStorage.isTryingToConnected()) {
+      ConnectionLocalStorage.setTryingToConnected(true)
+      while (navigator.onLine) {
+        const isDinoConnected = await this.isDinoConnected()
+        if (isDinoConnected) {
+          this.setConnected()
+          ConnectionLocalStorage.setTryingToConnected(false)
+          break
+        } else {
+          this.setDisconnected()
+        }
+  
+        await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
       }
-
-      await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
     }
   }
 

@@ -20,6 +20,7 @@ class LocalStorageKeys {
   APP_SETTINGS_SHOULD_SYNC = 'asss'
   PAGE_TEMP = 'pt'
   CONNECTION = 'con'
+  TRYING_CONNECTION = 'tcon'
   LOG_APP_ERROR_SYNC = 'laes'
   FAQ_USER_VERSION = 'fuv'
   FAQ_USER_INFO = 'fui'

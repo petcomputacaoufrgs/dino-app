@@ -64,7 +64,7 @@ class ImageToBase64Utils {
     const item = this.queue.pop()
     if (item) {
       this.image.src = item.src
-      this.image.setAttribute('crossorigin', 'true')
+      this.image.crossOrigin = 'Anonymous'
       this.currentItem = item
       this.image.onload = () => {
         this.genereCanvas()

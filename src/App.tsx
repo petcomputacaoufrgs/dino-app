@@ -17,6 +17,8 @@ import PrivacyPolicy from './views/privacy_policy'
 import UserSettingsProvider from './context/provider/user_settings/index'
 import TreatmentProvider from './context/provider/treatment'
 import GoogleScopeProvider from './context/provider/google_scope'
+import DataThemeUtils from './utils/DataThemeUtils'
+import UserSettingsService from './services/user/UserSettingsService'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
@@ -25,6 +27,8 @@ const App = (): JSX.Element => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [showLoadScreen, setShowLoadScreen] = useState(false)
 
+  DataThemeUtils.setBodyDataTheme(UserSettingsService.getSystemColorThemeName())
+  
   useEffect(() => {
     if (firstLoad) {
       ViewportService.maximizeViewport()

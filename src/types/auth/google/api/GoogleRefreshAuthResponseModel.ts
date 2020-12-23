@@ -1,6 +1,8 @@
+import GoogleScopeDataModel from "./GoogleScopeDataModel"
+
 export default interface GoogleRefreshAuthResponseModel {
   googleAccessToken: string
   googleExpiresDate: number
-  scopeList: string[]
+  scopes: GoogleScopeDataModel[]
   declinedContatsGrant: boolean
 }

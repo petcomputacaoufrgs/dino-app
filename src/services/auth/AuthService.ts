@@ -15,6 +15,7 @@ import GoogleGrantRequestModel from '../../types/auth/google/api/GoogleGrantRequ
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import GoogleScope from '../../types/auth/google/GoogleScope'
 import GoogleRefreshAuthResponseModel from '../../types/auth/google/api/GoogleRefreshAuthResponseModel'
+import GoogleScopeService from './google/GoogleScopeService'
 
 class AuthService {
   cleanLoginGarbage = () => {
@@ -258,11 +259,17 @@ class AuthService {
   ) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
+    if (responseBody.scopes && responseBody.scopes.length > 0) {
+      GoogleScopeService.localClearAndSaveAllFromModels(responseBody.scopes)
+    }
   }
 
   private saveGoogleAuthData(responseBody: GoogleAuthResponseModel) {
     this.setGoogleAccessToken(responseBody.googleAccessToken)
     this.setGoogleExpiresDate(responseBody.googleExpiresDate)
+    if (responseBody.scopes && responseBody.scopes.length > 0) {
+      GoogleScopeService.localClearAndSaveAllFromModels(responseBody.scopes)
+    }
     this.saveUserAuthData(responseBody)
   }
 

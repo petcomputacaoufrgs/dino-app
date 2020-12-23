@@ -233,8 +233,6 @@ export default class EN implements LanguageBase {
 
   SELECT_FAQ_BUTTON = 'Search FAQ'
 
-  SELECT_TREATMENT = 'Select Treatment'
-
   SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Load essential contacts related to my treatment'
 
   SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'

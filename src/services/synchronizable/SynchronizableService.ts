@@ -98,7 +98,7 @@ export default abstract class SynchronizableService<
     entities.forEach(entity => this.onSaveEntity(entity))
   }
 
-  protected async internalConvertModelToEntity(model: DATA_MODEL): Promise<ENTITY | undefined> {
+  public async internalConvertModelToEntity(model: DATA_MODEL): Promise<ENTITY | undefined> {
     const entity = await this.convertModelToEntity(model)
 
     if (entity) {
@@ -113,7 +113,7 @@ export default abstract class SynchronizableService<
     }
   }
 
-  protected async internalConvertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined> {
+  public async internalConvertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined> {
     const model = await this.convertEntityToModel(entity)
 
     if (model) {
@@ -125,7 +125,7 @@ export default abstract class SynchronizableService<
     }
   }
 
-  protected internalConvertModelsToEntities = async (
+  public internalConvertModelsToEntities = async (
     models: DATA_MODEL[]
   ): Promise<ENTITY[]> => {
     const result = await Promise.all(models.map(async (model) => {
@@ -139,7 +139,7 @@ export default abstract class SynchronizableService<
     return result.filter(model => model !== undefined) as ENTITY[]
   }
 
-  protected internalConvertEntitiesToModels = async (
+  public internalConvertEntitiesToModels = async (
     entities: ENTITY[]
   ): Promise<DATA_MODEL[]> => {
     const result = await Promise.all(entities.map((entity) => this.internalConvertEntityToModel(entity)))
@@ -497,7 +497,7 @@ export default abstract class SynchronizableService<
     return this.repository.saveAll(entities)
   }
 
-  protected async localClearAndSaveAllFromModels(models: DATA_MODEL[]) {
+  public async localClearAndSaveAllFromModels(models: DATA_MODEL[]) {
     const entities = await this.internalConvertModelsToEntities(models)
 
     this.onSaveEntities(entities)

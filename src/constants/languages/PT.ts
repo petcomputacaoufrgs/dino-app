@@ -239,8 +239,6 @@ export default class PT implements LanguageBase {
 
   SELECT_FAQ_BUTTON = 'Busque FAQ'
 
-  SELECT_TREATMENT = 'Selecione Tratamento'
-
   SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Carregar contatos essenciais referentes ao meu tratamento'
 
   SAVE_CONTACT_ON_GOOGLE_GRANT = 'Salvar contatos do DinoApp em minha conta Google'

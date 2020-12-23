@@ -114,7 +114,6 @@ export default interface LanguageBase {
   CANT_LOGIN_DISCONNECTED: string
   DISCONNECTED: string
   SELECT_FAQ_BUTTON: string
-  SELECT_TREATMENT: string
   SELECT_TREATMENT_LOAD_CONTACT_GRANT: string
   SAVE_CONTACT_ON_GOOGLE_GRANT: string
   SUNDAY_NAME: string

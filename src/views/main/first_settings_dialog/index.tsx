@@ -60,8 +60,6 @@ const FirstSettingsDialog: React.FC = () => {
   useEffect(() => {
     const essentialContactGrant = userSettings.service.getEssentialContactGrant(userSettings)
 
-    console.log(essentialContactGrant)
-
     if (essentialContactGrant !== undefined) {
       setSelectedEssentialContactGrant(essentialContactGrant)
     }
@@ -119,7 +117,7 @@ const FirstSettingsDialog: React.FC = () => {
         language: selectedLanguage,
         fontSize: selectedFontSize,
         colorTheme: selectedColorTheme,
-        includeEssentialContact: false,
+        includeEssentialContact: true,
         declineGoogleContacts: false,
         firstSettingsDone: false,
         syncGoogleContacts: false,

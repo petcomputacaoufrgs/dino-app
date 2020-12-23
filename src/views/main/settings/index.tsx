@@ -76,6 +76,10 @@ const Settings = (): JSX.Element => {
       currentUserSettings.colorTheme = selectedColorTheme
       currentUserSettings.includeEssentialContact = selectedEssentialContactGrant
       currentUserSettings.syncGoogleContacts = selectedGoogleContactGrant
+    
+      if (selectedTreatment) {
+        currentUserSettings.treatmentLocalId = selectedTreatment.localId
+      }
   
       userSettings.service.save(currentUserSettings)
     

@@ -4,9 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import SelectTreatmentProps from './props'
 import { useUserSettings } from '../../../../context/provider/user_settings'
-import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import './styles.css'
-
 
 const SelectTreatment: React.FC<SelectTreatmentProps> = ({
   children,
@@ -17,7 +15,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
   const [open, setOpen] = useState(false)
-  const [inputValue, setInputValue] = useState(treatment ? treatment.name : language.SELECT_TREATMENT)
+  const [inputValue, setInputValue] = useState('')
 
   return (
     <>
@@ -27,15 +25,18 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
         getOptionSelected={(option, value) => option === value}
-        getOptionLabel={(treatment) => treatment.name || ''}
-        options={availableTreatments}
+        getOptionLabel={(treatment) => treatment || ''}
+        options={availableTreatments.map(treatment => treatment.name)}
         noOptionsText={language.NO_TREATMENTS_AVAILABLE}
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
-        value={treatment ? treatment : null}
-        onChange={(event: any, newValue: TreatmentEntity | null) => {
+        value={treatment ? treatment.name : null}
+        onChange={(event: any, newValue: string | null) => {
           if (newValue) {
-            setTreatment(newValue)
+            const entity = availableTreatments.find(treatment => treatment.name === newValue)
+            if (entity) {
+              setTreatment(entity)
+            }
           }
         }}
         renderInput={(params) => (

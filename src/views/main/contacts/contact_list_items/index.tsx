@@ -23,14 +23,14 @@ const ContactItems: React.FC<ContactItemsProps> = ({
   const language = userSettings.service.getLanguage(userSettings)
 
     const handleOpenCard = (index: number) => {
-        setContactToView(items[index])
+      setContactToView(items[index])
     }
 
     const handleAcceptDeleteDialog = async () => {
+      setContactToDelete(undefined)
       if (contactToDelete) {
         await phoneService.deleteAll(contactToDelete.phones)
         contactService.delete(contactToDelete.contact)
-        setContactToDelete(undefined)
       }
     }
 
@@ -52,32 +52,38 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           />
       ))}
       </List>
-      <ContactCard
-        dialogOpen={contactToView !== undefined}
-        onClose={() => setContactToView(undefined)}
-        item={contactToView}
-        phoneService={phoneService}
-        onEdit={setContactToEdit}
-        onDelete={setContactToDelete}
-      />
-      <ContactFormDialog
-        dialogOpen={contactToEdit !== undefined}
-        onClose={() => setContactToEdit(undefined)}
-        item={contactToEdit}
-        contactService={contactService}
-        phoneService={phoneService}
-        items={items}
-        action={Constants.ACTION_EDIT}
-      />
-      <AgreementDialog 
-        open={contactToDelete !== undefined}
-        agreeOptionText={language.AGREEMENT_OPTION_TEXT}
-        disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
-        description={language.DELETE_CONTACT_OPTION_TEXT}
-        question={language.DELETE_CONTACT_QUESTION}
-        onAgree={handleAcceptDeleteDialog}
-        onDisagree={handleCloseDeleteDialog}
-      />
+      {contactToView && 
+        <ContactCard
+          dialogOpen={contactToView !== undefined}
+          onClose={() => setContactToView(undefined)}
+          item={contactToView}
+          phoneService={phoneService}
+          onEdit={setContactToEdit}
+          onDelete={setContactToDelete}
+        />
+      }
+      {contactToEdit && 
+        <ContactFormDialog
+          dialogOpen={contactToEdit !== undefined}
+          onClose={() => setContactToEdit(undefined)}
+          item={contactToEdit}
+          contactService={contactService}
+          phoneService={phoneService}
+          items={items}
+          action={Constants.ACTION_EDIT}
+        />
+      }
+      {contactToDelete && 
+        <AgreementDialog 
+          open={contactToDelete !== undefined}
+          agreeOptionText={language.AGREEMENT_OPTION_TEXT}
+          disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
+          description={language.DELETE_CONTACT_OPTION_TEXT}
+          question={language.DELETE_CONTACT_QUESTION}
+          onAgree={handleAcceptDeleteDialog}
+          onDisagree={handleCloseDeleteDialog}
+        />
+      }
     </>
   )
 }

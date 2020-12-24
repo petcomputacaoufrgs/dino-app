@@ -105,8 +105,14 @@ export default abstract class SynchronizableService<
       entity.id = model.id
       entity.lastUpdate = DateUtils.convertDinoAPIStringDateToDate(model.lastUpdate!)
 
-      if (model.localId !== undefined) {
+      if (model.localId !== undefined && model.localId !== null) {
         entity.localId = model.localId
+      } else if(model.id !== undefined && model.id !== null) {
+        const savedEntity = await this.repository.getById(model.id)
+
+        if (savedEntity) {
+          entity.localId = savedEntity.localId
+        }
       }
   
       return entity
@@ -229,12 +235,20 @@ export default abstract class SynchronizableService<
 
   //#region PUBLIC REQUESTS
 
-  public getById = async (id: number): Promise<ENTITY | undefined> => {
+  public getById = async (id: ID): Promise<ENTITY | undefined> => {
     return this.repository.getById(id)
   }
 
-  public getByLocalId = async (localId: number): Promise<ENTITY | undefined> => {
+  public getByLocalId = async (localId: LOCAL_ID): Promise<ENTITY | undefined> => {
     return this.repository.getByLocalId(localId)
+  }
+
+  public getUnique = (data: ENTITY[]): ENTITY | undefined => {
+    if (data.length > 0) {
+      return data[0]
+    }
+
+    return undefined
   }
 
   public getAll = async (): Promise<ENTITY[]> => {
@@ -501,7 +515,7 @@ export default abstract class SynchronizableService<
     const entities = await this.internalConvertModelsToEntities(models)
 
     this.onSaveEntities(entities)
-
+    
     await this.localClear()
 
     await this.localSaveAll(entities)

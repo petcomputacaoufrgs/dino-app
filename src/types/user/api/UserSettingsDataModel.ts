@@ -5,7 +5,6 @@ export default interface UserSettingsDataModel extends SynchronizableDataLocalId
   colorTheme: number,
   fontSize: number,
   includeEssentialContact: boolean,
-  syncGoogleContacts: boolean,
   declineGoogleContacts: boolean,
   treatmentId?: number,
   firstSettingsDone: boolean,

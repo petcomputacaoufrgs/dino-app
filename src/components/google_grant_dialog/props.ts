@@ -7,4 +7,5 @@ export default interface GoogleGrantDialogProps {
   open: boolean
   onDecline: () => void
   onAccept: () => void
+  onClose: () => void
 }

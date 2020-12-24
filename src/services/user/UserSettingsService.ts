@@ -30,7 +30,6 @@ UserSettingsRepositoryImpl> {
           fontSize: model.fontSize,
           includeEssentialContact: model.includeEssentialContact,
           language: model.language,
-          syncGoogleContacts: model.syncGoogleContacts,
           firstSettingsDone: model.firstSettingsDone,
           settingsStep: model.settingsStep
         }
@@ -53,7 +52,6 @@ UserSettingsRepositoryImpl> {
         fontSize: entity.fontSize,
         includeEssentialContact: entity.includeEssentialContact,
         language: entity.language,
-        syncGoogleContacts: entity.syncGoogleContacts,
         firstSettingsDone: entity.firstSettingsDone,
         settingsStep: entity.settingsStep
       }
@@ -64,7 +62,7 @@ UserSettingsRepositoryImpl> {
           model.treatmentId = treatment.id
         }
       }
-
+      
       return model
     }
 
@@ -132,12 +130,8 @@ UserSettingsRepositoryImpl> {
       }
     }
 
-    getUserSettingsEntity(userSettings: UserSettingsContextType): UserSettingsEntity | undefined {
-      return userSettings.data.length > 0 ? userSettings.data[0] : undefined
-    }
-
     getEssentialContactGrant(userSettings: UserSettingsContextType): boolean | undefined {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       if (entity) {
         return entity.includeEssentialContact
@@ -147,7 +141,7 @@ UserSettingsRepositoryImpl> {
     }
 
     getTreatment(userSettings: UserSettingsContextType, treatments: TreatmentEntity[]): TreatmentEntity | undefined {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       if (entity && entity.treatmentLocalId) {
         const treatment = treatments.find(treatment => treatment.localId === entity.treatmentLocalId)
@@ -160,7 +154,7 @@ UserSettingsRepositoryImpl> {
     }
 
     getFirstSettingsDone(userSettings: UserSettingsContextType): boolean | undefined {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       if (entity) {
         return entity.firstSettingsDone
@@ -169,18 +163,8 @@ UserSettingsRepositoryImpl> {
       }
     }
 
-    getSyncGoogleContact(userSettings: UserSettingsContextType): boolean {
-      const entity = this.getUserSettingsEntity(userSettings)
-
-      if (entity) {
-        return entity.syncGoogleContacts
-      } else {
-        return false
-      }
-    }
-
     getDeclinedGoogleContact(userSettings: UserSettingsContextType): boolean {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       if (entity) {
         return entity.declineGoogleContacts
@@ -190,7 +174,7 @@ UserSettingsRepositoryImpl> {
     }
 
     getLanguage = (userSettings: UserSettingsContextType): LanguageBase => {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       if (entity && entity.language === LanguageCodeConstants.ENGLISH) {
         return new EN()
@@ -200,13 +184,13 @@ UserSettingsRepositoryImpl> {
     }
 
     getColorThemeCode = (userSettings: UserSettingsContextType): number => {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       return entity ? entity.colorTheme : 4
     }
 
     getColorTheme = (userSettings: UserSettingsContextType): string => {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       if (entity) {
         switch (entity.colorTheme) {
@@ -227,13 +211,13 @@ UserSettingsRepositoryImpl> {
     }
 
     getFontSizeCode = (userSettings: UserSettingsContextType): number => {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       return entity ? entity.fontSize : 1
     }
 
     getFontSize = (userSettings: UserSettingsContextType): string => {
-      const entity = this.getUserSettingsEntity(userSettings)
+      const entity = this.getUnique(userSettings.data)
 
       if (entity) {
         switch (entity.fontSize) {

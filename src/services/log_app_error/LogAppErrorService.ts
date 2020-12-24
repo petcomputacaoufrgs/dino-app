@@ -26,24 +26,26 @@ class LogAppErrorService {
   }
 
   logModel = async (model: LogAppErrorModel) => {
-    if (!model.date) {
-      model.date = new Date().getTime()
-    }
-
-    const request = await DinoAgentService.post(
-      APIRequestMappingConstants.SAVE_LOG_APP_ERROR
-    )
-
-    if (request.canGo) {
-      try {
-        await request.authenticate().setBody(model).go()
-      } catch {
+    if (model.error) {
+      if (!model.date) {
+        model.date = new Date().getTime()
+      }
+  
+      const request = await DinoAgentService.post(
+        APIRequestMappingConstants.SAVE_LOG_APP_ERROR
+      )
+  
+      if (request.canGo) {
+        try {
+          await request.authenticate().setBody(model).go()
+        } catch {
+          this.saveLocalLog(model)
+          this.setShouldSync(true)
+        }
+      } else {
         this.saveLocalLog(model)
         this.setShouldSync(true)
       }
-    } else {
-      this.saveLocalLog(model)
-      this.setShouldSync(true)
     }
   }
 

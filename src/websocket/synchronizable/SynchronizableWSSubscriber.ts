@@ -7,6 +7,7 @@ import SynchronizableRepository from '../../storage/database/synchronizable/Sync
 import SynchronizableService from '../../services/synchronizable/SynchronizableService'
 import SynchronizableWSUpdateModel from '../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
+import SynchronizableWSSubscriberQueue from './SynchronizableWSSubscriberQueue'
 
 export default abstract class SynchronizableWSSubscriber<
   ID extends IndexableType,
@@ -22,13 +23,13 @@ export default abstract class SynchronizableWSSubscriber<
       {
         path: service.getUpdateWebSocketPath(),
         callback: (model: SynchronizableWSUpdateModel<ID, DATA_MODEL>) => {
-          service.webSocketUpdate(model)
+          SynchronizableWSSubscriberQueue.addItem(service.webSocketUpdate, model)
         },
       },
       {
         path: service.getDeleteWebSocketPath(),
         callback: (model: SynchronizableWSDeleteModel<ID>) => {
-          service.webSockeDelete(model)
+          SynchronizableWSSubscriberQueue.addItem(service.webSockeDelete, model)
         },
       },
     ]

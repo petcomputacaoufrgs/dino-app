@@ -7,27 +7,27 @@ import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 import CircularButton from '../../../components/button/circular_button'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { usePhone } from '../../../context/provider/phone'
 import { useGoogleContact } from '../../../context/provider/google_contact'
 import { useContact } from '../../../context/provider/contact'
 import Loader from '../../../components/loader'
 import { useUserSettings } from '../../../context/provider/user_settings'
 import { useGoogleScope } from '../../../context/provider/google_scope'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Contacts = (): JSX.Element => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  const syncGoogleContact = userSettings.service.getSyncGoogleContact(userSettings)
-  const declinedSyncGoogleContact = userSettings.service.getDeclinedGoogleContact(userSettings)
+  const currentSettings = userSettings.service.getUnique(userSettings.data) 
   const contact = useContact()
   const phone = usePhone()
   const googleContact = useGoogleContact()
   const googleScope = useGoogleScope()
-
+  const syncGoogleContacts = googleScope.service.hasContactGrant(googleScope)
   const [openGrantDialog, setOpenGrantDialog] = useState(false)
   const [add, setAdd] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const [shouldDecline, setShouldDecline] = useState(false)
 
   const contactViews = contact.service.getViewContactByFilter(contact.data, phone.data, googleContact.data, searchTerm)
 
@@ -35,22 +35,42 @@ const Contacts = (): JSX.Element => {
     setSearchTerm(event.target.value)
   }
 
-  const handleAcceptOrDeclineGoogleGrant = () => {
-    setAdd(true)
+  const handleAcceptGoogleGrant = () => {
+    if (currentSettings) {
+      currentSettings.declineGoogleContacts = false
+      userSettings.service.save(currentSettings)
+    }
     setOpenGrantDialog(false)
+    setAdd(true)
+  }
+
+  const handleCloseGoogleGrant = () => {
+    setOpenGrantDialog(false)
+    setAdd(true)
+  }
+
+  const handleDeclineGoogleGrant = () => {
+    setShouldDecline(true)
+    setOpenGrantDialog(false)
+    setAdd(true)
   }
 
   const handleAddContact = () => {
-    if (!declinedSyncGoogleContact) {
-      const hasGoogleContactsGrant = googleScope.service.hasContactGrant(googleScope)
-
-      if (!hasGoogleContactsGrant && !syncGoogleContact) {
+    if (currentSettings) {
+      if (!syncGoogleContacts && !currentSettings.declineGoogleContacts) {
         setOpenGrantDialog(true)
-  
         return
       }
-  
-      setAdd(true)
+    }
+
+    setAdd(true)
+  }
+
+  const handleClose = () => {
+    setAdd(false)
+    if (shouldDecline && currentSettings) {
+      currentSettings.declineGoogleContacts = true
+      userSettings.service.save(currentSettings)
     }
   }
 
@@ -81,11 +101,12 @@ const Contacts = (): JSX.Element => {
         items={contactViews}
         action={Contants.ACTION_ADD}
         dialogOpen={add}
-        onClose={() => setAdd(false)}
+        onClose={handleClose}
       />
       <GoogleGrantDialog
-        onAccept={handleAcceptOrDeclineGoogleGrant}
-        onDecline={handleAcceptOrDeclineGoogleGrant}
+        onAccept={handleAcceptGoogleGrant}
+        onDecline={handleDeclineGoogleGrant}
+        onClose={handleCloseGoogleGrant}
         open={openGrantDialog}
         scopes={[GoogleScope.SCOPE_CONTACT]}
         text={language.GOOGLE_CONTACT_GRANT_TEXT}

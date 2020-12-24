@@ -21,9 +21,8 @@ import GoogleScopeSync from './auth/GoogleScopeSync'
 class Synchronizer {
   private executionGrups: BaseSync[][][] = [
     [[UserSync]],
-    [[UserSettingsSync]],
     [[GoogleScopeSync]],
-    [[TreatmentSync], [FaqSync], [FaqItemSync, FaqUserQuestionSync]],
+    [[TreatmentSync], [FaqSync, UserSettingsSync], [FaqItemSync, FaqUserQuestionSync]],
     [[GlossarySync]],
     [[NoteColumnSync], [NoteSync]],
     [[ContactSync], [PhoneSync, GoogleContactSync]],

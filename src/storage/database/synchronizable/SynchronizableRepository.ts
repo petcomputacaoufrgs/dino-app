@@ -24,11 +24,11 @@ export default abstract class SynchronizableRepository<
     return entites.length > 0 ? entites[0] : undefined
   }
 
-  async getById(id: number): Promise<ENTITY | undefined> {
+  async getById(id: ID): Promise<ENTITY | undefined> {
     return this.table.where('id').equals(id).first()
   }
 
-  async getByLocalId(localId: number): Promise<ENTITY | undefined> {
+  async getByLocalId(localId: LOCAL_ID): Promise<ENTITY | undefined> {
     return this.table.where('localId').equals(localId).first()
   }
 

@@ -12,14 +12,14 @@ import { useUserSettings } from '../../../context/provider/user_settings'
 import { useTreatment } from '../../../context/provider/treatment/index'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import AuthService from '../../../services/auth/AuthService'
-import './styles.css'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
+import './styles.css'
 
 const FirstSettingsDialog: React.FC = () => {
   const userSettings = useUserSettings()
   const treatment = useTreatment()
   const language = userSettings.service.getLanguage(userSettings)
-  const currentSettings = userSettings.service.getUserSettingsEntity(userSettings)
+  const currentSettings = userSettings.service.getUnique(userSettings.data)
 
   const [dialogOpen, setDialogOpen] = useState(true)
 
@@ -75,7 +75,6 @@ const FirstSettingsDialog: React.FC = () => {
       currentSettings.colorTheme = selectedColorTheme
       currentSettings.fontSize = selectedFontSize
       currentSettings.includeEssentialContact = selectedEssentialContactGrant
-      currentSettings.syncGoogleContacts = false
       currentSettings.declineGoogleContacts = false
       currentSettings.firstSettingsDone = true
       currentSettings.treatmentLocalId  = selectedTreatment?.localId
@@ -120,7 +119,6 @@ const FirstSettingsDialog: React.FC = () => {
         includeEssentialContact: true,
         declineGoogleContacts: false,
         firstSettingsDone: false,
-        syncGoogleContacts: false,
         settingsStep: 1
       } 
       userSettings.service.save(newEntity)

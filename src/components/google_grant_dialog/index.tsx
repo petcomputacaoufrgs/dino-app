@@ -10,7 +10,7 @@ import { useUserSettings } from '../../context/provider/user_settings'
 import './styles.css'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
-  ({ scopes, title, text, open, onDecline: onClose, onAccept }, ref) => {
+  ({ scopes, title, text, open, onDecline, onAccept, onClose }, ref) => {
     const alert = useAlert()
 
     const userSettings = useUserSettings()
@@ -47,11 +47,9 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
       }
     }
 
-    //TODO DECLINE
     const handleDecline = async () => {
       alert.showInfoAlert(language.GRANT_DECLINED)
-      //contact.service.declineGoogleContacts()
-      onClose()
+      onDecline()
     }
 
     return (

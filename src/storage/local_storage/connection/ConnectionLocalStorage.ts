@@ -20,20 +20,6 @@ class ConnectionLocalStorage extends BaseLocalStorage {
     this.setConnectionState(false)
   }
 
-  setTryingToConnected = (value: boolean) => {
-    this.set(LS_Constants.TRYING_CONNECTION, JSON.stringify(value))
-  }
-
-  isTryingToConnected = () => {
-    const value = this.get(LS_Constants.TRYING_CONNECTION)
-
-    if (value) {
-      return JSON.parse(value)
-    }
-
-    return false
-  }
-
   private setConnectionState = (connected: boolean) => {
     this.set(LS_Constants.CONNECTION, JSON.stringify(connected))
   }

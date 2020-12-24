@@ -1,3 +1,5 @@
+import LogAppErrorService from "../services/log_app_error/LogAppErrorService"
+
 type ImageFormat = 'jpeg' | 'png'
 
 type ImageProcessItemCallback = (base64: string, success: boolean, data?: any) => void
@@ -63,14 +65,18 @@ class ImageToBase64Utils {
 
     const item = this.queue.pop()
     if (item) {
-      this.image.src = item.src
-      this.image.crossOrigin = 'Anonymous'
-      this.currentItem = item
-      this.image.onload = () => {
-        this.genereCanvas()
-      }
-      this.image.onerror = () => {
-        this.imageLoadError()
+      try {
+        this.image.crossOrigin = 'Anonymous'
+        this.image.src = item.src
+        this.currentItem = item
+        this.image.onload = () => {
+          this.genereCanvas()
+        }
+        this.image.onerror = () => {
+          this.imageLoadError()
+        }
+      } catch(e) {
+        LogAppErrorService.logError(e)
       }
     } else {
       this.processing = false

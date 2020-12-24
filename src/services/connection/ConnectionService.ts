@@ -10,9 +10,11 @@ export type ConnectionListennerCallback = (online: boolean) => void
 const DELAY_TO_VERIFY_DINO_CONNECTION = 2000
 
 class ConnectionService {
-  callbacks = [] as ConnectionListennerCallback[]
-
+  callbacks: ConnectionListennerCallback[]
+  tryingToConnect: boolean
   constructor() {
+    this.callbacks = []
+    this.tryingToConnect = false
     this.start()
   }
 
@@ -72,7 +74,7 @@ class ConnectionService {
       ConnectionLocalStorage.setDisconnected()
     }
 
-    window.addEventListener('online', async () => {
+    window.addEventListener('online', () => {
       this.awaitForDinoConnection()
     })
 
@@ -82,13 +84,13 @@ class ConnectionService {
   }
 
   private awaitForDinoConnection = async () => {
-    if (!ConnectionLocalStorage.isTryingToConnected()) {
-      ConnectionLocalStorage.setTryingToConnected(true)
+    if (!this.tryingToConnect) {
+      this.tryingToConnect = true
       while (navigator.onLine) {
         const isDinoConnected = await this.isDinoConnected()
         if (isDinoConnected) {
           this.setConnected()
-          ConnectionLocalStorage.setTryingToConnected(false)
+          this.tryingToConnect = false
           break
         } else {
           this.setDisconnected()

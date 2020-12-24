@@ -15,14 +15,20 @@ import SelectFontSize from './select_font_size'
 import { useUserSettings } from '../../../context/provider/user_settings'
 import { useTreatment } from '../../../context/provider/treatment/index'
 import './styles.css'
+import { useGoogleScope } from '../../../context/provider/google_scope'
 
-//TODO Adicionar seleção de tratamento
 const Settings = (): JSX.Element => {
   const userSettings = useUserSettings()
 
   const treatment = useTreatment()
 
   const alert = useAlert()
+
+  const googleScope = useGoogleScope()
+  
+  const syncGoogleContacts = googleScope.service.hasContactGrant(googleScope)
+
+  const currentSettings = userSettings.service.getUnique(userSettings.data)
 
   const language = userSettings.service.getLanguage(userSettings)
 
@@ -31,8 +37,6 @@ const Settings = (): JSX.Element => {
   const fontSizeCode = userSettings.service.getFontSizeCode(userSettings)
 
   const essentialContactGrant = userSettings.service.getEssentialContactGrant(userSettings)
-
-  const syncGoogleContact = userSettings.service.getSyncGoogleContact(userSettings)
 
   const currentTreatment = userSettings.service.getTreatment(userSettings, treatment.data)
 
@@ -47,41 +51,46 @@ const Settings = (): JSX.Element => {
 
   const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 
-  const [selectedGoogleContactGrant, setSelectedGoogleContactGrant] = useState(syncGoogleContact)
-
   const [selectedTreatment, setSelectedTreatment] = useState(currentTreatment)
 
   const handleOpenGoogleContactDialog = () => {
-    if (!selectedGoogleContactGrant) {
+    if (!syncGoogleContacts) {
       setOpenGoogleContactDialog(true)
     }
   }
 
   const handleAgreeContactsGrantDialog = () => {
-    setSelectedGoogleContactGrant(true)
+    if (currentSettings) {
+      currentSettings.declineGoogleContacts = false
+      userSettings.service.save(currentSettings)
+    }
     setOpenGoogleContactDialog(false)
   }
 
   const handleDisagreeContactsGrantDialog = () => {
-    setSelectedGoogleContactGrant(false)
+    if (currentSettings) {
+      currentSettings.declineGoogleContacts = true
+      userSettings.service.save(currentSettings)
+    }
+    setOpenGoogleContactDialog(false)
+  }
+
+  const handleCloseContactsGrantDialog = () => {
     setOpenGoogleContactDialog(false)
   }
 
   const onSave = () => {
-    const currentUserSettings = userSettings.service.getUserSettingsEntity(userSettings)
-
-    if (currentUserSettings) {
-      currentUserSettings.language = selectedLanguage
-      currentUserSettings.fontSize = selectedFontSize
-      currentUserSettings.colorTheme = selectedColorTheme
-      currentUserSettings.includeEssentialContact = selectedEssentialContactGrant
-      currentUserSettings.syncGoogleContacts = selectedGoogleContactGrant
+    if (currentSettings) {
+      currentSettings.language = selectedLanguage
+      currentSettings.fontSize = selectedFontSize
+      currentSettings.colorTheme = selectedColorTheme
+      currentSettings.includeEssentialContact = selectedEssentialContactGrant
     
       if (selectedTreatment) {
-        currentUserSettings.treatmentLocalId = selectedTreatment.localId
+        currentSettings.treatmentLocalId = selectedTreatment.localId
       }
   
-      userSettings.service.save(currentUserSettings)
+      userSettings.service.save(currentSettings)
     
       alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
     } else {
@@ -99,16 +108,15 @@ const Settings = (): JSX.Element => {
   )
 
   const renderDialogs = (): JSX.Element => (
-    <>
       <GoogleGrantDialog
         onAccept={handleAgreeContactsGrantDialog}
         onDecline={handleDisagreeContactsGrantDialog}
+        onClose={handleCloseContactsGrantDialog}
         open={openGoogleContactDialog}
         scopes={[GoogleScope.SCOPE_CONTACT]}
         text={language.GOOGLE_CONTACT_GRANT_TEXT}
         title={language.GOOGLE_CONTACT_GRANT_TITLE}
       />
-    </>
   )
 
   return (
@@ -148,7 +156,7 @@ const Settings = (): JSX.Element => {
       <DinoHr invisible/>
       <FormControl className="settings__form">
         <DinoSwitch
-          selected={selectedGoogleContactGrant}
+          selected={syncGoogleContacts}
           setSelected={handleOpenGoogleContactDialog}
           label={language.SAVE_CONTACT_ON_GOOGLE_GRANT}
         />

@@ -35,7 +35,7 @@ const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
 
 const ContactFormDialog = React.forwardRef(
   (
-    { dialogOpen, onClose: handleClose, action, item, items: itens, contactService, phoneService }: ContactFormDialogProps,
+    { dialogOpen, onClose, action, item, items: itens, contactService, phoneService }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
     
@@ -86,9 +86,8 @@ const ContactFormDialog = React.forwardRef(
           handleTakenNumber(viewWithSamePhone)
         } else {
           saveContact()
-          handleClose()
+          onClose()
         }
-        
       }
     }
 
@@ -178,7 +177,7 @@ const ContactFormDialog = React.forwardRef(
           open={dialogOpen}
           maxWidth="xl"
           fullWidth
-          onClose={handleClose}
+          onClose={onClose}
           TransitionComponent={TransitionSlide}
         >
           <ContactFormDialogHeader
@@ -186,7 +185,7 @@ const ContactFormDialog = React.forwardRef(
             name={contact.name}
             color={contact.color}
             handleChangeColor={handleChangeColor}
-            handleCloseDialog={handleClose}
+            handleCloseDialog={onClose}
           />
           <DialogContent dividers>
             <ContactFormDialogContent
@@ -204,7 +203,7 @@ const ContactFormDialog = React.forwardRef(
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>
+            <Button onClick={onClose}>
               {language.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
             <Button onClick={handleSave}>

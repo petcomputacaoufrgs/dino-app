@@ -2,6 +2,7 @@
   "name": "dino-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://lh3.googleusercontent.com",
   "dependencies": {
     "@date-io/date-fns": "1.3.13",
     "@material-ui/core": "^4.9.7",

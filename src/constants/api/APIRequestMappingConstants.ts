@@ -10,8 +10,8 @@ class APIRequestMappingConstants {
   NOTE_COLUMN = `${this.URL}note_column/`
   USER = `${this.URL}user/`
   CONTACT = `${this.URL}contact/`
-  PHONE =  `${this.URL}phone/`
-  GOOGLE_CONTACT =  `${this.URL}google_contact/`
+  PHONE = `${this.URL}phone/`
+  GOOGLE_CONTACT = `${this.URL}google_contact/`
   TREATMENT = `${this.URL}public/treatment/`
   USER_SETTINGS = `${this.URL}user_settings/`
   GOOGLE_SCOPE = `${this.URL}auth/google/scope/`
@@ -45,9 +45,8 @@ class APIRequestMappingConstants {
   SAVE_LOG_APP_ERROR = `${this.LOG_APP_ERROR}`
 
   SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
-  
-  TREATMENT_ESSENTIAL_CONTACTS = `${this.CONTACT}essential/faq/`
 
+  TREATMENT_ESSENTIAL_CONTACTS = `${this.CONTACT}essential/faq/`
 }
 
 export default new APIRequestMappingConstants()

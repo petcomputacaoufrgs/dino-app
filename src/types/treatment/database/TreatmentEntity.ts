@@ -1,5 +1,6 @@
-import SynchronizableEntity from "../../synchronizable/database/SynchronizableEntity"
+import SynchronizableEntity from '../../synchronizable/database/SynchronizableEntity'
 
-export default interface TreatmentEntity extends SynchronizableEntity<number, number> {
+export default interface TreatmentEntity
+  extends SynchronizableEntity<number, number> {
   name: string
 }

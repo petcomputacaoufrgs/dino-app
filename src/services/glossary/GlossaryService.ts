@@ -15,7 +15,9 @@ export class GlossaryServiceImpl extends SynchronizableService<
   GlossaryItemEntity,
   GlossaryRepositoryImpl
 > {
-  async convertModelToEntity(model: GlossaryItemModel): Promise<GlossaryItemEntity> {
+  async convertModelToEntity(
+    model: GlossaryItemModel
+  ): Promise<GlossaryItemEntity> {
     const entity: GlossaryItemEntity = {
       title: model.title,
       fullText: model.fullText,
@@ -26,7 +28,9 @@ export class GlossaryServiceImpl extends SynchronizableService<
     return entity
   }
 
-  async convertEntityToModel(entity: GlossaryItemEntity): Promise<GlossaryItemModel> {
+  async convertEntityToModel(
+    entity: GlossaryItemEntity
+  ): Promise<GlossaryItemModel> {
     const model: GlossaryItemModel = {
       title: entity.title,
       fullText: entity.fullText,

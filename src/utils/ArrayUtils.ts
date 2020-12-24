@@ -35,12 +35,18 @@ class ArrayUtils {
   notEqualIgnoreOrder = <T>(list1: T[], list2: T[]): boolean =>
     !this.equalIgnoreOrder(list1, list2)
 
-  partition = <T>(list: T[], selector: filter<T>): { selected: T[]; notSelected: T[]; } => {
-    return list.reduce((acc, value) => {
-      const listName = selector(value) ? 'selected' : 'notSelected'
-      acc[listName].push(value)
-      return acc
-    }, {selected: Array<T>(), notSelected: Array<T>()})
+  partition = <T>(
+    list: T[],
+    selector: filter<T>
+  ): { selected: T[]; notSelected: T[] } => {
+    return list.reduce(
+      (acc, value) => {
+        const listName = selector(value) ? 'selected' : 'notSelected'
+        acc[listName].push(value)
+        return acc
+      },
+      { selected: Array<T>(), notSelected: Array<T>() }
+    )
   }
 }
 

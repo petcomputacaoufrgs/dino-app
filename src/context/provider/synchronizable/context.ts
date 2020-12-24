@@ -10,7 +10,13 @@ export default interface SynchronizableContextType<
   DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
   REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>,
-  SERVICE extends SynchronizableService<ID, LOCAL_ID, DATA_MODEL, ENTITY, REPOSITORY>
+  SERVICE extends SynchronizableService<
+    ID,
+    LOCAL_ID,
+    DATA_MODEL,
+    ENTITY,
+    REPOSITORY
+  >
 > {
   data: ENTITY[]
   loading: boolean

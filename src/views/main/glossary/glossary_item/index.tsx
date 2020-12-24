@@ -14,7 +14,7 @@ const GlossaryItem: React.FC = () => {
 
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const glossary = useGlossary()
 
   const item = glossary.data.find((item) => item.id === Number(id))

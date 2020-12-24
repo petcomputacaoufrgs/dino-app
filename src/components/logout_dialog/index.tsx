@@ -11,7 +11,7 @@ const LogoutDialog: React.FC<LogoutDialogProps> = ({
   onDisagree,
 }) => {
   const userSettings = useUserSettings()
-    
+
   const language = userSettings.service.getLanguage(userSettings)
 
   const agreementDialogProps: AgreementDialogProps = {

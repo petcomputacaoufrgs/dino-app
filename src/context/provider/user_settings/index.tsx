@@ -4,7 +4,9 @@ import SynchronizableContextType from '../synchronizable/context'
 import UserSettingsDataModel from '../../../types/user/api/UserSettingsDataModel'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import { UserSettingsRepositoryImpl } from '../../../storage/database/user/UserSettingsRepository'
-import UserSettingsService, { UserSettingsServiceImpl } from '../../../services/user/UserSettingsService'
+import UserSettingsService, {
+  UserSettingsServiceImpl,
+} from '../../../services/user/UserSettingsService'
 
 export interface UserSettingsContextType
   extends SynchronizableContextType<

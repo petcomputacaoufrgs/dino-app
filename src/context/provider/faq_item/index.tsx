@@ -1,10 +1,12 @@
-import React, { createContext, useContext } from "react"
-import SynchronizableContextType from "../synchronizable/context"
-import SynchronizableProvider from "../synchronizable"
+import React, { createContext, useContext } from 'react'
+import SynchronizableContextType from '../synchronizable/context'
+import SynchronizableProvider from '../synchronizable'
 import FaqItemDataModel from '../../../types/faq/api/FaqItemDataModel'
 import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
 import { FaqItemRepositoryImpl } from '../../../storage/database/faq/FaqItemRepository'
-import FaqItemService, { FaqItemServiceImpl } from '../../../services/faq/FaqItemService'
+import FaqItemService, {
+  FaqItemServiceImpl,
+} from '../../../services/faq/FaqItemService'
 
 export interface FaqItemContextType
   extends SynchronizableContextType<

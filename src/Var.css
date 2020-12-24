@@ -9,7 +9,7 @@
   --default-small-font: 0.9rem;
   --default-font: 1rem;
   --big-font: 1.25rem;
-  --large-font:1.4rem;
+  --large-font: 1.4rem;
   --very-large-font: 1.75rem;
 
   --svg-size: 18px;
@@ -76,8 +76,8 @@
   --column-border: #2d1b35;
   --column-font-color: #f5f5f5;
 
-  --note-background: #B4A3BA;
-  --note-answer-background: #A692AE;
+  --note-background: #b4a3ba;
+  --note-answer-background: #a692ae;
 
   /* Botoes */
   --button-font-color: #b054d1;
@@ -135,7 +135,7 @@
   --default-small-font: 1.305rem;
   --default-font: 1.45rem;
   --big-font: 1.8125rem;
-  --large-font:2.03rem;
+  --large-font: 2.03rem;
   --very-large-font: 2.5375rem;
 
   --svg-size: 26px;
@@ -147,7 +147,7 @@
   --default-small-font: 1.575rem;
   --default-font: 1.75rem;
   --big-font: 2.1875rem;
-  --large-font:2.45rem;
+  --large-font: 2.45rem;
   --very-large-font: 3.0625rem;
 
   --svg-size: 30px;

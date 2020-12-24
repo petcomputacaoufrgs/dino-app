@@ -2,7 +2,9 @@ import GoogleAgentService from '../../agent/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
 import GooglePeopleModel from '../../types/google_api/people/GooglePeopleModel'
 import ContactService from './ContactService'
-import GoogleContactRepository, { GoogleContactRepositoryImpl } from '../../storage/database/contact/GoogleContactRepository'
+import GoogleContactRepository, {
+  GoogleContactRepositoryImpl,
+} from '../../storage/database/contact/GoogleContactRepository'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import GoogleContactModel from '../../types/contact/api/GoogleContactModel'
 import SynchronizableService from '../synchronizable/SynchronizableService'
@@ -11,27 +13,30 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import ContactEntity from '../../types/contact/database/ContactEntity'
 
 export class GoogleContactServiceImpl extends SynchronizableService<
-number,
-number,
-GoogleContactModel,
-GoogleContactEntity,
-GoogleContactRepositoryImpl
+  number,
+  number,
+  GoogleContactModel,
+  GoogleContactEntity,
+  GoogleContactRepositoryImpl
 > {
-
-  async convertModelToEntity(model: GoogleContactModel): Promise<GoogleContactEntity | undefined> {
+  async convertModelToEntity(
+    model: GoogleContactModel
+  ): Promise<GoogleContactEntity | undefined> {
     const contact = await ContactService.getById(model.contactId)
 
     if (contact) {
       const entity: GoogleContactEntity = {
         resourceName: model.resourceName,
-        localContactId: contact.localId
+        localContactId: contact.localId,
       }
-  
-      return entity  
+
+      return entity
     }
   }
 
-  async convertEntityToModel(entity: GoogleContactEntity): Promise<GoogleContactModel | undefined> {
+  async convertEntityToModel(
+    entity: GoogleContactEntity
+  ): Promise<GoogleContactModel | undefined> {
     if (entity.localContactId) {
       const contact = await ContactService.getByLocalId(entity.localContactId)
 
@@ -40,15 +45,20 @@ GoogleContactRepositoryImpl
           resourceName: entity.resourceName,
           contactId: contact.id,
         }
-      
+
         return model
       }
     }
   }
 
-  getByContact(contact: ContactEntity, googleContacts: GoogleContactEntity[]): GoogleContactEntity | undefined {
+  getByContact(
+    contact: ContactEntity,
+    googleContacts: GoogleContactEntity[]
+  ): GoogleContactEntity | undefined {
     if (contact.localId) {
-      return googleContacts.find(googleContact => googleContact.localContactId === contact.localId)
+      return googleContacts.find(
+        (googleContact) => googleContact.localContactId === contact.localId
+      )
     }
   }
 

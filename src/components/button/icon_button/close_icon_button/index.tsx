@@ -11,7 +11,7 @@ const CloseIconButton: React.FC<CloseIconButtonProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   return (
     <IconButton
       icon={CloseSVG}

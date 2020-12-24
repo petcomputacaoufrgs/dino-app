@@ -19,7 +19,7 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const handleCardClick = () => {
     onClickNote(note)
   }

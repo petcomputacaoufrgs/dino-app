@@ -10,7 +10,7 @@ import './styles.css'
 const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const handleDelete = () => {
     onDelete(alarm)
   }

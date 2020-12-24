@@ -1,6 +1,7 @@
-import SynchronizableEntity from "../../synchronizable/database/SynchronizableEntity"
+import SynchronizableEntity from '../../synchronizable/database/SynchronizableEntity'
 
-export default interface ContactGoogleResourceNameModel extends SynchronizableEntity<number, number> {
+export default interface ContactGoogleResourceNameModel
+  extends SynchronizableEntity<number, number> {
   resourceName: string
   localContactId?: number
 }

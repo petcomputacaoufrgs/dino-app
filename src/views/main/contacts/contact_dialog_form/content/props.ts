@@ -1,4 +1,4 @@
-import PhoneEntity from "../../../../../types/contact/database/PhoneEntity"
+import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 
 export interface ContactFormDialogContentProps {
   name: string

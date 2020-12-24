@@ -12,7 +12,7 @@ const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   return (
     <IconButton
       icon={MoreSVG}

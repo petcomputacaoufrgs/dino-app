@@ -10,7 +10,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
   children,
   availableTreatments,
   setTreatment,
-  treatment
+  treatment,
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
@@ -26,14 +26,16 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
         onClose={() => setOpen(false)}
         getOptionSelected={(option, value) => option === value}
         getOptionLabel={(treatment) => treatment || ''}
-        options={availableTreatments.map(treatment => treatment.name)}
+        options={availableTreatments.map((treatment) => treatment.name)}
         noOptionsText={language.NO_TREATMENTS_AVAILABLE}
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
         value={treatment ? treatment.name : null}
         onChange={(event: any, newValue: string | null) => {
           if (newValue) {
-            const entity = availableTreatments.find(treatment => treatment.name === newValue)
+            const entity = availableTreatments.find(
+              (treatment) => treatment.name === newValue
+            )
             if (entity) {
               setTreatment(entity)
             }
@@ -46,20 +48,17 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
             variant="standard"
             InputProps={{
               ...params.InputProps,
-              endAdornment: (
-                <>
-                  {params.InputProps.endAdornment}
-                </>
-              ),
+              endAdornment: <>{params.InputProps.endAdornment}</>,
             }}
           />
         )}
       />
-      
-      { children ? 
-      <div className='select-treatment__children'>
-        {children}
-      </div> : <></>}
+
+      {children ? (
+        <div className="select-treatment__children">{children}</div>
+      ) : (
+        <></>
+      )}
     </>
   )
 }

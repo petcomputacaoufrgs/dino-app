@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from 'react'
-import UserService, { UserServiceImpl } from '../../../services/user/UserService'
+import UserService, {
+  UserServiceImpl,
+} from '../../../services/user/UserService'
 import { UserRepositoryImpl } from '../../../storage/database/user/UserRepository'
 import UserDataModel from '../../../types/user/api/UserModel'
 import UserEntity from '../../../types/user/database/UserEntity'

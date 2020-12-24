@@ -5,8 +5,8 @@ import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
 import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
 
 export default interface ContactItemsProps {
-  items: Array<ContactView>,
-  contactService: ContactServiceImpl,
-  googleContactService: GoogleContactServiceImpl,
+  items: Array<ContactView>
+  contactService: ContactServiceImpl
+  googleContactService: GoogleContactServiceImpl
   phoneService: PhoneServiceImpl
 }

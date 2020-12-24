@@ -12,7 +12,7 @@ const FormItem: React.FC<FormItemProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const handleIconClick = () => {
     if (onIconClick) {
       onIconClick()

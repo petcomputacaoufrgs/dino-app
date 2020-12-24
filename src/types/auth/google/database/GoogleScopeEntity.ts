@@ -1,5 +1,6 @@
-import SynchronizableEntity from "../../../synchronizable/database/SynchronizableEntity"
+import SynchronizableEntity from '../../../synchronizable/database/SynchronizableEntity'
 
-export default interface GoogleScopeEntity extends SynchronizableEntity<number, number> {
-    name: string
+export default interface GoogleScopeEntity
+  extends SynchronizableEntity<number, number> {
+  name: string
 }

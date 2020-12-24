@@ -11,7 +11,7 @@ const NotesContentColumnAddNote: React.FC<NotesContentColumnAddNoteProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const maxNotes = notesCount >= NoteConstants.MAX_NOTES_PER_COLUMN
 
   return (

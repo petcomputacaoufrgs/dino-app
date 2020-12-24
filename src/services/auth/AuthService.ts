@@ -81,7 +81,7 @@ class AuthService {
   logout = async () => {
     EventService.whenLogout()
   }
-  
+
   refreshGoogleAccessToken = async (): Promise<boolean> => {
     this.startRefreshingGoogleAccessToken()
     const request = await DinoAgentService.get(
@@ -233,7 +233,6 @@ class AuthService {
       )
       if (request.canGo) {
         const response = await request.setBody(authRequestModel).go()
-
 
         if (response.status === HttpStatus.OK) {
           AuthLocalStorage.cleanLoginGarbage()

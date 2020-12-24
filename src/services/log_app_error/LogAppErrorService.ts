@@ -30,11 +30,11 @@ class LogAppErrorService {
       if (!model.date) {
         model.date = new Date().getTime()
       }
-  
+
       const request = await DinoAgentService.post(
         APIRequestMappingConstants.SAVE_LOG_APP_ERROR
       )
-  
+
       if (request.canGo) {
         try {
           await request.authenticate().setBody(model).go()

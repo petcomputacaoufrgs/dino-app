@@ -1,8 +1,12 @@
-import LogAppErrorService from "../services/log_app_error/LogAppErrorService"
+import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 
 type ImageFormat = 'jpeg' | 'png'
 
-type ImageProcessItemCallback = (base64: string, success: boolean, data?: any) => void
+type ImageProcessItemCallback = (
+  base64: string,
+  success: boolean,
+  data?: any
+) => void
 
 interface ImageProcessItem {
   src: string
@@ -34,7 +38,7 @@ class ImageToBase64Utils {
   getBase64FromImageSource(
     src: string,
     type: ImageFormat,
-    callback: ImageProcessItemCallback, 
+    callback: ImageProcessItemCallback,
     data?: any
   ) {
     this.addToQueue(src, type, callback, data)
@@ -50,7 +54,7 @@ class ImageToBase64Utils {
       src: src,
       callback: callback,
       type: type,
-      data: data
+      data: data,
     }
 
     this.queue.push(item)
@@ -75,7 +79,7 @@ class ImageToBase64Utils {
         this.image.onerror = () => {
           this.imageLoadError()
         }
-      } catch(e) {
+      } catch (e) {
         LogAppErrorService.logError(e)
       }
     } else {

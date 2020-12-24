@@ -16,13 +16,21 @@ const Faq: React.FC = () => {
   const treatment = useTreatment()
   const faq = useFaq()
   const faqItem = useFaqItem()
-  const currentTreatment = userSettings.service.getTreatment(userSettings, treatment.data)
+  const currentTreatment = userSettings.service.getTreatment(
+    userSettings,
+    treatment.data
+  )
   const [dialogOpen, setDialogOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<FaqView | undefined>()
 
   useEffect(() => {
-    const results = faq.service.getFaqViewByFilter(currentTreatment, faq.data, faqItem.data, searchTerm)
+    const results = faq.service.getFaqViewByFilter(
+      currentTreatment,
+      faq.data,
+      faqItem.data,
+      searchTerm
+    )
     setSearchResults(results)
   }, [currentTreatment, faq, faqItem, searchTerm])
 
@@ -38,7 +46,7 @@ const Faq: React.FC = () => {
 
   return (
     <div>
-      {searchResults !== undefined && 
+      {searchResults !== undefined && (
         <>
           <MuiSearchBar
             value={searchTerm}
@@ -46,12 +54,10 @@ const Faq: React.FC = () => {
             placeholder={language.SEARCH_HOLDER}
           />
           <div>
-            <FaqItems
-              data={searchResults}
-            />
-            <LinkButton 
-              text={language.NOT_FOUND_QUESTION_FAQ} 
-              onClick={handleSendQuestion} 
+            <FaqItems data={searchResults} />
+            <LinkButton
+              text={language.NOT_FOUND_QUESTION_FAQ}
+              onClick={handleSendQuestion}
             />
             <QuestionDialogForm
               dialogOpen={dialogOpen}
@@ -59,7 +65,7 @@ const Faq: React.FC = () => {
             />
           </div>
         </>
-      }
+      )}
     </div>
   )
 }

@@ -1,13 +1,15 @@
-import APIRequestMappingConstants from "../../constants/api/APIRequestMappingConstants"
-import APIWebSocketDestConstants from "../../constants/api/APIWebSocketDestConstants"
-import NoteConstants from "../../constants/note/NoteConstants"
-import NoteRepository, { NoteRepositoryImpl } from "../../storage/database/note/NoteRepository"
-import NoteDataModel from "../../types/note/api/NoteDataModel"
-import NoteColumnEntity from "../../types/note/database/NoteColumnEntity"
-import NoteEntity from "../../types/note/database/NoteEntity"
-import ArrayUtils from "../../utils/ArrayUtils"
-import SynchronizableService from "../synchronizable/SynchronizableService"
-import NoteColumnService from "./NoteColumnService"
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import NoteConstants from '../../constants/note/NoteConstants'
+import NoteRepository, {
+  NoteRepositoryImpl,
+} from '../../storage/database/note/NoteRepository'
+import NoteDataModel from '../../types/note/api/NoteDataModel'
+import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
+import NoteEntity from '../../types/note/database/NoteEntity'
+import ArrayUtils from '../../utils/ArrayUtils'
+import SynchronizableService from '../synchronizable/SynchronizableService'
+import NoteColumnService from './NoteColumnService'
 
 export class NoteServiceImpl extends SynchronizableService<
   number,
@@ -16,24 +18,33 @@ export class NoteServiceImpl extends SynchronizableService<
   NoteEntity,
   NoteRepositoryImpl
 > {
-  async convertModelToEntity(model: NoteDataModel): Promise<NoteEntity | undefined> {
+  async convertModelToEntity(
+    model: NoteDataModel
+  ): Promise<NoteEntity | undefined> {
     const noteColumn = await NoteColumnService.getById(model.columnId)
     if (noteColumn) {
       const entity: NoteEntity = {
         answer: model.answer,
         order: model.order,
         question: model.question,
-        tags: model.tags === "" ? [] : model.tags.split(NoteConstants.TAG_SEPARATOR),
-        columnLocalId: noteColumn.localId
+        tags:
+          model.tags === ''
+            ? []
+            : model.tags.split(NoteConstants.TAG_SEPARATOR),
+        columnLocalId: noteColumn.localId,
       }
-  
+
       return entity
     }
   }
 
-  async convertEntityToModel(entity: NoteEntity): Promise<NoteDataModel | undefined> {
+  async convertEntityToModel(
+    entity: NoteEntity
+  ): Promise<NoteDataModel | undefined> {
     if (entity.columnLocalId) {
-      const noteColumn = await NoteColumnService.getByLocalId(entity.columnLocalId)
+      const noteColumn = await NoteColumnService.getByLocalId(
+        entity.columnLocalId
+      )
 
       if (noteColumn && noteColumn.id) {
         const model: NoteDataModel = {
@@ -41,9 +52,9 @@ export class NoteServiceImpl extends SynchronizableService<
           columnId: noteColumn.id,
           order: entity.order,
           question: entity.question,
-          tags: entity.tags.join(NoteConstants.TAG_SEPARATOR)
+          tags: entity.tags.join(NoteConstants.TAG_SEPARATOR),
         }
-    
+
         return model
       }
     }
@@ -51,12 +62,19 @@ export class NoteServiceImpl extends SynchronizableService<
 
   getAllTags(notes: NoteEntity[]): string[] {
     const tags: string[] = []
-    notes.forEach(item => tags.push(...item.tags))
+    notes.forEach((item) => tags.push(...item.tags))
     return ArrayUtils.removeRepeatedValues(tags)
   }
 
-  getNotesInColumnByFilter(notes: NoteEntity[], column: NoteColumnEntity, tagsSearch: string[], textSearch: string, activeTagsSearch: boolean, activeTextSearch: boolean) {
-    return notes.filter(note => {
+  getNotesInColumnByFilter(
+    notes: NoteEntity[],
+    column: NoteColumnEntity,
+    tagsSearch: string[],
+    textSearch: string,
+    activeTagsSearch: boolean,
+    activeTextSearch: boolean
+  ) {
+    return notes.filter((note) => {
       if (note.columnLocalId !== column.localId) {
         return false
       }
@@ -64,7 +82,9 @@ export class NoteServiceImpl extends SynchronizableService<
       let valid = true
 
       if (activeTagsSearch) {
-        const inSearch = note.tags.some(tag => tagsSearch.some(tagSearch => tagSearch === tag))
+        const inSearch = note.tags.some((tag) =>
+          tagsSearch.some((tagSearch) => tagSearch === tag)
+        )
         valid = inSearch
       }
 
@@ -75,14 +95,16 @@ export class NoteServiceImpl extends SynchronizableService<
 
       return valid
     })
-  } 
+  }
 
   async deleteNotesByColumn(column: NoteColumnEntity) {
     const notes = await this.getAllByColumn(column)
     await this.deleteAll(notes)
   }
 
-  private async getAllByColumn(column: NoteColumnEntity): Promise<NoteEntity[]> {
+  private async getAllByColumn(
+    column: NoteColumnEntity
+  ): Promise<NoteEntity[]> {
     return this.repository.getAllByColumn(column)
   }
 }

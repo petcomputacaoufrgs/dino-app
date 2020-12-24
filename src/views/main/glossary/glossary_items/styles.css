@@ -3,7 +3,7 @@
   height: calc(100% - 60px);
   width: 100%;
   overflow-y: auto;
-  color:var(--contrast-color);
+  color: var(--contrast-color);
   font-size: var(--default-font);
 }
 
@@ -19,7 +19,7 @@
   background-color: var(--inv-ontrast-color);
 }
 
-.glossary__items .h5{
+.glossary__items .h5 {
   font-size: var(--big-font);
 }
 

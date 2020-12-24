@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from 'react'
-import NoteService, { NoteServiceImpl } from '../../../services/note/NoteService'
+import NoteService, {
+  NoteServiceImpl,
+} from '../../../services/note/NoteService'
 import { NoteRepositoryImpl } from '../../../storage/database/note/NoteRepository'
 import NoteDataModel from '../../../types/note/api/NoteDataModel'
 import NoteEntity from '../../../types/note/database/NoteEntity'

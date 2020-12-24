@@ -25,9 +25,9 @@ const AboutUs = (): JSX.Element => {
     <div className="about-us">
       <Paper elevation={1}>
         <div className="card__header">
-          <DinoLogoHeader 
-            title={"Sobre Nós"} 
-            subtitle={"Programa de Educação Tutorial"} 
+          <DinoLogoHeader
+            title={'Sobre Nós'}
+            subtitle={'Programa de Educação Tutorial'}
           />
         </div>
         <div className="card__content">

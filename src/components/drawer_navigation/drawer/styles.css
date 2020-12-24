@@ -79,7 +79,8 @@
   justify-content: center;
 }
 
-.user__avatar__loader, .user__avatar .avatar {
+.user__avatar__loader,
+.user__avatar .avatar {
   width: 8rem;
   height: 8rem;
   margin-bottom: 10px;

@@ -38,7 +38,7 @@ import './styles.css'
 const Form: React.FC = () => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const [eventType, setEventType] = useState(language.MEDICAL_APPOINTMENT_TYPE)
   const [eventName, setEventName] = useState<string>()
   const [initDate, setInitDate] = useState(new Date())

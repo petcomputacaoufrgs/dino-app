@@ -9,7 +9,7 @@ import './styles.css'
 const Header: React.FC<HeaderProps> = ({ day, onClose }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   return (
     <div className="calendar__day__modal__header">
       <div className="calendar__day__modal__header__info">

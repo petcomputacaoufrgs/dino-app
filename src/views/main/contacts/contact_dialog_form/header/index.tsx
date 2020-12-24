@@ -14,7 +14,7 @@ const AddContactDialogHeader = (
 ): JSX.Element => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   return (
     <CardHeader
       avatar={

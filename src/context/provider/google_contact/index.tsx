@@ -1,10 +1,12 @@
-import { createContext, useContext } from "react"
-import GoogleContactService, { GoogleContactServiceImpl } from "../../../services/contact/GoogleContactService"
-import { GoogleContactRepositoryImpl } from "../../../storage/database/contact/GoogleContactRepository"
-import GoogleContactModel from "../../../types/contact/api/GoogleContactModel"
-import GoogleContactEntity from "../../../types/contact/database/GoogleContactEntity"
-import SynchronizableProvider from "../synchronizable"
-import SynchronizableContextType from "../synchronizable/context"
+import { createContext, useContext } from 'react'
+import GoogleContactService, {
+  GoogleContactServiceImpl,
+} from '../../../services/contact/GoogleContactService'
+import { GoogleContactRepositoryImpl } from '../../../storage/database/contact/GoogleContactRepository'
+import GoogleContactModel from '../../../types/contact/api/GoogleContactModel'
+import GoogleContactEntity from '../../../types/contact/database/GoogleContactEntity'
+import SynchronizableProvider from '../synchronizable'
+import SynchronizableContextType from '../synchronizable/context'
 
 export interface GoogleContactContextType
   extends SynchronizableContextType<
@@ -36,6 +38,6 @@ const GoogleContactProvider: React.FC = ({ children }) =>
     service: GoogleContactService,
   })
 
-  export const useGoogleContact = () => useContext(GoogleContactContext)
+export const useGoogleContact = () => useContext(GoogleContactContext)
 
-  export default GoogleContactProvider
+export default GoogleContactProvider

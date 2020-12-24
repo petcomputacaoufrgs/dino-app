@@ -25,7 +25,7 @@ const Settings = (): JSX.Element => {
   const alert = useAlert()
 
   const googleScope = useGoogleScope()
-  
+
   const syncGoogleContacts = googleScope.service.hasContactGrant(googleScope)
 
   const currentSettings = userSettings.service.getUnique(userSettings.data)
@@ -36,18 +36,29 @@ const Settings = (): JSX.Element => {
 
   const fontSizeCode = userSettings.service.getFontSizeCode(userSettings)
 
-  const essentialContactGrant = userSettings.service.getEssentialContactGrant(userSettings)
+  const essentialContactGrant = userSettings.service.getEssentialContactGrant(
+    userSettings
+  )
 
-  const currentTreatment = userSettings.service.getTreatment(userSettings, treatment.data)
+  const currentTreatment = userSettings.service.getTreatment(
+    userSettings,
+    treatment.data
+  )
 
-  const [selectedLanguage, setSelectedLanguage] = useState(language.NAVIGATOR_LANGUAGE_CODE)
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    language.NAVIGATOR_LANGUAGE_CODE
+  )
 
   const [selectedFontSize, setSelectedFontSize] = useState(fontSizeCode)
 
   const [selectedColorTheme, setSelectedColorTheme] = useState(colorThemeCode)
 
-  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(
-    essentialContactGrant !== undefined ? essentialContactGrant : false)
+  const [
+    selectedEssentialContactGrant,
+    setSelectedEssentialContactGrant,
+  ] = useState(
+    essentialContactGrant !== undefined ? essentialContactGrant : false
+  )
 
   const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 
@@ -85,13 +96,13 @@ const Settings = (): JSX.Element => {
       currentSettings.fontSize = selectedFontSize
       currentSettings.colorTheme = selectedColorTheme
       currentSettings.includeEssentialContact = selectedEssentialContactGrant
-    
+
       if (selectedTreatment) {
         currentSettings.treatmentLocalId = selectedTreatment.localId
       }
-  
+
       userSettings.service.save(currentSettings)
-    
+
       alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
     } else {
       alert.showErrorAlert(language.SETTINGS_SAVE_ERROR)
@@ -108,15 +119,15 @@ const Settings = (): JSX.Element => {
   )
 
   const renderDialogs = (): JSX.Element => (
-      <GoogleGrantDialog
-        onAccept={handleAgreeContactsGrantDialog}
-        onDecline={handleDisagreeContactsGrantDialog}
-        onClose={handleCloseContactsGrantDialog}
-        open={openGoogleContactDialog}
-        scopes={[GoogleScope.SCOPE_CONTACT]}
-        text={language.GOOGLE_CONTACT_GRANT_TEXT}
-        title={language.GOOGLE_CONTACT_GRANT_TITLE}
-      />
+    <GoogleGrantDialog
+      onAccept={handleAgreeContactsGrantDialog}
+      onDecline={handleDisagreeContactsGrantDialog}
+      onClose={handleCloseContactsGrantDialog}
+      open={openGoogleContactDialog}
+      scopes={[GoogleScope.SCOPE_CONTACT]}
+      text={language.GOOGLE_CONTACT_GRANT_TEXT}
+      title={language.GOOGLE_CONTACT_GRANT_TITLE}
+    />
   )
 
   return (
@@ -129,20 +140,20 @@ const Settings = (): JSX.Element => {
         {language.SETTINGS_TITLE}
       </Typography>
       <FormControl className="settings__form">
-        <SelectLanguage 
+        <SelectLanguage
           languageName={selectedLanguage}
           setLanguage={setSelectedLanguage}
         />
       </FormControl>
       <FormControl className="settings__form">
-        <SelectFontSize 
+        <SelectFontSize
           fontSize={selectedFontSize}
           setFontSize={setSelectedFontSize}
         />
       </FormControl>
       <FormControl className="settings__form">
-        <SelectColorTheme 
-          colorTheme={selectedColorTheme} 
+        <SelectColorTheme
+          colorTheme={selectedColorTheme}
           setColorTheme={setSelectedColorTheme}
         />
       </FormControl>
@@ -153,7 +164,7 @@ const Settings = (): JSX.Element => {
           treatment={selectedTreatment}
         />
       </FormControl>
-      <DinoHr invisible/>
+      <DinoHr invisible />
       <FormControl className="settings__form">
         <DinoSwitch
           selected={syncGoogleContacts}
@@ -169,7 +180,7 @@ const Settings = (): JSX.Element => {
           label={language.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
         />
       </FormControl>
-      <DinoHr invisible/>
+      <DinoHr invisible />
       {renderSaveButton()}
       {renderDialogs()}
     </div>

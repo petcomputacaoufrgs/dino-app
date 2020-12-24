@@ -14,7 +14,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
         <Divider />
       </div>
 
-      {data && 
+      {data && (
         <Accordion className="faq-items__accordion">
           {data.items.map((item, index) => (
             <Card className="card" key={index}>
@@ -29,7 +29,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
             </Card>
           ))}
         </Accordion>
-      }
+      )}
     </div>
   )
 }

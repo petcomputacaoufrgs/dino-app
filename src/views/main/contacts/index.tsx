@@ -18,7 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const Contacts = (): JSX.Element => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  const currentSettings = userSettings.service.getUnique(userSettings.data) 
+  const currentSettings = userSettings.service.getUnique(userSettings.data)
   const contact = useContact()
   const phone = usePhone()
   const googleContact = useGoogleContact()
@@ -29,7 +29,12 @@ const Contacts = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('')
   const [shouldDecline, setShouldDecline] = useState(false)
 
-  const contactViews = contact.service.getViewContactByFilter(contact.data, phone.data, googleContact.data, searchTerm)
+  const contactViews = contact.service.getViewContactByFilter(
+    contact.data,
+    phone.data,
+    googleContact.data,
+    searchTerm
+  )
 
   const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
     setSearchTerm(event.target.value)
@@ -76,13 +81,16 @@ const Contacts = (): JSX.Element => {
 
   return (
     <div className="contacts">
-      <Loader className="contacts__loader" loading={contact.loading || phone.loading || googleContact.loading}>
+      <Loader
+        className="contacts__loader"
+        loading={contact.loading || phone.loading || googleContact.loading}
+      >
         <MuiSearchBar
           value={searchTerm}
           onChange={handleChange}
           placeholder={language.SEARCH_HOLDER}
         />
-        <ContactItems 
+        <ContactItems
           items={contactViews}
           contactService={contact.service}
           phoneService={phone.service}

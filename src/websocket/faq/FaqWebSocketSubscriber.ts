@@ -17,4 +17,3 @@ class FaqWebSocketSubscriber extends SynchronizableWSSubscriber<
 }
 
 export default new FaqWebSocketSubscriber()
-

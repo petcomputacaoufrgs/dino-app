@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react'
 import GoogleOAuth2Service from '../../../services/auth/google/GoogleOAuth2Service'
 
 export interface GoogleAuth2ContextType {
-    loading: boolean
+  loading: boolean
 }
 
 const GoogleOAuth2Context = createContext({
@@ -16,9 +16,9 @@ const GoogleOAuth2Provider: React.FC = (props) => {
 
   useEffect(() => {
     let handleInitUpdate = (loaded: boolean) => {
-        setValue({
-            loading: false,
-        })
+      setValue({
+        loading: false,
+      })
     }
 
     const init = () => {

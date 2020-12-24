@@ -23,7 +23,10 @@ export default abstract class SynchronizableWSSubscriber<
       {
         path: service.getUpdateWebSocketPath(),
         callback: (model: SynchronizableWSUpdateModel<ID, DATA_MODEL>) => {
-          SynchronizableWSSubscriberQueue.addItem(service.webSocketUpdate, model)
+          SynchronizableWSSubscriberQueue.addItem(
+            service.webSocketUpdate,
+            model
+          )
         },
       },
       {

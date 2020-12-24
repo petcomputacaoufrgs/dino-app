@@ -22,7 +22,11 @@ class Synchronizer {
   private executionGrups: BaseSync[][][] = [
     [[UserSync]],
     [[GoogleScopeSync]],
-    [[TreatmentSync], [FaqSync, UserSettingsSync], [FaqItemSync, FaqUserQuestionSync]],
+    [
+      [TreatmentSync],
+      [FaqSync, UserSettingsSync],
+      [FaqItemSync, FaqUserQuestionSync],
+    ],
     [[GlossarySync]],
     [[NoteColumnSync], [NoteSync]],
     [[ContactSync], [PhoneSync, GoogleContactSync]],
@@ -63,10 +67,7 @@ class Synchronizer {
     await Promise.all(executionList)
   }
 
-  private syncItem = async (
-    item: BaseSync,
-    onlyReceive?: boolean
-  ) => {
+  private syncItem = async (item: BaseSync, onlyReceive?: boolean) => {
     if (item.sync) {
       await item.sync()
     }

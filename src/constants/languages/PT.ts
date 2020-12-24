@@ -31,11 +31,11 @@ export default class PT implements LanguageBase {
 
   FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
 
-  FIRST_LOGIN_CHOOSE_TREATMENT = "Escolha seu Tratamento"
+  FIRST_LOGIN_CHOOSE_TREATMENT = 'Escolha seu Tratamento'
 
-  FIRST_LOGIN_CHOOSE_COLOR_THEME = "Escolha seu Tema de Cores"
+  FIRST_LOGIN_CHOOSE_COLOR_THEME = 'Escolha seu Tema de Cores'
 
-  FIRST_LOGIN_CHOOSE_LANGUAGE = "Escolha seu Idioma"
+  FIRST_LOGIN_CHOOSE_LANGUAGE = 'Escolha seu Idioma'
 
   LOGIN_BUTTON_TEXT = 'Entrar com o Google'
 
@@ -78,10 +78,11 @@ export default class PT implements LanguageBase {
 
   DELETE_CONTACT_QUESTION = 'Deletar contato?'
 
-  DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato permanentemente.'
-  
+  DELETE_CONTACT_OPTION_TEXT =
+    'Esta ação irá deletar seu contato permanentemente.'
+
   TERMS_OF_USE = 'Termos de Uso'
-  
+
   PRIVACY_POLICY = 'Política de Privacidade'
 
   MENU_HOME = 'Home'
@@ -239,9 +240,11 @@ export default class PT implements LanguageBase {
 
   SELECT_FAQ_BUTTON = 'Busque FAQ'
 
-  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Carregar contatos essenciais referentes ao meu tratamento'
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT =
+    'Carregar contatos essenciais referentes ao meu tratamento'
 
-  SAVE_CONTACT_ON_GOOGLE_GRANT = 'Salvar contatos do DinoApp em minha conta Google'
+  SAVE_CONTACT_ON_GOOGLE_GRANT =
+    'Salvar contatos do DinoApp em minha conta Google'
 
   SUNDAY_NAME = 'Domingo'
 
@@ -262,8 +265,8 @@ export default class PT implements LanguageBase {
   PREVIOUS_BUTTON_TEXT = 'Anterior'
 
   NEXT_BUTTON_TEXT_LABEL = 'Clique para avançar para o próximo elemento'
-  
-  PREVIOUS_BUTTON_TEXT_LABEL =  'Clique para retornar ao elemento anterior'
+
+  PREVIOUS_BUTTON_TEXT_LABEL = 'Clique para retornar ao elemento anterior'
 
   CLOSE_ARIA_LABEL = 'Fechar'
 
@@ -430,7 +433,7 @@ export default class PT implements LanguageBase {
   FONT_SIZE_SELECTION_TITLE = 'Escolher Tamanho da Fonte'
 
   DEFAULT_FONT_SIZE_NAME = 'Padrão'
-  
+
   LARGE_FONT_SIZE_NAME = 'Grande'
 
   LARGER_FONT_SIZE_NAME = 'Gigante'
@@ -493,5 +496,4 @@ export default class PT implements LanguageBase {
   READ_MORE = 'Leia mais'
 
   NO_TREATMENTS_AVAILABLE = 'Nenhum tratamento disponível'
-
 }

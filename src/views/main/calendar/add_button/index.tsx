@@ -8,7 +8,7 @@ import './styles.css'
 const AddButton: React.FC = () => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const [openDialog, setOpenDialog] = useState(false)
 
   const handleAddClick = () => {

@@ -28,7 +28,7 @@ const App = (): JSX.Element => {
   const [showLoadScreen, setShowLoadScreen] = useState(false)
 
   DataThemeUtils.setBodyDataTheme(UserSettingsService.getSystemColorThemeName())
-  
+
   useEffect(() => {
     if (firstLoad) {
       ViewportService.maximizeViewport()

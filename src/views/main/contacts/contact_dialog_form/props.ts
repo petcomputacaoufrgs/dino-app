@@ -1,4 +1,4 @@
-import ContactView from "../../../../types/contact/view/ContactView"
+import ContactView from '../../../../types/contact/view/ContactView'
 import { ContactServiceImpl } from '../../../../services/contact/ContactService'
 import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
 

@@ -6,13 +6,13 @@ import DinoStepperProps from './props'
 import './styles.css'
 import TextButton from '../button/text_button/index'
 
-const DinoStepper: React.FC<DinoStepperProps> = ({ 
-  steps, 
+const DinoStepper: React.FC<DinoStepperProps> = ({
+  steps,
   activeStep,
-  onNext, 
-  onBack, 
-  onSave, 
-  onCancel 
+  onNext,
+  onBack,
+  onSave,
+  onCancel,
 }) => {
   const userSettings = useUserSettings()
 
@@ -26,44 +26,47 @@ const DinoStepper: React.FC<DinoStepperProps> = ({
       position="static"
       activeStep={activeStep}
       nextButton={
-        activeStep === steps - 1 ?
-        <TextButton 
-          className="next__button"
-          aria-label={language.DIALOG_SAVE_BUTTON_LABEL} 
-          onClick={onSave}
+        activeStep === steps - 1 ? (
+          <TextButton
+            className="next__button"
+            aria-label={language.DIALOG_SAVE_BUTTON_LABEL}
+            onClick={onSave}
           >
             {language.DIALOG_SAVE_BUTTON_TEXT}
             <KeyboardArrowRight />
-        </TextButton> 
-        :
-        <TextButton 
-          className="next__button"
-          aria-label={language.NEXT_BUTTON_TEXT_LABEL}  
-          onClick={onNext}
+          </TextButton>
+        ) : (
+          <TextButton
+            className="next__button"
+            aria-label={language.NEXT_BUTTON_TEXT_LABEL}
+            onClick={onNext}
           >
             {language.NEXT_BUTTON_TEXT}
             <KeyboardArrowRight />
-        </TextButton>
+          </TextButton>
+        )
       }
       backButton={
-        activeStep === 0 ?
-        <TextButton 
-          className="back__button" 
-          aria-label={language.DIALOG_CANCEL_BUTTON_LABEL} 
-          onClick={onCancel}
+        activeStep === 0 ? (
+          <TextButton
+            className="back__button"
+            aria-label={language.DIALOG_CANCEL_BUTTON_LABEL}
+            onClick={onCancel}
           >
             <KeyboardArrowLeft />
-            <p></p>{language.DIALOG_CANCEL_BUTTON_TEXT}
-        </TextButton> 
-        :
-        <TextButton 
-          className="back__button" 
-          aria-label={language.PREVIOUS_BUTTON_TEXT_LABEL} 
-          onClick={onBack}
+            <p></p>
+            {language.DIALOG_CANCEL_BUTTON_TEXT}
+          </TextButton>
+        ) : (
+          <TextButton
+            className="back__button"
+            aria-label={language.PREVIOUS_BUTTON_TEXT_LABEL}
+            onClick={onBack}
           >
             <KeyboardArrowLeft />
             {language.PREVIOUS_BUTTON_TEXT}
-        </TextButton>
+          </TextButton>
+        )
       }
     />
   )

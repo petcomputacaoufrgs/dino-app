@@ -20,7 +20,12 @@ const Notes = () => {
   const [tagSearch, setTagSearch] = useState<string[]>([])
   const [searching, setSearching] = useState(false)
 
-  const noteView = column.service.getColumnsByFilter(note.data, column.data, tagSearch, textSearch)
+  const noteView = column.service.getColumnsByFilter(
+    note.data,
+    column.data,
+    tagSearch,
+    textSearch
+  )
 
   useEffect(() => {
     if (textSearch.length > 0 || tagSearch.length > 0) {
@@ -60,7 +65,7 @@ const Notes = () => {
 
   //#region Note
 
-  const questionAlreadyExists = (question: string): boolean => 
+  const questionAlreadyExists = (question: string): boolean =>
     note.data.some((note) => note.question === question)
 
   const handleSaveNewNote = (
@@ -70,11 +75,11 @@ const Notes = () => {
   ) => {
     if (noteView.column.localId) {
       note.service.save({
-        answer: "",
+        answer: '',
         question: question,
         tags: tagList,
         columnLocalId: noteView.column.localId,
-        order: noteView.notes.length
+        order: noteView.notes.length,
       })
     }
   }
@@ -103,11 +108,11 @@ const Notes = () => {
     const changedColumn = source.droppableId !== destination.droppableId
 
     const sourceViewNote = noteView.find(
-      item => item.column.title === source.droppableId
+      (item) => item.column.title === source.droppableId
     )
 
     const destinationViewNote = noteView.find(
-      item => item.column.title === destination.droppableId
+      (item) => item.column.title === destination.droppableId
     )
 
     if (!sourceViewNote || !destinationViewNote) {
@@ -127,7 +132,9 @@ const Notes = () => {
 
     if (changedColumn) {
       sourceViewNote.notes.forEach((note, index) => (note.order = index))
-      note.service.saveAll(destinationViewNote.notes.concat(sourceViewNote.notes))
+      note.service.saveAll(
+        destinationViewNote.notes.concat(sourceViewNote.notes)
+      )
     } else {
       note.service.saveAll(destinationViewNote.notes)
     }
@@ -147,9 +154,9 @@ const Notes = () => {
     noteView.splice(source.index, 1)
     noteView.splice(destination.index, 0, changedColumn)
 
-    noteView.forEach((item, index) => item.column.order = index)
+    noteView.forEach((item, index) => (item.column.order = index))
 
-    column.service.saveAll(noteView.map(item => item.column))
+    column.service.saveAll(noteView.map((item) => item.column))
   }
 
   const handleDragEnd = (result: DropResult) => {
@@ -178,7 +185,10 @@ const Notes = () => {
 
   return (
     <div className="notes">
-      <Loader className="notes__loader" loading={note.loading || column.loading}>
+      <Loader
+        className="notes__loader"
+        loading={note.loading || column.loading}
+      >
         <NoteHeader
           onTagSearch={handleTagSearch}
           onTextSearch={handleTextSearch}
@@ -197,7 +207,7 @@ const Notes = () => {
           tags={tags}
           searching={searching}
         />
-        </Loader>
+      </Loader>
     </div>
   )
 }

@@ -1,13 +1,13 @@
-import SynchronizableDataLocalIdModel from "../SynchronizableDataLocalIdModel"
+import SynchronizableDataLocalIdModel from '../SynchronizableDataLocalIdModel'
 
 export interface SynchronizableSaveAllResponseModel<
-    ID,
-    LOCAL_ID,
-    DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>
+  ID,
+  LOCAL_ID,
+  DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>
 > {
-    data: Array<DATA_MODEL>
-    
-    success: boolean
+  data: Array<DATA_MODEL>
 
-    error: string
+  success: boolean
+
+  error: string
 }

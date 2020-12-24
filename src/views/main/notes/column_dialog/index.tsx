@@ -34,12 +34,12 @@ const NoteColumnDialog = forwardRef(
     }, [props.open, props.column])
 
     const handleSave = async () => {
-      const invalidTitle = ! await isTitleValid(newTitle)
+      const invalidTitle = !(await isTitleValid(newTitle))
       setInvalidTitle(invalidTitle)
-      
+
       if (invalidTitle) {
         return
-      } 
+      }
 
       if (props.column) {
         if (props.column.title !== newTitle) {
@@ -52,7 +52,7 @@ const NoteColumnDialog = forwardRef(
       } else if (props.order !== undefined) {
         const newColumn: NoteColumnEntity = {
           title: newTitle,
-          order: props.order
+          order: props.order,
         }
         props.onSave(newColumn)
       }

@@ -13,7 +13,7 @@ const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onTitleChange(event.target.value as string)
   }

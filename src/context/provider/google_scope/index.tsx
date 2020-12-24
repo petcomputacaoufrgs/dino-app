@@ -4,7 +4,9 @@ import SynchronizableContextType from '../synchronizable/context'
 import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeDataModel'
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
 import { GoogleScopeRepositoryImpl } from '../../../storage/database/auth/GoogleScopeRepository'
-import GoogleScopeService, { GoogleScopeServiceImpl } from '../../../services/auth/google/GoogleScopeService'
+import GoogleScopeService, {
+  GoogleScopeServiceImpl,
+} from '../../../services/auth/google/GoogleScopeService'
 
 export interface GoogleScopeContextType
   extends SynchronizableContextType<
@@ -36,6 +38,6 @@ const GoogleScopeProvider: React.FC = ({ children }): JSX.Element =>
     service: GoogleScopeService,
   })
 
-  export const useGoogleScope = () => useContext(GoogleScopeContext)
+export const useGoogleScope = () => useContext(GoogleScopeContext)
 
-  export default GoogleScopeProvider
+export default GoogleScopeProvider

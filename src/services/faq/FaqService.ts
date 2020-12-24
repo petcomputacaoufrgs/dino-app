@@ -1,23 +1,27 @@
-import SynchronizableService from "../synchronizable/SynchronizableService"
+import SynchronizableService from '../synchronizable/SynchronizableService'
 import FaqDataModel from '../../types/faq/api/FaqDataModel'
 import FaqEntity from '../../types/faq/database/FaqEntity'
-import FaqRepository, { FaqRepositoryImpl } from '../../storage/database/faq/FaqRepository'
-import APIRequestMappingConstants from "../../constants/api/APIRequestMappingConstants"
-import APIWebSocketDestConstants from "../../constants/api/APIWebSocketDestConstants"
+import FaqRepository, {
+  FaqRepositoryImpl,
+} from '../../storage/database/faq/FaqRepository'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import FaqView from '../../types/faq/view/FaqView'
-import FaqItemService from "./FaqItemService"
-import TreatmentEntity from "../../types/treatment/database/TreatmentEntity"
-import TreatmentService from "../treatment/TreatmentService"
+import FaqItemService from './FaqItemService'
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import TreatmentService from '../treatment/TreatmentService'
 
 export class FaqServiceImpl extends SynchronizableService<
-number,
-number,
-FaqDataModel,
-FaqEntity,
-FaqRepositoryImpl
+  number,
+  number,
+  FaqDataModel,
+  FaqEntity,
+  FaqRepositoryImpl
 > {
-  async convertModelToEntity(model: FaqDataModel): Promise<FaqEntity | undefined> {
+  async convertModelToEntity(
+    model: FaqDataModel
+  ): Promise<FaqEntity | undefined> {
     const treatment = await TreatmentService.getById(model.treatmentId)
     if (treatment) {
       const entity: FaqEntity = {
@@ -29,39 +33,57 @@ FaqRepositoryImpl
     }
   }
 
-  async convertEntityToModel(entity: FaqEntity): Promise<FaqDataModel | undefined> {
+  async convertEntityToModel(
+    entity: FaqEntity
+  ): Promise<FaqDataModel | undefined> {
     if (entity.localTreatmentId) {
-      const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId)
+      const treatment = await TreatmentService.getByLocalId(
+        entity.localTreatmentId
+      )
 
       if (treatment && treatment.id) {
         const model: FaqDataModel = {
           title: entity.title,
-          treatmentId: treatment.id
+          treatmentId: treatment.id,
         }
-    
+
         return model
       }
     }
   }
 
-  public getFaqViewByFilter(treatment: TreatmentEntity | undefined, faqs: FaqEntity[], faqItem: FaqItemEntity[], searchTerm: string): FaqView | undefined {
+  public getFaqViewByFilter(
+    treatment: TreatmentEntity | undefined,
+    faqs: FaqEntity[],
+    faqItem: FaqItemEntity[],
+    searchTerm: string
+  ): FaqView | undefined {
     const currentFaq = this.getCurrentFaq(treatment, faqs)
 
     if (currentFaq) {
       const view: FaqView = {
         faq: currentFaq,
-        items: FaqItemService.getFaqItemByFilter(currentFaq, faqItem, searchTerm)
+        items: FaqItemService.getFaqItemByFilter(
+          currentFaq,
+          faqItem,
+          searchTerm
+        ),
       }
-      
+
       return view
     }
 
     return undefined
   }
 
-  public getCurrentFaq(treatment: TreatmentEntity | undefined, faqs: FaqEntity[]): FaqEntity | undefined {
+  public getCurrentFaq(
+    treatment: TreatmentEntity | undefined,
+    faqs: FaqEntity[]
+  ): FaqEntity | undefined {
     if (treatment) {
-      const currentFaq = faqs.find(faq => faq.localTreatmentId === treatment.localId)
+      const currentFaq = faqs.find(
+        (faq) => faq.localTreatmentId === treatment.localId
+      )
       return currentFaq
     }
 
@@ -70,7 +92,8 @@ FaqRepositoryImpl
 }
 
 export default new FaqServiceImpl(
-  FaqRepository, 
-  APIRequestMappingConstants.FAQ, 
-  APIWebSocketDestConstants.FAQ_UPDATE, 
-  APIWebSocketDestConstants.FAQ_DELETE)
+  FaqRepository,
+  APIRequestMappingConstants.FAQ,
+  APIWebSocketDestConstants.FAQ_UPDATE,
+  APIWebSocketDestConstants.FAQ_DELETE
+)

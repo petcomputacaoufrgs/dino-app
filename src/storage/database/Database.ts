@@ -40,7 +40,7 @@ class Database extends Dexie {
 
     /**
      * Add only attributes that you will use in where clause
-    **/
+     **/
     this.version(DATABASE_VERSION).stores({
       userSettings: generateSynchronizableTableString(),
       glossary: generateSynchronizableTableString(),
@@ -85,7 +85,7 @@ class Database extends Dexie {
 const generateSynchronizableTableString = (...attributes: string[]): string => {
   const basic = '++localId,localState,id'
   if (attributes && attributes.length > 0) {
-    return basic+ ',' + attributes.join(',')
+    return basic + ',' + attributes.join(',')
   }
 
   return basic

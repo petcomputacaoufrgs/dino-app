@@ -7,7 +7,9 @@ export class GoogleContactRepositoryImpl extends SynchronizableRepository<
   number,
   GoogleContactEntity
 > {
-  async getByContactLocalId(localContactId: number): Promise<GoogleContactEntity | undefined> {
+  async getByContactLocalId(
+    localContactId: number
+  ): Promise<GoogleContactEntity | undefined> {
     return this.table.where('localContactId').equals(localContactId).first()
   }
 }

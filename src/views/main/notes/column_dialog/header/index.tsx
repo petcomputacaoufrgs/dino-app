@@ -9,7 +9,7 @@ const NoteColumnDialogHeader: React.FC<NoteColumnDialogHeaderProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   return (
     <CardHeader
       title={editing ? language.COLUMN_EDIT_LABEL : language.COLUMN_ADD_LABEL}

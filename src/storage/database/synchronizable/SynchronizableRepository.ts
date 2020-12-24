@@ -72,8 +72,8 @@ export default abstract class SynchronizableRepository<
 
   async saveAll(entities: ENTITY[]) {
     this.removeNullLocalIds(entities)
-    const ids = await this.table.bulkPut(entities, undefined, {allKeys: true})
-    entities.forEach((entity, index) => entity.localId = ids[index])
+    const ids = await this.table.bulkPut(entities, undefined, { allKeys: true })
+    entities.forEach((entity, index) => (entity.localId = ids[index]))
   }
 
   async delete(entity: ENTITY) {
@@ -107,7 +107,9 @@ export default abstract class SynchronizableRepository<
   }
 
   async fakeDeleteAll(entities: ENTITY[], lastUpdate: Date): Promise<number> {
-    const entitiesIds = entities.filter(entity => entity.localId !== undefined).map(entity => entity.localId!)
+    const entitiesIds = entities
+      .filter((entity) => entity.localId !== undefined)
+      .map((entity) => entity.localId!)
     return await this.table
       .where('localId')
       .anyOf(entitiesIds)
@@ -133,7 +135,9 @@ export default abstract class SynchronizableRepository<
   }
 
   async deleteAll(entities: ENTITY[]) {
-    const localIds = entities.filter(entity => entity.localId !== undefined).map(entity => entity.localId!)
+    const localIds = entities
+      .filter((entity) => entity.localId !== undefined)
+      .map((entity) => entity.localId!)
     return this.table.where('localId').anyOf(localIds).delete()
   }
 
@@ -142,7 +146,7 @@ export default abstract class SynchronizableRepository<
   }
 
   removeNullLocalIds(entities: Array<ENTITY>) {
-    entities.forEach(entity => this.removeNullLocalId(entity))
+    entities.forEach((entity) => this.removeNullLocalId(entity))
   }
 
   removeNullLocalId(entity: ENTITY) {

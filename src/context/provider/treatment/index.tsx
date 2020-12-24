@@ -4,7 +4,9 @@ import SynchronizableProvider from '../synchronizable'
 import TreatmentDataModel from '../../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import { TreatmentRepositoryImpl } from '../../../storage/database/treatment/TreatmentRepository'
-import TreatmentService, { TreatmentServiceImpl } from '../../../services/treatment/TreatmentService'
+import TreatmentService, {
+  TreatmentServiceImpl,
+} from '../../../services/treatment/TreatmentService'
 
 export interface TreatmentContextType
   extends SynchronizableContextType<

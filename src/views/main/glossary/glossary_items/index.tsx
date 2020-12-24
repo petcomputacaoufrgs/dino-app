@@ -21,9 +21,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={index.toString()}>
               <Card.Body>
-                <Card.Subtitle className="mb-2">
-                  {item.subtitle}
-                </Card.Subtitle>
+                <Card.Subtitle className="mb-2">{item.subtitle}</Card.Subtitle>
                 <Card.Text>{item.text || language.NO_AVAILABLE_TEXT}</Card.Text>
                 <Link
                   className="card-link"

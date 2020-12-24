@@ -25,7 +25,10 @@ const QuestionDialogForm = React.forwardRef(
     const language = userSettings.service.getLanguage(userSettings)
     const treatment = useTreatment()
     const faq = useFaq()
-    const currentTreatment = userSettings.service.getTreatment(userSettings, treatment.data)
+    const currentTreatment = userSettings.service.getTreatment(
+      userSettings,
+      treatment.data
+    )
     const currentFaq = faq.service.getCurrentFaq(currentTreatment, faq.data)
     const [selectedFaq, setSelectedFaq] = useState(currentFaq)
     const [error, setError] = useState(false)
@@ -38,7 +41,7 @@ const QuestionDialogForm = React.forwardRef(
       if (selectedFaq !== undefined && question !== '') {
         const entity: FaqUserQuestionEntity = {
           question: question,
-          localFaqId: selectedFaq.localId
+          localFaqId: selectedFaq.localId,
         }
 
         FaqUserQuestionService.save(entity)

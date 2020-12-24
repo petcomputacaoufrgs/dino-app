@@ -1,4 +1,4 @@
-import GoogleScopeDataModel from "./GoogleScopeDataModel"
+import GoogleScopeDataModel from './GoogleScopeDataModel'
 
 export default interface GoogleRefreshAuthResponseModel {
   googleAccessToken: string

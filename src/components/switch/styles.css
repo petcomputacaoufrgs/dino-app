@@ -26,13 +26,13 @@
   align-items: center;
 }
 
-.dino_switch__form  .MuiSwitch-colorSecondary.Mui-checked {
+.dino_switch__form .MuiSwitch-colorSecondary.Mui-checked {
   color: var(--button-selected-font-color);
 }
 
-.dino_switch__form  .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+.dino_switch__form .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
   background-color: var(--button-selected-font-color);
 }
-.dino_switch__form  .MuiSwitch-colorSecondary {
+.dino_switch__form .MuiSwitch-colorSecondary {
   color: var(--button-font-color);
 }

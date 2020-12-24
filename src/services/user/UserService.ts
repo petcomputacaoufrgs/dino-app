@@ -3,7 +3,9 @@ import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import SynchronizableService from '../synchronizable/SynchronizableService'
 import UserEntity from '../../types/user/database/UserEntity'
-import UserRepository, { UserRepositoryImpl } from '../../storage/database/user/UserRepository'
+import UserRepository, {
+  UserRepositoryImpl,
+} from '../../storage/database/user/UserRepository'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import AuthService from '../auth/AuthService'
@@ -29,21 +31,27 @@ export class UserServiceImpl extends SynchronizableService<
   number,
   UserDataModel,
   UserEntity,
-  UserRepositoryImpl> {
-
+  UserRepositoryImpl
+> {
   getPicture(entities: UserEntity[]): string {
-    return entities.length > 0 ? (entities[0].pictureBase64 ? entities[0].pictureBase64 : entities[0].pictureURL) : ''
+    return entities.length > 0
+      ? entities[0].pictureBase64
+        ? entities[0].pictureBase64
+        : entities[0].pictureURL
+      : ''
   }
 
   getName(entities: UserEntity[]) {
     return entities.length > 0 ? entities[0].name : ''
   }
- 
+
   async updateUser(model: UserDataModel) {
     await this.localClearAndSaveAllFromModels([model])
   }
 
-  async convertModelToEntity(model: UserDataModel): Promise<UserEntity | undefined> {
+  async convertModelToEntity(
+    model: UserDataModel
+  ): Promise<UserEntity | undefined> {
     const entity: UserEntity = {
       email: model.email,
       name: model.name,
@@ -53,11 +61,13 @@ export class UserServiceImpl extends SynchronizableService<
     return entity
   }
 
-  async convertEntityToModel(entity: UserEntity): Promise<UserDataModel | undefined> {
+  async convertEntityToModel(
+    entity: UserEntity
+  ): Promise<UserDataModel | undefined> {
     const model: UserDataModel = {
       email: entity.email,
       name: entity.name,
-      pictureURL: entity.pictureURL
+      pictureURL: entity.pictureURL,
     }
 
     return model
@@ -83,7 +93,7 @@ export class UserServiceImpl extends SynchronizableService<
 
   protected async onSyncSuccess() {
     const user = await this.repository.getFirst()
-    
+
     if (user) {
       this.verifyGoogleUserPhoto(user)
     }
@@ -95,13 +105,13 @@ export class UserServiceImpl extends SynchronizableService<
 
       if (photoModel) {
         const primaryPhoto = this.getPrimaryPhotoFromGooglePhotos(photoModel)
-  
+
         if (primaryPhoto && primaryPhoto.url) {
           const newPictureURL = GooglePeopleAPIUtils.changeImageSize(
             primaryPhoto.url,
             125
           )
-  
+
           if (entity.pictureURL !== newPictureURL) {
             entity.pictureURL = newPictureURL
             await this.save(entity)
@@ -144,7 +154,11 @@ export class UserServiceImpl extends SynchronizableService<
     }
   }
 
-  private saveDowloadedImage = async (base64Image: string, success: boolean, id?: any) => {
+  private saveDowloadedImage = async (
+    base64Image: string,
+    success: boolean,
+    id?: any
+  ) => {
     if (success && id !== undefined) {
       const savedEntity = await this.repository.getById(id)
       if (savedEntity) {

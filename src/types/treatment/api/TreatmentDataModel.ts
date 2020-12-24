@@ -1,5 +1,6 @@
-import SynchronizableDataLocalIdModel from "../../synchronizable/api/SynchronizableDataLocalIdModel"
+import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
 
-export default interface TreatmentDataModel extends SynchronizableDataLocalIdModel<number, number> {
+export default interface TreatmentDataModel
+  extends SynchronizableDataLocalIdModel<number, number> {
   name: string
 }

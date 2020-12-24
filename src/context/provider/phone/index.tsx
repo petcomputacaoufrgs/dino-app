@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from 'react'
-import PhoneService, { PhoneServiceImpl } from '../../../services/contact/PhoneService'
+import PhoneService, {
+  PhoneServiceImpl,
+} from '../../../services/contact/PhoneService'
 import { PhoneRepositoryImpl } from '../../../storage/database/contact/PhoneRepository'
 import PhoneModel from '../../../types/contact/api/PhoneModel'
 import PhoneEntity from '../../../types/contact/database/PhoneEntity'
@@ -36,6 +38,6 @@ const PhoneProvider: React.FC = ({ children }) =>
     service: PhoneService,
   })
 
-  export const usePhone = () => useContext(PhoneContext)
+export const usePhone = () => useContext(PhoneContext)
 
-  export default PhoneProvider
+export default PhoneProvider

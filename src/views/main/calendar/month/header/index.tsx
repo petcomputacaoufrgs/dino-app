@@ -9,7 +9,7 @@ import './styles.css'
 const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   return (
     <div className="calendar__month__header">
       <h1>

@@ -22,7 +22,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   const language = userSettings.service.getLanguage(userSettings)
   const alert = useAlert()
   const googleOAuth2 = useGoogleOAuth2()
-  
+
   const [loading, setLoading] = useState(false)
 
   const [isConnected, setIsConnected] = useState(
@@ -82,7 +82,10 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   }
 
   return (
-    <Loader iconClassName="google_login_button__loader" loading={loading || googleOAuth2.loading}>
+    <Loader
+      iconClassName="google_login_button__loader"
+      loading={loading || googleOAuth2.loading}
+    >
       <div className="google_login_button">
         <TextIconButton
           ariaLabel={language.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
@@ -91,12 +94,10 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
           onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
           disabled={!isConnected}
         >
-          <p className='google_login_button__text_button__text'>{text}</p>
+          <p className="google_login_button__text_button__text">{text}</p>
         </TextIconButton>
         {!isConnected && (
-          <p className="google_login_button__error">
-            {language.DISCONNECTED}
-          </p>
+          <p className="google_login_button__error">{language.DISCONNECTED}</p>
         )}
       </div>
     </Loader>

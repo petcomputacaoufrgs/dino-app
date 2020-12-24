@@ -14,7 +14,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
     const alert = useAlert()
 
     const userSettings = useUserSettings()
-    
+
     const language = userSettings.service.getLanguage(userSettings)
 
     const [refreshNecessary, setRefreshNecessary] = useState(false)

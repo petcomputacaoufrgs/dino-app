@@ -37,9 +37,9 @@ const NoteContent: React.FC<NoteContentProps> = ({
   const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(
     undefined
   )
-  const [currentNoteView, setCurrentNoteView] = useState<
-    NoteView | undefined
-  >(undefined)
+  const [currentNoteView, setCurrentNoteView] = useState<NoteView | undefined>(
+    undefined
+  )
   const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
   const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState<
     boolean
@@ -53,8 +53,10 @@ const NoteContent: React.FC<NoteContentProps> = ({
   //#region COLUMN
 
   const updateCurrentNoteView = (column: NoteColumnEntity): boolean => {
-    const current = noteView.find(item => item.column.localId === column.localId)
-    
+    const current = noteView.find(
+      (item) => item.column.localId === column.localId
+    )
+
     if (current) {
       setCurrentNoteView(current)
       return true
@@ -81,7 +83,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   const handleEditColumn = (column: NoteColumnEntity) => {
     const success = updateCurrentNoteView(column)
-    
+
     if (success) {
       setNoteColumnDialogOpen(true)
     }
@@ -96,7 +98,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
   }
 
   const handleTitleAlreadyExists = (title: string): boolean => {
-    return column.data.some(item => item.title === title)
+    return column.data.some((item) => item.title === title)
   }
 
   const closeNoteColumnDialog = () => {

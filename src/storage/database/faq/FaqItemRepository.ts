@@ -1,6 +1,6 @@
-import SynchronizableRepository from "../synchronizable/SynchronizableRepository"
+import SynchronizableRepository from '../synchronizable/SynchronizableRepository'
 import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
-import Database from "../Database"
+import Database from '../Database'
 
 export class FaqItemRepositoryImpl extends SynchronizableRepository<
   number,

@@ -71,7 +71,10 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
                 onDelete={handleColumnDelete}
               />
             </div>
-            <Droppable droppableId={noteView.column.title} type={NoteDraggableType.NOTE}>
+            <Droppable
+              droppableId={noteView.column.title}
+              type={NoteDraggableType.NOTE}
+            >
               {(provided) => (
                 <div
                   className="note__note_content__column__draggable__droppable"
@@ -79,7 +82,9 @@ const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
                   {...provided.droppableProps}
                 >
                   <div className="note__note_content__column__draggable__droppable__scroll">
-                    {noteView.notes.map((note, index) => renderCard(note, columnIndex, index))}
+                    {noteView.notes.map((note, index) =>
+                      renderCard(note, columnIndex, index)
+                    )}
                   </div>
                   {provided.placeholder}
                 </div>

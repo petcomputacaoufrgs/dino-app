@@ -1,8 +1,8 @@
-import PhoneService from "../../services/contact/PhoneService"
-import { PhoneRepositoryImpl } from "../../storage/database/contact/PhoneRepository"
-import PhoneModel from "../../types/contact/api/PhoneModel"
-import PhoneEntity from "../../types/contact/database/PhoneEntity"
-import SynchronizableSync from "../synchronizable/SynchronizableSync"
+import PhoneService from '../../services/contact/PhoneService'
+import { PhoneRepositoryImpl } from '../../storage/database/contact/PhoneRepository'
+import PhoneModel from '../../types/contact/api/PhoneModel'
+import PhoneEntity from '../../types/contact/database/PhoneEntity'
+import SynchronizableSync from '../synchronizable/SynchronizableSync'
 
 class PhoneSync extends SynchronizableSync<
   number,

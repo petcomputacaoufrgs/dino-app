@@ -3,7 +3,10 @@ import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import SelectColorThemeProps from './props'
 import { useUserSettings } from '../../../../context/provider/user_settings'
 
-const SelectColorTheme = ({ colorTheme, setColorTheme }: SelectColorThemeProps) => {
+const SelectColorTheme = ({
+  colorTheme,
+  setColorTheme,
+}: SelectColorThemeProps) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
 

@@ -10,7 +10,7 @@ import { useUserSettings } from '../../../../context/provider/user_settings'
 const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   return (
     <div className="drawer__navigation__app_bar">
       <IconButton

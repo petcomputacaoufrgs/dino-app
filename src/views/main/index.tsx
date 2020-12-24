@@ -34,10 +34,12 @@ import DataFontSizeUtils from '../../utils/DataFontSizeUtils'
 const Main = (): JSX.Element => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  const firstSettingsDone = userSettings.service.getFirstSettingsDone(userSettings)
+  const firstSettingsDone = userSettings.service.getFirstSettingsDone(
+    userSettings
+  )
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
-  
+
   const colorThemeName = userSettings.service.getColorTheme(userSettings)
 
   DataThemeUtils.setBodyDataTheme(colorThemeName)
@@ -52,7 +54,7 @@ const Main = (): JSX.Element => {
   useEffect(() => {
     DataFontSizeUtils.setBodyDataFontSize(fontSizeName)
   }, [fontSizeName])
-  
+
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true)
   }
@@ -73,10 +75,7 @@ const Main = (): JSX.Element => {
   const renderMainContent = (): JSX.Element => {
     return (
       <Switch>
-        <PrivateRoute 
-          exact 
-          path={PathConstants.HOME} 
-          component={Home} />
+        <PrivateRoute exact path={PathConstants.HOME} component={Home} />
         <PrivateRoute
           exact
           path={PathConstants.GAMES}
@@ -120,7 +119,7 @@ const Main = (): JSX.Element => {
           path={PathConstants.SETTINGS}
           component={() => (
             <FaqProvider>
-              <Settings/>
+              <Settings />
             </FaqProvider>
           )}
         />
@@ -165,7 +164,7 @@ const Main = (): JSX.Element => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
-      {!firstSettingsDone && <FirstSettingsDialog/>}
+      {!firstSettingsDone && <FirstSettingsDialog />}
     </>
   )
 }

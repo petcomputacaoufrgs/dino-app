@@ -7,7 +7,14 @@ import TransitionSlide from '../../../../components/slide_transition'
 
 const ContactCard = forwardRef(
   (
-    { item, phoneService, dialogOpen, onClose, onEdit, onDelete }: ContactCardProps,
+    {
+      item,
+      phoneService,
+      dialogOpen,
+      onClose,
+      onEdit,
+      onDelete,
+    }: ContactCardProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
     return (

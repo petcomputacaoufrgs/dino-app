@@ -23,7 +23,7 @@ const PhoneFields = ({
 }: PhoneFieldsProps): JSX.Element => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const types = [
     { label: language.CONTACTS_MOBILE_PHONE, id: ContactsConstants.MOBILE },
     {
@@ -37,15 +37,15 @@ const PhoneFields = ({
   ]
 
   const getNumberFormat = () => {
-    return type === ContactsConstants.RESIDENTIAL 
-    ? '(23)4567-2345'
-    : '(89)89898-9898'
+    return type === ContactsConstants.RESIDENTIAL
+      ? '(23)4567-2345'
+      : '(89)89898-9898'
   }
 
   const getNumberMask = () => {
-    return type !== ContactsConstants.PUBLIC_SERVICE 
-    ? strUtils.replaceDigits(getNumberFormat(), '#')
-    : '#'.repeat(Constants.NUMBER_MAX)
+    return type !== ContactsConstants.PUBLIC_SERVICE
+      ? strUtils.replaceDigits(getNumberFormat(), '#')
+      : '#'.repeat(Constants.NUMBER_MAX)
   }
 
   return (

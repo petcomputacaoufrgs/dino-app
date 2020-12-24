@@ -22,23 +22,28 @@ const getContact = (item: ContactView | undefined): ContactEntity => {
     return {
       name: '',
       description: '',
-      color: undefined
+      color: undefined,
     }
   }
 }
 
 const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
-  return item
-    ? item.phones
-    : []
+  return item ? item.phones : []
 }
 
 const ContactFormDialog = React.forwardRef(
   (
-    { dialogOpen, onClose, action, item, items: itens, contactService, phoneService }: ContactFormDialogProps,
+    {
+      dialogOpen,
+      onClose,
+      action,
+      item,
+      items: itens,
+      contactService,
+      phoneService,
+    }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
-    
     const userSettings = useUserSettings()
     const language = userSettings.service.getLanguage(userSettings)
     const [contact, setContact] = useState(getContact(item))
@@ -47,7 +52,7 @@ const ContactFormDialog = React.forwardRef(
     const [invalidName, setInvalidName] = useState(false)
     const [invalidPhone, setInvalidPhone] = useState({
       number: '',
-      text: ''
+      text: '',
     })
 
     useEffect(() => {
@@ -57,7 +62,7 @@ const ContactFormDialog = React.forwardRef(
         setInvalidName(false)
         setInvalidPhone({
           number: '',
-          text: ''
+          text: '',
         })
       }
     }, [dialogOpen, item])
@@ -70,7 +75,9 @@ const ContactFormDialog = React.forwardRef(
 
       function handleTakenNumber(viewWithSamePhone: ContactView) {
         const phone = contactPhones.find((phone) =>
-          viewWithSamePhone.phones.map((phone) => phone.number).includes(phone.number)
+          viewWithSamePhone.phones
+            .map((phone) => phone.number)
+            .includes(phone.number)
         )
         if (phone)
           setInvalidPhone({
@@ -78,9 +85,13 @@ const ContactFormDialog = React.forwardRef(
             text: `${language.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`,
           })
       }
-      
+
       if (validInfo()) {
-        const viewWithSamePhone = phoneService.getContactWithSamePhone(itens, contactPhones, item)
+        const viewWithSamePhone = phoneService.getContactWithSamePhone(
+          itens,
+          contactPhones,
+          item
+        )
 
         if (viewWithSamePhone) {
           handleTakenNumber(viewWithSamePhone)
@@ -107,8 +118,8 @@ const ContactFormDialog = React.forwardRef(
     }
 
     const savePhones = async (contact: ContactEntity) => {
-      const newPhones = contactPhones.filter(phone => phone.number !== '')
-      newPhones.forEach(phone => phone.localContactId = contact.localId)
+      const newPhones = contactPhones.filter((phone) => phone.number !== '')
+      newPhones.forEach((phone) => (phone.localContactId = contact.localId))
       if (newPhones.length > 0) {
         await phoneService.saveAll(newPhones)
       }
@@ -127,14 +138,16 @@ const ContactFormDialog = React.forwardRef(
 
     const handleAddPhone = () => {
       contactPhones.push({
-        number: "",
+        number: '',
         type: ContactsConstants.MOBILE,
       })
       setContactPhones([...contactPhones])
     }
 
     const handleDeletePhone = (number: string) => {
-      const indexPhone = contactPhones.findIndex((phone) => phone.number === number)
+      const indexPhone = contactPhones.findIndex(
+        (phone) => phone.number === number
+      )
       phonesToDelete.push(contactPhones[indexPhone])
       contactPhones.splice(indexPhone, 1)
       setPhonesToDelete([...phonesToDelete])

@@ -95,7 +95,7 @@ class ConnectionService {
         } else {
           this.setDisconnected()
         }
-  
+
         await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
       }
     }

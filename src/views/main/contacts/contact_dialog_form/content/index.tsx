@@ -13,12 +13,11 @@ const ContactFormDialogContent = (
 ): JSX.Element => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const isNumberTaken = (tel: string): boolean =>
     props.helperText.number === tel
 
-  const isNumberInvalid = (tel: string) =>
-    isNumberTaken(tel)
+  const isNumberInvalid = (tel: string) => isNumberTaken(tel)
 
   const isNameInvalid = (name: string) =>
     name.length === Constants.NAME_MAX || props.invalidName

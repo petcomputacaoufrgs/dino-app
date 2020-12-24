@@ -29,8 +29,14 @@ const Home: React.FC<void> = () => {
           </div>
         ))}
       </div>
-      <LinkButton text={language.TERMS_OF_USE} onClick={() => HistoryService.push(PathConstants.TERMS_OF_USE)}/>
-      <LinkButton text={language.PRIVACY_POLICY} onClick={() => HistoryService.push(PathConstants.PRIVACY_POLICY)}/>
+      <LinkButton
+        text={language.TERMS_OF_USE}
+        onClick={() => HistoryService.push(PathConstants.TERMS_OF_USE)}
+      />
+      <LinkButton
+        text={language.PRIVACY_POLICY}
+        onClick={() => HistoryService.push(PathConstants.PRIVACY_POLICY)}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
-import SynchronizableDataLocalIdModel from "../../../synchronizable/api/SynchronizableDataLocalIdModel"
+import SynchronizableDataLocalIdModel from '../../../synchronizable/api/SynchronizableDataLocalIdModel'
 
-export default interface GoogleScopeDataModel extends SynchronizableDataLocalIdModel<number, number> {
-    name: string
+export default interface GoogleScopeDataModel
+  extends SynchronizableDataLocalIdModel<number, number> {
+  name: string
 }

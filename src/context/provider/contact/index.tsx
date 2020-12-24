@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from 'react'
-import ContactService, { ContactServiceImpl } from '../../../services/contact/ContactService'
+import ContactService, {
+  ContactServiceImpl,
+} from '../../../services/contact/ContactService'
 import { ContactRepositoryImpl } from '../../../storage/database/contact/ContactRepository'
 import ContactDataModel from '../../../types/contact/api/ContactDataModel'
 import ContactEntity from '../../../types/contact/database/ContactEntity'
@@ -36,6 +38,6 @@ const ContactProvider: React.FC = ({ children }): JSX.Element =>
     service: ContactService,
   })
 
-  export const useContact = () => useContext(ContactContext)
+export const useContact = () => useContext(ContactContext)
 
-  export default ContactProvider
+export default ContactProvider

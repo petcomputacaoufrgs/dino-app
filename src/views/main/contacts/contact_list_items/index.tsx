@@ -13,35 +13,41 @@ const ContactItems: React.FC<ContactItemsProps> = ({
   items,
   contactService,
   googleContactService,
-  phoneService
+  phoneService,
 }) => {
-  const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(undefined)
-  const [contactToView, setContactToView] = useState<ContactView | undefined>(undefined)
-  const [contactToDelete, setContactToDelete] = useState<ContactView | undefined>(undefined)
+  const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(
+    undefined
+  )
+  const [contactToView, setContactToView] = useState<ContactView | undefined>(
+    undefined
+  )
+  const [contactToDelete, setContactToDelete] = useState<
+    ContactView | undefined
+  >(undefined)
 
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
 
-    const handleOpenCard = (index: number) => {
-      setContactToView(items[index])
-    }
+  const handleOpenCard = (index: number) => {
+    setContactToView(items[index])
+  }
 
-    const handleAcceptDeleteDialog = async () => {
-      setContactToDelete(undefined)
-      if (contactToDelete) {
-        await phoneService.deleteAll(contactToDelete.phones)
-        contactService.delete(contactToDelete.contact)
-      }
+  const handleAcceptDeleteDialog = async () => {
+    setContactToDelete(undefined)
+    if (contactToDelete) {
+      await phoneService.deleteAll(contactToDelete.phones)
+      contactService.delete(contactToDelete.contact)
     }
+  }
 
-    const handleCloseDeleteDialog = () => {
-      setContactToDelete(undefined)
-    }
+  const handleCloseDeleteDialog = () => {
+    setContactToDelete(undefined)
+  }
 
-    return (
+  return (
     <>
       <List className="contacts__list">
-      {items.map((item, index) => (
+        {items.map((item, index) => (
           <ContactItemList
             key={index}
             item={item}
@@ -50,9 +56,9 @@ const ContactItems: React.FC<ContactItemsProps> = ({
             onDelete={setContactToDelete}
             onClick={() => handleOpenCard(index)}
           />
-      ))}
+        ))}
       </List>
-      {contactToView && 
+      {contactToView && (
         <ContactCard
           dialogOpen={contactToView !== undefined}
           onClose={() => setContactToView(undefined)}
@@ -61,8 +67,8 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           onEdit={setContactToEdit}
           onDelete={setContactToDelete}
         />
-      }
-      {contactToEdit && 
+      )}
+      {contactToEdit && (
         <ContactFormDialog
           dialogOpen={contactToEdit !== undefined}
           onClose={() => setContactToEdit(undefined)}
@@ -72,9 +78,9 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           items={items}
           action={Constants.ACTION_EDIT}
         />
-      }
-      {contactToDelete && 
-        <AgreementDialog 
+      )}
+      {contactToDelete && (
+        <AgreementDialog
           open={contactToDelete !== undefined}
           agreeOptionText={language.AGREEMENT_OPTION_TEXT}
           disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
@@ -83,7 +89,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           onAgree={handleAcceptDeleteDialog}
           onDisagree={handleCloseDeleteDialog}
         />
-      }
+      )}
     </>
   )
 }

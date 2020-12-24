@@ -13,7 +13,7 @@ const AddColumn: React.FC<AddColumnProps> = ({
 }) => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  
+
   const maxColumns = columnCount >= NoteConstants.MAX_COLUMNS
 
   return (

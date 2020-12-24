@@ -28,11 +28,11 @@ export default class EN implements LanguageBase {
 
   FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
 
-  FIRST_LOGIN_CHOOSE_TREATMENT = "Select your Treatment"
+  FIRST_LOGIN_CHOOSE_TREATMENT = 'Select your Treatment'
 
-  FIRST_LOGIN_CHOOSE_COLOR_THEME = "Select your Color Theme"
+  FIRST_LOGIN_CHOOSE_COLOR_THEME = 'Select your Color Theme'
 
-  FIRST_LOGIN_CHOOSE_LANGUAGE = "Select your Language"
+  FIRST_LOGIN_CHOOSE_LANGUAGE = 'Select your Language'
 
   LOGIN_BUTTON_TEXT = 'Log in with Google'
 
@@ -75,10 +75,11 @@ export default class EN implements LanguageBase {
 
   DELETE_CONTACT_QUESTION = 'Delete contact?'
 
-  DELETE_CONTACT_OPTION_TEXT = 'This action will permanently delete your contact.'
+  DELETE_CONTACT_OPTION_TEXT =
+    'This action will permanently delete your contact.'
 
   TERMS_OF_USE = 'Terms of Use'
-  
+
   PRIVACY_POLICY = 'Privacy Policy'
 
   MENU_HOME = 'Home'
@@ -233,7 +234,8 @@ export default class EN implements LanguageBase {
 
   SELECT_FAQ_BUTTON = 'Search FAQ'
 
-  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Load essential contacts related to my treatment'
+  SELECT_TREATMENT_LOAD_CONTACT_GRANT =
+    'Load essential contacts related to my treatment'
 
   SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
 
@@ -256,8 +258,8 @@ export default class EN implements LanguageBase {
   PREVIOUS_BUTTON_TEXT = 'Previous'
 
   NEXT_BUTTON_TEXT_LABEL = 'Click to go to the next element'
-  
-  PREVIOUS_BUTTON_TEXT_LABEL =  'Click to return to the previous element'
+
+  PREVIOUS_BUTTON_TEXT_LABEL = 'Click to return to the previous element'
 
   CLOSE_ARIA_LABEL = 'Close'
 
@@ -424,7 +426,7 @@ export default class EN implements LanguageBase {
   FONT_SIZE_SELECTION_TITLE = 'Choose Font Size'
 
   DEFAULT_FONT_SIZE_NAME = 'Default'
-  
+
   LARGE_FONT_SIZE_NAME = 'Large'
 
   LARGER_FONT_SIZE_NAME = 'Larger'

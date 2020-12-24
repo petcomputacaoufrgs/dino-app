@@ -11,10 +11,23 @@ export default interface SynchronizableProviderProps<
   DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
   REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>,
-  SERVICE extends SynchronizableService<ID, LOCAL_ID, DATA_MODEL, ENTITY, REPOSITORY>
+  SERVICE extends SynchronizableService<
+    ID,
+    LOCAL_ID,
+    DATA_MODEL,
+    ENTITY,
+    REPOSITORY
+  >
 > extends React.PropsWithChildren<{}> {
   context: React.Context<
-    SynchronizableContextType<ID, LOCAL_ID, DATA_MODEL, ENTITY, REPOSITORY, SERVICE>
+    SynchronizableContextType<
+      ID,
+      LOCAL_ID,
+      DATA_MODEL,
+      ENTITY,
+      REPOSITORY,
+      SERVICE
+    >
   >
   service: SERVICE
 }

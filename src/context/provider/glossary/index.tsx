@@ -3,7 +3,9 @@ import GlossaryItemDataModel from '../../../types/glossary/api/GlossaryItemDataM
 import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
 import SynchronizableContextType from '../synchronizable/context'
 import SynchronizableProvider from '../synchronizable'
-import GlossaryService, { GlossaryServiceImpl } from '../../../services/glossary/GlossaryService'
+import GlossaryService, {
+  GlossaryServiceImpl,
+} from '../../../services/glossary/GlossaryService'
 import { GlossaryRepositoryImpl } from '../../../storage/database/glossary/GlossaryRepository'
 
 export interface GlossaryContextType

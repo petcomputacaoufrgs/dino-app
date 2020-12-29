@@ -20,6 +20,7 @@ import SynchronizableDataLocalIdModel from '../../types/synchronizable/api/Synch
 import SynchronizableSyncModel from '../../types/synchronizable/api/request/SynchronizableSyncModel'
 import SynchronizableSyncResponseModel from '../../types/synchronizable/api/response/SynchronizableSyncResponseModel'
 import DateUtils from '../../utils/DateUtils'
+import UserDataService from '../events/UserDataService'
 
 /**
  * @description Generic service with basic methods for synchronizable entity,
@@ -36,7 +37,7 @@ export default abstract class SynchronizableService<
   DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>,
   ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
   REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>
-> {
+> implements UserDataService {
   protected webSocketUpdatePath: string
   protected webSocketDeletePath: string
   protected requestMapping: string
@@ -57,18 +58,18 @@ export default abstract class SynchronizableService<
   //#region EVENT METHODS TO OVERRIDE
 
   /**
-   * Override this function to do something before save entity on local database
+   * @description Override this function to do something before save entity on local database
    * @param entity entity that will be saved
    */
   protected async onSaveEntity(entity: ENTITY) {}
 
   /**
-   * Override this function to do something after a success on sync
+   * @description Override this function to do something after a success on sync
    */
   protected async onSyncSuccess() {}
 
   /**
-   * Override this function to do something when a websocket update is received
+   * @description Override this function to do something when a websocket update is received
    * @param model
    */
   protected async onWebSocketUpdate(
@@ -76,10 +77,17 @@ export default abstract class SynchronizableService<
   ) {}
 
   /**
-   * Override this function to do something when a websocket delete is received
+   * @description Override this function to do something when a websocket delete is received
    * @param model
    */
   protected async onWebSocketDelete(model: SynchronizableWSDeleteModel<ID>) {}
+
+  /**
+   * @description Function called on user logout, can be used to clean user data
+   */
+  public async onLogout(): Promise<void> {
+    return this.localClear()
+  }
 
   //#endregion
 
@@ -412,10 +420,6 @@ export default abstract class SynchronizableService<
     return success
   }
 
-  public removeData = async () => {
-    await this.localClear()
-  }
-
   //#endregion
 
   //#region CONTEXT PROVIDER
@@ -590,7 +594,8 @@ export default abstract class SynchronizableService<
       }
 
       try {
-        const response = await request.setBody(requestModel).authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.setBody(requestModel).go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)
@@ -607,7 +612,8 @@ export default abstract class SynchronizableService<
 
     if (request.canGo) {
       try {
-        const response = await request.setBody(data).authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.setBody(data).go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)
@@ -629,7 +635,8 @@ export default abstract class SynchronizableService<
       }
 
       try {
-        const response = await request.setBody(requestModel).authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.setBody(requestModel).go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)
@@ -645,7 +652,8 @@ export default abstract class SynchronizableService<
     const request = await DinoAgentService.get(this.getAllRequestURL())
     if (request.canGo) {
       try {
-        const response = await request.authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)
@@ -672,7 +680,8 @@ export default abstract class SynchronizableService<
       }
 
       try {
-        const response = await request.setBody(requestModel).authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.setBody(requestModel).go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)
@@ -696,7 +705,8 @@ export default abstract class SynchronizableService<
       }
 
       try {
-        const response = await request.setBody(requestModel).authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.setBody(requestModel).go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)
@@ -709,26 +719,25 @@ export default abstract class SynchronizableService<
   protected apiSync = async (
     toSave: Array<DATA_MODEL>,
     toDelete: Array<DATA_MODEL>
-  ): Promise<
-    SynchronizableSyncResponseModel<ID, LOCAL_ID, DATA_MODEL> | undefined
-  > => {
-    const request = await DinoAgentService.put(this.syncRequestURL())
+  ): Promise<SynchronizableSyncResponseModel<ID, LOCAL_ID, DATA_MODEL> | undefined> => {
+    try {
+      const request = await DinoAgentService.put(this.syncRequestURL())
 
-    if (request.canGo) {
-      const requestModel: SynchronizableSyncModel<ID, LOCAL_ID, DATA_MODEL> = {
-        save: toSave,
-        delete: toDelete.map((model) => ({
-          id: model.id,
-          lastUpdate: model.lastUpdate,
-        })),
-      }
+      if (request.canGo) {
+        const requestModel: SynchronizableSyncModel<ID, LOCAL_ID, DATA_MODEL> = {
+          save: toSave,
+          delete: toDelete.map((model) => ({
+            id: model.id,
+            lastUpdate: model.lastUpdate,
+          })),
+        }
 
-      try {
-        const response = await request.setBody(requestModel).authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.setBody(requestModel).go()
         return response.body
-      } catch (e) {
-        LogAppErrorService.logError(e)
       }
+    } catch (e) {
+      LogAppErrorService.logError(e)
     }
 
     return undefined

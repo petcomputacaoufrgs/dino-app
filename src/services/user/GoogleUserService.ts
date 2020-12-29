@@ -11,7 +11,8 @@ class GoogleUserService {
 
     if (request.canGo) {
       try {
-        const response = await request.authenticate().go()
+        const authRequest = await request.authenticate()
+        const response = await authRequest.go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)

@@ -7,7 +7,7 @@ export interface AgentRequestInfo {
 
 export default interface AgentRequest {
   go: () => Promise<Superagent.Response>
-  authenticate: () => AgentRequest
+  authenticate: () => Promise<AgentRequest>
   setBody: (body: string | object) => AgentRequest
   addHeader: (key: string, value: string) => AgentRequest
   canGo: boolean

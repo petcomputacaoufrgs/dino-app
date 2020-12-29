@@ -5,8 +5,9 @@ import LogAppErrorSyncLocalStorage from '../../storage/local_storage/log_app_err
 import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListModel'
 import LogAppErrorRepository from '../../storage/database/log_app_error/LogAppErrorRepository'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
+import UserDataService from '../events/UserDataService'
 
-class LogAppErrorService {
+class LogAppErrorService implements UserDataService {
   shouldSync = (): boolean => {
     return LogAppErrorSyncLocalStorage.getShouldSync()
   }
@@ -18,7 +19,7 @@ class LogAppErrorService {
   logError = (error: Error) => {
     if (error) {
       this.logModel({
-        date: new Date().getTime(),
+        date: new Date(),
         error: error.stack,
         title: error.message,
       } as LogAppErrorModel)
@@ -28,7 +29,7 @@ class LogAppErrorService {
   logModel = async (model: LogAppErrorModel) => {
     if (model.error) {
       if (!model.date) {
-        model.date = new Date().getTime()
+        model.date = new Date()
       }
 
       const request = await DinoAgentService.post(
@@ -37,7 +38,9 @@ class LogAppErrorService {
 
       if (request.canGo) {
         try {
-          await request.authenticate().setBody(model).go()
+          const authRequest = await request.authenticate()
+      
+          await authRequest.setBody(model).go()
         } catch {
           this.saveLocalLog(model)
           this.setShouldSync(true)
@@ -52,7 +55,7 @@ class LogAppErrorService {
   logSyncAPIError = (error: string) => {
     if (error) {
       this.logModel({
-        date: new Date().getTime(),
+        date: new Date(),
         error: error,
         title: 'API error',
       } as LogAppErrorModel)
@@ -62,7 +65,7 @@ class LogAppErrorService {
   logMessage = (message: string, title: string) => {
     if (message) {
       this.logModel({
-        date: new Date().getTime(),
+        date: new Date(),
         error: message,
         title: title,
       } as LogAppErrorModel)
@@ -76,7 +79,8 @@ class LogAppErrorService {
 
     if (request.canGo) {
       try {
-        await request.authenticate().setBody(models).go()
+        const authRequest = await request.authenticate()
+        await authRequest.setBody(models).go()
         this.setShouldSync(false)
         LogAppErrorRepository.deleteAll()
       } catch {
@@ -87,13 +91,19 @@ class LogAppErrorService {
     }
   }
 
-  removeData = () => {
+  onLogout = async () => {
     LogAppErrorSyncLocalStorage.removeUserData()
-    LogAppErrorRepository.deleteAll()
+    return LogAppErrorRepository.deleteAll()
   }
 
   private saveLocalLog = (model: LogAppErrorModel) => {
-    LogAppErrorRepository.put(model)
+    const entity: LogAppErrorEntity = {
+      date: model.date,
+      error: model.error,
+      file: model.file,
+      title: model.title
+    }
+    LogAppErrorRepository.put(entity)
   }
 
   private setShouldSync = (should: boolean) => {

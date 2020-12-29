@@ -8,23 +8,9 @@ import UserRepository, {
 } from '../../storage/database/user/UserRepository'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
-import AuthService from '../auth/AuthService'
-import NoteService from '../note/NoteService'
-import NoteColumnService from '../note/NoteColumnService'
-import GlossaryService from '../glossary/GlossaryService'
-import ContactService from '../contact/ContactService'
-import FaqService from '../faq/FaqService'
-import CalendarService from '../calendar/CalendarService'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
-import PhoneService from '../contact/PhoneService'
-import GoogleContactService from '../contact/GoogleContactService'
-import FaqItemService from '../faq/FaqItemService'
-import UserSettingsService from './UserSettingsService'
-import FaqUserQuestionService from '../faq/FaqUserQuestionService'
-import TreatmentService from '../treatment/TreatmentService'
-import GoogleScopeService from '../auth/google/GoogleScopeService'
 
 export class UserServiceImpl extends SynchronizableService<
   number,
@@ -120,25 +106,6 @@ export class UserServiceImpl extends SynchronizableService<
         }
       }
     }
-  }
-
-  removeUserData() {
-    this.removeData()
-    AuthService.removeUserData()
-    GoogleScopeService.removeData()
-    UserSettingsService.removeData()
-    NoteService.removeData()
-    NoteColumnService.removeData()
-    GlossaryService.removeData()
-    LogAppErrorService.removeData()
-    ContactService.removeData()
-    PhoneService.removeData()
-    GoogleContactService.removeData()
-    FaqService.removeData()
-    FaqItemService.removeData()
-    FaqUserQuestionService.removeData()
-    CalendarService.removeUserData()
-    TreatmentService.removeData()
   }
 
   private donwloadPicture = (pictureURL: string, localId: number) => {

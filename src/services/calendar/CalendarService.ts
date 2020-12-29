@@ -2,8 +2,9 @@ import LanguageBase from '../../constants/languages/LanguageBase'
 import DateUtils from '../../utils/DateUtils'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
 import CalendarEventRepository from '../../storage/database/calendar/CalendarEventRepository'
+import UserDataService from '../events/UserDataService'
 
-class CalendarService {
+class CalendarService implements UserDataService {
   getEventTypeName = (type: number, language: LanguageBase) => {
     switch (type) {
       case 0:
@@ -58,8 +59,8 @@ class CalendarService {
     CalendarEventRepository.putAll(calendarEvents)
   }
 
-  removeUserData = () => {
-    CalendarEventRepository.deleteAll()
+  onLogout = async () => {
+    return CalendarEventRepository.deleteAll()
   }
 }
 

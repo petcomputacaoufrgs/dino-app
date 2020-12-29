@@ -13,12 +13,16 @@ class GoogleOAuth2Service {
     })
   }
 
-  requestLogin = async (forceConsent) => {
+  requestLogin = async (forceConsent, email) => {
     const options = {
       client_id: GoogleSecrets.client_id,
       scope: 'email profile openid',
       response_type: 'code',
       include_granted_scopes: true,
+    }
+
+    if (email) {
+      options.login_hint = email
     }
 
     if (forceConsent) {

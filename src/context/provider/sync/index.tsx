@@ -1,14 +1,17 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import SyncContextType from '../../../types/sync/SyncContextType'
 import SyncStateEnum from '../../../types/sync/SyncStateEnum'
 import SyncContextUpdater from '../../updater/SyncContextUpdater'
 import SyncService from '../../../services/sync/SyncService'
+
+interface SyncContextType {
+  state: SyncStateEnum
+}
 
 const SyncContext = createContext({
   state: SyncStateEnum.SYNCED,
 } as SyncContextType)
 
-const SyncContextProvider: React.FC = (props) => {
+const SyncProvider: React.FC = (props) => {
   const [state, setState] = useState(SyncStateEnum.SYNCED)
 
   useEffect(() => {
@@ -46,4 +49,4 @@ const SyncContextProvider: React.FC = (props) => {
 
 export const useSync = () => useContext(SyncContext)
 
-export default SyncContextProvider
+export default SyncProvider

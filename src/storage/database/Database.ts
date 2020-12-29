@@ -14,11 +14,13 @@ import FaqUserQuestionEntity from '../../types/faq/database/FaqUserQuestionEntit
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
 import GoogleScopeEntity from '../../types/auth/google/database/GoogleScopeEntity'
+import AuthEntity from '../../types/auth/database/AuthEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 2
 
 class Database extends Dexie {
+  auth: Dexie.Table<AuthEntity, number>
   userSettings: Dexie.Table<UserSettingsEntity, number>
   note: Dexie.Table<NoteEntity, number>
   noteColumn: Dexie.Table<NoteColumnEntity, number>
@@ -55,11 +57,13 @@ class Database extends Dexie {
       faqUserQuestion: generateSynchronizableTableString(),
       treatment: generateSynchronizableTableString(),
       googleScope: generateSynchronizableTableString(),
+      auth: '++id',
       logAppError: '++id,title,file,error,date',
       calendarEvent:
         '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
     })
 
+    this.auth = this.table('auth')
     this.userSettings = this.table('userSettings')
     this.user = this.table('user')
     this.glossary = this.table('glossary')

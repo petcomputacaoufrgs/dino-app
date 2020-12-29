@@ -13,7 +13,7 @@ const PrivateRoute = (props: RouteProps): JSX.Element => {
 
   return (
     <>
-      {router.isAuthenticated() ? (
+      {router.isAuthenticated ? (
         <Route {...props} />
       ) : (
         <Redirect

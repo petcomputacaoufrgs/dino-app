@@ -1,8 +1,4 @@
-import GoogleScopeDataModel from './GoogleScopeDataModel'
+import SynchronizableGenericDataResponseModel from '../../../synchronizable/api/response/SynchronizableGenericDataResponseModel';
+import GoogleRefreshAuthResponseDataModel from './GoogleRefreshAuthResponseDataModel';
 
-export default interface GoogleRefreshAuthResponseModel {
-  googleAccessToken: string
-  googleExpiresDate: number
-  scopes: GoogleScopeDataModel[]
-  declinedContatsGrant: boolean
-}
+export default interface GoogleRefreshAuthResponseModel extends SynchronizableGenericDataResponseModel<GoogleRefreshAuthResponseDataModel> {}

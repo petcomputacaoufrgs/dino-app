@@ -45,14 +45,16 @@ class WebSocketConnector {
   private delayTimeout: NodeJS.Timeout | undefined
 
   connect = async (): Promise<boolean> => {
-    if (AuthService.isAuthenticated()) {
+    const isAuthenticated = await AuthService.isAuthenticated()
+
+    if (isAuthenticated) {
       try {
         const response = await AuthService.requestWebSocketAuthToken()
         if (response) {
           const baseUrl = this.getSocketBaseURL(response.webSocketToken)
           this.socket = new SockJS(baseUrl)
           this.stompClient = Stomp.over(this.socket)
-          //this.muteConnectionLogs()
+          this.muteConnectionLogs()
           this.stompClient.connect({}, this.subscribe)
           this.socket.onclose = () => {
             this.handleWebSocketClosed()
@@ -85,7 +87,7 @@ class WebSocketConnector {
 
   private handleWebSocketError = () => {
     LogAppErrorService.logModel({
-      date: new Date().getTime(),
+      date: new Date(),
       error: WebSocketConstants.ERROR_MESSAGE,
       title: WebSocketConstants.ERROR_TITLE,
       file: '',

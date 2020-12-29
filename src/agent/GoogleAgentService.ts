@@ -2,65 +2,36 @@ import Superagent from 'superagent'
 import AuthService from '../services/auth/AuthService'
 import GoogleAPIHeaderConstants from '../constants/google/GoogleAPIHeaderConstants'
 import BaseAgent from './BaseAgent'
-import sleep from '../utils/SleepUtils'
+import AuthEntity from '../types/auth/database/AuthEntity'
 
-const TIME_MARGIN_OF_ERROR_IN_MS = 300000
-const TIME_TO_AWAIT_FOR_REFRESHED_TOKEN = 500
-
-class GoogleAgentService extends BaseAgent {
-  protected filterBeforeCreate = async () => {
-    const success = this.updateGoogleAccessTokenIfNecessary()
-
-    return success
+class GoogleAgentService extends BaseAgent<AuthEntity> {
+  async getAuth(): Promise<AuthEntity | undefined> {
+    return AuthService.getAuth()
   }
 
-  protected addAuth = (
-    request: Superagent.SuperAgentRequest
-  ): Superagent.SuperAgentRequest => {
-    const token = this.getGoogleAccessToken()
+  async refreshAuth(): Promise<AuthEntity | undefined> {
+    return AuthService.refreshGoogleAuth()
+  }
 
-    request.set(GoogleAPIHeaderConstants.AUTHORIZATION, `Bearer ${token}`)
+  isAuthenticated(auth: AuthEntity): boolean {
+    return auth !== undefined && Boolean(auth.googleToken)
+  }
+
+  getTokenExpiresDate(auth: AuthEntity): Date | undefined {
+    return  auth ? auth.googleExpiresDate : undefined
+  }
+
+  protected addAuth(
+    request: Superagent.SuperAgentRequest,
+    auth: AuthEntity 
+  ): Superagent.SuperAgentRequest {
+    const token = auth.googleToken
+
+    if (token) {
+      request.set(GoogleAPIHeaderConstants.AUTHORIZATION, `Bearer ${token}`)
+    }
 
     return request
-  }
-
-  private getGoogleAccessToken = (): string | null =>
-    AuthService.getGoogleAccessToken()
-
-  private updateGoogleAccessTokenIfNecessary = async (): Promise<boolean> => {
-    const expiresDate = AuthService.getGoogleExpiresDate()
-
-    if (expiresDate) {
-      if (this.needsUpdateToken(expiresDate)) {
-        return this.awaitForRefreshedToken()
-      } else {
-        return this.refreshAuthToken()
-      }
-    }
-
-    return false
-  }
-
-  private awaitForRefreshedToken = async (): Promise<boolean> => {
-    while (AuthService.isRefreshingGoogleAccessToken()) {
-      await sleep(TIME_TO_AWAIT_FOR_REFRESHED_TOKEN)
-    }
-
-    const success = AuthService.successRefreshingGoogleAccessToken()
-
-    return success
-  }
-
-  private refreshAuthToken = async (): Promise<boolean> => {
-    return AuthService.refreshGoogleAccessToken()
-  }
-
-  private needsUpdateToken = (expiresDate: number): boolean => {
-    const expiresDateWithMargin = expiresDate - TIME_MARGIN_OF_ERROR_IN_MS
-
-    const nowInMS = new Date().getTime()
-
-    return expiresDateWithMargin <= nowInMS
   }
 }
 

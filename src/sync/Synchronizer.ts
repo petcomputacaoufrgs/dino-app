@@ -34,7 +34,9 @@ class Synchronizer {
   ]
 
   sync = async (onlyReceive?: boolean) => {
-    if (AuthService.isAuthenticated()) {
+    const isAuthenticated = await AuthService.isAuthenticated()
+
+    if (isAuthenticated) {
       SyncService.setSynchronizing()
       await this.syncGroupsIndependently(onlyReceive)
       if (ConnectionService.isConnected()) {

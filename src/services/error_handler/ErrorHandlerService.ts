@@ -1,4 +1,3 @@
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import EventService from '../events/EventService'
 import AuthService from '../auth/AuthService'
@@ -8,22 +7,23 @@ class ErrorHandlerService {
     window.onerror = this.log
   }
 
-  log = (
+  log = async (
     event: Event | string,
     source?: string,
     lineno?: number,
     colno?: number,
     error?: Error
   ) => {
-    if (error && AuthService.isAuthenticated()) {
-      LogAppErrorService.logModel({
+    const isAuthenticated = await AuthService.isAuthenticated()
+    if (error && error.stack && isAuthenticated) {
+      const errorModel: LogAppErrorModel = {
         error: error.stack,
         file: source,
-        title: event && typeof event === 'string' ? event : null,
-        date: new Date().getTime(),
-      } as LogAppErrorModel)
+        title: event && typeof event === 'string' ? event : undefined,
+        date: new Date(),
+      }
 
-      EventService.whenError()
+      EventService.whenError(errorModel)
     }
 
     return process.env.NODE_ENV === 'production' ? true : true

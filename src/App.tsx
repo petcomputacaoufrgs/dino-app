@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import AuthService from './services/auth/AuthService'
 import Login from './views/login'
 import Main from './views/main'
 import PrivateRouterContextProvider from './context/provider/private_router'
@@ -19,22 +18,20 @@ import TreatmentProvider from './context/provider/treatment'
 import GoogleScopeProvider from './context/provider/google_scope'
 import DataThemeUtils from './utils/DataThemeUtils'
 import UserSettingsService from './services/user/UserSettingsService'
+import { useAuth } from './context/provider/auth/index'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
 
 const App = (): JSX.Element => {
-  const [firstLoad, setFirstLoad] = useState(true)
+  const auth = useAuth()
   const [showLoadScreen, setShowLoadScreen] = useState(false)
 
   DataThemeUtils.setBodyDataTheme(UserSettingsService.getSystemColorThemeName())
 
   useEffect(() => {
-    if (firstLoad) {
-      ViewportService.maximizeViewport()
-      setFirstLoad(false)
-    }
-  }, [firstLoad])
+    ViewportService.maximizeViewport()
+  }, [])
 
   useEffect(() => {
     if (showLoadScreen) {
@@ -54,7 +51,7 @@ const App = (): JSX.Element => {
     <PrivateRouterContextProvider
       loginPath={PathConstants.LOGIN}
       homePath={PathConstants.HOME}
-      isAuthenticated={AuthService.isAuthenticated}
+      isAuthenticated={auth.isAuthenticated}
       browserHistory={HistoryService}
     >
       <Switch>
@@ -83,7 +80,7 @@ const App = (): JSX.Element => {
   const renderLoad = (): JSX.Element => <Load />
 
   return (
-    <div className="app">{showLoadScreen ? renderLoad() : renderApp()}</div>
+    <div className="app">{(showLoadScreen || auth.loading) ? renderLoad() : renderApp()}</div>
   )
 }
 

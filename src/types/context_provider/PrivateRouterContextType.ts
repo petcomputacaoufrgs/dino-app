@@ -5,7 +5,7 @@ export default interface PrivateRouterContextType<S = LocationState> {
 
   homePath: string
 
-  isAuthenticated: () => boolean
+  isAuthenticated: boolean
 
   browserHistory?: History<S>
 }

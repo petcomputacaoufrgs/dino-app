@@ -1,13 +1,19 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import AlertProps from '../../../components/alert/props'
 import Alert from '../../../components/alert'
-import AlertContextType from '../../../types/context_provider/AlertContextType'
 
 const ALERT_DURATION = 4000
 
 const VERIFY_DELAY = 50
 
 const AlertList = [] as AlertProps[]
+
+interface AlertContextType {
+  showSuccessAlert: (message: string) => void
+  showWarningAlert: (message: string) => void
+  showErrorAlert: (message: string) => void
+  showInfoAlert: (message: string) => void
+}
 
 const AddAlert = (
   message: string,
@@ -30,7 +36,7 @@ export const AlertControl: AlertContextType = {
   showErrorAlert: (message: string) => AddAlert(message, 'error'),
 }
 
-const AlertContextProvider: React.FC = (props) => {
+const AlertProvider: React.FC = (props) => {
   const [alert, setAlert] = useState(undefined as AlertProps | undefined)
 
   useEffect(() => {
@@ -79,4 +85,4 @@ const AlertContextProvider: React.FC = (props) => {
 
 export const useAlert = () => useContext(AlertContext)
 
-export default AlertContextProvider
+export default AlertProvider

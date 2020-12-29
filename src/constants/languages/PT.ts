@@ -51,7 +51,7 @@ export default class PT implements LanguageBase {
   LOGIN_CANCELED = 'Login cancelado.'
 
   LOGIN_REFRESH_NECESSARY =
-    'Ocorreu um erro. Precisamos que se autentique novamente, por favor.'
+    'Precisamos que se autentique novamente, por favor.'
 
   AVATAR_ALT = 'Imagem de perfil do usuário com as bordas arredondadas.'
 

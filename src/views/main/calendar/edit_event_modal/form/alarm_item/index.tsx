@@ -25,7 +25,7 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
         return alarm.time === 1 ? language.DAYS : language.DAYS
       default:
         LogAppErrorService.logModel({
-          date: new Date().getTime(),
+          date: new Date(),
           error: 'Invalid alarm type saved: ' + alarm.type,
           title: 'Event Alarm Type',
           file: 'AlarmItem',

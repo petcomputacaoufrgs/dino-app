@@ -8,8 +8,8 @@ import ConnectionService from '../../../services/connection/ConnectionService'
 import { useAlert } from '../../../context/provider/alert'
 import TextIconButton from '../icon_text_button'
 import { useUserSettings } from '../../../context/provider/user_settings'
-import './styles.css'
 import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2/index'
+import './styles.css'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   onCancel,
@@ -24,6 +24,8 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   const googleOAuth2 = useGoogleOAuth2()
 
   const [loading, setLoading] = useState(false)
+  const [refreshRequired, setRefreshRequired] = useState(false)
+  const [refreshEmail, setRefreshEmail] = useState<string | undefined>(undefined)
 
   const [isConnected, setIsConnected] = useState(
     ConnectionService.isConnected()
@@ -46,17 +48,18 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   const handleLoginButtonClick = async () => {
     setLoading(true)
 
-    const connected = await ConnectionService.isDinoConnected()
+    const isDinoConnected = await ConnectionService.isDinoConnected()
 
-    if (!connected) {
+    if (!isDinoConnected) {
       setLoading(false)
       setIsConnected(false)
       return
     }
 
-    const refreshTokenRequired = AuthService.isRefreshRequired()
+    const [status, email] = await AuthService.requestGoogleLogin(refreshRequired, refreshEmail)
 
-    const status = await AuthService.requestGoogleLogin(refreshTokenRequired)
+    setRefreshEmail(undefined)
+    setRefreshRequired(false)
 
     if (status === LoginStatusConstants.SUCCESS) {
       return
@@ -69,6 +72,8 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
     } else if (status === LoginStatusConstants.EXTERNAL_SERVICE_ERROR) {
       onGoogleFail && onGoogleFail()
     } else if (status === LoginStatusConstants.REFRESH_TOKEN_NECESSARY) {
+      setRefreshRequired(true)
+      setRefreshEmail(email)
       onRefreshTokenLostError && onRefreshTokenLostError()
     } else if (status === LoginStatusConstants.DISCONNECTED) {
       showOfflineMessage()

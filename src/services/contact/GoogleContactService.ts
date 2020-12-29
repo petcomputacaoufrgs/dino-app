@@ -125,7 +125,9 @@ export class GoogleContactServiceImpl extends SynchronizableService<
     )
 
     if (request.canGo) {
-      const response = await request.authenticate().setBody(model).go()
+      const authRequest = await request.authenticate()
+      
+      const response = await authRequest.setBody(model).go()
 
       return response.body
     }
@@ -140,7 +142,10 @@ export class GoogleContactServiceImpl extends SynchronizableService<
       GooglePeopleAPIURLConstants.GET_CONTACT(resourceName)
     )
     if (request.canGo) {
-      const response = await request.authenticate().go()
+      const authRequest = await request.authenticate()
+      
+      const response = await authRequest.go()
+
       return response.body
     }
 
@@ -158,7 +163,10 @@ export class GoogleContactServiceImpl extends SynchronizableService<
     if (request.canGo) {
       model.resourceName = resourceName
       model.etag = etag
-      const response = await request.authenticate().setBody(model).go()
+      const authRequest = await request.authenticate()
+      
+      const response = await authRequest.setBody(model).go()
+
       return response.body
     }
 
@@ -173,7 +181,9 @@ export class GoogleContactServiceImpl extends SynchronizableService<
     )
 
     if (request.canGo) {
-      await request.authenticate().go()
+      const authRequest = await request.authenticate()
+      
+      await authRequest.go()
       return true
     }
 

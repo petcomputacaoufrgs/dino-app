@@ -48,7 +48,7 @@ export default class EN implements LanguageBase {
   LOGIN_CANCELED = 'Login canceled.'
 
   LOGIN_REFRESH_NECESSARY =
-    'Login with error. We need you to authenticate again, please.'
+    'Try to login again, please.'
 
   AVATAR_ALT = "User's profile image with rounded edges."
 

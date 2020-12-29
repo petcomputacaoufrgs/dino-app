@@ -20,16 +20,14 @@ const LoginRoute = (props: RouteProps): JSX.Element => {
     }
 
     if (router) {
-      if (router.isAuthenticated()) {
+      if (router.isAuthenticated) {
         goToHome()
       }
-    } else {
-      throw Error('Todo LoginRoute deve estar dentro de um PrivateRouter.')
     }
   }, [router, location.pathname])
 
   const renderRoute = (): JSX.Element => {
-    if (!router.isAuthenticated()) {
+    if (!router.isAuthenticated) {
       return <Route {...props} />
     } else {
       return <></>

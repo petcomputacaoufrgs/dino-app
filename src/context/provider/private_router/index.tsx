@@ -9,7 +9,7 @@ import PrivateRouterContextType from '../../../types/context_provider/PrivateRou
 const PrivateRouterContext = createContext({
   homePath: '',
   loginPath: '',
-  isAuthenticated: () => false,
+  isAuthenticated: false,
 } as PrivateRouterContextType)
 
 /**

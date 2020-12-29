@@ -8,9 +8,9 @@ import APIRequestMappingConstants from '../../../constants/api/APIRequestMapping
 import APIWebSocketDestConstants from '../../../constants/api/APIWebSocketDestConstants'
 import SynchronizableWSUpdateModel from '../../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
-import AuthService from '../AuthService'
 import { GoogleScopeContextType } from '../../../context/provider/google_scope'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
+import GoogleAgentService from '../../../agent/GoogleAgentService'
 
 export class GoogleScopeServiceImpl extends SynchronizableService<
   number,
@@ -42,13 +42,13 @@ export class GoogleScopeServiceImpl extends SynchronizableService<
   protected async onWebSocketUpdate(
     model: SynchronizableWSUpdateModel<number, GoogleScopeDataModel>
   ) {
-    AuthService.refreshGoogleAccessToken()
+    GoogleAgentService.refreshAuth()
   }
 
   protected async onWebSocketDelete(
     model: SynchronizableWSDeleteModel<number>
   ) {
-    AuthService.refreshGoogleAccessToken()
+    GoogleAgentService.refreshAuth()
   }
 
   public hasContactGrant = (context: GoogleScopeContextType): boolean => {

@@ -58,12 +58,6 @@ export default abstract class SynchronizableService<
   //#region EVENT METHODS TO OVERRIDE
 
   /**
-   * @description Override this function to do something before save entity on local database
-   * @param entity entity that will be saved
-   */
-  protected async onSaveEntity(entity: ENTITY) {}
-
-  /**
    * @description Override this function to do something before save entity on API
    * @param entity entity that will be saved
    */
@@ -74,11 +68,6 @@ export default abstract class SynchronizableService<
    * @param entity entity that will be saved
    */
   protected async onDeleteOnAPI(entity: ENTITY) {}
-
-  /**
-   * @description Override this function to do something after a success on sync
-   */
-  protected async onSyncSuccess() {}
 
   /**
    * @description Override this function to do something when a websocket update is received
@@ -115,10 +104,6 @@ export default abstract class SynchronizableService<
    * @param entity local entity
    */
   abstract convertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined>
-
-  protected async onSaveEntities(entities: Array<ENTITY>) {
-    await Promise.all(entities.map((entity) => this.onSaveEntity(entity)))
-  }
 
   protected async onSaveAllOnAPI(entities: Array<ENTITY>) {
     await Promise.all(entities.map((entity) => this.onSaveOnAPI(entity)))
@@ -252,8 +237,6 @@ export default abstract class SynchronizableService<
           count++
         }
 
-        this.onSaveEntity(entity)
-
         return entity
       })
 
@@ -356,7 +339,6 @@ export default abstract class SynchronizableService<
     if (success && response) {
       const models = response.data
       const newEntities = await this.internalConvertModelsToEntities(models)
-      this.onSaveEntities(newEntities)
       await this.localSaveAll(newEntities)
     } else {
       await this.localSaveAll(entities)
@@ -442,13 +424,7 @@ export default abstract class SynchronizableService<
   }
 
   sync = async (): Promise<boolean> => {
-    const success = await this.doSync()
-
-    if (success) {
-      this.onSyncSuccess()
-    }
-
-    return success
+    return await this.doSync()
   }
 
   //#endregion
@@ -596,8 +572,6 @@ export default abstract class SynchronizableService<
 
   async localClearAndSaveAllFromModels(models: DATA_MODEL[]) {
     const entities = await this.internalConvertModelsToEntities(models)
-
-    this.onSaveEntities(entities)
 
     await this.localClear()
 

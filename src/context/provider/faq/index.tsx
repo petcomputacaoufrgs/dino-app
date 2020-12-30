@@ -22,7 +22,7 @@ const FaqContext = createContext<FaqContextType>({
   data: [],
 })
 
-const FaqProvider: React.FC = ({ children }): JSX.Element =>
+const FaqProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

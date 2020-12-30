@@ -24,7 +24,7 @@ const ContactContext = createContext<ContactContextType>({
   data: [],
 })
 
-const ContactProvider: React.FC = ({ children }): JSX.Element =>
+const ContactProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

@@ -24,7 +24,7 @@ const FaqUserQuestionContext = createContext<FaqUserQuestionContextType>({
   data: [],
 })
 
-const FaqUserQuestionProvider: React.FC = ({ children }): JSX.Element =>
+const FaqUserQuestionProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

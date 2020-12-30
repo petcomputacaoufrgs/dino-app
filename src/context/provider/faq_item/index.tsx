@@ -24,7 +24,7 @@ const FaqItemContext = createContext<FaqItemContextType>({
   data: [],
 })
 
-const FaqItemProvider: React.FC = ({ children }): JSX.Element =>
+const FaqItemProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

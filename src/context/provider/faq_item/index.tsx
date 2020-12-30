@@ -8,7 +8,7 @@ import FaqItemService, {
   FaqItemServiceImpl,
 } from '../../../services/faq/FaqItemService'
 
-export interface FaqItemContextType
+interface FaqItemContextType
   extends SynchronizableContextType<
     number,
     number,

@@ -8,7 +8,7 @@ import ContactEntity from '../../../types/contact/database/ContactEntity'
 import SynchronizableProvider from '../synchronizable'
 import SynchronizableContextType from '../synchronizable/context'
 
-export interface ContactContextType
+interface ContactContextType
   extends SynchronizableContextType<
     number,
     number,

@@ -8,7 +8,7 @@ import GlossaryService, {
 } from '../../../services/glossary/GlossaryService'
 import { GlossaryRepositoryImpl } from '../../../storage/database/glossary/GlossaryRepository'
 
-export interface GlossaryContextType
+interface GlossaryContextType
   extends SynchronizableContextType<
     number,
     number,

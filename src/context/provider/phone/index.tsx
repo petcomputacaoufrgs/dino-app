@@ -8,7 +8,7 @@ import PhoneEntity from '../../../types/contact/database/PhoneEntity'
 import SynchronizableProvider from '../synchronizable'
 import SynchronizableContextType from '../synchronizable/context'
 
-export interface PhoneContextType
+interface PhoneContextType
   extends SynchronizableContextType<
     number,
     number,

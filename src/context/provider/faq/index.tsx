@@ -6,7 +6,7 @@ import { FaqRepositoryImpl } from '../../../storage/database/faq/FaqRepository'
 import FaqService, { FaqServiceImpl } from '../../../services/faq/FaqService'
 import SynchronizableProvider from '../synchronizable'
 
-export interface FaqContextType
+interface FaqContextType
   extends SynchronizableContextType<
     number,
     number,

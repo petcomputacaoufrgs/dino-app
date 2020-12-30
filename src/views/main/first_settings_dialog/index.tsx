@@ -16,6 +16,7 @@ import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import AuthService from '../../../services/auth/AuthService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import './styles.css'
+import TransitionSlide from '../../../components/slide_transition'
 
 const FirstSettingsDialog: React.FC = () => {
   const userSettings = useUserSettings()
@@ -315,12 +316,15 @@ const FirstSettingsDialog: React.FC = () => {
     )
   }
 
+  console.log("teste")
   return (
-    <>
+    <div className="first-settings">
       <Dialog
         className="first-settings__dialog"
         aria-labelledby={language.FIRST_LOGIN_DIALOG_LABEL}
         open={dialogOpen}
+        key={currentSettings ? currentSettings.settingsStep : 0}
+        TransitionComponent={TransitionSlide}
         disableEscapeKeyDown
         disableBackdropClick
         fullWidth
@@ -337,7 +341,7 @@ const FirstSettingsDialog: React.FC = () => {
           />
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   )
 }
 

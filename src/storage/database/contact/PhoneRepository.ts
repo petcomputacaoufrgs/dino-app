@@ -7,9 +7,13 @@ export class PhoneRepositoryImpl extends SynchronizableRepository<
   number,
   PhoneEntity
 > {
+  constructor() {
+    super(Database.phone)
+  }
+  
   async getAllByContactLocalId(localContactId: number): Promise<PhoneEntity[]> {
     return this.table.where('localContactId').equals(localContactId).toArray()
   }
 }
 
-export default new PhoneRepositoryImpl(Database.phone)
+export default new PhoneRepositoryImpl()

@@ -6,6 +6,10 @@ export class FaqUserQuestionRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   FaqUserQuestionEntity
-> {}
+> {
+  constructor() {
+    super(Database.faqUserQuestion)
+  }
+}
 
-export default new FaqUserQuestionRepositoryImpl(Database.faqUserQuestion)
+export default new FaqUserQuestionRepositoryImpl()

@@ -6,6 +6,10 @@ export class GoogleContactRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   GoogleContactEntity
-> {}
+> {
+  constructor() {
+    super(Database.googleContact)
+  }
+}
 
-export default new GoogleContactRepositoryImpl(Database.googleContact)
+export default new GoogleContactRepositoryImpl()

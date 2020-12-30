@@ -6,6 +6,10 @@ export class TreatmentRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   TreatmentEntity
-> {}
+> {
+  constructor() {
+    super(Database.treatment)
+  }
+}
 
-export default new TreatmentRepositoryImpl(Database.treatment)
+export default new TreatmentRepositoryImpl()

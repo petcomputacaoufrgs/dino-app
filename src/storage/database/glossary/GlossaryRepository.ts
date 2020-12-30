@@ -6,6 +6,10 @@ export class GlossaryRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   GlossaryItemEntity
-> {}
+> {
+  constructor() {
+    super(Database.glossary)
+  }
+}
 
-export default new GlossaryRepositoryImpl(Database.glossary)
+export default new GlossaryRepositoryImpl()

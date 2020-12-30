@@ -7,6 +7,10 @@ export class GoogleScopeRepositoryImpl extends SynchronizableRepository<
   number,
   GoogleScopeEntity
 > {
+  constructor() {
+    super(Database.googleScope)
+  }
+
   async getByName(
     name: string
   ): Promise<GoogleScopeEntity | undefined> {
@@ -14,4 +18,4 @@ export class GoogleScopeRepositoryImpl extends SynchronizableRepository<
   }
 }
 
-export default new GoogleScopeRepositoryImpl(Database.googleScope)
+export default new GoogleScopeRepositoryImpl()

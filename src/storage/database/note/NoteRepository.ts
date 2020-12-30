@@ -8,6 +8,10 @@ export class NoteRepositoryImpl extends SynchronizableRepository<
   number,
   NoteEntity
 > {
+  constructor() {
+    super(Database.note)
+  }
+  
   getAllByColumn = async (column: NoteColumnEntity): Promise<NoteEntity[]> => {
     if (column.localId !== undefined) {
       return this.table.where('localColumnId').equals(column.localId).toArray()
@@ -17,4 +21,4 @@ export class NoteRepositoryImpl extends SynchronizableRepository<
   }
 }
 
-export default new NoteRepositoryImpl(Database.note)
+export default new NoteRepositoryImpl()

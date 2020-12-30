@@ -6,6 +6,10 @@ export class ContactRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   ContactEntity
-> {}
+> {
+  constructor() {
+    super(Database.contact)
+  }
+}
 
-export default new ContactRepositoryImpl(Database.contact)
+export default new ContactRepositoryImpl()

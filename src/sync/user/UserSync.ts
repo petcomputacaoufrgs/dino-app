@@ -10,6 +10,10 @@ class UserSync extends SynchronizableSync<
   UserDataModel,
   UserEntity,
   UserRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(UserService)
+  }
+}
 
-export default new UserSync(UserService)
+export default new UserSync()

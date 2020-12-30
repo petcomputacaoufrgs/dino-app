@@ -10,6 +10,10 @@ class FaqUserQuestionSync extends SynchronizableSync<
   FaqUserQuestionDataModel,
   FaqUserQuestionEntity,
   FaqUserQuestionRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(FaqUserQuestionService)
+  }
+}
 
-export default new FaqUserQuestionSync(FaqUserQuestionService)
+export default new FaqUserQuestionSync()

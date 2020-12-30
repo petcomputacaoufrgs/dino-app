@@ -10,6 +10,10 @@ class TreatmentSync extends SynchronizableSync<
   TreatmentDataModel,
   TreatmentEntity,
   TreatmentRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(TreatmentService)
+  }
+}
 
-export default new TreatmentSync(TreatmentService)
+export default new TreatmentSync()

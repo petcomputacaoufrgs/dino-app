@@ -10,6 +10,10 @@ class PhoneSync extends SynchronizableSync<
   PhoneDataModel,
   PhoneEntity,
   PhoneRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(PhoneService)
+  }
+}
 
-export default new PhoneSync(PhoneService)
+export default new PhoneSync()

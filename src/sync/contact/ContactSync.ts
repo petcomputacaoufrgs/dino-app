@@ -10,6 +10,10 @@ class ContactSync extends SynchronizableSync<
   ContactDataModel,
   ContactEntity,
   ContactRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(ContactService)
+  }
+} 
 
-export default new ContactSync(ContactService)
+export default new ContactSync()

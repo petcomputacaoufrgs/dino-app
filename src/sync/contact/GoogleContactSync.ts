@@ -10,6 +10,10 @@ class GoogleContactSync extends SynchronizableSync<
   GoogleContactModel,
   GoogleContactEntity,
   GoogleContactRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(GoogleContactService)
+  }
+}
 
-export default new GoogleContactSync(GoogleContactService)
+export default new GoogleContactSync()

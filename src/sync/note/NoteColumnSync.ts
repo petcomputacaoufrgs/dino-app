@@ -10,6 +10,10 @@ class NoteColumnSync extends SynchronizableSync<
   NoteColumnDataModel,
   NoteColumnEntity,
   NoteColumnRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(NoteColumnService)
+  }
+}
 
-export default new NoteColumnSync(NoteColumnService)
+export default new NoteColumnSync()

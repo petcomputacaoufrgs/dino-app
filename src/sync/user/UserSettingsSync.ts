@@ -10,6 +10,10 @@ class UserSettingsSync extends SynchronizableSync<
   UserSettingsDataModel,
   UserSettingsEntity,
   UserSettingsRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(UserSettingsService)
+  }
+}
 
-export default new UserSettingsSync(UserSettingsService)
+export default new UserSettingsSync()

@@ -56,21 +56,13 @@ const FirstSettingsDialog: React.FC = () => {
   }, [treatment, userSettings])
 
   useEffect(() => {
+    const fontSizeCode = userSettings.service.getFontSizeCode(userSettings)
+    const colorThemeCode = userSettings.service.getColorThemeCode(userSettings)
     const language = userSettings.service.getLanguage(userSettings)
 
-    setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
-  }, [userSettings])
-
-  useEffect(() => {
-    const fontSizeCode = userSettings.service.getFontSizeCode(userSettings)
-
     setSelectedFontSize(fontSizeCode)
-  }, [userSettings])
-
-  useEffect(() => {
-    const colorThemeCode = userSettings.service.getColorThemeCode(userSettings)
-
     setSelectedColorTheme(colorThemeCode)
+    setSelectedLanguage(language.NAVIGATOR_LANGUAGE_CODE)
   }, [userSettings])
 
   useEffect(() => {

@@ -58,7 +58,7 @@ export class FaqItemServiceImpl extends SynchronizableService<
   ): FaqItemEntity[] {
     return faqItem.filter(
       (item) =>
-        item.localFaqId === faq.id &&
+        item.localFaqId === faq.localId &&
         StringUtils.contains(item.question, searchTerm)
     )
   }

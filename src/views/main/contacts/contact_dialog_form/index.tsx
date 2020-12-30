@@ -13,6 +13,7 @@ import StringUtils from '../../../../utils/StringUtils'
 import ContactView from '../../../../types/contact/view/ContactView'
 import Utils from '../../../../utils/Utils'
 import { useUserSettings } from '../../../../context/provider/user_settings'
+import GoogleContactEntity from '../../../../types/contact/database/GoogleContactEntity'
 import './styles.css'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
@@ -38,9 +39,10 @@ const ContactFormDialog = React.forwardRef(
       onClose,
       action,
       item,
-      items: itens,
+      items,
       contactService,
       phoneService,
+      googleContactService
     }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
@@ -88,7 +90,7 @@ const ContactFormDialog = React.forwardRef(
 
       if (validInfo()) {
         const viewWithSamePhone = phoneService.getContactWithSamePhone(
-          itens,
+          items,
           contactPhones,
           item
         )
@@ -126,6 +128,20 @@ const ContactFormDialog = React.forwardRef(
 
       if (phonesToDelete.length > 0) {
         await phoneService.deleteAll(phonesToDelete)
+      }
+
+      await saveGoogleContact(contact)
+    }
+
+    const saveGoogleContact = async (contact: ContactEntity) => {
+      if (item && item.googleContact) {
+        await googleContactService.save(item.googleContact)
+      } else {
+        const googleContact: GoogleContactEntity = {
+          localContactId: contact.localId
+        }
+
+        await googleContactService.save(googleContact)
       }
     }
 

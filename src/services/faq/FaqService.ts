@@ -52,7 +52,7 @@ export class FaqServiceImpl extends SynchronizableService<
     }
   }
 
-  public getFaqViewByFilter(
+  getFaqViewByFilter(
     treatment: TreatmentEntity | undefined,
     faqs: FaqEntity[],
     faqItem: FaqItemEntity[],
@@ -76,7 +76,7 @@ export class FaqServiceImpl extends SynchronizableService<
     return undefined
   }
 
-  public getCurrentFaq(
+  getCurrentFaq(
     treatment: TreatmentEntity | undefined,
     faqs: FaqEntity[]
   ): FaqEntity | undefined {

@@ -51,7 +51,7 @@ export class GoogleScopeServiceImpl extends SynchronizableService<
     GoogleAgentService.refreshAuth()
   }
 
-  public hasContactGrant = (context: GoogleScopeContextType): boolean => {
+  hasContactGrant = (context: GoogleScopeContextType): boolean => {
     if (context && context.data) {
       return context.data.some(
         (scope) => scope.name === GoogleScope.SCOPE_CONTACT
@@ -59,6 +59,10 @@ export class GoogleScopeServiceImpl extends SynchronizableService<
     }
 
     return false
+  }
+
+  findContactGrant = async (): Promise<GoogleScopeEntity | undefined> => {
+    return this.repository.getByName(GoogleScope.SCOPE_CONTACT)
   }
 }
 

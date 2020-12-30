@@ -18,7 +18,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 
     const user = useUser()
 
-    const currentUser = user.service.getUnique(user.data)
+    const currentUser = user.first
 
     const language = userSettings.service.getLanguage(userSettings)
 

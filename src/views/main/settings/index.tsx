@@ -28,7 +28,7 @@ const Settings = (): JSX.Element => {
 
   const syncGoogleContacts = googleScope.service.hasContactGrant(googleScope)
 
-  const currentSettings = userSettings.service.getUnique(userSettings.data)
+  const currentSettings = userSettings.first
 
   const language = userSettings.service.getLanguage(userSettings)
 

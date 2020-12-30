@@ -1,8 +1,7 @@
 import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
 
-export default interface PhoneModel
+export default interface GoogleContactDataModel
   extends SynchronizableDataLocalIdModel<number, number> {
+  resourceName?: string
   contactId: number
-  number: string
-  type: number
 }

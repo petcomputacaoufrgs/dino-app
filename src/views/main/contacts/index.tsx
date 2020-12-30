@@ -18,7 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const Contacts = (): JSX.Element => {
   const userSettings = useUserSettings()
   const language = userSettings.service.getLanguage(userSettings)
-  const currentSettings = userSettings.service.getUnique(userSettings.data)
+  const currentSettings = userSettings.first
   const contact = useContact()
   const phone = usePhone()
   const googleContact = useGoogleContact()
@@ -106,6 +106,7 @@ const Contacts = (): JSX.Element => {
       <ContactFormDialog
         contactService={contact.service}
         phoneService={phone.service}
+        googleContactService={googleContact.service}
         items={contactViews}
         action={Contants.ACTION_ADD}
         dialogOpen={add}

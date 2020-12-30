@@ -5,7 +5,7 @@ import LanguageBase from '../../constants/languages/LanguageBase'
 import PhoneRepository, {
   PhoneRepositoryImpl,
 } from '../../storage/database/contact/PhoneRepository'
-import PhoneModel from '../../types/contact/api/PhoneModel'
+import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
@@ -16,12 +16,12 @@ import ContactView from '../../types/contact/view/ContactView'
 export class PhoneServiceImpl extends SynchronizableService<
   number,
   number,
-  PhoneModel,
+  PhoneDataModel,
   PhoneEntity,
   PhoneRepositoryImpl
 > {
   async convertModelToEntity(
-    model: PhoneModel
+    model: PhoneDataModel
   ): Promise<PhoneEntity | undefined> {
     const contact = await ContactService.getById(model.contactId)
 
@@ -38,12 +38,12 @@ export class PhoneServiceImpl extends SynchronizableService<
 
   async convertEntityToModel(
     entity: PhoneEntity
-  ): Promise<PhoneModel | undefined> {
+  ): Promise<PhoneDataModel | undefined> {
     if (entity.localContactId) {
       const contact = await ContactService.getByLocalId(entity.localContactId)
 
       if (contact && contact.id) {
-        const model: PhoneModel = {
+        const model: PhoneDataModel = {
           number: entity.number,
           type: entity.type,
           contactId: contact.id,
@@ -54,8 +54,8 @@ export class PhoneServiceImpl extends SynchronizableService<
     }
   }
 
-  async getAllByContactLocalId(localId: number) {
-    this.repository.getAllByContactLocalId(localId)
+  async getAllByContactLocalId(localId: number): Promise<PhoneEntity[]> {
+    return this.repository.getAllByContactLocalId(localId)
   }
 
   getPhoneTypes = (

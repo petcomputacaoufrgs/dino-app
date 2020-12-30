@@ -47,7 +47,7 @@ class Database extends Dexie {
       userSettings: generateSynchronizableTableString(),
       glossary: generateSynchronizableTableString(),
       contact: generateSynchronizableTableString(),
-      googleContact: generateSynchronizableTableString('localContactId'),
+      googleContact: generateSynchronizableTableString(),
       phone: generateSynchronizableTableString('localContactId'),
       noteColumn: generateSynchronizableTableString(),
       note: generateSynchronizableTableString('columnId', 'localColumnId'),
@@ -56,7 +56,7 @@ class Database extends Dexie {
       faqItem: generateSynchronizableTableString(),
       faqUserQuestion: generateSynchronizableTableString(),
       treatment: generateSynchronizableTableString(),
-      googleScope: generateSynchronizableTableString(),
+      googleScope: generateSynchronizableTableString('name'),
       auth: '++id',
       logAppError: '++id,title,file,error,date',
       calendarEvent:

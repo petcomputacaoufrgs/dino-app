@@ -2,12 +2,12 @@ import SynchronizableWSSubscriber from '../synchronizable/SynchronizableWSSubscr
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import { PhoneRepositoryImpl } from '../../storage/database/contact/PhoneRepository'
 import PhoneService from '../../services/contact/PhoneService'
-import PhoneModel from '../../types/contact/api/PhoneModel'
+import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
 
 class PhoneWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
   number,
-  PhoneModel,
+  PhoneDataModel,
   PhoneEntity,
   PhoneRepositoryImpl
 > {

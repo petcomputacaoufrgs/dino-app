@@ -37,6 +37,9 @@ const ContactItems: React.FC<ContactItemsProps> = ({
     if (contactToDelete) {
       await phoneService.deleteAll(contactToDelete.phones)
       contactService.delete(contactToDelete.contact)
+      if (contactToDelete.googleContact) {
+        googleContactService.delete(contactToDelete.googleContact)
+      }
     }
   }
 
@@ -75,6 +78,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           item={contactToEdit}
           contactService={contactService}
           phoneService={phoneService}
+          googleContactService={googleContactService}
           items={items}
           action={Constants.ACTION_EDIT}
         />

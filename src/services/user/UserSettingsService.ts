@@ -142,7 +142,7 @@ export class UserSettingsServiceImpl extends SynchronizableService<
   getEssentialContactGrant(
     userSettings: UserSettingsContextType
   ): boolean | undefined {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     if (entity) {
       return entity.includeEssentialContact
@@ -155,7 +155,7 @@ export class UserSettingsServiceImpl extends SynchronizableService<
     userSettings: UserSettingsContextType,
     treatments: TreatmentEntity[]
   ): TreatmentEntity | undefined {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     if (entity && entity.treatmentLocalId) {
       const treatment = treatments.find(
@@ -172,7 +172,7 @@ export class UserSettingsServiceImpl extends SynchronizableService<
   getFirstSettingsDone(
     userSettings: UserSettingsContextType
   ): boolean | undefined {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     if (entity) {
       return entity.firstSettingsDone
@@ -182,7 +182,7 @@ export class UserSettingsServiceImpl extends SynchronizableService<
   }
 
   getDeclinedGoogleContact(userSettings: UserSettingsContextType): boolean {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     if (entity) {
       return entity.declineGoogleContacts
@@ -192,7 +192,7 @@ export class UserSettingsServiceImpl extends SynchronizableService<
   }
 
   getLanguage = (userSettings: UserSettingsContextType): LanguageBase => {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     if (entity && entity.language === LanguageCodeConstants.ENGLISH) {
       return new EN()
@@ -202,13 +202,13 @@ export class UserSettingsServiceImpl extends SynchronizableService<
   }
 
   getColorThemeCode = (userSettings: UserSettingsContextType): number => {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     return entity ? entity.colorTheme : 4
   }
 
   getColorTheme = (userSettings: UserSettingsContextType): string => {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     if (entity) {
       switch (entity.colorTheme) {
@@ -229,13 +229,13 @@ export class UserSettingsServiceImpl extends SynchronizableService<
   }
 
   getFontSizeCode = (userSettings: UserSettingsContextType): number => {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     return entity ? entity.fontSize : 1
   }
 
   getFontSize = (userSettings: UserSettingsContextType): string => {
-    const entity = this.getUnique(userSettings.data)
+    const entity = userSettings.first
 
     if (entity) {
       switch (entity.fontSize) {

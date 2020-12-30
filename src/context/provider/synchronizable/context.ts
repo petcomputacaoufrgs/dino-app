@@ -19,6 +19,7 @@ export default interface SynchronizableContextType<
   >
 > {
   data: ENTITY[]
+  first?: ENTITY
   loading: boolean
   service: SERVICE
 }

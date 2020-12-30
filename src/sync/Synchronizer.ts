@@ -29,7 +29,7 @@ class Synchronizer {
     ],
     [[GlossarySync]],
     [[NoteColumnSync], [NoteSync]],
-    [[ContactSync], [PhoneSync, GoogleContactSync]],
+    [[ContactSync], [PhoneSync], [GoogleContactSync]],
     [[LogAppErrorSync]],
   ]
 

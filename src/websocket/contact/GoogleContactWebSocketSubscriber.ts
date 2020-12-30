@@ -1,5 +1,5 @@
 import SynchronizableWSSubscriber from '../synchronizable/SynchronizableWSSubscriber'
-import GoogleContactModel from '../../types/contact/api/GoogleContactModel'
+import GoogleContactModel from '../../types/contact/api/GoogleContactDataModel'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import { GoogleContactRepositoryImpl } from '../../storage/database/contact/GoogleContactRepository'
 import GoogleContactService from '../../services/contact/GoogleContactService'

@@ -51,7 +51,7 @@ export class FaqItemServiceImpl extends SynchronizableService<
     }
   }
 
-  public getFaqItemByFilter(
+  getFaqItemByFilter(
     faq: FaqEntity,
     faqItem: FaqItemEntity[],
     searchTerm: string

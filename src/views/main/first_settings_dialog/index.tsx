@@ -21,7 +21,7 @@ const FirstSettingsDialog: React.FC = () => {
   const userSettings = useUserSettings()
   const treatment = useTreatment()
   const language = userSettings.service.getLanguage(userSettings)
-  const currentSettings = userSettings.service.getUnique(userSettings.data)
+  const currentSettings = userSettings.first
 
   const [dialogOpen, setDialogOpen] = useState(true)
 

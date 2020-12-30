@@ -9,6 +9,7 @@ import SynchronizableDataLocalIdModel from '../../../types/synchronizable/api/Sy
 interface SynchronizableStateType<ENTITY> {
   loading: boolean
   data: ENTITY[]
+  first: ENTITY | undefined
 }
 
 function SynchronizableProvider<
@@ -38,6 +39,7 @@ function SynchronizableProvider<
 >): JSX.Element {
   const [state, setState] = useState<SynchronizableStateType<ENTITY>>({
     data: [],
+    first: undefined,
     loading: true,
   })
 
@@ -51,6 +53,7 @@ function SynchronizableProvider<
     let updateData = (data: ENTITY[]) => {
       setState({
         data: data,
+        first: data[0],
         loading: false,
       })
     }
@@ -77,6 +80,7 @@ function SynchronizableProvider<
       value={{
         data: state.data,
         loading: state.loading,
+        first: state.first,
         service: service,
       }}
     >

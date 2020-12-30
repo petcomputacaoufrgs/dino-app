@@ -50,11 +50,13 @@ class WebSocketConnector {
     if (isAuthenticated) {
       try {
         const response = await AuthService.requestWebSocketAuthToken()
-        if (response) {
-          const baseUrl = this.getSocketBaseURL(response.webSocketToken)
+        console.log(response)
+        if (response && response.success) {
+          const responseData = response.data
+          const baseUrl = this.getSocketBaseURL(responseData.webSocketToken)
           this.socket = new SockJS(baseUrl)
           this.stompClient = Stomp.over(this.socket)
-          this.muteConnectionLogs()
+          //this.muteConnectionLogs()
           this.stompClient.connect({}, this.subscribe)
           this.socket.onclose = () => {
             this.handleWebSocketClosed()

@@ -1,3 +1,4 @@
-export default interface WebSocketAuthResponseModel {
-  webSocketToken: string
-}
+import SynchronizableGenericDataResponseModel from "../../synchronizable/api/response/SynchronizableGenericDataResponseModel"
+import WebSocketAuthDataModel from "./WebSocketAuthDataModel"
+
+export default interface WebSocketAuthResponseModel extends SynchronizableGenericDataResponseModel<WebSocketAuthDataModel> {}

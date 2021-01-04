@@ -6,7 +6,6 @@ import { UserRepositoryImpl } from '../../storage/database/user/UserRepository'
 
 class UserWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   UserDataModel,
   UserEntity,
   UserRepositoryImpl

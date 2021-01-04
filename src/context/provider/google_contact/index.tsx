@@ -11,7 +11,6 @@ import SynchronizableContextType from '../synchronizable/context'
 interface GoogleContactContextType
   extends SynchronizableContextType<
     number,
-    number,
     GoogleContactModel,
     GoogleContactEntity,
     GoogleContactRepositoryImpl,
@@ -26,7 +25,6 @@ const GoogleContactContext = createContext<GoogleContactContextType>({
 
 const GoogleContactProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     GoogleContactModel,
     GoogleContactEntity,

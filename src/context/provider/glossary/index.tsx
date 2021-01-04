@@ -11,7 +11,6 @@ import { GlossaryRepositoryImpl } from '../../../storage/database/glossary/Gloss
 interface GlossaryContextType
   extends SynchronizableContextType<
     number,
-    number,
     GlossaryItemDataModel,
     GlossaryItemEntity,
     GlossaryRepositoryImpl,
@@ -26,7 +25,6 @@ const GlossaryContext = createContext<GlossaryContextType>({
 
 const GlossaryProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     GlossaryItemDataModel,
     GlossaryItemEntity,

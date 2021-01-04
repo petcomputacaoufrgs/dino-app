@@ -1,4 +1,4 @@
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import FaqDataModel from '../../types/faq/api/FaqDataModel'
 import FaqEntity from '../../types/faq/database/FaqEntity'
 import FaqRepository, {
@@ -11,14 +11,26 @@ import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from './FaqItemService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../treatment/TreatmentService'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class FaqServiceImpl extends SynchronizableService<
-  number,
+export class FaqServiceImpl extends AutoSynchronizableService<
   number,
   FaqDataModel,
   FaqEntity,
   FaqRepositoryImpl
 > {
+  constructor() {
+    super(
+      FaqRepository,
+      APIRequestMappingConstants.FAQ,
+      APIWebSocketDestConstants.FAQ_UPDATE,
+      APIWebSocketDestConstants.FAQ_DELETE
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return [TreatmentService]
+  }
   async convertModelToEntity(
     model: FaqDataModel
   ): Promise<FaqEntity | undefined> {
@@ -91,9 +103,4 @@ export class FaqServiceImpl extends SynchronizableService<
   }
 }
 
-export default new FaqServiceImpl(
-  FaqRepository,
-  APIRequestMappingConstants.FAQ,
-  APIWebSocketDestConstants.FAQ_UPDATE,
-  APIWebSocketDestConstants.FAQ_DELETE
-)
+export default new FaqServiceImpl()

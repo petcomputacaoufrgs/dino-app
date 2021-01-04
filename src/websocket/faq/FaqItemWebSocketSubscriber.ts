@@ -6,7 +6,6 @@ import FaqItemService from '../../services/faq/FaqItemService'
 
 class FaqItemWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   FaqItemDataModel,
   FaqItemEntity,
   FaqItemRepositoryImpl

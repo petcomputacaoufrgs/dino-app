@@ -6,7 +6,6 @@ import { GlossaryRepositoryImpl } from '../../storage/database/glossary/Glossary
 
 class GlossaryWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   GlossaryItemDataModel,
   GlossaryItemEntity,
   GlossaryRepositoryImpl

@@ -1,19 +1,32 @@
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentRepository, {
   TreatmentRepositoryImpl,
 } from '../../storage/database/treatment/TreatmentRepository'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class TreatmentServiceImpl extends SynchronizableService<
-  number,
+export class TreatmentServiceImpl extends AutoSynchronizableService<
   number,
   TreatmentDataModel,
   TreatmentEntity,
   TreatmentRepositoryImpl
 > {
+  constructor() {
+    super(
+      TreatmentRepository,
+      APIRequestMappingConstants.TREATMENT,
+      APIWebSocketDestConstants.TREATMENT_UPDATE,
+      APIWebSocketDestConstants.TREATMENT_DELETE,
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return []
+  }
+  
   async convertModelToEntity(
     model: TreatmentDataModel
   ): Promise<TreatmentEntity> {
@@ -35,9 +48,4 @@ export class TreatmentServiceImpl extends SynchronizableService<
   }
 }
 
-export default new TreatmentServiceImpl(
-  TreatmentRepository,
-  APIRequestMappingConstants.TREATMENT,
-  APIWebSocketDestConstants.TREATMENT_UPDATE,
-  APIWebSocketDestConstants.TREATMENT_DELETE
-)
+export default new TreatmentServiceImpl()

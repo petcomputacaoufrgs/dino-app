@@ -11,7 +11,6 @@ import SynchronizableContextType from '../synchronizable/context'
 interface UserContextType
   extends SynchronizableContextType<
     number,
-    number,
     UserDataModel,
     UserEntity,
     UserRepositoryImpl,
@@ -26,7 +25,6 @@ const UserContext = createContext<UserContextType>({
 
 const UserProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     UserDataModel,
     UserEntity,

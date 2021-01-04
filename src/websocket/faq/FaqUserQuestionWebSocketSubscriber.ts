@@ -6,7 +6,6 @@ import FaqUserQuestionService from '../../services/faq/FaqUserQuestionService'
 
 class FaqUserQuestionWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   FaqUserQuestionDataModel,
   FaqUserQuestionEntity,
   FaqUserQuestionRepositoryImpl

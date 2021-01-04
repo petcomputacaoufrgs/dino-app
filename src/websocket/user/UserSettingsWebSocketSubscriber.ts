@@ -6,7 +6,6 @@ import UserSettingsService from '../../services/user/UserSettingsService'
 
 class UserWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   UserSettingsDataModel,
   UserSettingsEntity,
   UserSettingsRepositoryImpl

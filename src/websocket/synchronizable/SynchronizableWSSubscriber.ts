@@ -1,23 +1,22 @@
-import { IndexableType, IndexableTypePart } from 'dexie'
+import { IndexableType } from 'dexie'
 import BaseWebSocketSubscriber from '../BaseWebSocketSubscriber'
 import SubscriberItem from '../../types/web_socket/SubscriberItem'
 import SynchronizableDataModel from '../../types/synchronizable/api/SynchronizableDataModel'
 import SynchronizableEntity from '../../types/synchronizable/database/SynchronizableEntity'
 import SynchronizableRepository from '../../storage/database/synchronizable/SynchronizableRepository'
-import SynchronizableService from '../../services/synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../../services/sync/AutoSynchronizableService'
 import SynchronizableWSUpdateModel from '../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
 import SynchronizableWSSubscriberQueue from './SynchronizableWSSubscriberQueue'
 
 export default abstract class SynchronizableWSSubscriber<
   ID extends IndexableType,
-  LOCAL_ID extends IndexableTypePart,
   DATA_MODEL extends SynchronizableDataModel<ID>,
-  ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
-  REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>
+  ENTITY extends SynchronizableEntity<ID>,
+  REPOSITORY extends SynchronizableRepository<ID, ENTITY>
 > extends BaseWebSocketSubscriber {
   constructor(
-    service: SynchronizableService<ID, LOCAL_ID, DATA_MODEL, ENTITY, REPOSITORY>
+    service: AutoSynchronizableService<ID, DATA_MODEL, ENTITY, REPOSITORY>
   ) {
     const items: SubscriberItem[] = [
       {

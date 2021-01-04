@@ -2,7 +2,7 @@ import SynchronizableDataModel from '../../synchronizable/api/SynchronizableData
 import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
 
 export default interface GlossaryItemDataModel
-  extends SynchronizableDataLocalIdModel<number, number> {
+  extends SynchronizableDataLocalIdModel<number> {
   title: string
   text: string
   subtitle: string

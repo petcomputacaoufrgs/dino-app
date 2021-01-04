@@ -4,7 +4,6 @@ import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
 
 export class NoteColumnRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   NoteColumnEntity
 > {
   constructor() {

@@ -1,4 +1,4 @@
-import { IndexableType, IndexableTypePart } from 'dexie'
+import { IndexableType } from 'dexie'
 import DinoAgentService from '../../agent/DinoAgentService'
 import SynchronizableGetModel from '../../types/synchronizable/api/request/SynchronizableGetModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
@@ -21,23 +21,22 @@ import SynchronizableSyncModel from '../../types/synchronizable/api/request/Sync
 import SynchronizableSyncResponseModel from '../../types/synchronizable/api/response/SynchronizableSyncResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import UserDataService from '../events/UserDataService'
+import BaseSynchronizableService from './BaseSynchronizableService'
 
 /**
- * @description Generic service with basic methods for synchronizable entity,
- * remember to transform booleans into numbers (0,1)
+ * @description Generic service with basic methods (save and delete) that auto synchronize entity with API
  * @param ID API synchronizable entity's id
  * @param LOCAL_ID local synchronizable entity's id
  * @param DATA_MODEL synchronizable entity's data model
  * @param ENTITY local synchronizable entity
  * @param REPOSITORY local synchronizable entity's repository
  */
-export default abstract class SynchronizableService<
+export default abstract class AutoSynchronizableService<
   ID extends IndexableType,
-  LOCAL_ID extends IndexableTypePart,
-  DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>,
-  ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
-  REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>
-> implements UserDataService {
+  DATA_MODEL extends SynchronizableDataLocalIdModel<ID>,
+  ENTITY extends SynchronizableEntity<ID>,
+  REPOSITORY extends SynchronizableRepository<ID, ENTITY>
+> extends BaseSynchronizableService implements UserDataService {
   protected webSocketUpdatePath: string
   protected webSocketDeletePath: string
   protected requestMapping: string
@@ -49,11 +48,13 @@ export default abstract class SynchronizableService<
     webSocketUpdatePath: string,
     webSocketDeletePath: string
   ) {
+    super()
     this.repository = repository
     this.requestMapping = requestMapping
     this.webSocketUpdatePath = webSocketUpdatePath
     this.webSocketDeletePath = webSocketDeletePath
   }
+
 
   //#region EVENT METHODS TO OVERRIDE
 
@@ -265,7 +266,7 @@ export default abstract class SynchronizableService<
   }
 
   getByLocalId = async (
-    localId: LOCAL_ID
+    localId: number
   ): Promise<ENTITY | undefined> => {
     return this.repository.getByLocalId(localId)
   }
@@ -421,10 +422,6 @@ export default abstract class SynchronizableService<
     }
 
     return true
-  }
-
-  sync = async (): Promise<boolean> => {
-    return await this.doSync()
   }
 
   //#endregion
@@ -682,7 +679,6 @@ export default abstract class SynchronizableService<
     if (request.canGo) {
       const requestModel: SynchronizableSaveAllModel<
         ID,
-        LOCAL_ID,
         DATA_MODEL
       > = {
         data: models,
@@ -728,12 +724,12 @@ export default abstract class SynchronizableService<
   protected apiSync = async (
     toSave: Array<DATA_MODEL>,
     toDelete: Array<DATA_MODEL>
-  ): Promise<SynchronizableSyncResponseModel<ID, LOCAL_ID, DATA_MODEL> | undefined> => {
+  ): Promise<SynchronizableSyncResponseModel<ID, DATA_MODEL> | undefined> => {
     try {
       const request = await DinoAgentService.put(this.syncRequestURL())
 
       if (request.canGo) {
-        const requestModel: SynchronizableSyncModel<ID, LOCAL_ID, DATA_MODEL> = {
+        const requestModel: SynchronizableSyncModel<ID, DATA_MODEL> = {
           save: toSave,
           delete: toDelete.map((model) => ({
             id: model.id,

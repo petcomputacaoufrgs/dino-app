@@ -6,8 +6,34 @@ import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListM
 import LogAppErrorRepository from '../../storage/database/log_app_error/LogAppErrorRepository'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import UserDataService from '../events/UserDataService'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-class LogAppErrorService implements UserDataService {
+class LogAppErrorService extends BaseSynchronizableService implements UserDataService {
+  getDependencies(): BaseSynchronizableService[] {
+    return []
+  }
+
+  protected async doSync(): Promise<boolean> {
+    if (this.shouldSync()) {
+      const logs = await this.getSavedLogs()
+
+      const items: LogAppErrorModel[] = logs.map((log) => ({
+        title: log.title,
+        error: log.error,
+        file: log.file,
+        date: log.date,
+      }))
+
+      const model: LogAppErrorListModel = {
+        items: items,
+      }
+
+      return this.saveAll(model)
+    }
+
+    return true
+  }
+  
   shouldSync = (): boolean => {
     return LogAppErrorSyncLocalStorage.getShouldSync()
   }
@@ -72,7 +98,7 @@ class LogAppErrorService implements UserDataService {
     }
   }
 
-  saveAll = async (models: LogAppErrorListModel) => {
+  saveAll = async (models: LogAppErrorListModel): Promise<boolean> => {
     const request = await DinoAgentService.post(
       APIRequestMappingConstants.SAVE_ALL_LOG_APP_ERROR
     )
@@ -83,12 +109,15 @@ class LogAppErrorService implements UserDataService {
         await authRequest.setBody(models).go()
         this.setShouldSync(false)
         LogAppErrorRepository.deleteAll()
+        return true
       } catch {
         this.setShouldSync(true)
       }
     } else {
       this.setShouldSync(true)
     }
+
+    return false
   }
 
   onLogout = async () => {

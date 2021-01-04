@@ -4,7 +4,6 @@ import ContactEntity from '../../../types/contact/database/ContactEntity'
 
 export class ContactRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   ContactEntity
 > {
   constructor() {

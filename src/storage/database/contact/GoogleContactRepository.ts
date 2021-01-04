@@ -4,7 +4,6 @@ import GoogleContactEntity from '../../../types/contact/database/GoogleContactEn
 
 export class GoogleContactRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   GoogleContactEntity
 > {
   constructor() {

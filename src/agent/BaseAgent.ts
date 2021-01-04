@@ -156,7 +156,7 @@ export default abstract class BaseAgent<AUTH> {
     return auth
   }
 
-  protected isExpired = (expiresDate: Date): boolean => {
+  private isExpired = (expiresDate: Date): boolean => {
     const expiresDateWithMargin = expiresDate.getTime() - TIME_MARGIN_OF_ERROR_IN_MS
     
     const nowInMS = new Date().getTime()
@@ -176,14 +176,22 @@ export default abstract class BaseAgent<AUTH> {
 
       this.refreshingAuth = false
       
-      setTimeout(() => this.resolveAll(auth), 0)
-      
+      this.resolveAllAfterReturn(auth)
+
       return auth
     } 
   }
 
-  protected async resolveAll(auth: AUTH | undefined) {
+  private resolveAllAfterReturn = (auth: AUTH | undefined) => {
+    setTimeout(() => this.resolveAll(auth), 0)
+  }
+
+  private resolveAll(auth: AUTH | undefined) {
     this.resolves.forEach(resolve => resolve(auth))
+    this.cleanResolveList()
+  }
+
+  private cleanResolveList() {
     this.resolves = []
   }
 

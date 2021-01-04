@@ -4,7 +4,6 @@ import SynchronizableRepository from '../synchronizable/SynchronizableRepository
 
 export class UserRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   UserEntity
 > {
   constructor() {

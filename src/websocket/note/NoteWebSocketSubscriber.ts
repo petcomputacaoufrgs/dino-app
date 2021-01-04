@@ -6,7 +6,6 @@ import SynchronizableWSSubscriber from '../synchronizable/SynchronizableWSSubscr
 
 class NoteWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   NoteDataModel,
   NoteEntity,
   NoteRepositoryImpl

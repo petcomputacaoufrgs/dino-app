@@ -11,7 +11,6 @@ import SynchronizableContextType from '../synchronizable/context'
 export interface NoteContextType
   extends SynchronizableContextType<
     number,
-    number,
     NoteDataModel,
     NoteEntity,
     NoteRepositoryImpl,
@@ -26,7 +25,6 @@ const NoteContext = createContext<NoteContextType>({
 
 const NoteProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     NoteDataModel,
     NoteEntity,

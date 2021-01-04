@@ -1,5 +1,5 @@
 import FaqUserQuestionDataModel from '../../types/faq/api/FaqUserQuestionDataModel'
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import FaqUserQuestionEntity from '../../types/faq/database/FaqUserQuestionEntity'
 import FaqUserQuestionRepository, {
   FaqUserQuestionRepositoryImpl,
@@ -7,14 +7,27 @@ import FaqUserQuestionRepository, {
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqService from './FaqService'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class FaqUserQuestionServiceImpl extends SynchronizableService<
-  number,
+export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
   number,
   FaqUserQuestionDataModel,
   FaqUserQuestionEntity,
   FaqUserQuestionRepositoryImpl
 > {
+  constructor() {
+    super(
+      FaqUserQuestionRepository,
+      APIRequestMappingConstants.FAQ_USER_QUESTION,
+      APIWebSocketDestConstants.FAQ_USER_QUESTION_UPDATE,
+      APIWebSocketDestConstants.FAQ_USER_QUESTION_DELETE
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return [FaqService]
+  }
+
   async convertModelToEntity(
     model: FaqUserQuestionDataModel
   ): Promise<FaqUserQuestionEntity | undefined> {
@@ -48,9 +61,4 @@ export class FaqUserQuestionServiceImpl extends SynchronizableService<
   }
 }
 
-export default new FaqUserQuestionServiceImpl(
-  FaqUserQuestionRepository,
-  APIRequestMappingConstants.FAQ_USER_QUESTION,
-  APIWebSocketDestConstants.FAQ_USER_QUESTION_UPDATE,
-  APIWebSocketDestConstants.FAQ_USER_QUESTION_DELETE
-)
+export default new FaqUserQuestionServiceImpl()

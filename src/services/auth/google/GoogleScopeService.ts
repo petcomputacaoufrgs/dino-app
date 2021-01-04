@@ -1,4 +1,4 @@
-import SynchronizableService from '../../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../../sync/AutoSynchronizableService'
 import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeDataModel'
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
 import GoogleScopeRepository, {
@@ -11,14 +11,23 @@ import SynchronizableWSDeleteModel from '../../../types/synchronizable/api/web_s
 import { GoogleScopeContextType } from '../../../context/provider/google_scope'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
+import BaseSynchronizableService from '../../sync/BaseSynchronizableService'
 
-export class GoogleScopeServiceImpl extends SynchronizableService<
-  number,
+export class GoogleScopeServiceImpl extends AutoSynchronizableService<
   number,
   GoogleScopeDataModel,
   GoogleScopeEntity,
   GoogleScopeRepositoryImpl
 > {
+  constructor() {
+    super(GoogleScopeRepository, APIRequestMappingConstants.GOOGLE_SCOPE,
+      APIWebSocketDestConstants.GOOGLE_SCOPE_UPDATE, APIWebSocketDestConstants.GOOGLE_SCOPE_DELETE)
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return []
+  }
+
   async convertModelToEntity(
     model: GoogleScopeDataModel
   ): Promise<GoogleScopeEntity | undefined> {
@@ -66,9 +75,4 @@ export class GoogleScopeServiceImpl extends SynchronizableService<
   }
 }
 
-export default new GoogleScopeServiceImpl(
-  GoogleScopeRepository,
-  APIRequestMappingConstants.GOOGLE_SCOPE,
-  APIWebSocketDestConstants.GOOGLE_SCOPE_UPDATE,
-  APIWebSocketDestConstants.GOOGLE_SCOPE_DELETE
-)
+export default new GoogleScopeServiceImpl()

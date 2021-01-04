@@ -6,7 +6,6 @@ import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
 
 class PhoneWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   PhoneDataModel,
   PhoneEntity,
   PhoneRepositoryImpl

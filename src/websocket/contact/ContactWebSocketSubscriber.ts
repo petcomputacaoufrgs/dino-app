@@ -6,7 +6,6 @@ import ContactService from '../../services/contact/ContactService'
 
 class ContactWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   ContactDataModel,
   ContactEntity,
   ContactRepositoryImpl

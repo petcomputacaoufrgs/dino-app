@@ -4,7 +4,6 @@ import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 
 export class TreatmentRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   TreatmentEntity
 > {
   constructor() {

@@ -1,7 +1,7 @@
 import SynchronizableEntity from '../../synchronizable/database/SynchronizableEntity'
 
 export default interface UserSettingsEntity
-  extends SynchronizableEntity<number, number> {
+  extends SynchronizableEntity<number> {
   language: string
   colorTheme: number
   fontSize: number

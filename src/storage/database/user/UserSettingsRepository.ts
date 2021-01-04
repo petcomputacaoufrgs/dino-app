@@ -4,7 +4,6 @@ import Database from '../Database'
 
 export class UserSettingsRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   UserSettingsEntity
 > {
   constructor() {

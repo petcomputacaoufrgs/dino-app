@@ -1,18 +1,16 @@
 import { IndexableType, IndexableTypePart } from 'dexie'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
-import SynchronizableService from '../../../services/synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../../../services/sync/AutoSynchronizableService'
 import SynchronizableRepository from '../../../storage/database/synchronizable/SynchronizableRepository'
 import SynchronizableDataLocalIdModel from '../../../types/synchronizable/api/SynchronizableDataLocalIdModel'
 
 export default interface SynchronizableContextType<
   ID extends IndexableType,
-  LOCAL_ID extends IndexableTypePart,
-  DATA_MODEL extends SynchronizableDataLocalIdModel<ID, LOCAL_ID>,
-  ENTITY extends SynchronizableEntity<ID, LOCAL_ID>,
-  REPOSITORY extends SynchronizableRepository<ID, LOCAL_ID, ENTITY>,
-  SERVICE extends SynchronizableService<
+  DATA_MODEL extends SynchronizableDataLocalIdModel<ID>,
+  ENTITY extends SynchronizableEntity<ID>,
+  REPOSITORY extends SynchronizableRepository<ID, ENTITY>,
+  SERVICE extends AutoSynchronizableService<
     ID,
-    LOCAL_ID,
     DATA_MODEL,
     ENTITY,
     REPOSITORY

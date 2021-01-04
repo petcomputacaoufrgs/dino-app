@@ -4,7 +4,6 @@ import Database from '../Database'
 
 export class GoogleScopeRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   GoogleScopeEntity
 > {
   constructor() {

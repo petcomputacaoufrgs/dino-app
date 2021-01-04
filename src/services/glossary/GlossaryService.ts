@@ -1,20 +1,33 @@
 import GlossaryItemModel from '../../types/glossary/api/GlossaryItemDataModel'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
 import GlossaryRepository, {
   GlossaryRepositoryImpl,
 } from '../../storage/database/glossary/GlossaryRepository'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class GlossaryServiceImpl extends SynchronizableService<
-  number,
+export class GlossaryServiceImpl extends AutoSynchronizableService<
   number,
   GlossaryItemDataModel,
   GlossaryItemEntity,
   GlossaryRepositoryImpl
 > {
+  constructor() {
+    super(
+      GlossaryRepository,
+      APIRequestMappingConstants.GLOSSARY,
+      APIWebSocketDestConstants.GLOSSARY_UPDATE,
+      APIWebSocketDestConstants.GLOSSARY_DELETE
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return []
+  }
+  
   async convertModelToEntity(
     model: GlossaryItemModel
   ): Promise<GlossaryItemEntity> {
@@ -42,9 +55,4 @@ export class GlossaryServiceImpl extends SynchronizableService<
   }
 }
 
-export default new GlossaryServiceImpl(
-  GlossaryRepository,
-  APIRequestMappingConstants.GLOSSARY,
-  APIWebSocketDestConstants.GLOSSARY_UPDATE,
-  APIWebSocketDestConstants.GLOSSARY_DELETE
-)
+export default new GlossaryServiceImpl()

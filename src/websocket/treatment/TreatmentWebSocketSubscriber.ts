@@ -6,7 +6,6 @@ import TreatmentService from '../../services/treatment/TreatmentService'
 
 class TreatmentWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   TreatmentDataModel,
   TreatmentEntity,
   TreatmentRepositoryImpl

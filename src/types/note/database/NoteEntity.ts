@@ -1,7 +1,7 @@
 import SynchronizableEntity from '../../synchronizable/database/SynchronizableEntity'
 
 export default interface NoteEntity
-  extends SynchronizableEntity<number, number> {
+  extends SynchronizableEntity<number> {
   order: number
   question: string
   answer: string

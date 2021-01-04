@@ -6,7 +6,6 @@ import GoogleContactService from '../../services/contact/GoogleContactService'
 
 class GoogleContactWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   GoogleContactModel,
   GoogleContactEntity,
   GoogleContactRepositoryImpl

@@ -6,7 +6,6 @@ import GoogleScopeService from '../../services/auth/google/GoogleScopeService'
 
 class GoogleScopeWebSocketSubscriber extends SynchronizableWSSubscriber<
   number,
-  number,
   GoogleScopeDataModel,
   GoogleScopeEntity,
   GoogleScopeRepositoryImpl

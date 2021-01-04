@@ -11,7 +11,6 @@ import TreatmentService, {
 interface TreatmentContextType
   extends SynchronizableContextType<
     number,
-    number,
     TreatmentDataModel,
     TreatmentEntity,
     TreatmentRepositoryImpl,
@@ -26,7 +25,6 @@ const TreatmentContext = createContext<TreatmentContextType>({
 
 const TreatmentProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     TreatmentDataModel,
     TreatmentEntity,

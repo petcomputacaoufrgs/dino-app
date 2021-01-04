@@ -1,4 +1,4 @@
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserSettingsDataModel from '../../types/user/api/UserSettingsDataModel'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
 import UserSettingsRepository, {
@@ -18,14 +18,27 @@ import EN from '../../constants/languages/EN'
 import { UserSettingsContextType } from '../../context/provider/user_settings/index'
 import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class UserSettingsServiceImpl extends SynchronizableService<
-  number,
+export class UserSettingsServiceImpl extends AutoSynchronizableService<
   number,
   UserSettingsDataModel,
   UserSettingsEntity,
   UserSettingsRepositoryImpl
 > {
+  constructor() {
+    super(
+      UserSettingsRepository,
+      APIRequestMappingConstants.USER_SETTINGS,
+      APIWebSocketDestConstants.USER_SETTINGS_UPDATE,
+      APIWebSocketDestConstants.USER_SETTINGS_DELETE
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return [TreatmentService]
+  }
+  
   async convertModelToEntity(
     model: UserSettingsDataModel
   ): Promise<UserSettingsEntity | undefined> {
@@ -262,9 +275,4 @@ export class UserSettingsServiceImpl extends SynchronizableService<
   }
 }
 
-export default new UserSettingsServiceImpl(
-  UserSettingsRepository,
-  APIRequestMappingConstants.USER_SETTINGS,
-  APIWebSocketDestConstants.USER_SETTINGS_UPDATE,
-  APIWebSocketDestConstants.USER_SETTINGS_DELETE
-)
+export default new UserSettingsServiceImpl()

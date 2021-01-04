@@ -1,7 +1,7 @@
 import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
 
 export default interface NoteDataModel
-  extends SynchronizableDataLocalIdModel<number, number> {
+  extends SynchronizableDataLocalIdModel<number> {
   order: number
   question: string
   answer: string

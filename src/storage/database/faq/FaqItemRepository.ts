@@ -4,7 +4,6 @@ import Database from '../Database'
 
 export class FaqItemRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   FaqItemEntity
 > {
   constructor() {

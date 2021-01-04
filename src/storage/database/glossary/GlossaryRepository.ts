@@ -4,7 +4,6 @@ import Database from '../Database'
 
 export class GlossaryRepositoryImpl extends SynchronizableRepository<
   number,
-  number,
   GlossaryItemEntity
 > {
   constructor() {

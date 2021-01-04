@@ -1,6 +1,6 @@
 import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
 
 export default interface TreatmentDataModel
-  extends SynchronizableDataLocalIdModel<number, number> {
+  extends SynchronizableDataLocalIdModel<number> {
   name: string
 }

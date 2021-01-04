@@ -11,7 +11,6 @@ import FaqItemService, {
 interface FaqItemContextType
   extends SynchronizableContextType<
     number,
-    number,
     FaqItemDataModel,
     FaqItemEntity,
     FaqItemRepositoryImpl,
@@ -26,7 +25,6 @@ const FaqItemContext = createContext<FaqItemContextType>({
 
 const FaqItemProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     FaqItemDataModel,
     FaqItemEntity,

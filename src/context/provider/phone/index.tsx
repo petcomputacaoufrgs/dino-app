@@ -11,7 +11,6 @@ import SynchronizableContextType from '../synchronizable/context'
 interface PhoneContextType
   extends SynchronizableContextType<
     number,
-    number,
     PhoneDataModel,
     PhoneEntity,
     PhoneRepositoryImpl,
@@ -26,7 +25,6 @@ const PhoneContext = createContext<PhoneContextType>({
 
 const PhoneProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     PhoneDataModel,
     PhoneEntity,

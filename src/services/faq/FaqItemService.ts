@@ -1,4 +1,4 @@
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import FaqItemRepository, {
   FaqItemRepositoryImpl,
 } from '../../storage/database/faq/FaqItemRepository'
@@ -9,14 +9,27 @@ import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import StringUtils from '../../utils/StringUtils'
 import FaqEntity from '../../types/faq/database/FaqEntity'
 import FaqService from './FaqService'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class FaqItemServiceImpl extends SynchronizableService<
-  number,
+export class FaqItemServiceImpl extends AutoSynchronizableService<
   number,
   FaqItemDataModel,
   FaqItemEntity,
   FaqItemRepositoryImpl
-> {
+> {  
+  constructor() {
+    super(
+      FaqItemRepository,
+      APIRequestMappingConstants.FAQ_ITEM,
+      APIWebSocketDestConstants.FAQ_ITEM_UPDATE,
+      APIWebSocketDestConstants.FAQ_ITEM_DELETE
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return [FaqService]
+  }
+
   async convertModelToEntity(
     model: FaqItemDataModel
   ): Promise<FaqItemEntity | undefined> {
@@ -64,9 +77,4 @@ export class FaqItemServiceImpl extends SynchronizableService<
   }
 }
 
-export default new FaqItemServiceImpl(
-  FaqItemRepository,
-  APIRequestMappingConstants.FAQ_ITEM,
-  APIWebSocketDestConstants.FAQ_ITEM_UPDATE,
-  APIWebSocketDestConstants.FAQ_ITEM_DELETE
-)
+export default new FaqItemServiceImpl()

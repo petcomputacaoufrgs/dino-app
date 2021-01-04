@@ -11,7 +11,6 @@ import SynchronizableContextType from '../synchronizable/context'
 interface ContactContextType
   extends SynchronizableContextType<
     number,
-    number,
     ContactDataModel,
     ContactEntity,
     ContactRepositoryImpl,
@@ -26,7 +25,6 @@ const ContactContext = createContext<ContactContextType>({
 
 const ContactProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     ContactDataModel,
     ContactEntity,

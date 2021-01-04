@@ -316,7 +316,6 @@ const FirstSettingsDialog: React.FC = () => {
     )
   }
 
-  console.log("teste")
   return (
     <div className="first-settings">
       <Dialog

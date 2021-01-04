@@ -11,7 +11,6 @@ import GoogleScopeService, {
 export interface GoogleScopeContextType
   extends SynchronizableContextType<
     number,
-    number,
     GoogleScopeDataModel,
     GoogleScopeEntity,
     GoogleScopeRepositoryImpl,
@@ -26,7 +25,6 @@ const GoogleScopeContext = createContext<GoogleScopeContextType>({
 
 const GoogleScopeProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     GoogleScopeDataModel,
     GoogleScopeEntity,

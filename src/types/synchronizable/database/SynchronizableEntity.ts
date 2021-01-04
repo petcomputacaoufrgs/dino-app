@@ -9,9 +9,8 @@ import SynchronizableLocalState from './SynchronizableLocalState'
  */
 export default interface SynchronizableEntity<
   ID extends IndexableType,
-  LOCAL_ID extends IndexableType
 > extends SynchronizableIdModel<ID> {
-  localId?: LOCAL_ID
+  localId?: number
   localState?: SynchronizableLocalState
   lastUpdate?: Date
 }

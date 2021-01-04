@@ -8,16 +8,29 @@ import NoteDataModel from '../../types/note/api/NoteDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 import NoteColumnService from './NoteColumnService'
 
-export class NoteServiceImpl extends SynchronizableService<
-  number,
+export class NoteServiceImpl extends AutoSynchronizableService<
   number,
   NoteDataModel,
   NoteEntity,
   NoteRepositoryImpl
 > {
+  constructor() {
+    super(
+      NoteRepository,
+      APIRequestMappingConstants.NOTE,
+      APIWebSocketDestConstants.NOTE_UPDATE,
+      APIWebSocketDestConstants.NOTE_DELETE,
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return [NoteColumnService]
+  }
+  
   async convertModelToEntity(
     model: NoteDataModel
   ): Promise<NoteEntity | undefined> {
@@ -109,9 +122,4 @@ export class NoteServiceImpl extends SynchronizableService<
   }
 }
 
-export default new NoteServiceImpl(
-  NoteRepository,
-  APIRequestMappingConstants.NOTE,
-  APIWebSocketDestConstants.NOTE_UPDATE,
-  APIWebSocketDestConstants.NOTE_DELETE
-)
+export default new NoteServiceImpl()

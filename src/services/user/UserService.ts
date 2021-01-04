@@ -1,7 +1,7 @@
 import UserDataModel from '../../types/user/api/UserModel'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserEntity from '../../types/user/database/UserEntity'
 import UserRepository, {
   UserRepositoryImpl,
@@ -11,14 +11,27 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class UserServiceImpl extends SynchronizableService<
-  number,
+export class UserServiceImpl extends AutoSynchronizableService<
   number,
   UserDataModel,
   UserEntity,
   UserRepositoryImpl
 > {
+  constructor() {
+    super(
+      UserRepository,
+      APIRequestMappingConstants.USER,
+      APIWebSocketDestConstants.USER_UPDATE,
+      APIWebSocketDestConstants.USER_DELETE
+    )
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return []
+  }
+
   getPicture(entities: UserEntity[]): string {
     return entities.length > 0
       ? entities[0].pictureBase64
@@ -143,9 +156,4 @@ export class UserServiceImpl extends SynchronizableService<
   }
 }
 
-export default new UserServiceImpl(
-  UserRepository,
-  APIRequestMappingConstants.USER,
-  APIWebSocketDestConstants.USER_UPDATE,
-  APIWebSocketDestConstants.USER_DELETE
-)
+export default new UserServiceImpl()

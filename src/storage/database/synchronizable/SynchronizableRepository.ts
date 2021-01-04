@@ -1,4 +1,4 @@
-import Dexie, { IndexableType, IndexableTypePart } from 'dexie'
+import Dexie, { IndexableType } from 'dexie'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
 import SynchronizableLocalState from '../../../types/synchronizable/database/SynchronizableLocalState'
 import Utils from '../../../utils/Utils'
@@ -10,12 +10,11 @@ import Utils from '../../../utils/Utils'
  */
 export default abstract class SynchronizableRepository<
   ID extends IndexableType,
-  LOCAL_ID extends IndexableTypePart,
-  ENTITY extends SynchronizableEntity<ID, LOCAL_ID>
+  ENTITY extends SynchronizableEntity<ID>
 > {
-  protected table: Dexie.Table<ENTITY, LOCAL_ID>
+  protected table: Dexie.Table<ENTITY, number>
 
-  constructor(table: Dexie.Table<ENTITY, LOCAL_ID>) {
+  constructor(table: Dexie.Table<ENTITY, number>) {
     this.table = table
   }
 
@@ -28,7 +27,7 @@ export default abstract class SynchronizableRepository<
     return this.table.where('id').equals(id).first()
   }
 
-  async getByLocalId(localId: LOCAL_ID): Promise<ENTITY | undefined> {
+  async getByLocalId(localId: number): Promise<ENTITY | undefined> {
     return this.table.where('localId').equals(localId).first()
   }
 
@@ -82,13 +81,13 @@ export default abstract class SynchronizableRepository<
     }
   }
 
-  async deleteByLocalId(localId: LOCAL_ID) {
+  async deleteByLocalId(localId: number) {
     if (localId) {
       this.table.delete(localId)
     }
   }
 
-  async deleteByLocalIds(localIds: LOCAL_ID[]) {
+  async deleteByLocalIds(localIds: number[]) {
     await this.table.bulkDelete(localIds)
   }
 
@@ -130,7 +129,7 @@ export default abstract class SynchronizableRepository<
     return this.table.where('id').anyOf(ids).delete()
   }
 
-  async deleteAllByLocalIds(ids: LOCAL_ID[]) {
+  async deleteAllByLocalIds(ids: number[]) {
     return this.table.where('localId').anyOf(ids).delete()
   }
 

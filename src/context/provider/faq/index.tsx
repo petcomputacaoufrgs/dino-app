@@ -9,7 +9,6 @@ import SynchronizableProvider from '../synchronizable'
 interface FaqContextType
   extends SynchronizableContextType<
     number,
-    number,
     FaqDataModel,
     FaqEntity,
     FaqRepositoryImpl,
@@ -24,7 +23,6 @@ const FaqContext = createContext<FaqContextType>({
 
 const FaqProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     FaqDataModel,
     FaqEntity,

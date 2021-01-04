@@ -14,7 +14,7 @@ import WebSocketConstants from '../constants/websocket/WebSocketConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import ConnectionService from '../services/connection/ConnectionService'
 import SyncService from '../services/sync/SyncService'
-import Synchronizer from '../sync/Synchronizer'
+import SynchronizationService from '../services/sync/SyncService'
 import GoogleContactWebSocketSubscriber from './contact/GoogleContactWebSocketSubscriber'
 import PhoneWebSocketSubscriber from './contact/PhoneWebSocketSubscriber'
 import FaqItemWebSocketSubscriber from './faq/FaqItemWebSocketSubscriber'
@@ -50,13 +50,12 @@ class WebSocketConnector {
     if (isAuthenticated) {
       try {
         const response = await AuthService.requestWebSocketAuthToken()
-        console.log(response)
         if (response && response.success) {
           const responseData = response.data
           const baseUrl = this.getSocketBaseURL(responseData.webSocketToken)
           this.socket = new SockJS(baseUrl)
           this.stompClient = Stomp.over(this.socket)
-          //this.muteConnectionLogs()
+          this.muteConnectionLogs()
           this.stompClient.connect({}, this.subscribe)
           this.socket.onclose = () => {
             this.handleWebSocketClosed()
@@ -82,7 +81,7 @@ class WebSocketConnector {
   }
 
   private handleWebSocketClosed = () => {
-    SyncService.setOffline()
+    SyncService.setNotSynced()
     ConnectionService.verify()
     this.tryToReconnect()
   }
@@ -108,7 +107,7 @@ class WebSocketConnector {
         if (!success) {
           this.tryToReconnect()
         } else {
-          Synchronizer.sync()
+          SynchronizationService.sync()
         }
       }, WebSocketConstants.DELAY_TO_RECONNECT)
     }

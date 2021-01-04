@@ -11,7 +11,6 @@ import UserSettingsService, {
 export interface UserSettingsContextType
   extends SynchronizableContextType<
     number,
-    number,
     UserSettingsDataModel,
     UserSettingsEntity,
     UserSettingsRepositoryImpl,
@@ -26,7 +25,6 @@ const UserSettingsContext = createContext<UserSettingsContextType>({
 
 const UserSettingsProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     UserSettingsDataModel,
     UserSettingsEntity,

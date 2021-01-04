@@ -7,7 +7,7 @@ import GoogleContactRepository, {
 } from '../../storage/database/contact/GoogleContactRepository'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import GoogleContactDataModel from '../../types/contact/api/GoogleContactDataModel'
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
@@ -15,14 +15,23 @@ import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import PhoneService from './PhoneService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class GoogleContactServiceImpl extends SynchronizableService<
-  number,
+export class GoogleContactServiceImpl extends AutoSynchronizableService<
   number,
   GoogleContactDataModel,
   GoogleContactEntity,
   GoogleContactRepositoryImpl
 > {
+  constructor() {
+    super(GoogleContactRepository, APIRequestMappingConstants.GOOGLE_CONTACT,
+      APIWebSocketDestConstants.GOOGLE_CONTACT_UPDATE, APIWebSocketDestConstants.GOOGLE_CONTACT_DELETE)
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return [ContactService]
+  }  
+
   async convertModelToEntity(
     model: GoogleContactDataModel
   ): Promise<GoogleContactEntity | undefined> {
@@ -245,9 +254,4 @@ export class GoogleContactServiceImpl extends SynchronizableService<
   }
 }
 
-export default new GoogleContactServiceImpl(
-  GoogleContactRepository,
-  APIRequestMappingConstants.GOOGLE_CONTACT,
-  APIWebSocketDestConstants.GOOGLE_CONTACT_UPDATE,
-  APIWebSocketDestConstants.GOOGLE_CONTACT_DELETE
-)
+export default new GoogleContactServiceImpl()

@@ -9,17 +9,26 @@ import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
-import SynchronizableService from '../synchronizable/SynchronizableService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import ContactService from './ContactService'
 import ContactView from '../../types/contact/view/ContactView'
+import BaseSynchronizableService from '../sync/BaseSynchronizableService'
 
-export class PhoneServiceImpl extends SynchronizableService<
-  number,
+export class PhoneServiceImpl extends AutoSynchronizableService<
   number,
   PhoneDataModel,
   PhoneEntity,
   PhoneRepositoryImpl
-> {
+> {  
+  constructor() {
+    super(PhoneRepository, APIRequestMappingConstants.PHONE, APIWebSocketDestConstants.PHONE_UPDATE, 
+      APIWebSocketDestConstants.PHONE_DELETE)
+  }
+
+  getDependencies(): BaseSynchronizableService[] {
+    return [ContactService]
+  }
+
   async convertModelToEntity(
     model: PhoneDataModel
   ): Promise<PhoneEntity | undefined> {
@@ -110,9 +119,4 @@ export class PhoneServiceImpl extends SynchronizableService<
   }
 }
 
-export default new PhoneServiceImpl(
-  PhoneRepository,
-  APIRequestMappingConstants.PHONE,
-  APIWebSocketDestConstants.PHONE_UPDATE,
-  APIWebSocketDestConstants.PHONE_DELETE
-)
+export default new PhoneServiceImpl()

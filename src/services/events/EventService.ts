@@ -3,10 +3,9 @@ import UserService from '../user/UserService'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import AuthService from '../auth/AuthService'
-import Synchronizer from '../../sync/Synchronizer'
+import SyncService from '../sync/SyncService'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
-import SyncService from '../sync/SyncService'
 import GoogleAgentService from '../../agent/GoogleAgentService'
 import UserDataService from './UserDataService'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
@@ -53,13 +52,13 @@ class EventService {
     if (isDinoConnected && isAuthenticated) {
       GoogleAgentService.refreshAuth()
       WebSocketConnector.connect()
-      Synchronizer.sync()
+      SyncService.sync()
     }
   }
 
   whenLogin = () => {
     CalendarService.addMocks()
-    Synchronizer.sync(true)
+    SyncService.sync()
     WebSocketConnector.connect()
     HistoryService.push(PathConstants.HOME)
   }
@@ -82,12 +81,12 @@ class EventService {
     const isAuthenticated = await AuthService.isAuthenticated()
     if (isDinoConnected && isAuthenticated) {
       WebSocketConnector.connect()
-      Synchronizer.sync()
+      SyncService.sync()
     }
   }
 
   whenConnectionLost = () => {
-    SyncService.setOffline()
+    SyncService.setNotSynced()
     WebSocketConnector.disconnect()
   }
 

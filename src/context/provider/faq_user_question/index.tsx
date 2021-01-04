@@ -11,7 +11,6 @@ import FaqUserQuestionService, {
 interface FaqUserQuestionContextType
   extends SynchronizableContextType<
     number,
-    number,
     FaqUserQuestionDataModel,
     FaqUserQuestionEntity,
     FaqUserQuestionRepositoryImpl,
@@ -26,7 +25,6 @@ const FaqUserQuestionContext = createContext<FaqUserQuestionContextType>({
 
 const FaqUserQuestionProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
-    number,
     number,
     FaqUserQuestionDataModel,
     FaqUserQuestionEntity,

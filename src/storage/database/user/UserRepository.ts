@@ -6,6 +6,10 @@ export class UserRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   UserEntity
-> {}
+> {
+  constructor() {
+    super(Database.user)
+  }
+}
 
-export default new UserRepositoryImpl(Database.user)
+export default new UserRepositoryImpl()

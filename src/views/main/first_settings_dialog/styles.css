@@ -1,3 +1,13 @@
+.first-settings {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.5;
+}
+
 .first-settings__dialog {
   min-width: 80%;
   min-height: 50%;

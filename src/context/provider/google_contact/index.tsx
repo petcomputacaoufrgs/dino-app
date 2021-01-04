@@ -8,7 +8,7 @@ import GoogleContactEntity from '../../../types/contact/database/GoogleContactEn
 import SynchronizableProvider from '../synchronizable'
 import SynchronizableContextType from '../synchronizable/context'
 
-export interface GoogleContactContextType
+interface GoogleContactContextType
   extends SynchronizableContextType<
     number,
     number,

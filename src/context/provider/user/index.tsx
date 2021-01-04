@@ -8,7 +8,7 @@ import UserEntity from '../../../types/user/database/UserEntity'
 import SynchronizableProvider from '../synchronizable'
 import SynchronizableContextType from '../synchronizable/context'
 
-export interface UserContextType
+interface UserContextType
   extends SynchronizableContextType<
     number,
     number,

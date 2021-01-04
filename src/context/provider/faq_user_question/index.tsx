@@ -8,7 +8,7 @@ import FaqUserQuestionService, {
   FaqUserQuestionServiceImpl,
 } from '../../../services/faq/FaqUserQuestionService'
 
-export interface FaqUserQuestionContextType
+interface FaqUserQuestionContextType
   extends SynchronizableContextType<
     number,
     number,
@@ -24,7 +24,7 @@ const FaqUserQuestionContext = createContext<FaqUserQuestionContextType>({
   data: [],
 })
 
-const FaqUserQuestionProvider: React.FC = ({ children }): JSX.Element =>
+const FaqUserQuestionProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

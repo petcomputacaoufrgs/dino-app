@@ -24,7 +24,7 @@ const GoogleScopeContext = createContext<GoogleScopeContextType>({
   data: [],
 })
 
-const GoogleScopeProvider: React.FC = ({ children }): JSX.Element =>
+const GoogleScopeProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

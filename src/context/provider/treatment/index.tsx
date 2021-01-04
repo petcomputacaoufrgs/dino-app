@@ -8,7 +8,7 @@ import TreatmentService, {
   TreatmentServiceImpl,
 } from '../../../services/treatment/TreatmentService'
 
-export interface TreatmentContextType
+interface TreatmentContextType
   extends SynchronizableContextType<
     number,
     number,

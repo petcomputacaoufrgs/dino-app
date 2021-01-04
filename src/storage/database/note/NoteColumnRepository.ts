@@ -6,6 +6,10 @@ export class NoteColumnRepositoryImpl extends SynchronizableRepository<
   number,
   number,
   NoteColumnEntity
-> {}
+> {
+  constructor() {
+    super(Database.noteColumn)
+  }
+}
 
-export default new NoteColumnRepositoryImpl(Database.noteColumn)
+export default new NoteColumnRepositoryImpl()

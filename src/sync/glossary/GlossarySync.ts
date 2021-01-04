@@ -10,6 +10,10 @@ class GlossarySync extends SynchronizableSync<
   GlossaryItemDataModel,
   GlossaryItemEntity,
   GlossaryRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(GlossaryServiceImpl)
+  }
+}
 
-export default new GlossarySync(GlossaryServiceImpl)
+export default new GlossarySync()

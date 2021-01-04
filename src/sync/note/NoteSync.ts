@@ -10,6 +10,10 @@ class NoteSync extends SynchronizableSync<
   NoteDataModel,
   NoteEntity,
   NoteRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(NoteServiceImpl)
+  }
+}
 
-export default new NoteSync(NoteServiceImpl)
+export default new NoteSync()

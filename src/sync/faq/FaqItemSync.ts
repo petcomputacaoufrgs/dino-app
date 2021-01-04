@@ -10,6 +10,10 @@ class FaqItemSync extends SynchronizableSync<
   FaqItemDataModel,
   FaqItemEntity,
   FaqItemRepositoryImpl
-> {}
+> {
+  constructor() {
+    super(FaqItemService)
+  }
+}
 
-export default new FaqItemSync(FaqItemService)
+export default new FaqItemSync()

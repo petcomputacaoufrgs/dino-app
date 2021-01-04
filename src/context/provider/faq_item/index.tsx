@@ -8,7 +8,7 @@ import FaqItemService, {
   FaqItemServiceImpl,
 } from '../../../services/faq/FaqItemService'
 
-export interface FaqItemContextType
+interface FaqItemContextType
   extends SynchronizableContextType<
     number,
     number,
@@ -24,7 +24,7 @@ const FaqItemContext = createContext<FaqItemContextType>({
   data: [],
 })
 
-const FaqItemProvider: React.FC = ({ children }): JSX.Element =>
+const FaqItemProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

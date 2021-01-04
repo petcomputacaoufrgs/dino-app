@@ -6,7 +6,7 @@ import { FaqRepositoryImpl } from '../../../storage/database/faq/FaqRepository'
 import FaqService, { FaqServiceImpl } from '../../../services/faq/FaqService'
 import SynchronizableProvider from '../synchronizable'
 
-export interface FaqContextType
+interface FaqContextType
   extends SynchronizableContextType<
     number,
     number,
@@ -22,7 +22,7 @@ const FaqContext = createContext<FaqContextType>({
   data: [],
 })
 
-const FaqProvider: React.FC = ({ children }): JSX.Element =>
+const FaqProvider: React.FC = ({ children }) =>
   SynchronizableProvider<
     number,
     number,

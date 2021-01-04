@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import GoogleOAuth2Service from '../../../services/auth/google/GoogleOAuth2Service'
 
-export interface GoogleAuth2ContextType {
+interface GoogleAuth2ContextType {
   loading: boolean
 }
 

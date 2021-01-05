@@ -5,11 +5,10 @@ import LogAppErrorSyncLocalStorage from '../../storage/local_storage/log_app_err
 import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListModel'
 import LogAppErrorRepository from '../../storage/database/log_app_error/LogAppErrorRepository'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
-import UserDataService from '../events/UserDataService'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
-class LogAppErrorService extends BaseSynchronizableService implements UserDataService {
-  getDependencies(): BaseSynchronizableService[] {
+class LogAppErrorService extends SynchronizableService {
+  getDependencies(): SynchronizableService[] {
     return []
   }
 

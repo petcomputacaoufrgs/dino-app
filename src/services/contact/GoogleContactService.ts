@@ -15,7 +15,7 @@ import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import PhoneService from './PhoneService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class GoogleContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -28,7 +28,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
       APIWebSocketDestConstants.GOOGLE_CONTACT_UPDATE, APIWebSocketDestConstants.GOOGLE_CONTACT_DELETE)
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return [ContactService]
   }  
 

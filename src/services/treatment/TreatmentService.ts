@@ -6,7 +6,7 @@ import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentRepository, {
   TreatmentRepositoryImpl,
 } from '../../storage/database/treatment/TreatmentRepository'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class TreatmentServiceImpl extends AutoSynchronizableService<
   number,
@@ -23,7 +23,7 @@ export class TreatmentServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return []
   }
   

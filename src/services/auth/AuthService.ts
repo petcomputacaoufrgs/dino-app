@@ -24,8 +24,19 @@ import AuthRepository from '../../storage/database/auth/AuthRepository'
 import DateUtils from '../../utils/DateUtils'
 import AuthEntity from '../../types/auth/database/AuthEntity'
 import AuthContextUpdater from '../../context/updater/AuthContextUpdater'
+import AuthenticatedService from './AuthenticatedService'
 
 class AuthService {
+  private authenticatedServices: AuthenticatedService[]
+
+  constructor() {
+    this.authenticatedServices = []
+  }
+
+  subscribeAuthenticatedService = (service: AuthenticatedService) => {
+    this.authenticatedServices.push(service)
+  }
+
   requestGoogleLogin = async (forceConsent: boolean, email?: string): Promise<[number, string | undefined]> => {
     try {
       const code = await GoogleOAuth2Service.requestLogin(forceConsent, email)
@@ -140,6 +151,12 @@ class AuthService {
 
   logout = async () => {
     await AuthRepository.clear()
+
+    const onLogoutCallbacks = this.authenticatedServices.map(service => {
+      return service.onLogout()
+    })
+
+    await Promise.all(onLogoutCallbacks)
 
     AuthContextUpdater.update()
 

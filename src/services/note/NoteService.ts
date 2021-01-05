@@ -9,7 +9,7 @@ import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 import NoteColumnService from './NoteColumnService'
 
 export class NoteServiceImpl extends AutoSynchronizableService<
@@ -27,7 +27,7 @@ export class NoteServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return [NoteColumnService]
   }
   

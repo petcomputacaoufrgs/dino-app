@@ -11,7 +11,7 @@ import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from './FaqItemService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../treatment/TreatmentService'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class FaqServiceImpl extends AutoSynchronizableService<
   number,
@@ -28,7 +28,7 @@ export class FaqServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return [TreatmentService]
   }
   

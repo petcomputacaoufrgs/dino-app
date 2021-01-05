@@ -11,7 +11,7 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class UserServiceImpl extends AutoSynchronizableService<
   number,
@@ -28,7 +28,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return []
   }
 

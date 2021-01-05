@@ -1,18 +1,18 @@
 import SyncResolve from "../../types/sync/SyncResolve"
+import AuthenticatedService from "../auth/AuthenticatedService"
 import SyncService from "./SyncService"
 
-//TODO Conservar estado de sincronizado
-export default abstract class BaseSynchronizableService {
-  /**
-   * @description Function that performs data synchronization with the API
-   */
-  protected abstract doSync(): Promise<boolean>
-
+export default abstract class SynchronizableService extends AuthenticatedService {
   /**
    * @description Return a list of dependencies for synchronization.
    * A dependencie occurs when an synchronizable entity has reference for another that needs to be synchronized first
    */
-  abstract getDependencies(): BaseSynchronizableService[]
+  abstract getDependencies(): SynchronizableService[]
+
+  /**
+   * @description Function that performs data synchronization with the API
+   */
+  protected abstract doSync(): Promise<boolean>
 
   private isSynchronizing: boolean
 
@@ -21,9 +21,10 @@ export default abstract class BaseSynchronizableService {
   private resolves: SyncResolve[]
   
   constructor() {
+    super()
     this.isSynchronizing = false
     this.resolves = []
-    this.subscribe()
+    this.subscribeInSyncService()
   }
 
   cleanResult = () => {
@@ -47,7 +48,7 @@ export default abstract class BaseSynchronizableService {
     } 
   }
 
-  private subscribe = () => {
+  private subscribeInSyncService = () => {
     window.addEventListener('load', () => { 
       SyncService.subscribeService(this)
     })

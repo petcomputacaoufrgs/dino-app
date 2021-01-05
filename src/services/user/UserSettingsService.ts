@@ -18,7 +18,7 @@ import EN from '../../constants/languages/EN'
 import { UserSettingsContextType } from '../../context/provider/user_settings/index'
 import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class UserSettingsServiceImpl extends AutoSynchronizableService<
   number,
@@ -35,7 +35,7 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return [TreatmentService]
   }
   

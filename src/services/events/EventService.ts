@@ -1,47 +1,15 @@
 import ConnectionService from '../connection/ConnectionService'
-import UserService from '../user/UserService'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import AuthService from '../auth/AuthService'
 import SyncService from '../sync/SyncService'
 import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
-import GoogleAgentService from '../../agent/GoogleAgentService'
-import UserDataService from './UserDataService'
-import GoogleScopeService from '../auth/google/GoogleScopeService'
-import GoogleContactService from '../contact/GoogleContactService'
-import NoteColumnService from '../note/NoteColumnService'
-import UserSettingsService from '../user/UserSettingsService'
-import NoteService from '../note/NoteService'
-import GlossaryService from '../glossary/GlossaryService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import ContactService from '../contact/ContactService'
-import PhoneService from '../contact/PhoneService'
-import FaqService from '../faq/FaqService'
-import FaqItemService from '../faq/FaqItemService'
-import FaqUserQuestionService from '../faq/FaqUserQuestionService'
-import TreatmentService from '../treatment/TreatmentService'
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
+import sleep from '../../utils/SleepUtils'
 
 class EventService {
-  userDataServices: UserDataService[] = [
-    UserService,
-    GoogleScopeService,
-    UserSettingsService,
-    NoteService,
-    NoteColumnService,
-    GlossaryService,
-    ContactService,
-    PhoneService,
-    GoogleContactService,
-    FaqService,
-    FaqItemService,
-    FaqUserQuestionService,
-    CalendarService,
-    TreatmentService,
-    LogAppErrorService,
-  ]
-
   constructor() {
     ConnectionService.addEventListener(this.connectionCallback)
   }
@@ -50,24 +18,21 @@ class EventService {
     const isDinoConnected = await ConnectionService.isDinoConnected()
     const isAuthenticated = await AuthService.isAuthenticated()
     if (isDinoConnected && isAuthenticated) {
-      GoogleAgentService.refreshAuth()
       WebSocketConnector.connect()
+      await SyncService.sync()
+      await sleep(1 * 30000)
       SyncService.sync()
     }
   }
 
   whenLogin = () => {
     CalendarService.addMocks()
-    SyncService.sync()
     WebSocketConnector.connect()
+    SyncService.sync()
     HistoryService.push(PathConstants.HOME)
   }
 
   whenLogout = async () => {
-    const cleanPromises = this.userDataServices.map((service, index) => {
-      return service.onLogout()
-    })
-    await Promise.all(cleanPromises)
     WebSocketConnector.disconnect()
     HistoryService.push(PathConstants.LOGIN)
   }

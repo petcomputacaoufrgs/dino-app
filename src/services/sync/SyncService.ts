@@ -1,42 +1,38 @@
 import AuthService from '../auth/AuthService'
-import BaseSynchronizableService from './BaseSynchronizableService'
+import SynchronizableService from './SynchronizableService'
 import SyncTree, { SyncTreeNode } from './SyncTree'
 import SyncStateEnum from '../../types/sync/SyncStateEnum'
 import SyncContextUpdater from '../../context/updater/SyncContextUpdater'
 import SyncResolve from '../../types/sync/SyncResolve'
 
-class SyncService {
-  /*private executionGrups: BaseSynchronizableService[][][] = [
-    [[UserService]],
-    [[GoogleScopeService]],
-    [
-      [TreatmentService],
-      [FaqService, UserService],
-      [FaqItemService, FaqUserQuestionService],
-    ],
-    [[GlossaryService]],
-    [[NoteColumnService], [NoteService]],
-    [[ContactService], [PhoneService], [GoogleContactService]],
-    [[LogAppErrorService]],
-  ]*/
+const DELAY_RETRY_IN_MIN = 2
 
+class SyncService {
   private tree: SyncTree
 
-  private subscribedServices: BaseSynchronizableService[]
+  private subscribedServices: SynchronizableService[]
 
   private syncState: SyncStateEnum
 
   private resolves: SyncResolve[]
+
+  private retryTimeout: NodeJS.Timeout | undefined
 
   constructor() {
     this.tree = new SyncTree()
     this.subscribedServices = []
     this.syncState = SyncStateEnum.SYNCED
     this.resolves = []
+    this.retryTimeout = undefined
   }
 
   sync = async (): Promise<boolean> => {
     const isAuthenticated = await AuthService.isAuthenticated()
+
+    if (this.retryTimeout !== undefined) {
+      clearTimeout(this.retryTimeout)
+      this.retryTimeout = undefined
+    }
 
     if (isAuthenticated) {
       if (this.syncState === SyncStateEnum.SYNCHRONIZING) {
@@ -44,23 +40,14 @@ class SyncService {
           this.resolves.push(resolve)
         })
       } else {
-        this.setSynchronizing()
-        const result: boolean = await this.syncTree()
-        if (result) {
-          this.setSynced()
-        } else {
-          //TODO Try again
-          this.setNotSynced()
-        }
-        this.resolveAllAfterReturn(result)
-        return result
+        return this.doSync()
       }
     }
 
     return true
   }
 
-  subscribeService = (service: BaseSynchronizableService) => {
+  subscribeService = (service: SynchronizableService) => {
     this.subscribedServices.push(service)
     this.tree.add(service)
   }
@@ -72,6 +59,23 @@ class SyncService {
   setNotSynced = () => {
     this.syncState = SyncStateEnum.NOT_SYNCED
     SyncContextUpdater.update()
+  }
+
+  private doSync = async (): Promise<boolean> => {
+    this.setSynchronizing()
+    const result: boolean = await this.syncTree()
+    if (result) {
+      this.setSynced()
+    } else {
+      this.setNotSynced()
+      this.retrySync()
+    }
+    this.resolveAllAfterReturn(result)
+    return result
+  }
+
+  private retrySync = () => {
+    this.retryTimeout = setTimeout(() => this.sync(), DELAY_RETRY_IN_MIN * 60000)
   }
 
   private resolveAllAfterReturn = (result: boolean) => {

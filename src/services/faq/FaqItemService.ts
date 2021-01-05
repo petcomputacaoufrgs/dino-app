@@ -9,7 +9,7 @@ import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import StringUtils from '../../utils/StringUtils'
 import FaqEntity from '../../types/faq/database/FaqEntity'
 import FaqService from './FaqService'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class FaqItemServiceImpl extends AutoSynchronizableService<
   number,
@@ -26,7 +26,7 @@ export class FaqItemServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return [FaqService]
   }
 

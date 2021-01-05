@@ -1,7 +1,7 @@
-import BaseSynchronizableService from "./BaseSynchronizableService"
+import SynchronizableService from "./SynchronizableService"
 
 export interface SyncTreeNode {
-    service: BaseSynchronizableService
+    service: SynchronizableService
     dependencies: SyncTreeNode[]
 }
   
@@ -12,7 +12,7 @@ class SyncTree {
       this.root = []
     }
   
-    add = (service: BaseSynchronizableService) => {
+    add = (service: SynchronizableService) => {
       const existentNode = this.findNode(service, this.root)
       const dependencies = service.getDependencies()
       if (existentNode && dependencies.length > 0) {
@@ -22,7 +22,7 @@ class SyncTree {
       }
     }
 
-    private addDependencies = (existentNode: SyncTreeNode, dependencies: BaseSynchronizableService[]) => {  
+    private addDependencies = (existentNode: SyncTreeNode, dependencies: SynchronizableService[]) => {  
         dependencies.forEach(dependency => {
           const dependencyNode = this.findNode(dependency, this.root)
   
@@ -38,7 +38,7 @@ class SyncTree {
         })
     }
   
-    private addNew = (service: BaseSynchronizableService) => {
+    private addNew = (service: SynchronizableService) => {
       const dependencies = service.getDependencies()
 
       if (dependencies.length > 0) {
@@ -64,14 +64,14 @@ class SyncTree {
       }
     }
   
-    private addNodeOnRoot = (service: BaseSynchronizableService, dependencies?: SyncTreeNode[]) => {
+    private addNodeOnRoot = (service: SynchronizableService, dependencies?: SyncTreeNode[]) => {
       this.root.push({
         dependencies: dependencies ? dependencies : [],
         service: service
       })
     }
   
-    private findNode = (service: BaseSynchronizableService, nodes: SyncTreeNode[]): SyncTreeNode | undefined => {
+    private findNode = (service: SynchronizableService, nodes: SyncTreeNode[]): SyncTreeNode | undefined => {
       const childrens: SyncTreeNode[] = []
     
       const serviceNode = nodes.find(node => {
@@ -90,7 +90,7 @@ class SyncTree {
       return childrens.length > 0 ? this.findNode(service, childrens) : undefined
     }
 
-    private removeNodeFromRoot = (service: BaseSynchronizableService) => {
+    private removeNodeFromRoot = (service: SynchronizableService) => {
         const index = this.root.findIndex(node => node.service === service)
         if (index >= 0) {
           this.root.splice(index, 1)

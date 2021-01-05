@@ -10,7 +10,7 @@ import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import StringUtils from '../../utils/StringUtils'
 import ContactView from '../../types/contact/view/ContactView'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
 import GoogleContactService from './GoogleContactService'
 
@@ -25,7 +25,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
       APIWebSocketDestConstants.CONTACT_UPDATE, APIWebSocketDestConstants.CONTACT_DELETE)
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return []
   }
 

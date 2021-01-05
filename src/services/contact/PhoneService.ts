@@ -12,7 +12,7 @@ import ArrayUtils from '../../utils/ArrayUtils'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import ContactService from './ContactService'
 import ContactView from '../../types/contact/view/ContactView'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
   number,
@@ -25,7 +25,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
       APIWebSocketDestConstants.PHONE_DELETE)
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return [ContactService]
   }
 

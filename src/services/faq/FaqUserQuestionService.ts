@@ -7,7 +7,7 @@ import FaqUserQuestionRepository, {
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqService from './FaqService'
-import BaseSynchronizableService from '../sync/BaseSynchronizableService'
+import SynchronizableService from '../sync/SynchronizableService'
 
 export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
   number,
@@ -24,7 +24,7 @@ export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return [FaqService]
   }
 

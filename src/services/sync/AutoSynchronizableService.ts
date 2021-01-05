@@ -20,8 +20,7 @@ import SynchronizableDataLocalIdModel from '../../types/synchronizable/api/Synch
 import SynchronizableSyncModel from '../../types/synchronizable/api/request/SynchronizableSyncModel'
 import SynchronizableSyncResponseModel from '../../types/synchronizable/api/response/SynchronizableSyncResponseModel'
 import DateUtils from '../../utils/DateUtils'
-import UserDataService from '../events/UserDataService'
-import BaseSynchronizableService from './BaseSynchronizableService'
+import SynchronizableService from './SynchronizableService'
 
 /**
  * @description Generic service with basic methods (save and delete) that auto synchronize entity with API
@@ -36,7 +35,7 @@ export default abstract class AutoSynchronizableService<
   DATA_MODEL extends SynchronizableDataLocalIdModel<ID>,
   ENTITY extends SynchronizableEntity<ID>,
   REPOSITORY extends SynchronizableRepository<ID, ENTITY>
-> extends BaseSynchronizableService implements UserDataService {
+> extends SynchronizableService {
   protected webSocketUpdatePath: string
   protected webSocketDeletePath: string
   protected requestMapping: string
@@ -87,7 +86,7 @@ export default abstract class AutoSynchronizableService<
   /**
    * @description Function called on user logout, can be used to clean user data
    */
-  async onLogout(): Promise<void> {
+  onLogout = async (): Promise<void> => {
     return this.localClear()
   }
 

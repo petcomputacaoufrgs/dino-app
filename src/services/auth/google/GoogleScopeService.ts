@@ -11,7 +11,7 @@ import SynchronizableWSDeleteModel from '../../../types/synchronizable/api/web_s
 import { GoogleScopeContextType } from '../../../context/provider/google_scope'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
-import BaseSynchronizableService from '../../sync/BaseSynchronizableService'
+import SynchronizableService from '../../sync/SynchronizableService'
 
 export class GoogleScopeServiceImpl extends AutoSynchronizableService<
   number,
@@ -24,7 +24,7 @@ export class GoogleScopeServiceImpl extends AutoSynchronizableService<
       APIWebSocketDestConstants.GOOGLE_SCOPE_UPDATE, APIWebSocketDestConstants.GOOGLE_SCOPE_DELETE)
   }
 
-  getDependencies(): BaseSynchronizableService[] {
+  getDependencies(): SynchronizableService[] {
     return []
   }
 

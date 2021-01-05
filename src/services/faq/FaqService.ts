@@ -31,6 +31,7 @@ export class FaqServiceImpl extends AutoSynchronizableService<
   getDependencies(): BaseSynchronizableService[] {
     return [TreatmentService]
   }
+  
   async convertModelToEntity(
     model: FaqDataModel
   ): Promise<FaqEntity | undefined> {

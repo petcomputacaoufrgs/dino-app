@@ -1,12 +1,12 @@
 import BaseSynchronizableService from "./BaseSynchronizableService"
 
-export interface SynchronizationNode {
+export interface SyncTreeNode {
     service: BaseSynchronizableService
-    dependencies: SynchronizationNode[]
+    dependencies: SyncTreeNode[]
 }
   
-class SynchronizationTree {
-    root: SynchronizationNode[]
+class SyncTree {
+    root: SyncTreeNode[]
   
     constructor() {
       this.root = []
@@ -14,15 +14,15 @@ class SynchronizationTree {
   
     add = (service: BaseSynchronizableService) => {
       const existentNode = this.findNode(service, this.root)
-  
-      if (existentNode && existentNode.dependencies.length > 0) {
-        this.addDependencies(existentNode, service.getDependencies())
+      const dependencies = service.getDependencies()
+      if (existentNode && dependencies.length > 0) {
+        this.addDependencies(existentNode, dependencies)
       } else {
         this.addNew(service)
       }
     }
 
-    private addDependencies = (existentNode: SynchronizationNode, dependencies: BaseSynchronizableService[]) => {  
+    private addDependencies = (existentNode: SyncTreeNode, dependencies: BaseSynchronizableService[]) => {  
         dependencies.forEach(dependency => {
           const dependencyNode = this.findNode(dependency, this.root)
   
@@ -42,7 +42,7 @@ class SynchronizationTree {
       const dependencies = service.getDependencies()
 
       if (dependencies.length > 0) {
-        const dependencyNodes: SynchronizationNode[] = []
+        const dependencyNodes: SyncTreeNode[] = []
   
         dependencies.forEach(dependency => {
           const dependencyNode = this.findNode(dependency, this.root)
@@ -64,18 +64,18 @@ class SynchronizationTree {
       }
     }
   
-    private addNodeOnRoot = (service: BaseSynchronizableService, dependencies?: SynchronizationNode[]) => {
+    private addNodeOnRoot = (service: BaseSynchronizableService, dependencies?: SyncTreeNode[]) => {
       this.root.push({
         dependencies: dependencies ? dependencies : [],
         service: service
       })
     }
   
-    private findNode = (service: BaseSynchronizableService, nodes: SynchronizationNode[]): SynchronizationNode | undefined => {
-      const childrens: SynchronizationNode[] = []
+    private findNode = (service: BaseSynchronizableService, nodes: SyncTreeNode[]): SyncTreeNode | undefined => {
+      const childrens: SyncTreeNode[] = []
     
       const serviceNode = nodes.find(node => {
-        if (node.service === service) {
+        if (Object.is(node.service, service)) {
           return true
         }
     
@@ -98,4 +98,4 @@ class SynchronizationTree {
     }
 }
 
-export default SynchronizationTree
+export default SyncTree

@@ -1,10 +1,11 @@
 import AuthService from '../auth/AuthService'
 import BaseSynchronizableService from './BaseSynchronizableService'
-import SynchronizationTree, { SynchronizationNode } from './SynchTree'
+import SyncTree, { SyncTreeNode } from './SyncTree'
 import SyncStateEnum from '../../types/sync/SyncStateEnum'
 import SyncContextUpdater from '../../context/updater/SyncContextUpdater'
+import SyncResolve from '../../types/sync/SyncResolve'
 
-class SynchronizationService {
+class SyncService {
   /*private executionGrups: BaseSynchronizableService[][][] = [
     [[UserService]],
     [[GoogleScopeService]],
@@ -19,66 +20,96 @@ class SynchronizationService {
     [[LogAppErrorService]],
   ]*/
 
-  private tree: SynchronizationTree
+  private tree: SyncTree
 
-  private synchronizationState: SyncStateEnum
+  private subscribedServices: BaseSynchronizableService[]
+
+  private syncState: SyncStateEnum
+
+  private resolves: SyncResolve[]
 
   constructor() {
-    this.tree = new SynchronizationTree()
-    this.synchronizationState = SyncStateEnum.SYNCED
+    this.tree = new SyncTree()
+    this.subscribedServices = []
+    this.syncState = SyncStateEnum.SYNCED
+    this.resolves = []
   }
 
-  sync = async () => {
+  sync = async (): Promise<boolean> => {
     const isAuthenticated = await AuthService.isAuthenticated()
 
     if (isAuthenticated) {
-      this.setSynchronizing()
-      const result: boolean = await this.syncTree()
-      if (result) {
-        this.setSynced()
+      if (this.syncState === SyncStateEnum.SYNCHRONIZING) {
+        return new Promise<boolean>(resolve => {
+          this.resolves.push(resolve)
+        })
       } else {
-        //TODO Try again
-        this.setNotSynced()
+        this.setSynchronizing()
+        const result: boolean = await this.syncTree()
+        if (result) {
+          this.setSynced()
+        } else {
+          //TODO Try again
+          this.setNotSynced()
+        }
+        this.resolveAllAfterReturn(result)
+        return result
       }
-
-      console.log(this.synchronizationState)
     }
+
+    return true
   }
 
   subscribeService = (service: BaseSynchronizableService) => {
+    this.subscribedServices.push(service)
     this.tree.add(service)
   }
 
   getState = () => {
-    return this.synchronizationState
+    return this.syncState
   }
 
   setNotSynced = () => {
-    this.synchronizationState = SyncStateEnum.NOT_SYNCED
+    this.syncState = SyncStateEnum.NOT_SYNCED
     SyncContextUpdater.update()
   }
 
+  private resolveAllAfterReturn = (result: boolean) => {
+    setTimeout(() => this.resolveAll(result), 0)
+  }
+
+  private resolveAll(result: boolean) {
+    this.resolves.forEach(resolve => resolve(result))
+    this.cleanResolveList()
+  }
+
+  private cleanResolveList() {
+    this.resolves = []
+  }
+
   private setSynchronizing = () => {
-    this.synchronizationState = SyncStateEnum.SYNCHRONIZING
+    this.syncState = SyncStateEnum.SYNCHRONIZING
     SyncContextUpdater.update()
   }
 
   private setSynced = () => {
-    this.synchronizationState = SyncStateEnum.SYNCED
+    this.syncState = SyncStateEnum.SYNCED
     SyncContextUpdater.update()
   }
 
-  private syncTree = (): Promise<boolean> => {
-    return this.syncNodes(this.tree.root)
+  private syncTree = async (): Promise<boolean> => {
+    const result = await this.syncNodes(this.tree.root)
+    this.cleanServicesResults()
+    return result
   }
 
-  private syncNodes = async (nodes: SynchronizationNode[]): Promise<boolean> => {
+  private syncNodes = async (nodes: SyncTreeNode[]): Promise<boolean> => {
     const executionList = nodes.map(node => this.syncNode(node))
     const results = await Promise.all(executionList)
-    return results.some(result => !result)
+    return results.every(result => result)
   }   
 
-  private syncNode = async (node: SynchronizationNode): Promise<boolean> => {
+  private syncNode = async (node: SyncTreeNode): Promise<boolean> => {
     if (node.dependencies.length > 0) {
       const executionList = node.dependencies.map(node => this.syncNode(node))
       const results = await Promise.all(executionList)
@@ -86,18 +117,14 @@ class SynchronizationService {
         return false
       }
     }
-    /*
-    console.log("=======================")
-    console.log("start syncing")
-    console.log(node.service)
-    console.log("=======================")*/
+    
     const result = await node.service.sync()
-    /*console.log("=======================")
-    console.log("stop syncing")
-    console.log(node.service)
-    console.log("=======================")*/
     return result
+  }
+
+  private cleanServicesResults = () => {
+    this.subscribedServices.forEach(service => service.cleanResult())
   }
 }
 
-export default new SynchronizationService()
+export default new SyncService()

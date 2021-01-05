@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import SynchronizationService from '../../../services/sync/SyncService'
+import SyncService from '../../../services/sync/SyncService'
 import SyncStateEnum from '../../../types/sync/SyncStateEnum'
 import SyncContextUpdater from '../../updater/SyncContextUpdater'
 
@@ -15,13 +15,13 @@ const SyncProvider: React.FC = (props) => {
   const [state, setState] = useState(SyncStateEnum.SYNCED)
 
   useEffect(() => {
-    const state = SynchronizationService.getState()
+    const state = SyncService.getState()
     setState(state)
   }, [])
 
   useEffect(() => {
     const updateData = () => {
-      const state = SynchronizationService.getState()
+      const state = SyncService.getState()
       setState(state)
     }
 

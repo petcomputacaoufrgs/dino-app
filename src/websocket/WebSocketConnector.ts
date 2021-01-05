@@ -14,7 +14,6 @@ import WebSocketConstants from '../constants/websocket/WebSocketConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import ConnectionService from '../services/connection/ConnectionService'
 import SyncService from '../services/sync/SyncService'
-import SynchronizationService from '../services/sync/SyncService'
 import GoogleContactWebSocketSubscriber from './contact/GoogleContactWebSocketSubscriber'
 import PhoneWebSocketSubscriber from './contact/PhoneWebSocketSubscriber'
 import FaqItemWebSocketSubscriber from './faq/FaqItemWebSocketSubscriber'
@@ -107,7 +106,7 @@ class WebSocketConnector {
         if (!success) {
           this.tryToReconnect()
         } else {
-          SynchronizationService.sync()
+          SyncService.sync()
         }
       }, WebSocketConstants.DELAY_TO_RECONNECT)
     }

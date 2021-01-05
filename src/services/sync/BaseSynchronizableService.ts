@@ -1,6 +1,5 @@
+import SyncResolve from "../../types/sync/SyncResolve"
 import SyncService from "./SyncService"
-
-type SyncResolve =  (value: boolean | PromiseLike<boolean>) => void
 
 //TODO Conservar estado de sincronizado
 export default abstract class BaseSynchronizableService {
@@ -17,6 +16,8 @@ export default abstract class BaseSynchronizableService {
 
   private isSynchronizing: boolean
 
+  private result: boolean | undefined
+
   private resolves: SyncResolve[]
   
   constructor() {
@@ -25,28 +26,31 @@ export default abstract class BaseSynchronizableService {
     this.subscribe()
   }
 
-  subscribe = () => {
-    window.addEventListener('load', () => SyncService.subscribeService(this))
+  cleanResult = () => {
+    this.result = undefined
   }
 
   async sync(): Promise<boolean> {
-    if (this.isSynchronizing) {
+    if (this.result !== undefined) {
+      return this.result
+    } else if (this.isSynchronizing) {
       return new Promise<boolean>(resolve => {
         this.resolves.push(resolve)
       })
     } else {
       this.isSynchronizing = true
-
       const result = await this.doSync()
-
-      console.log(this)
-
+      this.result = result
       this.isSynchronizing = false
-      
       this.resolveAllAfterReturn(result)
-      
       return result
     } 
+  }
+
+  private subscribe = () => {
+    window.addEventListener('load', () => { 
+      SyncService.subscribeService(this)
+    })
   }
 
   private resolveAllAfterReturn = (result: boolean) => {

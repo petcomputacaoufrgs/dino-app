@@ -10,19 +10,19 @@ class ErrorHandlerService {
   log = async (
     event: ErrorEvent
   ) => {
-    const isAuthenticated = await AuthService.isAuthenticated()
-    if (event && isAuthenticated) {
-      const errorModel: LogAppErrorModel = {
-        error: event.error,
-        file: event.filename,
-        title: event.message,
-        date: new Date(),
+    if (event) {
+      const isAuthenticated = await AuthService.isAuthenticated()
+      if (isAuthenticated) {
+        const errorModel: LogAppErrorModel = {
+          error: event.error,
+          file: event.filename,
+          title: event.message,
+          date: new Date(),
+        }
+  
+        EventService.whenError(errorModel)
       }
-
-      EventService.whenError(errorModel)
     }
-
-    return process.env.NODE_ENV === 'production' ? true : true
   }
 }
 

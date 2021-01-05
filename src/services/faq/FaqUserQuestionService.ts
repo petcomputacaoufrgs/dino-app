@@ -8,6 +8,7 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
 
 export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
   number,
@@ -19,8 +20,8 @@ export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
     super(
       FaqUserQuestionRepository,
       APIRequestMappingConstants.FAQ_USER_QUESTION,
-      APIWebSocketDestConstants.FAQ_USER_QUESTION_UPDATE,
-      APIWebSocketDestConstants.FAQ_USER_QUESTION_DELETE
+      WebSocketQueueURLService,
+      APIWebSocketDestConstants.FAQ_USER_QUESTION
     )
   }
 

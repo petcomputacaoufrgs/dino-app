@@ -10,7 +10,7 @@ import AuthService from '../services/auth/AuthService'
 import APIWebSocketDestConstants from '../constants/api/APIWebSocketDestConstants'
 import DinoAPIHeaderConstants from '../constants/api/APIHeaderConstants'
 import NoteColumnWebSocketSubscriber from './note/NoteColumnWebSocketSubscriber'
-import WebSocketConstants from '../constants/websocket/WebSocketConstants'
+import WebSocketConstants from '../constants/api/WebSocketConstants'
 import LogAppErrorService from '../services/log_app_error/LogAppErrorService'
 import ConnectionService from '../services/connection/ConnectionService'
 import SyncService from '../services/sync/SyncService'
@@ -54,7 +54,7 @@ class WebSocketConnector {
           const baseUrl = this.getSocketBaseURL(responseData.webSocketToken)
           this.socket = new SockJS(baseUrl)
           this.stompClient = Stomp.over(this.socket)
-          this.muteConnectionLogs()
+          //this.muteConnectionLogs()
           this.stompClient.connect({}, this.subscribe)
           this.socket.onclose = () => {
             this.handleWebSocketClosed()

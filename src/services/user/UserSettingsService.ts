@@ -19,6 +19,7 @@ import { UserSettingsContextType } from '../../context/provider/user_settings/in
 import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
 
 export class UserSettingsServiceImpl extends AutoSynchronizableService<
   number,
@@ -30,8 +31,8 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
     super(
       UserSettingsRepository,
       APIRequestMappingConstants.USER_SETTINGS,
-      APIWebSocketDestConstants.USER_SETTINGS_UPDATE,
-      APIWebSocketDestConstants.USER_SETTINGS_DELETE
+      WebSocketQueueURLService,
+      APIWebSocketDestConstants.USER_SETTINGS
     )
   }
 

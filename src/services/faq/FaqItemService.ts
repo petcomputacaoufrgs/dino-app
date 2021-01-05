@@ -10,6 +10,7 @@ import StringUtils from '../../utils/StringUtils'
 import FaqEntity from '../../types/faq/database/FaqEntity'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketTopicURLService from '../websocket/WebSocketTopicURLService'
 
 export class FaqItemServiceImpl extends AutoSynchronizableService<
   number,
@@ -21,8 +22,8 @@ export class FaqItemServiceImpl extends AutoSynchronizableService<
     super(
       FaqItemRepository,
       APIRequestMappingConstants.FAQ_ITEM,
-      APIWebSocketDestConstants.FAQ_ITEM_UPDATE,
-      APIWebSocketDestConstants.FAQ_ITEM_DELETE
+      WebSocketTopicURLService,
+      APIWebSocketDestConstants.FAQ_ITEM
     )
   }
 

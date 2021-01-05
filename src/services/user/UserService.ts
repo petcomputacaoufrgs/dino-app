@@ -12,6 +12,7 @@ import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotos
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
 
 export class UserServiceImpl extends AutoSynchronizableService<
   number,
@@ -23,8 +24,8 @@ export class UserServiceImpl extends AutoSynchronizableService<
     super(
       UserRepository,
       APIRequestMappingConstants.USER,
-      APIWebSocketDestConstants.USER_UPDATE,
-      APIWebSocketDestConstants.USER_DELETE
+      WebSocketQueueURLService,
+      APIWebSocketDestConstants.USER
     )
   }
 

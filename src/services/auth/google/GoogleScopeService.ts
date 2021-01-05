@@ -12,6 +12,7 @@ import { GoogleScopeContextType } from '../../../context/provider/google_scope'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
+import WebSocketQueueURLService from '../../websocket/WebSocketQueueURLService'
 
 export class GoogleScopeServiceImpl extends AutoSynchronizableService<
   number,
@@ -20,8 +21,12 @@ export class GoogleScopeServiceImpl extends AutoSynchronizableService<
   GoogleScopeRepositoryImpl
 > {
   constructor() {
-    super(GoogleScopeRepository, APIRequestMappingConstants.GOOGLE_SCOPE,
-      APIWebSocketDestConstants.GOOGLE_SCOPE_UPDATE, APIWebSocketDestConstants.GOOGLE_SCOPE_DELETE)
+    super(
+      GoogleScopeRepository, 
+      APIRequestMappingConstants.GOOGLE_SCOPE,
+      WebSocketQueueURLService,
+      APIWebSocketDestConstants.GOOGLE_SCOPE
+    )
   }
 
   getDependencies(): SynchronizableService[] {

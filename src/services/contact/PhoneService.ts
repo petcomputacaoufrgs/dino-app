@@ -13,6 +13,7 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import ContactService from './ContactService'
 import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
   number,
@@ -21,8 +22,12 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
   PhoneRepositoryImpl
 > {  
   constructor() {
-    super(PhoneRepository, APIRequestMappingConstants.PHONE, APIWebSocketDestConstants.PHONE_UPDATE, 
-      APIWebSocketDestConstants.PHONE_DELETE)
+    super(
+      PhoneRepository, 
+      APIRequestMappingConstants.PHONE, 
+      WebSocketQueueURLService,
+      APIWebSocketDestConstants.PHONE
+    )
   }
 
   getDependencies(): SynchronizableService[] {

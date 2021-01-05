@@ -7,6 +7,7 @@ import TreatmentRepository, {
   TreatmentRepositoryImpl,
 } from '../../storage/database/treatment/TreatmentRepository'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketTopicURLService from '../websocket/WebSocketTopicURLService'
 
 export class TreatmentServiceImpl extends AutoSynchronizableService<
   number,
@@ -18,8 +19,8 @@ export class TreatmentServiceImpl extends AutoSynchronizableService<
     super(
       TreatmentRepository,
       APIRequestMappingConstants.TREATMENT,
-      APIWebSocketDestConstants.TREATMENT_UPDATE,
-      APIWebSocketDestConstants.TREATMENT_DELETE,
+      WebSocketTopicURLService,
+      APIWebSocketDestConstants.TREATMENT
     )
   }
 

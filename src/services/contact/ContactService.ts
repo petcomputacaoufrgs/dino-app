@@ -13,6 +13,7 @@ import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
 import GoogleContactService from './GoogleContactService'
+import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
 
 export class ContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -21,8 +22,12 @@ export class ContactServiceImpl extends AutoSynchronizableService<
   ContactRepositoryImpl
 > {  
   constructor() {
-    super(ContactRepository, APIRequestMappingConstants.CONTACT,
-      APIWebSocketDestConstants.CONTACT_UPDATE, APIWebSocketDestConstants.CONTACT_DELETE)
+    super(
+      ContactRepository, 
+      APIRequestMappingConstants.CONTACT,
+      WebSocketQueueURLService,
+      APIWebSocketDestConstants.CONTACT
+    )
   }
 
   getDependencies(): SynchronizableService[] {

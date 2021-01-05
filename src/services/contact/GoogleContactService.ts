@@ -16,6 +16,7 @@ import GoogleScopeService from '../auth/google/GoogleScopeService'
 import PhoneService from './PhoneService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
 
 export class GoogleContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -24,8 +25,12 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
   GoogleContactRepositoryImpl
 > {
   constructor() {
-    super(GoogleContactRepository, APIRequestMappingConstants.GOOGLE_CONTACT,
-      APIWebSocketDestConstants.GOOGLE_CONTACT_UPDATE, APIWebSocketDestConstants.GOOGLE_CONTACT_DELETE)
+    super(
+      GoogleContactRepository, 
+      APIRequestMappingConstants.GOOGLE_CONTACT,
+      WebSocketQueueURLService,
+      APIWebSocketDestConstants.GOOGLE_CONTACT
+    )
   }
 
   getDependencies(): SynchronizableService[] {

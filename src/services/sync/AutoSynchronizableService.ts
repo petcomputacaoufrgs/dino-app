@@ -13,7 +13,7 @@ import SynchronizableGenericResponseModel from '../../types/synchronizable/api/r
 import SynchronizableLocalState from '../../types/synchronizable/database/SynchronizableLocalState'
 import SynchronizableWSUpdateModel from '../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
-import SynchronizableConstants from '../../constants/synchronizable/SynchronizableConstants'
+import SyncConstants from '../../constants/sync/SyncConstants'
 import SynchronizableGenericDataResponseModel from '../../types/synchronizable/api/response/SynchronizableGenericDataResponseModel'
 import ArrayUtils from '../../utils/ArrayUtils'
 import SynchronizableDataLocalIdModel from '../../types/synchronizable/api/SynchronizableDataLocalIdModel'
@@ -21,11 +21,14 @@ import SynchronizableSyncModel from '../../types/synchronizable/api/request/Sync
 import SynchronizableSyncResponseModel from '../../types/synchronizable/api/response/SynchronizableSyncResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import SynchronizableService from './SynchronizableService'
+import WebSocketURLService from '../websocket/WebSocketURLService'
+
+const WEBSOCKET_UPDATE_URL = '/update/'
+const WEBSOCKET_DELETE_URL = '/delete/'
 
 /**
  * @description Generic service with basic methods (save and delete) that auto synchronize entity with API
  * @param ID API synchronizable entity's id
- * @param LOCAL_ID local synchronizable entity's id
  * @param DATA_MODEL synchronizable entity's data model
  * @param ENTITY local synchronizable entity
  * @param REPOSITORY local synchronizable entity's repository
@@ -36,22 +39,22 @@ export default abstract class AutoSynchronizableService<
   ENTITY extends SynchronizableEntity<ID>,
   REPOSITORY extends SynchronizableRepository<ID, ENTITY>
 > extends SynchronizableService {
-  protected webSocketUpdatePath: string
-  protected webSocketDeletePath: string
   protected requestMapping: string
   protected repository: REPOSITORY
+  protected webSocketURLService: WebSocketURLService
+  protected webSocketBaseURL: string
 
   constructor(
     repository: REPOSITORY,
     requestMapping: string,
-    webSocketUpdatePath: string,
-    webSocketDeletePath: string
+    webSocketURLService: WebSocketURLService,
+    webSocketBaseURL: string
   ) {
     super()
     this.repository = repository
     this.requestMapping = requestMapping
-    this.webSocketUpdatePath = webSocketUpdatePath
-    this.webSocketDeletePath = webSocketDeletePath
+    this.webSocketURLService = webSocketURLService
+    this.webSocketBaseURL = webSocketBaseURL
   }
 
 
@@ -92,7 +95,7 @@ export default abstract class AutoSynchronizableService<
 
   //#endregion
 
-  //#region CONVERSION (MODEL <-> ENTITY)
+  //#region CONVERSION MODEL <-> ENTITY
 
   /**
    * @description Remember to transform model booleans into number (0,1) to save on database
@@ -182,37 +185,22 @@ export default abstract class AutoSynchronizableService<
 
   //#endregion
 
-  //#region API URL
-
-  protected getBaseRequestURL = (): string => {
-    return this.requestMapping
-  }
-
-  protected getRequestURL = (): string => `${this.getBaseRequestURL()}get/`
-
-  protected saveRequestURL = (): string => `${this.getBaseRequestURL()}save/`
-
-  protected deleteRequestURL = (): string =>
-    `${this.getBaseRequestURL()}delete/`
-
-  protected getAllRequestURL = (): string => `${this.getRequestURL()}all/`
-
-  protected saveAllRequestURL = (): string => `${this.saveRequestURL()}all/`
-
-  protected deleteAllRequestURL = (): string => `${this.deleteRequestURL()}all/`
-
-  protected syncRequestURL = (): string => `${this.getBaseRequestURL()}sync/`
-
-  //#endregion
-
   //#region WEB SOCKET
 
   getUpdateWebSocketPath = (): string => {
-    return this.webSocketUpdatePath
+    const partialUpdateURL = this.webSocketBaseURL + WEBSOCKET_UPDATE_URL
+
+    return this.addWebSocketBaseURL(partialUpdateURL)
   }
 
   getDeleteWebSocketPath = (): string => {
-    return this.webSocketDeletePath
+    const partialDeleteURL = this.webSocketBaseURL + WEBSOCKET_DELETE_URL
+
+    return this.addWebSocketBaseURL(partialDeleteURL)
+  }
+
+  private addWebSocketBaseURL = (url: string): string => {
+    return this.webSocketURLService.generateDestinationURL(url)
   }
 
   webSocketUpdate = async (
@@ -305,14 +293,14 @@ export default abstract class AutoSynchronizableService<
           } else {
             LogAppErrorService.logMessage(
               JSON.stringify(response.data),
-              SynchronizableConstants.CONVERT_MODEL_TO_ENTITY_ERROR
+              SyncConstants.CONVERT_MODEL_TO_ENTITY_ERROR
             )
           }
         }
       } else {
         LogAppErrorService.logMessage(
           JSON.stringify(entity),
-          SynchronizableConstants.CONVERT_ENTITY_TO_MODEL_ERROR
+          SyncConstants.CONVERT_ENTITY_TO_MODEL_ERROR
         )
       }
 
@@ -381,7 +369,7 @@ export default abstract class AutoSynchronizableService<
               } else {
                 LogAppErrorService.logMessage(
                   JSON.stringify(response.data),
-                  SynchronizableConstants.CONVERT_MODEL_TO_ENTITY_ERROR
+                  SyncConstants.CONVERT_MODEL_TO_ENTITY_ERROR
                 )
               }
             }
@@ -389,7 +377,7 @@ export default abstract class AutoSynchronizableService<
         } else {
           LogAppErrorService.logMessage(
             JSON.stringify(entity),
-            SynchronizableConstants.CONVERT_ENTITY_TO_MODEL_ERROR
+            SyncConstants.CONVERT_ENTITY_TO_MODEL_ERROR
           )
         }
     }
@@ -455,7 +443,7 @@ export default abstract class AutoSynchronizableService<
 
   //#endregion
 
-  //#region SYNC METHODS
+  //#region SYNC
 
   protected doSync = async (): Promise<boolean> => {
     const deletedEntities = await this.localGetAllFakeDeleted()
@@ -502,7 +490,7 @@ export default abstract class AutoSynchronizableService<
 
   //#endregion
 
-  //#region DATABASE REQUESTS
+  //#region LOCAL DATABASE
 
   protected localGetAllById = async (entities: ENTITY[]): Promise<ENTITY[]> => {
     return this.repository.getAllById(entities)
@@ -586,7 +574,25 @@ export default abstract class AutoSynchronizableService<
 
   //#endregion
 
-  //#region API REQUESTS
+  //#region API
+
+  protected getBaseRequestURL = (): string => {
+    return this.requestMapping
+  }
+  
+  protected getRequestURL = (): string => `${this.getBaseRequestURL()}get/`
+  
+  protected saveRequestURL = (): string => `${this.getBaseRequestURL()}save/`
+  
+  protected deleteRequestURL = (): string => `${this.getBaseRequestURL()}delete/`
+  
+  protected getAllRequestURL = (): string => `${this.getRequestURL()}all/`
+  
+  protected saveAllRequestURL = (): string => `${this.saveRequestURL()}all/`
+  
+  protected deleteAllRequestURL = (): string => `${this.deleteRequestURL()}all/`
+  
+  protected syncRequestURL = (): string => `${this.getBaseRequestURL()}sync/`
 
   protected apiGet = async (
     id: ID
@@ -768,4 +774,5 @@ export default abstract class AutoSynchronizableService<
   }
 
   //#endregion
+
 }

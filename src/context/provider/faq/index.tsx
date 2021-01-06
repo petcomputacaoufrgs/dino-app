@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react'
 import SynchronizableContextType from '../synchronizable/context'
 import FaqDataModel from '../../../types/faq/api/FaqDataModel'
 import FaqEntity from '../../../types/faq/database/FaqEntity'
-import { FaqRepositoryImpl } from '../../../storage/database/faq/FaqRepository'
 import FaqService, { FaqServiceImpl } from '../../../services/faq/FaqService'
 import SynchronizableProvider from '../synchronizable'
 
@@ -11,7 +10,6 @@ interface FaqContextType
     number,
     FaqDataModel,
     FaqEntity,
-    FaqRepositoryImpl,
     FaqServiceImpl
   > {}
 
@@ -26,7 +24,6 @@ const FaqProvider: React.FC = ({ children }) =>
     number,
     FaqDataModel,
     FaqEntity,
-    FaqRepositoryImpl,
     FaqServiceImpl
   >({
     children: children,

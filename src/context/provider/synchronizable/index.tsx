@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import SynchronizableProviderProps from './props'
 import { IndexableType } from 'dexie'
 import SynchronizableEntity from '../../../types/synchronizable/database/SynchronizableEntity'
-import SynchronizableRepository from '../../../storage/database/synchronizable/SynchronizableRepository'
 import AutoSynchronizableService from '../../../services/sync/AutoSynchronizableService'
 import SynchronizableDataLocalIdModel from '../../../types/synchronizable/api/SynchronizableDataLocalIdModel'
 
@@ -16,12 +15,10 @@ function SynchronizableProvider<
   ID extends IndexableType,
   DATA_MODEL extends SynchronizableDataLocalIdModel<ID>,
   ENTITY extends SynchronizableEntity<ID>,
-  REPOSITORY extends SynchronizableRepository<ID, ENTITY>,
   SERVICE extends AutoSynchronizableService<
     ID,
     DATA_MODEL,
-    ENTITY,
-    REPOSITORY
+    ENTITY
   >
 >({
   context,
@@ -31,7 +28,6 @@ function SynchronizableProvider<
   ID,
   DATA_MODEL,
   ENTITY,
-  REPOSITORY,
   SERVICE
 >): JSX.Element {
   const [state, setState] = useState<SynchronizableStateType<ENTITY>>({

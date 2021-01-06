@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react'
 import PhoneService, {
   PhoneServiceImpl,
 } from '../../../services/contact/PhoneService'
-import { PhoneRepositoryImpl } from '../../../storage/database/contact/PhoneRepository'
 import PhoneDataModel from '../../../types/contact/api/PhoneDataModel'
 import PhoneEntity from '../../../types/contact/database/PhoneEntity'
 import SynchronizableProvider from '../synchronizable'
@@ -13,7 +12,6 @@ interface PhoneContextType
     number,
     PhoneDataModel,
     PhoneEntity,
-    PhoneRepositoryImpl,
     PhoneServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const PhoneProvider: React.FC = ({ children }) =>
     number,
     PhoneDataModel,
     PhoneEntity,
-    PhoneRepositoryImpl,
     PhoneServiceImpl
   >({
     children: children,

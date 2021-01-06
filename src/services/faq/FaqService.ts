@@ -1,9 +1,6 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import FaqDataModel from '../../types/faq/api/FaqDataModel'
 import FaqEntity from '../../types/faq/database/FaqEntity'
-import FaqRepository, {
-  FaqRepositoryImpl,
-} from '../../storage/database/faq/FaqRepository'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
@@ -13,16 +10,16 @@ import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
+import Database from '../../storage/database/Database'
 
 export class FaqServiceImpl extends AutoSynchronizableService<
   number,
   FaqDataModel,
-  FaqEntity,
-  FaqRepositoryImpl
+  FaqEntity
 > {
   constructor() {
     super(
-      FaqRepository,
+      Database.faq,
       APIRequestMappingConstants.FAQ,
       WebSocketTopicURLService,
       APIWebSocketDestConstants.FAQ,

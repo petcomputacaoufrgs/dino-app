@@ -3,21 +3,18 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
-import TreatmentRepository, {
-  TreatmentRepositoryImpl,
-} from '../../storage/database/treatment/TreatmentRepository'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
+import Database from '../../storage/database/Database'
 
 export class TreatmentServiceImpl extends AutoSynchronizableService<
   number,
   TreatmentDataModel,
-  TreatmentEntity,
-  TreatmentRepositoryImpl
+  TreatmentEntity
 > {
   constructor() {
     super(
-      TreatmentRepository,
+      Database.treatment,
       APIRequestMappingConstants.TREATMENT,
       WebSocketTopicURLService,
       APIWebSocketDestConstants.TREATMENT

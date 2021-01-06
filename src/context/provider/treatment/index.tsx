@@ -3,7 +3,6 @@ import SynchronizableContextType from '../synchronizable/context'
 import SynchronizableProvider from '../synchronizable'
 import TreatmentDataModel from '../../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
-import { TreatmentRepositoryImpl } from '../../../storage/database/treatment/TreatmentRepository'
 import TreatmentService, {
   TreatmentServiceImpl,
 } from '../../../services/treatment/TreatmentService'
@@ -13,7 +12,6 @@ interface TreatmentContextType
     number,
     TreatmentDataModel,
     TreatmentEntity,
-    TreatmentRepositoryImpl,
     TreatmentServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const TreatmentProvider: React.FC = ({ children }) =>
     number,
     TreatmentDataModel,
     TreatmentEntity,
-    TreatmentRepositoryImpl,
     TreatmentServiceImpl
   >({
     children: children,

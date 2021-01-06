@@ -1,24 +1,21 @@
 import FaqUserQuestionDataModel from '../../types/faq/api/FaqUserQuestionDataModel'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import FaqUserQuestionEntity from '../../types/faq/database/FaqUserQuestionEntity'
-import FaqUserQuestionRepository, {
-  FaqUserQuestionRepositoryImpl,
-} from '../../storage/database/faq/FaqUserQuestionRepository'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/database/Database'
 
 export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
   number,
   FaqUserQuestionDataModel,
-  FaqUserQuestionEntity,
-  FaqUserQuestionRepositoryImpl
+  FaqUserQuestionEntity
 > {
   constructor() {
     super(
-      FaqUserQuestionRepository,
+      Database.faqUserQuestion,
       APIRequestMappingConstants.FAQ_USER_QUESTION,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.FAQ_USER_QUESTION

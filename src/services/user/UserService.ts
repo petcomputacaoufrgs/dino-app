@@ -3,9 +3,6 @@ import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserEntity from '../../types/user/database/UserEntity'
-import UserRepository, {
-  UserRepositoryImpl,
-} from '../../storage/database/user/UserRepository'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
@@ -13,16 +10,16 @@ import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/database/Database'
 
 export class UserServiceImpl extends AutoSynchronizableService<
   number,
   UserDataModel,
-  UserEntity,
-  UserRepositoryImpl
+  UserEntity
 > {
   constructor() {
     super(
-      UserRepository,
+      Database.user,
       APIRequestMappingConstants.USER,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.USER
@@ -46,7 +43,8 @@ export class UserServiceImpl extends AutoSynchronizableService<
   }
 
   async updateUser(model: UserDataModel) {
-    await this.localClearAndSaveAllFromModels([model])
+    await this.clearDatabase()
+    await this.saveFromDataModel(model)
   }
 
   async convertModelToEntity(
@@ -74,9 +72,9 @@ export class UserServiceImpl extends AutoSynchronizableService<
   }
 
   protected async onSaveEntity(entity: UserEntity) {
-    await this.repository.clear()
+    await this.clearDatabase()
     if (entity.id !== undefined) {
-      const savedEntity = await this.repository.getByLocalId(entity.id)
+      const savedEntity = await this.getByLocalId(entity.id)
 
       if (savedEntity) {
         const withoutSavedPicture = savedEntity.pictureBase64 === undefined
@@ -92,7 +90,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
   }
 
   protected async onSyncSuccess() {
-    const user = await this.repository.getFirst()
+    const user = await this.getFirst()
 
     if (user) {
       this.verifyGoogleUserPhoto(user)
@@ -141,12 +139,11 @@ export class UserServiceImpl extends AutoSynchronizableService<
     id?: any
   ) => {
     if (success && id !== undefined) {
-      const savedEntity = await this.repository.getById(id)
+      const savedEntity = await this.getById(id)
       if (savedEntity) {
         savedEntity.pictureBase64 = base64Image
-        await this.localSave(savedEntity)
+        await this.saveOnlyLocally(savedEntity)
       }
-      this.updateContext()
     }
   }
 

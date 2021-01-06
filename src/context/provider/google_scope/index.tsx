@@ -3,7 +3,6 @@ import SynchronizableProvider from '../synchronizable'
 import SynchronizableContextType from '../synchronizable/context'
 import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeDataModel'
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
-import { GoogleScopeRepositoryImpl } from '../../../storage/database/auth/GoogleScopeRepository'
 import GoogleScopeService, {
   GoogleScopeServiceImpl,
 } from '../../../services/auth/google/GoogleScopeService'
@@ -13,7 +12,6 @@ export interface GoogleScopeContextType
     number,
     GoogleScopeDataModel,
     GoogleScopeEntity,
-    GoogleScopeRepositoryImpl,
     GoogleScopeServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const GoogleScopeProvider: React.FC = ({ children }) =>
     number,
     GoogleScopeDataModel,
     GoogleScopeEntity,
-    GoogleScopeRepositoryImpl,
     GoogleScopeServiceImpl
   >({
     children: children,

@@ -2,9 +2,6 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import ContactsConstants from '../../constants/contact/ContactsConstants'
 import LanguageBase from '../../constants/languages/LanguageBase'
-import PhoneRepository, {
-  PhoneRepositoryImpl,
-} from '../../storage/database/contact/PhoneRepository'
 import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
@@ -14,16 +11,16 @@ import ContactService from './ContactService'
 import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/database/Database'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
   number,
   PhoneDataModel,
-  PhoneEntity,
-  PhoneRepositoryImpl
+  PhoneEntity
 > {  
   constructor() {
     super(
-      PhoneRepository, 
+      Database.phone, 
       APIRequestMappingConstants.PHONE, 
       WebSocketQueueURLService,
       APIWebSocketDestConstants.PHONE
@@ -68,8 +65,8 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
     }
   }
 
-  async getAllByContactLocalId(localId: number): Promise<PhoneEntity[]> {
-    return this.repository.getAllByContactLocalId(localId)
+  async getAllByContactLocalId(localContactId: number): Promise<PhoneEntity[]> {
+    return this.table.where('localContactId').equals(localContactId).toArray()
   }
 
   getPhoneTypes = (

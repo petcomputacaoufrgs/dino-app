@@ -3,22 +3,19 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
-import GlossaryRepository, {
-  GlossaryRepositoryImpl,
-} from '../../storage/database/glossary/GlossaryRepository'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
+import Database from '../../storage/database/Database'
 
 export class GlossaryServiceImpl extends AutoSynchronizableService<
   number,
   GlossaryItemDataModel,
-  GlossaryItemEntity,
-  GlossaryRepositoryImpl
+  GlossaryItemEntity
 > {
   constructor() {
     super(
-      GlossaryRepository,
+      Database.glossary,
       APIRequestMappingConstants.GLOSSARY,
       WebSocketTopicURLService,
       APIWebSocketDestConstants.GLOSSARY

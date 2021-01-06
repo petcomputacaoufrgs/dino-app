@@ -1,9 +1,6 @@
 import AutoSynchronizableService from '../../sync/AutoSynchronizableService'
 import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeDataModel'
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
-import GoogleScopeRepository, {
-  GoogleScopeRepositoryImpl,
-} from '../../../storage/database/auth/GoogleScopeRepository'
 import APIRequestMappingConstants from '../../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../../constants/api/APIWebSocketDestConstants'
 import SynchronizableWSUpdateModel from '../../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
@@ -13,16 +10,16 @@ import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
 import WebSocketQueueURLService from '../../websocket/path/WebSocketQueuePathService'
+import Database from '../../../storage/database/Database'
 
 export class GoogleScopeServiceImpl extends AutoSynchronizableService<
   number,
   GoogleScopeDataModel,
-  GoogleScopeEntity,
-  GoogleScopeRepositoryImpl
+  GoogleScopeEntity
 > {
   constructor() {
     super(
-      GoogleScopeRepository, 
+      Database.googleScope, 
       APIRequestMappingConstants.GOOGLE_SCOPE,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.GOOGLE_SCOPE
@@ -76,7 +73,7 @@ export class GoogleScopeServiceImpl extends AutoSynchronizableService<
   }
 
   findContactGrant = async (): Promise<GoogleScopeEntity | undefined> => {
-    return this.repository.getByName(GoogleScope.SCOPE_CONTACT)
+    return this.table.where('name').equals(GoogleScope.SCOPE_CONTACT).first()
   }
 }
 

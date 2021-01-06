@@ -1,8 +1,6 @@
 /**
- * @description Configuração de valores das chaves utilizadas para salvar valores no local storage
+ * @description Keys to save data on local storage
  */
-class LocalStorageKeys {
-  LOG_APP_ERROR_SYNC = 'laes'
-}
+class LocalStorageKeys { }
 
 export default new LocalStorageKeys()

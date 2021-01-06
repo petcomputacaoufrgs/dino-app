@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react'
 import ContactService, {
   ContactServiceImpl,
 } from '../../../services/contact/ContactService'
-import { ContactRepositoryImpl } from '../../../storage/database/contact/ContactRepository'
 import ContactDataModel from '../../../types/contact/api/ContactDataModel'
 import ContactEntity from '../../../types/contact/database/ContactEntity'
 import SynchronizableProvider from '../synchronizable'
@@ -13,7 +12,6 @@ interface ContactContextType
     number,
     ContactDataModel,
     ContactEntity,
-    ContactRepositoryImpl,
     ContactServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const ContactProvider: React.FC = ({ children }) =>
     number,
     ContactDataModel,
     ContactEntity,
-    ContactRepositoryImpl,
     ContactServiceImpl
   >({
     children: children,

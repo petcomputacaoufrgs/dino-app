@@ -2,7 +2,6 @@ import { createContext, useContext } from 'react'
 import GoogleContactService, {
   GoogleContactServiceImpl,
 } from '../../../services/contact/GoogleContactService'
-import { GoogleContactRepositoryImpl } from '../../../storage/database/contact/GoogleContactRepository'
 import GoogleContactModel from '../../../types/contact/api/GoogleContactDataModel'
 import GoogleContactEntity from '../../../types/contact/database/GoogleContactEntity'
 import SynchronizableProvider from '../synchronizable'
@@ -13,7 +12,6 @@ interface GoogleContactContextType
     number,
     GoogleContactModel,
     GoogleContactEntity,
-    GoogleContactRepositoryImpl,
     GoogleContactServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const GoogleContactProvider: React.FC = ({ children }) =>
     number,
     GoogleContactModel,
     GoogleContactEntity,
-    GoogleContactRepositoryImpl,
     GoogleContactServiceImpl
   >({
     children: children,

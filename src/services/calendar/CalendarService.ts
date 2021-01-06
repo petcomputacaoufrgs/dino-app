@@ -1,10 +1,17 @@
 import LanguageBase from '../../constants/languages/LanguageBase'
 import DateUtils from '../../utils/DateUtils'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
-import CalendarEventRepository from '../../storage/database/calendar/CalendarEventRepository'
 import AuthenticatedService from '../auth/AuthenticatedService'
+import Database from '../../storage/database/Database'
 
 class CalendarService extends AuthenticatedService {
+  private table: Dexie.Table<CalendarEventEntity, number>
+
+  constructor() {
+    super()
+    this.table = Database.calendarEvent
+  }
+
   getEventTypeName = (type: number, language: LanguageBase) => {
     switch (type) {
       case 0:
@@ -36,10 +43,15 @@ class CalendarService extends AuthenticatedService {
   }
 
   getEventByDate = async (date: Date): Promise<CalendarEventEntity[]> => {
-    return CalendarEventRepository.getByDate(
-      DateUtils.getStartOfDay(date),
-      DateUtils.getEndOfDay(date)
-    )
+    const initDate = DateUtils.getStartOfDay(date)
+    const endDate = DateUtils.getEndOfDay(date)
+    const calendarEvents = await this.table
+    .where('init_date')
+    .aboveOrEqual(initDate)
+    .and((event) => event.end_date <= endDate)
+    .toArray()
+
+    return calendarEvents
   }
 
   addMocks = async () => {
@@ -56,11 +68,23 @@ class CalendarService extends AuthenticatedService {
       },
     ]
 
-    CalendarEventRepository.putAll(calendarEvents)
+    this.saveAll(calendarEvents)
   }
 
   onLogout = async () => {
-    return CalendarEventRepository.deleteAll()
+    return this.deleteAll()
+  }
+
+  private saveAll = async (entities: CalendarEventEntity[]) => {
+    const ids = await Database.transaction('readwrite', this.table, () =>
+      Promise.all(entities.map((entity) => this.table.put(entity)))
+    )
+
+    entities.forEach((entity, index) => (entity.id = ids[index]))
+  }
+
+  private deleteAll = async() => {
+    return this.table.clear()
   }
 }
 

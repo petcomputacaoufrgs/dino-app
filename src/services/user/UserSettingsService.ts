@@ -1,9 +1,6 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserSettingsDataModel from '../../types/user/api/UserSettingsDataModel'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
-import UserSettingsRepository, {
-  UserSettingsRepositoryImpl,
-} from '../../storage/database/user/UserSettingsRepository'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import TreatmentService from '../treatment/TreatmentService'
@@ -20,16 +17,16 @@ import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/database/Database'
 
 export class UserSettingsServiceImpl extends AutoSynchronizableService<
   number,
   UserSettingsDataModel,
-  UserSettingsEntity,
-  UserSettingsRepositoryImpl
+  UserSettingsEntity
 > {
   constructor() {
     super(
-      UserSettingsRepository,
+      Database.userSettings,
       APIRequestMappingConstants.USER_SETTINGS,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.USER_SETTINGS
@@ -87,11 +84,6 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
     }
 
     return model
-  }
-
-  async saveLocally(entity: UserSettingsEntity) {
-    await this.localSave(entity)
-    this.updateContext()
   }
 
   getColorThemeOptions(language: LanguageBase): ColorThemeOption[] {

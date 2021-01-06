@@ -3,7 +3,6 @@ import SynchronizableContextType from '../synchronizable/context'
 import SynchronizableProvider from '../synchronizable'
 import FaqUserQuestionDataModel from '../../../types/faq/api/FaqUserQuestionDataModel'
 import FaqUserQuestionEntity from '../../../types/faq/database/FaqUserQuestionEntity'
-import { FaqUserQuestionRepositoryImpl } from '../../../storage/database/faq/FaqUserQuestionRepository'
 import FaqUserQuestionService, {
   FaqUserQuestionServiceImpl,
 } from '../../../services/faq/FaqUserQuestionService'
@@ -13,7 +12,6 @@ interface FaqUserQuestionContextType
     number,
     FaqUserQuestionDataModel,
     FaqUserQuestionEntity,
-    FaqUserQuestionRepositoryImpl,
     FaqUserQuestionServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const FaqUserQuestionProvider: React.FC = ({ children }) =>
     number,
     FaqUserQuestionDataModel,
     FaqUserQuestionEntity,
-    FaqUserQuestionRepositoryImpl,
     FaqUserQuestionServiceImpl
   >({
     children: children,

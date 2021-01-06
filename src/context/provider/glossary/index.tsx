@@ -6,14 +6,12 @@ import SynchronizableProvider from '../synchronizable'
 import GlossaryService, {
   GlossaryServiceImpl,
 } from '../../../services/glossary/GlossaryService'
-import { GlossaryRepositoryImpl } from '../../../storage/database/glossary/GlossaryRepository'
 
 interface GlossaryContextType
   extends SynchronizableContextType<
     number,
     GlossaryItemDataModel,
     GlossaryItemEntity,
-    GlossaryRepositoryImpl,
     GlossaryServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const GlossaryProvider: React.FC = ({ children }) =>
     number,
     GlossaryItemDataModel,
     GlossaryItemEntity,
-    GlossaryRepositoryImpl,
     GlossaryServiceImpl
   >({
     children: children,

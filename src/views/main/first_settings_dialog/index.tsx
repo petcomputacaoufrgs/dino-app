@@ -99,7 +99,7 @@ const FirstSettingsDialog: React.FC = () => {
     } else if (currentSettings) {
       currentSettings.settingsStep = 0
 
-      userSettings.service.saveLocally(currentSettings)
+      userSettings.service.saveOnlyLocally(currentSettings)
     }
   }
 
@@ -151,7 +151,7 @@ const FirstSettingsDialog: React.FC = () => {
       currentSettings.includeEssentialContact !== includeEssentialContact
     ) {
       currentSettings.includeEssentialContact = includeEssentialContact
-      userSettings.service.saveLocally(currentSettings)
+      userSettings.service.saveOnlyLocally(currentSettings)
     }
   }
 
@@ -165,7 +165,7 @@ const FirstSettingsDialog: React.FC = () => {
       currentSettings.treatmentLocalId !== newSelectedTreatment.localId
     ) {
       currentSettings.treatmentLocalId = newSelectedTreatment.localId
-      userSettings.service.saveLocally(currentSettings)
+      userSettings.service.saveOnlyLocally(currentSettings)
     }
   }
 
@@ -174,7 +174,7 @@ const FirstSettingsDialog: React.FC = () => {
 
     if (currentSettings && currentSettings.colorTheme !== newColorTheme) {
       currentSettings.colorTheme = newColorTheme
-      userSettings.service.saveLocally(currentSettings)
+      userSettings.service.saveOnlyLocally(currentSettings)
     }
   }
 
@@ -183,7 +183,7 @@ const FirstSettingsDialog: React.FC = () => {
 
     if (currentSettings && currentSettings.language !== newLanguage) {
       currentSettings.language = newLanguage
-      userSettings.service.saveLocally(currentSettings)
+      userSettings.service.saveOnlyLocally(currentSettings)
     }
   }
 
@@ -192,7 +192,7 @@ const FirstSettingsDialog: React.FC = () => {
 
     if (currentSettings && currentSettings.fontSize !== newFontSize) {
       currentSettings.fontSize = newFontSize
-      userSettings.service.saveLocally(currentSettings)
+      userSettings.service.saveOnlyLocally(currentSettings)
     }
   }
 

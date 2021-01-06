@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react'
 import NoteService, {
   NoteServiceImpl,
 } from '../../../services/note/NoteService'
-import { NoteRepositoryImpl } from '../../../storage/database/note/NoteRepository'
 import NoteDataModel from '../../../types/note/api/NoteDataModel'
 import NoteEntity from '../../../types/note/database/NoteEntity'
 import SynchronizableProvider from '../synchronizable'
@@ -13,7 +12,6 @@ export interface NoteContextType
     number,
     NoteDataModel,
     NoteEntity,
-    NoteRepositoryImpl,
     NoteServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const NoteProvider: React.FC = ({ children }) =>
     number,
     NoteDataModel,
     NoteEntity,
-    NoteRepositoryImpl,
     NoteServiceImpl
   >({
     children: children,

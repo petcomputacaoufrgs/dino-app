@@ -20,17 +20,19 @@ import GoogleAuthErrorCode from '../../types/auth/google/api/GoogleAuthErrorCode
 import GoogleRefreshAuthResponseDataModel from '../../types/auth/google/api/GoogleRefreshAuthResponseDataModel'
 import AuthRefreshRequestModel from '../../types/auth/api/AuthRefreshRequestModel'
 import AuthRefreshResponseModel from '../../types/auth/api/AuthRefreshResponseModel'
-import AuthRepository from '../../storage/database/auth/AuthRepository'
 import DateUtils from '../../utils/DateUtils'
 import AuthEntity from '../../types/auth/database/AuthEntity'
 import AuthContextUpdater from '../../context/updater/AuthContextUpdater'
 import AuthenticatedService from './AuthenticatedService'
+import Database from '../../storage/database/Database'
 
 class AuthService {
   private authenticatedServices: AuthenticatedService[]
+  private table: Dexie.Table<AuthEntity, number>
 
   constructor() {
     this.authenticatedServices = []
+    this.table = Database.auth
   }
 
   subscribeAuthenticatedService = (service: AuthenticatedService) => {
@@ -113,14 +115,14 @@ class AuthService {
       const responseBody: AuthRefreshResponseModel = response.body
 
       if (responseBody.success) {
-        const entity = await AuthRepository.getFirst()
+        const auth = await this.getAuth()
         const expiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.data.expiresDate)
 
-        if (entity) {
-          entity.dinoAccessToken = responseBody.data.accessToken
-          entity.dinoExpiresDate = expiresDate
-          await AuthRepository.save(entity)
-          return entity
+        if (auth) {
+          auth.dinoAccessToken = responseBody.data.accessToken
+          auth.dinoExpiresDate = expiresDate
+          await this.dbSave(auth)
+          return auth
         } 
       }
 
@@ -150,7 +152,7 @@ class AuthService {
   }
 
   logout = async () => {
-    await AuthRepository.clear()
+    await this.dbClear()
 
     const onLogoutCallbacks = this.authenticatedServices.map(service => {
       return service.onLogout()
@@ -164,19 +166,33 @@ class AuthService {
   }
 
   isAuthenticated = async (): Promise<boolean> => {
-    const entity = await AuthRepository.getFirst()
+    const entity = await this.getAuth()
 
     return entity !== undefined
   }
 
   isAuthenticatedWithGoogle = async (): Promise<boolean> => {
-    const entity = await AuthRepository.getFirst()
+    const auth = await this.getAuth()
 
-    return entity !== undefined && entity.googleToken !== undefined
+    return auth !== undefined && auth.googleToken !== undefined
   }
 
   getAuth = async() : Promise<AuthEntity | undefined> => {
-    return await AuthRepository.getFirst()
+    const all = await this.table.toArray()
+        
+    if (all.length > 0) {
+      return all[0]
+    }
+  }
+
+  private dbSave = async (entity: AuthEntity) => {
+    const id = await this.table.put(entity)
+        
+    entity.id = id
+  }
+
+  private dbClear = async () => {
+    await this.table.clear()
   }
 
   private requestGoogleLoginOnDinoAPI = async (
@@ -264,31 +280,32 @@ class AuthService {
   private async saveGoogleRefreshAuthData(
     responseBody: GoogleRefreshAuthResponseDataModel,
   ): Promise<AuthEntity | undefined> {
-    const entity = await AuthRepository.getFirst()
+    const auth = await this.getAuth()
     const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.googleExpiresDate)
 
-    if (entity) {
-      entity.googleExpiresDate = googleExpiresDate
-      entity.googleToken = responseBody.googleAccessToken
-      await AuthRepository.save(entity)
-      return entity
+    if (auth) {
+      auth.googleExpiresDate = googleExpiresDate
+      auth.googleToken = responseBody.googleAccessToken
+      await this.dbSave(auth)
+      return auth
     } else {
       await this.logout()
     }
 
     if (responseBody.scopes && responseBody.scopes.length > 0) {
-      await GoogleScopeService.localClearAndSaveAllFromModels(responseBody.scopes)
+      await GoogleScopeService.clearDatabase()
+      await GoogleScopeService.saveAllFromDataModel(responseBody.scopes)
     }
   }
 
   private async saveGoogleAuthData(responseBody: GoogleAuthResponseDataModel) {
-    await AuthRepository.clear()
+    await this.dbClear()
 
     const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.googleExpiresDate)
 
     const dinoExpiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.expiresDate)
 
-    const entity: AuthEntity = {
+    const auth: AuthEntity = {
       googleToken: responseBody.googleAccessToken,
       googleExpiresDate: googleExpiresDate,
       dinoAccessToken: responseBody.accessToken,
@@ -296,10 +313,11 @@ class AuthService {
       dinoRefreshToken: responseBody.refreshToken
     }
 
-    await AuthRepository.save(entity)
+    await this.dbSave(auth)
 
     if (responseBody.scopes && responseBody.scopes.length > 0) {
-      GoogleScopeService.localClearAndSaveAllFromModels(responseBody.scopes)
+      await GoogleScopeService.clearDatabase()
+      await GoogleScopeService.saveAllFromDataModel(responseBody.scopes)
     }
 
     await this.saveUserAuthData(responseBody)

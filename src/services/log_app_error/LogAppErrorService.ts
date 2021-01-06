@@ -1,14 +1,19 @@
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import DinoAgentService from '../../agent/DinoAgentService'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import LogAppErrorSyncLocalStorage from '../../storage/local_storage/log_app_error/LogAppErrorSyncLocalStorage'
 import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListModel'
-import LogAppErrorRepository from '../../storage/database/log_app_error/LogAppErrorRepository'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
+import Database from '../../storage/database/Database'
 
 class LogAppErrorService extends SynchronizableService {
+  private table: Dexie.Table<LogAppErrorEntity, number>
+
+  constructor() {
+    super()
+    this.table = Database.logAppError
+  }
 
   getSyncDependencies(): SynchronizableService[] {
     return []
@@ -19,9 +24,8 @@ class LogAppErrorService extends SynchronizableService {
   }
 
   protected async doSync(): Promise<boolean> {
-    if (this.shouldSync()) {
-      const logs = await this.getSavedLogs()
-
+    const logs = await this.getSavedLogs()
+    if (logs.length > 0) {
       const items: LogAppErrorModel[] = logs.map((log) => ({
         title: log.title,
         error: log.error,
@@ -38,13 +42,9 @@ class LogAppErrorService extends SynchronizableService {
 
     return true
   }
-  
-  shouldSync = (): boolean => {
-    return LogAppErrorSyncLocalStorage.getShouldSync()
-  }
 
   getSavedLogs = (): Promise<LogAppErrorEntity[]> => {
-    return LogAppErrorRepository.getAll()
+    return this.table.toArray()
   }
 
   logError = (error: Error) => {
@@ -74,11 +74,9 @@ class LogAppErrorService extends SynchronizableService {
           await authRequest.setBody(model).go()
         } catch {
           this.saveLocalLog(model)
-          this.setShouldSync(true)
         }
       } else {
         this.saveLocalLog(model)
-        this.setShouldSync(true)
       }
     }
   }
@@ -112,36 +110,36 @@ class LogAppErrorService extends SynchronizableService {
       try {
         const authRequest = await request.authenticate()
         await authRequest.setBody(models).go()
-        this.setShouldSync(false)
-        LogAppErrorRepository.deleteAll()
+        await this.dbDeleteAll()
         return true
-      } catch {
-        this.setShouldSync(true)
-      }
-    } else {
-      this.setShouldSync(true)
+      } catch { }
     }
 
     return false
   }
 
   onLogout = async () => {
-    LogAppErrorSyncLocalStorage.removeUserData()
-    return LogAppErrorRepository.deleteAll()
+    await this.dbDeleteAll()
+  }
+
+  private dbDeleteAll = async () => {
+    await this.table.clear()
+  }
+
+  private dbSave = async (log: LogAppErrorEntity) => {
+    const id = await this.table.put(log)
+  
+    log.id = id
   }
 
   private saveLocalLog = (model: LogAppErrorModel) => {
-    const entity: LogAppErrorEntity = {
+    const log: LogAppErrorEntity = {
       date: model.date,
       error: model.error,
       file: model.file,
       title: model.title
     }
-    LogAppErrorRepository.put(entity)
-  }
-
-  private setShouldSync = (should: boolean) => {
-    LogAppErrorSyncLocalStorage.setShouldSync(should)
+    this.dbSave(log)
   }
 }
 

@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react'
 import UserService, {
   UserServiceImpl,
 } from '../../../services/user/UserService'
-import { UserRepositoryImpl } from '../../../storage/database/user/UserRepository'
 import UserDataModel from '../../../types/user/api/UserModel'
 import UserEntity from '../../../types/user/database/UserEntity'
 import SynchronizableProvider from '../synchronizable'
@@ -13,7 +12,6 @@ interface UserContextType
     number,
     UserDataModel,
     UserEntity,
-    UserRepositoryImpl,
     UserServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const UserProvider: React.FC = ({ children }) =>
     number,
     UserDataModel,
     UserEntity,
-    UserRepositoryImpl,
     UserServiceImpl
   >({
     children: children,

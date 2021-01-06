@@ -3,7 +3,6 @@ import SynchronizableContextType from '../synchronizable/context'
 import SynchronizableProvider from '../synchronizable'
 import FaqItemDataModel from '../../../types/faq/api/FaqItemDataModel'
 import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
-import { FaqItemRepositoryImpl } from '../../../storage/database/faq/FaqItemRepository'
 import FaqItemService, {
   FaqItemServiceImpl,
 } from '../../../services/faq/FaqItemService'
@@ -13,7 +12,6 @@ interface FaqItemContextType
     number,
     FaqItemDataModel,
     FaqItemEntity,
-    FaqItemRepositoryImpl,
     FaqItemServiceImpl
   > {}
 
@@ -28,7 +26,6 @@ const FaqItemProvider: React.FC = ({ children }) =>
     number,
     FaqItemDataModel,
     FaqItemEntity,
-    FaqItemRepositoryImpl,
     FaqItemServiceImpl
   >({
     children: children,

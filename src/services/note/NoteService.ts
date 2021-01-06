@@ -1,9 +1,7 @@
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import NoteConstants from '../../constants/note/NoteConstants'
-import NoteRepository, {
-  NoteRepositoryImpl,
-} from '../../storage/database/note/NoteRepository'
+import Database from '../../storage/database/Database'
 import NoteDataModel from '../../types/note/api/NoteDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -16,12 +14,11 @@ import NoteColumnService from './NoteColumnService'
 export class NoteServiceImpl extends AutoSynchronizableService<
   number,
   NoteDataModel,
-  NoteEntity,
-  NoteRepositoryImpl
+  NoteEntity
 > {
   constructor() {
     super(
-      NoteRepository,
+      Database.note,
       APIRequestMappingConstants.NOTE,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.NOTE
@@ -112,14 +109,20 @@ export class NoteServiceImpl extends AutoSynchronizableService<
   }
 
   async deleteNotesByColumn(column: NoteColumnEntity) {
-    const notes = await this.getAllByColumn(column)
-    await this.deleteAll(notes)
+    if (column.localId !== undefined) {
+      const notes = await this.getAllByColumn(column)
+      await this.deleteAll(notes)
+    }
   }
 
   private async getAllByColumn(
     column: NoteColumnEntity
   ): Promise<NoteEntity[]> {
-    return this.repository.getAllByColumn(column)
+    if (column.localId !== undefined) {
+      return this.table.where('localColumnId').equals(column.localId).toArray()
+    }
+
+    return []
   }
 }
 

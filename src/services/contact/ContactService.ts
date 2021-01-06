@@ -1,9 +1,6 @@
 import ContactDataModel from '../../types/contact/api/ContactDataModel'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
-import ContactRepository, {
-  ContactRepositoryImpl,
-} from '../../storage/database/contact/ContactRepository'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
@@ -14,16 +11,16 @@ import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
 import GoogleContactService from './GoogleContactService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/database/Database'
 
 export class ContactServiceImpl extends AutoSynchronizableService<
   number,
   ContactDataModel,
-  ContactEntity,
-  ContactRepositoryImpl
+  ContactEntity
 > {  
   constructor() {
     super(
-      ContactRepository, 
+      Database.contact, 
       APIRequestMappingConstants.CONTACT,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.CONTACT

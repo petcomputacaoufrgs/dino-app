@@ -1,8 +1,6 @@
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
-import NoteColumnRepository, {
-  NoteColumnRepositoryImpl,
-} from '../../storage/database/note/NoteColumnRepository'
+import Database from '../../storage/database/Database'
 import NoteColumnDataModel from '../../types/note/api/NoteColumnDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -15,12 +13,11 @@ import NoteService from './NoteService'
 export class NoteColumnServiceImpl extends AutoSynchronizableService<
   number,
   NoteColumnDataModel,
-  NoteColumnEntity,
-  NoteColumnRepositoryImpl
+  NoteColumnEntity
 > {
   constructor() {
     super(
-      NoteColumnRepository,
+      Database.noteColumn,
       APIRequestMappingConstants.NOTE_COLUMN,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.NOTE_COLUMN

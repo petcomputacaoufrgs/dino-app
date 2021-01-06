@@ -2,9 +2,6 @@ import GoogleAgentService from '../../agent/GoogleAgentService'
 import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
 import GooglePeopleModel from '../../types/google_api/people/GooglePeopleModel'
 import ContactService from './ContactService'
-import GoogleContactRepository, {
-  GoogleContactRepositoryImpl,
-} from '../../storage/database/contact/GoogleContactRepository'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import GoogleContactDataModel from '../../types/contact/api/GoogleContactDataModel'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
@@ -17,16 +14,16 @@ import PhoneService from './PhoneService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/database/Database'
 
 export class GoogleContactServiceImpl extends AutoSynchronizableService<
   number,
   GoogleContactDataModel,
-  GoogleContactEntity,
-  GoogleContactRepositoryImpl
+  GoogleContactEntity
 > {
   constructor() {
     super(
-      GoogleContactRepository, 
+      Database.googleContact, 
       APIRequestMappingConstants.GOOGLE_CONTACT,
       WebSocketQueueURLService,
       APIWebSocketDestConstants.GOOGLE_CONTACT

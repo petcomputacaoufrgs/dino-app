@@ -8,7 +8,7 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
+import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 
 export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
   number,
@@ -25,7 +25,7 @@ export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return [FaqService]
   }
 

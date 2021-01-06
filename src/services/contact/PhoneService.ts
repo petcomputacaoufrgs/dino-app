@@ -13,7 +13,7 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import ContactService from './ContactService'
 import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
+import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
   number,
@@ -30,7 +30,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return [ContactService]
   }
 

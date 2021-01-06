@@ -1,7 +1,7 @@
-import WebSocketURLService from './WebSocketURLService'
+import WebSocketURLService from './WebSocketPathService'
 
 class WebSocketQueueURLService implements WebSocketURLService {
-    generateDestinationURL = (dest: string) => {
+    generateDestinationPath = (dest: string) => {
         return '/user/queue/' + dest
     }
 }

@@ -6,9 +6,15 @@ import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListM
 import LogAppErrorRepository from '../../storage/database/log_app_error/LogAppErrorRepository'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 
 class LogAppErrorService extends SynchronizableService {
-  getDependencies(): SynchronizableService[] {
+
+  getSyncDependencies(): SynchronizableService[] {
+    return []
+  }
+
+  protected getWebSocketSubscribers(): WebSocketSubscriber<any>[] {
     return []
   }
 

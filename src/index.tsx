@@ -11,7 +11,7 @@ import App from './App'
 import './Var.css'
 
 ErrorHandlerService.register()
-EventService.whenStart()
+window.addEventListener('load', EventService.whenStart)
 
 ReactDOM.render(
   <GoogleOAuth2Provider>

@@ -12,7 +12,7 @@ import { GoogleScopeContextType } from '../../../context/provider/google_scope'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
-import WebSocketQueueURLService from '../../websocket/WebSocketQueueURLService'
+import WebSocketQueueURLService from '../../websocket/path/WebSocketQueuePathService'
 
 export class GoogleScopeServiceImpl extends AutoSynchronizableService<
   number,
@@ -29,7 +29,7 @@ export class GoogleScopeServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return []
   }
 

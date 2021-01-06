@@ -2,7 +2,6 @@ import Superagent from 'superagent'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
-import ConnectionLocalStorage from '../../storage/local_storage/connection/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
 
 export type ConnectionListennerCallback = (online: boolean) => void
@@ -10,11 +9,14 @@ export type ConnectionListennerCallback = (online: boolean) => void
 const DELAY_TO_VERIFY_DINO_CONNECTION = 2000
 
 class ConnectionService {
-  callbacks: ConnectionListennerCallback[]
-  tryingToConnect: boolean
+  private callbacks: ConnectionListennerCallback[]
+  private tryingToConnect: boolean
+  private connected: boolean
+
   constructor() {
     this.callbacks = []
     this.tryingToConnect = false
+    this.connected = false
     this.start()
   }
 
@@ -29,11 +31,11 @@ class ConnectionService {
   }
 
   isConnected = (): boolean => {
-    return ConnectionLocalStorage.isConnected()
+    return this.connected
   }
 
   isDisconnected = (): boolean => {
-    return ConnectionLocalStorage.isDisconnected()
+    return !this.connected
   }
 
   isDinoConnected = async (): Promise<Boolean> => {
@@ -46,9 +48,9 @@ class ConnectionService {
     return isConnected
   }
 
-  verify = () => {
+  verify = async () => {
     if (navigator.onLine) {
-      this.awaitForDinoConnection()
+      await this.awaitForDinoConnection()
     } else {
       this.setDisconnected()
     }
@@ -68,10 +70,10 @@ class ConnectionService {
 
   private start = () => {
     if (navigator.onLine) {
-      ConnectionLocalStorage.setConnected()
+      this.setConnected()
       this.awaitForDinoConnection()
     } else {
-      ConnectionLocalStorage.setDisconnected()
+      this.setDisconnected()
     }
 
     window.addEventListener('online', () => {
@@ -103,7 +105,7 @@ class ConnectionService {
 
   private setConnected = () => {
     if (this.isDisconnected()) {
-      ConnectionLocalStorage.setConnected()
+      this.connected = true
 
       this.callbacks.forEach((callback) => callback(true))
     }
@@ -111,7 +113,7 @@ class ConnectionService {
 
   private setDisconnected = () => {
     if (this.isConnected()) {
-      ConnectionLocalStorage.setDisconnected()
+      this.connected = false
 
       this.callbacks.forEach((callback) => callback(false))
     }

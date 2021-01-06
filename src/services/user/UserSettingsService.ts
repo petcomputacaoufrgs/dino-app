@@ -19,7 +19,7 @@ import { UserSettingsContextType } from '../../context/provider/user_settings/in
 import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
+import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 
 export class UserSettingsServiceImpl extends AutoSynchronizableService<
   number,
@@ -36,7 +36,7 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return [TreatmentService]
   }
   

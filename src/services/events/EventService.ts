@@ -3,11 +3,10 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import AuthService from '../auth/AuthService'
 import SyncService from '../sync/SyncService'
-import WebSocketConnector from '../../websocket/WebSocketConnector'
 import CalendarService from '../calendar/CalendarService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
-import sleep from '../../utils/SleepUtils'
+import WebSocketService from '../websocket/WebSocketService'
 
 class EventService {
   constructor() {
@@ -18,45 +17,47 @@ class EventService {
     const isDinoConnected = await ConnectionService.isDinoConnected()
     const isAuthenticated = await AuthService.isAuthenticated()
     if (isDinoConnected && isAuthenticated) {
-      WebSocketConnector.connect()
-      await SyncService.sync()
-      await sleep(1 * 30000)
-      SyncService.sync()
+      this.startWebSocketAndSync()
     }
   }
 
-  whenLogin = () => {
+  whenLogin = async () => {
     CalendarService.addMocks()
-    WebSocketConnector.connect()
-    SyncService.sync()
+    this.startWebSocketAndSync()
     HistoryService.push(PathConstants.HOME)
   }
 
   whenLogout = async () => {
-    WebSocketConnector.disconnect()
+    WebSocketService.disconnect()
     HistoryService.push(PathConstants.LOGIN)
   }
 
   whenLoginForbidden = async () => {
-    await AuthService.logout()
+    AuthService.logout()
   }
 
   whenConnectionReturn = async () => {
     const isDinoConnected = await ConnectionService.isDinoConnected()
     const isAuthenticated = await AuthService.isAuthenticated()
     if (isDinoConnected && isAuthenticated) {
-      WebSocketConnector.connect()
-      SyncService.sync()
+      this.startWebSocketAndSync()
     }
   }
 
   whenConnectionLost = () => {
     SyncService.setNotSynced()
-    WebSocketConnector.disconnect()
+    WebSocketService.connect()
   }
 
   whenError = (error: LogAppErrorModel) => {
     LogAppErrorService.logModel(error)
+  }
+
+  private startWebSocketAndSync = async () => {
+    const success = WebSocketService.connect()
+    if (success) {
+      SyncService.sync()
+    }
   }
 
   private connectionCallback = (online: boolean) => {

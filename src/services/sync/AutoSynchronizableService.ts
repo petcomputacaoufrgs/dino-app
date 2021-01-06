@@ -21,7 +21,8 @@ import SynchronizableSyncModel from '../../types/synchronizable/api/request/Sync
 import SynchronizableSyncResponseModel from '../../types/synchronizable/api/response/SynchronizableSyncResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import SynchronizableService from './SynchronizableService'
-import WebSocketURLService from '../websocket/WebSocketURLService'
+import WebSocketURLService from '../websocket/path/WebSocketPathService'
+import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 
 const WEBSOCKET_UPDATE_URL = '/update/'
 const WEBSOCKET_DELETE_URL = '/delete/'
@@ -57,8 +58,7 @@ export default abstract class AutoSynchronizableService<
     this.webSocketBaseURL = webSocketBaseURL
   }
 
-
-  //#region EVENT METHODS TO OVERRIDE
+  //#region METHODS THAT CAN BE OVERWRITTEN
 
   /**
    * @description Override this function to do something before save entity on API
@@ -87,10 +87,17 @@ export default abstract class AutoSynchronizableService<
   protected async onWebSocketDelete(model: SynchronizableWSDeleteModel<ID>) {}
 
   /**
-   * @description Function called on user logout, can be used to clean user data
+   * @description Override this function to change service behavior when logout
    */
   onLogout = async (): Promise<void> => {
     return this.localClear()
+  }
+
+  /**
+   * @description Override to add more subscribers to websocket connection
+   */
+  getExtraWebSocketSubscribers = (): WebSocketSubscriber<any>[] => {
+    return []
   }
 
   //#endregion
@@ -187,6 +194,23 @@ export default abstract class AutoSynchronizableService<
 
   //#region WEB SOCKET
 
+  getWebSocketSubscribers = (): WebSocketSubscriber<any>[] => {
+    const defaultSubscribers = [
+      {
+        path: this.getUpdateWebSocketPath(),
+        callback: this.webSocketUpdate,
+      },
+      {
+        path: this.getDeleteWebSocketPath(),
+        callback: this.webSockeDelete,
+      },
+    ]
+
+    const extraSubscribers = this.getExtraWebSocketSubscribers()
+
+    return defaultSubscribers.concat(extraSubscribers)
+  }
+
   getUpdateWebSocketPath = (): string => {
     const partialUpdateURL = this.webSocketBaseURL + WEBSOCKET_UPDATE_URL
 
@@ -200,7 +224,7 @@ export default abstract class AutoSynchronizableService<
   }
 
   private addWebSocketBaseURL = (url: string): string => {
-    return this.webSocketURLService.generateDestinationURL(url)
+    return this.webSocketURLService.generateDestinationPath(url)
   }
 
   webSocketUpdate = async (

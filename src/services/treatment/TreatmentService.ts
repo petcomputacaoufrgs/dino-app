@@ -7,7 +7,7 @@ import TreatmentRepository, {
   TreatmentRepositoryImpl,
 } from '../../storage/database/treatment/TreatmentRepository'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/WebSocketTopicURLService'
+import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
 
 export class TreatmentServiceImpl extends AutoSynchronizableService<
   number,
@@ -24,7 +24,7 @@ export class TreatmentServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return []
   }
   

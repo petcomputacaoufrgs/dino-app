@@ -1,7 +1,7 @@
-import WebSocketURLService from './WebSocketURLService'
+import WebSocketURLService from './WebSocketPathService'
 
 class WebSocketTopicURLService implements WebSocketURLService {
-    generateDestinationURL = (dest: string) => {
+    generateDestinationPath = (dest: string) => {
         return '/topic/' + dest
     }
 }

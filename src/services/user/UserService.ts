@@ -12,7 +12,7 @@ import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotos
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
+import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 
 export class UserServiceImpl extends AutoSynchronizableService<
   number,
@@ -29,7 +29,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return []
   }
 

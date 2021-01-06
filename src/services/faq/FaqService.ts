@@ -12,7 +12,7 @@ import FaqItemService from './FaqItemService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/WebSocketTopicURLService'
+import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
 
 export class FaqServiceImpl extends AutoSynchronizableService<
   number,
@@ -29,7 +29,7 @@ export class FaqServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return [TreatmentService]
   }
   

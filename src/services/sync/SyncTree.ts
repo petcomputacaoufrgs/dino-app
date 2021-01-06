@@ -14,7 +14,7 @@ class SyncTree {
   
     add = (service: SynchronizableService) => {
       const existentNode = this.findNode(service, this.root)
-      const dependencies = service.getDependencies()
+      const dependencies = service.getSyncDependencies()
       if (existentNode && dependencies.length > 0) {
         this.addDependencies(existentNode, dependencies)
       } else {
@@ -39,7 +39,7 @@ class SyncTree {
     }
   
     private addNew = (service: SynchronizableService) => {
-      const dependencies = service.getDependencies()
+      const dependencies = service.getSyncDependencies()
 
       if (dependencies.length > 0) {
         const dependencyNodes: SyncTreeNode[] = []

@@ -8,7 +8,7 @@ import GlossaryRepository, {
 } from '../../storage/database/glossary/GlossaryRepository'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/WebSocketTopicURLService'
+import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
 
 export class GlossaryServiceImpl extends AutoSynchronizableService<
   number,
@@ -25,7 +25,7 @@ export class GlossaryServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return []
   }
   

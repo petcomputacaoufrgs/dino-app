@@ -10,7 +10,7 @@ import StringUtils from '../../utils/StringUtils'
 import FaqEntity from '../../types/faq/database/FaqEntity'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/WebSocketTopicURLService'
+import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
 
 export class FaqItemServiceImpl extends AutoSynchronizableService<
   number,
@@ -27,7 +27,7 @@ export class FaqItemServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return [FaqService]
   }
 

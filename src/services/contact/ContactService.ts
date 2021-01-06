@@ -13,7 +13,7 @@ import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
 import GoogleContactService from './GoogleContactService'
-import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
+import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 
 export class ContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -30,7 +30,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return []
   }
 

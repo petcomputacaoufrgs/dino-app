@@ -9,7 +9,7 @@ import NoteEntity from '../../types/note/database/NoteEntity'
 import NoteView from '../../types/note/view/NoteView'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/WebSocketQueueURLService'
+import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import NoteService from './NoteService'
 
 export class NoteColumnServiceImpl extends AutoSynchronizableService<
@@ -27,7 +27,7 @@ export class NoteColumnServiceImpl extends AutoSynchronizableService<
     )
   }
 
-  getDependencies(): SynchronizableService[] {
+  getSyncDependencies(): SynchronizableService[] {
     return []
   }
   

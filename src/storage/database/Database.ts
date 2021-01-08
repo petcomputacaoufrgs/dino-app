@@ -17,7 +17,7 @@ import GoogleScopeEntity from '../../types/auth/google/database/GoogleScopeEntit
 import AuthEntity from '../../types/auth/database/AuthEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
-const DATABASE_VERSION = 2
+const DATABASE_VERSION = 3
 
 class Database extends Dexie {
   auth: Dexie.Table<AuthEntity, number>
@@ -52,8 +52,8 @@ class Database extends Dexie {
       noteColumn: generateSynchronizableTableString(),
       note: generateSynchronizableTableString('columnId', 'localColumnId'),
       user: generateSynchronizableTableString(),
-      faq: generateSynchronizableTableString(),
-      faqItem: generateSynchronizableTableString(),
+      faq: generateSynchronizableTableString('localTreatmentId'),
+      faqItem: generateSynchronizableTableString('localFaqId'),
       faqUserQuestion: generateSynchronizableTableString(),
       treatment: generateSynchronizableTableString(),
       googleScope: generateSynchronizableTableString('name'),

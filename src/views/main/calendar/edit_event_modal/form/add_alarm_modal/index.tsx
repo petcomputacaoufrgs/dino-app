@@ -13,7 +13,7 @@ import {
 import StringUtils from '../../../../../../utils/StringUtils'
 import NumberUtils from '../../../../../../utils/NumberUtils'
 import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
-import { useUserSettings } from '../../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../../context/language'
 import './styles.css'
 
 const DEFAULT_TIME = 30
@@ -24,8 +24,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
   open,
   onSave,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
   const [dialogOpen, setDialogOpen] = useState(open)
   const [alarmType, setAlarmType] = useState(DEFAULT_ALARM_TYPE)
   const [time, setTime] = useState(DEFAULT_TIME)
@@ -82,7 +81,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
     const baseFormated = StringUtils.upperCaseFirstLetter(base)
 
     if (value === alarmType) {
-      return `${baseFormated} ${language.BEFORE}`
+      return `${baseFormated} ${language.data.BEFORE}`
     }
 
     return baseFormated
@@ -109,7 +108,7 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
         <FormControl>
           <div className="calendar__edit_event_modal__form__add_alarm_modal__time">
             <TextField
-              label={language.EVENT_ADD_ALARM_LABEL}
+              label={language.data.EVENT_ADD_ALARM_LABEL}
               value={time}
               className="calendar__edit_event_modal__form__add_alarm_modal__time__text_field"
               variant="outlined"
@@ -117,28 +116,28 @@ const AddAlarmModal: React.FC<AddAlarmModalProps> = ({
             />
           </div>
           <RadioGroup
-            aria-label={language.EVENT_ADD_ALARM_TYPE_LABEL}
+            aria-label={language.data.EVENT_ADD_ALARM_TYPE_LABEL}
             value={alarmType}
             onChange={handleTimeTypeChange}
           >
             <FormControlLabel
               value={EventAlarmType.MINUTE}
               control={<Radio />}
-              label={getAlarmTypeLabel(EventAlarmType.MINUTE, language.MINUTES)}
+              label={getAlarmTypeLabel(EventAlarmType.MINUTE, language.data.MINUTES)}
             />
             <FormControlLabel
               value={EventAlarmType.HOUR}
               control={<Radio />}
-              label={getAlarmTypeLabel(EventAlarmType.HOUR, language.HOURS)}
+              label={getAlarmTypeLabel(EventAlarmType.HOUR, language.data.HOURS)}
             />
             <FormControlLabel
               value={EventAlarmType.DAY}
               control={<Radio />}
-              label={getAlarmTypeLabel(EventAlarmType.DAY, language.DAYS)}
+              label={getAlarmTypeLabel(EventAlarmType.DAY, language.data.DAYS)}
             />
           </RadioGroup>
           <Button
-            ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
+            ariaLabel={language.data.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
             onClick={handleSave}
             className="calendar__edit_event_modal__form__add_alarm_modal__save_button"
           >

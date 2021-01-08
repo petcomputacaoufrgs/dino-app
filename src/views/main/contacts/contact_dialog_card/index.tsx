@@ -9,7 +9,6 @@ const ContactCard = forwardRef(
   (
     {
       item,
-      phoneService,
       dialogOpen,
       onClose,
       onEdit,
@@ -29,7 +28,6 @@ const ContactCard = forwardRef(
       >
         <ContactCardHeader
           item={item!}
-          phoneService={phoneService}
           onEdit={onEdit}
           onDelete={onDelete}
           onClose={onClose}

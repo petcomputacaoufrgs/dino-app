@@ -211,7 +211,7 @@ const enableDivTransition = (
   divEl: React.MutableRefObject<HTMLDivElement | null>
 ) => {
   if (divEl && divEl.current) {
-    divEl.current.style.transition = 'transform 250ms'
+    divEl.current.style.transition = 'transform 150ms'
   }
 }
 

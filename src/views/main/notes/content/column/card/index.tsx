@@ -7,8 +7,8 @@ import CardContent from '@material-ui/core/CardContent'
 import NoteBodyColumnCardProps from './props'
 import { Draggable } from 'react-beautiful-dnd'
 import { CardActions } from '@material-ui/core'
+import { useLanguage } from '../../../../../../context/language'
 import './styles.css'
-import { useUserSettings } from '../../../../../../context/provider/user_settings'
 
 const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   note,
@@ -17,8 +17,7 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
   searching,
   onClickNote,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const handleCardClick = () => {
     onClickNote(note)
@@ -42,7 +41,7 @@ const NoteContentColumnCard: React.FC<NoteBodyColumnCardProps> = ({
             title={note.question}
             subheader={DateUtils.getDateStringFormated(
               note.lastUpdate!,
-              language
+              language.data
             )}
           />
           <CardContent className="note__note_content__column__column_card__card__card_content">

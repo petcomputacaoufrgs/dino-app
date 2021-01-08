@@ -7,13 +7,13 @@ import ContactFormDialog from '../contact_dialog_form'
 import Constants from '../../../../constants/contact/ContactsConstants'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import ContactView from '../../../../types/contact/view/ContactView'
-import { useUserSettings } from '../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../context/language'
+import PhoneService from '../../../../services/contact/PhoneService'
+import ContactService from '../../../../services/contact/ContactService'
+import GoogleContactService from '../../../../services/contact/GoogleContactService'
 
 const ContactItems: React.FC<ContactItemsProps> = ({
   items,
-  contactService,
-  googleContactService,
-  phoneService,
 }) => {
   const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(
     undefined
@@ -25,8 +25,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({
     ContactView | undefined
   >(undefined)
 
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const handleOpenCard = (index: number) => {
     setContactToView(items[index])
@@ -35,10 +34,10 @@ const ContactItems: React.FC<ContactItemsProps> = ({
   const handleAcceptDeleteDialog = async () => {
     setContactToDelete(undefined)
     if (contactToDelete) {
-      await phoneService.deleteAll(contactToDelete.phones)
-      contactService.delete(contactToDelete.contact)
+      await PhoneService.deleteAll(contactToDelete.phones)
+      ContactService.delete(contactToDelete.contact)
       if (contactToDelete.googleContact) {
-        googleContactService.delete(contactToDelete.googleContact)
+        GoogleContactService.delete(contactToDelete.googleContact)
       }
     }
   }
@@ -54,7 +53,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           <ContactItemList
             key={index}
             item={item}
-            phoneService={phoneService}
             onEdit={setContactToEdit}
             onDelete={setContactToDelete}
             onClick={() => handleOpenCard(index)}
@@ -66,7 +64,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           dialogOpen={contactToView !== undefined}
           onClose={() => setContactToView(undefined)}
           item={contactToView}
-          phoneService={phoneService}
           onEdit={setContactToEdit}
           onDelete={setContactToDelete}
         />
@@ -76,9 +73,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           dialogOpen={contactToEdit !== undefined}
           onClose={() => setContactToEdit(undefined)}
           item={contactToEdit}
-          contactService={contactService}
-          phoneService={phoneService}
-          googleContactService={googleContactService}
           items={items}
           action={Constants.ACTION_EDIT}
         />
@@ -86,10 +80,10 @@ const ContactItems: React.FC<ContactItemsProps> = ({
       {contactToDelete && (
         <AgreementDialog
           open={contactToDelete !== undefined}
-          agreeOptionText={language.AGREEMENT_OPTION_TEXT}
-          disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
-          description={language.DELETE_CONTACT_OPTION_TEXT}
-          question={language.DELETE_CONTACT_QUESTION}
+          agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
+          disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
+          description={language.data.DELETE_CONTACT_OPTION_TEXT}
+          question={language.data.DELETE_CONTACT_QUESTION}
           onAgree={handleAcceptDeleteDialog}
           onDisagree={handleCloseDeleteDialog}
         />

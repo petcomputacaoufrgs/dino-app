@@ -3,9 +3,8 @@ import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeData
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
 import APIRequestMappingConstants from '../../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../../constants/api/APIWebSocketDestConstants'
-import SynchronizableWSUpdateModel from '../../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
-import SynchronizableWSDeleteModel from '../../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
-import { GoogleScopeContextType } from '../../../context/provider/google_scope'
+import SynchronizableWSUpdateModel from '../../../types/sync/api/web_socket/SynchronizableWSUpdateModel'
+import SynchronizableWSDeleteModel from '../../../types/sync/api/web_socket/SynchronizableWSDeleteModel'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
@@ -62,14 +61,9 @@ export class GoogleScopeServiceImpl extends AutoSynchronizableService<
     GoogleAgentService.refreshAuth()
   }
 
-  hasContactGrant = (context: GoogleScopeContextType): boolean => {
-    if (context && context.data) {
-      return context.data.some(
-        (scope) => scope.name === GoogleScope.SCOPE_CONTACT
-      )
-    }
-
-    return false
+  hasContactGrant = async (): Promise<boolean> => {
+    const scope = await this.table.where('name').equals(GoogleScope.SCOPE_CONTACT).first()
+    return scope !== undefined
   }
 
   findContactGrant = async (): Promise<GoogleScopeEntity | undefined> => {

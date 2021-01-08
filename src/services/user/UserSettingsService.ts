@@ -12,7 +12,6 @@ import { Language } from '../../types/context_provider/LanguageContextType'
 import LanguageCodeConstants from '../../constants/languages/LanguageCodeConstants'
 import PT from '../../constants/languages/PT'
 import EN from '../../constants/languages/EN'
-import { UserSettingsContextType } from '../../context/provider/user_settings/index'
 import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
@@ -45,7 +44,7 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
       declineGoogleContacts: model.declineGoogleContacts,
       fontSize: model.fontSize,
       includeEssentialContact: model.includeEssentialContact,
-      language: model.language,
+      language: model.language ? model.language : this.getDefaultLanguageCode(),
       firstSettingsDone: model.firstSettingsDone,
       settingsStep: model.settingsStep,
     }
@@ -146,78 +145,67 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
   }
 
   getEssentialContactGrant(
-    userSettings: UserSettingsContextType
+    userSettings: UserSettingsEntity | undefined
   ): boolean | undefined {
-    const entity = userSettings.first
-
-    if (entity) {
-      return entity.includeEssentialContact
+    if (userSettings) {
+      return userSettings.includeEssentialContact
     } else {
       return undefined
     }
   }
 
-  getTreatment(
-    userSettings: UserSettingsContextType,
-    treatments: TreatmentEntity[]
-  ): TreatmentEntity | undefined {
-    const entity = userSettings.first
-
-    if (entity && entity.treatmentLocalId) {
-      const treatment = treatments.find(
-        (treatment) => treatment.localId === entity.treatmentLocalId
-      )
-      if (treatment) {
-        return treatment
-      }
+  async getTreatment (
+    userSettings: UserSettingsEntity,
+  ): Promise<TreatmentEntity | undefined> {
+    if (userSettings.treatmentLocalId) {
+      return TreatmentService.getByLocalId(userSettings.treatmentLocalId)
     }
 
     return undefined
   }
 
-  getFirstSettingsDone(
-    userSettings: UserSettingsContextType
-  ): boolean | undefined {
-    const entity = userSettings.first
+  getFirstSettingsDone = async (): Promise<boolean | undefined> => {
+    const userSettings = await this.getFirst()
 
-    if (entity) {
-      return entity.firstSettingsDone
-    } else {
-      return undefined
-    }
-  }
-
-  getDeclinedGoogleContact(userSettings: UserSettingsContextType): boolean {
-    const entity = userSettings.first
-
-    if (entity) {
-      return entity.declineGoogleContacts
+    if (userSettings) {
+      return userSettings.firstSettingsDone
     } else {
       return false
     }
   }
-
-  getLanguage = (userSettings: UserSettingsContextType): LanguageBase => {
-    const entity = userSettings.first
-
-    if (entity && entity.language === LanguageCodeConstants.ENGLISH) {
+  
+  getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
+    if (userSettings && userSettings.language === LanguageCodeConstants.ENGLISH) {
       return new EN()
     } else {
       return new PT()
     }
   }
 
-  getColorThemeCode = (userSettings: UserSettingsContextType): number => {
-    const entity = userSettings.first
-
-    return entity ? entity.colorTheme : 4
+  getDefaultLanguage = (): LanguageBase => {
+    if (navigator && navigator.language) {
+        if (navigator.language.startsWith('pt')) {
+            return new PT()
+        }
+    }
+    return new EN()
   }
 
-  getColorTheme = (userSettings: UserSettingsContextType): string => {
-    const entity = userSettings.first
+  getDefaultLanguageCode = (): string => {
+    return this.getDefaultLanguage().ISO_LANGUAGE_CODE
+  }
 
-    if (entity) {
-      switch (entity.colorTheme) {
+  getColorThemeCode = (userSettings: UserSettingsEntity | undefined): number => {
+    return userSettings ? userSettings.colorTheme : this.getDefaultColorThemeCode()
+  }
+
+  getDefaultColorThemeCode = () => {
+    return ColorThemeEnum.DEVICE
+  }
+
+  getColorThemeName = (userSettings: UserSettingsEntity): string => {
+    if (userSettings) {
+      switch (userSettings.colorTheme) {
         case 1:
           return 'light'
         case 2:
@@ -234,17 +222,9 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
     return this.getSystemColorThemeName()
   }
 
-  getFontSizeCode = (userSettings: UserSettingsContextType): number => {
-    const entity = userSettings.first
-
-    return entity ? entity.fontSize : 1
-  }
-
-  getFontSize = (userSettings: UserSettingsContextType): string => {
-    const entity = userSettings.first
-
-    if (entity) {
-      switch (entity.fontSize) {
+  getFontSize = (userSettings: UserSettingsEntity): string => {
+    if (userSettings) {
+      switch (userSettings.fontSize) {
         case 1:
           return 'default'
         case 2:
@@ -256,6 +236,14 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
       }
     }
     return 'default'
+  }
+
+  getFontSizeCode = (userSettings: UserSettingsEntity | undefined): number => {
+    return userSettings ? userSettings.fontSize : this.getDefaultFontSizeCode()
+  }
+
+  getDefaultFontSizeCode = (): number => {
+    return FontSizeEnum.DEFAULT
   }
 
   getSystemColorThemeName = (): string => {

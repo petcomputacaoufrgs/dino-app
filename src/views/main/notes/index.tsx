@@ -1,31 +1,62 @@
 import React, { useState, useEffect } from 'react'
 import NoteHeader from './header'
 import NoteContent from './content'
-import { useNoteColumn } from '../../../context/provider/note_column'
 import { DropResult } from 'react-beautiful-dnd'
 import NoteDroppableType from '../../../constants/note/NoteDroppableType'
 import NoteEntity from '../../../types/note/database/NoteEntity'
 import NoteColumnEntity from '../../../types/note/database/NoteColumnEntity'
-import { useNote } from '../../../context/provider/note'
 import NoteView from '../../../types/note/view/NoteView'
-import './styles.css'
 import Loader from '../../../components/loader'
+import NoteService from '../../../services/note/NoteService'
+import NoteColumnService from '../../../services/note/NoteColumnService'
+import './styles.css'
 
-const Notes = () => {
-  const column = useNoteColumn()
-  const note = useNote()
-  const tags = note.service.getAllTags(note.data)
-
+const Notes: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [tags, setTags] = useState<string[]>([])
+  const [noteViews, setNoteViews] = useState<NoteView[]>([])
   const [textSearch, setTextSearch] = useState('')
   const [tagSearch, setTagSearch] = useState<string[]>([])
   const [searching, setSearching] = useState(false)
 
-  const noteView = column.service.getColumnsByFilter(
-    note.data,
-    column.data,
-    tagSearch,
-    textSearch
-  )
+  useEffect(() => {
+    const loadData = async () => {
+      const notes = await NoteService.getAll()
+      const columns = await NoteColumnService.getAll()
+
+      if (columns.length > 0) {
+        const tags = NoteService.getAllTags(notes)
+        const noteView = NoteColumnService.getNoteViews(notes, columns)
+  
+        updateData(noteView, tags)
+      }
+
+      finishLoading()
+    }
+
+    let updateData = (noteViews: NoteView[], tags: string[]) => {
+      setNoteViews(noteViews)
+      setTags(tags)
+    }
+
+    NoteColumnService.addUpdateEventListenner(loadData)
+    NoteService.addUpdateEventListenner(loadData)
+    
+    let finishLoading = () => {
+      setIsLoading(false)
+    }
+
+    if (isLoading) {
+      loadData()
+    }
+
+    return () => {
+      finishLoading = () => {}
+      updateData = () => {}
+      NoteColumnService.removeUpdateEventListenner(loadData)
+      NoteService.removeUpdateEventListenner(loadData)
+    }
+  }, [isLoading])
 
   useEffect(() => {
     if (textSearch.length > 0 || tagSearch.length > 0) {
@@ -53,12 +84,12 @@ const Notes = () => {
   //#region Column
 
   const handleSaveColumn = (item: NoteColumnEntity) => {
-    column.service.save(item)
+    NoteColumnService.save(item)
   }
 
   const handleDeleteColumn = async (item: NoteColumnEntity) => {
-    await note.service.deleteNotesByColumn(item)
-    column.service.delete(item)
+    await NoteService.deleteNotesByColumn(item)
+    NoteColumnService.delete(item)
   }
 
   //#endregion
@@ -66,7 +97,7 @@ const Notes = () => {
   //#region Note
 
   const questionAlreadyExists = (question: string): boolean =>
-    note.data.some((note) => note.question === question)
+    noteViews.some(noteView => noteView.notes.some(note => note.question === question))
 
   const handleSaveNewNote = (
     question: string,
@@ -74,7 +105,7 @@ const Notes = () => {
     noteView: NoteView
   ) => {
     if (noteView.column.localId) {
-      note.service.save({
+      NoteService.save({
         answer: '',
         question: question,
         tags: tagList,
@@ -85,11 +116,11 @@ const Notes = () => {
   }
 
   const handleSaveNote = (item: NoteEntity) => {
-    note.service.save(item)
+    NoteService.save(item)
   }
 
   const handleDeleteNote = (item: NoteEntity) => {
-    note.service.delete(item)
+    NoteService.delete(item)
   }
 
   //#endregion
@@ -107,11 +138,11 @@ const Notes = () => {
 
     const changedColumn = source.droppableId !== destination.droppableId
 
-    const sourceViewNote = noteView.find(
+    const sourceViewNote = noteViews.find(
       (item) => item.column.title === source.droppableId
     )
 
-    const destinationViewNote = noteView.find(
+    const destinationViewNote = noteViews.find(
       (item) => item.column.title === destination.droppableId
     )
 
@@ -132,11 +163,11 @@ const Notes = () => {
 
     if (changedColumn) {
       sourceViewNote.notes.forEach((note, index) => (note.order = index))
-      note.service.saveAll(
+      NoteService.saveAll(
         destinationViewNote.notes.concat(sourceViewNote.notes)
       )
     } else {
-      note.service.saveAll(destinationViewNote.notes)
+      NoteService.saveAll(destinationViewNote.notes)
     }
   }
 
@@ -149,14 +180,14 @@ const Notes = () => {
       return
     }
 
-    const changedColumn = noteView[source.index]
+    const changedColumn = noteViews[source.index]
 
-    noteView.splice(source.index, 1)
-    noteView.splice(destination.index, 0, changedColumn)
+    noteViews.splice(source.index, 1)
+    noteViews.splice(destination.index, 0, changedColumn)
 
-    noteView.forEach((item, index) => (item.column.order = index))
+    noteViews.forEach((item, index) => (item.column.order = index))
 
-    column.service.saveAll(noteView.map((item) => item.column))
+    NoteColumnService.saveAll(noteViews.map((item) => item.column))
   }
 
   const handleDragEnd = (result: DropResult) => {
@@ -187,7 +218,7 @@ const Notes = () => {
     <div className="notes">
       <Loader
         className="notes__loader"
-        loading={note.loading || column.loading}
+        isLoading={isLoading}
       >
         <NoteHeader
           onTagSearch={handleTagSearch}
@@ -202,10 +233,11 @@ const Notes = () => {
           onSaveNewNote={handleSaveNewNote}
           onSaveNote={handleSaveNote}
           questionAlreadyExists={questionAlreadyExists}
-          noteView={noteView}
-          column={column}
+          noteViews={noteViews}
           tags={tags}
           searching={searching}
+          tagSearch={tagSearch}
+          textSearch={textSearch}
         />
       </Loader>
     </div>

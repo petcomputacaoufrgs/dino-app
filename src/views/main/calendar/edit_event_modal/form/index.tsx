@@ -32,21 +32,20 @@ import Weekday from '../../../../../types/weekday_picker/Weekday'
 import AddAlarmModal from './add_alarm_modal'
 import EventAlarm from '../../../../../types/calendar/EventAlarm'
 import AlarmItem from './alarm_item'
-import { useUserSettings } from '../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
 const Form: React.FC = () => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
-  const [eventType, setEventType] = useState(language.MEDICAL_APPOINTMENT_TYPE)
+  const [eventType, setEventType] = useState(language.data.MEDICAL_APPOINTMENT_TYPE)
   const [eventName, setEventName] = useState<string>()
   const [initDate, setInitDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
   const [repeatType, setRepeatType] = useState(EventRepeatType.NOT_REPEAT)
   const [endRepeatDate, setEndRepeatDate] = useState<Date | undefined>()
   const [repeatModalOpen, setRepeatModalOpen] = useState(false)
-  const [weekdays, setWeekdays] = useState(new Week(language))
+  const [weekdays, setWeekdays] = useState(new Week(language.data))
   const [addAlarmModalOpen, setAddAlarmModalOpen] = useState(false)
   const [alarms, setAlarms] = useState<EventAlarm[]>([])
 
@@ -159,10 +158,10 @@ const Form: React.FC = () => {
   const renderEventNameField = (): JSX.Element => (
     <FormItem
       iconSrc={TitleSVG}
-      iconAlt={language.EVENT_TITLE_ICON_ALT}
+      iconAlt={language.data.EVENT_TITLE_ICON_ALT}
       item={
         <TextField
-          label={language.EVENT_NAME_LABEL}
+          label={language.data.EVENT_NAME_LABEL}
           value={eventName}
           variant="standard"
           className="calendar__edit_event_modal__event_name_text_field"
@@ -175,7 +174,7 @@ const Form: React.FC = () => {
   const renderEventTypeRadioGroup = (): JSX.Element => (
     <>
       <RadioGroup
-        aria-label={language.EVENT_TYPE_LABEL}
+        aria-label={language.data.EVENT_TYPE_LABEL}
         value={eventType}
         onChange={handleEventTypeChange}
       >
@@ -186,7 +185,7 @@ const Form: React.FC = () => {
             <FormControlLabel
               value={EventType.MEDICINE}
               control={<Radio />}
-              label={language.MEDICINE_TYPE}
+              label={language.data.MEDICINE_TYPE}
             />
           }
         />
@@ -195,7 +194,7 @@ const Form: React.FC = () => {
             <FormControlLabel
               value={EventType.MEDICAL_APPOINTMENT}
               control={<Radio />}
-              label={language.MEDICAL_APPOINTMENT_TYPE}
+              label={language.data.MEDICAL_APPOINTMENT_TYPE}
             />
           }
         />
@@ -207,21 +206,21 @@ const Form: React.FC = () => {
     <>
       <FormItem
         iconSrc={ScheduleSVG}
-        iconAlt={language.EVENT_DATE_ICON_ALT}
+        iconAlt={language.data.EVENT_DATE_ICON_ALT}
         item={
           <Grid container justify="space-around">
             <KeyboardDatePicker
               margin="normal"
               className="calendar__add__modal__form__date_picker"
-              label={language.EVENT_INIT_DATE_LABEL}
-              format={language.DATE_PICKER_DAY_FORMAT}
+              label={language.data.EVENT_INIT_DATE_LABEL}
+              format={language.data.DATE_PICKER_DAY_FORMAT}
               value={initDate}
               onChange={handleStartDateChange}
             />
             <KeyboardTimePicker
               margin="normal"
               className="calendar__add__modal__form__date_picker second"
-              label={language.EVENT_INIT_TIME_LABEL}
+              label={language.data.EVENT_INIT_TIME_LABEL}
               value={initDate}
               onChange={handleStartDateChange}
             />
@@ -234,15 +233,15 @@ const Form: React.FC = () => {
             <KeyboardDatePicker
               margin="normal"
               className="calendar__add__modal__form__date_picker"
-              label={language.EVENT_END_DATE_LABEL}
-              format={language.DATE_PICKER_DAY_FORMAT}
+              label={language.data.EVENT_END_DATE_LABEL}
+              format={language.data.DATE_PICKER_DAY_FORMAT}
               value={endDate}
               onChange={handleEndDateChange}
             />
             <KeyboardTimePicker
               margin="normal"
               className="calendar__add__modal__form__date_picker second"
-              label={language.EVENT_END_TIME_LABEL}
+              label={language.data.EVENT_END_TIME_LABEL}
               value={endDate}
               onChange={handleEndDateChange}
             />
@@ -255,14 +254,14 @@ const Form: React.FC = () => {
   const renderEventRepeatPicker = (): JSX.Element => (
     <FormItem
       iconSrc={RepeatSVG}
-      iconAlt={language.EVENT_REPEAT_ICON_ALT}
+      iconAlt={language.data.EVENT_REPEAT_ICON_ALT}
       item={
         <Button
-          ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
+          ariaLabel={language.data.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
           className="calendar__add__modal__event_repeat_button"
           onClick={handleOpenEventRepeatModal}
         >
-          {CalendarService.getEventRepeatTypeName(Number(repeatType), language)}
+          {CalendarService.getEventRepeatTypeName(Number(repeatType), language.data)}
         </Button>
       }
     />
@@ -275,8 +274,8 @@ const Form: React.FC = () => {
           item={
             <KeyboardDatePicker
               margin="normal"
-              label={language.EVENT_END_DATE_LABEL}
-              format={language.DATE_PICKER_DAY_FORMAT}
+              label={language.data.EVENT_END_DATE_LABEL}
+              format={language.data.DATE_PICKER_DAY_FORMAT}
               value={endRepeatDate}
               onChange={handleRepeatEndDateChange}
             />
@@ -293,7 +292,7 @@ const Form: React.FC = () => {
           item={
             <div className="calendar__edit_event_modal__form__weekday_picker">
               <p className="calendar__edit_event_modal__form__weekday_picker__label">
-                {language.EVENT_WEEKDAY_SELECT_LABEL}
+                {language.data.EVENT_WEEKDAY_SELECT_LABEL}
               </p>
               <WeekDayPicker
                 week={weekdays}
@@ -311,7 +310,7 @@ const Form: React.FC = () => {
       {alarms.map((alarm, index) => (
         <FormItem
           iconSrc={index === 0 ? AddAlertSVG : undefined}
-          iconAlt={index === 0 ? language.EVENT_ALERT_ALT : undefined}
+          iconAlt={index === 0 ? language.data.EVENT_ALERT_ALT : undefined}
           key={index}
           item={<AlarmItem alarm={alarm} onDelete={handleAlarmDelete} />}
         />
@@ -322,14 +321,14 @@ const Form: React.FC = () => {
   const renderAlarm = (): JSX.Element => (
     <FormItem
       iconSrc={alarms.length === 0 ? AddAlertSVG : undefined}
-      iconAlt={alarms.length === 0 ? language.EVENT_ALERT_ALT : undefined}
+      iconAlt={alarms.length === 0 ? language.data.EVENT_ALERT_ALT : undefined}
       item={
         <Button
-          ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
+          ariaLabel={language.data.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
           className="calendar__add__modal__event_alert_button"
           onClick={handleOpenEventAddAlertModal}
         >
-          {language.EVENT_ADD_ALERT}
+          {language.data.EVENT_ADD_ALERT}
         </Button>
       }
     />
@@ -338,12 +337,12 @@ const Form: React.FC = () => {
   const renderColorSelection = (): JSX.Element => (
     <FormItem
       iconSrc={ColorLensSVG}
-      iconAlt={language.CHANGE_COLOR_ARIA_LABEL}
+      iconAlt={language.data.CHANGE_COLOR_ARIA_LABEL}
       //onIconClick={handleColorChange}
       item={
         <div className="calendar__edit_event_modal__form__color_selection">
           <p className="calendar__edit_event_modal__form__color_selection__label">
-            {language.EVENT_COLOR_LABEL}:
+            {language.data.EVENT_COLOR_LABEL}:
           </p>
           <div
             className="calendar__edit_event_modal__form__color_selection__color_cicle"

@@ -4,15 +4,14 @@ import './styles.css'
 import Button from '../../../../../components/button'
 import { isMobile } from 'react-device-detect'
 import NoteConstants from '../../../../../constants/note/NoteConstants'
-import { useUserSettings } from '../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../context/language'
 
 const AddColumn: React.FC<AddColumnProps> = ({
   onAddColumn,
   visible,
   columnCount,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const maxColumns = columnCount >= NoteConstants.MAX_COLUMNS
 
@@ -29,7 +28,7 @@ const AddColumn: React.FC<AddColumnProps> = ({
         disabled={maxColumns}
       >
         <h2 className="note__note_content__columns__add_column__button__text">
-          {language.ADD_COLUMN_TEXT} (
+          {language.data.ADD_COLUMN_TEXT} (
           <span
             className={
               maxColumns

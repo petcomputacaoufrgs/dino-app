@@ -3,13 +3,12 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { Link } from 'react-router-dom'
-import { useUserSettings } from '../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../context/language'
 import GlossaryItemProps from './props'
 import './styles.css'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   return (
     <div className="glossary__items">
@@ -22,12 +21,12 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
             <Accordion.Collapse eventKey={index.toString()}>
               <Card.Body>
                 <Card.Subtitle className="mb-2">{item.subtitle}</Card.Subtitle>
-                <Card.Text>{item.text || language.NO_AVAILABLE_TEXT}</Card.Text>
+                <Card.Text>{item.text || language.data.NO_AVAILABLE_TEXT}</Card.Text>
                 <Link
                   className="card-link"
-                  to={`${PathConstants.GLOSSARY}/${item.id}`}
+                  to={`${PathConstants.GLOSSARY}/${item.localId}`}
                 >
-                  {language.READ_MORE}
+                  {language.data.READ_MORE}
                 </Link>
               </Card.Body>
             </Accordion.Collapse>

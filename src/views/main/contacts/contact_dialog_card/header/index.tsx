@@ -3,19 +3,18 @@ import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
 import ContactCardHeaderProps from './props'
 import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
-import { useUserSettings } from '../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../context/language'
+import PhoneService from '../../../../../services/contact/PhoneService'
 import '../../styles.css'
 import './styles.css'
 
 const ContactCardHeader = ({
   item,
-  phoneService,
   onEdit,
   onDelete,
   onClose: handleCloseDialog,
 }: ContactCardHeaderProps) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -48,7 +47,7 @@ const ContactCardHeader = ({
       <CardHeader
         avatar={
           <Avatar
-            aria-label={language.AVATAR_ALT}
+            aria-label={language.data.AVATAR_ALT}
             className={`avatar__color-${item.contact.color}`}
           >
             {item.contact.name[0].toUpperCase()}
@@ -61,7 +60,7 @@ const ContactCardHeader = ({
           </>
         }
         title={item.contact.name}
-        subheader={phoneService.getPhoneTypes(item.phones, language)}
+        subheader={PhoneService.getPhoneTypes(item.phones, language.data)}
         className="contact_dialog_content_header"
       />
       <Menu
@@ -69,9 +68,9 @@ const ContactCardHeader = ({
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleEdit}>{language.EDIT_OPTION_TEXT}</MenuItem>
+        <MenuItem onClick={handleEdit}>{language.data.EDIT_OPTION_TEXT}</MenuItem>
         <MenuItem onClick={handleDelete}>
-          {language.DELETE_OPTION_TEXT}
+          {language.data.DELETE_OPTION_TEXT}
         </MenuItem>
       </Menu>
     </>

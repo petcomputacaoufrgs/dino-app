@@ -12,8 +12,11 @@ import ContactsConstants from '../../../../constants/contact/ContactsConstants'
 import StringUtils from '../../../../utils/StringUtils'
 import ContactView from '../../../../types/contact/view/ContactView'
 import Utils from '../../../../utils/Utils'
-import { useUserSettings } from '../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../context/language'
 import GoogleContactEntity from '../../../../types/contact/database/GoogleContactEntity'
+import ContactService from '../../../../services/contact/ContactService'
+import PhoneService from '../../../../services/contact/PhoneService'
+import GoogleContactService from '../../../../services/contact/GoogleContactService'
 import './styles.css'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
@@ -40,14 +43,10 @@ const ContactFormDialog = React.forwardRef(
       action,
       item,
       items,
-      contactService,
-      phoneService,
-      googleContactService
     }: ContactFormDialogProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
-    const userSettings = useUserSettings()
-    const language = userSettings.service.getLanguage(userSettings)
+    const language = useLanguage()
     const [contact, setContact] = useState(getContact(item))
     const [contactPhones, setContactPhones] = useState(getPhones(item))
     const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
@@ -84,12 +83,12 @@ const ContactFormDialog = React.forwardRef(
         if (phone)
           setInvalidPhone({
             number: phone.number,
-            text: `${language.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`,
+            text: `${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`,
           })
       }
 
       if (validInfo()) {
-        const viewWithSamePhone = phoneService.getContactWithSamePhone(
+        const viewWithSamePhone = PhoneService.getContactWithSamePhone(
           items,
           contactPhones,
           item
@@ -107,11 +106,11 @@ const ContactFormDialog = React.forwardRef(
     const saveContact = async () => {
       if (action === ContactsConstants.ACTION_EDIT) {
         if (item && Utils.isNotEmpty(item.contact.localId)) {
-          await contactService.save(contact)
+          await ContactService.save(contact)
           await savePhones(contact)
         }
       } else if (action === ContactsConstants.ACTION_ADD) {
-        const savedContact = await contactService.save(contact)
+        const savedContact = await ContactService.save(contact)
 
         if (savedContact) {
           await savePhones(savedContact)
@@ -123,11 +122,11 @@ const ContactFormDialog = React.forwardRef(
       const newPhones = contactPhones.filter((phone) => phone.number !== '')
       newPhones.forEach((phone) => (phone.localContactId = contact.localId))
       if (newPhones.length > 0) {
-        await phoneService.saveAll(newPhones)
+        await PhoneService.saveAll(newPhones)
       }
 
       if (phonesToDelete.length > 0) {
-        await phoneService.deleteAll(phonesToDelete)
+        await PhoneService.deleteAll(phonesToDelete)
       }
 
       await saveGoogleContact(contact)
@@ -135,13 +134,13 @@ const ContactFormDialog = React.forwardRef(
 
     const saveGoogleContact = async (contact: ContactEntity) => {
       if (item && item.googleContact) {
-        await googleContactService.save(item.googleContact)
+        await GoogleContactService.save(item.googleContact)
       } else {
         const googleContact: GoogleContactEntity = {
           localContactId: contact.localId
         }
 
-        await googleContactService.save(googleContact)
+        await GoogleContactService.save(googleContact)
       }
     }
 
@@ -233,10 +232,10 @@ const ContactFormDialog = React.forwardRef(
           </DialogContent>
           <DialogActions>
             <Button onClick={onClose}>
-              {language.DIALOG_CANCEL_BUTTON_TEXT}
+              {language.data.DIALOG_CANCEL_BUTTON_TEXT}
             </Button>
             <Button onClick={handleSave}>
-              {language.DIALOG_SAVE_BUTTON_TEXT}
+              {language.data.DIALOG_SAVE_BUTTON_TEXT}
             </Button>
           </DialogActions>
         </Dialog>

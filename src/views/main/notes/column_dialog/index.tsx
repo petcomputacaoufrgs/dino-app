@@ -13,12 +13,11 @@ import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 import Button from '../../../../components/button/text_button'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
-import { useUserSettings } from '../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../context/language'
 
 const NoteColumnDialog = forwardRef(
   (props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
-    const userSettings = useUserSettings()
-    const language = userSettings.service.getLanguage(userSettings)
+    const language = useLanguage()
 
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -70,13 +69,13 @@ const NoteColumnDialog = forwardRef(
 
       const minLengthError = title.length < NoteColumnConstants.TITLE_MIN
       if (minLengthError) {
-        setInvalidMessage(language.COLUMN_MIN_LENGTH_ERROR)
+        setInvalidMessage(language.data.COLUMN_MIN_LENGTH_ERROR)
         return false
       }
 
       const titleConflict = props.titleAlreadyExists(title)
       if (titleConflict) {
-        setInvalidMessage(language.COLUMN_TITLE_ALREADY_EXISTS_ERROR)
+        setInvalidMessage(language.data.COLUMN_TITLE_ALREADY_EXISTS_ERROR)
         return false
       }
 
@@ -106,10 +105,10 @@ const NoteColumnDialog = forwardRef(
         </DialogContent>
         <DialogActions>
           <Button onClick={props.onClose}>
-            {language.DIALOG_CANCEL_BUTTON_TEXT}
+            {language.data.DIALOG_CANCEL_BUTTON_TEXT}
           </Button>
           <Button onClick={handleSave} inputRef={inputRef}>
-            {language.DIALOG_SAVE_BUTTON_TEXT}
+            {language.data.DIALOG_SAVE_BUTTON_TEXT}
           </Button>
         </DialogActions>
       </Dialog>

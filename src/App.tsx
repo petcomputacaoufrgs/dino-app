@@ -1,37 +1,83 @@
 import React, { useEffect, useState } from 'react'
 import Login from './views/login'
 import Main from './views/main'
-import PrivateRouterContextProvider from './context/provider/private_router'
+import PrivateRouterContextProvider from './context/private_router'
 import PrivateRoute from './components/private_route'
 import LoginRoute from './components/login_route/index'
 import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch, Route } from 'react-router'
 import NotFound from './views/not_found/index'
-import UserContextProvider from './context/provider/user'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
 import TermsOfUse from './views/terms_of_use'
 import PrivacyPolicy from './views/privacy_policy'
-import UserSettingsProvider from './context/provider/user_settings/index'
-import TreatmentProvider from './context/provider/treatment'
-import GoogleScopeProvider from './context/provider/google_scope'
 import DataThemeUtils from './utils/DataThemeUtils'
 import UserSettingsService from './services/user/UserSettingsService'
-import { useAuth } from './context/provider/auth/index'
+import UserSettingsEntity from './types/user/database/UserSettingsEntity'
+import DataFontSizeUtils from './utils/DataFontSizeUtils'
+import AuthService from './services/auth/AuthService'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
 
 const App = (): JSX.Element => {
-  const auth = useAuth()
+  const [isLoading, setIsLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [showLoadScreen, setShowLoadScreen] = useState(false)
 
-  DataThemeUtils.setBodyDataTheme(UserSettingsService.getSystemColorThemeName())
-
   useEffect(() => {
-    ViewportService.maximizeViewport()
-  }, [])
+    const loadData = async () => {
+      const isAuthenticated = await AuthService.isAuthenticated()
+      if (isAuthenticated) {
+        await loadSettings()
+      } else {
+        DataThemeUtils.setBodyDataTheme(UserSettingsService.getSystemColorThemeName())
+      }
+      updateAuth(isAuthenticated)
+      finishLoading()
+    }
+
+    const loadSettings = async () => {
+      const dbSettings = await UserSettingsService.getFirst() 
+        if (dbSettings) {
+          updateSettings(dbSettings)
+        } else {
+          DataThemeUtils.setBodyDataTheme(UserSettingsService.getSystemColorThemeName())
+        }
+    }
+
+    let updateSettings = (settings: UserSettingsEntity) => {
+      const colorTheme = UserSettingsService.getColorThemeName(settings)
+      DataThemeUtils.setBodyDataTheme(colorTheme)
+
+      const fontSize = UserSettingsService.getFontSize(settings)
+      DataFontSizeUtils.setBodyDataFontSize(fontSize)
+    }
+
+    let updateAuth = (isAuthenticated: boolean) => {
+      setIsAuthenticated(isAuthenticated)
+    }
+
+    let finishLoading = () => {
+      setIsLoading(false)
+    }
+
+    UserSettingsService.addUpdateEventListenner(loadSettings)
+    AuthService.addUpdateEventListenner(loadData)
+
+    if (isLoading) {
+      loadData()
+    }
+
+    return () => {
+      finishLoading = () => {}
+      updateSettings = () => {}
+      updateAuth = () => {}
+      UserSettingsService.removeUpdateEventListenner(loadSettings)
+      AuthService.removeUpdateEventListenner(loadData)
+    }
+  }, [isLoading]) 
 
   useEffect(() => {
     if (showLoadScreen) {
@@ -47,11 +93,16 @@ const App = (): JSX.Element => {
     }
   }, [showLoadScreen])
 
+  
+  useEffect(() => {
+    ViewportService.maximizeViewport()
+  }, [])
+
   const renderApp = (): JSX.Element => (
     <PrivateRouterContextProvider
       loginPath={PathConstants.LOGIN}
       homePath={PathConstants.HOME}
-      isAuthenticated={auth.isAuthenticated}
+      isAuthenticated={isAuthenticated}
       browserHistory={HistoryService}
     >
       <Switch>
@@ -59,15 +110,7 @@ const App = (): JSX.Element => {
         <PrivateRoute
           path={PathConstants.USER}
           component={() => (
-            <UserContextProvider>
-              <GoogleScopeProvider>
-                <UserSettingsProvider>
-                  <TreatmentProvider>
-                    <Main />
-                  </TreatmentProvider>
-                </UserSettingsProvider>
-              </GoogleScopeProvider>
-            </UserContextProvider>
+            <Main />
           )}
         />
         <Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
@@ -80,7 +123,9 @@ const App = (): JSX.Element => {
   const renderLoad = (): JSX.Element => <Load />
 
   return (
-    <div className="app">{(showLoadScreen || auth.loading) ? renderLoad() : renderApp()}</div>
+    <div className="app">
+      {(showLoadScreen || isLoading) ? renderLoad() : renderApp()}
+    </div>
   )
 }
 

@@ -8,8 +8,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import { DialogTitle, DialogActions } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
+import { useLanguage } from '../../../../context/language'
 import './styles.css'
-import { useUserSettings } from '../../../../context/provider/user_settings'
 
 const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
   onClose,
@@ -18,8 +18,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
   tagOptions,
   questionAlreadyExists,
 }): JSX.Element => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const [question, setQuestion] = useState('')
   const [questionWithError, setQuestionWithError] = useState(false)
@@ -38,7 +37,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 
     if (newQuestion.length === 0) {
       setQuestionWithError(true)
-      setQuestionErrorHelper(language.EMPTY_FIELD_ERROR)
+      setQuestionErrorHelper(language.data.EMPTY_FIELD_ERROR)
 
       return
     }
@@ -46,7 +45,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
     const questionConflict = questionAlreadyExists(newQuestion)
     if (questionConflict) {
       setQuestionWithError(true)
-      setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
+      setQuestionErrorHelper(language.data.QUESTION_ALREADY_EXISTS_ERROR)
 
       return
     }
@@ -83,9 +82,9 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
           error={questionWithError}
           helperText={questionErrorHelper}
           label={
-            language.QUESTION_NOTE_DIALOG_TITLE +
+            language.data.QUESTION_NOTE_DIALOG_TITLE +
             ' (' +
-            language.MAX +
+            language.data.MAX +
             NoteConstants.ANSWER_MAX_LENGTH +
             ')'
           }
@@ -106,7 +105,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
             <TextField
               {...params}
               fullWidth
-              label={`${language.NOTE_TAG_LABEL} (${language.MAX} ${NoteConstants.TAG_LIMIT})`}
+              label={`${language.data.NOTE_TAG_LABEL} (${language.data.MAX} ${NoteConstants.TAG_LIMIT})`}
               variant="outlined"
               inputProps={{
                 ...params.inputProps,
@@ -125,11 +124,11 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
       onClose={onClose}
       TransitionComponent={TransitionSlide}
     >
-      <DialogTitle>{language.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DialogTitle>
+      <DialogTitle>{language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DialogTitle>
       {renderDialogContent()}
       <DialogActions>
-        <Button onClick={onClose}>{language.DIALOG_CANCEL_BUTTON_TEXT}</Button>
-        <Button onClick={handleSave}>{language.DIALOG_SAVE_BUTTON_TEXT}</Button>
+        <Button onClick={onClose}>{language.data.DIALOG_CANCEL_BUTTON_TEXT}</Button>
+        <Button onClick={handleSave}>{language.data.DIALOG_SAVE_BUTTON_TEXT}</Button>
       </DialogActions>
     </Dialog>
   )

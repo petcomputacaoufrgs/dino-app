@@ -51,17 +51,12 @@ export class ContactServiceImpl extends AutoSynchronizableService<
     return model
   }
 
-  getViewContactByFilter(
+  getContactViews(
     contacts: ContactEntity[],
     phones: PhoneEntity[],
-    googleContacts: GoogleContactEntity[],
-    searchTerm: string
+    googleContacts: GoogleContactEntity[]
   ): ContactView[] {
-    const contactsFiltered = contacts.filter((item) =>
-      StringUtils.contains(item.name, searchTerm)
-    )
-
-    return contactsFiltered.map(
+    return contacts.map(
       (contact) =>
         ({
           contact: contact,
@@ -71,6 +66,19 @@ export class ContactServiceImpl extends AutoSynchronizableService<
             googleContacts
           ),
         } as ContactView)
+    ).sort((a,b) => {
+      if(a.contact.name < b.contact.name) { return -1; }
+      if(a.contact.name > b.contact.name) { return 1; }
+      return 0;
+    })
+  }
+
+  filterContactViews(
+    contacts: ContactView[],
+    searchTerm: string
+  ): ContactView[] {
+    return contacts.filter((item) =>
+      StringUtils.contains(item.contact.name, searchTerm)
     )
   }
 }

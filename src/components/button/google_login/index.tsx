@@ -5,10 +5,10 @@ import LoginButtonProps from './props'
 import LoginStatusConstants from '../../../constants/login/LoginStatusConstants'
 import AuthService from '../../../services/auth/AuthService'
 import ConnectionService from '../../../services/connection/ConnectionService'
-import { useAlert } from '../../../context/provider/alert'
+import { useAlert } from '../../../context/alert'
 import TextIconButton from '../icon_text_button'
-import { useUserSettings } from '../../../context/provider/user_settings'
-import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2/index'
+import { useGoogleOAuth2 } from '../../../context/google_oauth2/index'
+import { useLanguage } from '../../../context/language/index'
 import './styles.css'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
@@ -18,8 +18,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   onRefreshTokenLostError,
   text,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
   const alert = useAlert()
   const googleOAuth2 = useGoogleOAuth2()
 
@@ -83,17 +82,17 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
   }
 
   const showOfflineMessage = () => {
-    alert.showInfoAlert(language.CANT_LOGIN_DISCONNECTED)
+    alert.showInfoAlert(language.data.CANT_LOGIN_DISCONNECTED)
   }
 
   return (
     <Loader
       iconClassName="google_login_button__loader"
-      loading={loading || googleOAuth2.loading}
+      isLoading={loading || googleOAuth2.loading}
     >
       <div className="google_login_button">
         <TextIconButton
-          ariaLabel={language.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
+          ariaLabel={language.data.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
           icon={GoogleLogoSVG}
           className={'google_login_button__text_button'}
           onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
@@ -102,7 +101,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
           <p className="google_login_button__text_button__text">{text}</p>
         </TextIconButton>
         {!isConnected && (
-          <p className="google_login_button__error">{language.DISCONNECTED}</p>
+          <p className="google_login_button__error">{language.data.DISCONNECTED}</p>
         )}
       </div>
     </Loader>

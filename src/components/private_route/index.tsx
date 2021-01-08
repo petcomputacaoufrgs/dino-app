@@ -1,5 +1,5 @@
 import React from 'react'
-import { usePrivateRouter } from '../../context/provider/private_router'
+import { usePrivateRouter } from '../../context/private_router'
 import { Route, RouteProps, useLocation, Redirect } from 'react-router'
 
 /**

@@ -5,11 +5,12 @@ import './styles.css'
 import StringUtils from '../../utils/StringUtils'
 
 const Loader: React.FC<LoaderProps> = ({
-  loading,
+  isLoading: loading,
   children,
   className,
   iconClassName,
   disableBackground,
+  hideChildren
 }): ReactElement => {
   const [showLoader, setShowLoader] = useState(false)
 
@@ -18,14 +19,18 @@ const Loader: React.FC<LoaderProps> = ({
   }, [loading])
 
   const getIconClassName = (): string => {
-    const className = StringUtils.concatUndefinedSafe(
+    let className = StringUtils.concatUndefinedSafe(
       ' ',
       'loader__screen',
       iconClassName
     )
 
     if (disableBackground) {
-      return className.concat(' ').concat('disable_background')
+      className = className.concat(' ').concat('disable_background')
+    }
+
+    if (hideChildren) {
+      className = className.concat(' ').concat('hide_children')
     }
 
     return className

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Paper } from '@material-ui/core'
-import './styles.css'
 import PetLogo from '../../../assets/logos/pet.png'
 import HCLogo from '../../../assets/logos/hc.png'
 import UfrgsLogo from '../../../assets/logos/ufrgs.png'
 import Section from './section'
 import DinoLogoHeader from '../../../components/dino_logo_header'
+import './styles.css'
 
-const AboutUs = (): JSX.Element => {
+const AboutUs: React.FC = () => {
   const sections = [
     {
       title: 'PET Computação',

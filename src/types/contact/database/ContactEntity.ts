@@ -1,4 +1,4 @@
-import SynchronizableEntity from '../../synchronizable/database/SynchronizableEntity'
+import SynchronizableEntity from '../../sync/database/SynchronizableEntity'
 
 export default interface ContactEntity
   extends SynchronizableEntity<number> {

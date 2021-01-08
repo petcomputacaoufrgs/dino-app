@@ -489,4 +489,10 @@ export default class EN implements LanguageBase {
   READ_MORE = 'Read more'
 
   NO_TREATMENTS_AVAILABLE = 'No treatments available'
+
+  NO_TREATMENT_SELECTED = 'Select a treatment'
+
+  NO_FAQ_AVAILABLE = 'No F.A.Q available'
+
+  TREATMENT_SAVE = 'Save'
 }

@@ -1,15 +1,14 @@
 import { DropResult } from 'react-beautiful-dnd'
-import { NoteContextType } from '../../../../context/provider/note'
-import { NoteColumnContextType } from '../../../../context/provider/note_column'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../../../types/note/database/NoteEntity'
 import NoteView from '../../../../types/note/view/NoteView'
 
 export default interface NoteContentProps {
-  column: NoteColumnContextType
   tags: string[]
-  noteView: NoteView[]
-  searching: boolean
+  noteViews: NoteView[]
+  searching: boolean,
+  tagSearch: string[],
+  textSearch: string,
   onDragEnd: (result: DropResult) => void
   onSaveColumn: (column: NoteColumnEntity, oldTitle?: string) => void
   onDeleteColumn: (column: NoteColumnEntity) => void

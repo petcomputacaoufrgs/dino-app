@@ -1,27 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ServiceWorker from './serviceWorker'
-import ErrorHandlerService from './services/error_handler/ErrorHandlerService'
-import SyncProvider from './context/provider/sync'
-import AlertProvider from './context/provider/alert'
+import AlertProvider from './context/alert'
 import EventService from './services/events/EventService'
-import GoogleOAuth2Provider from './context/provider/google_oauth2'
-import AuthProvider from './context/provider/auth'
+import GoogleOAuth2Provider from './context/google_oauth2'
 import App from './App'
+import LanguageProvider from './context/language'
 import './Var.css'
 
-ErrorHandlerService.register()
-window.addEventListener('load', EventService.whenStart)
+window.addEventListener('load',() => {
+  EventService.whenStart()
+})
 
 ReactDOM.render(
   <GoogleOAuth2Provider>
-    <AuthProvider>
-      <AlertProvider>
-        <SyncProvider>
-          <App />
-        </SyncProvider>
-      </AlertProvider>
-    </AuthProvider>
+    <AlertProvider>
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
+    </AlertProvider>
   </GoogleOAuth2Provider>,
   document.getElementById('root')
 )

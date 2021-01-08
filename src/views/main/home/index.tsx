@@ -4,15 +4,14 @@ import IconButton from '../../../components/button/icon_button'
 import LinkButton from '../../../components/button/link_button'
 import HistoryService from '../../../services/history/HistoryService'
 import PathConstants from '../../../constants/app/PathConstants'
-import { useUserSettings } from '../../../context/provider/user_settings'
+import { useLanguage } from '../../../context/language'
 import './styles.css'
 
 const Home: React.FC<void> = () => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
-  const items = MenuService.getMainPages(language).filter(
-    (item) => item.name !== language.MENU_HOME
+  const items = MenuService.getMainPages(language.data).filter(
+    (item) => item.name !== language.data.MENU_HOME
   )
 
   return (
@@ -30,11 +29,11 @@ const Home: React.FC<void> = () => {
         ))}
       </div>
       <LinkButton
-        text={language.TERMS_OF_USE}
+        text={language.data.TERMS_OF_USE}
         onClick={() => HistoryService.push(PathConstants.TERMS_OF_USE)}
       />
       <LinkButton
-        text={language.PRIVACY_POLICY}
+        text={language.data.PRIVACY_POLICY}
         onClick={() => HistoryService.push(PathConstants.PRIVACY_POLICY)}
       />
     </div>

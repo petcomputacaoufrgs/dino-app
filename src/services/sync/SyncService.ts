@@ -2,12 +2,12 @@ import AuthService from '../auth/AuthService'
 import SynchronizableService from './SynchronizableService'
 import SyncTree, { SyncTreeNode } from './SyncTree'
 import SyncStateEnum from '../../types/sync/SyncStateEnum'
-import SyncContextUpdater from '../../context/updater/SyncContextUpdater'
 import SyncResolve from '../../types/sync/SyncResolve'
+import UpdatableService from '../update/UpdatableService'
 
 const DELAY_RETRY_IN_MIN = 2
 
-class SyncService {
+class SyncService extends UpdatableService {
   private tree: SyncTree
 
   private subscribedServices: SynchronizableService[]
@@ -19,12 +19,15 @@ class SyncService {
   private retryTimeout: NodeJS.Timeout | undefined
 
   constructor() {
+    super()
     this.tree = new SyncTree()
     this.subscribedServices = []
     this.syncState = SyncStateEnum.SYNCED
     this.resolves = []
     this.retryTimeout = undefined
   }
+
+  onLogout = async () => {}
 
   sync = async (): Promise<boolean> => {
     const isAuthenticated = await AuthService.isAuthenticated()
@@ -54,11 +57,6 @@ class SyncService {
 
   getState = () => {
     return this.syncState
-  }
-
-  setNotSynced = () => {
-    this.syncState = SyncStateEnum.NOT_SYNCED
-    SyncContextUpdater.update()
   }
 
   private doSync = async (): Promise<boolean> => {
@@ -93,12 +91,17 @@ class SyncService {
 
   private setSynchronizing = () => {
     this.syncState = SyncStateEnum.SYNCHRONIZING
-    SyncContextUpdater.update()
+    this.triggerUpdateEvent()
+  }
+
+  setNotSynced = () => {
+    this.syncState = SyncStateEnum.NOT_SYNCED
+    this.triggerUpdateEvent()
   }
 
   private setSynced = () => {
     this.syncState = SyncStateEnum.SYNCED
-    SyncContextUpdater.update()
+    this.triggerUpdateEvent()
   }
 
   private syncTree = async (): Promise<boolean> => {
@@ -122,12 +125,13 @@ class SyncService {
       }
     }
     
-    const result = await node.service.sync()
+    const result = await node.service.synchronize()
+
     return result
   }
 
   private cleanServicesResults = () => {
-    this.subscribedServices.forEach(service => service.cleanResult())
+    this.subscribedServices.forEach(service => service.finishSync())
   }
 }
 

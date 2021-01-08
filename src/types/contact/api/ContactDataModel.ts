@@ -1,4 +1,4 @@
-import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
+import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLocalIdModel'
 
 export default interface ContactDataModel
   extends SynchronizableDataLocalIdModel<number> {

@@ -1,68 +1,115 @@
-import React, { useState } from 'react'
-import { useAlert } from '../../../context/provider/alert'
+import React, { useState, useEffect } from 'react'
+import { useAlert } from '../../../context/alert'
+import { useLanguage } from '../../../context/language'
 import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
 import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import Button from '../../../components/button'
-import SelectTreatment from './select_treatment'
+import SelectTreatment from '../../../components/settings/select_treatment'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
-import SelectColorTheme from './select_color_theme'
-import SelectLanguage from './select_language'
+import SelectColorTheme from '../../../components/settings/select_color_theme'
+import SelectLanguage from '../../../components/settings/select_language'
 import DinoSwitch from '../../../components/switch'
 import DinoHr from '../../../components/dino_hr'
-import SelectFontSize from './select_font_size'
-import { useUserSettings } from '../../../context/provider/user_settings'
-import { useTreatment } from '../../../context/provider/treatment/index'
+import SelectFontSize from '../../../components/settings/select_font_size'
+import UserSettingsService from '../../../services/user/UserSettingsService'
+import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
+import Loader from '../../../components/loader'
+import TreatmentService from '../../../services/treatment/TreatmentService'
+import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
+import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
+import FontSizeEnum from '../../../types/user/view/FontSizeEnum'
+import ColorThemeEnum from '../../../types/user/view/ColorThemeEnum'
 import './styles.css'
-import { useGoogleScope } from '../../../context/provider/google_scope'
 
-const Settings = (): JSX.Element => {
-  const userSettings = useUserSettings()
-
-  const treatment = useTreatment()
-
+const Settings: React.FC = () => {
   const alert = useAlert()
-
-  const googleScope = useGoogleScope()
-
-  const syncGoogleContacts = googleScope.service.hasContactGrant(googleScope)
-
-  const currentSettings = userSettings.first
-
-  const language = userSettings.service.getLanguage(userSettings)
-
-  const colorThemeCode = userSettings.service.getColorThemeCode(userSettings)
-
-  const fontSizeCode = userSettings.service.getFontSizeCode(userSettings)
-
-  const essentialContactGrant = userSettings.service.getEssentialContactGrant(
-    userSettings
-  )
-
-  const currentTreatment = userSettings.service.getTreatment(
-    userSettings,
-    treatment.data
-  )
-
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    language.NAVIGATOR_LANGUAGE_CODE
-  )
-
-  const [selectedFontSize, setSelectedFontSize] = useState(fontSizeCode)
-
-  const [selectedColorTheme, setSelectedColorTheme] = useState(colorThemeCode)
-
-  const [
-    selectedEssentialContactGrant,
-    setSelectedEssentialContactGrant,
-  ] = useState(
-    essentialContactGrant !== undefined ? essentialContactGrant : false
-  )
+  const language = useLanguage()
 
   const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 
-  const [selectedTreatment, setSelectedTreatment] = useState(currentTreatment)
+  const [isLoading, setIsLoading] = useState(true)
+  const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
+  const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
+  const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
+
+  const [selectedLanguage, setSelectedLanguage] = useState(language.data.NAVIGATOR_LANGUAGE_CODE)
+  const [selectedFontSize, setSelectedFontSize] = useState(FontSizeEnum.DEFAULT)
+  const [selectedColorTheme, setSelectedColorTheme] = useState(ColorThemeEnum.DEVICE)
+  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(false)
+  const [selectedTreatment, setSelectedTreatment] = useState<TreatmentEntity | undefined>(undefined)
+
+  useEffect(() => {
+    const loadData = async () => {
+      const treatments = await TreatmentService.getAll()
+      const settings = await UserSettingsService.getFirst()
+      const syncGoogleContacs = await GoogleScopeService.hasContactGrant()
+
+      if (settings) {
+        if (treatments) {
+          const treatment = treatments.find(treatment => treatment.localId === settings.treatmentLocalId)
+          if (treatment) {
+            updateTreatment(treatment)
+          }
+          updateTreatments(treatments)
+        }
+        updateSettings(settings)
+      } 
+      updateSyncGoogleContacts(syncGoogleContacs)
+
+      finishLoading()
+    }
+
+    let updateTreatments = (treatments: TreatmentEntity[]) => {
+      setTreatments(treatments)
+    }
+
+    let updateTreatment = (treatment: TreatmentEntity) => {
+      setSelectedTreatment(treatment)
+    }
+
+    let updateSettings = (settings: UserSettingsEntity) => {
+      const colorThemeCode = UserSettingsService.getColorThemeCode(settings)
+      const fontSizeCode = UserSettingsService.getFontSizeCode(settings)
+      const essentialContactGrant = UserSettingsService.getEssentialContactGrant(settings)
+      setSelectedColorTheme(colorThemeCode)
+      setSelectedFontSize(fontSizeCode)
+      setSelectedEssentialContactGrant(essentialContactGrant !== undefined ? essentialContactGrant : false)
+      setSettings(settings)
+    }
+
+    let updateSyncGoogleContacts = (syncGoogleContacts: boolean) => {
+      setSyncGoogleContacts(syncGoogleContacts)
+    }
+
+    let finishLoading = () => {
+      setIsLoading(false)
+    }
+
+    UserSettingsService.addUpdateEventListenner(loadData)
+    TreatmentService.addUpdateEventListenner(loadData)
+    GoogleScopeService.addUpdateEventListenner(loadData)
+
+    if (isLoading) {
+      loadData()
+    }
+
+    return () => {
+      updateTreatment = () => {}
+      updateSettings = () => {}
+      updateTreatments = () => {}
+      updateSyncGoogleContacts = () => {}
+      finishLoading = () => {}
+      UserSettingsService.removeUpdateEventListenner(loadData)
+      TreatmentService.removeUpdateEventListenner(loadData)
+      GoogleScopeService.removeUpdateEventListenner(loadData)
+    }
+  }, [isLoading])
+
+  useEffect(() => {
+    setSelectedLanguage(language.data.NAVIGATOR_LANGUAGE_CODE)
+  }, [language])
 
   const handleOpenGoogleContactDialog = () => {
     if (!syncGoogleContacts) {
@@ -71,17 +118,17 @@ const Settings = (): JSX.Element => {
   }
 
   const handleAgreeContactsGrantDialog = () => {
-    if (currentSettings) {
-      currentSettings.declineGoogleContacts = false
-      userSettings.service.save(currentSettings)
+    if (settings) {
+      settings.declineGoogleContacts = false
+      UserSettingsService.save(settings)
     }
     setOpenGoogleContactDialog(false)
   }
 
   const handleDisagreeContactsGrantDialog = () => {
-    if (currentSettings) {
-      currentSettings.declineGoogleContacts = true
-      userSettings.service.save(currentSettings)
+    if (settings) {
+      settings.declineGoogleContacts = true
+      UserSettingsService.save(settings)
     }
     setOpenGoogleContactDialog(false)
   }
@@ -90,30 +137,30 @@ const Settings = (): JSX.Element => {
     setOpenGoogleContactDialog(false)
   }
 
-  const onSave = () => {
-    if (currentSettings) {
-      currentSettings.language = selectedLanguage
-      currentSettings.fontSize = selectedFontSize
-      currentSettings.colorTheme = selectedColorTheme
-      currentSettings.includeEssentialContact = selectedEssentialContactGrant
+  const handleSave = () => {
+    if (settings) {
+      settings.language = selectedLanguage
+      settings.fontSize = selectedFontSize
+      settings.colorTheme = selectedColorTheme
+      settings.includeEssentialContact = selectedEssentialContactGrant
 
       if (selectedTreatment) {
-        currentSettings.treatmentLocalId = selectedTreatment.localId
+        settings.treatmentLocalId = selectedTreatment.localId
       }
 
-      userSettings.service.save(currentSettings)
+      UserSettingsService.save(settings)
 
-      alert.showSuccessAlert(language.SETTINGS_SAVE_SUCCESS)
+      alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
     } else {
-      alert.showErrorAlert(language.SETTINGS_SAVE_ERROR)
+      alert.showErrorAlert(language.data.SETTINGS_SAVE_ERROR)
     }
   }
 
   const renderSaveButton = (): JSX.Element => (
     <div className="settings__save_button_container">
-      <Button className="settings__save_button" onClick={onSave}>
+      <Button className="settings__save_button" onClick={handleSave}>
         <SaveSVG className="settings__save_button__icon" />
-        {language.SETTINGS_SAVE}
+        {language.data.SETTINGS_SAVE}
       </Button>
     </div>
   )
@@ -125,65 +172,67 @@ const Settings = (): JSX.Element => {
       onClose={handleCloseContactsGrantDialog}
       open={openGoogleContactDialog}
       scopes={[GoogleScope.SCOPE_CONTACT]}
-      text={language.GOOGLE_CONTACT_GRANT_TEXT}
-      title={language.GOOGLE_CONTACT_GRANT_TITLE}
+      text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
+      title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
     />
   )
 
   return (
-    <div className="settings">
-      <Typography
-        className="settings__title"
-        color="textSecondary"
-        gutterBottom
-      >
-        {language.SETTINGS_TITLE}
-      </Typography>
-      <FormControl className="settings__form">
-        <SelectLanguage
-          languageName={selectedLanguage}
-          setLanguage={setSelectedLanguage}
-        />
-      </FormControl>
-      <FormControl className="settings__form">
-        <SelectFontSize
-          fontSize={selectedFontSize}
-          setFontSize={setSelectedFontSize}
-        />
-      </FormControl>
-      <FormControl className="settings__form">
-        <SelectColorTheme
-          colorTheme={selectedColorTheme}
-          setColorTheme={setSelectedColorTheme}
-        />
-      </FormControl>
-      <FormControl className="settings__form">
-        <SelectTreatment
-          availableTreatments={treatment.data}
-          setTreatment={setSelectedTreatment}
-          treatment={selectedTreatment}
-        />
-      </FormControl>
-      <DinoHr invisible />
-      <FormControl className="settings__form">
-        <DinoSwitch
-          selected={syncGoogleContacts}
-          setSelected={handleOpenGoogleContactDialog}
-          label={language.SAVE_CONTACT_ON_GOOGLE_GRANT}
-        />
-      </FormControl>
-      <DinoHr />
-      <FormControl className="settings__form">
-        <DinoSwitch
-          selected={selectedEssentialContactGrant}
-          setSelected={setSelectedEssentialContactGrant}
-          label={language.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-        />
-      </FormControl>
-      <DinoHr invisible />
-      {renderSaveButton()}
-      {renderDialogs()}
-    </div>
+    <Loader isLoading={isLoading} hideChildren>
+      <div className="settings">
+        <Typography
+          className="settings__title"
+          color="textSecondary"
+          gutterBottom
+        >
+          {language.data.SETTINGS_TITLE}
+        </Typography>
+        <FormControl className="settings__form">
+          <SelectLanguage
+            languageName={selectedLanguage}
+            setLanguage={setSelectedLanguage}
+          />
+        </FormControl>
+        <FormControl className="settings__form">
+          <SelectFontSize
+            fontSize={selectedFontSize}
+            setFontSize={setSelectedFontSize}
+          />
+        </FormControl>
+        <FormControl className="settings__form">
+          <SelectColorTheme
+            colorTheme={selectedColorTheme}
+            setColorTheme={setSelectedColorTheme}
+          />
+        </FormControl>
+        <FormControl className="settings__form">
+          <SelectTreatment
+            availableTreatments={treatments}
+            setTreatment={setSelectedTreatment}
+            treatment={selectedTreatment}
+          />
+        </FormControl>
+        <DinoHr invisible />
+        <FormControl className="settings__form">
+          <DinoSwitch
+            selected={syncGoogleContacts}
+            setSelected={handleOpenGoogleContactDialog}
+            label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
+          />
+        </FormControl>
+        <DinoHr />
+        <FormControl className="settings__form">
+          <DinoSwitch
+            selected={selectedEssentialContactGrant}
+            setSelected={setSelectedEssentialContactGrant}
+            label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
+          />
+        </FormControl>
+        <DinoHr invisible />
+        {renderSaveButton()}
+        {renderDialogs()}
+      </div>
+    </Loader>
   )
 }
 

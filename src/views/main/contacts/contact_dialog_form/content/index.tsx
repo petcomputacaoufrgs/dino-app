@@ -5,14 +5,13 @@ import PhoneFields from './phone_fields'
 import Typography from '@material-ui/core/Typography'
 import Constants from '../../../../../constants/contact/ContactsConstants'
 import TextButton from '../../../../../components/button/text_button'
-import { useUserSettings } from '../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
 const ContactFormDialogContent = (
   props: ContactFormDialogContentProps
 ): JSX.Element => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const isNumberTaken = (tel: string): boolean =>
     props.helperText.number === tel
@@ -31,7 +30,7 @@ const ContactFormDialogContent = (
         onChange={props.handleChangeName}
         margin="dense"
         id="name"
-        label={`${language.FORM_NAME} (${language.MAX} ${Constants.NAME_MAX})`}
+        label={`${language.data.FORM_NAME} (${language.data.MAX} ${Constants.NAME_MAX})`}
         type="name"
         inputProps={{ maxLength: Constants.NAME_MAX }}
         error={isNameInvalid(props.name)}
@@ -43,7 +42,7 @@ const ContactFormDialogContent = (
         onChange={props.handleChangeDescription}
         margin="dense"
         id="description"
-        label={`${language.FORM_DESCRIPTION} (${language.MAX} ${Constants.DESCRIPTION_MAX})`}
+        label={`${language.data.FORM_DESCRIPTION} (${language.data.MAX} ${Constants.DESCRIPTION_MAX})`}
         type="text"
         inputProps={{ maxLength: Constants.DESCRIPTION_MAX }}
         error={props.description.length === Constants.DESCRIPTION_MAX}
@@ -68,7 +67,7 @@ const ContactFormDialogContent = (
       ))}
       <TextButton className="add-phone__button" onClick={props.handleAddPhone}>
         <Typography variant="body2" color="textSecondary" display="block">
-          {language.FORM_ADD_PHONE}
+          {language.data.FORM_ADD_PHONE}
         </Typography>
       </TextButton>
     </div>

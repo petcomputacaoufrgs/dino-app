@@ -23,7 +23,7 @@ class LogAppErrorService extends SynchronizableService {
     return []
   }
 
-  protected async doSync(): Promise<boolean> {
+  protected async sync(): Promise<boolean> {
     const logs = await this.getSavedLogs()
     if (logs.length > 0) {
       const items: LogAppErrorModel[] = logs.map((log) => ({
@@ -51,7 +51,7 @@ class LogAppErrorService extends SynchronizableService {
     if (error) {
       this.logModel({
         date: new Date(),
-        error: error.stack,
+        error: error.stack ? error.stack : 'Empty stack',
         title: error.message,
       } as LogAppErrorModel)
     }

@@ -1,22 +1,22 @@
 import { IndexableType } from 'dexie'
 import DinoAgentService from '../../agent/DinoAgentService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import SynchronizableDataResponseModel from '../../types/synchronizable/api/response/SynchronizableDataResponseModel'
-import SynchronizableDeleteModel from '../../types/synchronizable/api/request/SynchronizableDeleteModel'
-import SynchronizableListDataResponseModel from '../../types/synchronizable/api/response/SynchronizableListDataResponseModel'
-import SynchronizableSaveAllModel from '../../types/synchronizable/api/request/SynchronizableSaveAllModel'
-import SynchronizableDeleteAllListModel from '../../types/synchronizable/api/request/SynchronizableDeleteAllListModel'
-import SynchronizableEntity from '../../types/synchronizable/database/SynchronizableEntity'
-import SynchronizableGenericResponseModel from '../../types/synchronizable/api/response/SynchronizableGenericResponseModel'
-import SynchronizableLocalState from '../../types/synchronizable/database/SynchronizableLocalState'
-import SynchronizableWSUpdateModel from '../../types/synchronizable/api/web_socket/SynchronizableWSUpdateModel'
-import SynchronizableWSDeleteModel from '../../types/synchronizable/api/web_socket/SynchronizableWSDeleteModel'
+import SynchronizableDataResponseModel from '../../types/sync/api/response/SynchronizableDataResponseModel'
+import SynchronizableDeleteModel from '../../types/sync/api/request/SynchronizableDeleteModel'
+import SynchronizableListDataResponseModel from '../../types/sync/api/response/SynchronizableListDataResponseModel'
+import SynchronizableSaveAllModel from '../../types/sync/api/request/SynchronizableSaveAllModel'
+import SynchronizableDeleteAllListModel from '../../types/sync/api/request/SynchronizableDeleteAllListModel'
+import SynchronizableEntity from '../../types/sync/database/SynchronizableEntity'
+import SynchronizableGenericResponseModel from '../../types/sync/api/response/SynchronizableGenericResponseModel'
+import SynchronizableLocalState from '../../types/sync/database/SynchronizableLocalState'
+import SynchronizableWSUpdateModel from '../../types/sync/api/web_socket/SynchronizableWSUpdateModel'
+import SynchronizableWSDeleteModel from '../../types/sync/api/web_socket/SynchronizableWSDeleteModel'
 import SyncConstants from '../../constants/sync/SyncConstants'
-import SynchronizableGenericDataResponseModel from '../../types/synchronizable/api/response/SynchronizableGenericDataResponseModel'
+import SynchronizableGenericDataResponseModel from '../../types/sync/api/response/SynchronizableGenericDataResponseModel'
 import ArrayUtils from '../../utils/ArrayUtils'
-import SynchronizableDataLocalIdModel from '../../types/synchronizable/api/SynchronizableDataLocalIdModel'
-import SynchronizableSyncModel from '../../types/synchronizable/api/request/SynchronizableSyncModel'
-import SynchronizableSyncResponseModel from '../../types/synchronizable/api/response/SynchronizableSyncResponseModel'
+import SynchronizableDataLocalIdModel from '../../types/sync/api/SynchronizableDataLocalIdModel'
+import SynchronizableSyncModel from '../../types/sync/api/request/SynchronizableSyncModel'
+import SynchronizableSyncResponseModel from '../../types/sync/api/response/SynchronizableSyncResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import SynchronizableService from './SynchronizableService'
 import WebSocketURLService from '../websocket/path/WebSocketPathService'
@@ -83,7 +83,7 @@ export default abstract class AutoSynchronizableService<
   /**
    * @description Override to add more subscribers to websocket connection
    */
-  getExtraWebSocketSubscribers = (): WebSocketSubscriber<any>[] => {
+  onGetWebSocketSubscribers = (): WebSocketSubscriber<any>[] => {
     return []
   }
 
@@ -225,7 +225,7 @@ export default abstract class AutoSynchronizableService<
     const dbEntity = await this.dbSave(entity)
 
     if (dbEntity.localId) {
-      this.updateContext()
+      this.triggerUpdateEvent()
 
       await this.onSaveOnAPI(entity)
 
@@ -243,7 +243,7 @@ export default abstract class AutoSynchronizableService<
             newEntity.localId = dbEntity.localId
             newEntity.localState = SynchronizableLocalState.SAVED_ON_API
             await this.dbSave(newEntity)
-            this.updateContext()
+            this.triggerUpdateEvent()
 
             return newEntity
           } else {
@@ -292,28 +292,28 @@ export default abstract class AutoSynchronizableService<
       await this.dbSaveAll(entities)
     }
 
-    this.updateContext()
+    this.triggerUpdateEvent()
   }
 
   /**
    * @description Save new entity from API data model
    * @param model Data model of entity
    */
-  saveFromDataModel = async (model: DATA_MODEL) => {
+  saveFromDataModelLocally = async (model: DATA_MODEL) => {
     const entity = await this.internalConvertModelToEntity(model)
     if (entity) {
-      await this.save(entity)
+      await this.saveOnlyLocally(entity)
     }
   }
 
   /**
-   * @description Save new entities from API data model
+   * @description Save new entities from API data model locally
    * @param models Data models of each entity
    */
-  saveAllFromDataModel = async (models: DATA_MODEL[]) => {
+  saveAllFromDataModelLocally = async (models: DATA_MODEL[]) => {
     const entities = await this.internalConvertModelsToEntities(models)
     if (entities.length > 0) {
-      await this.saveAll(entities)
+      await this.saveAllOnlyLocally(entities)
     }
   }
 
@@ -324,7 +324,7 @@ export default abstract class AutoSynchronizableService<
    */
   saveOnlyLocally = async (entity: ENTITY) => {
     await this.dbSave(entity)
-    this.updateContext()
+    this.triggerUpdateEvent()
   }
 
   /**
@@ -333,7 +333,7 @@ export default abstract class AutoSynchronizableService<
    */
   saveAllOnlyLocally = async (entities: ENTITY[]) => {
     await this.dbSaveAll(entities)
-    this.updateContext()
+    this.triggerUpdateEvent()
   }
 
   /**
@@ -343,7 +343,7 @@ export default abstract class AutoSynchronizableService<
   delete = async (entity: ENTITY) => {
     if (entity.id === undefined) {
       await this.dbDelete(entity)
-      this.updateContext()
+      this.triggerUpdateEvent()
       return
     }
 
@@ -351,7 +351,7 @@ export default abstract class AutoSynchronizableService<
     const deleted = await this.dbFakeDelete(entity)
 
     if (deleted) {
-      this.updateContext()
+        this.triggerUpdateEvent()
 
         await this.onDeleteOnAPI(entity)
         const model = await this.internalConvertEntityToModel(entity)
@@ -370,7 +370,7 @@ export default abstract class AutoSynchronizableService<
                 apiEntity.localId = entity.localId
                 apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
                 await this.dbSave(apiEntity)
-                this.updateContext()
+                this.triggerUpdateEvent()
               } else {
                 LogAppErrorService.logMessage(
                   JSON.stringify(response.data),
@@ -408,7 +408,7 @@ export default abstract class AutoSynchronizableService<
   
         if (success) {
           await this.dbDeleteAll(entities)
-          this.updateContext()
+          this.triggerUpdateEvent()
         }
   
         return success
@@ -442,6 +442,10 @@ export default abstract class AutoSynchronizableService<
 
   //#region WEB SOCKET
 
+  /**
+   * @description Return basic WebSocket subscribers for auto synchronizable service. 
+   * To add more dependencies use onGet... function.
+   */
   protected getWebSocketSubscribers = (): WebSocketSubscriber<any>[] => {
     const defaultSubscribers = [
       {
@@ -454,7 +458,7 @@ export default abstract class AutoSynchronizableService<
       },
     ]
 
-    const extraSubscribers = this.getExtraWebSocketSubscribers()
+    const extraSubscribers = this.onGetWebSocketSubscribers()
 
     return defaultSubscribers.concat(extraSubscribers)
   }
@@ -479,17 +483,20 @@ export default abstract class AutoSynchronizableService<
     model: SynchronizableWSUpdateModel<ID, DATA_MODEL>
   ) => {
     if (model && model.data && model.data.length > 0) {
-      const entities = (await this.internalConvertModelsToEntities(model.data))
+      const entities = await this.internalConvertModelsToEntities(model.data)
+      entities.forEach(entity => entity.localId = undefined)
+      
+      const orderedEntities = entities
         .filter((entity) => entity.id !== undefined && entity.id !== null)
         .sort(this.sortEntityById)
 
-      const dbEntities = await this.dbGetAllById(entities)
+      const dbEntities = await this.dbGetAllById(orderedEntities)
 
       const orderedDbEntities = dbEntities.sort(this.sortEntityById)
 
       let count = 0
 
-      const entitiesToSave = entities.map((entity) => {
+      const entitiesToSave = orderedEntities.map((entity) => {
         const dbEntity = orderedDbEntities[count]
 
         if (dbEntity && entity.id === dbEntity.id) {
@@ -504,7 +511,7 @@ export default abstract class AutoSynchronizableService<
 
       await this.onWebSocketUpdate(model)
 
-      this.updateContext()
+      this.triggerUpdateEvent()
     }
   }
 
@@ -512,7 +519,7 @@ export default abstract class AutoSynchronizableService<
     if (model && model.data && model.data.length > 0) {
       await this.dbDeleteAllById(model.data)
       await this.onWebSocketDelete(model)
-      this.updateContext()
+      this.triggerUpdateEvent()
     }
   }
 
@@ -520,7 +527,10 @@ export default abstract class AutoSynchronizableService<
 
   //#region SYNC
 
-  protected doSync = async (): Promise<boolean> => {
+  /**
+   * @description Start entity sync with API.
+   */
+  protected sync = async (): Promise<boolean> => {
     const deletedEntities = await this.dbGetAllFakeDeleted()
 
     await this.onDeleteAllOnAPI(deletedEntities)
@@ -550,7 +560,7 @@ export default abstract class AutoSynchronizableService<
 
       await this.dbSaveAll(entities)
 
-      this.updateContext()
+      this.triggerUpdateEvent()
     }
 
     return success
@@ -567,36 +577,6 @@ export default abstract class AutoSynchronizableService<
     }
 
     return false
-  }
-
-  //#endregion
-  
-  //#region CONTEXT PROVIDER
-
-  protected contextProviderCallback?: (data: ENTITY[]) => void
-
-  /**
-   * @description Set context provider function to update data
-   */
-  setContextProviderCallback = (callback: (data: ENTITY[]) => void) => {
-    this.contextProviderCallback = callback
-  }
-
-  /**
-   * @description Update context provider with new data
-   */
-  protected setContext = (data: ENTITY[]) => {
-    if (this.contextProviderCallback) {
-      this.contextProviderCallback(data)
-    }
-  }
-
-  /**
-   * @description Get local data and update context provider
-   */
-  protected updateContext = async () => {
-    const data = await this.getAll()
-    this.setContext(data)
   }
 
   //#endregion
@@ -717,18 +697,18 @@ export default abstract class AutoSynchronizableService<
 
   private dbSaveAll = async (entities: ENTITY[]) => {
     this.removeEmptyLocalIdFromEntities(entities)
-    const ids = await this.table.bulkPut(entities, undefined, { allKeys: true })
+    const ids = await this.table.bulkPut(entities, { allKeys: true })
     entities.forEach((entity, index) => (entity.localId = ids[index]))
   }
 
-  protected dbDeleteAllFakeDeleteds = async () => {
+  private dbDeleteAllFakeDeleteds = async () => {
     await this.table
       .where('localState')
       .equals(SynchronizableLocalState.DELETED_LOCALLY)
       .delete()
   }
 
-  protected dbClear = async () => {
+  private dbClear = async () => {
     await this.table.clear()
   }
 
@@ -786,23 +766,6 @@ export default abstract class AutoSynchronizableService<
       try {
         const authRequest = await request.authenticate()
         const response = await authRequest.setBody(requestModel).go()
-        return response.body
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
-    }
-
-    return undefined
-  }
-
-  private apiGetAll = async (): Promise<
-    SynchronizableListDataResponseModel<ID, DATA_MODEL> | undefined
-  > => {
-    const request = await DinoAgentService.get(this.getAllRequestURL())
-    if (request.canGo) {
-      try {
-        const authRequest = await request.authenticate()
-        const response = await authRequest.go()
         return response.body
       } catch (e) {
         LogAppErrorService.logError(e)

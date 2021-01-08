@@ -9,7 +9,7 @@ import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Constants from '../../../../../../constants/contact/ContactsConstants'
-import { useUserSettings } from '../../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../../context/language'
 import './style.css'
 
 const PhoneFields = ({
@@ -21,17 +21,16 @@ const PhoneFields = ({
   helperText,
   handleDeletePhone,
 }: PhoneFieldsProps): JSX.Element => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const types = [
-    { label: language.CONTACTS_MOBILE_PHONE, id: ContactsConstants.MOBILE },
+    { label: language.data.CONTACTS_MOBILE_PHONE, id: ContactsConstants.MOBILE },
     {
-      label: language.CONTACTS_RESIDENTIAL_PHONE,
+      label: language.data.CONTACTS_RESIDENTIAL_PHONE,
       id: ContactsConstants.RESIDENTIAL,
     },
     {
-      label: language.CONTACTS_PUBLIC_SERVICE_PHONE,
+      label: language.data.CONTACTS_PUBLIC_SERVICE_PHONE,
       id: ContactsConstants.PUBLIC_SERVICE,
     },
   ]
@@ -55,7 +54,7 @@ const PhoneFields = ({
         select
         fullWidth
         margin="dense"
-        label={language.FORM_TYPE}
+        label={language.data.FORM_TYPE}
         value={type}
         onChange={onChangeType}
       >
@@ -73,7 +72,7 @@ const PhoneFields = ({
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
-                ariaLabel={language.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
+                ariaLabel={language.data.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
                 icon={ClearIconSVG}
                 className="clear_button"
                 onClick={() => handleDeletePhone(number)}
@@ -87,7 +86,7 @@ const PhoneFields = ({
         value={number}
         onChange={onChangeNumber}
         margin="dense"
-        label={language.FORM_PHONE}
+        label={language.data.FORM_PHONE}
         type="tel"
         helperText={helperText}
       />

@@ -17,13 +17,15 @@ import NoteInfoDialog from '../note_info_dialog'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../../../types/note/database/NoteEntity'
 import NoteView from '../../../../types/note/view/NoteView'
-import { useUserSettings } from '../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../context/language'
+import NoteColumnService from '../../../../services/note/NoteColumnService'
 
 const NoteContent: React.FC<NoteContentProps> = ({
-  column,
   tags,
-  noteView,
+  noteViews,
   searching,
+  tagSearch,
+  textSearch,
   onDragEnd,
   onDeleteNote,
   onSaveColumn,
@@ -32,28 +34,22 @@ const NoteContent: React.FC<NoteContentProps> = ({
   onSaveNewNote,
   questionAlreadyExists,
 }): JSX.Element => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
-  const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(
-    undefined
-  )
-  const [currentNoteView, setCurrentNoteView] = useState<NoteView | undefined>(
-    undefined
-  )
+  const language = useLanguage()
+  
+  const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(undefined)
+  const [currentNoteView, setCurrentNoteView] = useState<NoteView | undefined>(undefined)
   const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
-  const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState<
-    boolean
-  >(false)
-
+  const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState(false)
   const [noteCreateDialogOpen, setNoteCreateDialogOpen] = useState(false)
   const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
-
   const [dragging, setDragging] = useState(false)
+
+  const filteredNoteViews = NoteColumnService.filterNoteViews(noteViews, tagSearch, textSearch)
 
   //#region COLUMN
 
   const updateCurrentNoteView = (column: NoteColumnEntity): boolean => {
-    const current = noteView.find(
+    const current = noteViews.find(
       (item) => item.column.localId === column.localId
     )
 
@@ -98,7 +94,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
   }
 
   const handleTitleAlreadyExists = (title: string): boolean => {
-    return column.data.some((item) => item.title === title)
+    return noteViews.some((noteView) => noteView.column.title === title)
   }
 
   const closeNoteColumnDialog = () => {
@@ -193,7 +189,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
     setDragging(true)
   }
 
-  const getColumnMaxOrder = (): number => noteView.length
+  const getColumnMaxOrder = (): number => noteViews.length
 
   const renderDialogs = (): JSX.Element => (
     <>
@@ -209,16 +205,16 @@ const NoteContent: React.FC<NoteContentProps> = ({
         <AgreementDialog
           question={
             currentNoteView.notes.length === 0
-              ? language.NOTE_COLUMN_DELETE_DIALOG_QUESTION
-              : language.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION
+              ? language.data.NOTE_COLUMN_DELETE_DIALOG_QUESTION
+              : language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION
           }
           description={
             currentNoteView.notes.length === 0
-              ? language.NOTE_COLUMN_DELETE_DIALOG_DESC
-              : language.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
+              ? language.data.NOTE_COLUMN_DELETE_DIALOG_DESC
+              : language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
           }
-          disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
-          agreeOptionText={language.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT}
+          disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
+          agreeOptionText={language.data.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT}
           onAgree={handleDeleteColumnAgree}
           onDisagree={handleDeleteColumnDisagree}
           open={deleteNoteColumnDialogOpen}
@@ -247,9 +243,9 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
   return (
     <div className="note__note_content">
-      {searching && noteView.length === 0 && (
+      {searching && filteredNoteViews.length === 0 && (
         <div className="note__note_content__columns__scroll__clean_search">
-          {language.NOTE_SEARCH_CLEAN}
+          {language.data.NOTE_SEARCH_CLEAN}
         </div>
       )}
       <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
@@ -264,27 +260,27 @@ const NoteContent: React.FC<NoteContentProps> = ({
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              <div className="note__note_content__columns__scroll">
-                {noteView.map((item, index) => (
-                  <NoteContentColumn
-                    noteView={item}
-                    columnIndex={index}
-                    key={index}
-                    searching={searching}
-                    onClickNote={handleClickNote}
-                    onEditColumn={handleEditColumn}
-                    onDeleteColumn={handleDeleteColumn}
-                    onAddNote={handleAddNote}
-                  />
-                ))}
-                {!searching && (
-                  <AddColumn
-                    visible={!dragging}
-                    columnCount={noteView.length}
-                    onAddColumn={handleAddColumn}
-                  />
-                )}
-              </div>
+                <div className="note__note_content__columns__scroll">
+                  {filteredNoteViews.map((item, index) => (
+                    <NoteContentColumn
+                      noteView={item}
+                      columnIndex={index}
+                      key={index}
+                      searching={searching}
+                      onClickNote={handleClickNote}
+                      onEditColumn={handleEditColumn}
+                      onDeleteColumn={handleDeleteColumn}
+                      onAddNote={handleAddNote}
+                    />
+                  ))}
+                  {!searching && (
+                    <AddColumn
+                      visible={!dragging}
+                      columnCount={noteViews.length}
+                      onAddColumn={handleAddColumn}
+                    />
+                  )}
+                </div>
               {provided.placeholder}
             </div>
           )}

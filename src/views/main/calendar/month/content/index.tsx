@@ -5,14 +5,13 @@ import { Calendar } from 'calendar'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import DateUtils from '../../../../../utils/DateUtils'
 import DayViewModel from '../../../../../types/calendar/DayViewModel'
-import { useUserSettings } from '../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
 const DAYS_IN_VIEW = 42
 
 const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const calendar = new Calendar()
 
@@ -54,32 +53,32 @@ const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
   return (
     <div className="calendar__month__content">
       <WeekDayColumn
-        shortName={getWeekDayFirstChar(language.SUNDAY_NAME)}
+        shortName={getWeekDayFirstChar(language.data.SUNDAY_NAME)}
         days={getAllMonthDaysThatOccursInAWeekday(0)}
         first
       />
       <WeekDayColumn
-        shortName={getWeekDayFirstChar(language.MONDAY_NAME)}
+        shortName={getWeekDayFirstChar(language.data.MONDAY_NAME)}
         days={getAllMonthDaysThatOccursInAWeekday(1)}
       />
       <WeekDayColumn
-        shortName={getWeekDayFirstChar(language.TUESDAY_NAME)}
+        shortName={getWeekDayFirstChar(language.data.TUESDAY_NAME)}
         days={getAllMonthDaysThatOccursInAWeekday(2)}
       />
       <WeekDayColumn
-        shortName={getWeekDayFirstChar(language.WEDNESDAY_NAME)}
+        shortName={getWeekDayFirstChar(language.data.WEDNESDAY_NAME)}
         days={getAllMonthDaysThatOccursInAWeekday(3)}
       />
       <WeekDayColumn
-        shortName={getWeekDayFirstChar(language.THURSDAY_NAME)}
+        shortName={getWeekDayFirstChar(language.data.THURSDAY_NAME)}
         days={getAllMonthDaysThatOccursInAWeekday(4)}
       />
       <WeekDayColumn
-        shortName={getWeekDayFirstChar(language.FRIDAY_NAME)}
+        shortName={getWeekDayFirstChar(language.data.FRIDAY_NAME)}
         days={getAllMonthDaysThatOccursInAWeekday(5)}
       />
       <WeekDayColumn
-        shortName={getWeekDayFirstChar(language.SATURDAY_NAME)}
+        shortName={getWeekDayFirstChar(language.data.SATURDAY_NAME)}
         days={getAllMonthDaysThatOccursInAWeekday(6)}
       />
     </div>

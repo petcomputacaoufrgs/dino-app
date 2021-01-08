@@ -30,21 +30,19 @@ export class UserServiceImpl extends AutoSynchronizableService<
     return []
   }
 
-  getPicture(entities: UserEntity[]): string {
-    return entities.length > 0
-      ? entities[0].pictureBase64
-        ? entities[0].pictureBase64
-        : entities[0].pictureURL
-      : ''
+  getPicture(user: UserEntity | undefined): string {
+    return user !== undefined
+        ? user.pictureBase64 ? user.pictureBase64 : user.pictureURL
+        : ''
   }
 
-  getName(entities: UserEntity[]) {
-    return entities.length > 0 ? entities[0].name : ''
+  getName(user: UserEntity | undefined) {
+    return user !== undefined ? user.name : ''
   }
 
   async updateUser(model: UserDataModel) {
     await this.clearDatabase()
-    await this.saveFromDataModel(model)
+    await this.saveFromDataModelLocally(model)
   }
 
   async convertModelToEntity(

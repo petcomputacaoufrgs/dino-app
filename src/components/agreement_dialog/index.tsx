@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { useUserSettings } from '../../context/provider/user_settings'
+import { useLanguage } from '../../context/language'
 import './styles.css'
 
 const AgreementDialog: React.FC<AgreementDialogProps> = ({
@@ -18,9 +18,7 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
   onDisagree,
   open,
 }) => {
-  const userSettings = useUserSettings()
-
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const handleDisagree = () => {
     onDisagree()
@@ -33,32 +31,32 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
   }
 
   return (
-    <Dialog open={open} onClose={handleDisagree}>
-      <DialogTitle className="alert__dialog_title" id="alert-dialog-title">
-        {question}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {description}
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          ariaLabel={language.AGREEMENT_BUTTON_ARIA_LABEL}
-          onClick={handleDisagree}
-        >
-          {disagreeOptionText}
-        </Button>
-        {onAgree && (
+      <Dialog open={open} onClose={handleDisagree}>
+        <DialogTitle className="alert__dialog_title" id="alert-dialog-title">
+          {question}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {description}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
           <Button
-            ariaLabel={language.DISAGREEMENT_BUTTON_ARIA_LABEL}
-            onClick={handleAgree}
+            ariaLabel={language.data.AGREEMENT_BUTTON_ARIA_LABEL}
+            onClick={handleDisagree}
           >
-            {agreeOptionText}
+            {disagreeOptionText}
           </Button>
-        )}
-      </DialogActions>
-    </Dialog>
+          {onAgree && (
+            <Button
+              ariaLabel={language.data.DISAGREEMENT_BUTTON_ARIA_LABEL}
+              onClick={handleAgree}
+            >
+              {agreeOptionText}
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
   )
 }
 

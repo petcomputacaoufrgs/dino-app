@@ -1,22 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import DrawerProps from './props'
-import './styles.css'
 import { Divider } from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { Avatar } from '@material-ui/core'
 import IconButton from '../../button/icon_button'
 import { ReactComponent as ChevronLeftIconSVG } from '../../../assets/icons/chevron_left.svg'
-import { useUser } from '../../../context/provider/user'
 import Loader from '../../loader'
-import { useUserSettings } from '../../../context/provider/user_settings'
+import { useLanguage } from '../../../context/language'
+import UserEntity from '../../../types/user/database/UserEntity'
+import UserService from '../../../services/user/UserService'
+import './styles.css'
 
 const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
-  const user = useUser()
+  const [isLoading, setIsLoading] =  useState(true)
+  const [user, setUser] = useState<UserEntity | undefined>()
 
+  useEffect(() => {
+    const loadData = async () => {
+      const user = await UserService.getFirst()
+
+      if (user) {
+        updateData(user)
+      }
+
+      finishLoading()
+    }
+
+    let updateData = (user: UserEntity) => {
+      setUser(user)
+    }
+
+    let finishLoading = () => {
+      setIsLoading(false)
+    }
+
+    UserService.addUpdateEventListenner(loadData)
+
+    if (isLoading) {
+      loadData()
+    }
+
+    return () => {
+      updateData = () => {}
+      finishLoading = () => {}
+      UserService.removeUpdateEventListenner(loadData)
+    }
+  }, [isLoading])
+  
   const handleClick = (item: MenuItemViewModel) => {
     onClose()
     item.onClick()
@@ -33,7 +66,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
     return items.map((item, itemIndex) => (
       <ListItem
         button
-        aria-label={language.CLICK_TO_OPEN_MENU_ITEM + item.name}
+        aria-label={language.data.CLICK_TO_OPEN_MENU_ITEM + item.name}
         key={itemIndex}
         onClick={() => handleClick(item)}
       >
@@ -58,15 +91,15 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
   const renderUser = (): JSX.Element => (
     <div className="user">
       <div className="user__avatar">
-        <Loader className="user__avatar__loader" loading={user.loading}>
+        <Loader className="user__avatar__loader" isLoading={isLoading}>
           <Avatar
-            src={user.service.getPicture(user.data)}
-            alt={language.AVATAR_ALT}
+            src={UserService.getPicture(user)}
+            alt={language.data.AVATAR_ALT}
             className="avatar"
           />
         </Loader>
       </div>
-      <p className="username">{user.service.getName(user.data)}</p>
+      <p className="username">{UserService.getName(user)}</p>
     </div>
   )
 
@@ -80,11 +113,11 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 
   return (
     <>
-      <div className={'drawer_navigation__drawer'}>
+      <div className='drawer_navigation__drawer'>
         <div className="drawer_navigation__drawer__visible">
           <div className="drawer_navigation__drawer__header">
             <IconButton
-              ariaLabel={language.CLOSE_MENU_BUTTON_ARIA_LABEL}
+              ariaLabel={language.data.CLOSE_MENU_BUTTON_ARIA_LABEL}
               icon={ChevronLeftIconSVG}
               onClick={handleCloseClick}
               bigger
@@ -101,7 +134,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
         <button
           className="drawer_navigation__drawer__invisible"
           onClick={handleCloseClick}
-          aria-label={language.CLOSE_MENU_ARIA_LABEL}
+          aria-label={language.data.CLOSE_MENU_ARIA_LABEL}
         />
       )}
     </>

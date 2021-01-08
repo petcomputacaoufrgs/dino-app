@@ -496,4 +496,10 @@ export default class PT implements LanguageBase {
   READ_MORE = 'Leia mais'
 
   NO_TREATMENTS_AVAILABLE = 'Nenhum tratamento disponível'
+
+  NO_TREATMENT_SELECTED = 'Selecione um tratamento'
+
+  NO_FAQ_AVAILABLE = 'Nenhuma F.A.Q disponível'
+
+  TREATMENT_SAVE = 'Salvar'
 }

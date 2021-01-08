@@ -102,7 +102,6 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
   
       const phones = await PhoneService.getAllByContactLocalId(entity.localContactId)
   
-  
       await this.saveContactOnGoogleAPI(entity, contact, phones)
     } catch (e) {
       LogAppErrorService.logError(e)
@@ -125,18 +124,22 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
     contact: ContactEntity, 
     phones: PhoneEntity[]
   ) => {
-    const peopleModel = this.convertToGooglePeopleModel(contact, phones)
+    try {
+      const peopleModel = this.convertToGooglePeopleModel(contact, phones)
 
-    const etag = await this.getCurrentGooglePeopleEtag(entity.resourceName)
-
-    const response = etag && entity.resourceName? 
-      await this.updateContactOnGoogleAPI(
-        peopleModel,
-        entity.resourceName,
-        etag) : await this.createContactOnGoogleAPI(peopleModel)
-
-    if (response && response.resourceName) {
-      entity.resourceName = response.resourceName
+      const etag = await this.getCurrentGooglePeopleEtag(entity.resourceName)
+  
+      const response = etag && entity.resourceName? 
+        await this.updateContactOnGoogleAPI(
+          peopleModel,
+          entity.resourceName,
+          etag) : await this.createContactOnGoogleAPI(peopleModel)
+  
+      if (response && response.resourceName) {
+        entity.resourceName = response.resourceName
+      }
+    } catch (e) {
+      LogAppErrorService.logError(e)
     }
   }
 
@@ -200,15 +203,19 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
   private deleteContactOnGoogleAPI = async (
     resourceName: string
   ): Promise<boolean> => {
-    const request = await GoogleAgentService.delete(
-      GooglePeopleAPIURLConstants.DELETE_CONTACT(resourceName)
-    )
-
-    if (request.canGo) {
-      const authRequest = await request.authenticate()
-      
-      await authRequest.go()
-      return true
+    try {
+      const request = await GoogleAgentService.delete(
+        GooglePeopleAPIURLConstants.DELETE_CONTACT(resourceName)
+      )
+  
+      if (request.canGo) {
+        const authRequest = await request.authenticate()
+        
+        await authRequest.go()
+        return true
+      }
+    } catch (e) {
+      LogAppErrorService.logError(e)
     }
 
     return false

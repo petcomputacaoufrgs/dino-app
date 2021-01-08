@@ -10,6 +10,7 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import NoteColumnService from './NoteColumnService'
+import NoteView from '../../types/note/view/NoteView'
 
 export class NoteServiceImpl extends AutoSynchronizableService<
   number,
@@ -77,16 +78,15 @@ export class NoteServiceImpl extends AutoSynchronizableService<
     return ArrayUtils.removeRepeatedValues(tags)
   }
 
-  getNotesInColumnByFilter(
-    notes: NoteEntity[],
-    column: NoteColumnEntity,
+  filterNotesInNoteView(
+    noteView: NoteView,
     tagsSearch: string[],
     textSearch: string,
     activeTagsSearch: boolean,
     activeTextSearch: boolean
   ) {
-    return notes.filter((note) => {
-      if (note.columnLocalId !== column.localId) {
+    return noteView.notes.filter((note) => {
+      if (note.columnLocalId !== noteView.column.localId) {
         return false
       }
 

@@ -22,17 +22,23 @@ import AuthRefreshRequestModel from '../../types/auth/api/AuthRefreshRequestMode
 import AuthRefreshResponseModel from '../../types/auth/api/AuthRefreshResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import AuthEntity from '../../types/auth/database/AuthEntity'
-import AuthContextUpdater from '../../context/updater/AuthContextUpdater'
 import AuthenticatedService from './AuthenticatedService'
 import Database from '../../storage/database/Database'
+import UpdatableService from '../update/UpdatableService'
+import UserSettingsService from '../user/UserSettingsService'
 
-class AuthService {
+class AuthService extends UpdatableService {
   private authenticatedServices: AuthenticatedService[]
   private table: Dexie.Table<AuthEntity, number>
 
   constructor() {
+    super()
     this.authenticatedServices = []
     this.table = Database.auth
+  }
+
+  onLogout = async () => {
+    this.dbClear()
   }
 
   subscribeAuthenticatedService = (service: AuthenticatedService) => {
@@ -160,7 +166,7 @@ class AuthService {
 
     await Promise.all(onLogoutCallbacks)
 
-    AuthContextUpdater.update()
+    this.triggerUpdateEvent()
 
     EventService.whenLogout()
   }
@@ -213,7 +219,8 @@ class AuthService {
 
         if (body.success) {
           await this.saveGoogleAuthData(body.data)
-          AuthContextUpdater.update()
+          await this.saveUserSettings(body.data)
+          this.triggerUpdateEvent()
           EventService.whenLogin()
           return [LoginStatusConstants.SUCCESS, undefined]
         }
@@ -287,15 +294,16 @@ class AuthService {
       auth.googleExpiresDate = googleExpiresDate
       auth.googleToken = responseBody.googleAccessToken
       await this.dbSave(auth)
-      return auth
     } else {
       await this.logout()
     }
 
     if (responseBody.scopes && responseBody.scopes.length > 0) {
       await GoogleScopeService.clearDatabase()
-      await GoogleScopeService.saveAllFromDataModel(responseBody.scopes)
+      await GoogleScopeService.saveAllFromDataModelLocally(responseBody.scopes)
     }
+
+    return auth
   }
 
   private async saveGoogleAuthData(responseBody: GoogleAuthResponseDataModel) {
@@ -317,10 +325,14 @@ class AuthService {
 
     if (responseBody.scopes && responseBody.scopes.length > 0) {
       await GoogleScopeService.clearDatabase()
-      await GoogleScopeService.saveAllFromDataModel(responseBody.scopes)
+      await GoogleScopeService.saveAllFromDataModelLocally(responseBody.scopes)
     }
 
     await this.saveUserAuthData(responseBody)
+  }
+
+  private async saveUserSettings(responseBody: GoogleAuthResponseDataModel) {
+    await UserSettingsService.saveFromDataModelLocally(responseBody.settings)
   }
 
   private async saveUserAuthData(responseBody: AuthResponseDataModel) {

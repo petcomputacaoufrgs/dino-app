@@ -9,9 +9,9 @@ import {
 } from '@material-ui/core'
 import EventRepeatModalProps from './props'
 import EventRepeatType from '../../../../../../constants/calendar/EventRepeatType'
-import './styles.css'
 import NumberUtils from '../../../../../../utils/NumberUtils'
-import { useUserSettings } from '../../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../../context/language'
+import './styles.css'
 
 const EventRepeatModal: React.FC<EventRepeatModalProps> = ({
   open,
@@ -19,8 +19,7 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({
   repeatType: eventRepeatType,
   onRepeatTypeChange: onEventRepeatTypeChange,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const [dialogOpen, setDialogOpen] = useState(open)
   const [repeatType, setRepeatType] = useState(eventRepeatType)
@@ -52,39 +51,39 @@ const EventRepeatModal: React.FC<EventRepeatModalProps> = ({
       <DialogContent>
         <FormControl>
           <RadioGroup
-            aria-label={language.EVENT_REPEAT_TYPE_LABEL}
+            aria-label={language.data.EVENT_REPEAT_TYPE_LABEL}
             value={repeatType}
             onChange={handleRepeatTypeChange}
           >
             <FormControlLabel
               value={EventRepeatType.NOT_REPEAT}
               control={<Radio />}
-              label={language.EVENT_REPEAT_NOT_REPEAT}
+              label={language.data.EVENT_REPEAT_NOT_REPEAT}
             />
             <FormControlLabel
               value={EventRepeatType.EVERY_DAY}
               control={<Radio />}
-              label={language.EVENT_REPEAT_EVERY_DAY}
+              label={language.data.EVENT_REPEAT_EVERY_DAY}
             />
             <FormControlLabel
               value={EventRepeatType.EVERY_WEEK}
               control={<Radio />}
-              label={language.EVENT_REPEAT_EVERY_WEEK}
+              label={language.data.EVENT_REPEAT_EVERY_WEEK}
             />
             <FormControlLabel
               value={EventRepeatType.EVERY_MONTH}
               control={<Radio />}
-              label={language.EVENT_REPEAT_EVERY_MONTH}
+              label={language.data.EVENT_REPEAT_EVERY_MONTH}
             />
             <FormControlLabel
               value={EventRepeatType.EVERY_YEAR}
               control={<Radio />}
-              label={language.EVENT_REPEAT_EVERY_YEAR}
+              label={language.data.EVENT_REPEAT_EVERY_YEAR}
             />
             <FormControlLabel
               value={EventRepeatType.CUSTOMIZED}
               control={<Radio />}
-              label={language.EVENT_REPEAT_EVERY_CUSTOMIZED}
+              label={language.data.EVENT_REPEAT_EVERY_CUSTOMIZED}
             />
           </RadioGroup>
         </FormControl>

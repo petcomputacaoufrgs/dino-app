@@ -73,6 +73,14 @@ export class FaqItemServiceImpl extends AutoSynchronizableService<
         StringUtils.contains(item.question, searchTerm)
     )
   }
+
+  getByFaq = async (faq: FaqEntity): Promise<FaqItemEntity[]> => {
+    if (faq.localId) {
+      return this.table.where('localFaqId').equals(faq.localId).toArray()
+    }
+
+    return []
+  }
 }
 
 export default new FaqItemServiceImpl()

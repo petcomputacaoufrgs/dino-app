@@ -28,3 +28,8 @@
 .glossary-item .card__typography.muted {
   opacity: 0.7;
 }
+
+.glossary-item-loader {
+  width: 100%;
+  height: 100%;
+}

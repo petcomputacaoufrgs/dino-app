@@ -3,23 +3,22 @@ import HeaderProps from './props'
 import DateUtils from '../../../../../utils/DateUtils'
 import { ReactComponent as TodayCalendarSVG } from '../../../../../assets/icons/today_calendar.svg'
 import IconButton from '../../../../../components/button/icon_button'
-import { useUserSettings } from '../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
 const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   return (
     <div className="calendar__month__header">
       <h1>
-        {DateUtils.getMonthName(date.getMonth(), language)},{' '}
+        {DateUtils.getMonthName(date.getMonth(), language.data)},{' '}
         {date.getFullYear()}
       </h1>
       <div className="calendar__month__header_buttons">
         <div className="calendar__month__header_buttons__today_button">
           <IconButton
-            ariaLabel={language.CALENDAR_CURRENT_MONTH_ARIA_LABEL}
+            ariaLabel={language.data.CALENDAR_CURRENT_MONTH_ARIA_LABEL}
             icon={TodayCalendarSVG}
             onClick={goToCurrentMonth}
           />

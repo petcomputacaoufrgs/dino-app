@@ -14,9 +14,8 @@ class ErrorHandlerService {
       const isAuthenticated = await AuthService.isAuthenticated()
       if (isAuthenticated) {
         const errorModel: LogAppErrorModel = {
-          error: event.error,
+          error: event.message,
           file: event.filename,
-          title: event.message,
           date: new Date(),
         }
   

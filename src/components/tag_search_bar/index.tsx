@@ -4,14 +4,13 @@ import TextField from '@material-ui/core/TextField'
 import TagSearchBarProps from './props'
 import { Search } from '@material-ui/icons'
 import { InputAdornment, IconButton } from '@material-ui/core'
-import { useUserSettings } from '../../context/provider/user_settings'
+import { useLanguage } from '../../context/language'
 import './styles.css'
 
 const MAX_TAGS = 5
 
 const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const [tagList, setTagList] = useState<string[]>([])
 
@@ -33,8 +32,8 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
       freeSolo
       multiple
       limitTags={1}
-      loadingText={language.LOADING}
-      noOptionsText={language.NO_OPTIONS}
+      loadingText={language.data.LOADING}
+      noOptionsText={language.data.NO_OPTIONS}
       options={props.options}
       getOptionLabel={(option) => option}
       className="tag_search_bar"
@@ -46,7 +45,7 @@ const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
         <TextField
           {...params}
           className={props.textFieldClass}
-          placeholder={`${language.SEARCH_BUTTON_LABEL} (${language.MAX} ${MAX_TAGS})`}
+          placeholder={`${language.data.SEARCH_BUTTON_LABEL} (${language.data.MAX} ${MAX_TAGS})`}
           variant="outlined"
           InputProps={{
             ...params.InputProps,

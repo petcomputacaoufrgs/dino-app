@@ -14,16 +14,16 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
   abstract getSyncDependencies(): SynchronizableService[]
 
   /**
-   * @description Function that performs data synchronization with the API
+   * @description Function that performs data synchronization with the API.
    */
-  protected abstract doSync(): Promise<boolean>
+  protected abstract sync(): Promise<boolean>
 
   /**
    * @description Override to add new dependencies for websocket.
    * A websocket dependencie occurs when any websocket function of another service needs to be completed to call one of this service.
    * A SynchronizableService is websocket dependent of itself and of this sync dependencies services.
    */
-  getWebSocketExtraDependencies(): WebSocketSubscriberableService[] {
+  protected onGetWebSocketDependencies(): WebSocketSubscriberableService[] {
     return []
   }
 
@@ -40,20 +40,17 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
     this.subscribeInSyncService()
   }
 
-  getWebSocketDependencies(): WebSocketSubscriberableService[] {
-    const webSocketDependencies: WebSocketSubscriberableService[] = []
-    webSocketDependencies.push(...this.getSyncDependencies())
-    webSocketDependencies.push(...this.getWebSocketExtraDependencies())
-    webSocketDependencies.push(this)
-    
-    return webSocketDependencies
-  }
-
-  cleanResult = () => {
+  /**
+   * @description Need to be called for finish sync process to not cause conflict with the next sync.
+   */
+  finishSync = () => {
     this.syncResult = undefined
   }
 
-  async sync(): Promise<boolean> {
+  /**
+   * @description Start complete synchronize process
+   */
+  async synchronize(): Promise<boolean> {
     if (this.syncResult !== undefined) {
       return this.syncResult
     } else if (this.isSynchronizing) {
@@ -62,12 +59,25 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
       })
     } else {
       this.isSynchronizing = true
-      const result = await this.doSync()
+      const result = await this.sync()
       this.syncResult = result
       this.isSynchronizing = false
       this.resolveAllAfterReturn(result)
       return result
     } 
+  }
+
+  /**
+   * @description return default WebSocket dependencies for synchronizable service. 
+   * To add more dependencies use onGet... function.
+   */
+  protected getWebSocketDependencies(): WebSocketSubscriberableService[] {
+    const webSocketDependencies: WebSocketSubscriberableService[] = []
+    webSocketDependencies.push(...this.getSyncDependencies())
+    webSocketDependencies.push(...this.onGetWebSocketDependencies())
+    webSocketDependencies.push(this)
+    
+    return webSocketDependencies
   }
 
   private subscribeInSyncService = () => {

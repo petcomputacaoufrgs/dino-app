@@ -17,7 +17,7 @@ import ArrayUtils from '../../../../utils/ArrayUtils'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
 import IconButton from '../../../../components/button/icon_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useUserSettings } from '../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../context/language'
 import './styles.css'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
@@ -29,8 +29,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
   onDelete,
   questionAlreadyExists,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const [question, setQuestion] = useState(note.question)
   const [answer, setAnswer] = useState(note.answer)
@@ -116,7 +115,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
   const validateQuestion = async (newQuestion: string): Promise<boolean> => {
     if (!newQuestion) {
       setQuestionWithError(true)
-      setQuestionErrorHelper(language.EMPTY_FIELD_ERROR)
+      setQuestionErrorHelper(language.data.EMPTY_FIELD_ERROR)
       return false
     }
 
@@ -125,7 +124,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
       if (questionConflict) {
         setQuestionWithError(true)
-        setQuestionErrorHelper(language.QUESTION_ALREADY_EXISTS_ERROR)
+        setQuestionErrorHelper(language.data.QUESTION_ALREADY_EXISTS_ERROR)
         return false
       }
     }
@@ -155,11 +154,11 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
         />
       </DialogTitle>
       <div className="note_info_dialog__last_update">
-        <h4>{DateUtils.getDateStringFormated(note.lastUpdate!, language)}</h4>
+        <h4>{DateUtils.getDateStringFormated(note.lastUpdate!, language.data)}</h4>
       </div>
       <DialogContent className="note__info_dialog__content">
         <TextField
-          label={`${language.ANSWER_NOTE_DIALOG_TITLE} (${language.MAX} ${NoteConstants.ANSWER_MAX_LENGTH})`}
+          label={`${language.data.ANSWER_NOTE_DIALOG_TITLE} (${language.data.MAX} ${NoteConstants.ANSWER_MAX_LENGTH})`}
           type="text"
           multiline
           variant="standard"
@@ -178,7 +177,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
             <TextField
               {...params}
               fullWidth
-              label={`${language.NOTE_TAG_LABEL} (${language.MAX} ${NoteConstants.TAG_LIMIT})`}
+              label={`${language.data.NOTE_TAG_LABEL} (${language.data.MAX} ${NoteConstants.TAG_LIMIT})`}
               variant="standard"
               inputProps={{
                 ...params.inputProps,
@@ -191,18 +190,18 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
       <DialogActions className="note__info_dialog__actions">
         {isEdited() && (
           <Button onClick={handleSaveNote}>
-            {language.DIALOG_SAVE_BUTTON_TEXT}
+            {language.data.DIALOG_SAVE_BUTTON_TEXT}
           </Button>
         )}
-        <Button onClick={onClose}>{language.CLOSE_ARIA_LABEL}</Button>
+        <Button onClick={onClose}>{language.data.CLOSE_ARIA_LABEL}</Button>
       </DialogActions>
       <AgreementDialog
         onAgree={handleDeleteNoteAgree}
         onDisagree={handleDeleteNoteDisagree}
-        question={language.DELETE_NOTE_ALERT_TITLE}
-        description={language.DELETE_NOTE_ALERT_TEXT}
-        agreeOptionText={language.AGREEMENT_OPTION_TEXT}
-        disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
+        question={language.data.DELETE_NOTE_ALERT_TITLE}
+        description={language.data.DELETE_NOTE_ALERT_TEXT}
+        agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
+        disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
         open={deleteNoteDialogOpen}
       />
     </Dialog>

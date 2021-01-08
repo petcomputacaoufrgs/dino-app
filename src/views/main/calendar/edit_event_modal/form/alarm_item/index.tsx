@@ -4,12 +4,11 @@ import EventAlarmType from '../../../../../../constants/calendar/EventAlarmType'
 import LogAppErrorService from '../../../../../../services/log_app_error/LogAppErrorService'
 import DeleteSVG from '../../../../../../assets/icons/delete.svg'
 import Button from '../../../../../../components/button'
-import { useUserSettings } from '../../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../../context/language'
 import './styles.css'
 
 const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const handleDelete = () => {
     onDelete(alarm)
@@ -18,11 +17,11 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
   const getTypeName = () => {
     switch (alarm.type) {
       case EventAlarmType.MINUTE:
-        return alarm.time === 1 ? language.MINUTE : language.MINUTES
+        return alarm.time === 1 ? language.data.MINUTE : language.data.MINUTES
       case EventAlarmType.HOUR:
-        return alarm.time === 1 ? language.HOUR : language.HOURS
+        return alarm.time === 1 ? language.data.HOUR : language.data.HOURS
       case EventAlarmType.DAY:
-        return alarm.time === 1 ? language.DAYS : language.DAYS
+        return alarm.time === 1 ? language.data.DAYS : language.data.DAYS
       default:
         LogAppErrorService.logModel({
           date: new Date(),
@@ -30,7 +29,7 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
           title: 'Event Alarm Type',
           file: 'AlarmItem',
         })
-        return language.EVENT_INVALID_ALARM_TYPE
+        return language.data.EVENT_INVALID_ALARM_TYPE
     }
   }
 
@@ -39,20 +38,20 @@ const AlarmItem: React.FC<AlarmItemProps> = ({ alarm, onDelete }) => {
       <div className="calendar__add__modal__event_alert_item__info">
         {alarm.time !== 0 ? (
           <>
-            {alarm.time} {getTypeName()} {language.BEFORE}
+            {alarm.time} {getTypeName()} {language.data.BEFORE}
           </>
         ) : (
-          <>{language.EVENT_ALARM_ZERO}</>
+          <>{language.data.EVENT_ALARM_ZERO}</>
         )}
       </div>
       <Button
-        ariaLabel={language.CALENDAR_DELETE_BUTTON_ARIA_LABEL}
+        ariaLabel={language.data.CALENDAR_DELETE_BUTTON_ARIA_LABEL}
         onClick={handleDelete}
         className="calendar__add__modal__event_alert_item__delete_button"
       >
         <img
           src={DeleteSVG}
-          alt={language.EVENT_ALARM_DELETE_ALT}
+          alt={language.data.EVENT_ALARM_DELETE_ALT}
           className="calendar__add__modal__event_alert_item__delete_button__image"
         />
       </Button>

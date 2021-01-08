@@ -6,12 +6,11 @@ import EventIcon from '@material-ui/icons/Event'
 import DescriptionIcon from '@material-ui/icons/Description'
 import StringUtils from '../../../../../utils/StringUtils'
 import CalendarService from '../../../../../services/calendar/CalendarService'
-import { useUserSettings } from '../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
 const Content: React.FC<ContentProps> = ({ event }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const getHourString = (date: Date): string => {
     return `${StringUtils.toStringWithZeros(
@@ -21,16 +20,16 @@ const Content: React.FC<ContentProps> = ({ event }) => {
   }
 
   const getDaysBeforeString = (days: number): string =>
-    `${days} ${days === 1 ? language.DAY : language.DAYS}`
+    `${days} ${days === 1 ? language.data.DAY : language.data.DAYS}`
 
   const getHoursBeforeString = (hours: number): string =>
-    `${hours} ${hours === 1 ? language.HOUR : language.HOURS}`
+    `${hours} ${hours === 1 ? language.data.HOUR : language.data.HOURS}`
 
   const getMinutesBeforeString = (minutes: number): string =>
-    `${minutes} ${minutes === 1 ? language.MINUTE : language.MINUTES}`
+    `${minutes} ${minutes === 1 ? language.data.MINUTE : language.data.MINUTES}`
 
   const getSeparator = (andCount: number): string =>
-    andCount > 1 ? ', ' : ` ${language.AND} `
+    andCount > 1 ? ', ' : ` ${language.data.AND} `
 
   const getEventAlarmString = (): string => {
     let finalString = ''
@@ -47,7 +46,7 @@ const Content: React.FC<ContentProps> = ({ event }) => {
 
       if (minutes > 0) {
         finalString = getMinutesBeforeString(minutes).concat(
-          ` ${language.AND} `,
+          ` ${language.data.AND} `,
           finalString
         )
 
@@ -103,26 +102,26 @@ const Content: React.FC<ContentProps> = ({ event }) => {
       )
     }
 
-    return `${finalString} ${language.BEFORE}`
+    return `${finalString} ${language.data.BEFORE}`
   }
 
   const renderDate = (): JSX.Element => {
     const isToday = DateUtils.isEqualDay(event.init_date, new Date())
 
     const day = isToday
-      ? language.TODAY
-      : DateUtils.getWeekDayName(event.init_date.getDay(), language)
+      ? language.data.TODAY
+      : DateUtils.getWeekDayName(event.init_date.getDay(), language.data)
 
     return (
       <div className="calendar__event_modal__content__date_info">
         <p>
-          {language.DATE_FROM}: {day},{' '}
-          {DateUtils.getDateStringFormated(event.init_date, language)} -{' '}
+          {language.data.DATE_FROM}: {day},{' '}
+          {DateUtils.getDateStringFormated(event.init_date, language.data)} -{' '}
           {getHourString(event.init_date)}
         </p>
         <p>
-          {language.DATE_TO}: {day},{' '}
-          {DateUtils.getDateStringFormated(event.end_date, language)} -{' '}
+          {language.data.DATE_TO}: {day},{' '}
+          {DateUtils.getDateStringFormated(event.end_date, language.data)} -{' '}
           {getHourString(event.end_date)}
         </p>
       </div>
@@ -143,7 +142,7 @@ const Content: React.FC<ContentProps> = ({ event }) => {
       <div className="calendar__event_modal__content__data__icon">
         <EventIcon fontSize="default" />
       </div>
-      <p>{CalendarService.getEventTypeName(event.type, language)}</p>
+      <p>{CalendarService.getEventTypeName(event.type, language.data)}</p>
     </div>
   )
 

@@ -7,6 +7,7 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/database/Database'
+import StringUtils from '../../utils/StringUtils'
 
 export class GlossaryServiceImpl extends AutoSynchronizableService<
   number,
@@ -50,6 +51,10 @@ export class GlossaryServiceImpl extends AutoSynchronizableService<
     }
 
     return model
+  }
+
+  filterGlossary = (glossary: GlossaryItemEntity[],searchTerm: string) => {
+    return glossary.filter((item) => StringUtils.contains(item.title, searchTerm)).sort((a, b) => (a.title >= b.title ? 1 : -1))
   }
 }
 

@@ -58,9 +58,21 @@ export class NoteColumnServiceImpl extends AutoSynchronizableService<
     return notes.filter((note) => note.columnLocalId === column.localId)
   }
 
-  getColumnsByFilter(
-    notes: NoteEntity[],
-    columns: NoteColumnEntity[],
+  getNoteViews = (notes: NoteEntity[], columns: NoteColumnEntity[]) => {
+    return columns
+      .sort((c1, c2) => c1.order - c2.order)
+      .map((column) => {
+        const columnNotes = notes.filter(note => note.columnLocalId === column.localId).sort((n1, n2) => n1.order - n2.order)
+
+        return {
+          column: column,
+          notes: columnNotes
+        }
+      })
+  }
+
+  filterNoteViews(
+    noteViews: NoteView[],
     tagsSearch: string[],
     textSearch: string
   ): NoteView[] {
@@ -69,12 +81,11 @@ export class NoteColumnServiceImpl extends AutoSynchronizableService<
     const activeTextSearch = textSearch !== undefined && textSearch.length !== 0
     const showAllColumns = !activeTagsSearch && !activeTextSearch
 
-    columns
-      .sort((c1, c2) => c1.order - c2.order)
-      .forEach((column) => {
-        const filteredNotes = NoteService.getNotesInColumnByFilter(
-          notes,
-          column,
+    noteViews
+      .sort((c1, c2) => c1.column.order - c2.column.order)
+      .forEach(noteView => {
+        const filteredNotes = NoteService.filterNotesInNoteView(
+          noteView,
           tagsSearch,
           textSearch,
           activeTagsSearch,
@@ -83,7 +94,7 @@ export class NoteColumnServiceImpl extends AutoSynchronizableService<
 
         if (filteredNotes.length > 0 || showAllColumns) {
           filteredColumns.push({
-            column: column,
+            column: noteView.column,
             notes: filteredNotes.sort((n1, n2) => n1.order - n2.order),
           })
         }

@@ -1,10 +1,9 @@
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 import WebSocketWaitExecutionResolve from '../../types/web_socket/WebSocketWaitExecutionResolve'
-import AuthenticatedService from '../auth/AuthenticatedService'
+import UpdatableService from '../update/UpdatableService'
 import WebSocketService from './WebSocketService'
 
-export default abstract class WebSocketSubscriberableService extends AuthenticatedService {
-    protected abstract getWebSocketSubscribers(): WebSocketSubscriber<any>[]
+export default abstract class WebSocketSubscriberableService extends UpdatableService {
     private webSocketResolves: WebSocketWaitExecutionResolve[]
     private isExecutingWSCallback: boolean
 
@@ -16,13 +15,18 @@ export default abstract class WebSocketSubscriberableService extends Authenticat
     }
 
     /**
+     * @description Return a list of websocket subscribers.
+     */
+    protected abstract getWebSocketSubscribers(): WebSocketSubscriber<any>[]
+
+    /**
      * @description Return a list of dependencies for websocket receiving.
      * A websocket dependencie occurs when any websocket function of another service needs to be completed to call one of this service.
      * A service can be dependent of itself.
      */
-    abstract getWebSocketDependencies(): WebSocketSubscriberableService[]
+    protected abstract getWebSocketDependencies(): WebSocketSubscriberableService[]
 
-    awaitWebSocketExecution = async (itself?: boolean): Promise<void> => {
+    private awaitWebSocketExecution = async (itself?: boolean): Promise<void> => {
       if (this.isExecutingWSCallback) {
         return new Promise<void>(resolve => {
           this.webSocketResolves.push(resolve)
@@ -30,11 +34,11 @@ export default abstract class WebSocketSubscriberableService extends Authenticat
       }
     }
 
-    protected cleanWebSocketResolves = () => {
+    private cleanWebSocketResolves = () => {
       this.webSocketResolves = []
     }
 
-    protected getSubscribersWithFilter = () => {
+    private getSubscribersWithFilter = () => {
         const subscribersWithFilter: WebSocketSubscriber<unknown>[] = []
 
         this.getWebSocketSubscribers().forEach((subscriber) => {

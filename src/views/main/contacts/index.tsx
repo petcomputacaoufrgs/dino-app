@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ContactItems from './contact_list_items'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import ContactFormDialog from './contact_dialog_form'
@@ -7,43 +7,103 @@ import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 import CircularButton from '../../../components/button/circular_button'
-import { usePhone } from '../../../context/provider/phone'
-import { useGoogleContact } from '../../../context/provider/google_contact'
-import { useContact } from '../../../context/provider/contact'
 import Loader from '../../../components/loader'
-import { useUserSettings } from '../../../context/provider/user_settings'
-import { useGoogleScope } from '../../../context/provider/google_scope'
+import { useLanguage } from '../../../context/language'
+import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
+import UserSettingsService from '../../../services/user/UserSettingsService'
+import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
+import ContactView from '../../../types/contact/view/ContactView'
+import ContactService from '../../../services/contact/ContactService'
+import PhoneService from '../../../services/contact/PhoneService'
+import GoogleContactService from '../../../services/contact/GoogleContactService'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const Contacts = (): JSX.Element => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
-  const currentSettings = userSettings.first
-  const contact = useContact()
-  const phone = usePhone()
-  const googleContact = useGoogleContact()
-  const googleScope = useGoogleScope()
-  const syncGoogleContacts = googleScope.service.hasContactGrant(googleScope)
+const Contacts: React.FC = () => {
+  const language = useLanguage()
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [contacts, setContacts] = useState<ContactView[]>([])
+  const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
+  const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
+
   const [openGrantDialog, setOpenGrantDialog] = useState(false)
   const [add, setAdd] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [shouldDecline, setShouldDecline] = useState(false)
 
-  const contactViews = contact.service.getViewContactByFilter(
-    contact.data,
-    phone.data,
-    googleContact.data,
-    searchTerm
-  )
+  const filteredContacts = ContactService.filterContactViews(contacts, searchTerm)
+
+  useEffect(() => {
+    const loadData = async () => {
+      const settings = await UserSettingsService.getFirst()
+      const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
+      const contacts  = await ContactService.getAll()
+      
+      if (contacts.length > 0) {
+        const phones = await PhoneService.getAll()
+        const googleContacts = await GoogleContactService.getAll()
+
+        const contactViews = ContactService.getContactViews(
+          contacts,
+          phones,
+          googleContacts
+        )
+
+        updateContacts(contactViews)
+      }
+
+      updateSyncGoogleContacts(syncGoogleContacts)
+      updateSettings(settings)
+      finishLoading()
+    }
+
+    ContactService.addUpdateEventListenner(loadData)
+    PhoneService.addUpdateEventListenner(loadData)
+    GoogleContactService.addUpdateEventListenner(loadData)
+    UserSettingsService.addUpdateEventListenner(loadData)
+    GoogleScopeService.addUpdateEventListenner(loadData)
+
+    let updateContacts = (contactViews: ContactView[]) => {
+      setContacts(contactViews)
+    }
+
+    let updateSettings = (settings: UserSettingsEntity | undefined) => {
+      setSettings(settings)
+    }
+
+    let updateSyncGoogleContacts = (syncGoogleContacts: boolean) => {
+      setSyncGoogleContacts(syncGoogleContacts)
+    }
+
+    let finishLoading = () => {
+      setIsLoading(false)
+    }
+
+    if (isLoading) {
+      loadData()
+    }
+
+    return () => {
+      updateContacts = () => {}
+      updateSettings = () => {}
+      updateSyncGoogleContacts = () => {}
+      finishLoading = () => {}
+      ContactService.removeUpdateEventListenner(loadData)
+      PhoneService.removeUpdateEventListenner(loadData)
+      GoogleContactService.removeUpdateEventListenner(loadData)
+      UserSettingsService.removeUpdateEventListenner(loadData)
+      GoogleScopeService.removeUpdateEventListenner(loadData)
+    }
+  }, [isLoading])
 
   const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
     setSearchTerm(event.target.value)
   }
 
   const handleAcceptGoogleGrant = () => {
-    if (currentSettings) {
-      currentSettings.declineGoogleContacts = false
-      userSettings.service.save(currentSettings)
+    if (settings) {
+      settings.declineGoogleContacts = false
+      UserSettingsService.save(settings)
     }
     setOpenGrantDialog(false)
     setAdd(true)
@@ -61,8 +121,8 @@ const Contacts = (): JSX.Element => {
   }
 
   const handleAddContact = () => {
-    if (currentSettings) {
-      if (!syncGoogleContacts && !currentSettings.declineGoogleContacts) {
+    if (settings) {
+      if (!syncGoogleContacts && !settings.declineGoogleContacts) {
         setOpenGrantDialog(true)
         return
       }
@@ -73,9 +133,9 @@ const Contacts = (): JSX.Element => {
 
   const handleClose = () => {
     setAdd(false)
-    if (shouldDecline && currentSettings) {
-      currentSettings.declineGoogleContacts = true
-      userSettings.service.save(currentSettings)
+    if (shouldDecline && settings) {
+      settings.declineGoogleContacts = true
+      UserSettingsService.save(settings)
     }
   }
 
@@ -83,31 +143,25 @@ const Contacts = (): JSX.Element => {
     <div className="contacts">
       <Loader
         className="contacts__loader"
-        loading={contact.loading || phone.loading || googleContact.loading}
+        isLoading={isLoading}
       >
         <MuiSearchBar
           value={searchTerm}
           onChange={handleChange}
-          placeholder={language.SEARCH_HOLDER}
+          placeholder={language.data.SEARCH_HOLDER}
         />
         <ContactItems
-          items={contactViews}
-          contactService={contact.service}
-          phoneService={phone.service}
-          googleContactService={googleContact.service}
+          items={filteredContacts}
         />
         <CircularButton
-          ariaLabel={language.CONTACTS_ADD_CONTACT}
+          ariaLabel={language.data.CONTACTS_ADD_CONTACT}
           className="add_contact_button"
           icon={AddIconSVG}
           onClick={handleAddContact}
         />
       </Loader>
       <ContactFormDialog
-        contactService={contact.service}
-        phoneService={phone.service}
-        googleContactService={googleContact.service}
-        items={contactViews}
+        items={contacts}
         action={Contants.ACTION_ADD}
         dialogOpen={add}
         onClose={handleClose}
@@ -118,8 +172,8 @@ const Contacts = (): JSX.Element => {
         onClose={handleCloseGoogleGrant}
         open={openGrantDialog}
         scopes={[GoogleScope.SCOPE_CONTACT]}
-        text={language.GOOGLE_CONTACT_GRANT_TEXT}
-        title={language.GOOGLE_CONTACT_GRANT_TITLE}
+        text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
+        title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
       />
     </div>
   )

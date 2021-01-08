@@ -1,5 +1,5 @@
-import SynchronizableDataModel from '../../synchronizable/api/SynchronizableDataModel'
-import SynchronizableDataLocalIdModel from '../../synchronizable/api/SynchronizableDataLocalIdModel'
+import SynchronizableDataModel from '../../sync/api/SynchronizableDataModel'
+import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLocalIdModel'
 
 export default interface GlossaryItemDataModel
   extends SynchronizableDataLocalIdModel<number> {

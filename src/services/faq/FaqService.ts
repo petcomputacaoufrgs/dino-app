@@ -64,18 +64,15 @@ export class FaqServiceImpl extends AutoSynchronizableService<
   }
 
   getFaqViewByFilter(
-    treatment: TreatmentEntity | undefined,
-    faqs: FaqEntity[],
+    faq: FaqEntity,
     faqItem: FaqItemEntity[],
     searchTerm: string
   ): FaqView | undefined {
-    const currentFaq = this.getCurrentFaq(treatment, faqs)
-
-    if (currentFaq) {
+    if (faq) {
       const view: FaqView = {
-        faq: currentFaq,
+        faq: faq,
         items: FaqItemService.getFaqItemByFilter(
-          currentFaq,
+          faq,
           faqItem,
           searchTerm
         ),
@@ -99,6 +96,12 @@ export class FaqServiceImpl extends AutoSynchronizableService<
     }
 
     return undefined
+  }
+
+  getByTreatment = async (treatment: TreatmentEntity): Promise<FaqEntity | undefined> => {
+    if (treatment.localId) {
+      return this.table.where('localTreatmentId').equals(treatment.localId).first()
+    }
   }
 }
 

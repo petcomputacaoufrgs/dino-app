@@ -1,8 +1,8 @@
 import React from 'react'
 import FormItemProps from './props'
 import Button from '../../../../../../components/button'
+import { useLanguage } from '../../../../../../context/language'
 import './styles.css'
-import { useUserSettings } from '../../../../../../context/provider/user_settings'
 
 const FormItem: React.FC<FormItemProps> = ({
   iconSrc,
@@ -10,8 +10,7 @@ const FormItem: React.FC<FormItemProps> = ({
   onIconClick,
   item,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const handleIconClick = () => {
     if (onIconClick) {
@@ -24,7 +23,7 @@ const FormItem: React.FC<FormItemProps> = ({
       if (onIconClick) {
         return (
           <Button
-            ariaLabel={language.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
+            ariaLabel={language.data.CALENDAR_EDIT_BUTTON_ARIA_LABEL}
             onClick={handleIconClick}
             className="calendar__edit_event_modal__form__item__icon__button"
           >

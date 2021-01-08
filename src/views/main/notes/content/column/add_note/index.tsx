@@ -3,14 +3,13 @@ import './styles.css'
 import NotesContentColumnAddNoteProps from './props'
 import Button from '../../../../../../components/button/text_button'
 import NoteConstants from '../../../../../../constants/note/NoteConstants'
-import { useUserSettings } from '../../../../../../context/provider/user_settings'
+import { useLanguage } from '../../../../../../context/language'
 
 const NotesContentColumnAddNote: React.FC<NotesContentColumnAddNoteProps> = ({
   onAdd,
   notesCount,
 }) => {
-  const userSettings = useUserSettings()
-  const language = userSettings.service.getLanguage(userSettings)
+  const language = useLanguage()
 
   const maxNotes = notesCount >= NoteConstants.MAX_NOTES_PER_COLUMN
 
@@ -21,7 +20,7 @@ const NotesContentColumnAddNote: React.FC<NotesContentColumnAddNoteProps> = ({
       disabled={maxNotes}
     >
       <h3>
-        + {language.NOTE_COLUMN_ADD_NOTE_TEXT} (
+        + {language.data.NOTE_COLUMN_ADD_NOTE_TEXT} (
         <span
           className={
             maxNotes ? 'note__note_content__column__add_note__max_notes' : ''

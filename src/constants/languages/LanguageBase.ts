@@ -234,4 +234,7 @@ export default interface LanguageBase {
   CALENDAR_CURRENT_MONTH_ARIA_LABEL: string
   READ_MORE: string
   NO_TREATMENTS_AVAILABLE: string
+  NO_TREATMENT_SELECTED: string
+  NO_FAQ_AVAILABLE: string
+  TREATMENT_SAVE: string
 }

@@ -27,6 +27,7 @@ const Faq: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [settings, setSettings] = useState<UserSettingsEntity>()
   const [treatments, setTreatments] = useState<TreatmentEntity[]>()
+  const [treatment, setTreatment] = useState<TreatmentEntity | undefined>(undefined)
 
   const [faq, setFaq] = useState<FaqEntity | undefined>(undefined)
   const [faqItems, setFaqItems] = useState<FaqItemEntity[]>([])
@@ -63,7 +64,7 @@ const Faq: React.FC = () => {
     }
 
     let updateTreatment = (treatment?: TreatmentEntity) => {
-      setSelectedTreatment(treatment)
+      setTreatment(treatment)
     }
 
     let updateSettings = (settings?: UserSettingsEntity) => {
@@ -101,7 +102,7 @@ const Faq: React.FC = () => {
   }, [isLoading])
 
   useEffect(() => {
-    if (selectedTreatment && faq) {
+    if (faq) {
       const results = FaqService.getFaqViewByFilter(
         faq,
         faqItems,
@@ -109,7 +110,7 @@ const Faq: React.FC = () => {
       )
       setSearchResults(results)
     }
-  }, [selectedTreatment, faq, faqItems, searchTerm])
+  }, [faq, faqItems, searchTerm])
 
   const handleChangeValueSearchTerm = (
     event: React.ChangeEvent<{ value: string }>
@@ -160,7 +161,7 @@ const Faq: React.FC = () => {
           </div>
         </>
       ) : <>
-        {selectedTreatment ? 
+        {treatment ? 
           <div className='faq__fail_to_load'>
             <h2>{language.data.NO_FAQ_AVAILABLE}</h2>
           </div>

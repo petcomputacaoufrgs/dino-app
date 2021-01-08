@@ -24,12 +24,10 @@ const Notes: React.FC = () => {
       const notes = await NoteService.getAll()
       const columns = await NoteColumnService.getAll()
 
-      if (columns.length > 0) {
-        const tags = NoteService.getAllTags(notes)
-        const noteView = NoteColumnService.getNoteViews(notes, columns)
+      const tags = NoteService.getAllTags(notes)
+      const noteView = NoteColumnService.getNoteViews(notes, columns)
   
-        updateData(noteView, tags)
-      }
+      updateData(noteView, tags)
 
       finishLoading()
     }

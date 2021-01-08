@@ -33,7 +33,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
   onDeleteColumn,
   onSaveNewNote,
   questionAlreadyExists,
-}): JSX.Element => {
+}) => {
   const language = useLanguage()
   
   const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(undefined)

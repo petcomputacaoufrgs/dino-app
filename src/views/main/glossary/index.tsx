@@ -18,11 +18,11 @@ const Glossary: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       const glossary = await GlossaryService.getAll()
-      updateDate(glossary)
+      updateData(glossary)
       finishLoading()
     }
 
-    let updateDate = (glossary: GlossaryItemEntity[]) => {
+    let updateData = (glossary: GlossaryItemEntity[]) => {
       setGlossary(glossary)
     }
 
@@ -37,7 +37,7 @@ const Glossary: React.FC = () => {
     }
 
     return () => {
-      updateDate = () => {}
+      updateData = () => {}
       finishLoading = () => {}
       GlossaryService.removeUpdateEventListenner(loadData)
     }

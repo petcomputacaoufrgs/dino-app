@@ -21,13 +21,12 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
   onClick,
 }) => {
   const language = useLanguage()
+  const handleOpen = () => onClick(item.contact.localId!)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget)
-
-  const handleOpen = () => onClick(item.contact.localId!)
 
   const handleClose = () => setAnchorEl(null)
 

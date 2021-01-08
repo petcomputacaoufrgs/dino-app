@@ -16,6 +16,12 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
   const [open, setOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
 
+  const renderChildren = () => {
+    return children ?
+      <div className="select-treatment__children">{children}</div>
+      : <></>
+  }
+
   return (
     <>
       <Autocomplete
@@ -52,12 +58,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
           />
         )}
       />
-
-      {children ? (
-        <div className="select-treatment__children">{children}</div>
-      ) : (
-        <></>
-      )}
+      {renderChildren()}
     </>
   )
 }

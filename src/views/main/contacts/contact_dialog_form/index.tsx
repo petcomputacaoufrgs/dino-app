@@ -20,15 +20,11 @@ import GoogleContactService from '../../../../services/contact/GoogleContactServ
 import './styles.css'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
-  if (item) {
-    return item.contact
-  } else {
-    return {
+  return item ? item.contact : {
       name: '',
       description: '',
       color: undefined,
     }
-  }
 }
 
 const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
@@ -51,10 +47,7 @@ const ContactFormDialog = React.forwardRef(
     const [contactPhones, setContactPhones] = useState(getPhones(item))
     const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
     const [invalidName, setInvalidName] = useState(false)
-    const [invalidPhone, setInvalidPhone] = useState({
-      number: '',
-      text: '',
-    })
+    const [invalidPhone, setInvalidPhone] = useState({number: '', text: ''})
 
     useEffect(() => {
       if (dialogOpen) {
@@ -88,11 +81,7 @@ const ContactFormDialog = React.forwardRef(
       }
 
       if (validInfo()) {
-        const viewWithSamePhone = PhoneService.getContactWithSamePhone(
-          items,
-          contactPhones,
-          item
-        )
+        const viewWithSamePhone = phoneService.getContactWithSamePhone(items, contactPhones, item)
 
         if (viewWithSamePhone) {
           handleTakenNumber(viewWithSamePhone)

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import IconButton from '../../../../../components/button/icon_button'
 import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/color_lens.svg'
-import { Avatar, CardHeader } from '@material-ui/core'
+import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
 import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
@@ -14,7 +14,17 @@ const AddContactDialogHeader = (
 ): JSX.Element => {
   const language = useLanguage()
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+    setAnchorEl(event.currentTarget)
+
+  const handleClose = () => setAnchorEl(null)
+
+  const handleNewEssentialContact = () => {}
+
   return (
+    <>
     <CardHeader
       avatar={
         <Avatar
@@ -32,7 +42,7 @@ const AddContactDialogHeader = (
             dark
             onClick={props.handleChangeColor}
           />
-          <CloseIconButton dark onClose={props.handleCloseDialog} />
+          <OptionsIconButton dark onClick={props.handleCloseDialog} />
         </>
       }
       title={
@@ -43,6 +53,10 @@ const AddContactDialogHeader = (
       subheader={language.data.CONTACT_DIALOG_FORM_SUBTITLE}
       className="contact_dialog_form_header"
     />
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        <MenuItem onClick={handleNewEssentialContact}>Definir Como Contato Essencial</MenuItem>
+      </Menu>
+    </>
   )
 }
 

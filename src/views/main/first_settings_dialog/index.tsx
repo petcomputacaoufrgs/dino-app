@@ -125,7 +125,6 @@ const FirstSettingsDialog: React.FC = () => {
 
   const handleSave = () => {
     handleCloseDialogs()
-
     saveSettings()
   }
 

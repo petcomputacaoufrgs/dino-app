@@ -1,14 +1,14 @@
-class ContactsConstants {
-  PUBLIC_SERVICE: number = 1
-  RESIDENTIAL: number = 2
-  MOBILE: number = 8
+enum ContactsConstants {
+  PUBLIC_SERVICE = 1,
+  RESIDENTIAL = 2,
+  MOBILE = 8,
 
-  ACTION_ADD: number = 1
-  ACTION_EDIT: number = 2
+  ACTION_ADD = 1,
+  ACTION_EDIT = 2,
 
-  NAME_MAX = 100
-  DESCRIPTION_MAX = 500
+  NAME_MAX = 100,
+  DESCRIPTION_MAX = 500,
   NUMBER_MAX = 30
 }
 
-export default new ContactsConstants()
+export default ContactsConstants

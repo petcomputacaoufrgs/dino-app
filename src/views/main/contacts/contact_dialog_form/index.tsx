@@ -81,7 +81,7 @@ const ContactFormDialog = React.forwardRef(
       }
 
       if (validInfo()) {
-        const viewWithSamePhone = phoneService.getContactWithSamePhone(items, contactPhones, item)
+        const viewWithSamePhone = PhoneService.getContactWithSamePhone(items, contactPhones, item)
 
         if (viewWithSamePhone) {
           handleTakenNumber(viewWithSamePhone)

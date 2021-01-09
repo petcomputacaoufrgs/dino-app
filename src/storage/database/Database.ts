@@ -6,6 +6,7 @@ import CalendarEventEntity from '../../types/calendar/database/CalendarEventEnti
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
 import UserEntity from '../../types/user/database/UserEntity'
 import ContactEntity from '../../types/contact/database/ContactEntity'
+import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import FaqEntity from '../../types/faq/database/FaqEntity'
@@ -28,6 +29,7 @@ class Database extends Dexie {
   calendarEvent: Dexie.Table<CalendarEventEntity, number>
   glossary: Dexie.Table<GlossaryItemEntity, number>
   contact: Dexie.Table<ContactEntity, number>
+  essentialContact: Dexie.Table<EssentialContactEntity, number>
   googleContact: Dexie.Table<GoogleContactEntity, number>
   phone: Dexie.Table<PhoneEntity, number>
   user: Dexie.Table<UserEntity, number>
@@ -47,8 +49,9 @@ class Database extends Dexie {
       userSettings: generateSynchronizableTableString(),
       glossary: generateSynchronizableTableString(),
       contact: generateSynchronizableTableString(),
+      essentialContact: generateSynchronizableTableString(),
       googleContact: generateSynchronizableTableString(),
-      phone: generateSynchronizableTableString('localContactId'),
+      phone: generateSynchronizableTableString('localContactId', 'localEssentialContactId'),
       noteColumn: generateSynchronizableTableString(),
       note: generateSynchronizableTableString('columnId', 'localColumnId'),
       user: generateSynchronizableTableString(),
@@ -68,6 +71,7 @@ class Database extends Dexie {
     this.user = this.table('user')
     this.glossary = this.table('glossary')
     this.contact = this.table('contact')
+    this.essentialContact = this.table('essentialContact')
     this.googleContact = this.table('googleContact')
     this.phone = this.table('phone')
     this.note = this.table('note')

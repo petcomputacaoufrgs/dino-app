@@ -5,4 +5,5 @@ export default interface ContactEntity
   name: string
   description?: string
   color?: number
+  isEssential?: boolean
 }

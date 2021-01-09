@@ -42,7 +42,7 @@ const AddContactDialogHeader = (
             dark
             onClick={props.handleChangeColor}
           />
-          <OptionsIconButton dark onClick={props.handleCloseDialog} />
+          <CloseIconButton dark onClose={props.handleCloseDialog} />
         </>
       }
       title={

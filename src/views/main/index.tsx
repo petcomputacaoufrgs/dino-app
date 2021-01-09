@@ -21,9 +21,10 @@ import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from './first_settings_dialog'
 import Loader from '../../components/loader/index'
 
+const Main = () => {
+
   const language = useLanguage()
-  const userSettings = useUserSettings()
-  const firstSettingsDone = userSettings.service.getFirstSettingsDone(userSettings)
+
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
   const handleLogoutClick = () => {

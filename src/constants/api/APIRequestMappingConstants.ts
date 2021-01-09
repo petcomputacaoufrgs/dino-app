@@ -10,6 +10,7 @@ class APIRequestMappingConstants {
   NOTE_COLUMN = `${this.URL}note_column/`
   USER = `${this.URL}user/`
   CONTACT = `${this.URL}contact/`
+  ESSENTIAL_CONTACT = `${this.URL}public/essential_contact/`
   PHONE = `${this.URL}phone/`
   GOOGLE_CONTACT = `${this.URL}google_contact/`
   TREATMENT = `${this.URL}public/treatment/`

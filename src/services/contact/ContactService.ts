@@ -66,11 +66,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
             googleContacts
           ),
         } as ContactView)
-    ).sort((a,b) => {
-      if(a.contact.name < b.contact.name) { return -1; }
-      if(a.contact.name > b.contact.name) { return 1; }
-      return 0;
-    })
+    ).sort((a,b) =>  a.contact.name > b.contact.name ? 1 : -1)
   }
 
   filterContactViews(

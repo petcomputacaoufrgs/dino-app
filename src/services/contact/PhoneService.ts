@@ -12,6 +12,7 @@ import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/database/Database'
+import EssentialContactService from './EssentialContactService'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
   number,
@@ -34,35 +35,59 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
   async convertModelToEntity(
     model: PhoneDataModel
   ): Promise<PhoneEntity | undefined> {
-    const contact = await ContactService.getById(model.contactId)
 
-    if (contact) {
+    let contactId = model.contactId
+    let essentialContactId = model.essentialContactId
+
+    if(contactId) {
+
+      const contact = await ContactService.getById(contactId)
+      contactId = contact?.localId
+      
+    } else if(essentialContactId) {
+
+      const essentialContact = await EssentialContactService.getById(essentialContactId)
+      essentialContactId = essentialContact?.localId
+
+    } else return;
+
       const entity: PhoneEntity = {
         number: model.number,
         type: model.type,
-        localContactId: contact.localId,
+        localContactId: contactId,
+        localEssentialContactId: essentialContactId,
       }
 
       return entity
-    }
   }
 
   async convertEntityToModel(
     entity: PhoneEntity
   ): Promise<PhoneDataModel | undefined> {
-    if (entity.localContactId) {
-      const contact = await ContactService.getByLocalId(entity.localContactId)
+    
+    let localContactId = entity.localContactId
+    let localEssentialContactId = entity.localEssentialContactId
 
-      if (contact && contact.id) {
-        const model: PhoneDataModel = {
-          number: entity.number,
-          type: entity.type,
-          contactId: contact.id,
-        }
+    if (localContactId) {
 
-        return model
-      }
+      const contact = await ContactService.getByLocalId(localContactId)
+      localContactId = contact?.localId
+
+    } else if (localEssentialContactId) {
+
+      const essentialContact = await EssentialContactService.getByLocalId(localEssentialContactId)
+      localEssentialContactId = essentialContact?.localId
+
+    } else return;
+
+    const model: PhoneDataModel = {
+      number: entity.number,
+      type: entity.type,
+      contactId: localContactId,
+      essentialContactId: localEssentialContactId,
     }
+
+      return model
   }
 
   async getAllByContactLocalId(localContactId: number): Promise<PhoneEntity[]> {

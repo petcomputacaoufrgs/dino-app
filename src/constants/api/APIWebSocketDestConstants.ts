@@ -11,6 +11,7 @@ class APIWebSocketDestConstants {
   TREATMENT = 'treatment'
   FAQ_USER_QUESTION = 'faq_user_question'
   CONTACT = 'contact'
+  ESSENTIAL_CONTACT = 'essential_contact'
   PHONE = 'phone'
   GOOGLE_CONTACT = 'google/contact'
   NOTE = 'note'

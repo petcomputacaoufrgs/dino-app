@@ -77,6 +77,10 @@ export class ContactServiceImpl extends AutoSynchronizableService<
       StringUtils.contains(item.contact.name, searchTerm)
     )
   }
+
+  async deleteAllEssentialContacts() {
+    await this.deleteAll(await this.table.where('isEssential').equals('true').toArray())
+  }
 }
 
 export default new ContactServiceImpl()

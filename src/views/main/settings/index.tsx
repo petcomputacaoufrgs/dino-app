@@ -22,6 +22,8 @@ import GoogleScopeService from '../../../services/auth/google/GoogleScopeService
 import FontSizeEnum from '../../../types/user/view/FontSizeEnum'
 import ColorThemeEnum from '../../../types/user/view/ColorThemeEnum'
 import './styles.css'
+import EssentialContactService from '../../../services/contact/EssentialContactService'
+import ContactService from '../../../services/contact/ContactService'
 
 const Settings: React.FC = () => {
   const alert = useAlert()
@@ -48,7 +50,7 @@ const Settings: React.FC = () => {
 
       if (settings) {
         if (treatments) {
-          const treatment = treatments.find(treatment => treatment.localId === settings.treatmentLocalId)
+          const treatment = treatments.find(treatment => treatment.id === settings.treatmentId)
           if (treatment) {
             updateTreatment(treatment)
           }
@@ -145,10 +147,14 @@ const Settings: React.FC = () => {
       settings.includeEssentialContact = selectedEssentialContactGrant
 
       if (selectedTreatment) {
-        settings.treatmentLocalId = selectedTreatment.localId
+        settings.treatmentId = selectedTreatment.id
       }
 
       UserSettingsService.save(settings)
+
+      ContactService.deleteAllEssentialContacts()
+
+      EssentialContactService.saveUserEssentialContacts(settings)
 
       alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
     } else {

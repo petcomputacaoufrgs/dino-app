@@ -42,7 +42,7 @@ const FirstSettingsDialog: React.FC = () => {
       const settings = await UserSettingsService.getFirst()
 
       if (settings) {
-        const treatment = treatments.find(treatment => treatment.localId === settings.treatmentLocalId)
+        const treatment = treatments.find(treatment => treatment.id === settings.treatmentId)
         if (treatment) {
           updateSelectedTreatment(treatment)
         }
@@ -103,16 +103,13 @@ const FirstSettingsDialog: React.FC = () => {
 
   const saveSettings = () => {
     if (settings) {
-
-      console.log("entrei")
-
       settings.language = selectedLanguage
       settings.colorTheme = selectedColorTheme
       settings.fontSize = selectedFontSize
       settings.includeEssentialContact = selectedEssentialContactGrant
       settings.declineGoogleContacts = false
       settings.firstSettingsDone = true
-      settings.treatmentLocalId = selectedTreatment?.localId
+      settings.treatmentId = selectedTreatment?.id
 
       UserSettingsService.save(settings)
       EssentialContactService.saveUserEssentialContacts(settings)
@@ -176,8 +173,8 @@ const FirstSettingsDialog: React.FC = () => {
   ) => {
     setSelectedTreatment(newSelectedTreatment)
 
-    if (settings && settings.treatmentLocalId !== newSelectedTreatment.localId) {
-      settings.treatmentLocalId = newSelectedTreatment.localId
+    if (settings && settings.treatmentId !== newSelectedTreatment.id) {
+      settings.treatmentId = newSelectedTreatment.id
       UserSettingsService.saveOnlyLocally(settings)
     }
   }

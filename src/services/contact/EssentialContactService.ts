@@ -9,6 +9,8 @@ import EssentialContactEntity from '../../types/contact/database/EssentialContac
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import ContactService from './ContactService'
+import TreatmentService from '../treatment/TreatmentService'
+import { Console } from 'console'
 
 export class EssentialContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -50,33 +52,29 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     return model
   }
 
-  async getAllByContactLocalId(localEssentialContactId: number): Promise<EssentialContactEntity[]> {
-    return this.table.where('localEssentialContactId').equals(localEssentialContactId).toArray()
-  }
-  
-  public saveUserEssentialContacts(settings: UserSettingsEntity) {
 
-    this.table.filter(ec => {
+  
+  public async saveUserEssentialContacts(settings: UserSettingsEntity) {
+
+    const entities = await this.table.filter(ec => {
       const treatmentIds = ec.treatmentIds
 
       const isUniversal = () => treatmentIds === undefined || treatmentIds.length === 0
 
       const isFromUserTreatment = () => { 
-        return settings.includeEssentialContact && 
-        treatmentIds !== undefined && 
-        settings.treatmentLocalId !== undefined && 
-        treatmentIds.includes(settings.treatmentLocalId)
-      }
 
-      console.log(isFromUserTreatment())
+        if(settings.includeEssentialContact && treatmentIds !== undefined && settings.treatmentId !== undefined) {
+            return treatmentIds.includes(settings.treatmentId)
+
+        } return false
+      }
 
       return isUniversal() || isFromUserTreatment()
-    }).toArray().then(
-      entities => {     
-        entities.map(ec => this.convertEntityToContactEntity(ec))
-        ContactService.saveAll(entities)
-      }
-    )
+      
+    }).toArray()
+
+    ContactService.saveAll(entities.map(ec => this.convertEntityToContactEntity(ec)))
+    
   }
 
   private convertEntityToContactEntity(entity: EssentialContactEntity) {

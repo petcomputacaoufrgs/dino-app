@@ -48,7 +48,7 @@ class Database extends Dexie {
     this.version(DATABASE_VERSION).stores({
       userSettings: generateSynchronizableTableString(),
       glossary: generateSynchronizableTableString(),
-      contact: generateSynchronizableTableString(),
+      contact: generateSynchronizableTableString('isEssential'),
       essentialContact: generateSynchronizableTableString(),
       googleContact: generateSynchronizableTableString(),
       phone: generateSynchronizableTableString('localContactId', 'localEssentialContactId'),

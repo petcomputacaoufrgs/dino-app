@@ -6,6 +6,9 @@ import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathServic
 import Database from '../../storage/database/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
 import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
+import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
+import ContactEntity from '../../types/contact/database/ContactEntity'
+import ContactService from './ContactService'
 
 export class EssentialContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -45,7 +48,48 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     }
 
     return model
-  }  
+  }
+
+  async getAllByContactLocalId(localEssentialContactId: number): Promise<EssentialContactEntity[]> {
+    return this.table.where('localEssentialContactId').equals(localEssentialContactId).toArray()
+  }
+  
+  public saveUserEssentialContacts(settings: UserSettingsEntity) {
+
+    this.table.filter(ec => {
+      const treatmentIds = ec.treatmentIds
+
+      const isUniversal = () => treatmentIds === undefined || treatmentIds.length === 0
+
+      const isFromUserTreatment = () => { 
+        return settings.includeEssentialContact && 
+        treatmentIds !== undefined && 
+        settings.treatmentLocalId !== undefined && 
+        treatmentIds.includes(settings.treatmentLocalId)
+      }
+
+      console.log(isFromUserTreatment())
+
+      return isUniversal() || isFromUserTreatment()
+    }).toArray().then(
+      entities => {     
+        entities.map(ec => this.convertEntityToContactEntity(ec))
+        ContactService.saveAll(entities)
+      }
+    )
+  }
+
+  private convertEntityToContactEntity(entity: EssentialContactEntity) {
+    const contactEntity: ContactEntity = {
+      name: entity.name,
+      description: entity.description,
+      color: entity.color,
+      isEssential: true
+    }
+
+    return contactEntity
+  }
+  
 }
 
 export default new EssentialContactServiceImpl()

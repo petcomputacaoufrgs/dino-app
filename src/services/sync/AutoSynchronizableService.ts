@@ -630,10 +630,10 @@ export default abstract class AutoSynchronizableService<
       (entity) => entity.id !== undefined
     )
 
-    const realDeletedItens = await this.dbDeleteAll(partition.selected)
+    const realDeletedItems = await this.dbDeleteAll(partition.selected)
     const deletedItens = await this.dbFakeDeleteAllWithId(partition.notSelected)
 
-    return realDeletedItens + deletedItens > 0
+    return realDeletedItems + deletedItens > 0
   }
 
   private dbFakeDeleteAllWithId = async (entities: ENTITY[]) => {

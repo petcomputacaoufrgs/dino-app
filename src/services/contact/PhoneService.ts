@@ -131,11 +131,11 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
   }
 
   getContactWithSamePhone(
-    itens: ContactView[],
+    items: ContactView[],
     newPhones: PhoneEntity[],
     currentContact?: ContactView
   ): ContactView | undefined {
-    return itens.find(
+    return items.find(
       (item) =>
         (!currentContact ||
           item.contact.localId !== currentContact.contact.localId) &&

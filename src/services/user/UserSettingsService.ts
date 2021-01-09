@@ -203,6 +203,10 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
     return ColorThemeEnum.DEVICE
   }
 
+  getDefaultEssentialContactGrant = () => {
+    return true
+  }
+
   getColorThemeName = (userSettings: UserSettingsEntity): string => {
     if (userSettings) {
       switch (userSettings.colorTheme) {

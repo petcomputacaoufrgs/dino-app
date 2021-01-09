@@ -18,6 +18,7 @@ import TransitionSlide from '../../../components/slide_transition'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import './styles.css'
+import EssentialContactService from '../../../services/contact/EssentialContactService'
 
 const FirstSettingsDialog: React.FC = () => {
   const language = useLanguage()
@@ -31,9 +32,9 @@ const FirstSettingsDialog: React.FC = () => {
 
   const [selectedLanguage, setSelectedLanguage] = useState(language.data.NAVIGATOR_LANGUAGE_CODE)
   const [selectedTreatment, setSelectedTreatment] = useState<TreatmentEntity | undefined>(undefined)
-  const [selectedFontSize, setSelectedFontSize] = useState<number | undefined>(undefined)
-  const [selectedColorTheme, setSelectedColorTheme] = useState<number | undefined>(undefined)
-  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(true)
+  const [selectedFontSize, setSelectedFontSize] = useState(UserSettingsService.getDefaultFontSizeCode())
+  const [selectedColorTheme, setSelectedColorTheme] = useState(UserSettingsService.getDefaultColorThemeCode())
+  const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(UserSettingsService.getDefaultEssentialContactGrant())
 
   useEffect(() => {
     const loadData = async () => {
@@ -63,7 +64,7 @@ const FirstSettingsDialog: React.FC = () => {
       const essentialContactGrant = UserSettingsService.getEssentialContactGrant(settings)
       setSelectedColorTheme(colorThemeCode)
       setSelectedFontSize(fontSizeCode)
-      setSelectedEssentialContactGrant(essentialContactGrant !== undefined ? essentialContactGrant : false)
+      setSelectedEssentialContactGrant(essentialContactGrant || false)
       setSettings(settings)
     }
 
@@ -101,12 +102,10 @@ const FirstSettingsDialog: React.FC = () => {
   }
 
   const saveSettings = () => {
-    if (
-      settings &&
-      selectedLanguage &&
-      selectedColorTheme &&
-      selectedFontSize
-    ) {
+    if (settings) {
+
+      console.log("entrei")
+
       settings.language = selectedLanguage
       settings.colorTheme = selectedColorTheme
       settings.fontSize = selectedFontSize
@@ -116,10 +115,7 @@ const FirstSettingsDialog: React.FC = () => {
       settings.treatmentLocalId = selectedTreatment?.localId
 
       UserSettingsService.save(settings)
-    } else if (settings) {
-      settings.settingsStep = 0
-
-      UserSettingsService.save(settings)
+      EssentialContactService.saveUserEssentialContacts(settings)
     }
   }
 
@@ -135,7 +131,7 @@ const FirstSettingsDialog: React.FC = () => {
 
   const handleBackStep = () => {
     if (settings) {
-      settings.settingsStep = settings.settingsStep - 1
+      settings.settingsStep -= 1
 
       UserSettingsService.save(settings)
     }
@@ -143,10 +139,13 @@ const FirstSettingsDialog: React.FC = () => {
 
   const handleNextStep = () => {
     if (settings) {
-      settings.settingsStep = settings.settingsStep + 1
+
+      settings.settingsStep += 1
 
       UserSettingsService.save(settings)
+
     } else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
+
       const newEntity: UserSettingsEntity = {
         language: selectedLanguage,
         fontSize: selectedFontSize,
@@ -156,6 +155,7 @@ const FirstSettingsDialog: React.FC = () => {
         firstSettingsDone: false,
         settingsStep: 1,
       }
+
       UserSettingsService.save(newEntity)
     }
   }

@@ -9,6 +9,8 @@ import EssentialContactEntity from '../../types/contact/database/EssentialContac
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import ContactService from './ContactService'
+import PhoneService from './PhoneService'
+import PhoneEntity from '../../types/contact/database/PhoneEntity'
 
 export class EssentialContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -50,8 +52,6 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     return model
   }
 
-
-  
   public async saveUserEssentialContacts(settings: UserSettingsEntity) {
 
     const entities = await this.table.filter(ec => {
@@ -61,8 +61,8 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
 
       const isFromUserTreatment = () => { 
 
-        if(settings.includeEssentialContact && treatmentIds !== undefined && settings.treatmentId !== undefined) {
-            return treatmentIds.includes(settings.treatmentId)
+        if(settings.includeEssentialContact) {
+            return treatmentIds!.includes(settings.treatmentId!)
 
         } return false
       }
@@ -71,7 +71,24 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
       
     }).toArray()
 
-    ContactService.saveAll(entities.map(ec => this.convertEntityToContactEntity(ec)))
+    entities.forEach(async ec => { 
+      const savedContact = await ContactService.save(this.convertEntityToContactEntity(ec))
+      if(savedContact) {
+        savePhonesFromEssentialContact(ec, savedContact)
+      }
+    })
+
+    const savePhonesFromEssentialContact = async (ec: EssentialContactEntity, c: ContactEntity) => {
+      const phones = await PhoneService.getAllByEssentialContactLocalId(ec.localId!)
+      const newContactPhones: PhoneEntity[] = phones.map(p => {
+        return {
+          localContactId: c.localId,
+          number: p.number,
+          type: p.type,
+        }
+      })
+      await PhoneService.saveAll(newContactPhones)
+    }
     
   }
 

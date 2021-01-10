@@ -8,9 +8,9 @@ import TextButton from '../../../../../components/button/text_button'
 import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
-const ContactFormDialogContent = (
+const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
   props: ContactFormDialogContentProps
-): JSX.Element => {
+) => {
   const language = useLanguage()
 
   const isNumberTaken = (tel: string): boolean =>
@@ -70,6 +70,7 @@ const ContactFormDialogContent = (
           {language.data.FORM_ADD_PHONE}
         </Typography>
       </TextButton>
+      {props.children}
     </div>
   )
 }

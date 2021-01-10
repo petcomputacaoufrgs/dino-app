@@ -18,6 +18,9 @@ import ContactService from '../../../../services/contact/ContactService'
 import PhoneService from '../../../../services/contact/PhoneService'
 import GoogleContactService from '../../../../services/contact/GoogleContactService'
 import './styles.css'
+import EssentialContactService from '../../../../services/contact/EssentialContactService'
+import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
+import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
   return item ? item.contact : {
@@ -28,7 +31,10 @@ const getContact = (item: ContactView | undefined): ContactEntity => {
 }
 
 const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
-  return item ? item.phones : []
+  return item ? item.phones : [{
+        number: '',
+        type: ContactsConstants.MOBILE,
+      }]
 }
 
 const ContactFormDialog = React.forwardRef(
@@ -41,7 +47,7 @@ const ContactFormDialog = React.forwardRef(
       items,
     }: ContactFormDialogProps,
     ref: React.Ref<unknown>
-  ): JSX.Element => {
+  ) => {
     const language = useLanguage()
     const [contact, setContact] = useState(getContact(item))
     const [contactPhones, setContactPhones] = useState(getPhones(item))
@@ -49,21 +55,22 @@ const ContactFormDialog = React.forwardRef(
     const [invalidName, setInvalidName] = useState(false)
     const [invalidPhone, setInvalidPhone] = useState({number: '', text: ''})
 
+    const [selectedTreatmentIds, setSelectedTreatmentIds] = React.useState<number[]>([]);
+
+
     useEffect(() => {
       if (dialogOpen) {
         setContact(getContact(item))
         setContactPhones(getPhones(item))
         setInvalidName(false)
-        setInvalidPhone({
-          number: '',
-          text: '',
-        })
+        setInvalidPhone({number: 'dummy text', text: ''})
       }
     }, [dialogOpen, item])
 
     const handleSave = (): void => {
       function validInfo(): string {
         setInvalidName(StringUtils.isEmpty(contact.name))
+        setInvalidPhone({number: '', text: ''})
         return contact.name
       }
 
@@ -93,6 +100,37 @@ const ContactFormDialog = React.forwardRef(
     }
 
     const saveContact = async () => {
+
+      async function savePhones(contact: ContactEntity) {
+
+        const newPhones = contactPhones.filter((phone) => phone.number !== '')
+
+          newPhones.forEach((phone) => (phone.localContactId = contact.localId))
+          await saveGoogleContact(contact)
+
+        if (newPhones.length > 0) {
+          await PhoneService.saveAll(newPhones)
+        }
+  
+        if (phonesToDelete.length > 0) {
+          await PhoneService.deleteAll(phonesToDelete)
+        }
+  
+      }
+
+      async function saveGoogleContact(contact: ContactEntity) {
+        
+        if (item && item.googleContact) {
+          await GoogleContactService.save(item.googleContact)
+        } else {
+          const googleContact: GoogleContactEntity = {
+            localContactId: contact.localId
+          }
+  
+          await GoogleContactService.save(googleContact)
+        }
+      }
+
       if (action === ContactsConstants.ACTION_EDIT) {
         if (item && Utils.isNotEmpty(item.contact.localId)) {
           await ContactService.save(contact)
@@ -104,32 +142,18 @@ const ContactFormDialog = React.forwardRef(
         if (savedContact) {
           await savePhones(savedContact)
         }
-      }
-    }
-
-    const savePhones = async (contact: ContactEntity) => {
-      const newPhones = contactPhones.filter((phone) => phone.number !== '')
-      newPhones.forEach((phone) => (phone.localContactId = contact.localId))
-      if (newPhones.length > 0) {
-        await PhoneService.saveAll(newPhones)
-      }
-
-      if (phonesToDelete.length > 0) {
-        await PhoneService.deleteAll(phonesToDelete)
-      }
-
-      await saveGoogleContact(contact)
-    }
-
-    const saveGoogleContact = async (contact: ContactEntity) => {
-      if (item && item.googleContact) {
-        await GoogleContactService.save(item.googleContact)
-      } else {
-        const googleContact: GoogleContactEntity = {
-          localContactId: contact.localId
+      } else if (action === ContactsConstants.ACTION_ADD_ESSENTIAL) {
+        const newEssentialContact: EssentialContactEntity = {
+          ...contact, 
+          treatmentIds: selectedTreatmentIds
         }
+        const savedEssentialContact = await EssentialContactService.save(newEssentialContact)
 
-        await GoogleContactService.save(googleContact)
+        if (savedEssentialContact) {
+          const newPhones = contactPhones.filter((phone) => phone.number !== '')
+          newPhones.forEach((phone) => (phone.localEssentialContactId = savedEssentialContact.localId))
+          await PhoneService.saveAll(newPhones)
+        }
       }
     }
 
@@ -196,6 +220,7 @@ const ContactFormDialog = React.forwardRef(
           fullWidth
           onClose={onClose}
           TransitionComponent={TransitionSlide}
+          disableBackdropClick
         >
           <ContactFormDialogHeader
             action={action}
@@ -207,7 +232,7 @@ const ContactFormDialog = React.forwardRef(
           <DialogContent dividers>
             <ContactFormDialogContent
               name={contact.name}
-              description={contact.description ? contact.description : ''}
+              description={contact.description || ''}
               phones={contactPhones}
               helperText={invalidPhone}
               invalidName={invalidName}
@@ -217,7 +242,15 @@ const ContactFormDialog = React.forwardRef(
               handleChangeNumber={handleChangeNumber}
               handleDeletePhone={handleDeletePhone}
               handleAddPhone={handleAddPhone}
-            />
+            >
+              {
+                action === ContactsConstants.ACTION_ADD_ESSENTIAL ?
+                <SelectMultipleTreatments 
+                  selectedIds={selectedTreatmentIds}
+                  setSelectedIds={setSelectedTreatmentIds}
+                /> : <></>
+              }
+            </ContactFormDialogContent>
           </DialogContent>
           <DialogActions>
             <Button onClick={onClose}>

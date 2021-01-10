@@ -28,6 +28,7 @@ const Contacts: React.FC = () => {
 
   const [openGrantDialog, setOpenGrantDialog] = useState(false)
   const [add, setAdd] = useState(false)
+  const [addEssential, setAddEssential] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [shouldDecline, setShouldDecline] = useState(false)
 
@@ -130,6 +131,9 @@ const Contacts: React.FC = () => {
 
     setAdd(true)
   }
+  const handleAddEssentialContact = () => {
+    setAddEssential(true)
+  }
 
   const handleClose = () => {
     setAdd(false)
@@ -137,6 +141,10 @@ const Contacts: React.FC = () => {
       settings.declineGoogleContacts = true
       UserSettingsService.save(settings)
     }
+  }
+
+  const handleCloseEssential = () => {
+    setAddEssential(false)
   }
 
   return (
@@ -159,12 +167,24 @@ const Contacts: React.FC = () => {
           icon={AddIconSVG}
           onClick={handleAddContact}
         />
+        <CircularButton
+          ariaLabel={language.data.CONTACTS_ADD_CONTACT + ' (Essential)'}
+          className="add_essential_contact_button"
+          icon={AddIconSVG}
+          onClick={handleAddEssentialContact}
+        />
       </Loader>
       <ContactFormDialog
         items={contacts}
         action={Contants.ACTION_ADD}
         dialogOpen={add}
         onClose={handleClose}
+      />
+      <ContactFormDialog
+        items={contacts}
+        action={Contants.ACTION_ADD_ESSENTIAL}
+        dialogOpen={addEssential}
+        onClose={handleCloseEssential}
       />
       <GoogleGrantDialog
         onAccept={handleAcceptGoogleGrant}

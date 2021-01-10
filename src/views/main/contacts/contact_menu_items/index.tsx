@@ -12,7 +12,10 @@ const ContactMenuItems = ({ anchor, setAnchor, item, onEdit, onDelete, onCloseDi
   }
 
   const renderEditMenuItem = () => {
-    if(item.contact.isEssential === 1) {
+
+    const isNotEssential = !Boolean(item.contact.isEssential)
+
+    if(isNotEssential) {
       return (
         <MenuItem onClick={handleEdit}>
           {language.data.EDIT_OPTION_TEXT}

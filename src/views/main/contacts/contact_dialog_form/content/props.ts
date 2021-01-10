@@ -1,6 +1,8 @@
+import { ReactNode } from 'react'
 import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 
 export interface ContactFormDialogContentProps {
+  children: ReactNode
   name: string
   description: string
   phones: PhoneEntity[]

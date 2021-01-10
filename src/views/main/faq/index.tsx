@@ -169,7 +169,7 @@ const Faq: React.FC = () => {
           <div className='faq__fail_to_load'>
             <h2>{language.data.NO_TREATMENT_SELECTED}</h2>
             <SelectTreatment
-              availableTreatments={treatments ? treatments : []}
+              availableTreatments={treatments || []}
               setTreatment={setSelectedTreatment}
               treatment={selectedTreatment}
             />

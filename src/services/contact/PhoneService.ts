@@ -94,6 +94,10 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
     return this.table.where('localContactId').equals(localContactId).toArray()
   }
 
+  async getAllByEssentialContactLocalId(localEssentialContactId: number): Promise<PhoneEntity[]> {
+    return this.table.where('localEssentialContactId').equals(localEssentialContactId).toArray()
+  }
+
   getPhoneTypes = (
     phones: Array<PhoneEntity>,
     language: LanguageBase

@@ -1,4 +1,3 @@
-import SynchronizableDataModel from '../../sync/api/SynchronizableDataModel'
 import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLocalIdModel'
 
 export default interface GlossaryItemDataModel

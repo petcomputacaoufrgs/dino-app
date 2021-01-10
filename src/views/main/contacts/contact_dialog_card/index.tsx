@@ -4,18 +4,20 @@ import ContactCardProps from './props'
 import ContactCardHeader from './header'
 import ContactCardContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
+import ContactMenuItems from '../contact_menu_items'
 
 const ContactCard = forwardRef(
   (
-    {
-      item,
-      dialogOpen,
-      onClose,
-      onEdit,
-      onDelete,
-    }: ContactCardProps,
+    { item, dialogOpen, onClose, onEdit, onDelete }: ContactCardProps,
     ref: React.Ref<unknown>
   ): JSX.Element => {
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget)
+    }
+
     return (
       <Dialog
         ref={ref}
@@ -28,10 +30,17 @@ const ContactCard = forwardRef(
       >
         <ContactCardHeader
           item={item!}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          onClose={onClose}
-        />
+          onClick={handleClick}
+        >
+          <ContactMenuItems
+            anchor={anchorEl}
+            setAnchor={setAnchorEl}
+            item={item!}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onCloseDialog={onClose}
+          />
+        </ContactCardHeader>
         <ContactCardContent item={item!} />
       </Dialog>
     )

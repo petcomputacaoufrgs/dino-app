@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ContactItemListProps from './props'
 import {
   Avatar,
@@ -6,48 +6,33 @@ import {
   ListItemText,
   ListItemAvatar,
   ListItemSecondaryAction,
-  Menu,
-  MenuItem,
 } from '@material-ui/core'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import { Star } from '@material-ui/icons'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
 import './styles.css'
+import ContactMenuItems from '../contact_menu_items'
 
 const ContactItemList: React.FC<ContactItemListProps> = ({
   item,
+  onClick,
   onEdit,
   onDelete,
-  onClick,
+  onCloseDialog
 }) => {
   const language = useLanguage()
+
   const handleOpen = () => onClick(item.contact.localId!)
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
-    setAnchorEl(event.currentTarget)
-
-  const handleClose = () => setAnchorEl(null)
-
-  const handleEdit = () => {
-    onEdit(item)
-    handleClose()
-  }
-  const handleDelete = () => {
-    onDelete(item)
-    handleClose()
-  }
 
   const isEssential = () => item.contact.isEssential === 1
 
-  const renderEditMenuItem = () => {
-    return isEssential() ? <></> : 
-    <MenuItem onClick={handleEdit}>
-      {language.data.EDIT_OPTION_TEXT}
-    </MenuItem> 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
   }
+
 
   return (
     <div className="contacts__list__item">
@@ -69,12 +54,14 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
           <OptionsIconButton dark onClick={handleClick} />
         </ListItemSecondaryAction>
       </ListItem>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {renderEditMenuItem()}
-        <MenuItem onClick={handleDelete}>
-          {language.data.DELETE_OPTION_TEXT}
-        </MenuItem>
-      </Menu>
+      <ContactMenuItems
+        anchor={anchorEl}
+        setAnchor={setAnchorEl}
+        item={item}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        onCloseDialog={onCloseDialog}
+      />
     </div>
   )
 }

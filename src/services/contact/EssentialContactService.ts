@@ -9,8 +9,6 @@ import EssentialContactEntity from '../../types/contact/database/EssentialContac
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import ContactService from './ContactService'
-import TreatmentService from '../treatment/TreatmentService'
-import { Console } from 'console'
 
 export class EssentialContactServiceImpl extends AutoSynchronizableService<
   number,

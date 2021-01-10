@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
+import { Avatar, CardHeader } from '@material-ui/core'
 import ContactCardHeaderProps from './props'
 import { Star } from '@material-ui/icons'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
@@ -8,48 +8,14 @@ import PhoneService from '../../../../../services/contact/PhoneService'
 import '../../styles.css'
 import './styles.css'
 
-const ContactCardHeader = ({
+const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({
   item,
-  onEdit,
-  onDelete,
-  onClose: handleCloseDialog,
-}: ContactCardHeaderProps) => {
+  onClick,
+  children
+}) => {
   const language = useLanguage()
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null)
-  }
-
-  const handleEdit = () => {
-    handleCloseMenu()
-    handleCloseDialog()
-    setTimeout(() => {
-      onEdit(item)
-    }, 300)
-  }
-
-  const handleDelete = () => {
-    handleCloseMenu()
-    handleCloseDialog()
-    setTimeout(() => {
-      onDelete(item)
-    }, 300)
-  }
-
   const isEssential = () => item.contact.isEssential === 1
-
-  const renderEditMenuItem = () => {
-    return isEssential() ? <></> : 
-    <MenuItem onClick={handleEdit}>
-      {language.data.EDIT_OPTION_TEXT}
-    </MenuItem> 
-  }
 
   return (
     <>
@@ -65,23 +31,14 @@ const ContactCardHeader = ({
         action={
           <>
             {isEssential() ? <Star /> : <></>}
-            <OptionsIconButton dark onClick={handleClick} />
+            <OptionsIconButton dark onClick={onClick} />
           </>
         }
         title={item.contact.name}
         subheader={PhoneService.getPhoneTypes(item.phones, language.data)}
         className="contact_dialog_content_header"
       />
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
-      >
-        {renderEditMenuItem()}
-        <MenuItem onClick={handleDelete}>
-          {language.data.DELETE_OPTION_TEXT}
-        </MenuItem>
-      </Menu>
+      {children}
     </>
   )
 }

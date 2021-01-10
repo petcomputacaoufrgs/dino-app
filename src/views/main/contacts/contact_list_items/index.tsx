@@ -15,15 +15,9 @@ import GoogleContactService from '../../../../services/contact/GoogleContactServ
 const ContactItems: React.FC<ContactItemsProps> = ({
   items,
 }) => {
-  const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(
-    undefined
-  )
-  const [contactToView, setContactToView] = useState<ContactView | undefined>(
-    undefined
-  )
-  const [contactToDelete, setContactToDelete] = useState<
-    ContactView | undefined
-  >(undefined)
+  const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(undefined)
+  const [contactToView, setContactToView] = useState<ContactView | undefined>(undefined)
+  const [contactToDelete, setContactToDelete] = useState<ContactView | undefined>(undefined)
 
   const language = useLanguage()
 
@@ -46,6 +40,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({
     setContactToDelete(undefined)
   }
 
+
   return (
     <>
       <List className="contacts__list">
@@ -53,9 +48,10 @@ const ContactItems: React.FC<ContactItemsProps> = ({
           <ContactItemList
             key={index}
             item={item}
+            onClick={() => handleOpenCard(index)}
             onEdit={setContactToEdit}
             onDelete={setContactToDelete}
-            onClick={() => handleOpenCard(index)}
+            onCloseDialog={() => setContactToView(undefined)}
           />
         ))}
       </List>

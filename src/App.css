@@ -67,3 +67,7 @@ body .MuiInput-underline:before {
 .MuiAutocomplete-popper {
   background-color: var(--other-details);
 }
+
+.MuiCardHeader-action button.button.icon_button {
+  margin: 0px 2px;
+}

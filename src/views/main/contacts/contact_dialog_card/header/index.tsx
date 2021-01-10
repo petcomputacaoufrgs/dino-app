@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
 import ContactCardHeaderProps from './props'
-import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
+import { Star } from '@material-ui/icons'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import { useLanguage } from '../../../../../context/language'
 import PhoneService from '../../../../../services/contact/PhoneService'
@@ -42,6 +42,15 @@ const ContactCardHeader = ({
     }, 300)
   }
 
+  const isEssential = () => item.contact.isEssential === 1
+
+  const renderEditMenuItem = () => {
+    return isEssential() ? <></> : 
+    <MenuItem onClick={handleEdit}>
+      {language.data.EDIT_OPTION_TEXT}
+    </MenuItem> 
+  }
+
   return (
     <>
       <CardHeader
@@ -55,8 +64,8 @@ const ContactCardHeader = ({
         }
         action={
           <>
+            {isEssential() ? <Star /> : <></>}
             <OptionsIconButton dark onClick={handleClick} />
-            <CloseIconButton dark onClose={handleCloseDialog} />
           </>
         }
         title={item.contact.name}
@@ -68,7 +77,7 @@ const ContactCardHeader = ({
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleEdit}>{language.data.EDIT_OPTION_TEXT}</MenuItem>
+        {renderEditMenuItem()}
         <MenuItem onClick={handleDelete}>
           {language.data.DELETE_OPTION_TEXT}
         </MenuItem>

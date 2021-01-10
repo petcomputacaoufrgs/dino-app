@@ -82,7 +82,7 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
       name: entity.name,
       description: entity.description,
       color: entity.color,
-      isEssential: true
+      isEssential: 1
     }
 
     return contactEntity

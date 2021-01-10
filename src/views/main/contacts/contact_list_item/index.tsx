@@ -10,6 +10,7 @@ import {
   MenuItem,
 } from '@material-ui/core'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
+import { Star } from '@material-ui/icons'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
 import './styles.css'
@@ -39,6 +40,15 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
     handleClose()
   }
 
+  const isEssential = () => item.contact.isEssential === 1
+
+  const renderEditMenuItem = () => {
+    return isEssential() ? <></> : 
+    <MenuItem onClick={handleEdit}>
+      {language.data.EDIT_OPTION_TEXT}
+    </MenuItem> 
+  }
+
   return (
     <div className="contacts__list__item">
       <ListItem button divider onClick={handleOpen}>
@@ -55,11 +65,12 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
           secondary={PhoneService.getPhoneTypes(item.phones, language.data)}
         />
         <ListItemSecondaryAction>
+          {isEssential() ? <Star /> : <></>}
           <OptionsIconButton dark onClick={handleClick} />
         </ListItemSecondaryAction>
       </ListItem>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem onClick={handleEdit}>{language.data.EDIT_OPTION_TEXT}</MenuItem>
+        {renderEditMenuItem()}
         <MenuItem onClick={handleDelete}>
           {language.data.DELETE_OPTION_TEXT}
         </MenuItem>

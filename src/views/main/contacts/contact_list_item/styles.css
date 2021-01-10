@@ -4,3 +4,7 @@
   overflow: hidden;
   text-align: justify;
 }
+
+.MuiListItemSecondaryAction-root {
+  display: flex;
+}

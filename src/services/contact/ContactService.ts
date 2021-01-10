@@ -79,7 +79,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
   }
 
   async deleteAllEssentialContacts() {
-    await this.deleteAll(await this.table.where('isEssential').equals('true').toArray())
+    await this.deleteAll(await this.table.where('isEssential').equals(1).toArray())
   }
 }
 

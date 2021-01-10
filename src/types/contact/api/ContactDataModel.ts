@@ -5,5 +5,5 @@ export default interface ContactDataModel
   name: string
   description?: string
   color?: number
-  isEssential?: boolean
+  isEssential?: 0 | 1
 }

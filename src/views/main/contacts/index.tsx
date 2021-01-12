@@ -39,20 +39,16 @@ const Contacts: React.FC = () => {
       const settings = await UserSettingsService.getFirst()
       const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
       const contacts  = await ContactService.getAll()
-      
-      if (contacts.length > 0) {
-        const phones = await PhoneService.getAll()
-        const googleContacts = await GoogleContactService.getAll()
+      const phones = await PhoneService.getAll()
+      const googleContacts = await GoogleContactService.getAll()
 
-        const contactViews = ContactService.getContactViews(
-          contacts,
-          phones,
-          googleContacts
-        )
+      const contactViews = ContactService.getContactViews(
+        contacts,
+        phones,
+        googleContacts
+      )
 
-        updateContacts(contactViews)
-      }
-
+      updateContacts(contactViews)
       updateSyncGoogleContacts(syncGoogleContacts)
       updateSettings(settings)
       finishLoading()

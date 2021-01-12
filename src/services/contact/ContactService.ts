@@ -12,6 +12,8 @@ import PhoneService from './PhoneService'
 import GoogleContactService from './GoogleContactService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/database/Database'
+import EssentialContactService from './EssentialContactService'
+import Utils from '../../utils/Utils'
 
 export class ContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -28,14 +30,23 @@ export class ContactServiceImpl extends AutoSynchronizableService<
   }
 
   getSyncDependencies(): SynchronizableService[] {
-    return []
+    return [EssentialContactService]
   }
 
   async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
     const entity: ContactEntity = {
       name: model.name,
       description: model.description,
-      color: model.color,
+      color: model.color
+    }
+
+    
+    if (Utils.isNotEmpty(model.essentialContactId)) {
+      const essentialContact = await EssentialContactService.getById(model.essentialContactId!)
+
+      if (essentialContact) {
+        entity.localEssentialContactId = essentialContact.localId
+      }
     }
 
     return entity
@@ -45,10 +56,34 @@ export class ContactServiceImpl extends AutoSynchronizableService<
     const model: ContactDataModel = {
       name: entity.name,
       description: entity.description,
-      color: entity.color,
+      color: entity.color
+    }
+
+    if (Utils.isNotEmpty(entity.localEssentialContactId)) {
+      const essentialContact = await EssentialContactService.getByLocalId(entity.localEssentialContactId!)
+
+      if (essentialContact) {
+        model.essentialContactId = essentialContact.id
+      }
     }
 
     return model
+  }
+
+  async getAllDerivatedFromEssential(): Promise<ContactEntity[]> {
+    return this.table.where('localEssentialContactId').aboveOrEqual(0).toArray()
+  }
+
+  async deleteUserEssentialContacts() {
+    const contacts = await this.getAllDerivatedFromEssential()
+
+    const phoneDeletePromises = contacts.map(contact => {
+      return PhoneService.deleteByContact(contact)
+    })
+  
+    await Promise.all(phoneDeletePromises)
+  
+    await this.deleteAll(contacts)
   }
 
   getContactViews(
@@ -60,7 +95,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
       (contact) =>
         ({
           contact: contact,
-          phones: PhoneService.getByContact(contact, phones),
+          phones: PhoneService.filterByContact(contact, phones),
           googleContact: GoogleContactService.getByContact(
             contact,
             googleContacts
@@ -76,10 +111,6 @@ export class ContactServiceImpl extends AutoSynchronizableService<
     return contacts.filter((item) =>
       StringUtils.contains(item.contact.name, searchTerm)
     )
-  }
-
-  async deleteAllEssentialContacts() {
-    await this.deleteAll(await this.table.where('isEssential').equals(1).toArray())
   }
 }
 

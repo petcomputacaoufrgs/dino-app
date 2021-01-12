@@ -2,7 +2,6 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/database/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
 import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
@@ -11,6 +10,9 @@ import ContactEntity from '../../types/contact/database/ContactEntity'
 import ContactService from './ContactService'
 import PhoneService from './PhoneService'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
+import TreatmentService from '../treatment/TreatmentService'
+import Utils from '../../utils/Utils'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 
 export class EssentialContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -21,13 +23,13 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     super(
       Database.essentialContact, 
       APIRequestMappingConstants.ESSENTIAL_CONTACT,
-      WebSocketQueueURLService,
+      WebSocketTopicPathService,
       APIWebSocketDestConstants.ESSENTIAL_CONTACT
     )
   }
 
   getSyncDependencies(): SynchronizableService[] {
-    return []
+    return [TreatmentService]
   }
 
   async convertModelToEntity(model: EssentialContactDataModel): Promise<EssentialContactEntity> {
@@ -35,7 +37,17 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
       name: model.name,
       description: model.description,
       color: model.color,
-      treatmentIds: model.treatmentIds
+      isUniversal: 1
+    }
+
+    if (model.treatmentIds) {
+      const treatments = await TreatmentService.getAllByIds(model.treatmentIds)
+      const treatmentLocalIds = treatments.filter(treatment => Utils.isNotEmpty(treatment.localId)).map(treatment => treatment.localId!)
+      
+      if (treatmentLocalIds.length > 0) {
+        entity.isUniversal = 0
+        entity.treatmentLocalIds = treatmentLocalIds
+      }
     }
 
     return entity
@@ -45,51 +57,59 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     const model: EssentialContactDataModel = {
       name: entity.name,
       description: entity.description,
-      color: entity.color,
-      treatmentIds: entity.treatmentIds
+      color: entity.color
+    }
+
+    if (entity.treatmentLocalIds) {
+      const treatments = await TreatmentService.getAllByLocalIds(entity.treatmentLocalIds)
+      model.treatmentIds = treatments.filter(treatment => Utils.isNotEmpty(treatment.id)).map(treatment => treatment.id!)
     }
 
     return model
   }
 
+  private async getUniversalEssentialContacts(): Promise<EssentialContactEntity[]> {
+    return this.table.where('isUniversal').equals(1).toArray()
+  }
+
+  private async getTreatmentEssentialContacts(settings: UserSettingsEntity): Promise<EssentialContactEntity[]> {
+    if (Utils.isNotEmpty(settings.treatmentLocalId)) {
+      return this.table.where('treatmentLocalIds').equals(settings.treatmentLocalId!).toArray()
+    } else return []
+  }
+
   public async saveUserEssentialContacts(settings: UserSettingsEntity) {
+    const essentialContacts: EssentialContactEntity[] = [] 
 
-    const entities = await this.table.filter(ec => {
-      const treatmentIds = ec.treatmentIds
+    const universalContactsPromise = this.getUniversalEssentialContacts()
+    const treatmentContactPromise = this.getTreatmentEssentialContacts(settings)
+    const results = await Promise.all([universalContactsPromise, treatmentContactPromise])
+    essentialContacts.push(...results[0], ...results[1])
 
-      const isUniversal = () => treatmentIds === undefined || treatmentIds.length === 0
-
-      const isFromUserTreatment = () => { 
-
-        if(settings.includeEssentialContact) {
-            return treatmentIds!.includes(settings.treatmentId!)
-
-        } return false
-      }
-
-      return isUniversal() || isFromUserTreatment()
-      
-    }).toArray()
-
-    entities.forEach(async ec => { 
+    //TODO: Estudar possibilidade de uma saveAll em contatos também
+    essentialContacts.forEach(async ec => { 
       const savedContact = await ContactService.save(this.convertEntityToContactEntity(ec))
-      if(savedContact) {
-        savePhonesFromEssentialContact(ec, savedContact)
-      }
+        if(savedContact) {
+          savePhonesFromEssentialContact(ec, savedContact)
+        }
     })
 
     const savePhonesFromEssentialContact = async (ec: EssentialContactEntity, c: ContactEntity) => {
-      const phones = await PhoneService.getAllByEssentialContactLocalId(ec.localId!)
-      const newContactPhones: PhoneEntity[] = phones.map(p => {
-        return {
-          localContactId: c.localId,
-          number: p.number,
-          type: p.type,
+      if (ec.localId) {
+        const phones = await PhoneService.getAllByEssentialContactLocalId(ec.localId)
+        if (phones.length > 0) {
+          const newContactPhones: PhoneEntity[] = phones.map(p => {
+            return {
+              localContactId: c.localId,
+              number: p.number,
+              type: p.type,
+              originalEssentialPhoneId: ec.id
+            }
+          })
+          await PhoneService.saveAll(newContactPhones)
         }
-      })
-      await PhoneService.saveAll(newContactPhones)
+      }
     }
-    
   }
 
   private convertEntityToContactEntity(entity: EssentialContactEntity) {
@@ -97,7 +117,7 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
       name: entity.name,
       description: entity.description,
       color: entity.color,
-      isEssential: 1
+      localEssentialContactId: entity.localId
     }
 
     return contactEntity

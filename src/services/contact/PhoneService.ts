@@ -13,6 +13,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/database/Database'
 import EssentialContactService from './EssentialContactService'
+import Utils from '../../utils/Utils'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
   number,
@@ -29,65 +30,65 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
   }
 
   getSyncDependencies(): SynchronizableService[] {
-    return [ContactService]
+    return [ContactService, EssentialContactService]
   }
 
   async convertModelToEntity(
     model: PhoneDataModel
   ): Promise<PhoneEntity | undefined> {
+    const entity: PhoneEntity = {
+      number: model.number,
+      type: model.type
+    }
 
-    let contactId = model.contactId
-    let essentialContactId = model.essentialContactId
+    const contactId = model.contactId
+    const essentialContactId = model.essentialContactId
+    if(Utils.isNotEmpty(contactId)) {
+      const contact = await ContactService.getById(contactId!)
+      entity.localContactId = contact?.localId
 
-    if(contactId) {
+      if (Utils.isNotEmpty(model.originalEssentialPhoneId)) {
+        const originalEPhone = await this.getById(model.originalEssentialPhoneId!)
 
-      const contact = await ContactService.getById(contactId)
-      contactId = contact?.localId
-      
-    } else if(essentialContactId) {
-
-      const essentialContact = await EssentialContactService.getById(essentialContactId)
-      essentialContactId = essentialContact?.localId
-
-    } else return;
-
-      const entity: PhoneEntity = {
-        number: model.number,
-        type: model.type,
-        localContactId: contactId,
-        localEssentialContactId: essentialContactId,
+        if (originalEPhone) {
+          entity.localOriginalEssentialPhoneId = originalEPhone.localId
+        }
       }
+    } else if(Utils.isNotEmpty(essentialContactId)) {
+      const essentialContact = await EssentialContactService.getById(essentialContactId!)
+      entity.localEssentialContactId = essentialContact?.localId
+    } else return
 
-      return entity
+    return entity
   }
 
   async convertEntityToModel(
     entity: PhoneEntity
   ): Promise<PhoneDataModel | undefined> {
-    
-    let localContactId = entity.localContactId
-    let localEssentialContactId = entity.localEssentialContactId
-
-    if (localContactId) {
-
-      const contact = await ContactService.getByLocalId(localContactId)
-      localContactId = contact?.localId
-
-    } else if (localEssentialContactId) {
-
-      const essentialContact = await EssentialContactService.getByLocalId(localEssentialContactId)
-      localEssentialContactId = essentialContact?.localId
-
-    } else return;
-
     const model: PhoneDataModel = {
       number: entity.number,
       type: entity.type,
-      contactId: localContactId,
-      essentialContactId: localEssentialContactId,
     }
 
-      return model
+    const localContactId = entity.localContactId
+    const localEssentialContactId = entity.localEssentialContactId
+
+    if (Utils.isNotEmpty(localContactId)) {
+      const contact = await ContactService.getByLocalId(localContactId!)
+      model.contactId = contact?.id
+      if (Utils.isNotEmpty(entity.localOriginalEssentialPhoneId)) {
+        const originalEPhone = await this.getByLocalId(entity.localOriginalEssentialPhoneId!)
+
+        if (originalEPhone) {
+          model.originalEssentialPhoneId = originalEPhone.id
+        }
+      }
+    } else if (Utils.isNotEmpty(localEssentialContactId)) {
+      const essentialContact = await EssentialContactService.getByLocalId(localEssentialContactId!)
+      model.essentialContactId = essentialContact?.id
+    } else return
+
+    return model
   }
 
   async getAllByContactLocalId(localContactId: number): Promise<PhoneEntity[]> {
@@ -125,7 +126,17 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
     }
   }
 
-  getByContact(
+  async deleteByContact(
+    contact: ContactEntity
+  ): Promise<void> {
+    if (Utils.isNotEmpty(contact.localId)) {
+      const phones = await this.table.where('localContactId').equals(contact.localId!).toArray()
+
+      await this.deleteAll(phones)
+    }
+  }
+
+  filterByContact(
     contact: ContactEntity,
     phones: PhoneEntity[]
   ): PhoneEntity[] | undefined {

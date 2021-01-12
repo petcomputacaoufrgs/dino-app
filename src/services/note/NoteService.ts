@@ -11,6 +11,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
+import Utils from '../../utils/Utils'
 
 export class NoteServiceImpl extends AutoSynchronizableService<
   number,
@@ -109,7 +110,7 @@ export class NoteServiceImpl extends AutoSynchronizableService<
   }
 
   async deleteNotesByColumn(column: NoteColumnEntity) {
-    if (column.localId !== undefined) {
+    if (Utils.isNotEmpty(column.localId)) {
       const notes = await this.getAllByColumn(column)
       await this.deleteAll(notes)
     }
@@ -118,8 +119,8 @@ export class NoteServiceImpl extends AutoSynchronizableService<
   private async getAllByColumn(
     column: NoteColumnEntity
   ): Promise<NoteEntity[]> {
-    if (column.localId !== undefined) {
-      return this.table.where('localColumnId').equals(column.localId).toArray()
+    if (Utils.isNotEmpty(column.localId)) {
+      return this.table.where('localColumnId').equals(column.localId!).toArray()
     }
 
     return []

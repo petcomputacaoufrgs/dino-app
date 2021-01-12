@@ -5,9 +5,9 @@ import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import Constants from '../../../../../constants/contact/ContactsConstants'
 import { useLanguage } from '../../../../../context/language'
+import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import '../../styles.css'
 import './styles.css'
-import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 
 const AddContactDialogHeader = (
   props: ContactFormDialogHeaderProps

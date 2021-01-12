@@ -18,7 +18,7 @@ import Calendar from './calendar'
 import AboutUs from './about'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
-import FirstSettingsDialog from './first_settings_dialog'
+import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
 import Loader from '../../components/loader/index'
 
 const Main = () => {

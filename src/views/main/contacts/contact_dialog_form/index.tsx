@@ -17,16 +17,16 @@ import GoogleContactEntity from '../../../../types/contact/database/GoogleContac
 import ContactService from '../../../../services/contact/ContactService'
 import PhoneService from '../../../../services/contact/PhoneService'
 import GoogleContactService from '../../../../services/contact/GoogleContactService'
-import './styles.css'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
+import './styles.css'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
   return item ? item.contact : {
       name: '',
       description: '',
-      color: undefined,
+      color: undefined
     }
 }
 
@@ -54,9 +54,7 @@ const ContactFormDialog = React.forwardRef(
     const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
     const [invalidName, setInvalidName] = useState(false)
     const [invalidPhone, setInvalidPhone] = useState({number: '', text: ''})
-
-    const [selectedTreatmentIds, setSelectedTreatmentIds] = React.useState<number[]>([]);
-
+    const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
 
     useEffect(() => {
       if (dialogOpen) {
@@ -64,6 +62,7 @@ const ContactFormDialog = React.forwardRef(
         setContactPhones(getPhones(item))
         setInvalidName(false)
         setInvalidPhone({number: 'dummy text', text: ''})
+        setSelectedTreatmentLocalIds([])
       }
     }, [dialogOpen, item])
 
@@ -100,33 +99,26 @@ const ContactFormDialog = React.forwardRef(
     }
 
     const saveContact = async () => {
-
       async function savePhones(contact: ContactEntity) {
-
         const newPhones = contactPhones.filter((phone) => phone.number !== '')
-
           newPhones.forEach((phone) => (phone.localContactId = contact.localId))
           await saveGoogleContact(contact)
 
         if (newPhones.length > 0) {
           await PhoneService.saveAll(newPhones)
         }
-  
         if (phonesToDelete.length > 0) {
           await PhoneService.deleteAll(phonesToDelete)
         }
-  
       }
 
       async function saveGoogleContact(contact: ContactEntity) {
-        
         if (item && item.googleContact) {
           await GoogleContactService.save(item.googleContact)
         } else {
           const googleContact: GoogleContactEntity = {
             localContactId: contact.localId
           }
-  
           await GoogleContactService.save(googleContact)
         }
       }
@@ -138,21 +130,27 @@ const ContactFormDialog = React.forwardRef(
         }
       } else if (action === ContactsConstants.ACTION_ADD) {
         const savedContact = await ContactService.save(contact)
-
         if (savedContact) {
           await savePhones(savedContact)
         }
       } else if (action === ContactsConstants.ACTION_ADD_ESSENTIAL) {
         const newEssentialContact: EssentialContactEntity = {
-          ...contact, 
-          treatmentIds: selectedTreatmentIds
+          ...contact,
+          isUniversal: 1
         }
-        const savedEssentialContact = await EssentialContactService.save(newEssentialContact)
+        
+        if (selectedTreatmentLocalIds.length > 0) {
+          newEssentialContact.treatmentLocalIds = selectedTreatmentLocalIds
+          newEssentialContact.isUniversal = 0
+        }
 
+        const savedEssentialContact = await EssentialContactService.save(newEssentialContact)
         if (savedEssentialContact) {
           const newPhones = contactPhones.filter((phone) => phone.number !== '')
-          newPhones.forEach((phone) => (phone.localEssentialContactId = savedEssentialContact.localId))
-          await PhoneService.saveAll(newPhones)
+          if (newPhones.length > 0) {
+            newPhones.forEach((phone) => (phone.localEssentialContactId = savedEssentialContact.localId))
+            await PhoneService.saveAll(newPhones)
+          }
         }
       }
     }
@@ -246,8 +244,8 @@ const ContactFormDialog = React.forwardRef(
               {
                 action === ContactsConstants.ACTION_ADD_ESSENTIAL ?
                 <SelectMultipleTreatments 
-                  selectedIds={selectedTreatmentIds}
-                  setSelectedIds={setSelectedTreatmentIds}
+                  selectedLocalIds={selectedTreatmentLocalIds}
+                  setSelectedLocalIds={setSelectedTreatmentLocalIds}
                 /> : <></>
               }
             </ContactFormDialogContent>

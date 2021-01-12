@@ -57,12 +57,12 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
 
     const [status, email] = await AuthService.requestGoogleLogin(refreshRequired, refreshEmail)
 
-    setRefreshEmail(undefined)
-    setRefreshRequired(false)
-
     if (status === LoginStatusConstants.SUCCESS) {
       return
     }
+
+    setRefreshEmail(undefined)
+    setRefreshRequired(false)
 
     if (status === LoginStatusConstants.REQUEST_CANCELED) {
       onCancel && onCancel()

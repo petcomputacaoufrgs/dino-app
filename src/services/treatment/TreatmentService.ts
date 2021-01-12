@@ -44,6 +44,14 @@ export class TreatmentServiceImpl extends AutoSynchronizableService<
 
     return model
   }
+
+  getAllByIds = (ids: number[]): Promise<TreatmentEntity[]> => {
+    return this.table.where("id").anyOf(ids).toArray()
+  }
+
+  getAllByLocalIds = (localIds: number[]): Promise<TreatmentEntity[]> => {
+    return this.table.where("localId").anyOf(localIds).toArray()
+  }
 }
 
 export default new TreatmentServiceImpl()

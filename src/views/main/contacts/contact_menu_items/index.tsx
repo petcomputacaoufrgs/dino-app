@@ -12,8 +12,7 @@ const ContactMenuItems = ({ anchor, setAnchor, item, onEdit, onDelete, onCloseDi
   }
 
   const renderEditMenuItem = () => {
-
-    const isNotEssential = !Boolean(item.contact.isEssential)
+    const isNotEssential = item.contact.localEssentialContactId === undefined
 
     if(isNotEssential) {
       return (

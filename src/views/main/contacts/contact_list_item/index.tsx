@@ -11,8 +11,9 @@ import OptionsIconButton from '../../../../components/button/icon_button/options
 import { Star } from '@material-ui/icons'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
-import './styles.css'
 import ContactMenuItems from '../contact_menu_items'
+import Utils from '../../../../utils/Utils'
+import './styles.css'
 
 const ContactItemList: React.FC<ContactItemListProps> = ({
   item,
@@ -25,14 +26,13 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 
   const handleOpen = () => onClick(item.contact.localId!)
 
-  const isEssential = () => item.contact.isEssential === 1
+  const isEssential = () => Utils.isNotEmpty(item.contact.localEssentialContactId)
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
-
 
   return (
     <div className="contacts__list__item">

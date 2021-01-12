@@ -1,4 +1,4 @@
 export default interface SelectMultipleTreatmentsProps {
-  selectedIds: number[]
-  setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>
+  selectedLocalIds: number[]
+  setSelectedLocalIds: React.Dispatch<React.SetStateAction<number[]>>
 }

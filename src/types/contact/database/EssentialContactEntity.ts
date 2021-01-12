@@ -4,5 +4,6 @@ export default interface EssentialContactEntity extends SynchronizableEntity<num
   name: string
   description?: string
   color?: number
-  treatmentIds?: number[]
+  treatmentLocalIds?: number[]
+  isUniversal: 0|1
 }

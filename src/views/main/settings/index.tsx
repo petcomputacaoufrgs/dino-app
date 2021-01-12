@@ -21,9 +21,9 @@ import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
 import FontSizeEnum from '../../../types/user/view/FontSizeEnum'
 import ColorThemeEnum from '../../../types/user/view/ColorThemeEnum'
-import './styles.css'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
+import './styles.css'
 
 const Settings: React.FC = () => {
   const alert = useAlert()
@@ -50,7 +50,7 @@ const Settings: React.FC = () => {
 
       if (settings) {
         if (treatments) {
-          const treatment = treatments.find(treatment => treatment.id === settings.treatmentId)
+          const treatment = treatments.find(treatment => treatment.localId === settings.treatmentLocalId)
           if (treatment) {
             updateTreatment(treatment)
           }
@@ -139,22 +139,33 @@ const Settings: React.FC = () => {
     setOpenGoogleContactDialog(false)
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (settings) {
+      const oldTreatment = settings.treatmentLocalId
+      const oldIncludeEssentialContact = settings.includeEssentialContact
+
       settings.language = selectedLanguage
       settings.fontSize = selectedFontSize
       settings.colorTheme = selectedColorTheme
       settings.includeEssentialContact = selectedEssentialContactGrant
 
       if (selectedTreatment) {
-        settings.treatmentId = selectedTreatment.id
+        settings.treatmentLocalId = selectedTreatment.localId
       }
 
-      UserSettingsService.save(settings)
+      await UserSettingsService.save(settings)
 
-      ContactService.deleteAllEssentialContacts()
+      const treatmentChangedWithEssentialContacts = oldTreatment !== settings.treatmentLocalId && settings.includeEssentialContact
+      const disabledEssentialContacts = oldIncludeEssentialContact !== settings.includeEssentialContact && oldIncludeEssentialContact
+      const enabledEssentialContacts = oldIncludeEssentialContact !== settings.includeEssentialContact && settings.includeEssentialContact
 
-      EssentialContactService.saveUserEssentialContacts(settings)
+      if (treatmentChangedWithEssentialContacts || disabledEssentialContacts) {
+        await ContactService.deleteUserEssentialContacts()
+      }
+      
+      if (treatmentChangedWithEssentialContacts || enabledEssentialContacts) {
+        EssentialContactService.saveUserEssentialContacts(settings)
+      }
 
       alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
     } else {

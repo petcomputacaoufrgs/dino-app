@@ -11,6 +11,7 @@ import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/database/Database'
+import Utils from '../../utils/Utils'
 
 export class UserServiceImpl extends AutoSynchronizableService<
   number,
@@ -71,18 +72,18 @@ export class UserServiceImpl extends AutoSynchronizableService<
 
   protected async onSaveEntity(entity: UserEntity) {
     await this.clearDatabase()
-    if (entity.id !== undefined) {
-      const savedEntity = await this.getByLocalId(entity.id)
+    if (Utils.isNotEmpty(entity.id)) {
+      const savedEntity = await this.getByLocalId(entity.id!)
 
       if (savedEntity) {
         const withoutSavedPicture = savedEntity.pictureBase64 === undefined
         const pictureUrlChanged = entity.pictureURL !== savedEntity.pictureURL
 
         if (withoutSavedPicture || pictureUrlChanged) {
-          this.donwloadPicture(entity.pictureURL, entity.id)
+          this.donwloadPicture(entity.pictureURL, entity.id!)
         }
       } else {
-        this.donwloadPicture(entity.pictureURL, entity.id)
+        this.donwloadPicture(entity.pictureURL, entity.id!)
       }
     }
   }
@@ -96,7 +97,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
   }
 
   async verifyGoogleUserPhoto(entity: UserEntity) {
-    if (entity.id !== undefined) {
+    if (Utils.isNotEmpty(entity.id)) {
       const photoModel = await GoogleUserService.getUserGoogleAPIPhoto()
 
       if (photoModel) {
@@ -111,7 +112,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
           if (entity.pictureURL !== newPictureURL) {
             entity.pictureURL = newPictureURL
             await this.save(entity)
-            this.donwloadPicture(newPictureURL, entity.id)
+            this.donwloadPicture(newPictureURL, entity.id!)
           }
         }
       }
@@ -136,7 +137,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
     success: boolean,
     id?: any
   ) => {
-    if (success && id !== undefined) {
+    if (success && Utils.isNotEmpty(id)) {
       const savedEntity = await this.getById(id)
       if (savedEntity) {
         savedEntity.pictureBase64 = base64Image

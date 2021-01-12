@@ -5,6 +5,7 @@ import { Star } from '@material-ui/icons'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import { useLanguage } from '../../../../../context/language'
 import PhoneService from '../../../../../services/contact/PhoneService'
+import Utils from '../../../../../utils/Utils'
 import '../../styles.css'
 import './styles.css'
 
@@ -15,7 +16,7 @@ const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({
 }) => {
   const language = useLanguage()
 
-  const isEssential = () => item.contact.isEssential === 1
+  const isEssential = Utils.isNotEmpty(item.contact.localEssentialContactId)
 
   return (
     <>
@@ -30,7 +31,7 @@ const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({
         }
         action={
           <>
-            {isEssential() ? <Star /> : <></>}
+            {isEssential ? <Star /> : <></>}
             <OptionsIconButton dark onClick={onClick} />
           </>
         }

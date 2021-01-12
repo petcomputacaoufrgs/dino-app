@@ -5,5 +5,5 @@ export default interface ContactEntity
   name: string
   description?: string
   color?: number
-  isEssential?: 0 | 1
+  localEssentialContactId?: number
 }

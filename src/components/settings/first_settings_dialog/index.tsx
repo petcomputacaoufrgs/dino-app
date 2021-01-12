@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Dialog, DialogActions } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
-import SelectTreatment from '../../../components/settings/select_treatment'
-import DinoSwitch from '../../../components/switch'
-import SelectLanguage from '../../../components/settings/select_language'
-import SelectColorTheme from '../../../components/settings/select_color_theme'
+import SelectTreatment from '../select_treatment'
+import DinoSwitch from '../../switch'
+import SelectLanguage from '../select_language'
+import SelectColorTheme from '../select_color_theme'
 import DinoDialogHeader, {
   DinoDialogContent,
-} from '../../../components/dino_dialog'
-import DinoLogoHeader from '../../../components/dino_logo_header'
-import DinoStepper from '../../../components/dino_stepper'
-import SelectFontSize from '../../../components/settings/select_font_size'
+} from '../../dino_dialog'
+import DinoLogoHeader from '../../dino_logo_header'
+import DinoStepper from '../../dino_stepper'
+import SelectFontSize from '../select_font_size'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import AuthService from '../../../services/auth/AuthService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
-import TransitionSlide from '../../../components/slide_transition'
+import TransitionSlide from '../../slide_transition'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import './styles.css'
@@ -42,7 +42,7 @@ const FirstSettingsDialog: React.FC = () => {
       const settings = await UserSettingsService.getFirst()
 
       if (settings) {
-        const treatment = treatments.find(treatment => treatment.id === settings.treatmentId)
+        const treatment = treatments.find(treatment => treatment.localId === settings.treatmentLocalId)
         if (treatment) {
           updateSelectedTreatment(treatment)
         }
@@ -101,7 +101,7 @@ const FirstSettingsDialog: React.FC = () => {
     setDialogOpen(false)
   }
 
-  const saveSettings = () => {
+  const saveSettings = async () => {
     if (settings) {
       settings.language = selectedLanguage
       settings.colorTheme = selectedColorTheme
@@ -109,10 +109,13 @@ const FirstSettingsDialog: React.FC = () => {
       settings.includeEssentialContact = selectedEssentialContactGrant
       settings.declineGoogleContacts = false
       settings.firstSettingsDone = true
-      settings.treatmentId = selectedTreatment?.id
+      settings.treatmentLocalId = selectedTreatment?.localId
 
-      UserSettingsService.save(settings)
-      EssentialContactService.saveUserEssentialContacts(settings)
+      await UserSettingsService.save(settings)
+
+      if (settings.includeEssentialContact) {
+        EssentialContactService.saveUserEssentialContacts(settings)
+      }
     }
   }
 
@@ -173,8 +176,8 @@ const FirstSettingsDialog: React.FC = () => {
   ) => {
     setSelectedTreatment(newSelectedTreatment)
 
-    if (settings && settings.treatmentId !== newSelectedTreatment.id) {
-      settings.treatmentId = newSelectedTreatment.id
+    if (settings && settings.treatmentLocalId !== newSelectedTreatment.id) {
+      settings.treatmentLocalId = newSelectedTreatment.localId
       UserSettingsService.saveOnlyLocally(settings)
     }
   }

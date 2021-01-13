@@ -20,6 +20,7 @@ import EssentialContactService from '../../../../services/contact/EssentialConta
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import './styles.css'
+import GoogleContactEntity from '../../../../types/contact/database/GoogleContactEntity'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
   return item ? item.contact : {
@@ -98,51 +99,73 @@ const ContactFormDialog = React.forwardRef(
     }
 
     const saveContact = async () => {
-      async function savePhones(contact: ContactEntity) {
-        const newPhones = contactPhones.filter((phone) => phone.number !== '')
-          newPhones.forEach((phone) => (phone.localContactId = contact.localId))
 
-        if (item) {
-          GoogleContactService.saveGoogleContact(contact, item.googleContact)
+      async function savePhones(contact: ContactEntity | EssentialContactEntity) {
+        
+        const newPhones = contactPhones.filter(phone => phone.number !== '')
+
+        let attr = "localEssentialContactId"
+          
+        if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {          
+          await saveGoogleContact(contact)
+          attr = "localContactId"
         }
+
+        newPhones.forEach(phone => (phone[attr] = contact.localId))
 
         if (newPhones.length > 0) {
           await PhoneService.saveAll(newPhones)
         }
+
         if (phonesToDelete.length > 0) {
           await PhoneService.deleteAll(phonesToDelete)
         }
+
       }
 
-      if (action === ContactsConstants.ACTION_EDIT) {
-        if (item && Utils.isNotEmpty(item.contact.localId)) {
-          await ContactService.save(contact)
-          await savePhones(contact)
-        }
-      } else if (action === ContactsConstants.ACTION_ADD) {
-        const savedContact = await ContactService.save(contact)
-        if (savedContact) {
-          await savePhones(savedContact)
-        }
-      } else if (action === ContactsConstants.ACTION_ADD_ESSENTIAL) {
-        const newEssentialContact: EssentialContactEntity = {
-          ...contact,
-          isUniversal: 1
-        }
-        
-        if (selectedTreatmentLocalIds.length > 0) {
-          newEssentialContact.treatmentLocalIds = selectedTreatmentLocalIds
-          newEssentialContact.isUniversal = 0
-        }
-
-        const savedEssentialContact = await EssentialContactService.save(newEssentialContact)
-        if (savedEssentialContact) {
-          const newPhones = contactPhones.filter((phone) => phone.number !== '')
-          if (newPhones.length > 0) {
-            newPhones.forEach((phone) => (phone.localEssentialContactId = savedEssentialContact.localId))
-            await PhoneService.saveAll(newPhones)
+      async function saveGoogleContact(contact: ContactEntity) {
+        if (item && item.googleContact) {
+          await GoogleContactService.save(item.googleContact)
+        } else {
+          const googleContact: GoogleContactEntity = {
+            localContactId: contact.localId
           }
+          await GoogleContactService.save(googleContact)
         }
+      }
+
+      switch(action) {
+
+        case ContactsConstants.ACTION_EDIT:
+
+          if (item && Utils.isNotEmpty(item.contact.localId)) {
+            await ContactService.save(contact)
+            await savePhones(contact)
+          }
+          break;
+
+        case ContactsConstants.ACTION_ADD:
+
+          const savedContact = await ContactService.save(contact)
+          if (savedContact) {
+            await savePhones(savedContact)
+          }
+          break;
+
+        case ContactsConstants.ACTION_ADD_ESSENTIAL:
+
+          const newEssentialContact: EssentialContactEntity = {
+            ...contact,
+            treatmentLocalIds: selectedTreatmentLocalIds,
+            isUniversal: selectedTreatmentLocalIds.length > 0 ? 1 : 0
+          }
+  
+          const savedEssentialContact = await EssentialContactService.save(newEssentialContact)
+
+          if (savedEssentialContact) {
+            await savePhones(savedEssentialContact)
+          }
+          break;
       }
     }
 

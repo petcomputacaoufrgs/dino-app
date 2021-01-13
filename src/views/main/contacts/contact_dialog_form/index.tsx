@@ -13,7 +13,6 @@ import StringUtils from '../../../../utils/StringUtils'
 import ContactView from '../../../../types/contact/view/ContactView'
 import Utils from '../../../../utils/Utils'
 import { useLanguage } from '../../../../context/language'
-import GoogleContactEntity from '../../../../types/contact/database/GoogleContactEntity'
 import ContactService from '../../../../services/contact/ContactService'
 import PhoneService from '../../../../services/contact/PhoneService'
 import GoogleContactService from '../../../../services/contact/GoogleContactService'
@@ -102,24 +101,16 @@ const ContactFormDialog = React.forwardRef(
       async function savePhones(contact: ContactEntity) {
         const newPhones = contactPhones.filter((phone) => phone.number !== '')
           newPhones.forEach((phone) => (phone.localContactId = contact.localId))
-          await saveGoogleContact(contact)
+
+        if (item) {
+          GoogleContactService.saveGoogleContact(contact, item.googleContact)
+        }
 
         if (newPhones.length > 0) {
           await PhoneService.saveAll(newPhones)
         }
         if (phonesToDelete.length > 0) {
           await PhoneService.deleteAll(phonesToDelete)
-        }
-      }
-
-      async function saveGoogleContact(contact: ContactEntity) {
-        if (item && item.googleContact) {
-          await GoogleContactService.save(item.googleContact)
-        } else {
-          const googleContact: GoogleContactEntity = {
-            localContactId: contact.localId
-          }
-          await GoogleContactService.save(googleContact)
         }
       }
 

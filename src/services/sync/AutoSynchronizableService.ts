@@ -361,6 +361,7 @@ export default abstract class AutoSynchronizableService<
           if (response) {
             if (response.success) {
               await this.dbDelete(entity)
+              return true
             } else if (response.data) {
               const apiEntity = await this.internalConvertModelToEntity(
                 response.data
@@ -370,6 +371,7 @@ export default abstract class AutoSynchronizableService<
                 apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
                 await this.dbSave(apiEntity)
                 this.triggerUpdateEvent()
+                return true
               } else {
                 LogAppErrorService.logMessage(
                   JSON.stringify(response.data),
@@ -384,6 +386,8 @@ export default abstract class AutoSynchronizableService<
             SyncConstants.CONVERT_ENTITY_TO_MODEL_ERROR
           )
         }
+
+        return false
     }
   }
 

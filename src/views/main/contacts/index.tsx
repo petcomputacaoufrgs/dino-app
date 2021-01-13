@@ -127,6 +127,7 @@ const Contacts: React.FC = () => {
 
     setAdd(true)
   }
+  
   const handleAddEssentialContact = () => {
     setAddEssential(true)
   }

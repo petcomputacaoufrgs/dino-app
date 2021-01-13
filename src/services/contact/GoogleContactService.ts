@@ -119,6 +119,17 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
     }
   }
 
+  async saveGoogleContact(contact: ContactEntity, googleContact?: GoogleContactEntity) {
+    if (googleContact) {
+      await this.save(googleContact)
+    } else {
+      const newGoogleContact: GoogleContactEntity = {
+        localContactId: contact.localId
+      }
+      await this.save(newGoogleContact)
+    }
+  }
+
   private saveContactOnGoogleAPI = async (
     entity: GoogleContactEntity,
     contact: ContactEntity, 

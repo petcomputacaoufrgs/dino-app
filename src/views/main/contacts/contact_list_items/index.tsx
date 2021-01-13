@@ -26,20 +26,28 @@ const ContactItems: React.FC<ContactItemsProps> = ({
   }
 
   const handleAcceptDeleteDialog = async () => {
+    const deleteGoogleContact = async (contactToDelete: ContactView): Promise<void> => {
+      if (contactToDelete.googleContact) {
+        await GoogleContactService.delete(contactToDelete.googleContact)
+      }
+    }
+
+    const deletePhones = async (contactToDelete: ContactView): Promise<void> => {
+      if (contactToDelete.phones.length > 0) {
+        await PhoneService.deleteAll(contactToDelete.phones)
+      }
+    }
+
     setContactToDelete(undefined)
     if (contactToDelete) {
-      await PhoneService.deleteAll(contactToDelete.phones)
-      ContactService.delete(contactToDelete.contact)
-      if (contactToDelete.googleContact) {
-        GoogleContactService.delete(contactToDelete.googleContact)
-      }
+      await Promise.all([deleteGoogleContact(contactToDelete), deletePhones(contactToDelete)])
+      await ContactService.delete(contactToDelete.contact)
     }
   }
 
   const handleCloseDeleteDialog = () => {
     setContactToDelete(undefined)
   }
-
 
   return (
     <>

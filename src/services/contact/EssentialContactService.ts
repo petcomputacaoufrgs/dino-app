@@ -13,6 +13,7 @@ import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import Utils from '../../utils/Utils'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import GoogleContactService from './GoogleContactService'
 
 export class EssentialContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -90,6 +91,7 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     essentialContacts.forEach(async ec => { 
       const savedContact = await ContactService.save(this.convertEntityToContactEntity(ec))
         if(savedContact) {
+          GoogleContactService.saveGoogleContact(savedContact)
           savePhonesFromEssentialContact(ec, savedContact)
         }
     })

@@ -101,7 +101,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
             googleContacts
           ),
         } as ContactView)
-    ).sort((a,b) =>  a.contact.name > b.contact.name ? 1 : -1)
+    ).sort((a,b) => this.contactViewSort(a,b))
   }
 
   filterContactViews(
@@ -111,6 +111,30 @@ export class ContactServiceImpl extends AutoSynchronizableService<
     return contacts.filter((item) =>
       StringUtils.contains(item.contact.name, searchTerm)
     )
+  }
+
+  private contactViewSort(a: ContactView, b: ContactView) {
+    const bComesFirst = 1
+    const aComesFirst = -1
+
+    const sortByName = () => {
+      return a.contact.name > b.contact.name ? bComesFirst : aComesFirst
+    }
+
+    const aIsEssential = Utils.isNotEmpty(a.contact.localEssentialContactId)
+    const bIsEssential = Utils.isNotEmpty(b.contact.localEssentialContactId)
+
+    if (aIsEssential) {
+      if (bIsEssential) {
+        return sortByName()
+      } else {
+        return aComesFirst
+      }
+    } else if (bIsEssential) {
+      return bComesFirst
+    }
+
+    return sortByName()
   }
 }
 

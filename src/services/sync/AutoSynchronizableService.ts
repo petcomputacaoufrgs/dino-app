@@ -7,7 +7,6 @@ import SynchronizableListDataResponseModel from '../../types/sync/api/response/S
 import SynchronizableSaveAllModel from '../../types/sync/api/request/SynchronizableSaveAllModel'
 import SynchronizableDeleteAllListModel from '../../types/sync/api/request/SynchronizableDeleteAllListModel'
 import SynchronizableEntity from '../../types/sync/database/SynchronizableEntity'
-import SynchronizableGenericResponseModel from '../../types/sync/api/response/SynchronizableGenericResponseModel'
 import SynchronizableLocalState from '../../types/sync/database/SynchronizableLocalState'
 import SynchronizableWSUpdateModel from '../../types/sync/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../types/sync/api/web_socket/SynchronizableWSDeleteModel'
@@ -62,7 +61,7 @@ export default abstract class AutoSynchronizableService<
   protected async onSaveOnAPI(entity: ENTITY) {}
 
     /**
-   * @description Override this function to do something before delete entity on API
+   * @description Override this function to do something after delete entity on API
    * @param entity entity that will be saved
    */
   protected async onDeleteOnAPI(entity: ENTITY) {}
@@ -239,6 +238,8 @@ export default abstract class AutoSynchronizableService<
             response.data
           )
 
+          console.log(newEntity)
+
           if (newEntity) {
             newEntity.localId = dbEntity.localId
             newEntity.localState = SynchronizableLocalState.SAVED_ON_API
@@ -253,11 +254,6 @@ export default abstract class AutoSynchronizableService<
             )
           }
         }
-      } else {
-        LogAppErrorService.logMessage(
-          JSON.stringify(entity),
-          SyncConstants.CONVERT_ENTITY_TO_MODEL_ERROR
-        )
       }
 
       return dbEntity
@@ -282,9 +278,7 @@ export default abstract class AutoSynchronizableService<
 
     const response = await this.apiSaveAll(models)
 
-    const success = this.processGenericResponse(response)
-
-    if (success && response) {
+    if (response && response.success) {
       const models = response.data
       const newEntities = await this.internalConvertModelsToEntities(models)
       await this.dbSaveAll(newEntities)
@@ -351,8 +345,6 @@ export default abstract class AutoSynchronizableService<
 
     if (deleted) {
         this.triggerUpdateEvent()
-
-        await this.onDeleteOnAPI(entity)
         const model = await this.internalConvertEntityToModel(entity)
 
         if (model) {
@@ -361,6 +353,8 @@ export default abstract class AutoSynchronizableService<
           if (response) {
             if (response.success) {
               await this.dbDelete(entity)
+              await this.onDeleteOnAPI(entity)
+
               return true
             } else if (response.data) {
               const apiEntity = await this.internalConvertModelToEntity(
@@ -371,7 +365,6 @@ export default abstract class AutoSynchronizableService<
                 apiEntity.localState = SynchronizableLocalState.SAVED_ON_API
                 await this.dbSave(apiEntity)
                 this.triggerUpdateEvent()
-                return true
               } else {
                 LogAppErrorService.logMessage(
                   JSON.stringify(response.data),
@@ -386,8 +379,6 @@ export default abstract class AutoSynchronizableService<
             SyncConstants.CONVERT_ENTITY_TO_MODEL_ERROR
           )
         }
-
-        return false
     }
   }
 
@@ -402,25 +393,18 @@ export default abstract class AutoSynchronizableService<
 
     if (filterById.selected.length > 0) {
       const deleted = await this.dbFakeDeleteAll(filterById.selected)
-
+      this.triggerUpdateEvent()
       if (deleted) {
-        await this.onDeleteAllOnAPI(entities)
         const models = await this.internalConvertEntitiesToModels(entities)
         const deleteAllResponse = await this.apiDeleteAll(models)
-        const success = this.processGenericResponse(deleteAllResponse)
   
-        if (success) {
+        if (deleteAllResponse && deleteAllResponse.success) {
           await this.dbDeleteAll(entities)
+          await this.onDeleteAllOnAPI(entities)
           this.triggerUpdateEvent()
         }
-  
-        return success
       }
-  
-      return false
     }
-
-    return true
   }
 
   /**
@@ -536,8 +520,6 @@ export default abstract class AutoSynchronizableService<
   protected sync = async (): Promise<boolean> => {
     const deletedEntities = await this.dbGetAllFakeDeleted()
 
-    await this.onDeleteAllOnAPI(deletedEntities)
-
     const deletedModels = await this.internalConvertEntitiesToModels(
       deletedEntities
     )
@@ -552,31 +534,22 @@ export default abstract class AutoSynchronizableService<
 
     const syncResponse = await this.apiSync(notSavedModels, deletedModels)
 
-    const success = this.processGenericResponse(syncResponse)
-
-    if (success && syncResponse) {
+    if (syncResponse && syncResponse.success) {
       await this.dbDeleteAllFakeDeleteds()
 
       const entities = await this.internalConvertModelsToEntities(syncResponse.data)
 
       await this.dbClear()
 
+      const apiDeletedEntities = deletedEntities.filter(model => !entities.some(entity => entity.id === model.id))
+
+      await this.onDeleteAllOnAPI(apiDeletedEntities)
+
       await this.dbSaveAll(entities)
 
       this.triggerUpdateEvent()
-    }
 
-    return success
-  }
-
-  private processGenericResponse = (
-    response: SynchronizableGenericResponseModel | undefined
-  ): boolean => {
-    if (response) {
-      if (response.success) {
-        return true
-      }
-      LogAppErrorService.logSyncAPIError(response.error)
+      return true
     }
 
     return false
@@ -628,15 +601,9 @@ export default abstract class AutoSynchronizableService<
   private dbFakeDeleteAll = async (
     entities: ENTITY[]
   ): Promise<boolean> => {
-    const partition = ArrayUtils.partition(
-      entities,
-      (entity) => Utils.isNotEmpty(entity.id)
-    )
+    const deletedItens = await this.dbFakeDeleteAllWithId(entities)
 
-    const realDeletedItems = await this.dbDeleteAll(partition.selected)
-    const deletedItens = await this.dbFakeDeleteAllWithId(partition.notSelected)
-
-    return realDeletedItems + deletedItens > 0
+    return deletedItens > 0
   }
 
   private dbFakeDeleteAllWithId = async (entities: ENTITY[]) => {

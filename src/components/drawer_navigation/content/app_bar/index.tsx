@@ -1,11 +1,10 @@
 import React from 'react'
-import './styles.css'
 import AppBarProps from './props'
 import IconButton from '../../../button/icon_button'
-import SyncInfo from './sync_info'
 import ArrowBack from '../../../arrow_back'
 import { ReactComponent as MenuIconSVG } from '../../../../assets/icons/menu.svg'
 import { useLanguage } from '../../../../context/language'
+import './styles.css'
 
 const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
   const language = useLanguage()
@@ -19,7 +18,6 @@ const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
         className="drawer__navigation__app_bar__button"
       />
       <ArrowBack />
-      <SyncInfo />
     </div>
   )
 }

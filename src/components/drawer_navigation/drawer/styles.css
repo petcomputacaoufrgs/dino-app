@@ -102,3 +102,17 @@
   .MuiTypography-root.MuiListItemText-primary {
   text-align: justify;
 }
+
+.user__avatar {
+  position: relative;
+}
+
+.user__avatar__sync_info {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 2.8rem;
+  border-radius: 50%;
+  background-color: var(--header-and-menu);
+  width: 1.5rem;
+  height: 1.5rem;
+}

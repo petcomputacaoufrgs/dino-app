@@ -79,6 +79,7 @@ class WebSocketService {
       file: '',
     })
 
+    SyncService.setNotSynced()
     if (this.stompClient && !this.stompClient.connected) {
       this.tryReconnect()
     }

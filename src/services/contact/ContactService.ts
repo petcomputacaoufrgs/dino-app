@@ -77,11 +77,15 @@ export class ContactServiceImpl extends AutoSynchronizableService<
   async deleteUserEssentialContacts() {
     const contacts = await this.getAllDerivatedFromEssential()
 
+    const googleContactDeletePromises = contacts.map(contact => {
+      return GoogleContactService.deleteByContact(contact)
+    })
+    
     const phoneDeletePromises = contacts.map(contact => {
       return PhoneService.deleteByContact(contact)
     })
   
-    await Promise.all(phoneDeletePromises)
+    await Promise.all([phoneDeletePromises, googleContactDeletePromises])
   
     await this.deleteAll(contacts)
   }

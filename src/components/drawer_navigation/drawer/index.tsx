@@ -10,6 +10,7 @@ import Loader from '../../loader'
 import { useLanguage } from '../../../context/language'
 import UserEntity from '../../../types/user/database/UserEntity'
 import UserService from '../../../services/user/UserService'
+import SyncInfo from '../../sync_info'
 import './styles.css'
 
 const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
@@ -97,6 +98,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
             alt={language.data.AVATAR_ALT}
             className="avatar"
           />
+          <SyncInfo className="user__avatar__sync_info" />
         </Loader>
       </div>
       <p className="username">{UserService.getName(user)}</p>

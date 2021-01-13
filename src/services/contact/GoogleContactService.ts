@@ -15,6 +15,7 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/database/Database'
+import Utils from '../../utils/Utils'
 
 export class GoogleContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -43,6 +44,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
       const entity: GoogleContactEntity = {
         resourceName: model.resourceName,
         localContactId: contact.localId,
+        savedOnGoogleAPI: model.resourceName ? 1 : 0
       }
 
       return entity
@@ -124,10 +126,40 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
       await this.save(googleContact)
     } else {
       const newGoogleContact: GoogleContactEntity = {
-        localContactId: contact.localId
+        localContactId: contact.localId,
+        savedOnGoogleAPI: 0
       }
+      console.log(newGoogleContact)
       await this.save(newGoogleContact)
     }
+  }
+
+  async deleteByContact(
+    contact: ContactEntity
+  ) {
+    if (Utils.isNotEmpty(contact.localId)) {
+      const googleContact = await this.table.where('localContactId').equals(contact.localId!).first()
+
+      if (googleContact) {
+        await this.delete(googleContact)
+      }
+    }
+  }
+
+  async activeGoogleContactsGrant() {
+    const notSavedGoogleContacts = await this.table.where('savedOnGoogleAPI').equals(0).toArray()
+
+    const savePromises = notSavedGoogleContacts.map(async googleContact => {
+      if (googleContact.localContactId) {
+        const contact = await ContactService.getByLocalId(googleContact.localContactId)
+        const phones = await PhoneService.getAllByContactLocalId(googleContact.localContactId)
+        if (contact) {
+          return this.saveContactOnGoogleAPI(googleContact, contact, phones)
+        }
+      }
+    })
+
+    await Promise.all(savePromises)
   }
 
   private saveContactOnGoogleAPI = async (
@@ -140,7 +172,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
 
       const etag = await this.getCurrentGooglePeopleEtag(entity.resourceName)
   
-      const response = etag && entity.resourceName? 
+      const response = etag && entity.resourceName ? 
         await this.updateContactOnGoogleAPI(
           peopleModel,
           entity.resourceName,
@@ -148,6 +180,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
   
       if (response && response.resourceName) {
         entity.resourceName = response.resourceName
+        entity.savedOnGoogleAPI = response.resourceName ? 1 : 0
       }
     } catch (e) {
       LogAppErrorService.logError(e)
@@ -213,7 +246,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
 
   private deleteContactOnGoogleAPI = async (
     resourceName: string
-  ): Promise<boolean> => {
+  ) => {
     try {
       const request = await GoogleAgentService.delete(
         GooglePeopleAPIURLConstants.DELETE_CONTACT(resourceName)
@@ -221,15 +254,11 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
   
       if (request.canGo) {
         const authRequest = await request.authenticate()
-        
         await authRequest.go()
-        return true
       }
     } catch (e) {
       LogAppErrorService.logError(e)
     }
-
-    return false
   }
 
   private convertToGooglePeopleModel = (

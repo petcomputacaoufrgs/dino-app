@@ -100,6 +100,7 @@ const Contacts: React.FC = () => {
   const handleAcceptGoogleGrant = () => {
     if (settings) {
       settings.declineGoogleContacts = false
+      GoogleContactService.activeGoogleContactsGrant()
       UserSettingsService.save(settings)
     }
     setOpenGrantDialog(false)

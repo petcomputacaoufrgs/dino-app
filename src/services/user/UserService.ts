@@ -31,10 +31,10 @@ export class UserServiceImpl extends AutoSynchronizableService<
     return []
   }
 
-  getPicture(user: UserEntity | undefined): string {
+  getPicture(user: UserEntity | undefined): string | undefined {
     return user !== undefined
         ? user.pictureBase64 ? user.pictureBase64 : user.pictureURL
-        : ''
+        : undefined
   }
 
   getName(user: UserEntity | undefined) {

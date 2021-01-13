@@ -4,7 +4,6 @@ import ContactMenuItemsProps from './props'
 import { useLanguage } from '../../../../context/language'
 
 const ContactMenuItems = ({ anchor, setAnchor, item, onEdit, onDelete, onCloseDialog}: ContactMenuItemsProps) => {
-
   const language = useLanguage()
 
   const handleClose = () => {

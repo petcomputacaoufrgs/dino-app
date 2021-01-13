@@ -91,7 +91,7 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     essentialContacts.forEach(async ec => { 
       const savedContact = await ContactService.save(this.convertEntityToContactEntity(ec))
         if(savedContact) {
-          GoogleContactService.saveGoogleContact(savedContact)
+          await GoogleContactService.saveGoogleContact(savedContact)
           savePhonesFromEssentialContact(ec, savedContact)
         }
     })

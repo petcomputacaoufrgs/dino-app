@@ -20,7 +20,6 @@ import EssentialContactService from '../../../../services/contact/EssentialConta
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import './styles.css'
-import GoogleContactEntity from '../../../../types/contact/database/GoogleContactEntity'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
   return item ? item.contact : {
@@ -99,15 +98,13 @@ const ContactFormDialog = React.forwardRef(
     }
 
     const saveContact = async () => {
-
       async function savePhones(contact: ContactEntity | EssentialContactEntity) {
-        
         const newPhones = contactPhones.filter(phone => phone.number !== '')
 
+        await GoogleContactService.saveGoogleContact(contact, item?.googleContact)
+
         let attr = "localEssentialContactId"
-          
-        if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {          
-          await saveGoogleContact(contact)
+        if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {
           attr = "localContactId"
         }
 
@@ -120,40 +117,24 @@ const ContactFormDialog = React.forwardRef(
         if (phonesToDelete.length > 0) {
           await PhoneService.deleteAll(phonesToDelete)
         }
-
-      }
-
-      async function saveGoogleContact(contact: ContactEntity) {
-        if (item && item.googleContact) {
-          await GoogleContactService.save(item.googleContact)
-        } else {
-          const googleContact: GoogleContactEntity = {
-            localContactId: contact.localId
-          }
-          await GoogleContactService.save(googleContact)
-        }
       }
 
       switch(action) {
-
         case ContactsConstants.ACTION_EDIT:
-
           if (item && Utils.isNotEmpty(item.contact.localId)) {
-            await ContactService.save(contact)
-            await savePhones(contact)
+            const savedContact = await ContactService.save(contact)
+            if (savedContact) {
+              await savePhones(savedContact)
+            }
           }
-          break;
-
+          break
         case ContactsConstants.ACTION_ADD:
-
           const savedContact = await ContactService.save(contact)
           if (savedContact) {
             await savePhones(savedContact)
           }
-          break;
-
+          break
         case ContactsConstants.ACTION_ADD_ESSENTIAL:
-
           const newEssentialContact: EssentialContactEntity = {
             ...contact,
             treatmentLocalIds: selectedTreatmentLocalIds,
@@ -161,11 +142,10 @@ const ContactFormDialog = React.forwardRef(
           }
   
           const savedEssentialContact = await EssentialContactService.save(newEssentialContact)
-
           if (savedEssentialContact) {
             await savePhones(savedEssentialContact)
           }
-          break;
+          break
       }
     }
 

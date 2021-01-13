@@ -23,6 +23,7 @@ import FontSizeEnum from '../../../types/user/view/FontSizeEnum'
 import ColorThemeEnum from '../../../types/user/view/ColorThemeEnum'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
+import GoogleContactService from '../../../services/contact/GoogleContactService'
 import './styles.css'
 
 const Settings: React.FC = () => {
@@ -123,6 +124,7 @@ const Settings: React.FC = () => {
     if (settings) {
       settings.declineGoogleContacts = false
       UserSettingsService.save(settings)
+      GoogleContactService.activeGoogleContactsGrant()
     }
     setOpenGoogleContactDialog(false)
   }

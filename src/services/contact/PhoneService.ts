@@ -69,26 +69,30 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
       number: entity.number,
       type: entity.type,
     }
-
     const localContactId = entity.localContactId
     const localEssentialContactId = entity.localEssentialContactId
-
+    
     if (Utils.isNotEmpty(localContactId)) {
       const contact = await ContactService.getByLocalId(localContactId!)
       model.contactId = contact?.id
       if (Utils.isNotEmpty(entity.localOriginalEssentialPhoneId)) {
         const originalEPhone = await this.getByLocalId(entity.localOriginalEssentialPhoneId!)
 
-        if (originalEPhone) {
+        if (originalEPhone && originalEPhone.id) {
           model.originalEssentialPhoneId = originalEPhone.id
+          return model
         }
+      } else {
+        return model
       }
     } else if (Utils.isNotEmpty(localEssentialContactId)) {
       const essentialContact = await EssentialContactService.getByLocalId(localEssentialContactId!)
-      model.essentialContactId = essentialContact?.id
-    } else return
 
-    return model
+      if (essentialContact && essentialContact.id) {
+        model.essentialContactId = essentialContact.id
+        return model
+      }
+    }
   }
 
   async getAllByContactLocalId(localContactId: number): Promise<PhoneEntity[]> {
@@ -132,7 +136,9 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
     if (Utils.isNotEmpty(contact.localId)) {
       const phones = await this.table.where('localContactId').equals(contact.localId!).toArray()
 
-      await this.deleteAll(phones)
+      if (phones.length > 0) {
+        await this.deleteAll(phones)
+      }
     }
   }
 

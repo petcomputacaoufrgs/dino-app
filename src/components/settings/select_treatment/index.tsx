@@ -31,16 +31,14 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
         onClose={() => setOpen(false)}
         getOptionSelected={(option, value) => option === value}
         getOptionLabel={(treatment) => treatment || ''}
-        options={availableTreatments.map((treatment) => treatment.name)}
+        options={availableTreatments.map(treatment => treatment.name)}
         noOptionsText={language.data.NO_TREATMENTS_AVAILABLE}
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
         value={treatment ? treatment.name : null}
         onChange={(event: any, newValue: string | null) => {
           if (newValue) {
-            const entity = availableTreatments.find(
-              (treatment) => treatment.name === newValue
-            )
+            const entity = availableTreatments.find(treatment => treatment.name === newValue)
             if (entity) {
               setTreatment(entity)
             }

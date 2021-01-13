@@ -20,6 +20,8 @@ import EssentialContactService from '../../../../services/contact/EssentialConta
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import './styles.css'
+import GoogleContactEntity from '../../../../types/contact/database/GoogleContactEntity'
+import DinoHr from '../../../../components/dino_hr'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
   return item ? item.contact : {
@@ -157,10 +159,7 @@ const ContactFormDialog = React.forwardRef(
     }
 
     const handleAddPhone = () => {
-      contactPhones.push({
-        number: '',
-        type: ContactsConstants.MOBILE,
-      })
+      contactPhones.push({number: '', type: ContactsConstants.MOBILE,})
       setContactPhones([...contactPhones])
     }
 
@@ -237,10 +236,11 @@ const ContactFormDialog = React.forwardRef(
             >
               {
                 action === ContactsConstants.ACTION_ADD_ESSENTIAL ?
+                <> <DinoHr />
                 <SelectMultipleTreatments 
                   selectedLocalIds={selectedTreatmentLocalIds}
                   setSelectedLocalIds={setSelectedTreatmentLocalIds}
-                /> : <></>
+                /> </> : <></>
               }
             </ContactFormDialogContent>
           </DialogContent>

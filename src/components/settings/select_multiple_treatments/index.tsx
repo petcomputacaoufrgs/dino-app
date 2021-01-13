@@ -6,11 +6,14 @@ import { FormControl, InputLabel, Select, Input } from '@material-ui/core'
 import SelectMultipleTreatmentsProps from './props'
 import Loader from '../../loader'
 import './styles.css'
+import { useLanguage } from '../../../context/language'
 
 const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({ selectedLocalIds, setSelectedLocalIds }) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedLocalIds(event.target.value as number[]);
   }
+
+  const language = useLanguage()
 
   const [isLoading, setIsLoading] = useState(true)
   const [treatments, setTreatments] = useState<TreatmentEntity[]>()
@@ -39,7 +42,7 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({ sel
     if(treatments && !isLoading) {
       return (
         treatments.map((t) => 
-          <MenuItem key={t.name} value={t.localId}>
+          <MenuItem key={t.localId} value={t.localId}>
             {t.name}
           </MenuItem>
       ))
@@ -49,22 +52,22 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({ sel
 
   return (
     <div className='select_multiple_treatments'>
-      <Loader isLoading={isLoading}>
-        <FormControl style={{'marginTop': '6px', 'width': '100%'}}>
-          <InputLabel id="select_multiple_treatments__input_label">Tratamentos</InputLabel>
-          <Select
-            labelId="select_multiple_treatments__input_label"
-            id="select_multiple_treatments__select_id"
-            multiple
-            fullWidth
-            value={selectedLocalIds}
-            onChange={handleChange}
-            input={<Input />}
-          >
-            {renderOptions()}
-          </Select>
+        <FormControl className="select_multiple_treatments__form_control">
+          <InputLabel id="select_multiple_treatments__input_label">{language.data.SETTINGS_TREATMENT}</InputLabel>
+          <Loader isLoading={isLoading}>
+            <Select
+              labelId="select_multiple_treatments__input_label"
+              id="select_multiple_treatments__select_id"
+              multiple
+              fullWidth
+              value={selectedLocalIds}
+              onChange={handleChange}
+              input={<Input />}
+            >
+                {renderOptions()}
+            </Select>
+          </Loader>
         </FormControl>
-      </Loader>
     </div>
   )
 }

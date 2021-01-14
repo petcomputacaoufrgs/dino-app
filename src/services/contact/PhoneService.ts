@@ -41,8 +41,6 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
       type: model.type
     }
 
-    console.log(model)
-
     const contactId = model.contactId
     const essentialContactId = model.essentialContactId
     if(Utils.isNotEmpty(contactId)) {

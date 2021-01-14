@@ -79,7 +79,7 @@ export default class PT implements LanguageBase {
   DELETE_CONTACT_QUESTION = 'Deletar contato?'
 
   DELETE_CONTACT_OPTION_TEXT =
-    'Esta ação irá deletar seu contato permanentemente.'
+    'Esta ação irá deletar seu contato para sempre.'
 
   TERMS_OF_USE = 'Termos de Uso'
 

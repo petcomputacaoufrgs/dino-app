@@ -1,8 +1,7 @@
 .note__note_content {
-  height: 100%;
-  overflow-y: hidden;
+  overflow-x: auto;
+  margin-bottom: 1rem;
 }
-
 .note__note_content__columns {
   width: 100%;
   height: 100%;

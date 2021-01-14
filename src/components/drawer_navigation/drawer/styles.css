@@ -15,13 +15,15 @@
 }
 
 .drawer_navigation__drawer__visible__menu__icon {
-  width: 25px;
-  height: 25px;
+  width: var(--very-large-font);
+  height: auto;
   fill: var(--light-color);
 }
 
 .drawer_navigation__drawer__visible .MuiListItemIcon-root {
   margin-bottom: 4px;
+  margin-right: 10px;
+  min-width: 0px;
 }
 
 .drawer_navigation__drawer__visible
@@ -92,10 +94,13 @@
 
 .drawer_navigation__drawer__visible .user .username {
   font-weight: 700;
-  font-size: large;
+  font-size: var(--default-font);
   color: inherit;
   margin-top: 1rem;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .drawer_navigation__drawer__visible

@@ -4,6 +4,10 @@
   text-overflow: ellipsis;
   overflow-x: hidden;
   text-align: justify;
+  font-size: var(--default-font);
+}
+.contact_dialog_content_header .MuiTypography-root.MuiTypography-root.MuiCardHeader-subheader {
+  font-size: var(--small-font);
 }
 
 .contact_dialog_content_header .MuiCardHeader-content {

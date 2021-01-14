@@ -1,5 +1,6 @@
 .faq-items {
   padding: 4px 8px 8px;
+  font-size: var(--default-font);
 }
 
 .faq-items__title {
@@ -12,4 +13,8 @@
 
 .faq-items__accordion {
   padding: 0px;
+}
+
+.link_button {
+  font-size: var(--small-font) !important;
 }

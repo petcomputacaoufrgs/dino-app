@@ -9,6 +9,7 @@
   background-color: var(--header-and-menu);
   font-weight: bold;
   color: var(--column-font-color);
+  font-size: var(--small-font);
 }
 
 .note_info_dialog__title.MuiDialogTitle-root {
@@ -42,7 +43,7 @@
 }
 
 .note__info_dialog__title__question .MuiInputBase-root {
-  font-size: 1.3rem;
+  font-size: var(--default-font);
   font-weight: bold;
   color: var(--column-font-color);
   height: 100%;

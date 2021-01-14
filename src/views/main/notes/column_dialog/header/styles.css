@@ -3,11 +3,11 @@
 }
 
 .note__column_dialog__header .MuiTypography-root.MuiCardHeader-title {
-  color: var(--inv-contrast-color);
+  color: var(--light-color);
 }
 
 .note__column_dialog__header.MuiCardHeader-root
   .MuiCardHeader-content
   .MuiTypography-root.MuiCardHeader-title {
-  font-size: 1.2rem;
+  font-size: var(--default-font);
 }

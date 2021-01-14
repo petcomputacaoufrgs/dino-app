@@ -57,7 +57,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
     if (entity.localContactId) {
       const contact = await ContactService.getByLocalId(entity.localContactId)
 
-      if (contact && contact.id && entity.resourceName) {
+      if (contact && contact.id) {
         const model: GoogleContactDataModel = {
           resourceName: entity.resourceName,
           contactId: contact.id,
@@ -129,7 +129,6 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
         localContactId: contact.localId,
         savedOnGoogleAPI: 0
       }
-      console.log(newGoogleContact)
       await this.save(newGoogleContact)
     }
   }

@@ -14,6 +14,7 @@ import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathServic
 import Database from '../../storage/database/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
+import GoogleScopeService from '../auth/google/GoogleScopeService'
 
 export class ContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -30,7 +31,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
   }
 
   getSyncDependencies(): SynchronizableService[] {
-    return [EssentialContactService]
+    return [GoogleScopeService, EssentialContactService]
   }
 
   async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {

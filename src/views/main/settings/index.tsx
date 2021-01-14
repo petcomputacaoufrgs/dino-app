@@ -120,13 +120,13 @@ const Settings: React.FC = () => {
     }
   }
 
-  const handleAgreeContactsGrantDialog = () => {
+  const handleAgreeContactsGrantDialog = async () => {
+    setOpenGoogleContactDialog(false)
     if (settings) {
       settings.declineGoogleContacts = false
-      UserSettingsService.save(settings)
+      await UserSettingsService.save(settings)
       GoogleContactService.activeGoogleContactsGrant()
     }
-    setOpenGoogleContactDialog(false)
   }
 
   const handleDisagreeContactsGrantDialog = () => {

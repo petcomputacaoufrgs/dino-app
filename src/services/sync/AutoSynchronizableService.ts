@@ -268,9 +268,9 @@ export default abstract class AutoSynchronizableService<
       entity.localState = SynchronizableLocalState.SAVED_LOCALLY
     })
 
-    await this.dbSaveAll(entities)
-
     await this.onSaveAllOnAPI(entities)
+
+    await this.dbSaveAll(entities)
 
     const models = await this.internalConvertEntitiesToModels(entities)
 

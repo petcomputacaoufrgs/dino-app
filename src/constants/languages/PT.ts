@@ -472,7 +472,7 @@ export default class PT implements LanguageBase {
   GRANT_DECLINED = 'Você pode ativar esta função futuramente.'
 
   GOOGLE_CONTACT_GRANT_TEXT =
-    'Gostaríamos de permissão para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. \nNunca leremos nem modificaremos outros contatos fora dos contatos do DinoApp.'
+    'Gostaríamos de permissão para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. \nNunca leremos nem modificaremos outros contatos além dos contatos criados no DinoApp.'
 
   GOOGLE_CONTACT_GRANT_TITLE = 'Seus contatos em qualquer lugar'
 

@@ -9,5 +9,5 @@ export default interface UserSettingsEntity
   declineGoogleContacts: boolean
   firstSettingsDone: boolean
   treatmentLocalId?: number
-  settingsStep: number
+  step: number
 }

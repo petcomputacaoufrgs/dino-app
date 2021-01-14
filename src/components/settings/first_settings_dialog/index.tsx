@@ -131,7 +131,7 @@ const FirstSettingsDialog: React.FC = () => {
 
   const handleBackStep = () => {
     if (settings) {
-      settings.settingsStep -= 1
+      settings.step -= 1
 
       UserSettingsService.save(settings)
     }
@@ -140,7 +140,7 @@ const FirstSettingsDialog: React.FC = () => {
   const handleNextStep = () => {
     if (settings) {
 
-      settings.settingsStep += 1
+      settings.step += 1
 
       UserSettingsService.save(settings)
 
@@ -153,7 +153,7 @@ const FirstSettingsDialog: React.FC = () => {
         includeEssentialContact: true,
         declineGoogleContacts: false,
         firstSettingsDone: false,
-        settingsStep: 1,
+        step: 1,
       }
 
       UserSettingsService.save(newEntity)
@@ -312,7 +312,7 @@ const FirstSettingsDialog: React.FC = () => {
   }
 
   const renderDialogContent = () => {
-    const step = settings ? settings.settingsStep : 0
+    const step = settings ? settings.step : 0
     const dialog = getDialog(step)
 
     return (
@@ -337,7 +337,7 @@ const FirstSettingsDialog: React.FC = () => {
           className="first-settings__dialog"
           aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
           open={dialogOpen}
-          key={settings ? settings.settingsStep : 0}
+          key={settings ? settings.step : 0}
           TransitionComponent={TransitionSlide}
           disableEscapeKeyDown
           disableBackdropClick
@@ -347,7 +347,7 @@ const FirstSettingsDialog: React.FC = () => {
           <DialogActions>
             <DinoStepper
               steps={NUMBER_DIALOGS}
-              activeStep={settings ? settings.settingsStep : 0}
+              activeStep={settings ? settings.step : 0}
               onNext={handleNextStep}
               onBack={handleBackStep}
               onSave={handleSave}

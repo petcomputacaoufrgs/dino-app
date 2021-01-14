@@ -46,7 +46,7 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
       includeEssentialContact: model.includeEssentialContact,
       language: model.language ? model.language : this.getDefaultLanguageCode(),
       firstSettingsDone: model.firstSettingsDone,
-      settingsStep: model.settingsStep,
+      step: model.step,
     }
 
     if (model.treatmentId) {
@@ -70,7 +70,7 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
       includeEssentialContact: entity.includeEssentialContact,
       language: entity.language,
       firstSettingsDone: entity.firstSettingsDone,
-      settingsStep: entity.settingsStep,
+      step: entity.step,
     }
 
     if (entity.treatmentLocalId) {

@@ -135,7 +135,6 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
   ): Promise<void> {
     if (Utils.isNotEmpty(contact.localId)) {
       const phones = await this.table.where('localContactId').equals(contact.localId!).toArray()
-
       if (phones.length > 0) {
         await this.deleteAll(phones)
       }

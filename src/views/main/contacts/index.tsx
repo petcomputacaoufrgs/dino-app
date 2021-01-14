@@ -17,6 +17,7 @@ import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
 import GoogleContactService from '../../../services/contact/GoogleContactService'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import UserService from '../../../services/user/UserService'
 
 const Contacts: React.FC = () => {
   const language = useLanguage()
@@ -25,17 +26,23 @@ const Contacts: React.FC = () => {
   const [contacts, setContacts] = useState<ContactView[]>([])
   const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
   const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-
   const [openGrantDialog, setOpenGrantDialog] = useState(false)
   const [add, setAdd] = useState(false)
   const [addEssential, setAddEssential] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [shouldDecline, setShouldDecline] = useState(false)
+  const [adminPermission, setAdminPermission] = useState(false)
 
   const filteredContacts = ContactService.filterContactViews(contacts, searchTerm)
 
   useEffect(() => {
     const loadData = async () => {
+
+      const user = await UserService.getFirst()
+
+      if(user) {
+        setAdminPermission(user.permission === 1)
+      }
       const settings = await UserSettingsService.getFirst()
       const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
       const contacts  = await ContactService.getAll()
@@ -165,12 +172,14 @@ const Contacts: React.FC = () => {
           icon={AddIconSVG}
           onClick={handleAddContact}
         />
-        <CircularButton
-          ariaLabel={language.data.CONTACTS_ADD_CONTACT + ' (Essential)'}
-          className="add_essential_contact_button"
-          icon={AddIconSVG}
-          onClick={handleAddEssentialContact}
-        />
+        {adminPermission && (
+          <CircularButton
+            ariaLabel={language.data.CONTACTS_ADD_CONTACT + ' (Essential)'}
+            className="add_essential_contact_button"
+            icon={AddIconSVG}
+            onClick={handleAddEssentialContact}
+          />
+        )}
       </Loader>
       <ContactFormDialog
         items={contacts}
@@ -178,12 +187,13 @@ const Contacts: React.FC = () => {
         dialogOpen={add}
         onClose={handleClose}
       />
+      
       <ContactFormDialog
         items={contacts}
         action={Contants.ACTION_ADD_ESSENTIAL}
         dialogOpen={addEssential}
         onClose={handleCloseEssential}
-      />
+      /> 
       <GoogleGrantDialog
         onAccept={handleAcceptGoogleGrant}
         onDecline={handleDeclineGoogleGrant}

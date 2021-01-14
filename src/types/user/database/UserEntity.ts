@@ -6,4 +6,5 @@ export default interface UserEntity
   email: string
   pictureURL: string
   pictureBase64?: string
+  permission: number
 }

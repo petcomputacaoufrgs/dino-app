@@ -53,6 +53,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
       email: model.email,
       name: model.name,
       pictureURL: model.pictureURL,
+      permission: model.permission
     }
 
     return entity
@@ -65,6 +66,7 @@ export class UserServiceImpl extends AutoSynchronizableService<
       email: entity.email,
       name: entity.name,
       pictureURL: entity.pictureURL,
+      permission: entity.permission
     }
 
     return model

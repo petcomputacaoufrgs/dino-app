@@ -1,6 +1,5 @@
 import React from 'react'
 import ArrowBack from '../../components/arrow_back'
-
 import './styles.css'
 
 const PrivacyPolicy: React.FC = () => {

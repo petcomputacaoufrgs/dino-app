@@ -1,6 +1,6 @@
 .privacy_policy {
   font-family: var(--font-base);
-  font-size: 14px;
+  font-size: var(--default-font);
   background-color: var(--background-main);
   color: var(--base-font-color);
   width: 100%;
@@ -8,6 +8,14 @@
   padding: 30px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.privacy_policy h2 {
+  font-size: var(--very-large-font);
+}
+
+.privacy_policy h5 {
+  font-size: var(--big-font);
 }
 
 .privacy_policy .arrow-back {
@@ -35,7 +43,7 @@
 }
 
 .privacy_policy span {
-  font-size: 12px;
+  font-size: var(--small-font);
   text-align: center;
   color: #636363;
 }

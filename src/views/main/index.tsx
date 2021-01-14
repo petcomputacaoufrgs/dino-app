@@ -15,14 +15,12 @@ import NotFound from '../not_found/index'
 import Faq from './faq'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import Calendar from './calendar'
-import AboutUs from './about'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
 import Loader from '../../components/loader/index'
 
 const Main = () => {
-
   const language = useLanguage()
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
@@ -79,13 +77,7 @@ const Main = () => {
         />
         <PrivateRoute
           path={PathConstants.FAQ}
-          component={() => (
-            <Faq />
-          )}
-        />
-        <PrivateRoute
-          path={PathConstants.ABOUT_US}
-          component={AboutUs}
+          component={Faq}
         />
         <PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
         <PrivateRoute path={'/'} component={NotFound} />

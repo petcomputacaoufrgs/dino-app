@@ -1,6 +1,6 @@
 .terms_of_use {
   font-family: var(--font-base);
-  font-size: 14px;
+  font-size: var(--default-font);
   text-align: justify;
 
   background-color: var(--background-main);
@@ -12,6 +12,15 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.terms_of_use h2 {
+  font-size: var(--very-large-font);
+}
+
+.terms_of_use h5 {
+  font-size: var(--big-font);
+}
+
 
 .terms_of_use .arrow-back {
   padding: 0px;

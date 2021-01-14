@@ -1,4 +1,4 @@
-button.link-button {
+button.link_button {
   text-decoration: underline;
   color: var(--button-font-color);
   border: none;
@@ -9,8 +9,8 @@ button.link-button {
   margin: auto;
 }
 
-button.link-button:hover,
-button.link-button:focus {
+button.link_button:hover,
+button.link_button:focus {
   color: var(--button-selected-font-color);
   outline: none;
 }

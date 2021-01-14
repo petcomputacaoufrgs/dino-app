@@ -3,7 +3,7 @@
 }
 
 .alert__dialog_title .MuiTypography-root {
-  color: var(--inv-contrast-color);
+  color: var(--light-color);
 }
 
 .alert__dialog_title .MuiDialogActions-root.MuiDialogActions-spacing {

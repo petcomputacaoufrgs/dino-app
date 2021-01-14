@@ -3,6 +3,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: justify;
+  font-size: var(--small-font);
 }
 
 .MuiListItemSecondaryAction-root {

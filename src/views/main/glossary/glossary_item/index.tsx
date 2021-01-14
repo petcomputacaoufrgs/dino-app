@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Divider, Paper } from '@material-ui/core'
+import { Divider } from '@material-ui/core'
 import { useLanguage } from '../../../../context/language'
 import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
@@ -52,9 +52,8 @@ const GlossaryItem: React.FC = () => {
   }, [isLoading, localId])
 
   return (
-    <Loader className='glossary-item-loader' isLoading={isLoading} hideChildren>
-      <div className="glossary-item">
-        <Paper elevation={1}>
+    <Loader className='glossary_item_loader' isLoading={isLoading} hideChildren>
+      <div className="glossary_item">
           <div className="card__header">
             <div className="card__header__title">
               {glossaryItem ? glossaryItem.title : language.data.NO_AVAILABLE_TEXT}
@@ -69,7 +68,6 @@ const GlossaryItem: React.FC = () => {
               {glossaryItem?.fullText || language.data.NO_AVAILABLE_TEXT}
             </div>
           </div>
-        </Paper>
       </div>
     </Loader>
   )

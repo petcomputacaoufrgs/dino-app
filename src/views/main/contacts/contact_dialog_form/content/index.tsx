@@ -67,7 +67,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
       ))}
       <TextButton className="add-phone__button" onClick={props.handleAddPhone}>
         <Typography variant="body2" color="textSecondary" display="block">
-          {language.data.FORM_ADD_PHONE}
+          {"+ " + language.data.FORM_ADD_PHONE}
         </Typography>
       </TextButton>
       {props.children}

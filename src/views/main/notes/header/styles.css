@@ -26,3 +26,7 @@
   .MuiAutocomplete-input {
   padding: 4.5px 32px 4.5px 0px;
 }
+
+.notes__header .MuiChip-label.MuiChip-labelSmall {
+  font-size: var(--small-font);
+}

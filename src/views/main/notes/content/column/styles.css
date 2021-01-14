@@ -14,7 +14,6 @@
   background-color: var(--board-background);
   border-radius: 8px;
   padding: 10px 15px 10px 15px;
-  height: 95%;
   width: 270px;
 }
 
@@ -36,8 +35,4 @@
   height: calc(100% - 10px);
   overflow-y: auto;
   margin-top: 24px;
-}
-
-.note__note_content__column__draggable__add_button {
-  height: 27px;
 }

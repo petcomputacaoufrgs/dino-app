@@ -36,7 +36,7 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
           {question}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id="alert-dialog-description" className="alert__dialog__description">
             {description}
           </DialogContentText>
         </DialogContent>

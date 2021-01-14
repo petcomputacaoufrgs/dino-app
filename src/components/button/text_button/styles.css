@@ -4,6 +4,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: var(--small-font);
   padding: 0.4rem 1rem;
 }

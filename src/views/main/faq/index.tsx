@@ -143,7 +143,7 @@ const Faq: React.FC = () => {
             onChange={handleChangeValueSearchTerm}
             placeholder={language.data.SEARCH_HOLDER}
           />
-          <div>
+          <div className="faq__content">
             <FaqItems data={searchResults} />
             {faq &&
               <>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
 import ContactMenuItemsProps from './props'
 import { useLanguage } from '../../../../context/language'
+import './styles.css'
 
 const ContactMenuItems = ({ anchor, setAnchor, item, onEdit, onDelete, onCloseDialog}: ContactMenuItemsProps) => {
   const language = useLanguage()
@@ -39,6 +40,7 @@ const ContactMenuItems = ({ anchor, setAnchor, item, onEdit, onDelete, onCloseDi
         anchorEl={anchor}
         open={Boolean(anchor)}
         onClose={handleClose}
+        className="contact__contact_menu_items"
       >
         {renderEditMenuItem()}
         <MenuItem onClick={handleDelete}>

@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         <div className="info__grid">
           {items.filter(item => !item.image).map((item, index) => (
             <Button key={index} className="info__grid__item" onClick={item.onClick}>
-              {item.name}
+              <p>{item.name}</p>
             </Button>
           ))}
         </div>

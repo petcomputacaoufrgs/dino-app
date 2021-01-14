@@ -47,8 +47,12 @@
   color: var(--light-color);
 }
 
+.button.settings__save_button {
+  font-size: var(--default-font);
+}
+
 .settings__title.MuiTypography-root {
   font-weight: 700;
-  font-size: large;
-  margin-bottom: 40px;
+  font-size: var(--big-font);
+  margin-bottom: 1.5rem;
 }

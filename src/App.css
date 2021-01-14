@@ -10,6 +10,17 @@ body .MuiInputBase-root,
   color: var(--base-font-color);
 }
 
+body .MuiInputBase-root {
+  font-size: var(--default-font);
+}
+
+body .MuiFormLabel-root {
+  font-size: var(--default-font);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 body .MuiFormControl-root.MuiTextField-root.MuiFormControl-fullWidth {
   overflow: hidden;
   text-overflow: ellipsis;

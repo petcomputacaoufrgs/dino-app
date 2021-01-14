@@ -1,10 +1,10 @@
 import React from 'react'
-import { Paper } from '@material-ui/core'
-import PetLogo from '../../../assets/logos/pet.png'
-import HCLogo from '../../../assets/logos/hc.png'
-import UfrgsLogo from '../../../assets/logos/ufrgs.png'
+import PetLogo from '../../assets/logos/pet.png'
+import HCLogo from '../../assets/logos/hc.png'
+import UfrgsLogo from '../../assets/logos/ufrgs.png'
 import Section from './section'
-import DinoLogoHeader from '../../../components/dino_logo_header'
+import DinoLogoHeader from '../../components/dino_logo_header'
+import ArrowBack from '../../components/arrow_back'
 import './styles.css'
 
 const AboutUs: React.FC = () => {
@@ -22,19 +22,19 @@ const AboutUs: React.FC = () => {
   ]
 
   return (
-    <div className="about-us">
-      <Paper elevation={1}>
+    <div className="about_us">
+      <ArrowBack />
         <div className="card__header">
           <DinoLogoHeader
             title={'Sobre Nós'}
-            subtitle={'Programa de Educação Tutorial'}
+            subtitle={'DinoApp'}
           />
         </div>
         <div className="card__content">
           <div className="card__typography">
             {sections.map((section, index) => (
               <Section
-                title={`${index + 1}. ${section.title}`}
+                title={`${section.title}`}
                 ImgSrc={section.img}
                 text={section.text}
                 footnote={section.footnote}
@@ -43,7 +43,6 @@ const AboutUs: React.FC = () => {
             ))}
           </div>
         </div>
-      </Paper>
     </div>
   )
 }

@@ -7,7 +7,7 @@ interface LinkButtonProps {
 }
 
 const LinkButton = ({ text, onClick }: LinkButtonProps): JSX.Element => (
-  <button className="link-button" onClick={onClick}>
+  <button className="link_button" onClick={onClick}>
     {text}
   </button>
 )

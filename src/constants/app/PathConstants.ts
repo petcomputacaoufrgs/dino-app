@@ -19,7 +19,7 @@ class PathConstants {
 
   CALENDAR = `${this.USER}/calendar`
 
-  ABOUT_US = `${this.USER}/about-us`
+  ABOUT_US = '/about-us'
 
   TERMS_OF_USE = '/terms_of_use'
 

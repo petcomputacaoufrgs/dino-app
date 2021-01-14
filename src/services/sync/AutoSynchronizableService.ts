@@ -238,8 +238,6 @@ export default abstract class AutoSynchronizableService<
             response.data
           )
 
-          console.log(newEntity)
-
           if (newEntity) {
             newEntity.localId = dbEntity.localId
             newEntity.localState = SynchronizableLocalState.SAVED_ON_API
@@ -270,9 +268,9 @@ export default abstract class AutoSynchronizableService<
       entity.localState = SynchronizableLocalState.SAVED_LOCALLY
     })
 
-    await this.dbSaveAll(entities)
-
     await this.onSaveAllOnAPI(entities)
+
+    await this.dbSaveAll(entities)
 
     const models = await this.internalConvertEntitiesToModels(entities)
 

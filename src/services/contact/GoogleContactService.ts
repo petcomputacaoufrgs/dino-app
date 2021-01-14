@@ -57,10 +57,10 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
     if (entity.localContactId) {
       const contact = await ContactService.getByLocalId(entity.localContactId)
 
-      if (contact && contact.id && entity.resourceName) {
+      if (contact && Utils.isNotEmpty(contact.id)) {
         const model: GoogleContactDataModel = {
           resourceName: entity.resourceName,
-          contactId: contact.id,
+          contactId: contact.id!,
         }
 
         return model
@@ -129,7 +129,6 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
         localContactId: contact.localId,
         savedOnGoogleAPI: 0
       }
-      console.log(newGoogleContact)
       await this.save(newGoogleContact)
     }
   }
@@ -149,17 +148,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
   async activeGoogleContactsGrant() {
     const notSavedGoogleContacts = await this.table.where('savedOnGoogleAPI').equals(0).toArray()
 
-    const savePromises = notSavedGoogleContacts.map(async googleContact => {
-      if (googleContact.localContactId) {
-        const contact = await ContactService.getByLocalId(googleContact.localContactId)
-        const phones = await PhoneService.getAllByContactLocalId(googleContact.localContactId)
-        if (contact) {
-          return this.saveContactOnGoogleAPI(googleContact, contact, phones)
-        }
-      }
-    })
-
-    await Promise.all(savePromises)
+    this.saveAll(notSavedGoogleContacts)
   }
 
   private saveContactOnGoogleAPI = async (
@@ -181,6 +170,7 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
       if (response && response.resourceName) {
         entity.resourceName = response.resourceName
         entity.savedOnGoogleAPI = response.resourceName ? 1 : 0
+        console.log("salvou")
       }
     } catch (e) {
       LogAppErrorService.logError(e)

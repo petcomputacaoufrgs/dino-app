@@ -64,14 +64,14 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
     groupedItems.length - 1 === groupIndex
 
   const renderItems = (items: MenuItemViewModel[]): JSX.Element[] => {
-    return items.map((item, itemIndex) => (
+    return items.filter(item => item.image).map((item, itemIndex) => (
       <ListItem
         button
         aria-label={language.data.CLICK_TO_OPEN_MENU_ITEM + item.name}
         key={itemIndex}
         onClick={() => handleClick(item)}
       >
-        <ListItemIcon>{renderItemImage(item.image)}</ListItemIcon>
+        <ListItemIcon>{renderItemImage(item.image!)}</ListItemIcon>
         <ListItemText primary={item.name} />
       </ListItem>
     ))

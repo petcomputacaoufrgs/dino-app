@@ -97,14 +97,14 @@ const Contacts: React.FC = () => {
     setSearchTerm(event.target.value)
   }
 
-  const handleAcceptGoogleGrant = () => {
-    if (settings) {
-      settings.declineGoogleContacts = false
-      GoogleContactService.activeGoogleContactsGrant()
-      UserSettingsService.save(settings)
-    }
+  const handleAcceptGoogleGrant = async () => {
     setOpenGrantDialog(false)
     setAdd(true)
+    if (settings) {
+      settings.declineGoogleContacts = false
+      await UserSettingsService.save(settings)
+      GoogleContactService.activeGoogleContactsGrant()
+    }
   }
 
   const handleCloseGoogleGrant = () => {

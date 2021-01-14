@@ -26,12 +26,26 @@
 
 .login__button {
   margin-top: 64px;
+  margin-bottom: 2.5rem;
 }
 
 .login__message {
   margin-top: 8px;
   font-size: x-large;
   color: var(--light-color);
+}
+
+.login .login__info {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login .link_button {
+  padding: 0;
+  margin-bottom: 0.8rem;
+  text-align: center;
 }
 
 @media (orientation: landscape) {

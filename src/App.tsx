@@ -17,6 +17,7 @@ import UserSettingsService from './services/user/UserSettingsService'
 import UserSettingsEntity from './types/user/database/UserSettingsEntity'
 import DataFontSizeUtils from './utils/DataFontSizeUtils'
 import AuthService from './services/auth/AuthService'
+import AboutUs from './views/about'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
@@ -115,6 +116,7 @@ const App = (): JSX.Element => {
         />
         <Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
         <Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
+        <Route path={PathConstants.ABOUT_US} component={AboutUs} />
         <Route path={'/'} component={NotFound} />
       </Switch>
     </PrivateRouterContextProvider>

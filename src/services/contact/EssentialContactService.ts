@@ -90,6 +90,7 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     //TODO: Estudar possibilidade de uma saveAll em contatos também
     essentialContacts.forEach(async ec => { 
       const savedContact = await ContactService.save(this.convertEntityToContactEntity(ec))
+      console.log(ec)
         if(savedContact) {
           await GoogleContactService.saveGoogleContact(savedContact)
           savePhonesFromEssentialContact(ec, savedContact)
@@ -99,6 +100,7 @@ export class EssentialContactServiceImpl extends AutoSynchronizableService<
     const savePhonesFromEssentialContact = async (ec: EssentialContactEntity, c: ContactEntity) => {
       if (ec.localId) {
         const phones = await PhoneService.getAllByEssentialContactLocalId(ec.localId)
+        console.log(phones)
         if (phones.length > 0) {
           const newContactPhones: PhoneEntity[] = phones.map(p => {
             return {

@@ -238,8 +238,6 @@ export default abstract class AutoSynchronizableService<
             response.data
           )
 
-          console.log(newEntity)
-
           if (newEntity) {
             newEntity.localId = dbEntity.localId
             newEntity.localState = SynchronizableLocalState.SAVED_ON_API

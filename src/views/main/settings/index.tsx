@@ -155,6 +155,8 @@ const Settings: React.FC = () => {
         settings.treatmentLocalId = selectedTreatment.localId
       }
 
+      alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
+
       await UserSettingsService.save(settings)
 
       const treatmentChangedWithEssentialContacts = oldTreatment !== settings.treatmentLocalId && settings.includeEssentialContact
@@ -168,8 +170,6 @@ const Settings: React.FC = () => {
       if (treatmentChangedWithEssentialContacts || enabledEssentialContacts) {
         EssentialContactService.saveUserEssentialContacts(settings)
       }
-
-      alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
     } else {
       alert.showErrorAlert(language.data.SETTINGS_SAVE_ERROR)
     }

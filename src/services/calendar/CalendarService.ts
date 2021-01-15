@@ -1,14 +1,12 @@
 import LanguageBase from '../../constants/languages/LanguageBase'
 import DateUtils from '../../utils/DateUtils'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
-import AuthenticatedService from '../auth/AuthenticatedService'
 import Database from '../../storage/database/Database'
 
-class CalendarService extends AuthenticatedService {
+class CalendarService {
   private table: Dexie.Table<CalendarEventEntity, number>
 
   constructor() {
-    super()
     this.table = Database.calendarEvent
   }
 

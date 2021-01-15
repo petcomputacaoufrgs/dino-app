@@ -1,7 +1,7 @@
 import React from 'react'
-import './styles.css'
 import DinoDialogProps from './props'
 import { ReactComponent as DinoAuthSVG } from '../../assets/icons/dino_auth.svg'
+import './styles.css'
 
 export const DinoDialogHeader = ({ children }: DinoDialogProps) => {
   return (

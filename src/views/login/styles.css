@@ -1,19 +1,19 @@
 .login {
-  position: absolute;
+  position: relative;
   overflow: hidden;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
+  padding-top: 45%;
+  height: 100%;
   background-color: var(--login-background);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .login__logo {
-  margin-top: 25vh;
-  width: 150px;
+  width: 10rem;
+  height: auto;
 }
 
 .login__curious {
@@ -24,28 +24,35 @@
   animation: curious_dino 10s infinite;
 }
 
-.login__button {
-  margin-top: 64px;
-  margin-bottom: 2.5rem;
+.login__content__button {
+  margin-top: 5rem;
 }
 
-.login__message {
-  margin-top: 8px;
-  font-size: x-large;
+.login__content__message {
+  text-align: center;
+  font-size: var(--large-font);
   color: var(--light-color);
 }
 
-.login .login__info {
+.login__content__info {
   margin-top: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 0.5rem;
 }
 
-.login .link_button {
+.login__content__info p {
+  margin-bottom: 0.55rem;
+  margin-left: 0.15rem;
+  margin-right: 0.15rem;
+}
+
+.login__content__info .link_button {
   padding: 0;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
   text-align: center;
+  font-size: var(--small-font);
 }
 
 @media (orientation: landscape) {

@@ -1,4 +1,5 @@
 import SyncResolve from "../../types/sync/SyncResolve"
+import AuthService from "../auth/AuthService"
 import WebSocketSubscriberableService from "../websocket/WebSocketSubscriberableService"
 import SyncService from "./SyncService"
 
@@ -27,6 +28,11 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
     return []
   }
 
+  /**
+   * @description Function called on logout
+   */
+  protected async onLogout(): Promise<void> {}
+
   private isSynchronizing: boolean
 
   private syncResult: boolean | undefined
@@ -38,6 +44,7 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
     this.isSynchronizing = false
     this.syncResolves = []
     this.subscribeInSyncService()
+    this.subscribeLogoutCallback()
   }
 
   /**
@@ -48,7 +55,7 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
   }
 
   /**
-   * @description Start complete synchronize process
+   * @description Start synchronization process
    */
   async synchronize(): Promise<boolean> {
     if (this.syncResult !== undefined) {
@@ -69,7 +76,7 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 
   /**
    * @description return default WebSocket dependencies for synchronizable service. 
-   * To add more dependencies use onGet... function.
+   * To add more dependencies use onGetWebSocketDependencies function.
    */
   protected getWebSocketDependencies(): WebSocketSubscriberableService[] {
     const webSocketDependencies: WebSocketSubscriberableService[] = []
@@ -81,9 +88,11 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
   }
 
   private subscribeInSyncService = () => {
-    window.addEventListener('load', () => { 
-      SyncService.subscribeService(this)
-    })
+    window.addEventListener('load', () => SyncService.subscribeService(this))
+  }
+
+  private subscribeLogoutCallback = () => {
+    window.addEventListener('load', () => AuthService.subscribeAuthenticatedService(this.onLogout))
   }
 
   private resolveAllAfterReturn = (result: boolean) => {

@@ -46,22 +46,22 @@ const Login = (): JSX.Element => {
       <div className="login">
         <Dinosaur2 className="login__curious" />
         <Dinosaur1 className="login__logo" />
-        <h1 className="login__message">{language.data.WELCOME_MESSAGE}</h1>
-        <div className="login__button">{renderLoginButton()}</div>
-        <div className="login__info">
-          <LinkButton
-            text={language.data.MENU_ABOUT_US}
-            onClick={() => HistoryService.push(PathConstants.ABOUT_US)}
-          />
-          <LinkButton
-            text={language.data.PRIVACY_POLICY}
-            onClick={() => HistoryService.push(PathConstants.PRIVACY_POLICY)}
-          />
-          <LinkButton
-            text={language.data.TERMS_OF_USE}
-            onClick={() => HistoryService.push(PathConstants.TERMS_OF_USE)}
-          />
-        </div>
+          <h1 className="login__content__message">{language.data.WELCOME_MESSAGE}</h1>
+          <div className="login__content__button">{renderLoginButton()}</div>
+          <div className="login__content__info">
+            <LinkButton
+              text={language.data.MENU_ABOUT_US}
+              onClick={() => HistoryService.push(PathConstants.ABOUT_US)}
+            />
+            <LinkButton
+              text={language.data.PRIVACY_POLICY}
+              onClick={() => HistoryService.push(PathConstants.PRIVACY_POLICY)}
+            />
+            <LinkButton
+              text={language.data.TERMS_OF_USE}
+              onClick={() => HistoryService.push(PathConstants.TERMS_OF_USE)}
+            />
+          </div>
       </div>
     </Loader>
   )

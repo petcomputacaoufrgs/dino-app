@@ -1,11 +1,12 @@
 import UpdateListenner from "../../types/update/UpdateListenner"
-import AuthenticatedService from "../auth/AuthenticatedService"
 
-export default abstract class UpdatableService extends AuthenticatedService {
+/**
+ * @description Base class with update event callback
+ */
+export default abstract class UpdatableService {
     private updateListenners: UpdateListenner[]
 
     constructor() {
-        super()
         this.updateListenners = []
     }
 

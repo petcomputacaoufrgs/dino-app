@@ -3,6 +3,9 @@ import WebSocketWaitExecutionResolve from '../../types/web_socket/WebSocketWaitE
 import UpdatableService from '../update/UpdatableService'
 import WebSocketService from './WebSocketService'
 
+/**
+ * @description Base service with WebSocket subscribers functions and queue to receive responses
+ */
 export default abstract class WebSocketSubscriberableService extends UpdatableService {
     private webSocketResolves: WebSocketWaitExecutionResolve[]
     private isExecutingWSCallback: boolean
@@ -26,7 +29,7 @@ export default abstract class WebSocketSubscriberableService extends UpdatableSe
      */
     protected abstract getWebSocketDependencies(): WebSocketSubscriberableService[]
 
-    private awaitWebSocketExecution = async (itself?: boolean): Promise<void> => {
+    private awaitWebSocketExecution = async (): Promise<void> => {
       if (this.isExecutingWSCallback) {
         return new Promise<void>(resolve => {
           this.webSocketResolves.push(resolve)

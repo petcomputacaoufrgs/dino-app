@@ -22,18 +22,18 @@ import AuthRefreshRequestModel from '../../types/auth/api/AuthRefreshRequestMode
 import AuthRefreshResponseModel from '../../types/auth/api/AuthRefreshResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import AuthEntity from '../../types/auth/database/AuthEntity'
-import AuthenticatedService from './AuthenticatedService'
 import Database from '../../storage/database/Database'
 import UpdatableService from '../update/UpdatableService'
 import UserSettingsService from '../user/UserSettingsService'
+import LogoutCallback from '../../types/auth/service/LogoutCallback'
 
 class AuthService extends UpdatableService {
-  private authenticatedServices: AuthenticatedService[]
+  private logoutCallbacks: LogoutCallback[]
   private table: Dexie.Table<AuthEntity, number>
 
   constructor() {
     super()
-    this.authenticatedServices = []
+    this.logoutCallbacks = []
     this.table = Database.auth
   }
 
@@ -41,8 +41,8 @@ class AuthService extends UpdatableService {
     this.dbClear()
   }
 
-  subscribeAuthenticatedService = (service: AuthenticatedService) => {
-    this.authenticatedServices.push(service)
+  subscribeAuthenticatedService = (callback: LogoutCallback) => {
+    this.logoutCallbacks.push(callback)
   }
 
   requestGoogleLogin = async (forceConsent: boolean, email?: string): Promise<[number, string | undefined]> => {
@@ -160,8 +160,8 @@ class AuthService extends UpdatableService {
   logout = async () => {
     await this.dbClear()
 
-    const onLogoutCallbacks = this.authenticatedServices.map(service => {
-      return service.onLogout()
+    const onLogoutCallbacks = this.logoutCallbacks.map(callback => {
+      return callback()
     })
 
     await Promise.all(onLogoutCallbacks)

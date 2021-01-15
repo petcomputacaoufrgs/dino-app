@@ -170,7 +170,6 @@ export class GoogleContactServiceImpl extends AutoSynchronizableService<
       if (response && response.resourceName) {
         entity.resourceName = response.resourceName
         entity.savedOnGoogleAPI = response.resourceName ? 1 : 0
-        console.log("salvou")
       }
     } catch (e) {
       LogAppErrorService.logError(e)

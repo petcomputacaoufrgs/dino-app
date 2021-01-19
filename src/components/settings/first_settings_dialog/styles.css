@@ -1,50 +1,50 @@
 .first-settings {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: black;
-  opacity: 0.5;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: black;
+	opacity: 0.5;
 }
 
 .first-settings__dialog {
-  min-width: 80%;
-  min-height: 50%;
+	min-width: 80%;
+	min-height: 50%;
 }
 
 .first-settings__dialog h5 {
-  font-size: var(--big-font);
+	font-size: var(--big-font);
 }
 
 .first-settings__dialog h6 {
-  font-size: var(--default-font);
+	font-size: var(--default-font);
 }
 
 .first-settings__dialog p {
-  font-size: var(--default-font);
+	font-size: var(--default-font);
 }
 
 .first-settings__dialog .MuiInputLabel-root {
-  font-size: var(--default-font);
+	font-size: var(--default-font);
 }
 
 .first-settings__dialog .MuiInputBase-root {
-  font-size: var(--default-font);
+	font-size: var(--default-font);
 }
 
 .first-settings__dialog .citation {
-  text-align: end;
-  font-style: italic;
+	text-align: end;
+	font-style: italic;
 }
 
 .first-settings__dialog .message_dialog .dino_header {
-  margin-bottom: 24px;
+	margin-bottom: 24px;
 }
 
 .first-settings__dialog .message_dialog .dino_hr {
-  margin: 12px 8px;
+	margin: 12px 8px;
 }
 .first-settings__dialog .font-size__selector {
-  margin-top: 20px;
+	margin-top: 20px;
 }

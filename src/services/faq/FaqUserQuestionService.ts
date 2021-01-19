@@ -9,54 +9,54 @@ import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathServic
 import Database from '../../storage/Database'
 
 class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
-  number,
-  FaqUserQuestionDataModel,
-  FaqUserQuestionEntity
+	number,
+	FaqUserQuestionDataModel,
+	FaqUserQuestionEntity
 > {
-  constructor() {
-    super(
-      Database.faqUserQuestion,
-      APIRequestMappingConstants.FAQ_USER_QUESTION,
-      WebSocketQueueURLService,
-      APIWebSocketDestConstants.FAQ_USER_QUESTION
-    )
-  }
+	constructor() {
+		super(
+			Database.faqUserQuestion,
+			APIRequestMappingConstants.FAQ_USER_QUESTION,
+			WebSocketQueueURLService,
+			APIWebSocketDestConstants.FAQ_USER_QUESTION,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return [FaqService]
-  }
+	getSyncDependencies(): SynchronizableService[] {
+		return [FaqService]
+	}
 
-  async convertModelToEntity(
-    model: FaqUserQuestionDataModel
-  ): Promise<FaqUserQuestionEntity | undefined> {
-    const faq = await FaqService.getById(model.faqId)
+	async convertModelToEntity(
+		model: FaqUserQuestionDataModel,
+	): Promise<FaqUserQuestionEntity | undefined> {
+		const faq = await FaqService.getById(model.faqId)
 
-    if (faq) {
-      const entity: FaqUserQuestionEntity = {
-        localFaqId: faq.localId,
-        question: model.question,
-      }
+		if (faq) {
+			const entity: FaqUserQuestionEntity = {
+				localFaqId: faq.localId,
+				question: model.question,
+			}
 
-      return entity
-    }
-  }
+			return entity
+		}
+	}
 
-  async convertEntityToModel(
-    entity: FaqUserQuestionEntity
-  ): Promise<FaqUserQuestionDataModel | undefined> {
-    if (entity.localFaqId) {
-      const faq = await FaqService.getByLocalId(entity.localFaqId)
+	async convertEntityToModel(
+		entity: FaqUserQuestionEntity,
+	): Promise<FaqUserQuestionDataModel | undefined> {
+		if (entity.localFaqId) {
+			const faq = await FaqService.getByLocalId(entity.localFaqId)
 
-      if (faq && faq.id) {
-        const model: FaqUserQuestionDataModel = {
-          faqId: faq.id,
-          question: entity.question,
-        }
+			if (faq && faq.id) {
+				const model: FaqUserQuestionDataModel = {
+					faqId: faq.id,
+					question: entity.question,
+				}
 
-        return model
-      }
-    }
-  }
+				return model
+			}
+		}
+	}
 }
 
 export default new FaqUserQuestionServiceImpl()

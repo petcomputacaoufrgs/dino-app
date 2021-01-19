@@ -3,58 +3,58 @@ import ButtonProps from './props'
 import './styles.css'
 
 const Button: React.FC<ButtonProps> = ({
-  className,
-  onClick,
-  children,
-  disabled,
-  inputRef,
-  ariaLabel,
-  outline,
+	className,
+	onClick,
+	children,
+	disabled,
+	inputRef,
+	ariaLabel,
+	outline,
 }) => {
-  const buttonRef = useRef<HTMLButtonElement>(null)
-  const getClassName = (): string => {
-    let mainClass = 'button'
+	const buttonRef = useRef<HTMLButtonElement>(null)
+	const getClassName = (): string => {
+		let mainClass = 'button'
 
-    if (className) {
-      mainClass = mainClass.concat(' ' + className)
-    }
+		if (className) {
+			mainClass = mainClass.concat(' ' + className)
+		}
 
-    if (outline) {
-      mainClass = mainClass.concat(' button__outline')
-    }
+		if (outline) {
+			mainClass = mainClass.concat(' button__outline')
+		}
 
-    if (disabled) {
-      mainClass = mainClass.concat(' disabled')
-    }
+		if (disabled) {
+			mainClass = mainClass.concat(' disabled')
+		}
 
-    return mainClass
-  }
+		return mainClass
+	}
 
-  useEffect(() => {
-    if (inputRef && inputRef.current) {
-      inputRef.current.addEventListener('keyup', (event) => {
-        if (event.keyCode === 13) {
-          event.preventDefault()
-          if (buttonRef.current) {
-            buttonRef.current.click()
-            buttonRef.current.focus()
-          }
-        }
-      })
-    }
-  }, [inputRef])
+	useEffect(() => {
+		if (inputRef && inputRef.current) {
+			inputRef.current.addEventListener('keyup', event => {
+				if (event.keyCode === 13) {
+					event.preventDefault()
+					if (buttonRef.current) {
+						buttonRef.current.click()
+						buttonRef.current.focus()
+					}
+				}
+			})
+		}
+	}, [inputRef])
 
-  return (
-    <button
-      className={getClassName()}
-      disabled={disabled}
-      onClick={onClick}
-      ref={buttonRef}
-      aria-label={ariaLabel}
-    >
-      {children}
-    </button>
-  )
+	return (
+		<button
+			className={getClassName()}
+			disabled={disabled}
+			onClick={onClick}
+			ref={buttonRef}
+			aria-label={ariaLabel}
+		>
+			{children}
+		</button>
+	)
 }
 
 export default Button

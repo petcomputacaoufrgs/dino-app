@@ -6,23 +6,23 @@ import { useLanguage } from '../../context/language'
 import './styles.css'
 
 const LogoutDialog: React.FC<LogoutDialogProps> = ({
-  open,
-  onAgree,
-  onDisagree,
+	open,
+	onAgree,
+	onDisagree,
 }) => {
-  const language = useLanguage()
+	const language = useLanguage()
 
-  const agreementDialogProps: AgreementDialogProps = {
-    onAgree: onAgree,
-    onDisagree: onDisagree,
-    question: language.data.LOGOUT_DIALOG_QUESTION,
-    description: language.data.LOGOUT_DIALOG_DESCRIPTION,
-    agreeOptionText: language.data.AGREEMENT_OPTION_TEXT,
-    disagreeOptionText: language.data.DISAGREEMENT_OPTION_TEXT,
-    open: open,
-  }
+	const agreementDialogProps: AgreementDialogProps = {
+		onAgree: onAgree,
+		onDisagree: onDisagree,
+		question: language.data.LOGOUT_DIALOG_QUESTION,
+		description: language.data.LOGOUT_DIALOG_DESCRIPTION,
+		agreeOptionText: language.data.AGREEMENT_OPTION_TEXT,
+		disagreeOptionText: language.data.DISAGREEMENT_OPTION_TEXT,
+		open: open,
+	}
 
-  return <AgreementDialog {...agreementDialogProps} />
+	return <AgreementDialog {...agreementDialogProps} />
 }
 
 export default LogoutDialog

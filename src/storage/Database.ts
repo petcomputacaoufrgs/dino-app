@@ -21,69 +21,78 @@ const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 11
 
 class Database extends Dexie {
-  auth: Dexie.Table<AuthEntity, number>
-  userSettings: Dexie.Table<UserSettingsEntity, number>
-  note: Dexie.Table<NoteEntity, number>
-  noteColumn: Dexie.Table<NoteColumnEntity, number>
-  logAppError: Dexie.Table<LogAppErrorEntity, number>
-  calendarEvent: Dexie.Table<CalendarEventEntity, number>
-  glossary: Dexie.Table<GlossaryItemEntity, number>
-  contact: Dexie.Table<ContactEntity, number>
-  essentialContact: Dexie.Table<EssentialContactEntity, number>
-  googleContact: Dexie.Table<GoogleContactEntity, number>
-  phone: Dexie.Table<PhoneEntity, number>
-  user: Dexie.Table<UserEntity, number>
-  faq: Dexie.Table<FaqEntity, number>
-  faqItem: Dexie.Table<FaqItemEntity, number>
-  faqUserQuestion: Dexie.Table<FaqUserQuestionEntity, number>
-  treatment: Dexie.Table<TreatmentEntity, number>
-  googleScope: Dexie.Table<GoogleScopeEntity, number>
+	auth: Dexie.Table<AuthEntity, number>
+	userSettings: Dexie.Table<UserSettingsEntity, number>
+	note: Dexie.Table<NoteEntity, number>
+	noteColumn: Dexie.Table<NoteColumnEntity, number>
+	logAppError: Dexie.Table<LogAppErrorEntity, number>
+	calendarEvent: Dexie.Table<CalendarEventEntity, number>
+	glossary: Dexie.Table<GlossaryItemEntity, number>
+	contact: Dexie.Table<ContactEntity, number>
+	essentialContact: Dexie.Table<EssentialContactEntity, number>
+	googleContact: Dexie.Table<GoogleContactEntity, number>
+	phone: Dexie.Table<PhoneEntity, number>
+	user: Dexie.Table<UserEntity, number>
+	faq: Dexie.Table<FaqEntity, number>
+	faqItem: Dexie.Table<FaqItemEntity, number>
+	faqUserQuestion: Dexie.Table<FaqUserQuestionEntity, number>
+	treatment: Dexie.Table<TreatmentEntity, number>
+	googleScope: Dexie.Table<GoogleScopeEntity, number>
 
-  constructor() {
-    super(DATABASE_NAME)
+	constructor() {
+		super(DATABASE_NAME)
 
-    /**
-     * Add only attributes that you will use in where clause
-     **/
-    this.version(DATABASE_VERSION).stores({
-      userSettings: generateSynchronizableTableString(),
-      glossary: generateSynchronizableTableString(),
-      contact: generateSynchronizableTableString('localEssentialContactId'),
-      essentialContact: generateSynchronizableTableString('*treatmentLocalIds', 'isUniversal'),
-      googleContact: generateSynchronizableTableString('localContactId', 'savedOnGoogleAPI'),
-      phone: generateSynchronizableTableString('localContactId', 'localEssentialContactId'),
-      noteColumn: generateSynchronizableTableString(),
-      note: generateSynchronizableTableString('columnId', 'localColumnId'),
-      user: generateSynchronizableTableString(),
-      faq: generateSynchronizableTableString('localTreatmentId'),
-      faqItem: generateSynchronizableTableString('localFaqId'),
-      faqUserQuestion: generateSynchronizableTableString(),
-      treatment: generateSynchronizableTableString(),
-      googleScope: generateSynchronizableTableString('name'),
-      auth: '++id',
-      logAppError: '++id,title,file,error,date',
-      calendarEvent:
-        '++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
-    })
+		/**
+		 * Add only attributes that you will use in where clause
+		 **/
+		this.version(DATABASE_VERSION).stores({
+			userSettings: generateSynchronizableTableString(),
+			glossary: generateSynchronizableTableString(),
+			contact: generateSynchronizableTableString('localEssentialContactId'),
+			essentialContact: generateSynchronizableTableString(
+				'*treatmentLocalIds',
+				'isUniversal',
+			),
+			googleContact: generateSynchronizableTableString(
+				'localContactId',
+				'savedOnGoogleAPI',
+			),
+			phone: generateSynchronizableTableString(
+				'localContactId',
+				'localEssentialContactId',
+			),
+			noteColumn: generateSynchronizableTableString(),
+			note: generateSynchronizableTableString('columnId', 'localColumnId'),
+			user: generateSynchronizableTableString(),
+			faq: generateSynchronizableTableString('localTreatmentId'),
+			faqItem: generateSynchronizableTableString('localFaqId'),
+			faqUserQuestion: generateSynchronizableTableString(),
+			treatment: generateSynchronizableTableString(),
+			googleScope: generateSynchronizableTableString('name'),
+			auth: '++id',
+			logAppError: '++id,title,file,error,date',
+			calendarEvent:
+				'++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
+		})
 
-    this.auth = this.table('auth')
-    this.userSettings = this.table('userSettings')
-    this.user = this.table('user')
-    this.glossary = this.table('glossary')
-    this.contact = this.table('contact')
-    this.essentialContact = this.table('essentialContact')
-    this.googleContact = this.table('googleContact')
-    this.phone = this.table('phone')
-    this.note = this.table('note')
-    this.noteColumn = this.table('noteColumn')
-    this.faq = this.table('faq')
-    this.faqItem = this.table('faqItem')
-    this.faqUserQuestion = this.table('faqUserQuestion')
-    this.logAppError = this.table('logAppError')
-    this.calendarEvent = this.table('calendarEvent')
-    this.treatment = this.table('treatment')
-    this.googleScope = this.table('googleScope')
-  }
+		this.auth = this.table('auth')
+		this.userSettings = this.table('userSettings')
+		this.user = this.table('user')
+		this.glossary = this.table('glossary')
+		this.contact = this.table('contact')
+		this.essentialContact = this.table('essentialContact')
+		this.googleContact = this.table('googleContact')
+		this.phone = this.table('phone')
+		this.note = this.table('note')
+		this.noteColumn = this.table('noteColumn')
+		this.faq = this.table('faq')
+		this.faqItem = this.table('faqItem')
+		this.faqUserQuestion = this.table('faqUserQuestion')
+		this.logAppError = this.table('logAppError')
+		this.calendarEvent = this.table('calendarEvent')
+		this.treatment = this.table('treatment')
+		this.googleScope = this.table('googleScope')
+	}
 }
 
 /**
@@ -91,12 +100,12 @@ class Database extends Dexie {
  * @param attributes attributes to index
  */
 const generateSynchronizableTableString = (...attributes: string[]): string => {
-  const basic = '++localId,localState,id'
-  if (attributes && attributes.length > 0) {
-    return basic + ',' + attributes.join(',')
-  }
+	const basic = '++localId,localState,id'
+	if (attributes && attributes.length > 0) {
+		return basic + ',' + attributes.join(',')
+	}
 
-  return basic
+	return basic
 }
 
 export default new Database()

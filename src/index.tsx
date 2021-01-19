@@ -8,19 +8,19 @@ import App from './App'
 import LanguageProvider from './context/language'
 import './Var.css'
 
-window.addEventListener('load',() => {
-  EventService.whenStart()
+window.addEventListener('load', () => {
+	EventService.whenStart()
 })
 
 ReactDOM.render(
-  <GoogleOAuth2Provider>
-    <AlertProvider>
-      <LanguageProvider>
-        <App />
-      </LanguageProvider>
-    </AlertProvider>
-  </GoogleOAuth2Provider>,
-  document.getElementById('root')
+	<GoogleOAuth2Provider>
+		<AlertProvider>
+			<LanguageProvider>
+				<App />
+			</LanguageProvider>
+		</AlertProvider>
+	</GoogleOAuth2Provider>,
+	document.getElementById('root'),
 )
 
 ServiceWorker.unregister()

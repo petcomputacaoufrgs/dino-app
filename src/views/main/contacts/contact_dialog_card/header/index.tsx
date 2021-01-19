@@ -10,38 +10,38 @@ import '../../styles.css'
 import './styles.css'
 
 const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({
-  item,
-  onClick,
-  children
+	item,
+	onClick,
+	children,
 }) => {
-  const language = useLanguage()
+	const language = useLanguage()
 
-  const isEssential = Utils.isNotEmpty(item.contact.localEssentialContactId)
+	const isEssential = Utils.isNotEmpty(item.contact.localEssentialContactId)
 
-  return (
-    <>
-      <CardHeader
-        avatar={
-          <Avatar
-            aria-label={language.data.AVATAR_ALT}
-            className={`avatar__color-${item.contact.color}`}
-          >
-            {item.contact.name[0].toUpperCase()}
-          </Avatar>
-        }
-        action={
-          <>
-            {isEssential ? <Star /> : <></>}
-            <OptionsIconButton dark onClick={onClick} />
-          </>
-        }
-        title={item.contact.name}
-        subheader={PhoneService.getPhoneTypes(item.phones, language.data)}
-        className="contact_dialog_content_header"
-      />
-      {children}
-    </>
-  )
+	return (
+		<>
+			<CardHeader
+				avatar={
+					<Avatar
+						aria-label={language.data.AVATAR_ALT}
+						className={`avatar__color-${item.contact.color}`}
+					>
+						{item.contact.name[0].toUpperCase()}
+					</Avatar>
+				}
+				action={
+					<>
+						{isEssential ? <Star /> : <></>}
+						<OptionsIconButton dark onClick={onClick} />
+					</>
+				}
+				title={item.contact.name}
+				subheader={PhoneService.getPhoneTypes(item.phones, language.data)}
+				className='contact_dialog_content_header'
+			/>
+			{children}
+		</>
+	)
 }
 
 export default ContactCardHeader

@@ -7,34 +7,34 @@ import { Route, RouteProps, useLocation } from 'react-router'
  * @param props Propriedades do Route
  */
 const LoginRoute = (props: RouteProps): JSX.Element => {
-  const router = usePrivateRouter()
+	const router = usePrivateRouter()
 
-  const location = useLocation()
+	const location = useLocation()
 
-  /**
-   * @description Verifica se o usuário está autenticado e redireciona para a tela correta caso sim
-   */
-  useEffect((): void => {
-    const goToHome = () => {
-      router.browserHistory?.push(router.homePath)
-    }
+	/**
+	 * @description Verifica se o usuário está autenticado e redireciona para a tela correta caso sim
+	 */
+	useEffect((): void => {
+		const goToHome = () => {
+			router.browserHistory?.push(router.homePath)
+		}
 
-    if (router) {
-      if (router.isAuthenticated) {
-        goToHome()
-      }
-    }
-  }, [router, location.pathname])
+		if (router) {
+			if (router.isAuthenticated) {
+				goToHome()
+			}
+		}
+	}, [router, location.pathname])
 
-  const renderRoute = (): JSX.Element => {
-    if (!router.isAuthenticated) {
-      return <Route {...props} />
-    } else {
-      return <></>
-    }
-  }
+	const renderRoute = (): JSX.Element => {
+		if (!router.isAuthenticated) {
+			return <Route {...props} />
+		} else {
+			return <></>
+		}
+	}
 
-  return renderRoute()
+	return renderRoute()
 }
 
 export default LoginRoute

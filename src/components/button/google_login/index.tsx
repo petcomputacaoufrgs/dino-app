@@ -12,100 +12,107 @@ import { useLanguage } from '../../../context/language/index'
 import './styles.css'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
-  onCancel,
-  onDinoAPIFail,
-  onGoogleFail,
-  onRefreshTokenLostError,
-  text,
+	onCancel,
+	onDinoAPIFail,
+	onGoogleFail,
+	onRefreshTokenLostError,
+	text,
 }) => {
-  const language = useLanguage()
-  const alert = useAlert()
-  const googleOAuth2 = useGoogleOAuth2()
+	const language = useLanguage()
+	const alert = useAlert()
+	const googleOAuth2 = useGoogleOAuth2()
 
-  const [loading, setLoading] = useState(false)
-  const [refreshRequired, setRefreshRequired] = useState(false)
-  const [refreshEmail, setRefreshEmail] = useState<string | undefined>(undefined)
+	const [loading, setLoading] = useState(false)
+	const [refreshRequired, setRefreshRequired] = useState(false)
+	const [refreshEmail, setRefreshEmail] = useState<string | undefined>(
+		undefined,
+	)
 
-  const [isConnected, setIsConnected] = useState(
-    ConnectionService.isConnected()
-  )
+	const [isConnected, setIsConnected] = useState(
+		ConnectionService.isConnected(),
+	)
 
-  useEffect(() => {
-    const updateConnectionState = (connected: boolean) => {
-      setIsConnected(connected)
-    }
+	useEffect(() => {
+		const updateConnectionState = (connected: boolean) => {
+			setIsConnected(connected)
+		}
 
-    ConnectionService.addEventListener(updateConnectionState)
+		ConnectionService.addEventListener(updateConnectionState)
 
-    const cleanBeforeUpdate = () => {
-      ConnectionService.removeEventListener(updateConnectionState)
-    }
+		const cleanBeforeUpdate = () => {
+			ConnectionService.removeEventListener(updateConnectionState)
+		}
 
-    return cleanBeforeUpdate
-  })
+		return cleanBeforeUpdate
+	})
 
-  const handleLoginButtonClick = async () => {
-    setLoading(true)
+	const handleLoginButtonClick = async () => {
+		setLoading(true)
 
-    const isDinoConnected = await ConnectionService.isDinoConnected()
+		const isDinoConnected = await ConnectionService.isDinoConnected()
 
-    if (!isDinoConnected) {
-      setLoading(false)
-      setIsConnected(false)
-      return
-    }
+		if (!isDinoConnected) {
+			setLoading(false)
+			setIsConnected(false)
+			return
+		}
 
-    const [status, email] = await AuthService.requestGoogleLogin(refreshRequired, refreshEmail)
+		const [status, email] = await AuthService.requestGoogleLogin(
+			refreshRequired,
+			refreshEmail,
+		)
 
-    if (status === LoginStatusConstants.SUCCESS) {
-      return
-    }
+		if (status === LoginStatusConstants.SUCCESS) {
+			return
+		}
 
-    setRefreshEmail(undefined)
-    setRefreshRequired(false)
+		setRefreshEmail(undefined)
+		setRefreshRequired(false)
 
-    if (status === LoginStatusConstants.REQUEST_CANCELED) {
-      onCancel && onCancel()
-    } else if (status === LoginStatusConstants.UNKNOW_API_ERROR) {
-      onDinoAPIFail && onDinoAPIFail()
-    } else if (status === LoginStatusConstants.EXTERNAL_SERVICE_ERROR) {
-      onGoogleFail && onGoogleFail()
-    } else if (status === LoginStatusConstants.REFRESH_TOKEN_NECESSARY) {
-      setRefreshRequired(true)
-      setRefreshEmail(email)
-      onRefreshTokenLostError && onRefreshTokenLostError()
-    } else if (status === LoginStatusConstants.DISCONNECTED) {
-      showOfflineMessage()
-    }
+		if (status === LoginStatusConstants.REQUEST_CANCELED) {
+			onCancel && onCancel()
+		} else if (status === LoginStatusConstants.UNKNOW_API_ERROR) {
+			onDinoAPIFail && onDinoAPIFail()
+		} else if (status === LoginStatusConstants.EXTERNAL_SERVICE_ERROR) {
+			onGoogleFail && onGoogleFail()
+		} else if (status === LoginStatusConstants.REFRESH_TOKEN_NECESSARY) {
+			setRefreshRequired(true)
+			setRefreshEmail(email)
+			onRefreshTokenLostError && onRefreshTokenLostError()
+		} else if (status === LoginStatusConstants.DISCONNECTED) {
+			showOfflineMessage()
+		}
 
-    setLoading(false)
-  }
+		setLoading(false)
+	}
 
-  const showOfflineMessage = () => {
-    alert.showInfoAlert(language.data.CANT_LOGIN_DISCONNECTED)
-  }
+	const showOfflineMessage = () => {
+		alert.showInfoAlert(language.data.CANT_LOGIN_DISCONNECTED)
+	}
 
-  return (
-    <Loader
-      iconClassName="google_login_button__loader"
-      isLoading={loading || googleOAuth2.loading}
-    >
-      <div className="google_login_button">
-        <TextIconButton
-          ariaLabel={language.data.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
-          icon={GoogleLogoSVG}
-          className={'google_login_button__text_button'}
-          onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
-          disabled={!isConnected}
-        >
-          <p className="google_login_button__text_button__text">{text}</p>
-        </TextIconButton>
-        {!isConnected && (
-          <p className="google_login_button__error">{language.data.DISCONNECTED}</p>
-        )}
-      </div>
-    </Loader>
-  )
+	return (
+		<Loader
+			iconClassName='google_login_button__loader'
+			isLoading={loading || googleOAuth2.loading}
+		>
+			<div className='google_login_button'>
+				<TextIconButton
+					ariaLabel={language.data.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
+					icon={GoogleLogoSVG}
+					className={'google_login_button__text_button'}
+					onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
+					disabled={!isConnected}
+				>
+					<p className='google_login_button__text_button__text'>{text}</p>
+				</TextIconButton>
+				{!isConnected && (
+					<p className='google_login_button__error'>
+						{language.data.DISCONNECTED}
+					</p>
+				)}
+			</div>
+		</Loader>
+	)
 }
 
 export default GoogleLoginButton

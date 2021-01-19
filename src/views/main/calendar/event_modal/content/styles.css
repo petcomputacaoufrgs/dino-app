@@ -1,27 +1,27 @@
 .calendar__event_modal__content__date_info {
-  padding-left: 60px;
+	padding-left: 60px;
 }
 
 .calendar__event_modal__content__data {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-left: 20px;
-  margin-bottom: 15px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-left: 20px;
+	margin-bottom: 15px;
 }
 
 .calendar__event_modal__content__data__icon {
-  margin-right: 16px;
+	margin-right: 16px;
 }
 
 .calendar__event_modal__content__data > p {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .calendar__event_modal__content__data.description {
-  align-items: flex-start;
+	align-items: flex-start;
 }
 
 .calendar__event_modal__content__data__description {
-  margin-top: -4px;
+	margin-top: -4px;
 }

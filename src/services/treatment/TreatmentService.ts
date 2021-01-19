@@ -8,50 +8,50 @@ import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathServic
 import Database from '../../storage/Database'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
-  number,
-  TreatmentDataModel,
-  TreatmentEntity
+	number,
+	TreatmentDataModel,
+	TreatmentEntity
 > {
-  constructor() {
-    super(
-      Database.treatment,
-      APIRequestMappingConstants.TREATMENT,
-      WebSocketTopicURLService,
-      APIWebSocketDestConstants.TREATMENT
-    )
-  }
+	constructor() {
+		super(
+			Database.treatment,
+			APIRequestMappingConstants.TREATMENT,
+			WebSocketTopicURLService,
+			APIWebSocketDestConstants.TREATMENT,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return []
-  }
-  
-  async convertModelToEntity(
-    model: TreatmentDataModel
-  ): Promise<TreatmentEntity> {
-    const entity: TreatmentEntity = {
-      name: model.name,
-    }
+	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
 
-    return entity
-  }
+	async convertModelToEntity(
+		model: TreatmentDataModel,
+	): Promise<TreatmentEntity> {
+		const entity: TreatmentEntity = {
+			name: model.name,
+		}
 
-  async convertEntityToModel(
-    entity: TreatmentEntity
-  ): Promise<TreatmentDataModel> {
-    const model: TreatmentDataModel = {
-      name: entity.name,
-    }
+		return entity
+	}
 
-    return model
-  }
+	async convertEntityToModel(
+		entity: TreatmentEntity,
+	): Promise<TreatmentDataModel> {
+		const model: TreatmentDataModel = {
+			name: entity.name,
+		}
 
-  getAllByIds = (ids: number[]): Promise<TreatmentEntity[]> => {
-    return this.table.where("id").anyOf(ids).toArray()
-  }
+		return model
+	}
 
-  getAllByLocalIds = (localIds: number[]): Promise<TreatmentEntity[]> => {
-    return this.table.where("localId").anyOf(localIds).toArray()
-  }
+	getAllByIds = (ids: number[]): Promise<TreatmentEntity[]> => {
+		return this.table.where('id').anyOf(ids).toArray()
+	}
+
+	getAllByLocalIds = (localIds: number[]): Promise<TreatmentEntity[]> => {
+		return this.table.where('localId').anyOf(localIds).toArray()
+	}
 }
 
 export default new TreatmentServiceImpl()

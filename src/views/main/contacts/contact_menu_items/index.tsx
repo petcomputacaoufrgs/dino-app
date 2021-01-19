@@ -4,50 +4,57 @@ import ContactMenuItemsProps from './props'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
 
-const ContactMenuItems = ({ anchor, setAnchor, item, onEdit, onDelete, onCloseDialog}: ContactMenuItemsProps) => {
-  const language = useLanguage()
+const ContactMenuItems = ({
+	anchor,
+	setAnchor,
+	item,
+	onEdit,
+	onDelete,
+	onCloseDialog,
+}: ContactMenuItemsProps) => {
+	const language = useLanguage()
 
-  const handleClose = () => {
-    setAnchor(null)
-  }
+	const handleClose = () => {
+		setAnchor(null)
+	}
 
-  const renderEditMenuItem = () => {
-    const isNotEssential = item.contact.localEssentialContactId === undefined
+	const renderEditMenuItem = () => {
+		const isNotEssential = item.contact.localEssentialContactId === undefined
 
-    if(isNotEssential) {
-      return (
-        <MenuItem onClick={handleEdit}>
-          {language.data.EDIT_OPTION_TEXT}
-        </MenuItem> 
-      )
-    } 
-  }
+		if (isNotEssential) {
+			return (
+				<MenuItem onClick={handleEdit}>
+					{language.data.EDIT_OPTION_TEXT}
+				</MenuItem>
+			)
+		}
+	}
 
-  const handleEdit = () => {
-    onEdit(item)
-    handleClose()
-    onCloseDialog()
-  }
+	const handleEdit = () => {
+		onEdit(item)
+		handleClose()
+		onCloseDialog()
+	}
 
-  const handleDelete = () => {
-    onDelete(item)
-    handleClose()
-    onCloseDialog()
-  }
+	const handleDelete = () => {
+		onDelete(item)
+		handleClose()
+		onCloseDialog()
+	}
 
-  return (
-      <Menu
-        anchorEl={anchor}
-        open={Boolean(anchor)}
-        onClose={handleClose}
-        className="contact__contact_menu_items"
-      >
-        {renderEditMenuItem()}
-        <MenuItem onClick={handleDelete}>
-          {language.data.DELETE_OPTION_TEXT}
-        </MenuItem>
-      </Menu>
-  ) 
+	return (
+		<Menu
+			anchorEl={anchor}
+			open={Boolean(anchor)}
+			onClose={handleClose}
+			className='contact__contact_menu_items'
+		>
+			{renderEditMenuItem()}
+			<MenuItem onClick={handleDelete}>
+				{language.data.DELETE_OPTION_TEXT}
+			</MenuItem>
+		</Menu>
+	)
 }
 
 export default ContactMenuItems

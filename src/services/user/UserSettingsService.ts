@@ -20,245 +20,252 @@ import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
-  number,
-  UserSettingsDataModel,
-  UserSettingsEntity
+	number,
+	UserSettingsDataModel,
+	UserSettingsEntity
 > {
-  constructor() {
-    super(
-      Database.userSettings,
-      APIRequestMappingConstants.USER_SETTINGS,
-      WebSocketQueueURLService,
-      APIWebSocketDestConstants.USER_SETTINGS
-    )
-  }
+	constructor() {
+		super(
+			Database.userSettings,
+			APIRequestMappingConstants.USER_SETTINGS,
+			WebSocketQueueURLService,
+			APIWebSocketDestConstants.USER_SETTINGS,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return [GoogleScopeService, TreatmentService]
-  }
-  
-  async convertModelToEntity(
-    model: UserSettingsDataModel
-  ): Promise<UserSettingsEntity | undefined> {
-    const entity: UserSettingsEntity = {
-      colorTheme: model.colorTheme,
-      declineGoogleContacts: model.declineGoogleContacts,
-      fontSize: model.fontSize,
-      includeEssentialContact: model.includeEssentialContact,
-      language: model.language ? model.language : this.getDefaultLanguageCode(),
-      firstSettingsDone: model.firstSettingsDone,
-      settingsStep: model.settingsStep,
-    }
+	getSyncDependencies(): SynchronizableService[] {
+		return [GoogleScopeService, TreatmentService]
+	}
 
-    if (model.treatmentId) {
-      const treatment = await TreatmentService.getById(model.treatmentId)
+	async convertModelToEntity(
+		model: UserSettingsDataModel,
+	): Promise<UserSettingsEntity | undefined> {
+		const entity: UserSettingsEntity = {
+			colorTheme: model.colorTheme,
+			declineGoogleContacts: model.declineGoogleContacts,
+			fontSize: model.fontSize,
+			includeEssentialContact: model.includeEssentialContact,
+			language: model.language ? model.language : this.getDefaultLanguageCode(),
+			firstSettingsDone: model.firstSettingsDone,
+			settingsStep: model.settingsStep,
+		}
 
-      if (treatment) {
-        entity.treatmentLocalId = treatment.localId
-      }
-    }
+		if (model.treatmentId) {
+			const treatment = await TreatmentService.getById(model.treatmentId)
 
-    return entity
-  }
+			if (treatment) {
+				entity.treatmentLocalId = treatment.localId
+			}
+		}
 
-  async convertEntityToModel(
-    entity: UserSettingsEntity
-  ): Promise<UserSettingsDataModel | undefined> {
-    const model: UserSettingsDataModel = {
-      colorTheme: entity.colorTheme,
-      declineGoogleContacts: entity.declineGoogleContacts,
-      fontSize: entity.fontSize,
-      includeEssentialContact: entity.includeEssentialContact,
-      language: entity.language,
-      firstSettingsDone: entity.firstSettingsDone,
-      settingsStep: entity.settingsStep,
-    }
+		return entity
+	}
 
-    if (entity.treatmentLocalId) {
-      const treatment = await TreatmentService.getByLocalId(
-        entity.treatmentLocalId
-      )
-      if (treatment && treatment.id) {
-        model.treatmentId = treatment.id
-      }
-    }
+	async convertEntityToModel(
+		entity: UserSettingsEntity,
+	): Promise<UserSettingsDataModel | undefined> {
+		const model: UserSettingsDataModel = {
+			colorTheme: entity.colorTheme,
+			declineGoogleContacts: entity.declineGoogleContacts,
+			fontSize: entity.fontSize,
+			includeEssentialContact: entity.includeEssentialContact,
+			language: entity.language,
+			firstSettingsDone: entity.firstSettingsDone,
+			settingsStep: entity.settingsStep,
+		}
 
-    return model
-  }
+		if (entity.treatmentLocalId) {
+			const treatment = await TreatmentService.getByLocalId(
+				entity.treatmentLocalId,
+			)
+			if (treatment && treatment.id) {
+				model.treatmentId = treatment.id
+			}
+		}
 
-  getColorThemeOptions(language: LanguageBase): ColorThemeOption[] {
-    return [
-      {
-        code: ColorThemeEnum.DEVICE,
-        name: language.DEVICE_DEFAULT_THEME_NAME,
-      },
-      {
-        code: ColorThemeEnum.LIGHT,
-        name: language.LIGHT_THEME_NAME,
-      },
-      {
-        code: ColorThemeEnum.DARK,
-        name: language.DARK_THEME_NAME,
-      },
-      {
-        code: ColorThemeEnum.DALTONIAN,
-        name: language.DALTONIAN_THEME_NAME,
-      },
-    ]
-  }
+		return model
+	}
 
-  getFontSizeOptions(language: LanguageBase): FontSizeOption[] {
-    return [
-      {
-        code: FontSizeEnum.DEFAULT,
-        name: language.DEFAULT_FONT_SIZE_NAME,
-      },
-      {
-        code: FontSizeEnum.LARGE,
-        name: language.LARGE_FONT_SIZE_NAME,
-      },
-      {
-        code: FontSizeEnum.LARGER,
-        name: language.LARGER_FONT_SIZE_NAME,
-      },
-    ]
-  }
+	getColorThemeOptions(language: LanguageBase): ColorThemeOption[] {
+		return [
+			{
+				code: ColorThemeEnum.DEVICE,
+				name: language.DEVICE_DEFAULT_THEME_NAME,
+			},
+			{
+				code: ColorThemeEnum.LIGHT,
+				name: language.LIGHT_THEME_NAME,
+			},
+			{
+				code: ColorThemeEnum.DARK,
+				name: language.DARK_THEME_NAME,
+			},
+			{
+				code: ColorThemeEnum.DALTONIAN,
+				name: language.DALTONIAN_THEME_NAME,
+			},
+		]
+	}
 
-  getLanguages(language: LanguageBase): Language[] {
-    return [
-      {
-        code: LanguageCodeConstants.PORTUGUESE,
-        name: language.LANGUAGE_PORTUGUESE,
-      },
-      {
-        code: LanguageCodeConstants.ENGLISH,
-        name: language.LANGUAGE_ENGLISH,
-      },
-    ]
-  }
+	getFontSizeOptions(language: LanguageBase): FontSizeOption[] {
+		return [
+			{
+				code: FontSizeEnum.DEFAULT,
+				name: language.DEFAULT_FONT_SIZE_NAME,
+			},
+			{
+				code: FontSizeEnum.LARGE,
+				name: language.LARGE_FONT_SIZE_NAME,
+			},
+			{
+				code: FontSizeEnum.LARGER,
+				name: language.LARGER_FONT_SIZE_NAME,
+			},
+		]
+	}
 
-  setHTMLLanguage(language: LanguageBase) {
-    const html = document.getElementById('html')
+	getLanguages(language: LanguageBase): Language[] {
+		return [
+			{
+				code: LanguageCodeConstants.PORTUGUESE,
+				name: language.LANGUAGE_PORTUGUESE,
+			},
+			{
+				code: LanguageCodeConstants.ENGLISH,
+				name: language.LANGUAGE_ENGLISH,
+			},
+		]
+	}
 
-    if (html) {
-      html.lang = language.ISO_LANGUAGE_CODE
-    }
-  }
+	setHTMLLanguage(language: LanguageBase) {
+		const html = document.getElementById('html')
 
-  getEssentialContactGrant(
-    userSettings: UserSettingsEntity | undefined
-  ): boolean | undefined {
-    if (userSettings) {
-      return userSettings.includeEssentialContact
-    } else {
-      return undefined
-    }
-  }
+		if (html) {
+			html.lang = language.ISO_LANGUAGE_CODE
+		}
+	}
 
-  async getTreatment (
-    userSettings: UserSettingsEntity,
-  ): Promise<TreatmentEntity | undefined> {
-    if (userSettings.treatmentLocalId) {
-      return TreatmentService.getByLocalId(userSettings.treatmentLocalId)
-    }
+	getEssentialContactGrant(
+		userSettings: UserSettingsEntity | undefined,
+	): boolean | undefined {
+		if (userSettings) {
+			return userSettings.includeEssentialContact
+		} else {
+			return undefined
+		}
+	}
 
-    return undefined
-  }
+	async getTreatment(
+		userSettings: UserSettingsEntity,
+	): Promise<TreatmentEntity | undefined> {
+		if (userSettings.treatmentLocalId) {
+			return TreatmentService.getByLocalId(userSettings.treatmentLocalId)
+		}
 
-  getFirstSettingsDone = async (): Promise<boolean | undefined> => {
-    const userSettings = await this.getFirst()
+		return undefined
+	}
 
-    if (userSettings) {
-      return userSettings.firstSettingsDone
-    } else {
-      return false
-    }
-  }
-  
-  getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
-    if (userSettings && userSettings.language === LanguageCodeConstants.ENGLISH) {
-      return new EN()
-    } else {
-      return new PT()
-    }
-  }
+	getFirstSettingsDone = async (): Promise<boolean | undefined> => {
+		const userSettings = await this.getFirst()
 
-  getDefaultLanguage = (): LanguageBase => {
-    if (navigator && navigator.language) {
-        if (navigator.language.startsWith('pt')) {
-            return new PT()
-        }
-    }
-    return new EN()
-  }
+		if (userSettings) {
+			return userSettings.firstSettingsDone
+		} else {
+			return false
+		}
+	}
 
-  getDefaultLanguageCode = (): string => {
-    return this.getDefaultLanguage().ISO_LANGUAGE_CODE
-  }
+	getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
+		if (
+			userSettings &&
+			userSettings.language === LanguageCodeConstants.ENGLISH
+		) {
+			return new EN()
+		} else {
+			return new PT()
+		}
+	}
 
-  getColorThemeCode = (userSettings: UserSettingsEntity | undefined): number => {
-    return userSettings ? userSettings.colorTheme : this.getDefaultColorThemeCode()
-  }
+	getDefaultLanguage = (): LanguageBase => {
+		if (navigator && navigator.language) {
+			if (navigator.language.startsWith('pt')) {
+				return new PT()
+			}
+		}
+		return new EN()
+	}
 
-  getDefaultColorThemeCode = () => {
-    return ColorThemeEnum.DEVICE
-  }
+	getDefaultLanguageCode = (): string => {
+		return this.getDefaultLanguage().ISO_LANGUAGE_CODE
+	}
 
-  getDefaultEssentialContactGrant = () => {
-    return true
-  }
+	getColorThemeCode = (
+		userSettings: UserSettingsEntity | undefined,
+	): number => {
+		return userSettings
+			? userSettings.colorTheme
+			: this.getDefaultColorThemeCode()
+	}
 
-  getColorThemeName = (userSettings: UserSettingsEntity): string => {
-    if (userSettings) {
-      switch (userSettings.colorTheme) {
-        case 1:
-          return 'light'
-        case 2:
-          return 'dark'
-        case 3:
-          return 'high_contrast'
-        case 4:
-          return this.getSystemColorThemeName()
-        default:
-          return this.getSystemColorThemeName()
-      }
-    }
+	getDefaultColorThemeCode = () => {
+		return ColorThemeEnum.DEVICE
+	}
 
-    return this.getSystemColorThemeName()
-  }
+	getDefaultEssentialContactGrant = () => {
+		return true
+	}
 
-  getFontSize = (userSettings: UserSettingsEntity): string => {
-    if (userSettings) {
-      switch (userSettings.fontSize) {
-        case 1:
-          return 'default'
-        case 2:
-          return 'large'
-        case 3:
-          return 'larger'
-        default:
-          return 'default'
-      }
-    }
-    return 'default'
-  }
+	getColorThemeName = (userSettings: UserSettingsEntity): string => {
+		if (userSettings) {
+			switch (userSettings.colorTheme) {
+				case 1:
+					return 'light'
+				case 2:
+					return 'dark'
+				case 3:
+					return 'high_contrast'
+				case 4:
+					return this.getSystemColorThemeName()
+				default:
+					return this.getSystemColorThemeName()
+			}
+		}
 
-  getFontSizeCode = (userSettings: UserSettingsEntity | undefined): number => {
-    return userSettings ? userSettings.fontSize : this.getDefaultFontSizeCode()
-  }
+		return this.getSystemColorThemeName()
+	}
 
-  getDefaultFontSizeCode = (): number => {
-    return FontSizeEnum.DEFAULT
-  }
+	getFontSize = (userSettings: UserSettingsEntity): string => {
+		if (userSettings) {
+			switch (userSettings.fontSize) {
+				case 1:
+					return 'default'
+				case 2:
+					return 'large'
+				case 3:
+					return 'larger'
+				default:
+					return 'default'
+			}
+		}
+		return 'default'
+	}
 
-  getSystemColorThemeName = (): string => {
-    const matchDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
-    if (matchDarkMode && matchDarkMode.matches) {
-      return 'dark'
-    }
+	getFontSizeCode = (userSettings: UserSettingsEntity | undefined): number => {
+		return userSettings ? userSettings.fontSize : this.getDefaultFontSizeCode()
+	}
 
-    return 'light'
-  }
+	getDefaultFontSizeCode = (): number => {
+		return FontSizeEnum.DEFAULT
+	}
+
+	getSystemColorThemeName = (): string => {
+		const matchDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+		if (matchDarkMode && matchDarkMode.matches) {
+			return 'dark'
+		}
+
+		return 'light'
+	}
 }
 
 export default new UserSettingsServiceImpl()

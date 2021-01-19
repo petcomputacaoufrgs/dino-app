@@ -11,97 +11,99 @@ import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathServic
 import NoteService from './NoteService'
 
 class NoteColumnServiceImpl extends AutoSynchronizableService<
-  number,
-  NoteColumnDataModel,
-  NoteColumnEntity
+	number,
+	NoteColumnDataModel,
+	NoteColumnEntity
 > {
-  constructor() {
-    super(
-      Database.noteColumn,
-      APIRequestMappingConstants.NOTE_COLUMN,
-      WebSocketQueueURLService,
-      APIWebSocketDestConstants.NOTE_COLUMN
-    )
-  }
+	constructor() {
+		super(
+			Database.noteColumn,
+			APIRequestMappingConstants.NOTE_COLUMN,
+			WebSocketQueueURLService,
+			APIWebSocketDestConstants.NOTE_COLUMN,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return []
-  }
-  
-  async convertModelToEntity(
-    model: NoteColumnDataModel
-  ): Promise<NoteColumnEntity> {
-    const entity: NoteColumnEntity = {
-      order: model.order,
-      title: model.title,
-    }
+	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
 
-    return entity
-  }
+	async convertModelToEntity(
+		model: NoteColumnDataModel,
+	): Promise<NoteColumnEntity> {
+		const entity: NoteColumnEntity = {
+			order: model.order,
+			title: model.title,
+		}
 
-  async convertEntityToModel(
-    entity: NoteColumnEntity
-  ): Promise<NoteColumnDataModel> {
-    const model: NoteColumnDataModel = {
-      order: entity.order,
-      title: entity.title,
-    }
+		return entity
+	}
 
-    return model
-  }
+	async convertEntityToModel(
+		entity: NoteColumnEntity,
+	): Promise<NoteColumnDataModel> {
+		const model: NoteColumnDataModel = {
+			order: entity.order,
+			title: entity.title,
+		}
 
-  hasNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {
-    return notes.some((note) => note.columnLocalId === column.localId)
-  }
+		return model
+	}
 
-  getNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {
-    return notes.filter((note) => note.columnLocalId === column.localId)
-  }
+	hasNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {
+		return notes.some(note => note.columnLocalId === column.localId)
+	}
 
-  getNoteViews = (notes: NoteEntity[], columns: NoteColumnEntity[]) => {
-    return columns
-      .sort((c1, c2) => c1.order - c2.order)
-      .map((column) => {
-        const columnNotes = notes.filter(note => note.columnLocalId === column.localId).sort((n1, n2) => n1.order - n2.order)
+	getNotesInColumn(notes: NoteEntity[], column: NoteColumnEntity) {
+		return notes.filter(note => note.columnLocalId === column.localId)
+	}
 
-        return {
-          column: column,
-          notes: columnNotes
-        }
-      })
-  }
+	getNoteViews = (notes: NoteEntity[], columns: NoteColumnEntity[]) => {
+		return columns
+			.sort((c1, c2) => c1.order - c2.order)
+			.map(column => {
+				const columnNotes = notes
+					.filter(note => note.columnLocalId === column.localId)
+					.sort((n1, n2) => n1.order - n2.order)
 
-  filterNoteViews(
-    noteViews: NoteView[],
-    tagsSearch: string[],
-    textSearch: string
-  ): NoteView[] {
-    const filteredColumns: NoteView[] = []
-    const activeTagsSearch = tagsSearch.length > 0
-    const activeTextSearch = textSearch !== undefined && textSearch.length !== 0
-    const showAllColumns = !activeTagsSearch && !activeTextSearch
+				return {
+					column: column,
+					notes: columnNotes,
+				}
+			})
+	}
 
-    noteViews
-      .sort((c1, c2) => c1.column.order - c2.column.order)
-      .forEach(noteView => {
-        const filteredNotes = NoteService.filterNotesInNoteView(
-          noteView,
-          tagsSearch,
-          textSearch,
-          activeTagsSearch,
-          activeTextSearch
-        )
+	filterNoteViews(
+		noteViews: NoteView[],
+		tagsSearch: string[],
+		textSearch: string,
+	): NoteView[] {
+		const filteredColumns: NoteView[] = []
+		const activeTagsSearch = tagsSearch.length > 0
+		const activeTextSearch = textSearch !== undefined && textSearch.length !== 0
+		const showAllColumns = !activeTagsSearch && !activeTextSearch
 
-        if (filteredNotes.length > 0 || showAllColumns) {
-          filteredColumns.push({
-            column: noteView.column,
-            notes: filteredNotes.sort((n1, n2) => n1.order - n2.order),
-          })
-        }
-      })
+		noteViews
+			.sort((c1, c2) => c1.column.order - c2.column.order)
+			.forEach(noteView => {
+				const filteredNotes = NoteService.filterNotesInNoteView(
+					noteView,
+					tagsSearch,
+					textSearch,
+					activeTagsSearch,
+					activeTextSearch,
+				)
 
-    return filteredColumns
-  }
+				if (filteredNotes.length > 0 || showAllColumns) {
+					filteredColumns.push({
+						column: noteView.column,
+						notes: filteredNotes.sort((n1, n2) => n1.order - n2.order),
+					})
+				}
+			})
+
+		return filteredColumns
+	}
 }
 
 export default new NoteColumnServiceImpl()

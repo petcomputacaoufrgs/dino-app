@@ -1,3 +1,3 @@
 export default interface AuthRefreshRequestModel {
-  refreshToken: string
+	refreshToken: string
 }

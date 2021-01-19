@@ -1,4 +1,4 @@
 export default interface HeaderProps {
-  shortName: string
-  first?: boolean
+	shortName: string
+	first?: boolean
 }

@@ -1,38 +1,38 @@
 .dino_switch__form {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: var(--default-small-font);
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	font-size: var(--default-small-font);
 }
 
 .dino_switch__form p {
-  margin: 0;
-  margin-right: 16px;
+	margin: 0;
+	margin-right: 16px;
 }
 
 .dino_switch__form__switch {
-  margin-left: auto;
+	margin-left: auto;
 }
 
 .dino_switch__form__switch .MuiSwitch-track {
-  height: 18px;
-  border-radius: 18px;
+	height: 18px;
+	border-radius: 18px;
 }
 
 .MuiSwitch-root.dino_switch__form__switch {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .dino_switch__form .MuiSwitch-colorSecondary.Mui-checked {
-  color: var(--button-selected-font-color);
+	color: var(--button-selected-font-color);
 }
 
 .dino_switch__form .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
-  background-color: var(--button-selected-font-color);
+	background-color: var(--button-selected-font-color);
 }
 .dino_switch__form .MuiSwitch-colorSecondary {
-  color: var(--button-font-color);
+	color: var(--button-font-color);
 }

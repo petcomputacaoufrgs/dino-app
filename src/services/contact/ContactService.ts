@@ -16,132 +16,137 @@ import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
 
 class ContactServiceImpl extends AutoSynchronizableService<
-  number,
-  ContactDataModel,
-  ContactEntity
-> {  
-  constructor() {
-    super(
-      Database.contact, 
-      APIRequestMappingConstants.CONTACT,
-      WebSocketQueueURLService,
-      APIWebSocketDestConstants.CONTACT
-    )
-  }
+	number,
+	ContactDataModel,
+	ContactEntity
+> {
+	constructor() {
+		super(
+			Database.contact,
+			APIRequestMappingConstants.CONTACT,
+			WebSocketQueueURLService,
+			APIWebSocketDestConstants.CONTACT,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return [EssentialContactService]
-  }
+	getSyncDependencies(): SynchronizableService[] {
+		return [EssentialContactService]
+	}
 
-  async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
-    const entity: ContactEntity = {
-      name: model.name,
-      description: model.description,
-      color: model.color
-    }
+	async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
+		const entity: ContactEntity = {
+			name: model.name,
+			description: model.description,
+			color: model.color,
+		}
 
-    
-    if (Utils.isNotEmpty(model.essentialContactId)) {
-      const essentialContact = await EssentialContactService.getById(model.essentialContactId!)
+		if (Utils.isNotEmpty(model.essentialContactId)) {
+			const essentialContact = await EssentialContactService.getById(
+				model.essentialContactId!,
+			)
 
-      if (essentialContact) {
-        entity.localEssentialContactId = essentialContact.localId
-      }
-    }
+			if (essentialContact) {
+				entity.localEssentialContactId = essentialContact.localId
+			}
+		}
 
-    return entity
-  }
+		return entity
+	}
 
-  async convertEntityToModel(entity: ContactEntity): Promise<ContactDataModel> {
-    const model: ContactDataModel = {
-      name: entity.name,
-      description: entity.description,
-      color: entity.color
-    }
+	async convertEntityToModel(entity: ContactEntity): Promise<ContactDataModel> {
+		const model: ContactDataModel = {
+			name: entity.name,
+			description: entity.description,
+			color: entity.color,
+		}
 
-    if (Utils.isNotEmpty(entity.localEssentialContactId)) {
-      const essentialContact = await EssentialContactService.getByLocalId(entity.localEssentialContactId!)
+		if (Utils.isNotEmpty(entity.localEssentialContactId)) {
+			const essentialContact = await EssentialContactService.getByLocalId(
+				entity.localEssentialContactId!,
+			)
 
-      if (essentialContact) {
-        model.essentialContactId = essentialContact.id
-      }
-    }
+			if (essentialContact) {
+				model.essentialContactId = essentialContact.id
+			}
+		}
 
-    return model
-  }
+		return model
+	}
 
-  async getAllDerivatedFromEssential(): Promise<ContactEntity[]> {
-    return this.table.where('localEssentialContactId').aboveOrEqual(0).toArray()
-  }
+	async getAllDerivatedFromEssential(): Promise<ContactEntity[]> {
+		return this.table.where('localEssentialContactId').aboveOrEqual(0).toArray()
+	}
 
-  async deleteUserEssentialContacts() {
-    const contacts = await this.getAllDerivatedFromEssential()
+	async deleteUserEssentialContacts() {
+		const contacts = await this.getAllDerivatedFromEssential()
 
-    const googleContactDeletePromises = contacts.map(contact => {
-      return GoogleContactService.deleteByContact(contact)
-    })
-    
-    await Promise.all(googleContactDeletePromises)
+		const googleContactDeletePromises = contacts.map(contact => {
+			return GoogleContactService.deleteByContact(contact)
+		})
 
-    const phoneDeletePromises = contacts.map(contact => {
-      return PhoneService.deleteByContact(contact)
-    })
+		await Promise.all(googleContactDeletePromises)
 
-    await Promise.all(phoneDeletePromises)
-  
-    await this.deleteAll(contacts)
-  }
+		const phoneDeletePromises = contacts.map(contact => {
+			return PhoneService.deleteByContact(contact)
+		})
 
-  getContactViews(
-    contacts: ContactEntity[],
-    phones: PhoneEntity[],
-    googleContacts: GoogleContactEntity[]
-  ): ContactView[] {
-    return contacts.map(
-      (contact) =>
-        ({
-          contact: contact,
-          phones: PhoneService.filterByContact(contact, phones),
-          googleContact: GoogleContactService.getByContact(
-            contact,
-            googleContacts
-          ),
-        } as ContactView)
-    ).sort((a,b) => this.contactViewSort(a,b))
-  }
+		await Promise.all(phoneDeletePromises)
 
-  filterContactViews(
-    contacts: ContactView[],
-    searchTerm: string
-  ): ContactView[] {
-    return contacts.filter((item) =>
-      StringUtils.contains(item.contact.name, searchTerm)
-    )
-  }
+		await this.deleteAll(contacts)
+	}
 
-  private contactViewSort(a: ContactView, b: ContactView) {
-    const bComesFirst = 1
-    const aComesFirst = -1
+	getContactViews(
+		contacts: ContactEntity[],
+		phones: PhoneEntity[],
+		googleContacts: GoogleContactEntity[],
+	): ContactView[] {
+		return contacts
+			.map(
+				contact =>
+					({
+						contact: contact,
+						phones: PhoneService.filterByContact(contact, phones),
+						googleContact: GoogleContactService.getByContact(
+							contact,
+							googleContacts,
+						),
+					} as ContactView),
+			)
+			.sort((a, b) => this.contactViewSort(a, b))
+	}
 
-    const sortByName = () => {
-      return a.contact.name > b.contact.name ? bComesFirst : aComesFirst
-    }
+	filterContactViews(
+		contacts: ContactView[],
+		searchTerm: string,
+	): ContactView[] {
+		return contacts.filter(item =>
+			StringUtils.contains(item.contact.name, searchTerm),
+		)
+	}
 
-    const aIsEssential = Utils.isNotEmpty(a.contact.localEssentialContactId)
-    const bIsEssential = Utils.isNotEmpty(b.contact.localEssentialContactId)
+	private contactViewSort(a: ContactView, b: ContactView) {
+		const bComesFirst = 1
+		const aComesFirst = -1
 
-    if (aIsEssential) {
-      if (bIsEssential) {
-        return sortByName()
-      } else {
-        return aComesFirst
-      }
-    } else if (bIsEssential) {
-      return bComesFirst
-    }
+		const sortByName = () => {
+			return a.contact.name > b.contact.name ? bComesFirst : aComesFirst
+		}
 
-    return sortByName()
-  }
+		const aIsEssential = Utils.isNotEmpty(a.contact.localEssentialContactId)
+		const bIsEssential = Utils.isNotEmpty(b.contact.localEssentialContactId)
+
+		if (aIsEssential) {
+			if (bIsEssential) {
+				return sortByName()
+			} else {
+				return aComesFirst
+			}
+		} else if (bIsEssential) {
+			return bComesFirst
+		}
+
+		return sortByName()
+	}
 }
 
 export default new ContactServiceImpl()

@@ -5,4 +5,4 @@ import SynchronizableModel from './SynchronizableModel'
  * @param ID Type of api entity ID
  */
 export default interface SynchronizableDataModel<ID>
-  extends SynchronizableModel<ID> {}
+	extends SynchronizableModel<ID> {}

@@ -9,37 +9,37 @@ import '../../styles.css'
 import './styles.css'
 
 const AddContactDialogHeader = (
-  props: ContactFormDialogHeaderProps
+	props: ContactFormDialogHeaderProps,
 ): JSX.Element => {
-  const language = useLanguage()
+	const language = useLanguage()
 
-  return (
-    <CardHeader
-      avatar={
-        <Avatar
-          aria-label={language.data.AVATAR_ALT}
-          className={`avatar__color-${props.color}`}
-        >
-          {props.name ? props.name[0].toUpperCase() : '?'}
-        </Avatar>
-      }
-      action={
-        <IconButton
-          ariaLabel={language.data.COLOR_THEME_SELECTION_ARIA_LABEL}
-          icon={ChangeColorIconSVG}
-          dark
-          onClick={props.handleChangeColor}
-        />
-      }
-      title={
-        props.action === Constants.ACTION_ADD
-          ? props.name || language.data.CONTACTS_ADD_CONTACT
-          : props.name
-      }
-      subheader={language.data.CONTACT_DIALOG_FORM_SUBTITLE}
-      className="contact_dialog_form_header"
-    />
-  )
+	return (
+		<CardHeader
+			avatar={
+				<Avatar
+					aria-label={language.data.AVATAR_ALT}
+					className={`avatar__color-${props.color}`}
+				>
+					{props.name ? props.name[0].toUpperCase() : '?'}
+				</Avatar>
+			}
+			action={
+				<IconButton
+					ariaLabel={language.data.COLOR_THEME_SELECTION_ARIA_LABEL}
+					icon={ChangeColorIconSVG}
+					dark
+					onClick={props.handleChangeColor}
+				/>
+			}
+			title={
+				props.action === Constants.ACTION_ADD
+					? props.name || language.data.CONTACTS_ADD_CONTACT
+					: props.name
+			}
+			subheader={language.data.CONTACT_DIALOG_FORM_SUBTITLE}
+			className='contact_dialog_form_header'
+		/>
+	)
 }
 
 export default AddContactDialogHeader

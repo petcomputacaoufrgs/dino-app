@@ -1,91 +1,91 @@
 .load {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: whitesmoke;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: whitesmoke;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
 .load_header {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 125px;
-  animation: dino_header_in 750ms forwards;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 125px;
+	animation: dino_header_in 750ms forwards;
 }
 
 .load__dino_title {
-  font-size: 24px;
-  color: black;
-  font-weight: normal;
-  margin-top: 0;
+	font-size: 24px;
+	color: black;
+	font-weight: normal;
+	margin-top: 0;
 }
 
 .load__dino_logo {
-  height: 125px;
-  width: 130px;
-  opacity: 0;
-  animation: dino_logo_in 750ms 750ms forwards;
+	height: 125px;
+	width: 130px;
+	opacity: 0;
+	animation: dino_logo_in 750ms 750ms forwards;
 }
 
 .load__team {
-  position: fixed;
-  bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+	position: fixed;
+	bottom: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
 }
 
 .load__team img {
-  width: 0px;
-  height: auto;
+	width: 0px;
+	height: auto;
 }
 
 .load__team img:not(:last-child) {
-  margin-right: 40px;
+	margin-right: 40px;
 }
 
 .load__team__pet {
-  animation: teams_logo_in 500ms forwards 1.5s;
+	animation: teams_logo_in 500ms forwards 1.5s;
 }
 
 .load__team__hc {
-  animation: teams_logo_in 750ms forwards 0.75s;
+	animation: teams_logo_in 750ms forwards 0.75s;
 }
 
 .load__team__ufrgs {
-  animation: teams_logo_in 500ms forwards 1.5s;
+	animation: teams_logo_in 500ms forwards 1.5s;
 }
 
 @keyframes dino_logo_in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes dino_header_in {
-  from {
-    padding-top: 82.5%;
-  }
-  to {
-    padding-top: 0;
-  }
+	from {
+		padding-top: 82.5%;
+	}
+	to {
+		padding-top: 0;
+	}
 }
 
 @keyframes teams_logo_in {
-  from {
-    width: 0px;
-  }
-  to {
-    width: 80px;
-  }
+	from {
+		width: 0px;
+	}
+	to {
+		width: 80px;
+	}
 }

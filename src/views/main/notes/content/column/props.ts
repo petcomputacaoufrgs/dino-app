@@ -3,11 +3,11 @@ import NoteColumnEntity from '../../../../../types/note/database/NoteColumnEntit
 import NoteEntity from '../../../../../types/note/database/NoteEntity'
 
 export default interface NoteBodyColumnProps {
-  noteView: NoteView
-  columnIndex: number
-  searching: boolean
-  onClickNote: (note: NoteEntity) => void
-  onEditColumn: (column: NoteColumnEntity) => void
-  onDeleteColumn: (column: NoteColumnEntity) => void
-  onAddNote: (column: NoteColumnEntity) => void
+	noteView: NoteView
+	columnIndex: number
+	searching: boolean
+	onClickNote: (note: NoteEntity) => void
+	onEditColumn: (column: NoteColumnEntity) => void
+	onDeleteColumn: (column: NoteColumnEntity) => void
+	onAddNote: (column: NoteColumnEntity) => void
 }

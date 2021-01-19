@@ -16,115 +16,141 @@ import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathServi
 import GoogleContactService from './GoogleContactService'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
-  number,
-  EssentialContactDataModel,
-  EssentialContactEntity
-> {  
-  constructor() {
-    super(
-      Database.essentialContact, 
-      APIRequestMappingConstants.ESSENTIAL_CONTACT,
-      WebSocketTopicPathService,
-      APIWebSocketDestConstants.ESSENTIAL_CONTACT
-    )
-  }
+	number,
+	EssentialContactDataModel,
+	EssentialContactEntity
+> {
+	constructor() {
+		super(
+			Database.essentialContact,
+			APIRequestMappingConstants.ESSENTIAL_CONTACT,
+			WebSocketTopicPathService,
+			APIWebSocketDestConstants.ESSENTIAL_CONTACT,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return [TreatmentService]
-  }
+	getSyncDependencies(): SynchronizableService[] {
+		return [TreatmentService]
+	}
 
-  async convertModelToEntity(model: EssentialContactDataModel): Promise<EssentialContactEntity> {
-    const entity: EssentialContactEntity = {
-      name: model.name,
-      description: model.description,
-      color: model.color,
-      isUniversal: 1
-    }
+	async convertModelToEntity(
+		model: EssentialContactDataModel,
+	): Promise<EssentialContactEntity> {
+		const entity: EssentialContactEntity = {
+			name: model.name,
+			description: model.description,
+			color: model.color,
+			isUniversal: 1,
+		}
 
-    if (model.treatmentIds) {
-      const treatments = await TreatmentService.getAllByIds(model.treatmentIds)
-      const treatmentLocalIds = treatments.filter(treatment => Utils.isNotEmpty(treatment.localId)).map(treatment => treatment.localId!)
-      
-      if (treatmentLocalIds.length > 0) {
-        entity.isUniversal = 0
-        entity.treatmentLocalIds = treatmentLocalIds
-      }
-    }
+		if (model.treatmentIds) {
+			const treatments = await TreatmentService.getAllByIds(model.treatmentIds)
+			const treatmentLocalIds = treatments
+				.filter(treatment => Utils.isNotEmpty(treatment.localId))
+				.map(treatment => treatment.localId!)
 
-    return entity
-  }
+			if (treatmentLocalIds.length > 0) {
+				entity.isUniversal = 0
+				entity.treatmentLocalIds = treatmentLocalIds
+			}
+		}
 
-  async convertEntityToModel(entity: EssentialContactEntity): Promise<EssentialContactDataModel> {
-    const model: EssentialContactDataModel = {
-      name: entity.name,
-      description: entity.description,
-      color: entity.color
-    }
+		return entity
+	}
 
-    if (entity.treatmentLocalIds) {
-      const treatments = await TreatmentService.getAllByLocalIds(entity.treatmentLocalIds)
-      model.treatmentIds = treatments.filter(treatment => Utils.isNotEmpty(treatment.id)).map(treatment => treatment.id!)
-    }
+	async convertEntityToModel(
+		entity: EssentialContactEntity,
+	): Promise<EssentialContactDataModel> {
+		const model: EssentialContactDataModel = {
+			name: entity.name,
+			description: entity.description,
+			color: entity.color,
+		}
 
-    return model
-  }
+		if (entity.treatmentLocalIds) {
+			const treatments = await TreatmentService.getAllByLocalIds(
+				entity.treatmentLocalIds,
+			)
+			model.treatmentIds = treatments
+				.filter(treatment => Utils.isNotEmpty(treatment.id))
+				.map(treatment => treatment.id!)
+		}
 
-  private async getUniversalEssentialContacts(): Promise<EssentialContactEntity[]> {
-    return this.table.where('isUniversal').equals(1).toArray()
-  }
+		return model
+	}
 
-  private async getTreatmentEssentialContacts(settings: UserSettingsEntity): Promise<EssentialContactEntity[]> {
-    if (Utils.isNotEmpty(settings.treatmentLocalId)) {
-      return this.table.where('treatmentLocalIds').equals(settings.treatmentLocalId!).toArray()
-    } else return []
-  }
+	private async getUniversalEssentialContacts(): Promise<
+		EssentialContactEntity[]
+	> {
+		return this.table.where('isUniversal').equals(1).toArray()
+	}
 
-  public async saveUserEssentialContacts(settings: UserSettingsEntity) {
-    const essentialContacts: EssentialContactEntity[] = [] 
+	private async getTreatmentEssentialContacts(
+		settings: UserSettingsEntity,
+	): Promise<EssentialContactEntity[]> {
+		if (Utils.isNotEmpty(settings.treatmentLocalId)) {
+			return this.table
+				.where('treatmentLocalIds')
+				.equals(settings.treatmentLocalId!)
+				.toArray()
+		} else return []
+	}
 
-    const universalContactsPromise = this.getUniversalEssentialContacts()
-    const treatmentContactPromise = this.getTreatmentEssentialContacts(settings)
-    const results = await Promise.all([universalContactsPromise, treatmentContactPromise])
-    essentialContacts.push(...results[0], ...results[1])
+	public async saveUserEssentialContacts(settings: UserSettingsEntity) {
+		const essentialContacts: EssentialContactEntity[] = []
 
-    //TODO: Estudar possibilidade de uma saveAll em contatos também
-    essentialContacts.forEach(async ec => { 
-      const savedContact = await ContactService.save(this.convertEntityToContactEntity(ec))
-        if(savedContact) {
-          await GoogleContactService.saveGoogleContact(savedContact)
-          savePhonesFromEssentialContact(ec, savedContact)
-        }
-    })
+		const universalContactsPromise = this.getUniversalEssentialContacts()
+		const treatmentContactPromise = this.getTreatmentEssentialContacts(settings)
+		const results = await Promise.all([
+			universalContactsPromise,
+			treatmentContactPromise,
+		])
+		essentialContacts.push(...results[0], ...results[1])
 
-    const savePhonesFromEssentialContact = async (ec: EssentialContactEntity, c: ContactEntity) => {
-      if (ec.localId) {
-        const phones = await PhoneService.getAllByEssentialContactLocalId(ec.localId)
-        if (phones.length > 0) {
-          const newContactPhones: PhoneEntity[] = phones.map(p => {
-            return {
-              localContactId: c.localId,
-              number: p.number,
-              type: p.type,
-              originalEssentialPhoneId: ec.id
-            }
-          })
-          await PhoneService.saveAll(newContactPhones)
-        }
-      }
-    }
-  }
+		//TODO: Estudar possibilidade de uma saveAll em contatos também
+		essentialContacts.forEach(async ec => {
+			const savedContact = await ContactService.save(
+				this.convertEntityToContactEntity(ec),
+			)
+			if (savedContact) {
+				await GoogleContactService.saveGoogleContact(savedContact)
+				savePhonesFromEssentialContact(ec, savedContact)
+			}
+		})
 
-  private convertEntityToContactEntity(entity: EssentialContactEntity) {
-    const contactEntity: ContactEntity = {
-      name: entity.name,
-      description: entity.description,
-      color: entity.color,
-      localEssentialContactId: entity.localId
-    }
+		const savePhonesFromEssentialContact = async (
+			ec: EssentialContactEntity,
+			c: ContactEntity,
+		) => {
+			if (ec.localId) {
+				const phones = await PhoneService.getAllByEssentialContactLocalId(
+					ec.localId,
+				)
+				if (phones.length > 0) {
+					const newContactPhones: PhoneEntity[] = phones.map(p => {
+						return {
+							localContactId: c.localId,
+							number: p.number,
+							type: p.type,
+							originalEssentialPhoneId: ec.id,
+						}
+					})
+					await PhoneService.saveAll(newContactPhones)
+				}
+			}
+		}
+	}
 
-    return contactEntity
-  }
-  
+	private convertEntityToContactEntity(entity: EssentialContactEntity) {
+		const contactEntity: ContactEntity = {
+			name: entity.name,
+			description: entity.description,
+			color: entity.color,
+			localEssentialContactId: entity.localId,
+		}
+
+		return contactEntity
+	}
 }
 
 export default new EssentialContactServiceImpl()

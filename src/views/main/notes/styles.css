@@ -1,36 +1,36 @@
 .notes {
-  position: relative;
-  width: 100%;
-  height: calc(100%);
-  display: flex;
-  flex-direction: column;
+	position: relative;
+	width: 100%;
+	height: calc(100%);
+	display: flex;
+	flex-direction: column;
 }
 
 .note_card_dialog.MuiDialog-root
-  .MuiBackdrop-root
-  .MuiDialog-container.MuiDialog-scrollPaper {
-  width: 100%;
+	.MuiBackdrop-root
+	.MuiDialog-container.MuiDialog-scrollPaper {
+	width: 100%;
 }
 
 .note_card_dialog.MuiDialog-root .MuiFormControl-root {
-  width: 100%;
-  margin-bottom: 20px;
+	width: 100%;
+	margin-bottom: 20px;
 }
 
 .note_card_dialog.MuiDialog-root .MuiDialog-paperWidthSm {
-  width: 100%;
+	width: 100%;
 }
 
 .note_card_dialog.MuiDialog-root .MuiInputBase-input textarea {
-  border: none;
-  border-color: transparent;
+	border: none;
+	border-color: transparent;
 }
 
 .notes__loader {
-  height: 100%;
-  background-color: transparent;
+	height: 100%;
+	background-color: transparent;
 }
 
 .note__loader_icon {
-  background-color: transparent;
+	background-color: transparent;
 }

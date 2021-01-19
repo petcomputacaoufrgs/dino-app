@@ -10,62 +10,62 @@ import WebSocketService from '../websocket/WebSocketService'
 import ErrorHandlerService from '../error_handler/ErrorHandlerService'
 
 class EventService {
-  constructor() {
-    ConnectionService.addEventListener(this.connectionCallback)
-  }
+	constructor() {
+		ConnectionService.addEventListener(this.connectionCallback)
+	}
 
-  whenStart = async () => {
-    ErrorHandlerService.register()
+	whenStart = async () => {
+		ErrorHandlerService.register()
 
-    const isDinoConnected = await ConnectionService.isDinoConnected()
-    const isAuthenticated = await AuthService.isAuthenticated()
-    if (isDinoConnected && isAuthenticated) {
-      this.startWebSocketAndSync()
-    }
-  }
+		const isDinoConnected = await ConnectionService.isDinoConnected()
+		const isAuthenticated = await AuthService.isAuthenticated()
+		if (isDinoConnected && isAuthenticated) {
+			this.startWebSocketAndSync()
+		}
+	}
 
-  whenLogin = async () => {
-    CalendarService.addMocks()
-    this.startWebSocketAndSync()
-    HistoryService.push(PathConstants.HOME)
-  }
+	whenLogin = async () => {
+		CalendarService.addMocks()
+		this.startWebSocketAndSync()
+		HistoryService.push(PathConstants.HOME)
+	}
 
-  whenLogout = async () => {
-    WebSocketService.disconnect()
-    HistoryService.push(PathConstants.LOGIN)
-  }
+	whenLogout = async () => {
+		WebSocketService.disconnect()
+		HistoryService.push(PathConstants.LOGIN)
+	}
 
-  whenLoginForbidden = async () => {
-    AuthService.logout()
-  }
+	whenLoginForbidden = async () => {
+		AuthService.logout()
+	}
 
-  whenConnectionReturn = async () => {
-    const isDinoConnected = await ConnectionService.isDinoConnected()
-    const isAuthenticated = await AuthService.isAuthenticated()
-    if (isDinoConnected && isAuthenticated) {
-      this.startWebSocketAndSync()
-    }
-  }
+	whenConnectionReturn = async () => {
+		const isDinoConnected = await ConnectionService.isDinoConnected()
+		const isAuthenticated = await AuthService.isAuthenticated()
+		if (isDinoConnected && isAuthenticated) {
+			this.startWebSocketAndSync()
+		}
+	}
 
-  whenConnectionLost = () => {
-    SyncService.setNotSynced()
-    WebSocketService.disconnect()
-  }
+	whenConnectionLost = () => {
+		SyncService.setNotSynced()
+		WebSocketService.disconnect()
+	}
 
-  whenError = (error: LogAppErrorModel) => {
-    LogAppErrorService.logModel(error)
-  }
+	whenError = (error: LogAppErrorModel) => {
+		LogAppErrorService.logModel(error)
+	}
 
-  private startWebSocketAndSync = async () => {
-    const success = WebSocketService.connect()
-    if (success) {
-      SyncService.sync()
-    }
-  }
+	private startWebSocketAndSync = async () => {
+		const success = WebSocketService.connect()
+		if (success) {
+			SyncService.sync()
+		}
+	}
 
-  private connectionCallback = (online: boolean) => {
-    online ? this.whenConnectionReturn() : this.whenConnectionLost()
-  }
+	private connectionCallback = (online: boolean) => {
+		online ? this.whenConnectionReturn() : this.whenConnectionLost()
+	}
 }
 
 export default new EventService()

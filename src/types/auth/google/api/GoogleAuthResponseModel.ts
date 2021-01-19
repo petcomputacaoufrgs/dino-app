@@ -1,6 +1,5 @@
-import SynchronizableGenericDataResponseModel from "../../../sync/api/response/SynchronizableGenericDataResponseModel";
-import GoogleAuthResponseDataModel from "./GoogleAuthResponseDataModel";
+import SynchronizableGenericDataResponseModel from '../../../sync/api/response/SynchronizableGenericDataResponseModel'
+import GoogleAuthResponseDataModel from './GoogleAuthResponseDataModel'
 
-
-export default interface GoogleAuthResponseModel extends SynchronizableGenericDataResponseModel<GoogleAuthResponseDataModel> {
-}
+export default interface GoogleAuthResponseModel
+	extends SynchronizableGenericDataResponseModel<GoogleAuthResponseDataModel> {}

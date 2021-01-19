@@ -9,24 +9,24 @@ import AddButton from '../add_button'
 import './styles.css'
 
 const DayModal = React.forwardRef<React.Ref<unknown>, DayModalProps>(
-  ({ day, events, open, onClose }, ref) => {
-    return (
-      <Dialog
-        ref={ref}
-        open={open}
-        fullWidth
-        maxWidth={'sm'}
-        style={{ zIndex: 990 }}
-        onClose={onClose}
-        TransitionComponent={TransitionSlide}
-        className={`calendar__day__modal ${isMobile ? `mobile` : `desktop`}`}
-      >
-        <Header day={day} onClose={onClose} />
-        <Content day={day} events={events} />
-        <AddButton />
-      </Dialog>
-    )
-  }
+	({ day, events, open, onClose }, ref) => {
+		return (
+			<Dialog
+				ref={ref}
+				open={open}
+				fullWidth
+				maxWidth={'sm'}
+				style={{ zIndex: 990 }}
+				onClose={onClose}
+				TransitionComponent={TransitionSlide}
+				className={`calendar__day__modal ${isMobile ? `mobile` : `desktop`}`}
+			>
+				<Header day={day} onClose={onClose} />
+				<Content day={day} events={events} />
+				<AddButton />
+			</Dialog>
+		)
+	},
 )
 
 export default DayModal

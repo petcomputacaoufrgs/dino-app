@@ -1,4 +1,4 @@
 export default interface EventAlarm {
-  time: number
-  type: number
+	time: number
+	type: number
 }

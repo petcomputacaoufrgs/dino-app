@@ -9,9 +9,9 @@ import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
 import WebSocketQueueURLService from '../../websocket/path/WebSocketQueuePathService'
-import Database from '../../../storage/database/Database'
+import Database from '../../../storage/Database'
 
-export class GoogleScopeServiceImpl extends AutoSynchronizableService<
+class GoogleScopeServiceImpl extends AutoSynchronizableService<
   number,
   GoogleScopeDataModel,
   GoogleScopeEntity

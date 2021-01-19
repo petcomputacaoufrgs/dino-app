@@ -29,7 +29,7 @@ const AddAlert = (
 
 const AlertContext = createContext({} as AlertContextType)
 
-export const AlertControl: AlertContextType = {
+const AlertControl: AlertContextType = {
   showSuccessAlert: (message: string) => AddAlert(message, 'success'),
   showWarningAlert: (message: string) => AddAlert(message, 'warning'),
   showInfoAlert: (message: string) => AddAlert(message, 'info'),

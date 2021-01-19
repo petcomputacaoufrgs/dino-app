@@ -5,9 +5,9 @@ import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 
-export class TreatmentServiceImpl extends AutoSynchronizableService<
+class TreatmentServiceImpl extends AutoSynchronizableService<
   number,
   TreatmentDataModel,
   TreatmentEntity

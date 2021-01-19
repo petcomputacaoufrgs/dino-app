@@ -10,10 +10,10 @@ import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 
-export class UserServiceImpl extends AutoSynchronizableService<
+class UserServiceImpl extends AutoSynchronizableService<
   number,
   UserDataModel,
   UserEntity

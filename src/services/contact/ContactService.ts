@@ -11,11 +11,11 @@ import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
 import GoogleContactService from './GoogleContactService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
 
-export class ContactServiceImpl extends AutoSynchronizableService<
+class ContactServiceImpl extends AutoSynchronizableService<
   number,
   ContactDataModel,
   ContactEntity

@@ -1,6 +1,6 @@
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import NoteColumnDataModel from '../../types/note/api/NoteColumnDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -10,7 +10,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import NoteService from './NoteService'
 
-export class NoteColumnServiceImpl extends AutoSynchronizableService<
+class NoteColumnServiceImpl extends AutoSynchronizableService<
   number,
   NoteColumnDataModel,
   NoteColumnEntity

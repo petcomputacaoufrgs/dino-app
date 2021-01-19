@@ -6,9 +6,9 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 
-export class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
+class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
   number,
   FaqUserQuestionDataModel,
   FaqUserQuestionEntity

@@ -4,7 +4,7 @@ import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
 import ArrayUtils from '../../utils/ArrayUtils'
 
-export type ConnectionListennerCallback = (online: boolean) => void
+type ConnectionListennerCallback = (online: boolean) => void
 
 const DELAY_TO_VERIFY_DINO_CONNECTION = 2000
 

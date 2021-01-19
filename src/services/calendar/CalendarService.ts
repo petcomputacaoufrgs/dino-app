@@ -1,7 +1,7 @@
 import LanguageBase from '../../constants/languages/LanguageBase'
 import DateUtils from '../../utils/DateUtils'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 
 class CalendarService {
   private table: Dexie.Table<CalendarEventEntity, number>

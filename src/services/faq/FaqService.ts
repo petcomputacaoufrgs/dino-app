@@ -10,9 +10,9 @@ import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 
-export class FaqServiceImpl extends AutoSynchronizableService<
+class FaqServiceImpl extends AutoSynchronizableService<
   number,
   FaqDataModel,
   FaqEntity

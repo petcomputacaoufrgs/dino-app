@@ -7,11 +7,11 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import PhoneService from './PhoneService'
 
-export class GoogleContactServiceImpl extends AutoSynchronizableService<
+class GoogleContactServiceImpl extends AutoSynchronizableService<
   number,
   GoogleContactDataModel,
   GoogleContactEntity

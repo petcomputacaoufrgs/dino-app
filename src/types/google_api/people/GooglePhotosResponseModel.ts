@@ -1,14 +1,14 @@
-export interface GooglePhotoSourceModel {
+interface GooglePhotoSourceModel {
   id: string
   type: string
 }
 
-export interface GooglePhotoMetadataModel {
+interface GooglePhotoMetadataModel {
   primary: boolean
   source: GooglePhotoSourceModel
 }
 
-export interface GooglePhotoModel {
+interface GooglePhotoModel {
   metadata: GooglePhotoMetadataModel
   url: string
 }

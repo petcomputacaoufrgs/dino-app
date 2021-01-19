@@ -8,9 +8,9 @@ import FaqEntity from '../../types/faq/database/FaqEntity'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 
-export class FaqItemServiceImpl extends AutoSynchronizableService<
+class FaqItemServiceImpl extends AutoSynchronizableService<
   number,
   FaqItemDataModel,
   FaqItemEntity

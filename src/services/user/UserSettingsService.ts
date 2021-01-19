@@ -16,10 +16,10 @@ import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 
-export class UserSettingsServiceImpl extends AutoSynchronizableService<
+class UserSettingsServiceImpl extends AutoSynchronizableService<
   number,
   UserSettingsDataModel,
   UserSettingsEntity

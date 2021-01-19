@@ -1,7 +1,7 @@
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import NoteConstants from '../../constants/note/NoteConstants'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import NoteDataModel from '../../types/note/api/NoteDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -13,7 +13,7 @@ import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
 import Utils from '../../utils/Utils'
 
-export class NoteServiceImpl extends AutoSynchronizableService<
+class NoteServiceImpl extends AutoSynchronizableService<
   number,
   NoteDataModel,
   NoteEntity

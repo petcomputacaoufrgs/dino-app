@@ -22,7 +22,7 @@ import AuthRefreshRequestModel from '../../types/auth/api/AuthRefreshRequestMode
 import AuthRefreshResponseModel from '../../types/auth/api/AuthRefreshResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import AuthEntity from '../../types/auth/database/AuthEntity'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import UpdatableService from '../update/UpdatableService'
 import UserSettingsService from '../user/UserSettingsService'
 import LogoutCallback from '../../types/auth/service/LogoutCallback'

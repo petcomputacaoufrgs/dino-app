@@ -5,7 +5,7 @@ import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListM
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 
 class LogAppErrorService extends SynchronizableService {
   private table: Dexie.Table<LogAppErrorEntity, number>

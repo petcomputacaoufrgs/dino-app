@@ -2,7 +2,7 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
 import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
@@ -15,7 +15,7 @@ import Utils from '../../utils/Utils'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import GoogleContactService from './GoogleContactService'
 
-export class EssentialContactServiceImpl extends AutoSynchronizableService<
+class EssentialContactServiceImpl extends AutoSynchronizableService<
   number,
   EssentialContactDataModel,
   EssentialContactEntity

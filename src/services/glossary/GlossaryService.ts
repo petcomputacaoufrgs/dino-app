@@ -6,10 +6,10 @@ import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
 
-export class GlossaryServiceImpl extends AutoSynchronizableService<
+class GlossaryServiceImpl extends AutoSynchronizableService<
   number,
   GlossaryItemDataModel,
   GlossaryItemEntity

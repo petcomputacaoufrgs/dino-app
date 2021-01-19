@@ -71,13 +71,7 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 			})
 		} else {
 			this.isSynchronizing = true
-			console.log('INIT:')
-			console.log(this)
-			console.log('------------------')
 			const result = await this.syncSave()
-			console.log('SYNCRONIZED:')
-			console.log(this)
-			console.log('------------------')
 			this.syncResult = result
 			this.isSynchronizing = false
 			this.resolveAllAfterReturn(result)
@@ -97,13 +91,7 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 			})
 		} else {
 			this.isSynchronizing = true
-			console.log('INIT:')
-			console.log(this)
-			console.log('------------------')
 			const result = await this.syncDelete()
-			console.log('SYNCRONIZED:')
-			console.log(this)
-			console.log('------------------')
 			this.syncResult = result
 			this.isSynchronizing = false
 			this.resolveAllAfterReturn(result)

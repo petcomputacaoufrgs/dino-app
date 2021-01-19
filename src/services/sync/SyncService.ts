@@ -114,14 +114,12 @@ class SyncService extends UpdatableService {
 	}
 
 	private syncSave = async (): Promise<boolean> => {
-		console.log('=======SAVE=======')
 		const result = await this.syncNodesToSave(this.tree.saveRoot)
 		this.cleanServiceResults()
 		return result
 	}
 
 	private syncDelete = async (): Promise<boolean> => {
-		console.log('=======DELETE=======')
 		const result = await this.syncNodesToDelete(this.tree.deleteRoot)
 		this.cleanServiceResults()
 		return result

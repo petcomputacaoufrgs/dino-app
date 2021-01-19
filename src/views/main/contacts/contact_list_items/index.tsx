@@ -40,7 +40,8 @@ const ContactItems: React.FC<ContactItemsProps> = ({
 
     setContactToDelete(undefined)
     if (contactToDelete) {
-      await Promise.all([deleteGoogleContact(contactToDelete), deletePhones(contactToDelete)])
+      await deleteGoogleContact(contactToDelete)
+      await deletePhones(contactToDelete)
       await ContactService.delete(contactToDelete.contact)
     }
   }

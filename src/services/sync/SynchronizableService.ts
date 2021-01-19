@@ -15,9 +15,14 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
   abstract getSyncDependencies(): SynchronizableService[]
 
   /**
-   * @description Function that performs data synchronization with the API.
+   * @description Function that performs save data synchronization with the API.
    */
-  protected abstract sync(): Promise<boolean>
+  protected abstract syncSave(): Promise<boolean>
+
+    /**
+   * @description Function that performs delete data synchronization with the API.
+   */
+  protected abstract syncDelete(): Promise<boolean>
 
   /**
    * @description Override to add new dependencies for websocket.
@@ -55,9 +60,9 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
   }
 
   /**
-   * @description Start synchronization process
+   * @description Start synchronization process to save entities
    */
-  async synchronize(): Promise<boolean> {
+  async synchronizeSave(): Promise<boolean> {
     if (this.syncResult !== undefined) {
       return this.syncResult
     } else if (this.isSynchronizing) {
@@ -66,7 +71,39 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
       })
     } else {
       this.isSynchronizing = true
-      const result = await this.sync()
+      console.log("INIT:")
+      console.log(this)
+      console.log("------------------")
+      const result = await this.syncSave()
+      console.log("SYNCRONIZED:")
+      console.log(this)
+      console.log("------------------")
+      this.syncResult = result
+      this.isSynchronizing = false
+      this.resolveAllAfterReturn(result)
+      return result
+    } 
+  }
+
+    /**
+   * @description Start synchronization process to delete entites
+   */
+  async synchronizeDelete(): Promise<boolean> {
+    if (this.syncResult !== undefined) {
+      return this.syncResult
+    } else if (this.isSynchronizing) {
+      return new Promise<boolean>(resolve => {
+        this.syncResolves.push(resolve)
+      })
+    } else {
+      this.isSynchronizing = true
+      console.log("INIT:")
+      console.log(this)
+      console.log("------------------")
+      const result = await this.syncDelete()
+      console.log("SYNCRONIZED:")
+      console.log(this)
+      console.log("------------------")
       this.syncResult = result
       this.isSynchronizing = false
       this.resolveAllAfterReturn(result)

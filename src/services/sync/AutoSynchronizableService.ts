@@ -55,18 +55,6 @@ export default abstract class AutoSynchronizableService<
   //#region METHODS THAT CAN BE OVERWRITTEN
 
   /**
-   * @description Override this function to do something before save entity on API
-   * @param entity entity that will be saved
-   */
-  protected async onSaveOnAPI(entity: ENTITY) {}
-
-    /**
-   * @description Override this function to do something after delete entity on API
-   * @param entity entity that will be saved
-   */
-  protected async onDeleteOnAPI(entity: ENTITY) {}
-
-  /**
    * @description Override this function to do something when a websocket update is received
    * @param model
    */
@@ -101,14 +89,6 @@ export default abstract class AutoSynchronizableService<
    * @param entity local entity
    */
   abstract convertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined>
-
-  private async onSaveAllOnAPI(entities: Array<ENTITY>) {
-    await Promise.all(entities.map((entity) => this.onSaveOnAPI(entity)))
-  }
-
-  private async onDeleteAllOnAPI(entities: Array<ENTITY>) {
-    await Promise.all(entities.map((entity) => this.onDeleteOnAPI(entity)))
-  }
 
   private async internalConvertModelToEntity(
     model: DATA_MODEL
@@ -227,8 +207,6 @@ export default abstract class AutoSynchronizableService<
     if (dbEntity.localId) {
       this.triggerUpdateEvent()
 
-      await this.onSaveOnAPI(entity)
-
       const model = await this.internalConvertEntityToModel(entity)
 
       if (model) {
@@ -267,8 +245,6 @@ export default abstract class AutoSynchronizableService<
       this.updateLastUpdate(entity)
       entity.localState = SynchronizableLocalState.SAVED_LOCALLY
     })
-
-    await this.onSaveAllOnAPI(entities)
 
     await this.dbSaveAll(entities)
 
@@ -351,7 +327,6 @@ export default abstract class AutoSynchronizableService<
           if (response) {
             if (response.success) {
               await this.dbDelete(entity)
-              await this.onDeleteOnAPI(entity)
 
               return true
             } else if (response.data) {
@@ -398,7 +373,6 @@ export default abstract class AutoSynchronizableService<
   
         if (deleteAllResponse && deleteAllResponse.success) {
           await this.dbDeleteAll(entities)
-          await this.onDeleteAllOnAPI(entities)
           this.triggerUpdateEvent()
         }
       }
@@ -513,35 +487,23 @@ export default abstract class AutoSynchronizableService<
   //#region SYNC
 
   /**
-   * @description Start entity sync with API.
+   * @description Start entity save sync with API.
    */
-  protected sync = async (): Promise<boolean> => {
-    const deletedEntities = await this.dbGetAllFakeDeleted()
-
-    const deletedModels = await this.internalConvertEntitiesToModels(
-      deletedEntities
-    )
-
+  protected syncSave = async (): Promise<boolean> => {
     const notSavedEntities = await this.dbGetAllNotSavedOnAPI()
-
-    await this.onSaveAllOnAPI(notSavedEntities)
 
     const notSavedModels = await this.internalConvertEntitiesToModels(
       notSavedEntities
     )
 
-    const syncResponse = await this.apiSync(notSavedModels, deletedModels)
+    const saveResponse = await this.apiSaveSync(notSavedModels)
 
-    if (syncResponse && syncResponse.success) {
+    if (saveResponse && saveResponse.success) {
       await this.dbDeleteAllFakeDeleteds()
 
-      const entities = await this.internalConvertModelsToEntities(syncResponse.data)
+      const entities = await this.internalConvertModelsToEntities(saveResponse.data)
 
       await this.dbClear()
-
-      const apiDeletedEntities = deletedEntities.filter(model => !entities.some(entity => entity.id === model.id))
-
-      await this.onDeleteAllOnAPI(apiDeletedEntities)
 
       await this.dbSaveAll(entities)
 
@@ -552,6 +514,32 @@ export default abstract class AutoSynchronizableService<
 
     return false
   }
+
+  /**
+   * @description Start entity delete sync with API.
+   */
+  protected syncDelete = async (): Promise<boolean> => {
+    const deletedEntities = await this.dbGetAllFakeDeleted()
+
+    if (deletedEntities.length === 0) return true
+
+    const deletedModels = await this.internalConvertEntitiesToModels(
+      deletedEntities
+    )
+
+    const deleteResponse = await this.apiDeleteAll(deletedModels)
+
+    if (deleteResponse && deleteResponse.success) {
+      await this.dbDeleteAllFakeDeleteds()
+      
+      this.triggerUpdateEvent()
+
+      return true
+    }
+
+    return false
+  }
+
 
   //#endregion
 
@@ -687,20 +675,16 @@ export default abstract class AutoSynchronizableService<
   private getBaseRequestURL = (): string => {
     return this.apiBaseURL
   }
-  
-  private getRequestURL = (): string => `${this.getBaseRequestURL()}get/`
-  
+    
   private saveRequestURL = (): string => `${this.getBaseRequestURL()}save/`
   
   private deleteRequestURL = (): string => `${this.getBaseRequestURL()}delete/`
-  
-  private getAllRequestURL = (): string => `${this.getRequestURL()}all/`
-  
+    
   private saveAllRequestURL = (): string => `${this.saveRequestURL()}all/`
   
   private deleteAllRequestURL = (): string => `${this.deleteRequestURL()}all/`
   
-  private syncRequestURL = (): string => `${this.getBaseRequestURL()}sync/`
+  private syncSaveRequestURL = (): string => `${this.getBaseRequestURL()}sync_save/`
 
   private apiSave = async (
     data: DATA_MODEL
@@ -795,20 +779,15 @@ export default abstract class AutoSynchronizableService<
     return undefined
   }
 
-  private apiSync = async (
-    toSave: Array<DATA_MODEL>,
-    toDelete: Array<DATA_MODEL>
+  private apiSaveSync = async (
+    toSave: Array<DATA_MODEL>
   ): Promise<SynchronizableSyncResponseModel<ID, DATA_MODEL> | undefined> => {
     try {
-      const request = await DinoAgentService.put(this.syncRequestURL())
+      const request = await DinoAgentService.put(this.syncSaveRequestURL())
 
       if (request.canGo) {
         const requestModel: SynchronizableSyncModel<ID, DATA_MODEL> = {
-          save: toSave,
-          delete: toDelete.map((model) => ({
-            id: model.id,
-            lastUpdate: model.lastUpdate,
-          })),
+          save: toSave
         }
 
         const authRequest = await request.authenticate()

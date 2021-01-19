@@ -23,7 +23,7 @@ class LogAppErrorService extends SynchronizableService {
     return []
   }
 
-  protected async sync(): Promise<boolean> {
+  protected async syncSave(): Promise<boolean> {
     const logs = await this.getSavedLogs()
     if (logs.length > 0) {
       const items: LogAppErrorModel[] = logs.map((log) => ({
@@ -40,6 +40,10 @@ class LogAppErrorService extends SynchronizableService {
       return this.saveAll(model)
     }
 
+    return true
+  }
+
+  protected async syncDelete(): Promise<boolean> {
     return true
   }
 

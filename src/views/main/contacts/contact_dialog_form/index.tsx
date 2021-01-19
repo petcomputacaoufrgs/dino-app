@@ -101,8 +101,6 @@ const ContactFormDialog = React.forwardRef(
       async function savePhones(contact: ContactEntity | EssentialContactEntity) {
         const newPhones = contactPhones.filter(phone => phone.number !== '')
 
-        await GoogleContactService.saveGoogleContact(contact, item?.googleContact)
-
         let attr = "localEssentialContactId"
         if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {
           attr = "localContactId"
@@ -117,6 +115,8 @@ const ContactFormDialog = React.forwardRef(
         if (phonesToDelete.length > 0) {
           await PhoneService.deleteAll(phonesToDelete)
         }
+
+        await GoogleContactService.saveGoogleContact(contact, item?.googleContact)
       }
 
       switch(action) {

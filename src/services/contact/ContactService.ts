@@ -14,7 +14,6 @@ import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathServic
 import Database from '../../storage/database/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
-import GoogleScopeService from '../auth/google/GoogleScopeService'
 
 export class ContactServiceImpl extends AutoSynchronizableService<
   number,
@@ -31,7 +30,7 @@ export class ContactServiceImpl extends AutoSynchronizableService<
   }
 
   getSyncDependencies(): SynchronizableService[] {
-    return [GoogleScopeService, EssentialContactService]
+    return [EssentialContactService]
   }
 
   async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
@@ -82,11 +81,13 @@ export class ContactServiceImpl extends AutoSynchronizableService<
       return GoogleContactService.deleteByContact(contact)
     })
     
+    await Promise.all(googleContactDeletePromises)
+
     const phoneDeletePromises = contacts.map(contact => {
       return PhoneService.deleteByContact(contact)
     })
-  
-    await Promise.all([phoneDeletePromises, googleContactDeletePromises])
+
+    await Promise.all(phoneDeletePromises)
   
     await this.deleteAll(contacts)
   }

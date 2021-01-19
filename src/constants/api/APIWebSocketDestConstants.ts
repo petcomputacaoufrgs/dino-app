@@ -13,12 +13,12 @@ class APIWebSocketDestConstants {
   CONTACT = 'contact'
   ESSENTIAL_CONTACT = 'essential_contact'
   PHONE = 'phone'
-  GOOGLE_CONTACT = 'google/contact'
+  GOOGLE_CONTACT = 'google_contact'
   NOTE = 'note'
   NOTE_COLUMN = 'note_column'
   USER = 'user'
   USER_SETTINGS = 'user_settings'
-  GOOGLE_SCOPE = 'auth/google/scope'
+  GOOGLE_SCOPE = 'google_scope'
 }
 
 export default new APIWebSocketDestConstants()

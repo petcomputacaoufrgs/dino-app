@@ -3,98 +3,106 @@ import SynchronizableService from "./SynchronizableService"
 export interface SyncTreeNode {
     service: SynchronizableService
     dependencies: SyncTreeNode[]
+    dependents: SyncTreeNode[]
 }
   
 class SyncTree {
-    root: SyncTreeNode[]
-  
+    nodes: SyncTreeNode[]
+    saveRoot: SyncTreeNode[]
+    deleteRoot: SyncTreeNode[]
+
     constructor() {
-      this.root = []
+      this.nodes = []
+      this.saveRoot = []
+      this.deleteRoot = []
     }
   
     add = (service: SynchronizableService) => {
-      const existentNode = this.findNode(service, this.root)
-      const dependencies = service.getSyncDependencies()
-      if (existentNode && dependencies.length > 0) {
-        this.addDependencies(existentNode, dependencies)
+      const node = this.findNode(service)
+
+      if (node) {
+        this.addDependencies(node)
       } else {
         this.addNew(service)
       }
     }
 
-    private addDependencies = (existentNode: SyncTreeNode, dependencies: SynchronizableService[]) => {  
-        dependencies.forEach(dependency => {
-          const dependencyNode = this.findNode(dependency, this.root)
-  
-          if (dependencyNode) {
-            this.removeNodeFromRoot(dependencyNode.service)
-            existentNode.dependencies.push(dependencyNode)
-          } else {
-            existentNode.dependencies.push({
-                service: dependency,
-                dependencies: []
-            })
-          }
-        })
-    }
-  
     private addNew = (service: SynchronizableService) => {
-      const dependencies = service.getSyncDependencies()
+        const newNode = this.createNode(service)
+  
+        this.addNodeOnSaveRoot(newNode)
 
-      if (dependencies.length > 0) {
-        const dependencyNodes: SyncTreeNode[] = []
-  
-        dependencies.forEach(dependency => {
-          const dependencyNode = this.findNode(dependency, this.root)
-  
+        this.addDependencies(newNode) 
+
+        this.addNodeOnNodeList(newNode)
+    }
+
+    private addDependencies = (node: SyncTreeNode) => {  
+        const dependencies = node.service.getSyncDependencies()
+
+        if (dependencies.length > 0) {
+          this.removeNodeFromDeleteRoot(node)
+        } else {
+          this.addNodeOnDeleteRoot(node)
+        }
+
+        dependencies.forEach(dependencyService => {
+          const dependencyNode = this.findNode(dependencyService)
+
           if (dependencyNode) {
-            this.removeNodeFromRoot(dependencyNode.service)
-            dependencyNodes.push(dependencyNode)
+            this.removeNodeFromSaveRoot(dependencyNode)
+            dependencyNode.dependents.push(node)
+            node.dependencies.push(dependencyNode)
           } else {
-            dependencyNodes.push({
-                service: dependency,
-                dependencies: []
-            })
+            const newNode = this.createNode(dependencyService)
+            newNode.dependents.push(node)
+            node.dependencies.push(newNode)
+            this.addNodeOnNodeList(newNode)
           }
         })
-  
-        this.addNodeOnRoot(service, dependencyNodes)
-      } else {
-        this.addNodeOnRoot(service)
-      }
-    }
-  
-    private addNodeOnRoot = (service: SynchronizableService, dependencies?: SyncTreeNode[]) => {
-      this.root.push({
-        dependencies: dependencies ? dependencies : [],
-        service: service
-      })
-    }
-  
-    private findNode = (service: SynchronizableService, nodes: SyncTreeNode[]): SyncTreeNode | undefined => {
-      const childrens: SyncTreeNode[] = []
-    
-      const serviceNode = nodes.find(node => {
-        if (Object.is(node.service, service)) {
-          return true
-        }
-    
-        childrens.push(...node.dependencies)
-        return false
-      })
-    
-      if (serviceNode) {
-        return serviceNode
-      }
-    
-      return childrens.length > 0 ? this.findNode(service, childrens) : undefined
     }
 
-    private removeNodeFromRoot = (service: SynchronizableService) => {
-        const index = this.root.findIndex(node => node.service === service)
-        if (index >= 0) {
-          this.root.splice(index, 1)
-        }
+    private createNode = (service: SynchronizableService): SyncTreeNode => {
+      return {
+        dependencies: [],
+        dependents: [],
+        service: service
+      }
+    }
+  
+    private addNodeOnSaveRoot = (node: SyncTreeNode) => {
+      this.saveRoot.push(node)
+    }
+
+    private addNodeOnDeleteRoot = (newNode: SyncTreeNode) => {
+      this.deleteRoot.push(newNode)
+    }
+
+    private addNodeOnNodeList = (node: SyncTreeNode) => {
+      this.nodes.push(node)
+    }
+  
+    private findNode = (service: SynchronizableService): SyncTreeNode | undefined => {
+      return this.nodes.find(node => this.areEqual(node.service, service))
+    }
+
+    private removeNodeFromSaveRoot = (nodeToRemove: SyncTreeNode) => {
+      this.removeNodeFromList(this.saveRoot, nodeToRemove)
+    }
+
+    private removeNodeFromDeleteRoot = (nodeToRemove: SyncTreeNode) => {
+      this.removeNodeFromList(this.deleteRoot, nodeToRemove)
+    }
+
+    private removeNodeFromList = (list: SyncTreeNode[], node: SyncTreeNode) => {
+      const index = list.findIndex(listNode => listNode.service === node.service)
+      if (index >= 0) {
+        list.splice(index, 1)
+      }
+    }
+
+    private areEqual = (serviceA: SynchronizableService, serviceB: SynchronizableService): boolean => {
+      return Object.is(serviceA, serviceB)
     }
 }
 

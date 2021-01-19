@@ -17,6 +17,7 @@ import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/database/Database'
+import GoogleScopeService from '../auth/google/GoogleScopeService'
 
 export class UserSettingsServiceImpl extends AutoSynchronizableService<
   number,
@@ -33,7 +34,7 @@ export class UserSettingsServiceImpl extends AutoSynchronizableService<
   }
 
   getSyncDependencies(): SynchronizableService[] {
-    return [TreatmentService]
+    return [GoogleScopeService, TreatmentService]
   }
   
   async convertModelToEntity(

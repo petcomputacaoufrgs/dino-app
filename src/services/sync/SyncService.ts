@@ -105,32 +105,67 @@ class SyncService extends UpdatableService {
   }
 
   private syncTree = async (): Promise<boolean> => {
-    const result = await this.syncNodes(this.tree.root)
-    this.cleanServicesResults()
+    const deleteResult = await this.syncDelete()
+    const saveResult = await this.syncSave()
+    return deleteResult && saveResult
+  }
+
+  private syncSave = async (): Promise<boolean> => {
+    console.log("=======SAVE=======")
+    const result = await this.syncNodesToSave(this.tree.saveRoot)
+    this.cleanServiceResults()
     return result
   }
 
-  private syncNodes = async (nodes: SyncTreeNode[]): Promise<boolean> => {
-    const executionList = nodes.map(node => this.syncNode(node))
-    const results = await Promise.all(executionList)
-    return results.every(result => result)
+  private syncDelete = async (): Promise<boolean> => {
+    console.log("=======DELETE=======")
+    const result = await this.syncNodesToDelete(this.tree.deleteRoot)
+    this.cleanServiceResults()
+    return result
+  }
+
+  private syncNodesToSave = async (nodes: SyncTreeNode[]): Promise<boolean> => {
+    const executionList = nodes.map(node => this.syncNodeToSave(node))
+    return this.processExecutionList(executionList)
   }   
 
-  private syncNode = async (node: SyncTreeNode): Promise<boolean> => {
-    if (node.dependencies.length > 0) {
-      const executionList = node.dependencies.map(node => this.syncNode(node))
-      const results = await Promise.all(executionList)
-      if (results.some(result => !result)) {
-        return false
-      }
+  private syncNodesToDelete = async (nodes: SyncTreeNode[]): Promise<boolean> => {
+    const executionList = nodes.map(node => this.syncNodeToDelete(node))
+    return this.processExecutionList(executionList)
+  }   
+
+  private syncNodeToSave = async (node: SyncTreeNode): Promise<boolean> => {
+    const dependencies = node.dependencies
+    if (dependencies.length > 0) {
+      const executionList = dependencies.map(node => this.syncNodeToSave(node))
+      const success = await this.processExecutionList(executionList)
+      if (!success) return false
+    }
+
+    const result = await node.service.synchronizeSave()
+  
+    return result
+  }
+
+  private syncNodeToDelete = async (node: SyncTreeNode): Promise<boolean> => {
+    const dependents = node.dependents
+    if (dependents.length > 0) {
+      const executionList = dependents.map(node => this.syncNodeToDelete(node))
+      const success = await this.processExecutionList(executionList)
+      if (!success) return false
     }
     
-    const result = await node.service.synchronize()
+    const result = await node.service.synchronizeDelete()
 
     return result
   }
 
-  private cleanServicesResults = () => {
+  private processExecutionList = async (executionList: Promise<boolean>[]) => {
+    const results = await Promise.all(executionList)
+    return results.every(result => result)
+  } 
+
+  private cleanServiceResults = () => {
     this.subscribedServices.forEach(service => service.finishSync())
   }
 }

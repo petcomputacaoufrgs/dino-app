@@ -4,20 +4,18 @@ import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import TreatmentService from '../treatment/TreatmentService'
-import { ColorThemeOption } from '../../types/context_provider/ColorThemeContextType'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import ColorThemeEnum from '../../types/user/view/ColorThemeEnum'
-import { FontSizeOption } from '../../types/context_provider/FontSizeContextType'
-import { Language } from '../../types/context_provider/LanguageContextType'
-import LanguageCodeConstants from '../../constants/languages/LanguageCodeConstants'
 import PT from '../../constants/languages/PT'
 import EN from '../../constants/languages/EN'
 import FontSizeEnum from '../../types/user/view/FontSizeEnum'
+import OptionType from '../../types/user/view/OptionType'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
+import LanguageEnum from '../../types/user/view/LanguageEnum'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -86,7 +84,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return model
 	}
 
-	getColorThemeOptions(language: LanguageBase): ColorThemeOption[] {
+	getColorThemeOptions(language: LanguageBase): OptionType[] {
 		return [
 			{
 				code: ColorThemeEnum.DEVICE,
@@ -107,7 +105,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		]
 	}
 
-	getFontSizeOptions(language: LanguageBase): FontSizeOption[] {
+	getFontSizeOptions(language: LanguageBase): OptionType[] {
 		return [
 			{
 				code: FontSizeEnum.DEFAULT,
@@ -124,14 +122,14 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		]
 	}
 
-	getLanguages(language: LanguageBase): Language[] {
+	getLanguagesOptions(language: LanguageBase): OptionType[] {
 		return [
 			{
-				code: LanguageCodeConstants.PORTUGUESE,
+				code: LanguageEnum.PORTUGUESE,
 				name: language.LANGUAGE_PORTUGUESE,
 			},
 			{
-				code: LanguageCodeConstants.ENGLISH,
+				code: LanguageEnum.ENGLISH,
 				name: language.LANGUAGE_ENGLISH,
 			},
 		]
@@ -178,7 +176,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 	getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
 		if (
 			userSettings &&
-			userSettings.language === LanguageCodeConstants.ENGLISH
+			userSettings.language === LanguageEnum.ENGLISH
 		) {
 			return new EN()
 		} else {
@@ -195,8 +193,8 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return new EN()
 	}
 
-	getDefaultLanguageCode = (): string => {
-		return this.getDefaultLanguage().ISO_LANGUAGE_CODE
+	getDefaultLanguageCode = (): number => {
+		return this.getDefaultLanguage().LANGUAGE_CODE
 	}
 
 	getColorThemeCode = (

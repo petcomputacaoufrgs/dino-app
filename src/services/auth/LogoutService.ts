@@ -22,7 +22,6 @@ class LogoutService extends WebSocketSubscriberableService {
   }
 
   private webSocketCallback = async (model: LogoutMessage | undefined) => {
-    console.log("oi")
     AuthService.logout()
 	}
 }

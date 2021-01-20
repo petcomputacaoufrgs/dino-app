@@ -2,14 +2,14 @@
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	padding: 24px 24px 0px;
-	grid-gap: 0px 24px;
+	padding: 1.5rem 1.5rem 0rem;
+	grid-gap: 0rem 1.5rem;
 }
 
 .home .home__grid__button {
 	width: 100%;
-	padding: 0px;
-	border-radius: 8px;
+	padding: 0rem;
+	border-radius: 0.5rem;
 }
 
 .home__grid__item {
@@ -27,15 +27,15 @@
 }
 
 .home .home__grid__button .MuiPaper-rounded {
-	border-radius: 8px;
+	border-radius: 0.5rem;
 }
 
 .home__grid__item__name {
-	height: 40px;
+	height: 2.5rem;
 	font-size: larger;
 	font-weight: bold;
 	color: var(--contrast-color);
-	margin-top: 4px;
+	margin-top: 0.25rem;
 }
 
 .home .home__grid__button {
@@ -49,7 +49,7 @@
 
 .home .home__grid__button svg {
 	width: 90%;
-	padding: 8px;
+	padding: 0.5rem;
 	height: auto;
 	fill: var(--dark-color);
 	opacity: 0.7;
@@ -59,8 +59,8 @@
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr;
-	padding: 24px 24px 0px;
-	grid-gap: 0px 24px;
+	padding: 1.5rem 1.5rem 0rem;
+	grid-gap: 0rem 1.5rem;
 }
 
 .info__grid__item {
@@ -84,9 +84,9 @@
 
 @media (orientation: landscape) {
 	.home .home__avatar {
-		margin-top: 40px;
-		width: 200px;
-		height: 200px;
+		margin-top: 2.5rem;
+		width: 12.5rem;
+		height: 12.5rem;
 	}
 
 	.home .home__grid__button .img {
@@ -95,6 +95,6 @@
 	}
 
 	.home__grid__item {
-		height: calc(100% + 80px);
+		height: calc(100% + 5rem);
 	}
 }

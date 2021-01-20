@@ -219,7 +219,7 @@ const ContactFormDialog = React.forwardRef(
 			<div className='contact__form'>
 				<Dialog
 					ref={ref}
-					style={{ margin: '0px' }}
+					style={{ margin: '0rem' }}
 					open={dialogOpen}
 					maxWidth='xl'
 					fullWidth

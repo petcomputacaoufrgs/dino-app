@@ -8,7 +8,7 @@
 
 	width: 100%;
 	height: 100%;
-	padding: 30px;
+	padding: 1.875rem;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -21,37 +21,37 @@
 	font-size: var(--big-font);
 }
 
-.terms_of_use .arrow-back {
-	padding: 0px;
-	margin-bottom: 10px;
+.terms_of_use .arrow_back {
+	padding: 0rem;
+	margin-bottom: 0.625rem;
 }
 
-.terms_of_use .icon_button.arrow-back svg {
+.terms_of_use .icon_button.arrow_back svg {
 	fill: var(--contrast-color);
 }
 
 .terms_of_use h2 {
 	font-weight: 600;
-	margin: 20px 0px 15px 0px;
+	margin: 1.25rem 0rem 0.938rem 0rem;
 }
 
 .terms_of_use h4 {
-	margin: 15px 0px 10px 0px;
+	margin: 0.938rem 0rem 0.625rem 0rem;
 	color: #636363;
 }
 
 .terms_of_use h5 {
 	font-style: italic;
-	margin: 15px 0px 10px 0px;
+	margin: 0.938rem 0rem 0.625rem 0rem;
 	color: #636363;
 }
 
 .terms_of_use p {
-	margin: 10px 0px;
+	margin: 0.625rem 0rem;
 }
 
 .terms_of_use span {
-	font-size: 12px;
+	font-size: 10.125rem;
 	text-align: center;
 	color: #636363;
 }

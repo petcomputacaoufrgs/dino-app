@@ -51,7 +51,7 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
 	return (
 		<div className='select_multiple_treatments'>
 			<Loader isLoading={isLoading}>
-				<FormControl style={{ marginTop: '6px', width: '100%' }}>
+				<FormControl style={{ marginTop: '0.375rem', width: '100%' }}>
 					<InputLabel id='select_multiple_treatments__input_label'>
 						Tratamentos
 					</InputLabel>

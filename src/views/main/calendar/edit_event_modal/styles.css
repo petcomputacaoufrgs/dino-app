@@ -17,5 +17,5 @@
 }
 
 .calendar__edit_event_modal.MuiDialog-root .MuiDialogContent-root {
-	padding: 8px;
+	padding: 0.5rem;
 }

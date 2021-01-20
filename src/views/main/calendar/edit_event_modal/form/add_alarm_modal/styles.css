@@ -6,8 +6,8 @@
 .calendar__edit_event_modal__form__add_alarm_modal.MuiDialog-root
 	.MuiFormControl-root {
 	width: 100%;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
 }
 
 .calendar__edit_event_modal__form__add_alarm_modal__time {
@@ -15,7 +15,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	margin-bottom: 15px;
+	margin-bottom: 0.938rem;
 }
 
 .calendar__edit_event_modal__form__add_alarm_modal__time__text_field

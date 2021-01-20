@@ -8,17 +8,17 @@
 }
 
 .tag_list.MuiPaper-root .MuiChip-root {
-	border: 1px solid;
+	border: 0.063rem solid;
 	border-color: var(--dark-color);
 	background-color: inherit;
-	margin-right: 5px;
+	margin-right: 0.313rem;
 	font-size: smaller;
-	height: 26px;
+	height: 1.625rem;
 }
 
 .tag_list.MuiPaper-root .MuiChip-root .MuiChip-label {
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 0.625rem;
+	padding-right: 0.625rem;
 }
 
 .tag_list.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {

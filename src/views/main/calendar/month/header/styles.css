@@ -4,13 +4,13 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 10px;
+	padding: 0.625rem;
 }
 
 .calendar__month__header h1 {
 	font-size: 1.3em;
 	margin-bottom: 0;
-	margin-right: 10px;
+	margin-right: 0.625rem;
 	width: 50%;
 }
 
@@ -27,5 +27,5 @@
 }
 
 .calendar__month__header_buttons__today_button__image {
-	height: 20px;
+	height: 1.25rem;
 }

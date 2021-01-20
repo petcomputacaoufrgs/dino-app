@@ -1,7 +1,7 @@
 .faq__content {
 	position: absolute;
 	width: 100%;
-	height: calc(100% - 60px);
+	height: calc(100% - 3.75rem);
 	overflow-y: auto;
 	font-size: var(--default-font);
 }
@@ -46,8 +46,8 @@
 
 .faq__save_button__icon {
 	margin-right: 0.5rem;
-	width: 18px;
-	height: 18px;
+	width: 1.125rem;
+	height: 1.125rem;
 	fill: var(--contrast-color);
 }
 

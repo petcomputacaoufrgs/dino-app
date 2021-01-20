@@ -3,9 +3,9 @@
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	border-radius: 8px;
-	border: 0px;
-	padding: 6px 16px;
+	border-radius: 0.5rem;
+	border: 0rem;
+	padding: 0.375rem 1rem;
 	font: 0.875rem;
 	font-weight: 500;
 	text-transform: uppercase;
@@ -27,7 +27,7 @@
 }
 
 .button.button__outline {
-	border: solid 1px;
+	border: solid 0.063rem;
 	border-color: var(--contrast-color);
 }
 

@@ -12,7 +12,7 @@ import FontSizeEnum from '../../types/user/view/FontSizeEnum'
 import OptionType from '../../types/user/view/OptionType'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/user/view/LanguageEnum'
@@ -26,7 +26,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.userSettings,
 			APIRequestMappingConstants.USER_SETTINGS,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.USER_SETTINGS,
 		)
 	}

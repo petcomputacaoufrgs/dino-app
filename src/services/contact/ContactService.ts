@@ -10,7 +10,7 @@ import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
 import GoogleContactService from './GoogleContactService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
@@ -24,7 +24,7 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.contact,
 			APIRequestMappingConstants.CONTACT,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.CONTACT,
 		)
 	}

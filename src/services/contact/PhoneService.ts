@@ -10,7 +10,7 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import ContactService from './ContactService'
 import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
@@ -24,7 +24,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.phone,
 			APIRequestMappingConstants.PHONE,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.PHONE,
 		)
 	}

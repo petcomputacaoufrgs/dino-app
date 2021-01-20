@@ -9,7 +9,7 @@ import FaqItemService from './FaqItemService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 
 class FaqServiceImpl extends AutoSynchronizableService<
@@ -21,7 +21,7 @@ class FaqServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.faq,
 			APIRequestMappingConstants.FAQ,
-			WebSocketTopicURLService,
+			WebSocketTopicPathService,
 			APIWebSocketDestConstants.FAQ,
 		)
 	}

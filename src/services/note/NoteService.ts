@@ -8,7 +8,7 @@ import NoteEntity from '../../types/note/database/NoteEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
 import Utils from '../../utils/Utils'
@@ -22,7 +22,7 @@ class NoteServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.note,
 			APIRequestMappingConstants.NOTE,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.NOTE,
 		)
 	}

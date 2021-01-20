@@ -9,7 +9,7 @@ import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotos
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 
@@ -22,7 +22,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.user,
 			APIRequestMappingConstants.USER,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.USER,
 		)
 	}

@@ -6,7 +6,7 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import PhoneService from './PhoneService'
@@ -20,7 +20,7 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.googleContact,
 			APIRequestMappingConstants.GOOGLE_CONTACT,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.GOOGLE_CONTACT,
 		)
 	}

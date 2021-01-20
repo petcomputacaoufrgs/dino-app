@@ -1,490 +1,497 @@
+import LanguageEnum from '../../types/user/view/LanguageEnum'
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from './LanguageCodeConstants'
 
 export default class EN implements LanguageBase {
-  APP_NAME = 'DinoApp'
+	APP_NAME = 'DinoApp'
 
-  DINOAPP_TEAM = 'DinoApp Team'
+	DINOAPP_TEAM = 'DinoApp Team'
 
-  CURIOUS_DINO_ALT = 'Curious dino'
+	CURIOUS_DINO_ALT = 'Curious dino'
 
-  ISO_LANGUAGE_CODE = 'en'
+	LANGUAGE_CODE = LanguageEnum.ENGLISH
 
-  NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.ENGLISH
+	ISO_LANGUAGE_CODE = 'en'
 
-  LANGUAGE_PORTUGUESE = 'Portuguese'
+	LANGUAGE_PORTUGUESE = 'Portuguese'
 
-  LANGUAGE_ENGLISH = 'English'
+	LANGUAGE_ENGLISH = 'English'
 
-  NOT_FOUND_MESSAGE = 'Item not found.'
+	NOT_FOUND_MESSAGE = 'Item not found.'
 
-  NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
+	NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
 
-  WELCOME_MESSAGE = 'Welcome to DinoApp!'
+	WELCOME_MESSAGE = 'Welcome to DinoApp!'
 
-  FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
+	FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
 
-  FIRST_LOGIN_WELCOME_MESSAGE = 'Welcome!'
+	FIRST_LOGIN_WELCOME_MESSAGE = 'Welcome!'
 
-  FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
+	FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
 
-  FIRST_LOGIN_CHOOSE_TREATMENT = "Select your Treatment"
+	FIRST_LOGIN_CHOOSE_TREATMENT = 'Select your Treatment'
 
-  FIRST_LOGIN_CHOOSE_COLOR_THEME = "Select your Color Theme"
+	FIRST_LOGIN_CHOOSE_COLOR_THEME = 'Select your Color Theme'
 
-  FIRST_LOGIN_CHOOSE_LANGUAGE = "Select your Language"
+	FIRST_LOGIN_CHOOSE_LANGUAGE = 'Select your Language'
 
-  LOGIN_BUTTON_TEXT = 'Log in with Google'
+	LOGIN_BUTTON_TEXT = 'Log in with Google'
 
-  LOGOUT_BUTTON_DESCRIPTION =
-    'Image with a open door and a arrow indicating an exit.'
+	LOGOUT_BUTTON_DESCRIPTION =
+		'Image with a open door and a arrow indicating an exit.'
 
-  SEARCH_HOLDER = 'Search...'
+	SEARCH_HOLDER = 'Search...'
 
-  LOGIN_FAIL_BY_GOOGLE = 'Login with Google failed.'
+	LOGIN_FAIL_BY_GOOGLE = 'Login with Google failed.'
 
-  LOGIN_FAIL_BY_API = 'Login with DinoApp server failed.'
+	LOGIN_FAIL_BY_API = 'Login with DinoApp server failed.'
 
-  LOGIN_CANCELED = 'Login canceled.'
+	LOGIN_CANCELED = 'Login canceled.'
 
-  LOGIN_REFRESH_NECESSARY =
-    'Login with error. We need you to authenticate again, please.'
+	LOGIN_REFRESH_NECESSARY = 'Try to login again, please.'
 
-  AVATAR_ALT = "User's profile image with rounded edges."
+	AVATAR_ALT = "User's profile image with rounded edges."
 
-  LOGOUT_DIALOG_QUESTION = 'Are you sure you want to log out?'
+	LOGOUT_DIALOG_QUESTION = 'Are you sure you want to log out?'
 
-  LOGOUT_DIALOG_DESCRIPTION =
-    'If you answer "YES" all your account data will be removed from this device'
+	LOGOUT_DIALOG_DESCRIPTION =
+		'If you answer "YES" all your account data will be removed from this device'
 
-  AGREEMENT_OPTION_TEXT = 'YES'
+	AGREEMENT_OPTION_TEXT = 'YES'
 
-  AGREEMENT_BUTTON_ARIA_LABEL = 'Click here to agree'
+	AGREEMENT_BUTTON_ARIA_LABEL = 'Click here to agree'
 
-  DISAGREEMENT_OPTION_TEXT = 'NO'
+	DISAGREEMENT_OPTION_TEXT = 'NO'
 
-  DISAGREEMENT_BUTTON_ARIA_LABEL = 'Click here to disagree'
+	DISAGREEMENT_BUTTON_ARIA_LABEL = 'Click here to disagree'
 
-  ADD_OPTION_TEXT = 'ADD'
+	ADD_OPTION_TEXT = 'ADD'
 
-  CANCEL_OPTION_TEXT = 'CANCEL'
+	CANCEL_OPTION_TEXT = 'CANCEL'
 
-  EDIT_OPTION_TEXT = 'Edit'
+	EDIT_OPTION_TEXT = 'Edit'
 
-  DELETE_OPTION_TEXT = 'Delete'
+	DELETE_OPTION_TEXT = 'Delete'
 
-  DELETE_CONTACT_QUESTION = 'Delete contact?'
+	DELETE_CONTACT_QUESTION = 'Delete contact?'
 
-  DELETE_CONTACT_OPTION_TEXT = 'This action will permanently delete your contact.'
+	DELETE_CONTACT_OPTION_TEXT =
+		'This action will permanently delete your contact.'
 
-  TERMS_OF_USE = 'Terms of Use'
-  
-  PRIVACY_POLICY = 'Privacy Policy'
+	TERMS_OF_USE = 'Terms of Use'
 
-  MENU_HOME = 'Home'
+	PRIVACY_POLICY = 'Privacy Policy'
 
-  MENU_GAMES = 'Games'
+	MENU_HOME = 'Home'
 
-  MENU_GLOSSARY = 'Glossary'
+	MENU_GAMES = 'Games'
 
-  MENU_CONTACTS = 'Contacts'
+	MENU_GLOSSARY = 'Glossary'
 
-  MENU_FAQ = 'F.A.Q.'
+	MENU_CONTACTS = 'Contacts'
 
-  MENU_SETTINGS = 'Settings'
+	MENU_FAQ = 'F.A.Q.'
 
-  MENU_LOGOUT = 'Logout'
+	MENU_SETTINGS = 'Settings'
 
-  MENU_CALENDAR = 'Calendar'
+	MENU_LOGOUT = 'Logout'
 
-  MENU_ABOUT_US = 'About Us'
+	MENU_CALENDAR = 'Calendar'
 
-  SETTINGS_TITLE = 'Settings'
+	MENU_ABOUT_US = 'About Us'
 
-  SETTINGS_LANGUAGE = 'Choose Language'
+	SETTINGS_TITLE = 'Settings'
 
-  SETTINGS_FAQ = 'Choose F.A.Q'
+	SETTINGS_LANGUAGE = 'Choose Language'
 
-  SETTINGS_SAVE = 'Save'
+	SETTINGS_TREATMENT = 'Choose treatment'
 
-  SETTINGS_SAVE_SUCCESS = 'Settings updated.'
+	SETTINGS_SAVE = 'Save'
 
-  MENU_NOTES = 'Notes'
+	SETTINGS_SAVE_SUCCESS = 'Settings updated.'
 
-  NOTES_HEADER_IMAGE_DESC = 'Image with a opened notebook and a hand writing.'
+	SETTINGS_SAVE_ERROR = 'Error saving new settings.'
 
-  ADD_BUTTON = 'Click to add a new item.'
+	MENU_NOTES = 'Notes'
 
-  NOTE_STATE_DONE = 'Note has a answer.'
+	NOTES_HEADER_IMAGE_DESC = 'Image with a opened notebook and a hand writing.'
 
-  NOTE_STATE_NOT_DONE = 'Note has no answers yet.'
+	ADD_BUTTON = 'Click to add a new item.'
 
-  NOTE_SHOW_ANSWER = 'Click to show the answer of this note right below.'
+	NOTE_STATE_DONE = 'Note has a answer.'
 
-  NOTE_EDIT_ANSWER_BUTTON = 'Click here to edit the answer of this note.'
+	NOTE_STATE_NOT_DONE = 'Note has no answers yet.'
 
-  NOTE_EDIT_QUESTION_BUTTON = 'Click here to edit the question of this note.'
+	NOTE_SHOW_ANSWER = 'Click to show the answer of this note right below.'
 
-  NOTE_DELETE_BUTTON = 'Click here to delete this note.'
+	NOTE_EDIT_ANSWER_BUTTON = 'Click here to edit the answer of this note.'
 
-  ANSWER_NOTE_DIALOG_TITLE = 'Answer'
+	NOTE_EDIT_QUESTION_BUTTON = 'Click here to edit the question of this note.'
 
-  NOTE_TAG_LABEL = 'Tags'
+	NOTE_DELETE_BUTTON = 'Click here to delete this note.'
 
-  DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
+	ANSWER_NOTE_DIALOG_TITLE = 'Answer'
 
-  DIALOG_SAVE_BUTTON_TEXT = 'Save'
+	NOTE_TAG_LABEL = 'Tags'
 
-  DIALOG_CANCEL_BUTTON_LABEL = 'Click to cancel.'
+	DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
 
-  DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
+	DIALOG_SAVE_BUTTON_TEXT = 'Save'
 
-  SEARCH_BUTTON_LABEL = 'Search...'
+	DIALOG_CANCEL_BUTTON_LABEL = 'Click to cancel.'
 
-  ANSWER_DIALOG_LABEL = 'Model for answer a question note'
+	DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
-  FORM_NAME = 'Name'
+	SEARCH_BUTTON_LABEL = 'Search...'
 
-  FORM_DESCRIPTION = 'Description'
+	ANSWER_DIALOG_LABEL = 'Model for answer a question note'
 
-  FORM_TYPE = 'Type'
+	FORM_NAME = 'Name'
 
-  FORM_PHONE = 'Phone'
+	FORM_DESCRIPTION = 'Description'
 
-  FORM_QUESTION = 'Question'
+	FORM_TYPE = 'Type'
 
-  FORM_QUESTION_PLACEHOLDER = 'Question?'
+	FORM_PHONE = 'Phone'
 
-  FORM_QUESTION_TITLE = 'Send us your question!'
+	FORM_QUESTION = 'Question'
 
-  FORM_ADD_PHONE = 'Add Phone'
+	FORM_QUESTION_PLACEHOLDER = 'Question?'
 
-  NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
+	FORM_QUESTION_TITLE = 'Send us your question!'
 
-  CONTACTS_ADD_CONTACT = 'New Contact'
+	FORM_ADD_PHONE = 'Add Phone'
 
-  CONTACTS_MOBILE_PHONE = 'Mobile'
+	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
-  CONTACTS_RESIDENTIAL_PHONE = 'Residential'
+	CONTACTS_ADD_CONTACT = 'New Contact'
 
-  CONTACTS_PUBLIC_SERVICE_PHONE = 'Public Service'
+	CONTACTS_MOBILE_PHONE = 'Mobile'
 
-  NO_AVAILABLE_TEXT = 'No Available Text'
+	CONTACTS_RESIDENTIAL_PHONE = 'Residential'
 
-  JANUARY = 'January'
+	CONTACTS_PUBLIC_SERVICE_PHONE = 'Public Service'
 
-  FEBRUARY = 'February'
+	NO_AVAILABLE_TEXT = 'No Available Text'
 
-  MARCH = 'March'
+	JANUARY = 'January'
 
-  APRIL = 'April'
+	FEBRUARY = 'February'
 
-  MAY = 'May'
+	MARCH = 'March'
 
-  JUNE = 'June'
+	APRIL = 'April'
 
-  JULY = 'July'
+	MAY = 'May'
 
-  AUGUST = 'August'
+	JUNE = 'June'
 
-  SEPTEMBER = 'September'
+	JULY = 'July'
 
-  OCTOBER = 'October'
+	AUGUST = 'August'
 
-  NOVEMBER = 'November'
+	SEPTEMBER = 'September'
 
-  DECEMBER = 'December'
+	OCTOBER = 'October'
 
-  INVALID_MONTH = 'Invalid month'
+	NOVEMBER = 'November'
 
-  STRING_DATE_FORMAT = 'MM DD, YYYY'
+	DECEMBER = 'December'
 
-  DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
+	INVALID_MONTH = 'Invalid month'
 
-  DELETE_NOTE_ALERT_TEXT = 'If you agree this note will be deleted permanently.'
+	STRING_DATE_FORMAT = 'MM DD, YYYY'
 
-  LOADING = 'Loading...'
+	DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
 
-  NO_OPTIONS = 'No options'
+	DELETE_NOTE_ALERT_TEXT = 'If you agree this note will be deleted permanently.'
 
-  EMPTY_FIELD_ERROR = "Field can't be empty."
+	LOADING = 'Loading...'
 
-  QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
+	NO_OPTIONS = 'No options'
 
-  DISCONNECTED_MESSAGE =
-    "You're disconnected of the Internet. Connect again to save local data."
+	EMPTY_FIELD_ERROR = "Field can't be empty."
 
-  CONNECTED_MESSAGE = "Now you're connected!"
+	QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
 
-  SYNC_STARTED = 'Synchronizing data...'
+	DISCONNECTED_MESSAGE =
+		"You're disconnected of the Internet. Connect again to save local data."
 
-  SYNC_FINISH = 'Sync finished!'
+	CONNECTED_MESSAGE = "Now you're connected!"
 
-  SYNC_FAIL = "Sync fail. Let's try again..."
+	SYNC_STARTED = 'Synchronizing data...'
 
-  SYNC_CONNECTION_FAIL =
-    'Sync connection error. We will try again when internet connection return.'
+	SYNC_FINISH = 'Sync finished!'
 
-  CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
+	SYNC_FAIL = "Sync fail. Let's try again..."
 
-  DISCONNECTED = 'Disconnected'
+	SYNC_CONNECTION_FAIL =
+		'Sync connection error. We will try again when internet connection return.'
 
-  SELECT_FAQ_BUTTON = 'Search FAQ'
+	CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
 
-  SELECT_TREATMENT = 'Select Treatment'
+	DISCONNECTED = 'Disconnected'
 
-  SELECT_TREATMENT_LOAD_CONTACT_GRANT = 'Load essential contacts related to my treatment'
+	SELECT_FAQ_BUTTON = 'Search FAQ'
 
-  SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
+	SELECT_TREATMENT_LOAD_CONTACT_GRANT =
+		'Load essential contacts related to my treatment'
 
-  SUNDAY_NAME = 'Sunday'
+	SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
 
-  MONDAY_NAME = 'Monday'
+	SUNDAY_NAME = 'Sunday'
 
-  TUESDAY_NAME = 'Tuesday'
+	MONDAY_NAME = 'Monday'
 
-  WEDNESDAY_NAME = 'Webnesday'
+	TUESDAY_NAME = 'Tuesday'
 
-  THURSDAY_NAME = 'Thursday'
+	WEDNESDAY_NAME = 'Webnesday'
 
-  FRIDAY_NAME = 'Friday'
+	THURSDAY_NAME = 'Thursday'
 
-  SATURDAY_NAME = 'Saturday'
+	FRIDAY_NAME = 'Friday'
 
-  NEXT_BUTTON_TEXT = 'Next'
+	SATURDAY_NAME = 'Saturday'
 
-  PREVIOUS_BUTTON_TEXT = 'Previous'
+	NEXT_BUTTON_TEXT = 'Next'
 
-  NEXT_BUTTON_TEXT_LABEL = 'Click to go to the next element'
-  
-  PREVIOUS_BUTTON_TEXT_LABEL =  'Click to return to the previous element'
+	PREVIOUS_BUTTON_TEXT = 'Previous'
 
-  CLOSE_ARIA_LABEL = 'Close'
+	NEXT_BUTTON_TEXT_LABEL = 'Click to go to the next element'
 
-  DELETE_ARIA_LABEL = 'Delete'
+	PREVIOUS_BUTTON_TEXT_LABEL = 'Click to return to the previous element'
 
-  EDIT_ARIA_LABEL = 'Edit'
+	CLOSE_ARIA_LABEL = 'Close'
 
-  INVALID_WEEKDAY = 'Invalid weekday.'
+	DELETE_ARIA_LABEL = 'Delete'
 
-  TODAY = 'Today'
+	EDIT_ARIA_LABEL = 'Edit'
 
-  DATE_FROM = 'From'
+	INVALID_WEEKDAY = 'Invalid weekday.'
 
-  DATE_TO = 'To'
+	TODAY = 'Today'
 
-  MEDICAL_APPOINTMENT_TYPE = 'Medical appointment'
+	DATE_FROM = 'From'
 
-  MEDICINE_TYPE = 'Medicine'
+	DATE_TO = 'To'
 
-  INVALID_EVENT_TYPE = 'Invalid event type'
+	MEDICAL_APPOINTMENT_TYPE = 'Medical appointment'
 
-  MINUTES = 'minutes'
+	MEDICINE_TYPE = 'Medicine'
 
-  HOURS = 'hours'
+	INVALID_EVENT_TYPE = 'Invalid event type'
 
-  DAYS = 'days'
+	MINUTES = 'minutes'
 
-  AND = 'and'
+	HOURS = 'hours'
 
-  BEFORE = 'before'
+	DAYS = 'days'
 
-  MINUTE = 'minute'
+	AND = 'and'
 
-  HOUR = 'hour'
+	BEFORE = 'before'
 
-  DAY = 'day'
+	MINUTE = 'minute'
 
-  ADD_EVENT_TITLE = 'New Event'
+	HOUR = 'hour'
 
-  EVENT_TYPE_LABEL = 'Event Type'
+	DAY = 'day'
 
-  EVENT_NAME_LABEL = 'Event Name'
+	ADD_EVENT_TITLE = 'New Event'
 
-  EVENT_INIT_DATE_LABEL = 'Start day'
+	EVENT_TYPE_LABEL = 'Event Type'
 
-  EVENT_INIT_TIME_LABEL = 'Start time'
+	EVENT_NAME_LABEL = 'Event Name'
 
-  EVENT_END_DATE_LABEL = 'End day'
+	EVENT_INIT_DATE_LABEL = 'Start day'
 
-  EVENT_END_TIME_LABEL = 'End time'
+	EVENT_INIT_TIME_LABEL = 'Start time'
 
-  DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
+	EVENT_END_DATE_LABEL = 'End day'
 
-  EVENT_REPEAT_NOT_REPEAT = 'Not repeat'
+	EVENT_END_TIME_LABEL = 'End time'
 
-  EVENT_REPEAT_EVERY_DAY = 'Everyday'
+	DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
 
-  EVENT_REPEAT_EVERY_WEEK = 'Every week'
+	EVENT_REPEAT_NOT_REPEAT = 'Not repeat'
 
-  EVENT_REPEAT_EVERY_MONTH = 'Every month'
+	EVENT_REPEAT_EVERY_DAY = 'Everyday'
 
-  EVENT_REPEAT_EVERY_YEAR = 'Every year'
+	EVENT_REPEAT_EVERY_WEEK = 'Every week'
 
-  EVENT_REPEAT_EVERY_CUSTOMIZED = 'Customized'
+	EVENT_REPEAT_EVERY_MONTH = 'Every month'
 
-  EVENT_REPEAT_TYPE_LABEL = 'Event repeat type'
+	EVENT_REPEAT_EVERY_YEAR = 'Every year'
 
-  INVALID_EVENT_REPEAT_TYPE = 'Invalid event repeat'
+	EVENT_REPEAT_EVERY_CUSTOMIZED = 'Customized'
 
-  EVENT_TITLE_ICON_ALT = 'Choose event title'
+	EVENT_REPEAT_TYPE_LABEL = 'Event repeat type'
 
-  EVENT_TYPE_ICON_ALT = 'Choose event type'
+	INVALID_EVENT_REPEAT_TYPE = 'Invalid event repeat'
 
-  EVENT_DATE_ICON_ALT = 'Choose event date'
+	EVENT_TITLE_ICON_ALT = 'Choose event title'
 
-  EVENT_REPEAT_ICON_ALT = 'Choose event repetition'
+	EVENT_TYPE_ICON_ALT = 'Choose event type'
 
-  EVENT_REPEAT_END_DATE_LABEL = 'Repetition end'
+	EVENT_DATE_ICON_ALT = 'Choose event date'
 
-  EVENT_WEEKDAY_SELECT_LABEL = 'Select days:'
+	EVENT_REPEAT_ICON_ALT = 'Choose event repetition'
 
-  EVENT_ALERT_ALT = 'Add alerts before event'
+	EVENT_REPEAT_END_DATE_LABEL = 'Repetition end'
 
-  EVENT_ADD_ALARM_LABEL = 'Time'
+	EVENT_WEEKDAY_SELECT_LABEL = 'Select days:'
 
-  EVENT_ADD_ALARM_TYPE_LABEL = 'Time measure'
+	EVENT_ALERT_ALT = 'Add alerts before event'
 
-  EVENT_ADD_ALERT = 'Add notification'
+	EVENT_ADD_ALARM_LABEL = 'Time'
 
-  EVENT_INVALID_ALARM_TYPE = 'invalid type'
+	EVENT_ADD_ALARM_TYPE_LABEL = 'Time measure'
 
-  EVENT_ALARM_ZERO = 'At the time of the event'
+	EVENT_ADD_ALERT = 'Add notification'
 
-  EVENT_ALARM_DELETE_ALT = 'Click to delete alarm'
+	EVENT_INVALID_ALARM_TYPE = 'invalid type'
 
-  CHANGE_COLOR_ARIA_LABEL = 'Click to select a random color'
+	EVENT_ALARM_ZERO = 'At the time of the event'
 
-  ADD_PHONE_ARIA_LABEL = 'Click to add a new phone number'
+	EVENT_ALARM_DELETE_ALT = 'Click to delete alarm'
 
-  RETURN_ARIA_LABEL = 'Return'
+	CHANGE_COLOR_ARIA_LABEL = 'Click to select a random color'
 
-  SEARCH_ARIA_LABEL = 'Search'
+	ADD_PHONE_ARIA_LABEL = 'Click to add a new phone number'
 
-  OPEN_MENU_ARIA_LABEL = 'Open menu'
+	RETURN_ARIA_LABEL = 'Return'
 
-  CLOSE_MENU_ARIA_LABEL = 'Close menu'
+	SEARCH_ARIA_LABEL = 'Search'
 
-  CLICK_TO_OPEN_MENU_ITEM = 'Click to open '
+	OPEN_MENU_ARIA_LABEL = 'Open menu'
 
-  ADD_ARIA_LABEL = 'Add'
+	CLOSE_MENU_ARIA_LABEL = 'Close menu'
 
-  OPTIONS_ARIA_LABEL = 'Options'
+	CLICK_TO_OPEN_MENU_ITEM = 'Click to open '
 
-  EVENT_COLOR_LABEL = 'Selected color'
+	ADD_ARIA_LABEL = 'Add'
 
-  FAQ_CONNECTION_ERROR = 'Internet connection required'
+	OPTIONS_ARIA_LABEL = 'Options'
 
-  MAX = 'max. '
+	EVENT_COLOR_LABEL = 'Selected color'
 
-  ADD_COLUMN_TEXT = '+ Add column'
+	MAX = 'max. '
 
-  COLUMN_ADD_LABEL = 'Add Column'
+	ADD_COLUMN_TEXT = '+ Add column'
 
-  COLUMN_EDIT_LABEL = 'Edit Column'
+	COLUMN_ADD_LABEL = 'Add Column'
 
-  COLUMN_TITLE_LABEL = "Column's title"
+	COLUMN_EDIT_LABEL = 'Edit Column'
 
-  COLUMN_MIN_LENGTH_ERROR = 'Minimum one character.'
+	COLUMN_TITLE_LABEL = "Column's title"
 
-  COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Title already exists'
+	COLUMN_MIN_LENGTH_ERROR = 'Minimum one character.'
 
-  NOTE_COLUMN_DELETE_DIALOG_QUESTION =
-    'Are you sure you want to delete this column?'
+	COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Title already exists'
 
-  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
-    'This column has notes, are you sure you want to delete it?'
+	NOTE_COLUMN_DELETE_DIALOG_QUESTION =
+		'Are you sure you want to delete this column?'
 
-  NOTE_COLUMN_DELETE_DIALOG_DESC =
-    'If you answer "YES" this column will be removed permanently.'
+	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
+		'This column has notes, are you sure you want to delete it?'
 
-  NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
-    'If you remove this column related notes will be deleted permanently.'
+	NOTE_COLUMN_DELETE_DIALOG_DESC =
+		'If you answer "YES" this column will be removed permanently.'
 
-  NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
+	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
+		'If you remove this column related notes will be deleted permanently.'
 
-  NOTE_COLUMN_ADD_NOTE_TEXT = 'Add note'
+	NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
 
-  NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'New note'
+	NOTE_COLUMN_ADD_NOTE_TEXT = 'Add note'
 
-  QUESTION_NOTE_DIALOG_TITLE = 'Question'
+	NOTE_EDIT_DIALOG_NEW_NOTE_TITLE = 'New note'
 
-  NOTE_INFO_DIALOG_LAST_UPDATE_TITLE = 'Last update:'
+	QUESTION_NOTE_DIALOG_TITLE = 'Question'
 
-  NOTE_INFO_DIALOG_COLUMN_TITLE = 'Column:'
+	NOTE_INFO_DIALOG_COLUMN_TITLE = 'Column:'
 
-  NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
+	NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
 
-  LIGHT_THEME_NAME = 'Light'
+	LIGHT_THEME_NAME = 'Light'
 
-  DARK_THEME_NAME = 'Dark'
+	DARK_THEME_NAME = 'Dark'
 
-  DALTONIAN_THEME_NAME = 'High contrast'
+	DALTONIAN_THEME_NAME = 'High contrast'
 
-  DEVICE_DEFAULT_THEME_NAME = 'System default'
+	DEVICE_DEFAULT_THEME_NAME = 'System default'
 
-  COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
+	COLOR_THEME_SELECTION_TITLE = 'Choose Color Theme'
 
-  FONT_SIZE_SELECTION_TITLE = 'Choose Font Size'
+	FONT_SIZE_SELECTION_TITLE = 'Choose Font Size'
 
-  DEFAULT_FONT_SIZE_NAME = 'Default'
-  
-  LARGE_FONT_SIZE_NAME = 'Large'
+	DEFAULT_FONT_SIZE_NAME = 'Default'
 
-  LARGER_FONT_SIZE_NAME = 'Larger'
+	LARGE_FONT_SIZE_NAME = 'Large'
 
-  CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
+	LARGER_FONT_SIZE_NAME = 'Larger'
 
-  CONTACT_NUMBER_ALREADY_EXISTS =
-    'This number is already created in the contact'
+	CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
 
-  CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Click here to clean'
+	CONTACT_NUMBER_ALREADY_EXISTS =
+		'This number is already created in the contact'
 
-  COLOR_THEME_SELECTION_ARIA_LABEL = 'Click here to change the contact color'
+	CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Click here to clean'
 
-  DIALOG_AGREE_TEXT = 'Accept'
+	COLOR_THEME_SELECTION_ARIA_LABEL = 'Click here to change the contact color'
 
-  DIALOG_DECLINE_BUTTON_TEXT = 'Decline'
+	DIALOG_AGREE_TEXT = 'Accept'
 
-  GRANT_FAIL_BY_EXTERNAL_ERROR =
-    'Sorry, something went wrong. Please, try again.'
+	DIALOG_DECLINE_BUTTON_TEXT = 'Decline'
 
-  GRANT_CANCELED = 'Permission canceled. Please, try again.'
+	GRANT_FAIL_BY_EXTERNAL_ERROR =
+		'Sorry, something went wrong. Please, try again.'
 
-  GRANT_FAIL_BY_INVALID_ACCOUNT =
-    'Invalid account. Please, use the logged account.'
+	GRANT_CANCELED = 'Permission canceled. Please, try again.'
 
-  GRANT_RESFRESH_TOKEN_NECESSARY = 'Sorry, our mistake. Please, try again.'
+	GRANT_FAIL_BY_INVALID_ACCOUNT =
+		'Invalid account. Please, use the logged account.'
 
-  GRANT_FAIL_BY_DISCONNECTION =
-    'Sorry, connection error. Please, try again when connection return.'
+	GRANT_RESFRESH_TOKEN_NECESSARY = 'Sorry, our mistake. Please, try again.'
 
-  GRANT_FAIL_BY_UNKNOW_ERROR =
-    'Sorry, an unknow error happened. Please, trye again.'
+	GRANT_FAIL_BY_DISCONNECTION =
+		'Sorry, connection error. Please, try again when connection return.'
 
-  GRANT_FAIL_BY_EXTERNAL_SUCCESS = 'Success! Enjoy your advantages.'
+	GRANT_FAIL_BY_UNKNOW_ERROR =
+		'Sorry, an unknow error happened. Please, trye again.'
 
-  GRANT_DECLINED = 'You can active this feature in settings.'
+	GRANT_FAIL_BY_EXTERNAL_SUCCESS = 'Success! Enjoy your advantages.'
 
-  GOOGLE_CONTACT_GRANT_TEXT =
-    "We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."
+	GRANT_DECLINED = 'You can active this at any time.'
 
-  GOOGLE_CONTACT_GRANT_TITLE = 'Your contacts anywhere'
+	GOOGLE_CONTACT_GRANT_TEXT =
+		"We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."
 
-  ARROW_BACK_ARIA_LABEL = 'Return to last page'
+	GOOGLE_CONTACT_GRANT_TITLE = 'Your contacts anywhere'
 
-  GOOGLE_LOGIN_BUTTON_ARIA_LABEL =
-    'Click here to login with your Google account'
+	ARROW_BACK_ARIA_LABEL = 'Return to last page'
 
-  OPEN_DRAWER_BUTTON_ARIA_LABEL = 'Click here to open menu'
+	GOOGLE_LOGIN_BUTTON_ARIA_LABEL =
+		'Click here to login with your Google account'
 
-  CLOSE_MENU_BUTTON_ARIA_LABEL = 'Click here to close menu'
+	OPEN_DRAWER_BUTTON_ARIA_LABEL = 'Click here to open menu'
 
-  CALENDAR_EDIT_BUTTON_ARIA_LABEL = 'Click here to edit'
+	CLOSE_MENU_BUTTON_ARIA_LABEL = 'Click here to close menu'
 
-  CALENDAR_DELETE_BUTTON_ARIA_LABEL = 'Click here to delete'
+	CALENDAR_EDIT_BUTTON_ARIA_LABEL = 'Click here to edit'
 
-  CALENDAR_CLOSE_BUTTON_ARIA_LABEL = 'Click here to close the page'
+	CALENDAR_DELETE_BUTTON_ARIA_LABEL = 'Click here to delete'
 
-  CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Click here to go to the current month'
+	CALENDAR_CLOSE_BUTTON_ARIA_LABEL = 'Click here to close the page'
+
+	CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Click here to go to the current month'
+
+	READ_MORE = 'Read more'
+
+	NO_TREATMENTS_AVAILABLE = 'No treatments available'
+
+	NO_TREATMENT_SELECTED = 'Select a treatment'
+
+	NO_FAQ_AVAILABLE = 'No F.A.Q available'
+
+	TREATMENT_SAVE = 'Save'
 }

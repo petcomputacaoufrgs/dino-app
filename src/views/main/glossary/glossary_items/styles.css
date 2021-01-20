@@ -1,27 +1,36 @@
 .glossary__items {
-  position: absolute;
-  height: calc(100% - 60px);
-  width: 100%;
-  overflow-y: auto;
-  font-size: var(--default-font);
+	position: absolute;
+	height: calc(100% - 60px);
+	width: 100%;
+	overflow-y: auto;
+	color: var(--contrast-color);
+	font-size: var(--default-font);
 }
 
 .accordion {
-  padding: 5px 10px 15px;
+	padding: 5px 10px 15px;
 }
 
 .accordion .card .card-title {
-  margin-bottom: 0.2rem;
+	margin-bottom: 0.2rem;
 }
 
-.accordion .card .card-link {
-  color: var(--button-font-color);
+.glossary__items .card.card {
+	background-color: var(--inv-ontrast-color);
 }
 
-.glossary__items .h5{
-  font-size: var(--big-font);
+.glossary__items .h5 {
+	font-size: var(--big-font);
 }
 
 .glossary__items .h6 {
-  font-size: var(--default-font);
+	font-size: var(--default-font);
+}
+
+.glossary__items .card-body .card-subtitle {
+	color: var(--selection);
+}
+
+.glossary__items .card-body .card-link {
+	color: var(--selection);
 }

@@ -1,3 +1,3 @@
 export default interface TagListProps {
-  tagList: string[]
+	tagList: string[]
 }

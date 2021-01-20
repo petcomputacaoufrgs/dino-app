@@ -1,28 +1,32 @@
 .notes__header {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-  padding: 20px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-content: center;
+	padding: 20px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 .notes__header__image {
-  width: 40px;
-  height: auto;
-  margin-right: 8px;
-  fill: var(--contrast-color);
+	width: 40px;
+	height: auto;
+	margin-right: 8px;
+	fill: var(--contrast-color);
 }
 
 .notes__header
-  .MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'][class*='MuiOutlinedInput-marginDense'] {
-  padding: 6px 0px;
+	.MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'][class*='MuiOutlinedInput-marginDense'] {
+	padding: 6px 0px;
 }
 
 .notes__header
-  .MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'][class*='MuiOutlinedInput-marginDense']
-  .MuiAutocomplete-input {
-  padding: 4.5px 32px 4.5px 0px;
+	.MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'][class*='MuiOutlinedInput-marginDense']
+	.MuiAutocomplete-input {
+	padding: 4.5px 32px 4.5px 0px;
+}
+
+.notes__header .MuiChip-label.MuiChip-labelSmall {
+	font-size: var(--small-font);
 }

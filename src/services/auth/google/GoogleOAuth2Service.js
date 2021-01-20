@@ -1,66 +1,70 @@
-import GoogleSecrets from '../../../environment/client_secret.json'
+import GoogleSecrets from '../../../environment/google_config.json'
 
 /* eslint-disable no-undef */
 
 class GoogleOAuth2Service {
-  init = async (callback) => {
-    gapi.load('auth2', () => {
-      try {
-        callback(true)
-      } catch (e) {
-        callback(false)
-      }
-    })
-  }
+	init = async callback => {
+		gapi.load('auth2', () => {
+			try {
+				callback(true)
+			} catch (e) {
+				callback(false)
+			}
+		})
+	}
 
-  requestLogin = async (forceConsent) => {
-    const options = {
-      client_id: GoogleSecrets.client_id,
-      scope: 'email profile openid',
-      response_type: 'code',
-      include_granted_scopes: true,
-    }
+	requestLogin = async (forceConsent, email) => {
+		const options = {
+			client_id: GoogleSecrets.client_id,
+			scope: 'email profile openid',
+			response_type: 'code',
+			include_granted_scopes: true,
+		}
 
-    if (forceConsent) {
-      options.prompt = 'consent'
-    }
+		if (email) {
+			options.login_hint = email
+		}
 
-    return new Promise((resolve, reject) => {
-      gapi.auth2.authorize(options, (response) => {
-        if (response.error) {
-          reject(undefined)
-        } else {
-          resolve(response.code)
-        }
-      })
-    })
-  }
+		if (forceConsent) {
+			options.prompt = 'consent'
+		}
 
-  requestGrant = async (scopeList, email, refreshTokenNecessary) => {
-    const scopeString = scopeList.join(' ')
+		return new Promise((resolve, reject) => {
+			gapi.auth2.authorize(options, response => {
+				if (response.error) {
+					reject(undefined)
+				} else {
+					resolve(response.code)
+				}
+			})
+		})
+	}
 
-    const options = {
-      client_id: GoogleSecrets.client_id,
-      scope: scopeString,
-      response_type: 'code',
-      login_hint: email,
-      include_granted_scopes: true,
-    }
+	requestGrant = async (scopeList, email, refreshTokenNecessary) => {
+		const scopeString = scopeList.join(' ')
 
-    if (refreshTokenNecessary) {
-      options.prompt = 'consent'
-    }
+		const options = {
+			client_id: GoogleSecrets.client_id,
+			scope: scopeString,
+			response_type: 'code',
+			login_hint: email,
+			include_granted_scopes: true,
+		}
 
-    return new Promise((resolve, reject) => {
-      gapi.auth2.authorize(options, (response) => {
-        if (response.error) {
-          reject(response.error)
-        } else {
-          resolve(response.code)
-        }
-      })
-    })
-  }
+		if (refreshTokenNecessary) {
+			options.prompt = 'consent'
+		}
+
+		return new Promise((resolve, reject) => {
+			gapi.auth2.authorize(options, response => {
+				if (response.error) {
+					reject(response.error)
+				} else {
+					resolve(response.code)
+				}
+			})
+		})
+	}
 }
 
 export default new GoogleOAuth2Service()

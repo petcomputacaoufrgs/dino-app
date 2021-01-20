@@ -3,101 +3,107 @@ import LanguageBase from '../constants/languages/LanguageBase'
 import moment from 'moment'
 
 class DateUtils {
-  getStartOfDay = (date: Date): Date => moment(date).startOf('day').toDate()
+	convertDinoAPIStringDateToDate(date: string) {
+		return new Date(date)
+	}
 
-  getEndOfDay = (date: Date): Date => moment(date).endOf('day').toDate()
+	convertDateToDinoAPIStringDate(date: Date) {
+		return date.toISOString()
+	}
 
-  isToday = (date: Date): boolean => this.isEqualDay(date, new Date())
+	getStartOfDay = (date: Date): Date => moment(date).startOf('day').toDate()
 
-  isEqualHour = (d1: Date, d2: Date): boolean =>
-    d1.getHours() === d2.getHours() && this.isEqualDay(d1, d2)
+	getEndOfDay = (date: Date): Date => moment(date).endOf('day').toDate()
 
-  isEqualDay = (d1: Date, d2: Date): boolean =>
-    d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
+	isToday = (date: Date): boolean => this.isEqualDay(date, new Date())
 
-  isEqualMonth = (d1: Date, d2: Date): boolean =>
-    d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
+	isEqualHour = (d1: Date, d2: Date): boolean =>
+		d1.getHours() === d2.getHours() && this.isEqualDay(d1, d2)
 
-  getLastMonth = (date: Date): Date => {
-    return moment(date).add(-1, 'M').startOf('month').toDate()
-  }
+	isEqualDay = (d1: Date, d2: Date): boolean =>
+		d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
 
-  getNextMonth = (date: Date): Date => {
-    return moment(date).add(1, 'M').startOf('month').toDate()
-  }
+	isEqualMonth = (d1: Date, d2: Date): boolean =>
+		d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
 
-  addMonth = (date: Date, diff: number): Date => {
-    return moment(date).add(diff, 'M').startOf('month').toDate()
-  }
+	getLastMonth = (date: Date): Date => {
+		return moment(date).add(-1, 'M').startOf('month').toDate()
+	}
 
-  getDateStringFormated = (dateMS: number, language: LanguageBase): string => {
-    const date = new Date(dateMS)
+	getNextMonth = (date: Date): Date => {
+		return moment(date).add(1, 'M').startOf('month').toDate()
+	}
 
-    const stringDate = language.STRING_DATE_FORMAT
+	addMonth = (date: Date, diff: number): Date => {
+		return moment(date).add(diff, 'M').startOf('month').toDate()
+	}
 
-    const stringDay = StringUtils.toStringWithZeros(date.getDate(), 2)
+	getDateStringFormated = (date: Date, language: LanguageBase): string => {
+		const stringDate = language.STRING_DATE_FORMAT
 
-    const stringMonth = this.getMonthName(date.getMonth(), language)
+		const stringDay = StringUtils.toStringWithZeros(date.getDate(), 2)
 
-    const stringYear = date.getFullYear().toString()
+		const stringMonth = this.getMonthName(date.getMonth(), language)
 
-    return stringDate
-      .replace('DD', stringDay)
-      .replace('MM', stringMonth)
-      .replace('YYYY', stringYear)
-  }
+		const stringYear = date.getFullYear().toString()
 
-  getMonthName = (monthNumber: number, language: LanguageBase): string => {
-    switch (monthNumber) {
-      case 0:
-        return language.JANUARY
-      case 1:
-        return language.FEBRUARY
-      case 2:
-        return language.MARCH
-      case 3:
-        return language.APRIL
-      case 4:
-        return language.MAY
-      case 5:
-        return language.JUNE
-      case 6:
-        return language.JULY
-      case 7:
-        return language.AUGUST
-      case 8:
-        return language.SEPTEMBER
-      case 9:
-        return language.OCTOBER
-      case 10:
-        return language.NOVEMBER
-      case 11:
-        return language.DECEMBER
-      default:
-        return language.INVALID_MONTH
-    }
-  }
+		return stringDate
+			.replace('DD', stringDay)
+			.replace('MM', stringMonth)
+			.replace('YYYY', stringYear)
+	}
 
-  getWeekDayName = (weekDayNumber: number, language: LanguageBase): string => {
-    switch (weekDayNumber) {
-      case 0:
-        return language.SUNDAY_NAME
-      case 1:
-        return language.MONDAY_NAME
-      case 2:
-        return language.TUESDAY_NAME
-      case 3:
-        return language.WEDNESDAY_NAME
-      case 4:
-        return language.THURSDAY_NAME
-      case 5:
-        return language.FRIDAY_NAME
-      case 6:
-        return language.SATURDAY_NAME
-      default:
-        return language.INVALID_WEEKDAY
-    }
-  }
+	getMonthName = (monthNumber: number, language: LanguageBase): string => {
+		switch (monthNumber) {
+			case 0:
+				return language.JANUARY
+			case 1:
+				return language.FEBRUARY
+			case 2:
+				return language.MARCH
+			case 3:
+				return language.APRIL
+			case 4:
+				return language.MAY
+			case 5:
+				return language.JUNE
+			case 6:
+				return language.JULY
+			case 7:
+				return language.AUGUST
+			case 8:
+				return language.SEPTEMBER
+			case 9:
+				return language.OCTOBER
+			case 10:
+				return language.NOVEMBER
+			case 11:
+				return language.DECEMBER
+			default:
+				return language.INVALID_MONTH
+		}
+	}
+
+	getWeekDayName = (weekDayNumber: number, language: LanguageBase): string => {
+		switch (weekDayNumber) {
+			case 0:
+				return language.SUNDAY_NAME
+			case 1:
+				return language.MONDAY_NAME
+			case 2:
+				return language.TUESDAY_NAME
+			case 3:
+				return language.WEDNESDAY_NAME
+			case 4:
+				return language.THURSDAY_NAME
+			case 5:
+				return language.FRIDAY_NAME
+			case 6:
+				return language.SATURDAY_NAME
+			default:
+				return language.INVALID_WEEKDAY
+		}
+	}
 }
 
 export default new DateUtils()

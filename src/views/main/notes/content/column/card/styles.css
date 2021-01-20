@@ -1,68 +1,63 @@
 .note__note_content__column__column_card {
-  width: 100%;
-  margin-bottom: 10px;
+	width: 100%;
+	margin-bottom: 10px;
 }
 
 .note__note_content__column__column_card .MuiTypography-root {
-  color: var(--dark-color);
-}
-
-.note__note_content__column__column_card__card__card_content {
-  overflow: auto;
-  -ms-overflow-style: none;
+	color: var(--dark-color);
 }
 
 .note__note_content__column__column_card__card__card_content .MuiChip-label {
-  color: var(--dark-color);
-  font-size: var(--small-font);
+	color: var(--dark-color);
+	font-size: var(--small-font);
 }
 
 .note__note_content__column__column_card__card__card_content.MuiCardContent-root {
-  padding-top: 0px;
+	padding-top: 0px;
 }
 
 .note__note_content__column__column_card__card__card_content:last-child {
-  padding-bottom: 16px;
+	padding-bottom: 16px;
 }
 
 .note__note_content__column__column_card__card__card_content::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 .note__note_content__column__column_card .MuiCardHeader-root {
-  padding: 16px;
-  padding-bottom: 12px;
+	padding: 16px;
+	padding-bottom: 12px;
 }
 
 .note__note_content__column__column_card
-  .MuiCardHeader-content
-  .MuiTypography-root.MuiCardHeader-title {
-  font-size: var(--default-font);
-  word-break: break-word;
+	.MuiCardHeader-content
+	.MuiTypography-root.MuiCardHeader-title {
+	font-size: var(--default-font);
+	word-break: break-word;
 }
 
 .note__note_content__column__column_card
-  .MuiCardHeader-content
-  .MuiTypography-root.MuiCardHeader-subheader {
-  font-size: var(--very-small-font);
+	.MuiCardHeader-content
+	.MuiTypography-root.MuiCardHeader-subheader {
+	font-size: var(--very-small-font);
 }
 
 .note__note_content__column__column_card.MuiPaper-rounded {
-  border-radius: 8px;
-  background-color: var(--note-background);
+	border-radius: 8px;
+	background-color: var(--note-background);
 }
 
 .note__note_content__column__column_card__card__card_answer.MuiCardActions-root {
-  padding: 8px 16px 8px 16px;
-  background-color: var(--note-answer-background);
+	padding: 8px 16px 8px 16px;
+	background-color: var(--note-answer-background);
 }
 
 .note__note_content__column__column_card__card__card_answer.MuiCardActions-root
-  p {
-  white-space: nowrap;
-  overflow: hidden;
-  display: block;
-  text-overflow: ellipsis;
-  margin: 0;
-  font-size: var(--default-font);
+	p {
+	white-space: nowrap;
+	overflow: hidden;
+	display: block;
+	text-overflow: ellipsis;
+	margin: 0;
+	font-size: var(--default-font);
 }

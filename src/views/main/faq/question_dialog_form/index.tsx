@@ -1,112 +1,105 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../../../components/button/text_button'
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  TextField,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	TextField,
 } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
 import QuestionDialogFormProps from './props'
-import {
-  useCurrentLanguage,
-  useCurrentFaq,
-} from '../../../../context/provider/app_settings'
-import SelectFaq from '../../settings/select_faq'
-import './styles.css'
-import FaqService from '../../../../services/faq/FaqService'
 import Constants from '../../../../constants/faq/FaqConstants'
+import FaqUserQuestionEntity from '../../../../types/faq/database/FaqUserQuestionEntity'
+import FaqUserQuestionService from '../../../../services/faq/FaqUserQuestionService'
+import { useLanguage } from '../../../../context/language'
+import './styles.css'
 
 const QuestionDialogForm = React.forwardRef(
-  (
-    { dialogOpen, setDialogOpen }: QuestionDialogFormProps,
-    ref: React.Ref<unknown>
-  ): JSX.Element => {
-    const language = useCurrentLanguage()
+	(
+		{ dialogOpen, setDialogOpen, faq }: QuestionDialogFormProps,
+		ref: React.Ref<unknown>,
+	): JSX.Element => {
+		const language = useLanguage()
+		const [question, setQuestion] = useState('')
+		const [error, setError] = useState(false)
 
-    const currentFaq = useCurrentFaq()
+		const handleClose = () => {
+			setDialogOpen(false)
+		}
 
-    const [selectedFaq, setSelectedFaq] = useState(currentFaq)
-    const [error, setError] = useState(false)
+		const handleSave = () => {
+			if (faq && question !== '') {
+				const entity: FaqUserQuestionEntity = {
+					question: question,
+					localFaqId: faq.localId,
+				}
 
-    const handleClose = () => {
-      setDialogOpen(false)
-    }
+				FaqUserQuestionService.save(entity)
 
-    const handleSave = () => {
-      if (selectedFaq !== undefined && question !== '') {
-        FaqService.saveUserQuestion(selectedFaq, question)
-        handleClose()
-      } else {
-        if (question === '') {
-          setError(true)
-        }
-      }
-    }
+				handleClose()
+			} else {
+				if (question === '') {
+					setError(true)
+				}
+			}
+		}
 
-    const [question, setQuestion] = useState('')
+		useEffect(() => {
+			if (dialogOpen === false) {
+				return () => {
+					setQuestion('')
+					setError(false)
+				}
+			}
+		}, [dialogOpen])
 
-    useEffect(() => {
-      if (dialogOpen === false) {
-        return () => {
-          setQuestion('')
-          setSelectedFaq(currentFaq)
-          setError(false)
-        }
-      }
-    }, [dialogOpen, currentFaq])
+		const handleChangeQuestion = (
+			event: React.ChangeEvent<HTMLInputElement>,
+		) => {
+			setQuestion(event.target.value as string)
+		}
 
-    const handleChangeQuestion = (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      setQuestion(event.target.value as string)
-    }
+		return (
+			<div className='dialog-form'>
+				<Dialog
+					ref={ref}
+					open={dialogOpen}
+					fullWidth
+					onClose={handleClose}
+					TransitionComponent={TransitionSlide}
+				>
+					<DialogContent dividers>
+						<TextField
+							required
+							fullWidth
+							value={question}
+							onChange={handleChangeQuestion}
+							autoFocus
+							margin='dense'
+							id='question'
+							label={language.data.FORM_QUESTION}
+							placeholder={language.data.FORM_QUESTION_PLACEHOLDER}
+							type='question'
+							multiline
+							rowsMax={7}
+							inputProps={{ maxLength: Constants.USER_QUESTION_MAX }}
+							helperText={`${question.length}/${Constants.USER_QUESTION_MAX}`}
+							error={question.length === Constants.USER_QUESTION_MAX || error}
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleClose}>
+							{language.data.DIALOG_CANCEL_BUTTON_TEXT}
+						</Button>
 
-    return (
-      <div className="dialog-form">
-        <Dialog
-          ref={ref}
-          open={dialogOpen}
-          fullWidth
-          onClose={handleClose}
-          TransitionComponent={TransitionSlide}
-        >
-          <DialogContent dividers>
-            <SelectFaq
-              faq={selectedFaq}
-              setFaq={setSelectedFaq}
-            />
-            <TextField
-              required
-              fullWidth
-              value={question}
-              onChange={handleChangeQuestion}
-              autoFocus
-              margin="dense"
-              id="question"
-              label={language.FORM_QUESTION}
-              placeholder={language.FORM_QUESTION_PLACEHOLDER}
-              type="question"
-              multiline
-              rowsMax={7}
-              inputProps={{ maxLength: Constants.USER_QUESTION_MAX }}
-              helperText={`${question.length}/${Constants.USER_QUESTION_MAX}`}
-              error={question.length === Constants.USER_QUESTION_MAX || error}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>
-              {language.DIALOG_CANCEL_BUTTON_TEXT}
-            </Button>
-
-            <Button onClick={handleSave}>
-              {language.DIALOG_SAVE_BUTTON_TEXT}
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    )
-  }
+						<Button onClick={handleSave}>
+							{language.data.DIALOG_SAVE_BUTTON_TEXT}
+						</Button>
+					</DialogActions>
+				</Dialog>
+			</div>
+		)
+	},
 )
 
 export default QuestionDialogForm

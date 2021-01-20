@@ -1,11 +1,16 @@
 .alert__dialog_title {
-  background-color: var(--header-and-menu);
+	background-color: var(--header-and-menu);
 }
 
 .alert__dialog_title .MuiTypography-root {
-  color: var(--inv-contrast-color);
+	color: var(--light-color);
+	font-size: var(--default-font);
 }
 
 .alert__dialog_title .MuiDialogActions-root.MuiDialogActions-spacing {
-  border-top: 1px solid rgb(179, 179, 179);
+	border-top: 1px solid rgb(179, 179, 179);
+}
+
+.alert__dialog__description.MuiTypography-body1 {
+	font-size: var(--default-font);
 }

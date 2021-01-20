@@ -2,42 +2,58 @@ import React, { useState, ReactElement, useEffect } from 'react'
 import RingLoader from 'react-spinners/RingLoader'
 import LoaderProps from './props'
 import './styles.css'
+import StringUtils from '../../utils/StringUtils'
 
 const Loader: React.FC<LoaderProps> = ({
-  loading,
-  children,
-  className,
+	isLoading: loading,
+	children,
+	className,
+	iconClassName,
+	disableBackground,
+	hideChildren,
 }): ReactElement => {
-  const [showLoader, setShowLoader] = useState(false)
+	const [showLoader, setShowLoader] = useState(false)
 
-  useEffect(() => {
-    setShowLoader(loading)
-  }, [loading])
+	useEffect(() => {
+		setShowLoader(loading)
+	}, [loading])
 
-  const getClassName = (): string => {
-    let mainClass = 'loader__screen'
+	const getIconClassName = (): string => {
+		let className = StringUtils.concatUndefinedSafe(
+			' ',
+			'loader__screen',
+			iconClassName,
+		)
 
-    if (className) {
-      mainClass = mainClass.concat(' ').concat(className)
-    }
+		if (disableBackground) {
+			className = className.concat(' ').concat('disable_background')
+		}
 
-    return mainClass
-  }
+		if (hideChildren) {
+			className = className.concat(' ').concat('hide_children')
+		}
 
-  return (
-    <>
-      {showLoader ? (
-        <div className="loader">
-          {children}
-          <div className={getClassName()}>
-            <RingLoader size={40} color={'#B32E55'} loading={loading} />
-          </div>
-        </div>
-      ) : (
-        <>{children}</>
-      )}
-    </>
-  )
+		return className
+	}
+
+	const getClassName = (): string => {
+		return StringUtils.concatUndefinedSafe(' ', 'loader', className)
+	}
+
+	return (
+		<>
+			{showLoader ? (
+				<div className={getClassName()}>
+					{children}
+					<div className={getIconClassName()}>
+						<RingLoader size={40} color={'#B32E55'} loading={loading} />
+					</div>
+				</div>
+			) : (
+				<>{children}</>
+			)}
+		</>
+	)
 }
 
 export default Loader

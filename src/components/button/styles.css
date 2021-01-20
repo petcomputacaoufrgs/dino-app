@@ -1,32 +1,36 @@
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 8px;
-  border: 0px;
-  padding: 6px 16px;
-  font: 0.875rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  background-color: var(--header-and-menu);
-  color: var(--light-color);
-  text-decoration: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 0px;
+	padding: 6px 16px;
+	font: 0.875rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	background-color: var(--header-and-menu);
+	color: var(--light-color);
+	text-decoration: none;
 }
 
 .button:focus {
-  outline: none;
+	outline: none;
 }
 
 .button:active {
-  outline: none;
+	outline: none;
 }
 
 .button:hover {
-  outline: none;
+	outline: none;
 }
 
-.button__outline {
-  border: solid 1px;
-  border-color: var(--contrast-color);
+.button.button__outline {
+	border: solid 1px;
+	border-color: var(--contrast-color);
+}
+
+.button.disabled {
+	opacity: 0.5;
 }

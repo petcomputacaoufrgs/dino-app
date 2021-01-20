@@ -1,8 +1,9 @@
-import ContactItemModel from '../../../../types/contact/ContactModel'
+import ContactView from '../../../../types/contact/view/ContactView'
 
 export default interface ContactItemListProps {
-  item: ContactItemModel
-  onEdit: () => void
-  onDelete: () => void
-  onClick: (id: number) => void
+	item: ContactView
+	onClick: (id: number) => void
+	onEdit: React.Dispatch<React.SetStateAction<ContactView | undefined>>
+	onDelete: React.Dispatch<React.SetStateAction<ContactView | undefined>>
+	onCloseDialog: () => void
 }

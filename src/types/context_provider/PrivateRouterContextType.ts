@@ -1,11 +1,11 @@
 import { History, LocationState } from 'history'
 
 export default interface PrivateRouterContextType<S = LocationState> {
-  loginPath: string
+	loginPath: string
 
-  homePath: string
+	homePath: string
 
-  isAuthenticated: () => boolean
+	isAuthenticated: boolean
 
-  browserHistory?: History<S>
+	browserHistory?: History<S>
 }

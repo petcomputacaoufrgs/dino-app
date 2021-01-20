@@ -4,96 +4,115 @@ import { ReactComponent as GoogleLogoSVG } from '../../../assets/logos/google.sv
 import LoginButtonProps from './props'
 import LoginStatusConstants from '../../../constants/login/LoginStatusConstants'
 import AuthService from '../../../services/auth/AuthService'
-import { Typography } from '@material-ui/core'
 import ConnectionService from '../../../services/connection/ConnectionService'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
-import { useGoogleOAuth2 } from '../../../context/provider/google_oauth2'
-import { useAlert } from '../../../context/provider/alert'
+import { useAlert } from '../../../context/alert'
 import TextIconButton from '../icon_text_button'
+import { useGoogleOAuth2 } from '../../../context/google_oauth2/index'
+import { useLanguage } from '../../../context/language/index'
 import './styles.css'
 
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
-  onCancel,
-  onDinoAPIFail,
-  onGoogleFail,
-  onRefreshTokenLostError,
-  text,
+	onCancel,
+	onDinoAPIFail,
+	onGoogleFail,
+	onRefreshTokenLostError,
+	text,
 }) => {
-  const language = useCurrentLanguage()
-  const alert = useAlert()
-  const googleOAuth2 = useGoogleOAuth2()
+	const language = useLanguage()
+	const alert = useAlert()
+	const googleOAuth2 = useGoogleOAuth2()
 
-  const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [refreshRequired, setRefreshRequired] = useState(false)
+	const [refreshEmail, setRefreshEmail] = useState<string | undefined>(
+		undefined,
+	)
 
-  const [isConnected, setIsConnected] = useState(
-    ConnectionService.isConnected()
-  )
+	const [isConnected, setIsConnected] = useState(
+		ConnectionService.isConnected(),
+	)
 
-  useEffect(() => {
-    const updateConnectionState = (connected) => {
-      setIsConnected(connected)
-    }
+	useEffect(() => {
+		const updateConnectionState = (connected: boolean) => {
+			setIsConnected(connected)
+		}
 
-    ConnectionService.addEventListener(updateConnectionState)
+		ConnectionService.addEventListener(updateConnectionState)
 
-    const cleanBeforeUpdate = () => {
-      ConnectionService.removeEventListener(updateConnectionState)
-    }
+		const cleanBeforeUpdate = () => {
+			ConnectionService.removeEventListener(updateConnectionState)
+		}
 
-    return cleanBeforeUpdate
-  }, [])
+		return cleanBeforeUpdate
+	})
 
-  const handleLoginButtonClick = async () => {
-    setLoading(true)
+	const handleLoginButtonClick = async () => {
+		setLoading(true)
 
-    const refreshTokenRequired = AuthService.isRefreshRequired()
+		const isDinoConnected = await ConnectionService.isDinoConnected()
 
-    const status = await AuthService.requestGoogleLogin(refreshTokenRequired)
+		if (!isDinoConnected) {
+			setLoading(false)
+			setIsConnected(false)
+			return
+		}
 
-    if (status === LoginStatusConstants.SUCCESS) {
-      return
-    }
+		const [status, email] = await AuthService.requestGoogleLogin(
+			refreshRequired,
+			refreshEmail,
+		)
 
-    if (status === LoginStatusConstants.REQUEST_CANCELED) {
-      onCancel && onCancel()
-    } else if (status === LoginStatusConstants.UNKNOW_API_ERROR) {
-      onDinoAPIFail && onDinoAPIFail()
-    } else if (status === LoginStatusConstants.EXTERNAL_SERVICE_ERROR) {
-      onGoogleFail && onGoogleFail()
-    } else if (status === LoginStatusConstants.REFRESH_TOKEN_NECESSARY) {
-      onRefreshTokenLostError && onRefreshTokenLostError()
-    } else if (status === LoginStatusConstants.DISCONNECTED) {
-      showOfflineMessage()
-    }
+		if (status === LoginStatusConstants.SUCCESS) {
+			return
+		}
 
-    setLoading(false)
-  }
+		setRefreshEmail(undefined)
+		setRefreshRequired(false)
 
-  const showOfflineMessage = () => {
-    alert.showInfoAlert(language.CANT_LOGIN_DISCONNECTED)
-  }
+		if (status === LoginStatusConstants.REQUEST_CANCELED) {
+			onCancel && onCancel()
+		} else if (status === LoginStatusConstants.UNKNOW_API_ERROR) {
+			onDinoAPIFail && onDinoAPIFail()
+		} else if (status === LoginStatusConstants.EXTERNAL_SERVICE_ERROR) {
+			onGoogleFail && onGoogleFail()
+		} else if (status === LoginStatusConstants.REFRESH_TOKEN_NECESSARY) {
+			setRefreshRequired(true)
+			setRefreshEmail(email)
+			onRefreshTokenLostError && onRefreshTokenLostError()
+		} else if (status === LoginStatusConstants.DISCONNECTED) {
+			showOfflineMessage()
+		}
 
-  return (
-    <Loader className="google_login_button__loader" loading={loading}>
-      <div className="google_login_button">
-        <TextIconButton
-          ariaLabel={language.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
-          text={text}
-          icon={GoogleLogoSVG}
-          className={'google_login_button__text_button'}
-          onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
-          disabled={!isConnected || !googleOAuth2.loaded}
-        >
-          <Typography component="p">{text}</Typography>
-        </TextIconButton>
-        {!isConnected && (
-          <Typography className="google_login_button__error" component="p">
-            {language.DISCONNECTED}
-          </Typography>
-        )}
-      </div>
-    </Loader>
-  )
+		setLoading(false)
+	}
+
+	const showOfflineMessage = () => {
+		alert.showInfoAlert(language.data.CANT_LOGIN_DISCONNECTED)
+	}
+
+	return (
+		<Loader
+			iconClassName='google_login_button__loader'
+			isLoading={loading || googleOAuth2.loading}
+		>
+			<div className='google_login_button'>
+				<TextIconButton
+					ariaLabel={language.data.GOOGLE_LOGIN_BUTTON_ARIA_LABEL}
+					icon={GoogleLogoSVG}
+					className={'google_login_button__text_button'}
+					onClick={isConnected ? handleLoginButtonClick : showOfflineMessage}
+					disabled={!isConnected}
+				>
+					<p className='google_login_button__text_button__text'>{text}</p>
+				</TextIconButton>
+				{!isConnected && (
+					<p className='google_login_button__error'>
+						{language.data.DISCONNECTED}
+					</p>
+				)}
+			</div>
+		</Loader>
+	)
 }
 
 export default GoogleLoginButton

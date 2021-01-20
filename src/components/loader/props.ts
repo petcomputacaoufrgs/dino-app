@@ -1,4 +1,7 @@
 export default interface LoaderProps {
-  loading: boolean
-  className?: string
+	isLoading: boolean
+	className?: string
+	iconClassName?: string
+	disableBackground?: boolean
+	hideChildren?: boolean
 }

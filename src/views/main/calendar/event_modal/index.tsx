@@ -9,50 +9,50 @@ import Content from './content'
 import './styles.css'
 
 const EventModal: React.FC<EventModalProps> = ({ open, onClose, event }) => {
-  const [dialogOpen, setDialogOpen] = useState(open)
+	const [dialogOpen, setDialogOpen] = useState(open)
 
-  const handleClose = () => {
-    onClose()
-  }
+	const handleClose = () => {
+		onClose()
+	}
 
-  const handleDelete = () => {}
+	const handleDelete = () => {}
 
-  const handleEdit = () => {}
+	const handleEdit = () => {}
 
-  useEffect(() => {
-    setDialogOpen(open)
-  }, [open])
+	useEffect(() => {
+		setDialogOpen(open)
+	}, [open])
 
-  return (
-    <Dialog
-      open={dialogOpen}
-      onClose={handleClose}
-      className="calendar__event_modal"
-      maxWidth="sm"
-      style={{ zIndex: 6000 }}
-    >
-      <DialogActions>
-        <Header
-          onClose={handleClose}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-        />
-      </DialogActions>
-      <DialogTitle
-        id="form-dialog-title"
-        className="calendar__event_modal__title"
-      >
-        <div
-          className="calendar__event_modal__title__color"
-          style={{ backgroundColor: event.color }}
-        />
-        {event.name}
-      </DialogTitle>
-      <DialogContent>
-        <Content event={event} />
-      </DialogContent>
-    </Dialog>
-  )
+	return (
+		<Dialog
+			open={dialogOpen}
+			onClose={handleClose}
+			className='calendar__event_modal'
+			maxWidth='sm'
+			style={{ zIndex: 6000 }}
+		>
+			<DialogActions>
+				<Header
+					onClose={handleClose}
+					onDelete={handleDelete}
+					onEdit={handleEdit}
+				/>
+			</DialogActions>
+			<DialogTitle
+				id='form-dialog-title'
+				className='calendar__event_modal__title'
+			>
+				<div
+					className='calendar__event_modal__title__color'
+					style={{ backgroundColor: event.color }}
+				/>
+				{event.name}
+			</DialogTitle>
+			<DialogContent>
+				<Content event={event} />
+			</DialogContent>
+		</Dialog>
+	)
 }
 
 export default EventModal

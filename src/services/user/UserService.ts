@@ -1,248 +1,158 @@
-import UserLocalStorage from '../../storage/local_storage/user/UserLocalStorage'
-import AuthService from '../auth/AuthService'
-import AppSettingsService from '../app_settings/AppSettingsService'
-import NoteService from '../note/NoteService'
-import UserModel from '../../types/user/UserModel'
-import DinoAgentService from '../../agent/DinoAgentService'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
-import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
+import UserDataModel from '../../types/user/api/UserModel'
 import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
-import UserContextUpdater from '../../context/updater/UserContextUpdater'
-import GoogleAgentService from '../../agent/GoogleAgentService'
-import GooglePeopleAPIURLConstants from '../../constants/google/GooglePeopleAPIURLConstants'
-import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
-import GlossaryService from '../glossary/GlossaryService'
-import UserUpdatePictureModel from '../../types/user/UserUpdatePictureModel'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import ContactService from '../contact/ContactService'
-import CalendarService from '../calendar/CalendarService'
-import FaqService from '../faq/FaqService'
-import NoteColumnService from '../note/NoteColumnService'
+import AutoSynchronizableService from '../sync/AutoSynchronizableService'
+import UserEntity from '../../types/user/database/UserEntity'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
+import GoogleUserService from './GoogleUserService'
+import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
+import SynchronizableService from '../sync/SynchronizableService'
+import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/Database'
+import Utils from '../../utils/Utils'
 
-class UserService {
-  private setVersion = (version: number) => {
-    UserLocalStorage.setVersion(version)
-  }
+class UserServiceImpl extends AutoSynchronizableService<
+	number,
+	UserDataModel,
+	UserEntity
+> {
+	constructor() {
+		super(
+			Database.user,
+			APIRequestMappingConstants.USER,
+			WebSocketQueueURLService,
+			APIWebSocketDestConstants.USER,
+		)
+	}
 
-  getVersion = () => {
-    return UserLocalStorage.getVersion()
-  }
+	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
 
-  getPictureUrl = (): string => {
-    return UserLocalStorage.getPictureURL()
-  }
+	getPicture(user: UserEntity | undefined): string | undefined {
+		return user !== undefined
+			? user.pictureBase64
+				? user.pictureBase64
+				: user.pictureURL
+			: undefined
+	}
 
-  getSavePictureWithError = (): boolean => {
-    const savedValue = UserLocalStorage.getSavePictureWithError()
+	getName(user: UserEntity | undefined) {
+		return user !== undefined ? user.name : ''
+	}
 
-    if (savedValue) {
-      return savedValue
-    }
+	async updateUser(model: UserDataModel) {
+		await this.clearDatabase()
+		await this.saveFromDataModelLocally(model)
+	}
 
-    return false
-  }
+	async convertModelToEntity(
+		model: UserDataModel,
+	): Promise<UserEntity | undefined> {
+		const entity: UserEntity = {
+			email: model.email,
+			name: model.name,
+			pictureURL: model.pictureURL,
+		}
 
-  private setPictureUrl = (url: string) => {
-    UserLocalStorage.setPictureURL(url)
-  }
+		return entity
+	}
 
-  private setSavedPicture = (base64Photo: string) => {
-    UserLocalStorage.setSavedPicture(base64Photo)
-  }
+	async convertEntityToModel(
+		entity: UserEntity,
+	): Promise<UserDataModel | undefined> {
+		const model: UserDataModel = {
+			email: entity.email,
+			name: entity.name,
+			pictureURL: entity.pictureURL,
+		}
 
-  private setSavePictureWithError = (isWithError: boolean) => {
-    UserLocalStorage.setSavePictureWithError(isWithError)
-  }
+		return model
+	}
 
-  getPicture = () => {
-    let picture = UserLocalStorage.getSavedPicture()
+	protected async onSaveEntity(entity: UserEntity) {
+		await this.clearDatabase()
+		if (Utils.isNotEmpty(entity.id)) {
+			const savedEntity = await this.getByLocalId(entity.id!)
 
-    if (!picture) {
-      picture = UserLocalStorage.getPictureURL()
-    }
+			if (savedEntity) {
+				const withoutSavedPicture = savedEntity.pictureBase64 === undefined
+				const pictureUrlChanged = entity.pictureURL !== savedEntity.pictureURL
 
-    return picture
-  }
+				if (withoutSavedPicture || pictureUrlChanged) {
+					this.donwloadPicture(entity.pictureURL, entity.id!)
+				}
+			} else {
+				this.donwloadPicture(entity.pictureURL, entity.id!)
+			}
+		}
+	}
 
-  getName = () => {
-    return UserLocalStorage.getName()
-  }
+	protected async onSyncSuccess() {
+		const user = await this.getFirst()
 
-  private setName = (name: string) => {
-    UserLocalStorage.setName(name)
-  }
+		if (user) {
+			this.verifyGoogleUserPhoto(user)
+		}
+	}
 
-  getEmail = () => UserLocalStorage.getEmail()
+	async verifyGoogleUserPhoto(entity: UserEntity) {
+		if (Utils.isNotEmpty(entity.id)) {
+			const photoModel = await GoogleUserService.getUserGoogleAPIPhoto()
 
-  private setEmail = (email: string) => {
-    UserLocalStorage.setEmail(email)
-  }
+			if (photoModel) {
+				const primaryPhoto = this.getPrimaryPhotoFromGooglePhotos(photoModel)
 
-  getServerVersion = async (): Promise<number | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_VERSION)
+				if (primaryPhoto && primaryPhoto.url) {
+					const newPictureURL = GooglePeopleAPIUtils.changeImageSize(
+						primaryPhoto.url,
+						125,
+					)
 
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().go()
-        const version: number = response.body
-        return version
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
-    }
+					if (entity.pictureURL !== newPictureURL) {
+						entity.pictureURL = newPictureURL
+						await this.save(entity)
+						this.donwloadPicture(newPictureURL, entity.id!)
+					}
+				}
+			}
+		}
+	}
 
-    return undefined
-  }
+	private donwloadPicture = (pictureURL: string, localId: number) => {
+		try {
+			ImageToBase64Utils.getBase64FromImageSource(
+				pictureURL,
+				'jpeg',
+				this.saveDowloadedImage,
+				localId,
+			)
+		} catch (e) {
+			LogAppErrorService.logError(e)
+		}
+	}
 
-  getServer = async (): Promise<UserModel | undefined> => {
-    const request = await DinoAgentService.get(DinoAPIURLConstants.USER_GET)
+	private saveDowloadedImage = async (
+		base64Image: string,
+		success: boolean,
+		id?: any,
+	) => {
+		if (success && Utils.isNotEmpty(id)) {
+			const savedEntity = await this.getById(id)
+			if (savedEntity) {
+				savedEntity.pictureBase64 = base64Image
+				await this.saveOnlyLocally(savedEntity)
+			}
+		}
+	}
 
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().go()
-        const user: UserModel = response.body
-        return user
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
-    }
-
-    return undefined
-  }
-
-  update = async (newVersion: number) => {
-    const savedVersion = this.getVersion()
-
-    if (newVersion !== savedVersion) {
-      const user = await this.getServer()
-
-      if (user) {
-        this.saveUserDataFromModel(user)
-      }
-    }
-
-    this.updateUserPhoto()
-  }
-
-  saveUserDataFromModel = (user: UserModel) => {
-    if (user.pictureURL) {
-      const pictureURL = GooglePeopleAPIUtils.changeImageSize(
-        user.pictureURL,
-        125
-      )
-      this.donwloadPicture(pictureURL)
-      this.setPictureUrl(pictureURL)
-    }
-
-    this.setEmail(user.email)
-    this.setName(user.name)
-
-    this.setVersion(user.version)
-
-    UserContextUpdater.update()
-  }
-
-  private updateUserPhoto = async () => {
-    const photoModel = await this.getUserGoogleAPIPhoto()
-
-    if (photoModel) {
-      const primaryPhoto = this.getPrimaryPhotoFromGooglePhotos(photoModel)
-
-      if (primaryPhoto && primaryPhoto.url) {
-        const pictureURL = GooglePeopleAPIUtils.changeImageSize(
-          primaryPhoto.url,
-          125
-        )
-
-        const savePictureWithError = this.getSavePictureWithError()
-
-        if (savePictureWithError || this.getPictureUrl() !== pictureURL) {
-          if (savePictureWithError) {
-            this.setSavePictureWithError(false)
-          }
-
-          this.setPictureUrl(pictureURL)
-          this.donwloadPicture(pictureURL)
-          this.saveNewPhotoOnServer(pictureURL)
-        }
-      }
-    }
-  }
-
-  saveNewPhotoOnServer = async (pictureURL: string) => {
-    const request = await DinoAgentService.put(
-      DinoAPIURLConstants.USER_PUT_PHOTO
-    )
-
-    if (request.canGo) {
-      try {
-        const model: UserUpdatePictureModel = {
-          pictureURL: pictureURL,
-        }
-        const response = await request.authenticate().setBody(model).go()
-        const newVersion: number = response.body
-        this.setVersion(newVersion)
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
-    }
-  }
-
-  private getPrimaryPhotoFromGooglePhotos = (
-    model: GooglePhotoResponseModel
-  ) => {
-    return model.photos.find((photo) => photo.metadata.primary)
-  }
-
-  private getUserGoogleAPIPhoto = async (): Promise<GooglePhotoResponseModel | null> => {
-    const request = await GoogleAgentService.get(
-      GooglePeopleAPIURLConstants.GET_USER_PHOTOS
-    )
-
-    if (request.canGo) {
-      try {
-        const response = await request.authenticate().go()
-        return response.body
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
-    }
-
-    return null
-  }
-
-  private donwloadPicture = (pictureURL: string) => {
-    try {
-      ImageToBase64Utils.getBase64FromImageSource(
-        pictureURL,
-        'jpeg',
-        this.saveDowloadedImage
-      )
-    } catch (e) {
-      this.setSavePictureWithError(true)
-      LogAppErrorService.logError(e)
-    }
-  }
-
-  private saveDowloadedImage = (base64Image: string, success: boolean) => {
-    if (success) {
-      this.setSavedPicture(base64Image)
-      UserContextUpdater.update()
-    }
-  }
-
-  removeUserData() {
-    UserLocalStorage.removeUserData()
-    AuthService.removeUserData()
-    AppSettingsService.removeUserData()
-    NoteService.removeUserData()
-    NoteColumnService.removeUserData()
-    GlossaryService.removeUserData()
-    LogAppErrorService.removeUserData()
-    ContactService.removeUserData()
-    FaqService.removeUserData()
-    CalendarService.removeUserData()
-  }
+	private getPrimaryPhotoFromGooglePhotos = (
+		model: GooglePhotoResponseModel,
+	) => {
+		return model.photos.find(photo => photo.metadata.primary)
+	}
 }
 
-export default new UserService()
+export default new UserServiceImpl()

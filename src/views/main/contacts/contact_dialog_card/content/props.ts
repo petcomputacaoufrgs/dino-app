@@ -1,5 +1,5 @@
-import ContactModel from '../../../../../types/contact/ContactModel'
+import ContactView from '../../../../../types/contact/view/ContactView'
 
 export default interface ContactCardContentProps {
-  item: ContactModel
+	item: ContactView
 }

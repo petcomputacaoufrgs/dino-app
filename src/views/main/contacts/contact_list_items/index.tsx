@@ -1,81 +1,108 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ContactItemsProps from './props'
 import ContactCard from '../contact_dialog_card'
 import ContactItemList from '../contact_list_item'
 import { List } from '@material-ui/core'
 import ContactFormDialog from '../contact_dialog_form'
-import ContactService from '../../../../services/contact/ContactService'
 import Constants from '../../../../constants/contact/ContactsConstants'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import { useCurrentLanguage } from '../../../../context/provider/app_settings'
-import ContactModel from '../../../../types/contact/ContactModel'
+import ContactView from '../../../../types/contact/view/ContactView'
+import { useLanguage } from '../../../../context/language'
+import PhoneService from '../../../../services/contact/PhoneService'
+import ContactService from '../../../../services/contact/ContactService'
+import GoogleContactService from '../../../../services/contact/GoogleContactService'
 
-const ContactItems = ({ items }: ContactItemsProps): JSX.Element => {
+const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
+	const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(
+		undefined,
+	)
+	const [contactToView, setContactToView] = useState<ContactView | undefined>(
+		undefined,
+	)
+	const [contactToDelete, setContactToDelete] = useState<
+		ContactView | undefined
+	>(undefined)
 
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [edit, setEdit] = useState(0)
-  const [_delete, setDelete] = useState(0)
-  const [cardOpen, setCardOpen] = useState(false)
-  const [deleteDialogAgreement, setDeleteDialogAgreement] = useState(false)
+	const language = useLanguage()
 
-  const language = useCurrentLanguage()
+	const handleOpenCard = (index: number) => {
+		setContactToView(items[index])
+	}
 
-  useEffect(() => {
-    if (_delete && deleteDialogAgreement) {
-      ContactService.deleteContact(_delete)
-      handleCloseDeleteDialog()
-    }
-  }, [_delete, deleteDialogAgreement])
+	const handleAcceptDeleteDialog = async () => {
+		const deleteGoogleContact = async (
+			contactToDelete: ContactView,
+		): Promise<void> => {
+			if (contactToDelete.googleContact) {
+				await GoogleContactService.delete(contactToDelete.googleContact)
+			}
+		}
 
-  const handleCloseDeleteDialog = () => {
-    setDeleteDialogAgreement(false)
-    setDelete(0)
-  }
+		const deletePhones = async (
+			contactToDelete: ContactView,
+		): Promise<void> => {
+			if (contactToDelete.phones.length > 0) {
+				await PhoneService.deleteAll(contactToDelete.phones)
+			}
+		}
 
-  const handleOpenCard = (index: number) => {
-    setCardOpen(true)
-    setSelectedIndex(index)
-  }
+		setContactToDelete(undefined)
+		if (contactToDelete) {
+			await deleteGoogleContact(contactToDelete)
+			await deletePhones(contactToDelete)
+			await ContactService.delete(contactToDelete.contact)
+		}
+	}
 
-  const getSelectedContact = (): ContactModel => items[selectedIndex] 
-  
-  return (
-    <>
-    <List className="contacts__list">
-      {items.map((contact, index) => 
-          <ContactItemList
-            key={index}
-            item={contact}
-            onEdit={() => setEdit(contact.frontId)}
-            onDelete={() => setDelete(contact.frontId)}
-            onClick={() => handleOpenCard(index)}
-          />
-      )}
-    </List>
-    <ContactCard
-      item={getSelectedContact()}
-      dialogOpen={cardOpen}
-      onClose={() => setCardOpen(false)}
-      onEdit={() => setEdit(getSelectedContact().frontId)}
-      onDelete={() => setDelete(getSelectedContact().frontId)}
-    />
-    <ContactFormDialog
-      item={getSelectedContact()}
-      dialogOpen={Boolean(edit)}
-      onClose={() => setEdit(0)}
-      action={Constants.ACTION_EDIT}
-    />
-    <AgreementDialog 
-      open={Boolean(_delete)}
-      agreeOptionText={language.AGREEMENT_OPTION_TEXT}
-      disagreeOptionText={language.DISAGREEMENT_OPTION_TEXT}
-      description={language.DELETE_CONTACT_OPTION_TEXT}
-      question={language.DELETE_CONTACT_QUESTION}
-      onAgree={() => setDeleteDialogAgreement(true)}
-      onDisagree={handleCloseDeleteDialog}
-    />
-  </>
-  )
+	const handleCloseDeleteDialog = () => {
+		setContactToDelete(undefined)
+	}
+
+	return (
+		<>
+			<List className='contacts__list'>
+				{items.map((item, index) => (
+					<ContactItemList
+						key={index}
+						item={item}
+						onClick={() => handleOpenCard(index)}
+						onEdit={setContactToEdit}
+						onDelete={setContactToDelete}
+						onCloseDialog={() => setContactToView(undefined)}
+					/>
+				))}
+			</List>
+			{contactToView && (
+				<ContactCard
+					dialogOpen={contactToView !== undefined}
+					onClose={() => setContactToView(undefined)}
+					item={contactToView}
+					onEdit={setContactToEdit}
+					onDelete={setContactToDelete}
+				/>
+			)}
+			{contactToEdit && (
+				<ContactFormDialog
+					dialogOpen={contactToEdit !== undefined}
+					onClose={() => setContactToEdit(undefined)}
+					item={contactToEdit}
+					items={items}
+					action={Constants.ACTION_EDIT}
+				/>
+			)}
+			{contactToDelete && (
+				<AgreementDialog
+					open={contactToDelete !== undefined}
+					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
+					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
+					description={language.data.DELETE_CONTACT_OPTION_TEXT}
+					question={language.data.DELETE_CONTACT_QUESTION}
+					onAgree={handleAcceptDeleteDialog}
+					onDisagree={handleCloseDeleteDialog}
+				/>
+			)}
+		</>
+	)
 }
 
 export default ContactItems

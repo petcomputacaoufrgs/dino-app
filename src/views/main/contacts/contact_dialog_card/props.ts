@@ -1,9 +1,10 @@
-import ContactModel from '../../../../types/contact/ContactModel'
+import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
+import ContactView from '../../../../types/contact/view/ContactView'
 
 export default interface ContactCardProps {
-  item: ContactModel
-  dialogOpen: boolean
-  onClose: () => void
-  onEdit: () => void
-  onDelete: () => void
+	item?: ContactView
+	dialogOpen: boolean
+	onClose: () => void
+	onEdit: React.Dispatch<React.SetStateAction<ContactView | undefined>>
+	onDelete: React.Dispatch<React.SetStateAction<ContactView | undefined>>
 }

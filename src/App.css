@@ -4,59 +4,92 @@ body .MuiBottomNavigationAction-label,
 body .MuiButton-label,
 body .MuiFormLabel-root,
 body .MuiInputBase-root,
-.dino_dialog__header, .dino_dialog__content {
-  font-family: var(--font-base);
-  color: var(--base-font-color);
+.dino_dialog__header,
+.dino_dialog__content {
+	font-family: var(--font-base);
+	color: var(--base-font-color);
+}
+
+body .MuiInputBase-root {
+	font-size: var(--default-font);
+}
+
+body .MuiListItemText-root .MuiTypography-body1 {
+	font-size: var(--default-font);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+body .MuiFormLabel-root {
+	font-size: var(--default-font);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+body .MuiFormControl-root.MuiTextField-root {
+	overflow: hidden;
+}
+
+body .PrivateNotchedOutline-legendLabelled-3 span {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 body .MuiDialogActions-spacing > :not(:first-child) {
-  margin-left: 0;
+	margin-left: 0;
 }
 
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-  fill: var(--contrast-color);
+	fill: var(--contrast-color);
 }
 
 body .MuiInput-underline:before {
-  border-bottom: 1px solid var(--base-font-color);
+	border-bottom: 1px solid var(--base-font-color);
 }
 
 .MuiDialog-root {
-  outline: none;
+	outline: none;
 }
 
 .MuiButtonBase-root.MuiIconButton-root {
-  outline: none;
+	outline: none;
 }
 
 .app {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  font-family: var(--font-base);
-  overflow: hidden;
-  color: var(--base-font-color);
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	font-family: var(--font-base);
+	overflow: hidden;
+	color: var(--base-font-color);
 }
 
-.MuiPaper-root.MuiMenu-paper, 
+.MuiPaper-root.MuiMenu-paper,
 .MuiPaper-root.MuiDialog-paper {
-  background-color: var(--other-details);
-  color: var(--base-font-color);
+	background-color: var(--other-details);
+	color: var(--base-font-color);
 }
 
-.app .MuiPaper-root, .app .card {
-  background-color: var(--other-details);
-  color: var(--base-font-color);
+.app .MuiPaper-root,
+.app .card {
+	background-color: var(--other-details);
+	color: var(--base-font-color);
 }
 
 .MuiTypography-root.MuiDialogContentText-root {
-  color: var(--base-font-color);
+	color: var(--base-font-color);
 }
 
 .MuiAutocomplete-popper {
-  background-color: var(--other-details);
+	background-color: var(--other-details);
+}
+
+.MuiCardHeader-action button.button.icon_button {
+	margin: 0px 2px;
 }

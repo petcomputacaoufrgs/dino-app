@@ -1,15 +1,24 @@
 .loader {
-  position: relative;
+	position: relative;
 }
 
 .loader__screen {
-  position: absolute;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 99;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+	position: absolute;
+	top: 0;
+	background-color: var(--inv-contrast-color);
+	opacity: 0.7;
+	z-index: 99;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.loader__screen.hide_children {
+	opacity: 1;
+}
+
+.loader__screen.disable_background {
+	background-color: transparent;
 }

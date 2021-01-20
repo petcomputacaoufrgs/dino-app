@@ -1,21 +1,23 @@
 import { DropResult } from 'react-beautiful-dnd'
-import { NoteColumnViewModel } from '../../../../types/note/view/NoteColumnViewModel'
-import NoteViewModel from '../../../../types/note/view/NoteViewModel'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
+import NoteEntity from '../../../../types/note/database/NoteEntity'
+import NoteView from '../../../../types/note/view/NoteView'
 
 export default interface NoteContentProps {
-  tags: string[]
-  columns: NoteColumnViewModel[]
-  searching: boolean
-  onDragEnd: (result: DropResult) => void
-  onSaveColumn: (column: NoteColumnEntity, oldTitle?: string) => void
-  onDeleteColumn: (column: NoteColumnViewModel) => void
-  onSaveNewNote: (
-    question: string,
-    tagList: string[],
-    column: NoteColumnViewModel
-  ) => void
-  onSaveNote: (note: NoteViewModel) => void
-  onDeleteNote: (note: NoteViewModel) => void
-  questionAlreadyExists: (question: string) => boolean
+	tags: string[]
+	noteViews: NoteView[]
+	searching: boolean
+	tagSearch: string[]
+	textSearch: string
+	onDragEnd: (result: DropResult) => void
+	onSaveColumn: (column: NoteColumnEntity, oldTitle?: string) => void
+	onDeleteColumn: (column: NoteColumnEntity) => void
+	onSaveNewNote: (
+		question: string,
+		tagList: string[],
+		noteView: NoteView,
+	) => void
+	onSaveNote: (note: NoteEntity) => void
+	onDeleteNote: (note: NoteEntity) => void
+	questionAlreadyExists: (question: string) => boolean
 }

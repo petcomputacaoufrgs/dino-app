@@ -1,8 +1,6 @@
-import ContactModel from '../../../../../types/contact/ContactModel'
+import ContactView from '../../../../../types/contact/view/ContactView'
 
 export default interface ContactCardHeaderProps {
-  item: ContactModel
-  onEdit: () => void
-  onDelete: () => void
-  onClose: () => void
+	item: ContactView
+	onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }

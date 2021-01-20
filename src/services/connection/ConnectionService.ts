@@ -1,108 +1,123 @@
 import Superagent from 'superagent'
-import DinoAPIURLConstants from '../../constants/dino_api/DinoAPIURLConstants'
+import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
-import ConnectionLocalStorage from '../../storage/local_storage/connection/ConnectionLocalStorage'
 import ArrayUtils from '../../utils/ArrayUtils'
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
-export type ConnectionListennerCallback = (online: boolean) => void
+type ConnectionListennerCallback = (online: boolean) => void
 
-const DELAY_TO_VERIFY_DINO_CONNECTION = 2500
+const DELAY_TO_VERIFY_DINO_CONNECTION = 2000
 
 class ConnectionService {
-  callbacks = [] as ConnectionListennerCallback[]
+	private callbacks: ConnectionListennerCallback[]
+	private tryingToConnect: boolean
+	private connected: boolean
 
-  constructor() {
-    this.start()
-  }
+	constructor() {
+		this.callbacks = []
+		this.tryingToConnect = false
+		this.connected = false
+		this.start()
+	}
 
-  addEventListener = (callback: ConnectionListennerCallback) => {
-    if (!this.callbacks.includes(callback)) {
-      this.callbacks.push(callback)
-    }
-  }
+	addEventListener = (callback: ConnectionListennerCallback) => {
+		if (!this.callbacks.includes(callback)) {
+			this.callbacks.push(callback)
+		}
+	}
 
-  removeEventListener = (callback: ConnectionListennerCallback) => {
-    this.callbacks = ArrayUtils.remove(this.callbacks, callback)
-  }
+	removeEventListener = (callback: ConnectionListennerCallback) => {
+		this.callbacks = ArrayUtils.remove(this.callbacks, callback)
+	}
 
-  isConnected = (): boolean => {
-    return ConnectionLocalStorage.isConnected()
-  }
+	isConnected = (): boolean => {
+		return this.connected
+	}
 
-  isDisconnected = (): boolean => {
-    return ConnectionLocalStorage.isDisconnected()
-  }
+	isDisconnected = (): boolean => {
+		return !this.connected
+	}
 
-  isDinoConnected = async (): Promise<Boolean> => {
-    try {
-      const request = Superagent.get(DinoAPIURLConstants.TEST_CONNECTION)
+	isDinoConnected = async (): Promise<Boolean> => {
+		const isConnected = await this.internalIsDinoConnected()
 
-      const response = await request
+		if (!isConnected) {
+			this.verify()
+		}
 
-      return response.status === HttpStatus.OK
-    } catch (e) {
-      LogAppErrorService.logError(e)
-    }
+		return isConnected
+	}
 
-    return false
-  }
+	verify = async () => {
+		if (navigator.onLine) {
+			await this.awaitForDinoConnection()
+		} else {
+			this.setDisconnected()
+		}
+	}
 
-  verify = () => {
-    if (navigator.onLine) {
-      this.awaitForDinoConnection()
-    } else {
-      this.setDisconnected()
-    }
-  }
+	private internalIsDinoConnected = async (): Promise<Boolean> => {
+		try {
+			const request = Superagent.get(APIRequestMappingConstants.TEST_CONNECTION)
 
-  private start = () => {
-    if (navigator.onLine) {
-      ConnectionLocalStorage.setConnected()
-      this.awaitForDinoConnection()
-    } else {
-      ConnectionLocalStorage.setDisconnected()
-    }
+			const response = await request
 
-    window.addEventListener('online', async () => {
-      this.awaitForDinoConnection()
-    })
+			return response.status === HttpStatus.OK
+		} catch (e) {
+			return false
+		}
+	}
 
-    window.addEventListener('offline', () => {
-      this.setDisconnected()
-    })
-  }
+	private start = () => {
+		if (navigator.onLine) {
+			this.setConnected()
+			this.awaitForDinoConnection()
+		} else {
+			this.setDisconnected()
+		}
 
-  private awaitForDinoConnection = async () => {
-    while (navigator.onLine) {
-      const isDinoConnected = await this.isDinoConnected()
-      if (isDinoConnected) {
-        this.setConnected()
-        break
-      } else {
-        this.setDisconnected()
-      }
+		window.addEventListener('online', () => {
+			this.awaitForDinoConnection()
+		})
 
-      await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
-    }
-  }
+		window.addEventListener('offline', () => {
+			this.setDisconnected()
+		})
+	}
 
-  private setConnected = () => {
-    if (this.isDisconnected()) {
-      ConnectionLocalStorage.setConnected()
+	private awaitForDinoConnection = async () => {
+		if (!this.tryingToConnect) {
+			this.tryingToConnect = true
+			while (navigator.onLine) {
+				const isDinoConnected = await this.isDinoConnected()
+				if (isDinoConnected) {
+					this.setConnected()
+					this.tryingToConnect = false
+					break
+				} else {
+					this.setDisconnected()
+				}
 
-      this.callbacks.forEach((callback) => callback(true))
-    }
-  }
+				await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
+			}
+		}
+	}
 
-  private setDisconnected = () => {
-    if (this.isConnected()) {
-      ConnectionLocalStorage.setDisconnected()
+	private setConnected = () => {
+		if (this.isDisconnected()) {
+			this.connected = true
 
-      this.callbacks.forEach((callback) => callback(false))
-    }
-  }
+			this.callbacks.forEach(callback => callback(true))
+		}
+	}
+
+	private setDisconnected = () => {
+		if (this.isConnected()) {
+			this.connected = false
+
+			this.callbacks.forEach(callback => callback(false))
+		}
+	}
 }
 
 export default new ConnectionService()

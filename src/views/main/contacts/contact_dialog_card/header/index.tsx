@@ -1,80 +1,47 @@
 import React from 'react'
-import { Avatar, CardHeader, Menu, MenuItem } from '@material-ui/core'
-import { useCurrentLanguage } from '../../../../../context/provider/app_settings'
+import { Avatar, CardHeader } from '@material-ui/core'
 import ContactCardHeaderProps from './props'
-import CloseIconButton from '../../../../../components/button/icon_button/close_icon_button'
+import { Star } from '@material-ui/icons'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
+import { useLanguage } from '../../../../../context/language'
+import PhoneService from '../../../../../services/contact/PhoneService'
+import Utils from '../../../../../utils/Utils'
 import '../../styles.css'
 import './styles.css'
-import ContactService from '../../../../../services/contact/ContactService'
 
-const ContactCardHeader = ({
-  item,
-  onEdit,
-  onDelete,
-  onClose: handleCloseDialog,
-}: ContactCardHeaderProps) => {
-  const language = useCurrentLanguage()
+const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({
+	item,
+	onClick,
+	children,
+}) => {
+	const language = useLanguage()
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+	const isEssential = Utils.isNotEmpty(item.contact.localEssentialContactId)
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null)
-  }
-
-  const handleEdit = () => {
-    handleCloseMenu()
-    handleCloseDialog()
-    setTimeout(() => {
-      onEdit()
-    }, 300)
-  }
-
-  const handleDelete = () => {
-    handleCloseMenu()
-    handleCloseDialog()
-    setTimeout(() => {
-      onDelete()
-    }, 300)
-  }
-
-  return (
-    <>
-      <CardHeader
-        avatar={
-          <Avatar
-            aria-label={language.AVATAR_ALT}
-            className={`avatar__color-${item.color}`}
-          >
-            {item.name[0].toUpperCase()}
-          </Avatar>
-        }
-        action={
-          <>
-            <OptionsIconButton dark onClick={handleClick} />
-            <CloseIconButton dark onClose={handleCloseDialog} />
-          </>
-        }
-        title={item.name}
-        subheader={ContactService.getPhoneTypes(item.phones, language)}
-        className="contact_dialog_content_header"
-      />
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
-      >
-        <MenuItem onClick={handleEdit}>{language.EDIT_OPTION_TEXT}</MenuItem>
-        <MenuItem onClick={handleDelete}>
-          {language.DELETE_OPTION_TEXT}
-        </MenuItem>
-      </Menu>
-    </>
-  )
+	return (
+		<>
+			<CardHeader
+				avatar={
+					<Avatar
+						aria-label={language.data.AVATAR_ALT}
+						className={`avatar__color-${item.contact.color}`}
+					>
+						{item.contact.name[0].toUpperCase()}
+					</Avatar>
+				}
+				action={
+					<>
+						{isEssential ? <Star /> : <></>}
+						<OptionsIconButton dark onClick={onClick} />
+					</>
+				}
+				title={item.contact.name}
+				subheader={PhoneService.getPhoneTypes(item.phones, language.data)}
+				className='contact_dialog_content_header'
+			/>
+			{children}
+		</>
+	)
 }
 
 export default ContactCardHeader

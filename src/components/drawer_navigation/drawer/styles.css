@@ -1,99 +1,123 @@
 .drawer_navigation__drawer {
-  height: 100%;
-  width: 240px;
-  display: flex;
-  flex-direction: row;
-  overflow: auto;
-  background-color: var(--header-and-menu);
-  margin-left: -240px;
+	height: 100%;
+	width: 240px;
+	display: flex;
+	flex-direction: row;
+	overflow: auto;
+	background-color: var(--header-and-menu);
+	margin-left: -240px;
 }
 
 .drawer_navigation__drawer__visible {
-  height: 100%;
-  width: 240px;
-  overflow: hidden;
+	height: 100%;
+	width: 240px;
+	overflow: hidden;
 }
 
 .drawer_navigation__drawer__visible__menu__icon {
-  width: 25px;
-  height: 25px;
-  fill: var(--light-color);
+	width: var(--very-large-font);
+	height: auto;
+	fill: var(--light-color);
 }
 
 .drawer_navigation__drawer__visible .MuiListItemIcon-root {
-  margin-bottom: 4px;
+	margin-bottom: 4px;
+	margin-right: 10px;
+	min-width: 0px;
 }
 
 .drawer_navigation__drawer__visible
-  .MuiTypography-root.MuiListItemText-primary {
-  color: var(--light-color);
+	.MuiTypography-root.MuiListItemText-primary {
+	color: var(--light-color);
 }
 
 .drawer_navigation__drawer__invisible {
-  position: fixed;
-  z-index: 888;
-  top: 0;
-  left: 0px;
-  height: 100%;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: none;
+	position: fixed;
+	z-index: 888;
+	top: 0;
+	left: 0px;
+	height: 100%;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.3);
+	border: none;
 }
 
 .drawer_navigation__drawer__invisible:focus {
-  outline: 0;
+	outline: 0;
 }
 
 .drawer_navigation__drawer__header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 45px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	height: 45px;
 }
 
 .drawer_navigation__drawer__content {
-  overflow-y: auto;
-  height: calc(100% - 45px);
-  padding: 8px;
+	overflow-y: auto;
+	height: calc(100% - 45px);
+	padding: 8px;
 }
 
 .drawer_navigation__drawer__visible .MuiList-root.MuiList-padding {
-  padding-top: 0px;
-  padding-bottom: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 
 .drawer_navigation__drawer__visible__item_image {
-  width: 30px;
-  height: 30px;
+	width: 30px;
+	height: 30px;
 }
 
 .drawer_navigation__drawer__visible .user {
-  color: var(--light-color);
-  padding: 8px 16px;
+	color: var(--light-color);
+	padding: 8px 16px;
 }
 
 .user__avatar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.drawer_navigation__drawer__visible .user .avatar {
-  width: 65%;
-  height: auto;
-  margin-bottom: 10px;
+.user__avatar__loader,
+.user__avatar .avatar {
+	width: 8rem;
+	height: 8rem;
+	margin-bottom: 10px;
+}
+
+.user__avatar__loader .loader__screen {
+	border-radius: 50%;
 }
 
 .drawer_navigation__drawer__visible .user .username {
-  font-weight: 700;
-  font-size: large;
-  color: inherit;
-  margin-top: 1rem;
-  text-align: center;
+	font-weight: 700;
+	font-size: var(--default-font);
+	color: inherit;
+	margin-top: 1rem;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .drawer_navigation__drawer__visible
-  .MuiTypography-root.MuiListItemText-primary {
-  text-align: justify;
+	.MuiTypography-root.MuiListItemText-primary {
+	text-align: justify;
+}
+
+.user__avatar {
+	position: relative;
+}
+
+.user__avatar__sync_info {
+	position: absolute;
+	bottom: 0.5rem;
+	right: 2.8rem;
+	border-radius: 50%;
+	background-color: var(--header-and-menu);
+	width: 1.5rem;
+	height: 1.5rem;
 }

@@ -1,29 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ServiceWorker from './serviceWorker'
-import ErrorHandlerService from './services/error_handler/ErrorHandlerService'
-import SyncContextProvider from './context/provider/sync'
-import AlertContextProvider from './context/provider/alert'
-import AppSettingsContextProvider from './context/provider/app_settings'
+import AlertProvider from './context/alert'
 import EventService from './services/events/EventService'
+import GoogleOAuth2Provider from './context/google_oauth2'
 import App from './App'
+import LanguageProvider from './context/language'
 import './Var.css'
-import GoogleOAuth2ContextProvider from './context/provider/google_oauth2'
 
-ErrorHandlerService.register()
-EventService.whenStart()
+window.addEventListener('load', () => {
+	EventService.whenStart()
+})
 
 ReactDOM.render(
-  <GoogleOAuth2ContextProvider>
-    <AlertContextProvider>
-      <SyncContextProvider>
-        <AppSettingsContextProvider>
-          <App />
-        </AppSettingsContextProvider>
-      </SyncContextProvider>
-    </AlertContextProvider>
-  </GoogleOAuth2ContextProvider>,
-  document.getElementById('root')
+	<GoogleOAuth2Provider>
+		<AlertProvider>
+			<LanguageProvider>
+				<App />
+			</LanguageProvider>
+		</AlertProvider>
+	</GoogleOAuth2Provider>,
+	document.getElementById('root'),
 )
 
 ServiceWorker.unregister()

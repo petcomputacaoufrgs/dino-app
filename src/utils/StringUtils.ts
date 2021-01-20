@@ -1,69 +1,87 @@
+import Utils from './Utils'
+
 class StringUtils {
-  upperCaseFirstLetter = (str: string): string =>
-    `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+	isEmpty(value: any | undefined): boolean {
+		return Utils.isEmpty(value) || value === '' || value === ' '
+	}
 
-  normalize = (str: string): string => {
-    if (str) {
-      return str
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-    }
-    return str
-  }
+	upperCaseFirstLetter = (str: string): string =>
+		`${str.charAt(0).toUpperCase()}${str.slice(1)}`
 
-  removeWhiteSpace = (str: string): string => str.replace(' ', '')
+	normalize = (str: string): string => {
+		if (str) {
+			return str
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.toLowerCase()
+		}
+		return str
+	}
 
-  /**
-   * @param s1 String um
-   * @param s2 String dois
-   * @returns True para s1 normalizada igual a s2 normalizada
-   */
-  areEqual = (s1: string, s2: string): boolean =>
-    this.normalize(s1) === this.normalize(s2)
+	removeWhiteSpace = (str: string): string => str.replace(' ', '')
 
-  /**
-   * @param s1 String um
-   * @param s2 String dois
-   * @returns True para s1 normalizada diferente de s2 normalizada
-   */
-  areNotEqual = (s1: string, s2: string): boolean => !this.areEqual(s1, s2)
+	/**
+	 * @param s1 String um
+	 * @param s2 String dois
+	 * @returns True para s1 normalizada igual a s2 normalizada
+	 */
+	areEqual = (s1: string, s2: string): boolean =>
+		this.normalize(s1) === this.normalize(s2)
 
-  /**
-   * @param s1 String maior
-   * @param s2 String possivelmente incluida na maior
-   * @returns True para s2 contida em s1
-   */
-  contains = (s1: string, s2: string): boolean => {
-    return this.normalize(s1).includes(this.normalize(s2))
-  }
+	/**
+	 * @param s1 String um
+	 * @param s2 String dois
+	 * @returns True para s1 normalizada diferente de s2 normalizada
+	 */
+	areNotEqual = (s1: string, s2: string): boolean => !this.areEqual(s1, s2)
 
-  /**
-   *
-   * @param n Número a ser convertido
-   * @param length Número de zeros a esquerda
-   */
-  toStringWithZeros = (n: number, length: number): string => {
-    const stringNumber = n.toString()
+	/**
+	 * @param s1 String maior
+	 * @param s2 String possivelmente incluida na maior
+	 * @returns True para s2 contida em s1
+	 */
+	contains = (s1: string, s2: string): boolean => {
+		return this.normalize(s1).includes(this.normalize(s2))
+	}
 
-    return stringNumber.padStart(length, '0')
-  }
+	/**
+	 *
+	 * @param n Número a ser convertido
+	 * @param length Número de zeros a esquerda
+	 */
+	toStringWithZeros = (n: number, length: number): string => {
+		const stringNumber = n.toString()
 
-  replaceDigits = (str: string, replacer: string): string => {
-    return str.replace(/[0-9]/g, replacer)
-  }
+		return stringNumber.padStart(length, '0')
+	}
 
-  replaceNonDigits = (str: string, replacer: string): string => {
-    return str.replace(/[^0-9]/g, replacer)
-  }
+	replaceDigits = (str: string, replacer: string): string => {
+		return str.replace(/[0-9]/g, replacer)
+	}
 
-  sortByAttr = (array: Array<any>, attr: string): Array<any> => {
-    if (array)
-      return array.sort((a, b) =>
-        this.normalize(a[attr]) < this.normalize(b[attr]) ? -1 : 1
-      )
-    return array
-  }
+	replaceNonDigits = (str: string, replacer: string): string => {
+		return str.replace(/[^0-9]/g, replacer)
+	}
+
+	sortByAttr = (array: Array<any>, attr: string): Array<any> => {
+		if (array)
+			return array.sort((a, b) =>
+				this.normalize(a[attr]) < this.normalize(b[attr]) ? -1 : 1,
+			)
+		return array
+	}
+
+	concatUndefinedSafe = (
+		separator: string,
+		s1: string,
+		s2?: string,
+	): string => {
+		if (s2) {
+			return s1.concat(separator).concat(s2)
+		}
+
+		return s1
+	}
 }
 
 export default new StringUtils()

@@ -4,98 +4,103 @@ import './styles.css'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import NoteContentColumnCard from './card'
 import NoteBodyColumnHeader from './header'
-import NoteViewModel from '../../../../../types/note/view/NoteViewModel'
 import { isMobile } from 'react-device-detect'
 import NoteDraggableType from '../../../../../constants/note/NoteDroppableType'
 import NotesContentColumnAddNote from './add_note'
+import NoteEntity from '../../../../../types/note/database/NoteEntity'
 
 const NoteContentColumn: React.FC<NoteBodyColumnProps> = ({
-  column,
-  columnIndex,
-  searching,
-  onClickNote,
-  onEditColumn,
-  onDeleteColumn,
-  onAddNote,
+	noteView,
+	columnIndex,
+	searching,
+	onClickNote,
+	onEditColumn,
+	onDeleteColumn,
+	onAddNote,
 }) => {
-  const renderCard = (
-    note: NoteViewModel,
-    noteIndex: number
-  ): JSX.Element | undefined => {
-    if (note.showByTag || note.showByQuestion) {
-      return (
-        <NoteContentColumnCard
-          searching={searching}
-          note={note}
-          key={note.id}
-          noteIndex={noteIndex}
-          onClickNote={onClickNote}
-        ></NoteContentColumnCard>
-      )
-    }
-  }
+	const renderCard = (
+		note: NoteEntity,
+		columnIndex: number,
+		noteIndex: number,
+	): JSX.Element | undefined => {
+		return (
+			<NoteContentColumnCard
+				searching={searching}
+				note={note}
+				key={noteIndex}
+				noteIndex={noteIndex}
+				columnIndex={columnIndex}
+				onClickNote={onClickNote}
+			></NoteContentColumnCard>
+		)
+	}
 
-  const handleColumnEdit = () => {
-    onEditColumn(column)
-  }
+	const handleColumnEdit = () => {
+		onEditColumn(noteView.column)
+	}
 
-  const handleColumnDelete = () => {
-    onDeleteColumn(column)
-  }
+	const handleColumnDelete = () => {
+		onDeleteColumn(noteView.column)
+	}
 
-  const handleAddNote = () => {
-    onAddNote(column)
-  }
+	const handleAddNote = () => {
+		onAddNote(noteView.column)
+	}
 
-  return (
-    <div className={`note__note_content__column${isMobile ? '' : ' desktop'}`}>
-      <Draggable
-        draggableId={column.id.toString()}
-        index={columnIndex}
-        isDragDisabled={searching}
-      >
-        {(provided) => (
-          <div
-            className="note__note_content__column__draggable"
-            {...provided.draggableProps}
-            ref={provided.innerRef}
-          >
-            <div
-              className="note__note_content__column__draggable__title"
-              {...provided.dragHandleProps}
-              data-dino-draggable={true}
-            >
-              <NoteBodyColumnHeader
-                title={column.title}
-                onEdit={handleColumnEdit}
-                onDelete={handleColumnDelete}
-              />
-            </div>
-            <Droppable droppableId={column.title} type={NoteDraggableType.NOTE}>
-              {(provided) => (
-                <div
-                  className="note__note_content__column__draggable__droppable"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  <div className="note__note_content__column__draggable__droppable__scroll">
-                    {column.notes.map((note, index) => renderCard(note, index))}
-                  </div>
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-            <div className="note__note_content__column__draggable__add_button">
-              <NotesContentColumnAddNote
-                notesCount={column.notes.length}
-                onAdd={handleAddNote}
-              />
-            </div>
-          </div>
-        )}
-      </Draggable>
-    </div>
-  )
+	return (
+		<div className={`note__note_content__column${isMobile ? '' : ' desktop'}`}>
+			<Draggable
+				draggableId={columnIndex.toString()}
+				index={columnIndex}
+				isDragDisabled={searching}
+			>
+				{provided => (
+					<div
+						className='note__note_content__column__draggable'
+						{...provided.draggableProps}
+						ref={provided.innerRef}
+					>
+						<div
+							className='note__note_content__column__draggable__title'
+							{...provided.dragHandleProps}
+							data-dino-draggable={true}
+						>
+							<NoteBodyColumnHeader
+								title={noteView.column.title}
+								onEdit={handleColumnEdit}
+								onDelete={handleColumnDelete}
+							/>
+						</div>
+						<Droppable
+							droppableId={noteView.column.title}
+							type={NoteDraggableType.NOTE}
+						>
+							{provided => (
+								<div
+									className='note__note_content__column__draggable__droppable'
+									ref={provided.innerRef}
+									{...provided.droppableProps}
+								>
+									<div className='note__note_content__column__draggable__droppable__scroll'>
+										{noteView.notes.map((note, index) =>
+											renderCard(note, columnIndex, index),
+										)}
+									</div>
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
+						<div className='note__note_content__column__draggable__add_button'>
+							<NotesContentColumnAddNote
+								notesCount={noteView.notes.length}
+								onAdd={handleAddNote}
+							/>
+						</div>
+					</div>
+				)}
+			</Draggable>
+		</div>
+	)
 }
 
 export default NoteContentColumn

@@ -1,63 +1,71 @@
 import ConnectionService from '../connection/ConnectionService'
-import UserService from '../user/UserService'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
-import AppSettingsService from '../app_settings/AppSettingsService'
 import AuthService from '../auth/AuthService'
-import Synchronizer from '../../sync/Synchronizer'
-import WebSocketConnector from '../../websocket/WebSocketConnector'
-import CalendarService from '../calendar/CalendarService'
 import SyncService from '../sync/SyncService'
+import CalendarService from '../calendar/CalendarService'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
+import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
+import WebSocketService from '../websocket/WebSocketService'
+import ErrorHandlerService from '../error_handler/ErrorHandlerService'
 
 class EventService {
-  constructor() {
-    ConnectionService.addEventListener(this.connectionCallback)
-  }
+	constructor() {
+		ConnectionService.addEventListener(this.connectionCallback)
+	}
 
-  whenStart = async () => {
-    AuthService.cleanLoginGarbage()
-    const isDinoConnected = await ConnectionService.isDinoConnected()
-    if (isDinoConnected && AuthService.isAuthenticated()) {
-      AuthService.refreshGoogleAccessToken()
-      WebSocketConnector.connect()
-      Synchronizer.sync()
-    }
-  }
+	whenStart = async () => {
+		ErrorHandlerService.register()
 
-  whenLogin = () => {
-    CalendarService.addMocks()
-    Synchronizer.sync(true)
-    WebSocketConnector.connect()
-    HistoryService.push(PathConstants.HOME)
-  }
+		const isDinoConnected = await ConnectionService.isDinoConnected()
+		const isAuthenticated = await AuthService.isAuthenticated()
+		if (isDinoConnected && isAuthenticated) {
+			this.startWebSocketAndSync()
+		}
+	}
 
-  whenLogout = () => {
-    UserService.removeUserData()
-    AppSettingsService.returnAppSettingsToDefault()
-    WebSocketConnector.disconnect()
-    HistoryService.push(PathConstants.LOGIN)
-  }
+	whenLogin = async () => {
+		CalendarService.addMocks()
+		this.startWebSocketAndSync()
+		HistoryService.push(PathConstants.HOME)
+	}
 
-  whenLoginForbidden = () => {
-    UserService.removeUserData()
-    WebSocketConnector.disconnect()
-    HistoryService.push(PathConstants.LOGIN)
-  }
+	whenLogout = async () => {
+		WebSocketService.disconnect()
+		HistoryService.push(PathConstants.LOGIN)
+	}
 
-  whenConnectionReturn = () => {
-    WebSocketConnector.connect()
-    Synchronizer.sync()
-  }
+	whenLoginForbidden = async () => {
+		AuthService.logout()
+	}
 
-  whenConnectionLost = () => {
-    SyncService.setOffline()
-  }
+	whenConnectionReturn = async () => {
+		const isDinoConnected = await ConnectionService.isDinoConnected()
+		const isAuthenticated = await AuthService.isAuthenticated()
+		if (isDinoConnected && isAuthenticated) {
+			this.startWebSocketAndSync()
+		}
+	}
 
-  whenError = () => {}
+	whenConnectionLost = () => {
+		SyncService.setNotSynced()
+		WebSocketService.disconnect()
+	}
 
-  private connectionCallback = (online: boolean) => {
-    online ? this.whenConnectionReturn() : this.whenConnectionLost()
-  }
+	whenError = (error: LogAppErrorModel) => {
+		LogAppErrorService.logModel(error)
+	}
+
+	private startWebSocketAndSync = async () => {
+		const success = WebSocketService.connect()
+		if (success) {
+			SyncService.sync()
+		}
+	}
+
+	private connectionCallback = (online: boolean) => {
+		online ? this.whenConnectionReturn() : this.whenConnectionLost()
+	}
 }
 
 export default new EventService()

@@ -1,39 +1,64 @@
 import React, { useState, useEffect } from 'react'
-import { useCurrentLanguage } from '../../../context/provider/app_settings'
 import GlossaryItems from './glossary_items'
-import GlossaryItemModel from '../../../types/glossary/GlossaryItemModel'
-import StringUtils from '../../../utils/StringUtils'
 import MuiSearchBar from '../../../components/mui_search_bar'
-import { useGlossary } from '../../../context/provider/glossary'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
+import Loader from '../../../components/loader'
+import { useLanguage } from '../../../context/language'
+import GlossaryService from '../../../services/glossary/GlossaryService'
+import './styles.css'
 
-const Glossary = (): JSX.Element => {
-  const language = useCurrentLanguage()
-  const items = useGlossary().items
+const Glossary: React.FC = () => {
+	const language = useLanguage()
 
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState(
-    new Array<GlossaryItemModel>()
-  )
+	const [glossary, setGlossary] = useState<GlossaryItemEntity[]>([])
+	const [searchTerm, setSearchTerm] = useState('')
+	const [isLoading, setIsLoading] = useState(true)
 
-  const handleChange = (event) => setSearchTerm(event.target.value)
+	useEffect(() => {
+		const loadData = async () => {
+			const glossary = await GlossaryService.getAll()
+			updateData(glossary)
+			finishLoading()
+		}
 
-  useEffect(() => {
-    const results = items.filter((item) =>
-      StringUtils.contains(item.title, searchTerm)
-    )
-    setSearchResults(results)
-  }, [items, searchTerm])
+		let updateData = (glossary: GlossaryItemEntity[]) => {
+			setGlossary(glossary)
+		}
 
-  return (
-    <div className="glossary">
-      <MuiSearchBar
-        value={searchTerm}
-        onChange={handleChange}
-        placeholder={language.SEARCH_HOLDER}
-      />
-      <GlossaryItems items={searchResults} />
-    </div>
-  )
+		let finishLoading = () => {
+			setIsLoading(false)
+		}
+
+		GlossaryService.addUpdateEventListenner(loadData)
+
+		if (isLoading) {
+			loadData()
+		}
+
+		return () => {
+			updateData = () => {}
+			finishLoading = () => {}
+			GlossaryService.removeUpdateEventListenner(loadData)
+		}
+	}, [isLoading])
+
+	const handleChange = (event: any) => setSearchTerm(event.target.value)
+
+	const filteredGlossary = GlossaryService.filterGlossary(glossary, searchTerm)
+
+	return (
+		<div className='glossary'>
+			<MuiSearchBar
+				value={searchTerm}
+				onChange={handleChange}
+				placeholder={language.data.SEARCH_HOLDER}
+			/>
+			<Loader className='glossary_loader' isLoading={isLoading}>
+				<GlossaryItems items={filteredGlossary} />
+			</Loader>
+		</div>
+	)
 }
 
 export default Glossary

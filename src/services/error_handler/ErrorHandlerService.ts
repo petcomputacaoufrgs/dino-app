@@ -1,33 +1,26 @@
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
-import LogAppErrorModel from '../../types/log_app_error/LogAppErrorModel'
+import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import EventService from '../events/EventService'
 import AuthService from '../auth/AuthService'
 
 class ErrorHandlerService {
-  register = () => {
-    window.onerror = this.log
-  }
+	register = () => {
+		window.addEventListener('error', event => this.log(event))
+	}
 
-  log = (
-    event: Event | string,
-    source?: string,
-    lineno?: number,
-    colno?: number,
-    error?: Error
-  ) => {
-    if (error && AuthService.isAuthenticated()) {
-      LogAppErrorService.logModel({
-        error: error.stack,
-        file: source,
-        title: event && typeof event === 'string' ? event : null,
-        date: new Date().getTime(),
-      } as LogAppErrorModel)
+	log = async (event: ErrorEvent) => {
+		if (event) {
+			const isAuthenticated = await AuthService.isAuthenticated()
+			if (isAuthenticated) {
+				const errorModel: LogAppErrorModel = {
+					error: event.message,
+					file: event.filename,
+					date: new Date(),
+				}
 
-      EventService.whenError()
-    }
-
-    return process.env.NODE_ENV === 'production' ? true : true
-  }
+				EventService.whenError(errorModel)
+			}
+		}
+	}
 }
 
 export default new ErrorHandlerService()

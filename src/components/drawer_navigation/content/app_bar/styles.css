@@ -1,17 +1,17 @@
 .drawer__navigation__app_bar {
-  width: 100%;
-  height: 45px;
-  background-color: var(--header-and-menu);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+	width: 100%;
+	height: 45px;
+	background-color: var(--header-and-menu);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .drawer__navigation__app_bar .MuiIconButton-label .MuiSvgIcon-root {
-  fill: var(--light-color);
+	fill: var(--light-color);
 }
 
 .drawer__navigation__app_bar__button svg {
-  margin-left: 0.8rem;
-  margin-right: 0.8rem;
+	margin-left: 0.8rem;
+	margin-right: 0.8rem;
 }

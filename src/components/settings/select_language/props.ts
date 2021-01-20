@@ -1,4 +1,4 @@
 export default interface SelectLanguageProps {
-	languageName: string | undefined
-	setLanguage: (newLanguage: string) => void
+	languageName: number | undefined
+	setLanguage: (newLanguage: number) => void
 }

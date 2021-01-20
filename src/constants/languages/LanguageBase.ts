@@ -2,8 +2,8 @@ export default interface LanguageBase {
 	APP_NAME: string
 	DINOAPP_TEAM: string
 	CURIOUS_DINO_ALT: string
+	LANGUAGE_CODE: number
 	ISO_LANGUAGE_CODE: string
-	NAVIGATOR_LANGUAGE_CODE: string
 	LANGUAGE_PORTUGUESE: string
 	LANGUAGE_ENGLISH: string
 	NOT_FOUND_MESSAGE: string

@@ -40,7 +40,7 @@ const Settings: React.FC = () => {
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
 
 	const [selectedLanguage, setSelectedLanguage] = useState(
-		language.data.NAVIGATOR_LANGUAGE_CODE,
+		language.data.LANGUAGE_CODE,
 	)
 	const [selectedFontSize, setSelectedFontSize] = useState(FontSizeEnum.DEFAULT)
 	const [selectedColorTheme, setSelectedColorTheme] = useState(
@@ -128,7 +128,7 @@ const Settings: React.FC = () => {
 	}, [isLoading])
 
 	useEffect(() => {
-		setSelectedLanguage(language.data.NAVIGATOR_LANGUAGE_CODE)
+		setSelectedLanguage(language.data.LANGUAGE_CODE)
 	}, [language])
 
 	const handleOpenGoogleContactDialog = () => {

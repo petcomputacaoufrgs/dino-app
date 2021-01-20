@@ -6,11 +6,11 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 
 const SelectLanguage = ({ languageName, setLanguage }: SelectLanguageProps) => {
 	const language = useLanguage()
-	const languageOptions = UserSettingsService.getLanguages(language.data)
+	const languageOptions = UserSettingsService.getLanguagesOptions(language.data)
 
 	const handleSelectedLanguageChanged = (event: any) => {
 		if (event && event.target && event.target.value) {
-			setLanguage(event.target.value as string)
+			setLanguage(event.target.value as number)
 		}
 	}
 

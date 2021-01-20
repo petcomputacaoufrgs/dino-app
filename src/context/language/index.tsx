@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import UserSettingsService from '../../services/user/UserSettingsService'
 
-interface LanguageContextType {
+export interface LanguageContextType {
 	data: LanguageBase
 	loading: boolean
 }

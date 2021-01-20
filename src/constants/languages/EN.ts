@@ -1,5 +1,5 @@
+import LanguageEnum from '../../types/user/view/LanguageEnum'
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from './LanguageCodeConstants'
 
 export default class EN implements LanguageBase {
 	APP_NAME = 'DinoApp'
@@ -8,9 +8,9 @@ export default class EN implements LanguageBase {
 
 	CURIOUS_DINO_ALT = 'Curious dino'
 
-	ISO_LANGUAGE_CODE = 'en'
+	LANGUAGE_CODE = LanguageEnum.ENGLISH
 
-	NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.ENGLISH
+	ISO_LANGUAGE_CODE = 'en'
 
 	LANGUAGE_PORTUGUESE = 'Portuguese'
 

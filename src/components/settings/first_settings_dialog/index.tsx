@@ -29,7 +29,7 @@ const FirstSettingsDialog: React.FC = () => {
 	const [dialogOpen, setDialogOpen] = useState(true)
 
 	const [selectedLanguage, setSelectedLanguage] = useState(
-		language.data.NAVIGATOR_LANGUAGE_CODE,
+		language.data.LANGUAGE_CODE,
 	)
 	const [selectedTreatment, setSelectedTreatment] = useState<
 		TreatmentEntity | undefined
@@ -107,7 +107,7 @@ const FirstSettingsDialog: React.FC = () => {
 	}, [isLoading])
 
 	useEffect(() => {
-		setSelectedLanguage(language.data.NAVIGATOR_LANGUAGE_CODE)
+		setSelectedLanguage(language.data.LANGUAGE_CODE)
 	}, [language])
 
 	const handleCloseDialogs = () => {
@@ -204,7 +204,7 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}
 
-	const handleSelectedLanguageChange = (newLanguage: string) => {
+	const handleSelectedLanguageChange = (newLanguage: number) => {
 		setSelectedLanguage(newLanguage)
 
 		if (settings && settings.language !== newLanguage) {

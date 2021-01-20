@@ -1,5 +1,5 @@
+import LanguageEnum from '../../types/user/view/LanguageEnum'
 import LanguageBase from './LanguageBase'
-import LanguageCodeConstants from './LanguageCodeConstants'
 
 /**
  * @description Conjunto de textos em português
@@ -10,10 +10,10 @@ export default class PT implements LanguageBase {
 	DINOAPP_TEAM = 'Equipe DinoApp'
 
 	CURIOUS_DINO_ALT = 'Dinossauro curioso'
+	
+	LANGUAGE_CODE = LanguageEnum.PORTUGUESE
 
 	ISO_LANGUAGE_CODE = 'pt'
-
-	NAVIGATOR_LANGUAGE_CODE = LanguageCodeConstants.PORTUGUESE
 
 	LANGUAGE_PORTUGUESE = 'Português'
 

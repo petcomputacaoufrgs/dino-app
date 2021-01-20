@@ -18,7 +18,7 @@ import UserSettingsEntity from './types/user/database/UserSettingsEntity'
 import DataFontSizeUtils from './utils/DataFontSizeUtils'
 import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
-import './App.css'
+import './app.css'
 
 const LOAD_SCREEN_TIME = 2250
 

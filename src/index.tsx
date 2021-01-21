@@ -6,7 +6,8 @@ import EventService from './services/events/EventService'
 import GoogleOAuth2Provider from './context/google_oauth2'
 import LanguageProvider from './context/language'
 import LogoutService from './services/auth/LogoutService'
-import App from './app'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
 import './external/MaterialIcons.css'
 import './fonts.css'
 import './var.css'
@@ -28,3 +29,4 @@ ReactDOM.render(
 )
 
 ServiceWorkerRegister.register()
+reportWebVitals()

@@ -1,10 +1,10 @@
 import Superagent from 'superagent'
-import HttpStatus from 'http-status-codes'
 import DinoAPIHeaderConstants from '../constants/api/APIHeaderConstants'
 import AuthService from '../services/auth/AuthService'
 import EventService from '../services/events/EventService'
 import BaseAgent from './BaseAgent'
 import AuthEntity from '../types/auth/database/AuthEntity'
+import HttpStatus from '../types/http/HttpStatus'
 
 class DinoAgentService extends BaseAgent<AuthEntity> {
 	getAuth(): Promise<AuthEntity | undefined> {

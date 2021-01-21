@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Login from './views/login'
 import Main from './views/main'
-import PrivateRouterContextProvider from './context/private_router'
+import PrivateRouterProvider from './context/private_router'
 import PrivateRoute from './components/private_route'
 import LoginRoute from './components/login_route/index'
 import PathConstants from './constants/app/PathConstants'
@@ -18,11 +18,11 @@ import UserSettingsEntity from './types/user/database/UserSettingsEntity'
 import DataFontSizeUtils from './utils/DataFontSizeUtils'
 import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
-import './app.css'
+import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
 
-const App = (): JSX.Element => {
+const App: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(false)
@@ -103,7 +103,7 @@ const App = (): JSX.Element => {
 	}, [])
 
 	const renderApp = (): JSX.Element => (
-		<PrivateRouterContextProvider
+		<PrivateRouterProvider
 			loginPath={PathConstants.LOGIN}
 			homePath={PathConstants.HOME}
 			isAuthenticated={isAuthenticated}
@@ -117,7 +117,7 @@ const App = (): JSX.Element => {
 				<Route path={PathConstants.ABOUT_US} component={AboutUs} />
 				<Route path={'/'} component={NotFound} />
 			</Switch>
-		</PrivateRouterContextProvider>
+		</PrivateRouterProvider>
 	)
 
 	const renderLoad = (): JSX.Element => <Load />

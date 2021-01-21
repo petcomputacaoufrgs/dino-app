@@ -1,4 +1,4 @@
-import LanguageEnum from '../../types/user/view/LanguageEnum'
+import LanguageEnum from '../../types/enum/LanguageEnum'
 import LanguageBase from './LanguageBase'
 
 export default class EN implements LanguageBase {

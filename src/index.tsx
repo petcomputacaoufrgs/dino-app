@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import * as ServiceWorker from './ServiceWorker'
+import * as ServiceWorkerRegister from './service_worker/ServiceWorkerRegister'
 import AlertProvider from './context/alert'
 import EventService from './services/events/EventService'
 import GoogleOAuth2Provider from './context/google_oauth2'
@@ -27,4 +27,4 @@ ReactDOM.render(
 	document.getElementById('root'),
 )
 
-ServiceWorker.register()
+ServiceWorkerRegister.register()

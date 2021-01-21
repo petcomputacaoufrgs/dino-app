@@ -7,7 +7,7 @@ import StringUtils from '../../utils/StringUtils'
 import FaqEntity from '../../types/faq/database/FaqEntity'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
@@ -19,7 +19,7 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.faqItem,
 			APIRequestMappingConstants.FAQ_ITEM,
-			WebSocketTopicURLService,
+			WebSocketTopicPathService,
 			APIWebSocketDestConstants.FAQ_ITEM,
 		)
 	}

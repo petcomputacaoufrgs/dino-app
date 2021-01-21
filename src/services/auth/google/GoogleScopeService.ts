@@ -8,7 +8,7 @@ import SynchronizableWSDeleteModel from '../../../types/sync/api/web_socket/Sync
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
-import WebSocketQueueURLService from '../../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../../websocket/path/WebSocketQueuePathService'
 import Database from '../../../storage/Database'
 
 class GoogleScopeServiceImpl extends AutoSynchronizableService<
@@ -20,7 +20,7 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.googleScope,
 			APIRequestMappingConstants.GOOGLE_SCOPE,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.GOOGLE_SCOPE,
 		)
 	}

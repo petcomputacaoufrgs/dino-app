@@ -5,7 +5,7 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 
 class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
@@ -17,7 +17,7 @@ class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.faqUserQuestion,
 			APIRequestMappingConstants.FAQ_USER_QUESTION,
-			WebSocketQueueURLService,
+			WebSocketQueuePathService,
 			APIWebSocketDestConstants.FAQ_USER_QUESTION,
 		)
 	}

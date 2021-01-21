@@ -5,7 +5,7 @@ import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataMode
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
 
@@ -18,7 +18,7 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.glossary,
 			APIRequestMappingConstants.GLOSSARY,
-			WebSocketTopicURLService,
+			WebSocketTopicPathService,
 			APIWebSocketDestConstants.GLOSSARY,
 		)
 	}

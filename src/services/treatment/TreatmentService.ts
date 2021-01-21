@@ -4,7 +4,7 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
@@ -16,7 +16,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.treatment,
 			APIRequestMappingConstants.TREATMENT,
-			WebSocketTopicURLService,
+			WebSocketTopicPathService,
 			APIWebSocketDestConstants.TREATMENT,
 		)
 	}

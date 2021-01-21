@@ -22,322 +22,338 @@ import AuthRefreshRequestModel from '../../types/auth/api/AuthRefreshRequestMode
 import AuthRefreshResponseModel from '../../types/auth/api/AuthRefreshResponseModel'
 import DateUtils from '../../utils/DateUtils'
 import AuthEntity from '../../types/auth/database/AuthEntity'
-import AuthenticatedService from './AuthenticatedService'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 import UpdatableService from '../update/UpdatableService'
 import UserSettingsService from '../user/UserSettingsService'
+import LogoutCallback from '../../types/auth/service/LogoutCallback'
 
 class AuthService extends UpdatableService {
-  private authenticatedServices: AuthenticatedService[]
-  private table: Dexie.Table<AuthEntity, number>
+	private logoutCallbacks: LogoutCallback[]
+	private table: Dexie.Table<AuthEntity, number>
 
-  constructor() {
-    super()
-    this.authenticatedServices = []
-    this.table = Database.auth
-  }
+	constructor() {
+		super()
+		this.logoutCallbacks = []
+		this.table = Database.auth
+	}
 
-  onLogout = async () => {
-    this.dbClear()
-  }
+	onLogout = async () => {
+		this.dbClear()
+	}
 
-  subscribeAuthenticatedService = (service: AuthenticatedService) => {
-    this.authenticatedServices.push(service)
-  }
+	subscribeAuthenticatedService = (callback: LogoutCallback) => {
+		this.logoutCallbacks.push(callback)
+	}
 
-  requestGoogleLogin = async (forceConsent: boolean, email?: string): Promise<[number, string | undefined]> => {
-    try {
-      const code = await GoogleOAuth2Service.requestLogin(forceConsent, email)
-      if (code) {
-        return this.requestGoogleLoginOnDinoAPI(code)
-      }
-      return [LoginStatusConstants.EXTERNAL_SERVICE_ERROR, undefined]
-    } catch (e) {
-      return [LoginStatusConstants.REQUEST_CANCELED, undefined]
-    }
-  }
+	requestGoogleLogin = async (
+		forceConsent: boolean,
+		email?: string,
+	): Promise<[number, string | undefined]> => {
+		try {
+			const code = await GoogleOAuth2Service.requestLogin(forceConsent, email)
+			if (code) {
+				return this.requestGoogleLoginOnDinoAPI(code)
+			}
+			return [LoginStatusConstants.EXTERNAL_SERVICE_ERROR, undefined]
+		} catch (e) {
+			return [LoginStatusConstants.REQUEST_CANCELED, undefined]
+		}
+	}
 
-  requestGoogleGrant = async (
-    scopeList: GoogleScope[],
-    refreshTokenNecessary: boolean,
-    email: string
-  ): Promise<[number, string | undefined]> => {
-    try {
-      const authCode = await GoogleOAuth2Service.requestGrant(
-        scopeList,
-        email,
-        refreshTokenNecessary
-      )
+	requestGoogleGrant = async (
+		scopeList: GoogleScope[],
+		refreshTokenNecessary: boolean,
+		email: string,
+	): Promise<[number, string | undefined]> => {
+		try {
+			const authCode = await GoogleOAuth2Service.requestGrant(
+				scopeList,
+				email,
+				refreshTokenNecessary,
+			)
 
-      if (authCode) {
-        return this.requestGoogleGrantOnDinoAPI(authCode, scopeList)
-      }
+			if (authCode) {
+				return this.requestGoogleGrantOnDinoAPI(authCode, scopeList)
+			}
 
-      return [GrantStatusConstants.EXTERNAL_SERVICE_ERROR, undefined]
-    } catch (e) {
-      LogAppErrorService.logError(e)
-      return [GrantStatusConstants.REQUEST_CANCELED, undefined]
-    }
-  }
+			return [GrantStatusConstants.EXTERNAL_SERVICE_ERROR, undefined]
+		} catch (e) {
+			LogAppErrorService.logError(e)
+			return [GrantStatusConstants.REQUEST_CANCELED, undefined]
+		}
+	}
 
-  refreshGoogleAuth = async (): Promise<AuthEntity | undefined> => {
-    const request = await DinoAgentService.get(
-      APIRequestMappingConstants.REFRESH_AUTH_GOOGLE
-    )
-    if (request.canGo) {
-      try {
-        const authRequest = await request.authenticate()
-        const response = await authRequest.go()
-        const responseBody: GoogleRefreshAuthResponseModel = response.body
+	refreshGoogleAuth = async (): Promise<AuthEntity | undefined> => {
+		const request = await DinoAgentService.get(
+			APIRequestMappingConstants.REFRESH_AUTH_GOOGLE,
+		)
+		if (request.canGo) {
+			try {
+				const authRequest = await request.authenticate()
+				const response = await authRequest.go()
+				const responseBody: GoogleRefreshAuthResponseModel = response.body
 
-        if (responseBody.success) {
-          return this.saveGoogleRefreshAuthData(responseBody.data)
-        } else {
-          await this.logout()
-        }
-        
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
-    }
-  }
+				if (responseBody.success) {
+					return this.saveGoogleRefreshAuthData(responseBody.data)
+				} else {
+					await this.logout()
+				}
+			} catch (e) {
+				LogAppErrorService.logError(e)
+			}
+		}
+	}
 
-  refreshDinoAuth = async (): Promise<AuthEntity | undefined> => {
-    try {
-      const auth = await this.getAuth()
+	refreshDinoAuth = async (): Promise<AuthEntity | undefined> => {
+		try {
+			const auth = await this.getAuth()
 
-      if (auth === undefined || !auth.dinoAccessToken) {
-        return
-      }
+			if (auth === undefined || !auth.dinoAccessToken) {
+				return
+			}
 
-      const model: AuthRefreshRequestModel = {
-        refreshToken: auth.dinoRefreshToken,
-      }
+			const model: AuthRefreshRequestModel = {
+				refreshToken: auth.dinoRefreshToken,
+			}
 
-      const response = await Superagent.put(
-        APIRequestMappingConstants.REFRESH_AUTH
-      ).send(model)
+			const response = await Superagent.put(
+				APIRequestMappingConstants.REFRESH_AUTH,
+			).send(model)
 
-      const responseBody: AuthRefreshResponseModel = response.body
+			const responseBody: AuthRefreshResponseModel = response.body
 
-      if (responseBody.success) {
-        const auth = await this.getAuth()
-        const expiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.data.expiresDate)
+			if (responseBody.success) {
+				const auth = await this.getAuth()
+				const expiresDate = DateUtils.convertDinoAPIStringDateToDate(
+					responseBody.data.expiresDate,
+				)
 
-        if (auth) {
-          auth.dinoAccessToken = responseBody.data.accessToken
-          auth.dinoExpiresDate = expiresDate
-          await this.dbSave(auth)
-          return auth
-        } 
-      }
+				if (auth) {
+					auth.dinoAccessToken = responseBody.data.accessToken
+					auth.dinoExpiresDate = expiresDate
+					await this.dbSave(auth)
+					return auth
+				}
+			}
 
-      await this.logout()
-    } catch (e) {
-      LogAppErrorService.logError(e)
-    }
-  }
+			await this.logout()
+		} catch (e) {
+			LogAppErrorService.logError(e)
+		}
+	}
 
-  requestWebSocketAuthToken = async (): Promise<
-    WebSocketAuthResponseModel | undefined
-  > => {
-    const request = await DinoAgentService.get(
-      APIRequestMappingConstants.WEB_SOCKET_AUTH
-    )
-    if (request.canGo) {
-      try {
-        const authRequest = await request.authenticate()
-        const response = await authRequest.go()
-        return response.body
-      } catch (e) {
-        LogAppErrorService.logError(e)
-      }
-    } else {
-      return undefined
-    }
-  }
+	requestWebSocketAuthToken = async (): Promise<
+		WebSocketAuthResponseModel | undefined
+	> => {
+		const request = await DinoAgentService.get(
+			APIRequestMappingConstants.WEB_SOCKET_AUTH,
+		)
+		if (request.canGo) {
+			try {
+				const authRequest = await request.authenticate()
+				const response = await authRequest.go()
+				return response.body
+			} catch (e) {
+				LogAppErrorService.logError(e)
+			}
+		} else {
+			return undefined
+		}
+	}
 
-  logout = async () => {
-    await this.dbClear()
+	logout = async () => {
+		await this.dbClear()
 
-    const onLogoutCallbacks = this.authenticatedServices.map(service => {
-      return service.onLogout()
-    })
+		const onLogoutCallbacks = this.logoutCallbacks.map(callback => {
+			return callback()
+		})
 
-    await Promise.all(onLogoutCallbacks)
+		await Promise.all(onLogoutCallbacks)
 
-    this.triggerUpdateEvent()
+		this.triggerUpdateEvent()
 
-    EventService.whenLogout()
-  }
+		EventService.whenLogout()
+	}
 
-  isAuthenticated = async (): Promise<boolean> => {
-    const entity = await this.getAuth()
+	isAuthenticated = async (): Promise<boolean> => {
+		const entity = await this.getAuth()
 
-    return entity !== undefined
-  }
+		return entity !== undefined
+	}
 
-  isAuthenticatedWithGoogle = async (): Promise<boolean> => {
-    const auth = await this.getAuth()
+	isAuthenticatedWithGoogle = async (): Promise<boolean> => {
+		const auth = await this.getAuth()
 
-    return auth !== undefined && auth.googleToken !== undefined
-  }
+		return auth !== undefined && auth.googleToken !== undefined
+	}
 
-  getAuth = async() : Promise<AuthEntity | undefined> => {
-    const all = await this.table.toArray()
-        
-    if (all.length > 0) {
-      return all[0]
-    }
-  }
+	getAuth = async (): Promise<AuthEntity | undefined> => {
+		const all = await this.table.toArray()
 
-  private dbSave = async (entity: AuthEntity) => {
-    const id = await this.table.put(entity)
-        
-    entity.id = id
-  }
+		if (all.length > 0) {
+			return all[0]
+		}
+	}
 
-  private dbClear = async () => {
-    await this.table.clear()
-  }
+	private dbSave = async (entity: AuthEntity) => {
+		const id = await this.table.put(entity)
 
-  private requestGoogleLoginOnDinoAPI = async (
-    code: string
-  ): Promise<[number, string | undefined]> => {
-    const authRequestModel: GoogleAuthRequestModel = {
-      code: code,
-    }
+		entity.id = id
+	}
 
-    try {
-      const request = await DinoAgentService.post(
-        APIRequestMappingConstants.AUTH_GOOGLE
-      )
-      if (request.canGo) {
-        const response = await request.setBody(authRequestModel).go()
+	private dbClear = async () => {
+		await this.table.clear()
+	}
 
-        const body: GoogleAuthResponseModel = response.body
+	private requestGoogleLoginOnDinoAPI = async (
+		code: string,
+	): Promise<[number, string | undefined]> => {
+		const authRequestModel: GoogleAuthRequestModel = {
+			code: code,
+		}
 
-        if (body.success) {
-          await this.saveGoogleAuthData(body.data)
-          await this.saveUserSettings(body.data)
-          this.triggerUpdateEvent()
-          EventService.whenLogin()
-          return [LoginStatusConstants.SUCCESS, undefined]
-        }
+		try {
+			const request = await DinoAgentService.post(
+				APIRequestMappingConstants.AUTH_GOOGLE,
+			)
+			if (request.canGo) {
+				const response = await request.setBody(authRequestModel).go()
 
-        if (body.errorCode === GoogleAuthErrorCode.REFRESH_TOKEN) {
-          return [LoginStatusConstants.REFRESH_TOKEN_NECESSARY, body.error]
-        } 
+				const body: GoogleAuthResponseModel = response.body
 
-        if (body.errorCode === GoogleAuthErrorCode.EXCEPTION) {
-          return [LoginStatusConstants.UNKNOW_API_ERROR, undefined]
-        }
-      }
-      return [LoginStatusConstants.DISCONNECTED, undefined]
-    } catch (e) {
-      LogAppErrorService.logError(e)
-      return [LoginStatusConstants.UNKNOW_API_ERROR, undefined]
-    }
-  }
+				if (body.success) {
+					await this.saveGoogleAuthData(body.data)
+					await this.saveUserSettings(body.data)
+					this.triggerUpdateEvent()
+					EventService.whenLogin()
+					return [LoginStatusConstants.SUCCESS, undefined]
+				}
 
-  private requestGoogleGrantOnDinoAPI = async (
-    code: string,
-    scopeList: string[]
-  ): Promise<[number, string | undefined]> => {
-    const grantRequestModel: GoogleGrantRequestModel = {
-      code: code,
-      scopeList: scopeList,
-    }
+				if (body.errorCode === GoogleAuthErrorCode.REFRESH_TOKEN) {
+					return [LoginStatusConstants.REFRESH_TOKEN_NECESSARY, body.error]
+				}
 
-    try {
-      const request = await DinoAgentService.post(
-        APIRequestMappingConstants.GRANT_GOOGLE
-      )
-      if (request.canGo) {
-        const authRequest = await request.authenticate()
-        const response = await authRequest.setBody(grantRequestModel).go()
+				if (body.errorCode === GoogleAuthErrorCode.EXCEPTION) {
+					return [LoginStatusConstants.UNKNOW_API_ERROR, undefined]
+				}
+			}
+			return [LoginStatusConstants.DISCONNECTED, undefined]
+		} catch (e) {
+			LogAppErrorService.logError(e)
+			return [LoginStatusConstants.UNKNOW_API_ERROR, undefined]
+		}
+	}
 
-        const responseBody: GoogleRefreshAuthResponseModel = response.body
+	private requestGoogleGrantOnDinoAPI = async (
+		code: string,
+		scopeList: string[],
+	): Promise<[number, string | undefined]> => {
+		const grantRequestModel: GoogleGrantRequestModel = {
+			code: code,
+			scopeList: scopeList,
+		}
 
-        if (responseBody.success) {
-          await this.saveGoogleRefreshAuthData(responseBody.data)
-          return [GrantStatusConstants.SUCCESS, undefined]
-        }
-            
-        if (responseBody.errorCode === GoogleAuthErrorCode.REFRESH_TOKEN) {
-          return [GrantStatusConstants.REFRESH_TOKEN_NECESSARY, responseBody.error]
-        } 
+		try {
+			const request = await DinoAgentService.post(
+				APIRequestMappingConstants.GRANT_GOOGLE,
+			)
+			if (request.canGo) {
+				const authRequest = await request.authenticate()
+				const response = await authRequest.setBody(grantRequestModel).go()
 
-        if (responseBody.errorCode === GoogleAuthErrorCode.EXCEPTION) {
-          return [GrantStatusConstants.UNKNOW_API_ERROR, undefined]
-        }
+				const responseBody: GoogleRefreshAuthResponseModel = response.body
 
-        if (responseBody.errorCode === GoogleAuthErrorCode.INVALID_GOOGLE_GRANT_USER) {
-          return [GrantStatusConstants.INVALID_ACCOUNT, responseBody.error]
-        }
-      }
+				if (responseBody.success) {
+					await this.saveGoogleRefreshAuthData(responseBody.data)
+					return [GrantStatusConstants.SUCCESS, undefined]
+				}
 
-      return [GrantStatusConstants.DISCONNECTED, undefined]
-    } catch (e) {
-      LogAppErrorService.logError(e)
-      return [GrantStatusConstants.UNKNOW_API_ERROR, undefined]
-    }
-  }
+				if (responseBody.errorCode === GoogleAuthErrorCode.REFRESH_TOKEN) {
+					return [
+						GrantStatusConstants.REFRESH_TOKEN_NECESSARY,
+						responseBody.error,
+					]
+				}
 
-  private async saveGoogleRefreshAuthData(
-    responseBody: GoogleRefreshAuthResponseDataModel,
-  ): Promise<AuthEntity | undefined> {
-    const auth = await this.getAuth()
-    const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.googleExpiresDate)
+				if (responseBody.errorCode === GoogleAuthErrorCode.EXCEPTION) {
+					return [GrantStatusConstants.UNKNOW_API_ERROR, undefined]
+				}
 
-    if (auth) {
-      auth.googleExpiresDate = googleExpiresDate
-      auth.googleToken = responseBody.googleAccessToken
-      await this.dbSave(auth)
-    } else {
-      await this.logout()
-    }
+				if (
+					responseBody.errorCode ===
+					GoogleAuthErrorCode.INVALID_GOOGLE_GRANT_USER
+				) {
+					return [GrantStatusConstants.INVALID_ACCOUNT, responseBody.error]
+				}
+			}
 
-    if (responseBody.scopes && responseBody.scopes.length > 0) {
-      await GoogleScopeService.clearDatabase()
-      await GoogleScopeService.saveAllFromDataModelLocally(responseBody.scopes)
-    }
+			return [GrantStatusConstants.DISCONNECTED, undefined]
+		} catch (e) {
+			LogAppErrorService.logError(e)
+			return [GrantStatusConstants.UNKNOW_API_ERROR, undefined]
+		}
+	}
 
-    return auth
-  }
+	private async saveGoogleRefreshAuthData(
+		responseBody: GoogleRefreshAuthResponseDataModel,
+	): Promise<AuthEntity | undefined> {
+		const auth = await this.getAuth()
+		const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(
+			responseBody.googleExpiresDate,
+		)
 
-  private async saveGoogleAuthData(responseBody: GoogleAuthResponseDataModel) {
-    await this.dbClear()
+		if (auth) {
+			auth.googleExpiresDate = googleExpiresDate
+			auth.googleToken = responseBody.googleAccessToken
+			await this.dbSave(auth)
+		} else {
+			await this.logout()
+		}
 
-    const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.googleExpiresDate)
+		if (responseBody.scopes && responseBody.scopes.length > 0) {
+			await GoogleScopeService.clearDatabase()
+			await GoogleScopeService.saveAllFromDataModelLocally(responseBody.scopes)
+		}
 
-    const dinoExpiresDate = DateUtils.convertDinoAPIStringDateToDate(responseBody.expiresDate)
+		return auth
+	}
 
-    const auth: AuthEntity = {
-      googleToken: responseBody.googleAccessToken,
-      googleExpiresDate: googleExpiresDate,
-      dinoAccessToken: responseBody.accessToken,
-      dinoExpiresDate: dinoExpiresDate,
-      dinoRefreshToken: responseBody.refreshToken
-    }
+	private async saveGoogleAuthData(responseBody: GoogleAuthResponseDataModel) {
+		await this.dbClear()
 
-    await this.dbSave(auth)
+		const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(
+			responseBody.googleExpiresDate,
+		)
 
-    if (responseBody.scopes && responseBody.scopes.length > 0) {
-      await GoogleScopeService.clearDatabase()
-      await GoogleScopeService.saveAllFromDataModelLocally(responseBody.scopes)
-    }
+		const dinoExpiresDate = DateUtils.convertDinoAPIStringDateToDate(
+			responseBody.expiresDate,
+		)
 
-    await this.saveUserAuthData(responseBody)
-  }
+		const auth: AuthEntity = {
+			googleToken: responseBody.googleAccessToken,
+			googleExpiresDate: googleExpiresDate,
+			dinoAccessToken: responseBody.accessToken,
+			dinoExpiresDate: dinoExpiresDate,
+			dinoRefreshToken: responseBody.refreshToken,
+		}
 
-  private async saveUserSettings(responseBody: GoogleAuthResponseDataModel) {
-    await UserSettingsService.saveFromDataModelLocally(responseBody.settings)
-  }
+		await this.dbSave(auth)
 
-  private async saveUserAuthData(responseBody: AuthResponseDataModel) {
-    await UserService.updateUser(responseBody.user)
-  }
+		if (responseBody.scopes && responseBody.scopes.length > 0) {
+			await GoogleScopeService.clearDatabase()
+			await GoogleScopeService.saveAllFromDataModelLocally(responseBody.scopes)
+		}
+
+		await this.saveUserAuthData(responseBody)
+	}
+
+	private async saveUserSettings(responseBody: GoogleAuthResponseDataModel) {
+		await UserSettingsService.saveFromDataModelLocally(responseBody.settings)
+	}
+
+	private async saveUserAuthData(responseBody: AuthResponseDataModel) {
+		await UserService.updateUser(responseBody.user)
+	}
 }
 
 export default new AuthService()

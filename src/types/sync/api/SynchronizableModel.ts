@@ -5,6 +5,6 @@ import SynchronizableIdModel from './SynchronizableIdModel'
  * @param ID Type of api entity ID
  */
 export default interface SynchronizableModel<ID>
-  extends SynchronizableIdModel<ID> {
-  lastUpdate?: string
+	extends SynchronizableIdModel<ID> {
+	lastUpdate?: string
 }

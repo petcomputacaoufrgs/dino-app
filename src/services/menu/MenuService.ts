@@ -12,69 +12,69 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 
 class MenuService {
-  getMainPages = (language: LanguageBase): MenuItemViewModel[] => [
-    {
-      image: HomeSVG,
-      name: language.MENU_HOME,
-      onClick: () => HistoryService.push(PathConstants.HOME),
-    },
-    {
-      image: GlossarySVG,
-      name: language.MENU_GLOSSARY,
-      onClick: () => HistoryService.push(PathConstants.GLOSSARY),
-    },
-    {
-      image: ContactsSVG,
-      name: language.MENU_CONTACTS,
-      onClick: () => HistoryService.push(PathConstants.CONTACTS),
-    },
-    {
-      image: NotesSVG,
-      name: language.MENU_NOTES,
-      onClick: () => HistoryService.push(PathConstants.NOTES),
-    },
-    {
-      image: FaqSVG,
-      name: language.MENU_FAQ,
-      onClick: () => HistoryService.push(PathConstants.FAQ),
-    },
-    {
-      image: CalendarSVG,
-      name: language.MENU_CALENDAR,
-      onClick: () => HistoryService.push(PathConstants.SETTINGS),
-    },
-    {
-      image: SettingsSVG,
-      name: language.MENU_SETTINGS,
-      onClick: () => HistoryService.push(PathConstants.SETTINGS),
-    },
-    {
-      name: language.MENU_ABOUT_US,
-      onClick: () => HistoryService.push(PathConstants.ABOUT_US),
-    },
-    {
-      name: language.PRIVACY_POLICY,
-      onClick: () => HistoryService.push(PathConstants.PRIVACY_POLICY),
-    },
-    {
-      name: language.TERMS_OF_USE,
-      onClick: () => HistoryService.push(PathConstants.TERMS_OF_USE),
-    },
-  ]
+	getMainPages = (language: LanguageBase): MenuItemViewModel[] => [
+		{
+			image: HomeSVG,
+			name: language.MENU_HOME,
+			onClick: () => HistoryService.push(PathConstants.HOME),
+		},
+		{
+			image: GlossarySVG,
+			name: language.MENU_GLOSSARY,
+			onClick: () => HistoryService.push(PathConstants.GLOSSARY),
+		},
+		{
+			image: ContactsSVG,
+			name: language.MENU_CONTACTS,
+			onClick: () => HistoryService.push(PathConstants.CONTACTS),
+		},
+		{
+			image: NotesSVG,
+			name: language.MENU_NOTES,
+			onClick: () => HistoryService.push(PathConstants.NOTES),
+		},
+		{
+			image: FaqSVG,
+			name: language.MENU_FAQ,
+			onClick: () => HistoryService.push(PathConstants.FAQ),
+		},
+		{
+			image: CalendarSVG,
+			name: language.MENU_CALENDAR,
+			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+		},
+		{
+			image: SettingsSVG,
+			name: language.MENU_SETTINGS,
+			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+		},
+		{
+			name: language.MENU_ABOUT_US,
+			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
+		},
+		{
+			name: language.PRIVACY_POLICY,
+			onClick: () => HistoryService.push(PathConstants.PRIVACY_POLICY),
+		},
+		{
+			name: language.TERMS_OF_USE,
+			onClick: () => HistoryService.push(PathConstants.TERMS_OF_USE),
+		},
+	]
 
-  getGroupedMenuItems = (
-    language: LanguageBase,
-    handleLogoutClick: () => void
-  ): MenuItemViewModel[][] => [
-    this.getMainPages(language),
-    [
-      {
-        image: LogoutSVG,
-        name: language.MENU_LOGOUT,
-        onClick: handleLogoutClick,
-      },
-    ],
-  ]
+	getGroupedMenuItems = (
+		language: LanguageBase,
+		handleLogoutClick: () => void,
+	): MenuItemViewModel[][] => [
+		this.getMainPages(language),
+		[
+			{
+				image: LogoutSVG,
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
+			},
+		],
+	]
 }
 
 export default new MenuService()

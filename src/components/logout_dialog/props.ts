@@ -1,5 +1,5 @@
 export default interface LogoutDialogProps {
-  open: boolean
-  onAgree: () => void
-  onDisagree: () => void
+	open: boolean
+	onAgree: () => void
+	onDisagree: () => void
 }

@@ -9,100 +9,101 @@ import FaqItemService from './FaqItemService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
-import Database from '../../storage/database/Database'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import Database from '../../storage/Database'
 
-export class FaqServiceImpl extends AutoSynchronizableService<
-  number,
-  FaqDataModel,
-  FaqEntity
+class FaqServiceImpl extends AutoSynchronizableService<
+	number,
+	FaqDataModel,
+	FaqEntity
 > {
-  constructor() {
-    super(
-      Database.faq,
-      APIRequestMappingConstants.FAQ,
-      WebSocketTopicURLService,
-      APIWebSocketDestConstants.FAQ,
-    )
-  }
+	constructor() {
+		super(
+			Database.faq,
+			APIRequestMappingConstants.FAQ,
+			WebSocketTopicPathService,
+			APIWebSocketDestConstants.FAQ,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return [TreatmentService]
-  }
-  
-  async convertModelToEntity(
-    model: FaqDataModel
-  ): Promise<FaqEntity | undefined> {
-    const treatment = await TreatmentService.getById(model.treatmentId)
-    if (treatment) {
-      const entity: FaqEntity = {
-        title: model.title,
-        localTreatmentId: treatment.localId,
-      }
+	getSyncDependencies(): SynchronizableService[] {
+		return [TreatmentService]
+	}
 
-      return entity
-    }
-  }
+	async convertModelToEntity(
+		model: FaqDataModel,
+	): Promise<FaqEntity | undefined> {
+		const treatment = await TreatmentService.getById(model.treatmentId)
+		if (treatment) {
+			const entity: FaqEntity = {
+				title: model.title,
+				localTreatmentId: treatment.localId,
+			}
 
-  async convertEntityToModel(
-    entity: FaqEntity
-  ): Promise<FaqDataModel | undefined> {
-    if (entity.localTreatmentId) {
-      const treatment = await TreatmentService.getByLocalId(
-        entity.localTreatmentId
-      )
+			return entity
+		}
+	}
 
-      if (treatment && treatment.id) {
-        const model: FaqDataModel = {
-          title: entity.title,
-          treatmentId: treatment.id,
-        }
+	async convertEntityToModel(
+		entity: FaqEntity,
+	): Promise<FaqDataModel | undefined> {
+		if (entity.localTreatmentId) {
+			const treatment = await TreatmentService.getByLocalId(
+				entity.localTreatmentId,
+			)
 
-        return model
-      }
-    }
-  }
+			if (treatment && treatment.id) {
+				const model: FaqDataModel = {
+					title: entity.title,
+					treatmentId: treatment.id,
+				}
 
-  getFaqViewByFilter(
-    faq: FaqEntity,
-    faqItem: FaqItemEntity[],
-    searchTerm: string
-  ): FaqView | undefined {
-    if (faq) {
-      const view: FaqView = {
-        faq: faq,
-        items: FaqItemService.getFaqItemByFilter(
-          faq,
-          faqItem,
-          searchTerm
-        ),
-      }
+				return model
+			}
+		}
+	}
 
-      return view
-    }
+	getFaqViewByFilter(
+		faq: FaqEntity,
+		faqItem: FaqItemEntity[],
+		searchTerm: string,
+	): FaqView | undefined {
+		if (faq) {
+			const view: FaqView = {
+				faq: faq,
+				items: FaqItemService.getFaqItemByFilter(faq, faqItem, searchTerm),
+			}
 
-    return undefined
-  }
+			return view
+		}
 
-  getCurrentFaq(
-    treatment: TreatmentEntity | undefined,
-    faqs: FaqEntity[]
-  ): FaqEntity | undefined {
-    if (treatment) {
-      const currentFaq = faqs.find(
-        (faq) => faq.localTreatmentId === treatment.localId
-      )
-      return currentFaq
-    }
+		return undefined
+	}
 
-    return undefined
-  }
+	getCurrentFaq(
+		treatment: TreatmentEntity | undefined,
+		faqs: FaqEntity[],
+	): FaqEntity | undefined {
+		if (treatment) {
+			const currentFaq = faqs.find(
+				faq => faq.localTreatmentId === treatment.localId,
+			)
+			return currentFaq
+		}
 
-  getByTreatment = async (treatment: TreatmentEntity): Promise<FaqEntity | undefined> => {
-    if (treatment.localId) {
-      return this.table.where('localTreatmentId').equals(treatment.localId).first()
-    }
-  }
+		return undefined
+	}
+
+	getByTreatment = async (
+		treatment: TreatmentEntity,
+	): Promise<FaqEntity | undefined> => {
+		if (treatment.localId) {
+			return this.table
+				.where('localTreatmentId')
+				.equals(treatment.localId)
+				.first()
+		}
+	}
 }
 
 export default new FaqServiceImpl()

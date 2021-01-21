@@ -6,23 +6,23 @@ import IconButton from '..'
 import { useLanguage } from '../../../../context/language'
 
 const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
-  onClick,
-  dark,
-  bigger,
+	onClick,
+	dark,
+	bigger,
 }) => {
-  const language = useLanguage()
+	const language = useLanguage()
 
-  return (
-    <IconButton
-      icon={MoreSVG}
-      ariaLabel={language.data.OPTIONS_ARIA_LABEL}
-      onClick={onClick}
-      dark={dark}
-      bigger={bigger}
-    >
-      <MoreVert />
-    </IconButton>
-  )
+	return (
+		<IconButton
+			icon={MoreSVG}
+			ariaLabel={language.data.OPTIONS_ARIA_LABEL}
+			onClick={onClick}
+			dark={dark}
+			bigger={bigger}
+		>
+			<MoreVert />
+		</IconButton>
+	)
 }
 
 export default OptionsIconButton

@@ -1,5 +1,5 @@
 interface GoogleAuthRequestModel {
-  code: string
+	code: string
 }
 
 export default GoogleAuthRequestModel

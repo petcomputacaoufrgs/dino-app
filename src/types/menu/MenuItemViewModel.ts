@@ -1,13 +1,13 @@
 interface MenuItemViewModel {
-  image?: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement> & {
-      title?: string | undefined
-    }
-  >
+	image?: React.FunctionComponent<
+		React.SVGProps<SVGSVGElement> & {
+			title?: string | undefined
+		}
+	>
 
-  name: string
+	name: string
 
-  onClick: () => void
+	onClick: () => void
 }
 
 export default MenuItemViewModel

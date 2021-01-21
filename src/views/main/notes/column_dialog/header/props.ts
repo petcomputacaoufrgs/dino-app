@@ -1,3 +1,3 @@
 export default interface NoteColumnDialogHeaderProps {
-  editing: boolean
+	editing: boolean
 }

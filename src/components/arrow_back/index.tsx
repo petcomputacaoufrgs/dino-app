@@ -5,16 +5,16 @@ import { ReactComponent as ArrowBackIconSVG } from '../../assets/icons/arrow_bac
 import { useLanguage } from '../../context/language'
 
 const ArrowBack = (): JSX.Element => {
-  const language = useLanguage()
+	const language = useLanguage()
 
-  return (
-    <IconButton
-      className="arrow-back"
-      ariaLabel={language.data.ARROW_BACK_ARIA_LABEL}
-      icon={ArrowBackIconSVG}
-      onClick={() => HistoryService.goBack()}
-    />
-  )
+	return (
+		<IconButton
+			className='arrow-back'
+			ariaLabel={language.data.ARROW_BACK_ARIA_LABEL}
+			icon={ArrowBackIconSVG}
+			onClick={() => HistoryService.goBack()}
+		/>
+	)
 }
 
 export default ArrowBack

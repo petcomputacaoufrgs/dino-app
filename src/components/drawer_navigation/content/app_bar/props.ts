@@ -1,3 +1,3 @@
 export default interface AppBarProps {
-  onDrawerOpen: () => void
+	onDrawerOpen: () => void
 }

@@ -21,83 +21,76 @@ import FirstSettingsDialog from '../../components/settings/first_settings_dialog
 import Loader from '../../components/loader/index'
 
 const Main = () => {
-  const language = useLanguage()
+	const language = useLanguage()
 
-  const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+	const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
-  const handleLogoutClick = () => {
-    setOpenLogoutDialog(true)
-  }
+	const handleLogoutClick = () => {
+		setOpenLogoutDialog(true)
+	}
 
-  const handleLogoutAgree = () => {
-    AuthService.logout()
-  }
+	const handleLogoutAgree = () => {
+		AuthService.logout()
+	}
 
-  const handleLogoutDisagree = () => {
-    setOpenLogoutDialog(false)
-  }
+	const handleLogoutDisagree = () => {
+		setOpenLogoutDialog(false)
+	}
 
-  const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
-    language.data,
-    handleLogoutClick
-  )
+	const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
+		language.data,
+		handleLogoutClick,
+	)
 
-  const renderMainContent = (): JSX.Element => {
-    return (
-      <Switch>
-        <PrivateRoute exact path={PathConstants.HOME} component={Home} />
-        <PrivateRoute
-          exact
-          path={PathConstants.GAMES}
-          component={() => <></>}
-        />
-        <PrivateRoute
-          exact
-          path={PathConstants.GLOSSARY}
-          component={Glossary}
-        />
-        <PrivateRoute
-          exact
-          path={PathConstants.CONTACTS}
-          component={Contacts}
-        />
-        <PrivateRoute
-          exact
-          path={PathConstants.NOTES}
-          component={Notes}
-        />
-        <PrivateRoute
-          exact
-          path={PathConstants.SETTINGS}
-          component={Settings}
-        />
-        <PrivateRoute
-          path={`${PathConstants.GLOSSARY}/:localId`}
-          component={GlossaryItem}
-        />
-        <PrivateRoute
-          path={PathConstants.FAQ}
-          component={Faq}
-        />
-        <PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
-        <PrivateRoute path={'/'} component={NotFound} />
-      </Switch>
-    )
-  }
-  return (
-    <Loader isLoading={language.loading} hideChildren>
-      <DrawerNavigation
-        groupedItems={groupedItems}
-        component={renderMainContent()}
-      />
-      <LogoutDialog
-        onAgree={handleLogoutAgree}
-        onDisagree={handleLogoutDisagree}
-        open={openLogoutDialog}
-      />
-      <FirstSettingsDialog />
-    </Loader>
-  )
+	const renderMainContent = (): JSX.Element => {
+		return (
+			<Switch>
+				<PrivateRoute exact path={PathConstants.HOME} component={Home} />
+				<PrivateRoute
+					exact
+					path={PathConstants.GAMES}
+					component={() => <></>}
+				/>
+				<PrivateRoute
+					exact
+					path={PathConstants.GLOSSARY}
+					component={Glossary}
+				/>
+				<PrivateRoute
+					exact
+					path={PathConstants.CONTACTS}
+					component={Contacts}
+				/>
+				<PrivateRoute exact path={PathConstants.NOTES} component={Notes} />
+				<PrivateRoute
+					exact
+					path={PathConstants.SETTINGS}
+					component={Settings}
+				/>
+				<PrivateRoute
+					path={`${PathConstants.GLOSSARY}/:localId`}
+					component={GlossaryItem}
+				/>
+				<PrivateRoute path={PathConstants.FAQ} component={Faq} />
+				<PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
+				<PrivateRoute path={'/'} component={NotFound} />
+			</Switch>
+		)
+	}
+	return (
+		<Loader isLoading={language.loading} hideChildren>
+			<DrawerNavigation
+				groupedItems={groupedItems}
+				component={renderMainContent()}
+			/>
+			<LogoutDialog
+				onAgree={handleLogoutAgree}
+				onDisagree={handleLogoutDisagree}
+				open={openLogoutDialog}
+			/>
+			<FirstSettingsDialog />
+		</Loader>
+	)
 }
 
 export default Main

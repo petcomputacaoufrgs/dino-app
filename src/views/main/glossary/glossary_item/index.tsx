@@ -8,69 +8,73 @@ import Loader from '../../../../components/loader'
 import './styles.css'
 
 interface RouterParams {
-  localId: string
+	localId: string
 }
 
 const GlossaryItem: React.FC = () => {
-  const { localId } = useParams<RouterParams>()
+	const { localId } = useParams<RouterParams>()
 
-  const language = useLanguage()
+	const language = useLanguage()
 
-  const [isLoading, setIsLoadind] = useState(true)
-  const [glossaryItem, setGlossaryItem] = useState<GlossaryItemEntity | undefined>(undefined)
+	const [isLoading, setIsLoadind] = useState(true)
+	const [glossaryItem, setGlossaryItem] = useState<
+		GlossaryItemEntity | undefined
+	>(undefined)
 
-  useEffect(() => {
-    let loadData = async () => {
-      const item = await GlossaryService.getByLocalId(Number(localId))
+	useEffect(() => {
+		let loadData = async () => {
+			const item = await GlossaryService.getByLocalId(Number(localId))
 
-      if (item) {
-        updateData(item)
-      }
+			if (item) {
+				updateData(item)
+			}
 
-      finishLoading()
-    }
+			finishLoading()
+		}
 
-    let updateData = (item: GlossaryItemEntity) => {
-      setGlossaryItem(item)
-    }
+		let updateData = (item: GlossaryItemEntity) => {
+			setGlossaryItem(item)
+		}
 
-    let finishLoading = () => {
-      setIsLoadind(false)
-    }
+		let finishLoading = () => {
+			setIsLoadind(false)
+		}
 
-    GlossaryService.addUpdateEventListenner(loadData)
+		GlossaryService.addUpdateEventListenner(loadData)
 
-    if (isLoading) {
-      loadData()
-    }
+		if (isLoading) {
+			loadData()
+		}
 
-    return () => {
-      updateData = () => {}
-      finishLoading = () => {}
-      GlossaryService.removeUpdateEventListenner(loadData)
-    }
-  }, [isLoading, localId])
+		return () => {
+			updateData = () => {}
+			finishLoading = () => {}
+			GlossaryService.removeUpdateEventListenner(loadData)
+		}
+	}, [isLoading, localId])
 
-  return (
-    <Loader className='glossary_item_loader' isLoading={isLoading} hideChildren>
-      <div className="glossary_item">
-          <div className="card__header">
-            <div className="card__header__title">
-              {glossaryItem ? glossaryItem.title : language.data.NO_AVAILABLE_TEXT}
-            </div>
-            <div className="card__typography muted">
-              {glossaryItem ? glossaryItem.subtitle : ''}
-            </div>
-          </div>
-          <Divider />
-          <div className="card__content">
-            <div className="card__typography">
-              {glossaryItem?.fullText || language.data.NO_AVAILABLE_TEXT}
-            </div>
-          </div>
-      </div>
-    </Loader>
-  )
+	return (
+		<Loader className='glossary_item_loader' isLoading={isLoading} hideChildren>
+			<div className='glossary_item'>
+				<div className='card__header'>
+					<div className='card__header__title'>
+						{glossaryItem
+							? glossaryItem.title
+							: language.data.NO_AVAILABLE_TEXT}
+					</div>
+					<div className='card__typography muted'>
+						{glossaryItem ? glossaryItem.subtitle : ''}
+					</div>
+				</div>
+				<Divider />
+				<div className='card__content'>
+					<div className='card__typography'>
+						{glossaryItem?.fullText || language.data.NO_AVAILABLE_TEXT}
+					</div>
+				</div>
+			</div>
+		</Loader>
+	)
 }
 
 export default GlossaryItem

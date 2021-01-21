@@ -3,10 +3,10 @@ import NoteContentProps from './props'
 import './styles.css'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import {
-  DragDropContext,
-  DropResult,
-  ResponderProvided,
-  Droppable,
+	DragDropContext,
+	DropResult,
+	ResponderProvided,
+	Droppable,
 } from 'react-beautiful-dnd'
 import NoteContentColumn from './column'
 import NoteDroppableType from '../../../../constants/note/NoteDroppableType'
@@ -21,274 +21,284 @@ import { useLanguage } from '../../../../context/language'
 import NoteColumnService from '../../../../services/note/NoteColumnService'
 
 const NoteContent: React.FC<NoteContentProps> = ({
-  tags,
-  noteViews,
-  searching,
-  tagSearch,
-  textSearch,
-  onDragEnd,
-  onDeleteNote,
-  onSaveColumn,
-  onSaveNote,
-  onDeleteColumn,
-  onSaveNewNote,
-  questionAlreadyExists,
+	tags,
+	noteViews,
+	searching,
+	tagSearch,
+	textSearch,
+	onDragEnd,
+	onDeleteNote,
+	onSaveColumn,
+	onSaveNote,
+	onDeleteColumn,
+	onSaveNewNote,
+	questionAlreadyExists,
 }) => {
-  const language = useLanguage()
-  
-  const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(undefined)
-  const [currentNoteView, setCurrentNoteView] = useState<NoteView | undefined>(undefined)
-  const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
-  const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState(false)
-  const [noteCreateDialogOpen, setNoteCreateDialogOpen] = useState(false)
-  const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
-  const [dragging, setDragging] = useState(false)
+	const language = useLanguage()
 
-  const filteredNoteViews = NoteColumnService.filterNoteViews(noteViews, tagSearch, textSearch)
+	const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(
+		undefined,
+	)
+	const [currentNoteView, setCurrentNoteView] = useState<NoteView | undefined>(
+		undefined,
+	)
+	const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
+	const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState(
+		false,
+	)
+	const [noteCreateDialogOpen, setNoteCreateDialogOpen] = useState(false)
+	const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
+	const [dragging, setDragging] = useState(false)
 
-  //#region COLUMN
+	const filteredNoteViews = NoteColumnService.filterNoteViews(
+		noteViews,
+		tagSearch,
+		textSearch,
+	)
 
-  const updateCurrentNoteView = (column: NoteColumnEntity): boolean => {
-    const current = noteViews.find(
-      (item) => item.column.localId === column.localId
-    )
+	//#region COLUMN
 
-    if (current) {
-      setCurrentNoteView(current)
-      return true
-    }
+	const updateCurrentNoteView = (column: NoteColumnEntity): boolean => {
+		const current = noteViews.find(
+			item => item.column.localId === column.localId,
+		)
 
-    return false
-  }
+		if (current) {
+			setCurrentNoteView(current)
+			return true
+		}
 
-  const handleNoteColumnDialogClose = () => {
-    closeNoteColumnDialog()
-  }
+		return false
+	}
 
-  const handleAddColumn = () => {
-    setNoteColumnDialogOpen(true)
-  }
+	const handleNoteColumnDialogClose = () => {
+		closeNoteColumnDialog()
+	}
 
-  const handleSaveNoteColumn = (
-    column: NoteColumnEntity,
-    oldTitle?: string
-  ) => {
-    closeNoteColumnDialog()
-    onSaveColumn(column, oldTitle)
-  }
+	const handleAddColumn = () => {
+		setNoteColumnDialogOpen(true)
+	}
 
-  const handleEditColumn = (column: NoteColumnEntity) => {
-    const success = updateCurrentNoteView(column)
+	const handleSaveNoteColumn = (
+		column: NoteColumnEntity,
+		oldTitle?: string,
+	) => {
+		closeNoteColumnDialog()
+		onSaveColumn(column, oldTitle)
+	}
 
-    if (success) {
-      setNoteColumnDialogOpen(true)
-    }
-  }
+	const handleEditColumn = (column: NoteColumnEntity) => {
+		const success = updateCurrentNoteView(column)
 
-  const handleDeleteColumn = (column: NoteColumnEntity) => {
-    const success = updateCurrentNoteView(column)
+		if (success) {
+			setNoteColumnDialogOpen(true)
+		}
+	}
 
-    if (success) {
-      setDeleteNoteColumnDialogOpen(true)
-    }
-  }
+	const handleDeleteColumn = (column: NoteColumnEntity) => {
+		const success = updateCurrentNoteView(column)
 
-  const handleTitleAlreadyExists = (title: string): boolean => {
-    return noteViews.some((noteView) => noteView.column.title === title)
-  }
+		if (success) {
+			setDeleteNoteColumnDialogOpen(true)
+		}
+	}
 
-  const closeNoteColumnDialog = () => {
-    setNoteColumnDialogOpen(false)
-    setCurrentNoteView(undefined)
-  }
+	const handleTitleAlreadyExists = (title: string): boolean => {
+		return noteViews.some(noteView => noteView.column.title === title)
+	}
 
-  const handleDeleteColumnAgree = () => {
-    if (currentNoteView) {
-      onDeleteColumn(currentNoteView.column)
-    }
-    closeNoteColumnDeleteDialog()
-  }
+	const closeNoteColumnDialog = () => {
+		setNoteColumnDialogOpen(false)
+		setCurrentNoteView(undefined)
+	}
 
-  const handleDeleteColumnDisagree = () => {
-    closeNoteColumnDeleteDialog()
-  }
+	const handleDeleteColumnAgree = () => {
+		if (currentNoteView) {
+			onDeleteColumn(currentNoteView.column)
+		}
+		closeNoteColumnDeleteDialog()
+	}
 
-  const closeNoteColumnDeleteDialog = () => {
-    setDeleteNoteColumnDialogOpen(false)
-    setCurrentNoteView(undefined)
-  }
+	const handleDeleteColumnDisagree = () => {
+		closeNoteColumnDeleteDialog()
+	}
 
-  //#endregion
+	const closeNoteColumnDeleteDialog = () => {
+		setDeleteNoteColumnDialogOpen(false)
+		setCurrentNoteView(undefined)
+	}
 
-  //#region NOTE
+	//#endregion
 
-  const handleSaveNewNote = (question: string, tagList: string[]) => {
-    setNoteCreateDialogOpen(false)
-    setCurrentNoteView(undefined)
-    if (currentNoteView) {
-      onSaveNewNote(question, tagList, currentNoteView)
-    }
-  }
+	//#region NOTE
 
-  const handleAddNote = (column: NoteColumnEntity) => {
-    const success = updateCurrentNoteView(column)
+	const handleSaveNewNote = (question: string, tagList: string[]) => {
+		setNoteCreateDialogOpen(false)
+		setCurrentNoteView(undefined)
+		if (currentNoteView) {
+			onSaveNewNote(question, tagList, currentNoteView)
+		}
+	}
 
-    if (success) {
-      setNoteCreateDialogOpen(true)
-    }
-  }
+	const handleAddNote = (column: NoteColumnEntity) => {
+		const success = updateCurrentNoteView(column)
 
-  const handleClickNote = (note: NoteEntity) => {
-    setCurrentNote(note)
-    setNoteInfoDialogOpen(true)
-  }
+		if (success) {
+			setNoteCreateDialogOpen(true)
+		}
+	}
 
-  const handleSaveNote = (
-    question: string,
-    answer: string,
-    tagList: string[]
-  ) => {
-    if (currentNote) {
-      currentNote.question = question
-      currentNote.answer = answer
-      currentNote.tags = tagList
+	const handleClickNote = (note: NoteEntity) => {
+		setCurrentNote(note)
+		setNoteInfoDialogOpen(true)
+	}
 
-      onSaveNote(currentNote)
-    }
+	const handleSaveNote = (
+		question: string,
+		answer: string,
+		tagList: string[],
+	) => {
+		if (currentNote) {
+			currentNote.question = question
+			currentNote.answer = answer
+			currentNote.tags = tagList
 
-    handleCloseNoteInfoDialog()
-  }
+			onSaveNote(currentNote)
+		}
 
-  const handleDeleteNote = () => {
-    if (currentNote) {
-      onDeleteNote(currentNote)
-    }
+		handleCloseNoteInfoDialog()
+	}
 
-    handleCloseNoteInfoDialog()
-  }
+	const handleDeleteNote = () => {
+		if (currentNote) {
+			onDeleteNote(currentNote)
+		}
 
-  const handleCloseNoteEditDialog = () => {
-    setNoteCreateDialogOpen(false)
-    setCurrentNoteView(undefined)
-    setCurrentNote(undefined)
-  }
+		handleCloseNoteInfoDialog()
+	}
 
-  const handleCloseNoteInfoDialog = () => {
-    setNoteInfoDialogOpen(false)
-    setCurrentNote(undefined)
-  }
+	const handleCloseNoteEditDialog = () => {
+		setNoteCreateDialogOpen(false)
+		setCurrentNoteView(undefined)
+		setCurrentNote(undefined)
+	}
 
-  //#endregion
+	const handleCloseNoteInfoDialog = () => {
+		setNoteInfoDialogOpen(false)
+		setCurrentNote(undefined)
+	}
 
-  const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
-    setDragging(false)
-    onDragEnd(result)
-  }
+	//#endregion
 
-  const handleDragStart = () => {
-    setDragging(true)
-  }
+	const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
+		setDragging(false)
+		onDragEnd(result)
+	}
 
-  const getColumnMaxOrder = (): number => noteViews.length
+	const handleDragStart = () => {
+		setDragging(true)
+	}
 
-  const renderDialogs = (): JSX.Element => (
-    <>
-      <NoteColumnDialog
-        onClose={handleNoteColumnDialogClose}
-        onSave={handleSaveNoteColumn}
-        open={noteColumnDialogOpen}
-        column={currentNoteView?.column}
-        order={getColumnMaxOrder()}
-        titleAlreadyExists={handleTitleAlreadyExists}
-      />
-      {currentNoteView && (
-        <AgreementDialog
-          question={
-            currentNoteView.notes.length === 0
-              ? language.data.NOTE_COLUMN_DELETE_DIALOG_QUESTION
-              : language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION
-          }
-          description={
-            currentNoteView.notes.length === 0
-              ? language.data.NOTE_COLUMN_DELETE_DIALOG_DESC
-              : language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
-          }
-          disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
-          agreeOptionText={language.data.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT}
-          onAgree={handleDeleteColumnAgree}
-          onDisagree={handleDeleteColumnDisagree}
-          open={deleteNoteColumnDialogOpen}
-        />
-      )}
-      <NoteCreateDialog
-        open={noteCreateDialogOpen}
-        tagOptions={tags}
-        onSave={handleSaveNewNote}
-        onClose={handleCloseNoteEditDialog}
-        questionAlreadyExists={questionAlreadyExists}
-      />
-      {currentNote && (
-        <NoteInfoDialog
-          note={currentNote}
-          open={noteInfoDialogOpen}
-          tagOptions={tags}
-          onSave={handleSaveNote}
-          onDelete={handleDeleteNote}
-          onClose={handleCloseNoteInfoDialog}
-          questionAlreadyExists={questionAlreadyExists}
-        />
-      )}
-    </>
-  )
+	const getColumnMaxOrder = (): number => noteViews.length
 
-  return (
-    <div className="note__note_content">
-      {searching && filteredNoteViews.length === 0 && (
-        <div className="note__note_content__columns__scroll__clean_search">
-          {language.data.NOTE_SEARCH_CLEAN}
-        </div>
-      )}
-      <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-        <Droppable
-          droppableId="all-columns"
-          direction="horizontal"
-          type={NoteDroppableType.COLUMN}
-        >
-          {(provided) => (
-            <div
-              className="note__note_content__columns"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-                <div className="note__note_content__columns__scroll">
-                  {filteredNoteViews.map((item, index) => (
-                    <NoteContentColumn
-                      noteView={item}
-                      columnIndex={index}
-                      key={index}
-                      searching={searching}
-                      onClickNote={handleClickNote}
-                      onEditColumn={handleEditColumn}
-                      onDeleteColumn={handleDeleteColumn}
-                      onAddNote={handleAddNote}
-                    />
-                  ))}
-                  {!searching && (
-                    <AddColumn
-                      visible={!dragging}
-                      columnCount={noteViews.length}
-                      onAddColumn={handleAddColumn}
-                    />
-                  )}
-                </div>
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      {renderDialogs()}
-    </div>
-  )
+	const renderDialogs = (): JSX.Element => (
+		<>
+			<NoteColumnDialog
+				onClose={handleNoteColumnDialogClose}
+				onSave={handleSaveNoteColumn}
+				open={noteColumnDialogOpen}
+				column={currentNoteView?.column}
+				order={getColumnMaxOrder()}
+				titleAlreadyExists={handleTitleAlreadyExists}
+			/>
+			{currentNoteView && (
+				<AgreementDialog
+					question={
+						currentNoteView.notes.length === 0
+							? language.data.NOTE_COLUMN_DELETE_DIALOG_QUESTION
+							: language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION
+					}
+					description={
+						currentNoteView.notes.length === 0
+							? language.data.NOTE_COLUMN_DELETE_DIALOG_DESC
+							: language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
+					}
+					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
+					agreeOptionText={language.data.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT}
+					onAgree={handleDeleteColumnAgree}
+					onDisagree={handleDeleteColumnDisagree}
+					open={deleteNoteColumnDialogOpen}
+				/>
+			)}
+			<NoteCreateDialog
+				open={noteCreateDialogOpen}
+				tagOptions={tags}
+				onSave={handleSaveNewNote}
+				onClose={handleCloseNoteEditDialog}
+				questionAlreadyExists={questionAlreadyExists}
+			/>
+			{currentNote && (
+				<NoteInfoDialog
+					note={currentNote}
+					open={noteInfoDialogOpen}
+					tagOptions={tags}
+					onSave={handleSaveNote}
+					onDelete={handleDeleteNote}
+					onClose={handleCloseNoteInfoDialog}
+					questionAlreadyExists={questionAlreadyExists}
+				/>
+			)}
+		</>
+	)
+
+	return (
+		<div className='note__note_content'>
+			{searching && filteredNoteViews.length === 0 && (
+				<div className='note__note_content__columns__scroll__clean_search'>
+					{language.data.NOTE_SEARCH_CLEAN}
+				</div>
+			)}
+			<DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+				<Droppable
+					droppableId='all-columns'
+					direction='horizontal'
+					type={NoteDroppableType.COLUMN}
+				>
+					{provided => (
+						<div
+							className='note__note_content__columns'
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
+							<div className='note__note_content__columns__scroll'>
+								{filteredNoteViews.map((item, index) => (
+									<NoteContentColumn
+										noteView={item}
+										columnIndex={index}
+										key={index}
+										searching={searching}
+										onClickNote={handleClickNote}
+										onEditColumn={handleEditColumn}
+										onDeleteColumn={handleDeleteColumn}
+										onAddNote={handleAddNote}
+									/>
+								))}
+								{!searching && (
+									<AddColumn
+										visible={!dragging}
+										columnCount={noteViews.length}
+										onAddColumn={handleAddColumn}
+									/>
+								)}
+							</div>
+							{provided.placeholder}
+						</div>
+					)}
+				</Droppable>
+			</DragDropContext>
+			{renderDialogs()}
+		</div>
+	)
 }
 
 export default NoteContent

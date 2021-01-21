@@ -1,5 +1,5 @@
 class GoogleAPIHeaderConstants {
-  AUTHORIZATION = 'Authorization'
+	AUTHORIZATION = 'Authorization'
 }
 
 export default new GoogleAPIHeaderConstants()

@@ -1,4 +1,4 @@
 export default interface HeaderProps {
-  date: Date
-  goToCurrentMonth: () => void
+	date: Date
+	goToCurrentMonth: () => void
 }

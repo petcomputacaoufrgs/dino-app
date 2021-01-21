@@ -1,19 +1,19 @@
 .note__note_content__column__add_note {
-  width: 100%;
+	width: 100%;
 }
 
 .note__note_content__column__add_note:focus {
-  outline: none;
+	outline: none;
 }
 
 .note__note_content__column__add_note h3 {
-  font-size: var(--small-font);
-  font-style: normal;
-  margin-bottom: 0;
-  margin-top: 0;
-  color: var(--column-border);
+	font-size: var(--small-font);
+	font-style: normal;
+	margin-bottom: 0;
+	margin-top: 0;
+	color: var(--column-border);
 }
 
 .note__note_content__column__add_note__max_notes {
-  color: red;
+	color: red;
 }

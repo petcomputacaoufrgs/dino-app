@@ -2,7 +2,7 @@ import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLoc
 
 export default interface UserSettingsDataModel
   extends SynchronizableDataLocalIdModel<number> {
-  language?: string
+  language?: number
   colorTheme: number
   fontSize: number
   includeEssentialContact: boolean

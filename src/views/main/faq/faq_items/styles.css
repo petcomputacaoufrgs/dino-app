@@ -1,20 +1,16 @@
 .faq-items {
-  padding: 4px 8px 8px;
-  font-size: var(--default-font);
+	padding: 4px 8px 8px;
+	font-size: var(--default-font);
 }
 
 .faq-items__title {
-  margin: 5px 5px 10px;
+	margin: 5px 5px 10px;
 }
 
 .faq-items__title p {
-  font-size: var(--default-font);
+	font-size: var(--default-font);
 }
 
 .faq-items__accordion {
-  padding: 0px;
-}
-
-.link_button {
-  font-size: var(--small-font) !important;
+	padding: 0px;
 }

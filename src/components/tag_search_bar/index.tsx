@@ -10,60 +10,60 @@ import './styles.css'
 const MAX_TAGS = 5
 
 const TagSearchBar = (props: TagSearchBarProps): JSX.Element => {
-  const language = useLanguage()
+	const language = useLanguage()
 
-  const [tagList, setTagList] = useState<string[]>([])
+	const [tagList, setTagList] = useState<string[]>([])
 
-  const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
-    if (values.length <= MAX_TAGS) {
-      setTagList(values)
-      props.onTagSearch(values)
-    }
-  }
+	const handleChange = (event: React.ChangeEvent<{}>, values: any) => {
+		if (values.length <= MAX_TAGS) {
+			setTagList(values)
+			props.onTagSearch(values)
+		}
+	}
 
-  const handleInputChange = (event: React.ChangeEvent<{}>, value: string) => {
-    if (props.onTextSearch) {
-      props.onTextSearch(value)
-    }
-  }
+	const handleInputChange = (event: React.ChangeEvent<{}>, value: string) => {
+		if (props.onTextSearch) {
+			props.onTextSearch(value)
+		}
+	}
 
-  return (
-    <Autocomplete
-      freeSolo
-      multiple
-      limitTags={1}
-      loadingText={language.data.LOADING}
-      noOptionsText={language.data.NO_OPTIONS}
-      options={props.options}
-      getOptionLabel={(option) => option}
-      className="tag_search_bar"
-      value={tagList}
-      onChange={handleChange}
-      onInputChange={handleInputChange}
-      size="small"
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          className={props.textFieldClass}
-          placeholder={`${language.data.SEARCH_BUTTON_LABEL} (${language.data.MAX} ${MAX_TAGS})`}
-          variant="outlined"
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: (
-              <>
-                <InputAdornment position="start">
-                  <IconButton>
-                    <Search />
-                  </IconButton>
-                </InputAdornment>
-                {params.InputProps.startAdornment}
-              </>
-            ),
-          }}
-        />
-      )}
-    />
-  )
+	return (
+		<Autocomplete
+			freeSolo
+			multiple
+			limitTags={1}
+			loadingText={language.data.LOADING}
+			noOptionsText={language.data.NO_OPTIONS}
+			options={props.options}
+			getOptionLabel={option => option}
+			className='tag_search_bar'
+			value={tagList}
+			onChange={handleChange}
+			onInputChange={handleInputChange}
+			size='small'
+			renderInput={params => (
+				<TextField
+					{...params}
+					className={props.textFieldClass}
+					placeholder={`${language.data.SEARCH_BUTTON_LABEL} (${language.data.MAX} ${MAX_TAGS})`}
+					variant='outlined'
+					InputProps={{
+						...params.InputProps,
+						startAdornment: (
+							<>
+								<InputAdornment position='start'>
+									<IconButton>
+										<Search />
+									</IconButton>
+								</InputAdornment>
+								{params.InputProps.startAdornment}
+							</>
+						),
+					}}
+				/>
+			)}
+		/>
+	)
 }
 
 export default TagSearchBar

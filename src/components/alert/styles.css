@@ -1,11 +1,11 @@
 .custom_alert .MuiSnackbar-root {
-  bottom: 28px;
+	bottom: 28px;
 }
 
 .custom_alert .MuiAlert-message {
-  color: var(--light-color);
+	color: var(--light-color);
 }
 
 .custom_alert .MuiSvgIcon-root {
-  fill: var(--light-color);
+	fill: var(--light-color);
 }

@@ -8,67 +8,70 @@ import SynchronizableWSDeleteModel from '../../../types/sync/api/web_socket/Sync
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
-import WebSocketQueueURLService from '../../websocket/path/WebSocketQueuePathService'
-import Database from '../../../storage/database/Database'
+import WebSocketQueuePathService from '../../websocket/path/WebSocketQueuePathService'
+import Database from '../../../storage/Database'
 
-export class GoogleScopeServiceImpl extends AutoSynchronizableService<
-  number,
-  GoogleScopeDataModel,
-  GoogleScopeEntity
+class GoogleScopeServiceImpl extends AutoSynchronizableService<
+	number,
+	GoogleScopeDataModel,
+	GoogleScopeEntity
 > {
-  constructor() {
-    super(
-      Database.googleScope, 
-      APIRequestMappingConstants.GOOGLE_SCOPE,
-      WebSocketQueueURLService,
-      APIWebSocketDestConstants.GOOGLE_SCOPE
-    )
-  }
+	constructor() {
+		super(
+			Database.googleScope,
+			APIRequestMappingConstants.GOOGLE_SCOPE,
+			WebSocketQueuePathService,
+			APIWebSocketDestConstants.GOOGLE_SCOPE,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return []
-  }
+	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
 
-  async convertModelToEntity(
-    model: GoogleScopeDataModel
-  ): Promise<GoogleScopeEntity | undefined> {
-    const entity: GoogleScopeEntity = {
-      name: model.name,
-    }
+	async convertModelToEntity(
+		model: GoogleScopeDataModel,
+	): Promise<GoogleScopeEntity | undefined> {
+		const entity: GoogleScopeEntity = {
+			name: model.name,
+		}
 
-    return entity
-  }
+		return entity
+	}
 
-  async convertEntityToModel(
-    entity: GoogleScopeEntity
-  ): Promise<GoogleScopeDataModel | undefined> {
-    const model: GoogleScopeDataModel = {
-      name: entity.name,
-    }
+	async convertEntityToModel(
+		entity: GoogleScopeEntity,
+	): Promise<GoogleScopeDataModel | undefined> {
+		const model: GoogleScopeDataModel = {
+			name: entity.name,
+		}
 
-    return model
-  }
+		return model
+	}
 
-  protected async onWebSocketUpdate(
-    model: SynchronizableWSUpdateModel<number, GoogleScopeDataModel>
-  ) {
-    GoogleAgentService.refreshAuth()
-  }
+	protected async onWebSocketUpdate(
+		model: SynchronizableWSUpdateModel<number, GoogleScopeDataModel>,
+	) {
+		GoogleAgentService.refreshAuth()
+	}
 
-  protected async onWebSocketDelete(
-    model: SynchronizableWSDeleteModel<number>
-  ) {
-    GoogleAgentService.refreshAuth()
-  }
+	protected async onWebSocketDelete(
+		model: SynchronizableWSDeleteModel<number>,
+	) {
+		GoogleAgentService.refreshAuth()
+	}
 
-  hasContactGrant = async (): Promise<boolean> => {
-    const scope = await this.table.where('name').equals(GoogleScope.SCOPE_CONTACT).first()
-    return scope !== undefined
-  }
+	hasContactGrant = async (): Promise<boolean> => {
+		const scope = await this.table
+			.where('name')
+			.equals(GoogleScope.SCOPE_CONTACT)
+			.first()
+		return scope !== undefined
+	}
 
-  findContactGrant = async (): Promise<GoogleScopeEntity | undefined> => {
-    return this.table.where('name').equals(GoogleScope.SCOPE_CONTACT).first()
-  }
+	findContactGrant = async (): Promise<GoogleScopeEntity | undefined> => {
+		return this.table.where('name').equals(GoogleScope.SCOPE_CONTACT).first()
+	}
 }
 
 export default new GoogleScopeServiceImpl()

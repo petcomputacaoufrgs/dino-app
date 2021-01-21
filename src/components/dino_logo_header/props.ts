@@ -1,5 +1,5 @@
 export default interface DinoLogoHeaderProps {
-  title: string
-  subtitle?: string
-  size?: 'small' | 'large'
+	title: string
+	subtitle?: string
+	size?: 'small' | 'large'
 }

@@ -1,4 +1,4 @@
 export default interface NotesContentColumnAddNoteProps {
-  onAdd: () => void
-  notesCount: number
+	onAdd: () => void
+	notesCount: number
 }

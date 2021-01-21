@@ -1,19 +1,19 @@
 .horizontal_pagination {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
 }
 
 .horizontal_pagination .react-swipe-container.carousel {
-  height: 100%;
+	height: 100%;
 }
 
 .horizontal_pagination .react-swipe-container.carousel > div {
-  height: 100%;
+	height: 100%;
 }
 
 .horizontal_pagination__slide {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }

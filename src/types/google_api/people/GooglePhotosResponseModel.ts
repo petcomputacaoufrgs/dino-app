@@ -1,18 +1,18 @@
-export interface GooglePhotoSourceModel {
-  id: string
-  type: string
+interface GooglePhotoSourceModel {
+	id: string
+	type: string
 }
 
-export interface GooglePhotoMetadataModel {
-  primary: boolean
-  source: GooglePhotoSourceModel
+interface GooglePhotoMetadataModel {
+	primary: boolean
+	source: GooglePhotoSourceModel
 }
 
-export interface GooglePhotoModel {
-  metadata: GooglePhotoMetadataModel
-  url: string
+interface GooglePhotoModel {
+	metadata: GooglePhotoMetadataModel
+	url: string
 }
 
 export default interface GooglePhotoResponseModel {
-  photos: GooglePhotoModel[]
+	photos: GooglePhotoModel[]
 }

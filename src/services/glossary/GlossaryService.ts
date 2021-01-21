@@ -5,57 +5,59 @@ import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataMode
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicURLService from '../websocket/path/WebSocketTopicPathService'
-import Database from '../../storage/database/Database'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
 
-export class GlossaryServiceImpl extends AutoSynchronizableService<
-  number,
-  GlossaryItemDataModel,
-  GlossaryItemEntity
+class GlossaryServiceImpl extends AutoSynchronizableService<
+	number,
+	GlossaryItemDataModel,
+	GlossaryItemEntity
 > {
-  constructor() {
-    super(
-      Database.glossary,
-      APIRequestMappingConstants.GLOSSARY,
-      WebSocketTopicURLService,
-      APIWebSocketDestConstants.GLOSSARY
-    )
-  }
+	constructor() {
+		super(
+			Database.glossary,
+			APIRequestMappingConstants.GLOSSARY,
+			WebSocketTopicPathService,
+			APIWebSocketDestConstants.GLOSSARY,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return []
-  }
-  
-  async convertModelToEntity(
-    model: GlossaryItemModel
-  ): Promise<GlossaryItemEntity> {
-    const entity: GlossaryItemEntity = {
-      title: model.title,
-      fullText: model.fullText,
-      subtitle: model.subtitle,
-      text: model.text,
-    }
+	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
 
-    return entity
-  }
+	async convertModelToEntity(
+		model: GlossaryItemModel,
+	): Promise<GlossaryItemEntity> {
+		const entity: GlossaryItemEntity = {
+			title: model.title,
+			fullText: model.fullText,
+			subtitle: model.subtitle,
+			text: model.text,
+		}
 
-  async convertEntityToModel(
-    entity: GlossaryItemEntity
-  ): Promise<GlossaryItemModel> {
-    const model: GlossaryItemModel = {
-      title: entity.title,
-      fullText: entity.fullText,
-      subtitle: entity.subtitle,
-      text: entity.text,
-    }
+		return entity
+	}
 
-    return model
-  }
+	async convertEntityToModel(
+		entity: GlossaryItemEntity,
+	): Promise<GlossaryItemModel> {
+		const model: GlossaryItemModel = {
+			title: entity.title,
+			fullText: entity.fullText,
+			subtitle: entity.subtitle,
+			text: entity.text,
+		}
 
-  filterGlossary = (glossary: GlossaryItemEntity[],searchTerm: string) => {
-    return glossary.filter((item) => StringUtils.contains(item.title, searchTerm)).sort((a, b) => (a.title >= b.title ? 1 : -1))
-  }
+		return model
+	}
+
+	filterGlossary = (glossary: GlossaryItemEntity[], searchTerm: string) => {
+		return glossary
+			.filter(item => StringUtils.contains(item.title, searchTerm))
+			.sort((a, b) => (a.title >= b.title ? 1 : -1))
+	}
 }
 
 export default new GlossaryServiceImpl()

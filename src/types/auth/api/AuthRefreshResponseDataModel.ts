@@ -1,4 +1,4 @@
 export default interface AuthRefreshResponseDataModel {
-  accessToken: string
-  expiresDate: string
+	accessToken: string
+	expiresDate: string
 }

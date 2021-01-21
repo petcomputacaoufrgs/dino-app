@@ -1,9 +1,9 @@
 .text_button {
-  background-color: transparent;
-  color: var(--base-font-color);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: var(--small-font);
-  padding: 0.4rem 1rem;
+	background-color: transparent;
+	color: var(--base-font-color);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	font-size: var(--small-font);
+	padding: 0.4rem 1rem;
 }

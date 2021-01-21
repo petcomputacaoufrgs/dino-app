@@ -5,142 +5,146 @@ import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListM
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
-import Database from '../../storage/database/Database'
+import Database from '../../storage/Database'
 
 class LogAppErrorService extends SynchronizableService {
-  private table: Dexie.Table<LogAppErrorEntity, number>
+	private table: Dexie.Table<LogAppErrorEntity, number>
 
-  constructor() {
-    super()
-    this.table = Database.logAppError
-  }
+	constructor() {
+		super()
+		this.table = Database.logAppError
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return []
-  }
+	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
 
-  protected getWebSocketSubscribers(): WebSocketSubscriber<any>[] {
-    return []
-  }
+	protected getWebSocketSubscribers(): WebSocketSubscriber<any>[] {
+		return []
+	}
 
-  protected async sync(): Promise<boolean> {
-    const logs = await this.getSavedLogs()
-    if (logs.length > 0) {
-      const items: LogAppErrorModel[] = logs.map((log) => ({
-        title: log.title,
-        error: log.error,
-        file: log.file,
-        date: log.date,
-      }))
+	protected async syncSave(): Promise<boolean> {
+		const logs = await this.getSavedLogs()
+		if (logs.length > 0) {
+			const items: LogAppErrorModel[] = logs.map(log => ({
+				title: log.title,
+				error: log.error,
+				file: log.file,
+				date: log.date,
+			}))
 
-      const model: LogAppErrorListModel = {
-        items: items,
-      }
+			const model: LogAppErrorListModel = {
+				items: items,
+			}
 
-      return this.saveAll(model)
-    }
+			return this.saveAll(model)
+		}
 
-    return true
-  }
+		return true
+	}
 
-  getSavedLogs = (): Promise<LogAppErrorEntity[]> => {
-    return this.table.toArray()
-  }
+	protected async syncDelete(): Promise<boolean> {
+		return true
+	}
 
-  logError = (error: Error) => {
-    if (error) {
-      this.logModel({
-        date: new Date(),
-        error: error.stack ? error.stack : 'Empty stack',
-        title: error.message,
-      } as LogAppErrorModel)
-    }
-  }
+	getSavedLogs = (): Promise<LogAppErrorEntity[]> => {
+		return this.table.toArray()
+	}
 
-  logModel = async (model: LogAppErrorModel) => {
-    if (model.error) {
-      if (!model.date) {
-        model.date = new Date()
-      }
+	logError = (error: Error) => {
+		if (error) {
+			this.logModel({
+				date: new Date(),
+				error: error.stack ? error.stack : 'Empty stack',
+				title: error.message,
+			} as LogAppErrorModel)
+		}
+	}
 
-      const request = await DinoAgentService.post(
-        APIRequestMappingConstants.SAVE_LOG_APP_ERROR
-      )
+	logModel = async (model: LogAppErrorModel) => {
+		if (model.error) {
+			if (!model.date) {
+				model.date = new Date()
+			}
 
-      if (request.canGo) {
-        try {
-          const authRequest = await request.authenticate()
-      
-          await authRequest.setBody(model).go()
-        } catch {
-          this.saveLocalLog(model)
-        }
-      } else {
-        this.saveLocalLog(model)
-      }
-    }
-  }
+			const request = await DinoAgentService.post(
+				APIRequestMappingConstants.SAVE_LOG_APP_ERROR,
+			)
 
-  logSyncAPIError = (error: string) => {
-    if (error) {
-      this.logModel({
-        date: new Date(),
-        error: error,
-        title: 'API error',
-      } as LogAppErrorModel)
-    }
-  }
+			if (request.canGo) {
+				try {
+					const authRequest = await request.authenticate()
 
-  logMessage = (message: string, title: string) => {
-    if (message) {
-      this.logModel({
-        date: new Date(),
-        error: message,
-        title: title,
-      } as LogAppErrorModel)
-    }
-  }
+					await authRequest.setBody(model).go()
+				} catch {
+					this.saveLocalLog(model)
+				}
+			} else {
+				this.saveLocalLog(model)
+			}
+		}
+	}
 
-  saveAll = async (models: LogAppErrorListModel): Promise<boolean> => {
-    const request = await DinoAgentService.post(
-      APIRequestMappingConstants.SAVE_ALL_LOG_APP_ERROR
-    )
+	logSyncAPIError = (error: string) => {
+		if (error) {
+			this.logModel({
+				date: new Date(),
+				error: error,
+				title: 'API error',
+			} as LogAppErrorModel)
+		}
+	}
 
-    if (request.canGo) {
-      try {
-        const authRequest = await request.authenticate()
-        await authRequest.setBody(models).go()
-        await this.dbDeleteAll()
-        return true
-      } catch { }
-    }
+	logMessage = (message: string, title: string) => {
+		if (message) {
+			this.logModel({
+				date: new Date(),
+				error: message,
+				title: title,
+			} as LogAppErrorModel)
+		}
+	}
 
-    return false
-  }
+	saveAll = async (models: LogAppErrorListModel): Promise<boolean> => {
+		const request = await DinoAgentService.post(
+			APIRequestMappingConstants.SAVE_ALL_LOG_APP_ERROR,
+		)
 
-  onLogout = async () => {
-    await this.dbDeleteAll()
-  }
+		if (request.canGo) {
+			try {
+				const authRequest = await request.authenticate()
+				await authRequest.setBody(models).go()
+				await this.dbDeleteAll()
+				return true
+			} catch {}
+		}
 
-  private dbDeleteAll = async () => {
-    await this.table.clear()
-  }
+		return false
+	}
 
-  private dbSave = async (log: LogAppErrorEntity) => {
-    const id = await this.table.put(log)
-  
-    log.id = id
-  }
+	onLogout = async () => {
+		await this.dbDeleteAll()
+	}
 
-  private saveLocalLog = (model: LogAppErrorModel) => {
-    const log: LogAppErrorEntity = {
-      date: model.date,
-      error: model.error,
-      file: model.file,
-      title: model.title
-    }
-    this.dbSave(log)
-  }
+	private dbDeleteAll = async () => {
+		await this.table.clear()
+	}
+
+	private dbSave = async (log: LogAppErrorEntity) => {
+		const id = await this.table.put(log)
+
+		log.id = id
+	}
+
+	private saveLocalLog = (model: LogAppErrorModel) => {
+		const log: LogAppErrorEntity = {
+			date: model.date,
+			error: model.error,
+			file: model.file,
+			title: model.title,
+		}
+		this.dbSave(log)
+	}
 }
 
 export default new LogAppErrorService()

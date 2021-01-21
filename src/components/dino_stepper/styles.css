@@ -1,33 +1,33 @@
 .dino_stepper.MuiMobileStepper-root {
-  padding: 0 0 0.5rem 0;
+	padding: 0 0 0.5rem 0;
 }
 
 .dino_stepper.MuiMobileStepper-root {
-  background: var(--other-details);
-  color: var(--base-font-color);
-  width: 100%;
+	background: var(--other-details);
+	color: var(--base-font-color);
+	width: 100%;
 }
 
 .dino_stepper .MuiMobileStepper-dotActive {
-  background-color: #c2740f;
+	background-color: #c2740f;
 }
 
 .dino_stepper .save__button,
 .dino_stepper .cancel__button,
 .dino_stepper .back__button,
 .dino_stepper .next__button {
-  margin: 0px;
-  padding: 0px;
-  margin-right: 0.3rem;
-  font-size: var(--default-small-font);
-  overflow: hidden;
-  text-overflow: ellipsis;
+	margin: 0px;
+	padding: 0px;
+	margin-right: 0.3rem;
+	font-size: var(--default-small-font);
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .dino_stepper .next__button {
-  margin-left: 0.3rem;
+	margin-left: 0.3rem;
 }
 
 .dino_stepper .back__button {
-  margin-right: 0.3rem;
+	margin-right: 0.3rem;
 }

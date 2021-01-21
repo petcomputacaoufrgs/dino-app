@@ -1,38 +1,38 @@
 .note__note_content__column {
-  flex: 0 0 auto;
-  height: 100%;
-  margin-right: 5px;
-  margin-left: 5px;
+	flex: 0 0 auto;
+	height: 100%;
+	margin-right: 5px;
+	margin-left: 5px;
 }
 
 .note__note_content__column.desktop {
-  width: 15%;
+	width: 15%;
 }
 
 .note__note_content__column__draggable {
-  border: 1px solid var(--column-border);
-  background-color: var(--board-background);
-  border-radius: 8px;
-  padding: 10px 15px 10px 15px;
-  width: 270px;
+	border: 1px solid var(--column-border);
+	background-color: var(--board-background);
+	border-radius: 8px;
+	padding: 10px 15px 10px 15px;
+	width: 270px;
 }
 
 .note__note_content__column:first-of-type {
-  margin-left: 14px;
+	margin-left: 14px;
 }
 
 .note__note_content__column__draggable__title {
-  margin-bottom: 10px;
-  height: 20px;
+	margin-bottom: 10px;
+	height: 20px;
 }
 
 .note__note_content__column__draggable__droppable {
-  height: calc(100% - 80px);
-  max-height: calc(100% - 80px);
+	height: calc(100% - 80px);
+	max-height: calc(100% - 80px);
 }
 
 .note__note_content__column__draggable__droppable__scroll {
-  height: calc(100% - 10px);
-  overflow-y: auto;
-  margin-top: 24px;
+	height: calc(100% - 10px);
+	overflow-y: auto;
+	margin-top: 24px;
 }

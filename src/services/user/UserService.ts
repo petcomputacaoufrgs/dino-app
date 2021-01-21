@@ -9,42 +9,44 @@ import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotos
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueueURLService from '../websocket/path/WebSocketQueuePathService'
-import Database from '../../storage/database/Database'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
+import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 
-export class UserServiceImpl extends AutoSynchronizableService<
-  number,
-  UserDataModel,
-  UserEntity
+class UserServiceImpl extends AutoSynchronizableService<
+	number,
+	UserDataModel,
+	UserEntity
 > {
-  constructor() {
-    super(
-      Database.user,
-      APIRequestMappingConstants.USER,
-      WebSocketQueueURLService,
-      APIWebSocketDestConstants.USER
-    )
-  }
+	constructor() {
+		super(
+			Database.user,
+			APIRequestMappingConstants.USER,
+			WebSocketQueuePathService,
+			APIWebSocketDestConstants.USER,
+		)
+	}
 
-  getSyncDependencies(): SynchronizableService[] {
-    return []
-  }
+	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
 
-  getPicture(user: UserEntity | undefined): string | undefined {
-    return user !== undefined
-        ? user.pictureBase64 ? user.pictureBase64 : user.pictureURL
-        : undefined
-  }
+	getPicture(user: UserEntity | undefined): string | undefined {
+		return user !== undefined
+			? user.pictureBase64
+				? user.pictureBase64
+				: user.pictureURL
+			: undefined
+	}
 
-  getName(user: UserEntity | undefined) {
-    return user !== undefined ? user.name : ''
-  }
+	getName(user: UserEntity | undefined) {
+		return user !== undefined ? user.name : ''
+	}
 
-  async updateUser(model: UserDataModel) {
-    await this.clearDatabase()
-    await this.saveFromDataModelLocally(model)
-  }
+	async updateUser(model: UserDataModel) {
+		await this.clearDatabase()
+		await this.saveFromDataModelLocally(model)
+	}
 
   async convertModelToEntity(
     model: UserDataModel
@@ -56,8 +58,8 @@ export class UserServiceImpl extends AutoSynchronizableService<
       permission: model.permission
     }
 
-    return entity
-  }
+		return entity
+	}
 
   async convertEntityToModel(
     entity: UserEntity
@@ -69,90 +71,90 @@ export class UserServiceImpl extends AutoSynchronizableService<
       permission: entity.permission
     }
 
-    return model
-  }
+		return model
+	}
 
-  protected async onSaveEntity(entity: UserEntity) {
-    await this.clearDatabase()
-    if (Utils.isNotEmpty(entity.id)) {
-      const savedEntity = await this.getByLocalId(entity.id!)
+	protected async onSaveEntity(entity: UserEntity) {
+		await this.clearDatabase()
+		if (Utils.isNotEmpty(entity.id)) {
+			const savedEntity = await this.getByLocalId(entity.id!)
 
-      if (savedEntity) {
-        const withoutSavedPicture = savedEntity.pictureBase64 === undefined
-        const pictureUrlChanged = entity.pictureURL !== savedEntity.pictureURL
+			if (savedEntity) {
+				const withoutSavedPicture = savedEntity.pictureBase64 === undefined
+				const pictureUrlChanged = entity.pictureURL !== savedEntity.pictureURL
 
-        if (withoutSavedPicture || pictureUrlChanged) {
-          this.donwloadPicture(entity.pictureURL, entity.id!)
-        }
-      } else {
-        this.donwloadPicture(entity.pictureURL, entity.id!)
-      }
-    }
-  }
+				if (withoutSavedPicture || pictureUrlChanged) {
+					this.donwloadPicture(entity.pictureURL, entity.id!)
+				}
+			} else {
+				this.donwloadPicture(entity.pictureURL, entity.id!)
+			}
+		}
+	}
 
-  protected async onSyncSuccess() {
-    const user = await this.getFirst()
+	protected async onSyncSuccess() {
+		const user = await this.getFirst()
 
-    if (user) {
-      this.verifyGoogleUserPhoto(user)
-    }
-  }
+		if (user) {
+			this.verifyGoogleUserPhoto(user)
+		}
+	}
 
-  async verifyGoogleUserPhoto(entity: UserEntity) {
-    if (Utils.isNotEmpty(entity.id)) {
-      const photoModel = await GoogleUserService.getUserGoogleAPIPhoto()
+	async verifyGoogleUserPhoto(entity: UserEntity) {
+		if (Utils.isNotEmpty(entity.id)) {
+			const photoModel = await GoogleUserService.getUserGoogleAPIPhoto()
 
-      if (photoModel) {
-        const primaryPhoto = this.getPrimaryPhotoFromGooglePhotos(photoModel)
+			if (photoModel) {
+				const primaryPhoto = this.getPrimaryPhotoFromGooglePhotos(photoModel)
 
-        if (primaryPhoto && primaryPhoto.url) {
-          const newPictureURL = GooglePeopleAPIUtils.changeImageSize(
-            primaryPhoto.url,
-            125
-          )
+				if (primaryPhoto && primaryPhoto.url) {
+					const newPictureURL = GooglePeopleAPIUtils.changeImageSize(
+						primaryPhoto.url,
+						125,
+					)
 
-          if (entity.pictureURL !== newPictureURL) {
-            entity.pictureURL = newPictureURL
-            await this.save(entity)
-            this.donwloadPicture(newPictureURL, entity.id!)
-          }
-        }
-      }
-    }
-  }
+					if (entity.pictureURL !== newPictureURL) {
+						entity.pictureURL = newPictureURL
+						await this.save(entity)
+						this.donwloadPicture(newPictureURL, entity.id!)
+					}
+				}
+			}
+		}
+	}
 
-  private donwloadPicture = (pictureURL: string, localId: number) => {
-    try {
-      ImageToBase64Utils.getBase64FromImageSource(
-        pictureURL,
-        'jpeg',
-        this.saveDowloadedImage,
-        localId
-      )
-    } catch (e) {
-      LogAppErrorService.logError(e)
-    }
-  }
+	private donwloadPicture = (pictureURL: string, localId: number) => {
+		try {
+			ImageToBase64Utils.getBase64FromImageSource(
+				pictureURL,
+				'jpeg',
+				this.saveDowloadedImage,
+				localId,
+			)
+		} catch (e) {
+			LogAppErrorService.logError(e)
+		}
+	}
 
-  private saveDowloadedImage = async (
-    base64Image: string,
-    success: boolean,
-    id?: any
-  ) => {
-    if (success && Utils.isNotEmpty(id)) {
-      const savedEntity = await this.getById(id)
-      if (savedEntity) {
-        savedEntity.pictureBase64 = base64Image
-        await this.saveOnlyLocally(savedEntity)
-      }
-    }
-  }
+	private saveDowloadedImage = async (
+		base64Image: string,
+		success: boolean,
+		id?: any,
+	) => {
+		if (success && Utils.isNotEmpty(id)) {
+			const savedEntity = await this.getById(id)
+			if (savedEntity) {
+				savedEntity.pictureBase64 = base64Image
+				await this.saveOnlyLocally(savedEntity)
+			}
+		}
+	}
 
-  private getPrimaryPhotoFromGooglePhotos = (
-    model: GooglePhotoResponseModel
-  ) => {
-    return model.photos.find((photo) => photo.metadata.primary)
-  }
+	private getPrimaryPhotoFromGooglePhotos = (
+		model: GooglePhotoResponseModel,
+	) => {
+		return model.photos.find(photo => photo.metadata.primary)
+	}
 }
 
 export default new UserServiceImpl()

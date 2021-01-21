@@ -16,6 +16,7 @@ import TreatmentEntity from '../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../types/user/database/UserSettingsEntity'
 import GoogleScopeEntity from '../types/auth/google/database/GoogleScopeEntity'
 import AuthEntity from '../types/auth/database/AuthEntity'
+import TabEntity from '../types/tab_control/TabEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 11
@@ -38,6 +39,7 @@ class Database extends Dexie {
 	faqUserQuestion: Dexie.Table<FaqUserQuestionEntity, number>
 	treatment: Dexie.Table<TreatmentEntity, number>
 	googleScope: Dexie.Table<GoogleScopeEntity, number>
+	tab: Dexie.Table<TabEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)
@@ -73,6 +75,7 @@ class Database extends Dexie {
 			logAppError: '++id,title,file,error,date',
 			calendarEvent:
 				'++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
+			tab: '++id'
 		})
 
 		this.auth = this.table('auth')
@@ -92,6 +95,7 @@ class Database extends Dexie {
 		this.calendarEvent = this.table('calendarEvent')
 		this.treatment = this.table('treatment')
 		this.googleScope = this.table('googleScope')
+		this.tab = this.table('tab')
 	}
 }
 

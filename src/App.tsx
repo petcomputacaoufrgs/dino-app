@@ -111,7 +111,7 @@ const App: React.FC = () => {
 		>
 			<Switch>
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-				<PrivateRoute path={PathConstants.USER} component={() => <Main />} />
+				<PrivateRoute path={PathConstants.USER} component={Main} />
 				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
 				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
 				<Route path={PathConstants.ABOUT_US} component={AboutUs} />
@@ -127,6 +127,6 @@ const App: React.FC = () => {
 			{showLoadScreen || isLoading ? renderLoad() : renderApp()}
 		</div>
 	)
-}
+}	
 
 export default App

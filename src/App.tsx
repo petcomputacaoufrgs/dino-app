@@ -19,6 +19,9 @@ import DataFontSizeUtils from './utils/DataFontSizeUtils'
 import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
 import './App.css'
+import UserService from './services/user/UserService'
+import UserEnum from './types/enum/UserEnum'
+import StaffMain from './views/staff_main'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -26,18 +29,21 @@ const App = (): JSX.Element => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(false)
+	const [userPermission, setUserPermission] = useState<number | undefined>(undefined)
 
 	useEffect(() => {
 		const loadData = async () => {
 			const isAuthenticated = await AuthService.isAuthenticated()
 			if (isAuthenticated) {
 				await loadSettings()
+				await loadUserPermission()
 			} else {
 				DataThemeUtils.setBodyDataTheme(
 					UserSettingsService.getSystemColorThemeName(),
 				)
 			}
 			updateAuth(isAuthenticated)
+			
 			finishLoading()
 		}
 
@@ -52,6 +58,11 @@ const App = (): JSX.Element => {
 			}
 		}
 
+		const loadUserPermission = async () => {
+			const hasUserPermission = await UserService.getPermission()
+         updateUserPermission(hasUserPermission || UserEnum.USER)
+		}
+
 		let updateSettings = (settings: UserSettingsEntity) => {
 			const colorTheme = UserSettingsService.getColorThemeName(settings)
 			DataThemeUtils.setBodyDataTheme(colorTheme)
@@ -62,6 +73,10 @@ const App = (): JSX.Element => {
 
 		let updateAuth = (isAuthenticated: boolean) => {
 			setIsAuthenticated(isAuthenticated)
+		}
+
+		let updateUserPermission = (userPermission: number) => {
+         setUserPermission(userPermission)
 		}
 
 		let finishLoading = () => {
@@ -79,6 +94,7 @@ const App = (): JSX.Element => {
 			finishLoading = () => {}
 			updateSettings = () => {}
 			updateAuth = () => {}
+			updateUserPermission = () => {}
 			UserSettingsService.removeUpdateEventListenner(loadSettings)
 			AuthService.removeUpdateEventListenner(loadData)
 		}
@@ -105,13 +121,24 @@ const App = (): JSX.Element => {
 	const renderApp = (): JSX.Element => (
 		<PrivateRouterContextProvider
 			loginPath={PathConstants.LOGIN}
-			homePath={PathConstants.HOME}
+			userHomePath={PathConstants.USER_HOME}
+			staffHomePath={PathConstants.STAFF_HOME}
 			isAuthenticated={isAuthenticated}
 			browserHistory={HistoryService}
+			userPermission={userPermission}
 		>
 			<Switch>
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-				<PrivateRoute path={PathConstants.USER} component={() => <Main />} />
+				<PrivateRoute 
+					path={PathConstants.USER} 
+					component={Main} 
+					restrictedTo={[UserEnum.USER]} 
+        />
+				<PrivateRoute 
+					path={PathConstants.STAFF} 
+					component={StaffMain} 
+					restrictedTo={[UserEnum.STAFF]} 
+				/>
 				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
 				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
 				<Route path={PathConstants.ABOUT_US} component={AboutUs} />

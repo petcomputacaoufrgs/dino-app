@@ -1,10 +1,10 @@
 import React from 'react'
 import PageNotFound from '../../assets/images/page_not_found.svg'
-import HistoryService from '../../services/history/HistoryService'
-import PathConstants from '../../constants/app/PathConstants'
 import { useLanguage } from '../../context/language'
 import Loader from '../../components/loader'
 import './styles.css'
+import { usePrivateRouter } from '../../context/private_router'
+import MenuService from '../../services/menu/MenuService'
 
 const redirectTimeout = 2000
 
@@ -12,10 +12,14 @@ const redirectTimeout = 2000
  * @description Tela para diretório não encontrado
  */
 const NotFound = (): JSX.Element => {
+
+	const router = usePrivateRouter()
+
 	const language = useLanguage()
 
 	const redirectToHome = () => {
-		HistoryService.push(PathConstants.HOME)
+		console.log("not found redicerionando")
+		MenuService.redirectToHome(router.userPermission)
 	}
 
 	setTimeout(redirectToHome, redirectTimeout)

@@ -74,6 +74,14 @@ class UserServiceImpl extends AutoSynchronizableService<
 		return model
 	}
 
+	async getPermission(): Promise<number | undefined> {
+		const user = await this.getFirst()
+		if(user) {
+			return user.permission
+		} 
+		return undefined
+	}
+
 	protected async onSaveEntity(entity: UserEntity) {
 		await this.clearDatabase()
 		if (Utils.isNotEmpty(entity.id)) {
@@ -155,6 +163,8 @@ class UserServiceImpl extends AutoSynchronizableService<
 	) => {
 		return model.photos.find(photo => photo.metadata.primary)
 	}
+
+
 }
 
 export default new UserServiceImpl()

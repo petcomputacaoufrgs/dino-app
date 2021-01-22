@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { usePrivateRouter } from '../../context/private_router'
 import { Route, RouteProps, useLocation } from 'react-router'
+import MenuService from '../../services/menu/MenuService'
 
 /**
  * @description Gera uma rota de login com verificação de autenticação e redirecionamento automático
@@ -16,7 +17,9 @@ const LoginRoute = (props: RouteProps): JSX.Element => {
 	 */
 	useEffect((): void => {
 		const goToHome = () => {
-			router.browserHistory?.push(router.homePath)
+			if(router.browserHistory) {
+				MenuService.redirectToHome(router.userPermission)
+			}
 		}
 
 		if (router) {

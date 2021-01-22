@@ -237,4 +237,6 @@ export default interface LanguageBase {
 	NO_TREATMENT_SELECTED: string
 	NO_FAQ_AVAILABLE: string
 	TREATMENT_SAVE: string
+	SECONDARY_TAB_MESSAGE: string
+	SECONDARY_TAB_BUTTON_TEXT: string
 }

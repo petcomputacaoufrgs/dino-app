@@ -18,6 +18,8 @@ import UserSettingsEntity from './types/user/database/UserSettingsEntity'
 import DataFontSizeUtils from './utils/DataFontSizeUtils'
 import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
+import TabControlService from './services/tab_control/TabControlService'
+import SecondaryTab from './views/secondary_tab'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
@@ -25,11 +27,15 @@ const LOAD_SCREEN_TIME = 2250
 const App: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
+	const [isMainTab, setIsMainTab] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(false)
 
 	useEffect(() => {
 		const loadData = async () => {
-			const isAuthenticated = await AuthService.isAuthenticated()
+			if (isLoading) await TabControlService.registerTab()
+
+			const isAuthenticated = await loadAuth()
+
 			if (isAuthenticated) {
 				await loadSettings()
 			} else {
@@ -37,8 +43,14 @@ const App: React.FC = () => {
 					UserSettingsService.getSystemColorThemeName(),
 				)
 			}
-			updateAuth(isAuthenticated)
+			await loadTabInfo()
 			finishLoading()
+		}
+
+		const loadAuth = async (): Promise<boolean> => {
+			const isAuthenticated = await AuthService.isAuthenticated()
+			updateAuth(isAuthenticated)
+			return isAuthenticated
 		}
 
 		const loadSettings = async () => {
@@ -52,6 +64,15 @@ const App: React.FC = () => {
 			}
 		}
 
+		const loadTabInfo = async () => {
+			const isMainTab = await TabControlService.isMainTab()
+			updateTabInfo(isMainTab)
+		}
+
+		let updateAuth = (isAuthenticated: boolean) => {
+			setIsAuthenticated(isAuthenticated)
+		}
+
 		let updateSettings = (settings: UserSettingsEntity) => {
 			const colorTheme = UserSettingsService.getColorThemeName(settings)
 			DataThemeUtils.setBodyDataTheme(colorTheme)
@@ -60,16 +81,17 @@ const App: React.FC = () => {
 			DataFontSizeUtils.setBodyDataFontSize(fontSize)
 		}
 
-		let updateAuth = (isAuthenticated: boolean) => {
-			setIsAuthenticated(isAuthenticated)
+		let updateTabInfo = (isMainTab: boolean) => {
+			setIsMainTab(isMainTab)
 		}
 
 		let finishLoading = () => {
 			setIsLoading(false)
 		}
 
-		UserSettingsService.addUpdateEventListenner(loadSettings)
 		AuthService.addUpdateEventListenner(loadData)
+		UserSettingsService.addUpdateEventListenner(loadSettings)
+		TabControlService.addUpdateEventListenner(loadData)
 
 		if (isLoading) {
 			loadData()
@@ -79,8 +101,10 @@ const App: React.FC = () => {
 			finishLoading = () => {}
 			updateSettings = () => {}
 			updateAuth = () => {}
-			UserSettingsService.removeUpdateEventListenner(loadSettings)
+			updateTabInfo = () => {}
 			AuthService.removeUpdateEventListenner(loadData)
+			UserSettingsService.removeUpdateEventListenner(loadSettings)
+			TabControlService.removeUpdateEventListenner(loadTabInfo)
 		}
 	}, [isLoading])
 
@@ -120,11 +144,9 @@ const App: React.FC = () => {
 		</PrivateRouterProvider>
 	)
 
-	const renderLoad = (): JSX.Element => <Load />
-
 	return (
 		<div className='app'>
-			{showLoadScreen || isLoading ? renderLoad() : renderApp()}
+			{showLoadScreen || isLoading ? <Load /> : isMainTab ? renderApp() : <SecondaryTab />}
 		</div>
 	)
 }	

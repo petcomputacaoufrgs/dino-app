@@ -494,4 +494,8 @@ export default class EN implements LanguageBase {
 	NO_FAQ_AVAILABLE = 'No F.A.Q available'
 
 	TREATMENT_SAVE = 'Save'
+
+	SECONDARY_TAB_MESSAGE = 'The dino is open in another browser tab. You can only use one tab.'
+
+	SECONDARY_TAB_BUTTON_TEXT = 'Click here to open this tab'
 }

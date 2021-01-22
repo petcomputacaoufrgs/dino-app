@@ -1,41 +1,79 @@
 import Database from "../../storage/Database"
-import PostMessageData from "../../types/service_worker/PostMessageData"
 import PostMessageType from "../../types/service_worker/PostMessageType"
 import TabEntity from "../../types/tab_control/TabEntity"
 import Utils from "../../utils/Utils"
+import EventService from "../events/EventService"
 import PostMessageService from "../service_worker/PostMessageService"
+import UpdatableService from "../update/UpdatableService"
 
-class TabControlService {
+class TabControlService extends UpdatableService {
   private table: Dexie.Table<TabEntity, number>
   private tabId?: number
 
   constructor() {
+    super()
     this.table = Database.tab
   }
 
-  registerTab = async () => {
-    const tab: TabEntity = {}
-    await this.save(tab)
-  }
-
-  registerUnloadEvent = () => {
+  start = () => {
     window.addEventListener("unload", () => {
       PostMessageService.sendPostMessage({
         type: PostMessageType.TAB_CLOSED,
-        message: this.tabId
+        info: this.tabId
 			})
     })
   }
+
+  registerTab = async () => {
+    if (process.env.NODE_ENV !== 'production') return
+
+    const tab: TabEntity = {
+      isMain: 1
+    }
+
+    await this.save(tab)
+
+    PostMessageService.sendPostMessage({
+      type: PostMessageType.REGISTER_NEW_TAB,
+      info: this.tabId
+    })
+  }
   
-  onMessageReceived = async (message: PostMessageData<number>) => {
-    console.log(message)
+  onMessageReceived = async () => {
+    await EventService.whenTabLoad()
+    this.triggerUpdateEvent()
   }
 
-  getAllById = async (entities: TabEntity[]): Promise<TabEntity[]> => {
-		const ids = entities
-			.filter(entity => Utils.isNotEmpty(entity.id))
-			.map(entity => entity.id!)
-		return this.table.where('id').anyOf(ids).toArray()
+  onProofOfLifeRequisition = async (tabId: number) => {
+    if (this.tabId === tabId) return
+
+    const tab: TabEntity = {
+      isMain: 0
+    }
+
+    await this.save(tab)
+    this.triggerUpdateEvent()
+  }
+
+  changeToMainTab = () => {
+    PostMessageService.sendPostMessage({
+      type: PostMessageType.SET_MAIN_TAB,
+      info: this.tabId
+    })
+  }
+
+  isMainTab = async (): Promise<boolean> => {
+    if (Utils.isNotEmpty(this.tabId)) {
+      const tab = await this.getById(this.tabId!)
+      if (tab) {
+        return tab.isMain === 1
+      }
+    }
+    return false
+  }
+
+  private getById = async (id: number): Promise<TabEntity | undefined> => {
+		return this.table.where('id').equals(id).first()
   }
   
   private save = async (entity: TabEntity): Promise<TabEntity> => {

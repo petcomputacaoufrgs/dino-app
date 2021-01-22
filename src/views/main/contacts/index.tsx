@@ -17,7 +17,6 @@ import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
 import GoogleContactService from '../../../services/contact/GoogleContactService'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import UserService from '../../../services/user/UserService'
 
 const Contacts: React.FC = () => {
 	const language = useLanguage()

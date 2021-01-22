@@ -20,7 +20,6 @@ import EssentialContactService from '../../../../services/contact/EssentialConta
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import './styles.css'
-import GoogleContactEntity from '../../../../types/contact/database/GoogleContactEntity'
 import DinoHr from '../../../../components/dino_hr'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {

@@ -118,7 +118,7 @@ const App = (): JSX.Element => {
 		ViewportService.maximizeViewport()
 	}, [])
 
-	const renderApp = (): JSX.Element => (
+	const renderApp = () => (
 		<PrivateRouterContextProvider
 			loginPath={PathConstants.LOGIN}
 			userHomePath={PathConstants.USER_HOME}
@@ -147,7 +147,7 @@ const App = (): JSX.Element => {
 		</PrivateRouterContextProvider>
 	)
 
-	const renderLoad = (): JSX.Element => <Load />
+	const renderLoad = () => <Load />
 
 	return (
 		<div className='app'>

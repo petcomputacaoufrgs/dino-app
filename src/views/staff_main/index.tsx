@@ -10,13 +10,7 @@ import FirstSettingsDialog from '../../components/settings/first_settings_dialog
 import Loader from '../../components/loader/index'
 import LogoutDialog from '../../components/logout_dialog'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
-import Faq from '../main/faq'
-import Glossary from '../main/glossary'
-import GlossaryItem from '../main/glossary/glossary_item'
 import NotFound from '../not_found'
-import Home from '../main/home'
-import Contacts from '../main/contacts'
-import Settings from '../main/settings'
 
 const StaffMain: React.FC = () => {
 	const language = useLanguage()

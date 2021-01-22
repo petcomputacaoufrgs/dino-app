@@ -163,6 +163,10 @@ export default class EN implements LanguageBase {
 
 	FORM_ADD_PHONE = 'Add Phone'
 
+	FORM_ADD_STAFF = 'Add Staff'
+
+	FORM_EMAIL = 'Add Staff E-mail'
+
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
 	CONTACTS_ADD_CONTACT = 'New Contact'

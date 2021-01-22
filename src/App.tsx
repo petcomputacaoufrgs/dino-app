@@ -132,7 +132,7 @@ const App = (): JSX.Element => {
 				<PrivateRoute 
 					path={PathConstants.USER} 
 					component={Main} 
-					restrictedTo={[UserEnum.USER]} 
+					restrictedTo={[UserEnum.USER, UserEnum.ADMIN]} 
         />
 				<PrivateRoute 
 					path={PathConstants.STAFF} 

@@ -13,6 +13,11 @@ import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import NotFound from '../not_found'
 import Settings from '../main/settings'
 import Home from '../main/home'
+import Contacts from '../main/contacts'
+import Faq from '../main/faq'
+import Glossary from '../main/glossary'
+import GlossaryItem from '../main/glossary/glossary_item'
+import StaffModeration from './staff_moderation'
 
 const StaffMain: React.FC = () => {
 	const language = useLanguage()
@@ -43,29 +48,29 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_GLOSSARY}
-					component={() => <> </>}//Glossary}
+					component={() => < Glossary />}
 				/>
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_CONTACTS}
-					component={() => <> </>}//Contacts}
+					component={Contacts}
 				/>
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_SETTINGS}
 					component={Settings}
 				/>
-				<PrivateRoute
-					path={`${PathConstants.STAFF_GLOSSARY}/:localId`}
-					component={() => <> </>}//GlossaryItem}
-				/>
 				<PrivateRoute 
 					path={PathConstants.STAFF_FAQ} 
-					component={() => <> </>} 
+					component={Faq} 
+				/>
+				<PrivateRoute
+					path={`${PathConstants.STAFF_GLOSSARY}/:localId`}
+					component={GlossaryItem}
 				/>
 				<PrivateRoute 
 					path={PathConstants.STAFF_MODERATION} 
-					component={() => <> </>} 
+					component={StaffModeration} 
 				/>
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>

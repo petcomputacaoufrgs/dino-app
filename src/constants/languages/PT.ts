@@ -167,6 +167,10 @@ export default class PT implements LanguageBase {
 
 	FORM_ADD_PHONE = 'Adicionar Telefone'
 
+	FORM_ADD_STAFF = 'Adicionar Funcionário(a)'
+
+	FORM_EMAIL = 'Adicionar E-mail'
+
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
 	CONTACTS_ADD_CONTACT = 'Novo Contato'

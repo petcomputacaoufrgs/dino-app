@@ -16,39 +16,31 @@ const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
 
 	const location = useLocation()
 	
-	const userIsNotAuthorized = () => {
-		if(props.restrictedTo !== undefined && props.restrictedTo.length > 0 && router.userPermission) {
-			return !props.restrictedTo.includes(router.userPermission)
-		} return false
+	const isAuthorized = () => {
+		if(props.restrictedTo !== undefined && props.restrictedTo.length > 0) {
+			return props.restrictedTo.includes(router.userPermission!)
+		} return true
 	}
 
-
-	const renderRedirect = () => {
-    console.log("redirectPath")
-		return (
-			<Redirect
-				to={{
-					pathname: router.loginPath ,
-					state: { from: location },
-				}}
-			/>
-		)
-   }
-
-   const render = () => {
+   const renderRoute = () => {
 
       if(router.isAuthenticated) {
-         if(userIsNotAuthorized()) {
-          return renderRedirect()
+         if(isAuthorized()) {
+          return <Route {...props} />
          }
-      } else return renderRedirect()
-
-      return <Route {...props} />
+			}
+			
+			return (
+				<Redirect
+					to={{
+						pathname: router.loginPath ,
+						state: { from: location },
+					}}
+				/>
+			)
    }
 
-
-   return render()
-
+   return renderRoute()
 	}
 
 

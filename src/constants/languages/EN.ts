@@ -99,6 +99,8 @@ export default class EN implements LanguageBase {
 
 	MENU_ABOUT_US = 'About Us'
 
+	MENU_STAFF_MODERATION = 'Staff Moderation'
+
 	SETTINGS_TITLE = 'Settings'
 
 	SETTINGS_LANGUAGE = 'Choose Language'

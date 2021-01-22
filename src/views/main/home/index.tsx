@@ -4,13 +4,23 @@ import IconButton from '../../../components/button/icon_button'
 import { useLanguage } from '../../../context/language'
 import Button from '../../../components/button'
 import './styles.css'
+import LanguageBase from '../../../constants/languages/LanguageBase'
+import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 
-const Home: React.FC = () => {
+interface HomeProps {
+	staff?: boolean
+}
+
+const Home: React.FC<HomeProps> = ({ staff }) => {
 	const language = useLanguage()
 
-	const items = MenuService.getMainPages(language.data).filter(
-		item => item.name !== language.data.MENU_HOME,
-	)
+	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => {
+		return getMainPages(language.data).filter(
+			item => item.name !== language.data.MENU_HOME,
+		)
+	}
+
+	const items = searchMainPages(staff ? MenuService.getStaffMainPages : MenuService.getMainPages)
 
 	return (
 		<div className='home'>

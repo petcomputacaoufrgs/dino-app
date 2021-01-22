@@ -99,6 +99,8 @@ export default class PT implements LanguageBase {
 
 	MENU_ABOUT_US = 'Sobre Nós'
 
+	MENU_STAFF_MODERATION = 'Moderação de Funcionários'
+
 	SETTINGS_TITLE = 'Configurações'
 
 	SETTINGS_LANGUAGE = 'Escolher Idioma'

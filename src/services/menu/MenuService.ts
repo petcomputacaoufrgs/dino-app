@@ -63,11 +63,58 @@ class MenuService {
 		},
 	]
 
+	getStaffMainPages = (language: LanguageBase): MenuItemViewModel[] => [
+		{
+			image: HomeSVG,
+			name: language.MENU_HOME,
+			onClick: () => HistoryService.push(PathConstants.STAFF_HOME),
+		},
+		{
+			image: GlossarySVG,
+			name: language.MENU_GLOSSARY,
+			onClick: () => HistoryService.push(PathConstants.STAFF_GLOSSARY),
+		},
+		{
+			image: ContactsSVG,
+			name: language.MENU_CONTACTS,
+			onClick: () => HistoryService.push(PathConstants.STAFF_CONTACTS),
+		},
+		{
+			image: FaqSVG,
+			name: language.MENU_FAQ,
+			onClick: () => HistoryService.push(PathConstants.STAFF_FAQ),
+		},
+		{
+			image: SettingsSVG,
+			name: language.MENU_SETTINGS,
+			onClick: () => HistoryService.push(PathConstants.STAFF_SETTINGS),
+		},
+		{
+			image: SettingsSVG,
+			name: language.MENU_STAFF_MODERATION,
+			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
+		}
+	]
+
 	getGroupedMenuItems = (
 		language: LanguageBase,
 		handleLogoutClick: () => void,
 	): MenuItemViewModel[][] => [
 		this.getMainPages(language),
+		[
+			{
+				image: LogoutSVG,
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
+			},
+		],
+	]
+
+	getStaffGroupedMenuItems = (
+		language: LanguageBase,
+		handleLogoutClick: () => void,
+	): MenuItemViewModel[][] => [
+		this.getStaffMainPages(language),
 		[
 			{
 				image: LogoutSVG,

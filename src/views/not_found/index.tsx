@@ -18,7 +18,6 @@ const NotFound = (): JSX.Element => {
 	const language = useLanguage()
 
 	const redirectToHome = () => {
-		console.log("not found redicerionando")
 		MenuService.redirectToHome(router.userPermission)
 	}
 

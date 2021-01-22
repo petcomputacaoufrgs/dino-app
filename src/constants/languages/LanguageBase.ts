@@ -46,6 +46,7 @@ export default interface LanguageBase {
 	MENU_LOGOUT: string
 	MENU_CALENDAR: string
 	MENU_ABOUT_US: string
+	MENU_STAFF_MODERATION: string
 	SETTINGS_TITLE: string
 	SETTINGS_LANGUAGE: string
 	SETTINGS_TREATMENT: string

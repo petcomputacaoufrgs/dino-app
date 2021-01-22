@@ -11,6 +11,8 @@ import Loader from '../../components/loader/index'
 import LogoutDialog from '../../components/logout_dialog'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import NotFound from '../not_found'
+import Settings from '../main/settings'
+import Home from '../main/home'
 
 const StaffMain: React.FC = () => {
 	const language = useLanguage()
@@ -29,7 +31,7 @@ const StaffMain: React.FC = () => {
 		setOpenLogoutDialog(false)
 	}
 
-	const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
+	const groupedItems: MenuItemViewModel[][] = MenuService.getStaffGroupedMenuItems(
 		language.data,
 		handleLogoutClick,
 	)
@@ -37,7 +39,7 @@ const StaffMain: React.FC = () => {
 	const renderMainContent = (): JSX.Element => {
 		return (
 			<Switch>
-				<PrivateRoute exact path={PathConstants.STAFF_HOME} component={() => <> </>} />
+				<PrivateRoute exact path={PathConstants.STAFF_HOME} component={() => <Home staff/>} />
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_GLOSSARY}
@@ -51,13 +53,20 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_SETTINGS}
-					component={() => <> </>}//Settings}
+					component={Settings}
 				/>
 				<PrivateRoute
 					path={`${PathConstants.STAFF_GLOSSARY}/:localId`}
 					component={() => <> </>}//GlossaryItem}
 				/>
-				<PrivateRoute path={PathConstants.STAFF_FAQ} component={() => <> </>} />
+				<PrivateRoute 
+					path={PathConstants.STAFF_FAQ} 
+					component={() => <> </>} 
+				/>
+				<PrivateRoute 
+					path={PathConstants.STAFF_MODERATION} 
+					component={() => <> </>} 
+				/>
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>
 		)

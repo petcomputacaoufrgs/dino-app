@@ -3,21 +3,51 @@ class PathConstants {
 
 	USER: string = `/user`
 
-	HOME: string = `${this.USER}/home`
+	STAFF: string = `/staff`
 
-	GLOSSARY: string = `${this.USER}/glossary`
+	private HOME: string = `home`
 
-	CONTACTS: string = `${this.USER}/contacts`
+	private GLOSSARY: string = `glossary`
 
-	GAMES: string = `${this.USER}/games`
+	private CONTACTS: string = `contacts`
 
-	SETTINGS: string = `${this.USER}/settings`
+	private GAMES: string = `games`
 
-	FAQ: string = `${this.USER}/faq`
+	private SETTINGS: string = `settings`
 
-	NOTES: string = `${this.USER}/notes`
+	private FAQ: string = `faq`
 
-	CALENDAR = `${this.USER}/calendar`
+	private NOTES: string = `notes`
+
+	private CALENDAR = `calendar`
+
+	USER_HOME: string = `${this.USER}/${this.HOME}`
+
+	USER_GLOSSARY: string = `${this.USER}/${this.GLOSSARY}`
+
+	USER_CONTACTS: string = `${this.USER}/${this.CONTACTS}`
+
+	USER_GAMES: string = `${this.USER}/${this.GAMES}`
+
+	USER_SETTINGS: string = `${this.USER}/${this.SETTINGS}`
+
+	USER_FAQ: string = `${this.USER}/${this.FAQ}`
+
+	USER_NOTES: string = `${this.USER}/${this.NOTES}`
+
+	USER_CALENDAR = `${this.USER}/${this.CALENDAR}`
+
+
+	STAFF_HOME: string = `${this.STAFF}/${this.HOME}`
+
+	STAFF_GLOSSARY: string = `${this.STAFF}/${this.GLOSSARY}`
+	
+	STAFF_CONTACTS: string = `${this.STAFF}/${this.CONTACTS}`
+
+	STAFF_SETTINGS: string = `${this.STAFF}/${this.SETTINGS}`
+
+	STAFF_FAQ: string = `${this.STAFF}/${this.FAQ}`
+	
 
 	ABOUT_US = '/about-us'
 

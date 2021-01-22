@@ -20,7 +20,7 @@ import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
 import Loader from '../../components/loader/index'
 
-const Main = () => {
+const Main: React.FC = () => {
 	const language = useLanguage()
 
 	const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
@@ -45,34 +45,34 @@ const Main = () => {
 	const renderMainContent = (): JSX.Element => {
 		return (
 			<Switch>
-				<PrivateRoute exact path={PathConstants.HOME} component={Home} />
+				<PrivateRoute exact path={PathConstants.USER_HOME} component={Home} />
 				<PrivateRoute
 					exact
-					path={PathConstants.GAMES}
+					path={PathConstants.USER_GAMES}
 					component={() => <></>}
 				/>
 				<PrivateRoute
 					exact
-					path={PathConstants.GLOSSARY}
+					path={PathConstants.USER_GLOSSARY}
 					component={Glossary}
 				/>
 				<PrivateRoute
 					exact
-					path={PathConstants.CONTACTS}
+					path={PathConstants.USER_CONTACTS}
 					component={Contacts}
 				/>
-				<PrivateRoute exact path={PathConstants.NOTES} component={Notes} />
+				<PrivateRoute exact path={PathConstants.USER_NOTES} component={Notes} />
 				<PrivateRoute
 					exact
-					path={PathConstants.SETTINGS}
+					path={PathConstants.USER_SETTINGS}
 					component={Settings}
 				/>
 				<PrivateRoute
-					path={`${PathConstants.GLOSSARY}/:localId`}
+					path={`${PathConstants.USER_GLOSSARY}/:localId`}
 					component={GlossaryItem}
 				/>
-				<PrivateRoute path={PathConstants.FAQ} component={Faq} />
-				<PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
+				<PrivateRoute path={PathConstants.USER_FAQ} component={Faq} />
+				<PrivateRoute path={PathConstants.USER_CALENDAR} component={Calendar} />
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>
 		)

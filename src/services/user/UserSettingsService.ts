@@ -5,17 +5,17 @@ import APIRequestMappingConstants from '../../constants/api/APIRequestMappingCon
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import TreatmentService from '../treatment/TreatmentService'
 import LanguageBase from '../../constants/languages/LanguageBase'
-import ColorThemeEnum from '../../types/user/view/ColorThemeEnum'
+import ColorThemeEnum from '../../types/enum/ColorThemeEnum'
 import PT from '../../constants/languages/PT'
 import EN from '../../constants/languages/EN'
-import FontSizeEnum from '../../types/user/view/FontSizeEnum'
-import OptionType from '../../types/user/view/OptionType'
+import FontSizeEnum from '../../types/enum/FontSizeEnum'
+import OptionType from '../../types/OptionType'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
-import LanguageEnum from '../../types/user/view/LanguageEnum'
+import LanguageEnum from '../../types/enum/LanguageEnum'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -58,19 +58,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 
 		return entity
 	}
-    
-  async convertEntityToModel(
-    entity: UserSettingsEntity
-  ): Promise<UserSettingsDataModel | undefined> {
-    const model: UserSettingsDataModel = {
-      colorTheme: entity.colorTheme,
-      declineGoogleContacts: entity.declineGoogleContacts,
-      fontSize: entity.fontSize,
-      includeEssentialContact: entity.includeEssentialContact,
-      language: entity.language,
-      firstSettingsDone: entity.firstSettingsDone,
-      step: entity.step,
-    }
+
 
 	async convertEntityToModel(
 		entity: UserSettingsEntity,
@@ -82,7 +70,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			settingsStep: entity.settingsStep,
+			step: entity.step,
 		}
 
 		if (entity.treatmentLocalId) {

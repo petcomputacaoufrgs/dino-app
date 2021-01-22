@@ -152,7 +152,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 	const handleNextStep = () => {
 		if (settings) {
-			settings.settingsStep += 1
+			settings.step += 1
 
 			UserSettingsService.save(settings)
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
@@ -326,7 +326,7 @@ const FirstSettingsDialog: React.FC = () => {
 	}
 
 	const renderDialogContent = () => {
-		const step = settings ? settings.settingsStep : 0
+		const step = settings ? settings.step : 0
 		const dialog = getDialog(step)
 
 		return (

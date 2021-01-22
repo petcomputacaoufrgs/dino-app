@@ -7,9 +7,11 @@ import PrivateRouterContextType from '../../types/context_provider/PrivateRouter
  * @description Contexto padrão para o router
  */
 const PrivateRouterContext = createContext({
-	homePath: '',
+	userHomePath: '',
+	staffHomePath: '',
 	loginPath: '',
 	isAuthenticated: false,
+	userPermission: undefined
 } as PrivateRouterContextType)
 
 /**

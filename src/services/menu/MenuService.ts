@@ -10,43 +10,44 @@ import { ReactComponent as CalendarSVG } from '../../assets/icons/menu_icons/cal
 import LanguageBase from '../../constants/languages/LanguageBase'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
+import UserEnum from '../../types/enum/UserEnum'
 
 class MenuService {
 	getMainPages = (language: LanguageBase): MenuItemViewModel[] => [
 		{
 			image: HomeSVG,
 			name: language.MENU_HOME,
-			onClick: () => HistoryService.push(PathConstants.HOME),
+			onClick: () => HistoryService.push(PathConstants.USER_HOME),
 		},
 		{
 			image: GlossarySVG,
 			name: language.MENU_GLOSSARY,
-			onClick: () => HistoryService.push(PathConstants.GLOSSARY),
+			onClick: () => HistoryService.push(PathConstants.USER_GLOSSARY),
 		},
 		{
 			image: ContactsSVG,
 			name: language.MENU_CONTACTS,
-			onClick: () => HistoryService.push(PathConstants.CONTACTS),
+			onClick: () => HistoryService.push(PathConstants.USER_CONTACTS),
 		},
 		{
 			image: NotesSVG,
 			name: language.MENU_NOTES,
-			onClick: () => HistoryService.push(PathConstants.NOTES),
+			onClick: () => HistoryService.push(PathConstants.USER_NOTES),
 		},
 		{
 			image: FaqSVG,
 			name: language.MENU_FAQ,
-			onClick: () => HistoryService.push(PathConstants.FAQ),
+			onClick: () => HistoryService.push(PathConstants.USER_FAQ),
 		},
 		{
 			image: CalendarSVG,
 			name: language.MENU_CALENDAR,
-			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.USER_SETTINGS),
 		},
 		{
 			image: SettingsSVG,
 			name: language.MENU_SETTINGS,
-			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.USER_SETTINGS),
 		},
 		{
 			name: language.MENU_ABOUT_US,
@@ -75,6 +76,10 @@ class MenuService {
 			},
 		],
 	]
+
+	redirectToHome = (userPermission: number | undefined) => {
+		HistoryService.push(userPermission === UserEnum.STAFF ? PathConstants.STAFF_HOME : PathConstants.USER_HOME)
+	}
 }
 
 export default new MenuService()

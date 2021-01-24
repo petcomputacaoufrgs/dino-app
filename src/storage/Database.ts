@@ -16,6 +16,7 @@ import TreatmentEntity from '../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../types/user/database/UserSettingsEntity'
 import GoogleScopeEntity from '../types/auth/google/database/GoogleScopeEntity'
 import AuthEntity from '../types/auth/database/AuthEntity'
+import StaffEntity from '../types/staff/database/StaffEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 11
@@ -38,6 +39,7 @@ class Database extends Dexie {
 	faqUserQuestion: Dexie.Table<FaqUserQuestionEntity, number>
 	treatment: Dexie.Table<TreatmentEntity, number>
 	googleScope: Dexie.Table<GoogleScopeEntity, number>
+	staff: Dexie.Table<StaffEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)
@@ -64,6 +66,7 @@ class Database extends Dexie {
 			noteColumn: generateSynchronizableTableString(),
 			note: generateSynchronizableTableString('columnId', 'localColumnId'),
 			user: generateSynchronizableTableString(),
+			staff: generateSynchronizableTableString(),
 			faq: generateSynchronizableTableString('localTreatmentId'),
 			faqItem: generateSynchronizableTableString('localFaqId'),
 			faqUserQuestion: generateSynchronizableTableString(),
@@ -78,6 +81,7 @@ class Database extends Dexie {
 		this.auth = this.table('auth')
 		this.userSettings = this.table('userSettings')
 		this.user = this.table('user')
+		this.staff = this.table('staff')
 		this.glossary = this.table('glossary')
 		this.contact = this.table('contact')
 		this.essentialContact = this.table('essentialContact')

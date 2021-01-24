@@ -1,18 +1,53 @@
 import { Avatar, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../../components/button'
 import { useLanguage } from '../../../context/language'
 import './styles.css'
 import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
 import DinoTabPanel from '../../../components/tab_panel'
 import AvatarIcon from '@material-ui/icons/Person';
+import StaffService from '../../../services/staff/StaffService'
+import StaffEntity from '../../../types/staff/database/StaffEntity'
+import Loader from '../../../components/loader'
 
 const StaffModeration: React.FC = () => {
+
+  const [staff, setStaff] = useState<StaffEntity[]>([])
+	const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+		const loadData = async () => {
+			const staff = await StaffService.getAll()
+			updateData(staff)
+			finishLoading()
+		}
+
+		let updateData = (staff: StaffEntity[]) => {
+			setStaff(staff)
+		}
+
+		let finishLoading = () => {
+			setIsLoading(false)
+		}
+
+		StaffService.addUpdateEventListenner(loadData)
+
+		if (isLoading) {
+			loadData()
+		}
+
+		return () => {
+			updateData = () => {}
+			finishLoading = () => {}
+			StaffService.removeUpdateEventListenner(loadData)
+		}
+	}, [isLoading])
 
   const language = useLanguage()
   const [email, setEmail] = useState('')
 
   const handleAddEmail = () => {
+    StaffService.save({ email, sentInvitationDate: new Date() })
     setEmail('')
   }
 
@@ -24,7 +59,7 @@ const StaffModeration: React.FC = () => {
         required
         fullWidth
         value={email}
-        onChange={(event) => setEmail(event.target.value as string)}
+        onChange={e => setEmail(e.target.value as string)}
         margin='dense'
         id='email'
         label={language.data.FORM_EMAIL}
@@ -47,22 +82,19 @@ const StaffModeration: React.FC = () => {
 
   const renderListContent = () => {
 
-    const staff = [
-      { primary: 'mayra.cademartori@gmail.com', secondary: "Jan 9, 2014"},
-      { primary: 'aaaaaa.cademartori@gmail.com', secondary: "Jan 23, 2014"} 
-    ]
-
     return (
-      <List>
-        {staff.map((e, index) => 
-          <ListItem key={index}>
-            <ListItemAvatar>
-              <Avatar><AvatarIcon /></Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={e.primary} secondary={e.secondary} />
-          </ListItem>
-        )}
-      </List>
+      <Loader className='staff_loader' isLoading={isLoading}>
+        <List>
+          {staff.map((e, index) => 
+            <ListItem key={index}>
+              <ListItemAvatar>
+                <Avatar><AvatarIcon /></Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={e.email} secondary={e.sentInvitationDate.toDateString()} />
+            </ListItem>
+          )}
+        </List>
+      </Loader>
     )
   }
   

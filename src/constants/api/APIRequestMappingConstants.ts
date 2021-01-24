@@ -48,6 +48,9 @@ class APIRequestMappingConstants {
 	SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
 
 	TREATMENT_ESSENTIAL_CONTACTS = `${this.CONTACT}essential/faq/`
+
+	STAFF = `${this.URL}staff/`
+
 }
 
 export default new APIRequestMappingConstants()

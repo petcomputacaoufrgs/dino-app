@@ -167,6 +167,10 @@ export default class EN implements LanguageBase {
 
 	FORM_EMAIL = 'Add Staff E-mail'
 
+	ADD_STAF_TAB = 'Add Staff'
+	
+	STAFF_LIST_TAB = 'Staff List'
+
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
 	CONTACTS_ADD_CONTACT = 'New Contact'

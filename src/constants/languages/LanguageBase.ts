@@ -80,6 +80,8 @@ export default interface LanguageBase {
 	FORM_ADD_PHONE: string
 	FORM_ADD_STAFF: string
 	FORM_EMAIL: string
+	ADD_STAF_TAB: string
+	STAFF_LIST_TAB: string
 	NOT_FOUND_QUESTION_FAQ: string
 	CONTACTS_ADD_CONTACT: string
 	CONTACTS_MOBILE_PHONE: string

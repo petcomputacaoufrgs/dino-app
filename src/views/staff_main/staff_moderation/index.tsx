@@ -11,11 +11,6 @@ const StaffModeration: React.FC = () => {
 
   const language = useLanguage()
   const [email, setEmail] = useState('')
-  const [valueTab, setValueTab] = React.useState(0)
-
-  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value as string)
-  }
 
   const handleAddEmail = () => {
     setEmail('')
@@ -29,7 +24,7 @@ const StaffModeration: React.FC = () => {
         required
         fullWidth
         value={email}
-        onChange={handleChangeEmail}
+        onChange={(event) => setEmail(event.target.value as string)}
         margin='dense'
         id='email'
         label={language.data.FORM_EMAIL}
@@ -74,12 +69,9 @@ const StaffModeration: React.FC = () => {
 
   return (
     <div className='staff_moderation'>
-      <DinoTabPanel 
-        valueTab={valueTab} 
-        setValueTab={setValueTab}
-        panels={[
-          { name: "Adicionar", Component: renderFormContent()}, 
-          { name: "Funcionários", Component: renderListContent()}
+      <DinoTabPanel panels={[
+          { name: language.data.ADD_STAF_TAB, Component: renderFormContent()}, 
+          { name: language.data.STAFF_LIST_TAB, Component: renderListContent()}
         ]} 
       />
     </div>

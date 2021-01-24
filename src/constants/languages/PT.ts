@@ -170,6 +170,10 @@ export default class PT implements LanguageBase {
 	FORM_ADD_STAFF = 'Adicionar Funcionário(a)'
 
 	FORM_EMAIL = 'Adicionar E-mail'
+	
+	ADD_STAF_TAB = 'Adicionar'
+	
+	STAFF_LIST_TAB = 'Funcionários'
 
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 

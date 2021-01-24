@@ -1,7 +1,6 @@
-import { AppBar, Tab, Tabs, useTheme } from '@material-ui/core'
-import React from 'react'
-import SwipeableViews from 'react-swipeable-views';
-import DinoTabPanelProps, { TabPanelProps } from './props'
+import { AppBar, Tab, Tabs } from '@material-ui/core'
+import React, { useState } from 'react'
+import { DinoTabPanelProps, TabPanelProps } from './props'
 
 function getProps(index: number) {
 	return {
@@ -10,30 +9,19 @@ function getProps(index: number) {
 	};
  }
 
- const DinoTabPanel = ({ valueTab, setValueTab, panels }: DinoTabPanelProps) => { 
+ const DinoTabPanel = ({panels}: DinoTabPanelProps) => { 
 
-  const theme = useTheme()
+  const [valueTab, setValueTab] = useState(0)
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValueTab(newValue)
-   }
-  
-   const handleChangeIndex = (index: number) => {
-    setValueTab(index)
-   }
-
-  const TabPanel = ({ children, value, index, ...other }: TabPanelProps) => {
+  const TabPanel = ({ children, value, index }: TabPanelProps) => {
     return (
       <div
         role="tabpanel"
         hidden={value !== index}
         id={`full-width-tabpanel-${index}`}
         aria-labelledby={`full-width-tab-${index}`}
-        {...other}
         >
-        {value === index && (
-          children
-        )}
+        {value === index && children}
       </div>
 	  )
  }
@@ -43,7 +31,7 @@ function getProps(index: number) {
       <AppBar position="static" color="default">
         <Tabs
           value={valueTab}
-          onChange={handleChange}
+          onChange={(event, newValue: number) => setValueTab(newValue)}
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
@@ -52,17 +40,11 @@ function getProps(index: number) {
           {panels.map((e, index) => <Tab key={index} label={e.name} {...getProps(index)} />)}
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={valueTab}
-        onChangeIndex={handleChangeIndex}
-      >
         {panels.map((e, index) => 
-          <TabPanel key={index} value={index} index={index} dir={theme.direction}>
+          <TabPanel key={index} value={valueTab} index={index} >
             {e.Component}
           </TabPanel>
         )}
-      </SwipeableViews>
     </div>
     )
   }

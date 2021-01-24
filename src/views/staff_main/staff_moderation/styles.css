@@ -1,9 +1,8 @@
-.dialog_form__content {
+.staff_moderation .dialog_form__content {
 	justify-content: center;
   width: 100%;
   height: 100%;
 	padding: 20px;
-  margin-top: auto;
   display: flex;
   flex-direction: column;
 }
@@ -11,4 +10,8 @@
 .staff_moderation__save_button {
   margin-top: 24px;
   align-self: center;
+}
+
+.staff_moderation .MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.MuiTab-fullWidth {
+  outline: none;
 }

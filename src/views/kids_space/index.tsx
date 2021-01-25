@@ -9,13 +9,11 @@ import './styles.css'
 
 const KidsSpace: React.FC = () => {
     return(
-        <>
 			<Switch>
                 <PrivateRoute exact path={PathConstants.KIDS_SPACE} component={Dinogotchi} />
                 <PrivateRoute exact path={PathConstants.SNAKE_GAME} component={SnakeGame} />
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>
-        </>
     )
 }
 

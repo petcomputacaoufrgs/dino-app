@@ -224,6 +224,7 @@ class AuthService extends UpdatableService {
 				if (body.success) {
 					await this.saveGoogleAuthData(body.data)
 					await this.saveUserSettings(body.data)
+					await this.saveUser(body.data)
 					this.triggerUpdateEvent()
 					await EventService.whenLogin()
 					return [LoginStatusConstants.SUCCESS, undefined]
@@ -352,6 +353,10 @@ class AuthService extends UpdatableService {
 	}
 
 	private async saveUserAuthData(responseBody: AuthResponseDataModel) {
+		await UserService.updateUser(responseBody.user)
+	}
+	
+	private async saveUser(responseBody: AuthResponseDataModel) {
 		await UserService.updateUser(responseBody.user)
 	}
 }

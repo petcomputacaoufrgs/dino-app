@@ -1,19 +1,27 @@
 import { TextField } from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '../../../../components/button'
 import { useLanguage } from '../../../../context/language'
 import { ReactComponent as SaveSVG } from '../../../../assets/icons/save.svg'
 
 
 interface FormContentProps {
-  value: string, 
-  setValue: React.Dispatch<React.SetStateAction<string>>, 
-  handleAdd: () => void
+  handleSave: (value: string) => void,
+  error?: boolean
 }
 
-const FormContent: React.FC<FormContentProps> = ({value, setValue, handleAdd}) => {
+const FormContent: React.FC<FormContentProps> = ({handleSave, error}) => {
+
+  const [value, setValue] = useState('')
 
   const language = useLanguage()
+
+  const onSave = () => {
+    handleSave(value)
+    if(!error) {
+      setValue('')
+    }
+  }
 
   return (
   <div className='dialog_form__content'>
@@ -22,18 +30,18 @@ const FormContent: React.FC<FormContentProps> = ({value, setValue, handleAdd}) =
       fullWidth
       autoFocus
       value={value}
-      onChange={e => setValue(e.target.value as string)}
+      onChange={e => {setValue(e.target.value as string)}}
       margin='dense'
       id='email'
       label={language.data.FORM_EMAIL}
       type='email'
       placeholder='Separe múltiplos e-mails por vírgula'
-      inputProps={{ maxLength: 50 }}
-      //error={isNameInvalid(props.name)}
+      inputProps={{ maxLength: 1000 }}
+      error={error}
     />
     <Button
       className='staff_moderation__save_button'
-      onClick={handleAdd}
+      onClick={onSave}
     >
       <SaveSVG className='staff_moderation__save_button__icon' />
       {language.data.FORM_ADD_STAFF}

@@ -8,13 +8,14 @@ import StaffService from '../../../services/staff/StaffService'
 import Loader from '../../../components/loader'
 import StaffView from '../../../types/staff/view/StaffView'
 import FormContent from './form_content'
+import StringUtils from '../../../utils/StringUtils'
 
 const StaffModeration: React.FC = () => {
 
   const language = useLanguage()
   const [staff, setStaff] = useState<StaffView[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [email, setEmail] = useState('')
+  const [invalidValue, setInvalidValue] = useState(false)
 
   useEffect(() => {
 		const loadData = async () => {
@@ -22,7 +23,6 @@ const StaffModeration: React.FC = () => {
 			updateData(staff.map(e => { 
         return { 
           email: e.email,
-          name: undefined,
           sentInvitationDate: e.sentInvitationDate,
           acceptedInvitation: e.userId !== undefined  
         }}))
@@ -52,10 +52,12 @@ const StaffModeration: React.FC = () => {
 	}, [isLoading])
 
 
-
-  const handleAddEmail = () => {
-    StaffService.save({ email, sentInvitationDate: new Date() })
-    setEmail('')
+  const handleAddEmail = (email: String) => {
+    const emails = email.split(',')
+    setInvalidValue(!emails.some(e => StringUtils.validateEmail(e)))
+    if(!invalidValue) {
+      StaffService.saveAll(emails.map(e => { return { email: e, sentInvitationDate: new Date() }}))
+    }
   }
 
   const ListContent = () => {
@@ -72,7 +74,7 @@ const StaffModeration: React.FC = () => {
                 secondary={
                   <Typography component={'span'} variant={'body2'}>
                     {e.sentInvitationDate.toDateString()}
-                    {!e.acceptedInvitation && (<p className='invitation_pending'>Pendente</p>)}
+                    {!e.acceptedInvitation && (<p className='invitation_pending'>{language.data.PENDING}</p>)}
                   </Typography>
                 }>
               </ListItemText>
@@ -88,8 +90,11 @@ const StaffModeration: React.FC = () => {
     <div className='staff_moderation'>
       <DinoTabPanel panels={[
           { name: language.data.ADD_STAF_TAB, Component: 
-            <FormContent value={email} setValue={setEmail} handleAdd={handleAddEmail} />}, 
-          { name: language.data.STAFF_LIST_TAB, Component: <ListContent />}
+            <FormContent 
+              handleSave={handleAddEmail}
+              error={invalidValue} />
+          }, 
+          { name: language.data.STAFF_LIST_TAB, Component: <ListContent /> }
         ]} 
       />
     </div>

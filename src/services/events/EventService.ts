@@ -30,9 +30,6 @@ class EventService {
 		//CalendarService.addMocks()
 		this.startWebSocketAndSync()
 		const userPermission = await UserService.getPermission()
-		console.log(userPermission)
-		const user = await UserService.getFirst()
-		console.log(user)
 		MenuService.redirectToHome(userPermission)
 	}
 

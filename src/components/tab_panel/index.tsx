@@ -10,7 +10,7 @@ function getProps(index: number) {
 	};
  }
 
- const DinoTabPanel = ({panels}: DinoTabPanelProps) => { 
+ const DinoTabPanel: React.FC<DinoTabPanelProps> = ({ panels, }) => { 
 
   const [valueTab, setValueTab] = useState(0)
 

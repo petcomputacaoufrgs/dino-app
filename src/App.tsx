@@ -61,8 +61,6 @@ const App = (): JSX.Element => {
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
 			const user = await UserService.getFirst()
-		console.log(user)
-			console.log("load no app", hasUserPermission)
       updateUserPermission(hasUserPermission || UserEnum.USER)
 		}
 

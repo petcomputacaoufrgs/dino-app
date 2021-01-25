@@ -175,6 +175,8 @@ export default class PT implements LanguageBase {
 	
 	STAFF_LIST_TAB = 'Funcionários'
 
+	PENDING = 'Pendente'
+
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
 	CONTACTS_ADD_CONTACT = 'Novo Contato'

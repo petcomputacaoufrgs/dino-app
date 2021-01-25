@@ -19,6 +19,10 @@ class PathConstants {
 
 	CALENDAR = `${this.USER}/calendar`
 
+	KIDS_SPACE = '/kids_space'
+
+	SNAKE_GAME = `${this.KIDS_SPACE}/snake_game`
+
 	ABOUT_US = '/about-us'
 
 	TERMS_OF_USE = '/terms_of_use'

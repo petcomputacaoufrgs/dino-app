@@ -18,6 +18,7 @@ import UserSettingsEntity from './types/user/database/UserSettingsEntity'
 import DataFontSizeUtils from './utils/DataFontSizeUtils'
 import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
+import KidsSpace from './views/kids_space'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
@@ -111,10 +112,11 @@ const App = (): JSX.Element => {
 		>
 			<Switch>
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-				<PrivateRoute path={PathConstants.USER} component={() => <Main />} />
-				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
-				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
-				<Route path={PathConstants.ABOUT_US} component={AboutUs} />
+				<PrivateRoute path={PathConstants.USER} component={Main} />
+				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
+				<Route exact path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
+				<Route exact path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
+				<Route exact path={PathConstants.ABOUT_US} component={AboutUs} />
 				<Route path={'/'} component={NotFound} />
 			</Switch>
 		</PrivateRouterContextProvider>

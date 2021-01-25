@@ -494,4 +494,6 @@ export default class EN implements LanguageBase {
 	NO_FAQ_AVAILABLE = 'No F.A.Q available'
 
 	TREATMENT_SAVE = 'Save'
+
+	KIDS_SPACE = 'Kid\'s space'
 }

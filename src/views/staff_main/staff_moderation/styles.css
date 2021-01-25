@@ -1,11 +1,15 @@
+.staff_moderation {
+  height: 100%;
+}
+
 .staff_moderation .dialog_form__content {
-	justify-content: center;
   width: 100%;
   height: 100%;
 	padding: 20px;
   display: flex;
   flex-direction: column;
 }
+
 
 .staff_moderation__save_button {
   margin-top: 24px;
@@ -14,4 +18,18 @@
 
 .staff_moderation .MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.MuiTab-fullWidth {
   outline: none;
+}
+
+.staff_moderation .MuiTypography-root.MuiTypography-body2 {
+  display: flex;
+  flex-direction: row;
+}
+
+.staff_moderation .invitation_pending {
+  margin-left: auto;
+  margin-bottom: 0px;
+  background-color: gray;
+  border-radius: 4px;
+  padding: 0px 4px;
+  width: fit-content;
 }

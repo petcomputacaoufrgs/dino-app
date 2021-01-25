@@ -1,6 +1,7 @@
 import { AppBar, Tab, Tabs } from '@material-ui/core'
 import React, { useState } from 'react'
 import { DinoTabPanelProps, TabPanelProps } from './props'
+import './styles.css'
 
 function getProps(index: number) {
 	return {
@@ -16,6 +17,7 @@ function getProps(index: number) {
   const TabPanel = ({ children, value, index }: TabPanelProps) => {
     return (
       <div
+        className='tab_panel'
         role="tabpanel"
         hidden={value !== index}
         id={`full-width-tabpanel-${index}`}
@@ -27,7 +29,7 @@ function getProps(index: number) {
  }
 
   return (
-    <div >
+    <div className='dino_tab_panels'>
       <AppBar position="static" color="default">
         <Tabs
           value={valueTab}

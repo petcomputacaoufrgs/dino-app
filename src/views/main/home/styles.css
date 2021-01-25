@@ -36,6 +36,7 @@
 	font-weight: bold;
 	color: var(--contrast-color);
 	margin-top: 4px;
+	text-align: center;
 }
 
 .home .home__grid__button {

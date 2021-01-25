@@ -3,7 +3,7 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import AuthService from '../auth/AuthService'
 import SyncService from '../sync/SyncService'
-import CalendarService from '../calendar/CalendarService'
+// import CalendarService from '../calendar/CalendarService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import WebSocketService from '../websocket/WebSocketService'
@@ -27,9 +27,12 @@ class EventService {
 	}
 
 	whenLogin = async () => {
-		CalendarService.addMocks()
+		//CalendarService.addMocks()
 		this.startWebSocketAndSync()
 		const userPermission = await UserService.getPermission()
+		console.log(userPermission)
+		const user = await UserService.getFirst()
+		console.log(user)
 		MenuService.redirectToHome(userPermission)
 	}
 

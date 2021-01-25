@@ -60,7 +60,10 @@ const App = (): JSX.Element => {
 
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
-         updateUserPermission(hasUserPermission || UserEnum.USER)
+			const user = await UserService.getFirst()
+		console.log(user)
+			console.log("load no app", hasUserPermission)
+      updateUserPermission(hasUserPermission || UserEnum.USER)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {

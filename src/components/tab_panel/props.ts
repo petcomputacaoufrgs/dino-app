@@ -5,5 +5,5 @@ export interface TabPanelProps {
 }
 
 export interface DinoTabPanelProps {
-  panels: { name: string, Component: React.ReactNode }[]
+  panels: { name: string, Component: React.ReactNode }[],
 }

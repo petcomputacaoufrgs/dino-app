@@ -1,28 +1,36 @@
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@material-ui/core'
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import Button from '../../../components/button'
 import { useLanguage } from '../../../context/language'
 import './styles.css'
-import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
 import DinoTabPanel from '../../../components/tab_panel'
 import AvatarIcon from '@material-ui/icons/Person';
 import StaffService from '../../../services/staff/StaffService'
-import StaffEntity from '../../../types/staff/database/StaffEntity'
 import Loader from '../../../components/loader'
+import StaffView from '../../../types/staff/view/StaffView'
+import FormContent from './form_content'
 
 const StaffModeration: React.FC = () => {
 
-  const [staff, setStaff] = useState<StaffEntity[]>([])
-	const [isLoading, setIsLoading] = useState(true)
+  const language = useLanguage()
+  const [staff, setStaff] = useState<StaffView[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
 		const loadData = async () => {
 			const staff = await StaffService.getAll()
-			updateData(staff)
+			updateData(staff.map(e => { 
+        return { 
+          email: e.email,
+          name: undefined,
+          sentInvitationDate: e.sentInvitationDate,
+          acceptedInvitation: e.userId !== undefined  
+        }}))
+
 			finishLoading()
 		}
 
-		let updateData = (staff: StaffEntity[]) => {
+		let updateData = (staff: StaffView[]) => {
 			setStaff(staff)
 		}
 
@@ -43,45 +51,14 @@ const StaffModeration: React.FC = () => {
 		}
 	}, [isLoading])
 
-  const language = useLanguage()
-  const [email, setEmail] = useState('')
+
 
   const handleAddEmail = () => {
     StaffService.save({ email, sentInvitationDate: new Date() })
     setEmail('')
   }
 
-
-  const renderFormContent = () => {
-    return (
-    <div className='dialog_form__content'>
-      <TextField
-        required
-        fullWidth
-        value={email}
-        onChange={e => setEmail(e.target.value as string)}
-        margin='dense'
-        id='email'
-        label={language.data.FORM_EMAIL}
-        type='email'
-        multiline
-        placeholder='Separe múltiplos e-mails por vírgula'
-        inputProps={{ maxLength: 50 }}
-        //error={isNameInvalid(props.name)}
-      />
-      <Button
-        className='staff_moderation__save_button'
-        onClick={handleAddEmail}
-      >
-        <SaveSVG className='staff_moderation__save_button__icon' />
-        {language.data.FORM_ADD_STAFF}
-      </Button>
-    </div>
-    )
-  }
-
-  const renderListContent = () => {
-
+  const ListContent = () => {
     return (
       <Loader className='staff_loader' isLoading={isLoading}>
         <List>
@@ -90,7 +67,15 @@ const StaffModeration: React.FC = () => {
               <ListItemAvatar>
                 <Avatar><AvatarIcon /></Avatar>
               </ListItemAvatar>
-              <ListItemText primary={e.email} secondary={e.sentInvitationDate.toDateString()} />
+              <ListItemText 
+                primary={e.email} 
+                secondary={
+                  <Typography component={'span'} variant={'body2'}>
+                    {e.sentInvitationDate.toDateString()}
+                    {!e.acceptedInvitation && (<p className='invitation_pending'>Pendente</p>)}
+                  </Typography>
+                }>
+              </ListItemText>
             </ListItem>
           )}
         </List>
@@ -102,8 +87,9 @@ const StaffModeration: React.FC = () => {
   return (
     <div className='staff_moderation'>
       <DinoTabPanel panels={[
-          { name: language.data.ADD_STAF_TAB, Component: renderFormContent()}, 
-          { name: language.data.STAFF_LIST_TAB, Component: renderListContent()}
+          { name: language.data.ADD_STAF_TAB, Component: 
+            <FormContent value={email} setValue={setEmail} handleAdd={handleAddEmail} />}, 
+          { name: language.data.STAFF_LIST_TAB, Component: <ListContent />}
         ]} 
       />
     </div>

@@ -1,4 +1,6 @@
 export default interface StaffView {
-	// faq: StaffEntity
-	// items: Array<FaqItemEntity>
+	email: string
+	name?: string
+	sentInvitationDate: Date
+	acceptedInvitation: boolean
 }

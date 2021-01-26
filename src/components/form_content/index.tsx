@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../button'
 import { useLanguage } from '../../context/language'
 import { ReactComponent as SaveSVG } from '../../assets/icons/save.svg'
@@ -8,13 +8,21 @@ import './styles.css'
 
 const FormContent: React.FC<FormContentProps> = ( props ) => {
 
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(props.invalidValue || '')
 
   const language = useLanguage()
 
-  const onSave = () => {
-    if(!props.error) {
-      props.handleSave(value)
+  const onSave = (event: React.MouseEvent<any, MouseEvent>) => {
+    props.handleSave(value)
+    clearValue()
+  }
+
+  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setValue(event.target.value as string)
+  }
+
+  const clearValue = () => {
+    if(!Boolean(props.invalidValue)) {
       setValue('')
     }
   }
@@ -26,7 +34,7 @@ const FormContent: React.FC<FormContentProps> = ( props ) => {
       required={props.required}
       fullWidth={props.fullWidth}
       value={value}
-      onChange={e => setValue(e.target.value as string)}
+      onChange={onChange}
       margin='dense'
       id={props.type || 'name'}
       label={props.label}
@@ -34,7 +42,7 @@ const FormContent: React.FC<FormContentProps> = ( props ) => {
       placeholder={props.placeholder}
       helperText={props.helperText}
       inputProps={{ maxLength: props.textMaxLengh || 1000 }}
-      error={props.error}
+      error={Boolean(props.invalidValue)}
     />
     {props.children}
     <Button

@@ -4,5 +4,6 @@ export default interface FormContentProps extends StandardTextFieldProps {
   handleSave: (value: string) => void,
   saveButtonText?: string
   textMaxLengh?: number
+  invalidValue?: string,
   children?: React.ReactNode
 }

@@ -15,7 +15,7 @@ const StaffModeration: React.FC = () => {
   const language = useLanguage()
   const [staff, setStaff] = useState<StaffView[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [invalidValue, setInvalidValue] = useState(false)
+  const [invalidValue, setInvalidValue] = useState('')
 
   useEffect(() => {
 		const loadData = async () => {
@@ -52,12 +52,17 @@ const StaffModeration: React.FC = () => {
 	}, [isLoading])
 
 
-  const handleAddEmail = (email: String) => {
-    const emails = email.split(',')
-    const isInvalid = !emails.some(e => StringUtils.validateEmail(e))
-    setInvalidValue(isInvalid)
-    if(!isInvalid) {
-      StaffService.saveAll(emails.map(e => { return { email: e, sentInvitationDate: new Date() }}))
+  const handleSaveEmail = (value: string) => {
+    const emails = value.split(',')
+    const areInvalid = emails.some(e => !StringUtils.validateEmail(e.trim()))
+
+    if(areInvalid) {
+      setInvalidValue(value)
+    } else {
+      setInvalidValue('')
+      StaffService.saveAll(emails.map(e => { 
+        return { email: e, sentInvitationDate: new Date() }
+      }))  
     }
   }
 
@@ -91,16 +96,16 @@ const StaffModeration: React.FC = () => {
     <div className='staff_moderation'>
       <DinoTabPanel panels={[
           { name: language.data.ADD_STAF_TAB, Component: 
-            <FormContent 
-              handleSave={handleAddEmail}
-              error={invalidValue}
+            <FormContent
+              defaultValue={'wftreretretrte'} 
+              handleSave={handleSaveEmail}
+              invalidValue={invalidValue}
               helperText={invalidValue && 'E-mail inválido'}
               type={'email'}
               placeholder={'Separe múltiplos e-mails por vírgula'} 
               label={language.data.FORM_EMAIL}
               saveButtonText={language.data.FORM_ADD_STAFF}
-            >
-            </FormContent>
+            />          
           }, 
           { name: language.data.STAFF_LIST_TAB, Component: <ListContent /> }
         ]} 

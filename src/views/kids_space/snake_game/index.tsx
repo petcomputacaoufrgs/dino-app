@@ -8,7 +8,7 @@ const SnakeGame: React.FC = () => {
             <div>
                 Eu sou o jogo da cobra ra ra
             </div>
-            <button onClick = {() => {HistoryService.push(PathConstants.KIDS_SPACE)}}> Clica ae </button>
+            <button onClick = {() => {HistoryService.push(PathConstants.GAME_MENU)}}> Clica ae </button>
         </>
     )
 }

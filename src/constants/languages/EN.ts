@@ -171,6 +171,8 @@ export default class EN implements LanguageBase {
 	
 	STAFF_LIST_TAB = 'Staff List'
 
+	STAFF_SAVE_SUCCESS = 'Staff successfully added'
+
 	PENDING = 'Pending'
 
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'

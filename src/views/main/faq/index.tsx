@@ -166,11 +166,11 @@ const Faq: React.FC = () => {
 				<>
 					{treatment ? (
 						<div className='faq__fail_to_load'>
-							<h2>{language.data.NO_FAQ_AVAILABLE}</h2>
+							<p>{language.data.NO_FAQ_AVAILABLE}</p>
 						</div>
 					) : (
 						<div className='faq__fail_to_load'>
-							<h2>{language.data.NO_TREATMENT_SELECTED}</h2>
+							<p>{language.data.NO_TREATMENT_SELECTED}</p>
 							<SelectTreatment
 								availableTreatments={treatments || []}
 								setTreatment={setSelectedTreatment}

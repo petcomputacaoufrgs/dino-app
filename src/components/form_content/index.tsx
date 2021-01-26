@@ -31,18 +31,10 @@ const FormContent: React.FC<FormContentProps> = ( props ) => {
   <div className='dialog_form__content'>
     <TextField
       className='dialog_form__content__textfield'
-      required={props.required}
-      fullWidth={props.fullWidth}
       value={value}
       onChange={onChange}
-      margin='dense'
-      id={props.type || 'name'}
-      label={props.label}
-      type={props.type || 'name'}
-      placeholder={props.placeholder}
-      helperText={props.helperText}
-      inputProps={{ maxLength: props.textMaxLengh || 1000 }}
       error={Boolean(props.invalidValue)}
+      {...props}
     />
     {props.children}
     <Button

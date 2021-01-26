@@ -9,10 +9,13 @@ import Loader from '../../../components/loader'
 import StaffView from '../../../types/staff/view/StaffView'
 import FormContent from '../../../components/form_content'
 import StringUtils from '../../../utils/StringUtils'
+import { useAlert } from '../../../context/alert'
 
 const StaffModeration: React.FC = () => {
 
   const language = useLanguage()
+  const alert = useAlert()
+
   const [staff, setStaff] = useState<StaffView[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [invalidValue, setInvalidValue] = useState('')
@@ -62,11 +65,12 @@ const StaffModeration: React.FC = () => {
       setInvalidValue('')
       StaffService.saveAll(emails.map(e => { 
         return { email: e, sentInvitationDate: new Date() }
-      }))  
+      }))
+      alert.showSuccessAlert(language.data.STAFF_SAVE_SUCCESS)
     }
   }
 
-  const ListContent = () => {
+  const ListStaff = () => {
     return (
       <Loader className='staff_loader' isLoading={isLoading}>
         <List>
@@ -90,24 +94,36 @@ const StaffModeration: React.FC = () => {
       </Loader>
     )
   }
+  const AddStaff = () => {
+    return (
+      <div className='add_staff'>
+        <p className='add_staff__title'>Adicione Funcionários</p>
+        <p>Funcionários são usuários com poderes adiministrativos de adicionar e blablabla</p>
+        <p>Para adicionar mais de um(a) funionário(a), separe seus e-mails por vírgula</p>
+        <FormContent
+          required
+          multiline
+          handleSave={handleSaveEmail}
+          invalidValue={invalidValue}
+          helperText={invalidValue && 'E-mail inválido'}
+          type='email'
+          margin='dense'
+          placeholder='Separe e-mails por vírgula'
+          inputProps={{ maxLength: 1000 }}
+          label={language.data.FORM_EMAIL}
+          saveButtonText={language.data.FORM_ADD_STAFF}
+        />          
+      </div>
+    )
+  }
   
 
   return (
     <div className='staff_moderation'>
+      
       <DinoTabPanel panels={[
-          { name: language.data.ADD_STAF_TAB, Component: 
-            <FormContent
-              defaultValue={'wftreretretrte'} 
-              handleSave={handleSaveEmail}
-              invalidValue={invalidValue}
-              helperText={invalidValue && 'E-mail inválido'}
-              type={'email'}
-              placeholder={'Separe múltiplos e-mails por vírgula'} 
-              label={language.data.FORM_EMAIL}
-              saveButtonText={language.data.FORM_ADD_STAFF}
-            />          
-          }, 
-          { name: language.data.STAFF_LIST_TAB, Component: <ListContent /> }
+          { name: language.data.ADD_STAF_TAB, Component: AddStaff() },
+          { name: language.data.STAFF_LIST_TAB, Component: ListStaff() }
         ]} 
       />
     </div>

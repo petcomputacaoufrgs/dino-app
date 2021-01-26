@@ -93,7 +93,19 @@ class MenuService {
 			image: SettingsSVG,
 			name: language.MENU_STAFF_MODERATION,
 			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
-		}
+		},
+		{
+			name: language.MENU_ABOUT_US,
+			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
+		},
+		{
+			name: language.PRIVACY_POLICY,
+			onClick: () => HistoryService.push(PathConstants.PRIVACY_POLICY),
+		},
+		{
+			name: language.TERMS_OF_USE,
+			onClick: () => HistoryService.push(PathConstants.TERMS_OF_USE),
+		},
 	]
 
 	getGroupedMenuItems = (

@@ -35,7 +35,7 @@
 	text-align: center;
 }
 
-.faq__fail_to_load h2 {
+.faq__fail_to_load p {
 	font-size: var(--big-font);
 	margin-bottom: 2rem;
 }

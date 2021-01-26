@@ -82,6 +82,7 @@ export default interface LanguageBase {
 	FORM_EMAIL: string
 	ADD_STAF_TAB: string
 	STAFF_LIST_TAB: string
+	STAFF_SAVE_SUCCESS: string
 	PENDING: string
 	NOT_FOUND_QUESTION_FAQ: string
 	CONTACTS_ADD_CONTACT: string

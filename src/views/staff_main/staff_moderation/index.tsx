@@ -7,7 +7,7 @@ import AvatarIcon from '@material-ui/icons/Person';
 import StaffService from '../../../services/staff/StaffService'
 import Loader from '../../../components/loader'
 import StaffView from '../../../types/staff/view/StaffView'
-import FormContent from './form_content'
+import FormContent from '../../../components/form_content'
 import StringUtils from '../../../utils/StringUtils'
 
 const StaffModeration: React.FC = () => {
@@ -54,8 +54,9 @@ const StaffModeration: React.FC = () => {
 
   const handleAddEmail = (email: String) => {
     const emails = email.split(',')
-    setInvalidValue(!emails.some(e => StringUtils.validateEmail(e)))
-    if(!invalidValue) {
+    const isInvalid = !emails.some(e => StringUtils.validateEmail(e))
+    setInvalidValue(isInvalid)
+    if(!isInvalid) {
       StaffService.saveAll(emails.map(e => { return { email: e, sentInvitationDate: new Date() }}))
     }
   }
@@ -92,7 +93,14 @@ const StaffModeration: React.FC = () => {
           { name: language.data.ADD_STAF_TAB, Component: 
             <FormContent 
               handleSave={handleAddEmail}
-              error={invalidValue} />
+              error={invalidValue}
+              helperText={invalidValue && 'E-mail inválido'}
+              type={'email'}
+              placeholder={'Separe múltiplos e-mails por vírgula'} 
+              label={language.data.FORM_EMAIL}
+              saveButtonText={language.data.FORM_ADD_STAFF}
+            >
+            </FormContent>
           }, 
           { name: language.data.STAFF_LIST_TAB, Component: <ListContent /> }
         ]} 

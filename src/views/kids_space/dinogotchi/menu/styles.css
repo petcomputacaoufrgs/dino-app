@@ -1,0 +1,13 @@
+.game_menu {
+    background-color: #A594AB;
+}
+
+.game_card {
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.go_back svg{
+    width: 3rem;
+    height: 3rem;
+    margin: 1rem 0rem 0rem 1rem;
+}

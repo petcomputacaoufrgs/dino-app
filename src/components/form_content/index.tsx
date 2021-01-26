@@ -23,8 +23,8 @@ const FormContent: React.FC<FormContentProps> = ( props ) => {
   <div className='dialog_form__content'>
     <TextField
       className='dialog_form__content__textfield'
-      required={props.required || true}
-      fullWidth={props.fullWidth || true}
+      required={props.required}
+      fullWidth={props.fullWidth}
       value={value}
       onChange={e => setValue(e.target.value as string)}
       margin='dense'

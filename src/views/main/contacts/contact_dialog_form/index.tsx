@@ -8,7 +8,7 @@ import ContactFormDialogContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
-import ContactsConstants from '../../../../constants/contact/ContactsConstants'
+import Constants from '../../../../constants/contact/ContactsConstants'
 import StringUtils from '../../../../utils/StringUtils'
 import ContactView from '../../../../types/contact/view/ContactView'
 import Utils from '../../../../utils/Utils'
@@ -21,6 +21,8 @@ import SelectMultipleTreatments from '../../../../components/settings/select_mul
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import './styles.css'
 import DinoHr from '../../../../components/dino_hr'
+import { usePrivateRouter } from '../../../../context/private_router'
+import UserEnum from '../../../../types/enum/UserEnum'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
 	return item
@@ -38,7 +40,7 @@ const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
 		: [
 				{
 					number: '',
-					type: ContactsConstants.MOBILE,
+					type: Constants.MOBILE,
 				},
 		  ]
 }
@@ -55,6 +57,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 		const [invalidName, setInvalidName] = useState(false)
 		const [invalidPhone, setInvalidPhone] = useState({ number: '', text: '' })
 		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
+		const staff = usePrivateRouter().userPermission === UserEnum.STAFF
 
 		useEffect(() => {
 			if (dialogOpen) {
@@ -109,12 +112,11 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 			) {
 				const newPhones = contactPhones.filter(phone => phone.number !== '')
 
-				let attr = 'localEssentialContactId'
-				if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {
-					attr = 'localContactId'
+				if (staff) {
+					newPhones.forEach(phone => (phone.localEssentialContactId = contact.localId))
+				} else {
+					newPhones.forEach(phone => (phone.localContactId = contact.localId))
 				}
-
-				newPhones.forEach(phone => (phone[attr] = contact.localId))
 
 				if (newPhones.length > 0) {
 					await PhoneService.saveAll(newPhones)
@@ -124,50 +126,45 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 					await PhoneService.deleteAll(phonesToDelete)
 				}
 
-				await GoogleContactService.saveGoogleContact(
-					contact,
-					item?.googleContact,
-				)
+				if(item && 'googleContact' in item) {
+					await GoogleContactService.saveGoogleContact(
+						contact,
+						item.googleContact,
+					)
+				}
 			}
 
-			switch (action) {
-				case ContactsConstants.ACTION_EDIT:
-					if (item && Utils.isNotEmpty(item.contact.localId)) {
-						const savedContact = await ContactService.save(contact)
-						if (savedContact) {
-							await savePhones(savedContact)
-						}
-					}
-					break
+			async function saveContactAndPhones() {
+				const saved = await ContactService.save(contact)
+				if (saved) {
+					await savePhones(saved)
+				}
+			}
 
-				case ContactsConstants.ACTION_ADD:
-					const savedContact = await ContactService.save(contact)
-					if (savedContact) {
-						await savePhones(savedContact)
-					}
-					break
+			async function saveEssentialContactAndPhones() {
+				const newEssentialContact: EssentialContactEntity = {
+					...contact,
+					treatmentLocalIds: selectedTreatmentLocalIds,
+					isUniversal: selectedTreatmentLocalIds.length > 0 ? 0 : 1,
+				}
+				
+				const saved = await EssentialContactService.save(newEssentialContact)
+				if (saved) {
+					await savePhones(saved)
+				}
+			}
 
-				case ContactsConstants.ACTION_ADD_ESSENTIAL:
-					const newEssentialContact: EssentialContactEntity = {
-						...contact,
-						treatmentLocalIds: selectedTreatmentLocalIds,
-						isUniversal: selectedTreatmentLocalIds.length > 0 ? 0 : 1,
-					}
-					
-					const savedEssentialContact = await EssentialContactService.save(
-						newEssentialContact,
-					)
-					if (savedEssentialContact) {
-						await savePhones(savedEssentialContact)
-					}
-					break
+			const isEditAndItemIsValid = item && Utils.isNotEmpty(item.contact.localId)
+
+			if(action === Constants.ADD || isEditAndItemIsValid) {
+					staff ? saveEssentialContactAndPhones() : saveContactAndPhones()
 			}
 		}
 
 		const handleAddPhone = () => {
 			contactPhones.push({
 				number: '',
-				type: ContactsConstants.MOBILE,
+				type: Constants.MOBILE,
 			})
 			setContactPhones([...contactPhones])
 		}
@@ -211,7 +208,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
               handleDeletePhone={handleDeletePhone}
               handleAddPhone={handleAddPhone}
             >
-              {action === ContactsConstants.ACTION_ADD_ESSENTIAL && (
+              {staff && (
 								<> <DinoHr />
 								<SelectMultipleTreatments 
 									selectedLocalIds={selectedTreatmentLocalIds}

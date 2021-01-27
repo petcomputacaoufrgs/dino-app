@@ -14,6 +14,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
+import EssentialContactView from '../../types/contact/view/EssentialContactView'
 
 class ContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -115,13 +116,13 @@ class ContactServiceImpl extends AutoSynchronizableService<
 			.sort((a, b) => this.contactViewSort(a, b))
 	}
 
+
+
 	filterContactViews(
-		contacts: ContactView[],
+		contacts: Array<ContactView | EssentialContactView>,
 		searchTerm: string,
-	): ContactView[] {
-		return contacts.filter(item =>
-			StringUtils.contains(item.contact.name, searchTerm),
-		)
+	) {
+		return contacts.filter((item) => StringUtils.contains(item.contact.name, searchTerm))
 	}
 
 	private contactViewSort(a: ContactView, b: ContactView) {

@@ -40,7 +40,7 @@ const AddContactDialogHeader = (
 					onClick={handleChangeColor}
 				/>
 			}
-			title={props.contact.name || props.action === Constants.ACTION_ADD
+			title={props.contact.name || props.action === Constants.ADD
 					? language.data.CONTACTS_ADD_CONTACT
 					: language.data.CONTACTS_ADD_ESSENTIAL_CONTACT
 			}

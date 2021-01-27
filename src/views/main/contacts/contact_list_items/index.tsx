@@ -11,47 +11,53 @@ import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
 import ContactService from '../../../../services/contact/ContactService'
 import GoogleContactService from '../../../../services/contact/GoogleContactService'
+import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
+import { usePrivateRouter } from '../../../../context/private_router'
+import UserEnum from '../../../../types/enum/UserEnum'
+import EssentialContactService from '../../../../services/contact/EssentialContactService'
+import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
-	const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(
-		undefined,
-	)
-	const [contactToView, setContactToView] = useState<ContactView | undefined>(
-		undefined,
-	)
-	const [contactToDelete, setContactToDelete] = useState<
-		ContactView | undefined
-	>(undefined)
+	const [contactToEdit, setContactToEdit] = useState<ContactView | EssentialContactView | undefined>(undefined,)
+	const [contactToView, setContactToView] = useState<ContactView | EssentialContactView | undefined>(undefined,)
+	const [contactToDelete, setContactToDelete] = useState<ContactView | EssentialContactView | undefined>(undefined)
 
 	const language = useLanguage()
+	const staff = usePrivateRouter().userPermission === UserEnum.STAFF
 
 	const handleOpenCard = (index: number) => {
 		setContactToView(items[index])
 	}
 
 	const handleAcceptDeleteDialog = async () => {
-		const deleteGoogleContact = async (
+
+		async function deleteGoogleContact (
 			contactToDelete: ContactView,
-		): Promise<void> => {
+		): Promise<void> {
 			if (contactToDelete.googleContact) {
 				await GoogleContactService.delete(contactToDelete.googleContact)
 			}
 		}
 
-		const deletePhones = async (
-			contactToDelete: ContactView,
-		): Promise<void> => {
+		async function deletePhones (
+			contactToDelete: ContactView | EssentialContactView,
+		): Promise<void> {
 			if (contactToDelete.phones.length > 0) {
 				await PhoneService.deleteAll(contactToDelete.phones)
 			}
 		}
 
-		setContactToDelete(undefined)
 		if (contactToDelete) {
-			await deleteGoogleContact(contactToDelete)
 			await deletePhones(contactToDelete)
-			await ContactService.delete(contactToDelete.contact)
+			if(staff) {
+				await EssentialContactService.delete(contactToDelete.contact as EssentialContactEntity)
+			} else {
+				await deleteGoogleContact(contactToDelete)
+				await ContactService.delete(contactToDelete.contact)
+			}
 		}
+		
+		setContactToDelete(undefined)
 	}
 
 	const handleCloseDeleteDialog = () => {
@@ -61,7 +67,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	return (
 		<>
 			<List className='contacts__list'>
-				{items.map((item, index) => (
+				{items.map((item, index) => 
 					<ContactItemList
 						key={index}
 						item={item}
@@ -70,7 +76,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						onDelete={setContactToDelete}
 						onCloseDialog={() => setContactToView(undefined)}
 					/>
-				))}
+				)}
 			</List>
 			{contactToView && (
 				<ContactCard
@@ -87,7 +93,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 					onClose={() => setContactToEdit(undefined)}
 					item={contactToEdit}
 					items={items}
-					action={Constants.ACTION_EDIT}
+					action={Constants.EDIT}
 				/>
 			)}
 			{contactToDelete && (

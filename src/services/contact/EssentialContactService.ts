@@ -14,6 +14,8 @@ import TreatmentService from '../treatment/TreatmentService'
 import Utils from '../../utils/Utils'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import GoogleContactService from './GoogleContactService'
+import EssentialContactView from '../../types/contact/view/EssentialContactView'
+import StringUtils from '../../utils/StringUtils'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -141,7 +143,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		}
 	}
 
-	private convertEntityToContactEntity(entity: EssentialContactEntity) {
+	private convertEntityToContactEntity(entity: EssentialContactEntity): ContactEntity {
 		const contactEntity: ContactEntity = {
 			name: entity.name,
 			description: entity.description,
@@ -150,6 +152,26 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		}
 
 		return contactEntity
+	}
+
+	getEssentialContactViews(
+		eContacts: EssentialContactEntity[],
+		phones: PhoneEntity[],
+	): EssentialContactView[] {
+		return eContacts
+			.map(e => ({
+						contact: e,
+						phones: PhoneService.filterByEssentialContact(e, phones),
+					} as EssentialContactView),
+			)
+			.sort((a, b) => a.contact.name > b.contact.name ? 1 : -1)
+	}
+
+	filterEssentialContactViews(
+		contacts: EssentialContactView[],
+		searchTerm: string,
+	): EssentialContactView[] {
+		return contacts.filter(item => StringUtils.contains(item.contact.name, searchTerm))
 	}
 }
 

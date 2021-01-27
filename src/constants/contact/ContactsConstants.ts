@@ -3,9 +3,8 @@ enum ContactsConstants {
 	RESIDENTIAL = 2,
 	MOBILE = 8,
 
-	ACTION_ADD = 1,
-	ACTION_EDIT = 2,
-	ACTION_ADD_ESSENTIAL = 3,
+	ADD = 1,
+	EDIT = 2,
 
 	NAME_MAX = 100,
 	DESCRIPTION_MAX = 500,

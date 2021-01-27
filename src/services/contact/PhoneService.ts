@@ -14,6 +14,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
+import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
 	number,
@@ -162,6 +163,15 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 	): PhoneEntity[] | undefined {
 		if (contact.localId) {
 			return phones.filter(phone => phone.localContactId === contact.localId)
+		}
+	}
+
+	filterByEssentialContact(
+		eContact: EssentialContactEntity,
+		phones: PhoneEntity[],
+	): PhoneEntity[] | undefined {
+		if (eContact.localId) {
+			return phones.filter(phone => phone.localEssentialContactId === eContact.localId)
 		}
 	}
 

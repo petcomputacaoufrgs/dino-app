@@ -53,7 +53,7 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_CONTACTS}
-					component={() => <Contacts staff/>}
+					component={Contacts}
 				/>
 				<PrivateRoute
 					exact

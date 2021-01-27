@@ -53,7 +53,7 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_CONTACTS}
-					component={Contacts}
+					component={() => <Contacts staff/>}
 				/>
 				<PrivateRoute
 					exact
@@ -87,7 +87,7 @@ const StaffMain: React.FC = () => {
 				onDisagree={handleLogoutDisagree}
 				open={openLogoutDialog}
 			/>
-			{/* <FirstSettingsDialog /> */}
+			<FirstSettingsDialog />
 		</Loader>
 	)
 }

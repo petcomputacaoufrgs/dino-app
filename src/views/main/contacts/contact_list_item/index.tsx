@@ -26,8 +26,7 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 
 	const handleOpen = () => onClick(item.contact.localId!)
 
-	const isEssential = () =>
-		Utils.isNotEmpty(item.contact.localEssentialContactId)
+	const isEssential = () => Utils.isNotEmpty(item.contact.localEssentialContactId)
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 

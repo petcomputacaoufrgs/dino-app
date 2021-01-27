@@ -1,24 +1,16 @@
 import { ReactNode } from 'react'
+import ContactEntity from '../../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 
 export interface ContactFormDialogContentProps {
-	children: ReactNode
-	name: string
-	description: string
+	action: number
+	contact: ContactEntity
+	setContact: (value: React.SetStateAction<ContactEntity>) => void
 	phones: PhoneEntity[]
+	setPhones: (value: React.SetStateAction<PhoneEntity[]>) => void
+	children: ReactNode
 	invalidName: boolean
-	helperText: { number: string; text: string }
-
+	helperTextInvalidPhone: { number: string; text: string }
 	handleAddPhone: () => void
 	handleDeletePhone: (number: string) => void
-	handleChangeName: (event: React.ChangeEvent<HTMLInputElement>) => void
-	handleChangeDescription: (event: React.ChangeEvent<HTMLInputElement>) => void
-	handleChangeType: (
-		e: React.ChangeEvent<HTMLInputElement>,
-		index: number,
-	) => void
-	handleChangeNumber: (
-		e: React.ChangeEvent<HTMLInputElement>,
-		index: number,
-	) => void
 }

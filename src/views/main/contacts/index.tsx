@@ -18,7 +18,12 @@ import PhoneService from '../../../services/contact/PhoneService'
 import GoogleContactService from '../../../services/contact/GoogleContactService'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const Contacts: React.FC = () => {
+interface ContactProps {
+	staff?: boolean
+}
+
+const Contacts: React.FC<ContactProps> = ( { staff }) => {
+
 	const language = useLanguage()
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -124,7 +129,7 @@ const Contacts: React.FC = () => {
 	}
 
 	const handleAddContact = () => {
-		if (settings) {
+		if (settings && !staff) {
 			if (!syncGoogleContacts && !settings.declineGoogleContacts) {
 				setOpenGrantDialog(true)
 				return
@@ -134,20 +139,12 @@ const Contacts: React.FC = () => {
 		setAdd(true)
 	}
 
-	const handleAddEssentialContact = () => {
-		setAddEssential(true)
-	}
-
 	const handleClose = () => {
 		setAdd(false)
 		if (shouldDecline && settings) {
 			settings.declineGoogleContacts = true
 			UserSettingsService.save(settings)
 		}
-	}
-
-	const handleCloseEssential = () => {
-		setAddEssential(false)
 	}
 
 	return (
@@ -165,24 +162,12 @@ const Contacts: React.FC = () => {
 					icon={AddIconSVG}
 					onClick={handleAddContact}
 				/>
-				<CircularButton
-					ariaLabel={language.data.CONTACTS_ADD_CONTACT + ' (Essential)'}
-					className='add_essential_contact_button'
-					icon={AddIconSVG}
-					onClick={handleAddEssentialContact}
-				/>
 			</Loader>
 			<ContactFormDialog
 				items={contacts}
-				action={Contants.ACTION_ADD}
+				action={staff ? Contants.ACTION_ADD_ESSENTIAL : Contants.ACTION_ADD}
 				dialogOpen={add}
 				onClose={handleClose}
-			/>
-			<ContactFormDialog
-				items={contacts}
-				action={Contants.ACTION_ADD_ESSENTIAL}
-				dialogOpen={addEssential}
-				onClose={handleCloseEssential}
 			/>
 			<GoogleGrantDialog
 				onAccept={handleAcceptGoogleGrant}

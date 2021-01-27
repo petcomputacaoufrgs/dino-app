@@ -60,7 +60,6 @@ const App = (): JSX.Element => {
 
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
-			const user = await UserService.getFirst()
       updateUserPermission(hasUserPermission || UserEnum.USER)
 		}
 

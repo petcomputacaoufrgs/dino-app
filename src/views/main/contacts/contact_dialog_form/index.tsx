@@ -43,9 +43,9 @@ const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
 		  ]
 }
 
-const ContactFormDialog = React.forwardRef(
+const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 	(
-		{ dialogOpen, onClose, action, item, items }: ContactFormDialogProps,
+		{ dialogOpen, onClose, action, item, items },
 		ref: React.Ref<unknown>,
 	) => {
 		const language = useLanguage()
@@ -54,9 +54,7 @@ const ContactFormDialog = React.forwardRef(
 		const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
 		const [invalidName, setInvalidName] = useState(false)
 		const [invalidPhone, setInvalidPhone] = useState({ number: '', text: '' })
-		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<
-			number[]
-		>([])
+		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
 
 		useEffect(() => {
 			if (dialogOpen) {
@@ -105,6 +103,7 @@ const ContactFormDialog = React.forwardRef(
 		}
 
 		const saveContact = async () => {
+
 			async function savePhones(
 				contact: ContactEntity | EssentialContactEntity,
 			) {
@@ -140,19 +139,21 @@ const ContactFormDialog = React.forwardRef(
 						}
 					}
 					break
+
 				case ContactsConstants.ACTION_ADD:
 					const savedContact = await ContactService.save(contact)
 					if (savedContact) {
 						await savePhones(savedContact)
 					}
 					break
+
 				case ContactsConstants.ACTION_ADD_ESSENTIAL:
 					const newEssentialContact: EssentialContactEntity = {
 						...contact,
 						treatmentLocalIds: selectedTreatmentLocalIds,
-						isUniversal: selectedTreatmentLocalIds.length > 0 ? 1 : 0,
+						isUniversal: selectedTreatmentLocalIds.length > 0 ? 0 : 1,
 					}
-
+					
 					const savedEssentialContact = await EssentialContactService.save(
 						newEssentialContact,
 					)
@@ -161,13 +162,6 @@ const ContactFormDialog = React.forwardRef(
 					}
 					break
 			}
-		}
-
-		const handleChangeColor = () => {
-			const colors = ColorConstants.COLORS
-			const index = colors.findIndex(c => c === contact.color)
-			const color = colors[(index + 1) % colors.length]
-			setContact({ ...contact, color })
 		}
 
 		const handleAddPhone = () => {
@@ -188,39 +182,10 @@ const ContactFormDialog = React.forwardRef(
 			setContactPhones([...contactPhones])
 		}
 
-		const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-			const name = event.target.value as string
-			setContact({ ...contact, name })
-		}
-
-		const handleChangeDescription = (
-			event: React.ChangeEvent<HTMLInputElement>,
-		) => {
-			const description = event.target.value as string
-			setContact({ ...contact, description })
-		}
-
-		const handleChangeType = (
-			event: React.ChangeEvent<HTMLInputElement>,
-			index: number,
-		) => {
-			contactPhones[index].type = Number(event.target.value)
-			setContactPhones([...contactPhones])
-		}
-
-		const handleChangeNumber = (
-			event: React.ChangeEvent<HTMLInputElement>,
-			index: number,
-		) => {
-			contactPhones[index].number = event.target.value as string
-			setContactPhones([...contactPhones])
-		}
-
     return (
       <div className="contact__form">
         <Dialog
           ref={ref}
-          style={{ margin: '0px' }}
           open={dialogOpen}
           maxWidth="xl"
           fullWidth
@@ -230,33 +195,29 @@ const ContactFormDialog = React.forwardRef(
         >
           <ContactFormDialogHeader
             action={action}
-            name={contact.name}
-            color={contact.color}
-            handleChangeColor={handleChangeColor}
+						contact={contact}
+						setContact={setContact}
             handleCloseDialog={onClose}
           />
           <DialogContent dividers>
             <ContactFormDialogContent
-              name={contact.name}
-              description={contact.description || ''}
-              phones={contactPhones}
-              helperText={invalidPhone}
+							action={action}
+							contact={contact}
+							setContact={setContact}
+							phones={contactPhones}
+							setPhones={setContactPhones}
               invalidName={invalidName}
-              handleChangeName={handleChangeName}
-              handleChangeDescription={handleChangeDescription}
-              handleChangeType={handleChangeType}
-              handleChangeNumber={handleChangeNumber}
+              helperTextInvalidPhone={invalidPhone}
               handleDeletePhone={handleDeletePhone}
               handleAddPhone={handleAddPhone}
             >
-              {
-                action === ContactsConstants.ACTION_ADD_ESSENTIAL ?
-                <> <DinoHr />
-                <SelectMultipleTreatments 
-                  selectedLocalIds={selectedTreatmentLocalIds}
-                  setSelectedLocalIds={setSelectedTreatmentLocalIds}
-                /> </> : <></>
-              }
+              {action === ContactsConstants.ACTION_ADD_ESSENTIAL && (
+								<> <DinoHr />
+								<SelectMultipleTreatments 
+									selectedLocalIds={selectedTreatmentLocalIds}
+									setSelectedLocalIds={setSelectedTreatmentLocalIds}
+								/> </>
+							)}
             </ContactFormDialogContent>
           </DialogContent>
           <DialogActions>

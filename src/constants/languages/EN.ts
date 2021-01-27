@@ -179,6 +179,8 @@ export default class EN implements LanguageBase {
 
 	CONTACTS_ADD_CONTACT = 'New Contact'
 
+	CONTACTS_ADD_ESSENTIAL_CONTACT = 'New Essential Contact'
+
 	CONTACTS_MOBILE_PHONE = 'Mobile'
 
 	CONTACTS_RESIDENTIAL_PHONE = 'Residential'

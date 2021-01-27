@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Button from '../button'
 import { useLanguage } from '../../context/language'
 import { ReactComponent as SaveSVG } from '../../assets/icons/save.svg'
@@ -31,10 +31,19 @@ const FormContent: React.FC<FormContentProps> = ( props ) => {
   <div className='dialog_form__content'>
     <TextField
       className='dialog_form__content__textfield'
+      margin='dense'
+      required={props.required}
+      fullWidth={props.fullWidth}
+      multiline={props.multiline}
+      id={props.type || 'name'}
+      label={props.label}
+      type={props.type || 'name'}
+      placeholder={props.placeholder}
+      helperText={props.helperText}
       value={value}
       onChange={onChange}
       error={Boolean(props.invalidValue)}
-      {...props}
+      
     />
     {props.children}
     <Button

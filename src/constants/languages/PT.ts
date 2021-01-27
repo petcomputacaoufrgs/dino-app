@@ -183,6 +183,8 @@ export default class PT implements LanguageBase {
 
 	CONTACTS_ADD_CONTACT = 'Novo Contato'
 
+	CONTACTS_ADD_ESSENTIAL_CONTACT = 'Novo Contato Essencial'
+
 	CONTACTS_MOBILE_PHONE = 'Móvel'
 
 	CONTACTS_RESIDENTIAL_PHONE = 'Fixo'

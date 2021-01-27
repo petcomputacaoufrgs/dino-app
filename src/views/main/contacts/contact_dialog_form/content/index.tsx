@@ -7,7 +7,6 @@ import Constants from '../../../../../constants/contact/ContactsConstants'
 import TextButton from '../../../../../components/button/text_button'
 import { useLanguage } from '../../../../../context/language'
 import './styles.css'
-import ContactsConstants from '../../../../../constants/contact/ContactsConstants'
 
 const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 	props,

@@ -3,11 +3,11 @@ import IconButton from '../../../../../components/button/icon_button'
 import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/color_lens.svg'
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
-import Constants from '../../../../../constants/contact/ContactsConstants'
 import { useLanguage } from '../../../../../context/language'
 import '../../styles.css'
 import './styles.css'
 import ColorConstants from '../../../../../constants/app/ColorConstants'
+import { isStaff } from '../../../../../context/private_router'
 
 const AddContactDialogHeader = (
 	props: ContactFormDialogHeaderProps,
@@ -21,6 +21,7 @@ const AddContactDialogHeader = (
 		props.setContact({ ...props.contact, color })
 	}
 
+	const staff = isStaff()
 
 	return (
 		<CardHeader
@@ -40,9 +41,9 @@ const AddContactDialogHeader = (
 					onClick={handleChangeColor}
 				/>
 			}
-			title={props.contact.name || props.action === Constants.ADD
-					? language.data.CONTACTS_ADD_CONTACT
-					: language.data.CONTACTS_ADD_ESSENTIAL_CONTACT
+			title={props.contact.name || staff
+					? language.data.CONTACTS_ADD_ESSENTIAL_CONTACT
+					: language.data.CONTACTS_ADD_CONTACT
 			}
 			subheader={language.data.CONTACT_DIALOG_FORM_SUBTITLE}
 			className='contact_dialog_form_header'

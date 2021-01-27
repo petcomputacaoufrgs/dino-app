@@ -19,12 +19,11 @@ import GoogleContactService from '../../../services/contact/GoogleContactService
 import 'bootstrap/dist/css/bootstrap.min.css'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import EssentialContactView from '../../../types/contact/view/EssentialContactView'
-import { usePrivateRouter } from '../../../context/private_router'
-import UserEnum from '../../../types/enum/UserEnum'
+import { isStaff } from '../../../context/private_router'
 
 const Contacts: React.FC = () => {
 
-	const staff = usePrivateRouter().userPermission === UserEnum.STAFF
+	const staff = isStaff()
 	const language = useLanguage()
 
 	const [isLoading, setIsLoading] = useState(true)

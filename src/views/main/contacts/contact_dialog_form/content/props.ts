@@ -3,7 +3,6 @@ import ContactEntity from '../../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 
 export interface ContactFormDialogContentProps {
-	action: number
 	contact: ContactEntity
 	setContact: (value: React.SetStateAction<ContactEntity>) => void
 	phones: PhoneEntity[]

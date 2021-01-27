@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { ContactFormDialogProps } from './props'
-import ColorConstants from '../../../../constants/app/ColorConstants'
 import Button from '../../../../components/button/text_button'
 import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
@@ -19,10 +18,9 @@ import GoogleContactService from '../../../../services/contact/GoogleContactServ
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
-import './styles.css'
 import DinoHr from '../../../../components/dino_hr'
-import { usePrivateRouter } from '../../../../context/private_router'
-import UserEnum from '../../../../types/enum/UserEnum'
+import { isStaff } from '../../../../context/private_router'
+import './styles.css'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
 	return item
@@ -57,7 +55,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 		const [invalidName, setInvalidName] = useState(false)
 		const [invalidPhone, setInvalidPhone] = useState({ number: '', text: '' })
 		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
-		const staff = usePrivateRouter().userPermission === UserEnum.STAFF
+		const staff = isStaff()
 
 		useEffect(() => {
 			if (dialogOpen) {
@@ -90,12 +88,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 			}
 
 			if (validInfo()) {
-				const viewWithSamePhone = PhoneService.getContactWithSamePhone(
-					items,
-					contactPhones,
-					item,
-				)
-
+				const viewWithSamePhone = PhoneService.getContactWithSamePhone( items, contactPhones, item)
 				if (viewWithSamePhone) {
 					handleTakenNumber(viewWithSamePhone)
 				} else {
@@ -157,7 +150,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 			const isEditAndItemIsValid = item && Utils.isNotEmpty(item.contact.localId)
 
 			if(action === Constants.ADD || isEditAndItemIsValid) {
-					staff ? saveEssentialContactAndPhones() : saveContactAndPhones()
+				staff ? saveEssentialContactAndPhones() : saveContactAndPhones()
 			}
 		}
 
@@ -191,14 +184,12 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
           disableBackdropClick
         >
           <ContactFormDialogHeader
-            action={action}
 						contact={contact}
 						setContact={setContact}
             handleCloseDialog={onClose}
           />
           <DialogContent dividers>
             <ContactFormDialogContent
-							action={action}
 							contact={contact}
 							setContact={setContact}
 							phones={contactPhones}

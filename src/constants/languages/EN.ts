@@ -510,4 +510,6 @@ export default class EN implements LanguageBase {
 	NO_FAQ_AVAILABLE = 'No F.A.Q available'
 
 	TREATMENT_SAVE = 'Save'
+
+	STAFF_ACCESS_BUTTON = 'Staff access'
 }

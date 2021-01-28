@@ -1,6 +1,8 @@
 class PathConstants {
 	LOGIN: string = `/`
 
+	LOGIN_STAFF: string = '/login-staff'
+
 	USER: string = `/user`
 
 	STAFF: string = `/staff`
@@ -36,7 +38,6 @@ class PathConstants {
 	USER_NOTES: string = `${this.USER}/${this.NOTES}`
 
 	USER_CALENDAR = `${this.USER}/${this.CALENDAR}`
-
 
 	STAFF_HOME: string = `${this.STAFF}/${this.HOME}`
 

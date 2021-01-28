@@ -50,6 +50,12 @@ const Login = (): JSX.Element => {
 					{language.data.WELCOME_MESSAGE}
 				</h1>
 				<div className='login__content__button'>{renderLoginButton()}</div>
+				<div className='login__content__staff_button'> 
+					<LinkButton
+						text={language.data.STAFF_ACCESS_BUTTON}
+						onClick={() => HistoryService.push(PathConstants.LOGIN_STAFF)}
+					/>
+				</div>
 				<div className='login__content__info'>
 					<LinkButton
 						text={language.data.MENU_ABOUT_US}

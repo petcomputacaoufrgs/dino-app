@@ -2,7 +2,7 @@
 	position: relative;
 	overflow: hidden;
 	width: 100%;
-	padding-top: 45%;
+	padding: 0;
 	height: 100%;
 	background-color: var(--login-background);
 	display: flex;

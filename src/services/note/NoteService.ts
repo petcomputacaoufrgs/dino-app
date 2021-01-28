@@ -100,7 +100,7 @@ class NoteServiceImpl extends AutoSynchronizableService<
 
 			if (activeTextSearch) {
 				const inSearch = note.question.includes(textSearch)
-				
+
 				if (inSearch) return true
 			}
 

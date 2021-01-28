@@ -75,7 +75,7 @@ class Database extends Dexie {
 			logAppError: '++id,title,file,error,date',
 			calendarEvent:
 				'++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
-			tab: '++id,isMain'
+			tab: '++id,isMain',
 		})
 
 		this.auth = this.table('auth')

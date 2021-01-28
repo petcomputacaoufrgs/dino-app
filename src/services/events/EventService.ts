@@ -78,7 +78,7 @@ class EventService {
 	private closeWebSocket = async () => {
 		WebSocketService.disconnect()
 	}
-	
+
 	private connectionCallback = (online: boolean) => {
 		online ? this.whenConnectionReturn() : this.whenConnectionLost()
 	}

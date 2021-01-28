@@ -72,10 +72,7 @@ const Main: React.FC = () => {
 					path={`${PathConstants.GLOSSARY}/:localId`}
 					component={GlossaryItem}
 				/>
-				<PrivateRoute
-					path={PathConstants.KIDS_SPACE}
-					component={KidsSpace}
-				/>
+				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
 				<PrivateRoute path={PathConstants.FAQ} component={Faq} />
 				<PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
 				<PrivateRoute path={'/'} component={NotFound} />

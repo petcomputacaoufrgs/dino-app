@@ -6,7 +6,7 @@ const GameCard: React.FC<GameCardProps> = ({
 	onClick,
 	ariaLabel,
 	background,
-	text
+	text,
 }) => {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 
@@ -16,7 +16,7 @@ const GameCard: React.FC<GameCardProps> = ({
 			onClick={onClick}
 			ref={buttonRef}
 			aria-label={ariaLabel}
-			style = {{backgroundImage: `url(${background})`}}
+			style={{ backgroundImage: `url(${background})` }}
 		>
 			{text}
 		</button>

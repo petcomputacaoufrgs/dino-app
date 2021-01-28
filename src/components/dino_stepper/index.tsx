@@ -26,18 +26,12 @@ const DinoStepper: React.FC<DinoStepperProps> = ({
 			activeStep={activeStep}
 			nextButton={
 				activeStep === steps - 1 ? (
-					<TextButton
-						className='next__button'
-						onClick={onEnd}
-					>
+					<TextButton className='next__button' onClick={onEnd}>
 						{endMessage}
 						<KeyboardArrowRight />
 					</TextButton>
 				) : (
-					<TextButton
-						className='next__button'
-						onClick={onNext}
-					>
+					<TextButton className='next__button' onClick={onNext}>
 						{language.data.NEXT_BUTTON_TEXT}
 						<KeyboardArrowRight />
 					</TextButton>
@@ -45,21 +39,16 @@ const DinoStepper: React.FC<DinoStepperProps> = ({
 			}
 			backButton={
 				activeStep === 0 ? (
-					onCancel ?
-					<TextButton
-						className='back__button'
-						onClick={() => onCancel()}
-					>
-						<KeyboardArrowLeft />
-						{language.data.DIALOG_CANCEL_BUTTON_TEXT}
-					</TextButton>
-					:
-					<div className='empty__action'></div>
+					onCancel ? (
+						<TextButton className='back__button' onClick={() => onCancel()}>
+							<KeyboardArrowLeft />
+							{language.data.DIALOG_CANCEL_BUTTON_TEXT}
+						</TextButton>
+					) : (
+						<div className='empty__action'></div>
+					)
 				) : (
-					<TextButton
-						className='back__button'
-						onClick={onBack}
-					>
+					<TextButton className='back__button' onClick={onBack}>
 						<KeyboardArrowLeft />
 						{language.data.PREVIOUS_BUTTON_TEXT}
 					</TextButton>

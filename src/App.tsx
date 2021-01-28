@@ -35,7 +35,7 @@ const App: React.FC = () => {
 	useEffect(() => {
 		const loadData = async () => {
 			if (isLoading) await TabControlService.registerTab()
-			
+
 			const isAuthenticated = await loadAuth()
 
 			if (isAuthenticated) {
@@ -125,7 +125,7 @@ const App: React.FC = () => {
 		}
 	}, [showLoadScreen])
 
-	useEffect(() => {		
+	useEffect(() => {
 		ViewportService.maximizeViewport()
 	}, [])
 
@@ -141,7 +141,11 @@ const App: React.FC = () => {
 				<PrivateRoute path={PathConstants.USER} component={Main} />
 				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
 				<Route exact path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
-				<Route exact path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
+				<Route
+					exact
+					path={PathConstants.PRIVACY_POLICY}
+					component={PrivacyPolicy}
+				/>
 				<Route exact path={PathConstants.ABOUT_US} component={AboutUs} />
 				<Route path={'/'} component={NotFound} />
 			</Switch>
@@ -150,10 +154,16 @@ const App: React.FC = () => {
 
 	return (
 		<div className='app'>
-			{showLoadScreen || isLoading ? <Load /> : isMainTab ? renderApp() : <SecondaryTab />}
+			{showLoadScreen || isLoading ? (
+				<Load />
+			) : isMainTab ? (
+				renderApp()
+			) : (
+				<SecondaryTab />
+			)}
 			<PWAControl />
 		</div>
 	)
-}	
+}
 
 export default App

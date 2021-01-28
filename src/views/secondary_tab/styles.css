@@ -1,35 +1,34 @@
 .secondary_tab {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: var(--inv-contrast-color);
-  padding: 2rem;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-color: var(--inv-contrast-color);
+	padding: 2rem;
 }
 
 .secondary_tab button {
-  width: 15rem;
-  font-size: var(--default-font);
+	width: 15rem;
+	font-size: var(--default-font);
 }
 
 .secondary_tab__message {
-  width: 100%;
-  display: flex;
-  margin-bottom: 4rem;
+	width: 100%;
+	display: flex;
+	margin-bottom: 4rem;
 }
 
 .secondary_tab__message p {
-  color: var(--contrast-color);
-  font-family: var(--font-base);
-  text-align: justify;
-  margin-left: 1rem;
-  font-size: var(--default-font);
+	color: var(--contrast-color);
+	font-family: var(--font-base);
+	text-align: justify;
+	margin-left: 1rem;
+	font-size: var(--default-font);
 }
 
 .secondary_tab__message svg {
-  width: 25rem;
-  height: auto;
+	width: 25rem;
+	height: auto;
 }
-

@@ -487,9 +487,10 @@ export default class EN implements LanguageBase {
 
 	TREATMENT_SAVE = 'Save'
 
-	KIDS_SPACE = 'Kid\'s space'
+	KIDS_SPACE = "Kid's space"
 
-	SECONDARY_TAB_MESSAGE = 'The dino is open in another browser tab. You can only use one tab.'
+	SECONDARY_TAB_MESSAGE =
+		'The dino is open in another browser tab. You can only use one tab.'
 
 	SECONDARY_TAB_BUTTON_TEXT = 'Click here to open this tab'
 
@@ -505,28 +506,32 @@ export default class EN implements LanguageBase {
 
 	PWA_INTRO_0_TEXT_1 = 'Hi! Welcome!'
 
-	PWA_INTRO_0_TEXT_2 = 'I\'m here to help you with questions, organization and bring fun and educational games for children!'
+	PWA_INTRO_0_TEXT_2 =
+		"I'm here to help you with questions, organization and bring fun and educational games for children!"
 
 	PWA_INTRO_TITLE_1 = 'The DinoApp works without internet!'
 
-	PWA_INTRO_1_TEXT_1 = 'From now on you do not need to have internet connection to use this application.'
+	PWA_INTRO_1_TEXT_1 =
+		'From now on you do not need to have internet connection to use this application.'
 
-	PWA_INTRO_1_TEXT_2 = 'I\'ll show you how this works!'
+	PWA_INTRO_1_TEXT_2 = "I'll show you how this works!"
 
 	PWA_INTRO_TITLE_2 = 'Everything safe at DinoCloud'
 
-	PWA_INTRO_2_TEXT_1 = 'The DinoCloud saves your data so you can access it from anywhere without ever losing anything!'
-	
-	PWA_INTRO_2_TEXT_2 = 'Even when disconnected, you can still use the app freely.'
+	PWA_INTRO_2_TEXT_1 =
+		'The DinoCloud saves your data so you can access it from anywhere without ever losing anything!'
+
+	PWA_INTRO_2_TEXT_2 =
+		'Even when disconnected, you can still use the app freely.'
 
 	PWA_INTRO_TITLE_3 = 'Connection with DinoCloud'
 
-	PWA_INTRO_3_TEXT_1 = 'This symbols are displayed next to your profile photo and indicate your connection with the DinoCloud.'
-	
-	PWA_INTRO_3_TEXT_2 = 'Disconnected from DinoCloud.'
-	
-	PWA_INTRO_3_TEXT_3 = 'Updating your data with DinoCloud.'
-	
-	PWA_INTRO_2_TEXT_4 = 'Connected to DinoCloud.'
+	PWA_INTRO_3_TEXT_1 =
+		'This symbols are displayed next to your profile photo and indicate your connection with the DinoCloud.'
 
+	PWA_INTRO_3_TEXT_2 = 'Disconnected from DinoCloud.'
+
+	PWA_INTRO_3_TEXT_3 = 'Updating your data with DinoCloud.'
+
+	PWA_INTRO_2_TEXT_4 = 'Connected to DinoCloud.'
 }

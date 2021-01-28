@@ -10,14 +10,14 @@ import PWAControlIntroContent from './intro_content'
 const NUMBER_OF_STEPS = 4
 
 const PWAControl: React.FC = () => {
-  const alert = useAlert()
-  const language = useLanguage()
+	const alert = useAlert()
+	const language = useLanguage()
 
-  const [isFirstLoad, setFirstLoad] = useState(true)
+	const [isFirstLoad, setFirstLoad] = useState(true)
 	const [openIntroDialog, setOpenIntroDialog] = useState(false)
 	const [introStep, setIntroStep] = useState(0)
-	
-  const handleNextStep = () => {
+
+	const handleNextStep = () => {
 		if (introStep < NUMBER_OF_STEPS - 1) {
 			setIntroStep(introStep + 1)
 		}
@@ -33,39 +33,37 @@ const PWAControl: React.FC = () => {
 		setOpenIntroDialog(false)
 	}
 
-  useEffect(() => {
+	useEffect(() => {
 		const onServiceWorkerReadyMessage = () => {
 			setOpenIntroDialog(true)
 		}
-	
+
 		const onServiceWorkerUpdateAvailable = () => {
 			alert.showInfoAlert(language.data.APP_UPDATE_MESSAGE)
 		}
-		
+
 		if (isFirstLoad) {
 			setFirstLoad(false)
 			window.addEventListener('load', () => {
 				ServiceWorkerRegistration.start({
 					onSuccess: onServiceWorkerReadyMessage,
-					onUpdate: onServiceWorkerUpdateAvailable
+					onUpdate: onServiceWorkerUpdateAvailable,
 				})
 			})
 		}
-  }, [isFirstLoad, alert, language, setIntroStep])
-  
-  return (
-    <Dialog
-				className='pwa_control__intro_dialog'
-				aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
-				open={openIntroDialog}
-				TransitionComponent={TransitionSlide}
-				disableEscapeKeyDown
-				disableBackdropClick
-				fullWidth
+	}, [isFirstLoad, alert, language, setIntroStep])
+
+	return (
+		<Dialog
+			className='pwa_control__intro_dialog'
+			aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
+			open={openIntroDialog}
+			TransitionComponent={TransitionSlide}
+			disableEscapeKeyDown
+			disableBackdropClick
+			fullWidth
 		>
-			<PWAControlIntroContent 
-				step={introStep}
-			/>
+			<PWAControlIntroContent step={introStep} />
 			<DialogActions>
 				<DinoStepper
 					steps={NUMBER_OF_STEPS}
@@ -77,7 +75,7 @@ const PWAControl: React.FC = () => {
 				/>
 			</DialogActions>
 		</Dialog>
-  )
+	)
 }
 
 export default PWAControl

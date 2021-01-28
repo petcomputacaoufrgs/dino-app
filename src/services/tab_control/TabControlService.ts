@@ -1,91 +1,91 @@
-import Database from "../../storage/Database"
-import PostMessageType from "../../types/service_worker/PostMessageType"
-import TabEntity from "../../types/tab_control/TabEntity"
-import Utils from "../../utils/Utils"
-import EventService from "../events/EventService"
-import PostMessageService from "../service_worker/PostMessageService"
-import UpdatableService from "../update/UpdatableService"
- 
+import Database from '../../storage/Database'
+import PostMessageType from '../../types/service_worker/PostMessageType'
+import TabEntity from '../../types/tab_control/TabEntity'
+import Utils from '../../utils/Utils'
+import EventService from '../events/EventService'
+import PostMessageService from '../service_worker/PostMessageService'
+import UpdatableService from '../update/UpdatableService'
+
 class TabControlService extends UpdatableService {
-  private table: Dexie.Table<TabEntity, number>
-  private tabId?: number
+	private table: Dexie.Table<TabEntity, number>
+	private tabId?: number
 
-  constructor() {
-    super()
-    this.table = Database.tab
-  }
+	constructor() {
+		super()
+		this.table = Database.tab
+	}
 
-  start = () => {
-    window.addEventListener("unload", () => {
-      PostMessageService.sendPostMessage({
-        type: PostMessageType.TAB_CLOSED,
-        info: this.tabId
+	start = () => {
+		window.addEventListener('unload', () => {
+			PostMessageService.sendPostMessage({
+				type: PostMessageType.TAB_CLOSED,
+				info: this.tabId,
 			})
-    })
-  }
+		})
+	}
 
-  registerTab = async () => {
-    if (process.env.NODE_ENV !== 'production') return 
+	registerTab = async () => {
+		if (process.env.NODE_ENV !== 'production') return
 
-    const tab: TabEntity = {
-      isMain: 1
-    }
-    await this.save(tab)
+		const tab: TabEntity = {
+			isMain: 1,
+		}
+		await this.save(tab)
 
-    PostMessageService.sendPostMessage({
-      type: PostMessageType.REGISTER_NEW_TAB,
-      info: this.tabId
-    })
-  }
-  
-  onMessageReceived = async () => {
-    await EventService.whenTabLoad()
-    this.triggerUpdateEvent()
-  }
+		PostMessageService.sendPostMessage({
+			type: PostMessageType.REGISTER_NEW_TAB,
+			info: this.tabId,
+		})
+	}
 
-  onProofOfLifeRequisition = async (tabId: number) => {
-    if (this.tabId === tabId) return
+	onMessageReceived = async () => {
+		await EventService.whenTabLoad()
+		this.triggerUpdateEvent()
+	}
 
-    const tab: TabEntity = {
-      isMain: 0
-    }
+	onProofOfLifeRequisition = async (tabId: number) => {
+		if (this.tabId === tabId) return
 
-    await this.save(tab)
-    this.triggerUpdateEvent()
-  }
+		const tab: TabEntity = {
+			isMain: 0,
+		}
 
-  changeToMainTab = () => {
-    PostMessageService.sendPostMessage({
-      type: PostMessageType.SET_MAIN_TAB,
-      info: this.tabId
-    })
-  }
+		await this.save(tab)
+		this.triggerUpdateEvent()
+	}
 
-  isMainTab = async (): Promise<boolean> => {
-    if (process.env.NODE_ENV !== 'production') return true
-    
-    if (Utils.isNotEmpty(this.tabId)) {
-      const tab = await this.getById(this.tabId!)
-      if (tab) {
-        return tab.isMain === 1
-      }
-    }
-    return false
-  }
+	changeToMainTab = () => {
+		PostMessageService.sendPostMessage({
+			type: PostMessageType.SET_MAIN_TAB,
+			info: this.tabId,
+		})
+	}
 
-  private getById = async (id: number): Promise<TabEntity | undefined> => {
+	isMainTab = async (): Promise<boolean> => {
+		if (process.env.NODE_ENV !== 'production') return true
+
+		if (Utils.isNotEmpty(this.tabId)) {
+			const tab = await this.getById(this.tabId!)
+			if (tab) {
+				return tab.isMain === 1
+			}
+		}
+		return false
+	}
+
+	private getById = async (id: number): Promise<TabEntity | undefined> => {
 		return this.table.where('id').equals(id).first()
-  }
-  
-  private save = async (entity: TabEntity): Promise<TabEntity> => {
+	}
+
+	private save = async (entity: TabEntity): Promise<TabEntity> => {
 		const id = await this.table.put(entity)
 
-    entity.id = id
-    
-    this.tabId = id
+		entity.id = id
+
+		this.tabId = id
 
 		return entity
-  }
+	}
 }
 
 export default new TabControlService()

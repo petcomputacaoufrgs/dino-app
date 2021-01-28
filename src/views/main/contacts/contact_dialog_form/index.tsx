@@ -110,9 +110,11 @@ const ContactFormDialog = React.forwardRef(
 				const newPhones = contactPhones.filter(phone => phone.number !== '')
 
 				if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {
-					newPhones.forEach(phone => phone.localContactId = contact.localId)
+					newPhones.forEach(phone => (phone.localContactId = contact.localId))
 				} else {
-					newPhones.forEach(phone => phone.localEssentialContactId = contact.localId)
+					newPhones.forEach(
+						phone => (phone.localEssentialContactId = contact.localId),
+					)
 				}
 
 				if (newPhones.length > 0) {

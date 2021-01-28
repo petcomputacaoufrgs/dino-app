@@ -60,7 +60,7 @@ const QuestionDialogForm = React.forwardRef(
 		}
 
 		return (
-			<div className='dialog-form'>
+			<div className='dialog_form'>
 				<Dialog
 					ref={ref}
 					open={dialogOpen}

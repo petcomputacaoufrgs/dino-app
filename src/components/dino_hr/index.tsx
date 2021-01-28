@@ -6,7 +6,7 @@ interface DinoHrProps {
 }
 
 const DinoHr = ({ invisible }: DinoHrProps) => {
-	return <hr className={`dino_hr${invisible ? '--inv' : ''}`} />
+	return <hr className={`dino_hr${invisible ? '__inv' : ''}`} />
 }
 
 export default DinoHr

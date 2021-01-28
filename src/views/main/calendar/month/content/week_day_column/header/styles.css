@@ -16,7 +16,7 @@
 }
 
 .calendar__month__content__week_day_column__header__separation_bar {
-	width: 1px;
+	width: 0.063rem;
 	height: 0.4em;
 	background-color: #b9b9a2;
 	align-self: flex-end;

@@ -18,9 +18,9 @@
 
 .login__curious {
 	position: absolute;
-	right: -10px;
-	top: 10px;
-	width: 100px;
+	right: -0.625rem;
+	top: 0.625rem;
+	width: 6.25rem;
 	animation: curious_dino 10s infinite;
 }
 
@@ -57,16 +57,16 @@
 
 @media (orientation: landscape) {
 	.login__logo {
-		width: 500px;
+		width: 31.25rem;
 	}
 	.login__message {
 		font-size: xx-large;
 	}
 	.login__curious {
 		position: absolute;
-		right: -500px;
-		top: -50px;
-		width: 500px;
+		right: -31.25rem;
+		top: -3.125rem;
+		width: 31.25rem;
 		transform: rotate(-60deg);
 		animation: curious_dino_landscape 10s infinite;
 	}
@@ -74,33 +74,33 @@
 
 @keyframes curious_dino {
 	0% {
-		right: -100px;
+		right: -6.25rem;
 	}
 	35% {
-		right: -10px;
+		right: -0.625rem;
 		transform: rotate(-20deg);
 	}
 	45% {
-		right: -100px;
+		right: -6.25rem;
 		transform: rotate(0deg);
 	}
 	100% {
-		right: -100px;
+		right: -6.25rem;
 	}
 }
 
 @keyframes curious_dino_landscape {
 	0% {
-		right: -500px;
+		right: -31.25rem;
 	}
 	35% {
-		right: -100px;
+		right: -6.25rem;
 		transform: rotate(0deg);
 	}
 	45% {
-		right: -500px;
+		right: -31.25rem;
 	}
 	100% {
-		right: -500px;
+		right: -31.25rem;
 	}
 }

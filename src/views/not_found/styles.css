@@ -9,11 +9,11 @@
 	align-items: center;
 	justify-content: center;
 	background-color: #f1d881;
-	padding: 10px;
+	padding: 0.625rem;
 }
 
 .not_found__image {
-	width: 250px;
+	width: 15.625rem;
 }
 
 .not_found__text {
@@ -25,6 +25,6 @@
 
 @media (orientation: landscape) {
 	.not_found__image {
-		width: 500px;
+		width: 31.25rem;
 	}
 }

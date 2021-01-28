@@ -7,11 +7,11 @@
 	display: flex;
 	align-items: flex-end;
 	justify-content: center;
-	min-height: 50px;
-	max-height: 50px;
+	min-height: 3.125rem;
+	max-height: 3.125rem;
 	width: 100%;
-	padding-bottom: 10px;
-	border-bottom: 1px #b9b9a2 solid;
+	padding-bottom: 0.625rem;
+	border-bottom: 0.063rem #b9b9a2 solid;
 	z-index: 99;
 	background-color: white;
 }
@@ -23,9 +23,9 @@
 
 .calendar__day__modal__header__info__close {
 	position: fixed;
-	width: 50px;
-	height: 0px;
-	top: 0px;
+	width: 3.125rem;
+	height: 0rem;
+	top: 0rem;
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -34,13 +34,13 @@
 
 .calendar__day__modal__header__info__close .MuiFab-primary {
 	position: fixed;
-	top: 55px;
+	top: 3.438rem;
 	background-color: white;
 	color: black;
 	outline: none;
 }
 
 .calendar__day__modal__header__info__close .MuiFab-root {
-	min-height: 0px;
-	height: 0px;
+	min-height: 0rem;
+	height: 0rem;
 }

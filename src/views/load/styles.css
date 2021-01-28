@@ -15,27 +15,27 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	margin-bottom: 125px;
+	margin-bottom: 7.813rem;
 	animation: dino_header_in 750ms forwards;
 }
 
 .load__dino_title {
-	font-size: 24px;
+	font-size: 1.5rem;
 	color: black;
 	font-weight: normal;
 	margin-top: 0;
 }
 
 .load__dino_logo {
-	height: 125px;
-	width: 130px;
+	height: 7.813rem;
+	width: 8.125rem;
 	opacity: 0;
 	animation: dino_logo_in 750ms 750ms forwards;
 }
 
 .load__team {
 	position: fixed;
-	bottom: 24px;
+	bottom: 1.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -43,12 +43,12 @@
 }
 
 .load__team img {
-	width: 0px;
+	width: 0rem;
 	height: auto;
 }
 
 .load__team img:not(:last-child) {
-	margin-right: 40px;
+	margin-right: 2.5rem;
 }
 
 .load__team__pet {
@@ -83,9 +83,9 @@
 
 @keyframes teams_logo_in {
 	from {
-		width: 0px;
+		width: 0rem;
 	}
 	to {
-		width: 80px;
+		width: 5rem;
 	}
 }

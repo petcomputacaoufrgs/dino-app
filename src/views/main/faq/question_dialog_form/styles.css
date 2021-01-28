@@ -3,6 +3,6 @@
 	display: block;
 }
 
-.dialog-form .MuiDialogContent-root .MuiDialogContent-dividers {
-	padding: 8px 24px !important;
+.dialog_form .MuiDialogContent-root .MuiDialogContent-dividers {
+	padding: 0.5rem 1.5rem !important;
 }

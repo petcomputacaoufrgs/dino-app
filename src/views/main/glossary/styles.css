@@ -1,5 +1,5 @@
 .glossary_loader {
 	position: absolute;
-	height: calc(100% - 60px);
+	height: calc(100% - 3.75rem);
 	width: 100%;
 }

@@ -19,11 +19,11 @@ import GoogleContactService from '../../../services/contact/GoogleContactService
 import 'bootstrap/dist/css/bootstrap.min.css'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import EssentialContactView from '../../../types/contact/view/EssentialContactView'
-import { isStaff } from '../../../context/private_router'
+import { IsStaff } from '../../../context/private_router'
 
 const Contacts: React.FC = () => {
 
-	const staff = isStaff()
+	const staff = IsStaff()
 	const language = useLanguage()
 
 	const [isLoading, setIsLoading] = useState(true)

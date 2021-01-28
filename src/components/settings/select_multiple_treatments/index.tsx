@@ -10,15 +10,12 @@ import { useLanguage } from '../../../context/language'
 
 const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
 	selectedLocalIds,
-	setSelectedLocalIds,
+	handleChange
 }) => {
-	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-		setSelectedLocalIds(event.target.value as number[])
-	}
 
   const language = useLanguage()
 
-  const [isLoading, setIsLoading] = useState(true)
+  let [isLoading, setIsLoading] = useState(true)
   const [treatments, setTreatments] = useState<TreatmentEntity[]>()
 
 	useEffect(() => {
@@ -51,7 +48,6 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
 		}
 	}
 
-
   return (
     <div className='select_multiple_treatments'>
         <FormControl className="select_multiple_treatments__form_control">
@@ -63,7 +59,7 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
               multiple
               fullWidth
               value={selectedLocalIds}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e.target.value as number[])}
               input={<Input />}
             >
                 {renderOptions()}

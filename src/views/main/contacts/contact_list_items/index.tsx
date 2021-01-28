@@ -12,7 +12,7 @@ import PhoneService from '../../../../services/contact/PhoneService'
 import ContactService from '../../../../services/contact/ContactService'
 import GoogleContactService from '../../../../services/contact/GoogleContactService'
 import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
-import { isStaff } from '../../../../context/private_router'
+import { IsStaff } from '../../../../context/private_router'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 
@@ -22,7 +22,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const [contactToDelete, setContactToDelete] = useState<ContactView | EssentialContactView | undefined>(undefined)
 
 	const language = useLanguage()
-	const staff = isStaff()
+	const staff = IsStaff()
 
 	const handleOpenCard = (index: number) => {
 		setContactToView(items[index])

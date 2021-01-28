@@ -39,6 +39,6 @@ const PrivateRouterContextProvider: React.FC<PrivateRouterContextType> = props =
 
 export const usePrivateRouter = () => useContext(PrivateRouterContext)
 
-export const isStaff = (): boolean => usePrivateRouter().userPermission === UserEnum.STAFF
+export const IsStaff = (): boolean => usePrivateRouter().userPermission === UserEnum.STAFF
 
 export default PrivateRouterContextProvider

@@ -19,8 +19,9 @@ import EssentialContactService from '../../../../services/contact/EssentialConta
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import DinoHr from '../../../../components/dino_hr'
-import { isStaff } from '../../../../context/private_router'
+import { IsStaff } from '../../../../context/private_router'
 import './styles.css'
+import { isDeepStrictEqual } from 'util'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
 	return item
@@ -55,7 +56,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 		const [invalidName, setInvalidName] = useState(false)
 		const [invalidPhone, setInvalidPhone] = useState({ number: '', text: '' })
 		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
-		const staff = isStaff()
+		const staff = IsStaff()
 
 		useEffect(() => {
 			if (dialogOpen) {
@@ -172,6 +173,10 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 			setContactPhones([...contactPhones])
 		}
 
+		const handleChangeTreatments = (ids: number[]) => {
+			setSelectedTreatmentLocalIds([...ids])
+		}
+
     return (
       <div className="contact__form">
         <Dialog
@@ -203,7 +208,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 								<> <DinoHr />
 								<SelectMultipleTreatments 
 									selectedLocalIds={selectedTreatmentLocalIds}
-									setSelectedLocalIds={setSelectedTreatmentLocalIds}
+									handleChange={handleChangeTreatments}
 								/> </>
 							)}
             </ContactFormDialogContent>

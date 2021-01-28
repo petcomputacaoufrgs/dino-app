@@ -20,7 +20,7 @@ import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
 import Loader from '../../components/loader/index'
 
-const Main = () => {
+const Main: React.FC = () => {
 	const language = useLanguage()
 
 	const [openLogoutDialog, setOpenLogoutDialog] = useState(false)

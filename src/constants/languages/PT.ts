@@ -137,13 +137,9 @@ export default class PT implements LanguageBase {
 
 	NOTE_TAG_LABEL = 'Tags'
 
-	DIALOG_SAVE_BUTTON_LABEL = 'Clique para salvar.'
+	DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
 
 	DIALOG_SAVE_BUTTON_TEXT = 'Salvar'
-
-	DIALOG_CANCEL_BUTTON_LABEL = 'Clique para cancelar.'
-
-	DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
 
 	SEARCH_BUTTON_LABEL = 'Buscar...'
 
@@ -261,10 +257,6 @@ export default class PT implements LanguageBase {
 	NEXT_BUTTON_TEXT = 'Próximo'
 
 	PREVIOUS_BUTTON_TEXT = 'Anterior'
-
-	NEXT_BUTTON_TEXT_LABEL = 'Clique para avançar para o próximo elemento'
-
-	PREVIOUS_BUTTON_TEXT_LABEL = 'Clique para retornar ao elemento anterior'
 
 	CLOSE_ARIA_LABEL = 'Fechar'
 
@@ -504,4 +496,41 @@ export default class PT implements LanguageBase {
 	SECONDARY_TAB_MESSAGE = 'O dino já está aberto em outra guia do seu navegador. Você só pode abri-lo em uma guia por vez.'
 
 	SECONDARY_TAB_BUTTON_TEXT = 'Clique aqui para abrir nesta guia'
+
+	APP_READY_FOR_OFFLINE_USE_MESSAGE = 'DinoApp está pronto para uso sem internet!'
+
+	APP_UPDATE_MESSAGE = 'Atualização disponível! Reinicie o DinoApp para instalar.'
+
+	PWA_CONTROL_END_INTRO_BUTTON = 'Fim'
+
+	FIRST_SETTINGS_SAVE_BUTTON = 'Salvar'
+
+	PWA_INTRO_TITLE_0 = 'Bem vindo ao DinoApp!'
+
+	PWA_INTRO_0_TEXT_1 = 'Olá! Seja muito bem vindo!'
+
+	PWA_INTRO_0_TEXT_2 = 'Estou aqui para te ajudar com dúvidas, organização e trazer jogos divertidos e educativos para as crianças!'
+
+	PWA_INTRO_TITLE_1 = 'O DinoApp funciona sem internet!'
+
+	PWA_INTRO_1_TEXT_1 = 'A partir de agora você não precisa estar conectado a internet para usar o DinoApp.'
+
+	PWA_INTRO_1_TEXT_2 = 'Vou te mostrar como isto funciona!'
+
+	PWA_INTRO_TITLE_2 = 'Tudo seguro na DinoNuvem'
+
+	PWA_INTRO_2_TEXT_1 = 'A DinoNuvem salva seus dados para que você possa acessá-los de qualquer lugar sem nunca perder nada!'
+	
+	PWA_INTRO_2_TEXT_2 = 'Mesmo desconectado você ainda pode usar o aplicativo livremente.'
+
+	PWA_INTRO_TITLE_3 = 'Conexão com a DinoNuvem'
+
+	PWA_INTRO_3_TEXT_1 = 'Estes simbolos abaixo são exibidos ao lado da sua foto de perfil e indicam sua conexão com a DinoNuvem.'
+
+	PWA_INTRO_3_TEXT_2 = 'Desconectado da DinoNuvem.'
+	
+	PWA_INTRO_3_TEXT_3 = 'Atualizando seus dados na DinoNuvem.'
+	
+	PWA_INTRO_2_TEXT_4 = 'Conectado com a DinoNuvem.'
+
 }

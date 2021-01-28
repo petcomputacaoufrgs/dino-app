@@ -20,6 +20,7 @@ import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
 import TabControlService from './services/tab_control/TabControlService'
 import SecondaryTab from './views/secondary_tab'
+import PWAControl from './components/pwa_control'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
@@ -28,12 +29,12 @@ const App: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 	const [isMainTab, setIsMainTab] = useState(false)
-	const [showLoadScreen, setShowLoadScreen] = useState(false)
+	const [showLoadScreen, setShowLoadScreen] = useState(true)
 
 	useEffect(() => {
 		const loadData = async () => {
 			if (isLoading) await TabControlService.registerTab()
-
+			
 			const isAuthenticated = await loadAuth()
 
 			if (isAuthenticated) {
@@ -43,6 +44,7 @@ const App: React.FC = () => {
 					UserSettingsService.getSystemColorThemeName(),
 				)
 			}
+
 			await loadTabInfo()
 			finishLoading()
 		}
@@ -122,7 +124,7 @@ const App: React.FC = () => {
 		}
 	}, [showLoadScreen])
 
-	useEffect(() => {
+	useEffect(() => {		
 		ViewportService.maximizeViewport()
 	}, [])
 
@@ -147,6 +149,7 @@ const App: React.FC = () => {
 	return (
 		<div className='app'>
 			{showLoadScreen || isLoading ? <Load /> : isMainTab ? renderApp() : <SecondaryTab />}
+			<PWAControl />
 		</div>
 	)
 }	

@@ -14,6 +14,7 @@
 	display: flex;
 	align-items: center;
 	margin-right: 8px;
+	color: var(--light-color);
 }
 
 .dino_dialog__header h5,

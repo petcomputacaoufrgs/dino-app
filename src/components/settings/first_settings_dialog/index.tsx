@@ -350,7 +350,6 @@ const FirstSettingsDialog: React.FC = () => {
 						className='first-settings__dialog'
 						aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
 						open={dialogOpen}
-						key={settings ? settings.settingsStep : 0}
 						TransitionComponent={TransitionSlide}
 						disableEscapeKeyDown
 						disableBackdropClick
@@ -361,9 +360,10 @@ const FirstSettingsDialog: React.FC = () => {
 							<DinoStepper
 								steps={NUMBER_DIALOGS}
 								activeStep={settings ? settings.settingsStep : 0}
+								endMessage={language.data.DIALOG_SAVE_BUTTON_TEXT}
 								onNext={handleNextStep}
 								onBack={handleBackStep}
-								onSave={handleSave}
+								onEnd={handleSave}
 								onCancel={handleCancel}
 							/>
 						</DialogActions>

@@ -9,9 +9,10 @@ import './styles.css'
 const DinoStepper: React.FC<DinoStepperProps> = ({
 	steps,
 	activeStep,
+	endMessage,
 	onNext,
 	onBack,
-	onSave,
+	onEnd,
 	onCancel,
 }) => {
 	const language = useLanguage()
@@ -27,16 +28,14 @@ const DinoStepper: React.FC<DinoStepperProps> = ({
 				activeStep === steps - 1 ? (
 					<TextButton
 						className='next__button'
-						aria-label={language.data.DIALOG_SAVE_BUTTON_LABEL}
-						onClick={onSave}
+						onClick={onEnd}
 					>
-						{language.data.DIALOG_SAVE_BUTTON_TEXT}
+						{endMessage}
 						<KeyboardArrowRight />
 					</TextButton>
 				) : (
 					<TextButton
 						className='next__button'
-						aria-label={language.data.NEXT_BUTTON_TEXT_LABEL}
 						onClick={onNext}
 					>
 						{language.data.NEXT_BUTTON_TEXT}
@@ -46,19 +45,19 @@ const DinoStepper: React.FC<DinoStepperProps> = ({
 			}
 			backButton={
 				activeStep === 0 ? (
+					onCancel ?
 					<TextButton
 						className='back__button'
-						aria-label={language.data.DIALOG_CANCEL_BUTTON_LABEL}
-						onClick={onCancel}
+						onClick={() => onCancel()}
 					>
 						<KeyboardArrowLeft />
-						<p></p>
 						{language.data.DIALOG_CANCEL_BUTTON_TEXT}
 					</TextButton>
+					:
+					<div className='empty__action'></div>
 				) : (
 					<TextButton
 						className='back__button'
-						aria-label={language.data.PREVIOUS_BUTTON_TEXT_LABEL}
 						onClick={onBack}
 					>
 						<KeyboardArrowLeft />

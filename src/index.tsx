@@ -1,21 +1,19 @@
 import ReactDOM from 'react-dom'
 import App from './App'
-import * as ServiceWorkerRegistration from './ServiceWorkerRegistration'
 import AlertProvider from './context/alert'
-import EventService from './services/events/EventService'
 import GoogleOAuth2Provider from './context/google_oauth2'
 import LanguageProvider from './context/language'
 import LogoutService from './services/auth/LogoutService'
+import EventService from './services/events/EventService'
 import PostMessageService from './services/service_worker/PostMessageService'
 import TabControlService from './services/tab_control/TabControlService'
 import ReportWebVitalsService from './services/web_vitals/ReportWebVitalsService'
 import './external/MaterialIcons.css'
-import './fonts.css'
-import './var.css'
+import './Fonts.css'
+import './Var.css'
 
-window.addEventListener('load', async () => {
+window.addEventListener('load', () => {
 	ReportWebVitalsService.start()
-	ServiceWorkerRegistration.start()
 	PostMessageService.start()
 	TabControlService.start()
 	LogoutService.start()

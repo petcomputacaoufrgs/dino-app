@@ -133,13 +133,9 @@ export default class EN implements LanguageBase {
 
 	NOTE_TAG_LABEL = 'Tags'
 
-	DIALOG_SAVE_BUTTON_LABEL = 'Click to save.'
+	DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
 	DIALOG_SAVE_BUTTON_TEXT = 'Save'
-
-	DIALOG_CANCEL_BUTTON_LABEL = 'Click to cancel.'
-
-	DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
 	SEARCH_BUTTON_LABEL = 'Search...'
 
@@ -255,10 +251,6 @@ export default class EN implements LanguageBase {
 	NEXT_BUTTON_TEXT = 'Next'
 
 	PREVIOUS_BUTTON_TEXT = 'Previous'
-
-	NEXT_BUTTON_TEXT_LABEL = 'Click to go to the next element'
-
-	PREVIOUS_BUTTON_TEXT_LABEL = 'Click to return to the previous element'
 
 	CLOSE_ARIA_LABEL = 'Close'
 
@@ -498,4 +490,41 @@ export default class EN implements LanguageBase {
 	SECONDARY_TAB_MESSAGE = 'The dino is open in another browser tab. You can only use one tab.'
 
 	SECONDARY_TAB_BUTTON_TEXT = 'Click here to open this tab'
+
+	APP_READY_FOR_OFFLINE_USE_MESSAGE = 'DinoApp is ready for offline use!'
+
+	APP_UPDATE_MESSAGE = 'Update available! Restart the DinoApp to install!'
+
+	PWA_CONTROL_END_INTRO_BUTTON = 'End'
+
+	FIRST_SETTINGS_SAVE_BUTTON = 'Save'
+
+	PWA_INTRO_TITLE_0 = 'Welcome to DinoApp!'
+
+	PWA_INTRO_0_TEXT_1 = 'Hi! Welcome!'
+
+	PWA_INTRO_0_TEXT_2 = 'I\'m here to help you with questions, organization and bring fun and educational games for children!'
+
+	PWA_INTRO_TITLE_1 = 'The DinoApp works without internet!'
+
+	PWA_INTRO_1_TEXT_1 = 'From now on you do not need to have internet connection to use this application.'
+
+	PWA_INTRO_1_TEXT_2 = 'I\'ll show you how this works!'
+
+	PWA_INTRO_TITLE_2 = 'Everything safe at DinoCloud'
+
+	PWA_INTRO_2_TEXT_1 = 'The DinoCloud saves your data so you can access it from anywhere without ever losing anything!'
+	
+	PWA_INTRO_2_TEXT_2 = 'Even when disconnected, you can still use the app freely.'
+
+	PWA_INTRO_TITLE_3 = 'Connection with DinoCloud'
+
+	PWA_INTRO_3_TEXT_1 = 'This symbols are displayed next to your profile photo and indicate your connection with the DinoCloud.'
+	
+	PWA_INTRO_3_TEXT_2 = 'Disconnected from DinoCloud.'
+	
+	PWA_INTRO_3_TEXT_3 = 'Updating your data with DinoCloud.'
+	
+	PWA_INTRO_2_TEXT_4 = 'Connected to DinoCloud.'
+
 }

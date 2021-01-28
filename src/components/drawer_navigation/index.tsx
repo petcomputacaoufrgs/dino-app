@@ -5,6 +5,7 @@ import Drawer from './drawer'
 import Content from './content'
 
 const DRAWER_WIDTH = 240
+const MIN_MOVE_TO_OPEN_DRAWER = 20
 
 const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
 	groupedItems,
@@ -70,7 +71,7 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
 			const currentTouch = getTouch(event)
 			if (startTouch && currentTouch) {
 				const diff = calcSwipeDiff(currentTouch)
-				if (diff > 0) {
+				if (diff > MIN_MOVE_TO_OPEN_DRAWER) {
 					const translateX = diff
 
 					if (translateX >= DRAWER_WIDTH) {

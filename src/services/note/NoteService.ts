@@ -87,25 +87,24 @@ class NoteServiceImpl extends AutoSynchronizableService<
 		activeTextSearch: boolean,
 	) {
 		return noteView.notes.filter(note => {
-			if (note.columnLocalId !== noteView.column.localId) {
-				return false
-			}
+			if (!activeTagsSearch && !activeTextSearch) return true
 
-			let valid = true
+			if (note.columnLocalId !== noteView.column.localId) return false
 
 			if (activeTagsSearch) {
 				const inSearch = note.tags.some(tag =>
 					tagsSearch.some(tagSearch => tagSearch === tag),
 				)
-				valid = inSearch
+				if (inSearch) return true
 			}
 
-			if (!valid && activeTextSearch) {
+			if (activeTextSearch) {
 				const inSearch = note.question.includes(textSearch)
-				valid = inSearch
+				
+				if (inSearch) return true
 			}
 
-			return valid
+			return false
 		})
 	}
 

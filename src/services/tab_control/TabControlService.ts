@@ -5,7 +5,7 @@ import Utils from "../../utils/Utils"
 import EventService from "../events/EventService"
 import PostMessageService from "../service_worker/PostMessageService"
 import UpdatableService from "../update/UpdatableService"
-
+ 
 class TabControlService extends UpdatableService {
   private table: Dexie.Table<TabEntity, number>
   private tabId?: number
@@ -25,12 +25,11 @@ class TabControlService extends UpdatableService {
   }
 
   registerTab = async () => {
-    if (process.env.NODE_ENV !== 'production') return
+    if (process.env.NODE_ENV !== 'production') return 
 
     const tab: TabEntity = {
       isMain: 1
     }
-
     await this.save(tab)
 
     PostMessageService.sendPostMessage({
@@ -63,6 +62,8 @@ class TabControlService extends UpdatableService {
   }
 
   isMainTab = async (): Promise<boolean> => {
+    if (process.env.NODE_ENV !== 'production') return true
+    
     if (Utils.isNotEmpty(this.tabId)) {
       const tab = await this.getById(this.tabId!)
       if (tab) {

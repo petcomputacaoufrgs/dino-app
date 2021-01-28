@@ -63,10 +63,8 @@ export default interface LanguageBase {
 	NOTE_DELETE_BUTTON: string
 	ANSWER_NOTE_DIALOG_TITLE: string
 	NOTE_TAG_LABEL: string
-	DIALOG_SAVE_BUTTON_LABEL: string
-	DIALOG_SAVE_BUTTON_TEXT: string
 	DIALOG_CANCEL_BUTTON_TEXT: string
-	DIALOG_CANCEL_BUTTON_LABEL: string
+	DIALOG_SAVE_BUTTON_TEXT: string
 	SEARCH_BUTTON_LABEL: string
 	ANSWER_DIALOG_LABEL: string
 	FORM_NAME: string
@@ -126,8 +124,6 @@ export default interface LanguageBase {
 	INVALID_WEEKDAY: string
 	NEXT_BUTTON_TEXT: string
 	PREVIOUS_BUTTON_TEXT: string
-	NEXT_BUTTON_TEXT_LABEL: string
-	PREVIOUS_BUTTON_TEXT_LABEL: string
 	CLOSE_ARIA_LABEL: string
 	DELETE_ARIA_LABEL: string
 	EDIT_ARIA_LABEL: string
@@ -239,4 +235,21 @@ export default interface LanguageBase {
 	TREATMENT_SAVE: string
 	SECONDARY_TAB_MESSAGE: string
 	SECONDARY_TAB_BUTTON_TEXT: string
+	APP_READY_FOR_OFFLINE_USE_MESSAGE: string
+	APP_UPDATE_MESSAGE: string
+	PWA_CONTROL_END_INTRO_BUTTON: string
+	PWA_INTRO_TITLE_0: string
+	PWA_INTRO_0_TEXT_1: string
+	PWA_INTRO_0_TEXT_2: string
+	PWA_INTRO_TITLE_1: string
+	PWA_INTRO_1_TEXT_1: string
+	PWA_INTRO_1_TEXT_2: string
+	PWA_INTRO_TITLE_2: string
+	PWA_INTRO_2_TEXT_1: string
+	PWA_INTRO_2_TEXT_2: string
+	PWA_INTRO_TITLE_3: string
+	PWA_INTRO_3_TEXT_1: string
+	PWA_INTRO_3_TEXT_2: string
+	PWA_INTRO_3_TEXT_3: string
+	PWA_INTRO_2_TEXT_4: string
 }

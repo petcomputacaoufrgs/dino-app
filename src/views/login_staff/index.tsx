@@ -18,26 +18,26 @@ const LoginStaff = (): JSX.Element => {
 				<h1 className='staff_login__content__message'>
 					{language.data.WELCOME_MESSAGE}
 				</h1>
-				<div className='staff_login__content__message_2'> 
-					Funcionário - Login
+				<div className='staff_login__content__signin'> 
+					<h2 className='staff_login__content__message_2'> {language.data.STAFF_LOGIN} </h2>
+
+                    <form className='staff_login__content__signin_form'>
+                        <label htmlFor="mail">{language.data.EMAIL}</label><br/>
+                        <input type="email" id="mail" /><br/>
+                        <label htmlFor="password">{language.data.PASSWORD}</label><br/>
+                        <input type="password" id="password"/><br/>
+                        <input type="submit" value="Entrar"></input>
+                    </form>
+
+                    <div className='staff_login__content__signup'>
+                        {language.data.REGISTER_QUESTION}
+                        <Button onClick= {() => HistoryService.push(PathConstants.REGISTER_STAFF)}>
+                            {language.data.REGISTER_TEXT}
+                        </Button>
+                    </div>
 				</div>
 
-                <form className='staff_login__content__signin_form'>
-                    <label htmlFor="mail">Email</label><br/>
-                    <input type="email" id="mail" /><br/>
-                    <label htmlFor="password">Senha</label><br/>
-                    <input type="password" id="password"/><br/>
-                    <input type="submit" value="Entrar"></input>
-                </form>
-
-                <div className='staff_login__content__signup'>
-                    Não tem cadastro?
-                    <Button onClick= {() => console.log('cliquei')}>
-                        Cadastre-se
-                    </Button>
-                </div>
-
-				<div className='login__content__info'>
+				<div className='staff_login__content__info'>
 					<LinkButton
 						text={language.data.MENU_ABOUT_US}
 						onClick={() => HistoryService.push(PathConstants.ABOUT_US)}

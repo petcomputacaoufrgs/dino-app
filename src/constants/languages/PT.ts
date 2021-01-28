@@ -518,4 +518,14 @@ export default class PT implements LanguageBase {
 	TREATMENT_SAVE = 'Salvar'
 
 	STAFF_ACCESS_BUTTON = 'Acesso dos funcionários'
+
+	STAFF_LOGIN = 'Funcionário - Login'
+
+	EMAIL = 'Email'
+
+	PASSWORD = 'Senha'
+
+	REGISTER_QUESTION = 'Não é cadastrado?'
+
+	REGISTER_TEXT = 'Registre-se'
 }

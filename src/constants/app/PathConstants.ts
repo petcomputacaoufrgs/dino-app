@@ -3,6 +3,8 @@ class PathConstants {
 
 	LOGIN_STAFF: string = '/login-staff'
 
+	REGISTER_STAFF: string = '/register-staff'
+
 	USER: string = `/user`
 
 	STAFF: string = `/staff`

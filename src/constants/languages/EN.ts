@@ -512,4 +512,14 @@ export default class EN implements LanguageBase {
 	TREATMENT_SAVE = 'Save'
 
 	STAFF_ACCESS_BUTTON = 'Staff access'
+	
+	STAFF_LOGIN = 'Staff - Sign in'
+	
+	EMAIL = 'Email'
+	
+	PASSWORD = 'Password'
+	
+	REGISTER_QUESTION = 'Not registered?'
+	
+	REGISTER_TEXT = 'Register'
 }

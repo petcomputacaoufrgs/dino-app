@@ -246,4 +246,9 @@ export default interface LanguageBase {
 	NO_FAQ_AVAILABLE: string
 	TREATMENT_SAVE: string
 	STAFF_ACCESS_BUTTON: string
+	STAFF_LOGIN: string
+	EMAIL: string
+	PASSWORD: string
+	REGISTER_QUESTION: string
+	REGISTER_TEXT: string
 }

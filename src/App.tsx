@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Login from './views/login'
 import LoginStaff from './views/login_staff'
+import RegisterStaff from './views/register_staff'
 import Main from './views/main'
 import PrivateRouterContextProvider from './context/private_router'
 import PrivateRoute from './components/private_route'
@@ -136,6 +137,7 @@ const App = (): JSX.Element => {
 					restrictedTo={[UserEnum.USER, UserEnum.ADMIN]} 
         />
 				<Route exact path={PathConstants.LOGIN_STAFF} component={LoginStaff} />
+				<Route exact path={PathConstants.REGISTER_STAFF} component={RegisterStaff} />
 				<PrivateRoute 
 					path={PathConstants.STAFF} 
 					component={StaffMain} 

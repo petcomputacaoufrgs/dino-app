@@ -6,7 +6,6 @@ import NotFound from '../not_found'
 import Dinogotchi from './dinogotchi'
 import Menu from './menu'
 import SnakeGame from './snake_game'
-import './styles.css'
 
 const KidsSpace: React.FC = () => {
     return(

@@ -21,7 +21,6 @@ import EssentialContactEntity from '../../../../types/contact/database/Essential
 import DinoHr from '../../../../components/dino_hr'
 import { IsStaff } from '../../../../context/private_router'
 import './styles.css'
-import { isDeepStrictEqual } from 'util'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
 	return item
@@ -54,7 +53,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 		const [contactPhones, setContactPhones] = useState(getPhones(item))
 		const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
 		const [invalidName, setInvalidName] = useState(false)
-		const [invalidPhone, setInvalidPhone] = useState({ number: '', text: '' })
+		const [invalidPhone, setInvalidPhone] = useState({ number: 'dummy text', text: '' })
 		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
 		const staff = IsStaff()
 
@@ -69,10 +68,14 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 		}, [dialogOpen, item])
 
 		const handleSave = (): void => {
-			function validInfo(): string {
+			function validInfo(): boolean {
 				setInvalidName(StringUtils.isEmpty(contact.name))
-				setInvalidPhone({ number: '', text: '' })
-				return contact.name
+				const nameIsNotEmpty = !StringUtils.isEmpty(contact.name)
+				const atLeastOnePhoneNotEmptyAsStaff = !staff || contactPhones.some(p => p.number !== '')
+				if(!atLeastOnePhoneNotEmptyAsStaff) {
+					setInvalidPhone({number: '', text: 'Contato Essencial deve ter um telefone'})
+				}
+				return nameIsNotEmpty && atLeastOnePhoneNotEmptyAsStaff
 			}
 
 			function handleTakenNumber(viewWithSamePhone: ContactView) {
@@ -89,7 +92,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 			}
 
 			if (validInfo()) {
-				const viewWithSamePhone = PhoneService.getContactWithSamePhone( items, contactPhones, item)
+				const viewWithSamePhone = PhoneService.getContactWithSamePhone(items, contactPhones, item)
 				if (viewWithSamePhone) {
 					handleTakenNumber(viewWithSamePhone)
 				} else {

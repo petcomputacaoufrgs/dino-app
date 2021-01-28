@@ -15,7 +15,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 
 	const isNumberTaken = (tel: string): boolean => props.helperTextInvalidPhone.number === tel
 
-	const isNumberInvalid = (tel: string) => isNumberTaken(tel)
+	const isNumberInvalid = (tel: string) => isNumberTaken(tel) 
 
 	const isNameInvalid = (name: string) => name.length === Constants.NAME_MAX || props.invalidName
 

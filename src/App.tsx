@@ -21,7 +21,7 @@ import AboutUs from './views/about'
 import './App.css'
 import UserService from './services/user/UserService'
 import UserEnum from './types/enum/UserEnum'
-import StaffMain from './views/staff_main'
+import StaffMain from './views/staff'
 
 const LOAD_SCREEN_TIME = 2250
 

@@ -4,7 +4,7 @@ import ContactCardProps from './props'
 import ContactCardHeader from './header'
 import ContactCardContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import ContactMenuItems from '../contact_menu_items'
+import ItemListMenu from '../../../../components/item_list_menu'
 
 const ContactCard = forwardRef(
 	(
@@ -28,13 +28,13 @@ const ContactCard = forwardRef(
 				open={dialogOpen}
 			>
 				<ContactCardHeader item={item!} onClick={handleClick}>
-					<ContactMenuItems
+					<ItemListMenu
 						anchor={anchorEl}
 						setAnchor={setAnchorEl}
-						item={item!}
 						onEdit={onEdit}
 						onDelete={onDelete}
 						onCloseDialog={onClose}
+						editAvailable
 					/>
 				</ContactCardHeader>
 				<ContactCardContent item={item!} />

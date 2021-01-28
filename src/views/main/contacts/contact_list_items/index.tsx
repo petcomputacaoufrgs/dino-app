@@ -17,18 +17,18 @@ import EssentialContactService from '../../../../services/contact/EssentialConta
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
-	const [contactToEdit, setContactToEdit] = useState<ContactView | EssentialContactView | undefined>(undefined,)
-	const [contactToView, setContactToView] = useState<ContactView | EssentialContactView | undefined>(undefined,)
-	const [contactToDelete, setContactToDelete] = useState<ContactView | EssentialContactView | undefined>(undefined)
+	const [itemToEdit, setItemToEdit] = useState<ContactView | EssentialContactView | undefined>(undefined,)
+	const [itemToView, setItemToView] = useState<ContactView | EssentialContactView | undefined>(undefined,)
+	const [itemToDelete, setItemToDelete] = useState<ContactView | EssentialContactView | undefined>(undefined)
 
 	const language = useLanguage()
 	const staff = IsStaff()
 
-	const handleOpenCard = (index: number) => {
-		setContactToView(items[index])
+	const handleOpenItem = (index: number) => {
+		setItemToView(items[index])
 	}
 
-	const handleAcceptDeleteDialog = async () => {
+	const handleAcceptDialogAndDeleteItem = async () => {
 
 		async function deleteGoogleContact (
 			contactToDelete: ContactView,
@@ -46,21 +46,21 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 			}
 		}
 
-		if (contactToDelete) {
-			await deletePhones(contactToDelete)
+		if (itemToDelete) {
+			await deletePhones(itemToDelete)
 			if(staff) {
-				await EssentialContactService.delete(contactToDelete.contact as EssentialContactEntity)
+				await EssentialContactService.delete(itemToDelete.contact as EssentialContactEntity)
 			} else {
-				await deleteGoogleContact(contactToDelete)
-				await ContactService.delete(contactToDelete.contact)
+				await deleteGoogleContact(itemToDelete)
+				await ContactService.delete(itemToDelete.contact)
 			}
 		}
 		
-		setContactToDelete(undefined)
+		setItemToDelete(undefined)
 	}
 
 	const handleCloseDeleteDialog = () => {
-		setContactToDelete(undefined)
+		setItemToDelete(undefined)
 	}
 
 	return (
@@ -70,39 +70,39 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 					<ContactItemList
 						key={index}
 						item={item}
-						onClick={() => handleOpenCard(index)}
-						onEdit={setContactToEdit}
-						onDelete={setContactToDelete}
-						onCloseDialog={() => setContactToView(undefined)}
+						onClick={() => handleOpenItem(index)}
+						onEdit={() => setItemToEdit(item)}
+						onDelete={() => setItemToDelete(item)}
+						onCloseDialog={() => setItemToView(undefined)}
 					/>
 				)}
 			</List>
-			{contactToView && (
+			{itemToView && (
 				<ContactCard
-					dialogOpen={contactToView !== undefined}
-					onClose={() => setContactToView(undefined)}
-					item={contactToView}
-					onEdit={setContactToEdit}
-					onDelete={setContactToDelete}
+					dialogOpen={itemToView !== undefined}
+					onClose={() => setItemToView(undefined)}
+					item={itemToView}
+					onEdit={() => setItemToEdit(itemToView)}
+					onDelete={() => setItemToDelete(itemToView)}
 				/>
 			)}
-			{contactToEdit && (
+			{itemToEdit && (
 				<ContactFormDialog
-					dialogOpen={contactToEdit !== undefined}
-					onClose={() => setContactToEdit(undefined)}
-					item={contactToEdit}
+					dialogOpen={itemToEdit !== undefined}
+					onClose={() => setItemToEdit(undefined)}
+					item={itemToEdit}
 					items={items}
 					action={Constants.EDIT}
 				/>
 			)}
-			{contactToDelete && (
+			{itemToDelete && (
 				<AgreementDialog
-					open={contactToDelete !== undefined}
+					open={itemToDelete !== undefined}
 					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
 					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
 					description={language.data.DELETE_CONTACT_OPTION_TEXT}
 					question={language.data.DELETE_CONTACT_QUESTION}
-					onAgree={handleAcceptDeleteDialog}
+					onAgree={handleAcceptDialogAndDeleteItem}
 					onDisagree={handleCloseDeleteDialog}
 				/>
 			)}

@@ -5,6 +5,6 @@ export default interface ContactCardProps {
 	item?: ContactView
 	dialogOpen: boolean
 	onClose: () => void
-	onEdit: React.Dispatch<React.SetStateAction<ContactView | undefined>>
-	onDelete: React.Dispatch<React.SetStateAction<ContactView | undefined>>
+	onEdit: () => void
+	onDelete: () => void
 }

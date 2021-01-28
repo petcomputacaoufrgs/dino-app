@@ -11,7 +11,7 @@ import OptionsIconButton from '../../../../components/button/icon_button/options
 import { Star } from '@material-ui/icons'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
-import ContactMenuItems from '../contact_menu_items'
+import ItemListMenu from '../../../../components/item_list_menu'
 import Utils from '../../../../utils/Utils'
 import './styles.css'
 
@@ -34,6 +34,8 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 		setAnchorEl(event.currentTarget)
 	}
 
+	const isEditAvailable = item.contact.localEssentialContactId === undefined
+
 	return (
 		<div className='contacts__list__item'>
 			<ListItem button divider onClick={handleOpen}>
@@ -54,13 +56,13 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 					<OptionsIconButton dark onClick={handleClick} />
 				</ListItemSecondaryAction>
 			</ListItem>
-			<ContactMenuItems
+			<ItemListMenu
 				anchor={anchorEl}
 				setAnchor={setAnchorEl}
-				item={item}
 				onEdit={onEdit}
 				onDelete={onDelete}
 				onCloseDialog={onCloseDialog}
+				editAvailable={isEditAvailable}
 			/>
 		</div>
 	)

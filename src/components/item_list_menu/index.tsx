@@ -1,17 +1,17 @@
 import React from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
-import ContactMenuItemsProps from './props'
-import { useLanguage } from '../../../../context/language'
+import ItemListMenuProps from './props'
+import { useLanguage } from '../../context/language'
 import './styles.css'
 
-const ContactMenuItems = ({
+const ItemListMenu = ({
 	anchor,
 	setAnchor,
-	item,
 	onEdit,
 	onDelete,
 	onCloseDialog,
-}: ContactMenuItemsProps) => {
+	editAvailable,
+}: ItemListMenuProps) => {
 	const language = useLanguage()
 
 	const handleClose = () => {
@@ -19,9 +19,8 @@ const ContactMenuItems = ({
 	}
 
 	const renderEditMenuItem = () => {
-		const isNotEssential = item.contact.localEssentialContactId === undefined
 
-		if (isNotEssential) {
+		if (editAvailable) {
 			return (
 				<MenuItem onClick={handleEdit}>
 					{language.data.EDIT_OPTION_TEXT}
@@ -31,13 +30,13 @@ const ContactMenuItems = ({
 	}
 
 	const handleEdit = () => {
-		onEdit(item)
+		onEdit()
 		handleClose()
 		onCloseDialog()
 	}
 
 	const handleDelete = () => {
-		onDelete(item)
+		onDelete()
 		handleClose()
 		onCloseDialog()
 	}
@@ -47,7 +46,7 @@ const ContactMenuItems = ({
 			anchorEl={anchor}
 			open={Boolean(anchor)}
 			onClose={handleClose}
-			className='contact__contact_menu_items'
+			className='item_list___menu_options'
 		>
 			{renderEditMenuItem()}
 			<MenuItem onClick={handleDelete}>
@@ -57,4 +56,4 @@ const ContactMenuItems = ({
 	)
 }
 
-export default ContactMenuItems
+export default ItemListMenu

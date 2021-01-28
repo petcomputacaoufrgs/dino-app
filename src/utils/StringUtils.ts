@@ -1,8 +1,8 @@
 import Utils from './Utils'
 
 class StringUtils {
-	isEmpty(value: any | undefined): boolean {
-		return Utils.isEmpty(value) || value === '' || value === ' '
+	isEmpty(value: string | undefined): boolean {
+		return Utils.isEmpty(value) || value?.trim() === ''
 	}
 
 	upperCaseFirstLetter = (str: string): string =>

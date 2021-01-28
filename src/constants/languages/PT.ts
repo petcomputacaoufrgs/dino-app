@@ -500,4 +500,6 @@ export default class PT implements LanguageBase {
 	NO_FAQ_AVAILABLE = 'Nenhuma F.A.Q disponível'
 
 	TREATMENT_SAVE = 'Salvar'
+
+	KIDS_SPACE = 'Espaço infantil'
 }

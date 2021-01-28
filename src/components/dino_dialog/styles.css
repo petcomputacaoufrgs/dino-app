@@ -13,13 +13,12 @@
 .dino_dialog__header .dino_dialog__header__title {
 	display: flex;
 	align-items: center;
-	margin-right: 8px;
-	color: var(--light-color);
+	margin-right: 0.5rem;
 }
 
 .dino_dialog__header h5,
 .dino_dialog__header h3 {
-	margin-bottom: 0px;
+	margin-bottom: 0rem;
 }
 
 .dino_dialog__content {

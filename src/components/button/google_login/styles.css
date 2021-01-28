@@ -7,17 +7,17 @@
 
 .google_login_button .google_login_button__error {
 	color: #ff0000;
-	padding: 2px;
+	padding: 0.125rem;
 	background-color: rgba(0, 0, 0, 0.3);
 	font-weight: 700;
 }
 
 .google_login_button__button button {
 	background-color: var(--note-background);
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
+	padding-left: 1.563rem;
+	padding-right: 1.563rem;
 }
 
 .google_login_button__button .MuiTypography-root {

@@ -1,6 +1,6 @@
 .glossary__items {
 	position: absolute;
-	height: calc(100% - 60px);
+	height: calc(100% - 3.75rem);
 	width: 100%;
 	overflow-y: auto;
 	color: var(--contrast-color);
@@ -8,10 +8,10 @@
 }
 
 .accordion {
-	padding: 5px 10px 15px;
+	padding: 0.313rem 0.625rem 0.938rem;
 }
 
-.accordion .card .card-title {
+.accordion .card .card_title {
 	margin-bottom: 0.2rem;
 }
 
@@ -31,6 +31,6 @@
 	color: var(--selection);
 }
 
-.glossary__items .card-body .card-link {
+.glossary__items .card-body .card_link {
 	color: var(--selection);
 }

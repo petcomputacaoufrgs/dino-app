@@ -14,7 +14,7 @@
 
 .note_card_dialog.MuiDialog-root .MuiFormControl-root {
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 1.25rem;
 }
 
 .note_card_dialog.MuiDialog-root .MuiDialog-paperWidthSm {

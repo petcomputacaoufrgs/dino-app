@@ -8,14 +8,14 @@ import Accordion from 'react-bootstrap/Accordion'
 
 const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 	return (
-		<div className='faq-items'>
-			<div className='faq-items__title'>
+		<div className='faq_items'>
+			<div className='faq_items__title'>
 				<Typography>{data ? data.faq.title : ''}</Typography>
 				<Divider />
 			</div>
 
 			{data && (
-				<Accordion className='faq-items__accordion'>
+				<Accordion className='faq_items__accordion'>
 					{data.items.map((item, index) => (
 						<Card className='card' key={index}>
 							<Accordion.Toggle as={Card.Header} eventKey={index.toString()}>

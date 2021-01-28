@@ -1,17 +1,17 @@
 .calendar__day__modal.mobile .MuiDialog-container.MuiDialog-scrollPaper {
 	position: absolute;
-	top: 55px;
-	margin-bottom: 70px;
-	height: calc(100% - 125px);
+	top: 3.438rem;
+	margin-bottom: 4.375rem;
+	height: calc(100% - 7.813rem);
 	left: 0;
 	right: 0;
 }
 
 .calendar__day__modal.desktop .MuiDialog-container.MuiDialog-scrollPaper {
 	position: absolute;
-	top: 55px;
-	bottom: 0px;
-	left: 73px;
+	top: 3.438rem;
+	bottom: 0rem;
+	left: 4.563rem;
 	right: 0;
 }
 

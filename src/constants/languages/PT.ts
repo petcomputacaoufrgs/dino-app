@@ -493,6 +493,8 @@ export default class PT implements LanguageBase {
 
 	TREATMENT_SAVE = 'Salvar'
 
+	KIDS_SPACE = 'Espaço infantil'
+
 	SECONDARY_TAB_MESSAGE = 'O dino já está aberto em outra guia do seu navegador. Você só pode abri-lo em uma guia por vez.'
 
 	SECONDARY_TAB_BUTTON_TEXT = 'Clique aqui para abrir nesta guia'

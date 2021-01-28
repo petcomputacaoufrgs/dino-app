@@ -1,16 +1,16 @@
 .drawer_navigation__drawer {
 	height: 100%;
-	width: 240px;
+	width: 15rem;
 	display: flex;
 	flex-direction: row;
 	overflow: auto;
 	background-color: var(--header-and-menu);
-	margin-left: -240px;
+	margin-left: -15rem;
 }
 
 .drawer_navigation__drawer__visible {
 	height: 100%;
-	width: 240px;
+	width: 15rem;
 	overflow: hidden;
 }
 
@@ -21,9 +21,9 @@
 }
 
 .drawer_navigation__drawer__visible .MuiListItemIcon-root {
-	margin-bottom: 4px;
-	margin-right: 10px;
-	min-width: 0px;
+	margin-bottom: 0.25rem;
+	margin-right: 0.625rem;
+	min-width: 0rem;
 }
 
 .drawer_navigation__drawer__visible
@@ -34,8 +34,8 @@
 .drawer_navigation__drawer__invisible {
 	position: fixed;
 	z-index: 888;
-	top: 0;
-	left: 0px;
+	top: 0rem;
+	left: 0rem;
 	height: 100%;
 	width: 100vw;
 	background-color: rgba(0, 0, 0, 0.3);
@@ -50,28 +50,28 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	height: 45px;
+	height: 2.813rem;
 }
 
 .drawer_navigation__drawer__content {
 	overflow-y: auto;
-	height: calc(100% - 45px);
-	padding: 8px;
+	height: calc(100% - 2.813rem);
+	padding: 0.5rem;
 }
 
 .drawer_navigation__drawer__visible .MuiList-root.MuiList-padding {
-	padding-top: 0px;
-	padding-bottom: 0px;
+	padding-top: 0rem;
+	padding-bottom: 0rem;
 }
 
 .drawer_navigation__drawer__visible__item_image {
-	width: 30px;
-	height: 30px;
+	width: 1.875rem;
+	height: 1.875rem;
 }
 
 .drawer_navigation__drawer__visible .user {
 	color: var(--light-color);
-	padding: 8px 16px;
+	padding: 0.5rem 1rem;
 }
 
 .user__avatar {
@@ -85,7 +85,7 @@
 .user__avatar .avatar {
 	width: 8rem;
 	height: 8rem;
-	margin-bottom: 10px;
+	margin-bottom: 0.625rem;
 }
 
 .user__avatar__loader .loader__screen {

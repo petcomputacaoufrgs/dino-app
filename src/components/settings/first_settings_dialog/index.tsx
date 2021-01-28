@@ -345,9 +345,9 @@ const FirstSettingsDialog: React.FC = () => {
 	return (
 		<>
 			{!isLoading && settings && !settings.firstSettingsDone && (
-				<div className='first-settings'>
+				<div className='first_settings'>
 					<Dialog
-						className='first-settings__dialog'
+						className='first_settings__dialog'
 						aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
 						open={dialogOpen}
 						TransitionComponent={TransitionSlide}

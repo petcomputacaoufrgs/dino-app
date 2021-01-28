@@ -43,8 +43,8 @@
 .dino_stepper .cancel__button,
 .dino_stepper .back__button,
 .dino_stepper .next__button {
-	margin: 0px;
-	padding: 0px;
+	margin: 0rem;
+	padding: 0rem;
 	margin-right: 0.3rem;
 	font-size: var(--default-small-font);
 	overflow: hidden;

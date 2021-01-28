@@ -5,10 +5,10 @@
 }
 
 .calendar__event_modal__title__color {
-	width: 24px;
-	height: 24px;
+	width: 1.5rem;
+	height: 1.5rem;
 	border-radius: 10%;
-	margin-right: 16px;
+	margin-right:  1rem;
 }
 
 .calendar__event_modal .MuiDialog-paperWidthSm {
@@ -34,9 +34,9 @@
 
 .calendar__event_modal.MuiDialog-root .MuiDialogTitle-root {
 	padding-bottom: 0;
-	padding-left: 20px;
+	padding-left: 1.25rem;
 }
 
 .calendar__event_modal .MuiDialogContent-root {
-	padding-left: 0px;
+	padding-left: 0rem;
 }

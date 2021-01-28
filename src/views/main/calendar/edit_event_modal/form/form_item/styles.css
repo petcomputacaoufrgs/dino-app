@@ -2,8 +2,8 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
-	padding-left: 12px;
-	padding-right: 48px;
+	padding-left: 10.125rem;
+	padding-right: 3rem;
 }
 
 .calendar__edit_event_modal__form__item__field {
@@ -17,15 +17,15 @@
 .calendar__edit_event_modal__form__item__icon__button.MuiButton-root {
 	outline: none !important;
 	border-radius: 50%;
-	width: 36px;
-	min-width: 36px;
+	width: 2.25rem;
+	min-width: 2.25rem;
 }
 
 .calendar__edit_event_modal__form__item__icon {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding-right: 12px;
-	width: 36px;
-	min-width: 36px;
+	padding-right: 10.125rem;
+	width: 2.25rem;
+	min-width: 2.25rem;
 }

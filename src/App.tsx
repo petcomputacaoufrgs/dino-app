@@ -21,6 +21,7 @@ import AboutUs from './views/about'
 import TabControlService from './services/tab_control/TabControlService'
 import SecondaryTab from './views/secondary_tab'
 import PWAControl from './components/pwa_control'
+import KidsSpace from './views/kids_space'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
@@ -138,9 +139,10 @@ const App: React.FC = () => {
 			<Switch>
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
 				<PrivateRoute path={PathConstants.USER} component={Main} />
-				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
-				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
-				<Route path={PathConstants.ABOUT_US} component={AboutUs} />
+				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
+				<Route exact path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
+				<Route exact path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
+				<Route exact path={PathConstants.ABOUT_US} component={AboutUs} />
 				<Route path={'/'} component={NotFound} />
 			</Switch>
 		</PrivateRouterProvider>

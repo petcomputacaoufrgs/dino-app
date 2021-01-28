@@ -1,10 +1,10 @@
 .clear_button {
-	width: 40px;
-	height: 40px;
+	width: 2.5rem;
+	height: 2.5rem;
 }
 
 .clear_button svg {
 	fill: var(--contrast-color);
-	width: 24px;
+	width: 1.5rem;
 	margin-left: auto;
 }

@@ -487,6 +487,8 @@ export default class EN implements LanguageBase {
 
 	TREATMENT_SAVE = 'Save'
 
+	KIDS_SPACE = 'Kid\'s space'
+
 	SECONDARY_TAB_MESSAGE = 'The dino is open in another browser tab. You can only use one tab.'
 
 	SECONDARY_TAB_BUTTON_TEXT = 'Click here to open this tab'

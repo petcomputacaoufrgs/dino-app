@@ -1,17 +1,17 @@
 .calendar__event_modal__content__date_info {
-	padding-left: 60px;
+	padding-left: 3.75rem;
 }
 
 .calendar__event_modal__content__data {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding-left: 20px;
-	margin-bottom: 15px;
+	padding-left: 1.25rem;
+	margin-bottom: 0.938rem;
 }
 
 .calendar__event_modal__content__data__icon {
-	margin-right: 16px;
+	margin-right:  1rem;
 }
 
 .calendar__event_modal__content__data > p {
@@ -23,5 +23,5 @@
 }
 
 .calendar__event_modal__content__data__description {
-	margin-top: -4px;
+	margin-top: -0.25rem;
 }

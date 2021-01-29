@@ -10,7 +10,6 @@ import { ReactComponent as CalendarSVG } from '../../assets/icons/menu_icons/cal
 import LanguageBase from '../../constants/languages/LanguageBase'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
-import UserEnum from '../../types/enum/UserEnum'
 
 class MenuService {
 	getMainPages = (language: LanguageBase): MenuItemViewModel[] => [
@@ -95,6 +94,11 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
 		},
 		{
+			image: SettingsSVG,
+			name: language.MENU_STAFF_MODERATION,
+			onClick: () => HistoryService.push(PathConstants.TREATMENT),
+		},
+		{
 			name: language.MENU_ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},
@@ -136,9 +140,6 @@ class MenuService {
 		],
 	]
 
-	redirectToHome = (userPermission: number | undefined) => {
-		HistoryService.push(userPermission === UserEnum.STAFF ? PathConstants.STAFF_HOME : PathConstants.USER_HOME)
-	}
 }
 
 export default new MenuService()

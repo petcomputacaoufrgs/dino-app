@@ -29,8 +29,7 @@ class EventService {
 	whenLogin = async () => {
 		//CalendarService.addMocks()
 		this.startWebSocketAndSync()
-		const userPermission = await UserService.getPermission()
-		MenuService.redirectToHome(userPermission)
+		AuthService.redirectToHome(await UserService.getPermission())
 	}
 
 	whenLogout = async () => {

@@ -1,7 +1,8 @@
 enum UserEnum {
-  STAFF = 1,
-  ADMIN = 2,
-	USER = 3,
+  CLIENT = 1,
+  STAFF = 2,
+  ADMIN = 3,
+	USER = 4,
 }
 
 export default UserEnum

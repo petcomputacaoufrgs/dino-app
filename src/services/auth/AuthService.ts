@@ -26,6 +26,9 @@ import Database from '../../storage/Database'
 import UpdatableService from '../update/UpdatableService'
 import UserSettingsService from '../user/UserSettingsService'
 import LogoutCallback from '../../types/auth/service/LogoutCallback'
+import UserEnum from '../../types/enum/UserEnum'
+import PathConstants from '../../constants/app/PathConstants'
+import HistoryService from '../history/HistoryService'
 
 class AuthService extends UpdatableService {
 	private logoutCallbacks: LogoutCallback[]
@@ -359,6 +362,13 @@ class AuthService extends UpdatableService {
 	private async saveUser(responseBody: AuthResponseDataModel) {
 		await UserService.updateUser(responseBody.user)
 	}
+
+	isStaff = (userPermission: number | undefined) => userPermission === UserEnum.STAFF || userPermission === UserEnum.CLIENT 
+	
+	redirectToHome(userPermission: number | undefined) {
+		HistoryService.push(this.isStaff(userPermission) ? PathConstants.STAFF_HOME : PathConstants.USER_HOME)
+	}
+
 }
 
 export default new AuthService()

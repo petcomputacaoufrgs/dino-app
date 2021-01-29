@@ -48,7 +48,9 @@ class PathConstants {
 
 	STAFF_FAQ: string = `${this.STAFF}/${this.FAQ}`
 
-	STAFF_MODERATION: string = `${this.STAFF}/moderation`
+	STAFF_MODERATION: string = `${this.STAFF}/moderation` 
+	
+	TREATMENT: string = `${this.STAFF}/treatment` 
 	
 	ABOUT_US = '/about-us'
 

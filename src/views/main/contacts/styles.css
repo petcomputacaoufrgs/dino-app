@@ -51,7 +51,7 @@
 	background-color: Var(--avatar-color-5);
 }
 
-.add_contact_button {
+.add_button {
 	position: absolute;
 	bottom: 1.2rem;
 	right: 1.2rem;

@@ -1,8 +1,8 @@
-.contact_form .MuiDialog-paper {
+.MuiDialog-paper {
 	margin: 0px;
 }
 
-.dialog_form__content
+.contact__dialog_form__content
 	.MuiFormHelperText-root.Mui-error.MuiFormHelperText-filled {
 	overflow: hidden;
 	text-overflow: ellipsis;

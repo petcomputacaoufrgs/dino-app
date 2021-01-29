@@ -43,16 +43,16 @@ const FormContent: React.FC<FormContentProps> = ( props ) => {
       value={value}
       onChange={onChange}
       error={Boolean(props.invalidValue)}
-      
     />
     {props.children}
+    {props.hideButton && (    
     <Button
-      className='dialog_form__content__save_button'
+      // className='dialog_form__content__save_button'
       onClick={onSave}
     >
-      <SaveSVG className='dialog_form__content__save_button__icon' />
+      <SaveSVG className='save_button__icon' />
       {props.saveButtonText || language.data.SETTINGS_SAVE}
-    </Button>
+    </Button>)}
   </div>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../button/text_button'
+import TextButton from '../button/text_button'
 import AgreementDialogProps from './props'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -44,19 +44,19 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>
-				<Button
+				<TextButton
 					ariaLabel={language.data.AGREEMENT_BUTTON_ARIA_LABEL}
 					onClick={handleDisagree}
 				>
 					{disagreeOptionText}
-				</Button>
+				</TextButton>
 				{onAgree && (
-					<Button
+					<TextButton
 						ariaLabel={language.data.DISAGREEMENT_BUTTON_ARIA_LABEL}
 						onClick={handleAgree}
 					>
 						{agreeOptionText}
-					</Button>
+					</TextButton>
 				)}
 			</DialogActions>
 		</Dialog>

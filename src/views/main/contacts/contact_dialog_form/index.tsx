@@ -68,14 +68,25 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 		}, [dialogOpen, item])
 
 		const handleSave = (): void => {
+
 			function validInfo(): boolean {
-				setInvalidName(StringUtils.isEmpty(contact.name))
+
 				const nameIsNotEmpty = !StringUtils.isEmpty(contact.name)
+				if(!nameIsNotEmpty){
+					setInvalidName(StringUtils.isEmpty(contact.name))
+				}
+				
 				const atLeastOnePhoneNotEmptyAsStaff = !staff || contactPhones.some(p => p.number !== '')
 				if(!atLeastOnePhoneNotEmptyAsStaff) {
 					setInvalidPhone({number: '', text: 'Contato Essencial deve ter um telefone'})
 				}
-				return nameIsNotEmpty && atLeastOnePhoneNotEmptyAsStaff
+
+				const hasViewWithSamePhone = PhoneService.getContactWithSamePhone(items, contactPhones, item)
+				if (hasViewWithSamePhone) {
+					handleTakenNumber(hasViewWithSamePhone)
+				}
+
+				return nameIsNotEmpty && atLeastOnePhoneNotEmptyAsStaff && !hasViewWithSamePhone
 			}
 
 			function handleTakenNumber(viewWithSamePhone: ContactView) {
@@ -92,13 +103,8 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 			}
 
 			if (validInfo()) {
-				const viewWithSamePhone = PhoneService.getContactWithSamePhone(items, contactPhones, item)
-				if (viewWithSamePhone) {
-					handleTakenNumber(viewWithSamePhone)
-				} else {
 					saveContact()
 					onClose()
-				}
 			}
 		}
 

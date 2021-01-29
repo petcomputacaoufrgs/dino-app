@@ -180,7 +180,7 @@ const Faq: React.FC = () => {
 								className='faq__save_button'
 								onClick={handleSaveTreatment}
 							>
-								<SaveSVG className='faq__save_button__icon' />
+								<SaveSVG className='save_button__icon' />
 								{language.data.TREATMENT_SAVE}
 							</Button>
 						</div>

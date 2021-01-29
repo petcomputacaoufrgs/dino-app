@@ -169,7 +169,7 @@ const Contacts: React.FC = () => {
 				<ContactItems items={filteredContacts} />
 				<CircularButton
 					ariaLabel={language.data.CONTACTS_ADD_CONTACT}
-					className='add_contact_button'
+					className='add_button'
 					icon={AddIconSVG}
 					onClick={handleAddContact}
 				/>

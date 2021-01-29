@@ -48,7 +48,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 	}
 
 	return (
-		<div className='dialog_form__content'>
+		<div className='contact__dialog_form__content'>
 			<TextField
 				required
 				fullWidth
@@ -91,7 +91,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 					<br />
 				</div>
 			))}
-			<TextButton className='add-phone__button' onClick={props.handleAddPhone}>
+			<TextButton className='add_phone__button' onClick={props.handleAddPhone}>
 				<Typography variant='body2' color='textSecondary' display='block'>
 					{'+ ' + language.data.FORM_ADD_PHONE}
 				</Typography>

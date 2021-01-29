@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/language'
 import Loader from '../../components/loader'
 import './styles.css'
 import { usePrivateRouter } from '../../context/private_router'
-import MenuService from '../../services/menu/MenuService'
+import AuthService from '../../services/auth/AuthService'
 
 const redirectTimeout = 2000
 
@@ -17,11 +17,7 @@ const NotFound = (): JSX.Element => {
 
 	const language = useLanguage()
 
-	const redirectToHome = () => {
-		MenuService.redirectToHome(router.userPermission)
-	}
-
-	setTimeout(redirectToHome, redirectTimeout)
+	setTimeout(() => AuthService.redirectToHome(router.userPermission), redirectTimeout)
 
 	return (
 		<Loader isLoading={language.loading}>

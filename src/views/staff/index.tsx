@@ -18,6 +18,7 @@ import Faq from '../main/faq'
 import Glossary from '../main/glossary'
 import GlossaryItem from '../main/glossary/glossary_item'
 import StaffModeration from './staff_moderation'
+import Treatment from './treatment'
 
 const StaffMain: React.FC = () => {
 	const language = useLanguage()
@@ -71,6 +72,10 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute 
 					path={PathConstants.STAFF_MODERATION} 
 					component={StaffModeration} 
+				/>
+				<PrivateRoute 
+					path={PathConstants.TREATMENT} 
+					component={Treatment} 
 				/>
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>

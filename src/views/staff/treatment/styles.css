@@ -1,0 +1,12 @@
+.treatment__dialog_form__content {
+  padding: 16px;
+  align-self: center;
+}
+
+.treatment__dialog_form__content__textfield {
+  width: 100%;
+}
+
+.treatment_action__buttons {
+  background-color: transparent;
+}

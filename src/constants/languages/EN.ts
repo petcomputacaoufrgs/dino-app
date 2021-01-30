@@ -99,8 +99,10 @@ export default class EN implements LanguageBase {
 
 	MENU_ABOUT_US = 'About Us'
 
-	MENU_STAFF_MODERATION = 'Staff Moderation'
+	MENU_STAFF_MODERATION = 'Staff Moderation' 
 
+	MENU_STAFF_TREATMENT = 'Treatments' 
+	
 	SETTINGS_TITLE = 'Settings'
 
 	SETTINGS_LANGUAGE = 'Choose Language'
@@ -173,6 +175,10 @@ export default class EN implements LanguageBase {
 
 	STAFF_SAVE_SUCCESS = 'Staff successfully added'
 
+	STAFF_ADD_TREATMENT = 'Add Treatment'
+
+	STAFF_ADD_TREATMENT_NAME = 'Add Treatment Name'
+
 	PENDING = 'Pending'
 
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
@@ -225,7 +231,7 @@ export default class EN implements LanguageBase {
 
 	NO_OPTIONS = 'No options'
 
-	EMPTY_FIELD_ERROR = "Field can't be empty."
+	EMPTY_FIELD_ERROR = "Field cannot be empty."
 
 	QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
 

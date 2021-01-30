@@ -93,25 +93,25 @@ const Treatment: React.FC<TreatmentProps> = React.forwardRef(({ ref },) => {
 					onClose={handleClose}
 					TransitionComponent={TransitionSlide}
 					fullWidth
+					disableBackdropClick
+					disableEscapeKeyDown
 				>
-					<DialogTitle>
-						Adicionar Tratamento
-					</DialogTitle>
+					<DialogTitle>{language.data.STAFF_ADD_TREATMENT}</DialogTitle>
 					<DialogContent dividers>
 						<TextField
 							className='treatment__dialog_form__content__textfield'
 							margin='dense'
 							required
 							fullWidth
-							label='{props.label}'
+							label={language.data.STAFF_ADD_TREATMENT_NAME}
 							type='name'
-							helperText={error && 'Não pode ser vazio'}
+							helperText={error && language.data.EMPTY_FIELD_ERROR}
 							value={value}
 							onChange={(e) => setValue(e.target.value as string)}
 							error={error}
 						/>
 					</DialogContent>
-						<DialogActions className='treatment_action__buttons'>
+						<DialogActions>
 							<TextButton onClick={handleClose}>
 								{language.data.DIALOG_CANCEL_BUTTON_TEXT}
 							</TextButton>

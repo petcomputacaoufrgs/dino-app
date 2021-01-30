@@ -25,8 +25,11 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 import ContactService from '../../../services/contact/ContactService'
 import GoogleContactService from '../../../services/contact/GoogleContactService'
 import './styles.css'
+import { IsStaff } from '../../../context/private_router'
 
 const Settings: React.FC = () => {
+
+	const staff = IsStaff()
 	const alert = useAlert()
 	const language = useLanguage()
 
@@ -247,29 +250,33 @@ const Settings: React.FC = () => {
 						setColorTheme={setSelectedColorTheme}
 					/>
 				</FormControl>
-				<FormControl className='settings__form'>
+				{/* {!staff && ( */}
+					<>
+					<FormControl className='settings__form'>
 					<SelectTreatment
 						availableTreatments={treatments}
 						setTreatment={setSelectedTreatment}
 						treatment={selectedTreatment}
-					/>
-				</FormControl>
-				<DinoHr invisible />
-				<FormControl className='settings__form'>
-					<DinoSwitch
-						selected={syncGoogleContacts}
-						setSelected={handleOpenGoogleContactDialog}
-						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
-					/>
-				</FormControl>
-				<DinoHr />
-				<FormControl className='settings__form'>
-					<DinoSwitch
-						selected={selectedEssentialContactGrant}
-						setSelected={setSelectedEssentialContactGrant}
-						label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-					/>
-				</FormControl>
+						/>
+					</FormControl>
+					<DinoHr invisible />
+					<FormControl className='settings__form'>
+						<DinoSwitch
+							selected={syncGoogleContacts}
+							setSelected={handleOpenGoogleContactDialog}
+							label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
+						/>
+					</FormControl>
+					<DinoHr />
+					<FormControl className='settings__form'>
+						<DinoSwitch
+							selected={selectedEssentialContactGrant}
+							setSelected={setSelectedEssentialContactGrant}
+							label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
+						/>
+					</FormControl>
+					</>
+				{/* )} */}
 				<DinoHr invisible />
 				{renderSaveButton()}
 				{renderDialogs()}

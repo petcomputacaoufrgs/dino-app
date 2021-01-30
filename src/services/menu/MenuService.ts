@@ -95,7 +95,7 @@ class MenuService {
 		},
 		{
 			image: SettingsSVG,
-			name: language.MENU_STAFF_MODERATION,
+			name: language.MENU_STAFF_TREATMENT,
 			onClick: () => HistoryService.push(PathConstants.TREATMENT),
 		},
 		{

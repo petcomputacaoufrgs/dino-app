@@ -45,7 +45,11 @@ const StaffMain: React.FC = () => {
 	const renderMainContent = (): JSX.Element => {
 		return (
 			<Switch>
-				<PrivateRoute exact path={PathConstants.STAFF_HOME} component={() => <Home staff/>} />
+				<PrivateRoute 
+					exact 
+					path={PathConstants.STAFF_HOME} 
+					component={Home} 
+				/>
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_GLOSSARY}
@@ -92,7 +96,7 @@ const StaffMain: React.FC = () => {
 				onDisagree={handleLogoutDisagree}
 				open={openLogoutDialog}
 			/>
-			<FirstSettingsDialog />
+			{/* <FirstSettingsDialog /> */}
 		</Loader>
 	)
 }

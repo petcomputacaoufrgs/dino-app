@@ -47,6 +47,7 @@ export default interface LanguageBase {
 	MENU_CALENDAR: string
 	MENU_ABOUT_US: string
 	MENU_STAFF_MODERATION: string
+	MENU_STAFF_TREATMENT: string
 	SETTINGS_TITLE: string
 	SETTINGS_LANGUAGE: string
 	SETTINGS_TREATMENT: string
@@ -83,6 +84,8 @@ export default interface LanguageBase {
 	ADD_STAF_TAB: string
 	STAFF_LIST_TAB: string
 	STAFF_SAVE_SUCCESS: string
+	STAFF_ADD_TREATMENT: string
+	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	NOT_FOUND_QUESTION_FAQ: string
 	CONTACTS_ADD_CONTACT: string

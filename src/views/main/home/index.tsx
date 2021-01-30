@@ -6,12 +6,11 @@ import Button from '../../../components/button'
 import './styles.css'
 import LanguageBase from '../../../constants/languages/LanguageBase'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
+import { IsStaff } from '../../../context/private_router'
 
-interface HomeProps {
-	staff?: boolean
-}
+const Home: React.FC = () => {
 
-const Home: React.FC<HomeProps> = ({ staff }) => {
+	const staff = IsStaff()
 	const language = useLanguage()
 
 	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => {

@@ -1,0 +1,8 @@
+.list__title {
+	padding: 0px 16px;
+	margin: 0px;
+}
+
+.list__title p {
+	font-size: var(--large-font);
+}

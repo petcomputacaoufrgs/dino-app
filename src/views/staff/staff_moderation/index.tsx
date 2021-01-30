@@ -10,6 +10,8 @@ import StaffView from '../../../types/staff/view/StaffView'
 import FormContent from '../../../components/form_content'
 import StringUtils from '../../../utils/StringUtils'
 import { useAlert } from '../../../context/alert'
+import Button from '../../../components/button'
+import ListTitle from '../../../components/list_title'
 
 const StaffModeration: React.FC = () => {
 
@@ -73,6 +75,7 @@ const StaffModeration: React.FC = () => {
   const ListStaff = () => {
     return (
       <Loader className='staff_loader' isLoading={isLoading}>
+        <ListTitle title={'Mods'}/>
         <List>
           {staff.map((e, index) => 
             <ListItem key={index}>
@@ -99,7 +102,7 @@ const StaffModeration: React.FC = () => {
       <div className='add_staff'>
         <p className='add_staff__title'>Adicione Funcionários</p>
         <p>Funcionários são usuários com poderes adiministrativos de adicionar e blablabla</p>
-        <p>Para adicionar mais de um(a) funionário(a), separe seus e-mails por vírgula</p>
+        <p>Para adicionar mais de um(a) funcionário(a), separe seus e-mails por vírgula</p>
         <FormContent
           required
           multiline
@@ -112,7 +115,7 @@ const StaffModeration: React.FC = () => {
           inputProps={{ maxLength: 1000 }}
           label={language.data.FORM_EMAIL}
           saveButtonText={language.data.FORM_ADD_STAFF}
-        />          
+        />         
       </div>
     )
   }

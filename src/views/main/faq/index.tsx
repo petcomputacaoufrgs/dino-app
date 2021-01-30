@@ -136,6 +136,34 @@ const Faq: React.FC = () => {
 		}
 	}
 
+	const renderNoFAQAvailable = () => {
+		return (
+			<div className='faq__fail_to_load'>
+				<p>{language.data.NO_FAQ_AVAILABLE}</p>
+			</div>
+		)
+	}
+
+	const renderNoFAQSelected = () => {
+		return (
+			<div className='faq__fail_to_load'>
+				<p>{language.data.NO_TREATMENT_SELECTED}</p>
+				<SelectTreatment
+					availableTreatments={treatments || []}
+					setTreatment={setSelectedTreatment}
+					treatment={selectedTreatment}
+				/>
+				<Button
+					className='faq__save_button'
+					onClick={handleSaveTreatment}
+				>
+					<SaveSVG className='save_button__icon' />
+					{language.data.TREATMENT_SAVE}
+				</Button>
+			</div>
+		)
+	}
+
 	return (
 		<Loader className='faq__loader' isLoading={isLoading} hideChildren>
 			{searchResults ? (
@@ -162,31 +190,8 @@ const Faq: React.FC = () => {
 						)}
 					</div>
 				</>
-			) : (
-				<>
-					{treatment ? (
-						<div className='faq__fail_to_load'>
-							<p>{language.data.NO_FAQ_AVAILABLE}</p>
-						</div>
-					) : (
-						<div className='faq__fail_to_load'>
-							<p>{language.data.NO_TREATMENT_SELECTED}</p>
-							<SelectTreatment
-								availableTreatments={treatments || []}
-								setTreatment={setSelectedTreatment}
-								treatment={selectedTreatment}
-							/>
-							<Button
-								className='faq__save_button'
-								onClick={handleSaveTreatment}
-							>
-								<SaveSVG className='save_button__icon' />
-								{language.data.TREATMENT_SAVE}
-							</Button>
-						</div>
-					)}
-				</>
-			)}
+			) : treatment ? renderNoFAQAvailable() : renderNoFAQSelected()
+			}
 		</Loader>
 	)
 }

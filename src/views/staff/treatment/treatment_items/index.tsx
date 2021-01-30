@@ -13,6 +13,7 @@ import OptionsIconButton from '../../../../components/button/icon_button/options
 import { Star } from '@material-ui/icons'
 import ItemListMenu from '../../../../components/item_list_menu'
 import PhoneService from '../../../../services/contact/PhoneService'
+import ListTitle from '../../../../components/list_title'
 
 interface TreatmentItemsProps {
 	items: TreatmentEntity[]
@@ -52,7 +53,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 	const renderTreatmentItemList = (item: TreatmentEntity, index: number) => {
 		return (
 			<div className='contacts__list__item'>
-			<ListItem button divider onClick={() => handleOpenCard(index)}>
+			<ListItem button onClick={() => handleOpenCard(index)}>
 				<ListItemText
 					primary={item.name}
 					//secondary={PhoneService.getPhoneTypes(item.phones, language.data)}
@@ -75,6 +76,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 
 	return (
 		<>
+		  <ListTitle title={'Treatments'}/>
 			<List className='contacts__list'>
 				{items.map((item, index) => renderTreatmentItemList(item, index))}
 			</List>

@@ -2,18 +2,14 @@ import './styles.css'
 import React from 'react'
 import FaqItemsProps from './props'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
+import ListTitle from '../../../../components/list_title'
 
 const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 	return (
 		<div className='faq-items'>
-			<div className='faq-items__title'>
-				<Typography>{data ? data.faq.title : ''}</Typography>
-				<Divider />
-			</div>
-
+			<ListTitle title={data?.faq.title}/>
 			{data && (
 				<Accordion className='faq-items__accordion'>
 					{data.items.map((item, index) => (

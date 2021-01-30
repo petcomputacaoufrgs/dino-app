@@ -53,3 +53,7 @@
 .staff_moderation .dialog_form__content {
   padding: 0px;
 }
+
+.staff_moderation .list__title {
+  margin: 16px 0px 0px;
+}

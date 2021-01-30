@@ -101,6 +101,8 @@ export default class PT implements LanguageBase {
 
 	MENU_STAFF_MODERATION = 'Moderação de Funcionários'
 
+	MENU_STAFF_TREATMENT = 'Tratamentos'
+
 	SETTINGS_TITLE = 'Configurações'
 
 	SETTINGS_LANGUAGE = 'Escolher Idioma'
@@ -176,6 +178,10 @@ export default class PT implements LanguageBase {
 	STAFF_LIST_TAB = 'Funcionários'
 
 	STAFF_SAVE_SUCCESS = 'Funcionários adicionados'
+
+	STAFF_ADD_TREATMENT = 'Adicione Tratamento'
+
+	STAFF_ADD_TREATMENT_NAME = 'Adicione Título de Tratamento'
 
 	PENDING = 'Pendente'
 

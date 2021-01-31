@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Dialog, DialogActions } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import SelectTreatment from '../select_treatment'
 import DinoSwitch from '../../switch'
 import SelectLanguage from '../select_language'
 import SelectColorTheme from '../select_color_theme'
-import DinoDialogHeader, { DinoDialogContent } from '../../dino_dialog'
+import DinoDialog, { DinoDialogHeader } from '../../dialogs/dino_dialog'
 import DinoLogoHeader from '../../dino_logo_header'
 import DinoStepper from '../../dino_stepper'
 import SelectFontSize from '../select_font_size'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import AuthService from '../../../services/auth/AuthService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
-import TransitionSlide from '../../slide_transition'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import './styles.css'
@@ -21,12 +19,11 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()
 
+	const [step, setStep] = useState(0)
 	const [isLoading, setIsLoading] = useState(true)
-
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 
-	const [dialogOpen, setDialogOpen] = useState(true)
 
 	const [selectedLanguage, setSelectedLanguage] = useState(
 		language.data.LANGUAGE_CODE,
@@ -111,7 +108,7 @@ const FirstSettingsDialog: React.FC = () => {
 	}, [language])
 
 	const handleCloseDialogs = () => {
-		setDialogOpen(false)
+		setStep(-1)
 	}
 
 	const saveSettings = async () => {
@@ -121,8 +118,9 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.fontSize = selectedFontSize
 			settings.includeEssentialContact = selectedEssentialContactGrant
 			settings.declineGoogleContacts = false
-			settings.firstSettingsDone = true
+			settings.firstSettingsDone = step === NUMBER_DIALOGS - 1
 			settings.treatmentLocalId = selectedTreatment?.localId
+			settings.step = step
 
 			await UserSettingsService.save(settings)
 
@@ -143,31 +141,11 @@ const FirstSettingsDialog: React.FC = () => {
 	}
 
   const handleBackStep = () => {
-    if (settings) {
-      settings.step -= 1
-
-			UserSettingsService.save(settings)
-		}
+		setStep(step - 1)
 	}
 
 	const handleNextStep = () => {
-		if (settings) {
-			settings.step += 1
-
-			UserSettingsService.save(settings)
-		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
-			const newEntity: UserSettingsEntity = {
-				language: selectedLanguage,
-				fontSize: selectedFontSize,
-				colorTheme: selectedColorTheme,
-				includeEssentialContact: true,
-				declineGoogleContacts: false,
-				firstSettingsDone: false,
-				step: 1,
-			}
-
-			UserSettingsService.save(newEntity)
-		}
+		setStep(step + 1)
 	}
 
 	const handleEssentialContactGrantChange = (
@@ -180,7 +158,7 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.includeEssentialContact !== includeEssentialContact
 		) {
 			settings.includeEssentialContact = includeEssentialContact
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -192,7 +170,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.treatmentLocalId !== newSelectedTreatment.id) {
 			settings.treatmentLocalId = newSelectedTreatment.localId
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -201,7 +179,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.colorTheme !== newColorTheme) {
 			settings.colorTheme = newColorTheme
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -210,7 +188,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.language !== newLanguage) {
 			settings.language = newLanguage
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -219,38 +197,42 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.fontSize !== newFontSize) {
 			settings.fontSize = newFontSize
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
 	const renderSelectTreatmentDialogContent = () => {
 		return (
-			<SelectTreatment
-				treatment={selectedTreatment}
-				setTreatment={handleSelectedTreatmentChange}
-				availableTreatments={treatments}
-			>
-				<DinoSwitch
-					selected={selectedEssentialContactGrant}
-					setSelected={handleEssentialContactGrantChange}
-					label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-				/>
-			</SelectTreatment>
+			<div className='first_settings__message_dialog'>
+				<SelectTreatment
+					treatment={selectedTreatment}
+					setTreatment={handleSelectedTreatmentChange}
+					availableTreatments={treatments}
+				>
+					<DinoSwitch
+						selected={selectedEssentialContactGrant}
+						setSelected={handleEssentialContactGrantChange}
+						label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
+					/>
+				</SelectTreatment>
+			</div>
 		)
 	}
 
 	const renderSelectColorThemeDialogContent = () => {
 		return (
-			<SelectColorTheme
-				colorTheme={selectedColorTheme}
-				setColorTheme={handleSelectedColorThemeChange}
-			/>
+			<div className='first_settings__message_dialog'>
+				<SelectColorTheme
+					colorTheme={selectedColorTheme}
+					setColorTheme={handleSelectedColorThemeChange}
+				/>
+			</div>
 		)
 	}
 
 	const renderSelectLanguageDialogContent = () => {
 		return (
-			<>
+			<div className='first_settings__message_dialog'>
 				<SelectLanguage
 					languageName={selectedLanguage}
 					setLanguage={handleSelectedLanguageChange}
@@ -259,13 +241,13 @@ const FirstSettingsDialog: React.FC = () => {
 					fontSize={selectedFontSize}
 					setFontSize={handleSelectedFontSizeChange}
 				/>
-			</>
+			</div>
 		)
 	}
 
 	const renderWelcomeMessageDialog = () => {
 		return (
-			<div className='message_dialog'>
+			<div className='first_settings__message_dialog'>
 				<DinoLogoHeader
 					title={language.data.FIRST_LOGIN_WELCOME_MESSAGE}
 					size='small'
@@ -282,7 +264,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 	const renderFinalMessageDialog = () => {
 		return (
-			<div className='message_dialog'>
+			<div className='first_settings__message_dialog'>
 				<DinoLogoHeader
 					title={language.data.FIRST_LOGIN_DONE_MESSAGE}
 					size='small'
@@ -297,7 +279,7 @@ const FirstSettingsDialog: React.FC = () => {
 	}
 
 	const firstLoginDialogs = [
-		{ title: '', component: renderWelcomeMessageDialog },
+		{ component: renderWelcomeMessageDialog },
 		{
 			title: language.data.FIRST_LOGIN_CHOOSE_LANGUAGE,
 			component: renderSelectLanguageDialogContent,
@@ -310,66 +292,49 @@ const FirstSettingsDialog: React.FC = () => {
 			title: language.data.FIRST_LOGIN_CHOOSE_TREATMENT,
 			component: renderSelectTreatmentDialogContent,
 		},
-		{ title: '', component: renderFinalMessageDialog },
+		{ component: renderFinalMessageDialog },
 	]
 
 	const NUMBER_DIALOGS = firstLoginDialogs.length
 
-	const isFirstOrLastDialog = (index: number) =>
-		index === 0 || index === NUMBER_DIALOGS - 1
-
-	const getDialog = (step: number) => {
+	const getDialog = () => {
 		if (step < firstLoginDialogs.length) {
 			return firstLoginDialogs[step]
 		}
 		return firstLoginDialogs[firstLoginDialogs.length - 1]
 	}
 
-	const renderDialogContent = () => {
-		const step = settings ? settings.step : 0
-		const dialog = getDialog(step)
+	const renderDialogHeader = () => {
+
+		const isFirstOrLastDialog = () => step === 0 || step === NUMBER_DIALOGS - 1
 
 		return (
-			<>
-				{isFirstOrLastDialog(step) ? (
-					<></>
-				) : (
-					<DinoDialogHeader>
-						<h5>{dialog.title}</h5>
-					</DinoDialogHeader>
-				)}
-				<DinoDialogContent>{dialog.component()}</DinoDialogContent>
-			</>
+			!isFirstOrLastDialog() && <DinoDialogHeader>{getDialog().title}</DinoDialogHeader>
 		)
 	}
 
 	return (
 		<>
 			{!isLoading && settings && !settings.firstSettingsDone && (
-				<div className='first-settings'>
-					<Dialog
-						className='first-settings__dialog'
-						aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
-						open={dialogOpen}
-						key={settings ? settings.step : 0}
-						TransitionComponent={TransitionSlide}
-						disableEscapeKeyDown
-						disableBackdropClick
-						fullWidth
-					>
-						{renderDialogContent()}
-						<DialogActions>
-							<DinoStepper
-								steps={NUMBER_DIALOGS}
-								activeStep={settings ? settings.step : 0}
-								onNext={handleNextStep}
-								onBack={handleBackStep}
-								onSave={handleSave}
-								onCancel={handleCancel}
-							/>
-						</DialogActions>
-					</Dialog>
-				</div>
+				<DinoDialog
+					aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
+					open={step > -1}
+					handleSave={handleSave}
+					handleClose={handleCloseDialogs}
+					header={renderDialogHeader()}
+					actions={
+						<DinoStepper
+							steps={NUMBER_DIALOGS}
+							activeStep={step}
+							onNext={handleNextStep}
+							onBack={handleBackStep}
+							onSave={handleSave}
+							onCancel={handleCancel}
+						/>
+					}
+				>
+					{getDialog().component()}
+				</DinoDialog>
 			)}
 		</>
 	)

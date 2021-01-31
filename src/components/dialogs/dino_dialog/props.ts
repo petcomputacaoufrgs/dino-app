@@ -4,5 +4,4 @@ export default interface DinoDialogProps {
 	handleSave: () => void
 	header?: React.ReactNode
 	actions?: React.ReactNode
-	disableHeader?: boolean
 }

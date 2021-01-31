@@ -250,7 +250,7 @@ const Settings: React.FC = () => {
 						setColorTheme={setSelectedColorTheme}
 					/>
 				</FormControl>
-				{/* {!staff && ( */}
+				{!staff && (
 					<>
 					<FormControl className='settings__form'>
 					<SelectTreatment
@@ -276,7 +276,7 @@ const Settings: React.FC = () => {
 						/>
 					</FormControl>
 					</>
-				{/* )} */}
+				)}
 				<DinoHr invisible />
 				{renderSaveButton()}
 				{renderDialogs()}

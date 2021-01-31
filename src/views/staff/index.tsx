@@ -96,7 +96,7 @@ const StaffMain: React.FC = () => {
 				onDisagree={handleLogoutDisagree}
 				open={openLogoutDialog}
 			/>
-			{/* <FirstSettingsDialog /> */}
+			<FirstSettingsDialog />
 		</Loader>
 	)
 }

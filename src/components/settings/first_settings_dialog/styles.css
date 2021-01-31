@@ -8,6 +8,10 @@
 	opacity: 0.5;
 }
 
+.first-settings .dino_dialog__actions{
+	padding: 16px;
+}
+
 .first-settings__dialog {
 	min-width: 80%;
 	min-height: 50%;
@@ -33,18 +37,18 @@
 	font-size: var(--default-font);
 }
 
-.first-settings__dialog .citation {
+.first_settings__message_dialog .citation {
 	text-align: end;
 	font-style: italic;
 }
 
-.first-settings__dialog .message_dialog .dino_header {
+.first_settings__message_dialog .dino_header {
 	margin-bottom: 24px;
 }
 
-.first-settings__dialog .message_dialog .dino_hr {
+.first_settings__message_dialog .dino_hr {
 	margin: 12px 8px;
 }
-.first-settings__dialog .font-size__selector {
+.first_settings__message_dialog .font-size__selector {
 	margin-top: 20px;
 }

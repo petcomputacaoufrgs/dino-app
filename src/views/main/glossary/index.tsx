@@ -7,8 +7,11 @@ import Loader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
 import GlossaryService from '../../../services/glossary/GlossaryService'
 import './styles.css'
+import { IsStaff } from '../../../context/private_router'
 
 const Glossary: React.FC = () => {
+
+	const staff = IsStaff()
 	const language = useLanguage()
 
 	const [glossary, setGlossary] = useState<GlossaryItemEntity[]>([])

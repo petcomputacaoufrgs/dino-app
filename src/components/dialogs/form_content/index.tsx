@@ -1,8 +1,8 @@
 import { TextField } from '@material-ui/core'
 import React, { useState } from 'react'
-import Button from '../button'
-import { useLanguage } from '../../context/language'
-import { ReactComponent as SaveSVG } from '../../assets/icons/save.svg'
+import Button from '../../button'
+import { useLanguage } from '../../../context/language'
+import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
 import FormContentProps from './props'
 import './styles.css'
 

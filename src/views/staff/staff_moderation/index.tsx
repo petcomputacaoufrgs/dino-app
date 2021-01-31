@@ -7,7 +7,7 @@ import AvatarIcon from '@material-ui/icons/Person';
 import StaffService from '../../../services/staff/StaffService'
 import Loader from '../../../components/loader'
 import StaffView from '../../../types/staff/view/StaffView'
-import FormContent from '../../../components/form_content'
+import FormContent from '../../../components/dialogs/form_content'
 import StringUtils from '../../../utils/StringUtils'
 import { useAlert } from '../../../context/alert'
 import Button from '../../../components/button'
@@ -123,10 +123,9 @@ const StaffModeration: React.FC = () => {
 
   return (
     <div className='staff_moderation'>
-      
       <DinoTabPanel panels={[
-          { name: language.data.ADD_STAF_TAB, Component: AddStaff() },
-          { name: language.data.STAFF_LIST_TAB, Component: ListStaff() }
+          { name: language.data.ADD_STAF_TAB, Component: <AddStaff/> },
+          { name: language.data.STAFF_LIST_TAB, Component: <ListStaff/> }
         ]} 
       />
     </div>

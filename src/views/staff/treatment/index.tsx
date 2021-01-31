@@ -8,11 +8,12 @@ import StringUtils from '../../../utils/StringUtils'
 import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import TreatmentItems from './treatment_items'
-import FormContent from '../../../components/form_content'
+import FormContent from '../../../components/dialogs/form_content'
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core'
 import TransitionSlide from '../../../components/slide_transition'
 import './styles.css'
 import TextButton from '../../../components/button/text_button'
+import DinoDialog, { DinoDialogHeader } from '../../../components/dialogs/dino_dialog'
 
 interface TreatmentProps {
 	ref: React.Ref<unknown>,
@@ -86,40 +87,29 @@ const Treatment: React.FC<TreatmentProps> = React.forwardRef(({ ref },) => {
 	const renderAddTreatment = () => {
 		return (
 			<div className='treatment__dialog_form__content'>
-				<Dialog
-				  ref={ref}
+				<DinoDialog 
 					open={add}
-					maxWidth='xs'
-					onClose={handleClose}
-					TransitionComponent={TransitionSlide}
-					fullWidth
-					disableBackdropClick
-					disableEscapeKeyDown
+					handleSave={handleSave}
+					handleClose={handleClose}
+					header={
+						<DinoDialogHeader>
+							{language.data.STAFF_ADD_TREATMENT}
+						</DinoDialogHeader>
+					}
 				>
-					<DialogTitle>{language.data.STAFF_ADD_TREATMENT}</DialogTitle>
-					<DialogContent dividers>
-						<TextField
-							className='treatment__dialog_form__content__textfield'
-							margin='dense'
-							required
-							fullWidth
-							label={language.data.STAFF_ADD_TREATMENT_NAME}
-							type='name'
-							helperText={error && language.data.EMPTY_FIELD_ERROR}
-							value={value}
-							onChange={(e) => setValue(e.target.value as string)}
-							error={error}
-						/>
-					</DialogContent>
-						<DialogActions>
-							<TextButton onClick={handleClose}>
-								{language.data.DIALOG_CANCEL_BUTTON_TEXT}
-							</TextButton>
-							<TextButton onClick={handleSave}>
-								{language.data.DIALOG_SAVE_BUTTON_TEXT}
-							</TextButton>
-						</DialogActions>
-				</Dialog>
+					<TextField
+						className='treatment__dialog_form__content__textfield'
+						margin='dense'
+						required
+						fullWidth
+						label={language.data.STAFF_ADD_TREATMENT_NAME}
+						type='name'
+						helperText={error && language.data.EMPTY_FIELD_ERROR}
+						value={value}
+						onChange={(e) => setValue(e.target.value as string)}
+						error={error}
+					/>
+				</DinoDialog>
 			</div>
 		)
 	}

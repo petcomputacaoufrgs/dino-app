@@ -61,7 +61,9 @@
 	margin-bottom: 0.2rem;
 }
 
-.staff_registry__content__signin_form input[type=email], input[type=password], input[type="text"] {
+.staff_registry__content__signin_form input[type=email], 
+.staff_registry__content__signin_form input[type=password], 
+.staff_registry__content__signin_form input[type="text"] {
 	width: 90%;
 	max-height: 1.5rem;
 	padding: 0.2rem;
@@ -72,7 +74,9 @@
 	background: var(--input-background);
 }
   
-.staff_registry__content__signin_form input[type=email]:focus, input[type=password]:focus, input[type="text"]:focus {
+.staff_registry__content__signin_form input[type=email]:focus, 
+.staff_registry__content__signin_form input[type=password]:focus, 
+.staff_registry__content__signin_form input[type="text"]:focus {
 	outline: none;
 }
 

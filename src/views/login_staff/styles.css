@@ -58,7 +58,7 @@
 
 .staff_login__content__signin {
 	width: 100%;
-	margin: 0 3rem;
+	margin-left: 4rem;
 }
 
 .staff_login__content__signup {
@@ -72,7 +72,8 @@
 	margin-top: 2vw;
 }
 
-.staff_login__content__signin_form input[type=email], input[type=password] {
+.staff_login__content__signin_form input[type=email], 
+.staff_login__content__signin_form input[type=password] {
 	width: 80%;
 	max-height: 1.5rem;
 	padding: 0.2rem;
@@ -83,7 +84,8 @@
 	background: var(--input-background);
 }
   
-.staff_login__content__signin_form input[type=email]:focus, input[type=password]:focus {
+.staff_login__content__signin_form input[type=email]:focus, 
+.staff_login__content__signin_form input[type=password]:focus {
 	outline: none;
 }
 

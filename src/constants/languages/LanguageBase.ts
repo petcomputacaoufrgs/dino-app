@@ -247,8 +247,14 @@ export default interface LanguageBase {
 	TREATMENT_SAVE: string
 	STAFF_ACCESS_BUTTON: string
 	STAFF_LOGIN: string
+	STAFF_REGISTER: string
+	NAME: string
+	LAST_NAME:string
 	EMAIL: string
 	PASSWORD: string
+	CONFIRM_PASSWORD:string
 	REGISTER_QUESTION: string
 	REGISTER_TEXT: string
+	AGREEMENT: string
+	SIGN_IN: string
 }

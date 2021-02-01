@@ -54,6 +54,7 @@
 	--avatar-color-4: #2196f3;
 	--avatar-color-5: #4caf50;
 	--tag-color: #d1a300;
+	--input-background: #9D83A7;
 }
 
 [data-theme='dark'] {
@@ -94,6 +95,7 @@
 	--avatar-color-4: #0c3d64;
 	--avatar-color-5: #255727;
 	--tag-color: #d1a300;
+	--input-background: #474747;
 }
 
 [data-theme='high_contrast'] {
@@ -129,6 +131,7 @@
 	--inv-contrast-color: #f5f5f5;
 	--other-details: #f5f5f5;
 	--tag-color: #a594ab;
+	--input-background: #9D83A7;
 }
 
 [data-font-size='large'] {

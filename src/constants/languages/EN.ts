@@ -522,4 +522,16 @@ export default class EN implements LanguageBase {
 	REGISTER_QUESTION = 'Not registered?'
 	
 	REGISTER_TEXT = 'Register'
+
+	STAFF_REGISTER = 'Staff - Sign up'
+
+	NAME = 'Name'
+
+	LAST_NAME = 'Last name'
+
+	CONFIRM_PASSWORD = 'Confirm password'
+
+	AGREEMENT = 'I agree with the Terms of Use'
+
+	SIGN_IN = 'Sign In'
 }

@@ -26,7 +26,7 @@ const LoginStaff = (): JSX.Element => {
                         <input type="email" id="mail" /><br/>
                         <label htmlFor="password">{language.data.PASSWORD}</label><br/>
                         <input type="password" id="password"/><br/>
-                        <input type="submit" value="Entrar"></input>
+                        <input type="submit" value={language.data.SIGN_IN}></input>
                     </form>
 
                     <div className='staff_login__content__signup'>

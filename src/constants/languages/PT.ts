@@ -528,4 +528,16 @@ export default class PT implements LanguageBase {
 	REGISTER_QUESTION = 'Não é cadastrado?'
 
 	REGISTER_TEXT = 'Registre-se'
+
+	STAFF_REGISTER = 'Funcionário - Registro'
+
+	NAME = 'Nome'
+
+	LAST_NAME = 'Sobrenome'
+
+	CONFIRM_PASSWORD = 'Confirme sua senha'
+
+	AGREEMENT = 'Li e concordo com os termos de uso'
+
+	SIGN_IN = 'Entrar'
 }

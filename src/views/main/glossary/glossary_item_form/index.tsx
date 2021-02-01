@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import { useLanguage } from '../../../../context/language'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
@@ -8,16 +8,33 @@ import './styles.css'
 
 interface GlossaryItemFormProps {
   open: boolean,
+  item?: GlossaryItemEntity
   handleClose: () => void
+}
+
+const getItem = (item: GlossaryItemEntity | undefined) => {
+  return item || getEmptyItem()
+}
+
+const getEmptyItem = () => {
+  return { title: '', subtitle: '', text: '', fullText: ''} as GlossaryItemEntity
 }
 
 const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
 
   const language = useLanguage()
-  const [item, setItem] = useState<GlossaryItemEntity>({ title: '', subtitle: '', text: '', fullText: ''})
+  const [item, setItem] = useState<GlossaryItemEntity>(getItem(props.item))
+
+  useEffect(() => {
+    if(props.open) {
+      setItem(getItem(props.item))
+    }
+  }, [props.open])
 
   const handleSave = () => {
-		GlossaryService.save(item)
+    GlossaryService.save(item)
+    props.handleClose()
+    setItem({ title: '', subtitle: '', text: '', fullText: ''})
 	}
 
   return (

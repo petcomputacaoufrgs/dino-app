@@ -3,8 +3,6 @@ import { Router } from 'react-router'
 import { History } from 'history'
 import PrivateRouterContextType from '../../types/context_provider/PrivateRouterContextType'
 import UserEnum from '../../types/enum/UserEnum'
-import PathConstants from '../../constants/app/PathConstants'
-import HistoryService from '../../services/history/HistoryService'
 
 /**
  * @description Contexto padrão para o router

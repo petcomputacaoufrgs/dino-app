@@ -8,7 +8,6 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import WebSocketService from '../websocket/WebSocketService'
 import ErrorHandlerService from '../error_handler/ErrorHandlerService'
-import MenuService from '../menu/MenuService'
 import UserService from '../user/UserService'
 
 class EventService {

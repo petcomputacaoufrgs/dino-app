@@ -1,18 +1,12 @@
 import React, { useState } from 'react'
 import { List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core'
-import Constants from '../../../../constants/contact/ContactsConstants'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
 import { IsStaff } from '../../../../context/private_router'
-import ContactCard from '../../../main/contacts/contact_dialog_card'
-import ContactFormDialog from '../../../main/contacts/contact_dialog_form'
-import ContactItemList from '../../../main/contacts/contact_list_item'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
-import { Star } from '@material-ui/icons'
 import ItemListMenu from '../../../../components/item_list_menu'
-import PhoneService from '../../../../services/contact/PhoneService'
 import ListTitle from '../../../../components/list_title'
 
 interface TreatmentItemsProps {

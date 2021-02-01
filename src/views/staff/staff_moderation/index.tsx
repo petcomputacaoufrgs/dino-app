@@ -10,7 +10,6 @@ import StaffView from '../../../types/staff/view/StaffView'
 import FormContent from '../../../components/dialogs/form_content'
 import StringUtils from '../../../utils/StringUtils'
 import { useAlert } from '../../../context/alert'
-import Button from '../../../components/button'
 import ListTitle from '../../../components/list_title'
 
 const StaffModeration: React.FC = () => {

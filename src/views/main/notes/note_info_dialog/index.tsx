@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../../../../components/button/text_button'
 import NoteInfoDialogProps from './props'
 import {
 	DialogTitle,

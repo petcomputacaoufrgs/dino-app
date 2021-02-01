@@ -1,6 +1,6 @@
 import React from 'react'
 import { ReactComponent as DinoAuthSVG } from '../../../assets/icons/dino_auth.svg'
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core'
+import { Dialog, DialogContent, DialogActions } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import TextButton from '../../button/text_button'
 import TransitionSlide from '../../slide_transition'

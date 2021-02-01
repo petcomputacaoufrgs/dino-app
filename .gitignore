@@ -36,3 +36,5 @@ log.txt
 src/environment/
 
 *.log
+
+.eslintcache

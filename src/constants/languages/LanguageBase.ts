@@ -48,6 +48,10 @@ export default interface LanguageBase {
 	MENU_ABOUT_US: string
 	MENU_STAFF_MODERATION: string
 	MENU_STAFF_TREATMENT: string
+	TITLE: string
+	SUBTITLE: string
+	TEXT: string
+	FULL_TEXT: string
 	SETTINGS_TITLE: string
 	SETTINGS_LANGUAGE: string
 	SETTINGS_TREATMENT: string
@@ -88,7 +92,8 @@ export default interface LanguageBase {
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	NOT_FOUND_QUESTION_FAQ: string
-	CONTACTS_ADD_CONTACT: string
+	NEW_CONTACT: string
+	NEW_GLOSSARY_ITEM: string
 	CONTACTS_ADD_ESSENTIAL_CONTACT: string
 	CONTACTS_MOBILE_PHONE: string
 	CONTACTS_RESIDENTIAL_PHONE: string

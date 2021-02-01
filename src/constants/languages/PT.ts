@@ -103,6 +103,14 @@ export default class PT implements LanguageBase {
 
 	MENU_STAFF_TREATMENT = 'Tratamentos'
 
+	TITLE = 'Título'
+
+	SUBTITLE = 'Subtítulo'
+
+	TEXT = 'Texto Prévio'
+
+	FULL_TEXT = 'Texto Completo'
+
 	SETTINGS_TITLE = 'Configurações'
 
 	SETTINGS_LANGUAGE = 'Escolher Idioma'
@@ -187,7 +195,9 @@ export default class PT implements LanguageBase {
 
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
-	CONTACTS_ADD_CONTACT = 'Novo Contato'
+	NEW_CONTACT = 'Novo Contato'
+
+	NEW_GLOSSARY_ITEM = 'Novo Item de Glossário'
 
 	CONTACTS_ADD_ESSENTIAL_CONTACT = 'Novo Contato Essencial'
 

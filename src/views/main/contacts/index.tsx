@@ -167,13 +167,13 @@ const Contacts: React.FC = () => {
 					placeholder={language.data.SEARCH_HOLDER}
 				/>
 				<ContactItems items={filteredContacts} />
-				<CircularButton
-					ariaLabel={language.data.CONTACTS_ADD_CONTACT}
-					className='add_button'
-					icon={AddIconSVG}
-					onClick={handleAddContact}
-				/>
 			</Loader>
+			<CircularButton
+				ariaLabel={language.data.NEW_CONTACT}
+				className='add_button'
+				icon={AddIconSVG}
+				onClick={handleAddContact}
+			/>
 			<ContactFormDialog
 				items={contacts}
 				action={Contants.ADD}

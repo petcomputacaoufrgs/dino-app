@@ -102,6 +102,14 @@ export default class EN implements LanguageBase {
 	MENU_STAFF_MODERATION = 'Staff Moderation' 
 
 	MENU_STAFF_TREATMENT = 'Treatments' 
+
+	TITLE = 'Title'
+
+	SUBTITLE = 'Subtitle'
+
+	TEXT = 'Text'
+
+	FULL_TEXT = 'Full Text'
 	
 	SETTINGS_TITLE = 'Settings'
 
@@ -183,8 +191,10 @@ export default class EN implements LanguageBase {
 
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
-	CONTACTS_ADD_CONTACT = 'New Contact'
+	NEW_CONTACT = 'New Contact'
 
+	NEW_GLOSSARY_ITEM = 'New Glossary Item'
+	
 	CONTACTS_ADD_ESSENTIAL_CONTACT = 'New Essential Contact'
 
 	CONTACTS_MOBILE_PHONE = 'Mobile'

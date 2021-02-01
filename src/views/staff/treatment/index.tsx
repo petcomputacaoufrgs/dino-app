@@ -11,6 +11,7 @@ import TreatmentItems from './treatment_items'
 import { TextField } from '@material-ui/core'
 import './styles.css'
 import DinoDialog, { DinoDialogHeader } from '../../../components/dialogs/dino_dialog'
+import AddButton from '../../../components/button/circular_button/add_button'
 
 interface TreatmentProps {
 	ref: React.Ref<unknown>,
@@ -121,11 +122,9 @@ const Treatment: React.FC<TreatmentProps> = React.forwardRef(({ ref },) => {
 					placeholder={language.data.SEARCH_HOLDER}
 				/>
 				<TreatmentItems items={filteredTreatments} />
-				<CircularButton
-					ariaLabel={language.data.CONTACTS_ADD_CONTACT}
-					className='add_button'
-					icon={AddIconSVG}
-					onClick={handleAdd}
+				<AddButton
+					handleAdd={handleAdd}
+					label={language.data.NEW_CONTACT}
 				/>
 			</Loader>
 			{renderAddTreatment()}

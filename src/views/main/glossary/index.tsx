@@ -8,6 +8,10 @@ import { useLanguage } from '../../../context/language'
 import GlossaryService from '../../../services/glossary/GlossaryService'
 import './styles.css'
 import { IsStaff } from '../../../context/private_router'
+import AddButton from '../../../components/button/circular_button/add_button'
+import DinoDialog from '../../../components/dialogs/dino_dialog'
+import { TextField } from '@material-ui/core'
+import GlossaryItemForm from './glossary_item_form'
 
 const Glossary: React.FC = () => {
 
@@ -17,7 +21,8 @@ const Glossary: React.FC = () => {
 	const [glossary, setGlossary] = useState<GlossaryItemEntity[]>([])
 	const [searchTerm, setSearchTerm] = useState('')
 	const [isLoading, setIsLoading] = useState(true)
-
+	const [add, setAdd] = useState(false)
+	
 	useEffect(() => {
 		const loadData = async () => {
 			const glossary = await GlossaryService.getAll()
@@ -60,6 +65,16 @@ const Glossary: React.FC = () => {
 			<Loader className='glossary_loader' isLoading={isLoading}>
 				<GlossaryItems items={filteredGlossary} />
 			</Loader>
+			{ //staff && 
+				<AddButton
+					handleAdd={() => setAdd(true)}
+					label={language.data.NEW_GLOSSARY_ITEM}
+				/>
+			}
+			<GlossaryItemForm 
+				open={add}
+				handleClose={() => setAdd(false)}
+			/>
 		</div>
 	)
 }

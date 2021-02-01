@@ -306,11 +306,9 @@ const FirstSettingsDialog: React.FC = () => {
 
 	const renderDialogHeader = () => {
 
-		const isFirstOrLastDialog = () => step === 0 || step === NUMBER_DIALOGS - 1
+		const isFirstOrLastDialog = step === 0 || step === NUMBER_DIALOGS - 1
 
-		return (
-			!isFirstOrLastDialog() && <DinoDialogHeader>{getDialog().title}</DinoDialogHeader>
-		)
+		return !isFirstOrLastDialog && <DinoDialogHeader>{getDialog().title}</DinoDialogHeader>
 	}
 
 	return (

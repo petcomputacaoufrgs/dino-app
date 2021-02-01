@@ -10,7 +10,7 @@ const ItemListMenu = ({
 	onEdit,
 	onDelete,
 	onCloseDialog,
-	editAvailable,
+	editUnavailable,
 }: ItemListMenuProps) => {
 	const language = useLanguage()
 
@@ -20,7 +20,7 @@ const ItemListMenu = ({
 
 	const renderEditMenuItem = () => {
 
-		if (editAvailable) {
+		if (!editUnavailable) {
 			return (
 				<MenuItem onClick={handleEdit}>
 					{language.data.EDIT_OPTION_TEXT}
@@ -29,16 +29,22 @@ const ItemListMenu = ({
 		}
 	}
 
+	const handleCloseDialog = () => {
+		if(onCloseDialog) {
+			onCloseDialog()
+		}
+	}
+
 	const handleEdit = () => {
 		onEdit()
 		handleClose()
-		onCloseDialog()
+		handleCloseDialog()
 	}
 
 	const handleDelete = () => {
 		onDelete()
 		handleClose()
-		onCloseDialog()
+		handleCloseDialog()
 	}
 
 	return (

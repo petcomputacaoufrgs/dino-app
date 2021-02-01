@@ -5,7 +5,7 @@ import EditEventModal from '../edit_event_modal'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
 
-const AddButton: React.FC = () => {
+const CalendarAddButton: React.FC = () => {
 	const language = useLanguage()
 
 	const [openDialog, setOpenDialog] = useState(false)
@@ -32,4 +32,4 @@ const AddButton: React.FC = () => {
 	)
 }
 
-export default AddButton
+export default CalendarAddButton

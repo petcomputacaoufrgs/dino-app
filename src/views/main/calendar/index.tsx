@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Month from './month'
-import AddButton from './add_button'
+import CalendarAddButton from './add_button'
 import DateUtils from '../../../utils/DateUtils'
 import HorizontalPagination from '../../../components/horizontal_pagination'
 import './styles.css'
@@ -62,7 +62,7 @@ const Calendar: React.FC = () => {
 					pages={getMonthElementList()}
 				/>
 			</div>
-			<AddButton />
+			<CalendarAddButton />
 		</>
 	)
 }

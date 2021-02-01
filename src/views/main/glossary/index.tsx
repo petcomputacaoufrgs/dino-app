@@ -9,9 +9,8 @@ import GlossaryService from '../../../services/glossary/GlossaryService'
 import './styles.css'
 import { IsStaff } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
-import DinoDialog from '../../../components/dialogs/dino_dialog'
-import { TextField } from '@material-ui/core'
 import GlossaryItemForm from './glossary_item_form'
+import AgreementDialog from '../../../components/agreement_dialog'
 
 const Glossary: React.FC = () => {
 
@@ -65,7 +64,7 @@ const Glossary: React.FC = () => {
 			<Loader className='glossary_loader' isLoading={isLoading}>
 				<GlossaryItems items={filteredGlossary} />
 			</Loader>
-			{ //staff && 
+			{ staff && 
 				<AddButton
 					handleAdd={() => setAdd(true)}
 					label={language.data.NEW_GLOSSARY_ITEM}

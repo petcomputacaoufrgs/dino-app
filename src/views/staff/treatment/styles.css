@@ -5,6 +5,7 @@
 
 .treatment__dialog_form__content__textfield {
   width: 100%;
+  padding: 16px;
 }
 
 .treatment_action__buttons {

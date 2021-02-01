@@ -7,7 +7,6 @@ import './styles.css'
 interface AddButtonProps {
   handleAdd: () => void,
   label?: string
-
 }
 
 const AddButton: React.FC<AddButtonProps> = ({ handleAdd, label }) => {

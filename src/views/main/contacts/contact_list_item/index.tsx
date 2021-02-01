@@ -34,7 +34,7 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 		setAnchorEl(event.currentTarget)
 	}
 
-	const isEditAvailable = item.contact.localEssentialContactId === undefined
+	const isEditUnavailable = item.contact.localEssentialContactId !== undefined
 
 	return (
 		<div className='contacts__list__item'>
@@ -62,7 +62,7 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 				onEdit={onEdit}
 				onDelete={onDelete}
 				onCloseDialog={onCloseDialog}
-				editAvailable={isEditAvailable}
+				editUnavailable={isEditUnavailable}
 			/>
 		</div>
 	)

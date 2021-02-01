@@ -93,18 +93,19 @@ const Treatment: React.FC<TreatmentProps> = React.forwardRef(({ ref },) => {
 						</DinoDialogHeader>
 					}
 				>
-					<TextField
-						className='treatment__dialog_form__content__textfield'
-						margin='dense'
-						required
-						fullWidth
-						label={language.data.STAFF_ADD_TREATMENT_NAME}
-						type='name'
-						helperText={error && language.data.EMPTY_FIELD_ERROR}
-						value={value}
-						onChange={(e) => setValue(e.target.value as string)}
-						error={error}
-					/>
+					<div className='treatment__dialog_form__content__textfield'>
+						<TextField
+							margin='dense'
+							required
+							fullWidth
+							label={language.data.STAFF_ADD_TREATMENT_NAME}
+							type='name'
+							helperText={error && language.data.EMPTY_FIELD_ERROR}
+							value={value}
+							onChange={(e) => setValue(e.target.value as string)}
+							error={error}
+							/>
+					</div>
 				</DinoDialog>
 			</div>
 		)

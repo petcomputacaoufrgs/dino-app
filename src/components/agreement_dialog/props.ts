@@ -3,7 +3,7 @@ export default interface AgreementDialogProps {
 	description: string
 	onAgree?: () => void
 	onDisagree: () => void
-	agreeOptionText: string
-	disagreeOptionText: string
+	agreeOptionText?: string
+	disagreeOptionText?: string
 	open: boolean
 }

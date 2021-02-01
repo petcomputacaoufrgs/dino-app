@@ -56,7 +56,7 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 	filterGlossary = (glossary: GlossaryItemEntity[], searchTerm: string) => {
 		return glossary
 			.filter(item => StringUtils.contains(item.title, searchTerm))
-			.sort((a, b) => (a.title >= b.title ? 1 : -1))
+			.sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
 	}
 }
 

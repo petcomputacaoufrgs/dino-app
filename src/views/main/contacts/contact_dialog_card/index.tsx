@@ -34,7 +34,7 @@ const ContactCard = forwardRef(
 						onEdit={onEdit}
 						onDelete={onDelete}
 						onCloseDialog={onClose}
-						editAvailable
+						editUnavailable={item?.contact.localEssentialContactId !== undefined}
 					/>
 				</ContactCardHeader>
 				<ContactCardContent item={item!} />

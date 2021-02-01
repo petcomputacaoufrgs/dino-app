@@ -58,12 +58,10 @@ const GlossaryItem: React.FC = () => {
 			<div className='glossary_item'>
 				<div className='card__header'>
 					<div className='card__header__title'>
-						{glossaryItem
-							? glossaryItem.title
-							: language.data.NO_AVAILABLE_TEXT}
+						{glossaryItem?.title || language.data.NO_AVAILABLE_TEXT}
 					</div>
 					<div className='card__typography muted'>
-						{glossaryItem ? glossaryItem.subtitle : ''}
+						{glossaryItem?.subtitle || ''}
 					</div>
 				</div>
 				<Divider />

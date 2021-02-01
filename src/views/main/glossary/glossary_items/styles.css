@@ -12,7 +12,13 @@
 }
 
 .accordion .card .card-title {
+	display: flex;
 	margin-bottom: 0.2rem;
+	flex-direction: row;
+}
+
+.accordion .card .card-title .icon_button__options {
+	margin-left: auto;
 }
 
 .glossary__items .card.card {

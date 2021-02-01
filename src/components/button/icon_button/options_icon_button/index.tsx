@@ -14,6 +14,7 @@ const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 
 	return (
 		<IconButton
+			className='icon_button__options'
 			icon={MoreSVG}
 			ariaLabel={language.data.OPTIONS_ARIA_LABEL}
 			onClick={onClick}

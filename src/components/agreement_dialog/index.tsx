@@ -48,14 +48,14 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
 					ariaLabel={language.data.AGREEMENT_BUTTON_ARIA_LABEL}
 					onClick={handleDisagree}
 				>
-					{disagreeOptionText}
+					{disagreeOptionText || language.data.DISAGREEMENT_OPTION_TEXT}
 				</TextButton>
 				{onAgree && (
 					<TextButton
 						ariaLabel={language.data.DISAGREEMENT_BUTTON_ARIA_LABEL}
 						onClick={handleAgree}
 					>
-						{agreeOptionText}
+						{agreeOptionText || language.data.AGREEMENT_OPTION_TEXT}
 					</TextButton>
 				)}
 			</DialogActions>

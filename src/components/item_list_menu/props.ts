@@ -5,6 +5,6 @@ export default interface ItemListMenuProps {
 	setAnchor: React.Dispatch<React.SetStateAction<HTMLElement | null>>
 	onEdit: () => void
 	onDelete: () => void
-	onCloseDialog: () => void
-	editAvailable?: boolean
+	onCloseDialog?: () => void
+	editUnavailable?: boolean
 }

@@ -61,8 +61,6 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 				setAnchor={setAnchorEl}
 				onEdit={() => setItemToEdit(item)}
 				onDelete={() => setItemToDelete(item)}
-				onCloseDialog={() => {}}
-				editAvailable
 			/>
 		</div>
 		)

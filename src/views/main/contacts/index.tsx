@@ -5,8 +5,6 @@ import ContactFormDialog from './contact_dialog_form'
 import Contants from '../../../constants/contact/ContactsConstants'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
-import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
-import CircularButton from '../../../components/button/circular_button'
 import Loader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
@@ -20,6 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import EssentialContactView from '../../../types/contact/view/EssentialContactView'
 import { IsStaff } from '../../../context/private_router'
+import AddButton from '../../../components/button/circular_button/add_button'
 
 const Contacts: React.FC = () => {
 
@@ -168,11 +167,9 @@ const Contacts: React.FC = () => {
 				/>
 				<ContactItems items={filteredContacts} />
 			</Loader>
-			<CircularButton
-				ariaLabel={language.data.NEW_CONTACT}
-				className='add_button'
-				icon={AddIconSVG}
-				onClick={handleAddContact}
+			<AddButton
+				handleAdd={handleAddContact}
+				label={language.data.NEW_CONTACT}
 			/>
 			<ContactFormDialog
 				items={contacts}

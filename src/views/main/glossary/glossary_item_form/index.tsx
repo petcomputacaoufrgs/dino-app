@@ -2,6 +2,7 @@ import { TextField } from '@material-ui/core'
 import React, { useState } from 'react'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import { useLanguage } from '../../../../context/language'
+import GlossaryService from '../../../../services/glossary/GlossaryService'
 import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
 import './styles.css'
 
@@ -16,7 +17,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
   const [item, setItem] = useState<GlossaryItemEntity>({ title: '', subtitle: '', text: '', fullText: ''})
 
   const handleSave = () => {
-		
+		GlossaryService.save(item)
 	}
 
   return (

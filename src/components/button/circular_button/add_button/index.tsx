@@ -2,6 +2,7 @@ import React from 'react'
 import { useLanguage } from '../../../../context/language'
 import { ReactComponent as AddIconSVG } from '../../../../assets/icons/add.svg'
 import CircularButton from '..'
+import './styles.css'
 
 interface AddButtonProps {
   handleAdd: () => void,

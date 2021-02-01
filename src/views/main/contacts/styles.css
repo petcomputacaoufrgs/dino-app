@@ -51,12 +51,6 @@
 	background-color: Var(--avatar-color-5);
 }
 
-.add_button {
-	position: absolute;
-	bottom: 1.2rem;
-	right: 1.2rem;
-}
-
 .contacts__loader {
 	height: 100%;
 }

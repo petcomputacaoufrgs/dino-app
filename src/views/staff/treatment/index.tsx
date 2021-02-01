@@ -8,11 +8,8 @@ import StringUtils from '../../../utils/StringUtils'
 import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import TreatmentItems from './treatment_items'
-import FormContent from '../../../components/dialogs/form_content'
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core'
-import TransitionSlide from '../../../components/slide_transition'
+import { TextField } from '@material-ui/core'
 import './styles.css'
-import TextButton from '../../../components/button/text_button'
 import DinoDialog, { DinoDialogHeader } from '../../../components/dialogs/dino_dialog'
 
 interface TreatmentProps {

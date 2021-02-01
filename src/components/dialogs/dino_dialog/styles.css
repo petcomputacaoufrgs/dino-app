@@ -30,3 +30,7 @@
 .dino_dialog .dino_dialog__actions {
 	padding: 8px;
 }
+
+.dino_dialog .MuiDialogContent-dividers {
+	padding: 0;
+}

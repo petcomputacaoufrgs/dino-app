@@ -1,6 +1,7 @@
 .note_info_dialog__title {
 	display: flex;
 	flex-direction: row;
+	outline: none;
 }
 
 .note_info_dialog__title,
@@ -28,13 +29,9 @@
 	margin-bottom: 0;
 }
 
-.note__info_dialog__content.MuiDialogContent-root {
-	padding-top: 8px;
+.note__info_dialog__content {
+	padding: 16px;
 	overflow-y: visible;
-}
-
-.note__info_dialog__actions .MuiButtonBase-root.MuiButton-root {
-	color: var(--column-font-color);
 }
 
 .note__info_dialog__content__answer.MuiFormControl-root {

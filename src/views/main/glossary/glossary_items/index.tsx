@@ -12,7 +12,6 @@ import OptionsIconButton from '../../../../components/button/icon_button/options
 import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import GlossaryItemForm from '../glossary_item_form'
-import Glossary from '..'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
@@ -23,7 +22,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	const [itemToDelete, setItemToDelete] = useState<GlossaryItemEntity | undefined>(undefined)
 
 	const handleDelete = () => {
-		if(itemToDelete) {
+		if(itemToDelete && staff) {
 			GlossaryService.delete(itemToDelete)
 			setItemToDelete(undefined)
 		}
@@ -45,7 +44,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 					<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
 						<Card.Title className='card-title'>
 							{item.title}
-							<OptionsIconButton dark onClick={handleClick} />
+							{staff && <OptionsIconButton dark onClick={handleClick} />}
 						</Card.Title>
 					</Accordion.Toggle>
 					<Accordion.Collapse eventKey={eventKey}>

@@ -1,19 +1,11 @@
 import React, { forwardRef, useState, useEffect, useRef } from 'react'
 import './styles.css'
-import {
-	Dialog,
-	Divider,
-	DialogContent,
-	DialogActions,
-} from '@material-ui/core'
-import TransitionSlide from '../../../../components/slide_transition'
 import NoteColumnDialogProps from './props'
-import NoteColumnDialogHeader from './header'
 import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
-import Button from '../../../../components/button/text_button'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import { useLanguage } from '../../../../context/language'
+import DinoDialog, { DinoDialogHeader } from '../../../../components/dialogs/dino_dialog'
 
 const NoteColumnDialog = forwardRef(
 	(props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
@@ -33,7 +25,7 @@ const NoteColumnDialog = forwardRef(
 		}, [props.open, props.column])
 
 		const handleSave = async () => {
-			const invalidTitle = !(await isTitleValid(newTitle))
+			const invalidTitle = !isTitleValid(newTitle)
 			setInvalidTitle(invalidTitle)
 
 			if (invalidTitle) {
@@ -84,34 +76,24 @@ const NoteColumnDialog = forwardRef(
 		}
 
 		return (
-			<Dialog
-				ref={ref}
+			<DinoDialog
 				open={props.open}
-				fullWidth
-				onClose={props.onClose}
-				TransitionComponent={TransitionSlide}
-				className='note__column_dialog'
+				header={
+					<DinoDialogHeader>
+					{props.column ? language.data.COLUMN_EDIT_LABEL : language.data.COLUMN_ADD_LABEL}
+					</DinoDialogHeader>
+				}
+				handleSave={handleSave}
+				handleClose={props.onClose}
 			>
-				<NoteColumnDialogHeader editing={Boolean(props.column)} />
-				<Divider />
-				<DialogContent>
-					<NoteColumnDialogContent
-						title={newTitle}
-						onTitleChange={handleTitleChange}
-						invalidTitle={invalidTitle}
-						invalidMessage={invalidMessage}
-						inputRef={inputRef}
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={props.onClose}>
-						{language.data.DIALOG_CANCEL_BUTTON_TEXT}
-					</Button>
-					<Button onClick={handleSave} inputRef={inputRef}>
-						{language.data.DIALOG_SAVE_BUTTON_TEXT}
-					</Button>
-				</DialogActions>
-			</Dialog>
+				<NoteColumnDialogContent
+					title={newTitle}
+					onTitleChange={handleTitleChange}
+					invalidTitle={invalidTitle}
+					invalidMessage={invalidMessage}
+					inputRef={inputRef}
+				/>
+			</DinoDialog>
 		)
 	},
 )

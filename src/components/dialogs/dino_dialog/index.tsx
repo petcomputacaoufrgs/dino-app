@@ -14,7 +14,6 @@ const DinoDialog: React.FC<DinoDialogProps> = ({ open, handleClose, handleSave, 
 	return (
 		<div>
 			<Dialog
-				// ref={ref}
 				className='dino_dialog'
 				open={open}
 				maxWidth='xs'

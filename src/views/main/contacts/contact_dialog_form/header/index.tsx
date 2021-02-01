@@ -41,9 +41,9 @@ const AddContactDialogHeader = (
 					onClick={handleChangeColor}
 				/>
 			}
-			title={props.contact.name || staff
+			title={props.contact.name || (staff
 					? language.data.CONTACTS_ADD_ESSENTIAL_CONTACT
-					: language.data.CONTACTS_ADD_CONTACT
+					: language.data.CONTACTS_ADD_CONTACT)
 			}
 			subheader={language.data.CONTACT_DIALOG_FORM_SUBTITLE}
 			className='contact_dialog_form_header'

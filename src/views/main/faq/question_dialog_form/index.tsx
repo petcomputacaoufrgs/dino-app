@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../../../../components/button/text_button'
 import {
-	Dialog,
-	DialogActions,
-	DialogContent,
 	TextField,
 } from '@material-ui/core'
-import TransitionSlide from '../../../../components/slide_transition'
 import QuestionDialogFormProps from './props'
 import Constants from '../../../../constants/faq/FaqConstants'
 import FaqUserQuestionEntity from '../../../../types/faq/database/FaqUserQuestionEntity'
 import FaqUserQuestionService from '../../../../services/faq/FaqUserQuestionService'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
+import DinoDialog from '../../../../components/dialogs/dino_dialog'
 
 const QuestionDialogForm = React.forwardRef(
 	(
@@ -61,15 +57,12 @@ const QuestionDialogForm = React.forwardRef(
 
 		return (
 			<div className='dialog-form'>
-				<Dialog
-					ref={ref}
+				<DinoDialog
 					open={dialogOpen}
-					fullWidth
-					onClose={handleClose}
-					TransitionComponent={TransitionSlide}
+					handleSave={handleSave}
+					handleClose={handleClose}	
 				>
-					<DialogContent dividers>
-						<TextField
+					<TextField
 							required
 							fullWidth
 							value={question}
@@ -86,17 +79,7 @@ const QuestionDialogForm = React.forwardRef(
 							helperText={`${question.length}/${Constants.USER_QUESTION_MAX}`}
 							error={question.length === Constants.USER_QUESTION_MAX || error}
 						/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleClose}>
-							{language.data.DIALOG_CANCEL_BUTTON_TEXT}
-						</Button>
-
-						<Button onClick={handleSave}>
-							{language.data.DIALOG_SAVE_BUTTON_TEXT}
-						</Button>
-					</DialogActions>
-				</Dialog>
+				</DinoDialog>
 			</div>
 		)
 	},

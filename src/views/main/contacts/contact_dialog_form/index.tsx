@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ContactFormDialogProps } from './props'
-import Button from '../../../../components/button/text_button'
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
-import TransitionSlide from '../../../../components/slide_transition'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
 import Constants from '../../../../constants/contact/ContactsConstants'
@@ -21,6 +18,7 @@ import EssentialContactEntity from '../../../../types/contact/database/Essential
 import DinoHr from '../../../../components/dino_hr'
 import { IsStaff } from '../../../../context/private_router'
 import './styles.css'
+import DinoDialog from '../../../../components/dialogs/dino_dialog'
 
 const getContact = (item: ContactView | undefined): ContactEntity => {
 	return item
@@ -186,51 +184,44 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
 			setSelectedTreatmentLocalIds([...ids])
 		}
 
+		const renderSelectTreatments = () => {
+			return (
+				<> 
+					<DinoHr />
+					<SelectMultipleTreatments 
+						selectedLocalIds={selectedTreatmentLocalIds}
+						handleChange={handleChangeTreatments}
+					/> 
+				</>
+			)
+		}
+
     return (
       <div className="contact__form">
-        <Dialog
-          ref={ref}
-          open={dialogOpen}
-          maxWidth="xl"
-          fullWidth
-          onClose={onClose}
-          TransitionComponent={TransitionSlide}
-          disableBackdropClick
-        >
-          <ContactFormDialogHeader
-						contact={contact}
-						setContact={setContact}
-            handleCloseDialog={onClose}
-          />
-          <DialogContent dividers>
-            <ContactFormDialogContent
+        <DinoDialog
+					open={dialogOpen}
+					handleClose={onClose}
+					handleSave={handleSave}
+					header={
+						<ContactFormDialogHeader
 							contact={contact}
 							setContact={setContact}
-							phones={contactPhones}
-							setPhones={setContactPhones}
-              invalidName={invalidName}
-              helperTextInvalidPhone={invalidPhone}
-              handleDeletePhone={handleDeletePhone}
-              handleAddPhone={handleAddPhone}
-            >
-              {staff && (
-								<> <DinoHr />
-								<SelectMultipleTreatments 
-									selectedLocalIds={selectedTreatmentLocalIds}
-									handleChange={handleChangeTreatments}
-								/> </>
-							)}
-            </ContactFormDialogContent>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={onClose}>
-              {language.data.DIALOG_CANCEL_BUTTON_TEXT}
-            </Button>
-            <Button onClick={handleSave}>
-              {language.data.DIALOG_SAVE_BUTTON_TEXT}
-            </Button>
-          </DialogActions>
-        </Dialog>
+							handleCloseDialog={onClose}
+						/>}
+        >
+					<ContactFormDialogContent
+						contact={contact}
+						setContact={setContact}
+						phones={contactPhones}
+						setPhones={setContactPhones}
+						invalidName={invalidName}
+						helperTextInvalidPhone={invalidPhone}
+						handleDeletePhone={handleDeletePhone}
+						handleAddPhone={handleAddPhone}
+					>
+						{staff && renderSelectTreatments()}
+          </ContactFormDialogContent>
+        </DinoDialog>
       </div>
     )
   }

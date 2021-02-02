@@ -316,7 +316,7 @@ const FirstSettingsDialog: React.FC = () => {
 			{!isLoading && settings && !settings.firstSettingsDone && (
 				<DinoDialog
 					aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
-					open={step > -1}
+					open={step > -1 && step < NUMBER_DIALOGS}
 					handleSave={handleSave}
 					handleClose={handleCloseDialogs}
 					header={renderDialogHeader()}

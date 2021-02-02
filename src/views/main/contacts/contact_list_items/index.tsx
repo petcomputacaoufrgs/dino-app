@@ -15,18 +15,19 @@ import EssentialContactView from '../../../../types/contact/view/EssentialContac
 import { IsStaff } from '../../../../context/private_router'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
+import ItemListMenu from '../../../../components/item_list_menu'
+import ContactEntity from '../../../../types/contact/database/ContactEntity'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
-	const [itemToEdit, setItemToEdit] = useState<ContactView | EssentialContactView | undefined>(undefined,)
-	const [itemToView, setItemToView] = useState<ContactView | EssentialContactView | undefined>(undefined,)
-	const [itemToDelete, setItemToDelete] = useState<ContactView | EssentialContactView | undefined>(undefined)
+	const [toEdit, setToEdit] = useState(false)
+	const [toView, setToView] = useState(false)
+	const [toDelete, setToDelete] = useState(false)
+	const [selectedItem, setSelectedItem] = useState<ContactView | EssentialContactView | undefined>(undefined)
+
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const language = useLanguage()
 	const staff = IsStaff()
-
-	const handleOpenItem = (index: number) => {
-		setItemToView(items[index])
-	}
 
 	const handleAcceptDialogAndDeleteItem = async () => {
 
@@ -46,22 +47,33 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 			}
 		}
 
-		if (itemToDelete) {
-			await deletePhones(itemToDelete)
+		if (toDelete && selectedItem) {
+			await deletePhones(selectedItem)
 			if(staff) {
-				await EssentialContactService.delete(itemToDelete.contact as EssentialContactEntity)
+				await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
 			} else {
-				await deleteGoogleContact(itemToDelete)
-				await ContactService.delete(itemToDelete.contact)
+				await deleteGoogleContact(selectedItem)
+				await ContactService.delete(selectedItem.contact)
 			}
 		}
-		
-		setItemToDelete(undefined)
+		setToDelete(false)
 	}
 
-	const handleCloseDeleteDialog = () => {
-		setItemToDelete(undefined)
+	const handleViewOption = () => {
+		setToView(true)
 	}
+
+	const handleEditOption = () => {
+		setToEdit(true)
+	}
+
+	const handleDeleteOption = () => {
+		setToDelete(true)
+	}
+
+	const isEditUnavailable = selectedItem 
+	&& (selectedItem.contact as ContactEntity)
+	.localEssentialContactId !== undefined
 
 	return (
 		<>
@@ -70,41 +82,46 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 					<ContactItemList
 						key={index}
 						item={item}
-						onClick={() => handleOpenItem(index)}
-						onEdit={() => setItemToEdit(item)}
-						onDelete={() => setItemToDelete(item)}
-						onCloseDialog={() => setItemToView(undefined)}
+						onClick={handleViewOption}
+						setSelected={setSelectedItem}
+						setAnchor={setAnchorEl}
 					/>
 				)}
 			</List>
-			{itemToView && (
+			{selectedItem && (
+				<>
 				<ContactCard
-					dialogOpen={itemToView !== undefined}
-					onClose={() => setItemToView(undefined)}
-					item={itemToView}
-					onEdit={() => setItemToEdit(itemToView)}
-					onDelete={() => setItemToDelete(itemToView)}
+					dialogOpen={toView}
+					onClose={() => setToView(false)}
+					item={selectedItem}
+					onEdit={handleEditOption}
+					onDelete={handleDeleteOption}
 				/>
-			)}
-			{itemToEdit && (
 				<ContactFormDialog
-					dialogOpen={itemToEdit !== undefined}
-					onClose={() => setItemToEdit(undefined)}
-					item={itemToEdit}
+					dialogOpen={toEdit}
+					onClose={() => setToEdit(false)}
+					item={selectedItem}
 					items={items}
 					action={Constants.EDIT}
 				/>
-			)}
-			{itemToDelete && (
 				<AgreementDialog
-					open={itemToDelete !== undefined}
+					open={toDelete}
 					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
 					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
 					description={language.data.DELETE_CONTACT_OPTION_TEXT}
 					question={language.data.DELETE_CONTACT_QUESTION}
 					onAgree={handleAcceptDialogAndDeleteItem}
-					onDisagree={handleCloseDeleteDialog}
+					onDisagree={() => setToDelete(false)}
 				/>
+				<ItemListMenu
+					anchor={anchorEl}
+					setAnchor={setAnchorEl}
+					onEdit={handleEditOption}
+					onDelete={handleDeleteOption}
+					onCloseDialog={() => setToView(false)}
+					editUnavailable={isEditUnavailable}
+				/>
+				</>
 			)}
 		</>
 	)

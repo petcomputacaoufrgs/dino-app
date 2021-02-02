@@ -1,5 +1,6 @@
+import StaffEntity from "../database/StaffEntity"
+
 export default interface StaffView {
-	email: string
-	sentInvitationDate: Date
+	staff: StaffEntity,
 	acceptedInvitation: boolean
 }

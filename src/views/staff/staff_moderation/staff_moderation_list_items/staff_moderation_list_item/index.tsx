@@ -1,13 +1,13 @@
-import { Avatar, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
+import { Avatar, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
 import React from 'react'
 import AvatarIcon from '@material-ui/icons/Person';
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
-import StaffView from '../../../../../types/staff/view/StaffView'
 import { useLanguage } from '../../../../../context/language'
+import StaffEntity from '../../../../../types/staff/database/StaffEntity'
 
 interface StaffItemProps {
-  item: StaffView, 
-  setSelected: (value: StaffView) => void,
+  item: StaffEntity, 
+  setSelected: (value: StaffEntity) => void,
   setAnchor: (value: React.SetStateAction<HTMLElement | null>) => void,
 }
 
@@ -19,6 +19,8 @@ const StaffItem: React.FC<StaffItemProps> = ({ item, setAnchor, setSelected }) =
     setAnchor(event.currentTarget)
     setSelected(item)
   }
+
+  const invitationIsPending = item.userId === undefined
   
   return (
     <ListItem>
@@ -30,7 +32,7 @@ const StaffItem: React.FC<StaffItemProps> = ({ item, setAnchor, setSelected }) =
         secondary={
           <Typography component={'span'} variant={'body2'}>
             {item.sentInvitationDate.toDateString()}
-            {!item.acceptedInvitation && (<p className='invitation_pending'>{language.data.PENDING}</p>)}
+            {invitationIsPending && (<p className='invitation_pending'>{language.data.PENDING}</p>)}
           </Typography>
         }>
       </ListItemText>

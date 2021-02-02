@@ -9,14 +9,14 @@ interface EmailFormProps {
   error: boolean,
 }
 
-const EmailForm: React.FC<EmailFormProps> = ({ value, handleChange, error }) => {
+const EmailTextField: React.FC<EmailFormProps> = ({ value, handleChange, error }) => {
 
   const language = useLanguage()
   const isNotClient = IsNotClient()
 
   return (
     <TextField
-      className='dialog_form__content__textfield'
+      className='email_textfield'
       value={value}
       onChange={(e) => handleChange(e.target.value)}
       margin='dense'
@@ -33,4 +33,4 @@ const EmailForm: React.FC<EmailFormProps> = ({ value, handleChange, error }) => 
   )
 }
 
-export default EmailForm
+export default EmailTextField

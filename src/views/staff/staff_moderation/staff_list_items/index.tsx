@@ -4,13 +4,13 @@ import AgreementDialog from '../../../../components/agreement_dialog'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import ItemListMenu from '../../../../components/item_list_menu'
 import ListTitle from '../../../../components/list_title'
-import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
 import StaffService from '../../../../services/staff/StaffService'
 import StaffEntity from '../../../../types/staff/database/StaffEntity'
 import StringUtils from '../../../../utils/StringUtils'
-import EmailForm from '../email_form'
-import StaffItem from './staff_moderation_list_item'
+import EmailTextField from '../email_textfield'
+import StaffItem from './staff_list_item'
+import './styles.css'
 
 interface ListStaffProps {
   items: StaffEntity[],
@@ -19,7 +19,6 @@ interface ListStaffProps {
 const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 
   const language = useLanguage()
-  const alert = useAlert()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [selectedItem, setSelectedItem] = useState<StaffEntity | undefined>(undefined)
@@ -35,7 +34,6 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
       setError(isInvalid)
       if(!isInvalid) {
         StaffService.save(selectedItem)
-        alert.showSuccessAlert(language.data.STAFF_SAVE_SUCCESS)
         closeEditDialog()
         setSelectedItem(undefined)
       }
@@ -74,7 +72,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
           handleSave={handleEdit}
           handleClose={closeEditDialog} 
         >
-          <EmailForm 
+          <EmailTextField 
             value={selectedItem.email}
             handleChange={(value) => setSelectedItem({...selectedItem, email: value})}
             error={error}

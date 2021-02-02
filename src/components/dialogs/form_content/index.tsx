@@ -43,10 +43,13 @@ const FormContent: React.FC<FormContentProps> = ( props ) => {
       value={value}
       onChange={onChange}
       error={Boolean(props.invalidValue)}
+      disabled={props.disabled}
+
     />
     {props.children}
     {!props.hideButton && (    
     <Button
+      disabled={props.disabled}
       // className='dialog_form__content__save_button'
       onClick={onSave}
     >

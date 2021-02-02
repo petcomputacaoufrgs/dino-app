@@ -59,7 +59,9 @@
 		"prettier": "prettier --write .",
 		"compress-images": "node scripts/compressImages.js",
 		"server": "node scripts/server.js",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"go": "react-scripts start --ssl"
+
 	},
 	"pre-push": [
 		"prettier"

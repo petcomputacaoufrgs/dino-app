@@ -193,6 +193,8 @@ export default class PT implements LanguageBase {
 
 	PENDING = 'Pendente'
 
+	STAFF = 'Funcionários(as)'
+
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
 	NEW_CONTACT = 'Novo Contato'

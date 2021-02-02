@@ -189,6 +189,8 @@ export default class EN implements LanguageBase {
 
 	PENDING = 'Pending'
 
+	STAFF = 'Staff'
+
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
 	NEW_CONTACT = 'New Contact'

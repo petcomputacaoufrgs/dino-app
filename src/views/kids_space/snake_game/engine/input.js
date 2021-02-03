@@ -1,14 +1,17 @@
-/* --> Constants <-- */
+//#region Constants
+
 let inputDirection = {x: 0, y: 0, d:'N'}
 let lastInputDirection = {x: 0, y: 0, d:'N'}
 
 let xDown = null;                                                        
 let yDown = null;
 
+//#endregion
 
-/* --> Event Listeners <-- */
+//#region Event Listeners 
+
 // Activated when an user touches the screen
-document.addEventListener('touchstart', evt => {
+window.addEventListener('touchstart', evt => {
     const firstTouch = evt.touches[0]
 
     xDown = firstTouch.clientX                                   
@@ -16,7 +19,7 @@ document.addEventListener('touchstart', evt => {
 } , false)
 
 // Activated when an user moves the finger along the screen
-document.addEventListener('touchmove', evt => {
+window.addEventListener('touchmove', evt => {
     if ( ! xDown || ! yDown ) {
         return
     }
@@ -75,9 +78,14 @@ window.addEventListener('keydown', e => {
     }
 })
 
-/* --> Functions <-- */
-// getInputDirection(): gets the head direction based on the user moves
-//  output: inputDirection -> {x , y , direction } : direction of the movement
+//#endregion
+
+//#region Functions
+
+/**
+ * @description gets the head direction based on the user moves
+ * @returns direction of the movement
+ */
 export function getInputDirection() {
     lastInputDirection = inputDirection
     return inputDirection
@@ -90,3 +98,5 @@ export function resetInput() {
     inputDirection = {x: 0, y: 0, d:'N'}
     lastInputDirection = {x: 0, y: 0, d:'N'}
 }
+
+//#endregion

@@ -30,6 +30,7 @@ let started = false
 //#endregion
 
 //#region Functions 
+
 /**
  * @description set default values of snake's body
  * @param snakeBody empty snake's body
@@ -50,6 +51,7 @@ export function resetSnake() {
 
 /**
  * @description update the snake vector with the new segment position at each time interval
+ * @returns true if snake's position has been changed otherwise false
  */
 export function updateSnake() {
     if(grow) {
@@ -58,32 +60,31 @@ export function updateSnake() {
     // Get the head direction (changed by the user)
     const inputDirection = getInputDirection()
 
-    // Update the array -> the current segment gets the position of the previous segment
-    for (let i = snakeBody.length - 2; i >= 0; i--) {
-        snakeBody[i + 1] = { ...snakeBody[i] }
-    }
+    verifyGameState(inputDirection)
 
-    if(!started) {
-        adjustSecondSegmentPosition(snakeBody, inputDirection)
+    const ignoredSegments = started ? 2 : 3
+
+    // Update the array -> the current segment gets the position of the previous segment
+    for (let i = snakeBody.length - ignoredSegments; i >= 0; i--) {
+        snakeBody[i + 1] = { ...snakeBody[i] }
     }
 
     // Update the head position
     snakeBody[0].x += inputDirection.x
     snakeBody[0].y += inputDirection.y
+
+    return inputDirection.d !== 'N'
 }
 
 /**
- * Ajusta a posição do segundo segmento no inicio do jogo
- * @param snakeBody snake's body
- * @param inputDirection current input direction
+ * @description verify when game has been started
  */
-function adjustSecondSegmentPosition(snakeBody, inputDirection) {
-    const hasInputDirection = !(inputDirection.x === 0 && inputDirection.y === 0)
-    if(hasInputDirection) {
-        started = true
-    } else {
-        const hasOnlyTwoSegments = snakeBody.length === 2
-        if(hasOnlyTwoSegments) snakeBody[1].y = 12
+function verifyGameState(inputDirection) {
+    if (!started) {
+        const hasInputDirection = !(inputDirection.x === 0 && inputDirection.y === 0)
+        if(hasInputDirection) {
+            started = true
+        }
     }
 }
 
@@ -103,7 +104,7 @@ export function renderSnake(gameBoard) {
         snakePiece.setAttribute("src", image)
         snakePiece.style.gridRowStart = segment.y
         snakePiece.style.gridColumnStart = segment.x
-        snakePiece.classList.add('snake')
+        snakePiece.classList.add('snake_game__snake')
 
         // Append the segment to the board
         gameBoard.appendChild(snakePiece)

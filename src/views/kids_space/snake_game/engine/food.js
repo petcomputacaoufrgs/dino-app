@@ -24,7 +24,10 @@ export function updateFood() {
         growSnake()
         food = getRandomFoodPosition()
         score += 1
+        return true
     }
+
+    return false
 }
 
 /**
@@ -38,17 +41,15 @@ export function renderFood(gameBoard) {
     foodElement.setAttribute("src", FOOD)
     foodElement.style.gridRowStart = food.y
     foodElement.style.gridColumnStart = food.x
-    foodElement.classList.add('food')
+    foodElement.classList.add('snake_game__food')
 
     // Append the segment to the board
     gameBoard.appendChild(foodElement)
 }
 
-// getRandomFoodPosition(): get a random position that not colides with the snake for the new food
-//  output: newFooPosition -> { x , y } : the position of the new food
 /**
- * @description 
- * @returns
+ * @description get a random position that not colides with the snake for the new food
+ * @returns the position of the new food
  */
 function getRandomFoodPosition() {
     let newFoodPosition
@@ -69,3 +70,5 @@ function getRandomFoodPosition() {
 export function resetFood() {
     score = 0
 }
+
+//#endregion

@@ -1,52 +1,26 @@
-@media only screen 
-and (min-device-width: 1224px) {
-    body {
-        flex-direction: row-reverse;
-    }
-
-    dialog {
-        width: 500px;
-    }
-
-    #score-board {
+@media only screen and (min-device-width: 1224px) {
+    #snake_game__score_board {
         margin-left: 10vmin;
     }
 }
 
-@media only screen
-and (max-device-width: 1223px) {
-    body{
-        flex-direction: column;
-    }
-
-    dialog {
-        width: 80vw;
-    }
-
-    #score-board {
+@media only screen and (max-device-width: 1223px) {
+    #snake_game__score_board {
         margin-bottom: 10vmin;
     }
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+.snake_game {
     background-image: url(../../../assets/kids_space/snake/outter_board_background.png);
     height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     margin: 0; 
 }
 
-dialog {
-    background-color: #694E73;
-    border-radius: 0.9rem;
-    border: none;
-    padding: 2rem;
-    top: 30%;
-}
 
 button {
     background-color: #f5f5f5;
@@ -60,28 +34,15 @@ button {
     text-decoration: none;
 }
 
-button:hover {
-    color: whitesmoke;
-}
-
-button:focus {
-    outline: none;
-}
-
-p {
-    font-size: 1.4rem;
-    color: #f5f5f5;
-}
-
-.food {
+.snake_game__food {
     width: 100%;
 }
 
-.snake {
+.snake_game__snake {
     width: 100%;
 }
 
-#game-board {
+#snake_game__game_board {
     background-image: url(../../../assets/kids_space/snake/inner_board_background.png);
     background-size: contain;
     height: 100vmin;
@@ -91,23 +52,32 @@ p {
     grid-template-columns: repeat(21, 1fr);
 }
 
-#score-board {
+#snake_game__score_board {
     background-color: #694E73;
     width: 5rem;
     height: 5rem;
     border-radius: 50%;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#score-board p {
+#snake_game__score_board p {
     font-weight: bold;
+    margin-bottom: 0;
 }
 
-#confirm:hover {
-    background-color: #6AB155;
-    
+.snake_game__dialog p {
+	font-size: var(--default-small-font);
 }
 
-#cancel:hover {
-    background-color: #ff4d4d; 
+.snake_game__dialog__buttons {
+	margin-left: auto;
+	padding: 0.5rem;
+}
+
+.snake_game__dialog__buttons__accept_button.MuiButtonBase-root {
+	background-color: var(--header-and-menu);
+	margin-left: 0.5rem;
 }

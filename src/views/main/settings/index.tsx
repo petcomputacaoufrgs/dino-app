@@ -15,7 +15,7 @@ import DinoHr from '../../../components/dino_hr'
 import SelectFontSize from '../../../components/settings/select_font_size'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
-import Loader from '../../../components/loader'
+import DinoLoader from '../../../components/loader'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
@@ -223,7 +223,7 @@ const Settings: React.FC = () => {
 	)
 
 	return (
-		<Loader isLoading={isLoading} hideChildren>
+		<DinoLoader isLoading={isLoading} hideChildren>
 			<div className='settings'>
 				<Typography
 					className='settings__title'
@@ -281,7 +281,7 @@ const Settings: React.FC = () => {
 				{renderSaveButton()}
 				{renderDialogs()}
 			</div>
-		</Loader>
+		</DinoLoader>
 	)
 }
 

@@ -4,7 +4,7 @@ import { Switch } from 'react-router'
 import PathConstants from '../../constants/app/PathConstants'
 import DrawerNavigation from '../../components/drawer_navigation'
 import PrivateRoute from '../../components/private_route'
-import GlossaryItem from './glossary/glossary_item'
+import GlossaryItem from './glossary/glossary_items/glossary_item'
 import Glossary from './glossary'
 import Contacts from './contacts'
 import Home from './home'
@@ -18,7 +18,7 @@ import Calendar from './calendar'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
-import Loader from '../../components/loader/index'
+import DinoLoader from '../../components/loader/index'
 
 const Main: React.FC = () => {
 	const language = useLanguage()
@@ -78,7 +78,7 @@ const Main: React.FC = () => {
 		)
 	}
 	return (
-		<Loader isLoading={language.loading} hideChildren>
+		<DinoLoader isLoading={language.loading} hideChildren>
 			<DrawerNavigation
 				groupedItems={groupedItems}
 				component={renderMainContent()}
@@ -89,7 +89,7 @@ const Main: React.FC = () => {
 				open={openLogoutDialog}
 			/>
 			<FirstSettingsDialog />
-		</Loader>
+		</DinoLoader>
 	)
 }
 

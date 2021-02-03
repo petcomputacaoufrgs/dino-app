@@ -7,7 +7,7 @@ import PrivateRoute from '../../components/private_route'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
-import Loader from '../../components/loader/index'
+import DinoLoader from '../../components/loader/index'
 import LogoutDialog from '../../components/logout_dialog'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import NotFound from '../not_found'
@@ -16,7 +16,7 @@ import Home from '../main/home'
 import Contacts from '../main/contacts'
 import Faq from '../main/faq'
 import Glossary from '../main/glossary'
-import GlossaryItem from '../main/glossary/glossary_item'
+import GlossaryItem from '../main/glossary/glossary_items/glossary_item'
 import StaffModeration from './staff_moderation'
 import Treatment from './treatment'
 
@@ -86,7 +86,7 @@ const StaffMain: React.FC = () => {
 		)
 	}
 	return (
-		<Loader isLoading={language.loading} hideChildren>
+		<DinoLoader isLoading={language.loading} hideChildren>
 			<DrawerNavigation
 				groupedItems={groupedItems}
 				component={renderMainContent()}
@@ -97,7 +97,7 @@ const StaffMain: React.FC = () => {
 				open={openLogoutDialog}
 			/>
 			<FirstSettingsDialog />
-		</Loader>
+		</DinoLoader>
 	)
 }
 

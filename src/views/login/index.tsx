@@ -4,7 +4,7 @@ import { ReactComponent as Dinosaur1 } from '../../assets/logos/dinosaur_1.svg'
 import { ReactComponent as Dinosaur2 } from '../../assets/images/dinosaur_2.svg'
 import GoogleLoginButton from '../../components/button/google_login'
 import { useLanguage } from '../../context/language'
-import Loader from '../../components/loader'
+import DinoLoader from '../../components/loader'
 import LinkButton from '../../components/button/link_button'
 import HistoryService from '../../services/history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
@@ -42,7 +42,7 @@ const Login = (): JSX.Element => {
 	)
 
 	return (
-		<Loader isLoading={language.loading}>
+		<DinoLoader isLoading={language.loading}>
 			<div className='login'>
 				<Dinosaur2 className='login__curious' />
 				<Dinosaur1 className='login__logo' />
@@ -65,7 +65,7 @@ const Login = (): JSX.Element => {
 					/>
 				</div>
 			</div>
-		</Loader>
+		</DinoLoader>
 	)
 }
 

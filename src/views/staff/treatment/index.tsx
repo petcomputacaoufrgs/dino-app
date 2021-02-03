@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Loader from '../../../components/loader'
+import DinoLoader from '../../../components/loader'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import { useLanguage } from '../../../context/language'
 import TreatmentService from '../../../services/treatment/TreatmentService'
@@ -114,7 +114,7 @@ const Treatment: React.FC<TreatmentProps> = () => {
 
 	return (
 		<div className='treatments'>
-			<Loader className='treatments__loader' isLoading={isLoading}>
+			<DinoLoader className='treatments__loader' isLoading={isLoading}>
 				<MuiSearchBar
 					value={searchTerm}
 					onChange={handleChange}
@@ -125,7 +125,7 @@ const Treatment: React.FC<TreatmentProps> = () => {
 					handleAdd={handleAdd}
 					label={language.data.NEW_CONTACT}
 				/>
-			</Loader>
+			</DinoLoader>
 			{renderAddTreatment()}
 		</div>
 	)

@@ -4,7 +4,7 @@ import LoaderProps from './props'
 import './styles.css'
 import StringUtils from '../../utils/StringUtils'
 
-const Loader: React.FC<LoaderProps> = ({
+const DinoLoader: React.FC<LoaderProps> = ({
 	isLoading: loading,
 	children,
 	className,
@@ -56,4 +56,4 @@ const Loader: React.FC<LoaderProps> = ({
 	)
 }
 
-export default Loader
+export default DinoLoader

@@ -4,7 +4,7 @@ import DinoTabPanel from '../../../components/tab_panel'
 import StaffService from '../../../services/staff/StaffService'
 import StaffEntity from '../../../types/staff/database/StaffEntity'
 import ListStaff from './staff_list_items'
-import Loader from '../../../components/loader'
+import DinoLoader from '../../../components/loader'
 import AddStaffForm from './add_staff_form'
 import './styles.css'
 
@@ -47,9 +47,9 @@ const StaffModeration: React.FC = () => {
       <DinoTabPanel panels={[
           { name: language.data.ADD_STAF_TAB, Component: <AddStaffForm /> },
           { name: language.data.STAFF_LIST_TAB, Component: 
-            <Loader className='staff_loader' isLoading={isLoading}>
+            <DinoLoader className='staff_loader' isLoading={isLoading}>
               <ListStaff items={staff} />
-            </Loader> 
+            </DinoLoader> 
           }
         ]} 
       />

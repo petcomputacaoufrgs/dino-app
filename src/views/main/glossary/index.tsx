@@ -3,7 +3,7 @@ import GlossaryItems from './glossary_items'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
-import Loader from '../../../components/loader'
+import DinoLoader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
 import GlossaryService from '../../../services/glossary/GlossaryService'
 import './styles.css'
@@ -60,9 +60,9 @@ const Glossary: React.FC = () => {
 				onChange={handleChange}
 				placeholder={language.data.SEARCH_HOLDER}
 			/>
-			<Loader className='glossary_loader' isLoading={isLoading}>
+			<DinoLoader className='glossary_loader' isLoading={isLoading}>
 				<GlossaryItems items={filteredGlossary} />
-			</Loader>
+			</DinoLoader>
 			{ staff && 
 				<AddButton
 					handleAdd={() => setAdd(true)}

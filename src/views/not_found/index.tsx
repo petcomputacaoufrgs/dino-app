@@ -1,7 +1,7 @@
 import React from 'react'
 import PageNotFound from '../../assets/images/page_not_found.svg'
 import { useLanguage } from '../../context/language'
-import Loader from '../../components/loader'
+import DinoLoader from '../../components/loader'
 import './styles.css'
 import { usePrivateRouter } from '../../context/private_router'
 import AuthService from '../../services/auth/AuthService'
@@ -20,7 +20,7 @@ const NotFound = (): JSX.Element => {
 	setTimeout(() => AuthService.redirectToHome(router.userPermission), redirectTimeout)
 
 	return (
-		<Loader isLoading={language.loading}>
+		<DinoLoader isLoading={language.loading}>
 			<div className='not_found'>
 				<p className='not_found__text'>
 					{language.data.NOT_FOUND_MESSAGE} &nbsp; :(
@@ -34,7 +34,7 @@ const NotFound = (): JSX.Element => {
 					alt='Página não encontrada'
 				/>
 			</div>
-		</Loader>
+		</DinoLoader>
 	)
 }
 

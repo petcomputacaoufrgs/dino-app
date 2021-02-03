@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Divider } from '@material-ui/core'
-import { useLanguage } from '../../../../context/language'
-import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
-import GlossaryService from '../../../../services/glossary/GlossaryService'
-import Loader from '../../../../components/loader'
+import { useLanguage } from '../../../../../context/language'
+import GlossaryItemEntity from '../../../../../types/glossary/database/GlossaryItemEntity'
+import GlossaryService from '../../../../../services/glossary/GlossaryService'
+import DinoLoader from '../../../../../components/loader'
 import './styles.css'
 
 interface RouterParams {
@@ -12,6 +12,7 @@ interface RouterParams {
 }
 
 const GlossaryItem: React.FC = () => {
+
 	const { localId } = useParams<RouterParams>()
 
 	const language = useLanguage()
@@ -54,7 +55,7 @@ const GlossaryItem: React.FC = () => {
 	}, [isLoading, localId])
 
 	return (
-		<Loader className='glossary_item_loader' isLoading={isLoading} hideChildren>
+		<DinoLoader className='glossary_item_loader' isLoading={isLoading} hideChildren>
 			<div className='glossary_item'>
 				<div className='card__header'>
 					<div className='card__header__title'>
@@ -71,7 +72,7 @@ const GlossaryItem: React.FC = () => {
 					</div>
 				</div>
 			</div>
-		</Loader>
+		</DinoLoader>
 	)
 }
 

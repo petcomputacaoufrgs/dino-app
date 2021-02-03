@@ -4,7 +4,7 @@ import TreatmentService from '../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import { FormControl, InputLabel, Select, Input } from '@material-ui/core'
 import SelectMultipleTreatmentsProps from './props'
-import Loader from '../../loader'
+import DinoLoader from '../../loader'
 import './styles.css'
 import { useLanguage } from '../../../context/language'
 
@@ -52,7 +52,7 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
     <div className='select_multiple_treatments'>
         <FormControl className="select_multiple_treatments__form_control">
           <InputLabel id="select_multiple_treatments__input_label">{language.data.SETTINGS_TREATMENT}</InputLabel>
-          <Loader isLoading={isLoading}>
+          <DinoLoader isLoading={isLoading}>
             <Select
               labelId="select_multiple_treatments__input_label"
               id="select_multiple_treatments__select_id"
@@ -64,7 +64,7 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
             >
                 {renderOptions()}
             </Select>
-          </Loader>
+          </DinoLoader>
         </FormControl>
     </div>
   )

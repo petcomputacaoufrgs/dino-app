@@ -10,7 +10,7 @@ import TreatmentService from '../../../services/treatment/TreatmentService'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import FaqService from '../../../services/faq/FaqService'
 import FaqItemService from '../../../services/faq/FaqItemService'
-import Loader from '../../../components/loader'
+import DinoLoader from '../../../components/loader'
 import SelectTreatment from '../../../components/settings/select_treatment'
 import Button from '../../../components/button'
 import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
@@ -165,7 +165,7 @@ const Faq: React.FC = () => {
 	}
 
 	return (
-		<Loader className='faq__loader' isLoading={isLoading} hideChildren>
+		<DinoLoader className='faq__loader' isLoading={isLoading} hideChildren>
 			{searchResults ? (
 				<>
 					<MuiSearchBar
@@ -192,7 +192,7 @@ const Faq: React.FC = () => {
 				</>
 			) : treatment ? renderNoFAQAvailable() : renderNoFAQSelected()
 			}
-		</Loader>
+		</DinoLoader>
 	)
 }
 

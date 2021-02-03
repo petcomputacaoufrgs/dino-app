@@ -5,7 +5,7 @@ import ContactFormDialog from './contact_dialog_form'
 import Contants from '../../../constants/contact/ContactsConstants'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
-import Loader from '../../../components/loader'
+import DinoLoader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
@@ -159,14 +159,14 @@ const Contacts: React.FC = () => {
 
 	return (
 		<div className='contacts'>
-			<Loader className='contacts__loader' isLoading={isLoading}>
+			<DinoLoader className='contacts__loader' isLoading={isLoading}>
 				<MuiSearchBar
 					value={searchTerm}
 					onChange={handleChange}
 					placeholder={language.data.SEARCH_HOLDER}
 				/>
 				<ContactItems items={filteredContacts} />
-			</Loader>
+			</DinoLoader>
 			<AddButton
 				handleAdd={handleAddContact}
 				label={language.data.NEW_CONTACT}

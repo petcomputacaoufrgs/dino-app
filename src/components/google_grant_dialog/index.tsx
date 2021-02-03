@@ -9,7 +9,7 @@ import { useLanguage } from '../../context/language'
 import { DinoDialogContent, DinoDialogHeader } from '../dialogs/dino_dialog'
 import UserEntity from '../../types/user/database/UserEntity'
 import UserService from '../../services/user/UserService'
-import Loader from '../loader'
+import DinoLoader from '../loader'
 import './styles.css'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
@@ -101,7 +101,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 				TransitionComponent={TransitionSlide}
 				open={open}
 			>
-				<Loader isLoading={isLoading}>
+				<DinoLoader isLoading={isLoading}>
 					<DinoDialogHeader>
 						<h1>{title}</h1>
 					</DinoDialogHeader>
@@ -120,7 +120,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 							{language.data.DIALOG_AGREE_TEXT}
 						</Button>
 					</div>
-				</Loader>
+				</DinoLoader>
 			</Dialog>
 		)
 	},

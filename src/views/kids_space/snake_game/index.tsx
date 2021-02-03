@@ -28,8 +28,6 @@ const SnakeGame: React.FC = () => {
         setOpenDialog(true)
     }
 
-    console.log(openDialog)
-
     return(
         <>  
             <Dialog

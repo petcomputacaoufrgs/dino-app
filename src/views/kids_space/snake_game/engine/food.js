@@ -1,8 +1,8 @@
-/* --> Imports <-- */
 import { foodAte, onSnake, growSnake } from './snake.js'
 import FOOD from '../../../../assets/kids_space/snake/food.png'
 
-/* --> Constants <-- */
+//#region Constants
+
 // Board
 const GRID_SIZE = 21
 
@@ -12,8 +12,13 @@ let food = getRandomFoodPosition()
 // Score
 export let score = 0
 
-/* --> Functions <-- */
-// updateFood(): if the food was ate, the score is updated and the flag to grow the snake is activated
+//#endregion
+
+//#region Functions
+
+/**
+ * @description if the food was ate, the score is updated and the flag to grow the snake is activated
+ */
 export function updateFood() {
     if(foodAte(food)) {
         growSnake()
@@ -22,8 +27,10 @@ export function updateFood() {
     }
 }
 
-// renderFood(gameBoard): render the food on the board
-//  input: gameBoard -> html element : div where the game renders
+/**
+ * @description render the food on the board
+ * @param gameBoard div where the game renders
+ */
 export function renderFood(gameBoard) {
     const foodElement = document.createElement('IMG')
 
@@ -39,6 +46,10 @@ export function renderFood(gameBoard) {
 
 // getRandomFoodPosition(): get a random position that not colides with the snake for the new food
 //  output: newFooPosition -> { x , y } : the position of the new food
+/**
+ * @description 
+ * @returns
+ */
 function getRandomFoodPosition() {
     let newFoodPosition
 
@@ -50,4 +61,11 @@ function getRandomFoodPosition() {
     }
 
     return newFoodPosition
+}
+
+/**
+ * @description clear food variables
+ */
+export function resetFood() {
+    score = 0
 }

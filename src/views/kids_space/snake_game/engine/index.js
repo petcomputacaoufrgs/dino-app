@@ -1,28 +1,43 @@
-/* --> Imports <-- */
 import { renderSnake, outsideGrid, snakeOverItself, updateSnake, resetSnake } from './snake.js'
-import { updateFood, renderFood, score } from './food.js'
+import { updateFood, renderFood, score, resetFood } from './food.js'
+import { resetInput } from './input'
 
+//#region Constants
 
-/* --> Constants <-- */
-// HTML Elements
+//HTML Elements
 let gameBoard
 let scoreBoard
-let onGameOver
 
-// General attirbutes
+//General attirbutes
 let lastRender = 0
 let gameOver = false
 
-// Snake
+//Snake
 const SNAKE_SPEED = 4
 
-/* --> Initializing the game <-- */
+//External function
+let onGameOver
+
+//#endregion
+
+//#region Functions
+
+/**
+ * @description Initialize the game
+ * @param handleGameOver Callback for game over event
+ */
 export function starGame(handleGameOver) {
+    resetInput()
+    resetFood()
     resetSnake()
     setDefaultVars(handleGameOver)
     window.requestAnimationFrame(main)
 }
 
+/**
+ * @description Set default variables values
+ * @param handleGameOver Callback for game over event
+ */
 function setDefaultVars(handleGameOver) {
     gameOver = false
     lastRender = 0
@@ -31,9 +46,11 @@ function setDefaultVars(handleGameOver) {
     scoreBoard = document.getElementById('score-board')
 }
 
-/* --> Functions <-- */
-// main(currentTime): main function of the game; organizes and set everything needded
-//  input: currentTime -> number : actual time
+/**
+ * @description main function of the game; organizes and set everything needded
+ * @param currentTime actual time
+ * @returns
+ */
 function main(currentTime) {
     // Verify if is a game over scenario
     if(gameOver) {
@@ -57,14 +74,18 @@ function main(currentTime) {
     }
 }
 
-// update(): update the food and the snake if necessary
+/**
+ * @description update the food and the snake if necessary
+ */
 function update() {
     updateSnake()
     updateFood()
     checkDeath()
 }
 
-// render(): render the snake, the food and the current score
+/**
+ * @description render the snake, the food and the current score
+ */
 function render() {
     scoreBoard.innerHTML = `<p>${score}</p>`
     gameBoard.innerHTML = ''
@@ -72,7 +93,11 @@ function render() {
     renderFood(gameBoard)
 }
 
-// checkDeath(): verify if some condition of game over was reached
+/**
+ * @description verify if some condition of game over was reached
+ */
 function checkDeath() {
     gameOver = outsideGrid() || snakeOverItself()
 }
+
+//#endregion

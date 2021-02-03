@@ -71,6 +71,7 @@ window.addEventListener('keydown', e => {
                 inputDirection = {x: 1, y: 0, d:'R'}
             }
             break
+        default: return
     }
 })
 

@@ -9,7 +9,6 @@ import LogoutService from './services/auth/LogoutService'
 import App from './App'
 import './Var.css'
 
-
 window.addEventListener('load', () => {
 	EventService.whenStart()
 	LogoutService.start()

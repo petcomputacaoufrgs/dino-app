@@ -1,5 +1,5 @@
 /* --> Imports <-- */
-import { renderSnake, outsideGrid, snakeOverItself, updateSnake } from './snake.js'
+import { renderSnake, outsideGrid, snakeOverItself, updateSnake, resetSnake } from './snake.js'
 import { updateFood, renderFood, score } from './food.js'
 
 
@@ -7,9 +7,7 @@ import { updateFood, renderFood, score } from './food.js'
 // HTML Elements
 let gameBoard
 let scoreBoard
-let restartDialog
-let cancelButton
-let confirmButton
+let onGameOver
 
 // General attirbutes
 let lastRender = 0
@@ -18,16 +16,18 @@ let gameOver = false
 // Snake
 const SNAKE_SPEED = 4
 
-
 /* --> Initializing the game <-- */
-export default function starGame(){
+export function starGame(handleGameOver) {
     gameBoard = document.getElementById('game-board')
     scoreBoard = document.getElementById('score-board')
-    restartDialog = document.getElementById('restart-dialog')
-    cancelButton = document.getElementById('cancel')
-    confirmButton = document.getElementById('confirm')
 
-    restartDialog.close()
+    window.requestAnimationFrame(main)
+
+    onGameOver = handleGameOver
+}
+
+export function restartGame() {
+    resetSnake()
     window.requestAnimationFrame(main)
 }
 
@@ -39,10 +39,7 @@ function main(currentTime) {
     // Verify if is a game over scenario
     if(gameOver) {
         // Check if the user would like to restart the game
-        restartDialog.showModal()
-        confirmButton.addEventListener('click', () => {
-            console.log('ora ora')
-        })
+        onGameOver()
         return
     } else {
         window.requestAnimationFrame(main)

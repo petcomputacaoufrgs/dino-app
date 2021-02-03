@@ -1,0 +1,113 @@
+@media only screen 
+and (min-device-width: 1224px) {
+    body {
+        flex-direction: row-reverse;
+    }
+
+    dialog {
+        width: 500px;
+    }
+
+    #score-board {
+        margin-left: 10vmin;
+    }
+}
+
+@media only screen
+and (max-device-width: 1223px) {
+    body{
+        flex-direction: column;
+    }
+
+    dialog {
+        width: 80vw;
+    }
+
+    #score-board {
+        margin-bottom: 10vmin;
+    }
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    background-image: url(../../../../assets/kids_space/snake/outter_board_background.png);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0; 
+}
+
+dialog {
+    background-color: #694E73;
+    border-radius: 0.9rem;
+    border: none;
+    padding: 2rem;
+    top: 30%;
+}
+
+button {
+    background-color: #f5f5f5;
+    color: #694E73;
+    float: right;
+    border-radius: 0.6rem;
+    border: none;
+    margin-left: 1rem;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+}
+
+button:hover {
+    color: whitesmoke;
+}
+
+button:focus {
+    outline: none;
+}
+
+p {
+    font-size: 1.4rem;
+    color: #f5f5f5;
+}
+
+.food {
+    width: 100%;
+}
+
+.snake {
+    width: 100%;
+}
+
+#game-board {
+    background-image: url(../../../../assets/kids_space/snake/inner_board_background.png);
+    background-size: contain;
+    height: 100vmin;
+    width: 100vmin;
+    display: grid;
+    grid-template-rows: repeat(21, 1fr);
+    grid-template-columns: repeat(21, 1fr);
+}
+
+#score-board {
+    background-color: #694E73;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    text-align: center;
+}
+
+#score-board p {
+    font-weight: bold;
+}
+
+#confirm:hover {
+    background-color: #6AB155;
+    
+}
+
+#cancel:hover {
+    background-color: #ff4d4d; 
+}

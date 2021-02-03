@@ -6,6 +6,9 @@ import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
+import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
+import TreatmentView from '../../types/faq/view/FaqView'
+import FaqItemService from '../faq/FaqItemService'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -51,6 +54,19 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 
 	getAllByLocalIds = (localIds: number[]): Promise<TreatmentEntity[]> => {
 		return this.table.where('localId').anyOf(localIds).toArray()
+	}
+
+	getTreatmentViewByFilter(
+		treatment: TreatmentEntity,
+		faqItems: FaqItemEntity[],
+		searchTerm: string,
+	): TreatmentView | undefined {
+			const view = {
+				treatment,
+				faqItems: FaqItemService.getFaqItemByFilter(treatment, faqItems, searchTerm),
+			}
+
+			return view as TreatmentView
 	}
 }
 

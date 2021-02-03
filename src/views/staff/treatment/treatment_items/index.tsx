@@ -50,7 +50,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 			<ListItem button onClick={() => handleOpenCard(index)}>
 				<ListItemText
 					primary={item.name}
-					//secondary={PhoneService.getPhoneTypes(item.phones, language.data)}
+					secondary={'OI'}
 				/>
 				<ListItemSecondaryAction>
 					<OptionsIconButton dark onClick={handleClickMenu} />
@@ -68,7 +68,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 
 	return (
 		<>
-		  <ListTitle title={'Treatments'}/>
+		  <ListTitle title={'Treatments & FAQs'}/>
 			<List className='contacts__list'>
 				{items.map((item, index) => renderTreatmentItemList(item, index))}
 			</List>

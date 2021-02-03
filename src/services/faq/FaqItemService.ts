@@ -4,11 +4,11 @@ import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConst
 import FaqItemDataModel from '../../types/faq/api/FaqItemDataModel'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import StringUtils from '../../utils/StringUtils'
-import FaqEntity from '../../types/faq/database/FaqEntity'
-import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
+import TreatmentService from '../treatment/TreatmentService'
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,18 +25,18 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
-		return [FaqService]
+		return [TreatmentService]
 	}
 
 	async convertModelToEntity(
 		model: FaqItemDataModel,
 	): Promise<FaqItemEntity | undefined> {
-		const faq = await FaqService.getById(model.faqId)
+		const treatment = await TreatmentService.getById(model.treatmentId)
 
-		if (faq) {
+		if (treatment) {
 			const entity: FaqItemEntity = {
 				answer: model.answer,
-				localFaqId: faq.localId,
+				localTreatmentId: treatment.localId,
 				question: model.question,
 			}
 
@@ -47,13 +47,13 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	async convertEntityToModel(
 		entity: FaqItemEntity,
 	): Promise<FaqItemDataModel | undefined> {
-		if (entity.localFaqId) {
-			const faq = await FaqService.getByLocalId(entity.localFaqId)
+		if (entity.localTreatmentId) {
+			const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId)
 
-			if (faq && faq.id) {
+			if (treatment && treatment.id) {
 				const model: FaqItemDataModel = {
 					answer: entity.answer,
-					faqId: faq.id,
+					treatmentId: treatment.id,
 					question: entity.question,
 				}
 
@@ -63,20 +63,20 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	}
 
 	getFaqItemByFilter(
-		faq: FaqEntity,
+		treatment: TreatmentEntity,
 		faqItem: FaqItemEntity[],
 		searchTerm: string,
 	): FaqItemEntity[] {
 		return faqItem.filter(
 			item =>
-				item.localFaqId === faq.localId &&
+				item.localTreatmentId === treatment.localId &&
 				StringUtils.contains(item.question, searchTerm),
 		)
 	}
 
-	getByFaq = async (faq: FaqEntity): Promise<FaqItemEntity[]> => {
-		if (faq.localId) {
-			return this.table.where('localFaqId').equals(faq.localId).toArray()
+	getByTreatment = async (treatment: TreatmentEntity): Promise<FaqItemEntity[]> => {
+		if (treatment.localId) {
+			return this.table.where('localTreatmentId').equals(treatment.localId).toArray()
 		}
 
 		return []

@@ -3,9 +3,8 @@ import APIConfig from '../../environment/api_config.json'
 class APIRequestMappingConstants {
 	URL = APIConfig.URL
 	GLOSSARY = `${this.URL}public/glossary/`
-	FAQ = `${this.URL}public/faq/`
 	FAQ_ITEM = `${this.URL}public/faq_item/`
-	FAQ_USER_QUESTION = `${this.URL}faq_user_question/`
+	TREATMENT_QUESTION = `${this.URL}treatment_question/`
 	NOTE = `${this.URL}note/`
 	NOTE_COLUMN = `${this.URL}note_column/`
 	USER = `${this.URL}user/`
@@ -47,7 +46,7 @@ class APIRequestMappingConstants {
 
 	SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
 
-	TREATMENT_ESSENTIAL_CONTACTS = `${this.CONTACT}essential/faq/`
+	TREATMENT_ESSENTIAL_CONTACTS = `${this.CONTACT}essential/`
 
 	STAFF = `${this.URL}staff/`
 

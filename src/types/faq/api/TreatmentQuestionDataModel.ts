@@ -1,7 +1,7 @@
 import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLocalIdModel'
 
-export default interface FaqDataModel
+export default interface TreatmentQuestionDataModel
 	extends SynchronizableDataLocalIdModel<number> {
-	title: string
 	treatmentId: number
+	question: string
 }

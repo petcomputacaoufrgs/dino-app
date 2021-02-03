@@ -1,6 +1,7 @@
 import SynchronizableEntity from '../../sync/database/SynchronizableEntity'
 
-export default interface FaqEntity extends SynchronizableEntity<number> {
-	title: string
+export default interface FaqUserQuestionEntity
+	extends SynchronizableEntity<number> {
+	question: string
 	localTreatmentId?: number
 }

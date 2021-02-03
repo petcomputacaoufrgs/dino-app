@@ -9,10 +9,10 @@ import ListTitle from '../../../../components/list_title'
 const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 	return (
 		<div className='faq-items'>
-			<ListTitle title={data?.faq.title}/>
+			<ListTitle title={data?.treatment.name}/>
 			{data && (
 				<Accordion className='faq-items__accordion'>
-					{data.items.map((item, index) => (
+					{data.faqItems.map((item, index) => (
 						<Card className='card' key={index}>
 							<Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
 								<Typography>{item.question}</Typography>

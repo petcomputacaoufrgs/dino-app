@@ -3,42 +3,29 @@ import MuiSearchBar from '../../../components/mui_search_bar'
 import FaqItems from './faq_items'
 import QuestionDialogForm from './question_dialog_form'
 import LinkButton from '../../../components/button/link_button'
-import FaqView from '../../../types/faq/view/FaqView'
+import TreatmentView from '../../../types/faq/view/FaqView'
 import { useLanguage } from '../../../context/language'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import UserSettingsService from '../../../services/user/UserSettingsService'
-import FaqService from '../../../services/faq/FaqService'
 import FaqItemService from '../../../services/faq/FaqItemService'
 import DinoLoader from '../../../components/loader'
-import SelectTreatment from '../../../components/settings/select_treatment'
-import Button from '../../../components/button'
-import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import { useAlert } from '../../../context/alert'
-import FaqEntity from '../../../types/faq/database/FaqEntity'
 import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
 import './styles.css'
+import NoTreatmentSelected from './no_treatment_selected'
 
 const Faq: React.FC = () => {
 	const language = useLanguage()
-	const alert = useAlert()
 
 	const [isLoading, setIsLoading] = useState(true)
-	const [settings, setSettings] = useState<UserSettingsEntity>()
-	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
-	const [treatment, setTreatment] = useState<TreatmentEntity | undefined>(
-		undefined,
-	)
+	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 
-	const [faq, setFaq] = useState<FaqEntity | undefined>(undefined)
-	const [faqItems, setFaqItems] = useState<FaqItemEntity[]>([])
-	const [selectedTreatment, setSelectedTreatment] = useState<
-		TreatmentEntity | undefined
-	>(undefined)
+	const [treatmentView, setTreatmentView] = useState<TreatmentView | undefined>(undefined)
 	const [dialogOpen, setDialogOpen] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
-	const [searchResults, setSearchResults] = useState<FaqView | undefined>()
+	const [searchResults, setSearchResults] = useState<TreatmentView | undefined>()
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -50,44 +37,28 @@ const Faq: React.FC = () => {
 					treatment => treatment.localId === userSettings.treatmentLocalId,
 				)
 				if (currentTreatment) {
-					const faq = await FaqService.getByTreatment(currentTreatment)
-					if (faq) {
-						const faqItems = await FaqItemService.getByFaq(faq)
-						updateFaq(faq, faqItems)
-					}
+					const faqItems = await FaqItemService.getByTreatment(currentTreatment)
+					updateTreatmentView(currentTreatment, faqItems)
 				}
-				updateTreatment(currentTreatment)
 			}
 
-			updateSettings(userSettings)
 			updateTreatments(treatments)
 			finishLoading()
 		}
 
-		let updateFaq = (faq: FaqEntity, faqItems: FaqItemEntity[]) => {
-			setFaq(faq)
-			setFaqItems(faqItems)
-		}
-
-		let updateTreatment = (treatment?: TreatmentEntity) => {
-			setTreatment(treatment)
-		}
-
-		let updateSettings = (settings?: UserSettingsEntity) => {
-			setSettings(settings)
+		let updateTreatmentView = (treatment: TreatmentEntity, faqItems: FaqItemEntity[]) => {
+			setTreatmentView({treatment, faqItems})
 		}
 
 		let updateTreatments = (treatments?: TreatmentEntity[]) => {
-			setTreatments(treatments)
+			setTreatments(treatments || [])
 		}
 
 		let finishLoading = () => {
 			setIsLoading(false)
 		}
 
-		UserSettingsService.addUpdateEventListenner(loadData)
 		TreatmentService.addUpdateEventListenner(loadData)
-		FaqService.addUpdateEventListenner(loadData)
 		FaqItemService.addUpdateEventListenner(loadData)
 
 		if (isLoading) {
@@ -95,24 +66,20 @@ const Faq: React.FC = () => {
 		}
 
 		return () => {
-			updateFaq = () => {}
-			updateTreatment = () => {}
-			updateSettings = () => {}
+			updateTreatmentView = () => {}
 			updateTreatments = () => {}
 			finishLoading = () => {}
-			UserSettingsService.addUpdateEventListenner(loadData)
 			TreatmentService.addUpdateEventListenner(loadData)
-			FaqService.addUpdateEventListenner(loadData)
 			FaqItemService.addUpdateEventListenner(loadData)
 		}
 	}, [isLoading])
 
 	useEffect(() => {
-		if (faq) {
-			const results = FaqService.getFaqViewByFilter(faq, faqItems, searchTerm)
+		if (treatmentView) {
+			const results = TreatmentService.getTreatmentViewByFilter(treatmentView.treatment, treatmentView.faqItems, searchTerm)
 			setSearchResults(results)
 		}
-	}, [faq, faqItems, searchTerm])
+	}, [treatmentView, searchTerm])
 
 	const handleChangeValueSearchTerm = (
 		event: React.ChangeEvent<{ value: string }>,
@@ -124,42 +91,10 @@ const Faq: React.FC = () => {
 		setDialogOpen(true)
 	}
 
-	const handleSaveTreatment = () => {
-		if (settings) {
-			if (selectedTreatment) {
-				settings.treatmentLocalId = selectedTreatment.localId
-				UserSettingsService.save(settings)
-				alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
-			}
-		} else {
-			alert.showErrorAlert(language.data.SETTINGS_SAVE_ERROR)
-		}
-	}
-
 	const renderNoFAQAvailable = () => {
 		return (
 			<div className='faq__fail_to_load'>
 				<p>{language.data.NO_FAQ_AVAILABLE}</p>
-			</div>
-		)
-	}
-
-	const renderNoFAQSelected = () => {
-		return (
-			<div className='faq__fail_to_load'>
-				<p>{language.data.NO_TREATMENT_SELECTED}</p>
-				<SelectTreatment
-					availableTreatments={treatments || []}
-					setTreatment={setSelectedTreatment}
-					treatment={selectedTreatment}
-				/>
-				<Button
-					className='faq__save_button'
-					onClick={handleSaveTreatment}
-				>
-					<SaveSVG className='save_button__icon' />
-					{language.data.TREATMENT_SAVE}
-				</Button>
 			</div>
 		)
 	}
@@ -175,14 +110,14 @@ const Faq: React.FC = () => {
 					/>
 					<div className='faq__content'>
 						<FaqItems data={searchResults} />
-						{faq && (
+						{treatmentView && (
 							<>
 								<LinkButton
 									text={language.data.NOT_FOUND_QUESTION_FAQ}
 									onClick={handleSendQuestion}
 								/>
 								<QuestionDialogForm
-									faq={faq}
+									treatment={treatmentView.treatment}
 									dialogOpen={dialogOpen}
 									setDialogOpen={setDialogOpen}
 								/>
@@ -190,7 +125,7 @@ const Faq: React.FC = () => {
 						)}
 					</div>
 				</>
-			) : treatment ? renderNoFAQAvailable() : renderNoFAQSelected()
+			) : treatmentView ? renderNoFAQAvailable() : <NoTreatmentSelected treatments={treatments}/>
 			}
 		</DinoLoader>
 	)

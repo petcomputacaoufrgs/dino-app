@@ -41,11 +41,7 @@ const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
 		  ]
 }
 
-const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
-	(
-		{ dialogOpen, onClose, action, item, items },
-		ref: React.Ref<unknown>,
-	) => {
+const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, action, item, items }) => {
 		const language = useLanguage()
 		const [contact, setContact] = useState(getContact(item))
 		const [contactPhones, setContactPhones] = useState(getPhones(item))
@@ -225,6 +221,5 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = React.forwardRef(
       </div>
     )
   }
-)
 
 export default ContactFormDialog

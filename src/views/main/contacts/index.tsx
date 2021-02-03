@@ -111,7 +111,7 @@ const Contacts: React.FC = () => {
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading])
+	}, [isLoading, staff])
 
 	const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
 		setSearchTerm(event.target.value)

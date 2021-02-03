@@ -15,7 +15,7 @@ interface TreatmentProps {
 	ref: React.Ref<unknown>,
 }
 
-const Treatment: React.FC<TreatmentProps> = React.forwardRef(({ ref },) => {
+const Treatment: React.FC<TreatmentProps> = () => {
 
 	const language = useLanguage()
 
@@ -129,6 +129,6 @@ const Treatment: React.FC<TreatmentProps> = React.forwardRef(({ ref },) => {
 			{renderAddTreatment()}
 		</div>
 	)
-})
+}
 
 export default Treatment

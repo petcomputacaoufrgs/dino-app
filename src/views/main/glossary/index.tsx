@@ -10,7 +10,6 @@ import './styles.css'
 import { IsStaff } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
 import GlossaryItemForm from './glossary_item_form'
-import AgreementDialog from '../../../components/agreement_dialog'
 
 const Glossary: React.FC = () => {
 

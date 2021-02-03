@@ -29,7 +29,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
     if(props.open) {
       setItem(getItem(props.item))
     }
-  }, [props.open])
+  }, [props.open, props.item])
 
   const handleSave = () => {
     GlossaryService.save(item)

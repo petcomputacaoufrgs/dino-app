@@ -10,11 +10,9 @@ import TreatmentService from '../../../services/treatment/TreatmentService'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import FaqItemService from '../../../services/faq/FaqItemService'
 import DinoLoader from '../../../components/loader'
-import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
-import { useAlert } from '../../../context/alert'
 import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
-import './styles.css'
 import NoTreatmentSelected from './no_treatment_selected'
+import './styles.css'
 
 const Faq: React.FC = () => {
 	const language = useLanguage()

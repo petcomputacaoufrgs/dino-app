@@ -46,7 +46,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 
 	const renderTreatmentItemList = (item: TreatmentEntity, index: number) => {
 		return (
-			<div className='contacts__list__item'>
+			<div className='contacts__list__item' key={index}>
 			<ListItem button onClick={() => handleOpenCard(index)}>
 				<ListItemText
 					primary={item.name}

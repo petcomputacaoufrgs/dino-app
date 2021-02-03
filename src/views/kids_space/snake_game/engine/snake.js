@@ -16,7 +16,6 @@ import RABA_DOWN from '../../../../assets/kids_space/snake/raba_down.png'
 import RABA_LEFT from '../../../../assets/kids_space/snake/raba_left.png'
 import RABA_RIGHT from '../../../../assets/kids_space/snake/raba_right.png'
 
-
 //#region Constants
 
 // Board
@@ -46,6 +45,7 @@ function startSnakeBody(snakeBody) {
 export function resetSnake() {
     snakeBody.splice(0, snakeBody.length)
     startSnakeBody(snakeBody)
+    started = false
 }
 
 /**

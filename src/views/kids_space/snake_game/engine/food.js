@@ -12,7 +12,6 @@ let food = getRandomFoodPosition()
 // Score
 export let score = 0
 
-
 /* --> Functions <-- */
 // updateFood(): if the food was ate, the score is updated and the flag to grow the snake is activated
 export function updateFood() {

@@ -82,3 +82,11 @@ export function getInputDirection() {
     lastInputDirection = inputDirection
     return inputDirection
 }
+
+/**
+ * @description clear input variables
+ */
+export function resetInput() {
+    inputDirection = {x: 0, y: 0, d:'N'}
+    lastInputDirection = {x: 0, y: 0, d:'N'}
+}

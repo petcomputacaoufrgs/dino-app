@@ -18,19 +18,18 @@ const SNAKE_SPEED = 4
 
 /* --> Initializing the game <-- */
 export function starGame(handleGameOver) {
+    resetSnake()
+    setDefaultVars(handleGameOver)
+    window.requestAnimationFrame(main)
+}
+
+function setDefaultVars(handleGameOver) {
+    gameOver = false
+    lastRender = 0
+    onGameOver = handleGameOver
     gameBoard = document.getElementById('game-board')
     scoreBoard = document.getElementById('score-board')
-
-    window.requestAnimationFrame(main)
-
-    onGameOver = handleGameOver
 }
-
-export function restartGame() {
-    resetSnake()
-    window.requestAnimationFrame(main)
-}
-
 
 /* --> Functions <-- */
 // main(currentTime): main function of the game; organizes and set everything needded

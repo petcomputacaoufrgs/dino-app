@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core"
+import { Dialog, DialogActions, DialogContent, DialogContentText } from "@material-ui/core"
 import TransitionSlide from "../../../components/slide_transition"
 import PathConstants from "../../../constants/app/PathConstants"
 import HistoryService from "../../../services/history/HistoryService"
-import {starGame, restartGame} from './engine/index.js'
+import {starGame} from './engine/index.js'
 import Button from "../../../components/button"
 import './styles.css'
 
@@ -20,12 +20,15 @@ const SnakeGame: React.FC = () => {
     }
 
     const handleRestart = () => {
-        restartGame()
+        setOpenDialog(false)
+        starGame(handleGameOver)
     }
     
     const handleGameOver = () => {
         setOpenDialog(true)
     }
+
+    console.log(openDialog)
 
     return(
         <>  
@@ -33,13 +36,11 @@ const SnakeGame: React.FC = () => {
                 TransitionComponent={TransitionSlide}
                 open={openDialog}
                 onClose={handleClose}
-                disableBackdropClick
-                disableEscapeKeyDown
             >
                 <DialogContent>
                     <DialogContentText>
-                        <p> Oh não! Sua cobra bateu!</p>
-                        <p> Deseja jogar novamente? </p>
+                        Oh não! Sua cobra bateu!
+                        Deseja jogar novamente?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

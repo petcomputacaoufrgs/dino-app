@@ -6,7 +6,8 @@ import './inner_game/styles.css'
 
 const SnakeGame: React.FC = () => {
     useEffect(() => {
-        window.addEventListener('load', StartGame)
+        StartGame()
+        //window.addEventListener('load', StartGame)
     }, [])
     return(
         <>  
@@ -14,7 +15,7 @@ const SnakeGame: React.FC = () => {
                 <p> Oh não! Sua cobra bateu!</p>
                 <p> Deseja jogar novamente? </p>
                 <button id="cancel" type="reset" onClick = {() => {HistoryService.push(PathConstants.GAME_MENU)}}>Não</button>
-                <button id="confirm">Sim!</button>
+                <button id="confirm" onClick = {StartGame} >Sim</button>
             </dialog>
 
             <div id="score-board"></div>

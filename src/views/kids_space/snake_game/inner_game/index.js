@@ -40,9 +40,6 @@ function main(currentTime) {
     if(gameOver) {
         // Check if the user would like to restart the game
         restartDialog.showModal()
-        confirmButton.addEventListener('click', () => {
-            console.log('ora ora')
-        })
         return
     } else {
         window.requestAnimationFrame(main)

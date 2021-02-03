@@ -109,12 +109,13 @@ const ContactFormDialog = React.forwardRef(
 			) {
 				const newPhones = contactPhones.filter(phone => phone.number !== '')
 
-				let attr = 'localEssentialContactId'
 				if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {
-					attr = 'localContactId'
+					newPhones.forEach(phone => (phone.localContactId = contact.localId))
+				} else {
+					newPhones.forEach(
+						phone => (phone.localEssentialContactId = contact.localId),
+					)
 				}
-
-				newPhones.forEach(phone => (phone[attr] = contact.localId))
 
 				if (newPhones.length > 0) {
 					await PhoneService.saveAll(newPhones)

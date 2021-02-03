@@ -7,7 +7,7 @@
 .note_info_dialog__last_update {
 	width: 100%;
 	background-color: var(--header-and-menu);
-	font-weight: bold;
+	font-weight: 700;
 	color: var(--column-font-color);
 	font-size: var(--small-font);
 }
@@ -17,7 +17,7 @@
 }
 
 .note_info_dialog__last_update {
-	padding: 0rem 1.5rem  1rem 1.5rem;
+	padding: 0rem 1.5rem 1rem 1.5rem;
 }
 .note_info_dialog__last_update h3 {
 	font-size: small;
@@ -44,7 +44,7 @@
 
 .note__info_dialog__title__question .MuiInputBase-root {
 	font-size: var(--default-font);
-	font-weight: bold;
+	font-weight: 700;
 	color: var(--column-font-color);
 	height: 100%;
 }

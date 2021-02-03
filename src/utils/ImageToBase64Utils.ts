@@ -70,7 +70,7 @@ class ImageToBase64Utils {
 		const item = this.queue.pop()
 		if (item) {
 			try {
-				this.image.crossOrigin = 'Anonymous'
+				this.image.crossOrigin = 'anonymous'
 				this.image.src = item.src
 				this.currentItem = item
 				this.image.onload = () => {

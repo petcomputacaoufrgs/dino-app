@@ -1,5 +1,5 @@
 /* --> Imports <-- */
-import { getInputDirection } from './input.js'
+import { getInputDirection } from './input'
 
 import HEAD_UP from '../../../../assets/kids_space/snake/head_up.png'
 import HEAD_DOWN from '../../../../assets/kids_space/snake/head_down.png'
@@ -16,17 +16,21 @@ import RABA_DOWN from '../../../../assets/kids_space/snake/raba_down.png'
 import RABA_LEFT from '../../../../assets/kids_space/snake/raba_left.png'
 import RABA_RIGHT from '../../../../assets/kids_space/snake/raba_right.png'
 
-//#region Constants
+type CoordinatePosition = {
+    x: number
+    y: number
+} 
 
+//#region Constants
 // Board
 const GRID_SIZE = 21
 
 // Snake
-const snakeBody = []
-startSnakeBody(snakeBody)
+const snakeBody: CoordinatePosition[] = []
 let grow = false
 let started = false
 
+startSnakeBody(snakeBody)
 //#endregion
 
 //#region Functions 
@@ -35,7 +39,7 @@ let started = false
  * @description set default values of snake's body
  * @param snakeBody empty snake's body
  */
-function startSnakeBody(snakeBody) {
+function startSnakeBody(snakeBody: CoordinatePosition[]) {
     snakeBody.push({ x: 11, y: 11 })
     snakeBody.push({x: 11, y: 12})
 }
@@ -92,7 +96,7 @@ function verifyGameState(inputDirection) {
  * @description render the snake array on the board
  * @param gameBoard div where the game renders
  */
-export function renderSnake(gameBoard) {
+export function renderSnake(gameBoard : HTMLElement) {
     // Render each segment
     snakeBody.forEach((segment, index) => {
         const snakePiece = document.createElement('IMG')
@@ -102,8 +106,8 @@ export function renderSnake(gameBoard) {
 
         // Set all attributes
         snakePiece.setAttribute("src", image)
-        snakePiece.style.gridRowStart = segment.y
-        snakePiece.style.gridColumnStart = segment.x
+        snakePiece.style.gridRowStart = segment.y.toString()
+        snakePiece.style.gridColumnStart = segment.x.toString()
         snakePiece.classList.add('snake_game__snake')
 
         // Append the segment to the board
@@ -116,7 +120,7 @@ export function renderSnake(gameBoard) {
  * @param position the position of the current food
  * @returns true if food was ate or false if food is still there
  */
-export function foodAte(position) {
+export function foodAte(position : CoordinatePosition) {
     return snakeBody[0].x === position.x && snakeBody[0].y === position.y
 }
 
@@ -126,7 +130,7 @@ export function foodAte(position) {
  * @param ignoreHead tells if is necessary to ignore the head (this function is used to verify if the snake is over itself)
  * @returns true if the position overlaps the snake or false if the postion don't overlap the snake
  */
-export function onSnake(position, ignoreHead = false) {
+export function onSnake(position : CoordinatePosition, ignoreHead = false) {
     return snakeBody.some((segment, index) => {
         if (ignoreHead && index === 0) {
             return false
@@ -172,7 +176,7 @@ export function snakeOverItself() {
  * @param index index of the segment on the array
  * @returns directory of the image needed
  */
-function getCorrectImage(index) {
+function getCorrectImage(index : number) {
     const inputDirection = getInputDirection()
     
     const isHead = index === 0

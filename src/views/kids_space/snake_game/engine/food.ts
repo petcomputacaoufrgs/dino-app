@@ -1,8 +1,12 @@
-import { foodAte, onSnake, growSnake } from './snake.js'
+import { foodAte, onSnake, growSnake } from './snake'
 import FOOD from '../../../../assets/kids_space/snake/food.png'
 
-//#region Constants
+type CoordinatePosition = {
+    x: number
+    y: number
+} 
 
+//#region Constants
 // Board
 const GRID_SIZE = 21
 
@@ -34,13 +38,13 @@ export function updateFood() {
  * @description render the food on the board
  * @param gameBoard div where the game renders
  */
-export function renderFood(gameBoard) {
+export function renderFood(gameBoard : HTMLElement) {
     const foodElement = document.createElement('IMG')
 
     // Set all attributes
     foodElement.setAttribute("src", FOOD)
-    foodElement.style.gridRowStart = food.y
-    foodElement.style.gridColumnStart = food.x
+    foodElement.style.gridRowStart = food.y.toString()
+    foodElement.style.gridColumnStart = food.x.toString()
     foodElement.classList.add('snake_game__food')
 
     // Append the segment to the board
@@ -51,8 +55,8 @@ export function renderFood(gameBoard) {
  * @description get a random position that not colides with the snake for the new food
  * @returns the position of the new food
  */
-function getRandomFoodPosition() {
-    let newFoodPosition
+function getRandomFoodPosition():CoordinatePosition {
+    let newFoodPosition: CoordinatePosition | null = null
 
     while(newFoodPosition == null || onSnake(newFoodPosition)){
         newFoodPosition = {

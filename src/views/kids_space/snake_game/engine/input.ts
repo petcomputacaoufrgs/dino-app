@@ -3,13 +3,12 @@
 let inputDirection = {x: 0, y: 0, d:'N'}
 let lastInputDirection = {x: 0, y: 0, d:'N'}
 
-let xDown = null;                                                        
-let yDown = null;
+let xDown : number | null = null;                                                        
+let yDown : number | null = null;
 
 //#endregion
 
 //#region Event Listeners 
-
 // Activated when an user touches the screen
 window.addEventListener('touchstart', evt => {
     const firstTouch = evt.touches[0]

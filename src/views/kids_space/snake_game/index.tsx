@@ -6,9 +6,12 @@ import HistoryService from "../../../services/history/HistoryService"
 import {starGame} from './engine/index.js'
 import { DinoDialogContent } from "../../../components/dino_dialog"
 import TextButton from '../../../components/button/text_button/index'
+import { useLanguage } from "../../../context/language"
 import './styles.css'
+import '../variables.css'
 
 const SnakeGame: React.FC = () => {
+	const language = useLanguage()
     const [openDialog, setOpenDialog] = useState(false) 
 
     useEffect(() => {
@@ -38,12 +41,12 @@ const SnakeGame: React.FC = () => {
                 className="snake_game__dialog"
             >
 				<DinoDialogContent>
-					<p>Oh não! Sua cobra bateu!</p>
-                    <p>Deseja jogar novamente?</p>
+					<p>{language.data.SNAKE_GAME_GAME_OVER_MSG_1}</p>
+                    <p>{language.data.SNAKE_GAME_GAME_OVER_MSG_2}</p>
 				</DinoDialogContent>
                 <div className="snake_game__dialog__buttons">
-                    <TextButton onClick={handleClose}>Não</TextButton>
-                    <TextButton className="snake_game__dialog__buttons__accept_button" onClick={handleRestart}>Sim!</TextButton>
+                    <TextButton onClick={handleClose}>{language.data.DISAGREEMENT_OPTION_TEXT}</TextButton>
+                    <TextButton className="snake_game__dialog__buttons__accept_button" onClick={handleRestart}>{language.data.AGREEMENT_OPTION_TEXT}</TextButton>
                 </div>
             </Dialog>
             <div id="snake_game__score_board"></div>

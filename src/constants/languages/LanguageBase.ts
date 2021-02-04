@@ -238,4 +238,6 @@ export default interface LanguageBase {
 	NO_FAQ_AVAILABLE: string
 	TREATMENT_SAVE: string
 	KIDS_SPACE: string
+	SNAKE_GAME_GAME_OVER_MSG_1: string
+	SNAKE_GAME_GAME_OVER_MSG_2: string
 }

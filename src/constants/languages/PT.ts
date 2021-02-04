@@ -502,4 +502,8 @@ export default class PT implements LanguageBase {
 	TREATMENT_SAVE = 'Salvar'
 
 	KIDS_SPACE = 'Espaço infantil'
+
+	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh não! Sua cobra bateu!'
+
+	SNAKE_GAME_GAME_OVER_MSG_2 = 'Deseja jogar novamente?'
 }

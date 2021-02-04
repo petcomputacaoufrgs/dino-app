@@ -67,6 +67,7 @@ const StaffMain: React.FC = () => {
 					component={Settings}
 				/>
 				<PrivateRoute
+					exact
 					path={`${PathConstants.STAFF_FAQ}/:localId`}
 					component={Faq}
 				/>

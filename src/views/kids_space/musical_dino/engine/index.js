@@ -1,4 +1,4 @@
-const TOTAL_TURNS = 20
+const TOTAL_TURNS = 3
 
 let order = []
 let playerOrder = []
@@ -17,8 +17,11 @@ let bottomRight
 let startButton
 let turnDiv
 
-export function startGame() {
-  topLeft = document.querySelector("#topleft")
+let onWin
+
+export function startGame(handleWin) {
+  onWin = handleWin
+  topLeft = document.getElementById('topleft')
   topRight = document.querySelector("#topright")
   bottomLeft = document.querySelector("#bottomleft")
   bottomRight = document.querySelector("#bottomright")
@@ -28,14 +31,7 @@ export function startGame() {
   win = true
   noise = false
 
-  startButton.addEventListener('click', (event) => {
-    if (win) {
-      startButton.style.opacity = 0
-      play()
-    }
-  });
-
-  topLeft.addEventListener('click', (event) => {
+  topLeft.onclick = () => {
     if (!compTurn) {
       playerOrder.push(1)
       check()
@@ -46,9 +42,9 @@ export function startGame() {
         }, 300)
       }
     }
-  })
+  }
 
-  topRight.addEventListener('click', (event) => {
+  topRight.onclick = () => {
     if (!compTurn) {
       playerOrder.push(2)
       check()
@@ -59,9 +55,9 @@ export function startGame() {
         }, 300)
       }
     }
-  })
+  }
 
-  bottomLeft.addEventListener('click', (event) => {
+  bottomLeft.onclick = () => {
     if (!compTurn) {
       playerOrder.push(3)
       check()
@@ -72,9 +68,9 @@ export function startGame() {
         }, 300)
       }
     }
-  })
+  }
 
-  bottomRight.addEventListener('click', (event) => {
+  bottomRight.onclick = () => {
     if (!compTurn) {
       playerOrder.push(4)
       check()
@@ -85,7 +81,12 @@ export function startGame() {
         }, 300)
       }
     }
-  })
+  }
+
+  if (win) {
+    startButton.style.opacity = 0
+    play()
+  }
 } 
   
 
@@ -169,10 +170,9 @@ function flashColor() {
 }
 
 function check() {
-  if (playerOrder[playerOrder.length - 1] !== order[playerOrder.length - 1])
-    console.log(playerOrder)
-    console.log(order)
+  if (playerOrder[playerOrder.length - 1] !== order[playerOrder.length - 1]){
     good = false
+  }
 
   if (playerOrder.length === TOTAL_TURNS && good) {
     winGame()
@@ -207,5 +207,5 @@ function check() {
 function winGame() {
   flashColor()
   win = true
-  startButton.style.opacity = 1
+  onWin()
 }

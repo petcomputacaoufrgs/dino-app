@@ -40,17 +40,6 @@
 	margin-bottom: 2rem;
 }
 
-.faq__save_button {
-	margin-top: 2rem;
-}
-
-.save_button__icon {
-	margin-right: 0.5rem;
-	width: 18px;
-	height: 18px;
-	fill: var(--contrast-color);
-}
-
 .faq__loader {
 	width: 100%;
 	height: 100%;
@@ -59,3 +48,13 @@
 .faq__content .link_button {
 	font-size: var(--small-font);
 }
+
+.faq__fail_to_load .faq__save_button {
+	margin-top: 2rem;
+}
+.faq__fail_to_load .save_button__icon {
+    margin-right: 0.5rem;
+    width: 18px;
+    height: 18px;
+    fill: var(--contrast-color);
+  }

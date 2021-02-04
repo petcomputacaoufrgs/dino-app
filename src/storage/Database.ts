@@ -10,7 +10,7 @@ import EssentialContactEntity from '../types/contact/database/EssentialContactEn
 import PhoneEntity from '../types/contact/database/PhoneEntity'
 import GoogleContactEntity from '../types/contact/database/GoogleContactEntity'
 import FaqItemEntity from '../types/faq/database/FaqItemEntity'
-import FaqUserQuestionEntity from '../types/faq/database/TreatmentQuestionEntity'
+import TreatmentQuestionEntity from '../types/faq/database/TreatmentQuestionEntity'
 import TreatmentEntity from '../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../types/user/database/UserSettingsEntity'
 import GoogleScopeEntity from '../types/auth/google/database/GoogleScopeEntity'
@@ -34,7 +34,7 @@ class Database extends Dexie {
 	phone: Dexie.Table<PhoneEntity, number>
 	user: Dexie.Table<UserEntity, number>
 	faqItem: Dexie.Table<FaqItemEntity, number>
-	treatmentQuestion: Dexie.Table<FaqUserQuestionEntity, number>
+	treatmentQuestion: Dexie.Table<TreatmentQuestionEntity, number>
 	treatment: Dexie.Table<TreatmentEntity, number>
 	googleScope: Dexie.Table<GoogleScopeEntity, number>
 	staff: Dexie.Table<StaffEntity, number>

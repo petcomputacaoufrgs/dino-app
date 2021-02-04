@@ -1,8 +1,9 @@
 export default interface DinoStepperProps {
 	steps: number
 	activeStep: number
-	onSave: () => void
-	onCancel: () => void
+	endMessage: string
+	onEnd: () => void
+	onCancel?: () => void
 	onBack: () => void
 	onNext: () => void
 }

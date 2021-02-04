@@ -2,6 +2,4 @@ import SynchronizableGenericDataResponseModel from '../../../sync/api/response/S
 import GoogleRefreshAuthResponseDataModel from './GoogleRefreshAuthResponseDataModel'
 
 export default interface GoogleRefreshAuthResponseModel
-	extends SynchronizableGenericDataResponseModel<
-		GoogleRefreshAuthResponseDataModel
-	> {}
+	extends SynchronizableGenericDataResponseModel<GoogleRefreshAuthResponseDataModel> {}

@@ -1,5 +1,5 @@
 import React from 'react'
-import PageNotFound from '../../assets/images/page_not_found.svg'
+import PageNotFound from '../../assets/icons/page_not_found.svg'
 import HistoryService from '../../services/history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import { useLanguage } from '../../context/language'
@@ -11,7 +11,7 @@ const redirectTimeout = 2000
 /**
  * @description Tela para diretório não encontrado
  */
-const NotFound = (): JSX.Element => {
+const NotFound: React.FC = () => {
 	const language = useLanguage()
 
 	const redirectToHome = () => {

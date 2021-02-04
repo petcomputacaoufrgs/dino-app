@@ -17,7 +17,7 @@
 }
 
 .note__note_content__column__column_card__card__card_content:last-child {
-	padding-bottom:  1rem;
+	padding-bottom: 1rem;
 }
 
 .note__note_content__column__column_card__card__card_content::-webkit-scrollbar {
@@ -25,7 +25,7 @@
 }
 
 .note__note_content__column__column_card .MuiCardHeader-root {
-	padding:  1rem;
+	padding: 1rem;
 	padding-bottom: 10.125rem;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .note__note_content__column__column_card__card__card_answer.MuiCardActions-root {
-	padding: 0.5rem  1rem 0.5rem  1rem;
+	padding: 0.5rem 1rem 0.5rem 1rem;
 	background-color: var(--note-answer-background);
 }
 

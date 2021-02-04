@@ -1,5 +1,32 @@
 .dino_stepper.MuiMobileStepper-root {
+	display: flex;
+	flex-direction: row;
 	padding: 0 0 0.5rem 0;
+}
+
+.dino_stepper.MuiMobileStepper-root > :nth-child(1),
+.dino_stepper.MuiMobileStepper-root > :nth-child(2),
+.dino_stepper.MuiMobileStepper-root > :nth-child(3) {
+	display: flex;
+	align-items: center;
+}
+
+.dino_stepper.MuiMobileStepper-root > :nth-child(1),
+.dino_stepper.MuiMobileStepper-root > :nth-child(3) {
+	width: 40%;
+}
+
+.dino_stepper.MuiMobileStepper-root > :nth-child(1) {
+	justify-content: flex-start;
+}
+
+.dino_stepper.MuiMobileStepper-root > :nth-child(2) {
+	justify-content: center;
+	width: 20%;
+}
+
+.dino_stepper.MuiMobileStepper-root > :nth-child(3) {
+	justify-content: flex-end;
 }
 
 .dino_stepper.MuiMobileStepper-root {
@@ -22,6 +49,10 @@
 	font-size: var(--default-small-font);
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.dino_stepper .empty__action {
+	width: 5rem;
 }
 
 .dino_stepper .next__button {

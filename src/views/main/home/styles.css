@@ -33,7 +33,7 @@
 .home__grid__item__name {
 	height: 2.5rem;
 	font-size: larger;
-	font-weight: bold;
+	font-weight: 700;
 	color: var(--contrast-color);
 	margin-top: 0.25rem;
 }
@@ -68,7 +68,7 @@
 	height: 2.5rem;
 	background-color: var(--horizontal-menu-item);
 	font-size: var(--big-font);
-	font-weight: bold;
+	font-weight: 700;
 	text-align: center;
 	margin-bottom: 1rem;
 	border-radius: 0.5rem;

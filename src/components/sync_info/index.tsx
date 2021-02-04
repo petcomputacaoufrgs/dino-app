@@ -7,7 +7,7 @@ import SyncService from '../../services/sync/SyncService'
 import SyncCloudProps from './props'
 import './styles.css'
 
-const SyncInfo: React.FC<SyncCloudProps> = ({ className }) => {
+const SyncInfo: React.FC<SyncCloudProps> = ({ className, state }) => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [syncState, setSyncState] = useState(SyncStateEnum.SYNCHRONIZING)
 
@@ -18,16 +18,20 @@ const SyncInfo: React.FC<SyncCloudProps> = ({ className }) => {
 			setIsLoading(false)
 		}
 
-		SyncService.addUpdateEventListenner(loadData)
+		if (state === undefined) SyncService.addUpdateEventListenner(loadData)
 
 		if (isLoading) {
-			loadData()
+			if (state === undefined) {
+				loadData()
+			} else {
+				setSyncState(state)
+			}
 		}
 
 		return () => {
-			SyncService.removeUpdateEventListenner(loadData)
+			if (state === undefined) SyncService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading])
+	}, [isLoading, state])
 
 	const getSyncSymbol = (): JSX.Element => {
 		if (syncState === SyncStateEnum.NOT_SYNCED) {

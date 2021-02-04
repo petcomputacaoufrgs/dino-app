@@ -1,8 +1,8 @@
 import Superagent from 'superagent'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import HttpStatus from 'http-status-codes'
 import sleep from '../../utils/SleepUtils'
 import ArrayUtils from '../../utils/ArrayUtils'
+import HttpStatus from '../../types/http/HttpStatus'
 
 type ConnectionListennerCallback = (online: boolean) => void
 

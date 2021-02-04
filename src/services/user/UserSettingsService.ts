@@ -174,10 +174,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 	}
 
 	getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
-		if (
-			userSettings &&
-			userSettings.language === LanguageEnum.ENGLISH
-		) {
+		if (userSettings && userSettings.language === LanguageEnum.ENGLISH) {
 			return new EN()
 		} else {
 			return new PT()

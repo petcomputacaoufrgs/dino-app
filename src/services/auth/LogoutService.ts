@@ -1,28 +1,30 @@
-import APIWebSocketDestConstants from "../../constants/api/APIWebSocketDestConstants"
-import LogoutMessage from "../../types/auth/api/LogoutMessage"
-import WebSocketSubscriber from "../../types/web_socket/WebSocketSubscriber"
-import WebSocketQueuePathService from "../websocket/path/WebSocketQueuePathService"
-import WebSocketSubscriberableService from "../websocket/WebSocketSubscriberableService"
-import AuthService from "./AuthService"
+import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import LogoutMessage from '../../types/auth/api/LogoutMessage'
+import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
+import WebSocketSubscriberableService from '../websocket/WebSocketSubscriberableService'
+import AuthService from './AuthService'
 
 class LogoutService extends WebSocketSubscriberableService {
-  public start() {}
+	public start() {}
 
-  protected getWebSocketSubscribers(): WebSocketSubscriber<LogoutMessage>[] {
-    return [
+	protected getWebSocketSubscribers(): WebSocketSubscriber<LogoutMessage>[] {
+		return [
 			{
-				path: WebSocketQueuePathService.generateDestinationPath(APIWebSocketDestConstants.LOGOUT_REQUEST), 
+				path: WebSocketQueuePathService.generateDestinationPath(
+					APIWebSocketDestConstants.LOGOUT_REQUEST,
+				),
 				callback: this.webSocketCallback,
 			},
 		]
-  }
+	}
 
-  protected getWebSocketDependencies(): WebSocketSubscriberableService[] {
-    return []
-  }
+	protected getWebSocketDependencies(): WebSocketSubscriberableService[] {
+		return []
+	}
 
-  private webSocketCallback = async (model: LogoutMessage | undefined) => {
-    AuthService.logout()
+	private webSocketCallback = async (model: LogoutMessage | undefined) => {
+		AuthService.logout()
 	}
 }
 

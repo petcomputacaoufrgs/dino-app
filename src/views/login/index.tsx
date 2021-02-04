@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAlert } from '../../context/alert'
 import { ReactComponent as Dinosaur1 } from '../../assets/logos/dinosaur_1.svg'
-import { ReactComponent as Dinosaur2 } from '../../assets/images/dinosaur_2.svg'
+import { ReactComponent as Dinosaur2 } from '../../assets/icons/dino/dinosaur_2.svg'
 import GoogleLoginButton from '../../components/button/google_login'
 import { useLanguage } from '../../context/language'
 import Loader from '../../components/loader'

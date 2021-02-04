@@ -1,5 +1,5 @@
-import TreatmentView from '../../../../types/faq/view/FaqView'
+import FaqView from '../../../../types/faq/view/FaqView'
 
 export default interface FaqItemsProps {
-	data: TreatmentView | undefined
+	data: FaqView | undefined
 }

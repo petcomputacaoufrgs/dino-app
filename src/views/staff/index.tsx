@@ -66,14 +66,9 @@ const StaffMain: React.FC = () => {
 					path={PathConstants.STAFF_SETTINGS}
 					component={Settings}
 				/>
-				<PrivateRoute 
-					exact
-					path={PathConstants.STAFF_FAQ} 
-					component={Faq} 
-				/>
 				<PrivateRoute
 					path={`${PathConstants.STAFF_FAQ}/:localId`}
-					component={FaqItems}
+					component={Faq}
 				/>
 				<PrivateRoute
 					path={`${PathConstants.STAFF_GLOSSARY}/:localId`}

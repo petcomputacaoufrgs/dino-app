@@ -3,45 +3,65 @@ import MuiSearchBar from '../../../components/mui_search_bar'
 import FaqItems from './faq_items'
 import QuestionDialogForm from './question_dialog_form'
 import LinkButton from '../../../components/button/link_button'
-import TreatmentView from '../../../types/faq/view/FaqView'
 import { useLanguage } from '../../../context/language'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import FaqItemService from '../../../services/faq/FaqItemService'
 import DinoLoader from '../../../components/loader'
-import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
 import NoTreatmentSelected from './no_treatment_selected'
 import './styles.css'
+import FaqView from '../../../types/faq/view/FaqView'
+import { useParams } from 'react-router-dom'
 import { IsStaff } from '../../../context/private_router'
-import HistoryService from '../../../services/history/HistoryService'
-import PathConstants from '../../../constants/app/PathConstants'
 
 const Faq: React.FC = () => {
+
+	const { localId } = useParams<{localId?: string}>()
+
 	const staff = IsStaff()
 	const language = useLanguage()
+
 	const [isLoading, setIsLoading] = useState(true)
-	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
+	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
+	const [dialogOpen, setDialogOpen] = useState(false)
+	const [searchTerm, setSearchTerm] = useState('')
+
+	const [faqView, setFaqView] = useState<FaqView>()
 
 	useEffect(() => {
-		const loadData = async () => {
-			const userSettings = await UserSettingsService.getFirst()
+
+		const loadUserTreatment = async () => {
 			const treatments = await TreatmentService.getAll()
-			
-			if (userSettings && treatments) {
-				const currentTreatment = treatments.find(t => t.localId === userSettings.treatmentLocalId)
-				if(currentTreatment) {
-					HistoryService.push(`${staff ? 
-						PathConstants.STAFF_FAQ : PathConstants.USER_FAQ}/${currentTreatment.localId}`)
+			if(treatments.length > 0) {
+				updateTreatments(treatments)
+				const userSettings = await UserSettingsService.getFirst()
+				if (userSettings) {
+					const currentTreatment = treatments?.find(t => t.localId === userSettings.treatmentLocalId)
+					if (currentTreatment) {
+						await updateFaqView(currentTreatment)
+					}
 				}
 			}
-
-			updateTreatments(treatments)
-			finishLoading()
 		}
 
-		let updateTreatments = (treatments?: TreatmentEntity[]) => {
-			setTreatments(treatments || [])
+		const loadData = async () => {
+			if(localId) {
+				const currentTreatment = await TreatmentService.getByLocalId(Number(localId))
+				if(currentTreatment)
+					await updateFaqView(currentTreatment)
+			} else await loadUserTreatment()
+
+			finishLoading()
+		} 
+
+		let updateFaqView = async (treatment: TreatmentEntity) => {
+			const faqItems = await FaqItemService.getByTreatment(treatment)
+			setFaqView({treatment, faqItems})
+		}
+
+		let updateTreatments = (treatments: TreatmentEntity[]) => {
+			setTreatments(treatments)
 		}
 
 		let finishLoading = () => {
@@ -49,18 +69,31 @@ const Faq: React.FC = () => {
 		}
 
 		TreatmentService.addUpdateEventListenner(loadData)
+		FaqItemService.addUpdateEventListenner(loadData)
 
 		if (isLoading) {
 			loadData()
 		}
 
 		return () => {
+			updateFaqView = async () => {}
 			updateTreatments = () => {}
 			finishLoading = () => {}
-			TreatmentService.addUpdateEventListenner(loadData)
+			TreatmentService.removeUpdateEventListenner(loadData)
+			FaqItemService.removeUpdateEventListenner(loadData)
 		}
 	}, [isLoading])
 
+	// useEffect(() => {
+	// 	if (faqView) {
+	// 		const result = TreatmentService.getTreatmentViewByFilter(faqView.treatment, faqView.faqItems, searchTerm)
+	// 		setFaqView(result)
+	// 	}
+	// }, [faqView, searchTerm])
+
+	const handleSendQuestion = () => {
+		setDialogOpen(true)
+	}
 
 	const NoFAQAvailable = () => {
 		return (
@@ -72,7 +105,32 @@ const Faq: React.FC = () => {
 
 	return (
 		<DinoLoader className='faq__loader' isLoading={isLoading} hideChildren>
-			{treatments ? <NoTreatmentSelected treatments={treatments}/> : <NoFAQAvailable />}
+			{faqView ? (
+				<>
+					<MuiSearchBar
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value as string)}
+						placeholder={language.data.SEARCH_HOLDER}
+					/>
+					<div className='faq__content'>
+						<FaqItems data={faqView} />
+						{!staff && (
+							<>
+								<LinkButton
+									text={language.data.NOT_FOUND_QUESTION_FAQ}
+									onClick={handleSendQuestion}
+								/>
+								<QuestionDialogForm
+									treatment={faqView.treatment}
+									dialogOpen={dialogOpen}
+									setDialogOpen={setDialogOpen}
+								/>
+							</>
+						)}
+					</div>
+				</>
+			) : treatments ? <NoTreatmentSelected treatments={treatments} /> : <NoFAQAvailable />
+			}
 		</DinoLoader>
 	)
 }

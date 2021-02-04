@@ -7,7 +7,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
-import TreatmentView from '../../types/faq/view/FaqView'
+import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from '../faq/FaqItemService'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
@@ -60,13 +60,13 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		treatment: TreatmentEntity,
 		faqItems: FaqItemEntity[],
 		searchTerm: string,
-	): TreatmentView | undefined {
+	): FaqView {
 			const view = {
 				treatment,
 				faqItems: FaqItemService.getFaqItemByFilter(treatment, faqItems, searchTerm),
 			}
 
-			return view as TreatmentView
+			return view as FaqView
 	}
 }
 

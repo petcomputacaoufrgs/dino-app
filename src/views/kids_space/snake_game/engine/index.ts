@@ -13,7 +13,7 @@ let gameOver = false
 let firstRender = true
 
 //Snake
-const SNAKE_SPEED = 150
+const SNAKE_SPEED = 250
 
 //External function
 let onGameOver : () => void
@@ -126,5 +126,4 @@ function removeBoardElementByClassName(className : string) {
         Array.from(elements).forEach(e => e.remove())
     }
 }
-
 //#endregion

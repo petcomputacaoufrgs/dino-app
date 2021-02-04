@@ -21,6 +21,12 @@ type CoordinatePosition = {
     y: number
 } 
 
+type CoordinatePositionWithDirection = {
+    x: number
+    y: number
+    d: string
+} 
+
 //#region Constants
 // Board
 const GRID_SIZE = 21
@@ -83,7 +89,7 @@ export function updateSnake() {
 /**
  * @description verify when game has been started
  */
-function verifyGameState(inputDirection) {
+function verifyGameState(inputDirection : CoordinatePositionWithDirection) {
     if (!started) {
         const hasInputDirection = !(inputDirection.x === 0 && inputDirection.y === 0)
         if(hasInputDirection) {

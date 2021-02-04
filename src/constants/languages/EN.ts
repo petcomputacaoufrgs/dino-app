@@ -487,8 +487,6 @@ export default class EN implements LanguageBase {
 
 	TREATMENT_SAVE = 'Save'
 
-	KIDS_SPACE = "Kid's space"
-
 	SECONDARY_TAB_MESSAGE =
 		'The dino is open in another browser tab. You can only use one tab.'
 
@@ -534,6 +532,7 @@ export default class EN implements LanguageBase {
 	PWA_INTRO_3_TEXT_3 = 'Updating your data with DinoCloud.'
 
 	PWA_INTRO_2_TEXT_4 = 'Connected to DinoCloud.'
+	
 	KIDS_SPACE = 'Kid\'s space'
 
 	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh no! Your snake crashed'

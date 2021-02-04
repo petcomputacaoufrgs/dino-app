@@ -3,7 +3,7 @@ import { Dialog } from "@material-ui/core"
 import TransitionSlide from "../../../components/slide_transition"
 import PathConstants from "../../../constants/app/PathConstants"
 import HistoryService from "../../../services/history/HistoryService"
-import {starGame} from './engine/index.js'
+import {starGame} from './engine'
 import { DinoDialogContent } from "../../../components/dino_dialog"
 import TextButton from '../../../components/button/text_button/index'
 import { useLanguage } from "../../../context/language"

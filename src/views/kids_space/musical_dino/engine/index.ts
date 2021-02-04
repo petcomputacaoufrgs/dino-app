@@ -1,37 +1,37 @@
 const TOTAL_TURNS = 3
 
-let order = []
-let playerOrder = []
-let flash
-let turn
-let good
-let compTurn
-let intervalId
-let noise
-let win
+let order : number[] = []
+let playerOrder : number[]  = []
+let flash : number
+let turn : number
+let good : boolean
+let compTurn : boolean
+let intervalId : NodeJS.Timeout | null
+let noise : boolean
+let win : boolean
 
-let topLeft
-let topRight
-let bottomLeft
-let bottomRight
-let startButton
-let turnDiv
+let topLeft : HTMLElement | null
+let topRight : HTMLElement | null
+let bottomLeft : HTMLElement | null
+let bottomRight : HTMLElement | null
+let startButton : HTMLElement | null
+let turnDiv : HTMLElement | null
 
-let onWin
+let onWin : () => void
 
-export function startGame(handleWin) {
+export function startGame(handleWin : () => void) {
   onWin = handleWin
   topLeft = document.getElementById('topleft')
-  topRight = document.querySelector("#topright")
-  bottomLeft = document.querySelector("#bottomleft")
-  bottomRight = document.querySelector("#bottomright")
-  startButton = document.querySelector("#start")
-  turnDiv = document.querySelector('#turn')
+  topRight = document.getElementById('topright')
+  bottomLeft = document.getElementById('bottomleft')
+  bottomRight = document.getElementById('bottomright')
+  startButton = document.getElementById('start')
+  turnDiv = document.getElementById('turn')
 
   win = true
   noise = false
 
-  topLeft.onclick = () => {
+  topLeft!.onclick = () => {
     if (!compTurn) {
       playerOrder.push(1)
       check()
@@ -44,7 +44,7 @@ export function startGame(handleWin) {
     }
   }
 
-  topRight.onclick = () => {
+  topRight!.onclick = () => {
     if (!compTurn) {
       playerOrder.push(2)
       check()
@@ -57,7 +57,7 @@ export function startGame(handleWin) {
     }
   }
 
-  bottomLeft.onclick = () => {
+  bottomLeft!.onclick = () => {
     if (!compTurn) {
       playerOrder.push(3)
       check()
@@ -70,7 +70,7 @@ export function startGame(handleWin) {
     }
   }
 
-  bottomRight.onclick = () => {
+  bottomRight!.onclick = () => {
     if (!compTurn) {
       playerOrder.push(4)
       check()
@@ -84,7 +84,7 @@ export function startGame(handleWin) {
   }
 
   if (win) {
-    startButton.style.opacity = 0
+    startButton!.style.opacity = '0'
     play()
   }
 } 
@@ -95,10 +95,10 @@ function play() {
   order = []
   playerOrder = []
   flash = 0
-  intervalId = 0
+  intervalId = null
   turn = 1
   good = true
-  turnDiv.innerHTML = turn
+  turnDiv!.innerHTML = turn.toString()
 
   for (var i = 0; i < TOTAL_TURNS; i++) {
     order.push(Math.floor(Math.random() * 4) + 1)
@@ -110,7 +110,7 @@ function play() {
 
 function gameTurn() {
   if (flash === turn) {
-    clearInterval(intervalId)
+    clearInterval(intervalId!)
     compTurn = false
     clearColor()
   }
@@ -129,44 +129,60 @@ function gameTurn() {
 
 function one() {
   if (noise) {
+    let audio = document.getElementById("clip1") as HTMLAudioElement | null
+    if(audio){
+      audio.play()
+    }
   }
   noise = true
-  topLeft.classList.add('dino_moving')
+  topLeft!.classList.add('dino_moving')
 }
 
 function two() {
   if (noise) {
+    let audio = document.getElementById("clip2") as HTMLAudioElement | null
+    if(audio) {
+      audio.play();
+    }
   }
   noise = true;
-  topRight.classList.add('dino_moving')
+  topRight!.classList.add('dino_moving')
 }
 
 function three() {
   if (noise) {
+    let audio = document.getElementById("clip3") as HTMLAudioElement | null
+    if(audio) {
+      audio.play();
+    }
   }
   noise = true;
-  bottomLeft.classList.add('dino_moving')
+  bottomLeft!.classList.add('dino_moving')
 }
 
 function four() {
   if (noise) {
+    let audio = document.getElementById("clip4") as HTMLAudioElement | null
+    if(audio) {
+      audio.play();
+    }
   }
   noise = true;
-  bottomRight.classList.add('dino_moving')
+  bottomRight!.classList.add('dino_moving')
 }
 
 function clearColor() {
-  topLeft.classList.remove('dino_moving')
-  topRight.classList.remove('dino_moving')
-  bottomLeft.classList.remove('dino_moving')
-  bottomRight.classList.remove('dino_moving')
+  topLeft!.classList.remove('dino_moving')
+  topRight!.classList.remove('dino_moving')
+  bottomLeft!.classList.remove('dino_moving')
+  bottomRight!.classList.remove('dino_moving')
 }
 
 function flashColor() {
-    topLeft.classList.add('dino_moving')
-    topRight.classList.add('dino_moving')
-    bottomLeft.classList.add('dino_moving')
-    bottomRight.classList.add('dino_moving')
+    topLeft!.classList.add('dino_moving')
+    topRight!.classList.add('dino_moving')
+    bottomLeft!.classList.add('dino_moving')
+    bottomRight!.classList.add('dino_moving')
 }
 
 function check() {
@@ -195,7 +211,7 @@ function check() {
 
   if (turn === playerOrder.length && good && !win) {
     turn++;
-    turnDiv.innerHTML = turn
+    turnDiv!.innerHTML = turn.toString()
     playerOrder = []
     compTurn = true
     flash = 0

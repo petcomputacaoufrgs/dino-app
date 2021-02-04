@@ -7,17 +7,13 @@ import GlossaryService from '../../../../../services/glossary/GlossaryService'
 import DinoLoader from '../../../../../components/loader'
 import './styles.css'
 
-interface RouterParams {
-	localId: string
-}
-
 const GlossaryItem: React.FC = () => {
 
-	const { localId } = useParams<RouterParams>()
+	const { localId } = useParams<{localId: string}>()
 
 	const language = useLanguage()
 
-	const [isLoading, setIsLoadind] = useState(true)
+	const [isLoading, setIsLoading] = useState(true)
 	const [glossaryItem, setGlossaryItem] = useState<
 		GlossaryItemEntity | undefined
 	>(undefined)
@@ -38,7 +34,7 @@ const GlossaryItem: React.FC = () => {
 		}
 
 		let finishLoading = () => {
-			setIsLoadind(false)
+			setIsLoading(false)
 		}
 
 		GlossaryService.addUpdateEventListenner(loadData)

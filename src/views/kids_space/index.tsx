@@ -6,6 +6,7 @@ import NotFound from '../not_found'
 import Dinogotchi from './dinogotchi'
 import Menu from './menu'
 import SnakeGame from './snake_game'
+import MusicalDino from './musical_dino'
 
 const KidsSpace: React.FC = () => {
 	return (
@@ -20,6 +21,11 @@ const KidsSpace: React.FC = () => {
 				exact
 				path={PathConstants.SNAKE_GAME}
 				component={SnakeGame}
+			/>
+			<PrivateRoute
+				exact
+				path={PathConstants.MUSICAL_DINO_GAME}
+				component={MusicalDino}
 			/>
 			<PrivateRoute path={'/'} component={NotFound} />
 		</Switch>

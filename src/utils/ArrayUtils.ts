@@ -1,6 +1,10 @@
 type filter<T> = (value: T) => boolean
 
 class ArrayUtils {
+	suffle = <T>(list: T[]) => {
+		list.sort(() => Math.random() - 0.5)
+	}
+	
 	removeRepeatedValues = <T>(list: T[]): T[] => {
 		const uniqueList = new Set(list)
 

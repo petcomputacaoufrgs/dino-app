@@ -1,86 +1,109 @@
-import ArrayUtils from "../../../../utils/ArrayUtils"
-import { getRandomInteger } from "../../../../utils/RandomUtils"
-import sleep from "../../../../utils/SleepUtils"
+import ArrayUtils from '../../../../utils/ArrayUtils'
+import { getRandomInteger } from '../../../../utils/RandomUtils'
+import sleep from '../../../../utils/SleepUtils'
 
+const cloudClickEffectDuration = 2500
+const randomQueue: ((value: number | PromiseLike<number>) => void)[] = []
 let duration = 0
-let firstCount = 0
-let cloudsCount = 0
-const randomStack: ((value: number | PromiseLike<number>) => void)[] = []
-let longSleepCount = 0
+let queueCount = 0
+let isRunning = true
 
-export function startCloudsAnimation() {
+export function start() {
   const clouds = [
-    document.getElementById("cloud_one"),
-    document.getElementById("cloud_two"),
-    document.getElementById("cloud_three"),
-    document.getElementById("cloud_four"),
-    document.getElementById("cloud_five"),
-    //document.getElementById("cloud_six"),
-  ]
+    document.getElementById('cloud_one'),
+    document.getElementById('cloud_two'),
+    document.getElementById('cloud_three'),
+    document.getElementById('cloud_four'),
+    document.getElementById('cloud_five'),
+    document.getElementById('cloud_six'),
+    document.getElementById('cloud_seven'),
+    document.getElementById('cloud_eight'),
+    document.getElementById('cloud_nine')
+  ].filter(el => el !== null) as HTMLElement[]
 
-  firstCount = 0
-  longSleepCount = 0
-  cloudsCount = clouds.length
+  isRunning = true
+  queueCount = 0
   duration = getRandomDuration()
 
   ArrayUtils.suffle(clouds)
+  
+  startAnimations(clouds)
 
-  clouds.forEach(cloud => {
-    if (cloud) runCloudAnimation(cloud)
-  })
+  return stop
+}
+
+function stop() {
+  isRunning = false
+}
+
+async function startAnimations(clouds: HTMLElement[]) {
+  for (const cloud of clouds) {
+    if (cloud) {
+      runCloudAnimation(cloud)
+      await sleep(duration/clouds.length * 2)
+    }
+  }
+}
+
+async function handleCloudClick(cloud: HTMLElement, id: string) {
+  let opacity = 1
+  while(opacity > 0) {
+    cloud.style.opacity = `${opacity}`
+    opacity = opacity - 0.1
+    await sleep(100)
+  }
 }
 
 async function runCloudAnimation(cloud: HTMLElement) {
   const id = cloud.id
-  cloud.removeAttribute('id')
-
-  const isFirstRender = await firstRender(cloud)
-
-  if (!isFirstRender) {
-    const sleepTime = await getRandomSleep()
-    console.log(sleepTime)
+  let sleepTime = 100
+  cloud.onclick = () => handleCloudClick(cloud, id)
+  while(isRunning) {
+    cloud.removeAttribute('id')
     await sleep(sleepTime)
+    cloud.style.animationDuration = `${duration}ms`
+    cloud.style.display = 'visible'
+    cloud.style.opacity = "1"
+    cloud.setAttribute('id', id)
+    await sleep(duration)
+    cloud.style.display = 'none'
+    sleepTime = await getRandomSleep()
   }
-  
-  cloud.style.animationDuration = `${duration}s`
-  cloud.setAttribute('id', id)
 }
 
 function getRandomDuration(): number {
-  return getRandomInteger(20, 30)
+  return getRandomInteger(30000, 70000)
 }
 
 function getRandomSleep(): Promise<number> {
   return new Promise<number>(resolve => {
-    randomStack.push(resolve)
-    if (randomStack.length === 1) resolveRandomStack()
+    randomQueue.push(resolve)
+    if (randomQueue.length === 1) resolveRandomSleepQueue()
   })
 }
 
-async function resolveRandomStack() {
-  let value
-  if (longSleepCount >= 1) {
-    longSleepCount = 0
-    value = getRandomInteger(0, duration*10)
-  } else {
-    longSleepCount++
-    value = getRandomInteger(duration*150, duration*300) 
-  }
-   
-  const resolve = randomStack.pop()
-  if (resolve) resolve(value)
+async function resolveRandomSleepQueue() {
+  const resolve = randomQueue.shift()
+  if (resolve) resolve(getSleepValue())
 
   await sleep(getRandomInteger(50, 150))
-  if (randomStack.length > 0) resolveRandomStack()
+  if (randomQueue.length > 0) resolveRandomSleepQueue()
 }
 
-async function firstRender(cloud: HTMLElement): Promise<boolean> {
-  if (firstCount <= cloudsCount) {
-    firstCount++
-    cloud.onanimationend = () => runCloudAnimation(cloud)
-    await sleep((firstCount * (duration*150)))
-    
-    return true
+function getSleepValue(): number {
+  if (queueCount === 0) {
+    queueCount++
+    return getRandomInteger(0, duration*0.02)
+  } 
+  if (queueCount === 1) {
+    queueCount++
+    return getRandomInteger(duration*0.05, duration*0.3) 
   }
-  return false
+  if (queueCount === 2) {
+    queueCount++
+    return getRandomInteger(duration*0.5, duration*0.7) 
+  }
+
+  queueCount = 0
+  return getRandomInteger(duration*1.5, duration*2) 
 }

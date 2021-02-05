@@ -7,24 +7,21 @@ import { ReactComponent as Dino } from '../../../assets/kids_space/dinogotchi/do
 import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go-back-arrow.svg'
 import { ReactComponent as GoOutSVG } from '../../../assets/kids_space/dinogotchi/exit.svg'
 import { ReactComponent as GameSVG } from '../../../assets/kids_space/dinogotchi/gamepad.svg'
-import { ReactComponent as OutsideDaySVG } from '../../../assets/kids_space/dinogotchi/outside_day.svg'
-import { ReactComponent as OutsideNightSVG } from '../../../assets/kids_space/dinogotchi/outside_night.svg'
-import { startCloudsAnimation } from './engine/clouds'
+import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogotchi/outside.svg'
+import { start } from './engine/clouds'
 import './styles.css'
-
-// Adicionar <Menu> e tirar o resto depois
 
 const Dinogotchi: React.FC = () => {
 	useEffect(() => {
-		startCloudsAnimation()
+		return start()
 	}, [])
 	
 	const renderBackground = (): JSX.Element => {
 		const currentHour = new Date().getHours()
-		if (currentHour > 24) {
-			return <OutsideNightSVG className='dinogotchi_screen__background'/>
+		if (currentHour > 19) {
+			return <OutsideSVG className='dinogotchi_screen__background night'/>
 		}
-		return <OutsideDaySVG className='dinogotchi_screen__background'/>
+		return <OutsideSVG className='dinogotchi_screen__background day'/>
 	}
 
 	return (

@@ -54,7 +54,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 								{item.text || language.data.NO_AVAILABLE_TEXT}
 							</Card.Text>
 							<Link
-								className='card-link'
+								className='history_link'
 								to={`${staff ? PathConstants.STAFF_GLOSSARY : PathConstants.USER_GLOSSARY}/${item.localId}`}
 							>
 								{language.data.READ_MORE}

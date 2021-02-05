@@ -59,8 +59,9 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 		setToDelete(false)
 	}
 
-	const handleViewOption = () => {
+	const handleViewOption = (item: ContactView) => {
 		setToView(true)
+		setSelectedItem(item)
 	}
 
 	const handleEditOption = () => {
@@ -70,6 +71,11 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const handleDeleteOption = () => {
 		setToDelete(true)
 	}
+
+	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>, item: ContactView) => {
+    setAnchorEl(event.currentTarget)
+    setSelectedItem(item)
+  }
 
 	const isEditUnavailable = selectedItem 
 	&& (selectedItem.contact as ContactEntity)
@@ -83,8 +89,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						key={index}
 						item={item}
 						onClick={handleViewOption}
-						setSelected={setSelectedItem}
-						setAnchor={setAnchorEl}
+						onClickMenu={handleClickMenu}
 					/>
 				)}
 			</List>

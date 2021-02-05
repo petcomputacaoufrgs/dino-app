@@ -71,7 +71,11 @@ const Main: React.FC = () => {
 					path={`${PathConstants.USER_GLOSSARY}/:localId`}
 					component={GlossaryItem}
 				/>
-				<PrivateRoute path={PathConstants.USER_FAQ} component={Faq} />
+				<PrivateRoute 
+					exact 
+					path={PathConstants.USER_FAQ}
+					component={Faq} 
+				/>
 				<PrivateRoute path={PathConstants.USER_CALENDAR} component={Calendar} />
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>

@@ -4,15 +4,15 @@ import {
 } from '@material-ui/core'
 import QuestionDialogFormProps from './props'
 import Constants from '../../../../constants/faq/FaqConstants'
-import FaqUserQuestionEntity from '../../../../types/faq/database/FaqUserQuestionEntity'
-import FaqUserQuestionService from '../../../../services/faq/FaqUserQuestionService'
+import TreatmentQuestionEntity from '../../../../types/faq/database/TreatmentQuestionEntity'
+import TreatmentQuestionService from '../../../../services/faq/TreatmentQuestionService'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 
 const QuestionDialogForm = React.forwardRef(
 	(
-		{ dialogOpen, setDialogOpen, faq }: QuestionDialogFormProps,
+		{ dialogOpen, setDialogOpen, treatment }: QuestionDialogFormProps,
 		ref: React.Ref<unknown>,
 	): JSX.Element => {
 		const language = useLanguage()
@@ -24,13 +24,13 @@ const QuestionDialogForm = React.forwardRef(
 		}
 
 		const handleSave = () => {
-			if (faq && question !== '') {
-				const entity: FaqUserQuestionEntity = {
+			if (treatment && question !== '') {
+				const entity: TreatmentQuestionEntity = {
 					question: question,
-					localFaqId: faq.localId,
+					localTreatmentId: treatment.localId,
 				}
-
-				FaqUserQuestionService.save(entity)
+				
+				TreatmentQuestionService.save(entity)
 
 				handleClose()
 			} else {
@@ -59,8 +59,8 @@ const QuestionDialogForm = React.forwardRef(
 			<div className='dialog-form'>
 				<DinoDialog
 					open={dialogOpen}
-					handleSave={handleSave}
-					handleClose={handleClose}	
+					onSave={handleSave}
+					onClose={handleClose}	
 				>
 					<TextField
 							required
@@ -75,9 +75,9 @@ const QuestionDialogForm = React.forwardRef(
 							type='question'
 							multiline
 							rowsMax={7}
-							inputProps={{ maxLength: Constants.USER_QUESTION_MAX }}
-							helperText={`${question.length}/${Constants.USER_QUESTION_MAX}`}
-							error={question.length === Constants.USER_QUESTION_MAX || error}
+							inputProps={{ maxLength: Constants.TREATMENT_QUESTION_MAX }}
+							helperText={`${question.length}/${Constants.TREATMENT_QUESTION_MAX}`}
+							error={question.length === Constants.TREATMENT_QUESTION_MAX || error}
 						/>
 				</DinoDialog>
 			</div>

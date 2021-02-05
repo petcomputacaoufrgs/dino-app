@@ -79,11 +79,6 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.STAFF_CONTACTS),
 		},
 		{
-			image: FaqSVG,
-			name: language.MENU_FAQ,
-			onClick: () => HistoryService.push(PathConstants.STAFF_FAQ),
-		},
-		{
 			image: SettingsSVG,
 			name: language.MENU_SETTINGS,
 			onClick: () => HistoryService.push(PathConstants.STAFF_SETTINGS),

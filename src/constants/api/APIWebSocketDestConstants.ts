@@ -6,10 +6,9 @@ import APIRequestMappingConstants from './APIRequestMappingConstants'
 class APIWebSocketDestConstants {
 	URL = `${APIRequestMappingConstants.URL}websocket/`
 	GLOSSARY = 'glossary'
-	FAQ = 'faq'
 	FAQ_ITEM = 'faq_item'
 	TREATMENT = 'treatment'
-	FAQ_USER_QUESTION = 'faq_user_question'
+	TREATMENT_QUESTION = 'treatment_question'
 	CONTACT = 'contact'
 	ESSENTIAL_CONTACT = 'essential_contact'
 	PHONE = 'phone'

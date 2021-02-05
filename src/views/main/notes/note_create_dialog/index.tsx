@@ -112,8 +112,8 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 	return (
 		<DinoDialog
 			open={open}
-			handleClose={onClose}
-			handleSave={handleSave}
+			onClose={onClose}
+			onSave={handleSave}
 			header={<DinoDialogHeader>{language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DinoDialogHeader>}
 		>
 		 	{renderDialogContent()}

@@ -40,8 +40,8 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
   return (
       <DinoDialog
 				open={props.open}
-				handleSave={handleSave}
-				handleClose={props.handleClose}
+				onSave={handleSave}
+				onClose={props.handleClose}
 			>
 				<div className='glossary_item__form_content'>
           <TextField

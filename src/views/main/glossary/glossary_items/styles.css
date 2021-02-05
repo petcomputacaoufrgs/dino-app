@@ -36,7 +36,3 @@
 .glossary__items .card-body .card-subtitle {
 	color: var(--selection);
 }
-
-.glossary__items .card-body .card-link {
-	color: var(--selection);
-}

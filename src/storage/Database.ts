@@ -9,9 +9,8 @@ import ContactEntity from '../types/contact/database/ContactEntity'
 import EssentialContactEntity from '../types/contact/database/EssentialContactEntity'
 import PhoneEntity from '../types/contact/database/PhoneEntity'
 import GoogleContactEntity from '../types/contact/database/GoogleContactEntity'
-import FaqEntity from '../types/faq/database/FaqEntity'
 import FaqItemEntity from '../types/faq/database/FaqItemEntity'
-import FaqUserQuestionEntity from '../types/faq/database/FaqUserQuestionEntity'
+import TreatmentQuestionEntity from '../types/faq/database/TreatmentQuestionEntity'
 import TreatmentEntity from '../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../types/user/database/UserSettingsEntity'
 import GoogleScopeEntity from '../types/auth/google/database/GoogleScopeEntity'
@@ -34,9 +33,8 @@ class Database extends Dexie {
 	googleContact: Dexie.Table<GoogleContactEntity, number>
 	phone: Dexie.Table<PhoneEntity, number>
 	user: Dexie.Table<UserEntity, number>
-	faq: Dexie.Table<FaqEntity, number>
 	faqItem: Dexie.Table<FaqItemEntity, number>
-	faqUserQuestion: Dexie.Table<FaqUserQuestionEntity, number>
+	treatmentQuestion: Dexie.Table<TreatmentQuestionEntity, number>
 	treatment: Dexie.Table<TreatmentEntity, number>
 	googleScope: Dexie.Table<GoogleScopeEntity, number>
 	staff: Dexie.Table<StaffEntity, number>
@@ -67,9 +65,8 @@ class Database extends Dexie {
 			note: generateSynchronizableTableString('columnId', 'localColumnId'),
 			user: generateSynchronizableTableString(),
 			staff: generateSynchronizableTableString(),
-			faq: generateSynchronizableTableString('localTreatmentId'),
-			faqItem: generateSynchronizableTableString('localFaqId'),
-			faqUserQuestion: generateSynchronizableTableString(),
+			faqItem: generateSynchronizableTableString('localTreatmentId'),
+			treatmentQuestion: generateSynchronizableTableString(),
 			treatment: generateSynchronizableTableString(),
 			googleScope: generateSynchronizableTableString('name'),
 			auth: '++id',
@@ -89,9 +86,8 @@ class Database extends Dexie {
 		this.phone = this.table('phone')
 		this.note = this.table('note')
 		this.noteColumn = this.table('noteColumn')
-		this.faq = this.table('faq')
 		this.faqItem = this.table('faqItem')
-		this.faqUserQuestion = this.table('faqUserQuestion')
+		this.treatmentQuestion = this.table('treatmentQuestion')
 		this.logAppError = this.table('logAppError')
 		this.calendarEvent = this.table('calendarEvent')
 		this.treatment = this.table('treatment')

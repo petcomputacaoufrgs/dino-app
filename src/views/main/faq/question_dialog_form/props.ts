@@ -1,7 +1,7 @@
-import FaqEntity from '../../../../types/faq/database/FaqEntity'
+import TreatmentEntity from "../../../../types/treatment/database/TreatmentEntity"
 
 export default interface QuestionDialogFormProps {
+	treatment: TreatmentEntity
 	dialogOpen: boolean
-	faq: FaqEntity
 	setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
 }

@@ -136,7 +136,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	return (
 
 		<DinoDialog 
-			open={open} handleClose={onClose} handleSave={handleSaveNote}
+			open={open} onClose={onClose} onSave={handleSaveNote}
 			header={
 				<DialogTitle disableTypography className='note_info_dialog__title'>
 					<DiscreetTextField

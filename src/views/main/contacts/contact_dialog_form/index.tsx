@@ -196,8 +196,8 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
       <div className="contact__form">
         <DinoDialog
 					open={dialogOpen}
-					handleClose={onClose}
-					handleSave={handleSave}
+					onClose={onClose}
+					onSave={handleSave}
 					header={
 						<ContactFormDialogHeader
 							contact={contact}

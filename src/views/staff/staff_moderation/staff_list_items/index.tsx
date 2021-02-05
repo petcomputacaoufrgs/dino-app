@@ -69,8 +69,8 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
       {selectedItem !== undefined && 
         <DinoDialog 
           open={openEditDialog}
-          handleSave={handleEdit}
-          handleClose={closeEditDialog} 
+          onSave={handleEdit}
+          onClose={closeEditDialog} 
         >
           <EmailTextField 
             value={selectedItem.email}

@@ -542,4 +542,8 @@ export default class PT implements LanguageBase {
 	PWA_INTRO_3_TEXT_3 = 'Atualizando seus dados na DinoNuvem.'
 
 	PWA_INTRO_2_TEXT_4 = 'Conectado com a DinoNuvem.'
+
+	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh não! Sua cobra bateu!'
+
+	SNAKE_GAME_GAME_OVER_MSG_2 = 'Deseja jogar novamente?'
 }

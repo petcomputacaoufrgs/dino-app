@@ -7,23 +7,18 @@ import StaffEntity from '../../../../../types/staff/database/StaffEntity'
 
 interface StaffItemProps {
   item: StaffEntity, 
-  setSelected: (value: StaffEntity) => void,
-  setAnchor: (value: React.SetStateAction<HTMLElement | null>) => void,
+  onClick: (item: StaffEntity) => void,
+  onClickMenu: (event: React.MouseEvent<HTMLButtonElement>, item: StaffEntity) => void
 }
 
-const StaffItem: React.FC<StaffItemProps> = ({ item, setAnchor, setSelected }) => {
+const StaffItem: React.FC<StaffItemProps> = ({ item, onClickMenu, onClick }) => {
 
   const language = useLanguage()
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchor(event.currentTarget)
-    setSelected(item)
-  }
 
   const invitationIsPending = item.userId === undefined
   
   return (
-    <ListItem>
+    <ListItem button onClick={() => onClick(item)}>
       <ListItemAvatar>
         <Avatar><AvatarIcon /></Avatar>
       </ListItemAvatar>
@@ -37,7 +32,7 @@ const StaffItem: React.FC<StaffItemProps> = ({ item, setAnchor, setSelected }) =
         }>
       </ListItemText>
       <ListItemSecondaryAction>
-        <OptionsIconButton dark onClick={handleClick} />
+        <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />
       </ListItemSecondaryAction>
     </ListItem>
   )

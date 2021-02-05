@@ -9,13 +9,9 @@ import Utils from '../../../../../utils/Utils'
 import '../../styles.css'
 import './styles.css'
 
-const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({
-	item,
-	onClick,
-	children,
-}) => {
-	const language = useLanguage()
+const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({ item, onClick, children }) => {
 
+	const language = useLanguage()
 	const isEssential = Utils.isNotEmpty(item.contact.localEssentialContactId)
 
 	return (

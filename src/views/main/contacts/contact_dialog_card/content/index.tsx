@@ -30,7 +30,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 	}
 
 	const Description = (): JSX.Element => {
-		return item.contact.description ? (
+		return item.contact.description ? 
 			<ListItem divider className='contacts__list__item'>
 				<ListItemIcon>
 					<PersonIcon />
@@ -43,9 +43,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 					}
 				/>
 			</ListItem>
-		) : (
-			<Divider />
-		)
+		: <Divider />	
 	}
 
 	const Phones = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import IconButton from '../../../components/button/icon_button'
@@ -8,16 +8,45 @@ import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotc
 import { ReactComponent as GoOutSVG } from '../../../assets/kids_space/dinogotchi/exit.svg'
 import { ReactComponent as GameSVG } from '../../../assets/kids_space/dinogotchi/gamepad.svg'
 import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogotchi/outside.svg'
-import { start } from './engine/clouds'
+import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotchi/inside.svg'
+import { startCloudEngine } from './engine/clouds'
+import { startPaitingEngine } from './engine/painting'
 import './styles.css'
 
 const Dinogotchi: React.FC = () => {
+	const [isInside, setInside] = useState(true)
+	
 	useEffect(() => {
-		return start()
+		return startCloudEngine()
 	}, [])
+	
+	useEffect(() => {
+		if (isInside) {
+			return startPaitingEngine()
+		}
+	}, [isInside])
+
+	const handleChangeLocation = () => {
+		setInside(!isInside)
+	}
 	
 	const renderBackground = (): JSX.Element => {
 		const currentHour = new Date().getHours()
+		if (isInside) {
+			return renderInsideBackground(currentHour)
+		} 
+
+		return renderOusideBackground(currentHour)
+	}
+
+	const renderInsideBackground = (currentHour: number): JSX.Element => {
+		if (currentHour > 19) {
+			return <InsideSVG className='dinogotchi_screen__background night'/>
+		}
+		return <InsideSVG className='dinogotchi_screen__background day'/>
+	}
+
+	const renderOusideBackground = (currentHour: number): JSX.Element => {
 		if (currentHour > 19) {
 			return <OutsideSVG className='dinogotchi_screen__background night'/>
 		}
@@ -25,7 +54,7 @@ const Dinogotchi: React.FC = () => {
 	}
 
 	return (
-		<div className='dinogotchi_screen'>
+		<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 			{renderBackground()}
 			<div className='dinogotchi_screen__header'>
 				<IconButton
@@ -42,7 +71,7 @@ const Dinogotchi: React.FC = () => {
 						HistoryService.push(PathConstants.GAME_MENU)
 					}}
 				/>
-				<CircularButton icon={GoOutSVG} onClick={() => console.log('oizi')} />
+				<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
 			</div>
 			<Dino className='dinogotchi_screen__dino_pet' />
 		</div>

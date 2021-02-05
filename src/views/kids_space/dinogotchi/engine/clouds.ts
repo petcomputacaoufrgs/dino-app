@@ -2,23 +2,22 @@ import ArrayUtils from '../../../../utils/ArrayUtils'
 import { getRandomInteger } from '../../../../utils/RandomUtils'
 import sleep from '../../../../utils/SleepUtils'
 
-const cloudClickEffectDuration = 2500
 const randomQueue: ((value: number | PromiseLike<number>) => void)[] = []
 let duration = 0
 let queueCount = 0
 let isRunning = true
 
-export function start() {
+export function startCloudEngine() {
   const clouds = [
-    document.getElementById('cloud_one'),
-    document.getElementById('cloud_two'),
-    document.getElementById('cloud_three'),
-    document.getElementById('cloud_four'),
-    document.getElementById('cloud_five'),
-    document.getElementById('cloud_six'),
-    document.getElementById('cloud_seven'),
-    document.getElementById('cloud_eight'),
-    document.getElementById('cloud_nine')
+    document.getElementById('dinogotchi__inside__cloud_one'),
+    document.getElementById('dinogotchi__inside__cloud_two'),
+    document.getElementById('dinogotchi__inside__cloud_three'),
+    document.getElementById('dinogotchi__inside__cloud_four'),
+    document.getElementById('dinogotchi__inside__cloud_five'),
+    document.getElementById('dinogotchi__inside__cloud_six'),
+    document.getElementById('dinogotchi__inside__cloud_seven'),
+    document.getElementById('dinogotchi__inside__cloud_eight'),
+    document.getElementById('dinogotchi__inside__cloud_nine')
   ].filter(el => el !== null) as HTMLElement[]
 
   isRunning = true
@@ -39,17 +38,18 @@ function stop() {
 async function startAnimations(clouds: HTMLElement[]) {
   for (const cloud of clouds) {
     if (cloud) {
+      cloud.onclick = () => handleCloudClick(cloud)
       runCloudAnimation(cloud)
       await sleep(duration/clouds.length * 2)
     }
   }
 }
 
-async function handleCloudClick(cloud: HTMLElement, id: string) {
+async function handleCloudClick(cloud: HTMLElement) {
   let opacity = 1
   while(opacity > 0) {
-    cloud.style.opacity = `${opacity}`
     opacity = opacity - 0.1
+    cloud.style.opacity = `${opacity}`
     await sleep(100)
   }
 }
@@ -57,16 +57,15 @@ async function handleCloudClick(cloud: HTMLElement, id: string) {
 async function runCloudAnimation(cloud: HTMLElement) {
   const id = cloud.id
   let sleepTime = 100
-  cloud.onclick = () => handleCloudClick(cloud, id)
+  cloud.style.animationDuration = `${duration}ms`
   while(isRunning) {
     cloud.removeAttribute('id')
     await sleep(sleepTime)
-    cloud.style.animationDuration = `${duration}ms`
-    cloud.style.display = 'visible'
     cloud.style.opacity = "1"
+    cloud.style.visibility = 'visible'
     cloud.setAttribute('id', id)
     await sleep(duration)
-    cloud.style.display = 'none'
+    cloud.style.visibility = 'hidden'
     sleepTime = await getRandomSleep()
   }
 }
@@ -97,13 +96,13 @@ function getSleepValue(): number {
   } 
   if (queueCount === 1) {
     queueCount++
-    return getRandomInteger(duration*0.05, duration*0.3) 
+    return getRandomInteger(duration*0.1, duration*0.2) 
   }
   if (queueCount === 2) {
     queueCount++
-    return getRandomInteger(duration*0.5, duration*0.7) 
+    return getRandomInteger(duration*0.4, duration*0.6) 
   }
 
   queueCount = 0
-  return getRandomInteger(duration*1.5, duration*2) 
+  return getRandomInteger(duration*0.8, duration*1) 
 }

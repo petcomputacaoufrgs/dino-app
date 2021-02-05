@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core'
+import { List } from '@material-ui/core'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
 import { IsStaff } from '../../../../context/private_router'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
-import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import ItemListMenu from '../../../../components/item_list_menu'
 import ListTitle from '../../../../components/list_title'
+import TreatmentForm from '../treatment_form'
+import TreatmentItemList from './treatment_item'
 
 interface TreatmentItemsProps {
 	items: TreatmentEntity[]
@@ -15,86 +16,52 @@ interface TreatmentItemsProps {
 
 const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 
-	const [itemToEdit, setItemToEdit] = useState<TreatmentEntity | undefined>(undefined)
-	const [itemToView, setItemToView] = useState<TreatmentEntity | undefined>(undefined)
-	const [itemToDelete, setItemToDelete] = useState<TreatmentEntity | undefined>(undefined)
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
-	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setAnchorEl(event.currentTarget)
-	}
-
 	const language = useLanguage()
 	const staff = IsStaff()
 
-	const handleOpenCard = (index: number) => {
-		setItemToView(items[index])
-	}
+	const [selectedItem, setSelectedItem] = useState<TreatmentEntity>()
+	const [toEdit, setToEdit] = useState(false)
+	const [toDelete, setToDelete] = useState(false)
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const handleAcceptDeleteDialog = async () => {
-
-		if (itemToDelete && staff) {
-			await TreatmentService.delete(itemToDelete)
+		if (toDelete && selectedItem && staff) {
+			await TreatmentService.delete(selectedItem)
 		}
-		
-		setItemToDelete(undefined)
+		handleCloseDeleteDialog()
 	}
 
 	const handleCloseDeleteDialog = () => {
-		setItemToDelete(undefined)
+		setToDelete(false)
 	}
 
-	const renderTreatmentItemList = (item: TreatmentEntity, index: number) => {
-		return (
-			<div className='contacts__list__item' key={index}>
-			<ListItem button onClick={() => handleOpenCard(index)}>
-				<ListItemText
-					primary={item.name}
-					secondary={'OI'}
-				/>
-				<ListItemSecondaryAction>
-					<OptionsIconButton dark onClick={handleClickMenu} />
-				</ListItemSecondaryAction>
-			</ListItem>
-			<ItemListMenu
-				anchor={anchorEl}
-				setAnchor={setAnchorEl}
-				onEdit={() => setItemToEdit(item)}
-				onDelete={() => setItemToDelete(item)}
-			/>
-		</div>
-		)
-	}
+	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>, item: TreatmentEntity) => {
+    setAnchorEl(event.currentTarget)
+    setSelectedItem(item)
+  }
 
 	return (
 		<>
 		  <ListTitle title={'Treatments & FAQs'}/>
 			<List className='contacts__list'>
-				{items.map((item, index) => renderTreatmentItemList(item, index))}
+				{items.map((item, index) => 
+					<TreatmentItemList 
+						key={index} 
+						item={item}
+						onClickMenu={handleClickMenu} 
+					/>
+				)}
 			</List>
-			{itemToView && (
-				// <ContactCard
-				// 	dialogOpen={itemToView !== undefined}
-				// 	onClose={() => setItemToView(undefined)}
-				// 	item={itemToView}
-				// 	onEdit={setItemToEdit}
-				// 	onDelete={setItemToDelete}
-				// />
-				<></>
+			{toEdit && (
+				<TreatmentForm 
+					open={toEdit} 
+					onClose={() => setToEdit(false)} 
+					treatment={selectedItem}
+				/>
 			)}
-			{itemToEdit && (
-				// <ContactFormDialog
-				// 	dialogOpen={itemToEdit !== undefined}
-				// 	onClose={() => setItemToEdit(undefined)}
-				// 	item={itemToEdit}
-				// 	items={items}
-				// 	action={Constants.EDIT}
-				// />
-				<></>
-			)}
-			{itemToDelete && (
+			{toDelete && (
 				<AgreementDialog
-					open={itemToDelete !== undefined}
+					open={toDelete !== undefined}
 					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
 					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
 					description={language.data.DELETE_CONTACT_OPTION_TEXT}
@@ -103,6 +70,12 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 					onDisagree={handleCloseDeleteDialog}
 				/>
 			)}
+			<ItemListMenu
+				anchor={anchorEl}
+				setAnchor={setAnchorEl}
+				onEdit={() => setToEdit(true)}
+				onDelete={() => setToDelete(true)}
+			/>
 		</>
 	)
 }

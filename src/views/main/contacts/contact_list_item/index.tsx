@@ -17,26 +17,15 @@ import './styles.css'
 const ContactItemList: React.FC<ContactItemListProps> = ({
 	item,
 	onClick,
-	setSelected,
-	setAnchor
+	onClickMenu
 }) => {
+	
 	const language = useLanguage()
-
-	const handleOpen = () => {
-		setSelected(item)
-		onClick()
-	}
-
 	const isEssential = Utils.isNotEmpty(item.contact.localEssentialContactId)
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchor(event.currentTarget)
-    setSelected(item)
-  }
 
 	return (
 		<div className='contacts__list__item'>
-			<ListItem button divider onClick={handleOpen}>
+			<ListItem button divider onClick={() => onClick(item)}>
 				<ListItemAvatar>
 					<Avatar
 						aria-label={language.data.AVATAR_ALT}
@@ -51,7 +40,7 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 				/>
 				<ListItemSecondaryAction>
 					{isEssential ? <Star /> : <></>}
-					<OptionsIconButton dark onClick={handleClick} />
+					<OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />
 				</ListItemSecondaryAction>
 			</ListItem>
 

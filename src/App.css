@@ -93,3 +93,7 @@ body .MuiInput-underline:before {
 .MuiCardHeader-action button.button.icon_button {
 	margin: 0px 2px;
 }
+
+.history_link {
+	color: var(--selection);
+}

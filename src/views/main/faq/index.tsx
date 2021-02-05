@@ -38,9 +38,7 @@ const Faq: React.FC = () => {
 				const userSettings = await UserSettingsService.getFirst()
 				if (userSettings) {
 					const currentTreatment = treatments?.find(t => t.localId === userSettings.treatmentLocalId)
-					if (currentTreatment) {
-						await updateFaqView(currentTreatment)
-					}
+					await updateFaqView(currentTreatment)
 				}
 			}
 		}
@@ -48,16 +46,17 @@ const Faq: React.FC = () => {
 		const loadData = async () => {
 			if(localId) {
 				const currentTreatment = await TreatmentService.getByLocalId(Number(localId))
-				if(currentTreatment)
-					await updateFaqView(currentTreatment)
+				await updateFaqView(currentTreatment)
 			} else await loadUserTreatment()
-
+		
 			finishLoading()
 		} 
 
-		let updateFaqView = async (treatment: TreatmentEntity) => {
-			const faqItems = await FaqItemService.getByTreatment(treatment)
-			setFaqView({treatment, faqItems})
+		let updateFaqView = async (treatment?: TreatmentEntity) => {
+			if(treatment) {
+				const faqItems = await FaqItemService.getByTreatment(treatment)
+				setFaqView({treatment, faqItems})
+			}
 		}
 
 		let updateTreatments = (treatments: TreatmentEntity[]) => {
@@ -82,7 +81,7 @@ const Faq: React.FC = () => {
 			TreatmentService.removeUpdateEventListenner(loadData)
 			FaqItemService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading])
+	}, [isLoading,localId])
 
 	// useEffect(() => {
 	// 	if (faqView) {

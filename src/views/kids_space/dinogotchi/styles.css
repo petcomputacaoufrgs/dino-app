@@ -2,9 +2,120 @@
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-image: url('../../../assets/kids_space/dinogotchi/1.png');
-	background-size: 100vh;
-	background-repeat: no-repeat;
+	display: flex;
+}
+
+.dinogotchi_screen.inside {
+	justify-content: center;
+}
+
+.dinogotchi_screen.outside {
+	justify-content: flex-start;
+}
+
+.dinogotchi_screen__background {
+	position: absolute;
+	height: 100vh;
+	width: auto;
+}
+
+.dinogotchi_screen__background .cloud {
+	transform-box: fill-box;
+	opacity: 0;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_one {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_one;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_two {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_two;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_three {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_three;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_four {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_four;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_five {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_five;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_six {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_one;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_seven {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_one;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_eight {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_four;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background #dinogotchi__inside__cloud_nine {
+	animation-name: dinogotchi_screen__background__dinogotchi__inside__cloud_two;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.dinogotchi_screen__background.night .outside_background {
+	fill:rgb(10.5896%,30.589294%,41.958618%);
+	fill-opacity:1;
+	stroke:none;
+}
+
+.dinogotchi_screen__background.day .outside_background {
+	fill:rgb(65.489197%,87.449646%,100%);
+	fill-opacity:1;
+	stroke:none;
+}
+
+.dinogotchi_screen__background.night .cloud {
+	fill:rgb(36.079407%,49.01886%,57.249451%);
+	fill-opacity:1;
+	fill-rule:nonzero;
+	stroke:none;
+}
+
+.dinogotchi_screen__background.day .cloud {
+	fill:rgb(100%,100%,100%);
+	fill-opacity:1;
+	fill-rule:nonzero;
+	stroke:none;
+}
+
+.dinogotchi_screen__background.night .grass {
+	fill:rgb(25.099182%,48.239136%,14.898682%);
+	fill-opacity:1;
+	fill-rule:nonzero;
+	stroke:none;
+}
+
+.dinogotchi_screen__background.day .grass {
+	fill:rgb(52.549744%,81.17981%,39.99939%);
+	fill-opacity:1;
+	fill-rule:nonzero;
+	stroke:none;
 }
 
 .dinogotchi_screen__dino_pet {
@@ -12,6 +123,12 @@
 	bottom: 4rem;
 	width: 80vmin;
 	left: 10vmin;
+}
+
+.dinogotchi_screen__header {
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .dinogotchi_screen__header svg {
@@ -24,6 +141,7 @@
 .dinogotchi_screen__options {
 	position: absolute;
 	right: 7vw;
+	top: 15vh;
 }
 
 .dinogotchi_screen__options .circular_button {
@@ -37,4 +155,54 @@
 .dinogotchi_screen__options svg {
 	width: 4rem;
 	height: 4rem;
+}
+
+.dinogotchi_screen__background .painting {
+	transform-box: fill-box;
+	transform-origin: top;
+}
+
+@keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_one {
+	from {
+		transform: translate3d(-300%, 0, 0);
+	}
+	to {
+		transform: translate3d(300%, 0, 0);
+	}
+}
+
+@keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_two {
+	from {
+		transform: translate3d(-100%, 0, 0);
+	}
+	to {
+		transform: translate3d(475%, 0, 0);
+	}
+}
+
+@keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_three {
+	from {
+		transform: translate3d(-500%, 0, 0);
+	}
+	to {
+		transform: translate3d(125%, 0, 0);
+	}
+}
+
+@keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_four {
+	from {
+		transform: translate3d(-425%, 0, 0);
+	}
+	to {
+		transform: translate3d(125%, 0, 0);
+	}
+}
+
+@keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_five {
+	from {
+		transform: translate3d(-150%, 0, 0);
+	}
+	to {
+		transform: translate3d(450%, 0, 0);
+	}
 }

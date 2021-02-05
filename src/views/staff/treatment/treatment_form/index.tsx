@@ -51,6 +51,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
             type='name'
             helperText={error && language.data.EMPTY_FIELD_ERROR}
             value={item.name}
+            /* é importante descontruir o objeto ao atualizá-lo, mesmo com um único atributo, senão ele vira outro. */
             onChange={(e) => setItem({ ...item, name: e.target.value })}
             error={error}
             />

@@ -4,7 +4,7 @@ import { Switch } from 'react-router'
 import PathConstants from '../../constants/app/PathConstants'
 import DrawerNavigation from '../../components/drawer_navigation'
 import PrivateRoute from '../../components/private_route'
-import GlossaryItem from './glossary/glossary_items/glossary_item'
+import GlossaryItem from './glossary/glossary_list_items/glossary_item'
 import Glossary from './glossary'
 import Contacts from './contacts'
 import Home from './home'
@@ -37,10 +37,7 @@ const Main: React.FC = () => {
 		setOpenLogoutDialog(false)
 	}
 
-	const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
-		language.data,
-		handleLogoutClick,
-	)
+	const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(language.data, handleLogoutClick)
 
 	const renderMainContent = (): JSX.Element => {
 		return (

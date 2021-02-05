@@ -8,7 +8,7 @@ import TreatmentService from '../../../../services/treatment/TreatmentService'
 import ItemListMenu from '../../../../components/item_list_menu'
 import ListTitle from '../../../../components/list_title'
 import TreatmentForm from '../treatment_form'
-import TreatmentItemList from './treatment_item'
+import TreatmentItemList from './treatment_list_item'
 
 interface TreatmentItemsProps {
 	items: TreatmentEntity[]

@@ -12,13 +12,13 @@ interface PrivateRouteProps extends RouteProps {
 }
 
 const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
-	const router = usePrivateRouter()
 
+	const router = usePrivateRouter()
 	const location = useLocation()
 	
 	const isAuthorized = () => {
-		if(props.restrictedTo !== undefined && props.restrictedTo.length > 0) {
-			return props.restrictedTo.includes(router.userPermission!)
+		if(props.restrictedTo && props.restrictedTo.length > 0) {
+				return router.userPermission && props.restrictedTo.includes(router.userPermission)
 		} return true
 	}
 

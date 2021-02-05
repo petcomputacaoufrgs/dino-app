@@ -4,7 +4,6 @@ import EssentialContactView from '../../../../types/contact/view/EssentialContac
 export interface ContactFormDialogProps {
 	dialogOpen: boolean
 	onClose: () => void
-	action: 1 | 2
 	item?: ContactView | EssentialContactView
 	items: Array<ContactView | EssentialContactView>
 }

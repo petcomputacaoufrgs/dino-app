@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MuiSearchBar from '../../../components/mui_search_bar'
-import FaqItems from './faq_items'
+import FaqItems from './faq_list_items'
 import QuestionDialogForm from './question_dialog_form'
 import LinkButton from '../../../components/button/link_button'
 import { useLanguage } from '../../../context/language'
@@ -27,7 +27,6 @@ const Faq: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState('')
 
 	const [faqView, setFaqView] = useState<FaqView>()
-	const filteredData = 
 
 	useEffect(() => {
 
@@ -105,7 +104,7 @@ const Faq: React.FC = () => {
 						placeholder={language.data.SEARCH_HOLDER}
 					/>
 					<div className='faq__content'>
-						<FaqItems data={TreatmentService.getTreatmentViewByFilter(faqView, searchTerm)} />
+						<FaqItems data={TreatmentService.getFaqViewByFilter(faqView, searchTerm)} />
 						{!staff && (
 							<>
 								<LinkButton

@@ -26,21 +26,15 @@ const Contacts: React.FC = () => {
 	const language = useLanguage()
 
 	const [isLoading, setIsLoading] = useState(true)
-	const [contacts, setContacts] = useState<ContactView[] | EssentialContactView[]>([])
-	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
-		undefined,
-	)
+	const [contacts, setContacts] = useState<Array<ContactView | EssentialContactView>>([])
+	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
-	const [add, setAdd] = useState(false)
+	const [toAdd, setToAdd] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
 
-	const filteredContacts = ContactService.filterContactViews(
-		contacts,
-		searchTerm,
-	)
+	const filteredContacts = ContactService.filterContactViews(contacts, searchTerm)
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -119,7 +113,7 @@ const Contacts: React.FC = () => {
 
 	const handleAcceptGoogleGrant = async () => {
 		setOpenGrantDialog(false)
-		setAdd(true)
+		setToAdd(true)
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
@@ -129,13 +123,13 @@ const Contacts: React.FC = () => {
 
 	const handleCloseGoogleGrant = () => {
 		setOpenGrantDialog(false)
-		setAdd(true)
+		setToAdd(true)
 	}
 
 	const handleDeclineGoogleGrant = () => {
 		setShouldDecline(true)
 		setOpenGrantDialog(false)
-		setAdd(true)
+		setToAdd(true)
 	}
 
 	const handleAddContact = () => {
@@ -146,11 +140,11 @@ const Contacts: React.FC = () => {
 			}
 		}
 
-		setAdd(true)
+		setToAdd(true)
 	}
 
 	const handleClose = () => {
-		setAdd(false)
+		setToAdd(false)
 		if (shouldDecline && settings) {
 			settings.declineGoogleContacts = true
 			UserSettingsService.save(settings)
@@ -173,8 +167,7 @@ const Contacts: React.FC = () => {
 			/>
 			<ContactFormDialog
 				items={contacts}
-				action={Contants.ADD}
-				dialogOpen={add}
+				dialogOpen={toAdd}
 				onClose={handleClose}
 			/>
 			<GoogleGrantDialog

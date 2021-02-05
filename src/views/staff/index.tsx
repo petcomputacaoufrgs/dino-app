@@ -16,7 +16,7 @@ import Home from '../main/home'
 import Contacts from '../main/contacts'
 import Faq from '../main/faq'
 import Glossary from '../main/glossary'
-import GlossaryItem from '../main/glossary/glossary_items/glossary_item'
+import GlossaryItem from '../main/glossary/glossary_list_items/glossary_item'
 import StaffModeration from './staff_moderation'
 import Treatment from './treatment'
 

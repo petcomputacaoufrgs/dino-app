@@ -56,7 +56,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		return this.table.where('localId').anyOf(localIds).toArray()
 	}
 
-	getTreatmentViewByFilter(
+	getFaqViewByFilter(
 		view: FaqView,
 		searchTerm: string,
 	): FaqView {

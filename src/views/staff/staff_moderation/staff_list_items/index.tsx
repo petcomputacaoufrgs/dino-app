@@ -1,7 +1,7 @@
 import { List } from '@material-ui/core'
 import React, { useState } from 'react'
 import AgreementDialog from '../../../../components/agreement_dialog'
-import DinoDialog from '../../../../components/dialogs/dino_dialog'
+import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/dino_dialog'
 import ItemListMenu from '../../../../components/item_list_menu'
 import ListTitle from '../../../../components/list_title'
 import { useLanguage } from '../../../../context/language'
@@ -22,14 +22,14 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [selectedItem, setSelectedItem] = useState<StaffEntity | undefined>(undefined)
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
-  const [openEditDialog, setOpenEditDialog] = useState(false)
+  const [toDelete, setToDelete] = useState(false)
+  const [toEdit, setToEdit] = useState(false)
   const [error, setError] = useState(false)
   
-  const closeEditDialog = () => setOpenEditDialog(false)
+  const closeEditDialog = () => setToEdit(false)
 
   const handleEdit = () => {
-    if(selectedItem !== undefined) {
+    if(selectedItem) {
       const isInvalid = !StringUtils.validateEmail(selectedItem.email)
       setError(isInvalid)
       if(!isInvalid) {
@@ -41,7 +41,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
   }
 
   const handleDelete = () => {
-    if(selectedItem !== undefined) {
+    if(selectedItem) {
       StaffService.delete(selectedItem)
       setSelectedItem(undefined)
     }
@@ -63,28 +63,30 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
       <ItemListMenu
         anchor={anchorEl}
         setAnchor={setAnchorEl}
-        onEdit={() => setOpenEditDialog(true)}
-        onDelete={() => setOpenDeleteDialog(true)}
+        onEdit={() => setToEdit(true)}
+        onDelete={() => setToDelete(true)}
       />
-      {selectedItem !== undefined && 
+      {selectedItem && 
         <DinoDialog 
-          open={openEditDialog}
+          open={toEdit}
           onSave={handleEdit}
           onClose={closeEditDialog} 
         >
-          <EmailTextField 
-            value={selectedItem.email}
-            handleChange={(value) => setSelectedItem({...selectedItem, email: value})}
-            error={error}
-          />
+          <DinoDialogContent>
+            <EmailTextField 
+              value={selectedItem.email}
+              handleChange={(value) => setSelectedItem({...selectedItem, email: value})}
+              error={error}
+            />
+          </DinoDialogContent>
         </DinoDialog>
       }
       <AgreementDialog
-        open={openDeleteDialog}
+        open={toDelete}
         description={language.data.DELETE_CONTACT_OPTION_TEXT}
         question={language.data.DELETE_CONTACT_QUESTION}
         onAgree={handleDelete}
-        onDisagree={() => setOpenDeleteDialog(false)}
+        onDisagree={() => setToDelete(false)}
       />
     </div>
   )

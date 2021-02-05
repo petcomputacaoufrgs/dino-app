@@ -107,7 +107,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 					onClose={() => setToEdit(false)}
 					item={selectedItem}
 					items={items}
-					action={Constants.EDIT}
 				/>
 				<AgreementDialog
 					open={toDelete}

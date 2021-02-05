@@ -9,7 +9,7 @@ import { IsStaff } from '../../../../context/private_router'
 import { useLanguage } from '../../../../context/language'
 import FaqItemEntity from '../../../../types/faq/database/FaqItemEntity'
 import ItemListMenu from '../../../../components/item_list_menu'
-import FaqItem from './faq_item'
+import FaqItem from './faq_list_item'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import FaqItemService from '../../../../services/faq/FaqItemService'
 

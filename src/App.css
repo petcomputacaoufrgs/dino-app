@@ -14,6 +14,13 @@ body .MuiInputBase-root {
 	font-size: var(--default-font);
 }
 
+.save_button__icon {
+	margin-right: 0.5rem;
+	width: 18px;
+	height: 18px;
+	fill: var(--contrast-color);
+}
+
 body .MuiListItemText-root .MuiTypography-body1 {
 	font-size: var(--default-font);
 	white-space: nowrap;

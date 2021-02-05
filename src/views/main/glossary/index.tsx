@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import GlossaryItems from './glossary_items'
+import GlossaryItems from './glossary_list_items'
 import MuiSearchBar from '../../../components/mui_search_bar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'

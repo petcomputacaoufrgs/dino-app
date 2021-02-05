@@ -20,28 +20,13 @@ import { IsStaff } from '../../../../context/private_router'
 import './styles.css'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 
-const getContact = (item: ContactView | undefined): ContactEntity => {
-	return item
-		? item.contact
-		: {
-				name: '',
-				description: '',
-				color: undefined,
-		  }
-}
+const getContact = (item?: ContactView): ContactEntity => item ? item.contact : { name: '', description: '',}
 
-const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
-	return item
-		? item.phones
-		: [
-				{
-					number: '',
-					type: Constants.MOBILE,
-				},
-		  ]
-}
+const getPhones = (item?: ContactView): PhoneEntity[] => item ? item.phones : [{ number: '', type: Constants.MOBILE, }]
 
-const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, action, item, items }) => {
+const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, item, items }) => {
+	
+		const staff = IsStaff()
 		const language = useLanguage()
 		const [contact, setContact] = useState(getContact(item))
 		const [contactPhones, setContactPhones] = useState(getPhones(item))
@@ -49,7 +34,6 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 		const [invalidName, setInvalidName] = useState(false)
 		const [invalidPhone, setInvalidPhone] = useState({ number: 'dummy text', text: '' })
 		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
-		const staff = IsStaff()
 
 		useEffect(() => {
 			if (dialogOpen) {
@@ -97,16 +81,15 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 			}
 
 			if (validInfo()) {
-					saveContact()
-					onClose()
+				saveContact()
+				onClose()
 			}
 		}
 
 		const saveContact = async () => {
 
-			async function savePhones(
-				contact: ContactEntity | EssentialContactEntity,
-			) {
+			async function savePhones(contact: ContactEntity | EssentialContactEntity) {
+
 				const newPhones = contactPhones.filter(phone => phone.number !== '')
 
 				if (staff) {
@@ -151,11 +134,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 				}
 			}
 
-			const isEditAndItemIsValid = item && Utils.isNotEmpty(item.contact.localId)
-
-			if(action === Constants.ADD || isEditAndItemIsValid) {
-				staff ? saveEssentialContactAndPhones() : saveContactAndPhones()
-			}
+			staff ? saveEssentialContactAndPhones() : saveContactAndPhones()
 		}
 
 		const handleAddPhone = () => {
@@ -203,7 +182,8 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 							contact={contact}
 							setContact={setContact}
 							handleCloseDialog={onClose}
-						/>}
+						/>
+					}
         >
 					<ContactFormDialogContent
 						contact={contact}

@@ -59,8 +59,8 @@ const QuestionDialogForm = React.forwardRef(
 			<div className='dialog-form'>
 				<DinoDialog
 					open={dialogOpen}
-					handleSave={handleSave}
-					handleClose={handleClose}	
+					onSave={handleSave}
+					onClose={handleClose}	
 				>
 					<TextField
 							required

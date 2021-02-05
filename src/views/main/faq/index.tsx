@@ -18,9 +18,8 @@ import { IsStaff } from '../../../context/private_router'
 const Faq: React.FC = () => {
 
 	const { localId } = useParams<{localId?: string}>()
-
-	const staff = IsStaff()
 	const language = useLanguage()
+	const staff = IsStaff()
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
@@ -28,6 +27,7 @@ const Faq: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState('')
 
 	const [faqView, setFaqView] = useState<FaqView>()
+	const filteredData = 
 
 	useEffect(() => {
 
@@ -81,14 +81,7 @@ const Faq: React.FC = () => {
 			TreatmentService.removeUpdateEventListenner(loadData)
 			FaqItemService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading,localId])
-
-	// useEffect(() => {
-	// 	if (faqView) {
-	// 		const result = TreatmentService.getTreatmentViewByFilter(faqView.treatment, faqView.faqItems, searchTerm)
-	// 		setFaqView(result)
-	// 	}
-	// }, [faqView, searchTerm])
+	}, [isLoading, localId])
 
 	const handleSendQuestion = () => {
 		setDialogOpen(true)
@@ -112,7 +105,7 @@ const Faq: React.FC = () => {
 						placeholder={language.data.SEARCH_HOLDER}
 					/>
 					<div className='faq__content'>
-						<FaqItems data={faqView} />
+						<FaqItems data={TreatmentService.getTreatmentViewByFilter(faqView, searchTerm)} />
 						{!staff && (
 							<>
 								<LinkButton

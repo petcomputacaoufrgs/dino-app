@@ -22,9 +22,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
 		if(!StringUtils.isEmpty(item.name)) {
 			TreatmentService.save(item)
 			handleClose()
-		} else {
-			setError(true)
-		}
+		} else setError(true)
 	}	
 
   const handleClose = () => {
@@ -36,8 +34,8 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
     <div className='treatment__dialog_form__content'>
       <DinoDialog 
         open={open}
-        handleSave={handleSave}
-        handleClose={handleClose}
+        onSave={handleSave}
+        onClose={handleClose}
         header={
           <DinoDialogHeader>
             {language.data.STAFF_ADD_TREATMENT}

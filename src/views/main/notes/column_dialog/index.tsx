@@ -83,8 +83,8 @@ const NoteColumnDialog = forwardRef(
 					{props.column ? language.data.COLUMN_EDIT_LABEL : language.data.COLUMN_ADD_LABEL}
 					</DinoDialogHeader>
 				}
-				handleSave={handleSave}
-				handleClose={props.onClose}
+				onSave={handleSave}
+				onClose={props.onClose}
 			>
 				<NoteColumnDialogContent
 					title={newTitle}

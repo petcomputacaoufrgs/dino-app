@@ -317,8 +317,8 @@ const FirstSettingsDialog: React.FC = () => {
 				<DinoDialog
 					aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
 					open={step > -1}
-					handleSave={handleSave}
-					handleClose={handleCloseDialogs}
+					onSave={handleSave}
+					onClose={handleCloseDialogs}
 					header={renderDialogHeader()}
 					actions={
 						<DinoStepper

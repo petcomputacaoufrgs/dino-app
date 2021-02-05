@@ -57,16 +57,15 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	}
 
 	getTreatmentViewByFilter(
-		treatment: TreatmentEntity,
-		faqItems: FaqItemEntity[],
+		view: FaqView,
 		searchTerm: string,
 	): FaqView {
-			const view = {
-				treatment,
-				faqItems: FaqItemService.getFaqItemByFilter(treatment, faqItems, searchTerm),
+			const newView = {
+				...view,
+				faqItems: FaqItemService.getFaqItemByFilter(view.treatment, view.faqItems, searchTerm),
 			}
 
-			return view as FaqView
+			return newView as FaqView
 	}
 }
 

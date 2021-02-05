@@ -7,7 +7,7 @@ import TransitionSlide from '../../slide_transition'
 import DinoDialogProps from './props'
 import './styles.css'
 
-const DinoDialog: React.FC<DinoDialogProps> = ({ open, handleClose, handleSave, header, actions, children }) => {
+const DinoDialog: React.FC<DinoDialogProps> = ({ open, onClose: handleClose, onSave: handleSave, header, actions, children }) => {
 
 	const language = useLanguage()
 

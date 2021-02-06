@@ -18,7 +18,7 @@ const Dinogotchi: React.FC = () => {
 	
 	useEffect(() => {
 		return startCloudEngine()
-	}, [])
+	}, [isInside])
 	
 	useEffect(() => {
 		if (isInside) {

@@ -1,29 +1,63 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Dialog } from "@material-ui/core"
 import TransitionSlide from "../../../components/slide_transition"
-import PathConstants from "../../../constants/app/PathConstants"
-import HistoryService from "../../../services/history/HistoryService"
-import {startGame} from './engine'
+import { startDinoRunnerGame } from './engine/game'
 import { DinoDialogContent } from "../../../components/dino_dialog"
 import TextButton from '../../../components/button/text_button/index'
 import { useLanguage } from "../../../context/language"
+import HistoryService from '../../../services/history/HistoryService'
+import PathConstants from "../../../constants/app/PathConstants"
+import { ReactComponent as BackgroundSVG } from '../../../assets/kids_space/dino_runner/background.svg'
 import './styles.css'
-import '../variables.css'
 
 const DinoRunner: React.FC = () => {
     const language = useLanguage()
+
+    const dinoRunnerGameContainer = useRef<HTMLDivElement>(null)
+    const dinoRunnerGameGrid = useRef<HTMLDivElement>(null)
+    const dinoRunnerGameCharacter = useRef<HTMLDivElement>(null)
+    const dinoRunnerGameScoreBoard = useRef<HTMLDivElement>(null)
+
     const [openDialog, setOpenDialog] = useState(false)
+    const [gameStarted, setGameStarted] = useState(false)
+    const [startGame, setStartGame] = useState<(() => void)>(() => {})
+
+    useEffect(() => {
+        const container = dinoRunnerGameContainer.current
+        const grid = dinoRunnerGameGrid.current
+        const character = dinoRunnerGameCharacter.current
+        const scoreBoard = dinoRunnerGameScoreBoard.current
+
+        if (container && grid && character && scoreBoard) {
+            const [handleStopBackgroundEngine, handleStartGame] = 
+                startDinoRunnerGame(handleGameEnd, container, grid, character, scoreBoard)
+            setStartGame(() => handleStartGame)
+            return handleStopBackgroundEngine
+        }
+    }, [])
 
     function handleClose() {
-
+        setOpenDialog(false)
+        HistoryService.push(PathConstants.GAME_MENU)
     }
 
     function handleRestart() {
-        
+        setOpenDialog(false)
+        handleStartGame()
+    }
+
+    function handleStartGame() {
+        setGameStarted(true)
+        startGame()
+    }
+
+    function handleGameEnd() {
+        setOpenDialog(true)
+        setGameStarted(false)
     }
 
     return(
-        <div className="dino_runner_game">  
+        <div ref={dinoRunnerGameContainer} className="dino_runner_game">
             <Dialog
                 TransitionComponent={TransitionSlide}
                 open={openDialog}
@@ -38,11 +72,14 @@ const DinoRunner: React.FC = () => {
                     <TextButton onClick={handleRestart}>{language.data.AGREEMENT_OPTION_TEXT}</TextButton>
                 </div>
             </Dialog>
-            <div id='grid'>
-                <div id='dino'>
-                </div>
+            <div ref={dinoRunnerGameGrid} className='dino_runner_game__grid'>
+                <div ref={dinoRunnerGameCharacter} className='dino_runner_game__grid__character'></div>
             </div>
-            <button id='start_game_button' onClick={startGame}> Iniciar o jogo </button>
+            <div className="dino_runner_game__score_board_container">
+                <div ref={dinoRunnerGameScoreBoard} className="dino_runner_game__score_board" /> 
+            </div>
+            <BackgroundSVG className='dino_runner_game__grid__background' />  
+            {!gameStarted && <button className='dino_runner_game__start_game_button' onClick={handleStartGame}> Iniciar o jogo </button>}
         </div>
     )
 }

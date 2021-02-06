@@ -8,7 +8,6 @@ import { DinoDialogContent } from "../../../components/dino_dialog"
 import TextButton from '../../../components/button/text_button/index'
 import { useLanguage } from "../../../context/language"
 import './styles.css'
-import '../variables.css'
 
 const SnakeGame: React.FC = () => {
 	const language = useLanguage()

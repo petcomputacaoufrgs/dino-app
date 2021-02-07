@@ -11,6 +11,8 @@ import { useGoogleOAuth2 } from '../../../context/google_oauth2/index'
 import { useLanguage } from '../../../context/language/index'
 import './styles.css'
 
+const Sound = require('../../../assets/sounds/dino.mp3')
+
 const GoogleLoginButton: React.FC<LoginButtonProps> = ({
 	onCancel,
 	onDinoAPIFail,
@@ -47,6 +49,9 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({
 	})
 
 	const handleLoginButtonClick = async () => {
+		const audio = new Audio(Sound)
+		audio.play()
+		
 		setLoading(true)
 
 		const isDinoConnected = await ConnectionService.isDinoConnected()

@@ -8,6 +8,7 @@ import HistoryService from "../../../../services/history/HistoryService";
 import PathConstants from "../../../../constants/app/PathConstants";
 import Game from './components/Game'
 import './styles.css'
+import '../../variables.css'
 
 const TicTacDino: React.FC = () => {
   const language = useLanguage()

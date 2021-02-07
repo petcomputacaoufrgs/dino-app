@@ -538,4 +538,8 @@ export default class EN implements LanguageBase {
 	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh no! Your snake crashed'
 
 	SNAKE_GAME_GAME_OVER_MSG_2 = 'Do you want to play again?'
+
+	WINNER = 'Winner: '
+
+	NEXT_PLAYER = 'Next player: '
 }

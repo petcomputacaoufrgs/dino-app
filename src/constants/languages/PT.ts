@@ -546,4 +546,8 @@ export default class PT implements LanguageBase {
 	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh não! Sua cobra bateu!'
 
 	SNAKE_GAME_GAME_OVER_MSG_2 = 'Deseja jogar novamente?'
+
+	WINNER = 'Ganhador: '
+
+	NEXT_PLAYER = 'Próximo jogador: '
 }

@@ -1,3 +1,9 @@
 :root {
+    --dark-color: #121212;
+
     --snake-game-score-background-color: #694E73;
+    
+    --tic-tac-dino-background-color: #CEC1E7;
+    --tic-tac-dino-square-background-color: #D8CDEC;
+    --tic-tac-dino-display-background-color: #c1e7e1b3;
 }

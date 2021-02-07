@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Board from "./Board";
 import { calculateWinner } from "../helper";
+import { useLanguage } from "../../../../../context/language"
 
 const Game = () => { 
+    const language = useLanguage()
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [stepNumber, setStepNumber] = useState(0);
     const [xIsNext, setXisNext] = useState(true);
@@ -29,7 +31,7 @@ const Game = () => {
     <>
       <Board squares={history[stepNumber]} onClick={handleClick} />
       <div className='tic_tac_dino_game__display'>
-        {winner ? 'Winner: ' + winner : "Next Player: " + player}
+        {winner ? language.data.WINNER + winner : language.data.NEXT_PLAYER + player}
       </div>
     </>
   );

@@ -255,4 +255,6 @@ export default interface LanguageBase {
 	PWA_INTRO_3_TEXT_2: string
 	PWA_INTRO_3_TEXT_3: string
 	PWA_INTRO_2_TEXT_4: string
+	WINNER: string
+	NEXT_PLAYER: string
 }

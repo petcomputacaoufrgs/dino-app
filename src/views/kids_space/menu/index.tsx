@@ -44,6 +44,13 @@ const GameMenu: React.FC = () => {
 				background={CardBackground1}
 			></GameCard>
 			<GameCard
+				onClick={() => {
+					HistoryService.push(PathConstants.TIC_TAC_DINO_GAME)
+				}}
+				text='Tic Tac Dino'
+				background={CardBackground1}
+			></GameCard>
+			<GameCard
 				onClick={() => console.log('1010')}
 				text='1010'
 				background={CardBackground2}

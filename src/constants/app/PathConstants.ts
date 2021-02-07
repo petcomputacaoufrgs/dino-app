@@ -25,6 +25,8 @@ class PathConstants {
 
 	SNAKE_GAME = `${this.KIDS_SPACE}/snake_game`
 
+	TIC_TAC_DINO_GAME = `${this.KIDS_SPACE}/tic_tac_dino`
+
 	ABOUT_US = '/about_us'
 
 	TERMS_OF_USE = '/terms_of_use'

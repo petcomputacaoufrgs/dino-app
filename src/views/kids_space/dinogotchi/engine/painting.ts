@@ -6,7 +6,7 @@ const INCREASE_IN_ROTATION_SPEED_PER_ROTATION = 3
 let isRunningAnimation = false
 
 export function startPaitingEngine() {  
-  const paiting = document.getElementById('dinogotchi_inside_paiting')
+  const paiting = document.getElementById('dinogotchi__inside__paiting')
   isRunningAnimation = false
 
   if (paiting) {

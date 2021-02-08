@@ -1,10 +1,5 @@
 import SkyAnimation from '../../engine/SkyAnimation'
 
-const randomQueue: ((value: number | PromiseLike<number>) => void)[] = []
-let duration = 0
-let queueCount = 0
-let isRunning = true
-
 export function startCloudEngine() {
   const clouds = [
     document.getElementById('dinogotchi__inside__cloud_one'),

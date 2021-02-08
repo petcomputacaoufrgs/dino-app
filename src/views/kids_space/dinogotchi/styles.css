@@ -79,43 +79,43 @@
 }
 
 .dinogotchi_screen__background.night .outside_background {
-	fill:rgb(10.5896%,30.589294%,41.958618%);
-	fill-opacity:1;
-	stroke:none;
+	fill: rgb(10.5896%, 30.589294%, 41.958618%);
+	fill-opacity: 1;
+	stroke: none;
 }
 
 .dinogotchi_screen__background.day .outside_background {
-	fill:rgb(65.489197%,87.449646%,100%);
-	fill-opacity:1;
-	stroke:none;
+	fill: rgb(65.489197%, 87.449646%, 100%);
+	fill-opacity: 1;
+	stroke: none;
 }
 
 .dinogotchi_screen__background.night .cloud {
-	fill:rgb(36.079407%,49.01886%,57.249451%);
-	fill-opacity:1;
-	fill-rule:nonzero;
-	stroke:none;
+	fill: rgb(36.079407%, 49.01886%, 57.249451%);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
 }
 
 .dinogotchi_screen__background.day .cloud {
-	fill:rgb(100%,100%,100%);
-	fill-opacity:1;
-	fill-rule:nonzero;
-	stroke:none;
+	fill: rgb(100%, 100%, 100%);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
 }
 
 .dinogotchi_screen__background.night .grass {
-	fill:rgb(25.099182%,48.239136%,14.898682%);
-	fill-opacity:1;
-	fill-rule:nonzero;
-	stroke:none;
+	fill: rgb(25.099182%, 48.239136%, 14.898682%);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
 }
 
 .dinogotchi_screen__background.day .grass {
-	fill:rgb(52.549744%,81.17981%,39.99939%);
-	fill-opacity:1;
-	fill-rule:nonzero;
-	stroke:none;
+	fill: rgb(52.549744%, 81.17981%, 39.99939%);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
 }
 
 .dinogotchi_screen__dino_pet {
@@ -123,19 +123,6 @@
 	bottom: 4rem;
 	width: 80vmin;
 	left: 10vmin;
-}
-
-.dinogotchi_screen__header {
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.dinogotchi_screen__header svg {
-	width: 4rem;
-	height: 4rem;
-	margin: 1.5rem 0rem 0rem 1.5rem;
-	fill: #a594ab;
 }
 
 .dinogotchi_screen__options {

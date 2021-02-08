@@ -1,0 +1,10 @@
+.game_over_dialog__buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.game_over_dialog__buttons .text_button {
+	font-size: var(--default-font);
+}

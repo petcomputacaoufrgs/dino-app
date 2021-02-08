@@ -235,7 +235,8 @@ export default interface LanguageBase {
 	TREATMENT_SAVE: string
 	KIDS_SPACE: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string
-	SNAKE_GAME_GAME_OVER_MSG_2: string
+	PLAY_AGAIN_MESSAGE: string
+	DINO_RUNNER_GAME_OVER_MSG_1: string
 	SECONDARY_TAB_MESSAGE: string
 	SECONDARY_TAB_BUTTON_TEXT: string
 	APP_READY_FOR_OFFLINE_USE_MESSAGE: string
@@ -257,4 +258,5 @@ export default interface LanguageBase {
 	PWA_INTRO_2_TEXT_4: string
 	WINNER: string
 	NEXT_PLAYER: string
+	START_GAME_TEXT: string
 }

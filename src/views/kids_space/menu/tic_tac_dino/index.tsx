@@ -13,6 +13,7 @@ import '../../variables.css'
 const TicTacDino: React.FC = () => {
   const language = useLanguage()
   const [openDialog, setOpenDialog] = useState(false)
+  const [gameStarted, setGameStarted] = useState(true)
 
   function handleClose() {
     setOpenDialog(false)
@@ -21,31 +22,30 @@ const TicTacDino: React.FC = () => {
 
   function handleRestart() {
     setOpenDialog(false)
-    handleStartGame()
+    setGameStarted(true)
   }
 
-  function handleStartGame() {
-    console.log('bora reiniciar')
+  function handleEndGame() {
+    setOpenDialog(true)
+    setGameStarted(false)
   }
 
   return (
-    <div className= 'tic_tac_dino_game'>
+    <div className='tic_tac_dino_game'>
       <Dialog
         TransitionComponent={TransitionSlide}
         open={openDialog}
-        onClose={handleClose}
       >
 				<DinoDialogContent>
 					<p>{language.data.SNAKE_GAME_GAME_OVER_MSG_1}</p>
-                    <p>{language.data.SNAKE_GAME_GAME_OVER_MSG_2}</p>
+          <p>{language.data.SNAKE_GAME_GAME_OVER_MSG_2}</p>
 				</DinoDialogContent>
-                <div>
-                    <TextButton onClick={handleClose}>{language.data.DISAGREEMENT_OPTION_TEXT}</TextButton>
-                    <TextButton onClick={handleRestart}>{language.data.AGREEMENT_OPTION_TEXT}</TextButton>
-                </div>
+            <div>
+              <TextButton onClick={handleClose}>{language.data.DISAGREEMENT_OPTION_TEXT}</TextButton>
+              <TextButton onClick={handleRestart}>{language.data.AGREEMENT_OPTION_TEXT}</TextButton>
+            </div>
       </Dialog>
-
-      <Game/>
+      <Game onEndGame={handleEndGame} gameStarted={gameStarted}/>
     </div>
   );
 }

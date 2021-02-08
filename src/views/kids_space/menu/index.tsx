@@ -1,25 +1,21 @@
 import React from 'react'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
-import IconButton from '../../../components/button/icon_button'
-import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go-back-arrow.svg'
 import GameCard from '../../../components/game_card'
 import CardBackground1 from '../../../assets/kids_space/game_menu/1.png'
 import CardBackground2 from '../../../assets/kids_space/game_menu/2.png'
 import CardBackground3 from '../../../assets/kids_space/game_menu/3.png'
 import CardBackground4 from '../../../assets/kids_space/game_menu/4.png'
 import CardBackground5 from '../../../assets/kids_space/game_menu/5.png'
+import GoBackButton from '../../../components/button/go_back'
 import './styles.css'
 
 const GameMenu: React.FC = () => {
 	return (
 		<div className='game_menu'>
-			<IconButton
-				icon={GoBackSVG}
-				className='go_back'
-				onClick={() => {
-					HistoryService.push(PathConstants.KIDS_SPACE)
-				}}
+			<GoBackButton
+				className='game_menu__go_back'
+				path={PathConstants.KIDS_SPACE}
 			/>
 			<GameCard
 				onClick={() => console.log('jogo da memória')}

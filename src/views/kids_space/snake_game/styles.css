@@ -1,57 +1,57 @@
 @media only screen and (min-device-width: 1224px) {
-    #snake_game__score_board {
-        margin-left: 10vmin;
-    }
+	#snake_game__score_board {
+		margin-left: 10vmin;
+	}
 }
 
 @media only screen and (max-device-width: 1223px) {
-    #snake_game__score_board {
-        margin-bottom: 10vmin;
-    }
+	#snake_game__score_board {
+		margin-bottom: 10vmin;
+	}
 }
 
 .snake_game {
-    background-image: url(../../../assets/kids_space/snake/outter_board_background.png);
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: 0; 
+	background-image: url(../../../assets/kids_space/snake/outter_board_background.png);
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin: 0;
 }
 
 .snake_game__food {
-    width: 100%;
+	width: 100%;
 }
 
 .snake_game__snake {
-    width: 100%;
+	width: 100%;
 }
 
 #snake_game__game_board {
-    background-image: url(../../../assets/kids_space/snake/inner_board_background.png);
-    background-size: contain;
-    height: 100vmin;
-    width: 100vmin;
-    display: grid;
-    grid-template-rows: repeat(21, 1fr);
-    grid-template-columns: repeat(21, 1fr);
+	background-image: url(../../../assets/kids_space/snake/inner_board_background.png);
+	background-size: contain;
+	height: 100vmin;
+	width: 100vmin;
+	display: grid;
+	grid-template-rows: repeat(21, 1fr);
+	grid-template-columns: repeat(21, 1fr);
 }
 
 #snake_game__score_board {
-    background-color: var(--snake-game-score-background-color);
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	background-color: var(--snake-game-score-background-color);
+	width: 5rem;
+	height: 5rem;
+	border-radius: 50%;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 #snake_game__score_board p {
-    font-size: var(--very-large-font);
-    font-weight: bold;
-    margin-bottom: 0;
+	font-size: var(--very-large-font);
+	font-weight: bold;
+	margin-bottom: 0;
 }

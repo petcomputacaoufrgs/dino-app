@@ -545,5 +545,10 @@ export default class PT implements LanguageBase {
 
 	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh não! Sua cobra bateu!'
 
-	SNAKE_GAME_GAME_OVER_MSG_2 = 'Deseja jogar novamente?'
+	PLAY_AGAIN_MESSAGE = 'Deseja jogar novamente?'
+
+	DINO_RUNNER_GAME_OVER_MSG_1 =
+		'Oh não! Seu dinossauro encostou em uma bactéria.'
+
+	START_GAME_TEXT = 'Iniciar Jogo!'
 }

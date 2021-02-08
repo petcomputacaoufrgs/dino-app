@@ -56,8 +56,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
 		textSearch,
 	)
 
-	console.log(filteredNoteViews)
-
 	//#region COLUMN
 
 	const updateCurrentNoteView = (column: NoteColumnEntity): boolean => {

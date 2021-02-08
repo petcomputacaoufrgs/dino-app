@@ -543,6 +543,15 @@ export default class PT implements LanguageBase {
 
 	PWA_INTRO_2_TEXT_4 = 'Conectado com a DinoNuvem.'
 
+	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh não! Sua cobra bateu!'
+
+	PLAY_AGAIN_MESSAGE = 'Deseja jogar novamente?'
+
+	DINO_RUNNER_GAME_OVER_MSG_1 =
+		'Oh não! Seu dinossauro encostou em uma bactéria.'
+
+	START_GAME_TEXT = 'Iniciar Jogo!'
+
 	MUSICAL_DINO_GAME_MSG_1 = 'Parabéns! Sua música ficou incrível!'
 	
 	MUSICAL_DINO_GAME_MSG_2 = 'Deseja jogar novamente?'

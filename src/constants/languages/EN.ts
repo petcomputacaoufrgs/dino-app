@@ -487,8 +487,6 @@ export default class EN implements LanguageBase {
 
 	TREATMENT_SAVE = 'Save'
 
-	KIDS_SPACE = "Kid's space"
-
 	SECONDARY_TAB_MESSAGE =
 		'The dino is open in another browser tab. You can only use one tab.'
 
@@ -538,4 +536,14 @@ export default class EN implements LanguageBase {
 	MUSICAL_DINO_GAME_MSG_1 = 'Congratulations! Your song is amazing!'
 
 	MUSICAL_DINO_GAME_MSG_2 = 'Do you want to play again?'
+
+	KIDS_SPACE = "Kid's space"
+
+	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh no! Your snake crashed.'
+
+	PLAY_AGAIN_MESSAGE = 'Do you want to play again?'
+
+	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh no! Your dinosaur touched a bacterium.'
+
+	START_GAME_TEXT = 'Start Game!'
 }

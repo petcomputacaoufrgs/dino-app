@@ -1,11 +1,13 @@
 import { getRandomInteger } from '../../../../utils/RandomUtils'
 import sleep from '../../../../utils/SleepUtils'
 
-const MAX_DEGREE_REDUCTION_PER_ROTATION = 10
+const MAX_DEGREE_REDUCTION_PER_ROTATION = 20
 const INCREASE_IN_ROTATION_SPEED_PER_ROTATION = 3
+let isRunningAnimation = false
 
-export function startPaitingEngine() {
-	const paiting = document.getElementById('dinogotchi__inside__paiting')
+export function startPaitingEngine() {  
+  const paiting = document.getElementById('dinogotchi__inside__paiting')
+  isRunningAnimation = false
 
 	if (paiting) {
 		paiting.onclick = () => handlePaitingClick(paiting)
@@ -13,9 +15,15 @@ export function startPaitingEngine() {
 }
 
 async function handlePaitingClick(paiting: HTMLElement) {
-	let rotateDelay = getRandomInteger(10, 15)
-	let maxDegree = getRandomInteger(30, 50)
-	let currentDegree
+  if (isRunningAnimation) return
+
+  isRunningAnimation = true
+  let rotateDelay = getRandomInteger(10,15)
+  let maxDegree = getRandomInteger(30,50)
+  let currentDegree
+  
+  while(isPositiveDegree(maxDegree)) {
+    currentDegree = 0
 
 	while (isPositiveDegree(maxDegree)) {
 		currentDegree = 0
@@ -32,15 +40,11 @@ async function handlePaitingClick(paiting: HTMLElement) {
 			currentDegree--
 		}
 
-		//Center
-		while (isNotCentralized(currentDegree)) {
-			await rotatePaiting(paiting, currentDegree, rotateDelay)
-			currentDegree++
-		}
+    maxDegree = maxDegree - MAX_DEGREE_REDUCTION_PER_ROTATION
+    rotateDelay = rotateDelay + INCREASE_IN_ROTATION_SPEED_PER_ROTATION
+  }
 
-		maxDegree = maxDegree - MAX_DEGREE_REDUCTION_PER_ROTATION
-		rotateDelay = rotateDelay + INCREASE_IN_ROTATION_SPEED_PER_ROTATION
-	}
+  isRunningAnimation = false
 }
 
 async function rotatePaiting(

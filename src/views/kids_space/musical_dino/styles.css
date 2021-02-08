@@ -75,105 +75,105 @@
     margin: 5vmin;
 }
 
-.dino_moving svg {
+.musical_dino__dino_moving svg {
     animation: dino-rotation-animation;
     animation-duration: 1s;
     animation-iteration-count: 2;
 }
 
-.musical_dino__dino_green .dark_color {
+.musical_dino__dino_green .musical_dino__dark_color {
     fill:#498a68;
 }
   
-.musical_dino__dino_green .main_color {
+.musical_dino__dino_green .musical_dino__main_color {
     fill:#5cb38e;
 }
   
-.musical_dino__dino_green .light_color {
+.musical_dino__dino_green .musical_dino__light_color {
     fill:#9bdfc1;
 }
   
-.musical_dino__dino_yellow .dark_color {
+.musical_dino__dino_yellow .musical_dino__dark_color {
     fill:#BFB08B;
 }
   
-.musical_dino__dino_yellow .main_color {
+.musical_dino__dino_yellow .musical_dino__main_color {
     fill: #FFEBBA;
 }
   
-.musical_dino__dino_yellow .light_color {
+.musical_dino__dino_yellow .musical_dino__light_color {
     fill:#FFF5DC;
 }
   
-.musical_dino__dino_red .dark_color {
+.musical_dino__dino_red .musical_dino__dark_color {
     fill:#8f3c3c;
 }
   
-.musical_dino__dino_red .main_color {
+.musical_dino__dino_red .musical_dino__main_color {
     fill:#be5050;
 }
   
-.musical_dino__dino_red .light_color {
+.musical_dino__dino_red .musical_dino__light_color {
     fill:#dfa8a8;
 }
   
-.musical_dino__dino_blue .dark_color {
+.musical_dino__dino_blue .musical_dino__dark_color {
     fill:#679bb4;
 }
   
-.musical_dino__dino_blue .main_color {
+.musical_dino__dino_blue .musical_dino__main_color {
     fill:#89cff0;
 }
   
-.musical_dino__dino_blue .light_color {
+.musical_dino__dino_blue .musical_dino__light_color {
     fill:#c4e7f7;
 }
 
-.musical_dino__dino_green.dino_moving .dark_color {
+.musical_dino__dino_green.musical_dino__dino_moving .musical_dino__dark_color {
     fill:#74A791;
 }
   
-.musical_dino__dino_green.dino_moving .main_color {
+.musical_dino__dino_green.musical_dino__dino_moving .musical_dino__main_color {
     fill:#9bdfc1;
 }
 
-.musical_dino__dino_green.dino_moving .light_color {
+.musical_dino__dino_green.musical_dino__dino_moving .musical_dino__light_color {
     fill:#CDEFE0;
 }
   
-.musical_dino__dino_yellow.dino_moving .dark_color {
+.musical_dino__dino_yellow.musical_dino__dino_moving .musical_dino__dark_color {
     fill:#BFB8A5;
 }
   
-.musical_dino__dino_yellow.dino_moving .main_color {
+.musical_dino__dino_yellow.musical_dino__dino_moving .musical_dino__main_color {
     fill: #FFF5DC;
 }
   
-.musical_dino__dino_yellow.dino_moving .light_color {
+.musical_dino__dino_yellow.musical_dino__dino_moving .musical_dino__light_color {
     fill:#FFFAED;
 }
   
-.dino_red.dino_moving .dark_color {
+.musical_dino__dino_red.musical_dino__dino_moving .musical_dino__dark_color {
     fill:#A77E7E;
 }
   
-.dino_red.dino_moving .main_color {
+.musical_dino__dino_red.musical_dino__dino_moving .musical_dino__main_color {
     fill:#dfa8a8;
 }
   
-.dino_red.dino_moving .light_color {
+.musical_dino__dino_red.musical_dino__dino_moving .musical_dino__light_color {
     fill:#EFD3D3;
 }
   
-.musical_dino__dino_blue.dino_moving .dark_color {
+.musical_dino__dino_blue.musical_dino__dino_moving .musical_dino__dark_color {
     fill:#93ADB9;
 }
   
-.musical_dino__dino_blue.dino_moving .main_color {
+.musical_dino__dino_blue.musical_dino__dino_moving .musical_dino__main_color {
     fill: #c4e7f7;
 }
   
-.musical_dino__dino_blue.dino_moving .light_color {
+.musical_dino__dino_blue.musical_dino__dino_moving .musical_dino__light_color {
     fill:#E2F3FB;
 }
 

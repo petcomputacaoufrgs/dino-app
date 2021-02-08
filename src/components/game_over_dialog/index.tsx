@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Dialog } from '@material-ui/core'
 import TransitionSlide from '../slide_transition'
 import TextButton from '../button/text_button'

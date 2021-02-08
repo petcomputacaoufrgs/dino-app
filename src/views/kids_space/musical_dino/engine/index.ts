@@ -1,4 +1,4 @@
-const TOTAL_TURNS = 3
+const TOTAL_TURNS = 20
 
 let order : number[] = []
 let playerOrder : number[]  = []
@@ -129,60 +129,60 @@ function gameTurn() {
 
 function one() {
   if (noise) {
-    let audio = document.getElementById("musical_dino__clip1") as HTMLAudioElement | null
+    const audio = document.getElementById("musical_dino__clip1") as HTMLAudioElement | null
     if(audio){
       audio.play()
     }
   }
   noise = true
-  topLeft!.classList.add('dino_moving')
+  topLeft!.classList.add('musical_dino__dino_moving')
 }
 
 function two() {
   if (noise) {
-    let audio = document.getElementById("musical_dino__clip2") as HTMLAudioElement | null
+    const audio = document.getElementById("musical_dino__clip2") as HTMLAudioElement | null
     if(audio) {
       audio.play();
     }
   }
   noise = true;
-  topRight!.classList.add('dino_moving')
+  topRight!.classList.add('musical_dino__dino_moving')
 }
 
 function three() {
   if (noise) {
-    let audio = document.getElementById("musical_dino__clip3") as HTMLAudioElement | null
+    const audio = document.getElementById("musical_dino__clip3") as HTMLAudioElement | null
     if(audio) {
       audio.play();
     }
   }
   noise = true;
-  bottomLeft!.classList.add('dino_moving')
+  bottomLeft!.classList.add('musical_dino__dino_moving')
 }
 
 function four() {
   if (noise) {
-    let audio = document.getElementById("musical_dino__clip4") as HTMLAudioElement | null
+    const audio = document.getElementById("musical_dino__clip4") as HTMLAudioElement | null
     if(audio) {
       audio.play();
     }
   }
   noise = true;
-  bottomRight!.classList.add('dino_moving')
+  bottomRight!.classList.add('musical_dino__dino_moving')
 }
 
 function clearColor() {
-  topLeft!.classList.remove('dino_moving')
-  topRight!.classList.remove('dino_moving')
-  bottomLeft!.classList.remove('dino_moving')
-  bottomRight!.classList.remove('dino_moving')
+  topLeft!.classList.remove('musical_dino__dino_moving')
+  topRight!.classList.remove('musical_dino__dino_moving')
+  bottomLeft!.classList.remove('musical_dino__dino_moving')
+  bottomRight!.classList.remove('musical_dino__dino_moving')
 }
 
 function flashColor() {
-    topLeft!.classList.add('dino_moving')
-    topRight!.classList.add('dino_moving')
-    bottomLeft!.classList.add('dino_moving')
-    bottomRight!.classList.add('dino_moving')
+    topLeft!.classList.add('musical_dino__dino_moving')
+    topRight!.classList.add('musical_dino__dino_moving')
+    bottomLeft!.classList.add('musical_dino__dino_moving')
+    bottomRight!.classList.add('musical_dino__dino_moving')
 }
 
 function check() {

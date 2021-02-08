@@ -69,7 +69,7 @@ const DinoRunner: React.FC = () => {
 				<p>{language.data.DINO_RUNNER_GAME_OVER_MSG_1}</p>
 				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.KIDS_SPACE} />
+			<GoBackButton path={PathConstants.GAME_MENU} />
 			<div ref={dinoRunnerGameGrid} className='dino_runner_game__grid'>
 				<div
 					ref={dinoRunnerGameCharacter}

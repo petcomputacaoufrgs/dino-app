@@ -533,9 +533,9 @@ export default class EN implements LanguageBase {
 
 	PWA_INTRO_2_TEXT_4 = 'Connected to DinoCloud.'
 
-	KIDS_SPACE = "Kid's space"
+	MUSICAL_DINO_GAME_MSG_1 = 'Congratulations! Your song is amazing!'
 
-	SNAKE_GAME_GAME_OVER_MSG_2 = 'Do you want to play again?'
+	KIDS_SPACE = "Kid's space"
 
 	WINNER = 'Winner: '
 
@@ -547,4 +547,6 @@ export default class EN implements LanguageBase {
 	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh no! Your dinosaur touched a bacterium.'
 
 	START_GAME_TEXT = 'Start Game!'
+
+	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Good game!'
 }

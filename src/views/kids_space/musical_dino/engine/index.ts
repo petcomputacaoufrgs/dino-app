@@ -21,12 +21,12 @@ let onWin : () => void
 
 export function startGame(handleWin : () => void) {
   onWin = handleWin
-  topLeft = document.getElementById('topleft')
-  topRight = document.getElementById('topright')
-  bottomLeft = document.getElementById('bottomleft')
-  bottomRight = document.getElementById('bottomright')
-  startButton = document.getElementById('start')
-  turnDiv = document.getElementById('turn')
+  topLeft = document.getElementById('musical_dino__topleft')
+  topRight = document.getElementById('musical_dino__topright')
+  bottomLeft = document.getElementById('musical_dino__bottomleft')
+  bottomRight = document.getElementById('musical_dino__bottomright')
+  startButton = document.getElementById('musical_dino__start')
+  turnDiv = document.getElementById('musical_dino__header__turn')
 
   win = true
   noise = false
@@ -129,7 +129,7 @@ function gameTurn() {
 
 function one() {
   if (noise) {
-    let audio = document.getElementById("clip1") as HTMLAudioElement | null
+    let audio = document.getElementById("musical_dino__clip1") as HTMLAudioElement | null
     if(audio){
       audio.play()
     }
@@ -140,7 +140,7 @@ function one() {
 
 function two() {
   if (noise) {
-    let audio = document.getElementById("clip2") as HTMLAudioElement | null
+    let audio = document.getElementById("musical_dino__clip2") as HTMLAudioElement | null
     if(audio) {
       audio.play();
     }
@@ -151,7 +151,7 @@ function two() {
 
 function three() {
   if (noise) {
-    let audio = document.getElementById("clip3") as HTMLAudioElement | null
+    let audio = document.getElementById("musical_dino__clip3") as HTMLAudioElement | null
     if(audio) {
       audio.play();
     }
@@ -162,7 +162,7 @@ function three() {
 
 function four() {
   if (noise) {
-    let audio = document.getElementById("clip4") as HTMLAudioElement | null
+    let audio = document.getElementById("musical_dino__clip4") as HTMLAudioElement | null
     if(audio) {
       audio.play();
     }

@@ -1,0 +1,24 @@
+import SkyAnimation from '../../engine/SkyAnimation'
+
+const STAR_SPEED = 1500
+
+export function startBackgroundEngine() {
+	const stars = [
+		document.getElementById('dino_runner__star_one'),
+		document.getElementById('dino_runner__star_two'),
+		document.getElementById('dino_runner__star_three'),
+		document.getElementById('dino_runner__star_four'),
+		document.getElementById('dino_runner__star_five'),
+		document.getElementById('dino_runner__star_six'),
+		document.getElementById('dino_runner__star_seven'),
+		document.getElementById('dino_runner__star_eight'),
+		document.getElementById('dino_runner__star_nine'),
+		document.getElementById('dino_runner__star_ten'),
+		document.getElementById('dino_runner__star_eleven'),
+	].filter(el => el !== null) as HTMLElement[]
+
+	const skyAnimation = new SkyAnimation()
+	skyAnimation.startSkyEngine(stars, STAR_SPEED, true)
+
+	return skyAnimation.stopSkyEngine
+}

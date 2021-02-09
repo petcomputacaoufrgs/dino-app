@@ -37,8 +37,10 @@ const GameMenu: React.FC = () => {
 				background={CardBackground5}
 			></GameCard>
 			<GameCard
-				onClick={() => console.log('dino jump')}
-				text='Dino Jump'
+				onClick={() => {
+					HistoryService.push(PathConstants.MUSICAL_DINO_GAME)
+				}}
+				text='Dino musical'
 				background={CardBackground1}
 			></GameCard>
 			<GameCard

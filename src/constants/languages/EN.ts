@@ -533,6 +533,10 @@ export default class EN implements LanguageBase {
 
 	PWA_INTRO_2_TEXT_4 = 'Connected to DinoCloud.'
 
+	MUSICAL_DINO_GAME_MSG_1 = 'Congratulations! Your song is amazing!'
+
+	MUSICAL_DINO_GAME_MSG_2 = 'Do you want to play again?'
+
 	KIDS_SPACE = "Kid's space"
 
 	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh no! Your snake crashed.'

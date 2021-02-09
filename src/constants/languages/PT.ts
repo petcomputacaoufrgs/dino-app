@@ -551,4 +551,8 @@ export default class PT implements LanguageBase {
 		'Oh não! Seu dinossauro encostou em uma bactéria.'
 
 	START_GAME_TEXT = 'Iniciar Jogo!'
+
+	MUSICAL_DINO_GAME_MSG_1 = 'Parabéns! Sua música ficou incrível!'
+	
+	MUSICAL_DINO_GAME_MSG_2 = 'Deseja jogar novamente?'
 }

@@ -2,22 +2,22 @@
 	background: radial-gradient(
 			circle at 100% 50%,
 			transparent 20%,
-			rgba(255, 255, 255, 0.3) 21%,
-			rgba(255, 255, 255, 0.3) 34%,
+			#ffffff4d 21%,
+			#ffffff4d 34%,
 			transparent 35%,
 			transparent
 		),
 		radial-gradient(
 				circle at 0% 50%,
 				transparent 20%,
-				rgba(255, 255, 255, 0.3) 21%,
-				rgba(255, 255, 255, 0.3) 34%,
+				#ffffff4d 21%,
+				#ffffff4d 34%,
 				transparent 35%,
 				transparent
 			)
 			0 -50px;
 	background-size: 75px 100px;
-	background-color: #ffe1ed;
+	background-color: var(--dino-runner-game-background-color);
 	width: 100vw;
 	height: 100vh;
 }
@@ -58,8 +58,8 @@
 	height: 8vh;
 	max-width: 20rem;
 	max-height: 5rem;
-	background-color: #e274a0;
-	color: #f5f5f5;
+	background-color: var(--dino-runner-game-details-color);
+	color: var(--light-color);
 	border: none;
 	text-decoration: none;
 	border-radius: 0.5rem;
@@ -67,7 +67,7 @@
 
 .dino_runner_game__grid__background {
 	position: absolute;
-	background-color: #1e344b;
+	background-color: var(--dino-runner-game-board-background);
 	width: auto;
 	height: 40vh;
 	margin: 0;
@@ -90,7 +90,7 @@
 }
 
 .dino_runner_game__score_board {
-	background-color: #e274a0;
+	background-color: var(--dino-runner-game-details-color);
 	width: 5rem;
 	height: 5rem;
 	border-radius: 50%;

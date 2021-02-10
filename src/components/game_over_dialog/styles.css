@@ -7,8 +7,6 @@
 	border-radius: 1rem;
 	z-index: 10;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-	animation-name: animatetop;
-  	animation-duration: 0.4s
 }
 
 .game_over_dialog__content {
@@ -28,8 +26,3 @@
 	font-size: var(--default-font);
 	margin-left: 1.5rem;
 }
-
-@keyframes animatetop {
-	from {opacity:0}
-	to {opacity:1}
-  }

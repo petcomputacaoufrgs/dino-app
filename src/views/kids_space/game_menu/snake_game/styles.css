@@ -11,7 +11,7 @@
 }
 
 .snake_game {
-	background-image: url(../../../assets/kids_space/snake/outter_board_background.png);
+	background-image: url(../../../../assets/kids_space/snake/outter_board_background.png);
 	height: 100vh;
 	width: 100vw;
 	display: flex;
@@ -30,7 +30,7 @@
 }
 
 #snake_game__game_board {
-	background-image: url(../../../assets/kids_space/snake/inner_board_background.png);
+	background-image: url(../../../../assets/kids_space/snake/inner_board_background.png);
 	background-size: contain;
 	height: 100vmin;
 	width: 100vmin;

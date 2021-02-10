@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import PathConstants from '../../../constants/app/PathConstants'
-import HistoryService from '../../../services/history/HistoryService'
+import PathConstants from '../../../../constants/app/PathConstants'
+import HistoryService from '../../../../services/history/HistoryService'
 import { starGame } from './engine'
-import { useLanguage } from '../../../context/language'
-import GameOverDialog from '../../../components/game_over_dialog'
-import GoBackButton from '../../../components/button/go_back'
+import { useLanguage } from '../../../../context/language'
+import GameOverDialog from '../../../../components/game_over_dialog'
+import GoBackButton from '../../../../components/button/go_back'
 import './styles.css'
 
 const SnakeGame: React.FC = () => {

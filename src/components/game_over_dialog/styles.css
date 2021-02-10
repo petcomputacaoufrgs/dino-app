@@ -1,5 +1,5 @@
 .game_over_dialog {
-	background-color: #A594AB;
+	background-color: var(--dialog_main_color);
 	position: fixed;
 	width: 80vw;
 	height: 30vh;
@@ -23,8 +23,8 @@
 }
 
 .game_over_dialog__buttons .button {
-	background-color: #F5F5F5;
-	color: #A594AB;
+	background-color: var(--light-color);
+	color: var(--dialog_main_color);
 	font-size: var(--default-font);
 	margin-left: 1.5rem;
 }

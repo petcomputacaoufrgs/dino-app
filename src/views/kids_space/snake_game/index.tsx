@@ -30,16 +30,15 @@ const SnakeGame: React.FC = () => {
 	}
 
 	return (
-		<div className='snake_game'>
+		<div className='minigame snake_game'>
 			<GameOverDialog
 				onAgree={handleRestart}
 				onDisagree={handleClose}
 				open={openDialog}
 			>
 				<p>{language.data.SNAKE_GAME_GAME_OVER_MSG_1}</p>
-				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.KIDS_SPACE} />
+			<GoBackButton path={PathConstants.GAME_MENU} />
 			<div id='snake_game__score_board'></div>
 			<div id='snake_game__game_board'></div>
 		</div>

@@ -26,7 +26,7 @@
 	position: absolute;
 	width: 100vw;
 	height: 40vh;
-	margin-top: 20vh;
+	margin-top: 30vh;
 	padding: 1rem;
 	display: flex;
 	align-items: flex-end;
@@ -71,7 +71,7 @@
 	width: auto;
 	height: 40vh;
 	margin: 0;
-	margin-top: 20vh;
+	margin-top: 30vh;
 	z-index: 1;
 }
 
@@ -82,7 +82,7 @@
 
 .dino_runner_game__score_board_container {
 	position: absolute;
-	top: 2rem;
+	top: 13vh;
 	width: 100vw;
 	display: flex;
 	align-items: center;
@@ -90,7 +90,7 @@
 }
 
 .dino_runner_game__score_board {
-	background-color: var(--snake-game-score-background-color);
+	background-color: #e274a0;
 	width: 5rem;
 	height: 5rem;
 	border-radius: 50%;
@@ -104,6 +104,15 @@
 	font-size: var(--very-large-font);
 	font-weight: bold;
 	margin-bottom: 0;
+}
+
+.dino_runner_game .game_over_dialog {
+	top: 35vh;
+	left: 10vw;
+}
+
+.dino_runner_game .game_over_dialog .game_over_dialog__buttons {
+	margin-top: 8vmin;
 }
 
 .dino_runner_game__grid__background #dino_runner__star_one {

@@ -544,7 +544,7 @@ export default class EN implements LanguageBase {
 
 	PLAY_AGAIN_MESSAGE = 'Do you want to play again?'
 
-	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh no! Your dinosaur touched a bacterium.'
+	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh no! Dino touched a bacterium.'
 
 	START_GAME_TEXT = 'Start Game!'
 

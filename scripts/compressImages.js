@@ -1,7 +1,6 @@
 const imagemin = require('imagemin')
 const imageminPng = require('imagemin-pngquant')
 const imageminJpg = require('imagemin-mozjpeg')
-const imageminSvg = require('imagemin-svgo')
 const fs = require('fs')
 const path = require('path')
 
@@ -49,10 +48,7 @@ const compressImages = async dirs => {
 				}),
 				imageminJpg({
 					quality: [0.6, 0.8],
-				}),
-				imageminSvg({
-					plugins: [{ removeViewBox: false }],
-				}),
+				})
 			],
 		})
 

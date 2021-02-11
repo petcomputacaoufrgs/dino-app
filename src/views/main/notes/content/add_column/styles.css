@@ -1,7 +1,7 @@
 .note__note_content__columns__add_column {
-	padding-right: 14px;
-	margin-left: 7px;
-	width: 270px;
+	padding-right: 0.875rem;
+	margin-left: 0.438rem;
+	width: 16.875rem;
 	flex: 0 0 auto;
 }
 
@@ -10,10 +10,10 @@
 }
 
 .note__note_content__columns__add_column__button {
-	border: 1px solid;
+	border: 0.063rem solid;
 	border-color: var(--column-border);
 	background-color: var(--board-background);
-	border-radius: 5px;
+	border-radius: 0.313rem;
 	width: 100%;
 	height: auto;
 }
@@ -23,7 +23,7 @@
 	font-size: var(--small-font);
 	margin-bottom: 0;
 	margin-top: 0;
-	font-weight: bold;
+	font-weight: 700;
 	color: var(--column-border);
 }
 

@@ -6,3 +6,13 @@
 .note_create__dialog_content {
 	padding: 20px 16px 8px;
 }
+
+.note_create_dialog .MuiTypography-root.MuiTypography-h6 {
+	color: white;
+	font-size: var(--default-font);
+}
+
+.note_create_dialog
+	.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+	color: var(--column-font-color);
+}

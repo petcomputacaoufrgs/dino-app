@@ -1,5 +1,5 @@
 import React from 'react'
-import MoreVert from '@material-ui/icons/MoreVert'
+import { MoreVert } from '@material-ui/icons'
 import OptionsIconButtonProps from './props'
 import { ReactComponent as MoreSVG } from '../../../../assets/icons/more_vert.svg'
 import IconButton from '..'

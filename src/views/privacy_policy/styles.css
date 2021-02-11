@@ -5,7 +5,7 @@
 	color: var(--base-font-color);
 	width: 100%;
 	height: 100%;
-	padding: 30px;
+	padding: 1.875rem;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -18,28 +18,28 @@
 	font-size: var(--big-font);
 }
 
-.privacy_policy .arrow-back {
-	padding: 0px;
-	margin-bottom: 10px;
+.privacy_policy .arrow_back {
+	padding: 0rem;
+	margin-bottom: 0.625rem;
 }
 
-.privacy_policy .icon_button.arrow-back svg {
+.privacy_policy .icon_button.arrow_back svg {
 	fill: var(--contrast-color);
 }
 
 .privacy_policy h2 {
-	font-weight: 600;
-	margin: 20px 0px 15px 0px;
+	font-weight: 700;
+	margin: 1.25rem 0rem 0.938rem 0rem;
 }
 
 .privacy_policy h5 {
-	margin: 15px 0px 10px 0px;
+	margin: 0.938rem 0rem 0.625rem 0rem;
 	color: #636363;
 }
 
 .privacy_policy p {
 	text-align: justify;
-	margin: 10px 0px;
+	margin: 0.625rem 0rem;
 }
 
 .privacy_policy span {

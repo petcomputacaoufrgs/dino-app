@@ -8,7 +8,7 @@
 
 .dino_switch__form p {
 	margin: 0;
-	margin-right: 16px;
+	margin-right: 1rem;
 }
 
 .dino_switch__form__switch {
@@ -16,8 +16,8 @@
 }
 
 .dino_switch__form__switch .MuiSwitch-track {
-	height: 18px;
-	border-radius: 18px;
+	height: 1.125rem;
+	border-radius: 1.125rem;
 }
 
 .MuiSwitch-root.dino_switch__form__switch {

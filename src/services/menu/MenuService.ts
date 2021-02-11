@@ -7,6 +7,7 @@ import { ReactComponent as FaqSVG } from '../../assets/icons/menu_icons/faq.svg'
 import { ReactComponent as SettingsSVG } from '../../assets/icons/menu_icons/settings.svg'
 import { ReactComponent as LogoutSVG } from '../../assets/icons/menu_icons/logout.svg'
 import { ReactComponent as CalendarSVG } from '../../assets/icons/menu_icons/calendar.svg'
+import { ReactComponent as KidsSpaceSVG } from '../../assets/icons/menu_icons/blocks.svg'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
@@ -92,6 +93,11 @@ class MenuService {
 			image: SettingsSVG,
 			name: language.MENU_STAFF_TREATMENT,
 			onClick: () => HistoryService.push(PathConstants.TREATMENT),
+		},
+		{
+			image: KidsSpaceSVG,
+			name: language.KIDS_SPACE,
+			onClick: () => HistoryService.push(PathConstants.KIDS_SPACE),
 		},
 		{
 			name: language.MENU_ABOUT_US,

@@ -19,7 +19,7 @@ const PrivateRouterContext = createContext({
  * @description Gera os dados necessários para as rotas privadas e de login
  * @param props Propriedades do PrivateRouter
  */
-const PrivateRouterContextProvider: React.FC<PrivateRouterContextType> = props => {
+const PrivateRouterProvider: React.FC<PrivateRouterContextType> = props => {
 	const getHistory = (): History => {
 		if (props.browserHistory) {
 			return props.browserHistory
@@ -46,5 +46,4 @@ export const IsStaff = (): boolean => {
 
 export const IsNotClient = (): boolean => usePrivateRouter().userPermission !== UserEnum.CLIENT 
 
-
-export default PrivateRouterContextProvider
+export default PrivateRouterProvider

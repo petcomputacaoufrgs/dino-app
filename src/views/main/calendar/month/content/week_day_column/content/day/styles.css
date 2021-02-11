@@ -1,15 +1,15 @@
 .calendar__month__content__week_day_column__content__day {
 	position: relative;
-	padding: 0px;
+	padding: 0rem;
 	border: 0;
-	border-top: #b9b9a2 1px solid;
+	border-top: #b9b9a2 0.063rem solid;
 	height: 100%;
 	width: 100%;
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-start;
 	background-color: transparent;
-	margin: 0px;
+	margin: 0rem;
 	outline: none !important;
 	background-position: center;
 	transition: background 0.8s;
@@ -28,10 +28,10 @@
 
 .calendar__month__content__week_day_column__content__day__box {
 	position: absolute;
-	top: 2px;
-	bottom: 2px;
+	top: 0.125rem;
+	bottom: 0.125rem;
 	width: 100%;
-	height: calc(100%-5px);
+	height: calc(100%-0.313rem);
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
@@ -39,7 +39,7 @@
 }
 
 .calendar__month__content__week_day_column__content__day__box::-webkit-scrollbar {
-	width: 0px;
+	width: 0rem;
 }
 
 .calendar__month__content__week_day_column__content__day__box__title {
@@ -75,13 +75,13 @@
 	padding-left: 3%;
 	padding-right: 3%;
 	padding-top: 3%;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .calendar__month__content__week_day_column__content__day__box__events__item {
 	white-space: nowrap;
 	font-size: 0.8em;
-	border-radius: 2px;
+	border-radius: 0.125rem;
 	height: 1.2em;
 	color: white;
 	margin-bottom: 2%;

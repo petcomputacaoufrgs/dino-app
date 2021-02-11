@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Login from './views/login'
 import Main from './views/main'
-import PrivateRouterContextProvider from './context/private_router'
+import PrivateRouterProvider from './context/private_router'
 import PrivateRoute from './components/private_route'
 import LoginRoute from './components/login_route/index'
 import PathConstants from './constants/app/PathConstants'
@@ -18,6 +18,10 @@ import UserSettingsEntity from './types/user/database/UserSettingsEntity'
 import DataFontSizeUtils from './utils/DataFontSizeUtils'
 import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
+import TabControlService from './services/tab_control/TabControlService'
+import SecondaryTab from './views/secondary_tab'
+import PWAControl from './components/pwa_control'
+import KidsSpace from './views/kids_space'
 import './App.css'
 import UserService from './services/user/UserService'
 import UserEnum from './types/enum/UserEnum'
@@ -25,15 +29,19 @@ import StaffMain from './views/staff'
 
 const LOAD_SCREEN_TIME = 2250
 
-const App = (): JSX.Element => {
+const App: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
-	const [showLoadScreen, setShowLoadScreen] = useState(false)
+	const [isMainTab, setIsMainTab] = useState(false)
+	const [showLoadScreen, setShowLoadScreen] = useState(true)
 	const [userPermission, setUserPermission] = useState<number | undefined>(undefined)
 
 	useEffect(() => {
 		const loadData = async () => {
-			const isAuthenticated = await AuthService.isAuthenticated()
+			if (isLoading) await TabControlService.registerTab()
+
+			const isAuthenticated = await loadAuth()
+
 			if (isAuthenticated) {
 				await loadSettings()
 				await loadUserPermission()
@@ -42,9 +50,15 @@ const App = (): JSX.Element => {
 					UserSettingsService.getSystemColorThemeName(),
 				)
 			}
+			await loadTabInfo()
 			updateAuth(isAuthenticated)
-			
 			finishLoading()
+		}
+
+		const loadAuth = async (): Promise<boolean> => {
+			const isAuthenticated = await AuthService.isAuthenticated()
+			updateAuth(isAuthenticated)
+			return isAuthenticated
 		}
 
 		const loadSettings = async () => {
@@ -58,9 +72,18 @@ const App = (): JSX.Element => {
 			}
 		}
 
+		const loadTabInfo = async () => {
+			const isMainTab = await TabControlService.isMainTab()
+			updateTabInfo(isMainTab)
+		}
+
+		let updateAuth = (isAuthenticated: boolean) => {
+			setIsAuthenticated(isAuthenticated)
+		}
+
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
-      updateUserPermission(hasUserPermission || UserEnum.USER)
+            updateUserPermission(hasUserPermission || UserEnum.USER)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {
@@ -71,8 +94,8 @@ const App = (): JSX.Element => {
 			DataFontSizeUtils.setBodyDataFontSize(fontSize)
 		}
 
-		let updateAuth = (isAuthenticated: boolean) => {
-			setIsAuthenticated(isAuthenticated)
+		let updateTabInfo = (isMainTab: boolean) => {
+			setIsMainTab(isMainTab)
 		}
 
 		let updateUserPermission = (userPermission: number) => {
@@ -83,8 +106,9 @@ const App = (): JSX.Element => {
 			setIsLoading(false)
 		}
 
-		UserSettingsService.addUpdateEventListenner(loadSettings)
 		AuthService.addUpdateEventListenner(loadData)
+		UserSettingsService.addUpdateEventListenner(loadSettings)
+		TabControlService.addUpdateEventListenner(loadData)
 
 		if (isLoading) {
 			loadData()
@@ -95,8 +119,10 @@ const App = (): JSX.Element => {
 			updateSettings = () => {}
 			updateAuth = () => {}
 			updateUserPermission = () => {}
-			UserSettingsService.removeUpdateEventListenner(loadSettings)
+			updateTabInfo = () => {}
 			AuthService.removeUpdateEventListenner(loadData)
+			UserSettingsService.removeUpdateEventListenner(loadSettings)
+			TabControlService.removeUpdateEventListenner(loadTabInfo)
 		}
 	}, [isLoading])
 
@@ -142,16 +168,24 @@ const App = (): JSX.Element => {
 				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
 				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
 				<Route path={PathConstants.ABOUT_US} component={AboutUs} />
+				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
 				<Route path={'/'} component={NotFound} />
 			</Switch>
-		</PrivateRouterContextProvider>
+		</PrivateRouterProvider>
 	)
 
-	const renderLoad = () => <Load />
+	const renderLoad = (): JSX.Element => <Load />
 
 	return (
 		<div className='app'>
-			{showLoadScreen || isLoading ? renderLoad() : renderApp()}
+			{showLoadScreen || isLoading ? (
+				<Load />
+			) : isMainTab ? (
+				renderApp()
+			) : (
+				<SecondaryTab />
+			)}
+			<PWAControl />
 		</div>
 	)
 }

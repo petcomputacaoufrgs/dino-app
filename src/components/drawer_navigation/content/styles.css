@@ -7,7 +7,7 @@
 
 .drawer__navigation__content__component {
 	position: relative;
-	height: calc(100% - 45px);
+	height: calc(100% - 2.813rem);
 	background-color: var(--background-main);
 }
 
@@ -17,5 +17,5 @@
 }
 
 .drawer__navigation__content__app_bar {
-	height: 45px;
+	height: 2.813rem;
 }

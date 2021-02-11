@@ -1,11 +1,11 @@
 .settings {
 	display: flex;
 	flex-direction: column;
-	padding: 20px 20px;
+	padding: 1.25rem 1.25rem;
 }
 
 .settings .dino_hr {
-	margin: 5px 20px;
+	margin: 0.313rem 1.25rem;
 }
 
 .settings .settings__form {
@@ -32,14 +32,14 @@
 }
 
 .settings__save_button__icon {
-	width: 18px;
-	height: 18px;
-	margin-right: 7px;
+	width: 1.125rem;
+	height: 1.125rem;
+	margin-right: 0.438rem;
 	fill: var(--inv-contrast-color);
 }
 
 .settings__save_button.MuiButtonBase-root {
-	margin-top: 50px;
+	margin-top: 3.125rem;
 	background-color: var(--header-and-menu);
 }
 

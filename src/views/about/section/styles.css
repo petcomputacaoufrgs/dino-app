@@ -1,5 +1,5 @@
 .section {
-	padding-bottom: 32px;
+	padding-bottom: 2rem;
 }
 
 .section__title {
@@ -10,11 +10,11 @@
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-	padding: 16px;
+	padding: 1rem;
 }
 
 .section__footnote {
-	padding: 10px 20px;
+	padding: 0.625rem 1.25rem;
 	text-align: center;
 	font-style: italic;
 }

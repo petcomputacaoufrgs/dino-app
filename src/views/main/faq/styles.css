@@ -1,7 +1,7 @@
 .faq__content {
 	position: absolute;
 	width: 100%;
-	height: calc(100% - 60px);
+	height: calc(100% - 3.75rem);
 	overflow-y: auto;
 	font-size: var(--default-font);
 }

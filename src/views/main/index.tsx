@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../../context/language/index'
+import { useLanguage } from '../../context/language'
 import { Switch } from 'react-router'
 import PathConstants from '../../constants/app/PathConstants'
 import DrawerNavigation from '../../components/drawer_navigation'
@@ -11,13 +11,15 @@ import Home from './home'
 import Settings from './settings'
 import LogoutDialog from '../../components/logout_dialog'
 import Notes from './notes'
-import NotFound from '../not_found/index'
+import NotFound from '../not_found'
 import Faq from './faq'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import Calendar from './calendar'
 import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
+import Loader from '../../components/loader'
+import KidsSpace from '../kids_space'
 import DinoLoader from '../../components/loader/index'
 
 const Main: React.FC = () => {
@@ -74,6 +76,7 @@ const Main: React.FC = () => {
 					component={Faq} 
 				/>
 				<PrivateRoute path={PathConstants.USER_CALENDAR} component={Calendar} />
+				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>
 		)

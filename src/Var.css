@@ -11,8 +11,9 @@
 	--big-font: 1.25rem;
 	--large-font: 1.4rem;
 	--very-large-font: 1.75rem;
+	--titan-font: 2.5rem;
 
-	--svg-size: 18px;
+	--svg-size: 1.125rem;
 
 	/* // Light Mode // */
 	/* Fundos */
@@ -140,7 +141,7 @@
 	--large-font: 2.03rem;
 	--very-large-font: 2.5375rem;
 
-	--svg-size: 26px;
+	--svg-size: 1.625rem;
 }
 
 [data-font-size='larger'] {
@@ -152,5 +153,5 @@
 	--large-font: 2.45rem;
 	--very-large-font: 3.0625rem;
 
-	--svg-size: 30px;
+	--svg-size: 1.875rem;
 }

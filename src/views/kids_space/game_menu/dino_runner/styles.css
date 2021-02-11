@@ -112,7 +112,7 @@
 }
 
 .dino_runner_game .game_over_dialog .game_over_dialog__buttons {
-	margin-top: 8vmin;
+	margin-bottom: 1vmin;
 }
 
 .dino_runner_game__grid__background #dino_runner__star_one {

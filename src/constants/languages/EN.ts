@@ -535,10 +535,11 @@ export default class EN implements LanguageBase {
 
 	MUSICAL_DINO_GAME_MSG_1 = 'Congratulations! Your song is amazing!'
 
-	MUSICAL_DINO_GAME_MSG_2 = 'Do you want to play again?'
-
 	KIDS_SPACE = "Kid's space"
 
+	WINNER = 'Winner: '
+
+	NEXT_PLAYER = 'Next player: '
 	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh no! Your snake crashed.'
 
 	PLAY_AGAIN_MESSAGE = 'Do you want to play again?'
@@ -546,4 +547,8 @@ export default class EN implements LanguageBase {
 	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh no! Your dinosaur touched a bacterium.'
 
 	START_GAME_TEXT = 'Start Game!'
+
+	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Good game! Congratulations '
+
+	TIC_TAC_DINO_TIE = 'Tie!'
 }

@@ -39,8 +39,8 @@ const SnakeGame: React.FC = () => {
 				<p>{language.data.SNAKE_GAME_GAME_OVER_MSG_1}</p>
 			</GameOverDialog>
 			<GoBackButton path={PathConstants.GAME_MENU} />
-			<div id='snake_game__score_board'></div>
-			<div id='snake_game__game_board'></div>
+			<div id='snake_game__score_board' />
+			<div id='snake_game__game_board' />
 		</div>
 	)
 }

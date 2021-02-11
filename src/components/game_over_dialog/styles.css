@@ -1,6 +1,7 @@
 .game_over_dialog {
 	background-color: var(--dialog_main_color);
 	position: fixed;
+	top: 35vh;
 	width: 80vw;
 	height: 30vh;
 	padding: 2rem 2rem 0 2rem;
@@ -10,14 +11,19 @@
 }
 
 .game_over_dialog__content {
+	height: 70%;
+	width: 100%;
 	text-align: center;
+	padding-top: 1rem;
 }
 
 .game_over_dialog__buttons {
+	height: 30%;
+	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
-	margin-top: 12vmin;
+	padding-bottom: 1rem;
 }
 
 .game_over_dialog__buttons .button {
@@ -25,4 +31,5 @@
 	color: var(--dialog_main_color);
 	font-size: var(--default-font);
 	margin-left: 1.5rem;
+	height: 2rem;
 }

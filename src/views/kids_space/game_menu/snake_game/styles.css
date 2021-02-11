@@ -1,21 +1,9 @@
-@media only screen and (min-device-width: 1224px) {
-	#snake_game__score_board {
-		margin-left: 10vmin;
-	}
-}
-
-@media only screen and (max-device-width: 1223px) {
-	#snake_game__score_board {
-		margin-bottom: 10vmin;
-	}
-}
-
 .snake_game {
 	background-image: url(../../../../assets/kids_space/snake/outter_board_background.png);
 	height: 100vh;
 	width: 100vw;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	flex-direction: column;
 	margin: 0;
@@ -48,10 +36,24 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin-top: 5rem;
+	margin-bottom: 2rem;
 }
 
 #snake_game__score_board p {
 	font-size: var(--very-large-font);
 	font-weight: bold;
 	margin-bottom: 0;
+}
+
+@media only screen and (min-device-width: 1224px) {
+	#snake_game__score_board {
+		margin-left: 10vmin;
+	}
+}
+
+@media only screen and (max-device-width: 1223px) {
+	#snake_game__score_board {
+		margin-bottom: 5rem;
+	}
 }

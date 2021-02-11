@@ -82,7 +82,7 @@
 
 .dino_runner_game__score_board_container {
 	position: absolute;
-	top: 13vh;
+	top: 10vh;
 	width: 100vw;
 	display: flex;
 	align-items: center;

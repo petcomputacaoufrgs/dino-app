@@ -548,5 +548,7 @@ export default class EN implements LanguageBase {
 
 	START_GAME_TEXT = 'Start Game!'
 
-	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Good game!'
+	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Good game! Congratulations '
+
+	TIC_TAC_DINO_TIE = 'Tie!'
 }

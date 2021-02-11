@@ -6,11 +6,13 @@ import GameOverDialog from "../../../../components/game_over_dialog"
 import Game from './components/Game'
 import '../../variables.css'
 import './styles.css'
+import GoBackButton from "../../../../components/button/go_back"
 
 const TicTacDino: React.FC = () => {
   const language = useLanguage()
   const [openDialog, setOpenDialog] = useState(false)
   const [gameStarted, setGameStarted] = useState(true)
+  const [message, setMessage] = useState('')
 
   function handleClose() {
     setOpenDialog(false)
@@ -22,7 +24,12 @@ const TicTacDino: React.FC = () => {
     setGameStarted(true)
   }
 
-  function handleEndGame() {
+  function handleEndGame(winner : string | null) {
+    if(winner) {
+      setMessage(`${language.data.TIC_TAC_DINO_GAME_OVER_MSG_1} ${winner}!`)
+    } else {
+      setMessage(language.data.TIC_TAC_DINO_TIE)
+    }
     setOpenDialog(true)
     setGameStarted(false)
   }
@@ -34,9 +41,10 @@ const TicTacDino: React.FC = () => {
         onDisagree={handleClose}
         open={openDialog}
       >
-				<p>{language.data.TIC_TAC_DINO_GAME_OVER_MSG_1}</p>
+				<p>{message}</p>
         <p>{language.data.PLAY_AGAIN_MESSAGE}</p>
       </GameOverDialog>
+      <GoBackButton path={PathConstants.GAME_MENU} />
       <Game onEndGame={handleEndGame} gameStarted={gameStarted}/>
     </div>
   );

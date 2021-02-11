@@ -4,7 +4,7 @@ import { calculateWinner } from "../helper";
 import { useLanguage } from "../../../../../context/language"
 
 interface GameProps {
-  onEndGame : () => void
+  onEndGame : (winner : string | null) => void
   gameStarted : boolean
 }
 
@@ -31,16 +31,34 @@ const Game : React.FC <GameProps> = ({onEndGame, gameStarted}) => {
     };
 
     useEffect(() => {
+      const handleEndGame = () => {
+        setStepNumber(0)
+        onEndGame(winner)
+      }
+
+      if(winner && gameStarted) {
+        handleEndGame()
+      }
+    }, [gameStarted, winner, onEndGame])
+
+    useEffect(() => {
       if(gameStarted) {
         setHistory([Array(9).fill(null)])
         setStepNumber(0)
         setXisNext(true)
       }
+    }, [gameStarted])
 
-      if(winner && gameStarted) {
-        onEndGame()
+    useEffect(() => {
+      const handleEndGame = () => {
+        setStepNumber(0)
+        onEndGame(winner)
       }
-    }, [gameStarted, winner, onEndGame])
+
+      if(stepNumber === 9 && gameStarted) {
+        handleEndGame()
+      }
+    }, [stepNumber, gameStarted, winner, onEndGame])
 
   return (
     <>

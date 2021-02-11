@@ -261,4 +261,5 @@ export default interface LanguageBase {
 	START_GAME_TEXT: string
 	MUSICAL_DINO_GAME_MSG_1: string
 	TIC_TAC_DINO_GAME_OVER_MSG_1: string
+	TIC_TAC_DINO_TIE: string
 }

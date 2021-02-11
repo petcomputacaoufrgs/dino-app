@@ -1,4 +1,3 @@
-import './styles.css'
 import React, { useState } from 'react'
 import FaqItemsProps from './props'
 import Accordion from 'react-bootstrap/Accordion'

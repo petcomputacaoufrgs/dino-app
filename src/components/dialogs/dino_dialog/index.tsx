@@ -1,11 +1,10 @@
 import React from 'react'
-import { ReactComponent as DinoAuthSVG } from '../../../assets/icons/dino_auth.svg'
+import { ReactComponent as DinoAuthSVG } from '../../../assets/icons/dino/dino_auth.svg'
 import { Dialog, DialogContent, DialogActions } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import TextButton from '../../button/text_button'
 import TransitionSlide from '../../slide_transition'
 import DinoDialogProps from './props'
-import './styles.css'
 
 const DinoDialog: React.FC<DinoDialogProps> = ({ open, onClose: handleClose, onSave: handleSave, header, actions, children }) => {
 

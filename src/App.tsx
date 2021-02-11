@@ -22,10 +22,10 @@ import TabControlService from './services/tab_control/TabControlService'
 import SecondaryTab from './views/secondary_tab'
 import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
-import './App.css'
 import UserService from './services/user/UserService'
 import UserEnum from './types/enum/UserEnum'
 import StaffMain from './views/staff'
+import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -145,7 +145,7 @@ const App: React.FC = () => {
 	}, [])
 
 	const renderApp = () => (
-		<PrivateRouterContextProvider
+		<PrivateRouterProvider
 			loginPath={PathConstants.LOGIN}
 			userHomePath={PathConstants.USER_HOME}
 			staffHomePath={PathConstants.STAFF_HOME}

@@ -18,8 +18,6 @@ const NotFound: React.FC = () => {
 
 	const router = usePrivateRouter()
 
-	const language = useLanguage()
-
 	setTimeout(() => AuthService.redirectToHome(router.userPermission), redirectTimeout)
 
 	return (

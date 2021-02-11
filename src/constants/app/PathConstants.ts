@@ -5,7 +5,7 @@ class PathConstants {
 
 	STAFF: string = `/staff`
 
-	private HOME: string = `home`
+  HOME: string = `home`
 
 	private GLOSSARY: string = `glossary`
 
@@ -52,7 +52,6 @@ class PathConstants {
 	
 	TREATMENT: string = `${this.STAFF}/treatment` 
 	
-	ABOUT_US = '/about-us'
 	KIDS_SPACE = '/kids_space'
 
 	GAME_MENU = `${this.KIDS_SPACE}/game_menu`

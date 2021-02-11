@@ -1,3 +1,8 @@
 :root {
 	--snake-game-score-background-color: #694e73;
+
+	/* Warning Dialog */
+	--dialog-background-color: #A594AB;
+	--dialog-circle-background-color: #E6E2E8;
+	--dialog-circle-border-color: #694E73;
 }

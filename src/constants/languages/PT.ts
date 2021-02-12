@@ -558,7 +558,7 @@ export default class PT implements LanguageBase {
 	
 	PLAY_AGAIN_MESSAGE = 'Deseja jogar novamente?'
 
-	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Bom jogo! Parabéns '
+	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Bom jogo! Parabéns'
 
 	TIC_TAC_DINO_TIE = 'Empatou!'
 

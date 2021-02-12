@@ -1,3 +1,7 @@
+body {
+	overscroll-behavior-y: contain;
+}
+
 body .MuiTypography-root,
 body .MuiChip-label,
 body .MuiBottomNavigationAction-label,

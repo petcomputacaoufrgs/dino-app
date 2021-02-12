@@ -26,6 +26,11 @@ const KidsSpace: React.FC = () => {
 			/>
 			<PrivateRoute
 				exact
+				path={PathConstants.TIC_TAC_DINO_GAME}
+				component={TicTacDino}
+			/>
+			<PrivateRoute
+				exact
 				path={PathConstants.DINO_RUNNER_GAME}
 				component={DinoRunner}
 			/>

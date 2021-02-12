@@ -1,10 +1,11 @@
 import React from 'react'
 import { Dialog } from '@material-ui/core'
-import TransitionSlide from '../slide_transition'
-import TextButton from '../button/text_button'
-import { DinoDialogContent } from '../dino_dialog'
+import TransitionSlide from '../../slide_transition'
+import TextButton from '../../button/text_button'
+import { DinoDialogContent } from '../../dino_dialog'
 import GameOverDialogProps from './props'
-import { useLanguage } from '../../context/language/index'
+import { useLanguage } from '../../../context/language/index'
+import '../styles.css'
 import './styles.css'
 
 const GameOverDialog: React.FC<GameOverDialogProps> = ({

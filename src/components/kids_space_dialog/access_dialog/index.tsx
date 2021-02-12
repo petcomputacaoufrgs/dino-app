@@ -1,7 +1,8 @@
 import React from 'react'
 import AccessDialogProps from './props'
-import { useLanguage } from '../../context/language/index'
-import Button from '../button'
+import { useLanguage } from '../../../context/language/index'
+import Button from '../../button'
+import '../styles.css'
 import './styles.css'
 
 const AccessDialog: React.FC<AccessDialogProps> = ({

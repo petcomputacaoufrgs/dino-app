@@ -6,7 +6,7 @@ import { ReactComponent as DinoSVG } from '../../../assets/kids_space/dinogotchi
 import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go-back-arrow.svg'
 import { useLanguage } from "../../../context/language"
 import IconButton from '../../../components/button/icon_button'
-import GameOverDialog from '../../../components/game_over_dialog'
+import GameOverDialog from '../../../components/kids_space_dialog/game_over_dialog'
 import './styles.css'
 
 const BellSound = require('../../../assets/kids_space/musical_dino/bell.mp3')

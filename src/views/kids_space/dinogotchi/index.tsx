@@ -12,7 +12,7 @@ import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotc
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import GoBackButton from '../../../components/button/icon_button'
-import AccessDialog from '../../../components/access_dialog'
+import AccessDialog from '../../../components/kids_space_dialog/access_dialog'
 import './styles.css'
 
 const Dinogotchi: React.FC = () => {

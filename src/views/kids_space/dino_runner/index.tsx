@@ -60,16 +60,15 @@ const DinoRunner: React.FC = () => {
 	}
 
 	return (
-		<div ref={dinoRunnerGameContainer} className='dino_runner_game'>
+		<div ref={dinoRunnerGameContainer} className='minigame dino_runner_game'>
 			<GameOverDialog
 				onAgree={handleRestart}
 				onDisagree={handleClose}
 				open={openDialog}
 			>
 				<p>{language.data.DINO_RUNNER_GAME_OVER_MSG_1}</p>
-				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.KIDS_SPACE} />
+			<GoBackButton path={PathConstants.GAME_MENU} />
 			<div ref={dinoRunnerGameGrid} className='dino_runner_game__grid'>
 				<div
 					ref={dinoRunnerGameCharacter}

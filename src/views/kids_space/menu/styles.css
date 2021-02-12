@@ -3,6 +3,7 @@
 	height: 100%;
 	background-color: #a594ab;
 	font-size: var(--very-large-font);
+	overflow: auto;
 }
 
 .game_card {
@@ -13,4 +14,8 @@
 	width: 3rem;
 	height: 3rem;
 	margin: 1rem 0rem 0rem 1rem;
+}
+
+.minigame .go_back_button svg {
+	fill: #12121280;
 }

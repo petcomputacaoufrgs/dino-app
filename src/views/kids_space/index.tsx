@@ -6,6 +6,7 @@ import NotFound from '../not_found'
 import Dinogotchi from './dinogotchi'
 import DinoRunner from './dino_runner'
 import Menu from './menu'
+import TicTacDino from './menu/tic_tac_dino'
 import SnakeGame from './snake_game'
 import MusicalDino from './musical_dino'
 import './variables.css'
@@ -23,6 +24,11 @@ const KidsSpace: React.FC = () => {
 				exact
 				path={PathConstants.SNAKE_GAME}
 				component={SnakeGame}
+			/>
+			<PrivateRoute
+				exact
+				path={PathConstants.TIC_TAC_DINO_GAME}
+				component={TicTacDino}
 			/>
 			<PrivateRoute
 				exact

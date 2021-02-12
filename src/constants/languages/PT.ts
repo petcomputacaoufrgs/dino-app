@@ -545,14 +545,21 @@ export default class PT implements LanguageBase {
 
 	SNAKE_GAME_GAME_OVER_MSG_1 = 'Oh não! Sua cobra bateu!'
 
-	PLAY_AGAIN_MESSAGE = 'Deseja jogar novamente?'
+	WINNER = 'Ganhador: '
+
+	NEXT_PLAYER = 'Próximo jogador: '
 
 	DINO_RUNNER_GAME_OVER_MSG_1 =
-		'Oh não! Seu dinossauro encostou em uma bactéria.'
+		'Oh não! O Dino encostou na bactéria.'
 
 	START_GAME_TEXT = 'Iniciar Jogo!'
 
 	MUSICAL_DINO_GAME_MSG_1 = 'Parabéns! Sua música ficou incrível!'
 	
-	MUSICAL_DINO_GAME_MSG_2 = 'Deseja jogar novamente?'
+	PLAY_AGAIN_MESSAGE = 'Deseja jogar novamente?'
+
+	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Bom jogo! Parabéns '
+
+	TIC_TAC_DINO_TIE = 'Empatou!'
+
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import IconButton from '../icon_button'
 import GoBackButtonProps from './props'
-import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go-back-arrow.svg'
+import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import HistoryService from '../../../services/history/HistoryService'
 import './styles.css'
 

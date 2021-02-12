@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import CircularButton from '../../../components/button/circular_button'
-import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go-back-arrow.svg'
+import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import { ReactComponent as AngryDinoSVG } from '../../../assets/kids_space/dinogotchi/angry.svg'
 import { ReactComponent as Dino } from '../../../assets/kids_space/dinogotchi/doctor.svg'
 import { ReactComponent as GoOutSVG } from '../../../assets/kids_space/dinogotchi/exit.svg'
@@ -59,10 +59,8 @@ const Dinogotchi: React.FC = () => {
 	return (
 		<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 			{renderBackground()}
-			<AccessDialog open={open} icon={AngryDinoSVG}>
-				<p>Testinho</p>
-			</AccessDialog>
-			<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(!open)}} />
+			<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
+			<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(true)}} />
 			<div className='dinogotchi_screen__options'>
 				<CircularButton
 					icon={GameSVG}

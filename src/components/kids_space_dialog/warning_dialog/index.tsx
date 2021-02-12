@@ -14,11 +14,11 @@ const WarningDialog: React.FC<WarningDialogProps> = ({
 	return (
 		<>
 		{open && 
-		<div className="warning_dialog">
-            <div className="warning_dialog__circle">
+		<div className="kids_space_dialog warning_dialog">
+            <div className="kids_space_dialog__circle">
                 <Icon />
             </div>
-  			<div className='warning_dialog__content'>
+  			<div className='kids_space_dialog__content'>
     			{children}
   			</div>
 		</div>}

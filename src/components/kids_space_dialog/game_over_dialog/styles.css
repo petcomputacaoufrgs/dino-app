@@ -1,14 +1,8 @@
 .game_over_dialog {
-	background-color: #A594AB;
-	position: fixed;
+	background-color: var(--dialog-background-color);
 	width: 80vw;
 	height: 30vh;
-	padding: 2rem 2rem 0 2rem;
-	border-radius: 1rem;
-	z-index: 10;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-	animation-name: animatetop;
-  	animation-duration: 0.4s
 }
 
 .game_over_dialog__content {
@@ -19,17 +13,12 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
-	margin-top: 12vmin;
+	margin-top: 10vmin;
 }
 
 .game_over_dialog__buttons .button {
-	background-color: #F5F5F5;
-	color: #A594AB;
+	background-color: var(--light-color);
+	color: var(--dialog-background-color);
 	font-size: var(--default-font);
 	margin-left: 1.5rem;
 }
-
-@keyframes animatetop {
-	from {opacity:0}
-	to {opacity:1}
-  }

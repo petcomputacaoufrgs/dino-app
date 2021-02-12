@@ -9,6 +9,7 @@ import Menu from './game_menu'
 import SnakeGame from './game_menu/snake_game'
 import MusicalDino from './game_menu/musical_dino'
 import './variables.css'
+import TicTacDino from './game_menu/tic_tac_dino'
 
 const KidsSpace: React.FC = () => {
 	return (

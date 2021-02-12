@@ -1,6 +1,7 @@
 :root {
 	/* Definições gerais */
 	--light-color: #F5F5F5;
+	--dark-color: #121212;
 	--dark-color-transparency: #12121280;
 	--dialog_main_color: #A594AB;
 
@@ -19,6 +20,10 @@
 	/* Snake */
 	--snake-game-score-background-color: #694E73;
 
+	/* Tic Tac Dino */
+	--tic-tac-dino-background-color: #CEC1E7;
+    --tic-tac-dino-square-background-color: #D8CDEC;
+    --tic-tac-dino-display-background-color: #c1e7e1b3;
 	/* ========================== */
 	/* =         Dinos          = */
 	/* ========================== */

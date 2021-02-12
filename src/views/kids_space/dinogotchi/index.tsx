@@ -12,8 +12,8 @@ import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotc
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import GoBackButton from '../../../components/button/icon_button'
+import AccessDialog from '../../../components/access_dialog'
 import './styles.css'
-import WarningDialog from '../../../components/warning_dialog'
 
 const Dinogotchi: React.FC = () => {
 	const [isInside, setInside] = useState(true)
@@ -59,9 +59,9 @@ const Dinogotchi: React.FC = () => {
 	return (
 		<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 			{renderBackground()}
-			<WarningDialog open={open} input={true} icon={AngryDinoSVG}>
+			<AccessDialog open={open} icon={AngryDinoSVG}>
 				<p>Testinho</p>
-			</WarningDialog>
+			</AccessDialog>
 			<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(!open)}} />
 			<div className='dinogotchi_screen__options'>
 				<CircularButton

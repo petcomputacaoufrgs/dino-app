@@ -562,4 +562,15 @@ export default class PT implements LanguageBase {
 
 	TIC_TAC_DINO_TIE = 'Empatou!'
 
+	YES = 'Sim'
+
+	NO = 'Não'
+
+	DELETE_ACCOUNT = 'Excluir conta'
+
+	DELETE_ACCOUNT_MESSAGE = 'Esta ação é IRREVERSÍVEL, você tem certeza que deseja EXCLUIR a sua conta?'
+
+	DELETE_ACCOUNT_SUCCESS_MESSAGE = 'Sua conta foi excluida com sucesso.'
+
+	DELETE_ACCOUNT_ERROR_MESSAGE = 'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
 }

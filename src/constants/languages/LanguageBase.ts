@@ -262,4 +262,10 @@ export default interface LanguageBase {
 	MUSICAL_DINO_GAME_MSG_1: string
 	TIC_TAC_DINO_GAME_OVER_MSG_1: string
 	TIC_TAC_DINO_TIE: string
+	YES: string
+	NO: string
+	DELETE_ACCOUNT: string
+	DELETE_ACCOUNT_MESSAGE: string
+	DELETE_ACCOUNT_SUCCESS_MESSAGE: string
+	DELETE_ACCOUNT_ERROR_MESSAGE: string
 }

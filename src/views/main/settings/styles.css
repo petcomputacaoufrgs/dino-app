@@ -20,10 +20,14 @@
 }
 
 .settings__save_button_container {
-	margin-top: auto;
-	align-items: flex-end;
-	align-self: center;
-	width: 50%;
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 13vh;
+	left: 0;
+	bottom: 1.5rem;
 }
 
 .settings__save_button {
@@ -48,11 +52,45 @@
 }
 
 .button.settings__save_button {
-	font-size: var(--default-font);
+	width: 70%;
+	height: 100%;
+	font-size: var(--large-font);
 }
 
 .settings__title.MuiTypography-root {
 	font-weight: 700;
 	font-size: var(--big-font);
 	margin-bottom: 1.5rem;
+}
+
+.settings__form__delete_account {
+	font-size: var(--large-font);
+	margin-top: 0.5rem;
+	color: #ED2939;
+	text-transform: uppercase;
+}
+
+.dino_hr.settings__last_line {
+	margin-bottom: 17vh;
+}
+
+.settings__delete_account_dialog h1 {
+	font-size: var(--large-font);
+}
+
+.settings__delete_account_dialog__buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+	margin-right: 1rem;
+}
+
+.settings__delete_account_dialog__buttons button {
+	width: 5rem;
+}
+
+.settings__delete_account_dialog__buttons__delete_button {
+	margin-left: 1rem;
 }

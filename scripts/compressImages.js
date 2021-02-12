@@ -48,7 +48,7 @@ const compressImages = async dirs => {
 				}),
 				imageminJpg({
 					quality: [0.6, 0.8],
-				})
+				}),
 			],
 		})
 

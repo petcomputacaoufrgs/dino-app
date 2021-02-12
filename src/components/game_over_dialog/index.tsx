@@ -15,21 +15,22 @@ const GameOverDialog: React.FC<GameOverDialogProps> = ({
 
 	return (
 		<>
-		{open &&
-		<div className="game_over_dialog">
-  			<div className='game_over_dialog__content'>
-    			{children}
-				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
-  			</div>
-			<div className='game_over_dialog__buttons'>
-				<TextButton onClick={onDisagree}>
-					{language.data.DISAGREEMENT_OPTION_TEXT}
-				</TextButton>
-				<TextButton onClick={onAgree}>
-					{language.data.AGREEMENT_OPTION_TEXT}
-				</TextButton>
-			</div>
-		</div>}
+			{open && (
+				<div className='game_over_dialog'>
+					<div className='game_over_dialog__content'>
+						{children}
+						<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
+					</div>
+					<div className='game_over_dialog__buttons'>
+						<TextButton onClick={onDisagree}>
+							{language.data.DISAGREEMENT_OPTION_TEXT}
+						</TextButton>
+						<TextButton onClick={onAgree}>
+							{language.data.AGREEMENT_OPTION_TEXT}
+						</TextButton>
+					</div>
+				</div>
+			)}
 		</>
 	)
 }

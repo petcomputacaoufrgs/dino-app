@@ -26,7 +26,9 @@ import ContactService from '../../../services/contact/ContactService'
 import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import TransitionSlide from '../../../components/slide_transition'
-import DinoDialogHeader, { DinoDialogContent } from '../../../components/dino_dialog'
+import DinoDialogHeader, {
+	DinoDialogContent,
+} from '../../../components/dino_dialog'
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
@@ -40,7 +42,9 @@ const Settings: React.FC = () => {
 
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
-	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
+	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
+		undefined,
+	)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
 	const [selectedLanguage, setSelectedLanguage] = useState(
@@ -141,7 +145,7 @@ const Settings: React.FC = () => {
 		const reduceTimeToDeleteAccount = () => {
 			setTimeToDeleteAccount(timeToDeleteAccount - 1)
 		}
-		
+
 		let timeout: NodeJS.Timeout
 
 		if (timeToDeleteAccount > 0) {
@@ -283,15 +287,15 @@ const Settings: React.FC = () => {
 						<Button onClick={handleCloseDeleteAccountDialog}>
 							{language.data.NO}
 						</Button>
-						<Button 
+						<Button
 							onClick={handleDeleteAccount}
 							className='settings__delete_account_dialog__buttons__delete_button'
 						>
-							{timeToDeleteAccount === 0 ? 
+							{timeToDeleteAccount === 0 ? (
 								<>{language.data.YES}</>
-								:
+							) : (
 								<>{timeToDeleteAccount}</>
-							}
+							)}
 						</Button>
 					</div>
 				</Loader>
@@ -352,11 +356,14 @@ const Settings: React.FC = () => {
 				</FormControl>
 				<DinoHr />
 				<FormControl className='settings__form'>
-					<TextButton onClick={handlerDeleteAccountClick} className='settings__form__delete_account'>
+					<TextButton
+						onClick={handlerDeleteAccountClick}
+						className='settings__form__delete_account'
+					>
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
-				<DinoHr className='settings__last_line'/>
+				<DinoHr className='settings__last_line' />
 				{renderSaveButton()}
 				{renderDialogs()}
 			</div>

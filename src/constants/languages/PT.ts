@@ -549,13 +549,12 @@ export default class PT implements LanguageBase {
 
 	NEXT_PLAYER = 'Próximo jogador: '
 
-	DINO_RUNNER_GAME_OVER_MSG_1 =
-		'Oh não! O Dino encostou na bactéria.'
+	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh não! O Dino encostou na bactéria.'
 
 	START_GAME_TEXT = 'Iniciar Jogo!'
 
 	MUSICAL_DINO_GAME_MSG_1 = 'Parabéns! Sua música ficou incrível!'
-	
+
 	PLAY_AGAIN_MESSAGE = 'Deseja jogar novamente?'
 
 	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Bom jogo! Parabéns'
@@ -568,9 +567,11 @@ export default class PT implements LanguageBase {
 
 	DELETE_ACCOUNT = 'Excluir conta'
 
-	DELETE_ACCOUNT_MESSAGE = 'Esta ação é IRREVERSÍVEL, você tem certeza que deseja EXCLUIR a sua conta?'
+	DELETE_ACCOUNT_MESSAGE =
+		'Esta ação é IRREVERSÍVEL, você tem certeza que deseja EXCLUIR a sua conta?'
 
 	DELETE_ACCOUNT_SUCCESS_MESSAGE = 'Sua conta foi excluida com sucesso.'
 
-	DELETE_ACCOUNT_ERROR_MESSAGE = 'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
+	DELETE_ACCOUNT_ERROR_MESSAGE =
+		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
 }

@@ -123,17 +123,19 @@ class UserServiceImpl extends AutoSynchronizableService<
 	}
 
 	public deleteAccount = async (): Promise<boolean> => {
-		const request = await DinoAgentService.delete(APIRequestMappingConstants.DELETE_ACCOUNT)
+		const request = await DinoAgentService.delete(
+			APIRequestMappingConstants.DELETE_ACCOUNT,
+		)
 
 		if (request.canGo) {
 			try {
 				const authRequest = await request.authenticate()
 				const response = await authRequest.go()
 				return response.body
-			} catch(e) {
+			} catch (e) {
 				LogAppErrorService.logError(e)
 			}
-		} 
+		}
 
 		return false
 	}

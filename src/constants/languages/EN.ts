@@ -558,9 +558,11 @@ export default class EN implements LanguageBase {
 
 	DELETE_ACCOUNT = 'Delete account'
 
-	DELETE_ACCOUNT_MESSAGE = 'This action CANNOT BE UNDONE. Are you sure you want to DELETE your account?'
+	DELETE_ACCOUNT_MESSAGE =
+		'This action CANNOT BE UNDONE. Are you sure you want to DELETE your account?'
 
 	DELETE_ACCOUNT_SUCCESS_MESSAGE = 'Your account was successfully deleted.'
 
-	DELETE_ACCOUNT_ERROR_MESSAGE = 'Error deleting your account, please try again later.'
+	DELETE_ACCOUNT_ERROR_MESSAGE =
+		'Error deleting your account, please try again later.'
 }

@@ -35,14 +35,13 @@ const TicTacDino: React.FC = () => {
   }
 
   return (
-    <div className='tic_tac_dino_game'>
+    <div className='minigame tic_tac_dino_game'>
       <GameOverDialog
         onAgree={handleRestart}
         onDisagree={handleClose}
         open={openDialog}
       >
 				<p>{message}</p>
-        <p>{language.data.PLAY_AGAIN_MESSAGE}</p>
       </GameOverDialog>
       <GoBackButton path={PathConstants.GAME_MENU} />
       <Game onEndGame={handleEndGame} gameStarted={gameStarted}/>

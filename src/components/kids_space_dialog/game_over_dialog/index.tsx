@@ -4,6 +4,7 @@ import GameOverDialogProps from './props'
 import { useLanguage } from '../../../context/language/index'
 import '../styles.css'
 import './styles.css'
+import '../../views/kids_space/variables.css'
 
 const GameOverDialog: React.FC<GameOverDialogProps> = ({
 	open,

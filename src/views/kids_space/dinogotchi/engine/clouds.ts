@@ -1,4 +1,4 @@
-import SkyAnimation from '../../engine/SkyAnimation'
+import SkyAnimation from '../../animation/SkyAnimation'
 
 export function startCloudEngine() {
 	const clouds = [

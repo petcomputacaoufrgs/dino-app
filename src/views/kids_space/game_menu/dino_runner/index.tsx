@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { startDinoRunnerGame } from './engine/game'
-import { useLanguage } from '../../../context/language'
-import HistoryService from '../../../services/history/HistoryService'
-import PathConstants from '../../../constants/app/PathConstants'
-import { ReactComponent as BackgroundSVG } from '../../../assets/kids_space/dino_runner/background.svg'
-import GameOverDialog from '../../../components/kids_space_dialog/game_over_dialog'
-import GoBackButton from '../../../components/button/go_back'
+import { useLanguage } from '../../../../context/language'
+import HistoryService from '../../../../services/history/HistoryService'
+import PathConstants from '../../../../constants/app/PathConstants'
+import { ReactComponent as BackgroundSVG } from '../../../../assets/kids_space/dino_runner/background.svg'
+import GameOverDialog from '../../../../components/game_over_dialog'
+import GoBackButton from '../../../../components/button/go_back'
 import './styles.css'
 
 const DinoRunner: React.FC = () => {

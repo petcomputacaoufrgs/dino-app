@@ -7,7 +7,7 @@
 	padding: 2rem 2rem 0 2rem;
 	border-radius: 1rem;
 	z-index: 10;
-	animation-name: animatetop;
+	animation-name: kids_space_dialog_animation;
   	animation-duration: 0.4s
 }
 
@@ -47,7 +47,7 @@
 
 }
 
-@keyframes animatetop {
+@keyframes kids_space_dialog_animation {
 	from {opacity:0}
 	to {opacity:1}
 }

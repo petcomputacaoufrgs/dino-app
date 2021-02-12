@@ -1,4 +1,4 @@
-import SkyAnimation from '../../engine/SkyAnimation'
+import SkyAnimation from '../../../animation/SkyAnimation'
 
 const STAR_SPEED = 1500
 

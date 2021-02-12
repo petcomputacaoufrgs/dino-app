@@ -1,5 +1,5 @@
-import sleep from '../../../../utils/SleepUtils'
-import { getRandomInteger } from '../../../../utils/RandomUtils'
+import sleep from '../../../../../utils/SleepUtils'
+import { getRandomInteger } from '../../../../../utils/RandomUtils'
 import { startBackgroundEngine } from './background'
 
 let dino: HTMLElement | null

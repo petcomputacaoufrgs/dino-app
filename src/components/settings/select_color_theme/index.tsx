@@ -4,10 +4,10 @@ import SelectColorThemeProps from './props'
 import { useLanguage } from '../../../context/language'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 
-const SelectColorTheme = ({
+const SelectColorTheme: React.FC<SelectColorThemeProps> = ({
 	colorTheme,
 	setColorTheme,
-}: SelectColorThemeProps) => {
+}) => {
 	const language = useLanguage()
 
 	const colorThemeList = UserSettingsService.getColorThemeOptions(language.data)
@@ -19,13 +19,12 @@ const SelectColorTheme = ({
 	}
 
 	return (
-		<div className='select-color-theme'>
-			<InputLabel shrink id='color-theme--select-label'>
+		<>
+			<InputLabel shrink id='color_theme__select_label'>
 				{language.data.COLOR_THEME_SELECTION_TITLE}
 			</InputLabel>
 			<Select
-				labelId='color-theme--select-label'
-				id='color-theme--select'
+				labelId='color_theme__select_label'
 				value={colorTheme}
 				onChange={handleSelectedColorThemeChanged}
 				fullWidth
@@ -36,7 +35,7 @@ const SelectColorTheme = ({
 					</MenuItem>
 				))}
 			</Select>
-		</div>
+		</>
 	)
 }
 

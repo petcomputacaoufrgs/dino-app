@@ -33,33 +33,21 @@ const Settings: React.FC = () => {
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 
 	const [isLoading, setIsLoading] = useState(true)
-	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
-		undefined,
-	)
+	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-
-	const [selectedLanguage, setSelectedLanguage] = useState(
-		language.data.LANGUAGE_CODE,
-	)
+	const [selectedLanguage, setSelectedLanguage] = useState(language.data.LANGUAGE_CODE)
 	const [selectedFontSize, setSelectedFontSize] = useState(FontSizeEnum.DEFAULT)
-	const [selectedColorTheme, setSelectedColorTheme] = useState(
-		ColorThemeEnum.DEVICE,
-	)
-	const [
-		selectedEssentialContactGrant,
-		setSelectedEssentialContactGrant,
-	] = useState(false)
-	const [selectedTreatment, setSelectedTreatment] = useState<
-		TreatmentEntity | undefined
-	>(undefined)
+	const [selectedColorTheme, setSelectedColorTheme] = useState(ColorThemeEnum.DEVICE,)
+	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(false)
+	const [selectedTreatment, setSelectedTreatment] = useState<TreatmentEntity | undefined>(undefined)
 
 	useEffect(() => {
 		const loadData = async () => {
 			const treatments = await TreatmentService.getAll()
 			const settings = await UserSettingsService.getFirst()
 			const syncGoogleContacs = await GoogleScopeService.hasContactGrant()
-
+			
 			if (settings) {
 				if (treatments) {
 					const treatment = treatments.find(
@@ -72,7 +60,7 @@ const Settings: React.FC = () => {
 				}
 				updateSettings(settings)
 			}
-			updateSyncGoogleContacts(syncGoogleContacs)
+			updateSyncGoogleContacts(syncGoogleContacs, settings)
 
 			finishLoading()
 		}
@@ -99,7 +87,8 @@ const Settings: React.FC = () => {
 			setSettings(settings)
 		}
 
-		let updateSyncGoogleContacts = (syncGoogleContacts: boolean) => {
+		let updateSyncGoogleContacts = (syncGoogleContacts: boolean, settings?: UserSettingsEntity) => {
+			if (!settings || settings.declineGoogleContacts) return
 			setSyncGoogleContacts(syncGoogleContacts)
 		}
 
@@ -131,9 +120,13 @@ const Settings: React.FC = () => {
 		setSelectedLanguage(language.data.LANGUAGE_CODE)
 	}, [language])
 
-	const handleOpenGoogleContactDialog = () => {
+	const handleGoogleContactSwitchChanged = () => {
+		if (!settings) return
+		
 		if (!syncGoogleContacts) {
 			setOpenGoogleContactDialog(true)
+		} else {
+			setSyncGoogleContacts(false)
 		}
 	}
 
@@ -167,6 +160,12 @@ const Settings: React.FC = () => {
 			settings.fontSize = selectedFontSize
 			settings.colorTheme = selectedColorTheme
 			settings.includeEssentialContact = selectedEssentialContactGrant
+
+			const userDeclinedGoogleContacts = !settings.declineGoogleContacts && !syncGoogleContacts
+			
+			if (userDeclinedGoogleContacts) {
+				settings.declineGoogleContacts = true
+			}
 
 			if (selectedTreatment) {
 				settings.treatmentLocalId = selectedTreatment.localId
@@ -213,7 +212,7 @@ const Settings: React.FC = () => {
 			onDecline={handleDisagreeContactsGrantDialog}
 			onClose={handleCloseContactsGrantDialog}
 			open={openGoogleContactDialog}
-			scopes={[GoogleScope.SCOPE_CONTACT]}
+			scopes={[GoogleScope.CONTACT_SCOPE]}
 			text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
 			title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
 		/>
@@ -258,7 +257,7 @@ const Settings: React.FC = () => {
 				<FormControl className='settings__form'>
 					<DinoSwitch
 						selected={syncGoogleContacts}
-						setSelected={handleOpenGoogleContactDialog}
+						setSelected={handleGoogleContactSwitchChanged}
 						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
 					/>
 				</FormControl>

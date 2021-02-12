@@ -38,7 +38,7 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 			const entity: GoogleContactEntity = {
 				resourceName: model.resourceName,
 				localContactId: contact.localId,
-				savedOnGoogleAPI: model.resourceName ? 1 : 0,
+				savedOnGoogleAPI: model.savedOnGoogleAPI ? 1 : 0
 			}
 
 			return entity
@@ -55,6 +55,7 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 				const model: GoogleContactDataModel = {
 					resourceName: entity.resourceName,
 					contactId: contact.id!,
+					savedOnGoogleAPI: entity.savedOnGoogleAPI === 1
 				}
 
 				return model
@@ -78,6 +79,7 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 		googleContact?: GoogleContactEntity,
 	) {
 		if (googleContact) {
+			googleContact.savedOnGoogleAPI = 0
 			await this.save(googleContact)
 		} else {
 			const newGoogleContact: GoogleContactEntity = {
@@ -102,12 +104,11 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 	}
 
 	async activeGoogleContactsGrant() {
-		const notSavedGoogleContacts = await this.table
-			.where('savedOnGoogleAPI')
-			.equals(0)
-			.toArray()
+		const unsavedGoogleContacts = await this.table.where('savedOnGoogleAPI').equals(0).toArray()
 
-		this.saveAll(notSavedGoogleContacts)
+		if (unsavedGoogleContacts.length > 0) {
+			this.saveAll(unsavedGoogleContacts)
+		}
 	}
 }
 

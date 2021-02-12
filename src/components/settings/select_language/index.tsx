@@ -4,7 +4,10 @@ import SelectLanguageProps from './props'
 import { useLanguage } from '../../../context/language'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 
-const SelectLanguage = ({ languageName, setLanguage }: SelectLanguageProps) => {
+const SelectLanguage: React.FC<SelectLanguageProps> = ({
+	languageName,
+	setLanguage 
+}) => {
 	const language = useLanguage()
 	const languageOptions = UserSettingsService.getLanguagesOptions(language.data)
 
@@ -16,12 +19,11 @@ const SelectLanguage = ({ languageName, setLanguage }: SelectLanguageProps) => {
 
 	return (
 		<>
-			<InputLabel shrink id='language-select-label'>
+			<InputLabel shrink id='language_select_label'>
 				{language.data.SETTINGS_LANGUAGE}
 			</InputLabel>
 			<Select
-				labelId='language-select-label'
-				id='language-select'
+				labelId='language_select_label'
 				value={languageName}
 				onChange={handleSelectedLanguageChanged}
 				fullWidth

@@ -3,8 +3,12 @@ import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import SelectFontSizeProps from './props'
 import { useLanguage } from '../../../context/language'
 import UserSettingsService from '../../../services/user/UserSettingsService'
+import './styles.css'
 
-const SelectFontSize = ({ fontSize, setFontSize }: SelectFontSizeProps) => {
+const SelectFontSize: React.FC<SelectFontSizeProps> = ({
+	fontSize, 
+	setFontSize 
+}) => {
 	const language = useLanguage()
 	const fontSizeList = UserSettingsService.getFontSizeOptions(language.data)
 
@@ -15,13 +19,12 @@ const SelectFontSize = ({ fontSize, setFontSize }: SelectFontSizeProps) => {
 	}
 
 	return (
-		<div className='font-size__selector'>
-			<InputLabel shrink id='font-size--select-label'>
+		<div className='font_size__selector'>
+			<InputLabel shrink id='font_size__select_label'>
 				{language.data.FONT_SIZE_SELECTION_TITLE}
 			</InputLabel>
 			<Select
-				labelId='font-size--select-label'
-				id='font-size--select'
+				labelId='font_size__select_label'
 				value={fontSize}
 				onChange={handleSelectedFontSizeChanged}
 				fullWidth

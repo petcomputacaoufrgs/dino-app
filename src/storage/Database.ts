@@ -19,7 +19,7 @@ import AuthEntity from '../types/auth/database/AuthEntity'
 import TabEntity from '../types/tab_control/TabEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
-const DATABASE_VERSION = 11
+const DATABASE_VERSION = 12
 
 class Database extends Dexie {
 	auth: Dexie.Table<AuthEntity, number>

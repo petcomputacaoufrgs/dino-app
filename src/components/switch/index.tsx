@@ -1,9 +1,13 @@
-import { Switch } from '@material-ui/core'
 import React from 'react'
+import { Switch } from '@material-ui/core'
 import SwitchProps from './props'
 import './styles.css'
 
-const DinoSwitch = ({ selected, setSelected, label }: SwitchProps) => {
+const DinoSwitch: React.FC<SwitchProps> = ({ 
+	selected, 
+	setSelected, 
+	label 
+}) => {
 	const handleSwitch = () => {
 		setSelected(!selected)
 	}

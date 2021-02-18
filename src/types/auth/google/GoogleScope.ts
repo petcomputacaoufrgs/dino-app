@@ -1,5 +1,5 @@
 enum GoogleScope {
-	SCOPE_CONTACT = 'https://www.googleapis.com/auth/contacts',
+	CONTACT_SCOPE = 'https://www.googleapis.com/auth/contacts',
 }
 
 export default GoogleScope

@@ -12,7 +12,7 @@ import PhoneService from '../../../../services/contact/PhoneService'
 import ContactService from '../../../../services/contact/ContactService'
 import GoogleContactService from '../../../../services/contact/GoogleContactService'
 
-const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
+const ContactItems: React.FC<ContactItemsProps> = ({ items, settings }) => {
 	const [contactToEdit, setContactToEdit] = useState<ContactView | undefined>(
 		undefined,
 	)
@@ -81,7 +81,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 					onDelete={setContactToDelete}
 				/>
 			)}
-			{contactToEdit && (
+			{contactToEdit && settings && (
 				<ContactFormDialog
 					dialogOpen={contactToEdit !== undefined}
 					onClose={() => setContactToEdit(undefined)}

@@ -551,4 +551,12 @@ export default class EN implements LanguageBase {
 	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Good game! Congratulations '
 
 	TIC_TAC_DINO_TIE = 'Tie!'
+
+	PASSWORD = 'Password'
+
+	FORGOT_PASSWORD = 'Forgot your password?'
+
+	ACCESS_PARENTS_AREA = 'This area is for adults. Are you an adult or accompanied by an adult?'
+
+	ACCESS_BUTTON = 'Access'
 }

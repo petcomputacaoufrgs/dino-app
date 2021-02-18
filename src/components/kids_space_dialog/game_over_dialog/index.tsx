@@ -1,7 +1,8 @@
 import React from 'react'
-import TextButton from '../button'
+import TextButton from '../../button/text_button'
 import GameOverDialogProps from './props'
-import { useLanguage } from '../../context/language/index'
+import { useLanguage } from '../../../context/language/index'
+import '../styles.css'
 import './styles.css'
 import '../../views/kids_space/variables.css'
 
@@ -16,7 +17,7 @@ const GameOverDialog: React.FC<GameOverDialogProps> = ({
 	return (
 		<>
 		{open &&
-		<div className="game_over_dialog">
+		<div className="kids_space_dialog game_over_dialog">
   			<div className='game_over_dialog__content'>
     			{children}
 				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>

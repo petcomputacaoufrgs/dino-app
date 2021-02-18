@@ -562,4 +562,12 @@ export default class PT implements LanguageBase {
 
 	TIC_TAC_DINO_TIE = 'Empatou!'
 
+	PASSWORD = 'Senha'
+
+	FORGOT_PASSWORD = 'Esqueceu sua senha?'
+
+	ACCESS_PARENTS_AREA = 'Essa área é para adultos. Você é um adulto ou está acompanhado de um?'
+
+	ACCESS_BUTTON = 'Acessar'
+
 }

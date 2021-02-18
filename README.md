@@ -8,7 +8,7 @@
 #### TypeScript é um super-set estritamente sintático para JavaScript e adiciona tipagem estática opcional.
 - https://www.typescriptlang.org/
 
-## ReactJS e CRA
+## ReactJS e CRA com template Typescript para PWA
 #### O ReactJS é uma biblioteca para construção de interfaces de usuário.
 - https://reactjs.org/
 #### Create React App (CRA) é um software para criação e configuração de projetos web com ReactJS. No DinoApp é utilizada a versão 4 com o template "cra-template-pwa-typescript".

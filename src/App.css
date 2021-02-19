@@ -1,3 +1,7 @@
+body {
+	overscroll-behavior-y: contain;
+}
+
 body .MuiTypography-root,
 body .MuiChip-label,
 body .MuiBottomNavigationAction-label,
@@ -7,6 +11,7 @@ body .MuiInputBase-root,
 .dino_dialog__header,
 .dino_dialog__content {
 	font-family: var(--font-base);
+	text-align: justify;
 	color: var(--base-font-color);
 }
 

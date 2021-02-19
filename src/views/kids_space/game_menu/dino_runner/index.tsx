@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { startDinoRunnerGame } from './engine/game'
-import { useLanguage } from '../../../context/language'
-import HistoryService from '../../../services/history/HistoryService'
-import PathConstants from '../../../constants/app/PathConstants'
-import { ReactComponent as BackgroundSVG } from '../../../assets/kids_space/dino_runner/background.svg'
-import GameOverDialog from '../../../components/game_over_dialog'
-import GoBackButton from '../../../components/button/go_back'
+import { useLanguage } from '../../../../context/language'
+import HistoryService from '../../../../services/history/HistoryService'
+import PathConstants from '../../../../constants/app/PathConstants'
+import { ReactComponent as BackgroundSVG } from '../../../../assets/kids_space/dino_runner/background.svg'
+import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
+import GoBackButton from '../../../../components/button/go_back'
 import './styles.css'
 
 const DinoRunner: React.FC = () => {
@@ -60,16 +60,15 @@ const DinoRunner: React.FC = () => {
 	}
 
 	return (
-		<div ref={dinoRunnerGameContainer} className='dino_runner_game'>
+		<div ref={dinoRunnerGameContainer} className='minigame dino_runner_game'>
 			<GameOverDialog
 				onAgree={handleRestart}
 				onDisagree={handleClose}
 				open={openDialog}
 			>
 				<p>{language.data.DINO_RUNNER_GAME_OVER_MSG_1}</p>
-				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.KIDS_SPACE} />
+			<GoBackButton path={PathConstants.GAME_MENU} />
 			<div ref={dinoRunnerGameGrid} className='dino_runner_game__grid'>
 				<div
 					ref={dinoRunnerGameCharacter}

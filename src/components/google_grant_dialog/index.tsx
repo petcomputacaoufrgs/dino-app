@@ -10,6 +10,7 @@ import { DinoDialogContent, DinoDialogHeader } from '../dialogs/dino_dialog'
 import UserEntity from '../../types/user/database/UserEntity'
 import UserService from '../../services/user/UserService'
 import DinoLoader from '../loader'
+import ConnectionService from '../../services/connection/ConnectionService'
 import './styles.css'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
@@ -18,20 +19,27 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 
 		const [isLoading, setIsLoading] = useState(true)
 		const [user, setUser] = useState<UserEntity | undefined>()
+		const [isConnected, setIsConnected] = useState<boolean>(true)
 
 		useEffect(() => {
 			const loadData = async () => {
 				const user = await UserService.getFirst()
+				const isConnected = ConnectionService.isConnected()
 
 				if (user) {
-					updateData(user)
+					updateData(user, isConnected)
 				}
 
 				finishLoading()
 			}
 
-			let updateData = (user: UserEntity) => {
+			const updateConnectionState = () => {
+				setIsConnected(ConnectionService.isConnected())
+			}
+
+			let updateData = (user: UserEntity, isConnected: boolean) => {
 				setUser(user)
+				setIsConnected(isConnected)
 			}
 
 			let finishLoading = () => {
@@ -39,6 +47,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 			}
 
 			UserService.addUpdateEventListenner(loadData)
+			ConnectionService.addEventListener(updateConnectionState)
 
 			if (isLoading) {
 				loadData()
@@ -48,6 +57,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 				updateData = () => {}
 				finishLoading = () => {}
 				UserService.removeUpdateEventListenner(loadData)
+				ConnectionService.removeEventListener(updateConnectionState)
 			}
 		}, [isLoading])
 
@@ -91,6 +101,41 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 			onDecline()
 		}
 
+		const renderDialogContent = (): JSX.Element => (
+			<>
+				<DinoDialogHeader>
+					<h1>{title}</h1>
+				</DinoDialogHeader>
+				<DinoDialogContent>
+					<p>{text}</p>
+				</DinoDialogContent>
+				<div className='google_grant_dialog__buttons'>
+					<Button onClick={handleDecline}>
+						{language.data.DIALOG_DECLINE_BUTTON_TEXT}
+					</Button>
+					<Button
+						autoFocus
+						onClick={handleAcceptClick}
+						className='google_grant_dialog__buttons__accept_button'
+					>
+						{language.data.DIALOG_AGREE_TEXT}
+					</Button>
+				</div>
+			</>
+		)
+
+		const renderOfflineContent = (): JSX.Element => (
+			<>
+				<DinoDialogHeader>
+					<h1>Sem conexão</h1>
+				</DinoDialogHeader>
+				<DinoDialogContent>
+					<p>Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.</p>
+					<p>Tente novamente quando estiver conectado.</p>
+				</DinoDialogContent>
+			</>
+		)
+
 		return (
 			<Dialog
 				className='google_grant_dialog'
@@ -102,24 +147,12 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 				open={open}
 			>
 				<DinoLoader isLoading={isLoading}>
-					<DinoDialogHeader>
-						<h1>{title}</h1>
-					</DinoDialogHeader>
-					<DinoDialogContent>
-						<p>{text}</p>
-					</DinoDialogContent>
-					<div className='google_grant_dialog__buttons'>
-						<Button onClick={handleDecline}>
-							{language.data.DIALOG_DECLINE_BUTTON_TEXT}
-						</Button>
-						<Button
-							autoFocus
-							onClick={handleAcceptClick}
-							className='google_grant_dialog__buttons__accept_button'
-						>
-							{language.data.DIALOG_AGREE_TEXT}
-						</Button>
-					</div>
+					{isConnected ? 
+						renderDialogContent()
+					: 
+						renderOfflineContent()
+					}
+					
 				</DinoLoader>
 			</Dialog>
 		)

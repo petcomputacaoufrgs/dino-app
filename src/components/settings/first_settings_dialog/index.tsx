@@ -13,8 +13,8 @@ import AuthService from '../../../services/auth/AuthService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
-import './styles.css'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
+import './styles.css'
 
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()

@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
-import PathConstants from '../../../constants/app/PathConstants'
-import HistoryService from '../../../services/history/HistoryService'
+import PathConstants from '../../../../constants/app/PathConstants'
+import HistoryService from '../../../../services/history/HistoryService'
 import { startGame } from './engine/index'
-import { ReactComponent as DinoSVG } from '../../../assets/kids_space/dinogotchi/dino.svg'
-import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go-back-arrow.svg'
-import { useLanguage } from "../../../context/language"
-import IconButton from '../../../components/button/icon_button'
-import GameOverDialog from '../../../components/game_over_dialog'
+import { ReactComponent as DinoSVG } from '../../../../assets/kids_space/dinogotchi/dino.svg'
+import { ReactComponent as GoBackSVG } from '../../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
+import { useLanguage } from "../../../../context/language"
+import IconButton from '../../../../components/button/icon_button'
+import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
 import './styles.css'
 
-const BellSound = require('../../../assets/kids_space/musical_dino/bell.mp3')
-const DrumOneSound = require('../../../assets/kids_space/musical_dino/drum_1.mp3')
-const DrumTwoSound = require('../../../assets/kids_space/musical_dino/drum_2.mp3')
-const GuitarSound = require('../../../assets/kids_space/musical_dino/guitar.mp3')
+const BellSound = require('../../../../assets/kids_space/musical_dino/bell.mp3')
+const DrumOneSound = require('../../../../assets/kids_space/musical_dino/drum_1.mp3')
+const DrumTwoSound = require('../../../../assets/kids_space/musical_dino/drum_2.mp3')
+const GuitarSound = require('../../../../assets/kids_space/musical_dino/guitar.mp3')
 
 const MusicalDino: React.FC = () => {
     const language = useLanguage()
@@ -56,7 +56,7 @@ const MusicalDino: React.FC = () => {
                 open={openDialog}
             >
                     <p>{language.data.MUSICAL_DINO_GAME_MSG_1}</p>
-                    <p>{language.data.MUSICAL_DINO_GAME_MSG_2}</p>
+                    <p>{language.data.PLAY_AGAIN_MESSAGE}</p>
             </GameOverDialog>
             <div className='musical_dino__header'>
                 <IconButton

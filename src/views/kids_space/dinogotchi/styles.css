@@ -144,6 +144,18 @@
 	height: 4rem;
 }
 
+.dinogotchi_screen .icon_button {
+	position:absolute;
+	top: 3vmin;
+	left: 3vmin;
+	width: 16vmin;
+	height: 16vmin;
+}
+
+.dinogotchi_screen .icon_button svg {
+	fill: #A594AB;
+}
+
 .dinogotchi_screen__background .painting {
 	transform-box: fill-box;
 	transform-origin: top;

@@ -5,7 +5,7 @@ import './styles.css'
 const GameCard: React.FC<GameCardProps> = ({
 	onClick,
 	ariaLabel,
-	background,
+	backgroundColor,
 	text,
 }) => {
 	const buttonRef = useRef<HTMLButtonElement>(null)
@@ -14,9 +14,8 @@ const GameCard: React.FC<GameCardProps> = ({
 		<button
 			className={'game_card'}
 			onClick={onClick}
-			ref={buttonRef}
 			aria-label={ariaLabel}
-			style={{ backgroundImage: `url(${background})` }}
+			style={{ backgroundColor: backgroundColor }}
 		>
 			{text}
 		</button>

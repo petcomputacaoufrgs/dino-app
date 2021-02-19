@@ -64,13 +64,13 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 	hasContactGrant = async (): Promise<boolean> => {
 		const scope = await this.table
 			.where('name')
-			.equals(GoogleScope.SCOPE_CONTACT)
+			.equals(GoogleScope.CONTACT_SCOPE)
 			.first()
 		return scope !== undefined
 	}
 
 	findContactGrant = async (): Promise<GoogleScopeEntity | undefined> => {
-		return this.table.where('name').equals(GoogleScope.SCOPE_CONTACT).first()
+		return this.table.where('name').equals(GoogleScope.CONTACT_SCOPE).first()
 	}
 }
 

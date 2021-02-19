@@ -273,7 +273,14 @@ export default interface LanguageBase {
 	PWA_INTRO_3_TEXT_2: string
 	PWA_INTRO_3_TEXT_3: string
 	PWA_INTRO_2_TEXT_4: string
+	WINNER: string
+	NEXT_PLAYER: string
 	START_GAME_TEXT: string
 	MUSICAL_DINO_GAME_MSG_1: string
-	MUSICAL_DINO_GAME_MSG_2: string
+	TIC_TAC_DINO_GAME_OVER_MSG_1: string
+	TIC_TAC_DINO_TIE: string
+	PASSWORD: string
+	FORGOT_PASSWORD: string
+	ACCESS_PARENTS_AREA: string
+	ACCESS_BUTTON: string
 }

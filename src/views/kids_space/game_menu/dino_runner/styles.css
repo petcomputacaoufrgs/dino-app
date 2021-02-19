@@ -2,22 +2,22 @@
 	background: radial-gradient(
 			circle at 100% 50%,
 			transparent 20%,
-			rgba(255, 255, 255, 0.3) 21%,
-			rgba(255, 255, 255, 0.3) 34%,
+			#ffffff4d 21%,
+			#ffffff4d 34%,
 			transparent 35%,
 			transparent
 		),
 		radial-gradient(
 				circle at 0% 50%,
 				transparent 20%,
-				rgba(255, 255, 255, 0.3) 21%,
-				rgba(255, 255, 255, 0.3) 34%,
+				#ffffff4d 21%,
+				#ffffff4d 34%,
 				transparent 35%,
 				transparent
 			)
 			0 -50px;
 	background-size: 75px 100px;
-	background-color: #ffe1ed;
+	background-color: var(--dino-runner-game-background-color);
 	width: 100vw;
 	height: 100vh;
 }
@@ -26,7 +26,7 @@
 	position: absolute;
 	width: 100vw;
 	height: 40vh;
-	margin-top: 20vh;
+	margin-top: 30vh;
 	padding: 1rem;
 	display: flex;
 	align-items: flex-end;
@@ -39,7 +39,7 @@
 	height: 25vmin;
 	max-width: 150px;
 	max-height: 150px;
-	background-image: url('../../../assets/kids_space/dino_runner/fear.svg');
+	background-image: url('../../../../assets/kids_space/dino_runner/fear.svg');
 }
 
 .dino_runner_game__obstacle {
@@ -47,7 +47,7 @@
 	height: 15vmin;
 	max-width: 100px;
 	max-height: 100px;
-	background-image: url('../../../assets/kids_space/dino_runner/bacteria.svg');
+	background-image: url('../../../../assets/kids_space/dino_runner/bacteria.svg');
 }
 
 .dino_runner_game__start_game_button {
@@ -58,8 +58,8 @@
 	height: 8vh;
 	max-width: 20rem;
 	max-height: 5rem;
-	background-color: #e274a0;
-	color: #f5f5f5;
+	background-color: var(--dino-runner-game-details-color);
+	color: var(--light-color);
 	border: none;
 	text-decoration: none;
 	border-radius: 0.5rem;
@@ -67,11 +67,11 @@
 
 .dino_runner_game__grid__background {
 	position: absolute;
-	background-color: #1e344b;
+	background-color: var(--dino-runner-game-board-background);
 	width: auto;
 	height: 40vh;
 	margin: 0;
-	margin-top: 20vh;
+	margin-top: 30vh;
 	z-index: 1;
 }
 
@@ -82,7 +82,7 @@
 
 .dino_runner_game__score_board_container {
 	position: absolute;
-	top: 2rem;
+	top: 10vh;
 	width: 100vw;
 	display: flex;
 	align-items: center;
@@ -90,7 +90,7 @@
 }
 
 .dino_runner_game__score_board {
-	background-color: var(--snake-game-score-background-color);
+	background-color: var(--dino-runner-game-details-color);
 	width: 5rem;
 	height: 5rem;
 	border-radius: 50%;
@@ -104,6 +104,15 @@
 	font-size: var(--very-large-font);
 	font-weight: bold;
 	margin-bottom: 0;
+}
+
+.dino_runner_game .game_over_dialog {
+	top: 35vh;
+	left: 10vw;
+}
+
+.dino_runner_game .game_over_dialog .game_over_dialog__buttons {
+	margin-bottom: 1vmin;
 }
 
 .dino_runner_game__grid__background #dino_runner__star_one {

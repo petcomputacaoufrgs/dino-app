@@ -4,11 +4,12 @@ import PrivateRoute from '../../components/private_route'
 import PathConstants from '../../constants/app/PathConstants'
 import NotFound from '../not_found'
 import Dinogotchi from './dinogotchi'
-import DinoRunner from './dino_runner'
-import Menu from './menu'
-import SnakeGame from './snake_game'
-import MusicalDino from './musical_dino'
+import DinoRunner from './game_menu/dino_runner'
+import Menu from './game_menu'
+import SnakeGame from './game_menu/snake_game'
+import MusicalDino from './game_menu/musical_dino'
 import './variables.css'
+import TicTacDino from './game_menu/tic_tac_dino'
 
 const KidsSpace: React.FC = () => {
 	return (
@@ -23,6 +24,11 @@ const KidsSpace: React.FC = () => {
 				exact
 				path={PathConstants.SNAKE_GAME}
 				component={SnakeGame}
+			/>
+			<PrivateRoute
+				exact
+				path={PathConstants.TIC_TAC_DINO_GAME}
+				component={TicTacDino}
 			/>
 			<PrivateRoute
 				exact

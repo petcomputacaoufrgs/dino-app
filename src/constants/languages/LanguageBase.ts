@@ -279,4 +279,7 @@ export default interface LanguageBase {
 	INSERT_OLD_PASSWORD: string
 	INSERT_NEW_PASSWORD: string
 	INSERT_NEW_PASSWORD_AGAIN: string
+	SETTING_PASSWORD_EXPLANATION: string
+	INSERT_PASSWORD: string
+	INSERT_PASSWORD_AGAIN: string
 }

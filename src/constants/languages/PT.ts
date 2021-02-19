@@ -596,4 +596,10 @@ export default class PT implements LanguageBase {
 	INSERT_NEW_PASSWORD = 'Digite a nova senha: '
 
 	INSERT_NEW_PASSWORD_AGAIN = 'Digite novamente a nova senha: '
+
+	SETTING_PASSWORD_EXPLANATION = 'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha.'
+
+	INSERT_PASSWORD = 'Digite a senha: '
+
+	INSERT_PASSWORD_AGAIN = 'Digite novamente a senha: '
 }

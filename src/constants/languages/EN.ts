@@ -582,9 +582,15 @@ export default class EN implements LanguageBase {
 
 	CHANGE = 'Change'
 
-	INSERT_OLD_PASSWORD = 'Current password'
+	INSERT_OLD_PASSWORD = 'Current password: '
 
-	INSERT_NEW_PASSWORD = 'New password'
+	INSERT_NEW_PASSWORD = 'New password: '
 
-	INSERT_NEW_PASSWORD_AGAIN = 'Repeat new password'
+	INSERT_NEW_PASSWORD_AGAIN = 'Repeat new password: '
+
+	SETTING_PASSWORD_EXPLANATION = 'This password protects the kid from sensible content, because you can only access the parents area with this password'
+
+	INSERT_PASSWORD = 'Insert password: '
+
+	INSERT_PASSWORD_AGAIN = 'Repeat password: '
 }

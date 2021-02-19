@@ -279,6 +279,20 @@ const FirstSettingsDialog: React.FC = () => {
 		)
 	}
 
+	const renderSetPasswordDialog = () => {
+		return (
+			<div className='message_dialog set_password'>
+				<p>
+					{language.data.SETTING_PASSWORD_EXPLANATION}
+				</p>
+				<label htmlFor="pass">{language.data.INSERT_PASSWORD} </label>
+    			<input type="password" id="pass_1" name="password" required />
+				<label htmlFor="pass"> {language.data.INSERT_PASSWORD_AGAIN} </label>
+    			<input type="password" id="pass_1" name="password" required />
+			</div>
+		)
+	}
+
 	const renderFinalMessageDialog = () => {
 		return (
 			<div className='message_dialog'>
@@ -308,6 +322,10 @@ const FirstSettingsDialog: React.FC = () => {
 		{
 			title: language.data.FIRST_LOGIN_CHOOSE_TREATMENT,
 			component: renderSelectTreatmentDialogContent,
+		},
+		{
+			title: 'Crie uma senha para a área dos responsáveis', 
+			component: renderSetPasswordDialog,
 		},
 		{ title: '', component: renderFinalMessageDialog },
 	]

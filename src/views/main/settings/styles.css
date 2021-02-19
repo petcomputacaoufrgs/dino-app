@@ -109,3 +109,7 @@
 	color: var(--base-font-color);
 	border: none;
 }
+
+.settings__change_password_dialog .dino_dialog__header__title h1 {
+	font-size: var(--very-large-font);
+}

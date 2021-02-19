@@ -6,7 +6,6 @@ import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
-import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from '../faq/FaqItemService'
 

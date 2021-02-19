@@ -262,7 +262,7 @@ const Settings: React.FC = () => {
 					<FormControl className='settings__form'>
 						<DinoSwitch
 							selected={syncGoogleContacts}
-							setSelected={handleOpenGoogleContactDialog}
+							setSelected={handleGoogleContactSwitchChanged}
 							label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
 						/>
 					</FormControl>

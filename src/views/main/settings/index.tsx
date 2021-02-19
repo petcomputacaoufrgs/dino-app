@@ -158,14 +158,15 @@ const Settings: React.FC = () => {
 		}
 	}, [timeToDeleteAccount])
 
-	const handleOpenGoogleContactDialog = () => {
+	const handleGoogleContactSwitchChanged = () => {
+		if (!settings) return
+		
 		if (!syncGoogleContacts) {
 			setOpenGoogleContactDialog(true)
 		} else {
 			setSyncGoogleContacts(false)
 		}
 	}
-
 	const handleAgreeContactsGrantDialog = async () => {
 		setOpenGoogleContactDialog(false)
 		if (settings) {
@@ -271,7 +272,7 @@ const Settings: React.FC = () => {
 				onDecline={handleDisagreeContactsGrantDialog}
 				onClose={handleCloseContactsGrantDialog}
 				open={openGoogleContactDialog}
-				scopes={[GoogleScope.SCOPE_CONTACT]}
+				scopes={[GoogleScope.CONTACT_SCOPE]}
 				text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
 				title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
 			/>

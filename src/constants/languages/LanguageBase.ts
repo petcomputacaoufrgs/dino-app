@@ -266,4 +266,10 @@ export default interface LanguageBase {
 	FORGOT_PASSWORD: string
 	ACCESS_PARENTS_AREA: string
 	ACCESS_BUTTON: string
+	YES: string
+	NO: string
+	DELETE_ACCOUNT: string
+	DELETE_ACCOUNT_MESSAGE: string
+	DELETE_ACCOUNT_SUCCESS_MESSAGE: string
+	DELETE_ACCOUNT_ERROR_MESSAGE: string
 }

@@ -24,23 +24,43 @@ import ColorThemeEnum from '../../../types/user/view/ColorThemeEnum'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
 import GoogleContactService from '../../../services/contact/GoogleContactService'
+import TextButton from '../../../components/button/text_button'
+import TransitionSlide from '../../../components/slide_transition'
+import DinoDialogHeader, {
+	DinoDialogContent,
+} from '../../../components/dino_dialog'
+import { Dialog } from '@material-ui/core'
+import UserService from '../../../services/user/UserService'
+import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
+
+const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
 const Settings: React.FC = () => {
 	const alert = useAlert()
 	const language = useLanguage()
 
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
-
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-	const [selectedLanguage, setSelectedLanguage] = useState(language.data.LANGUAGE_CODE)
+	const [selectedLanguage, setSelectedLanguage] = useState(
+		language.data.LANGUAGE_CODE,
+	)
 	const [selectedFontSize, setSelectedFontSize] = useState(FontSizeEnum.DEFAULT)
-	const [selectedColorTheme, setSelectedColorTheme] = useState(ColorThemeEnum.DEVICE,)
-	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] = useState(false)
-	const [selectedTreatment, setSelectedTreatment] = useState<TreatmentEntity | undefined>(undefined)
+	const [selectedColorTheme, setSelectedColorTheme] = useState(
+		ColorThemeEnum.DEVICE,
+	)
+	const [
+		selectedEssentialContactGrant,
+		setSelectedEssentialContactGrant,
+	] = useState(false)
+	const [selectedTreatment, setSelectedTreatment] = useState<
+		TreatmentEntity | undefined
+	>(undefined)
+	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
+	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -120,6 +140,24 @@ const Settings: React.FC = () => {
 		setSelectedLanguage(language.data.LANGUAGE_CODE)
 	}, [language])
 
+	useEffect(() => {
+		const reduceTimeToDeleteAccount = () => {
+			setTimeToDeleteAccount(timeToDeleteAccount - 1)
+		}
+
+		let timeout: NodeJS.Timeout
+
+		if (timeToDeleteAccount > 0) {
+			timeout = setTimeout(reduceTimeToDeleteAccount, 1000)
+		}
+
+		return () => {
+			if (timeout) {
+				clearTimeout(timeout)
+			}
+		}
+	}, [timeToDeleteAccount])
+
 	const handleGoogleContactSwitchChanged = () => {
 		if (!settings) return
 		
@@ -129,7 +167,6 @@ const Settings: React.FC = () => {
 			setSyncGoogleContacts(false)
 		}
 	}
-
 	const handleAgreeContactsGrantDialog = async () => {
 		setOpenGoogleContactDialog(false)
 		if (settings) {
@@ -149,6 +186,28 @@ const Settings: React.FC = () => {
 
 	const handleCloseContactsGrantDialog = () => {
 		setOpenGoogleContactDialog(false)
+	}
+
+	const handlerDeleteAccountClick = () => {
+		setTimeToDeleteAccount(AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS)
+		setOpenDeleteAccountDialog(true)
+	}
+
+	const handleCloseDeleteAccountDialog = () => {
+		setOpenDeleteAccountDialog(false)
+	}
+
+	const handleDeleteAccount = async () => {
+		if (timeToDeleteAccount === 0) {
+			const success = await UserService.deleteAccount()
+			if (success) {
+				alert.showSuccessAlert(language.data.DELETE_ACCOUNT_SUCCESS_MESSAGE)
+				AuthService.logout()
+			} else {
+				alert.showErrorAlert(language.data.DELETE_ACCOUNT_ERROR_MESSAGE)
+			}
+			setOpenDeleteAccountDialog(false)
+		}
 	}
 
 	const handleSave = async () => {
@@ -207,15 +266,49 @@ const Settings: React.FC = () => {
 	)
 
 	const renderDialogs = (): JSX.Element => (
-		<GoogleGrantDialog
-			onAccept={handleAgreeContactsGrantDialog}
-			onDecline={handleDisagreeContactsGrantDialog}
-			onClose={handleCloseContactsGrantDialog}
-			open={openGoogleContactDialog}
-			scopes={[GoogleScope.CONTACT_SCOPE]}
-			text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
-			title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
-		/>
+		<>
+			<GoogleGrantDialog
+				onAccept={handleAgreeContactsGrantDialog}
+				onDecline={handleDisagreeContactsGrantDialog}
+				onClose={handleCloseContactsGrantDialog}
+				open={openGoogleContactDialog}
+				scopes={[GoogleScope.CONTACT_SCOPE]}
+				text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
+				title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
+			/>
+			<Dialog
+				className='settings__delete_account_dialog'
+				fullWidth
+				maxWidth='xs'
+				onClose={handleCloseDeleteAccountDialog}
+				TransitionComponent={TransitionSlide}
+				open={openDeleteAccountDialog}
+			>
+				<Loader isLoading={isLoading}>
+					<DinoDialogHeader>
+						<h1>{language.data.DELETE_ACCOUNT}</h1>
+					</DinoDialogHeader>
+					<DinoDialogContent>
+						<p>{language.data.DELETE_ACCOUNT_MESSAGE}</p>
+					</DinoDialogContent>
+					<div className='settings__delete_account_dialog__buttons'>
+						<Button onClick={handleCloseDeleteAccountDialog}>
+							{language.data.NO}
+						</Button>
+						<Button
+							onClick={handleDeleteAccount}
+							className='settings__delete_account_dialog__buttons__delete_button'
+						>
+							{timeToDeleteAccount === 0 ? (
+								<>{language.data.YES}</>
+							) : (
+								<>{timeToDeleteAccount}</>
+							)}
+						</Button>
+					</div>
+				</Loader>
+			</Dialog>
+		</>
 	)
 
 	return (
@@ -269,7 +362,16 @@ const Settings: React.FC = () => {
 						label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
 					/>
 				</FormControl>
-				<DinoHr invisible />
+				<DinoHr />
+				<FormControl className='settings__form'>
+					<TextButton
+						onClick={handlerDeleteAccountClick}
+						className='settings__form__delete_account'
+					>
+						{language.data.DELETE_ACCOUNT}
+					</TextButton>
+				</FormControl>
+				<DinoHr className='settings__last_line' />
 				{renderSaveButton()}
 				{renderDialogs()}
 			</div>

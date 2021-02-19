@@ -575,4 +575,16 @@ export default class EN implements LanguageBase {
 		'Error deleting your account, please try again later.'
 
 	CHANGE_PASSWORD = 'Change password to parents area'
+
+	CHANGE_PASSWORD_DIALOG = 'Change password'
+
+	CANCEL = 'Cancel'
+
+	CHANGE = 'Change'
+
+	INSERT_OLD_PASSWORD = 'Current password'
+
+	INSERT_NEW_PASSWORD = 'New password'
+
+	INSERT_NEW_PASSWORD_AGAIN = 'Repeat new password'
 }

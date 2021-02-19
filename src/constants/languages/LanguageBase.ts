@@ -273,4 +273,10 @@ export default interface LanguageBase {
 	DELETE_ACCOUNT_SUCCESS_MESSAGE: string
 	DELETE_ACCOUNT_ERROR_MESSAGE: string
 	CHANGE_PASSWORD: string
+	CHANGE_PASSWORD_DIALOG: string
+	CANCEL: string
+	CHANGE: string
+	INSERT_OLD_PASSWORD: string
+	INSERT_NEW_PASSWORD: string
+	INSERT_NEW_PASSWORD_AGAIN: string
 }

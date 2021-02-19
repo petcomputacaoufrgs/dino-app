@@ -331,26 +331,25 @@ const Settings: React.FC = () => {
 			>
 				<Loader isLoading={isLoading}>
 					<DinoDialogHeader>
-						<h1>Alterar senha</h1>
+						<h1>{language.data.CHANGE_PASSWORD_DIALOG}</h1>
 					</DinoDialogHeader>
 					<DinoDialogContent>
-						<label htmlFor="pass">Insira a senha atual:</label>
+						<label htmlFor="pass">{language.data.INSERT_OLD_PASSWORD}</label>
     					<input type="password" id="pass_1" name="password" required />
-						<label htmlFor="pass">Digite a nova senha:</label>
+						<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD}</label>
     					<input type="password" id="pass_2" name="password" required />
-						<label htmlFor="pass">Digite novamente a nova senha:</label>
+						<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD_AGAIN}</label>
     					<input type="password" id="pass_3" name="password" required />
 						<a href={'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'}> {language.data.FORGOT_PASSWORD}</a>
 					</DinoDialogContent>
-					<div className='settings__delete_account_dialog__buttons'>
+					<div className='settings__change_password_dialog__buttons'>
 						<Button onClick={handleCloseChangePasswordDialog}>
-							CANCELAR
+							{language.data.CANCEL}
 						</Button>
 						<Button
 							onClick={handlePasswordChange}
-							className='settings__delete_account_dialog__buttons__delete_button'
 						>
-							ALTERAR
+							{language.data.CHANGE}
 						</Button>
 					</div>
 				</Loader>

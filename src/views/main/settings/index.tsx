@@ -59,6 +59,7 @@ const Settings: React.FC = () => {
 	const [selectedTreatment, setSelectedTreatment] = useState<
 		TreatmentEntity | undefined
 	>(undefined)
+	const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false)
 	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
 	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
 
@@ -188,6 +189,14 @@ const Settings: React.FC = () => {
 		setOpenGoogleContactDialog(false)
 	}
 
+	const handleCloseChangePasswordDialog = () => {
+		setOpenChangePasswordDialog(false)
+	}
+
+	const handlePasswordChange = () => {
+		console.log('ta na hora da verificação')
+	}
+
 	const handlerDeleteAccountClick = () => {
 		setTimeToDeleteAccount(AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS)
 		setOpenDeleteAccountDialog(true)
@@ -195,6 +204,10 @@ const Settings: React.FC = () => {
 
 	const handleCloseDeleteAccountDialog = () => {
 		setOpenDeleteAccountDialog(false)
+	}
+
+	const handleChangePasswordClick = () => {
+		setOpenChangePasswordDialog(true)
 	}
 
 	const handleDeleteAccount = async () => {
@@ -308,6 +321,40 @@ const Settings: React.FC = () => {
 					</div>
 				</Loader>
 			</Dialog>
+			<Dialog
+				className='settings__change_password_dialog'
+				fullWidth
+				maxWidth='xs'
+				onClose={handleCloseChangePasswordDialog}
+				TransitionComponent={TransitionSlide}
+				open={openChangePasswordDialog}
+			>
+				<Loader isLoading={isLoading}>
+					<DinoDialogHeader>
+						<h1>Alterar senha</h1>
+					</DinoDialogHeader>
+					<DinoDialogContent>
+						<label htmlFor="pass">Insira a senha atual:</label>
+    					<input type="password" id="pass_1" name="password" required />
+						<label htmlFor="pass">Digite a nova senha:</label>
+    					<input type="password" id="pass_2" name="password" required />
+						<label htmlFor="pass">Digite novamente a nova senha:</label>
+    					<input type="password" id="pass_3" name="password" required />
+						<a href={'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'}> {language.data.FORGOT_PASSWORD}</a>
+					</DinoDialogContent>
+					<div className='settings__delete_account_dialog__buttons'>
+						<Button onClick={handleCloseChangePasswordDialog}>
+							CANCELAR
+						</Button>
+						<Button
+							onClick={handlePasswordChange}
+							className='settings__delete_account_dialog__buttons__delete_button'
+						>
+							ALTERAR
+						</Button>
+					</div>
+				</Loader>
+			</Dialog>
 		</>
 	)
 
@@ -363,6 +410,15 @@ const Settings: React.FC = () => {
 					/>
 				</FormControl>
 				<DinoHr />
+				<FormControl>
+					<TextButton
+						onClick={handleChangePasswordClick}
+						className='settings__form__change_password'
+					>
+						{language.data.CHANGE_PASSWORD}
+					</TextButton>
+				</FormControl>
+				<DinoHr />	
 				<FormControl className='settings__form'>
 					<TextButton
 						onClick={handlerDeleteAccountClick}

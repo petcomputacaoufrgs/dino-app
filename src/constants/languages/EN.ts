@@ -573,4 +573,6 @@ export default class EN implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Error deleting your account, please try again later.'
+
+	CHANGE_PASSWORD = 'Change password to parents area'
 }

@@ -582,4 +582,6 @@ export default class PT implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
+
+	CHANGE_PASSWORD = 'Alterar senha de acesso a área dos responsáveis'
 }

@@ -1,0 +1,42 @@
+.access_dialog {
+    top: 17vh;
+}
+
+.access_dialog .kids_space_dialog__content {
+	height: 55vh;
+    text-align: justify;
+    padding-left: 1.3rem;
+}
+
+.access_dialog .kids_space_dialog__content p {
+    margin-right: 1.3rem;
+}
+
+.access_dialog__form {
+    margin-top: 1rem;
+    font-size: var(--small-font);
+}
+
+.access_dialog__form input {
+    background-color: var(--dialog-input-background-color);
+    text-decoration: none;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    width: 94%;
+    height: 1.7rem;
+    margin-bottom: 1rem;
+}
+
+.access_dialog__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem;
+}
+
+.access_dialog__buttons .button {
+    background-color: var(--light-color);
+    color: var(--dialog-background-color);
+    font-size: var(--small-font);
+    margin-left: 1rem;
+}

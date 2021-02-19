@@ -4,4 +4,5 @@ export default interface GoogleContactDataModel
 	extends SynchronizableDataLocalIdModel<number> {
 	resourceName?: string
 	contactId: number
+	savedOnGoogleAPI: boolean
 }

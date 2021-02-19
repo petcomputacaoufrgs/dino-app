@@ -4,5 +4,5 @@ export default interface GoogleContactEntity
 	extends SynchronizableEntity<number> {
 	resourceName?: string
 	localContactId?: number
-	savedOnGoogleAPI: 0 | 1
+	savedOnGoogleAPI: number
 }

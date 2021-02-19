@@ -3,7 +3,13 @@
 	--light-color: #f5f5f5;
 	--dark-color: #121212;
 	--dark-color-transparency: #12121280;
-	--dialog_main_color: #a594ab;
+	--dialog_main_color: #A594AB;
+    
+	/* Warning Dialog */
+	--dialog-background-color: #A594AB;
+	--dialog-circle-background-color: #E6E2E8;
+	--dialog-circle-border-color: #694E73;
+    --dialog-input-background-color: #C0B3C5;
 
 	/* ========================== */
 	/* =         Games          = */

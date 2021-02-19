@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { useLanguage } from '../../../../context/language'
-import HistoryService from '../../../../services/history/HistoryService'
-import PathConstants from '../../../../constants/app/PathConstants'
-import GameOverDialog from '../../../../components/game_over_dialog'
+import React, { useState } from "react"
+import { useLanguage } from "../../../../context/language"
+import HistoryService from "../../../../services/history/HistoryService"
+import PathConstants from "../../../../constants/app/PathConstants"
+import GameOverDialog from "../../../../components/kids_space_dialog/game_over_dialog"
 import Game from './components/Game'
 import '../../variables.css'
 import './styles.css'

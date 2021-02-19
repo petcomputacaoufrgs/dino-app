@@ -11,6 +11,7 @@ body .MuiInputBase-root,
 .dino_dialog__header,
 .dino_dialog__content {
 	font-family: var(--font-base);
+	text-align: justify;
 	color: var(--base-font-color);
 }
 

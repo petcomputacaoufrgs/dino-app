@@ -18,7 +18,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 
 	const renderChildren = () => {
 		return children ? (
-			<div className='select-treatment__children'>{children}</div>
+			<div className='select_treatment__children'>{children}</div>
 		) : (
 			<></>
 		)
@@ -27,7 +27,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 	return (
 		<>
 			<Autocomplete
-				className='select-treatment__autocomplete'
+				className='select_treatment__autocomplete'
 				open={open}
 				onOpen={() => setOpen(true)}
 				onClose={() => setOpen(false)}

@@ -42,9 +42,7 @@ const Settings: React.FC = () => {
 
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
-	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
-		undefined,
-	)
+	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
 	const [selectedLanguage, setSelectedLanguage] = useState(
@@ -69,7 +67,7 @@ const Settings: React.FC = () => {
 			const treatments = await TreatmentService.getAll()
 			const settings = await UserSettingsService.getFirst()
 			const syncGoogleContacs = await GoogleScopeService.hasContactGrant()
-
+			
 			if (settings) {
 				if (treatments) {
 					const treatment = treatments.find(
@@ -82,7 +80,7 @@ const Settings: React.FC = () => {
 				}
 				updateSettings(settings)
 			}
-			updateSyncGoogleContacts(syncGoogleContacs)
+			updateSyncGoogleContacts(syncGoogleContacs, settings)
 
 			finishLoading()
 		}
@@ -109,7 +107,8 @@ const Settings: React.FC = () => {
 			setSettings(settings)
 		}
 
-		let updateSyncGoogleContacts = (syncGoogleContacts: boolean) => {
+		let updateSyncGoogleContacts = (syncGoogleContacts: boolean, settings?: UserSettingsEntity) => {
+			if (!settings || settings.declineGoogleContacts) return
 			setSyncGoogleContacts(syncGoogleContacts)
 		}
 
@@ -162,6 +161,8 @@ const Settings: React.FC = () => {
 	const handleOpenGoogleContactDialog = () => {
 		if (!syncGoogleContacts) {
 			setOpenGoogleContactDialog(true)
+		} else {
+			setSyncGoogleContacts(false)
 		}
 	}
 
@@ -217,6 +218,12 @@ const Settings: React.FC = () => {
 			settings.fontSize = selectedFontSize
 			settings.colorTheme = selectedColorTheme
 			settings.includeEssentialContact = selectedEssentialContactGrant
+
+			const userDeclinedGoogleContacts = !settings.declineGoogleContacts && !syncGoogleContacts
+			
+			if (userDeclinedGoogleContacts) {
+				settings.declineGoogleContacts = true
+			}
 
 			if (selectedTreatment) {
 				settings.treatmentLocalId = selectedTreatment.localId
@@ -342,7 +349,7 @@ const Settings: React.FC = () => {
 				<FormControl className='settings__form'>
 					<DinoSwitch
 						selected={syncGoogleContacts}
-						setSelected={handleOpenGoogleContactDialog}
+						setSelected={handleGoogleContactSwitchChanged}
 						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
 					/>
 				</FormControl>

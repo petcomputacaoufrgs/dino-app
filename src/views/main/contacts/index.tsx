@@ -158,7 +158,7 @@ const Contacts: React.FC = () => {
 					onChange={handleChange}
 					placeholder={language.data.SEARCH_HOLDER}
 				/>
-				<ContactItems items={filteredContacts} />
+				{settings && <ContactItems settings={settings} items={filteredContacts} />}
 				<CircularButton
 					ariaLabel={language.data.CONTACTS_ADD_CONTACT}
 					className='add_contact_button'
@@ -189,7 +189,7 @@ const Contacts: React.FC = () => {
 				onDecline={handleDeclineGoogleGrant}
 				onClose={handleCloseGoogleGrant}
 				open={openGrantDialog}
-				scopes={[GoogleScope.SCOPE_CONTACT]}
+				scopes={[GoogleScope.CONTACT_SCOPE]}
 				text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
 				title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
 			/>

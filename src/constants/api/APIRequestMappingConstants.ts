@@ -19,37 +19,22 @@ class APIRequestMappingConstants {
 	private PUBLIC_AUTH = `${this.URL}public/auth/`
 	private APP_SETTINGS = `${this.URL}user_app_settings/`
 	private LOG_APP_ERROR = `${this.URL}log_app_error/`
-
 	AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
-
 	GRANT_GOOGLE = `${this.AUTH}google/grant/`
-
 	REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`
-
 	REFRESH_AUTH = `${this.PUBLIC_AUTH}refresh/`
-
 	WEB_SOCKET_AUTH = `${this.AUTH}web_socket/`
-
 	LOGOUT = `${this.AUTH}logout/`
-
 	APP_SETTINGS_VERSION = `${this.APP_SETTINGS}version/`
-
 	APP_SETTINGS_GET = `${this.APP_SETTINGS}`
-
 	APP_SETTINGS_SAVE = `${this.APP_SETTINGS}`
-
 	CONTACT_GOOGLE_DECLINE = `${this.CONTACT}google/decline_contacts/`
-
 	TEST_CONNECTION = `${this.URL}public/test_connection/`
-
 	SAVE_LOG_APP_ERROR = `${this.LOG_APP_ERROR}`
-
 	SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
-
 	TREATMENT_ESSENTIAL_CONTACTS = `${this.CONTACT}essential/`
-
 	STAFF = `${this.URL}staff/`
-
+	DELETE_ACCOUNT = `${this.USER}delete_account/`
 }
 
 export default new APIRequestMappingConstants()

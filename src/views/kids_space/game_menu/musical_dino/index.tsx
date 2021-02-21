@@ -4,7 +4,7 @@ import HistoryService from '../../../../services/history/HistoryService'
 import { startGame } from './engine/index'
 import { ReactComponent as DinoSVG } from '../../../../assets/kids_space/dinogotchi/dino.svg'
 import { ReactComponent as GoBackSVG } from '../../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
-import { useLanguage } from "../../../../context/language"
+import { useLanguage } from '../../../../context/language'
 import IconButton from '../../../../components/button/icon_button'
 import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
 import './styles.css'
@@ -15,81 +15,95 @@ const DrumTwoSound = require('../../../../assets/kids_space/musical_dino/drum_2.
 const GuitarSound = require('../../../../assets/kids_space/musical_dino/guitar.mp3')
 
 const MusicalDino: React.FC = () => {
-    const language = useLanguage()
-    const [openDialog, setOpenDialog] = useState(false)
-    
-    function handleWin() {
-        setOpenDialog(true)
-    }
+	const language = useLanguage()
+	const [openDialog, setOpenDialog] = useState(false)
 
-    function handleClose() {
-        setOpenDialog(false)
-        HistoryService.push(PathConstants.GAME_MENU)
-    }
+	function handleWin() {
+		setOpenDialog(true)
+	}
 
-    function handleRestart() {
-        setOpenDialog(false)
-        startGame(handleWin)
-    }
+	function handleClose() {
+		setOpenDialog(false)
+		HistoryService.push(PathConstants.GAME_MENU)
+	}
+
+	function handleRestart() {
+		setOpenDialog(false)
+		startGame(handleWin)
+	}
 
 	return (
-		<div className="musical_dino">
-            <audio id="musical_dino__clip1">
-                <source src={BellSound.default}>
-                </source>
-            </audio>
-            <audio id="musical_dino__clip2">
-                <source src={DrumOneSound.default}>
-                </source>
-            </audio>
-            <audio id="musical_dino__clip3">
-                <source src={DrumTwoSound.default}>
-                </source>
-            </audio>
-            <audio id="musical_dino__clip4">
-                <source src={GuitarSound.default}>
-                </source>
-            </audio>
-            <GameOverDialog
-                onAgree={handleRestart}
-                onDisagree={handleClose}
-                open={openDialog}
-            >
-                    <p>{language.data.MUSICAL_DINO_GAME_MSG_1}</p>
-                    <p>{language.data.PLAY_AGAIN_MESSAGE}</p>
-            </GameOverDialog>
-            <div className='musical_dino__header'>
-                <IconButton
+		<div className='musical_dino'>
+			<audio id='musical_dino__clip1'>
+				<source src={BellSound.default}></source>
+			</audio>
+			<audio id='musical_dino__clip2'>
+				<source src={DrumOneSound.default}></source>
+			</audio>
+			<audio id='musical_dino__clip3'>
+				<source src={DrumTwoSound.default}></source>
+			</audio>
+			<audio id='musical_dino__clip4'>
+				<source src={GuitarSound.default}></source>
+			</audio>
+			<GameOverDialog
+				onAgree={handleRestart}
+				onDisagree={handleClose}
+				open={openDialog}
+			>
+				<p>{language.data.MUSICAL_DINO_GAME_MSG_1}</p>
+				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
+			</GameOverDialog>
+			<div className='musical_dino__header'>
+				<IconButton
 					icon={GoBackSVG}
 					onClick={() => {
 						HistoryService.push(PathConstants.GAME_MENU)
 					}}
 				/>
-                <div id='musical_dino__header__turn'>0</div>
-            </div>
-            <div className="musical_dino__dino_song_board">
-                <div className='musical_dino__dino_song_board__top'>
-                    <div id="musical_dino__topleft" className='musical_dino__dino musical_dino__dino_green'>
-                        <DinoSVG />
-                    </div>
-                    <div id="musical_dino__topright" className='musical_dino__dino musical_dino__dino_red'>
-                        <DinoSVG />
-                    </div>
-                </div>
-                <div className='musical_dino__dino_song_board__bottom'>
-                    <div id="musical_dino__bottomleft" className='musical_dino__dino musical_dino__dino_yellow'>
-                        <DinoSVG />
-                    </div>
-                    <div id="musical_dino__bottomright" className='musical_dino__dino musical_dino__dino_blue'>
-                        <DinoSVG />
-                    </div>
-                </div>
-            </div>
+				<div id='musical_dino__header__turn'>0</div>
+			</div>
+			<div className='musical_dino__dino_song_board'>
+				<div className='musical_dino__dino_song_board__top'>
+					<div
+						id='musical_dino__topleft'
+						className='musical_dino__dino musical_dino__dino_green'
+					>
+						<DinoSVG />
+					</div>
+					<div
+						id='musical_dino__topright'
+						className='musical_dino__dino musical_dino__dino_red'
+					>
+						<DinoSVG />
+					</div>
+				</div>
+				<div className='musical_dino__dino_song_board__bottom'>
+					<div
+						id='musical_dino__bottomleft'
+						className='musical_dino__dino musical_dino__dino_yellow'
+					>
+						<DinoSVG />
+					</div>
+					<div
+						id='musical_dino__bottomright'
+						className='musical_dino__dino musical_dino__dino_blue'
+					>
+						<DinoSVG />
+					</div>
+				</div>
+			</div>
 			<div className='musical_dino__start_game'>
-                <button className='musical_dino__start_game__button' id="musical_dino__start" onClick = {() => {startGame(handleWin)}}>
-                    {language.data.START_GAME_TEXT}
-                </button>
-            </div>
+				<button
+					className='musical_dino__start_game__button'
+					id='musical_dino__start'
+					onClick={() => {
+						startGame(handleWin)
+					}}
+				>
+					{language.data.START_GAME_TEXT}
+				</button>
+			</div>
 		</div>
 	)
 }

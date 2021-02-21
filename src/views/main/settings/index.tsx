@@ -26,9 +26,7 @@ import ContactService from '../../../services/contact/ContactService'
 import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import TransitionSlide from '../../../components/slide_transition'
-import DinoDialogHeader, {
-	DinoDialogContent,
-} from '../../../components/dino_dialog'
+import {DinoDialogHeader,DinoDialogContent,} from '../../../components/dialogs/dino_dialog'
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
@@ -287,7 +285,7 @@ const Settings: React.FC = () => {
 				TransitionComponent={TransitionSlide}
 				open={openDeleteAccountDialog}
 			>
-				<Loader isLoading={isLoading}>
+				<DinoLoader isLoading={isLoading}>
 					<DinoDialogHeader>
 						<h1>{language.data.DELETE_ACCOUNT}</h1>
 					</DinoDialogHeader>
@@ -309,7 +307,7 @@ const Settings: React.FC = () => {
 							)}
 						</Button>
 					</div>
-				</Loader>
+				</DinoLoader>
 			</Dialog>
 		</>
 	)

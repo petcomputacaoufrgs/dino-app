@@ -29,7 +29,8 @@ const AddStaffForm = () => {
   
   return (
     <div className='add_staff'>
-      <p className='add_staff__title'>Adicione Funcionários</p>
+      <p className='add_staff__title'>{language.data.FORM_ADD_STAFF}</p>
+      {/* @TO-DO: fazer esse texto */}
       <p>Funcionários são usuários com poderes adiministrativos de adicionar e blablabla. 
         Apenas a conta do <i>Client</i> original é capaz de adicionar e remover outros funcionários.</p>
       <div className='dialog_form__content'>

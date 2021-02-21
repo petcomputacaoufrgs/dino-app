@@ -5,6 +5,7 @@ import { useLanguage } from '../../../context/language'
 import TextButton from '../../button/text_button'
 import TransitionSlide from '../../slide_transition'
 import DinoDialogProps from './props'
+import '../styles.css'
 
 const DinoDialog: React.FC<DinoDialogProps> = ({ open, onClose: handleClose, onSave: handleSave, header, actions, children }) => {
 

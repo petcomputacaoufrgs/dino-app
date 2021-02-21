@@ -23,7 +23,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const [toView, setToView] = useState(false)
 	const [toDelete, setToDelete] = useState(false)
 	const [selectedItem, setSelectedItem] = useState<ContactView | EssentialContactView | undefined>(undefined)
-
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const language = useLanguage()

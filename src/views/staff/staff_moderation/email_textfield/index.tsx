@@ -23,7 +23,7 @@ const EmailTextField: React.FC<EmailFormProps> = ({ value, handleChange, error }
       required
       fullWidth
       type='email'
-      // placeholder='Separe e-mails por vírgula'
+      // @to-do: placeholder='Separe e-mails por vírgula'
       inputProps={{ maxLength: 1000 }}
       label={language.data.FORM_EMAIL}
       disabled={isNotClient}

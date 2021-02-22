@@ -68,7 +68,6 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
       <MuiSearchBar
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value as string)}
-        placeholder={language.data.SEARCH_HOLDER}
       />
       <ListTitle title={language.data.STAFF}/>
       <List>
@@ -111,8 +110,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
           />
           <AgreementDialog
             open={toDelete}
-            description={language.data.DELETE_CONTACT_OPTION_TEXT}
-            question={language.data.DELETE_CONTACT_QUESTION}
+            question={language.data.deleteItemText(language.data.STAFF)}
             onAgree={handleDelete}
             onDisagree={() => setToDelete(false)}
           />

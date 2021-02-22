@@ -73,10 +73,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 					/>}
 					{toDelete && <AgreementDialog
 						open={toDelete !== undefined}
-						agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
-						disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
-						description={language.data.DELETE_CONTACT_OPTION_TEXT}
-						question={language.data.DELETE_CONTACT_QUESTION}
+            question={language.data.deleteItemText(language.data.FAQ)}
 						onAgree={handleAcceptDeleteDialog}
 						onDisagree={handleCloseDeleteDialog}
 					/>}

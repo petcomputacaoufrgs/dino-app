@@ -157,7 +157,6 @@ const Contacts: React.FC = () => {
 				<MuiSearchBar
 					value={searchTerm}
 					onChange={handleChange}
-					placeholder={language.data.SEARCH_HOLDER}
 				/>
 				<ContactItems items={filteredContacts} />
 			</DinoLoader>

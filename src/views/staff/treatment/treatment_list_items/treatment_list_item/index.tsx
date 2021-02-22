@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import PathConstants from '../../../../../constants/app/PathConstants'
+import { useLanguage } from '../../../../../context/language'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 
 interface TreatmentItemProps {
@@ -12,6 +13,8 @@ interface TreatmentItemProps {
 
 const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) => {
 
+  const language = useLanguage()
+
   return (
     <div className='contacts__list__item'>
     <ListItem >
@@ -19,7 +22,7 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
         primary={item.name}
         secondary={
         <Link className='history_link' to={`${PathConstants.STAFF_FAQ}/${item.localId}`}>
-          {`Ver F.A.Q. de ${item.name}`} 
+          {language.data.seeFAQItemsText(item.name)} 
         </Link>}
       />
       <ListItemSecondaryAction>

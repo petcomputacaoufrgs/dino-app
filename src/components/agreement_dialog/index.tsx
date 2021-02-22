@@ -40,7 +40,7 @@ const AgreementDialog: React.FC<AgreementDialogProps> = ({
 					id='alert-dialog-description'
 					className='alert__dialog__description'
 				>
-					{description}
+					{description || language.data.DELETE_ITEM_OPTION_TEXT}
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>

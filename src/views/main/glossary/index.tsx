@@ -58,7 +58,6 @@ const Glossary: React.FC = () => {
 			<MuiSearchBar
 				value={searchTerm}
 				onChange={handleChange}
-				placeholder={language.data.SEARCH_HOLDER}
 			/>
 			<DinoLoader className='glossary_loader' isLoading={isLoading}>
 				<GlossaryItems items={filteredGlossary} />

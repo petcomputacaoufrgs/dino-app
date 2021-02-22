@@ -1,4 +1,6 @@
 export default interface LanguageBase {
+	deleteItemText(item: string): string
+	seeFAQItemsText(item: string): string
 	APP_NAME: string
 	DINOAPP_TEAM: string
 	CURIOUS_DINO_ALT: string
@@ -9,6 +11,9 @@ export default interface LanguageBase {
 	NOT_FOUND_MESSAGE: string
 	NOT_FROND_REDIRECT_MESSAGE: string
 	WELCOME_MESSAGE: string
+	GLOSSARY: string
+	GLOSSARY_ITEM: string
+	FAQ: string
 	FIRST_LOGIN_DIALOG_LABEL: string
 	FIRST_LOGIN_WELCOME_MESSAGE: string
 	FIRST_LOGIN_DONE_MESSAGE: string
@@ -33,15 +38,13 @@ export default interface LanguageBase {
 	CANCEL_OPTION_TEXT: string
 	EDIT_OPTION_TEXT: string
 	DELETE_OPTION_TEXT: string
-	DELETE_CONTACT_QUESTION: string
 	DELETE_CONTACT_OPTION_TEXT: string
+	DELETE_ITEM_OPTION_TEXT: string
 	TERMS_OF_USE: string
 	PRIVACY_POLICY: string
 	MENU_HOME: string
 	MENU_GAMES: string
-	MENU_GLOSSARY: string
 	MENU_CONTACTS: string
-	MENU_FAQ: string
 	MENU_SETTINGS: string
 	MENU_LOGOUT: string
 	MENU_CALENDAR: string
@@ -223,7 +226,7 @@ export default interface LanguageBase {
 	DEFAULT_FONT_SIZE_NAME: string
 	LARGE_FONT_SIZE_NAME: string
 	LARGER_FONT_SIZE_NAME: string
-	CONTACT_DIALOG_FORM_SUBTITLE: string
+	CONTACT: string
 	CONTACT_NUMBER_ALREADY_EXISTS: string
 	DIALOG_AGREE_TEXT: string
 	DIALOG_DECLINE_BUTTON_TEXT: string
@@ -289,4 +292,6 @@ export default interface LanguageBase {
 	DELETE_ACCOUNT_MESSAGE: string
 	DELETE_ACCOUNT_SUCCESS_MESSAGE: string
 	DELETE_ACCOUNT_ERROR_MESSAGE: string
+	EXAMPLE_EMAIL: string
 }
+

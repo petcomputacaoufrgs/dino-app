@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react'
 import { Avatar, CardContent, CardHeader, Dialog, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
-import { useLanguage } from '../../../../context/language'
 import ItemListMenu from '../../../../components/item_list_menu'
 import TransitionSlide from '../../../../components/slide_transition'
 import AvatarIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
 import StaffEntity from '../../../../types/staff/database/StaffEntity'
+import { useLanguage } from '../../../../context/language'
 
 interface StaffCardProps {
   open: boolean,
@@ -18,8 +18,6 @@ interface StaffCardProps {
 
 const StaffCard: React.FC<StaffCardProps> = forwardRef(({ open, onClose, item, onEdit, onDelete }, ref: React.Ref<unknown>) => {
 	
-	const language = useLanguage()
-
   const handleEdit = () => {
     onClose()
     onEdit()
@@ -32,6 +30,8 @@ const StaffCard: React.FC<StaffCardProps> = forwardRef(({ open, onClose, item, o
 
   const StaffCardHeader = () => {
 
+    const language = useLanguage()
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,7 +42,7 @@ const StaffCard: React.FC<StaffCardProps> = forwardRef(({ open, onClose, item, o
         <CardHeader
           avatar={<Avatar><AvatarIcon /></Avatar>}
           action={<OptionsIconButton dark onClick={handleClick} />}
-          title={item.name || 'staff'}
+          title={item.name || language.data.STAFF}
           subheader={item.sentInvitationDate.toDateString()}
         />
         <ItemListMenu

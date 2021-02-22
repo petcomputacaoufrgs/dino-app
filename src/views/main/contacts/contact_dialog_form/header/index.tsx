@@ -45,7 +45,7 @@ const AddContactDialogHeader = (
 					? language.data.CONTACTS_ADD_ESSENTIAL_CONTACT
 					: language.data.NEW_CONTACT)
 			}
-			subheader={language.data.CONTACT_DIALOG_FORM_SUBTITLE}
+			subheader={language.data.CONTACT}
 			className='contact_dialog_form_header'
 		/>
 	)

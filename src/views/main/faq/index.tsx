@@ -101,7 +101,6 @@ const Faq: React.FC = () => {
 					<MuiSearchBar
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value as string)}
-						placeholder={language.data.SEARCH_HOLDER}
 					/>
 					<div className='faq__content'>
 						<FaqItems data={TreatmentService.getFaqViewByFilter(faqView, searchTerm)} />

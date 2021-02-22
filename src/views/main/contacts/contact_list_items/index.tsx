@@ -109,10 +109,8 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 				/>
 				<AgreementDialog
 					open={toDelete}
-					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
-					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
 					description={language.data.DELETE_CONTACT_OPTION_TEXT}
-					question={language.data.DELETE_CONTACT_QUESTION}
+					question={language.data.deleteItemText(language.data.CONTACT)}
 					onAgree={handleAcceptDialogAndDeleteItem}
 					onDisagree={() => setToDelete(false)}
 				/>

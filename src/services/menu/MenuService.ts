@@ -21,7 +21,7 @@ class MenuService {
 		},
 		{
 			image: GlossarySVG,
-			name: language.MENU_GLOSSARY,
+			name: language.GLOSSARY,
 			onClick: () => HistoryService.push(PathConstants.USER_GLOSSARY),
 		},
 		{
@@ -36,7 +36,7 @@ class MenuService {
 		},
 		{
 			image: FaqSVG,
-			name: language.MENU_FAQ,
+			name: language.FAQ,
 			onClick: () => HistoryService.push(PathConstants.USER_FAQ),
 		},
 		{
@@ -71,7 +71,7 @@ class MenuService {
 		},
 		{
 			image: GlossarySVG,
-			name: language.MENU_GLOSSARY,
+			name: language.GLOSSARY,
 			onClick: () => HistoryService.push(PathConstants.STAFF_GLOSSARY),
 		},
 		{

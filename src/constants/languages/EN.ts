@@ -72,10 +72,11 @@ export default class EN implements LanguageBase {
 
 	DELETE_OPTION_TEXT = 'Delete'
 
-	DELETE_CONTACT_QUESTION = 'Delete contact?'
-
 	DELETE_CONTACT_OPTION_TEXT =
 		'This action will permanently delete your contact.'
+
+	DELETE_ITEM_OPTION_TEXT =
+		'This action will permanently delete the item.'
 
 	TERMS_OF_USE = 'Terms of Use'
 
@@ -85,11 +86,13 @@ export default class EN implements LanguageBase {
 
 	MENU_GAMES = 'Games'
 
-	MENU_GLOSSARY = 'Glossary'
+	GLOSSARY = 'Glossary'
+
+	GLOSSARY_ITEM = 'Glossary Item'
 
 	MENU_CONTACTS = 'Contacts'
 
-	MENU_FAQ = 'F.A.Q.'
+	FAQ = 'F.A.Q.'
 
 	MENU_SETTINGS = 'Settings'
 
@@ -456,7 +459,7 @@ export default class EN implements LanguageBase {
 
 	LARGER_FONT_SIZE_NAME = 'Larger'
 
-	CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
+	CONTACT = 'Contact'
 
 	CONTACT_NUMBER_ALREADY_EXISTS =
 		'This number is already created in the contact'
@@ -607,4 +610,9 @@ export default class EN implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Error deleting your account, please try again later.'
+
+	EXAMPLE_EMAIL='example@email.com'
+
+	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
+	seeFAQItemsText = (item: string) => 'See' + item.toLowerCase() + "'s" + this.FAQ
 }

@@ -52,8 +52,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 					/>
 					<AgreementDialog
 						open={toDelete}
-						description={language.data.DELETE_CONTACT_OPTION_TEXT}
-						question={language.data.DELETE_CONTACT_QUESTION}
+						question={language.data.deleteItemText(language.data.GLOSSARY_ITEM)}
 						onAgree={handleDelete}
 						onDisagree={() => setToDelete(false)}
 					/>

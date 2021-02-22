@@ -66,11 +66,11 @@ const Treatment: React.FC<TreatmentProps> = () => {
 				<MuiSearchBar
 					value={searchTerm}
 					onChange={handleChange}
-					placeholder={language.data.SEARCH_HOLDER}
 				/>
 				<TreatmentItems items={filteredTreatments} />
 				<AddButton
 					handleAdd={() => setToAdd(true)}
+					// @todo: change this v
 					label={language.data.NEW_CONTACT}
 				/>
 			</DinoLoader>

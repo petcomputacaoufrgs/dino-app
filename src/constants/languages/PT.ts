@@ -5,6 +5,7 @@ import LanguageBase from './LanguageBase'
  * @description Conjunto de textos em português
  */
 export default class PT implements LanguageBase {
+
 	APP_NAME = 'DinoApp'
 
 	DINOAPP_TEAM = 'Equipe DinoApp'
@@ -75,7 +76,7 @@ export default class PT implements LanguageBase {
 
 	DELETE_OPTION_TEXT = 'Deletar'
 
-	DELETE_CONTACT_QUESTION = 'Deletar contato?'
+	DELETE_ITEM_OPTION_TEXT ='Esta ação irá deletar o item para sempre.'
 
 	DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato para sempre.'
 
@@ -88,12 +89,8 @@ export default class PT implements LanguageBase {
 	MENU_GAMES = 'Jogos'
 
 	MENU_SETTINGS = 'Configurações'
-
-	MENU_GLOSSARY = 'Glossário'
-
+	
 	MENU_CONTACTS = 'Contatos'
-
-	MENU_FAQ = 'F.A.Q.'
 
 	MENU_LOGOUT = 'Sair'
 
@@ -462,7 +459,7 @@ export default class PT implements LanguageBase {
 
 	LARGER_FONT_SIZE_NAME = 'Gigante'
 
-	CONTACT_DIALOG_FORM_SUBTITLE = 'Contato'
+	CONTACT = 'Contato'
 
 	CONTACT_NUMBER_ALREADY_EXISTS = 'Este número já está registrado no contato'
 
@@ -616,4 +613,16 @@ export default class PT implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
+
+	EXAMPLE_EMAIL='examplo@email.com'
+
+	GLOSSARY = 'Glossário'
+
+	GLOSSARY_ITEM = 'Item de Glossário'
+
+	FAQ = 'F.A.Q.'
+	
+	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
+	seeFAQItemsText = (item: string) => `Ver F.A.Q. de ${item}`
 }
+

@@ -36,11 +36,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
         open={open}
         onSave={handleSave}
         onClose={handleClose}
-        header={
-          <DinoDialogHeader>
-            {language.data.STAFF_ADD_TREATMENT}
-          </DinoDialogHeader>
-        }
+        header={<DinoDialogHeader>{language.data.ADD_TREATMENT}</DinoDialogHeader>}
       >
         <div className='treatment__dialog_form__content__textfield'>
           <TextField

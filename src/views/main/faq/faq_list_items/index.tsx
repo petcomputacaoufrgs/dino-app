@@ -42,7 +42,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 
 	return (
 		<div className='faq-items'>
-			<ListTitle title={data.treatment.name + ' F.A.Q.'}/>
+			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
 			{data && (
 				<Accordion className='faq-items__accordion'>
 					{data.faqItems.map((item, index) =>	
@@ -58,7 +58,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 				<>
 					<AddButton
 						handleAdd={() => setToAdd(true)}
-						label={language.data.NEW_CONTACT}
+						label={`${language.data.ADD_ARIA_LABEL} ${language.data.FAQ}`}
 					/>
 					{toAdd && <FaqItemForm 
 						open={toAdd} 

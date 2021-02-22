@@ -42,7 +42,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 
 	return (
 		<>
-		  <ListTitle title={'Treatments & FAQs'}/>
+		  <ListTitle title={language.data.TREATMENTS_AND_FAQS}/>
 			<List className='contacts__list'>
 				{items.map((item, index) => 
 					<TreatmentItemList 

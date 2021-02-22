@@ -165,10 +165,14 @@ const App: React.FC = () => {
 					component={StaffMain} 
 					restrictedTo={[UserEnum.CLIENT, UserEnum.STAFF]} 
 				/>
+				<PrivateRoute 
+					path={PathConstants.KIDS_SPACE} 
+					component={KidsSpace}
+					restrictedTo={[UserEnum.USER, UserEnum.ADMIN]}
+				/>
 				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
 				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
 				<Route path={PathConstants.ABOUT_US} component={AboutUs} />
-				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
 				<Route path={'/'} component={NotFound} />
 			</Switch>
 		</PrivateRouterProvider>

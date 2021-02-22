@@ -2,6 +2,7 @@ import LanguageEnum from '../../types/enum/LanguageEnum'
 import LanguageBase from './LanguageBase'
 
 export default class EN implements LanguageBase {
+
 	APP_NAME = 'DinoApp'
 
 	DINOAPP_TEAM = 'DinoApp Team'
@@ -92,8 +93,8 @@ export default class EN implements LanguageBase {
 
 	MENU_CONTACTS = 'Contacts'
 
-	FAQ = 'F.A.Q.'
-
+	FAQ = 'FAQ'
+	
 	MENU_SETTINGS = 'Settings'
 
 	MENU_LOGOUT = 'Logout'
@@ -182,13 +183,15 @@ export default class EN implements LanguageBase {
 
 	STAFF_SAVE_SUCCESS = 'Staff successfully added'
 
-	STAFF_ADD_TREATMENT = 'Add Treatment'
+	ADD_TREATMENT = 'Add Treatment'
 
 	STAFF_ADD_TREATMENT_NAME = 'Add Treatment Name'
 
 	PENDING = 'Pending'
 
 	STAFF = 'Staff'
+
+	MEMBER_OF_STAFF = 'Member of Staff'
 
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
@@ -613,6 +616,9 @@ export default class EN implements LanguageBase {
 
 	EXAMPLE_EMAIL='example@email.com'
 
+	TREATMENTS_AND_FAQS = `Treatments & ${this.FAQ}s`
+
 	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
-	seeFAQItemsText = (item: string) => 'See' + item.toLowerCase() + "'s" + this.FAQ
+	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
+	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`
 }

@@ -6,6 +6,7 @@ const TermsOfUse: React.FC = () => {
 	return (
 		<div className='terms_of_use'>
 			<ArrowBack />
+			{/* @TODO: fazer a tradução disso aqui */}
 			<h2>Termos de Serviço</h2>
 			<span>Em vigor a partir de 30 de novembro de 2020.</span>
 			<p>

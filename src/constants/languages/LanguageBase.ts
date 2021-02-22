@@ -1,6 +1,7 @@
 export default interface LanguageBase {
 	deleteItemText(item: string): string
-	seeFAQItemsText(item: string): string
+	seeFAQItemsText(treatment: string): string
+	titleFAQTreatmentText(treatment: string): string
 	APP_NAME: string
 	DINOAPP_TEAM: string
 	CURIOUS_DINO_ALT: string
@@ -89,10 +90,11 @@ export default interface LanguageBase {
 	ADD_STAF_TAB: string
 	STAFF_LIST_TAB: string
 	STAFF_SAVE_SUCCESS: string
-	STAFF_ADD_TREATMENT: string
+	ADD_TREATMENT: string
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	STAFF: string
+	MEMBER_OF_STAFF: string
 	NOT_FOUND_QUESTION_FAQ: string
 	NEW_CONTACT: string
 	NEW_GLOSSARY_ITEM: string
@@ -293,5 +295,6 @@ export default interface LanguageBase {
 	DELETE_ACCOUNT_SUCCESS_MESSAGE: string
 	DELETE_ACCOUNT_ERROR_MESSAGE: string
 	EXAMPLE_EMAIL: string
+	TREATMENTS_AND_FAQS: string
 }
 

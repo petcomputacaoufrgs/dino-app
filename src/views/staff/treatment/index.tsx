@@ -70,8 +70,7 @@ const Treatment: React.FC<TreatmentProps> = () => {
 				<TreatmentItems items={filteredTreatments} />
 				<AddButton
 					handleAdd={() => setToAdd(true)}
-					// @todo: change this v
-					label={language.data.NEW_CONTACT}
+					label={language.data.ADD_TREATMENT}
 				/>
 			</DinoLoader>
 			<TreatmentForm open={toAdd} onClose={handleClose} />

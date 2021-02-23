@@ -200,11 +200,11 @@ export default class PT implements LanguageBase {
 
 	CONTACTS_ADD_ESSENTIAL_CONTACT = 'Novo Contato Essencial'
 
-	CONTACTS_MOBILE_PHONE = 'Móvel'
+	CONTACT_MOBILE_PHONE = 'Móvel'
 
-	CONTACTS_RESIDENTIAL_PHONE = 'Fixo'
+	CONTACT_RESIDENTIAL_PHONE = 'Fixo'
 
-	CONTACTS_PUBLIC_SERVICE_PHONE = 'Serviço'
+	CONTACT_PUBLIC_SERVICE_PHONE = 'Serviço'
 
 	NO_AVAILABLE_TEXT = 'Sem Texto Disponível'
 

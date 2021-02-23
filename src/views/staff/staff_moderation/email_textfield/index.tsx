@@ -1,5 +1,6 @@
 import { TextField } from '@material-ui/core'
 import React from 'react'
+import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import { IsNotClient } from '../../../../context/private_router'
 
@@ -16,19 +17,19 @@ const EmailTextField: React.FC<EmailFormProps> = ({ value, handleChange, error }
 
   return (
     <TextField
-      className='email_textfield'
+      className='email_textfield dino_textfield'
       value={value}
       onChange={(e) => handleChange(e.target.value)}
       margin='dense'
-      required
+      required={DataConstants.STAFF_EMAIL.REQUIRED}
       fullWidth
       type='email'
       placeholder={language.data.EXAMPLE_EMAIL}
-      inputProps={{ maxLength: 1000 }}
       label={language.data.FORM_EMAIL}
       disabled={isNotClient}
       error={error}
-      helperText={error && 'E-mail inválido'}
+      inputProps={{ maxLength: DataConstants.STAFF_EMAIL.MAX }}
+      helperText={(error && language.data.INVALID_VALUE) || `${value.length}/${DataConstants.STAFF_EMAIL.MAX}`}
     />
   )
 }

@@ -5,6 +5,7 @@ import { useLanguage } from '../../../../context/language'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import StringUtils from '../../../../utils/StringUtils'
+import Constants from '../../../../constants/app_data/DataConstants'
 
 interface TreatmentFormProps {
   open: boolean, 
@@ -40,16 +41,17 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
       >
         <div className='treatment__dialog_form__content__textfield'>
           <TextField
+          	className='dino_textfield'
             margin='dense'
             required
             fullWidth
             label={language.data.STAFF_ADD_TREATMENT_NAME}
             type='name'
-            helperText={error && language.data.EMPTY_FIELD_ERROR}
             value={item.name}
             /* é importante descontruir o objeto ao atualizá-lo, mesmo com um único atributo, senão ele vira outro. */
             onChange={(e) => setItem({ ...item, name: e.target.value })}
             error={error}
+            helperText={(error && language.data.EMPTY_FIELD_ERROR) || `${item.name.length}/${Constants.TREATMENT.MAX}`}
             />
         </div>
       </DinoDialog>

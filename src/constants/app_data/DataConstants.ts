@@ -27,6 +27,10 @@ class DataConstants {
 	static GLOSSARY_TEXT = { MAX : 1000, REQUIRED: false } as const
 	static GLOSSARY_FULLTEXT = { MAX : 10000, REQUIRED: false } as const
 
+	// *-------------* STAFF *-------------*
+
+	static STAFF_EMAIL = { MAX : 100, REQUIRED: true } as const
+
 }
 
 export default DataConstants

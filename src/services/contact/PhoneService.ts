@@ -1,6 +1,6 @@
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
-import ContactsConstants from '../../constants/contact/ContactsConstants'
+import DataConstants from '../../constants/app_data/DataConstants'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
 import ContactEntity from '../../types/contact/database/ContactEntity'
@@ -133,14 +133,14 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 
 	getPhoneType = (type: number, language: LanguageBase): string => {
 		switch (type) {
-			case ContactsConstants.PUBLIC_SERVICE:
-				return language.CONTACTS_PUBLIC_SERVICE_PHONE
+			case DataConstants.CONTACT_PHONE_CODE_PUBLIC_SERVICE:
+				return language.CONTACT_PUBLIC_SERVICE_PHONE
 
-			case ContactsConstants.RESIDENTIAL:
-				return language.CONTACTS_RESIDENTIAL_PHONE
+			case DataConstants.CONTACT_PHONE_CODE_RESIDENTIAL:
+				return language.CONTACT_RESIDENTIAL_PHONE
 
 			default:
-				return language.CONTACTS_MOBILE_PHONE
+				return language.CONTACT_MOBILE_PHONE
 		}
 	}
 

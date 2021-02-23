@@ -203,11 +203,11 @@ export default class EN implements LanguageBase {
 
 	CONTACTS_ADD_ESSENTIAL_CONTACT = 'New Essential Contact'
 
-	CONTACTS_MOBILE_PHONE = 'Mobile'
+	CONTACT_MOBILE_PHONE = 'Mobile'
 
-	CONTACTS_RESIDENTIAL_PHONE = 'Residential'
+	CONTACT_RESIDENTIAL_PHONE = 'Residential'
 
-	CONTACTS_PUBLIC_SERVICE_PHONE = 'Public Service'
+	CONTACT_PUBLIC_SERVICE_PHONE = 'Public Service'
 
 	NO_AVAILABLE_TEXT = 'No Available Text'
 

@@ -1,6 +1,7 @@
 import { TextField } from '@material-ui/core'
 import React, { useState } from 'react'
 import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/dino_dialog'
+import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import FaqItemService from '../../../../services/faq/FaqItemService'
 import FaqItemEntity from '../../../../types/faq/database/FaqItemEntity'
@@ -41,25 +42,27 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
     >
       <DinoDialogContent>
         <TextField
+          className='dino_textfield'
           margin='dense'
-          required
+          required={DataConstants.FAQ_QUESTION.REQUIRED}
           fullWidth
           label={language.data.FORM_QUESTION}
           type='name'
-          helperText={errorQuestion && language.data.EMPTY_FIELD_ERROR}
+          helperText={(errorQuestion && language.data.EMPTY_FIELD_ERROR) || `${item.question.length}/${DataConstants.FAQ_QUESTION.MAX}` }
           value={item.question}
           onChange={(e) => setItem({ ...item, question: e.target.value })}
           error={errorQuestion}
         />
         <TextField
+        	className='dino_textfield'
           margin='dense'
-          required
+          required={DataConstants.FAQ_ANSWER.REQUIRED}
           fullWidth
           multiline
           rows={7}
           label={'Answer'}
           type='name'
-          helperText={errorAnswer && language.data.EMPTY_FIELD_ERROR}
+          helperText={(errorAnswer && language.data.EMPTY_FIELD_ERROR) || `${item.answer.length}/${DataConstants.FAQ_ANSWER.MAX}`}
           value={item.answer}
           onChange={(e) => setItem({ ...item, answer: e.target.value })}
           error={errorAnswer}

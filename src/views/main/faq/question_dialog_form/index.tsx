@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TextField } from '@material-ui/core'
 import QuestionDialogFormProps from './props'
-import Constants from '../../../../constants/faq/FaqConstants'
+import Constants from '../../../../constants/app_data/DataConstants'
 import TreatmentQuestionEntity from '../../../../types/faq/database/TreatmentQuestionEntity'
 import TreatmentQuestionService from '../../../../services/faq/TreatmentQuestionService'
 import { useLanguage } from '../../../../context/language'
@@ -40,8 +40,7 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, set
 			}
 		}, [dialogOpen])
 
-		const maxLength =  Constants.TREATMENT_QUESTION_MAX
-		const getHelperText = () => (error && language.data.INVALID_VALUE) || `${question.length}/${maxLength}`
+		const getHelperText = () => (error && language.data.INVALID_VALUE) || `${question.length}/${Constants.FAQ_USER_QUESTION.MAX}`
 
 		return (
 			<div className='dialog-form'>
@@ -59,7 +58,7 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, set
 						<p style={{'margin': '0'}}>Mande para os profissionais!</p>
 						<TextField
 								className='dino_textfield'
-								required
+								required={Constants.FAQ_USER_QUESTION.REQUIRED}
 								fullWidth
 								value={question}
 								onChange={(e) => setQuestion(e.target.value)}
@@ -70,7 +69,7 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, set
 								type='question'
 								multiline
 								rowsMax={7}
-								inputProps={{ maxLength }}
+								inputProps={{ maxLength: Constants.FAQ_USER_QUESTION.MAX }}
 								helperText={getHelperText()}
 								error={error}
 							/>

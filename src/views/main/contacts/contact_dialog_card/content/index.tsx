@@ -1,5 +1,5 @@
 import React from 'react'
-import ContactsConstants from '../../../../../constants/contact/ContactsConstants'
+import ContactsConstants from '../../../../../constants/app_data/DataConstants'
 import ContactCardContentProps from './props'
 import {
 	Typography,
@@ -20,10 +20,10 @@ import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
-		if (phone.type === ContactsConstants.MOBILE) {
+		if (phone.type === ContactsConstants.CONTACT_PHONE_CODE_MOBILE) {
 			return <PhoneIcon />
 		}
-		if (phone.type === ContactsConstants.RESIDENTIAL) {
+		if (phone.type === ContactsConstants.CONTACT_PHONE_CODE_RESIDENTIAL) {
 			return <HomeIcon />
 		}
 		return <HospitalIcon />

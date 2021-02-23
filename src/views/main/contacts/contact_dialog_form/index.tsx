@@ -4,7 +4,7 @@ import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
-import Constants from '../../../../constants/contact/ContactsConstants'
+import Constants from '../../../../constants/app_data/DataConstants'
 import StringUtils from '../../../../utils/StringUtils'
 import ContactView from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
@@ -21,7 +21,7 @@ import DinoDialog from '../../../../components/dialogs/dino_dialog'
 
 const getContact = (item?: ContactView): ContactEntity => item ? item.contact : { name: '', description: '',}
 
-const getPhones = (item?: ContactView): PhoneEntity[] => item ? item.phones : [{ number: '', type: Constants.MOBILE, }]
+const getPhones = (item?: ContactView): PhoneEntity[] => item ? item.phones : [{ number: '', type: Constants.CONTACT_PHONE_CODE_MOBILE, }]
 
 const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, item, items }) => {
 	
@@ -139,7 +139,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 		const handleAddPhone = () => {
 			contactPhones.push({
 				number: '',
-				type: Constants.MOBILE,
+				type: Constants.CONTACT_PHONE_CODE_MOBILE,
 			})
 			setContactPhones([...contactPhones])
 		}

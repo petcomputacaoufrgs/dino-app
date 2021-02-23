@@ -6,7 +6,6 @@ import { InvalidPhoneProps } from '../props'
 export interface ContactFormDialogContentProps {
 	contact: ContactEntity
 	phones: PhoneEntity[]
-	children: ReactNode
 	invalidName: boolean
 	helperTextInvalidPhone?: InvalidPhoneProps
 	setContact: (value: React.SetStateAction<ContactEntity>) => void

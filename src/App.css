@@ -109,3 +109,9 @@ body .MuiInput-underline:before {
 .history_link {
 	color: var(--selection);
 }
+
+.dino_textfield .MuiFormHelperText-root {
+	text-align: right;
+	display: block;
+	color: var(--contrast-color);
+}

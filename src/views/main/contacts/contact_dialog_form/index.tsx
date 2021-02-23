@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ContactFormDialogProps } from './props'
+import { ContactFormDialogProps, InvalidPhoneProps } from './props'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
@@ -7,7 +7,6 @@ import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
 import Constants from '../../../../constants/contact/ContactsConstants'
 import StringUtils from '../../../../utils/StringUtils'
 import ContactView from '../../../../types/contact/view/ContactView'
-import Utils from '../../../../utils/Utils'
 import { useLanguage } from '../../../../context/language'
 import ContactService from '../../../../services/contact/ContactService'
 import PhoneService from '../../../../services/contact/PhoneService'
@@ -26,26 +25,26 @@ const getPhones = (item?: ContactView): PhoneEntity[] => item ? item.phones : [{
 
 const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, item, items }) => {
 	
-		const staff = IsStaff()
-		const language = useLanguage()
-		const [contact, setContact] = useState(getContact(item))
-		const [contactPhones, setContactPhones] = useState(getPhones(item))
-		const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
-		const [invalidName, setInvalidName] = useState(false)
-		const [invalidPhone, setInvalidPhone] = useState({ number: 'dummy text', text: '' })
-		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
+	const staff = IsStaff()
+	const language = useLanguage()
+	const [contact, setContact] = useState(getContact(item))
+	const [contactPhones, setContactPhones] = useState(getPhones(item))
+	const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
+	const [invalidName, setInvalidName] = useState(false)
+	const [invalidPhone, setInvalidPhone] = useState<InvalidPhoneProps>()
+	const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
 
 		useEffect(() => {
 			if (dialogOpen) {
 				setContact(getContact(item))
 				setContactPhones(getPhones(item))
 				setInvalidName(false)
-				setInvalidPhone({ number: 'dummy text', text: '' })
+				setInvalidPhone(undefined)
 				setSelectedTreatmentLocalIds([])
 			}
 		}, [dialogOpen, item])
 
-		const handleSave = (): void => {
+		const handleSave = () => {
 
 			function validInfo(): boolean {
 
@@ -56,7 +55,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 				
 				const atLeastOnePhoneNotEmptyAsStaff = !staff || contactPhones.some(p => p.number !== '')
 				if(!atLeastOnePhoneNotEmptyAsStaff) {
-					setInvalidPhone({number: '', text: 'Contato Essencial deve ter um telefone'})
+					setInvalidPhone({ number: '', text: language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE })
 				}
 
 				const hasViewWithSamePhone = PhoneService.getContactWithSamePhone(items, contactPhones, item)
@@ -146,13 +145,17 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 		}
 
 		const handleDeletePhone = (number: string) => {
-			const indexPhone = contactPhones.findIndex(
-				phone => phone.number === number,
-			)
-			phonesToDelete.push(contactPhones[indexPhone])
-			contactPhones.splice(indexPhone, 1)
-			setPhonesToDelete([...phonesToDelete])
-			setContactPhones([...contactPhones])
+			if(!staff || contactPhones.length > 1) {
+				const indexPhone = contactPhones.findIndex(
+					phone => phone.number === number,
+				)
+				phonesToDelete.push(contactPhones[indexPhone])
+				contactPhones.splice(indexPhone, 1)
+				setPhonesToDelete([...phonesToDelete])
+				setContactPhones([...contactPhones])
+			} else {
+				setInvalidPhone({ text: language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE })
+			}
 		}
 
 		const handleChangeTreatments = (ids: number[]) => {

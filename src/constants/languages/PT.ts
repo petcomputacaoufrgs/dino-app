@@ -196,6 +196,8 @@ export default class PT implements LanguageBase {
 
 	NEW_GLOSSARY_ITEM = 'Novo Item de Glossário'
 
+	ESSENTIAL_CONTACT_MUST_HAVE_PHONE = 'Contato Essencial deve ter um telefone'
+
 	CONTACTS_ADD_ESSENTIAL_CONTACT = 'Novo Contato Essencial'
 
 	CONTACTS_MOBILE_PHONE = 'Móvel'
@@ -625,10 +627,12 @@ export default class PT implements LanguageBase {
 	FAQ = 'FAQ'
 
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
+
+	INVALID_VALUE = 'Valor inválido'
 	
 	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
 	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`
 	titleFAQTreatmentText = (treatment: string) => `${this.FAQ} de ${treatment}`
-
+	titleTreatmentQuestion = (treatment: string) => `Tem uma pergunta sobre ${treatment}?`
 }
 

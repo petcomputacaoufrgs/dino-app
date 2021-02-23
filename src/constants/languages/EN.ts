@@ -199,6 +199,8 @@ export default class EN implements LanguageBase {
 
 	NEW_GLOSSARY_ITEM = 'New Glossary Item'
 	
+	ESSENTIAL_CONTACT_MUST_HAVE_PHONE = 'Essential Contact must have a phone'
+
 	CONTACTS_ADD_ESSENTIAL_CONTACT = 'New Essential Contact'
 
 	CONTACTS_MOBILE_PHONE = 'Mobile'
@@ -618,7 +620,10 @@ export default class EN implements LanguageBase {
 
 	TREATMENTS_AND_FAQS = `Treatments & ${this.FAQ}s`
 
+	INVALID_VALUE = 'Invalid value'
+
 	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
 	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
 	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`
+	titleTreatmentQuestion = (treatment: string) => `Have a question about ${treatment}?`
 }

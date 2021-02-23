@@ -2,6 +2,7 @@ export default interface LanguageBase {
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string
 	titleFAQTreatmentText(treatment: string): string
+	titleTreatmentQuestion(treatment: string): string
 	APP_NAME: string
 	DINOAPP_TEAM: string
 	CURIOUS_DINO_ALT: string
@@ -99,6 +100,7 @@ export default interface LanguageBase {
 	NEW_CONTACT: string
 	NEW_GLOSSARY_ITEM: string
 	CONTACTS_ADD_ESSENTIAL_CONTACT: string
+	ESSENTIAL_CONTACT_MUST_HAVE_PHONE: string
 	CONTACTS_MOBILE_PHONE: string
 	CONTACTS_RESIDENTIAL_PHONE: string
 	CONTACTS_PUBLIC_SERVICE_PHONE: string
@@ -296,5 +298,6 @@ export default interface LanguageBase {
 	DELETE_ACCOUNT_ERROR_MESSAGE: string
 	EXAMPLE_EMAIL: string
 	TREATMENTS_AND_FAQS: string
+	INVALID_VALUE: string
 }
 

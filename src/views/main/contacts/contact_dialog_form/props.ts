@@ -7,3 +7,8 @@ export interface ContactFormDialogProps {
 	item?: ContactView | EssentialContactView
 	items: Array<ContactView | EssentialContactView>
 }
+
+export interface InvalidPhoneProps {
+	number?: string;
+	text: string;
+}

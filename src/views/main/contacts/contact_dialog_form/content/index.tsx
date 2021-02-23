@@ -13,11 +13,9 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 ) => {
 	const language = useLanguage()
 
-	const isNumberTaken = (tel: string): boolean => props.helperTextInvalidPhone.number === tel
+	const isNumberTaken = (tel: string): boolean => props.helperTextInvalidPhone?.number === tel
 
-	const isNumberInvalid = (tel: string) => isNumberTaken(tel) 
-
-	const isNameInvalid = (name: string) => name.length === Constants.NAME_MAX || props.invalidName
+	const isNumberInvalid = (tel: string) => isNumberTaken(tel)
 
 	const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const name = event.target.value as string
@@ -50,6 +48,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 	return (
 		<div className='contact__dialog_form__content'>
 			<TextField
+				className='dino_textfield'
 				required
 				fullWidth
 				value={props.contact.name}
@@ -59,10 +58,15 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 				label={`${language.data.FORM_NAME}`}
 				type='name'
 				inputProps={{ maxLength: Constants.NAME_MAX }}
-				error={isNameInvalid(props.contact.name)}
+				error={props.invalidName}
+				helperText={(props.invalidName && language.data.INVALID_VALUE) 
+					|| `${props.contact.name.length}/${Constants.NAME_MAX}`}
 			/>
 			<br />
 			<TextField
+				className='dino_textfield'
+				multiline
+				rowsMax={5}
 				fullWidth
 				value={props.contact.description}
 				onChange={handleChangeDescription}
@@ -72,6 +76,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 				type='text'
 				inputProps={{ maxLength: Constants.DESCRIPTION_MAX }}
 				error={props.contact.description?.length === Constants.DESCRIPTION_MAX}
+				helperText={`${props.contact.description?.length}/${Constants.DESCRIPTION_MAX}`}
 			/>
 			<br />
 
@@ -83,9 +88,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 						number={phone.number}
 						onChangeNumber={e => handleChangeNumber(e, index)}
 						error={isNumberInvalid(phone.number)}
-						helperText={
-							isNumberTaken(phone.number) ? props.helperTextInvalidPhone.text : ''
-						}
+						helperText={isNumberTaken(phone.number) ? props.helperTextInvalidPhone?.text : ''}
 						handleDeletePhone={() => props.handleDeletePhone(phone.number)}
 					/>
 					<br />

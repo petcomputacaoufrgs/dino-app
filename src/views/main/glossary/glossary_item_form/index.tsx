@@ -1,9 +1,11 @@
 import { TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
+import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
 import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
+import StringUtils from '../../../../utils/StringUtils'
 import './styles.css'
 
 interface GlossaryItemFormProps {
@@ -24,17 +26,24 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
 
   const language = useLanguage()
   const [item, setItem] = useState<GlossaryItemEntity>(getItem(props.item))
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if(props.open) {
       setItem(getItem(props.item))
     }
+    return () => {
+      setItem({ title: '', subtitle: '', text: '', fullText: ''})
+      setError(false)
+    }
   }, [props.open, props.item])
 
+
   const handleSave = () => {
-    GlossaryService.save(item)
-    props.handleClose()
-    setItem({ title: '', subtitle: '', text: '', fullText: ''})
+    if(StringUtils.isNotEmpty(item.title)) {
+      GlossaryService.save(item)
+      props.handleClose()
+    } else setError(true)
 	}
 
   return (
@@ -45,29 +54,35 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
 			>
 				<div className='glossary_item__form_content'>
           <TextField
-            required
+            className='dino_textfield'
+            required={DataConstants.GLOSSARY_TITLE.REQUIRED}
             fullWidth
             value={item.title}
             onChange={(e) => setItem({...item, title: e.target.value})}
             margin='dense'
             label={`${language.data.TITLE}`}
             type='name'
-            inputProps={{ maxLength: 100 }}//Constants.NAME_MAX }}
-            //error={isNameInvalid(props.contact.name)}
+            error={error}
+            inputProps={{ maxLength: DataConstants.GLOSSARY_TITLE.MAX }}
+            helperText={(error && language.data.EMPTY_FIELD_ERROR) || `${item.title.length}/${DataConstants.GLOSSARY_TITLE.MAX}` }
           />
           <br />
           <TextField
+            className='dino_textfield'
+            required={DataConstants.GLOSSARY_SUBTITLE.REQUIRED}
             fullWidth
             value={item.subtitle}
             onChange={(e) => setItem({...item, subtitle: e.target.value})}
             margin='dense'
             label={`${language.data.SUBTITLE}`}
             type='text'
-            inputProps={{ maxLength: 100 }}
-            //error={props.contact.description?.length === Constants.DESCRIPTION_MAX}
+            inputProps={{ maxLength: DataConstants.GLOSSARY_SUBTITLE.MAX }}
+            helperText={`${item.subtitle.length}/${DataConstants.GLOSSARY_SUBTITLE.MAX}` }
           />
           <br />
           <TextField
+            className='dino_textfield'
+            required={DataConstants.GLOSSARY_TEXT.REQUIRED}
             multiline
             rows={3}
             fullWidth
@@ -76,11 +91,13 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
             margin='dense'
             label={`${language.data.TEXT}`}
             type='text'
-            inputProps={{ maxLength: 100 }}
-            //error={props.contact.description?.length === Constants.DESCRIPTION_MAX}
+            inputProps={{ maxLength: DataConstants.GLOSSARY_TEXT.MAX }}
+            helperText={`${item.text.length}/${DataConstants.GLOSSARY_TEXT.MAX}` }
           />
           <br />
           <TextField
+            className='dino_textfield'
+            required={DataConstants.GLOSSARY_FULLTEXT.REQUIRED}
             multiline
             rows={5}
             fullWidth
@@ -89,8 +106,8 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
             margin='dense'
             label={`${language.data.FULL_TEXT}`}
             type='text'
-            inputProps={{ maxLength: 1000 }}
-            //error={props.contact.description?.length === Constants.DESCRIPTION_MAX}
+            inputProps={{ maxLength: DataConstants.GLOSSARY_FULLTEXT.MAX }}
+            helperText={`${item.text.length}/${DataConstants.GLOSSARY_FULLTEXT.MAX}` }
           />
           <br />
         </div>

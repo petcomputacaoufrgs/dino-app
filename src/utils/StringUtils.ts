@@ -5,6 +5,8 @@ class StringUtils {
 		return Utils.isEmpty(value) || value?.trim() === ''
 	}
 
+	isNotEmpty = (value: string | undefined) => !this.isEmpty(value) 
+
 	upperCaseFirstLetter = (str: string): string =>
 		`${str.charAt(0).toUpperCase()}${str.slice(1)}`
 

@@ -9,6 +9,7 @@ import GlossaryItemForm from '../glossary_item_form'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
 import GlossaryListItem from './glossary_list_item'
 import ItemListMenu from '../../../../components/item_list_menu'
+import ListTitle from '../../../../components/list_title'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	const language = useLanguage()
@@ -34,6 +35,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 
 	return (
 		<div className='glossary__items'>
+			<ListTitle title={language.data.GLOSSARY}/>
 			<Accordion className='accordion'>
 				{items.map((item, index) => 
 					<GlossaryListItem 

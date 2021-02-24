@@ -20,10 +20,6 @@
   outline: none;
 }
 
-.staff_moderation .MuiTypography-root.MuiTypography-body2 {
-  display: flex;
-  flex-direction: row;
-}
 
 .staff_moderation .invitation_pending {
   margin-left: auto;

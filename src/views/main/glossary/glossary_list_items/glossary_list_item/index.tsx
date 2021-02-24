@@ -2,7 +2,6 @@ import React from 'react'
 import Card from 'react-bootstrap/Card'
 import PathConstants from '../../../../../constants/app/PathConstants'
 import { Link } from 'react-router-dom'
-import ItemListMenu from '../../../../../components/item_list_menu'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import GlossaryItemEntity from '../../../../../types/glossary/database/GlossaryItemEntity'
 import Accordion from 'react-bootstrap/Accordion'
@@ -24,7 +23,7 @@ interface GlossaryListItemProps {
 			<div>
 				<Card className='card'>
 					<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
-						<Card.Title className='card-title'>
+						<Card.Title className='card-title element_flex__right'>
 							{item.title}
 							{staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
 						</Card.Title>

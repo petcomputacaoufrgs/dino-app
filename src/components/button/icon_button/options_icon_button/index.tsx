@@ -4,6 +4,7 @@ import OptionsIconButtonProps from './props'
 import { ReactComponent as MoreSVG } from '../../../../assets/icons/more_vert.svg'
 import IconButton from '..'
 import { useLanguage } from '../../../../context/language'
+import './styles.css'
 
 const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 	onClick,

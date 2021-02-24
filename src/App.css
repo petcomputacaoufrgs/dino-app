@@ -115,3 +115,12 @@ body .MuiInput-underline:before {
 	display: block;
 	color: var(--contrast-color);
 }
+
+.element_flex__right {
+	display: flex;
+	flex-direction: row;
+}
+
+.accordion {
+	padding: 4px 8px;
+}

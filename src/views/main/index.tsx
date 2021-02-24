@@ -1,31 +1,31 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../../context/language'
-import { Switch } from 'react-router'
-import PathConstants from '../../constants/app/PathConstants'
-import DrawerNavigation from '../../components/drawer_navigation'
-import PrivateRoute from '../../components/private_route'
-import GlossaryItem from './glossary/glossary_list_items/glossary_item'
-import Glossary from './glossary'
-import Contacts from './contacts'
-import Home from './home'
-import Settings from './settings'
-import LogoutDialog from '../../components/logout_dialog'
-import Notes from './notes'
-import NotFound from '../not_found'
-import Faq from './faq'
-import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
-import Calendar from './calendar'
 import AuthService from '../../services/auth/AuthService'
-import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
-import Loader from '../../components/loader'
-import KidsSpace from '../kids_space'
 import DinoLoader from '../../components/loader/index'
+import DrawerNavigation from '../../components/drawer_navigation'
+import LogoutDialog from '../../components/logout_dialog'
+import { useLanguage } from '../../context/language/index'
+import { IsStaff } from '../../context/private_router'
+import MenuService from '../../services/menu/MenuService'
+import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
+import LanguageBase from '../../constants/languages/LanguageBase'
 
-const Main: React.FC = () => {
-	const language = useLanguage()
+type getGroupedItemsType = (language: LanguageBase, handleLogoutClick: () => void) => MenuItemViewModel[][]
 
-	const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
+
+  const staff = IsStaff()
+
+  const language = useLanguage()
+
+  const getGroupedItems = (): MenuItemViewModel[][] => {
+
+    const searchGroupedItems = (getItems: getGroupedItemsType) => getItems(language.data, handleLogoutClick)
+    
+		return searchGroupedItems(staff ? MenuService.getStaffGroupedMenuItems : MenuService.getGroupedMenuItems) 
+	}
+
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
 	const handleLogoutClick = () => {
 		setOpenLogoutDialog(true)
@@ -39,62 +39,20 @@ const Main: React.FC = () => {
 		setOpenLogoutDialog(false)
 	}
 
-	const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(language.data, handleLogoutClick)
-
-	const renderMainContent = (): JSX.Element => {
-		return (
-			<Switch>
-				<PrivateRoute exact path={PathConstants.USER_HOME} component={Home} />
-				<PrivateRoute
-					exact
-					path={PathConstants.USER_GAMES}
-					component={() => <></>}
-				/>
-				<PrivateRoute
-					exact
-					path={PathConstants.USER_GLOSSARY}
-					component={Glossary}
-				/>
-				<PrivateRoute
-					exact
-					path={PathConstants.USER_CONTACTS}
-					component={Contacts}
-				/>
-				<PrivateRoute exact path={PathConstants.USER_NOTES} component={Notes} />
-				<PrivateRoute
-					exact
-					path={PathConstants.USER_SETTINGS}
-					component={Settings}
-				/>
-				<PrivateRoute
-					path={`${PathConstants.USER_GLOSSARY}/:localId`}
-					component={GlossaryItem}
-				/>
-				<PrivateRoute 
-					exact 
-					path={PathConstants.USER_FAQ}
-					component={Faq} 
-				/>
-				<PrivateRoute path={PathConstants.USER_CALENDAR} component={Calendar} />
-				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
-				<PrivateRoute path={'/'} component={NotFound} />
-			</Switch>
-		)
-	}
-	return (
-		<DinoLoader isLoading={language.loading} hideChildren>
-			<DrawerNavigation
-				groupedItems={groupedItems}
-				component={renderMainContent()}
-			/>
-			<LogoutDialog
-				onAgree={handleLogoutAgree}
-				onDisagree={handleLogoutDisagree}
-				open={openLogoutDialog}
-			/>
-			<FirstSettingsDialog />
-		</DinoLoader>
-	)
+  return (
+    <DinoLoader isLoading={language.loading} hideChildren>
+      <DrawerNavigation
+        groupedItems={getGroupedItems()}
+        component={children}
+      />
+      <LogoutDialog
+        onAgree={handleLogoutAgree}
+        onDisagree={handleLogoutDisagree}
+        open={openLogoutDialog}
+      />
+      <FirstSettingsDialog />
+    </DinoLoader>
+  )
 }
 
 export default Main

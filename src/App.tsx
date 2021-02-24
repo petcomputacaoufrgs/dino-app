@@ -26,6 +26,7 @@ import UserService from './services/user/UserService'
 import UserEnum from './types/enum/UserEnum'
 import StaffMain from './views/staff'
 import './App.css'
+import UserMain from './views/main/user_main'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -157,7 +158,7 @@ const App: React.FC = () => {
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
 				<PrivateRoute 
 					path={PathConstants.USER} 
-					component={Main} 
+					component={UserMain} 
 					restrictedTo={[UserEnum.USER, UserEnum.ADMIN]} 
         />
 				<PrivateRoute 

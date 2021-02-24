@@ -116,7 +116,7 @@ body .MuiInput-underline:before {
 	color: var(--contrast-color);
 }
 
-.element_flex__right {
+.element__flex_row {
 	display: flex;
 	flex-direction: row;
 }

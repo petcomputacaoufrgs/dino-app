@@ -50,6 +50,11 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.USER_SETTINGS),
 		},
 		{
+			image: KidsSpaceSVG,
+			name: language.KIDS_SPACE,
+			onClick: () => HistoryService.push(PathConstants.KIDS_SPACE),
+		},
+		{
 			name: language.MENU_ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},

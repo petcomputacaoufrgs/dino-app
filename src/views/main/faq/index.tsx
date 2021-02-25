@@ -14,6 +14,10 @@ import './styles.css'
 import FaqView from '../../../types/faq/view/FaqView'
 import { useParams } from 'react-router-dom'
 import { IsStaff } from '../../../context/private_router'
+import DinoTabPanel from '../../../components/tab_panel'
+import TreatmentQuestionItems from './treatment_question_list_items'
+import TreatmentQuestionEntity from '../../../types/faq/database/TreatmentQuestionEntity'
+import TreatmentQuestionService from '../../../services/faq/TreatmentQuestionService'
 
 const Faq: React.FC = () => {
 
@@ -27,6 +31,7 @@ const Faq: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState('')
 
 	const [faqView, setFaqView] = useState<FaqView>()
+	const [treatmentQuestions, setTreatmentQuestions] = useState<TreatmentQuestionEntity[]>()
 
 	useEffect(() => {
 
@@ -46,6 +51,7 @@ const Faq: React.FC = () => {
 			if(localId) {
 				const currentTreatment = await TreatmentService.getByLocalId(Number(localId))
 				await updateFaqView(currentTreatment)
+				await updateTreatmentQuestions(currentTreatment)
 			} else await loadUserTreatment()
 		
 			finishLoading()
@@ -55,6 +61,13 @@ const Faq: React.FC = () => {
 			if(treatment) {
 				const faqItems = await FaqItemService.getByTreatment(treatment)
 				setFaqView({treatment, faqItems})
+			}
+		}
+
+		let updateTreatmentQuestions = async (treatment?: TreatmentEntity) => {
+			if(treatment) {
+				const treatmentQuestions = await TreatmentQuestionService.getByTreatment(treatment)
+				setTreatmentQuestions(treatmentQuestions)
 			}
 		}
 
@@ -68,6 +81,7 @@ const Faq: React.FC = () => {
 
 		TreatmentService.addUpdateEventListenner(loadData)
 		FaqItemService.addUpdateEventListenner(loadData)
+		TreatmentQuestionService.addUpdateEventListenner(loadData)
 
 		if (isLoading) {
 			loadData()
@@ -76,15 +90,15 @@ const Faq: React.FC = () => {
 		return () => {
 			updateFaqView = async () => {}
 			updateTreatments = () => {}
+			updateTreatmentQuestions = async () => {}
 			finishLoading = () => {}
 			TreatmentService.removeUpdateEventListenner(loadData)
 			FaqItemService.removeUpdateEventListenner(loadData)
+			TreatmentQuestionService.removeUpdateEventListenner(loadData)
 		}
 	}, [isLoading, localId])
 
-	const handleSendQuestion = () => {
-		setDialogOpen(true)
-	}
+	const handleSendQuestion = () => setDialogOpen(true)
 
 	const NoFAQAvailable = () => {
 		return (
@@ -94,29 +108,46 @@ const Faq: React.FC = () => {
 		)
 	}
 
+	const renderFAQ = () => {
+		console.log("faq")
+		return (
+			<>
+				<MuiSearchBar
+					value={searchTerm}
+					onChange={(e) => setSearchTerm(e.target.value as string)}
+				/>
+				<FaqItems data={TreatmentService.getFaqViewByFilter(faqView!, searchTerm)} />
+				<LinkButton
+					text={language.data.NOT_FOUND_QUESTION_FAQ}
+					onClick={handleSendQuestion}
+				/>
+				<QuestionDialogForm
+					treatment={faqView!.treatment}
+					dialogOpen={dialogOpen}
+					setDialogOpen={setDialogOpen}
+				/>
+			</>
+		)
+	}
+
+	const renderStaffFAQ = () => {
+		console.log("faq staff")
+
+		return (		
+				<DinoTabPanel panels={[ { name: language.data.FAQ, Component: renderFAQ() },
+						{ name: language.data.USERS_QUESTIONS, Component: 
+						treatmentQuestions && <TreatmentQuestionItems items={treatmentQuestions} />}
+					]}
+				/> 
+		)
+	}
+
 	return (
 		<DinoLoader className='faq__loader' isLoading={isLoading} hideChildren>
 			{faqView ? (
 				<>
-					<MuiSearchBar
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value as string)}
-					/>
 					<div className='faq__content'>
-						<FaqItems data={TreatmentService.getFaqViewByFilter(faqView, searchTerm)} />
-						{!staff && (
-							<>
-								<LinkButton
-									text={language.data.NOT_FOUND_QUESTION_FAQ}
-									onClick={handleSendQuestion}
-								/>
-								<QuestionDialogForm
-									treatment={faqView.treatment}
-									dialogOpen={dialogOpen}
-									setDialogOpen={setDialogOpen}
-								/>
-							</>
-						)}
+						{staff ? renderStaffFAQ() : renderFAQ()}
 					</div>
 				</>
 			) : treatments ? <NoTreatmentSelected treatments={treatments} /> : <NoFAQAvailable />

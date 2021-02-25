@@ -7,6 +7,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import TreatmentService from '../treatment/TreatmentService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 
 class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 	number,
@@ -56,6 +57,13 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 				return model
 			}
 		}
+	}
+
+	getByTreatment = async (treatment: TreatmentEntity): Promise<TreatmentQuestionEntity[]> => {
+		if (treatment.localId) {
+			return this.table.where('localTreatmentId').equals(treatment.localId).toArray()
+		}
+		return []
 	}
 }
 

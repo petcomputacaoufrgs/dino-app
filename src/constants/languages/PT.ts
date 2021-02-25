@@ -629,6 +629,8 @@ export default class PT implements LanguageBase {
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
 
 	INVALID_VALUE = 'Valor inválido'
+
+	USERS_QUESTIONS = 'Perguntas de Usuários'
 	
 	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
 	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`

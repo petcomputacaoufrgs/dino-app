@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Login from './views/login'
-import Main from './views/main'
 import PrivateRouterProvider from './context/private_router'
 import PrivateRoute from './components/private_route'
 import LoginRoute from './components/login_route/index'
@@ -24,9 +23,9 @@ import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
 import UserEnum from './types/enum/UserEnum'
-import StaffMain from './views/staff'
 import './App.css'
 import UserMain from './views/main/user_main'
+import StaffMain from './views/main/staff_main'
 
 const LOAD_SCREEN_TIME = 2250
 

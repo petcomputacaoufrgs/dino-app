@@ -299,5 +299,6 @@ export default interface LanguageBase {
 	EXAMPLE_EMAIL: string
 	TREATMENTS_AND_FAQS: string
 	INVALID_VALUE: string
+	USERS_QUESTIONS: string
 }
 

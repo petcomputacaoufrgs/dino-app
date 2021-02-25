@@ -14,7 +14,6 @@ import Contacts from '../contacts'
 import Settings from '../settings'
 
 const StaffMain: React.FC = () => {
-	
 	return (
 		<Main>	
 			<Switch>

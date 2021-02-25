@@ -1,12 +1,11 @@
-import APIRequestMappingConstants from './APIRequestMappingConstants'
+import APIConfig from '../../environment/api_config.json'
 
 /**
  * @description Valores de URL para conexão com o WebScoket da API.
- *  
  * São valores de referência em APIRequestMappingConstants !!!!!!!
  */
 class APIWebSocketDestConstants {
-	URL = `${APIRequestMappingConstants.URL}websocket/`
+	URL = `${APIConfig.URL}websocket/`
 	GLOSSARY = 'glossary'
 	FAQ_ITEM = 'faq_item'
 	TREATMENT = 'treatment'

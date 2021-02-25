@@ -622,6 +622,8 @@ export default class EN implements LanguageBase {
 
 	INVALID_VALUE = 'Invalid value'
 
+	USERS_QUESTIONS = "User's Questions"
+
 	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
 	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
 	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`

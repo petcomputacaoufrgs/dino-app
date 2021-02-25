@@ -18,6 +18,7 @@ import DinoTabPanel from '../../../components/tab_panel'
 import TreatmentQuestionItems from './treatment_question_list_items'
 import TreatmentQuestionEntity from '../../../types/faq/database/TreatmentQuestionEntity'
 import TreatmentQuestionService from '../../../services/faq/TreatmentQuestionService'
+import TreatmentQuestionView from '../../../types/faq/view/TreatmentQuestionView'
 
 const Faq: React.FC = () => {
 

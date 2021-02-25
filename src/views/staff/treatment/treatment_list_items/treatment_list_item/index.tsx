@@ -6,6 +6,7 @@ import PathConstants from '../../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../../context/language'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 
+
 interface TreatmentItemProps {
   item: TreatmentEntity,
   onClickMenu: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: TreatmentEntity) => void
@@ -23,7 +24,8 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
         secondary={
         <Link className='history_link' to={`${PathConstants.STAFF_FAQ}/${item.localId}`}>
           {language.data.seeFAQItemsText(item.name)} 
-        </Link>}
+        </Link>
+        }
       />
       <ListItemSecondaryAction>
         <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />

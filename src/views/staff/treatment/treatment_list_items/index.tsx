@@ -9,9 +9,10 @@ import ItemListMenu from '../../../../components/item_list_menu'
 import ListTitle from '../../../../components/list_title'
 import TreatmentForm from '../treatment_form'
 import TreatmentItemList from './treatment_list_item'
+import TreatmentQuestionView from '../../../../types/faq/view/TreatmentQuestionView'
 
 interface TreatmentItemsProps {
-	items: TreatmentEntity[]
+	items: TreatmentEntity[],
 }
 
 const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {

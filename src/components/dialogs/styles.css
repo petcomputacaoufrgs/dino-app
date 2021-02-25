@@ -11,6 +11,7 @@
 }
 
 .dino_dialog__header .dino_dialog__header__title {
+	text-align: initial;
 	display: flex;
 	align-items: center;
 	margin-right: 8px;

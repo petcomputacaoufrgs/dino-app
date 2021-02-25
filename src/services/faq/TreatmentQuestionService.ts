@@ -4,9 +4,9 @@ import TreatmentQuestionEntity from '../../types/faq/database/TreatmentQuestionE
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import TreatmentService from '../treatment/TreatmentService'
+import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 
 class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 	number,
@@ -17,7 +17,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.treatmentQuestion,
 			APIRequestMappingConstants.TREATMENT_QUESTION,
-			WebSocketQueuePathService,
+			WebSocketTopicPathService,
 			APIWebSocketDestConstants.TREATMENT_QUESTION,
 		)
 	}

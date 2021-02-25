@@ -1,7 +1,9 @@
 import APIRequestMappingConstants from './APIRequestMappingConstants'
 
 /**
- * @description Valores de URL para conexão com o WebScoket da API
+ * @description Valores de URL para conexão com o WebScoket da API.
+ *  
+ * São valores de referência em APIRequestMappingConstants !!!!!!!
  */
 class APIWebSocketDestConstants {
 	URL = `${APIRequestMappingConstants.URL}websocket/`

@@ -50,7 +50,7 @@ const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
-      <FirstSettingsDialog />
+      {/* <FirstSettingsDialog /> */}
     </DinoLoader>
   )
 }

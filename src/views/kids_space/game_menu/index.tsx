@@ -13,7 +13,7 @@ const GameMenu: React.FC = () => {
 				path={PathConstants.KIDS_SPACE}
 			/>
 			<GameCard
-				onClick={() => console.log('jogo da memória')}
+				onClick={() => HistoryService.push(PathConstants.MEMORY_GAME)}
 				text='Jogo da Memória'
 				backgroundColor={'#FFA19C'}
 			></GameCard>

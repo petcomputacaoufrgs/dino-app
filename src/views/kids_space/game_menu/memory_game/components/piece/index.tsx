@@ -5,13 +5,21 @@ import PieceProps from './props'
 const Piece: React.FC<PieceProps> = ({
     piece,
     onClick,
-    turned: turnedBack,
+    turnedBack,
     visible
 }) => {
-    const Image = piece.image
-    
-    const renderPiece = (turned:boolean) => (
-        <div className={turned? (turnedBack? "piece_container reverse" : (visible? "piece_container turned" : "piece_container scored")) : "piece_container"}>
+    const Image = piece.image        
+
+    const getClassName = () => (
+        piece.turned? 
+            turnedBack ? "piece_container reverse" 
+                : visible? "piece_container turned" 
+                    : "piece_container scored" 
+            : "piece_container"
+    )
+
+    const renderPiece = () => (
+        <div className={getClassName()}>
             <div className="piece piece__back" />
             <Image className="piece piece__front" />
         </div>
@@ -19,11 +27,9 @@ const Piece: React.FC<PieceProps> = ({
 
     return (
         <div className="piece" onClick={onClick}>
-        { piece.turned && piece.visible
-            ? renderPiece(piece.turned) 
-            : piece.visible
-                ? renderPiece(piece.turned)
-                : <div className="piece__invisible_piece" />
+        { piece.visible
+            ? renderPiece()
+            : <div className="piece__invisible_piece" />
         }
         </div>
     )

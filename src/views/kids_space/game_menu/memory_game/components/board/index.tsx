@@ -20,12 +20,7 @@ const Board: React.FC<BoardProps> = ({
     const [score, setScore] = useState(0)
     const [turnBack, setTurnBack] = useState<boolean>(false)
     const [visibility, setVisibility] = useState(true)
-
-    useEffect(() => {
-        if(score >= 8) {
-            onGameOver()
-        }
-    }, [score, onGameOver])
+    const [gameOver, setGameOver] = useState(false)
 
     useEffect(() => {
         if(restart) {
@@ -35,8 +30,16 @@ const Board: React.FC<BoardProps> = ({
             setScore(0)
             setTurnBack(false)
             setVisibility(true)
+            setGameOver(false)
         }
     }, [restart, pieceList])
+
+    useEffect(() => {
+        if (!gameOver && score === 8) {
+            setGameOver(true)
+            onGameOver()
+        }
+    }, [score, gameOver, onGameOver])
 
     const handleOnClick = async(index: number) => {
         if(!pieceState[index].turned && !blocked) {
@@ -62,7 +65,6 @@ const Board: React.FC<BoardProps> = ({
 
                     pieceState[turnedPieceIndex].visible = false
                     pieceState[index].visible = false
-
                 } else {
                     setTurnBack(true)
 

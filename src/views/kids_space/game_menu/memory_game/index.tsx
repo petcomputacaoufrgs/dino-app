@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PathConstants from '../../../../constants/app/PathConstants'
 import HistoryService from '../../../../services/history/HistoryService'
 import { useLanguage } from '../../../../context/language'
@@ -28,6 +28,12 @@ const MemoryGame: React.FC = () => {
 
 	const boardRandom = board.sort(() => Math.random() - 0.5)
 
+	useEffect(() => {
+		if (restart) {
+			setRestart(false)
+		}
+	}, [restart])
+
 	const handleClose = () => {
 		setOpenDialog(false)
 		HistoryService.push(PathConstants.GAME_MENU)
@@ -52,7 +58,7 @@ const MemoryGame: React.FC = () => {
 				<p>{language.data.MEMORY_GAME_GAME_OVER}</p>
 			</GameOverDialog>
 			<GoBackButton path={PathConstants.GAME_MENU} />
-			<Board pieceList={boardRandom} onGameOver= {handleGameOver} restart = {restart}/>
+			<Board pieceList={boardRandom} onGameOver= {handleGameOver} restart={restart}/>
 		</div>
 	)
 }

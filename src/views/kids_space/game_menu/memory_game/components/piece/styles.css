@@ -17,13 +17,13 @@
     width: inherit;
     position: absolute;
     top:0;
-    
-    transform: rotate3d(0, 1, 0, 180deg);
 }
 
 .piece__front {
+    background-color: aliceblue;
     background-image: url('../../../../../../assets/kids_space/memory_game/front_card.png');
-    background-size: inherit;
+    height: 4.5rem;
+    width: 4.5rem;
 }
 
 .piece__invisible_piece {
@@ -36,8 +36,8 @@
   
 .piece_container {
     transform-style: preserve-3d;
-    width: 100%;
-    height: 100%;
+    height: 4.5rem;
+    width: 4.5rem;
     animation-duration: 500ms;
     animation-fill-mode: forwards;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import BoardProps from './props'
 import Piece from '../piece'
 import './styles.css'
@@ -19,12 +19,7 @@ const Board: React.FC<BoardProps> = ({
     const [turnBack, setTurnBack] = useState<boolean>(false)
     const [visibility, setVisibility] = useState(true)
 
-    useEffect(() => {
-        document.title = "Pontos: " + score
-    }, [score])
-
     const handleOnClick = async(index: number) => {
-        console.log("click")
         if(!pieceState[index].turned && !blocked) {
             pieceState[index].turned = true
 
@@ -70,11 +65,16 @@ const Board: React.FC<BoardProps> = ({
     }
 
     return (
+        <>
+        <div className="score_board">
+            {score}
+        </div>
         <div className="Board">
             {pieceState.map((piece, index) => (
                 <Piece piece={piece} key={index} turnedBack={turnBack} visible={visibility} onClick={() => handleOnClick(index)} />
             ))}
         </div>
+        </>
     )
 }
 

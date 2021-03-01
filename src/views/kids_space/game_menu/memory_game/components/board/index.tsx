@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BoardProps from './props'
 import Piece from '../piece'
 import './styles.css'
@@ -10,7 +10,9 @@ function sleep(ms:number) {
 }
 
 const Board: React.FC<BoardProps> = ({
-    pieceList
+    pieceList,
+    onGameOver,
+    restart
 }) => {
     const [pieceState, setPieceState] = useState(pieceList)
     const [turnedPieceIndex, setTurnedPieceIndex] = useState<number>(-1)
@@ -18,6 +20,23 @@ const Board: React.FC<BoardProps> = ({
     const [score, setScore] = useState(0)
     const [turnBack, setTurnBack] = useState<boolean>(false)
     const [visibility, setVisibility] = useState(true)
+
+    useEffect(() => {
+        if(score >= 8) {
+            onGameOver()
+        }
+    }, [score, onGameOver])
+
+    useEffect(() => {
+        if(restart) {
+            setPieceState(pieceList)
+            setTurnedPieceIndex(-1)
+            setBlocked(false)
+            setScore(0)
+            setTurnBack(false)
+            setVisibility(true)
+        }
+    }, [restart, pieceList])
 
     const handleOnClick = async(index: number) => {
         if(!pieceState[index].turned && !blocked) {

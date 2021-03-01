@@ -7,15 +7,14 @@
 
 .piece__back {
     background-image: url('../../../../../../assets/kids_space/memory_game/back_card.svg');
-    background-color: #805a46;
+    background-color: var(--memory-game-piece-back-color);
     background-size: cover;
     height: inherit;
     width: inherit;
 }
 
 .piece__front {
-    background-image: url('../../../../../../assets/kids_space/memory_game/front_card.png');
-    background-color: aliceblue;
+    background-color: var(--memory-game-contrast-color);
     height: inherit;
     width: inherit;
     transform: rotate3d(0, 1, 0, 180deg);

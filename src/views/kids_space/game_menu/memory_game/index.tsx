@@ -19,6 +19,7 @@ import './styles.css'
 const MemoryGame: React.FC = () => {
 	const language = useLanguage()
 	const [openDialog, setOpenDialog] = useState(false)
+	const [restart, setRestart] = useState(true)
 
 	const board = [
 		...getPieces(),
@@ -34,7 +35,7 @@ const MemoryGame: React.FC = () => {
 
 	const handleRestart = () => {
 		setOpenDialog(false)
-		
+		setRestart(true)	
 	}
 
 	const handleGameOver = () => {
@@ -48,10 +49,10 @@ const MemoryGame: React.FC = () => {
 				onDisagree={handleClose}
 				open={openDialog}
 			>
-				<p>Cabou</p>
+				<p>{language.data.MEMORY_GAME_GAME_OVER}</p>
 			</GameOverDialog>
 			<GoBackButton path={PathConstants.GAME_MENU} />
-			<Board pieceList={boardRandom} />
+			<Board pieceList={boardRandom} onGameOver= {handleGameOver} restart = {restart}/>
 		</div>
 	)
 }

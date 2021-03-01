@@ -235,6 +235,7 @@ export default interface LanguageBase {
 	TREATMENT_SAVE: string
 	KIDS_SPACE: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string
+	MEMORY_GAME_GAME_OVER: string
 	PLAY_AGAIN_MESSAGE: string
 	DINO_RUNNER_GAME_OVER_MSG_1: string
 	SECONDARY_TAB_MESSAGE: string

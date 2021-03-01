@@ -1,5 +1,7 @@
 .memory_game {
-    background-color: #FDCF76;
+    background-color: var(--memory-game-primary-background-color);
+    background-size: 40px 40px;
+    background-image: repeating-linear-gradient(45deg, var(--memory-game-secondary-background-color) 0, var(--memory-game-secondary-background-color) 4px, var(--memory-game-primary-background-color) 0, var(--memory-game-primary-background-color) 50%);
     text-align: center;
     height: 100vh;
     display: flex;
@@ -14,4 +16,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 12px;
+}
+
+.memory_game .game_over_dialog {
+    top: 35vh;
 }

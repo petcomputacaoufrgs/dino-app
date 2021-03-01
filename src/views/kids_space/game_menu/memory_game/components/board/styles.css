@@ -11,5 +11,5 @@
     padding: 0.5rem;
     border-radius: 50%;
     font-size: var(--titan-font);
-    background-color: blueviolet;
+    background-color: var(--memory-game-contrast-color);
 }

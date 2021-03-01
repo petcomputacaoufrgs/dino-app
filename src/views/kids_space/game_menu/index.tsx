@@ -13,13 +13,13 @@ const GameMenu: React.FC = () => {
 				path={PathConstants.KIDS_SPACE}
 			/>
 			<GameCard
-				onClick={() => HistoryService.push(PathConstants.MEMORY_GAME)}
-				text='Jogo da Memória'
+				onClick={() => {HistoryService.push(PathConstants.DINO_RUNNER_GAME)}}
+				text='Dino Corredor'
 				backgroundColor={'#FFA19C'}
 			></GameCard>
 			<GameCard
-				onClick={() => console.log('1010')}
-				text='1010'
+				onClick={() => HistoryService.push(PathConstants.MEMORY_GAME)}
+				text='Jogo da Memória'
 				backgroundColor={'#FFD28C'}
 			></GameCard>
 			<GameCard
@@ -42,13 +42,6 @@ const GameMenu: React.FC = () => {
 				}}
 				text='Tic Tac Dino'
 				backgroundColor={'#E1BFFF'}
-			></GameCard>
-			<GameCard
-				onClick={() => {
-					HistoryService.push(PathConstants.DINO_RUNNER_GAME)
-				}}
-				text='Dino Corredor'
-				backgroundColor={'#FECBDC'}
 			></GameCard>
 		</div>
 	)

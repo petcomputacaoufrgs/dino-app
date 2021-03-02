@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Dialog, DialogActions } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import SelectTreatment from '../select_treatment'
@@ -16,18 +16,16 @@ import TransitionSlide from '../../slide_transition'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
+import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import './styles.css'
 
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()
 
 	const [isLoading, setIsLoading] = useState(true)
-
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
-
 	const [dialogOpen, setDialogOpen] = useState(true)
-
 	const [selectedLanguage, setSelectedLanguage] = useState(
 		language.data.LANGUAGE_CODE,
 	)
@@ -44,6 +42,9 @@ const FirstSettingsDialog: React.FC = () => {
 		selectedEssentialContactGrant,
 		setSelectedEssentialContactGrant,
 	] = useState(UserSettingsService.getDefaultEssentialContactGrant())
+	const [parentsAreaPassword, setParentsAreaPassword] = useState<string>("")
+	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState<string>("")
+	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -114,6 +115,22 @@ const FirstSettingsDialog: React.FC = () => {
 		setDialogOpen(false)
 	}
 
+	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
+		const newValue = event.target.value
+		
+		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+			setParentsAreaPassword(event.target.value)
+		}
+	}
+
+	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
+		const newValue = event.target.value
+
+		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+			setConfirmParentsAreaPassword(event.target.value)
+		}
+	}
+
 	const saveSettings = async () => {
 		if (settings) {
 			settings.language = selectedLanguage
@@ -123,6 +140,7 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = true
 			settings.treatmentLocalId = selectedTreatment?.localId
+			settings.parentsAreaPassword = parentsAreaPassword
 
 			await UserSettingsService.save(settings)
 
@@ -152,8 +170,8 @@ const FirstSettingsDialog: React.FC = () => {
 
 	const handleNextStep = () => {
 		if (settings) {
+			if (isInvalidPassword(settings)) return
 			settings.settingsStep += 1
-
 			UserSettingsService.save(settings)
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
 			const newEntity: UserSettingsEntity = {
@@ -222,6 +240,22 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}
 
+	const isInvalidPassword = (settings: UserSettingsEntity): boolean => {
+		if (settings.settingsStep !== 4) return false
+
+		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
+			return true
+		}
+
+		if (parentsAreaPassword !== confirmParentsAreaPassword) {
+			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
+			return true
+		}
+
+		return false
+	}
+
 	const renderSelectTreatmentDialogContent = () => {
 		return (
 			<SelectTreatment
@@ -285,10 +319,25 @@ const FirstSettingsDialog: React.FC = () => {
 				<p>
 					{language.data.SETTING_PASSWORD_EXPLANATION}
 				</p>
-				<label htmlFor="pass">{language.data.INSERT_PASSWORD} </label>
-    			<input type="password" name="password" required />
-				<label htmlFor="pass"> {language.data.INSERT_PASSWORD_AGAIN} </label>
-    			<input type="password" name="password" required />
+				<form>
+					<label htmlFor="pass">{language.data.INSERT_PASSWORD} </label>
+					<input 
+						autoComplete="off" 
+						value={parentsAreaPassword} 
+						onChange={handleChangePassword}
+						type="password" 
+						name="password" 
+						required />
+					<label htmlFor="pass"> {language.data.INSERT_PASSWORD_AGAIN} </label>
+					<input 
+						autoComplete="off" 
+						value={confirmParentsAreaPassword}
+						onChange={handleChangeConfirmPassword}
+						type="password" 
+						name="password" 
+						required />
+					{passwordErrorMessage && <p className="set_password__error_message">{passwordErrorMessage}</p>}
+				</form>
 			</div>
 		)
 	}

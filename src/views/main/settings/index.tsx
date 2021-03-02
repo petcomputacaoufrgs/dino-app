@@ -335,11 +335,11 @@ const Settings: React.FC = () => {
 					</DinoDialogHeader>
 					<DinoDialogContent>
 						<label htmlFor="pass">{language.data.INSERT_OLD_PASSWORD}</label>
-    					<input type="password" id="pass_1" name="password" required />
+    					<input type="password" name="password" required />
 						<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD}</label>
-    					<input type="password" id="pass_2" name="password" required />
+    					<input type="password" name="password" required />
 						<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD_AGAIN}</label>
-    					<input type="password" id="pass_3" name="password" required />
+    					<input type="password" name="password" required />
 						<a href={'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'}> {language.data.FORGOT_PASSWORD}</a>
 					</DinoDialogContent>
 					<div className='settings__change_password_dialog__buttons'>

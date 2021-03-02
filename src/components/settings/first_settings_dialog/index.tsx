@@ -286,9 +286,9 @@ const FirstSettingsDialog: React.FC = () => {
 					{language.data.SETTING_PASSWORD_EXPLANATION}
 				</p>
 				<label htmlFor="pass">{language.data.INSERT_PASSWORD} </label>
-    			<input type="password" id="pass_1" name="password" required />
+    			<input type="password" name="password" required />
 				<label htmlFor="pass"> {language.data.INSERT_PASSWORD_AGAIN} </label>
-    			<input type="password" id="pass_1" name="password" required />
+    			<input type="password" name="password" required />
 			</div>
 		)
 	}

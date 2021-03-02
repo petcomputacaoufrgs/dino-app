@@ -322,7 +322,7 @@ const FirstSettingsDialog: React.FC = () => {
 				<form>
 					<label htmlFor="pass">{language.data.INSERT_PASSWORD} </label>
 					<input 
-						autoComplete="off" 
+						autoComplete="off"
 						value={parentsAreaPassword} 
 						onChange={handleChangePassword}
 						type="password" 
@@ -330,7 +330,7 @@ const FirstSettingsDialog: React.FC = () => {
 						required />
 					<label htmlFor="pass"> {language.data.INSERT_PASSWORD_AGAIN} </label>
 					<input 
-						autoComplete="off" 
+						autoComplete="off"
 						value={confirmParentsAreaPassword}
 						onChange={handleChangeConfirmPassword}
 						type="password" 

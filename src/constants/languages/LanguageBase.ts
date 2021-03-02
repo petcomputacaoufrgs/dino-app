@@ -284,4 +284,6 @@ export default interface LanguageBase {
 	INSERT_PASSWORD_AGAIN: string
 	PASSWORD_MIN_LENGHT_ERROR_MESSAGE: string
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE: string
+	PASSWORD_CHANGED: string
+	WRONG_PASSWORD: string
 }

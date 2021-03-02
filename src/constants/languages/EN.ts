@@ -597,4 +597,8 @@ export default class EN implements LanguageBase {
 	PASSWORD_MIN_LENGHT_ERROR_MESSAGE = 'The password must be between 8 and 24 characters'
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'The passwords are different'
+
+	PASSWORD_CHANGED = 'Success'
+
+	WRONG_PASSWORD = 'Wrong current password'
 }

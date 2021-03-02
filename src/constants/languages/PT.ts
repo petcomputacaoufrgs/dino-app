@@ -606,4 +606,8 @@ export default class PT implements LanguageBase {
 	PASSWORD_MIN_LENGHT_ERROR_MESSAGE = 'A senha deve ter entre 8 e 24 caracteres'
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'A senhas estão diferentes'
+
+	PASSWORD_CHANGED = 'Sucesso'
+
+	WRONG_PASSWORD = 'Senha atual errada'
 }

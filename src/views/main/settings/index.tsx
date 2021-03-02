@@ -64,9 +64,9 @@ const Settings: React.FC = () => {
 	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
 	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
 
-	const [oldPassword, setOldPassword] = useState<string>("")
-	const [parentsAreaPassword, setParentsAreaPassword] = useState<string>("")
-	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState<string>("")
+	const [oldPassword, setOldPassword] = useState("")
+	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
+	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {

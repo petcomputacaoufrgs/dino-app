@@ -609,5 +609,5 @@ export default class PT implements LanguageBase {
 
 	PASSWORD_CHANGED = 'Sucesso'
 
-	WRONG_PASSWORD = 'Senha atual errada'
+	WRONG_PASSWORD = 'Senha incorreta'
 }

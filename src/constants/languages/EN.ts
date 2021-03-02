@@ -600,5 +600,5 @@ export default class EN implements LanguageBase {
 
 	PASSWORD_CHANGED = 'Success'
 
-	WRONG_PASSWORD = 'Wrong current password'
+	WRONG_PASSWORD = 'Wrong password'
 }

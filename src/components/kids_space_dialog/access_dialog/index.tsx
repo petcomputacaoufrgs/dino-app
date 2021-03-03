@@ -7,6 +7,7 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import '../styles.css'
 import './styles.css'
+import HashUtils from '../../../utils/HashUtils'
 
 const AccessDialog: React.FC<AccessDialogProps> = ({
 	open,
@@ -20,6 +21,13 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
     
+    useEffect(() => {
+        if(!open) {
+            setParentsAreaPassword("")
+            setPasswordErrorMessage(undefined)
+        }
+    }, [open])
+
     useEffect(() => {
 		const loadData = async () => {
 			const settings = await UserSettingsService.getFirst()
@@ -52,10 +60,12 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 	}, [isLoading])
 
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         if (!settings) return
 
-        if (settings.parentsAreaPassword !== parentsAreaPassword) {
+        const encryptedPassword = await HashUtils.sha256(parentsAreaPassword)
+
+        if (settings.parentsAreaPassword !== encryptedPassword) {
             setPasswordErrorMessage(language.data.WRONG_PASSWORD)
             return
         }

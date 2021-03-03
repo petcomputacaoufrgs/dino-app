@@ -34,6 +34,7 @@ import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
+import HashUtils from '../../../utils/HashUtils'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
@@ -68,6 +69,15 @@ const Settings: React.FC = () => {
 	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
+
+	useEffect(() => {
+		if(!openChangePasswordDialog) {
+			setParentsAreaPassword("")
+			setConfirmParentsAreaPassword("")
+			setOldPassword("")
+			setPasswordErrorMessage(undefined)
+		}
+	}, [openChangePasswordDialog])
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -199,10 +209,12 @@ const Settings: React.FC = () => {
 		setOpenChangePasswordDialog(false)
 	}
 
-	const handlePasswordChange = () => {
+	const handlePasswordChange = async () => {
 		if (!settings) return
+		
+		const encryptedOldPassword = await HashUtils.sha256(oldPassword)
 
-		if (oldPassword !== settings.parentsAreaPassword) {
+		if (encryptedOldPassword !== settings.parentsAreaPassword) {
 			setPasswordErrorMessage(language.data.WRONG_PASSWORD)
 			return
 		}
@@ -217,8 +229,8 @@ const Settings: React.FC = () => {
 			return
 		}
 
-		settings.parentsAreaPassword = parentsAreaPassword
-		UserSettingsService.save(settings)
+		settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
+		await UserSettingsService.save(settings)
 
 		alert.showSuccessAlert(language.data.PASSWORD_CHANGED)
 

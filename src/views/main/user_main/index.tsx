@@ -9,7 +9,7 @@ import Home from '../home'
 import Settings from '../settings'
 import Notes from '../notes'
 import NotFound from '../../not_found/index'
-import Faq from '../faq'
+import FaqHub from '../faq'
 import Calendar from '../calendar'
 import Main from '..'
 
@@ -47,7 +47,7 @@ const UserMain: React.FC = () => {
 					<PrivateRoute 
 						exact 
 						path={PathConstants.USER_FAQ}
-						component={Faq} 
+						component={FaqHub} 
 						/>
 					<PrivateRoute path={PathConstants.USER_CALENDAR} component={Calendar} />
 					<PrivateRoute path={'/'} component={NotFound} />

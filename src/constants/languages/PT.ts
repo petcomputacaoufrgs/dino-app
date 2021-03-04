@@ -630,7 +630,9 @@ export default class PT implements LanguageBase {
 
 	INVALID_VALUE = 'Valor inválido'
 
-	USERS_QUESTIONS = 'Perguntas de Usuários'
+	USERS_QUESTIONS = 'Usuários Perguntam'
+
+	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
 	
 	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
 	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`

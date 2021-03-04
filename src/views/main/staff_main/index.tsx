@@ -6,12 +6,13 @@ import NotFound from '../../not_found'
 import Main from '..'
 import StaffModeration from '../../staff/staff_moderation'
 import Treatment from '../../staff/treatment'
-import Faq from '../faq'
+import FaqHub from '../faq'
 import Glossary from '../glossary'
 import GlossaryItem from '../glossary/glossary_list_items/glossary_item'
 import Home from '../home'
 import Contacts from '../contacts'
 import Settings from '../settings'
+import StaffDataProvider from '../../../context/staff_data'
 
 const StaffMain: React.FC = () => {
 	return (
@@ -38,11 +39,6 @@ const StaffMain: React.FC = () => {
 					component={Settings}
 				/>
 				<PrivateRoute
-					exact
-					path={`${PathConstants.STAFF_FAQ}/:localId`}
-					component={Faq}
-				/>
-				<PrivateRoute
 					path={`${PathConstants.STAFF_GLOSSARY}/:localId`}
 					component={GlossaryItem}
 				/>
@@ -50,10 +46,20 @@ const StaffMain: React.FC = () => {
 					path={PathConstants.STAFF_MODERATION} 
 					component={StaffModeration} 
 				/>
-				<PrivateRoute 
-					path={PathConstants.TREATMENT} 
-					component={Treatment} 
-				/>
+				<StaffDataProvider>
+					<Switch>
+						<PrivateRoute
+							exact
+							path={`${PathConstants.STAFF_FAQ}/:localId`}
+							component={FaqHub}
+						/>
+						<PrivateRoute 
+							path={PathConstants.TREATMENT} 
+							component={Treatment} 
+						/>
+						<PrivateRoute path={'/'} component={NotFound} />
+					</Switch>
+				</StaffDataProvider>
 				<PrivateRoute path={'/'} component={NotFound} />
 			</Switch>
 		</Main>

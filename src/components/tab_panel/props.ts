@@ -5,5 +5,6 @@ export interface TabPanelProps {
 }
 
 export interface DinoTabPanelProps {
-  panels: { name: string, Component: React.ReactNode }[],
+  panels: { Label: React.ReactNode, Component: React.ReactNode }[],
+  currentTab?: number
 }

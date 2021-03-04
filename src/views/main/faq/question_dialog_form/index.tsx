@@ -7,27 +7,24 @@ import TreatmentQuestionService from '../../../../services/faq/TreatmentQuestion
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
 import DinoDialog, { DinoDialogContent, DinoDialogHeader } from '../../../../components/dialogs/dino_dialog'
+import StringUtils from '../../../../utils/StringUtils'
 
-const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, setDialogOpen, treatment }) => {
+const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, onClose, treatment }) => {
 
 		const language = useLanguage()
 		const [question, setQuestion] = useState('')
 		const [error, setError] = useState(false)
 
-		const handleClose = () => {
-			setDialogOpen(false)
-		}
-
 		const handleSave = () => {
-			if (treatment && question !== '') {
+			if (question !== '') {
 				const entity: TreatmentQuestionEntity = {
 					question: question,
 					localTreatmentId: treatment.localId,
 				}
 				TreatmentQuestionService.save(entity)
-				handleClose()
-			} else if (question === '') {
-					setError(true)
+				onClose()
+			} else if (StringUtils.isEmpty(question)) {
+				setError(true)
 			}
 		}
 
@@ -40,14 +37,14 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, set
 			}
 		}, [dialogOpen])
 
-		const getHelperText = () => (error && language.data.INVALID_VALUE) || `${question.length}/${Constants.FAQ_USER_QUESTION.MAX}`
+		const getHelperText = () => (error && language.data.EMPTY_FIELD_ERROR) || `${question.length}/${Constants.FAQ_USER_QUESTION.MAX}`
 
 		return (
 			<div className='dialog-form'>
 				<DinoDialog
 					open={dialogOpen}
 					onSave={handleSave}
-					onClose={handleClose}	
+					onClose={onClose}	
 					header={
 					<DinoDialogHeader>
 						{language.data.titleTreatmentQuestion(treatment.name)}
@@ -55,7 +52,7 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, set
 					}
 				>
 					<DinoDialogContent>
-						<p style={{'margin': '0'}}>Mande para os profissionais!</p>
+						<p style={{'margin': '0'}}>{language.data.SEND_TO_THE_PROFESSIONALS}</p>
 						<TextField
 								className='dino_textfield'
 								required={Constants.FAQ_USER_QUESTION.REQUIRED}

@@ -64,14 +64,17 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 
 	getFaqItemByFilter(
 		treatment: TreatmentEntity,
-		faqItem: FaqItemEntity[],
 		searchTerm: string,
+		faqItems?: FaqItemEntity[],
 	): FaqItemEntity[] {
-		return faqItem.filter(
-			item =>
-				item.localTreatmentId === treatment.localId &&
-				StringUtils.contains(item.question, searchTerm),
-		)
+		if(faqItems) {
+			return faqItems.filter(
+				item =>
+					item.localTreatmentId === treatment.localId &&
+					StringUtils.contains(item.question, searchTerm),
+			)
+		}
+		return []
 	}
 
 	getByTreatment = async (treatment: TreatmentEntity): Promise<FaqItemEntity[]> => {

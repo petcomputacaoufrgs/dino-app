@@ -45,8 +45,8 @@ const StaffModeration: React.FC = () => {
   return (
     <div className='staff_moderation'>
       <DinoTabPanel panels={[
-          { name: language.data.ADD_STAF_TAB, Component: <AddStaffForm /> },
-          { name: language.data.STAFF_LIST_TAB, Component: 
+          { Label: language.data.ADD_STAF_TAB, Component: <AddStaffForm /> },
+          { Label: language.data.STAFF_LIST_TAB, Component: 
             <DinoLoader className='staff_loader' isLoading={isLoading}>
               <ListStaff items={staff} />
             </DinoLoader> 

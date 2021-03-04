@@ -3,5 +3,5 @@ import FaqItemEntity from '../database/FaqItemEntity'
 
 export default interface FaqView {
 	treatment: TreatmentEntity
-	faqItems: Array<FaqItemEntity>
+	faqItems?: Array<FaqItemEntity>
 }

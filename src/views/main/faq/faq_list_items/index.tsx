@@ -45,7 +45,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
 			{data && (
 				<Accordion className='accordion'>
-					{data.faqItems.map((item, index) =>	
+					{data.faqItems?.map((item, index) =>	
 						<FaqItem 
 							key={index} 
 							item={item} 

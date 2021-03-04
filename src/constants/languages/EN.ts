@@ -624,6 +624,8 @@ export default class EN implements LanguageBase {
 
 	USERS_QUESTIONS = "User's Questions"
 
+	SEND_TO_THE_PROFESSIONALS = 'Sendo to the profissionals!'
+
 	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
 	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
 	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`

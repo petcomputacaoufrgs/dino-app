@@ -10,9 +10,9 @@ function getProps(index: number) {
 	};
  }
 
- const DinoTabPanel: React.FC<DinoTabPanelProps> = ({ panels, }) => { 
+ const DinoTabPanel: React.FC<DinoTabPanelProps> = ({ panels, currentTab }) => { 
 
-  const [valueTab, setValueTab] = useState(0)
+  const [valueTab, setValueTab] = useState(currentTab || 0)
 
   const TabPanel = ({ children, value, index }: TabPanelProps) => {
     return (
@@ -39,11 +39,11 @@ function getProps(index: number) {
           variant="fullWidth"
           aria-label="full width tabs"
         >
-          {panels.map((e, index) => <Tab key={index} label={e.name} {...getProps(index)} />)}
+          {panels.map((e, index) => <Tab wrapped key={index} label={e.Label} {...getProps(index)} />)}
         </Tabs>
       </AppBar>
         {panels.map((e, index) => 
-          <TabPanel key={index} value={valueTab} index={index} >
+          <TabPanel key={index} value={valueTab} index={index}>
             {e.Component}
           </TabPanel>
         )}

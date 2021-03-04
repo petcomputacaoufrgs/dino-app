@@ -52,7 +52,7 @@ const GlossaryItem: React.FC = () => {
 
 	return (
 		<DinoLoader className='glossary_item_loader' isLoading={isLoading} hideChildren>
-			<div className='glossary_item text__wrap'>
+			<div className='glossary_item dino__text__wrap'>
 				<div className='card__header'>
 					<div className='card__header__title'>
 						{glossaryItem?.title || language.data.NO_AVAILABLE_TEXT}

@@ -110,21 +110,22 @@ body .MuiInput-underline:before {
 	color: var(--selection);
 }
 
-.dino_textfield .MuiFormHelperText-root {
+.dino__textfield .MuiFormHelperText-root {
 	text-align: right;
 	display: block;
 	color: var(--contrast-color);
 }
 
-.element__flex_row {
+.dino__flex_row {
 	display: flex;
 	flex-direction: row;
 }
 
-.accordion {
+.dino__accordion {
 	padding: 4px 8px;
 }
 
-.text__wrap {
-	overflow-wrap: anywhere
+.dino__text__wrap {
+	overflow-wrap: anywhere;
+	white-space: normal;
 }

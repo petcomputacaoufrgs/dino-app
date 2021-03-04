@@ -22,7 +22,7 @@ interface GlossaryListItemProps {
 		return (
 			<Card className='card'>
 				<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
-					<Card.Title className='card-title element__flex_row text__wrap'>
+					<Card.Title className='card-title dino__flex_row dino__text__wrap'>
 						{item.title}
 						{staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
 					</Card.Title>

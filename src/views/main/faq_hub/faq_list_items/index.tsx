@@ -41,10 +41,10 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 	}
 
 	return (
-		<div className='faq-items text__wrap'>
+		<div className='faq-items dino__text__wrap'>
 			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
 			{data && (
-				<Accordion className='accordion'>
+				<Accordion className='dino__accordion'>
 					{data.faqItems?.map((item, index) =>	
 						<FaqItem 
 							key={index} 

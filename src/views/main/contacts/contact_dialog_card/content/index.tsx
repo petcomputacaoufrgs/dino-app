@@ -37,7 +37,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 				</ListItemIcon>
 				<ListItemText
 					primary={
-						<div className='contacts__list__item__text text__wrap'>
+						<div className='contacts__list__item__text dino__text__wrap'>
 							{item.contact.description}
 						</div>
 					}
@@ -58,7 +58,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 						<ListItem
 							button
 							divider
-							className='contacts__list__item__content__phones'
+							className='contacts__list__item__content__phones dino__text__wrap'
 						>
 							<ListItemIcon>{getTypePhoneIcon(phone)}</ListItemIcon>
 							<ListItemText

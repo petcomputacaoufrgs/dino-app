@@ -634,7 +634,7 @@ export default class PT implements LanguageBase {
 
 	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
 	
-	deleteItemText = (item: string) => this.DELETE_OPTION_TEXT + item.toLowerCase() + '?'
+	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
 	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`
 	titleFAQTreatmentText = (treatment: string) => `${this.FAQ} de ${treatment}`
 	titleTreatmentQuestion = (treatment: string) => `Tem uma pergunta sobre ${treatment}?`

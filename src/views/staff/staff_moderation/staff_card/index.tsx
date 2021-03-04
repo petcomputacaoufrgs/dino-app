@@ -68,7 +68,7 @@ const StaffCard: React.FC<StaffCardProps> = forwardRef(({ open, onClose, item, o
       <CardContent>
         <ListItem divider>
           <ListItemIcon><EmailIcon /></ListItemIcon>
-          <ListItemText className='text__wrap' primary={item.email}/>
+          <ListItemText className='dino__text__wrap' primary={item.email}/>
         </ListItem>
       </CardContent>
     </Dialog>

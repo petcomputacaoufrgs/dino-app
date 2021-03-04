@@ -1,6 +1,7 @@
-.contact_dialog_content_header .MuiTypography-root {
+.contact_dialog_content_header .MuiTypography-root.MuiCardHeader-title {
 	font-size: var(--default-font);
 }
+
 .contact_dialog_content_header
 	.MuiTypography-root.MuiTypography-root.MuiCardHeader-subheader {
 	font-size: var(--small-font);

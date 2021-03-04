@@ -36,7 +36,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	return (
 		<div className='glossary__items'>
 			<ListTitle title={language.data.GLOSSARY}/>
-			<Accordion className='accordion'>
+			<Accordion className='dino__accordion'>
 				{items.map((item, index) => 
 					<GlossaryListItem 
 						item={item} 

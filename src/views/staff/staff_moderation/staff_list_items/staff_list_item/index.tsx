@@ -25,7 +25,7 @@ const StaffItem: React.FC<StaffItemProps> = ({ item, onClickMenu, onClick }) => 
       <ListItemText 
         primary={item.email} 
         secondary={
-          <Typography className='element__flex_row' component={'span'} variant={'body2'}>
+          <Typography className='dino__flex_row' component={'span'} variant={'body2'}>
             {item.sentInvitationDate.toDateString()}
             {invitationIsPending && (<p className='invitation_pending'>{language.data.PENDING}</p>)}
           </Typography>

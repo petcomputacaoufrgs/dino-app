@@ -2,7 +2,9 @@ type filter<T> = (value: T) => boolean
 
 class ArrayUtils {
 
-	isNotEmpty = <T>(list?: T[]) => { return list !== undefined && list.length > 0 } 
+	isNotEmpty = <T>(list?: T[]) => !this.isEmpty()  
+	
+	isEmpty = <T>(list?: T[]) => list === undefined || list.length === 0  
 
 	suffle = <T>(list: T[]) => {
 		list.sort(() => Math.random() - 0.5)

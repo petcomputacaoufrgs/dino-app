@@ -48,6 +48,7 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
           fullWidth
           label={language.data.FORM_QUESTION}
           type='name'
+          inputProps={{ maxLength: DataConstants.FAQ_QUESTION.MAX }}
           helperText={(errorQuestion && language.data.EMPTY_FIELD_ERROR) || `${item.question.length}/${DataConstants.FAQ_QUESTION.MAX}` }
           value={item.question}
           onChange={(e) => setItem({ ...item, question: e.target.value })}
@@ -62,6 +63,7 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
           rows={7}
           label={'Answer'}
           type='name'
+          inputProps={{ maxLength: DataConstants.FAQ_ANSWER.MAX }}
           helperText={(errorAnswer && language.data.EMPTY_FIELD_ERROR) || `${item.answer.length}/${DataConstants.FAQ_ANSWER.MAX}`}
           value={item.answer}
           onChange={(e) => setItem({ ...item, answer: e.target.value })}

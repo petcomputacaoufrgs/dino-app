@@ -124,3 +124,7 @@ body .MuiInput-underline:before {
 .accordion {
 	padding: 4px 8px;
 }
+
+.text__wrap {
+	overflow-wrap: anywhere
+}

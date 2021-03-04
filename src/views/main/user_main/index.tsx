@@ -9,7 +9,7 @@ import Home from '../home'
 import Settings from '../settings'
 import Notes from '../notes'
 import NotFound from '../../not_found/index'
-import FaqHub from '../faq'
+import FaqHub from '../faq_hub'
 import Calendar from '../calendar'
 import Main from '..'
 

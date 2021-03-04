@@ -28,7 +28,6 @@ const Treatment: React.FC<TreatmentProps> = () => {
 	useEffect(() => {
 		const loadData = async () => {
 			updateTreatments(await TreatmentService.getAll())
-
 			finishLoading()
 		}
 

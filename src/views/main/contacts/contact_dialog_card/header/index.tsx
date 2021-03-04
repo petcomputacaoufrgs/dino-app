@@ -26,14 +26,14 @@ const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({ item, onClick, ch
 					</Avatar>
 				}
 				action={
-					<>
+					<div className='element__flex_row'>
 						{isEssential ? <Star /> : <></>}
 						<OptionsIconButton dark onClick={onClick} />
-					</>
+					</div>
 				}
 				title={item.contact.name}
 				subheader={PhoneService.getPhoneTypes(item.phones, language.data)}
-				className='contact_dialog_content_header'
+				className='contact_dialog_content_header text__wrap'
 			/>
 			{children}
 		</>

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import TreatmentQuestionService from '../../services/faq/TreatmentQuestionService'
 import TreatmentService from '../../services/treatment/TreatmentService'
-import FaqView from '../../types/faq/view/FaqView'
 import TreatmentView from '../../types/faq/view/TreatmentView'
 
 /**
@@ -42,7 +41,6 @@ const StaffDataProvider: React.FC = ({ children }) => {
 			})
 
 			setValue([...treatmentViews])
-			console.log(treatmentViews)
 		}
 
 		loadData()
@@ -61,6 +59,9 @@ const StaffDataProvider: React.FC = ({ children }) => {
 
 export const useStaffData = () => useContext(StaffData)
 
-export const UseTreatmentView = (treatmentLocalId: number) => useContext(StaffData)[treatmentLocalId]
+export const useTreatmentView = (treatmentLocalId?: number) => {
+	const staffData = useStaffData()
+	return treatmentLocalId ? staffData[treatmentLocalId] : undefined
+}
 
 export default StaffDataProvider

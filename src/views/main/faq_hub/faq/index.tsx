@@ -1,4 +1,3 @@
-import language from 'material-ui/svg-icons/action/language'
 import React, { useState } from 'react'
 import LinkButton from '../../../../components/button/link_button'
 import MuiSearchBar from '../../../../components/mui_search_bar'
@@ -22,16 +21,17 @@ const Faq: React.FC<{ view?: FaqView }> = ({ view }) => {
       />
       { view ? 
         <>
-        <FaqItems data={TreatmentService.getFaqViewByFilter(view, searchTerm)} />
-        <LinkButton
-          text={language.data.NOT_FOUND_QUESTION_FAQ}
-          onClick={() => setQuestionDialogOpen(true)}
-        />
-        <QuestionDialogForm
-          treatment={view.treatment}
-          dialogOpen={dialogOpen}
-          onClose={() => setQuestionDialogOpen(false)}
-        /> </> : <> </>
+          <FaqItems data={TreatmentService.getFaqViewByFilter(view, searchTerm)} />
+          <LinkButton
+            text={language.data.NOT_FOUND_QUESTION_FAQ}
+            onClick={() => setQuestionDialogOpen(true)}
+          />
+          <QuestionDialogForm
+            treatment={view.treatment}
+            dialogOpen={dialogOpen}
+            onClose={() => setQuestionDialogOpen(false)}
+          /> 
+        </> : <> </>
       }
     </>
   )

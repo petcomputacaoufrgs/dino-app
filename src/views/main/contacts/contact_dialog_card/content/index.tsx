@@ -37,7 +37,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 				</ListItemIcon>
 				<ListItemText
 					primary={
-						<div className='contacts__list__item__text'>
+						<div className='contacts__list__item__text text__wrap'>
 							{item.contact.description}
 						</div>
 					}

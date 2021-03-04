@@ -15,8 +15,8 @@ import TreatmentQuestionItems from './treatment_question_list_items'
 import TreatmentQuestionService from '../../../services/faq/TreatmentQuestionService'
 import TreatmentView from '../../../types/faq/view/TreatmentView'
 import { useStaffData } from '../../../context/staff_data'
-import { Badge, Typography } from '@material-ui/core'
-import Faq from './faq_2'
+import { Badge } from '@material-ui/core'
+import Faq from './faq'
 import ArrayUtils from '../../../utils/ArrayUtils'
 
 
@@ -96,7 +96,7 @@ const FaqHub: React.FC = () => {
 			FaqItemService.removeUpdateEventListenner(loadData)
 			TreatmentQuestionService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading, localId])
+	}, [isLoading, localId, staffData])
 
 	const NoFAQAvailable = () => {
 		return (
@@ -109,7 +109,7 @@ const FaqHub: React.FC = () => {
 	const FaqAndUserQuestions: React.FC = () => {
 		return (		
 				<DinoTabPanel 
-					currentTab={1} 
+					// currentTab={1} 
 					panels={[ 
 						{ Label: language.data.FAQ, Component: <Faq view={faqView}/> },
 						{ 
@@ -117,7 +117,7 @@ const FaqHub: React.FC = () => {
 								<Badge 
 									color="secondary" 
 									variant="dot"
-									invisible={!ArrayUtils.isNotEmpty(treatmentView?.questions)} 
+									invisible={ArrayUtils.isEmpty(treatmentView?.questions)} 
 								>
 									{language.data.USERS_QUESTIONS}
 								</Badge>, 
@@ -130,13 +130,11 @@ const FaqHub: React.FC = () => {
 
 	return (
 		<DinoLoader className='faq__loader' isLoading={isLoading} hideChildren>
-			{faqView ? (
-				<>
-					<div className='faq__content'>
-						{staff ? <FaqAndUserQuestions/> : <Faq/>}
-					</div>
-				</>
-			) : treatments ? <NoTreatmentSelected treatments={treatments} /> : <NoFAQAvailable />
+			{faqView ? 
+				<div className='faq__content'>
+					{staff ? <FaqAndUserQuestions/> : <Faq view={faqView} />}
+				</div>
+			: treatments ? <NoTreatmentSelected treatments={treatments} /> : <NoFAQAvailable />
 			}
 		</DinoLoader>
 	)

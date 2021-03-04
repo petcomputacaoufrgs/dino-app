@@ -107,7 +107,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
             label={`${language.data.FULL_TEXT}`}
             type='text'
             inputProps={{ maxLength: DataConstants.GLOSSARY_FULLTEXT.MAX }}
-            helperText={`${item.text.length}/${DataConstants.GLOSSARY_FULLTEXT.MAX}` }
+            helperText={`${item.fullText.length}/${DataConstants.GLOSSARY_FULLTEXT.MAX}` }
           />
           <br />
         </div>

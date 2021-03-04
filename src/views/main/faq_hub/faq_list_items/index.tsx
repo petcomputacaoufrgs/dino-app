@@ -41,7 +41,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 	}
 
 	return (
-		<div className='faq-items'>
+		<div className='faq-items text__wrap'>
 			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
 			{data && (
 				<Accordion className='accordion'>
@@ -58,7 +58,7 @@ const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
 				<>
 					<AddButton
 						handleAdd={() => setToAdd(true)}
-						label={`${language.data.ADD_ARIA_LABEL} ${language.data.FAQ}`}
+						label={language.data.FAQ}
 					/>
 					{toAdd && <FaqItemForm 
 						open={toAdd} 

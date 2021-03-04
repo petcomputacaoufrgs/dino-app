@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DinoDialog, { DinoDialogHeader } from '../../../../components/dialogs/dino_dialog'
 import { useLanguage } from '../../../../context/language'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
@@ -18,6 +18,11 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
   const [item, setItem] = useState(treatment || { name: '' })
   const [error, setError] = useState(false)
 	const language = useLanguage()
+
+  useEffect(() => {
+    if(!open) 
+      return setItem({ name: '' })
+  }, [open])
 
   const handleSave = () => {
 		if(!StringUtils.isEmpty(item.name)) {
@@ -51,6 +56,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
             /* é importante descontruir o objeto ao atualizá-lo, mesmo com um único atributo, senão ele vira outro. */
             onChange={(e) => setItem({ ...item, name: e.target.value })}
             error={error}
+            inputProps={{ maxLength: Constants.TREATMENT.MAX }}
             helperText={(error && language.data.EMPTY_FIELD_ERROR) || `${item.name.length}/${Constants.TREATMENT.MAX}`}
             />
         </div>

@@ -15,7 +15,7 @@ const AddButton: React.FC<AddButtonProps> = ({ handleAdd, label }) => {
   
   return (
     <CircularButton
-      ariaLabel={language.data.ADD_OPTION_TEXT + label}
+      ariaLabel={`${language.data.ADD_OPTION_TEXT} ${label}`}
       className='add_button'
       icon={AddIconSVG}
       onClick={handleAdd}

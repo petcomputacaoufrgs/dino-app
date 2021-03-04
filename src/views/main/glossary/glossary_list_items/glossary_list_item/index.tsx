@@ -20,30 +20,28 @@ interface GlossaryListItemProps {
 		const eventKey = String(item.localId)
 
 		return (
-			<div>
-				<Card className='card'>
-					<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
-						<Card.Title className='card-title element__flex_row'>
-							{item.title}
-							{staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
-						</Card.Title>
-					</Accordion.Toggle>
-					<Accordion.Collapse eventKey={eventKey}>
-						<Card.Body>
-							<Card.Subtitle className='mb-2'>{item.subtitle}</Card.Subtitle>
-							<Card.Text>
-								{item.text || language.data.NO_AVAILABLE_TEXT}
-							</Card.Text>
-							<Link
-								className='history_link'
-								to={`${staff ? PathConstants.STAFF_GLOSSARY : PathConstants.USER_GLOSSARY}/${item.localId}`}
-							>
-								{language.data.READ_MORE}
-							</Link>
-						</Card.Body>
-					</Accordion.Collapse>
-				</Card>
-			</div>
+			<Card className='card'>
+				<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
+					<Card.Title className='card-title element__flex_row text__wrap'>
+						{item.title}
+						{staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
+					</Card.Title>
+				</Accordion.Toggle>
+				<Accordion.Collapse eventKey={eventKey}>
+					<Card.Body>
+						<Card.Subtitle className='mb-2'>{item.subtitle}</Card.Subtitle>
+						<Card.Text>
+							{item.text || language.data.NO_AVAILABLE_TEXT}
+						</Card.Text>
+						<Link
+							className='history_link'
+							to={`${staff ? PathConstants.STAFF_GLOSSARY : PathConstants.USER_GLOSSARY}/${item.localId}`}
+						>
+							{language.data.READ_MORE}
+						</Link>
+					</Card.Body>
+				</Accordion.Collapse>
+			</Card>
 		)
 	}
 

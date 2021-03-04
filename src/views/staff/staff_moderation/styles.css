@@ -15,6 +15,9 @@
   margin-top: 24px;
   align-self: center;
 }
+.staff_moderation .MuiListItemText-root .MuiTypography-body1 {
+  white-space: inherit;
+}
 
 .staff_moderation .MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.MuiTab-fullWidth {
   outline: none;

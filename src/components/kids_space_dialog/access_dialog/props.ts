@@ -3,4 +3,5 @@ export default interface AccessDialogProps {
 	icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
 	onClose: () => void
 	onConfirm: () => void
+	onRecoverPassword: () => void
 }

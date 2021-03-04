@@ -16,6 +16,8 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/user/view/LanguageEnum'
+import DinoAgentService from '../../agent/DinoAgentService'
+import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,

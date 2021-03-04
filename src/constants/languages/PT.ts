@@ -228,7 +228,7 @@ export default class PT implements LanguageBase {
 	SYNC_CONNECTION_FAIL =
 		'Erro de conexão durante a sincronização. Assim que a conexão retornar tentaremos novamente.'
 
-	CANT_LOGIN_DISCONNECTED = 'Conexão com a internet necessária para login'
+	CONNECTION_NECESSARY = 'Conexão com a internet necessária'
 
 	DISCONNECTED = 'Desconectado'
 
@@ -607,7 +607,23 @@ export default class PT implements LanguageBase {
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'A senhas estão diferentes'
 
-	PASSWORD_CHANGED = 'Sucesso'
+	SUCCESS = 'Sucesso'
+
+	FAILURE = 'Ocorreu um erro, tente novamente mais tarde'
+
+	RECOVER_EMAIL_INFO = 'Enviamos um código por email, verifique sua caixa de entrada e digite o código no campo abaixo. Caso não tenha recebido o código feche esse diálogo, espere alguns minutos e tente novamente.'
 
 	WRONG_PASSWORD = 'Senha incorreta'
+
+	CODE = 'Digite o código:'
+
+	VALIDATE = 'Validar'
+
+	RECOVER_PASSWORD_DIALOG = 'Recuperar senha'
+
+	INVALID_RECOVER_CODE = 'Código de recuperação inválido'
+
+	UPDATE_YOUR_PASSWORD = 'Atualize a sua senha'
+
+	ERROR_CHANGING_PASSWORD = 'Erro salvando a nova senha, feche este diálogo e tente novamente em alguns minutos'
 }

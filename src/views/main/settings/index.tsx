@@ -32,9 +32,11 @@ import DinoDialogHeader, {
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
-import './styles.css'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import HashUtils from '../../../utils/HashUtils'
+import RecoverPasswordDialog from '../../../components/recover_password_dialog'
+import RecoverPasswordService from '../../../services/user/RecoverPasswordService'
+import './styles.css'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
@@ -42,6 +44,7 @@ const Settings: React.FC = () => {
 	const alert = useAlert()
 	const language = useLanguage()
 
+	const [openRecoverDialog, setOpenRecoverDialog] = useState(false)
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
@@ -232,7 +235,7 @@ const Settings: React.FC = () => {
 		settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 		await UserSettingsService.save(settings)
 
-		alert.showSuccessAlert(language.data.PASSWORD_CHANGED)
+		alert.showSuccessAlert(language.data.SUCCESS)
 
 		setOpenChangePasswordDialog(false)
 	}
@@ -333,6 +336,14 @@ const Settings: React.FC = () => {
 		}
 	}
 
+	const handleRecoverPassword = async () => {
+		if (!openRecoverDialog) {
+			RecoverPasswordService.requestCode()
+			setOpenChangePasswordDialog(false)
+			setOpenRecoverDialog(true)
+		}
+	}
+
 	const renderSaveButton = (): JSX.Element => (
 		<div className='settings__save_button_container'>
 			<Button className='settings__save_button' onClick={handleSave}>
@@ -344,6 +355,7 @@ const Settings: React.FC = () => {
 
 	const renderDialogs = (): JSX.Element => (
 		<>
+			<RecoverPasswordDialog open={openRecoverDialog} onClose={() => setOpenRecoverDialog(false)}/>
 			<GoogleGrantDialog
 				onAccept={handleAgreeContactsGrantDialog}
 				onDecline={handleDisagreeContactsGrantDialog}
@@ -425,7 +437,9 @@ const Settings: React.FC = () => {
 								required />
 								{passwordErrorMessage && <p className="settings__change_password_dialog__error_message">{passwordErrorMessage}</p>}
 						</form>
-						<a href={'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'}> {language.data.FORGOT_PASSWORD}</a>
+						<TextButton onClick={handleRecoverPassword}>
+							{language.data.FORGOT_PASSWORD}
+						</TextButton>
 					</DinoDialogContent>
 					<div className='settings__change_password_dialog__buttons'>
 						<Button onClick={handleCloseChangePasswordDialog}>

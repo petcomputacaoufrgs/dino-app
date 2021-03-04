@@ -223,7 +223,7 @@ export default class EN implements LanguageBase {
 	SYNC_CONNECTION_FAIL =
 		'Sync connection error. We will try again when internet connection return.'
 
-	CANT_LOGIN_DISCONNECTED = 'Internet connection is necessary to login.'
+	CONNECTION_NECESSARY = 'Internet connection is necessary.'
 
 	DISCONNECTED = 'Disconnected'
 
@@ -598,7 +598,23 @@ export default class EN implements LanguageBase {
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'The passwords are different'
 
-	PASSWORD_CHANGED = 'Success'
+	SUCCESS = 'Success'
+
+	FAILURE = 'Failure, try again later'
+
+	RECOVER_EMAIL_INFO = 'Recover code sent to your email, check your inbox and enter the code below. If you have not received the code close this dialog, wait a few minutes and try again.'
 
 	WRONG_PASSWORD = 'Wrong password'
+	
+	CODE = 'Enter the code'
+
+	VALIDATE = 'Validate'
+
+	RECOVER_PASSWORD_DIALOG = 'Recover password'
+
+	INVALID_RECOVER_CODE = 'Invalid recover code'
+
+	UPDATE_YOUR_PASSWORD = 'Update your password'
+
+	ERROR_CHANGING_PASSWORD = 'Error saving new password, close this dialog and try again later'
 }

@@ -6,7 +6,7 @@
 	border-radius: 0.5rem;
 	border: 0rem;
 	padding: 0.375rem 1rem;
-	font: 0.875rem;
+	font: var(--default-small-font);
 	font-weight: 500;
 	text-transform: uppercase;
 	background-color: var(--header-and-menu);

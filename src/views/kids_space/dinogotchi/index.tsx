@@ -13,12 +13,13 @@ import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import GoBackButton from '../../../components/button/icon_button'
 import AccessDialog from '../../../components/kids_space_dialog/access_dialog'
+import RecoverPasswordDialog from '../../../components/recover_password_dialog'
 import './styles.css'
 
 const Dinogotchi: React.FC = () => {
 	const [isInside, setInside] = useState(true)
 	const [open, setOpen] = useState(false)
-
+	const [openRecover, setOpenRecover] = useState(false)
 	useEffect(() => {
 		return startCloudEngine()
 	}, [isInside])
@@ -31,6 +32,11 @@ const Dinogotchi: React.FC = () => {
 
 	const handleChangeLocation = () => {
 		setInside(!isInside)
+	}
+
+	const handleRecoverPassword = () => {
+		setOpen(false)
+		setOpenRecover(true)
 	}
 
 	const renderBackground = (): JSX.Element => {
@@ -59,7 +65,8 @@ const Dinogotchi: React.FC = () => {
 	return (
 		<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 			{renderBackground()}
-			<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
+			<AccessDialog open={open} icon={AngryDinoSVG} onRecoverPassword={handleRecoverPassword} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
+			<RecoverPasswordDialog open={openRecover} onClose={() => setOpenRecover(false)}/>
 			<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(true)}} />
 			<div className='dinogotchi_screen__options'>
 				<CircularButton

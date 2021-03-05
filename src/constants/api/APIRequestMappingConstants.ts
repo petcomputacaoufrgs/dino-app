@@ -20,7 +20,7 @@ class APIRequestMappingConstants {
 	private PUBLIC_AUTH = `${this.URL}public/auth/`
 	private APP_SETTINGS = `${this.URL}user_app_settings/`
 	private LOG_APP_ERROR = `${this.URL}log_app_error/`
-	private RECOVER_PASSWORD = `${this.URL}recover_password/`
+	private RESPONSIBLE_AUTH = `${this.URL}responsible_auth/`
 	AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 	GRANT_GOOGLE = `${this.AUTH}google/grant/`
 	REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`
@@ -36,9 +36,9 @@ class APIRequestMappingConstants {
 	SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
 	TREATMENT_ESSENTIAL_CONTACTS = `${this.CONTACT}essential/faq/`
 	DELETE_ACCOUNT = `${this.USER}delete_account/`
-	RECOVER_PASSWORD_REQUEST = `${this.RECOVER_PASSWORD}request/`
-	RECOVER_PASSWORD_VERIFY = `${this.RECOVER_PASSWORD}verify/`
-	RECOVER_PASSWORD_CHANGE = `${this.RECOVER_PASSWORD}change/`
+	RECOVER_PASSWORD_REQUEST = `${this.RESPONSIBLE_AUTH}request_recover/`
+	RECOVER_PASSWORD_VERIFY = `${this.RESPONSIBLE_AUTH}verify_recover_code/`
+	RECOVER_PASSWORD_CHANGE = `${this.RESPONSIBLE_AUTH}change_auth/`
 }
 
 export default new APIRequestMappingConstants()

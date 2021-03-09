@@ -573,4 +573,24 @@ export default class EN implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Error deleting your account, please try again later.'
+
+	CHANGE_PASSWORD = 'Change password to parents area'
+
+	CHANGE_PASSWORD_DIALOG = 'Change password'
+
+	CANCEL = 'Cancel'
+
+	CHANGE = 'Change'
+
+	INSERT_OLD_PASSWORD = 'Current password: '
+
+	INSERT_NEW_PASSWORD = 'New password: '
+
+	INSERT_NEW_PASSWORD_AGAIN = 'Repeat new password: '
+
+	SETTING_PASSWORD_EXPLANATION = 'This password protects the kid from sensible content, because you can only access the parents area with this password'
+
+	INSERT_PASSWORD = 'Insert password: '
+
+	INSERT_PASSWORD_AGAIN = 'Repeat password: '
 }

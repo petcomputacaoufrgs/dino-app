@@ -19,7 +19,7 @@ import './styles.css'
 const MemoryGame: React.FC = () => {
 	const language = useLanguage()
 	const [openDialog, setOpenDialog] = useState(false)
-	const [restart, setRestart] = useState(true)
+	const [restart, setRestart] = useState(false)
 
 	const board = [
 		...getPieces(),
@@ -67,46 +67,7 @@ export default MemoryGame
 
 
 const getPieces = (): BoardPiece[] => {
-  return [
-    {
-      image: Braquiosaurus,
-      turned: false,
-	  visible: true
-    },
-    {
-      image: Dinosaur,
-      turned: false,
-	  visible: true
-    },
-    {
-      image: Diplodocus,
-      turned: false,
-	  visible: true
-    },
-    {
-      image: Parasaurolophus,
-      turned: false,
-	  visible: true
-    },
-    {
-      image: Plateosaurus,
-      turned: false,
-	  visible: true
-    },
-    {
-      image: Stegosaurus,
-      turned: false,
-	  visible: true
-    },
-    {
-      image: Triceratops,
-      turned: false,
-	  visible: true
-    },
-    {
-      image: Tyrannosaurus,
-      turned: false,
-	  visible: true
-    }
-  ]
+
+	const SVGs = [ Braquiosaurus, Dinosaur, Diplodocus, Parasaurolophus, Plateosaurus, Stegosaurus, Triceratops, Tyrannosaurus ]
+  return SVGs.map(svg => { return { image: svg, turned: false, visible: true }})
 }

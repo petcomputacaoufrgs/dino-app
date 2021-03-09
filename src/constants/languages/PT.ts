@@ -585,4 +585,24 @@ export default class PT implements LanguageBase {
 	
 	MEMORY_GAME_GAME_OVER = 'Você arrasou! Parabéns'
 
+
+	CHANGE_PASSWORD = 'Alterar senha de acesso a área dos responsáveis'
+
+	CHANGE_PASSWORD_DIALOG = 'Alterar senha'
+
+	CANCEL = 'Cancelar'
+
+	CHANGE = 'Alterar'
+
+	INSERT_OLD_PASSWORD = 'Digite a senha atual: '
+
+	INSERT_NEW_PASSWORD = 'Digite a nova senha: '
+
+	INSERT_NEW_PASSWORD_AGAIN = 'Digite novamente a nova senha: '
+
+	SETTING_PASSWORD_EXPLANATION = 'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha.'
+
+	INSERT_PASSWORD = 'Digite a senha: '
+
+	INSERT_PASSWORD_AGAIN = 'Digite novamente a senha: '
 }

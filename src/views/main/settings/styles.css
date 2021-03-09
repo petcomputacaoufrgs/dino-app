@@ -78,7 +78,8 @@
 	font-size: var(--large-font);
 }
 
-.settings__delete_account_dialog__buttons {
+.settings__delete_account_dialog__buttons,
+.settings__change_password_dialog__buttons {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -87,10 +88,28 @@
 	margin-right: 1rem;
 }
 
+.settings__change_password_dialog__buttons .button {
+	margin-left: 1rem;
+}
+
 .settings__delete_account_dialog__buttons button {
 	width: 5rem;
 }
 
 .settings__delete_account_dialog__buttons__delete_button {
 	margin-left: 1rem;
+}
+
+.settings__change_password_dialog input{
+	margin-bottom: 0.7rem;
+	width: 100%;
+	padding: 0.2rem;
+	border-radius: 1rem;
+	background-color: var(--dialog-input);
+	color: var(--base-font-color);
+	border: none;
+}
+
+.settings__change_password_dialog .dino_dialog__header__title h1 {
+	font-size: var(--very-large-font);
 }

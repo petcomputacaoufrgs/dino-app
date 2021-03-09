@@ -10,6 +10,7 @@ import SnakeGame from './game_menu/snake_game'
 import MusicalDino from './game_menu/musical_dino'
 import './variables.css'
 import TicTacDino from './game_menu/tic_tac_dino'
+import MemoryGame from './game_menu/memory_game'
 
 const KidsSpace: React.FC = () => {
 	return (
@@ -20,6 +21,11 @@ const KidsSpace: React.FC = () => {
 				component={Dinogotchi}
 			/>
 			<PrivateRoute exact path={PathConstants.GAME_MENU} component={Menu} />
+			<PrivateRoute
+				exact
+				path={PathConstants.MEMORY_GAME}
+				component={MemoryGame}
+			/>
 			<PrivateRoute
 				exact
 				path={PathConstants.SNAKE_GAME}

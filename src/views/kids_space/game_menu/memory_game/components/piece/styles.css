@@ -1,0 +1,74 @@
+.piece {
+    height: 4.5rem;
+    width: 4.5rem;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+.piece__back {
+    background-image: url('../../../../../../assets/kids_space/memory_game/back_card.svg');
+    background-color: var(--memory-game-piece-back-color);
+    background-size: cover;
+    height: inherit;
+    width: inherit;
+}
+
+.piece__front {
+    background-color: var(--memory-game-contrast-color);
+    height: inherit;
+    width: inherit;
+    transform: rotate3d(0, 1, 0, 180deg);
+}
+
+.piece__invisible_piece {
+    background-color: transparent;
+    background-image: none;
+    height: inherit;
+    width: inherit;
+}
+
+  
+.piece_container {
+    transform-style: preserve-3d;
+    height: 100%;
+    width: 100%;
+}
+
+.piece_container svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+  
+.piece_container.turned {
+    animation: piece_flip_front_animation 500ms forwards;
+}
+  
+.piece_container.reverse {
+    animation: piece_flip_back_animation 500ms forwards;
+}
+  
+.piece_container.scored {
+    animation: score_made_animation 500ms forwards;
+}
+
+@keyframes piece_flip_back_animation{
+    0% {transform: rotate3d(0, 1, 0, 180deg);}
+    100% {transform: rotate3d(0);}
+}
+  
+@keyframes piece_flip_front_animation {
+    0% {transform: rotate3d(0,0,0,0);}
+    100% {transform: rotate3d(0, 1, 0, 180deg);}
+}
+  
+@keyframes score_made_animation {
+    0% {
+        transform: scale(1, 1) rotate3d(0, 1, 0, 180deg);
+      }
+      100% {
+        transform: scale(0, 0) rotate3d(5, 1, 0, 180deg);
+      }
+}

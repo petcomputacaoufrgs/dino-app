@@ -18,6 +18,7 @@ import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import './styles.css'
+import HashUtils from '../../../utils/HashUtils'
 
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()
@@ -42,9 +43,17 @@ const FirstSettingsDialog: React.FC = () => {
 		selectedEssentialContactGrant,
 		setSelectedEssentialContactGrant,
 	] = useState(UserSettingsService.getDefaultEssentialContactGrant())
-	const [parentsAreaPassword, setParentsAreaPassword] = useState<string>("")
-	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState<string>("")
+	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
+	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
+
+	useEffect(() => {
+		if (settings?.settingsStep !== 4 && parentsAreaPassword !== "") {
+			setParentsAreaPassword("")
+			setConfirmParentsAreaPassword("")
+			setPasswordErrorMessage(undefined)
+		}
+	}, [settings, parentsAreaPassword])
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -140,7 +149,7 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = true
 			settings.treatmentLocalId = selectedTreatment?.localId
-			settings.parentsAreaPassword = parentsAreaPassword
+			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 
 			await UserSettingsService.save(settings)
 

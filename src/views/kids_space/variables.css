@@ -11,6 +11,7 @@
 	--dialog-circle-border-color: #694E73;
     --dialog-input-background-color: #C0B3C5;
 
+
 	/* ========================== */
 	/* =         Games          = */
 	/* ========================== */
@@ -30,6 +31,13 @@
 	--tic-tac-dino-background-color: #cec1e7;
 	--tic-tac-dino-square-background-color: #d8cdec;
 	--tic-tac-dino-display-background-color: #c1e7e1b3;
+
+	/* Memory Game */
+	--memory-game-primary-background-color: #ffda91;
+	--memory-game-secondary-background-color: #ffd175;
+	--memory-game-contrast-color: #76aaca;
+	--memory-game-piece-back-color: #805a46;
+
 	/* ========================== */
 	/* =         Dinos          = */
 	/* ========================== */

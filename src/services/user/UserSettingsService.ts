@@ -46,6 +46,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			language: model.language ? model.language : this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
 			settingsStep: model.settingsStep,
+			parentsAreaPassword: model.parentsAreaPassword
 		}
 
 		if (model.treatmentId) {
@@ -70,13 +71,14 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
 			settingsStep: entity.settingsStep,
+			parentsAreaPassword: entity.parentsAreaPassword
 		}
 
 		if (entity.treatmentLocalId) {
 			const treatment = await TreatmentService.getByLocalId(
 				entity.treatmentLocalId,
 			)
-			if (treatment && treatment.id) {
+			if (treatment && treatment.id !== undefined) {
 				model.treatmentId = treatment.id
 			}
 		}

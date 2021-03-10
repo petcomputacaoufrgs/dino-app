@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import { useAlert } from '../../../context/alert'
 import { useLanguage } from '../../../context/language'
 import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
@@ -33,6 +33,7 @@ import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
+import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
@@ -62,6 +63,11 @@ const Settings: React.FC = () => {
 	const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false)
 	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
 	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
+
+	const [oldPassword, setOldPassword] = useState("")
+	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
+	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
+	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -194,7 +200,29 @@ const Settings: React.FC = () => {
 	}
 
 	const handlePasswordChange = () => {
-		console.log('ta na hora da verificação')
+		if (!settings) return
+
+		if (oldPassword !== settings.parentsAreaPassword) {
+			setPasswordErrorMessage(language.data.WRONG_PASSWORD)
+			return
+		}
+
+		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
+			return
+		}
+
+		if (parentsAreaPassword !== confirmParentsAreaPassword) {
+			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
+			return
+		}
+
+		settings.parentsAreaPassword = parentsAreaPassword
+		UserSettingsService.save(settings)
+
+		alert.showSuccessAlert(language.data.PASSWORD_CHANGED)
+
+		setOpenChangePasswordDialog(false)
 	}
 
 	const handlerDeleteAccountClick = () => {
@@ -269,6 +297,30 @@ const Settings: React.FC = () => {
 		}
 	}
 
+	const handleChangeOldPassword = (event: ChangeEvent<HTMLInputElement>) => {
+		const newValue = event.target.value
+		
+		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+			setOldPassword(event.target.value)
+		}
+	}
+
+	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
+		const newValue = event.target.value
+		
+		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+			setParentsAreaPassword(event.target.value)
+		}
+	}
+
+	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
+		const newValue = event.target.value
+
+		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+			setConfirmParentsAreaPassword(event.target.value)
+		}
+	}
+
 	const renderSaveButton = (): JSX.Element => (
 		<div className='settings__save_button_container'>
 			<Button className='settings__save_button' onClick={handleSave}>
@@ -334,12 +386,33 @@ const Settings: React.FC = () => {
 						<h1>{language.data.CHANGE_PASSWORD_DIALOG}</h1>
 					</DinoDialogHeader>
 					<DinoDialogContent>
-						<label htmlFor="pass">{language.data.INSERT_OLD_PASSWORD}</label>
-    					<input type="password" name="password" required />
-						<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD}</label>
-    					<input type="password" name="password" required />
-						<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD_AGAIN}</label>
-    					<input type="password" name="password" required />
+						<form>
+							<label htmlFor="pass">{language.data.INSERT_OLD_PASSWORD}</label>
+							<input 
+								autoComplete="off"
+								value={oldPassword} 
+								onChange={handleChangeOldPassword}
+								type="password" 
+								name="password" 
+								required />
+							<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD}</label>
+							<input 
+								autoComplete="off"
+								value={parentsAreaPassword} 
+								onChange={handleChangePassword}
+								type="password" 
+								name="password" 
+								required />
+							<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD_AGAIN}</label>
+							<input 
+								autoComplete="off"
+								value={confirmParentsAreaPassword}
+								onChange={handleChangeConfirmPassword}
+								type="password" 
+								name="password" 
+								required />
+								{passwordErrorMessage && <p className="settings__change_password_dialog__error_message">{passwordErrorMessage}</p>}
+						</form>
 						<a href={'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'}> {language.data.FORGOT_PASSWORD}</a>
 					</DinoDialogContent>
 					<div className='settings__change_password_dialog__buttons'>

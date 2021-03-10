@@ -8,9 +8,9 @@ import DinoRunner from './game_menu/dino_runner'
 import Menu from './game_menu'
 import SnakeGame from './game_menu/snake_game'
 import MusicalDino from './game_menu/musical_dino'
-import './variables.css'
 import TicTacDino from './game_menu/tic_tac_dino'
 import MemoryGame from './game_menu/memory_game'
+import './variables.css'
 
 const KidsSpace: React.FC = () => {
 	return (

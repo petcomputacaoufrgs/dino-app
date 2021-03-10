@@ -16,24 +16,40 @@ interface TreatmentFormProps {
 const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment }) => {
 
   const [item, setItem] = useState(treatment || { name: '' })
-  const [error, setError] = useState(false)
-	const language = useLanguage()
+  const [error, setError] = useState<string>()
+	const langData = useLanguage().data
 
   useEffect(() => {
     if(!open) 
       return setItem({ name: '' })
   }, [open])
 
-  const handleSave = () => {
-		if(!StringUtils.isEmpty(item.name)) {
+  const handleSave = async () => {
+
+    async function isValueValid() {
+
+      if(!StringUtils.isEmpty(item.name)) {
+        const alreadyExists = await TreatmentService.getByName(item.name)
+
+        if(alreadyExists === undefined) {
+          return true
+        }
+        setError(langData.itemAlreadyExists(langData.TREATMENT))
+        return false
+      }
+      setError(langData.EMPTY_FIELD_ERROR)
+      return false
+    }
+
+		if(await isValueValid()) {
 			TreatmentService.save(item)
 			handleClose()
-		} else setError(true)
+		} 
 	}	
 
   const handleClose = () => {
     onClose()
-		setError(false)
+		setError(undefined)
   }
  
   return (
@@ -42,22 +58,23 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
         open={open}
         onSave={handleSave}
         onClose={handleClose}
-        header={<DinoDialogHeader>{language.data.ADD_TREATMENT}</DinoDialogHeader>}
+        header={<DinoDialogHeader>{langData.ADD_TREATMENT}</DinoDialogHeader>}
       >
         <div className='treatment__dialog_form__content__textfield'>
           <TextField
-          	className='dino_textfield'
+            aria-labelledby={langData.STAFF_ADD_TREATMENT_NAME}
+          	className='dino__textfield'
             margin='dense'
             required
             fullWidth
-            label={language.data.STAFF_ADD_TREATMENT_NAME}
+            label={langData.STAFF_ADD_TREATMENT_NAME}
             type='name'
             value={item.name}
             /* é importante descontruir o objeto ao atualizá-lo, mesmo com um único atributo, senão ele vira outro. */
             onChange={(e) => setItem({ ...item, name: e.target.value })}
-            error={error}
+            error={error !== undefined}
             inputProps={{ maxLength: Constants.TREATMENT.MAX }}
-            helperText={(error && language.data.EMPTY_FIELD_ERROR) || `${item.name.length}/${Constants.TREATMENT.MAX}`}
+            helperText={error || `${item.name.length}/${Constants.TREATMENT.MAX}`}
             />
         </div>
       </DinoDialog>

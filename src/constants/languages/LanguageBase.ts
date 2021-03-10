@@ -1,4 +1,5 @@
 export default interface LanguageBase {
+	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string
 	titleFAQTreatmentText(treatment: string): string
@@ -91,6 +92,7 @@ export default interface LanguageBase {
 	ADD_STAF_TAB: string
 	STAFF_LIST_TAB: string
 	STAFF_SAVE_SUCCESS: string
+	TREATMENT: string
 	ADD_TREATMENT: string
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
@@ -98,6 +100,7 @@ export default interface LanguageBase {
 	MEMBER_OF_STAFF: string
 	NOT_FOUND_QUESTION_FAQ: string
 	NEW_CONTACT: string
+	NEW_TREATMENT: string
 	NEW_GLOSSARY_ITEM: string
 	CONTACTS_ADD_ESSENTIAL_CONTACT: string
 	ESSENTIAL_CONTACT_MUST_HAVE_PHONE: string

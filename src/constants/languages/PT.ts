@@ -180,7 +180,9 @@ export default class PT implements LanguageBase {
 
 	STAFF_SAVE_SUCCESS = 'Funcionários adicionados'
 
-	ADD_TREATMENT = 'Adicione Tratamento'
+	TREATMENT = 'Tratamento'
+
+	ADD_TREATMENT = `Adicione ${this.TREATMENT}`
 
 	STAFF_ADD_TREATMENT_NAME = 'Adicione Título de Tratamento'
 
@@ -193,6 +195,8 @@ export default class PT implements LanguageBase {
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
 	NEW_CONTACT = 'Novo Contato'
+	
+	NEW_TREATMENT = 'Novo Tratamento'
 
 	NEW_GLOSSARY_ITEM = 'Novo Item de Glossário'
 
@@ -634,6 +638,7 @@ export default class PT implements LanguageBase {
 
 	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
 	
+	itemAlreadyExists = (item: string) => `${item} já existente`
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
 	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`
 	titleFAQTreatmentText = (treatment: string) => `${this.FAQ} de ${treatment}`

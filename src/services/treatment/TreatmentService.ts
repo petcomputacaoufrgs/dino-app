@@ -66,6 +66,10 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 
 			return newView as FaqView
 	}
+
+	getByName = (name: string): Promise<TreatmentEntity | undefined> => {
+		return this.table.where('name').equalsIgnoreCase(name).first()
+	}
 }
 
 export default new TreatmentServiceImpl()

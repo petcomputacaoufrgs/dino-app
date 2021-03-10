@@ -69,7 +69,7 @@ class Database extends Dexie {
 			staff: generateSynchronizableTableString(),
 			faqItem: generateSynchronizableTableString('localTreatmentId'),
 			treatmentQuestion: generateSynchronizableTableString('localTreatmentId'),
-			treatment: generateSynchronizableTableString(),
+			treatment: generateSynchronizableTableString('name'),
 			googleScope: generateSynchronizableTableString('name'),
 			auth: '++id',
 			logAppError: '++id,title,file,error,date',

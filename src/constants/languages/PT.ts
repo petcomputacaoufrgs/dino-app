@@ -390,7 +390,7 @@ export default class PT implements LanguageBase {
 		'Tem certeza que deseja remover esta coluna?'
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
-		'Esta coluna possui anotações, tem certeza que deseja removê-la?'
+		'Tem certeza?'
 
 	NOTE_COLUMN_DELETE_DIALOG_DESC =
 		'Caso responda "SIM" esta coluna será removida permanentemente.'

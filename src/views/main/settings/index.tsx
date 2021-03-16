@@ -503,7 +503,7 @@ const Settings: React.FC = () => {
 					</TextButton>
 				</FormControl>
 				<DinoHr />	
-				<FormControl className='settings__form'>
+				<FormControl>
 					<TextButton
 						onClick={handlerDeleteAccountClick}
 						className='settings__form__delete_account'

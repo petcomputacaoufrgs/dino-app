@@ -24,15 +24,16 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 100vw;
-	height: 13vh;
-	left: 0;
+	width: 80vw;
+	height: 8vh;
+	left: 10vw;
 	bottom: 1.5rem;
 }
 
 .settings__save_button {
 	width: 100%;
 	margin-top: auto;
+	padding-right: 1.563rem;
 }
 
 .settings__save_button__icon {
@@ -64,8 +65,7 @@
 }
 
 .settings__form__delete_account {
-	font-size: var(--large-font);
-	margin-top: 0.5rem;
+	font-size: var(--small-font);
 	color: #ed2939;
 	text-transform: uppercase;
 }

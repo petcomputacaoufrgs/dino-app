@@ -57,13 +57,16 @@ class ResponsibleAuthService {
 				if (responseBody.success) {
 					const auth = await AuthService.getAuth()
 					if (auth) {
-						const newCode = await AESUtils.decrypt(newPassword, responseBody.hash)
+						//TODO: Recuperar a senha
+						/*
+						const newCode = await AESUtils.decrypt(newPassword, responseBody.token)
 						if (newCode) {
 							auth.responsibleCode = newCode
-							auth.responsibleHash = responseBody.hash
+							auth.responsibleHash = responseBody.token
+							auth.responsibleIV = responseBody.iv
 							await AuthService.save(auth)
 							return true
-						}
+						}*/
 					}
 				}
 				return false
@@ -79,8 +82,9 @@ class ResponsibleAuthService {
 
 		if (request.canGo) {
 			try {
+				const key = HashUtils.sha3of256(password)
         const requestBody: CreateResponsibleAuthModel = {
-          password: password
+          key: key
         }
 				
 				const authRequest = await request.authenticate()
@@ -89,11 +93,11 @@ class ResponsibleAuthService {
 				if (responseBody.success) {
 					const auth = await AuthService.getAuth()
 					if (auth) {
-						const passwordHash = await HashUtils.sha256(password)
-						const code = await AESUtils.decrypt(passwordHash, responseBody.hash)
+						const code = await AESUtils.decrypt(key, responseBody.iv, responseBody.token)
 						if (code) {
 							auth.responsibleCode = code
-							auth.responsibleHash = responseBody.hash
+							auth.responsibleToken = responseBody.token
+							auth.responsibleIV = responseBody.iv
 							await AuthService.save(auth)
 							return true
 						}
@@ -110,9 +114,9 @@ class ResponsibleAuthService {
 
 	decryptCode = async (password: string): Promise<boolean> => {
 		const auth = await AuthService.getAuth()
-		if (auth && auth.responsibleHash) {
+		if (auth && auth.responsibleToken) {
 			const cryptr = new Cryptr(password);
-			const code = cryptr.decrypt(auth.responsibleHash);
+			const code = cryptr.decrypt(auth.responsibleToken);
 			auth.responsibleCode = code
 			await AuthService.save(auth)
 

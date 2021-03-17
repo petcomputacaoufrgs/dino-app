@@ -228,7 +228,7 @@ export default class PT implements LanguageBase {
 	SYNC_CONNECTION_FAIL =
 		'Erro de conexão durante a sincronização. Assim que a conexão retornar tentaremos novamente.'
 
-	CONNECTION_NECESSARY = 'Conexão com a internet necessária'
+	CONNECTION_NECESSARY = 'Conexão com a internet necessária, tente novamente quando a conexão retornar'
 
 	DISCONNECTED = 'Desconectado'
 

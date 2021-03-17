@@ -223,7 +223,7 @@ export default class EN implements LanguageBase {
 	SYNC_CONNECTION_FAIL =
 		'Sync connection error. We will try again when internet connection return.'
 
-	CONNECTION_NECESSARY = 'Internet connection is necessary.'
+	CONNECTION_NECESSARY = 'Internet connection is necessary, try again when connections returns.'
 
 	DISCONNECTED = 'Disconnected'
 

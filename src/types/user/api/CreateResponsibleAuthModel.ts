@@ -1,3 +1,3 @@
 export default interface CreateResponsibleAuthModel {
-	password: string
+	key: string
 }

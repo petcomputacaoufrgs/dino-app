@@ -20,6 +20,8 @@ import UserSettingsConstants from '../../../constants/user/UserSettingsConstants
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
 import { useAlert } from '../../../context/alert/index'
 import './styles.css'
+import Loader from '../../loader'
+import ConnectionService from '../../../services/connection/ConnectionService'
 
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()
@@ -47,13 +49,13 @@ const FirstSettingsDialog: React.FC = () => {
 	] = useState(UserSettingsService.getDefaultEssentialContactGrant())
 	const [responsiblePassword, setParentsAreaPassword] = useState("")
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
-	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
+	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("")
 
 	useEffect(() => {
 		if (settings?.settingsStep !== 4 && responsiblePassword !== "") {
 			setParentsAreaPassword("")
 			setConfirmParentsAreaPassword("")
-			setPasswordErrorMessage(undefined)
+			setPasswordErrorMessage("")
 		}
 	}, [settings, responsiblePassword])
 
@@ -129,6 +131,10 @@ const FirstSettingsDialog: React.FC = () => {
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
+		if (passwordErrorMessage.length > 0) {
+			setPasswordErrorMessage("")
+		}
+
 		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
 			setParentsAreaPassword(event.target.value)
 		}
@@ -136,6 +142,10 @@ const FirstSettingsDialog: React.FC = () => {
 
 	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
+
+		if (passwordErrorMessage.length > 0) {
+			setPasswordErrorMessage("")
+		}
 
 		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
 			setConfirmParentsAreaPassword(event.target.value)
@@ -182,7 +192,7 @@ const FirstSettingsDialog: React.FC = () => {
 		setIsLoading(true)
 		if (settings) {
 			if (settings.settingsStep === 4) {
-				if (isValidPassword(settings)) {
+				if (isValidPassword()) {
 					const authCreated = await createResponsibleAuth()
 					if (!authCreated) {
 						alert.showErrorAlert(language.data.ERROR_CREATING_PASSWORD)
@@ -193,7 +203,7 @@ const FirstSettingsDialog: React.FC = () => {
 			} else {
 				settings.settingsStep += 1
 			}
-			
+
 			UserSettingsService.save(settings)
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
 			const newEntity: UserSettingsEntity = {
@@ -263,8 +273,11 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}
 
-	const isValidPassword = (settings: UserSettingsEntity): boolean => {
-		if (settings.settingsStep !== 4) return true
+	const isValidPassword = (): boolean => {
+		if (ConnectionService.isDisconnected()) {
+			setPasswordErrorMessage(language.data.CONNECTION_NECESSARY)
+			return false
+		}
 
 		if (responsiblePassword.length < UserSettingsConstants.PASSWORD_MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
@@ -279,7 +292,7 @@ const FirstSettingsDialog: React.FC = () => {
 		return true
 	}
 
-	const createResponsibleAuth = async (): Promise<boolean> => {
+	const createResponsibleAuth = async () => {
 		return ResponsibleAuthService.createAuth(responsiblePassword)
 	}
 
@@ -439,7 +452,7 @@ const FirstSettingsDialog: React.FC = () => {
 	//TODO: Exibir loading enquanto faz requisição para salvar senha
 	return (
 		<>
-			{!isLoading && settings && !settings.firstSettingsDone && (
+			{settings && !settings.firstSettingsDone && (
 				<div className='first_settings'>
 					<Dialog
 						className='first_settings__dialog'
@@ -450,18 +463,20 @@ const FirstSettingsDialog: React.FC = () => {
 						disableBackdropClick
 						fullWidth
 					>
-						{renderDialogContent()}
-						<DialogActions>
-							<DinoStepper
-								steps={NUMBER_DIALOGS}
-								activeStep={settings ? settings.settingsStep : 0}
-								endMessage={language.data.DIALOG_SAVE_BUTTON_TEXT}
-								onNext={handleNextStep}
-								onBack={handleBackStep}
-								onEnd={handleSave}
-								onCancel={handleCancel}
-							/>
-						</DialogActions>
+						<Loader isLoading={isLoading}>
+							{renderDialogContent()}
+							<DialogActions>
+								<DinoStepper
+									steps={NUMBER_DIALOGS}
+									activeStep={settings ? settings.settingsStep : 0}
+									endMessage={language.data.DIALOG_SAVE_BUTTON_TEXT}
+									onNext={handleNextStep}
+									onBack={handleBackStep}
+									onEnd={handleSave}
+									onCancel={handleCancel}
+								/>
+							</DialogActions>
+						</Loader>
 					</Dialog>
 				</div>
 			)}

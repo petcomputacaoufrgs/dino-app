@@ -59,12 +59,21 @@ const RecoverPasswordDialog: React.FC<RecoverPasswordDialogProps> = ({
     }
     
     setIsLoading(true)
-    const isValidCode = await ResponsibleAuthService.verifyCode(code)
-    if (isValidCode) {
-      setValidCode(true)
-      setErrorMessage("")
+    const response = await ResponsibleAuthService.verifyCode(code)
+    if (response) {
+      if (response.requestNotFound) {
+        alert.showErrorAlert(language.data.MAX_ATTEMPS_REACHED)
+        onClose()
+      } else {
+        if (response.valid) {
+          setValidCode(true)
+          setErrorMessage("")
+        } else {
+          setErrorMessage(language.data.INVALID_RECOVER_CODE)
+        }
+      }
     } else {
-      setErrorMessage(language.data.INVALID_RECOVER_CODE)
+      setErrorMessage(language.data.CONNECTION_NECESSARY)
     }
     setIsLoading(false)
   }
@@ -99,17 +108,15 @@ const RecoverPasswordDialog: React.FC<RecoverPasswordDialogProps> = ({
       setIsLoading(false)
 			return
 		}
-
-		const newPassword = await HashUtils.sha256(password)
     
-    const isSuccess = await ResponsibleAuthService.changeAuth(code, newPassword)
+    const isSuccess = await ResponsibleAuthService.recoverAuth(code, password)
 
     if (isSuccess) {
       alert.showSuccessAlert(language.data.SUCCESS)
-      onClose()
     } else {
       setErrorMessage(language.data.ERROR_CHANGING_PASSWORD)
     }
+    onClose()
     setIsLoading(false)
 	}
 

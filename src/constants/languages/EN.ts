@@ -616,7 +616,12 @@ export default class EN implements LanguageBase {
 
 	UPDATE_YOUR_PASSWORD = 'Update your password'
 
-	ERROR_CHANGING_PASSWORD = 'Error saving new password, close this dialog and try again later'
+	ERROR_CHANGING_PASSWORD = 'Error saving new password, try again later'
 
 	ERROR_CREATING_PASSWORD = 'Error creating password, try again later'
+
+	ERROR_REQUESTING_RECOVER_CODE = 'Error requesting recover code, try again later'
+
+	MAX_ATTEMPS_REACHED = 'Max attemps reached, try again later'
+
 }

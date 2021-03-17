@@ -38,7 +38,8 @@ class APIRequestMappingConstants {
 	DELETE_ACCOUNT = `${this.USER}delete_account/`
 	RECOVER_PASSWORD_REQUEST = `${this.RESPONSIBLE_AUTH}request_recover/`
 	RECOVER_PASSWORD_VERIFY = `${this.RESPONSIBLE_AUTH}verify_recover_code/`
-	RECOVER_PASSWORD_CHANGE = `${this.RESPONSIBLE_AUTH}change_auth/`
+	RECOVER_PASSWORD_CHANGE = `${this.RESPONSIBLE_AUTH}recover_auth/`
+	CHANGE_RESPONSIBLE_AUTH = `${this.RESPONSIBLE_AUTH}change_auth/`
 	CREATE_RESPONSIBLE_AUTH = `${this.RESPONSIBLE_AUTH}create_auth/`
 }
 

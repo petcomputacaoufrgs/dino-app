@@ -295,4 +295,6 @@ export default interface LanguageBase {
 	UPDATE_YOUR_PASSWORD: string
 	ERROR_CHANGING_PASSWORD: string
 	ERROR_CREATING_PASSWORD: string
+	ERROR_REQUESTING_RECOVER_CODE: string
+	MAX_ATTEMPS_REACHED: string
 }

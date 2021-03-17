@@ -5,9 +5,9 @@ import Button from '../../button'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
-import HashUtils from '../../../utils/HashUtils'
 import TextButton from '../../button/text_button'
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
+import { useAlert } from '../../../context/alert/index'
 import '../styles.css'
 import './styles.css'
 
@@ -18,15 +18,16 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
   onConfirm,
 	onRecoverPassword
 }) => {
+	const alert = useAlert()
 	const language = useLanguage()
   const [isLoading, setIsLoading] = useState(true)
   const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
-	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
+	const [responsiblePassword, setResponsiblePassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
     
   useEffect(() => {
       if(!open) {
-          setParentsAreaPassword("")
+          setResponsiblePassword("")
           setPasswordErrorMessage(undefined)
 			}
   }, [open])
@@ -66,27 +67,31 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
   const handleConfirm = async () => {
     if (!settings) return
 
-		//[TO-DO]: Verificar se a senha quebra o token
-    const encryptedPassword = await HashUtils.sha256(parentsAreaPassword)
-		/*		
-    if (settings.responsiblePassword !== encryptedPassword) {
-      setPasswordErrorMessage(language.data.WRONG_PASSWORD)
-    } else {
+		const success = await ResponsibleAuthService.responsibleLogin(responsiblePassword)
+
+		if (success) {
 			onConfirm()
-		}*/
+		} else {
+			setPasswordErrorMessage(language.data.WRONG_PASSWORD)
+		}
   }
 
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
 		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
-			setParentsAreaPassword(event.target.value)
+			setResponsiblePassword(event.target.value)
 		}
 	}
 
 	const handleRecoverPassword = async () => {
-		ResponsibleAuthService.requestCode()
-		onRecoverPassword()
+		const success = await ResponsibleAuthService.requestCode()
+		if (success) {
+			console.log("Oi")
+			onRecoverPassword()
+		} else {
+			alert.showErrorAlert(language.data.ERROR_REQUESTING_RECOVER_CODE)
+		}
 	}
 
 	return (
@@ -103,7 +108,7 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
                         <label>{language.data.PASSWORD}</label><br/>
                         <input 
                             autoComplete="off"
-                            value={parentsAreaPassword} 
+                            value={responsiblePassword} 
                             onChange={handleChangePassword}
                             type="password" 
                             name="password" 

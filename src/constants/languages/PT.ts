@@ -625,7 +625,12 @@ export default class PT implements LanguageBase {
 
 	UPDATE_YOUR_PASSWORD = 'Atualize a sua senha'
 
-	ERROR_CHANGING_PASSWORD = 'Erro salvando a nova senha, feche este diálogo e tente novamente em alguns minutos'
+	ERROR_CHANGING_PASSWORD = 'Erro salvando a nova senha, tente novamente depois'
 	
-	ERROR_CREATING_PASSWORD = 'Erro ao criar senha, tente novamente em alguns segundos'
+	ERROR_CREATING_PASSWORD = 'Erro ao criar senha, tente novamente depois'
+
+	ERROR_REQUESTING_RECOVER_CODE = 'Erro ao solicitar código de recuperação, tente novamente depois'
+
+	MAX_ATTEMPS_REACHED = 'Máximo de tentativas alcançadas, tente novamente depois'
+
 }

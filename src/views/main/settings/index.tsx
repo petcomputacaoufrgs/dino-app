@@ -69,13 +69,13 @@ const Settings: React.FC = () => {
 	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
 
 	const [oldPassword, setOldPassword] = useState("")
-	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
+	const [responsibleNewPassword, setResponsibleNewPassword] = useState("")
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
 		if(!openChangePasswordDialog) {
-			setParentsAreaPassword("")
+			setResponsibleNewPassword("")
 			setConfirmParentsAreaPassword("")
 			setOldPassword("")
 			setPasswordErrorMessage(undefined)
@@ -187,6 +187,7 @@ const Settings: React.FC = () => {
 			setSyncGoogleContacts(false)
 		}
 	}
+	
 	const handleAgreeContactsGrantDialog = async () => {
 		setOpenGoogleContactDialog(false)
 		if (settings) {
@@ -215,30 +216,30 @@ const Settings: React.FC = () => {
 	const handlePasswordChange = async () => {
 		if (!settings) return
 
-		//[TO-DO]: Requisitar mudança a API
-		
-		const encryptedOldPassword = await HashUtils.sha256(oldPassword)
+		const isValidOldPassword = await ResponsibleAuthService.verifyPassword(oldPassword)
 
-		/*
-		if (encryptedOldPassword !== settings.responsiblePassword) {
+		if (!isValidOldPassword) {
 			setPasswordErrorMessage(language.data.WRONG_PASSWORD)
 			return
 		}
 
-		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+		if (responsibleNewPassword.length < UserSettingsConstants.PASSWORD_MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
 			return
 		}
 
-		if (parentsAreaPassword !== confirmParentsAreaPassword) {
+		if (responsibleNewPassword !== confirmParentsAreaPassword) {
 			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
 			return
 		}
+		
+		const success = await ResponsibleAuthService.changeAuth(responsibleNewPassword)
 
-		settings.responsiblePassword = await HashUtils.sha256(parentsAreaPassword)
-		await UserSettingsService.save(settings)
-		*/
-		alert.showSuccessAlert(language.data.SUCCESS)
+		if (success) {
+			alert.showSuccessAlert(language.data.SUCCESS)
+		} else {
+			alert.showErrorAlert(language.data.ERROR_CHANGING_PASSWORD)
+		}
 		
 		setOpenChangePasswordDialog(false)
 	}
@@ -327,7 +328,7 @@ const Settings: React.FC = () => {
 		const newValue = event.target.value
 		
 		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
-			setParentsAreaPassword(event.target.value)
+			setResponsibleNewPassword(event.target.value)
 		}
 	}
 
@@ -341,9 +342,12 @@ const Settings: React.FC = () => {
 
 	const handleRecoverPassword = async () => {
 		if (!openRecoverDialog) {
-			ResponsibleAuthService.requestCode()
-			setOpenChangePasswordDialog(false)
-			setOpenRecoverDialog(true)
+			const success = await ResponsibleAuthService.requestCode()
+			if (success) {
+				setOpenChangePasswordDialog(false)
+				setOpenRecoverDialog(true)
+			}
+			alert.showErrorAlert(language.data.ERROR_REQUESTING_RECOVER_CODE)
 		}
 	}
 
@@ -425,7 +429,7 @@ const Settings: React.FC = () => {
 							<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD}</label>
 							<input 
 								autoComplete="off"
-								value={parentsAreaPassword} 
+								value={responsibleNewPassword} 
 								onChange={handleChangePassword}
 								type="password" 
 								name="password" 

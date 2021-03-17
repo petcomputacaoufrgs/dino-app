@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch } from 'react-router'
 import PrivateRoute from '../../components/private_route'
 import PathConstants from '../../constants/app/PathConstants'
@@ -9,9 +9,14 @@ import Menu from './game_menu'
 import SnakeGame from './game_menu/snake_game'
 import MusicalDino from './game_menu/musical_dino'
 import TicTacDino from './game_menu/tic_tac_dino'
+import ResponsibleAuthService from '../../services/auth/ResponsibleAuthService'
 import './variables.css'
 
 const KidsSpace: React.FC = () => {
+	useEffect(() => {
+		ResponsibleAuthService.responsibleLogout()
+	}, [])
+
 	return (
 		<Switch>
 			<PrivateRoute

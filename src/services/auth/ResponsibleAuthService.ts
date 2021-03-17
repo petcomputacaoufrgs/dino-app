@@ -57,7 +57,7 @@ class ResponsibleAuthService {
 				if (responseBody.success) {
 					const auth = await AuthService.getAuth()
 					if (auth) {
-						const newCode = AESUtils.decrypt(newPassword, responseBody.hash)
+						const newCode = await AESUtils.decrypt(newPassword, responseBody.hash)
 						if (newCode) {
 							auth.responsibleCode = newCode
 							auth.responsibleHash = responseBody.hash
@@ -90,7 +90,7 @@ class ResponsibleAuthService {
 					const auth = await AuthService.getAuth()
 					if (auth) {
 						const passwordHash = await HashUtils.sha256(password)
-						const code = AESUtils.decrypt(passwordHash, responseBody.hash)
+						const code = await AESUtils.decrypt(passwordHash, responseBody.hash)
 						if (code) {
 							auth.responsibleCode = code
 							auth.responsibleHash = responseBody.hash

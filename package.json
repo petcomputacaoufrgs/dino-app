@@ -24,6 +24,7 @@
 		"crypto-js": "^4.0.0",
 		"date-fns": "^2.16.1",
 		"dexie": "^3.0.3",
+		"js-sha3": "^0.8.0",
 		"moment": "^2.29.1",
 		"react": "^17.0.1",
 		"react-beautiful-dnd": "^13.0.0",

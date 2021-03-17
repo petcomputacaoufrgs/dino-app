@@ -294,4 +294,5 @@ export default interface LanguageBase {
 	INVALID_RECOVER_CODE: string
 	UPDATE_YOUR_PASSWORD: string
 	ERROR_CHANGING_PASSWORD: string
+	ERROR_CREATING_PASSWORD: string
 }

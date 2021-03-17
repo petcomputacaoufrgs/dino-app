@@ -626,4 +626,6 @@ export default class PT implements LanguageBase {
 	UPDATE_YOUR_PASSWORD = 'Atualize a sua senha'
 
 	ERROR_CHANGING_PASSWORD = 'Erro salvando a nova senha, feche este diálogo e tente novamente em alguns minutos'
+	
+	ERROR_CREATING_PASSWORD = 'Erro ao criar senha, tente novamente em alguns segundos'
 }

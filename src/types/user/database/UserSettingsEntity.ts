@@ -10,5 +10,4 @@ export default interface UserSettingsEntity
 	firstSettingsDone: boolean
 	treatmentLocalId?: number
 	settingsStep: number
-	parentsAreaPassword?: string
 }

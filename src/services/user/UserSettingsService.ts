@@ -16,8 +16,6 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/user/view/LanguageEnum'
-import DinoAgentService from '../../agent/DinoAgentService'
-import LogAppErrorService from '../log_app_error/LogAppErrorService'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -48,7 +46,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			language: model.language ? model.language : this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
 			settingsStep: model.settingsStep,
-			parentsAreaPassword: model.parentsAreaPassword
 		}
 
 		if (model.treatmentId) {
@@ -72,8 +69,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			settingsStep: entity.settingsStep,
-			parentsAreaPassword: entity.parentsAreaPassword
+			settingsStep: entity.settingsStep
 		}
 
 		if (entity.treatmentLocalId) {

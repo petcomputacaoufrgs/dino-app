@@ -5,4 +5,6 @@ export default interface AuthEntity {
 	dinoAccessToken: string
 	dinoExpiresDate: Date
 	dinoRefreshToken: string
+	responsibleHash?: string
+	responsibleCode?: string
 }

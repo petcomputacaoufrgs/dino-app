@@ -131,7 +131,7 @@ class AuthService extends UpdatableService {
 				if (auth) {
 					auth.dinoAccessToken = responseBody.data.accessToken
 					auth.dinoExpiresDate = expiresDate
-					await this.dbSave(auth)
+					await this.save(auth)
 					return auth
 				}
 			}
@@ -195,7 +195,7 @@ class AuthService extends UpdatableService {
 		}
 	}
 
-	private dbSave = async (entity: AuthEntity) => {
+	save = async (entity: AuthEntity) => {
 		const id = await this.table.put(entity)
 
 		entity.id = id
@@ -305,7 +305,7 @@ class AuthService extends UpdatableService {
 		if (auth) {
 			auth.googleExpiresDate = googleExpiresDate
 			auth.googleToken = responseBody.googleAccessToken
-			await this.dbSave(auth)
+			await this.save(auth)
 		} else {
 			await this.logout()
 		}
@@ -337,7 +337,7 @@ class AuthService extends UpdatableService {
 			dinoRefreshToken: responseBody.refreshToken,
 		}
 
-		await this.dbSave(auth)
+		await this.save(auth)
 
 		if (responseBody.scopes && responseBody.scopes.length > 0) {
 			await GoogleScopeService.clearDatabase()

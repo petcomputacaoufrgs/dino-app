@@ -9,7 +9,7 @@ import DinoDialogHeader, { DinoDialogContent } from '../dino_dialog'
 import Loader from '../loader'
 import { useAlert } from '../../context/alert'
 import ConnectionService from '../../services/connection/ConnectionService'
-import RecoverPasswordService from '../../services/user/RecoverPasswordService'
+import ResponsibleAuthService from '../../services/auth/ResponsibleAuthService'
 import './styles.css'
 import UserSettingsConstants from '../../constants/user/UserSettingsConstants'
 import HashUtils from '../../utils/HashUtils'
@@ -59,7 +59,7 @@ const RecoverPasswordDialog: React.FC<RecoverPasswordDialogProps> = ({
     }
     
     setIsLoading(true)
-    const isValidCode = await RecoverPasswordService.verifyCode(code)
+    const isValidCode = await ResponsibleAuthService.verifyCode(code)
     if (isValidCode) {
       setValidCode(true)
       setErrorMessage("")
@@ -102,7 +102,7 @@ const RecoverPasswordDialog: React.FC<RecoverPasswordDialogProps> = ({
 
 		const newPassword = await HashUtils.sha256(password)
     
-    const isSuccess = await RecoverPasswordService.changePassword(code, newPassword)
+    const isSuccess = await ResponsibleAuthService.changeAuth(code, newPassword)
 
     if (isSuccess) {
       alert.showSuccessAlert(language.data.SUCCESS)

@@ -35,7 +35,7 @@ import AuthService from '../../../services/auth/AuthService'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import HashUtils from '../../../utils/HashUtils'
 import RecoverPasswordDialog from '../../../components/recover_password_dialog'
-import RecoverPasswordService from '../../../services/user/RecoverPasswordService'
+import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
 import './styles.css'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
@@ -214,10 +214,13 @@ const Settings: React.FC = () => {
 
 	const handlePasswordChange = async () => {
 		if (!settings) return
+
+		//[TO-DO]: Requisitar mudança a API
 		
 		const encryptedOldPassword = await HashUtils.sha256(oldPassword)
 
-		if (encryptedOldPassword !== settings.parentsAreaPassword) {
+		/*
+		if (encryptedOldPassword !== settings.responsiblePassword) {
 			setPasswordErrorMessage(language.data.WRONG_PASSWORD)
 			return
 		}
@@ -232,11 +235,11 @@ const Settings: React.FC = () => {
 			return
 		}
 
-		settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
+		settings.responsiblePassword = await HashUtils.sha256(parentsAreaPassword)
 		await UserSettingsService.save(settings)
-
+		*/
 		alert.showSuccessAlert(language.data.SUCCESS)
-
+		
 		setOpenChangePasswordDialog(false)
 	}
 
@@ -338,7 +341,7 @@ const Settings: React.FC = () => {
 
 	const handleRecoverPassword = async () => {
 		if (!openRecoverDialog) {
-			RecoverPasswordService.requestCode()
+			ResponsibleAuthService.requestCode()
 			setOpenChangePasswordDialog(false)
 			setOpenRecoverDialog(true)
 		}

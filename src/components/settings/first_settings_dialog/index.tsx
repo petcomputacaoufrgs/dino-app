@@ -17,11 +17,13 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
+import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
+import { useAlert } from '../../../context/alert/index'
 import './styles.css'
-import HashUtils from '../../../utils/HashUtils'
 
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()
+	const alert = useAlert()
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity>()
@@ -43,17 +45,17 @@ const FirstSettingsDialog: React.FC = () => {
 		selectedEssentialContactGrant,
 		setSelectedEssentialContactGrant,
 	] = useState(UserSettingsService.getDefaultEssentialContactGrant())
-	const [parentsAreaPassword, setParentsAreaPassword] = useState("")
+	const [responsiblePassword, setParentsAreaPassword] = useState("")
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
-		if (settings?.settingsStep !== 4 && parentsAreaPassword !== "") {
+		if (settings?.settingsStep !== 4 && responsiblePassword !== "") {
 			setParentsAreaPassword("")
 			setConfirmParentsAreaPassword("")
 			setPasswordErrorMessage(undefined)
 		}
-	}, [settings, parentsAreaPassword])
+	}, [settings, responsiblePassword])
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -149,7 +151,6 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = true
 			settings.treatmentLocalId = selectedTreatment?.localId
-			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 
 			await UserSettingsService.save(settings)
 
@@ -177,10 +178,22 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}
 
-	const handleNextStep = () => {
+	const handleNextStep = async () => {
+		setIsLoading(true)
 		if (settings) {
-			if (isInvalidPassword(settings)) return
-			settings.settingsStep += 1
+			if (settings.settingsStep === 4) {
+				if (isValidPassword(settings)) {
+					const authCreated = await createResponsibleAuth()
+					if (!authCreated) {
+						alert.showErrorAlert(language.data.ERROR_CREATING_PASSWORD)
+					} else {
+						settings.settingsStep += 1
+					}
+				}
+			} else {
+				settings.settingsStep += 1
+			}
+			
 			UserSettingsService.save(settings)
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
 			const newEntity: UserSettingsEntity = {
@@ -195,6 +208,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 			UserSettingsService.save(newEntity)
 		}
+		setIsLoading(false)
 	}
 
 	const handleEssentialContactGrantChange = (
@@ -249,20 +263,24 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}
 
-	const isInvalidPassword = (settings: UserSettingsEntity): boolean => {
-		if (settings.settingsStep !== 4) return false
+	const isValidPassword = (settings: UserSettingsEntity): boolean => {
+		if (settings.settingsStep !== 4) return true
 
-		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+		if (responsiblePassword.length < UserSettingsConstants.PASSWORD_MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
-			return true
+			return false
 		}
 
-		if (parentsAreaPassword !== confirmParentsAreaPassword) {
+		if (responsiblePassword !== confirmParentsAreaPassword) {
 			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
-			return true
+			return false
 		}
 
-		return false
+		return true
+	}
+
+	const createResponsibleAuth = async (): Promise<boolean> => {
+		return ResponsibleAuthService.createAuth(responsiblePassword)
 	}
 
 	const renderSelectTreatmentDialogContent = () => {
@@ -332,7 +350,7 @@ const FirstSettingsDialog: React.FC = () => {
 					<label htmlFor="pass">{language.data.INSERT_PASSWORD} </label>
 					<input 
 						autoComplete="off"
-						value={parentsAreaPassword} 
+						value={responsiblePassword} 
 						onChange={handleChangePassword}
 						type="password" 
 						name="password" 
@@ -418,6 +436,7 @@ const FirstSettingsDialog: React.FC = () => {
 		)
 	}
 
+	//TODO: Exibir loading enquanto faz requisição para salvar senha
 	return (
 		<>
 			{!isLoading && settings && !settings.firstSettingsDone && (

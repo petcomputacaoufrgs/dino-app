@@ -7,7 +7,7 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import HashUtils from '../../../utils/HashUtils'
 import TextButton from '../../button/text_button'
-import RecoverPasswordService from '../../../services/user/RecoverPasswordService'
+import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
 import '../styles.css'
 import './styles.css'
 
@@ -63,17 +63,18 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 	}, [isLoading])
 
 
-    const handleConfirm = async () => {
-        if (!settings) return
+  const handleConfirm = async () => {
+    if (!settings) return
 
-        const encryptedPassword = await HashUtils.sha256(parentsAreaPassword)
-				
-        if (settings.parentsAreaPassword !== encryptedPassword) {
-          setPasswordErrorMessage(language.data.WRONG_PASSWORD)
-        } else {
-					onConfirm()
-				}
-    }
+		//[TO-DO]: Verificar se a senha quebra o token
+    const encryptedPassword = await HashUtils.sha256(parentsAreaPassword)
+		/*		
+    if (settings.responsiblePassword !== encryptedPassword) {
+      setPasswordErrorMessage(language.data.WRONG_PASSWORD)
+    } else {
+			onConfirm()
+		}*/
+  }
 
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
@@ -84,7 +85,7 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 	}
 
 	const handleRecoverPassword = async () => {
-		RecoverPasswordService.requestCode()
+		ResponsibleAuthService.requestCode()
 		onRecoverPassword()
 	}
 

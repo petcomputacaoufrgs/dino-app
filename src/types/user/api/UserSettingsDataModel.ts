@@ -10,5 +10,4 @@ export default interface UserSettingsDataModel
 	treatmentId?: number
 	firstSettingsDone: boolean
 	settingsStep: number
-	parentsAreaPassword?: string
 }

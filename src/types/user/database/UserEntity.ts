@@ -5,4 +5,7 @@ export default interface UserEntity extends SynchronizableEntity<number> {
 	email: string
 	pictureURL: string
 	pictureBase64?: string
+	responsibleToken?: string
+	responsibleIV?: string
+	responsibleCode?: string
 }

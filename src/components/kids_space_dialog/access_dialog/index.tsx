@@ -87,7 +87,6 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 	const handleRecoverPassword = async () => {
 		const success = await ResponsibleAuthService.requestCode()
 		if (success) {
-			console.log("Oi")
 			onRecoverPassword()
 		} else {
 			alert.showErrorAlert(language.data.ERROR_REQUESTING_RECOVER_CODE)

@@ -5,4 +5,6 @@ export default interface UserDataModel
 	name: string
 	email: string
 	pictureURL: string
+	responsibleToken?: string
+	responsibleIV?: string
 }

@@ -26,6 +26,7 @@ import Database from '../../storage/Database'
 import UpdatableService from '../update/UpdatableService'
 import UserSettingsService from '../user/UserSettingsService'
 import LogoutCallback from '../../types/auth/service/LogoutCallback'
+import UserEntity from '../../types/user/database/UserEntity'
 
 class AuthService extends UpdatableService {
 	private logoutCallbacks: LogoutCallback[]
@@ -195,6 +196,10 @@ class AuthService extends UpdatableService {
 		}
 	}
 
+	getUser = async (): Promise<UserEntity | undefined>=> {
+		return UserService.getFirst()
+	}
+
 	save = async (entity: AuthEntity) => {
 		const id = await this.table.put(entity)
 
@@ -320,6 +325,7 @@ class AuthService extends UpdatableService {
 
 	private async saveGoogleAuthData(responseBody: GoogleAuthResponseDataModel) {
 		await this.dbClear()
+		console.log(responseBody)
 
 		const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(
 			responseBody.googleExpiresDate,
@@ -334,7 +340,7 @@ class AuthService extends UpdatableService {
 			googleExpiresDate: googleExpiresDate,
 			dinoAccessToken: responseBody.accessToken,
 			dinoExpiresDate: dinoExpiresDate,
-			dinoRefreshToken: responseBody.refreshToken,
+			dinoRefreshToken: responseBody.refreshToken
 		}
 
 		await this.save(auth)

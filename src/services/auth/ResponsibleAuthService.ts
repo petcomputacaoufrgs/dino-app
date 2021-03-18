@@ -11,6 +11,7 @@ import ResponsibleRecoverPasswordModel from "../../types/auth/api/responsible/Re
 import SetResponsibleAuthResponseModel from "../../types/auth/api/responsible/SetResponsibleAuthResponseModel"
 import ResponsibleRequestRecoverResponseModel from "../../types/auth/api/responsible/ResponsibleRequestRecoverResponseModel"
 import ResponsibleVerityRecoverCodeResponseModel from "../../types/auth/api/responsible/ResponsibleVerityRecoverCodeResponseModel"
+import UserService from "../user/UserService"
 
 class ResponsibleAuthService {
 	requestCode = async () => {
@@ -68,12 +69,12 @@ class ResponsibleAuthService {
 	}
 
 	verifyPassword = async (password: string) => {
-		const auth = await AuthService.getAuth()
+		const user = await AuthService.getUser()
 
-		if (auth && auth.responsibleIV && auth.responsibleToken) {
+		if (user && user.responsibleIV && user.responsibleToken) {
 			const key = HashUtils.sha3of256(password)
 
-			const code = await AESUtils.decrypt(key, auth.responsibleIV, auth.responsibleToken)
+			const code = await AESUtils.decrypt(key, user.responsibleIV, user.responsibleToken)
 
 			return Boolean(code)
 		}
@@ -82,17 +83,17 @@ class ResponsibleAuthService {
 	}
 
 	responsibleLogin = async (password: string) => {
-		const auth = await AuthService.getAuth()
+		const user = await AuthService.getUser()
 
-		if (auth && auth.responsibleIV && auth.responsibleToken) {
+		if (user && user.responsibleIV && user.responsibleToken) {
 			const key = HashUtils.sha3of256(password)
 
-			const code = await AESUtils.decrypt(key, auth.responsibleIV, auth.responsibleToken)
+			const code = await AESUtils.decrypt(key, user.responsibleIV, user.responsibleToken)
 
 			if (code) {
-				auth.responsibleCode = code
+				user.responsibleCode = code
 
-				await AuthService.save(auth)
+				await UserService.saveOnlyLocally(user)
 
 				return true
 			}
@@ -102,11 +103,11 @@ class ResponsibleAuthService {
 	}
 
 	responsibleLogout = async () => {
-		const auth = await AuthService.getAuth()
+		const user = await AuthService.getUser()
 
-		if (auth) {
-			auth.responsibleCode = undefined
-			await AuthService.save(auth)
+		if (user) {
+			user.responsibleCode = undefined
+			await UserService.saveOnlyLocally(user)
 		}
 	}
 
@@ -123,14 +124,14 @@ class ResponsibleAuthService {
 				const response = await authRequest.setBody(requestBody).go()
 				const responseBody: SetResponsibleAuthResponseModel = response.body
 				if (responseBody.success) {
-					const auth = await AuthService.getAuth()
-					if (auth) {
+					const user = await AuthService.getUser()
+					if (user) {
 						const code = await AESUtils.decrypt(key, responseBody.iv, responseBody.token)
 						if (code) {
-							auth.responsibleCode = code
-							auth.responsibleToken = responseBody.token
-							auth.responsibleIV = responseBody.iv
-							await AuthService.save(auth)
+							user.responsibleCode = code
+							user.responsibleToken = responseBody.token
+							user.responsibleIV = responseBody.iv
+							await UserService.saveOnlyLocally(user)
 							return true
 						}
 					}

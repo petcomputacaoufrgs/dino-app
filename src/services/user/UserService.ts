@@ -56,6 +56,8 @@ class UserServiceImpl extends AutoSynchronizableService<
 			email: model.email,
 			name: model.name,
 			pictureURL: model.pictureURL,
+			responsibleToken: model.responsibleToken,
+			responsibleIV: model.responsibleIV
 		}
 
 		return entity

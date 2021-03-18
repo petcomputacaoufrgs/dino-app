@@ -7,5 +7,9 @@ export default interface PrivateRouterContextType<S = LocationState> {
 
 	isAuthenticated: boolean
 
+	isResponsibleAuthenticated: boolean
+
+	isFirstSettingsDone: boolean
+
 	browserHistory?: History<S>
 }

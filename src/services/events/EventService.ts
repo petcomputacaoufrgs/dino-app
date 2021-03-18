@@ -9,6 +9,7 @@ import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import WebSocketService from '../websocket/WebSocketService'
 import ErrorHandlerService from '../error_handler/ErrorHandlerService'
 import TabControlService from '../tab_control/TabControlService'
+import ResponsibleAuthService from '../auth/ResponsibleAuthService'
 
 class EventService {
 	constructor() {
@@ -16,6 +17,7 @@ class EventService {
 	}
 
 	whenStart = () => {
+		ResponsibleAuthService.responsibleLogout()
 		ErrorHandlerService.register()
 		if (process.env.NODE_ENV === 'development') {
 			this.startWebSocketAndSync()

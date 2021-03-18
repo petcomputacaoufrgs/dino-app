@@ -282,7 +282,7 @@ export default interface LanguageBase {
 	SETTING_PASSWORD_EXPLANATION: string
 	INSERT_PASSWORD: string
 	INSERT_PASSWORD_AGAIN: string
-	PASSWORD_MIN_LENGHT_ERROR_MESSAGE: string
+	PASSWORD_LENGHT_ERROR_MESSAGE: (min: number, max: number) => string
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE: string
 	SUCCESS: string
 	FAILURE: string
@@ -297,4 +297,5 @@ export default interface LanguageBase {
 	ERROR_CREATING_PASSWORD: string
 	ERROR_REQUESTING_RECOVER_CODE: string
 	MAX_ATTEMPS_REACHED: string
+	RESPONSIBLE_LOGIN: string
 }

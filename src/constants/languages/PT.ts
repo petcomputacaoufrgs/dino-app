@@ -597,13 +597,13 @@ export default class PT implements LanguageBase {
 
 	INSERT_NEW_PASSWORD_AGAIN = 'Digite novamente a nova senha: '
 
-	SETTING_PASSWORD_EXPLANATION = 'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter entre 8 e 24 caracteres.'
+	SETTING_PASSWORD_EXPLANATION = 'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter 4 caracteres.'
 
 	INSERT_PASSWORD = 'Digite a senha: '
 
 	INSERT_PASSWORD_AGAIN = 'Digite novamente a senha: '
 
-	PASSWORD_MIN_LENGHT_ERROR_MESSAGE = 'A senha deve ter entre 8 e 24 caracteres'
+	PASSWORD_LENGHT_ERROR_MESSAGE = (min: number, max: number) => `A senha deve ter entre ${min} e ${max} caracteres` 
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'A senhas estão diferentes'
 
@@ -632,5 +632,7 @@ export default class PT implements LanguageBase {
 	ERROR_REQUESTING_RECOVER_CODE = 'Erro ao solicitar código de recuperação, tente novamente depois'
 
 	MAX_ATTEMPS_REACHED = 'Máximo de tentativas alcançadas, tente novamente depois'
+	
+	RESPONSIBLE_LOGIN = 'Autenticação de Responsável'
 
 }

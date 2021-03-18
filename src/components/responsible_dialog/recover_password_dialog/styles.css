@@ -1,0 +1,7 @@
+.recover_password_dialog h1 {
+  font-size: var(--large-font);
+}
+
+.recover_password_dialog p {
+  font-size: var(--default-font);
+}

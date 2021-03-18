@@ -1,6 +1,6 @@
 class UserSettingsConstants {
-	PASSWORD_MAX = 24
-  PASSWORD_MIN = 8
+  PASSWORD_LENGTH_MIN = 4
+  PASSWORD_LENGTH_MAX = 24
 }
 
 export default new UserSettingsConstants()

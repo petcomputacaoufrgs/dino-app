@@ -16,12 +16,13 @@ import TransitionSlide from '../../slide_transition'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
-import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
+import UserSettingsConstants from '../../../constants/auth/ResponsibleAuthConstants'
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
 import { useAlert } from '../../../context/alert/index'
 import './styles.css'
 import Loader from '../../loader'
 import ConnectionService from '../../../services/connection/ConnectionService'
+import ResponsibleAuthConstants from '../../../constants/auth/ResponsibleAuthConstants'
 
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()
@@ -135,7 +136,7 @@ const FirstSettingsDialog: React.FC = () => {
 			setPasswordErrorMessage("")
 		}
 
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
 			setParentsAreaPassword(event.target.value)
 		}
 	}
@@ -147,7 +148,7 @@ const FirstSettingsDialog: React.FC = () => {
 			setPasswordErrorMessage("")
 		}
 
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
 			setConfirmParentsAreaPassword(event.target.value)
 		}
 	}
@@ -278,9 +279,10 @@ const FirstSettingsDialog: React.FC = () => {
 			setPasswordErrorMessage(language.data.CONNECTION_NECESSARY)
 			return false
 		}
-
-		if (responsiblePassword.length < UserSettingsConstants.PASSWORD_MIN) {
-			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
+		
+		if (responsiblePassword.length < UserSettingsConstants.PASSWORD_LENGTH_MAX) {
+			setPasswordErrorMessage(language.data.PASSWORD_LENGHT_ERROR_MESSAGE(
+				ResponsibleAuthConstants.PASSWORD_LENGTH_MIN, ResponsibleAuthConstants.PASSWORD_LENGTH_MAX))
 			return false
 		}
 

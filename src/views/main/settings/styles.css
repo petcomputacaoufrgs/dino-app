@@ -8,6 +8,11 @@
 	margin: 0.313rem 1.25rem;
 }
 
+.settings__change_password_dialog .button.text_button {
+	padding: 0;
+	margin: 0;
+}
+
 .settings .settings__form {
 	align-self: center;
 	width: 90%;

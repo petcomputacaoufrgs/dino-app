@@ -22,13 +22,17 @@ import TabControlService from './services/tab_control/TabControlService'
 import SecondaryTab from './views/secondary_tab'
 import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
+import UserService from './services/user/UserService'
+import ResponsibleAuthService from './services/auth/ResponsibleAuthService'
 import './App.css'
 
 const LOAD_SCREEN_TIME = 2250
 
 const App: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
-	const [isAuthenticated, setIsAuthenticated] = useState(false)
+	const [isAuthenticated, setAuthenticated] = useState(false)
+	const [isResponsibleAuthenticated, setResponsibleAuthenticated] = useState(false)
+	const [isFirstSettingsDone, setFirstSettingsDone] = useState(false)
 	const [isMainTab, setIsMainTab] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(true)
 
@@ -38,6 +42,8 @@ const App: React.FC = () => {
 
 			const isAuthenticated = await loadAuth()
 
+			await loadResponsibleAuth()
+
 			if (isAuthenticated) {
 				await loadSettings()
 			} else {
@@ -45,7 +51,7 @@ const App: React.FC = () => {
 					UserSettingsService.getSystemColorThemeName(),
 				)
 			}
-
+			
 			await loadTabInfo()
 			finishLoading()
 		}
@@ -54,6 +60,12 @@ const App: React.FC = () => {
 			const isAuthenticated = await AuthService.isAuthenticated()
 			updateAuth(isAuthenticated)
 			return isAuthenticated
+		}
+
+		const loadResponsibleAuth = async (): Promise<boolean> => {
+			const isResponsibleAuthenticated = await ResponsibleAuthService.isAuthenticated()
+			updateResponsibleAuth(isResponsibleAuthenticated)
+			return isResponsibleAuthenticated
 		}
 
 		const loadSettings = async () => {
@@ -73,7 +85,11 @@ const App: React.FC = () => {
 		}
 
 		let updateAuth = (isAuthenticated: boolean) => {
-			setIsAuthenticated(isAuthenticated)
+			setAuthenticated(isAuthenticated)
+		}
+
+		let updateResponsibleAuth = (isAuthenticated: boolean) => {
+			setResponsibleAuthenticated(isAuthenticated)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {
@@ -82,6 +98,8 @@ const App: React.FC = () => {
 
 			const fontSize = UserSettingsService.getFontSize(settings)
 			DataFontSizeUtils.setBodyDataFontSize(fontSize)
+
+			setFirstSettingsDone(settings.firstSettingsDone)
 		}
 
 		let updateTabInfo = (isMainTab: boolean) => {
@@ -92,6 +110,7 @@ const App: React.FC = () => {
 			setIsLoading(false)
 		}
 
+		UserService.addUpdateEventListenner(loadData)
 		AuthService.addUpdateEventListenner(loadData)
 		UserSettingsService.addUpdateEventListenner(loadSettings)
 		TabControlService.addUpdateEventListenner(loadData)
@@ -104,7 +123,9 @@ const App: React.FC = () => {
 			finishLoading = () => {}
 			updateSettings = () => {}
 			updateAuth = () => {}
+			updateResponsibleAuth = () => {}
 			updateTabInfo = () => {}
+			UserService.removeUpdateEventListenner(loadData)
 			AuthService.removeUpdateEventListenner(loadData)
 			UserSettingsService.removeUpdateEventListenner(loadSettings)
 			TabControlService.removeUpdateEventListenner(loadTabInfo)
@@ -134,6 +155,8 @@ const App: React.FC = () => {
 			loginPath={PathConstants.LOGIN}
 			homePath={PathConstants.HOME}
 			isAuthenticated={isAuthenticated}
+			isResponsibleAuthenticated={isResponsibleAuthenticated}
+			isFirstSettingsDone={isFirstSettingsDone}
 			browserHistory={HistoryService}
 		>
 			<Switch>

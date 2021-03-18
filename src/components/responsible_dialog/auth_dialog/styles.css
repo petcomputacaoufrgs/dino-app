@@ -1,0 +1,16 @@
+.responsible_auth_dialog h1 {
+  text-align: left;
+  font-size: var(--large-font);
+}
+
+.responsible_auth_dialog__buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+.responsible_auth_dialog .button.text_button {
+  padding: 0.2rem;
+  margin: 0;
+}

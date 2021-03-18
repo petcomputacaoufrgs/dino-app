@@ -13,7 +13,7 @@ import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import GoBackButton from '../../../components/button/icon_button'
 import AccessDialog from '../../../components/kids_space_dialog/access_dialog'
-import RecoverPasswordDialog from '../../../components/recover_password_dialog'
+import RecoverPasswordDialog from '../../../components/responsible_dialog/recover_password_dialog'
 import './styles.css'
 
 const Dinogotchi: React.FC = () => {

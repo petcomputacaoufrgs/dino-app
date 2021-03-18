@@ -7,4 +7,5 @@ export default interface ButtonProps {
 	className?: string
 	disabled?: boolean
 	outline?: boolean
+	type?: "button" | "submit" | "reset"
 }

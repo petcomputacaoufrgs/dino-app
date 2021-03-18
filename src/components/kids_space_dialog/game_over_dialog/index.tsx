@@ -2,9 +2,9 @@ import React from 'react'
 import TextButton from '../../button/text_button'
 import GameOverDialogProps from './props'
 import { useLanguage } from '../../../context/language/index'
+import '../../../views/kids_space/variables.css'
 import '../styles.css'
 import './styles.css'
-import '../../../views/kids_space/variables.css'
 
 const GameOverDialog: React.FC<GameOverDialogProps> = ({
 	open,

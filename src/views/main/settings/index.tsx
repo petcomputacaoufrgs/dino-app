@@ -32,10 +32,10 @@ import DinoDialogHeader, {
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
-import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
-import HashUtils from '../../../utils/HashUtils'
-import RecoverPasswordDialog from '../../../components/recover_password_dialog'
+import UserSettingsConstants from '../../../constants/auth/ResponsibleAuthConstants'
+import RecoverPasswordDialog from '../../../components/responsible_dialog/recover_password_dialog'
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
+import ResponsibleAuthConstants from '../../../constants/auth/ResponsibleAuthConstants'
 import './styles.css'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
@@ -223,8 +223,11 @@ const Settings: React.FC = () => {
 			return
 		}
 
-		if (responsibleNewPassword.length < UserSettingsConstants.PASSWORD_MIN) {
-			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
+		if (responsibleNewPassword.length < UserSettingsConstants.PASSWORD_LENGTH_MIN) {
+			setPasswordErrorMessage(
+				language.data.PASSWORD_LENGHT_ERROR_MESSAGE(
+					ResponsibleAuthConstants.PASSWORD_LENGTH_MIN, ResponsibleAuthConstants.PASSWORD_LENGTH_MAX)
+			)
 			return
 		}
 
@@ -319,7 +322,7 @@ const Settings: React.FC = () => {
 	const handleChangeOldPassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
 			setOldPassword(event.target.value)
 		}
 	}
@@ -327,7 +330,7 @@ const Settings: React.FC = () => {
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
 			setResponsibleNewPassword(event.target.value)
 		}
 	}
@@ -335,7 +338,7 @@ const Settings: React.FC = () => {
 	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
 			setConfirmParentsAreaPassword(event.target.value)
 		}
 	}

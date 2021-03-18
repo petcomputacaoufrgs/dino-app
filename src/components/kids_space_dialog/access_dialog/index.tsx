@@ -4,7 +4,7 @@ import { useLanguage } from '../../../context/language/index'
 import Button from '../../button'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
-import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
+import UserSettingsConstants from '../../../constants/auth/ResponsibleAuthConstants'
 import TextButton from '../../button/text_button'
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
 import { useAlert } from '../../../context/alert/index'
@@ -79,7 +79,7 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
 			setResponsiblePassword(event.target.value)
 		}
 	}
@@ -97,32 +97,32 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 		<>
 		{open &&
         <div className="kids_space_dialog access_dialog">
-        <div className="kids_space_dialog__circle">
-            <Icon />
-        </div>
-          <div className='kids_space_dialog__content'>
-                <p>{language.data.ACCESS_PARENTS_AREA}</p>
-                <div className='access_dialog__form'>
-                    <form>
-                        <label>{language.data.PASSWORD}</label><br/>
-                        <input 
-                            autoComplete="off"
-                            value={responsiblePassword} 
-                            onChange={handleChangePassword}
-                            type="password" 
-                            name="password" 
-                            required />
-                        {passwordErrorMessage && <p className="access_dialog__form__error_message">{passwordErrorMessage}</p>}
-                    </form>
-                    <TextButton onClick={handleRecoverPassword}>
-						{language.data.FORGOT_PASSWORD}
-					</TextButton>
-                    <div className='access_dialog__buttons'>
-                        <Button onClick={onClose}>{language.data.DIALOG_CANCEL_BUTTON_TEXT}</Button>
-                        <Button onClick={handleConfirm}>{language.data.ACCESS_BUTTON}</Button>
-                    </div>
-                </div>
-          </div>
+					<div className="kids_space_dialog__circle">
+							<Icon />
+					</div>
+						<div className='kids_space_dialog__content'>
+							<div className='access_dialog__form'>
+								<p>{language.data.ACCESS_PARENTS_AREA}</p>
+								<form onSubmit={e => e.preventDefault()}>
+									<label>{language.data.PASSWORD}</label><br/>
+									<input 
+										autoComplete="off"
+										value={responsiblePassword} 
+										onChange={handleChangePassword}
+										type="password" 
+										required 
+									/>
+										{passwordErrorMessage && <p className="access_dialog__form__error_message">{passwordErrorMessage}</p>}
+									<TextButton onClick={handleRecoverPassword}>
+										{language.data.FORGOT_PASSWORD}
+									</TextButton>
+									<div className='access_dialog__buttons'>
+										<Button onClick={onClose}>{language.data.DIALOG_CANCEL_BUTTON_TEXT}</Button>
+										<Button type="submit" onClick={handleConfirm}>{language.data.ACCESS_BUTTON}</Button>
+									</div>
+								</form>
+							</div>
+						</div>
         </div>}
 		</>
 	)

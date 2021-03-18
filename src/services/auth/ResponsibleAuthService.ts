@@ -14,6 +14,12 @@ import ResponsibleVerityRecoverCodeResponseModel from "../../types/auth/api/resp
 import UserService from "../user/UserService"
 
 class ResponsibleAuthService {
+	isAuthenticated = async () => {
+		const user = await AuthService.getUser()
+
+		return Boolean(user && user.responsibleCode)
+	}
+
 	requestCode = async () => {
 		const request = await DinoAgentService.put(APIRequestMappingConstants.RECOVER_PASSWORD_REQUEST)
 

@@ -325,7 +325,6 @@ class AuthService extends UpdatableService {
 
 	private async saveGoogleAuthData(responseBody: GoogleAuthResponseDataModel) {
 		await this.dbClear()
-		console.log(responseBody)
 
 		const googleExpiresDate = DateUtils.convertDinoAPIStringDateToDate(
 			responseBody.googleExpiresDate,

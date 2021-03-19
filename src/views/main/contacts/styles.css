@@ -13,10 +13,6 @@
 	padding: 0.5rem;
 }
 
-.contacts .contacts__list__item__content__phones {
-	padding: 0.313rem;
-}
-
 .contacts__list__item__text {
 	font-size: var(--default-font);
 	font-weight: 400;

@@ -28,7 +28,7 @@ body .MuiInputBase-root {
 
 body .MuiListItemText-root .MuiTypography-body1 {
 	font-size: var(--default-font);
-	white-space: nowrap;
+	/* white-space: nowrap; */
 	overflow: hidden;
 	text-overflow: ellipsis;
 }

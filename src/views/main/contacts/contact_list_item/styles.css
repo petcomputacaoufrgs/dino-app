@@ -9,3 +9,7 @@
 .MuiListItemSecondaryAction-root {
 	display: flex;
 }
+
+.list__item__text {
+  margin-right: 1.2em;
+}

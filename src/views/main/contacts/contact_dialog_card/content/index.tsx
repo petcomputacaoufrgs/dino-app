@@ -8,8 +8,7 @@ import EssentialContactView from '../../../../../types/contact/view/EssentialCon
 import TreatmentService from '../../../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import DinoLoader from '../../../../../components/loader'
-import DinoHr from '../../../../../components/dino_hr'
-import language from '../../../../../context/language'
+import { IsStaff } from '../../../../../context/private_router'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
 
@@ -90,34 +89,33 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 				const treatments = await TreatmentService.getAllByLocalIds(treatmentIds)
 				if(treatments) setTreatments(treatments)
 			}
-			finishLoading()
-		}
-
-		let finishLoading = () => {
 			setIsLoading(false)
 		}
 
-		if (isLoading) {
+		if (isLoading) 
 			loadData()
-		}
-
-		return () => {
-			finishLoading = () => {}
-		}
+		
 	}, [isLoading])
 
-	return treatments ? 
+	const renderTreatmentListItem = (name: string) => {
+		return (
+			<ListItem className='dino__text_wrap'>
+				<ListItemText primary={name}/>
+			</ListItem>
+		)
+	}
+
+	const isUniversal = Boolean((item as EssentialContactView).contact.isUniversal)
+
+	return IsStaff() ? (
 		<List component='nav'>
 			<SectionTitle/>
-			<DinoLoader isLoading={isLoading}>
-				{treatments.map(e =>
-					<ListItem className='contacts__list__item__content__phones dino__text__wrap'>
-						<ListItemText primary={e.name}/>
-					</ListItem>
-				)}
-			</DinoLoader>
+			{ isUniversal ? renderTreatmentListItem('Este contato é universal e aparecerá em todas as agendas de usuários')
+			: <DinoLoader isLoading={isLoading}>
+					{treatments?.map(e => renderTreatmentListItem(e.name))}
+				</DinoLoader>}
 		</List>
-		: <></>
+	) : <></>
 }
 
 const SectionTitle = () => {

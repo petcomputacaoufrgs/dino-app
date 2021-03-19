@@ -8,9 +8,11 @@ import EssentialContactView from '../../../../../types/contact/view/EssentialCon
 import TreatmentService from '../../../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import DinoLoader from '../../../../../components/loader'
-import ContactView from '../../../../../types/contact/view/ContactView'
+import DinoHr from '../../../../../components/dino_hr'
+import language from '../../../../../context/language'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
+
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
 		if (phone.type === ContactsConstants.CONTACT_PHONE_CODE_MOBILE) {
 			return <PhoneIcon />
@@ -28,14 +30,12 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 					<PersonIcon />
 				</ListItemIcon>
 				<ListItemText
-					primary={
-						<div className='contacts__list__item__text dino__text__wrap'>
-							{item.contact.description}
-						</div>
-					}
+					primary={ <div className='contacts__list__item__text dino__text__wrap'> 
+					{item.contact.description} 
+					</div>}
 				/>
 			</ListItem>
-		: <Divider />	
+		: <></>	
 	}
 
 	const Phones = () => {
@@ -47,21 +47,13 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 						style={{ textDecoration: 'none' }}
 						key={index}
 					>
-						<ListItem
-							button
-							divider
-							className='contacts__list__item__content__phones dino__text__wrap'
-						>
+						<ListItem divider button className='contacts__list__item__content__phones dino__text__wrap'>
 							<ListItemIcon>{getTypePhoneIcon(phone)}</ListItemIcon>
 							<ListItemText
 								primary={
-									<Typography
-										variant='subtitle1'
-										color='textSecondary'
-										component='p'
-									>
-										{phone.number}
-									</Typography>
+								<Typography variant='subtitle1' color='textSecondary' component='p'>
+									{phone.number}
+								</Typography>
 								}
 							/>
 						</ListItem>
@@ -116,15 +108,22 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 
 	return treatments ? 
 		<List component='nav'>
+			<SectionTitle/>
 			<DinoLoader isLoading={isLoading}>
 				{treatments.map(e =>
-					<ListItem divider className='contacts__list__item__content__phones dino__text__wrap'>
-						<ListItemText
-							primary={<Typography variant='subtitle1' color='textSecondary' component='p'>{e.name}</Typography>}
-						/>
+					<ListItem className='contacts__list__item__content__phones dino__text__wrap'>
+						<ListItemText primary={e.name}/>
 					</ListItem>
 				)}
 			</DinoLoader>
 		</List>
 		: <></>
+}
+
+const SectionTitle = () => {
+	return (
+		<div style={{'margin': 0}}>
+			<p style={{'margin': 0, 'color': '#a6a6a6', 'textAlign': 'center'}}>{'Treatments'.toUpperCase()}</p>
+		</div>
+	)
 }

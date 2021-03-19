@@ -1,4 +1,3 @@
-import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
 import ContactView from '../../../../types/contact/view/ContactView'
 import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
 

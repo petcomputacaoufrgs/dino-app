@@ -9,13 +9,9 @@ import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
 const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
-	{contact, phones, children, invalidName, helperTextInvalidPhone, setContact, setPhones, handleAddPhone, handleDeletePhone,}
+	{contact, phones, children, errorName, errorPhone, setContact, setPhones, handleAddPhone, handleDeletePhone,}
 ) => {
 	const language = useLanguage()
-
-	const isNumberTaken = (tel: string): boolean => helperTextInvalidPhone?.number === tel
-
-	const isNumberInvalid = (tel: string) => isNumberTaken(tel)
 
 	const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const name = event.target.value as string
@@ -57,8 +53,8 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 				label={`${language.data.FORM_NAME}`}
 				type='name'
 				inputProps={{ maxLength: Constants.CONTACT_NAME.MAX }}
-				error={invalidName}
-				helperText={(invalidName && language.data.INVALID_VALUE) || `${contact.name.length}/${Constants.CONTACT_NAME.MAX}`}
+				error={errorName !== undefined}
+				helperText={errorName || `${contact.name.length}/${Constants.CONTACT_NAME.MAX}`}
 			/>
 			<br />
 			<TextField
@@ -84,8 +80,8 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 						onChangeType={e => handleChangeType(e, index)}
 						number={phone.number}
 						onChangeNumber={e => handleChangeNumber(e, index)}
-						error={isNumberInvalid(phone.number)}
-						helperText={isNumberTaken(phone.number) ? helperTextInvalidPhone?.text : ''}
+						error={errorPhone !== undefined}
+						helperText={errorPhone}
 						handleDeletePhone={() => handleDeletePhone(phone.number)}
 					/>
 					<br />
@@ -93,7 +89,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 			))}
 			<TextButton className='add_phone__button' onClick={handleAddPhone}>
 				<Typography variant='body2' color='textSecondary' display='block'>
-					{'+ ' + language.data.FORM_ADD_PHONE}
+					{`+ ${language.data.FORM_ADD_PHONE}`}
 				</Typography>
 			</TextButton>
 			{children}

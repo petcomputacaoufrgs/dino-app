@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ContactFormDialogProps, InvalidPhoneProps } from './props'
+import ContactFormDialogProps from './props'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
@@ -16,12 +16,15 @@ import SelectMultipleTreatments from '../../../../components/settings/select_mul
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import DinoHr from '../../../../components/dino_hr'
 import { IsStaff } from '../../../../context/private_router'
-import './styles.css'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
+import './styles.css'
+import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
 
 const getContact = (item?: ContactView): ContactEntity => item ? item.contact : { name: '', description: '',}
 
 const getPhones = (item?: ContactView): PhoneEntity[] => item ? item.phones : [{ number: '', type: Constants.CONTACT_PHONE_CODE_MOBILE, }]
+
+const getTreatmentLocalIds = (item?: ContactView | EssentialContactView): number[] => (item as EssentialContactView)?.contact.treatmentLocalIds || []
 
 const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, item, items }) => {
 	
@@ -30,17 +33,17 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 	const [contact, setContact] = useState(getContact(item))
 	const [contactPhones, setContactPhones] = useState(getPhones(item))
 	const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
-	const [invalidName, setInvalidName] = useState(false)
-	const [invalidPhone, setInvalidPhone] = useState<InvalidPhoneProps>()
-	const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>([])
+	const [errorName, setErrorName] = useState<string>()
+	const [errorPhone, setErrorPhone] = useState<string>()
+	const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>(getTreatmentLocalIds(item))
 
 		useEffect(() => {
 			if (dialogOpen) {
 				setContact(getContact(item))
 				setContactPhones(getPhones(item))
-				setInvalidName(false)
-				setInvalidPhone(undefined)
-				setSelectedTreatmentLocalIds([])
+				setErrorName(undefined)
+				setErrorPhone(undefined)
+				setSelectedTreatmentLocalIds(getTreatmentLocalIds(item))
 			}
 		}, [dialogOpen, item])
 
@@ -48,22 +51,24 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 
 			function validInfo(): boolean {
 
-				const nameIsNotEmpty = !StringUtils.isEmpty(contact.name)
-				if(!nameIsNotEmpty){
-					setInvalidName(StringUtils.isEmpty(contact.name))
+				if(StringUtils.isEmpty(contact.name)){
+					setErrorName(language.data.EMPTY_FIELD_ERROR)
+					return false
 				}
 				
-				const atLeastOnePhoneNotEmptyAsStaff = !staff || contactPhones.some(p => p.number !== '')
-				if(!atLeastOnePhoneNotEmptyAsStaff) {
-					setInvalidPhone({ number: '', text: language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE })
+				/* When on Staff mode, the essential contact has to have at least one non-empty phone */
+				if(staff && !contactPhones.some(p => StringUtils.isNotEmpty(p.number))) {
+					setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
+					return false
 				}
 
 				const hasViewWithSamePhone = PhoneService.getContactWithSamePhone(items, contactPhones, item)
 				if (hasViewWithSamePhone) {
 					handleTakenNumber(hasViewWithSamePhone)
+					return false
 				}
 
-				return nameIsNotEmpty && atLeastOnePhoneNotEmptyAsStaff && !hasViewWithSamePhone
+				return true
 			}
 
 			function handleTakenNumber(viewWithSamePhone: ContactView) {
@@ -72,11 +77,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 						.map(phone => phone.number)
 						.includes(phone.number),
 				)
-				if (phone)
-					setInvalidPhone({
-						number: phone.number,
-						text: `${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`,
-					})
+				if (phone) setErrorPhone(`${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`)
 			}
 
 			if (validInfo()) {
@@ -154,7 +155,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 				setPhonesToDelete([...phonesToDelete])
 				setContactPhones([...contactPhones])
 			} else {
-				setInvalidPhone({ text: language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE })
+				setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
 			}
 		}
 
@@ -193,8 +194,8 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 						setContact={setContact}
 						phones={contactPhones}
 						setPhones={setContactPhones}
-						invalidName={invalidName}
-						helperTextInvalidPhone={invalidPhone}
+						errorName={errorName}
+						errorPhone={errorPhone}
 						handleDeletePhone={handleDeletePhone}
 						handleAddPhone={handleAddPhone}
 					>

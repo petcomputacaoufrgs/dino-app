@@ -12,15 +12,19 @@ import './styles.css'
 const AddStaffForm = () => {
 
   const [emailValue, setEmailValue] = useState('')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<string>()
   const isNotClient = IsNotClient()
   const alert = useAlert()
   const language = useLanguage()
 
-  const handleAddEmail = () => {
+  const handleAddEmail = async () => {
+
     const email = emailValue.trim()
-    const isInvalid = !StringUtils.validateEmail(email)
+
+    const isInvalid = await StaffService.isEmailInvalid(email, language.data)
+
     setError(isInvalid)
+
     if(!isInvalid) {
       StaffService.save({ email, sentInvitationDate: new Date() })
       alert.showSuccessAlert(language.data.STAFF_SAVE_SUCCESS)

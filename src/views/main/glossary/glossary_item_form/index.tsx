@@ -26,7 +26,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
 
   const language = useLanguage()
   const [item, setItem] = useState<GlossaryItemEntity>(getItem(props.item))
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<string>()
 
   useEffect(() => {
     if(props.open) {
@@ -34,16 +34,21 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
     }
     return () => {
       setItem({ title: '', subtitle: '', text: '', fullText: ''})
-      setError(false)
+      setError(undefined)
     }
   }, [props.open, props.item])
 
 
-  const handleSave = () => {
-    if(StringUtils.isNotEmpty(item.title)) {
+  const handleSave = async () => {
+
+    const isInvalid = await GlossaryService.isTitleInvalid(item.title, language.data)
+
+    setError(isInvalid)
+
+    if(!isInvalid) {
       GlossaryService.save(item)
       props.handleClose()
-    } else setError(true)
+    } 
 	}
 
   return (
@@ -62,9 +67,9 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
             margin='dense'
             label={`${language.data.TITLE}`}
             type='name'
-            error={error}
+            error={error !== undefined}
             inputProps={{ maxLength: DataConstants.GLOSSARY_TITLE.MAX }}
-            helperText={(error && language.data.EMPTY_FIELD_ERROR) || `${item.title.length}/${DataConstants.GLOSSARY_TITLE.MAX}` }
+            helperText={error || `${item.title.length}/${DataConstants.GLOSSARY_TITLE.MAX}` }
           />
           <br />
           <TextField

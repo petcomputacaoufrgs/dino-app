@@ -97,6 +97,7 @@ export default interface LanguageBase {
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	STAFF: string
+	EMAIL: string
 	MEMBER_OF_STAFF: string
 	NOT_FOUND_QUESTION_FAQ: string
 	NEW_CONTACT: string

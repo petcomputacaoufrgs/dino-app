@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import FaqItemsProps from './props'
 import Accordion from 'react-bootstrap/Accordion'
 import ListTitle from '../../../../components/list_title'
 import AddButton from '../../../../components/button/circular_button/add_button'

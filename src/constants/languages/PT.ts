@@ -190,6 +190,8 @@ export default class PT implements LanguageBase {
 
 	STAFF = 'Funcionários(as)'
 
+	EMAIL = 'E-mail'
+
 	MEMBER_OF_STAFF = 'Funcionário(a)'
 
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'

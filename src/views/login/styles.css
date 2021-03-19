@@ -50,7 +50,6 @@
 	padding: 8px;
 	margin-bottom: 0.5rem;
 	text-align: center;
-	font-size: var(--small-font);
 }
 
 @media (orientation: landscape) {

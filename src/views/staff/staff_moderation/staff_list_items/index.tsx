@@ -5,6 +5,7 @@ import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/di
 import ItemListMenu from '../../../../components/item_list_menu'
 import ListTitle from '../../../../components/list_title'
 import MuiSearchBar from '../../../../components/mui_search_bar'
+import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
 import StaffService from '../../../../services/staff/StaffService'
 import StaffEntity from '../../../../types/staff/database/StaffEntity'
@@ -21,23 +22,30 @@ interface ListStaffProps {
 const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 
   const language = useLanguage()
+  const alert = useAlert()
 
   const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
   const [selectedItem, setSelectedItem] = useState<StaffEntity | undefined>(undefined)
   const [toView, setToView] = useState(false)
   const [toDelete, setToDelete] = useState(false)
   const [toEdit, setToEdit] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<string>()
   const [searchTerm, setSearchTerm] = useState('')
   
   const closeEditDialog = () => setToEdit(false)
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     if(selectedItem) {
-      const isInvalid = !StringUtils.validateEmail(selectedItem.email)
+
+      const email = selectedItem.email.trim()
+
+      const isInvalid = await StaffService.isEmailInvalid(email, language.data)
+  
       setError(isInvalid)
+
       if(!isInvalid) {
         StaffService.save(selectedItem)
+        alert.showSuccessAlert(language.data.STAFF_SAVE_SUCCESS)
         closeEditDialog()
         setSelectedItem(undefined)
       }

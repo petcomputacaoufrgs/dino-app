@@ -49,7 +49,7 @@ class Database extends Dexie {
 		 **/
 		this.version(DATABASE_VERSION).stores({
 			userSettings: generateSynchronizableTableString(),
-			glossary: generateSynchronizableTableString(),
+			glossary: generateSynchronizableTableString('title'),
 			contact: generateSynchronizableTableString('localEssentialContactId'),
 			essentialContact: generateSynchronizableTableString(
 				'*treatmentLocalIds',
@@ -66,7 +66,7 @@ class Database extends Dexie {
 			noteColumn: generateSynchronizableTableString(),
 			note: generateSynchronizableTableString('columnId', 'localColumnId'),
 			user: generateSynchronizableTableString(),
-			staff: generateSynchronizableTableString(),
+			staff: generateSynchronizableTableString('email'),
 			faqItem: generateSynchronizableTableString('localTreatmentId'),
 			treatmentQuestion: generateSynchronizableTableString('localTreatmentId'),
 			treatment: generateSynchronizableTableString('name'),

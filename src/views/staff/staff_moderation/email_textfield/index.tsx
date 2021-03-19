@@ -7,7 +7,7 @@ import { IsNotClient } from '../../../../context/private_router'
 interface EmailFormProps {
   value: string, 
   handleChange: (value: string) => void,
-  error: boolean,
+  error?: string,
 }
 
 const EmailTextField: React.FC<EmailFormProps> = ({ value, handleChange, error }) => {
@@ -27,9 +27,9 @@ const EmailTextField: React.FC<EmailFormProps> = ({ value, handleChange, error }
       placeholder={language.data.EXAMPLE_EMAIL}
       label={language.data.FORM_EMAIL}
       disabled={isNotClient}
-      error={error}
+      error={error !== undefined}
       inputProps={{ maxLength: DataConstants.STAFF_EMAIL.MAX }}
-      helperText={(error && language.data.INVALID_VALUE) || `${value.length}/${DataConstants.STAFF_EMAIL.MAX}`}
+      helperText={error || `${value.length}/${DataConstants.STAFF_EMAIL.MAX}`}
     />
   )
 }

@@ -193,6 +193,8 @@ export default class EN implements LanguageBase {
 
 	STAFF = 'Staff'
 
+	EMAIL = 'E-mail'
+
 	MEMBER_OF_STAFF = 'Member of Staff'
 
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'

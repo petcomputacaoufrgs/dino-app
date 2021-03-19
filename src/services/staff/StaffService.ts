@@ -8,6 +8,8 @@ import UserService from '../user/UserService'
 import StaffDataModel from '../../types/staff/api/StaffDataModel'
 import StaffEntity from '../../types/staff/database/StaffEntity'
 import DateUtils from '../../utils/DateUtils'
+import StringUtils from '../../utils/StringUtils'
+import LanguageBase from '../../constants/languages/LanguageBase'
 
 class StaffServiceImpl extends AutoSynchronizableService<
 	number,
@@ -68,6 +70,25 @@ class StaffServiceImpl extends AutoSynchronizableService<
     return model
 	}
 
+	getByEmail = async (email: string): Promise<StaffEntity | undefined> => {
+			return this.table.where('email').equalsIgnoreCase(email).first()
+	}
+
+	isEmailInvalid = async (email: string, languageData: LanguageBase) => {
+
+    const isInvalid = !StringUtils.validateEmail(email)
+    if(isInvalid) {
+      return languageData.INVALID_VALUE
+    }
+
+    const alreadyExists = await this.getByEmail(email)
+
+    if(alreadyExists) {
+      return languageData.itemAlreadyExists(languageData.EMAIL)
+    }
+
+		return undefined
+	}
 }
 
 export default new StaffServiceImpl()

@@ -8,6 +8,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
+import LanguageBase from '../../constants/languages/LanguageBase'
 
 class GlossaryServiceImpl extends AutoSynchronizableService<
 	number,
@@ -57,6 +58,21 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 		return glossary
 			.filter(item => StringUtils.contains(item.title, searchTerm))
 			.sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
+	}
+
+	getByTitle = async (title: string): Promise<GlossaryItemEntity | undefined> => {
+		return this.table.where('title').equalsIgnoreCase(title).first()
+}
+
+	isTitleInvalid = async (title: string, languageData: LanguageBase) => {
+		
+		if(StringUtils.isEmpty(title)) {
+			return languageData.EMPTY_FIELD_ERROR
+		}
+
+		const alreadyExists = await this.getByTitle(title)
+
+		return alreadyExists ? languageData.itemAlreadyExists(languageData.TITLE) :	undefined
 	}
 }
 

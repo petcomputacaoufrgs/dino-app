@@ -384,7 +384,7 @@ export default class EN implements LanguageBase {
 		'Are you sure you want to delete this column?'
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
-		'This column has notes, are you sure you want to delete it?'
+		'Are you sure?'
 
 	NOTE_COLUMN_DELETE_DIALOG_DESC =
 		'If you answer "YES" this column will be removed permanently.'
@@ -573,6 +573,8 @@ export default class EN implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Error deleting your account, please try again later.'
+	
+	MEMORY_GAME_GAME_OVER = 'You nail it! Congratulations'
 
 	CHANGE_PASSWORD = 'Change password to parents area'
 

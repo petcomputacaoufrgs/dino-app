@@ -390,7 +390,7 @@ export default class PT implements LanguageBase {
 		'Tem certeza que deseja remover esta coluna?'
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
-		'Esta coluna possui anotações, tem certeza que deseja removê-la?'
+		'Tem certeza?'
 
 	NOTE_COLUMN_DELETE_DIALOG_DESC =
 		'Caso responda "SIM" esta coluna será removida permanentemente.'
@@ -582,6 +582,9 @@ export default class PT implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
+	
+	MEMORY_GAME_GAME_OVER = 'Você arrasou! Parabéns'
+
 
 	CHANGE_PASSWORD = 'Alterar senha de acesso a área dos responsáveis'
 

@@ -1,8 +1,9 @@
 import { PhoneServiceImpl } from '../../../../services/contact/PhoneService'
 import ContactView from '../../../../types/contact/view/ContactView'
+import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
 
 export default interface ContactCardProps {
-	item?: ContactView
+	item?: ContactView | EssentialContactView
 	dialogOpen: boolean
 	onClose: () => void
 	onEdit: () => void

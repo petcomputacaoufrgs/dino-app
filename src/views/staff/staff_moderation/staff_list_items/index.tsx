@@ -93,6 +93,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
         setAnchor={setAnchor}
         onEdit={() => setToEdit(true)}
         onDelete={() => setToDelete(true)}
+        editUnavailable={selectedItem?.userId !== undefined}
       />
       {selectedItem && 
         <>

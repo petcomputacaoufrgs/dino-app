@@ -5,6 +5,7 @@ import ContactCardHeader from './header'
 import ContactCardContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
 import ItemListMenu from '../../../../components/item_list_menu'
+import ContactView from '../../../../types/contact/view/ContactView'
 
 const ContactCard = forwardRef(
 	(
@@ -17,7 +18,7 @@ const ContactCard = forwardRef(
 			setAnchorEl(event.currentTarget)
 		}
 
-		return (
+		return item ? 
 			<Dialog
 				ref={ref}
 				style={{ padding: 0 }}
@@ -27,20 +28,19 @@ const ContactCard = forwardRef(
 				TransitionComponent={TransitionSlide}
 				open={dialogOpen}
 			>
-				<ContactCardHeader item={item!} onClick={handleClick}>
+				<ContactCardHeader item={item} onClick={handleClick}>
 					<ItemListMenu
 						anchor={anchorEl}
 						setAnchor={setAnchorEl}
 						onEdit={onEdit}
 						onDelete={onDelete}
 						onCloseDialog={onClose}
-						editUnavailable={item?.contact.localEssentialContactId !== undefined}
+						editUnavailable={(item as ContactView).contact.localEssentialContactId !== undefined}
 					/>
 				</ContactCardHeader>
-				<ContactCardContent item={item!} />
+				<ContactCardContent item={item} />
 			</Dialog>
-		)
-	},
-)
+			: <></>
+},)
 
 export default ContactCard

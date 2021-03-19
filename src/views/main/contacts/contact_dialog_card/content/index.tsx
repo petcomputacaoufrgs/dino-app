@@ -1,22 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ContactsConstants from '../../../../../constants/app_data/DataConstants'
 import ContactCardContentProps from './props'
-import {
-	Typography,
-	CardContent,
-	List,
-	ListItem,
-	ListItemText,
-	ListItemIcon,
-	Divider,
-} from '@material-ui/core'
-import {
-	Person as PersonIcon,
-	Phone as PhoneIcon,
-	Home as HomeIcon,
-	LocalHospitalRounded as HospitalIcon,
-} from '@material-ui/icons'
+import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
+import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospitalRounded as HospitalIcon } from '@material-ui/icons'
 import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
+import EssentialContactView from '../../../../../types/contact/view/EssentialContactView'
+import TreatmentService from '../../../../../services/treatment/TreatmentService'
+import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
+import DinoLoader from '../../../../../components/loader'
+import ContactView from '../../../../../types/contact/view/ContactView'
 
 const ContactCardContent = ({ item }: ContactCardContentProps) => {
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
@@ -76,9 +68,7 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 					</a>
 				))}
 			</div>
-		) : (
-			<></>
-		)
+		) : <></>
 	}
 
 	return (
@@ -87,8 +77,54 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 			<List component='nav'>
 				<Phones />
 			</List>
+			<TreatmentList item={item}/>
 		</CardContent>
 	)
 }
 
 export default ContactCardContent
+
+const TreatmentList = ({item} : ContactCardContentProps) => {
+
+	const treatmentIds = (item as EssentialContactView).contact.treatmentLocalIds
+
+	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
+
+	let [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		const loadData = async () => {
+			if(treatmentIds) {
+				const treatments = await TreatmentService.getAllByLocalIds(treatmentIds)
+				if(treatments) setTreatments(treatments)
+			}
+			finishLoading()
+		}
+
+		let finishLoading = () => {
+			setIsLoading(false)
+		}
+
+		if (isLoading) {
+			loadData()
+		}
+
+		return () => {
+			finishLoading = () => {}
+		}
+	}, [isLoading])
+
+	return treatments ? 
+		<List component='nav'>
+			<DinoLoader isLoading={isLoading}>
+				{treatments.map(e =>
+					<ListItem divider className='contacts__list__item__content__phones dino__text__wrap'>
+						<ListItemText
+							primary={<Typography variant='subtitle1' color='textSecondary' component='p'>{e.name}</Typography>}
+						/>
+					</ListItem>
+				)}
+			</DinoLoader>
+		</List>
+		: <></>
+}

@@ -42,7 +42,7 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
     >
       <DinoDialogContent>
         <TextField
-          className='dino_textfield'
+          className='dino__textfield'
           margin='dense'
           required={DataConstants.FAQ_QUESTION.REQUIRED}
           fullWidth
@@ -55,7 +55,7 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
           error={errorQuestion}
         />
         <TextField
-        	className='dino_textfield'
+        	className='dino__textfield'
           margin='dense'
           required={DataConstants.FAQ_ANSWER.REQUIRED}
           fullWidth

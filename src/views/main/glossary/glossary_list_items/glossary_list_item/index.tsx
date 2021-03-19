@@ -20,9 +20,9 @@ interface GlossaryListItemProps {
 		const eventKey = String(item.localId)
 
 		return (
-			<Card className='card'>
+			<Card className='glossary__card'>
 				<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
-					<Card.Title className='card-title dino__flex_row dino__text__wrap'>
+					<Card.Title className='glossary__card_title dino__flex_row dino__text__wrap'>
 						{item.title}
 						{staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
 					</Card.Title>
@@ -34,7 +34,7 @@ interface GlossaryListItemProps {
 							{item.text || language.data.NO_AVAILABLE_TEXT}
 						</Card.Text>
 						<Link
-							className='history_link'
+							className='dino__history_link'
 							to={`${staff ? PathConstants.STAFF_GLOSSARY : PathConstants.USER_GLOSSARY}/${item.localId}`}
 						>
 							{language.data.READ_MORE}

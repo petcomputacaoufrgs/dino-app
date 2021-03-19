@@ -17,7 +17,7 @@ const EmailTextField: React.FC<EmailFormProps> = ({ value, handleChange, error }
 
   return (
     <TextField
-      className='email_textfield dino_textfield'
+      className='email_textfield dino__textfield'
       value={value}
       onChange={(e) => handleChange(e.target.value)}
       margin='dense'

@@ -54,7 +54,7 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, onC
 					<DinoDialogContent>
 						<p style={{'margin': '0'}}>{language.data.SEND_TO_THE_PROFESSIONALS}</p>
 						<TextField
-								className='dino_textfield'
+								className='dino__textfield'
 								required={Constants.FAQ_USER_QUESTION.REQUIRED}
 								fullWidth
 								value={question}

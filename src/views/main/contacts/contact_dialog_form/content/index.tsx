@@ -48,7 +48,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 	return (
 		<div className='contact__dialog_form__content'>
 			<TextField
-				className='dino_textfield'
+				className='dino__textfield'
 				required={Constants.CONTACT_NAME.REQUIRED}
 				fullWidth
 				value={contact.name}
@@ -62,7 +62,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 			/>
 			<br />
 			<TextField
-				className='dino_textfield'
+				className='dino__textfield'
 				required={Constants.CONTACT_DESCRIPTION.REQUIRED}
 				multiline
 				rowsMax={5}

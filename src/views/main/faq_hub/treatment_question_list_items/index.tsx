@@ -29,7 +29,7 @@ const TreatmentQuestionItems: React.FC<{ view?: TreatmentView }> = ({ view }) =>
       <>
         <AddButton
           handleAdd={() => setToAdd(true)}
-          label={language.data.NEW_CONTACT}
+          label={language.data.NEW_TREATMENT}
         />
         <QuestionDialogForm
           treatment={view.treatment}

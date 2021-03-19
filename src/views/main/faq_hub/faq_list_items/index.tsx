@@ -11,8 +11,9 @@ import ItemListMenu from '../../../../components/item_list_menu'
 import FaqItem from './faq_list_item'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import FaqItemService from '../../../../services/faq/FaqItemService'
+import FaqView from '../../../../types/faq/view/FaqView'
 
-const FaqItems = ({ data }: FaqItemsProps): JSX.Element => {
+const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	
 	const language = useLanguage()
 	const staff = IsStaff()

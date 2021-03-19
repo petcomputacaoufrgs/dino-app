@@ -7,6 +7,7 @@ button.link_button {
 	display: block;
 	padding: 0.438rem;
 	margin: auto;
+	font-size: var(--small-font);
 }
 
 button.link_button:hover,

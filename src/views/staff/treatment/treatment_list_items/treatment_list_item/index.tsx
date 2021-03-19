@@ -8,7 +8,6 @@ import { useTreatmentView } from '../../../../../context/staff_data'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import Icon from '@material-ui/icons/ContactSupport';
 
-
 interface TreatmentItemProps {
   item: TreatmentEntity,
   onClickMenu: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: TreatmentEntity) => void
@@ -21,15 +20,15 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
   const questions = treatmentData ? treatmentData.questions || [] : []
 
   return (
-    <div className='contacts__list__item'>
+    <div className='treatment__list_item'>
     <ListItem >
       <ListItemText 
         // TODO: Tirar isso aqui
-        style={{'marginRight':'24px'}}
+        className='treatment__list_item__text'
         primary={item.name}
         secondary={
-        <Link className='history_link' to={`${PathConstants.STAFF_FAQ}/${item.localId}`}>
-          {language.data.seeFAQItemsText(item.name)} 
+        <Link className='dino__history_link' to={`${PathConstants.STAFF_FAQ}/${item.localId}`}>
+          {language.data.seeFAQItemsText(language.data.TREATMENT)} 
         </Link>
         }
       />

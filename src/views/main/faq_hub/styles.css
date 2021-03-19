@@ -45,10 +45,10 @@
 	height: 100%;
 }
 
-.faq__content .link_button {
-	font-size: var(--small-font);
-}
-
 .faq__fail_to_load .faq__save_button {
 	margin-top: 2rem;
+}
+
+.faq__card_title {
+	font-size: var(--default-font);
 }

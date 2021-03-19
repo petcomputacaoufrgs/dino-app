@@ -9,6 +9,7 @@ import { IsStaff } from '../../context/private_router'
 import MenuService from '../../services/menu/MenuService'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import LanguageBase from '../../constants/languages/LanguageBase'
+import { toggle } from '../../constants/toggle/Toggle'
 
 type getGroupedItemsType = (language: LanguageBase, handleLogoutClick: () => void) => MenuItemViewModel[][]
 
@@ -50,7 +51,7 @@ const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
-      {/* <FirstSettingsDialog /> */}
+      {toggle.firstLoginDialog && <FirstSettingsDialog />}
     </DinoLoader>
   )
 }

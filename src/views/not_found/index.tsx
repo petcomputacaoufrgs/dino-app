@@ -1,7 +1,5 @@
 import React from 'react'
 import PageNotFound from '../../assets/icons/page_not_found.svg'
-import HistoryService from '../../services/history/HistoryService'
-import PathConstants from '../../constants/app/PathConstants'
 import { useLanguage } from '../../context/language'
 import DinoLoader from '../../components/loader'
 import './styles.css'

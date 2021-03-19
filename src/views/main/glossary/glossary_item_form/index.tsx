@@ -54,7 +54,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
 			>
 				<div className='glossary_item__form_content'>
           <TextField
-            className='dino_textfield'
+            className='dino__textfield'
             required={DataConstants.GLOSSARY_TITLE.REQUIRED}
             fullWidth
             value={item.title}
@@ -68,7 +68,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
           />
           <br />
           <TextField
-            className='dino_textfield'
+            className='dino__textfield'
             required={DataConstants.GLOSSARY_SUBTITLE.REQUIRED}
             fullWidth
             value={item.subtitle}
@@ -81,7 +81,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
           />
           <br />
           <TextField
-            className='dino_textfield'
+            className='dino__textfield'
             required={DataConstants.GLOSSARY_TEXT.REQUIRED}
             multiline
             rows={3}
@@ -96,7 +96,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
           />
           <br />
           <TextField
-            className='dino_textfield'
+            className='dino__textfield'
             required={DataConstants.GLOSSARY_FULLTEXT.REQUIRED}
             multiline
             rows={5}

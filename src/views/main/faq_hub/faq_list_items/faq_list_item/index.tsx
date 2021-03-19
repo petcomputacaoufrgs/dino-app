@@ -15,9 +15,9 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, onClickMenu }) => {
 	const staff = IsStaff()
 
   return (
-    <Card className='card'>
+    <Card className='faq__card'>
       <Accordion.Toggle as={Card.Header} eventKey={item.question}>
-        <Card.Title className='card__title dino__flex_row dino__text__wrap'>
+        <Card.Title className='faq__card_title dino__flex_row dino__text__wrap'>
           {item.question}
           {staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
         </Card.Title>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Login from './views/login'
 import Main from './views/main'
-import PrivateRouterProvider from './context/private_router'
-import PrivateRoute from './components/private_route'
-import LoginRoute from './components/login_route/index'
+import AuthProvider from './context/auth'
+import LoginRoute from './components/route/login/index'
 import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
-import { Switch, Route } from 'react-router'
+import { Switch } from 'react-router'
 import NotFound from './views/not_found/index'
 import Load from './views/load'
 import ViewportService from './services/viewport/ViewportService'
@@ -24,15 +23,19 @@ import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
 import ResponsibleAuthService from './services/auth/ResponsibleAuthService'
+import ResponsibleRoute from './components/route/authenticated/responsible'
+import KidsRoute from './components/route/authenticated/kids/index'
 import './App.css'
+import PublicRoute from './components/route/public'
 
 const LOAD_SCREEN_TIME = 2250
 
 const App: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isAuthenticated, setAuthenticated] = useState(false)
-	const [isResponsibleAuthenticated, setResponsibleAuthenticated] = useState(false)
+	const [isResponsibleAuthenticated, setResponsibleAuthenticated] = useState(true)
 	const [isFirstSettingsDone, setFirstSettingsDone] = useState(false)
+	const [isKidsMode, setKidsMode] = useState(false)
 	const [isMainTab, setIsMainTab] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(true)
 
@@ -64,7 +67,8 @@ const App: React.FC = () => {
 
 		const loadResponsibleAuth = async (): Promise<boolean> => {
 			const isResponsibleAuthenticated = await ResponsibleAuthService.isAuthenticated()
-			updateResponsibleAuth(isResponsibleAuthenticated)
+			const isKidsMode = ResponsibleAuthService.isKidsMode()
+			updateResponsibleAuth(isResponsibleAuthenticated, isKidsMode)
 			return isResponsibleAuthenticated
 		}
 
@@ -88,8 +92,9 @@ const App: React.FC = () => {
 			setAuthenticated(isAuthenticated)
 		}
 
-		let updateResponsibleAuth = (isAuthenticated: boolean) => {
+		let updateResponsibleAuth = (isAuthenticated: boolean, isKidsMode: boolean) => {
 			setResponsibleAuthenticated(isAuthenticated)
+			setKidsMode(isKidsMode)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {
@@ -151,28 +156,30 @@ const App: React.FC = () => {
 	}, [])
 
 	const renderApp = (): JSX.Element => (
-		<PrivateRouterProvider
+		<AuthProvider
 			loginPath={PathConstants.LOGIN}
-			homePath={PathConstants.HOME}
+			responsibleHomePath={PathConstants.RESPONSIBLE_HOME}
+			kidsHomePath={PathConstants.KIDS_SPACE}
 			isAuthenticated={isAuthenticated}
 			isResponsibleAuthenticated={isResponsibleAuthenticated}
 			isFirstSettingsDone={isFirstSettingsDone}
+			isKidsMode={isKidsMode}
 			browserHistory={HistoryService}
 		>
 			<Switch>
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-				<PrivateRoute path={PathConstants.USER} component={Main} />
-				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
-				<Route exact path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
-				<Route
+				<ResponsibleRoute path={PathConstants.RESPONSIBLE} component={Main} />
+				<KidsRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
+				<PublicRoute exact path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
+				<PublicRoute
 					exact
 					path={PathConstants.PRIVACY_POLICY}
 					component={PrivacyPolicy}
 				/>
-				<Route exact path={PathConstants.ABOUT_US} component={AboutUs} />
-				<Route path={'/'} component={NotFound} />
+				<PublicRoute exact path={PathConstants.ABOUT_US} component={AboutUs} />
+				<PublicRoute path={'/'} component={NotFound} />
 			</Switch>
-		</PrivateRouterProvider>
+		</AuthProvider>
 	)
 
 	return (

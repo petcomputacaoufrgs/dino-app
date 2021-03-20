@@ -1,8 +1,8 @@
 import Superagent from 'superagent'
 import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import sleep from '../../utils/SleepUtils'
 import ArrayUtils from '../../utils/ArrayUtils'
 import HttpStatus from '../../types/http/HttpStatus'
+import SleepUtils from '../../utils/SleepUtils'
 
 type ConnectionListennerCallback = (online: boolean) => void
 
@@ -98,7 +98,7 @@ class ConnectionService {
 					this.setDisconnected()
 				}
 
-				await sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
+				await SleepUtils.sleep(DELAY_TO_VERIFY_DINO_CONNECTION)
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -19,6 +20,10 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 			WebSocketTopicPathService,
 			APIWebSocketDestConstants.TREATMENT,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return []
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

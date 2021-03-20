@@ -11,6 +11,7 @@ import TreatmentService from '../treatment/TreatmentService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class FaqServiceImpl extends AutoSynchronizableService<
 	number,
@@ -26,6 +27,10 @@ class FaqServiceImpl extends AutoSynchronizableService<
 		)
 	}
 
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
+	}
+	
 	getSyncDependencies(): SynchronizableService[] {
 		return [TreatmentService]
 	}

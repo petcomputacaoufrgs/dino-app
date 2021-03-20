@@ -1,5 +1,5 @@
 import { getRandomInteger } from '../../../../utils/RandomUtils'
-import sleep from '../../../../utils/SleepUtils'
+import SleepUtils from '../../../../utils/SleepUtils'
 
 const MAX_DEGREE_REDUCTION_PER_ROTATION = 20
 const INCREASE_IN_ROTATION_SPEED_PER_ROTATION = 3
@@ -56,7 +56,7 @@ async function rotatePaiting(
 	delay: number,
 ) {
 	paiting.style.transform = `rotate3d(0, 0, 1, ${degrees}deg)`
-	await sleep(delay)
+	await SleepUtils.sleep(delay)
 }
 
 function isPositiveDegree(degrees: number): boolean {

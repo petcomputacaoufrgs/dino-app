@@ -16,6 +16,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/user/view/LanguageEnum'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -29,6 +30,10 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.USER_SETTINGS,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

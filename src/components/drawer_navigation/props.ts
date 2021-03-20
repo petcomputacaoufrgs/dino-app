@@ -1,7 +1,7 @@
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 
 export default interface DrawerNavigationProps {
-	groupedItems: MenuItemViewModel[][]
+	items: MenuItemViewModel[][]
 
 	component: JSX.Element
 }

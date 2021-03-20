@@ -1,6 +1,6 @@
-import sleep from '../../../../../utils/SleepUtils'
 import { getRandomInteger } from '../../../../../utils/RandomUtils'
 import { startBackgroundEngine } from './background'
+import SleepUtils from '../../../../../utils/SleepUtils'
 
 let dino: HTMLElement | null
 let grid: HTMLElement | null
@@ -61,7 +61,7 @@ async function jump(dino: HTMLElement) {
 
 	//move up
 	while (position < 150) {
-		await sleep(20)
+		await SleepUtils.sleep(20)
 		position = position + gravity
 		gravity = gravity * 0.95
 		dino.style.transform = `translate3d(0, -${position}%, 0)`
@@ -70,7 +70,7 @@ async function jump(dino: HTMLElement) {
 	gravity = 10
 	// move down
 	while (position > 0) {
-		await sleep(20)
+		await SleepUtils.sleep(20)
 		position = position - gravity
 		gravity = gravity * 1.05
 		dino.style.transform = `translate3d(0, -${position}%, 0)`
@@ -106,7 +106,7 @@ async function generateObstacle() {
 			break
 		}
 
-		await sleep(20)
+		await SleepUtils.sleep(20)
 		obstaclePosition -= 12.5
 		obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	}
@@ -120,7 +120,7 @@ async function generateObstacle() {
 async function generateNextObstacle() {
 	if (!isGameOver) {
 		const randomTime = getRandomInteger(0, 200)
-		await sleep(randomTime)
+		await SleepUtils.sleep(randomTime)
 		generateObstacle()
 	}
 }

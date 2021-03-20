@@ -3,6 +3,6 @@ import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 
 export default interface DrawerProps {
 	open: boolean
-	groupedItems: MenuItemViewModel[][]
+	items: MenuItemViewModel[][]
 	onClose: () => void
 }

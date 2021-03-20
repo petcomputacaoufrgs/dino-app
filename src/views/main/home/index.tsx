@@ -8,7 +8,7 @@ import './styles.css'
 const Home: React.FC = () => {
 	const language = useLanguage()
 
-	const items = MenuService.getMainPages(language.data).filter(
+	const items = MenuService.getResponsiblePages(language.data).filter(
 		item => item.name !== language.data.MENU_HOME,
 	)
 

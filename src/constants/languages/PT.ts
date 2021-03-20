@@ -638,4 +638,6 @@ export default class PT implements LanguageBase {
 	
 	RESPONSIBLE_LOGIN = 'Autenticação de Responsável'
 
+	FIRST_SETTINGS_PASSWORD_STEP_TITLE = 'Crie uma senha'
+	
 }

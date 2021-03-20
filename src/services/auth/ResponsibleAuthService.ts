@@ -12,6 +12,9 @@ import SetResponsibleAuthResponseModel from "../../types/auth/api/responsible/Se
 import ResponsibleRequestRecoverResponseModel from "../../types/auth/api/responsible/ResponsibleRequestRecoverResponseModel"
 import ResponsibleVerityRecoverCodeResponseModel from "../../types/auth/api/responsible/ResponsibleVerityRecoverCodeResponseModel"
 import UserService from "../user/UserService"
+import LocalStorage from "../../storage/LocalStorage"
+import LocalStorageKeysConstants from "../../constants/local_storage/LocalStorageKeysConstants"
+import DinoPermission from "../../types/auth/api/DinoPermissions"
 
 class ResponsibleAuthService {
 	isAuthenticated = async () => {
@@ -20,13 +23,30 @@ class ResponsibleAuthService {
 		return Boolean(user && user.responsibleCode)
 	}
 
+	isKidsMode = (): boolean => {
+		const value = LocalStorage.getItem(LocalStorageKeysConstants.KIDS_MODE)
+		if (value) {
+			return JSON.parse(value)
+		}
+
+		return false
+	}
+
+	getCode = async (): Promise<string | undefined> => {
+		const user = await AuthService.getUser()
+
+		if (!user || !user.responsibleCode) return undefined
+
+		return user.responsibleCode
+	}
+
 	requestCode = async () => {
 		const request = await DinoAgentService.put(APIRequestMappingConstants.RECOVER_PASSWORD_REQUEST)
 
 		if (request.canGo) {
 			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.go()
+				await request.authenticate()
+				const response = await request.go()
 				const responseBody: ResponsibleRequestRecoverResponseModel = response.body
 				return responseBody.success
 			} catch (e) {
@@ -44,8 +64,8 @@ class ResponsibleAuthService {
         const body: VerifyResponsibleRecoverCodeModel = {
           code: code
         }
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(body).go()
+				await request.authenticate()
+				const response = await request.setBody(body).go()
 
 				return response.body
 			} catch (e) {
@@ -59,19 +79,34 @@ class ResponsibleAuthService {
   recoverAuth = async (code: string, newPassword: string): Promise<boolean> => {
 		const request = await DinoAgentService.put(APIRequestMappingConstants.RECOVER_PASSWORD_CHANGE)
 
-		return this.setAuth(request, newPassword, code)
+		if (request.canGo) {
+			return this.setAuth(request, newPassword, code)
+		}
+
+		return false
 	}
 
 	changeAuth = async (newPassword: string) => {
 		const request = await DinoAgentService.post(APIRequestMappingConstants.CHANGE_RESPONSIBLE_AUTH)
+		request.addPermission(DinoPermission.RESPONSIBLE)
 
-		return this.setAuth(request, newPassword)
+		if (request.canGo) {
+			if (request.hasPermissions) {
+				return this.setAuth(request, newPassword)
+			}
+		}
+
+		return false
 	}
 
 	createAuth = async (password: string): Promise<boolean> => {
 		const request = await DinoAgentService.post(APIRequestMappingConstants.CREATE_RESPONSIBLE_AUTH)
 
-		return this.setAuth(request, password)
+		if (request.canGo) {
+			return this.setAuth(request, password)
+		}
+
+		return false
 	}
 
 	verifyPassword = async (password: string) => {
@@ -100,6 +135,8 @@ class ResponsibleAuthService {
 				user.responsibleCode = code
 
 				await UserService.saveOnlyLocally(user)
+				
+				LocalStorage.setItem(LocalStorageKeysConstants.KIDS_MODE, JSON.stringify(false))
 
 				return true
 			}
@@ -117,36 +154,39 @@ class ResponsibleAuthService {
 		}
 	}
 
-	private setAuth = async (request: AgentRequest, password: string, code?: string): Promise<boolean> => {
-		if (request.canGo) {
-			try {
-				const key = HashUtils.sha3of256(password).substr(0, 32)
-        const requestBody: ResponsibleRecoverPasswordModel | SetResponsibleAuthModel = code ? {
-          key: key,
-					code: code
-        } : { key: key }
-				
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(requestBody).go()
-				const responseBody: SetResponsibleAuthResponseModel = response.body
-				if (responseBody.success) {
-					const user = await AuthService.getUser()
-					if (user) {
-						const code = await AESUtils.decrypt(key, responseBody.iv, responseBody.token)
-						if (code) {
-							user.responsibleCode = code
-							user.responsibleToken = responseBody.token
-							user.responsibleIV = responseBody.iv
-							await UserService.saveOnlyLocally(user)
-							return true
-						}
+	activeChildMode = async () => {
+		LocalStorage.setItem(LocalStorageKeysConstants.KIDS_MODE, JSON.stringify(true))
+		await this.responsibleLogout()
+	}
+
+	private setAuth = async (request: AgentRequest<DinoPermission>, password: string, code?: string): Promise<boolean> => {
+		try {
+			const key = HashUtils.sha3of256(password).substr(0, 32)
+			const requestBody: ResponsibleRecoverPasswordModel | SetResponsibleAuthModel = code ? {
+				key: key,
+				code: code
+			} : { key: key }
+			await request.authenticate()
+			const response = await request.setBody(requestBody).go()
+			const responseBody: SetResponsibleAuthResponseModel = response.body
+			if (responseBody.success) {
+				const user = await AuthService.getUser()
+				if (user) {
+					const code = await AESUtils.decrypt(key, responseBody.iv, responseBody.token)
+					if (code) {
+						user.responsibleCode = code
+						user.responsibleToken = responseBody.token
+						user.responsibleIV = responseBody.iv
+						await UserService.saveOnlyLocally(user)
+						return true
 					}
 				}
-				return false
-			} catch (e) {
-				LogAppErrorService.logError(e)
 			}
+			return false
+		} catch (e) {
+			LogAppErrorService.logError(e)
 		}
+
 		return false
 	}
 }

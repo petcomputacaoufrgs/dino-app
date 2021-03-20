@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
-import { Switch } from 'react-router'
-import PrivateRoute from '../../components/private_route'
+import React from 'react'
+import { Route, Switch } from 'react-router'
 import PathConstants from '../../constants/app/PathConstants'
 import NotFound from '../not_found'
 import Dinogotchi from './dinogotchi'
@@ -10,48 +9,43 @@ import SnakeGame from './game_menu/snake_game'
 import MusicalDino from './game_menu/musical_dino'
 import TicTacDino from './game_menu/tic_tac_dino'
 import MemoryGame from './game_menu/memory_game'
-import ResponsibleAuthService from '../../services/auth/ResponsibleAuthService'
 import './variables.css'
 
 const KidsSpace: React.FC = () => {
-	useEffect(() => {
-		ResponsibleAuthService.responsibleLogout()
-	}, [])
-
 	return (
 		<Switch>
-			<PrivateRoute
+			<Route
 				exact
 				path={PathConstants.KIDS_SPACE}
 				component={Dinogotchi}
 			/>
-			<PrivateRoute exact path={PathConstants.GAME_MENU} component={Menu} />
-			<PrivateRoute
+			<Route exact path={PathConstants.GAME_MENU} component={Menu} />
+			<Route
 				exact
 				path={PathConstants.MEMORY_GAME}
 				component={MemoryGame}
 			/>
-			<PrivateRoute
+			<Route
 				exact
 				path={PathConstants.SNAKE_GAME}
 				component={SnakeGame}
 			/>
-			<PrivateRoute
+			<Route
 				exact
 				path={PathConstants.TIC_TAC_DINO_GAME}
 				component={TicTacDino}
 			/>
-			<PrivateRoute
+			<Route
 				exact
 				path={PathConstants.DINO_RUNNER_GAME}
 				component={DinoRunner}
 			/>
-			<PrivateRoute
+			<Route
 				exact
 				path={PathConstants.MUSICAL_DINO_GAME}
 				component={MusicalDino}
 			/>
-			<PrivateRoute path={'/'} component={NotFound} />
+			<Route path={'/'} component={NotFound} />
 		</Switch>
 	)
 }

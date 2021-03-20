@@ -19,9 +19,7 @@ class EventService {
 	whenStart = () => {
 		ResponsibleAuthService.responsibleLogout()
 		ErrorHandlerService.register()
-		if (process.env.NODE_ENV === 'development') {
-			this.startWebSocketAndSync()
-		}
+		this.startWebSocketAndSync()
 	}
 
 	whenTabLoad = async () => {
@@ -37,7 +35,7 @@ class EventService {
 	whenLogin = async () => {
 		CalendarService.addMocks()
 		this.startWebSocketAndSync()
-		HistoryService.push(PathConstants.HOME)
+		HistoryService.push(PathConstants.RESPONSIBLE_HOME)
 	}
 
 	whenLogout = async () => {
@@ -45,7 +43,7 @@ class EventService {
 		HistoryService.push(PathConstants.LOGIN)
 	}
 
-	whenLoginForbidden = async () => {
+	whenForbidden = async () => {
 		AuthService.logout()
 	}
 

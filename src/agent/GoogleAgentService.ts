@@ -3,8 +3,10 @@ import AuthService from '../services/auth/AuthService'
 import GoogleAPIHeaderConstants from '../constants/google/GoogleAPIHeaderConstants'
 import BaseAgent from './BaseAgent'
 import AuthEntity from '../types/auth/database/AuthEntity'
+import GooglePermission from '../types/auth/service/GooglePermission'
+import { AgentRequestInfo } from '../types/agent/AgentRequest'
 
-class GoogleAgentService extends BaseAgent<AuthEntity> {
+class GoogleAgentService extends BaseAgent<AuthEntity, GooglePermission> {
 	async getAuth(): Promise<AuthEntity | undefined> {
 		return AuthService.getAuth()
 	}
@@ -19,6 +21,16 @@ class GoogleAgentService extends BaseAgent<AuthEntity> {
 
 	getTokenExpiresDate(auth: AuthEntity): Date | undefined {
 		return auth ? auth.googleExpiresDate : undefined
+	}
+
+	async hasPermissions(permissions: null[]): Promise<boolean> {
+		return false
+	}
+
+	async addPermissions(
+		requestInfo: AgentRequestInfo,
+		permissions: null[]): Promise<AgentRequestInfo> {
+		return requestInfo
 	}
 
 	protected addAuth(

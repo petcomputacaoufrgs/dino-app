@@ -13,7 +13,7 @@ import UserService from '../../../services/user/UserService'
 import SyncInfo from '../../sync_info'
 import './styles.css'
 
-const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
+const Drawer: React.FC<DrawerProps> = ({ open, items, onClose }) => {
 	const language = useLanguage()
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -51,17 +51,17 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 		}
 	}, [isLoading])
 
-	const handleClick = (item: MenuItemViewModel) => {
-		onClose()
-		item.onClick()
-	}
-
 	const handleCloseClick = () => {
 		onClose()
 	}
 
+	const handleItemClick = (item: MenuItemViewModel) => {
+		item.onClick()
+		onClose()
+	}
+
 	const isLastGroup = (groupIndex: number): boolean =>
-		groupedItems.length - 1 === groupIndex
+		items.length - 1 === groupIndex
 
 	const renderItems = (items: MenuItemViewModel[]): JSX.Element[] => {
 		return items
@@ -71,7 +71,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 					button
 					aria-label={language.data.CLICK_TO_OPEN_MENU_ITEM + item.name}
 					key={itemIndex}
-					onClick={() => handleClick(item)}
+					onClick={() => handleItemClick(item)}
 				>
 					<ListItemIcon>{renderItemImage(item.image!)}</ListItemIcon>
 					<ListItemText primary={item.name} />
@@ -108,7 +108,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 	)
 
 	const renderGroupItems = (): JSX.Element[] =>
-		groupedItems.map((items, groupIndex) => (
+		items.map((items, groupIndex) => (
 			<div key={groupIndex}>
 				<List>{renderItems(items)}</List>
 				{!isLastGroup(groupIndex) && <Divider />}

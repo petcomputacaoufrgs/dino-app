@@ -12,6 +12,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
 import Utils from '../../utils/Utils'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class NoteServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,6 +26,10 @@ class NoteServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.NOTE,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

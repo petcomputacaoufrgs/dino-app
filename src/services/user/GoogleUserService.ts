@@ -9,14 +9,14 @@ class GoogleUserService {
 			GooglePeopleAPIURLConstants.GET_USER_PHOTOS,
 		)
 
-		if (request.canGo) {
-			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.go()
+		try {
+			await request.authenticate()
+			if (request.canGo) {
+				const response = await request.go()
 				return response.body
-			} catch (e) {
-				LogAppErrorService.logError(e)
 			}
+		} catch (e) {
+			LogAppErrorService.logError(e)
 		}
 
 		return null

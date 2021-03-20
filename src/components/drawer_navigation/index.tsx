@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react'
 import DrawerNavigationProps from './props'
-import './styles.css'
 import Drawer from './drawer'
 import Content from './content'
+import './styles.css'
 
 const DRAWER_WIDTH = 240
 const MIN_MOVE_TO_OPEN_DRAWER = 20
 
 const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
-	groupedItems,
-	component,
-}): JSX.Element => {
+	items,
+	component
+}) => {
 	const drawerEl = useRef<HTMLDivElement | null>(null)
 
 	const [startTouch, setStartTouch] = useState<HorizontalTouch | undefined>(
@@ -147,7 +147,7 @@ const DrawerNavigation: React.FC<DrawerNavigationProps> = ({
 		<div className='drawer_navigation'>
 			<div className='drawer_navigation__box' ref={drawerEl}>
 				<Drawer
-					groupedItems={groupedItems}
+					items={items}
 					onClose={handleDrawerClose}
 					open={open}
 				/>

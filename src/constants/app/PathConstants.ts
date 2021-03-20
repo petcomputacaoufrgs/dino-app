@@ -1,23 +1,21 @@
 class PathConstants {
-	LOGIN: string = `/`
+	LOGIN = `/`
 
-	USER: string = `/user`
+	RESPONSIBLE = `/responsible`
 
-	HOME: string = `${this.USER}/home`
+	RESPONSIBLE_HOME = `${this.RESPONSIBLE}/home`
 
-	GLOSSARY: string = `${this.USER}/glossary`
+	GLOSSARY = `${this.RESPONSIBLE}/glossary`
 
-	CONTACTS: string = `${this.USER}/contacts`
+	CONTACTS = `${this.RESPONSIBLE}/contacts`
 
-	GAMES: string = `${this.USER}/games`
+	SETTINGS = `${this.RESPONSIBLE}/settings`
 
-	SETTINGS: string = `${this.USER}/settings`
+	FAQ = `${this.RESPONSIBLE}/faq`
 
-	FAQ: string = `${this.USER}/faq`
+	NOTES = `${this.RESPONSIBLE}/notes`
 
-	NOTES: string = `${this.USER}/notes`
-
-	CALENDAR = `${this.USER}/calendar`
+	CALENDAR = `${this.RESPONSIBLE}/calendar`
 
 	KIDS_SPACE = '/kids_space'
 
@@ -30,6 +28,7 @@ class PathConstants {
 	MUSICAL_DINO_GAME = `${this.GAME_MENU}/musical_dino_game`
 
 	DINO_RUNNER_GAME = `${this.GAME_MENU}/dino_runner`
+
 	TIC_TAC_DINO_GAME = `${this.GAME_MENU}/tic_tac_dino`
 
 	ABOUT_US = '/about_us'

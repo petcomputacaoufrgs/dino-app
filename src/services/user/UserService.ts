@@ -13,6 +13,8 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import DinoAgentService from '../../agent/DinoAgentService'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
+import AuthService from '../auth/AuthService'
 
 class UserServiceImpl extends AutoSynchronizableService<
 	number,
@@ -26,6 +28,10 @@ class UserServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.USER,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
@@ -125,18 +131,21 @@ class UserServiceImpl extends AutoSynchronizableService<
 	}
 
 	public deleteAccount = async (): Promise<boolean> => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return false
+		
 		const request = await DinoAgentService.delete(
 			APIRequestMappingConstants.DELETE_ACCOUNT,
 		)
 
-		if (request.canGo) {
-			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.go()
+		try {
+			await request.authenticate([DinoPermission.RESPONSIBLE])
+			if (request.canGo && request.hasPermissions) {
+				const response = await request.go()
 				return response.body
-			} catch (e) {
-				LogAppErrorService.logError(e)
 			}
+		} catch (e) {
+			LogAppErrorService.logError(e)
 		}
 
 		return false

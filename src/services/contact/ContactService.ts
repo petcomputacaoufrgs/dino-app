@@ -14,6 +14,8 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
+import AuthService from '../auth/AuthService'
 
 class ContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -27,6 +29,10 @@ class ContactServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.CONTACT,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
@@ -78,6 +84,9 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	}
 
 	async deleteUserEssentialContacts() {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+		
 		const contacts = await this.getAllDerivatedFromEssential()
 
 		const googleContactDeletePromises = contacts.map(contact => {

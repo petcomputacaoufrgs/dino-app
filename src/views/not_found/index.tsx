@@ -8,14 +8,11 @@ import './styles.css'
 
 const redirectTimeout = 2000
 
-/**
- * @description Tela para diretório não encontrado
- */
 const NotFound: React.FC = () => {
 	const language = useLanguage()
 
 	const redirectToHome = () => {
-		HistoryService.push(PathConstants.HOME)
+		HistoryService.push(PathConstants.RESPONSIBLE_HOME)
 	}
 
 	setTimeout(redirectToHome, redirectTimeout)

@@ -27,6 +27,8 @@ import UpdatableService from '../update/UpdatableService'
 import UserSettingsService from '../user/UserSettingsService'
 import LogoutCallback from '../../types/auth/service/LogoutCallback'
 import UserEntity from '../../types/user/database/UserEntity'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
+import ResponsibleAuthService from './ResponsibleAuthService'
 
 class AuthService extends UpdatableService {
 	private logoutCallbacks: LogoutCallback[]
@@ -90,8 +92,8 @@ class AuthService extends UpdatableService {
 		)
 		if (request.canGo) {
 			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.go()
+				await request.authenticate()
+				const response = await request.go()
 				const responseBody: GoogleRefreshAuthResponseModel = response.body
 
 				if (responseBody.success) {
@@ -151,8 +153,8 @@ class AuthService extends UpdatableService {
 		)
 		if (request.canGo) {
 			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.go()
+				await request.authenticate()
+				const response = await request.go()
 				return response.body
 			} catch (e) {
 				LogAppErrorService.logError(e)
@@ -204,6 +206,23 @@ class AuthService extends UpdatableService {
 		const id = await this.table.put(entity)
 
 		entity.id = id
+	}
+
+	hasPermissions = async (permissions: DinoPermission[]) => {
+		if (permissions.length === 0) return true
+
+		const verifyRequests = permissions.map(async permission => {
+			switch(permission) {
+				case 'responsable':
+					return ResponsibleAuthService.isAuthenticated()
+				default:
+					return false
+			}
+		})
+		
+		const hasPermissions = await Promise.all(verifyRequests)
+
+		return hasPermissions.every(hasPermission => hasPermission)
 	}
 
 	private dbClear = async () => {
@@ -263,8 +282,8 @@ class AuthService extends UpdatableService {
 				APIRequestMappingConstants.GRANT_GOOGLE,
 			)
 			if (request.canGo) {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(grantRequestModel).go()
+				await request.authenticate()
+				const response = await request.setBody(grantRequestModel).go()
 
 				const responseBody: GoogleRefreshAuthResponseModel = response.body
 

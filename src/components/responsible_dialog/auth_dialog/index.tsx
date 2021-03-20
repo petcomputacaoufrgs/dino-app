@@ -96,22 +96,22 @@ const ResponsibleAuthDialog: React.FC<{
         <DinoDialogHeader>
           <h1>{language.data.RESPONSIBLE_LOGIN}</h1>
         </DinoDialogHeader>
-        <form>
-        <DinoDialogContent>
-          <label htmlFor="responsible_auth_dialog__input">{language.data.PASSWORD}</label>
-          <input 
-            id="responsible_auth_dialog__input"
-            className="responsible_input"
-            autoComplete="off"
-            value={password} 
-            onChange={handlePasswordChanged}
-            type="password" 
-            required />
-            {errorMessage && <p className="responsible__error_message">{errorMessage}</p>}
-          <TextButton onClick={handleRecoverPassword}>
-            {language.data.FORGOT_PASSWORD}
-          </TextButton>
-        </DinoDialogContent>
+        <form onSubmit={e => e.preventDefault()}>
+          <DinoDialogContent>
+            <label htmlFor="responsible_auth_dialog__input">{language.data.PASSWORD}</label>
+            <input 
+              id="responsible_auth_dialog__input"
+              className="responsible_input"
+              autoComplete="off"
+              value={password} 
+              onChange={handlePasswordChanged}
+              type="password" 
+              required />
+              {errorMessage && <p className="responsible__error_message">{errorMessage}</p>}
+            <TextButton onClick={handleRecoverPassword}>
+              {language.data.FORGOT_PASSWORD}
+            </TextButton>
+          </DinoDialogContent>
           <div className='responsible_auth_dialog__buttons'>
             <Button
               type="submit"

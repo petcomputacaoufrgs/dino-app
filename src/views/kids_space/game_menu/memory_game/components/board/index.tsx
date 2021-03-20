@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react'
 import BoardProps from './props'
 import Piece from '../piece'
 import './styles.css'
+import SleepUtils from '../../../../../../utils/SleepUtils'
 
 const BASE_ANIMATION_DELAY = 500
-
-function sleep(ms:number) {
-    return new Promise<void>(resolve => setTimeout(resolve, ms));
-}
 
 const Board: React.FC<BoardProps> = ({
     pieceList,
@@ -49,14 +46,14 @@ const Board: React.FC<BoardProps> = ({
                 setPieceState([...pieceState])
                 setBlocked(true)
                 
-                await sleep(BASE_ANIMATION_DELAY)
+                await SleepUtils.sleep(BASE_ANIMATION_DELAY)
 
                 if (pieceState[turnedPieceIndex].image === pieceState[index].image) {
                     setScore(score + 1)
                     
                     setVisibility(false)
 
-                    await sleep(BASE_ANIMATION_DELAY)
+                    await SleepUtils.sleep(BASE_ANIMATION_DELAY)
 
                     setBlocked(false)
                     setVisibility(true)
@@ -66,7 +63,7 @@ const Board: React.FC<BoardProps> = ({
                 } else {
                     setTurnBack(true)
 
-                    await sleep(BASE_ANIMATION_DELAY)
+                    await SleepUtils.sleep(BASE_ANIMATION_DELAY)
 
                     setTurnBack(false)
                     setBlocked(false)

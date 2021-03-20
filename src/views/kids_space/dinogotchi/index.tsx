@@ -65,15 +65,19 @@ const Dinogotchi: React.FC = () => {
 	return (
 		<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 			{renderBackground()}
-			<AccessDialog open={open} icon={AngryDinoSVG} onRecoverPassword={handleRecoverPassword} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
+			<AccessDialog 
+				open={open} 
+				icon={AngryDinoSVG} 
+				onRecoverPassword={handleRecoverPassword}
+				onClose={() => setOpen(false)} 
+				onConfirm = {() => HistoryService.push(PathConstants.RESPONSIBLE_HOME)}
+			/>
 			<RecoverPasswordDialog open={openRecover} onClose={() => setOpenRecover(false)}/>
 			<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(true)}} />
 			<div className='dinogotchi_screen__options'>
 				<CircularButton
 					icon={GameSVG}
-					onClick={() => {
-						HistoryService.push(PathConstants.GAME_MENU)
-					}}
+					onClick={() => HistoryService.push(PathConstants.GAME_MENU)}
 				/>
 				<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
 			</div>

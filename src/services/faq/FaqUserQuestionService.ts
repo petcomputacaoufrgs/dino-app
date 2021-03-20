@@ -7,6 +7,7 @@ import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
 	number,
@@ -20,6 +21,10 @@ class FaqUserQuestionServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.FAQ_USER_QUESTION,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

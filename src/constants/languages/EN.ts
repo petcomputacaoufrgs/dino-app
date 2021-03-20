@@ -628,4 +628,6 @@ export default class EN implements LanguageBase {
 
 	RESPONSIBLE_LOGIN = 'Responsible Authentication'
 
+	FIRST_SETTINGS_PASSWORD_STEP_TITLE = 'Create a password'
+
 }

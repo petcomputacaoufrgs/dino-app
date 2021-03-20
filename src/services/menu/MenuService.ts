@@ -11,13 +11,14 @@ import { ReactComponent as KidsSpaceSVG } from '../../assets/icons/menu_icons/bl
 import LanguageBase from '../../constants/languages/LanguageBase'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
+import ResponsibleAuthService from '../auth/ResponsibleAuthService'
 
 class MenuService {
-	getMainPages = (language: LanguageBase): MenuItemViewModel[] => [
+	getResponsiblePages = (language: LanguageBase): MenuItemViewModel[] => [
 		{
 			image: HomeSVG,
 			name: language.MENU_HOME,
-			onClick: () => HistoryService.push(PathConstants.HOME),
+			onClick: () => HistoryService.push(PathConstants.RESPONSIBLE_HOME),
 		},
 		{
 			image: GlossarySVG,
@@ -32,27 +33,27 @@ class MenuService {
 		{
 			image: NotesSVG,
 			name: language.MENU_NOTES,
-			onClick: () => HistoryService.push(PathConstants.NOTES),
+			onClick: () => HistoryService.push(PathConstants.NOTES)
 		},
 		{
 			image: FaqSVG,
 			name: language.MENU_FAQ,
-			onClick: () => HistoryService.push(PathConstants.FAQ),
+			onClick: () => HistoryService.push(PathConstants.FAQ)
 		},
 		{
 			image: CalendarSVG,
 			name: language.MENU_CALENDAR,
-			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.SETTINGS)
 		},
 		{
 			image: SettingsSVG,
 			name: language.MENU_SETTINGS,
-			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.SETTINGS)
 		},
 		{
 			image: KidsSpaceSVG,
 			name: language.KIDS_SPACE,
-			onClick: () => HistoryService.push(PathConstants.KIDS_SPACE),
+			onClick: () => ResponsibleAuthService.activeChildMode(),
 		},
 		{
 			name: language.MENU_ABOUT_US,
@@ -68,11 +69,11 @@ class MenuService {
 		},
 	]
 
-	getGroupedMenuItems = (
+	getMenuItems = (
 		language: LanguageBase,
 		handleLogoutClick: () => void,
 	): MenuItemViewModel[][] => [
-		this.getMainPages(language),
+		this.getResponsiblePages(language),
 		[
 			{
 				image: LogoutSVG,

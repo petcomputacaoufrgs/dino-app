@@ -14,6 +14,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
 	number,
@@ -27,6 +28,10 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.PHONE,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

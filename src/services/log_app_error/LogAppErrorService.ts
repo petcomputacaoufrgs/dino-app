@@ -71,15 +71,15 @@ class LogAppErrorService extends SynchronizableService {
 				APIRequestMappingConstants.SAVE_LOG_APP_ERROR,
 			)
 
-			if (request.canGo) {
-				try {
-					const authRequest = await request.authenticate()
+			try {
+				await request.authenticate()
 
-					await authRequest.setBody(model).go()
-				} catch {
+				if (request.canGo) {
+					await request.setBody(model).go()
+				} else {
 					this.saveLocalLog(model)
 				}
-			} else {
+			} catch {
 				this.saveLocalLog(model)
 			}
 		}
@@ -110,13 +110,15 @@ class LogAppErrorService extends SynchronizableService {
 			APIRequestMappingConstants.SAVE_ALL_LOG_APP_ERROR,
 		)
 
-		if (request.canGo) {
-			try {
-				const authRequest = await request.authenticate()
-				await authRequest.setBody(models).go()
+		try {
+			await request.authenticate()
+			if (request.canGo) {
+				await request.setBody(models).go()
 				await this.dbDeleteAll()
 				return true
-			} catch {}
+			}
+		} catch (e) {
+			this.logError(e)
 		}
 
 		return false

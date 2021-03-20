@@ -299,4 +299,5 @@ export default interface LanguageBase {
 	ERROR_REQUESTING_RECOVER_CODE: string
 	MAX_ATTEMPS_REACHED: string
 	RESPONSIBLE_LOGIN: string
+	FIRST_SETTINGS_PASSWORD_STEP_TITLE: string
 }

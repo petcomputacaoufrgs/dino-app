@@ -10,6 +10,7 @@ import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
 import WebSocketQueuePathService from '../../websocket/path/WebSocketQueuePathService'
 import Database from '../../../storage/Database'
+import DinoPermission from '../../../types/auth/api/DinoPermissions'
 
 class GoogleScopeServiceImpl extends AutoSynchronizableService<
 	number,
@@ -23,6 +24,10 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.GOOGLE_SCOPE,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return []
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

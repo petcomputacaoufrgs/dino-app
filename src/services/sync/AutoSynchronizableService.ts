@@ -21,6 +21,11 @@ import SynchronizableService from './SynchronizableService'
 import WebSocketURLService from '../websocket/path/WebSocketPathService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 import Utils from '../../utils/Utils'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
+import APITreatedResponse from '../../types/sync/APITreatedResponse'
+import APITreatedResponseStatus from '../../types/sync/APITreatedResponseStatus'
+import SynchronizableGenericResponseModel from '../../types/sync/api/response/SynchronizableGenericResponseModel'
+import AuthService from '../auth/AuthService'
 
 /**
  * @description Generic service with basic methods (save and delete) that auto synchronize entity with API
@@ -89,6 +94,11 @@ export default abstract class AutoSynchronizableService<
 	 * @param entity local entity
 	 */
 	abstract convertEntityToModel(entity: ENTITY): Promise<DATA_MODEL | undefined>
+
+	/**
+	 * Return list of permissions to access this data on DinoAPI
+	 */
+	protected abstract getDinoPermissions(): DinoPermission[]
 
 	private async internalConvertModelToEntity(
 		model: DATA_MODEL,
@@ -197,6 +207,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entity Entity to save
 	 */
 	save = async (entity: ENTITY): Promise<ENTITY | undefined> => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		this.updateLastUpdate(entity)
 		entity.localState = SynchronizableLocalState.SAVED_LOCALLY
 
@@ -208,8 +221,10 @@ export default abstract class AutoSynchronizableService<
 			const model = await this.internalConvertEntityToModel(entity)
 
 			if (model) {
-				const response = await this.apiSave(model)
-				if (response && response.success) {
+				const result = await this.apiSave(model)
+				if (this.apiResultSuccess(result)) {
+					const response = result.data!
+
 					const newEntity = await this.internalConvertModelToEntity(
 						response.data,
 					)
@@ -227,6 +242,8 @@ export default abstract class AutoSynchronizableService<
 							SyncConstants.CONVERT_MODEL_TO_ENTITY_ERROR,
 						)
 					}
+				} else if (result.status === APITreatedResponseStatus.NO_PERMISSION) {
+					await this.dbDelete(dbEntity)
 				}
 			}
 
@@ -239,6 +256,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entities Entities to save
 	 */
 	saveAll = async (entities: ENTITY[]) => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		entities.forEach(entity => {
 			this.updateLastUpdate(entity)
 			entity.localState = SynchronizableLocalState.SAVED_LOCALLY
@@ -248,14 +268,15 @@ export default abstract class AutoSynchronizableService<
 
 		const models = await this.internalConvertEntitiesToModels(entities)
 
-		const response = await this.apiSaveAll(models)
+		const result = await this.apiSaveAll(models)
 
-		if (response && response.success) {
+		if (this.apiResultSuccess(result)) {
+			const response = result.data!
 			const models = response.data
 			const newEntities = await this.internalConvertModelsToEntities(models)
 			await this.dbSaveAll(newEntities)
-		} else {
-			await this.dbSaveAll(entities)
+		} else if (result.status === APITreatedResponseStatus.NO_PERMISSION) {
+			await this.dbDeleteAll(entities)
 		}
 
 		this.triggerUpdateEvent()
@@ -266,6 +287,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param model Data model of entity
 	 */
 	saveFromDataModelLocally = async (model: DATA_MODEL) => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		const entity = await this.internalConvertModelToEntity(model)
 		if (entity) {
 			await this.saveOnlyLocally(entity)
@@ -277,6 +301,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param models Data models of each entity
 	 */
 	saveAllFromDataModelLocally = async (models: DATA_MODEL[]) => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		const entities = await this.internalConvertModelsToEntities(models)
 		if (entities.length > 0) {
 			await this.saveAllOnlyLocally(entities)
@@ -288,6 +315,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entity Entity to save
 	 */
 	saveOnlyLocally = async (entity: ENTITY) => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		await this.dbSave(entity)
 		this.triggerUpdateEvent()
 	}
@@ -297,6 +327,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entities Entities to save
 	 */
 	saveAllOnlyLocally = async (entities: ENTITY[]) => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		await this.dbSaveAll(entities)
 		this.triggerUpdateEvent()
 	}
@@ -306,6 +339,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entity Entity to delete
 	 */
 	delete = async (entity: ENTITY) => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		if (entity.id === undefined) {
 			await this.dbDelete(entity)
 			this.triggerUpdateEvent()
@@ -320,12 +356,12 @@ export default abstract class AutoSynchronizableService<
 			const model = await this.internalConvertEntityToModel(entity)
 
 			if (model) {
-				const response = await this.apiDelete(model)
+				const result = await this.apiDelete(model)
 
-				if (response) {
+				if (this.apiResultSuccess(result)) {
+					const response = result.data!
 					if (response.success) {
 						await this.dbDelete(entity)
-
 						return true
 					} else if (response.data) {
 						const apiEntity = await this.internalConvertModelToEntity(
@@ -343,6 +379,8 @@ export default abstract class AutoSynchronizableService<
 							)
 						}
 					}
+				} else if (result.status === APITreatedResponseStatus.NO_PERMISSION) {
+
 				}
 			} else {
 				LogAppErrorService.logMessage(
@@ -358,6 +396,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entities Entities to delete
 	 */
 	deleteAll = async (entities: ENTITY[]) => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return
+
 		const filterById = ArrayUtils.partition(entities, entity =>
 			Utils.isNotEmpty(entity.id),
 		)
@@ -369,9 +410,9 @@ export default abstract class AutoSynchronizableService<
 			this.triggerUpdateEvent()
 			if (deleted) {
 				const models = await this.internalConvertEntitiesToModels(entities)
-				const deleteAllResponse = await this.apiDeleteAll(models)
+				const result = await this.apiDeleteAll(models)
 
-				if (deleteAllResponse && deleteAllResponse.success) {
+				if (this.apiResultSuccess(result)) {
 					await this.dbDeleteAll(entities)
 					this.triggerUpdateEvent()
 				}
@@ -492,15 +533,20 @@ export default abstract class AutoSynchronizableService<
 	 * @description Start entity save sync with API.
 	 */
 	protected syncSave = async (): Promise<boolean> => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return false
+
 		const notSavedEntities = await this.dbGetAllNotSavedOnAPI()
 
 		const notSavedModels = await this.internalConvertEntitiesToModels(
 			notSavedEntities,
 		)
 
-		const saveResponse = await this.apiSaveSync(notSavedModels)
+		const result = await this.apiSaveSync(notSavedModels)
 
-		if (saveResponse && saveResponse.success) {
+		if (this.apiResultSuccess(result)) {
+			const saveResponse = result.data!
+
 			await this.dbDeleteAllFakeDeleteds()
 
 			const entities = await this.internalConvertModelsToEntities(
@@ -523,6 +569,9 @@ export default abstract class AutoSynchronizableService<
 	 * @description Start entity delete sync with API.
 	 */
 	protected syncDelete = async (): Promise<boolean> => {
+		const hasPermission = await AuthService.hasPermissions(this.getDinoPermissions())
+		if (!hasPermission) return false
+
 		const deletedEntities = await this.dbGetAllFakeDeleted()
 
 		if (deletedEntities.length === 0) return true
@@ -531,9 +580,9 @@ export default abstract class AutoSynchronizableService<
 			deletedEntities,
 		)
 
-		const deleteResponse = await this.apiDeleteAll(deletedModels)
+		const result = await this.apiDeleteAll(deletedModels)
 
-		if (deleteResponse && deleteResponse.success) {
+		if (this.apiResultSuccess(result)) {
 			await this.dbDeleteAllFakeDeleteds()
 
 			this.triggerUpdateEvent()
@@ -690,114 +739,165 @@ export default abstract class AutoSynchronizableService<
 
 	private apiSave = async (
 		data: DATA_MODEL,
-	): Promise<SynchronizableDataResponseModel<ID, DATA_MODEL> | undefined> => {
+	): Promise<APITreatedResponse<SynchronizableDataResponseModel<ID, DATA_MODEL>>> => {
 		const request = await DinoAgentService.post(this.saveRequestURL())
-
-		if (request.canGo) {
-			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(data).go()
-				return response.body
-			} catch (e) {
-				LogAppErrorService.logError(e)
-			}
+		const result: APITreatedResponse<SynchronizableDataResponseModel<ID, DATA_MODEL>> = {
+			data: undefined,
+			status: APITreatedResponseStatus.SUCCESS
 		}
 
-		return undefined
+		try {
+			const permissions = this.getDinoPermissions()
+			await request.authenticate(permissions)
+			if (!request.hasPermissions) {
+				result.status = APITreatedResponseStatus.NO_PERMISSION
+				return result
+			}
+			if (request.canGo) {
+				const response = await request.setBody(data).go()
+				result.data = response.body
+				return result
+			}
+		} catch (e) {
+			LogAppErrorService.logError(e)
+		}
+
+		result.status = APITreatedResponseStatus.FAILURE
+		return result
 	}
 
 	private apiDelete = async (
 		model: DATA_MODEL,
-	): Promise<SynchronizableDataResponseModel<ID, DATA_MODEL> | undefined> => {
+	): Promise<APITreatedResponse<SynchronizableDataResponseModel<ID, DATA_MODEL>>> => {
 		const request = await DinoAgentService.delete(this.deleteRequestURL())
-
-		if (request.canGo) {
-			const requestModel: SynchronizableDeleteModel<ID> = {
-				id: model.id,
-				lastUpdate: model.lastUpdate,
-			}
-
-			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(requestModel).go()
-				return response.body
-			} catch (e) {
-				LogAppErrorService.logError(e)
-			}
+		const result: APITreatedResponse<SynchronizableDataResponseModel<ID, DATA_MODEL>> = {
+			data: undefined,
+			status: APITreatedResponseStatus.SUCCESS
 		}
 
-		return undefined
-	}
-
-	private apiSaveAll = async (
-		models: DATA_MODEL[],
-	): Promise<
-		SynchronizableListDataResponseModel<ID, DATA_MODEL> | undefined
-	> => {
-		const request = await DinoAgentService.post(this.saveAllRequestURL())
-
-		if (request.canGo) {
-			const requestModel: SynchronizableSaveAllModel<ID, DATA_MODEL> = {
-				data: models,
-			}
-
-			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(requestModel).go()
-				return response.body
-			} catch (e) {
-				LogAppErrorService.logError(e)
-			}
+		const requestModel: SynchronizableDeleteModel<ID> = {
+			id: model.id,
+			lastUpdate: model.lastUpdate,
 		}
 
-		return undefined
-	}
-
-	private apiDeleteAll = async (
-		models: DATA_MODEL[],
-	): Promise<SynchronizableGenericDataResponseModel<Array<ID>> | undefined> => {
-		const request = await DinoAgentService.delete(this.deleteAllRequestURL())
-
-		if (request.canGo) {
-			const requestModel: SynchronizableDeleteAllListModel<ID> = {
-				data: models.map(model => ({
-					id: model.id,
-					lastUpdate: model.lastUpdate,
-				})),
-			}
-
-			try {
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(requestModel).go()
-				return response.body
-			} catch (e) {
-				LogAppErrorService.logError(e)
-			}
-		}
-
-		return undefined
-	}
-
-	private apiSaveSync = async (
-		toSave: Array<DATA_MODEL>,
-	): Promise<SynchronizableSyncResponseModel<ID, DATA_MODEL> | undefined> => {
 		try {
-			const request = await DinoAgentService.put(this.syncSaveRequestURL())
-
+			const permissions = this.getDinoPermissions()
+			await request.authenticate(permissions)
+			if (!request.hasPermissions) {
+				result.status = APITreatedResponseStatus.NO_PERMISSION
+				return result
+			}
 			if (request.canGo) {
-				const requestModel: SynchronizableSyncModel<ID, DATA_MODEL> = {
-					save: toSave,
-				}
-
-				const authRequest = await request.authenticate()
-				const response = await authRequest.setBody(requestModel).go()
+				const response = await request.setBody(requestModel).go()
 				return response.body
 			}
 		} catch (e) {
 			LogAppErrorService.logError(e)
 		}
 
-		return undefined
+		result.status = APITreatedResponseStatus.FAILURE
+		return result
+	}
+
+	private apiSaveAll = async (
+		models: DATA_MODEL[],
+	): Promise<APITreatedResponse<SynchronizableListDataResponseModel<ID, DATA_MODEL>>> => {
+		const request = await DinoAgentService.post(this.saveAllRequestURL())
+		const result: APITreatedResponse<SynchronizableListDataResponseModel<ID, DATA_MODEL>> = {
+			data: undefined,
+			status: APITreatedResponseStatus.SUCCESS
+		}
+
+		const requestModel: SynchronizableSaveAllModel<ID, DATA_MODEL> = {
+			data: models,
+		}
+
+		try {
+			const permissions = this.getDinoPermissions()
+			await request.authenticate(permissions)
+			if (!request.hasPermissions) {
+				result.status = APITreatedResponseStatus.NO_PERMISSION
+				return result
+			}
+			if (request.canGo) {
+				const response = await request.setBody(requestModel).go()
+				return response.body
+			}
+		} catch (e) {
+			LogAppErrorService.logError(e)
+		}
+
+		result.status = APITreatedResponseStatus.FAILURE
+		return result
+	}
+
+	private apiDeleteAll = async (
+		models: DATA_MODEL[],
+	): Promise<APITreatedResponse<SynchronizableGenericDataResponseModel<Array<ID>>>> => {
+		const request = await DinoAgentService.delete(this.deleteAllRequestURL())
+		const result: APITreatedResponse<SynchronizableGenericDataResponseModel<Array<ID>>> = {
+			data: undefined,
+			status: APITreatedResponseStatus.SUCCESS
+		}
+
+		const requestModel: SynchronizableDeleteAllListModel<ID> = {
+			data: models.map(model => ({
+				id: model.id,
+				lastUpdate: model.lastUpdate,
+			})),
+		}
+
+		try {
+			const permissions = this.getDinoPermissions()
+			await request.authenticate(permissions)
+			if (!request.hasPermissions) {
+				result.status = APITreatedResponseStatus.NO_PERMISSION
+				return result
+			}
+			if (request.canGo) {
+				const response = await request.setBody(requestModel).go()
+				return response.body
+			}
+		} catch (e) {
+			LogAppErrorService.logError(e)
+		}
+
+		result.status = APITreatedResponseStatus.FAILURE
+		return result
+	}
+
+	private apiSaveSync = async (
+		toSave: Array<DATA_MODEL>,
+	): Promise<APITreatedResponse<SynchronizableSyncResponseModel<ID, DATA_MODEL>>> => {
+		const result: APITreatedResponse<SynchronizableSyncResponseModel<ID, DATA_MODEL>> = {
+			data: undefined,
+			status: APITreatedResponseStatus.SUCCESS
+		}
+
+		try {
+			const request = await DinoAgentService.put(this.syncSaveRequestURL())
+
+			const requestModel: SynchronizableSyncModel<ID, DATA_MODEL> = {
+				save: toSave,
+			}
+			const permissions = this.getDinoPermissions()
+			await request.authenticate(permissions)
+			if (request.canGo) {
+				const response = await request.setBody(requestModel).go()
+				result.data = response.body
+				return result
+			}
+		} catch (e) {
+			LogAppErrorService.logError(e)
+		}
+
+		result.status === APITreatedResponseStatus.FAILURE
+		return result
+	}
+
+	private apiResultSuccess<T extends SynchronizableGenericResponseModel>
+	(result: APITreatedResponse<T>) {
+		return result.status === APITreatedResponseStatus.SUCCESS && result.data && result.data.success
 	}
 
 	//#endregion

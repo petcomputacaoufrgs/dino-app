@@ -24,3 +24,10 @@
 .dino_dialog__content {
 	padding: 1.3rem;
 }
+
+.dino_dialog__header,
+.dino_dialog__content {
+	text-align: start;
+	font-family: var(--font-base);
+	color: var(--base-font-color);
+}

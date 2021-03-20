@@ -8,6 +8,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class GlossaryServiceImpl extends AutoSynchronizableService<
 	number,
@@ -21,6 +22,10 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 			WebSocketTopicPathService,
 			APIWebSocketDestConstants.GLOSSARY,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return []
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

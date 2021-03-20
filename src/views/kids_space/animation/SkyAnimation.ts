@@ -1,6 +1,6 @@
 import ArrayUtils from '../../../utils/ArrayUtils'
 import { getRandomInteger } from '../../../utils/RandomUtils'
-import sleep from '../../../utils/SleepUtils'
+import SleepUtils from '../../../utils/SleepUtils'
 
 export default class SkyAnimation {
 	duration = 0
@@ -35,7 +35,7 @@ export default class SkyAnimation {
 				if (this.hasClickEvent)
 					element.onclick = () => this.handleCloudClick(element)
 				this.runCloudAnimation(element)
-				await sleep((this.duration / elements.length) * 2)
+				await SleepUtils.sleep((this.duration / elements.length) * 2)
 			}
 		}
 	}
@@ -45,7 +45,7 @@ export default class SkyAnimation {
 		while (opacity > 0) {
 			opacity = opacity - 0.1
 			cloud.style.opacity = `${opacity}`
-			await sleep(100)
+			await SleepUtils.sleep(100)
 		}
 	}
 
@@ -55,11 +55,11 @@ export default class SkyAnimation {
 		cloud.style.animationDuration = `${this.duration}ms`
 		while (this.isRunning) {
 			cloud.removeAttribute('id')
-			await sleep(sleepTime)
+			await SleepUtils.sleep(sleepTime)
 			cloud.style.opacity = '1'
 			cloud.style.visibility = 'visible'
 			cloud.setAttribute('id', id)
-			await sleep(this.duration)
+			await SleepUtils.sleep(this.duration)
 			cloud.style.visibility = 'hidden'
 			sleepTime = await this.getRandomSleep()
 		}
@@ -80,7 +80,7 @@ export default class SkyAnimation {
 		const resolve = this.randomQueue.shift()
 		if (resolve) resolve(this.getSleepValue())
 
-		await sleep(getRandomInteger(50, 150))
+		await SleepUtils.sleep(getRandomInteger(50, 150))
 		if (this.randomQueue.length > 0) this.resolveRandomSleepQueue()
 	}
 

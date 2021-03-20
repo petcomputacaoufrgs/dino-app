@@ -1,6 +1,7 @@
 import Superagent from 'superagent'
 import AgentRequest, { AgentRequestInfo } from '../types/agent/AgentRequest'
 import ConnectionService from '../services/connection/ConnectionService'
+import SleepUtils from '../utils/SleepUtils'
 
 type AgentResolve<AUTH> = (
 	value: AUTH | undefined | PromiseLike<AUTH | undefined>,
@@ -8,7 +9,7 @@ type AgentResolve<AUTH> = (
 
 const TIME_MARGIN_OF_ERROR_IN_MS = 300000
 
-export default abstract class BaseAgent<AUTH> {
+export default abstract class BaseAgent<AUTH, PERMISSION> {
 	private refreshingAuth: boolean
 	private resolves: AgentResolve<AUTH>[]
 
@@ -36,6 +37,19 @@ export default abstract class BaseAgent<AUTH> {
 	 * Return true if user has valid authentication
 	 */
 	abstract isAuthenticated(auth: AUTH): boolean
+
+	/**
+	 * Return true if user has the requested permission
+	 * @param permissions list of defined permissions
+	 */
+	abstract hasPermissions(permissions: PERMISSION[]): Promise<boolean>
+
+	/**
+	 * Return request with additional header for permissions if necessary
+	 * @param permissions 
+	 */
+	abstract addPermissions(requestInfo: AgentRequestInfo,
+		permissions: PERMISSION[]): Promise<AgentRequestInfo>
 
 	/**
 	 * Override to add authentication on request
@@ -68,7 +82,7 @@ export default abstract class BaseAgent<AUTH> {
 		return request
 	}
 
-	put = async (url: string): Promise<AgentRequest> => {
+	put = async (url: string): Promise<AgentRequest<PERMISSION>> => {
 		const request = this.filterWhileCreating(
 			Superagent.put(url)
 				.on('error', this.onError)
@@ -77,11 +91,12 @@ export default abstract class BaseAgent<AUTH> {
 
 		return this.getAgentRequest({
 			request: request,
-			canGo: this.canGo(),
+			hasPermission: true,
+			canGo: true
 		})
 	}
 
-	patch = async (url: string): Promise<AgentRequest> => {
+	patch = async (url: string): Promise<AgentRequest<PERMISSION>> => {
 		const request = this.filterWhileCreating(
 			Superagent.patch(url)
 				.on('error', this.onError)
@@ -90,11 +105,12 @@ export default abstract class BaseAgent<AUTH> {
 
 		return this.getAgentRequest({
 			request: request,
-			canGo: this.canGo(),
+			hasPermission: true,
+			canGo: true
 		})
 	}
 
-	post = async (url: string): Promise<AgentRequest> => {
+	post = async (url: string): Promise<AgentRequest<PERMISSION>> => {
 		const request = this.filterWhileCreating(
 			Superagent.post(url)
 				.on('error', this.onError)
@@ -103,11 +119,12 @@ export default abstract class BaseAgent<AUTH> {
 
 		return this.getAgentRequest({
 			request: request,
-			canGo: this.canGo(),
+			hasPermission: true,
+			canGo: true
 		})
 	}
 
-	get = async (url: string): Promise<AgentRequest> => {
+	get = async (url: string): Promise<AgentRequest<PERMISSION>> => {
 		const request = this.filterWhileCreating(
 			Superagent.get(url)
 				.on('error', this.onError)
@@ -116,11 +133,12 @@ export default abstract class BaseAgent<AUTH> {
 
 		return this.getAgentRequest({
 			request: request,
-			canGo: this.canGo(),
+			hasPermission: true,
+			canGo: true
 		})
 	}
 
-	delete = async (url: string): Promise<AgentRequest> => {
+	delete = async (url: string): Promise<AgentRequest<PERMISSION>> => {
 		const request = this.filterWhileCreating(
 			Superagent.delete(url)
 				.on('error', this.onError)
@@ -129,22 +147,19 @@ export default abstract class BaseAgent<AUTH> {
 
 		return this.getAgentRequest({
 			request: request,
-			canGo: this.canGo(),
+			hasPermission: true,
+			canGo: true
 		})
 	}
 
 	private getUpdatedAuth = async (): Promise<AUTH | undefined> => {
 		const auth = await this.getAuth()
 
-		if (!auth) {
-			return
-		}
+		if (!auth) return
 
 		const isAuthenticated = this.isAuthenticated(auth)
 
-		if (!isAuthenticated) {
-			return
-		}
+		if (!isAuthenticated) return
 
 		const expiresDate = this.getTokenExpiresDate(auth)
 
@@ -185,27 +200,16 @@ export default abstract class BaseAgent<AUTH> {
 		}
 	}
 
-	private resolveAllAfterReturn = (auth: AUTH | undefined) => {
-		setTimeout(() => this.resolveAll(auth), 0)
-	}
-
-	private resolveAll(auth: AUTH | undefined) {
+	private resolveAllAfterReturn = async (auth: AUTH | undefined) => {
+		await SleepUtils.sleep(0)
 		this.resolves.forEach(resolve => resolve(auth))
-		this.cleanResolveList()
-	}
-
-	private cleanResolveList() {
 		this.resolves = []
-	}
-
-	private canGo = () => {
-		return ConnectionService.isConnected()
 	}
 
 	private setBody = (
 		info: AgentRequestInfo,
 		body: string | object,
-	): AgentRequest => {
+	): AgentRequest<PERMISSION> => {
 		info.request.send(body)
 		return this.getAgentRequest(info)
 	}
@@ -214,31 +218,54 @@ export default abstract class BaseAgent<AUTH> {
 		info: AgentRequestInfo,
 		key: string,
 		value: string,
-	): AgentRequest => {
+	): AgentRequest<PERMISSION> => {
 		info.request.set(key, value)
 		return this.getAgentRequest(info)
 	}
 
 	private authenticate = async (
 		info: AgentRequestInfo,
-	): Promise<AgentRequest> => {
+		permissions?: PERMISSION[]
+	): Promise<void> => {
 		const auth = await this.getUpdatedAuth()
 
 		if (auth) {
 			info.request = this.addAuth(info.request, auth)
+			if (permissions && permissions.length > 0) {
+				this.permissions(info, permissions)
+			}
+		} else {
+			info.canGo = false
 		}
-
-		return this.getAgentRequest(info)
 	}
 
-	private getAgentRequest = (info: AgentRequestInfo): AgentRequest => {
+	private permissions = async (info: AgentRequestInfo, permissions: PERMISSION[]): Promise<void> => {
+		const hasPermissions = await this.hasPermissions(permissions)
+ 
+		if (hasPermissions) {
+			await this.addPermissions(info, permissions)
+		} else {
+			info.hasPermission = false
+		}
+	}
+
+	private canGo(info: AgentRequestInfo) {
+		if (info.canGo) {
+			return ConnectionService.isConnected()
+		}
+
+		return false
+	}
+
+	private getAgentRequest = (info: AgentRequestInfo): AgentRequest<PERMISSION> => {
 		return {
 			go: async (): Promise<Superagent.Response> => await info.request,
-			canGo: info.canGo,
-			authenticate: () => this.authenticate(info),
+			canGo: this.canGo(info),
+			authenticate: (permissions?: PERMISSION[]) => this.authenticate(info, permissions),
+			addPermission: (permission: PERMISSION) => this.permissions(info, [permission]),
 			setBody: (body: string | object) => this.setBody(info, body),
-			addHeader: (key: string, value: string) =>
-				this.addHeader(info, key, value),
+			addHeader: (key: string, value: string) => this.addHeader(info, key, value),
+			hasPermissions: info.hasPermission
 		}
 	}
 }

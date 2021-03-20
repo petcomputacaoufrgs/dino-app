@@ -14,6 +14,7 @@ import TreatmentService from '../treatment/TreatmentService'
 import Utils from '../../utils/Utils'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import GoogleContactService from './GoogleContactService'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -27,6 +28,10 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			WebSocketTopicPathService,
 			APIWebSocketDestConstants.ESSENTIAL_CONTACT,
 		)
+	}
+	
+	protected getDinoPermissions(): DinoPermission[] {
+		return []
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

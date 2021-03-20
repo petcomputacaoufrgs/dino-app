@@ -10,6 +10,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import PhoneService from './PhoneService'
+import DinoPermission from '../../types/auth/api/DinoPermissions'
 
 class GoogleContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -23,6 +24,10 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.GOOGLE_CONTACT,
 		)
+	}
+
+	protected getDinoPermissions(): DinoPermission[] {
+		return [DinoPermission.RESPONSIBLE]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

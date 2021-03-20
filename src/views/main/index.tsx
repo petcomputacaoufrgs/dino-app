@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useLanguage } from '../../context/language'
-import { Switch } from 'react-router'
+import { Route, Switch } from 'react-router'
 import PathConstants from '../../constants/app/PathConstants'
 import DrawerNavigation from '../../components/drawer_navigation'
-import PrivateRoute from '../../components/private_route'
 import GlossaryItem from './glossary/glossary_item'
 import Glossary from './glossary'
 import Contacts from './contacts'
@@ -19,11 +18,10 @@ import AuthService from '../../services/auth/AuthService'
 import MenuService from '../../services/menu/MenuService'
 import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
 import Loader from '../../components/loader'
-import KidsSpace from '../kids_space'
+import './styles.css'
 
 const Main: React.FC = () => {
 	const language = useLanguage()
-
 	const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
 	const handleLogoutClick = () => {
@@ -38,7 +36,7 @@ const Main: React.FC = () => {
 		setOpenLogoutDialog(false)
 	}
 
-	const groupedItems: MenuItemViewModel[][] = MenuService.getGroupedMenuItems(
+	const menuItems: MenuItemViewModel[][] = MenuService.getMenuItems(
 		language.data,
 		handleLogoutClick,
 	)
@@ -46,43 +44,37 @@ const Main: React.FC = () => {
 	const renderMainContent = (): JSX.Element => {
 		return (
 			<Switch>
-				<PrivateRoute exact path={PathConstants.HOME} component={Home} />
-				<PrivateRoute
-					exact
-					path={PathConstants.GAMES}
-					component={() => <></>}
-				/>
-				<PrivateRoute
+				<Route exact path={PathConstants.RESPONSIBLE_HOME} component={Home} />
+				<Route
 					exact
 					path={PathConstants.GLOSSARY}
 					component={Glossary}
 				/>
-				<PrivateRoute
+				<Route
 					exact
 					path={PathConstants.CONTACTS}
 					component={Contacts}
 				/>
-				<PrivateRoute exact path={PathConstants.NOTES} component={Notes} />
-				<PrivateRoute
+				<Route exact path={PathConstants.NOTES} component={Notes} />
+				<Route
 					exact
 					path={PathConstants.SETTINGS}
 					component={Settings}
 				/>
-				<PrivateRoute
+				<Route
 					path={`${PathConstants.GLOSSARY}/:localId`}
 					component={GlossaryItem}
 				/>
-				<PrivateRoute path={PathConstants.KIDS_SPACE} component={KidsSpace} />
-				<PrivateRoute path={PathConstants.FAQ} component={Faq} />
-				<PrivateRoute path={PathConstants.CALENDAR} component={Calendar} />
-				<PrivateRoute path={'/'} component={NotFound} />
+				<Route path={PathConstants.FAQ} component={Faq} />
+				<Route path={PathConstants.CALENDAR} component={Calendar} />
+				<Route path={'/'} component={NotFound} />
 			</Switch>
 		)
 	}
 	return (
-		<Loader isLoading={language.loading} hideChildren>
+		<Loader className='responsible_loader' isLoading={language.loading} hideChildren>
 			<DrawerNavigation
-				groupedItems={groupedItems}
+				items={menuItems}
 				component={renderMainContent()}
 			/>
 			<LogoutDialog

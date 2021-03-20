@@ -19,10 +19,10 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 import UserSettingsConstants from '../../../constants/auth/ResponsibleAuthConstants'
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
 import { useAlert } from '../../../context/alert/index'
-import './styles.css'
 import Loader from '../../loader'
 import ConnectionService from '../../../services/connection/ConnectionService'
 import ResponsibleAuthConstants from '../../../constants/auth/ResponsibleAuthConstants'
+import './styles.css'
 
 const FirstSettingsDialog: React.FC = () => {
 	const language = useLanguage()
@@ -280,7 +280,7 @@ const FirstSettingsDialog: React.FC = () => {
 			return false
 		}
 		
-		if (responsiblePassword.length < UserSettingsConstants.PASSWORD_LENGTH_MAX) {
+		if (responsiblePassword.length < UserSettingsConstants.PASSWORD_LENGTH_MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_LENGHT_ERROR_MESSAGE(
 				ResponsibleAuthConstants.PASSWORD_LENGTH_MIN, ResponsibleAuthConstants.PASSWORD_LENGTH_MAX))
 			return false
@@ -415,7 +415,7 @@ const FirstSettingsDialog: React.FC = () => {
 			component: renderSelectTreatmentDialogContent,
 		},
 		{
-			title: 'Crie uma senha para a área dos responsáveis', 
+			title: language.data.FIRST_SETTINGS_PASSWORD_STEP_TITLE, 
 			component: renderSetPasswordDialog,
 		},
 		{ title: '', component: renderFinalMessageDialog },
@@ -451,7 +451,6 @@ const FirstSettingsDialog: React.FC = () => {
 		)
 	}
 
-	//TODO: Exibir loading enquanto faz requisição para salvar senha
 	return (
 		<>
 			{settings && !settings.firstSettingsDone && (

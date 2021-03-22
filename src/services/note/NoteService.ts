@@ -1,5 +1,5 @@
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import NoteConstants from '../../constants/note/NoteConstants'
 import Database from '../../storage/Database'
 import NoteDataModel from '../../types/note/api/NoteDataModel'
@@ -23,7 +23,7 @@ class NoteServiceImpl extends AutoSynchronizableService<
 			Database.note,
 			APIRequestMappingConstants.NOTE,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.NOTE,
+			APIMainPathsConstants.NOTE,
 		)
 	}
 

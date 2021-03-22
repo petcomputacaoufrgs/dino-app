@@ -3,8 +3,8 @@ import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserEntity from '../../types/user/database/UserEntity'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
@@ -24,7 +24,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 			Database.user,
 			APIRequestMappingConstants.USER,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.USER,
+			APIMainPathsConstants.USER,
 		)
 	}
 

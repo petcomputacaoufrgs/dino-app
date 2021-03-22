@@ -1,5 +1,5 @@
 import Superagent from 'superagent'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import sleep from '../../utils/SleepUtils'
 import ArrayUtils from '../../utils/ArrayUtils'
 import HttpStatus from '../../types/http/HttpStatus'

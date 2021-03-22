@@ -1,6 +1,6 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import FaqItemDataModel from '../../types/faq/api/FaqItemDataModel'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import StringUtils from '../../utils/StringUtils'
@@ -20,7 +20,7 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 			Database.faqItem,
 			APIRequestMappingConstants.FAQ_ITEM,
 			WebSocketTopicPathService,
-			APIWebSocketDestConstants.FAQ_ITEM,
+			APIMainPathsConstants.FAQ_ITEM,
 		)
 	}
 

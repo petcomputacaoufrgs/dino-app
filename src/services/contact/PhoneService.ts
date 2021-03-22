@@ -1,5 +1,5 @@
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import DataConstants from '../../constants/app_data/DataConstants'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
@@ -26,7 +26,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 			Database.phone,
 			APIRequestMappingConstants.PHONE,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.PHONE,
+			APIMainPathsConstants.PHONE,
 		)
 	}
 

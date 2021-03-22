@@ -1,6 +1,6 @@
 import Superagent from 'superagent'
 import GoogleAuthRequestModel from '../../types/auth/google/api/GoogleAuthRequestModel'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import AuthResponseDataModel from '../../types/auth/api/AuthResponseModel'
 import LoginStatusConstants from '../../constants/login/LoginStatusConstants'
 import UserService from '../user/UserService'

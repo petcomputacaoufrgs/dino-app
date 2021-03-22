@@ -1,6 +1,6 @@
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
@@ -19,7 +19,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 			Database.treatment,
 			APIRequestMappingConstants.TREATMENT,
 			WebSocketTopicPathService,
-			APIWebSocketDestConstants.TREATMENT,
+			APIMainPathsConstants.TREATMENT,
 		)
 	}
 

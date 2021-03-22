@@ -630,7 +630,7 @@ export default class EN implements LanguageBase {
 
 	USERS_QUESTIONS = "User's Questions"
 
-	SEND_TO_THE_PROFESSIONALS = 'Sendo to the profissionals!'
+	SEND_TO_THE_PROFESSIONALS = 'Send to the profissionals!'
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

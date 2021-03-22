@@ -4,6 +4,7 @@ import { DinoTabPanelProps, TabPanelProps } from './props'
 import './styles.css'
 
 function getProps(index: number) {
+  console.log(index)
 	return {
 	  id: `full-width-tab-${index}`,
 	  'aria-controls': `full-width-tabpanel-${index}`,

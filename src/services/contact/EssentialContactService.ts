@@ -1,6 +1,6 @@
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
@@ -27,7 +27,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			Database.essentialContact,
 			APIRequestMappingConstants.ESSENTIAL_CONTACT,
 			WebSocketTopicPathService,
-			APIWebSocketDestConstants.ESSENTIAL_CONTACT,
+			APIMainPathsConstants.ESSENTIAL_CONTACT,
 		)
 	}
 

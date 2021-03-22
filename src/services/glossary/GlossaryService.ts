@@ -1,9 +1,9 @@
 import GlossaryItemModel from '../../types/glossary/api/GlossaryItemDataModel'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
@@ -20,7 +20,7 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 			Database.glossary,
 			APIRequestMappingConstants.GLOSSARY,
 			WebSocketTopicPathService,
-			APIWebSocketDestConstants.GLOSSARY,
+			APIMainPathsConstants.GLOSSARY,
 		)
 	}
 

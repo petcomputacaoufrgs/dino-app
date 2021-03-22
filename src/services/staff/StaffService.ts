@@ -1,6 +1,6 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
@@ -21,7 +21,7 @@ class StaffServiceImpl extends AutoSynchronizableService<
 			Database.staff,
 			APIRequestMappingConstants.STAFF,
 			WebSocketTopicPathService,
-			APIWebSocketDestConstants.STAFF,
+			APIMainPathsConstants.STAFF,
 		)
 	}
 

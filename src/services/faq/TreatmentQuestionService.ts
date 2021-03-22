@@ -1,8 +1,8 @@
 import TreatmentQuestionDataModel from '../../types/faq/api/TreatmentQuestionDataModel'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import TreatmentQuestionEntity from '../../types/faq/database/TreatmentQuestionEntity'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import TreatmentService from '../treatment/TreatmentService'
@@ -19,7 +19,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 			Database.treatmentQuestion,
 			APIRequestMappingConstants.TREATMENT_QUESTION,
 			WebSocketTopicPathService,
-			APIWebSocketDestConstants.TREATMENT_QUESTION,
+			APIMainPathsConstants.TREATMENT_QUESTION,
 		)
 	}
 

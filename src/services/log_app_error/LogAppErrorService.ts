@@ -1,6 +1,6 @@
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import DinoAgentService from '../../agent/DinoAgentService'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListModel'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import SynchronizableService from '../sync/SynchronizableService'

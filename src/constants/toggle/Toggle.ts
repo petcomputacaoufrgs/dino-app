@@ -1,3 +1,3 @@
 export const toggle = {
-	firstLoginDialog: true
+	firstLoginDialog: false
 }

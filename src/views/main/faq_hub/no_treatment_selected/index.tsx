@@ -45,7 +45,7 @@ const NoTreatmentSelected: React.FC<NoTreatmentSelectedProps> = ({ treatments })
         onClick={handleSaveUserTreatment}
       >
         <SaveSVG className='save_button__icon' />
-        {language.data.TREATMENT_SAVE}
+        {language.data.SAVE}
       </Button>
     </div>
   )

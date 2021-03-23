@@ -23,9 +23,11 @@ import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
 import UserEnum from './types/enum/UserEnum'
-import './App.css'
 import UserMain from './views/main/user_main'
 import StaffMain from './views/main/staff_main'
+import './App.css'
+import './MaterialUI.css'
+import './General.css'
 
 const LOAD_SCREEN_TIME = 2250
 

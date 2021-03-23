@@ -328,7 +328,7 @@ const FirstSettingsDialog: React.FC = () => {
 							onBack={handleBackStep}
 							onEnd={handleSave}
 							onCancel={handleCancel}
-							endMessage={language.data.DIALOG_SAVE_BUTTON_TEXT}
+							endMessage={language.data.SAVE}
 						/>
 					}
 				>

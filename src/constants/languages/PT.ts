@@ -114,8 +114,6 @@ export default class PT implements LanguageBase {
 
 	SETTINGS_TREATMENT = 'Escolha seu tratamento'
 
-	SETTINGS_SAVE = 'Salvar'
-
 	SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
 
 	SETTINGS_SAVE_ERROR = 'Erro salvando as novas configurações.'
@@ -147,8 +145,6 @@ export default class PT implements LanguageBase {
 	NOTE_TAG_LABEL = 'Tags'
 
 	DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
-
-	DIALOG_SAVE_BUTTON_TEXT = 'Salvar'
 
 	SEARCH_BUTTON_LABEL = 'Buscar...'
 
@@ -532,8 +528,6 @@ export default class PT implements LanguageBase {
 
 	NO_FAQ_AVAILABLE = 'Nenhuma F.A.Q disponível'
 
-	TREATMENT_SAVE = 'Salvar'
-
 	KIDS_SPACE = 'Espaço infantil'
 
 	SECONDARY_TAB_MESSAGE =
@@ -548,8 +542,6 @@ export default class PT implements LanguageBase {
 		'Atualização disponível! Reinicie o DinoApp para instalar.'
 
 	PWA_CONTROL_END_INTRO_BUTTON = 'Fim'
-
-	FIRST_SETTINGS_SAVE_BUTTON = 'Salvar'
 
 	PWA_INTRO_TITLE_0 = 'Bem vindo ao DinoApp!'
 
@@ -639,11 +631,18 @@ export default class PT implements LanguageBase {
 	USERS_QUESTIONS = 'Usuários Perguntam'
 
 	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
-	
+
+	SAVE = 'Salvar'
+
 	itemAlreadyExists = (item: string) => `${item} já existente`
+
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
+
 	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`
+
 	titleFAQTreatmentText = (treatment: string) => `${this.FAQ} de ${treatment}`
+
 	titleTreatmentQuestion = (treatment: string) => `Tem uma pergunta sobre ${treatment}?`
+
 }
 

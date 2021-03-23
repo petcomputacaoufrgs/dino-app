@@ -33,7 +33,7 @@ const DinoDialog: React.FC<DinoDialogProps> = ({ open, onClose: handleClose, onS
 							{language.data.DIALOG_CANCEL_BUTTON_TEXT}
 						</TextButton>
 						<TextButton onClick={handleSave}>
-							{language.data.DIALOG_SAVE_BUTTON_TEXT}
+							{language.data.SAVE}
 						</TextButton>
 					</DialogActions>
 				}

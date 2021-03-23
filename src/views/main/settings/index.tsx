@@ -261,7 +261,7 @@ const Settings: React.FC = () => {
 		<div className='settings__save_button_container'>
 			<Button className='settings__save_button' onClick={handleSave}>
 				<SaveSVG className='settings__save_button__icon' />
-				{language.data.SETTINGS_SAVE}
+				{language.data.SAVE}
 			</Button>
 		</div>
 	)

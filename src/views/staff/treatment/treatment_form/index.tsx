@@ -60,7 +60,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
         onClose={handleClose}
         header={<DinoDialogHeader>{langData.ADD_TREATMENT}</DinoDialogHeader>}
       >
-        <div className='treatment__dialog_form__content__textfield'>
+        <div className='treatment__dialog_form__content__textfield dino_material_adapter'>
           <TextField
             aria-labelledby={langData.STAFF_ADD_TREATMENT_NAME}
           	className='dino__textfield'

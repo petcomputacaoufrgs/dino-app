@@ -1,0 +1,32 @@
+.save_button__icon {
+	margin-right: 0.5rem;
+	width: 18px;
+	height: 18px;
+	fill: var(--contrast-color);
+}
+
+.dino__history_link {
+	color: var(--button-font-color);
+	font-size: var(--default-font);
+	text-decoration: underline;
+}
+
+.dino__textfield .MuiFormHelperText-root {
+	text-align: right;
+	display: block;
+	color: var(--contrast-color);
+}
+
+.dino__flex_row {
+	display: flex;
+	flex-direction: row;
+}
+
+.dino__accordion {
+	padding: 4px 8px;
+}
+
+.dino__text__wrap {
+	overflow-wrap: anywhere;
+	white-space: normal;
+}

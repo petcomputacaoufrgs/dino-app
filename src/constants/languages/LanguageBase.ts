@@ -1,9 +1,4 @@
 export default interface LanguageBase {
-	itemAlreadyExists(item: string): string
-	deleteItemText(item: string): string
-	seeFAQItemsText(treatment: string): string
-	titleFAQTreatmentText(treatment: string): string
-	titleTreatmentQuestion(treatment: string): string
 	APP_NAME: string
 	DINOAPP_TEAM: string
 	CURIOUS_DINO_ALT: string
@@ -61,7 +56,6 @@ export default interface LanguageBase {
 	SETTINGS_TITLE: string
 	SETTINGS_LANGUAGE: string
 	SETTINGS_TREATMENT: string
-	SETTINGS_SAVE: string
 	SETTINGS_SAVE_SUCCESS: string
 	SETTINGS_SAVE_ERROR: string
 	MENU_NOTES: string
@@ -76,7 +70,6 @@ export default interface LanguageBase {
 	ANSWER_NOTE_DIALOG_TITLE: string
 	NOTE_TAG_LABEL: string
 	DIALOG_CANCEL_BUTTON_TEXT: string
-	DIALOG_SAVE_BUTTON_TEXT: string
 	SEARCH_BUTTON_LABEL: string
 	ANSWER_DIALOG_LABEL: string
 	FORM_NAME: string
@@ -260,7 +253,6 @@ export default interface LanguageBase {
 	NO_TREATMENTS_AVAILABLE: string
 	NO_TREATMENT_SELECTED: string
 	NO_FAQ_AVAILABLE: string
-	TREATMENT_SAVE: string
 	KIDS_SPACE: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string
 	PLAY_AGAIN_MESSAGE: string
@@ -305,5 +297,11 @@ export default interface LanguageBase {
 	INVALID_VALUE: string
 	USERS_QUESTIONS: string
 	SEND_TO_THE_PROFESSIONALS: string
+	SAVE: string
+	itemAlreadyExists(item: string): string
+	deleteItemText(item: string): string
+	seeFAQItemsText(treatment: string): string
+	titleFAQTreatmentText(treatment: string): string
+	titleTreatmentQuestion(treatment: string): string
 }
 

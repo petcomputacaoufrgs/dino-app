@@ -42,7 +42,7 @@ const ContactFormDialogContent: React.FC<ContactFormDialogContentProps> = (
 	}
 
 	return (
-		<div className='contact__dialog_form__content'>
+		<div className='contact__dialog_form__content material_label_overflow'>
 			<TextField
 				className='dino__textfield'
 				required={Constants.CONTACT_NAME.REQUIRED}

@@ -39,7 +39,9 @@ const PhoneFields = ({
 
 	const getNumberFormat = () => {
 		return type === Constants.CONTACT_PHONE_CODE_RESIDENTIAL
-			? '(23)4567-2345'
+			? '(23)4567-2345' 
+			: type === Constants.CONTACT_PHONE_CODE_PUBLIC_SERVICE
+			? '194'
 			: '(89)89898-9898'
 	}
 

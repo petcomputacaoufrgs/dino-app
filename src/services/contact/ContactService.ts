@@ -1,8 +1,8 @@
 import ContactDataModel from '../../types/contact/api/ContactDataModel'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import StringUtils from '../../utils/StringUtils'
@@ -26,7 +26,7 @@ class ContactServiceImpl extends AutoSynchronizableService<
 			Database.contact,
 			APIRequestMappingConstants.CONTACT,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.CONTACT,
+			APIMainPathsConstants.CONTACT,
 		)
 	}
 

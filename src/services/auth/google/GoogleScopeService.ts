@@ -1,8 +1,8 @@
 import AutoSynchronizableService from '../../sync/AutoSynchronizableService'
 import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeDataModel'
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
-import APIRequestMappingConstants from '../../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../../constants/api/APIMainPathsConstants'
 import SynchronizableWSUpdateModel from '../../../types/sync/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../../types/sync/api/web_socket/SynchronizableWSDeleteModel'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
@@ -21,7 +21,7 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 			Database.googleScope,
 			APIRequestMappingConstants.GOOGLE_SCOPE,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.GOOGLE_SCOPE,
+			APIMainPathsConstants.GOOGLE_SCOPE,
 		)
 	}
 

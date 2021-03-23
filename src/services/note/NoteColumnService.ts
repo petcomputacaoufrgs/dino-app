@@ -1,5 +1,5 @@
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import Database from '../../storage/Database'
 import NoteColumnDataModel from '../../types/note/api/NoteColumnDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
@@ -20,7 +20,7 @@ class NoteColumnServiceImpl extends AutoSynchronizableService<
 			Database.noteColumn,
 			APIRequestMappingConstants.NOTE_COLUMN,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.NOTE_COLUMN,
+			APIMainPathsConstants.NOTE_COLUMN,
 		)
 	}
 

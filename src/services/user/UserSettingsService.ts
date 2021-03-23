@@ -1,8 +1,8 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserSettingsDataModel from '../../types/user/api/UserSettingsDataModel'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import TreatmentService from '../treatment/TreatmentService'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import ColorThemeEnum from '../../types/enum/ColorThemeEnum'
@@ -27,7 +27,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			Database.userSettings,
 			APIRequestMappingConstants.USER_SETTINGS,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.USER_SETTINGS,
+			APIMainPathsConstants.USER_SETTINGS,
 		)
 	}
 

@@ -65,12 +65,16 @@ body .MuiInputBase-root {
 	margin: 0rem 0.125rem;
 }
 
-.material_label_overflow .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
   text-overflow: ellipsis;
   width: 100%;
   overflow: hidden;
 }
 
-.material_label_overflow .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated.MuiInputLabel-shrink {
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated.MuiInputLabel-shrink {
   width: 135%;
+}
+
+.MuiFormHelperText-root.Mui-required.MuiFormHelperText-marginDense {
+	font-size: var(--very-small-font);
 }

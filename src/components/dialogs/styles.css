@@ -26,6 +26,7 @@
 
 .dino_dialog__content {
 	padding: 1.3rem;
+	font-size: var(--default-font);
 }
 
 .dino_dialog .dino_dialog__actions {

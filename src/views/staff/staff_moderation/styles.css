@@ -35,13 +35,13 @@
 
 .staff_moderation .add_staff {
 	width: 100%;
-	height: 100%;
 	padding: 2rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	text-align: center;
+  font-size: var(--default-font);
 }
 
 .staff_moderation .add_staff p.add_staff__title  {

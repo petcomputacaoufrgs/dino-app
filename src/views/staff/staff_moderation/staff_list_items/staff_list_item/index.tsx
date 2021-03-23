@@ -4,6 +4,7 @@ import AvatarIcon from '@material-ui/icons/Person';
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import { useLanguage } from '../../../../../context/language'
 import StaffEntity from '../../../../../types/staff/database/StaffEntity'
+import './styles.css'
 
 interface StaffItemProps {
   item: StaffEntity, 
@@ -25,7 +26,7 @@ const StaffItem: React.FC<StaffItemProps> = ({ item, onClickMenu, onClick }) => 
       <ListItemText 
         primary={item.email} 
         secondary={
-          <Typography className='dino__flex_row' component={'span'} variant={'body2'}>
+          <Typography className='dino__flex_row staff_item' component={'span'} variant={'body2'}>
             {item.sentInvitationDate.toDateString()}
             {invitationIsPending && (<p className='invitation_pending'>{language.data.PENDING}</p>)}
           </Typography>

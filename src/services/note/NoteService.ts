@@ -99,8 +99,8 @@ class NoteServiceImpl extends AutoSynchronizableService<
 			}
 
 			if (activeTextSearch) {
-				const inSearch = note.question.includes(textSearch)
-
+				const regex = new RegExp(`${textSearch}`, 'i')
+				const inSearch = note.question.match(regex)
 				if (inSearch) return true
 			}
 

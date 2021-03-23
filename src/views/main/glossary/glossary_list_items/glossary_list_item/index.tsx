@@ -7,6 +7,7 @@ import GlossaryItemEntity from '../../../../../types/glossary/database/GlossaryI
 import Accordion from 'react-bootstrap/Accordion'
 import { useLanguage } from '../../../../../context/language'
 import { IsStaff } from '../../../../../context/private_router'
+import './styles.css'
 
 interface GlossaryListItemProps {
   item: GlossaryItemEntity,
@@ -29,8 +30,8 @@ interface GlossaryListItemProps {
 				</Accordion.Toggle>
 				<Accordion.Collapse eventKey={eventKey}>
 					<Card.Body>
-						<Card.Subtitle className='mb-2'>{item.subtitle}</Card.Subtitle>
-						<Card.Text>
+						<Card.Subtitle className='glossary__card__subtitle mb-2'>{item.subtitle}</Card.Subtitle>
+						<Card.Text className='glossary__card__text'>
 							{item.text || language.data.NO_AVAILABLE_TEXT}
 						</Card.Text>
 						<Link

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import GlossaryItems from './glossary_list_items'
 import MuiSearchBar from '../../../components/mui_search_bar'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
 import DinoLoader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
 import GlossaryService from '../../../services/glossary/GlossaryService'
-import './styles.css'
 import { IsStaff } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
 import GlossaryItemForm from './glossary_item_form'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles.css'
 
 const Glossary: React.FC = () => {
 

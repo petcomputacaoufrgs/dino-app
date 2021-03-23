@@ -5,7 +5,6 @@ import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
 import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
-import StringUtils from '../../../../utils/StringUtils'
 import './styles.css'
 
 interface GlossaryItemFormProps {
@@ -40,8 +39,7 @@ const GlossaryItemForm: React.FC<GlossaryItemFormProps> = ( props ) => {
 
 
   const handleSave = async () => {
-
-    const isInvalid = await GlossaryService.isTitleInvalid(item.title, language.data)
+    const isInvalid = await GlossaryService.isTitleInvalid(item, language.data)
 
     setError(isInvalid)
 

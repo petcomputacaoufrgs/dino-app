@@ -64,15 +64,14 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 		return this.table.where('title').equalsIgnoreCase(title).first()
 }
 
-	isTitleInvalid = async (title: string, languageData: LanguageBase) => {
-		
-		if(StringUtils.isEmpty(title)) {
+	isTitleInvalid = async (item: GlossaryItemEntity, languageData: LanguageBase) => {
+		if(StringUtils.isEmpty(item.title)) {
 			return languageData.EMPTY_FIELD_ERROR
 		}
 
-		const alreadyExists = await this.getByTitle(title)
+		const dbItem = await this.getByTitle(item.title)
 
-		return alreadyExists ? languageData.itemAlreadyExists(languageData.TITLE) :	undefined
+		return dbItem && dbItem.localId !== item.localId ? languageData.itemAlreadyExists(languageData.TITLE) :	undefined
 	}
 }
 

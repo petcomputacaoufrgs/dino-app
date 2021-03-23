@@ -1,6 +1,5 @@
 import Superagent from 'superagent'
 import GoogleAuthRequestModel from '../../types/auth/google/api/GoogleAuthRequestModel'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import AuthResponseDataModel from '../../types/auth/api/AuthResponseModel'
 import LoginStatusConstants from '../../constants/login/LoginStatusConstants'
 import UserService from '../user/UserService'
@@ -29,6 +28,7 @@ import LogoutCallback from '../../types/auth/service/LogoutCallback'
 import UserEnum from '../../types/enum/UserEnum'
 import PathConstants from '../../constants/app/PathConstants'
 import HistoryService from '../history/HistoryService'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 
 class AuthService extends UpdatableService {
 	private logoutCallbacks: LogoutCallback[]
@@ -88,7 +88,7 @@ class AuthService extends UpdatableService {
 
 	refreshGoogleAuth = async (): Promise<AuthEntity | undefined> => {
 		const request = await DinoAgentService.get(
-			APIRequestMappingConstants.REFRESH_AUTH_GOOGLE,
+			APIHTTPPathsConstants.REFRESH_AUTH_GOOGLE,
 		)
 		if (request.canGo) {
 			try {
@@ -120,7 +120,7 @@ class AuthService extends UpdatableService {
 			}
 
 			const response = await Superagent.put(
-				APIRequestMappingConstants.REFRESH_AUTH,
+				APIHTTPPathsConstants.REFRESH_AUTH,
 			).send(model)
 
 			const responseBody: AuthRefreshResponseModel = response.body
@@ -149,7 +149,7 @@ class AuthService extends UpdatableService {
 		WebSocketAuthResponseModel | undefined
 	> => {
 		const request = await DinoAgentService.get(
-			APIRequestMappingConstants.WEB_SOCKET_AUTH,
+			APIHTTPPathsConstants.WEB_SOCKET_AUTH,
 		)
 		if (request.canGo) {
 			try {
@@ -217,7 +217,7 @@ class AuthService extends UpdatableService {
 
 		try {
 			const request = await DinoAgentService.post(
-				APIRequestMappingConstants.AUTH_GOOGLE,
+				APIHTTPPathsConstants.AUTH_GOOGLE,
 			)
 			if (request.canGo) {
 				const response = await request.setBody(authRequestModel).go()
@@ -259,7 +259,7 @@ class AuthService extends UpdatableService {
 
 		try {
 			const request = await DinoAgentService.post(
-				APIRequestMappingConstants.GRANT_GOOGLE,
+				APIHTTPPathsConstants.GRANT_GOOGLE,
 			)
 			if (request.canGo) {
 				const authRequest = await request.authenticate()

@@ -16,7 +16,7 @@ RUN git clone https://github.com/petcomputacaoufrgs/DinoApp
 WORKDIR /app/DinoApp
 RUN git checkout server && git pull
 RUN apt-get install nasm
-RUN yarn install --network-timeout 10000000 && yarn build
+RUN yarn install --production --network-timeout 10000000 && yarn build
 
 FROM nginx:stable-alpine
 COPY --from=build /app/DinoApp/build /usr/share/nginx/html

@@ -16,7 +16,7 @@ RUN apt install git -y
 RUN git clone https://github.com/petcomputacaoufrgs/DinoApp && cd DinoApp
 
 # Build branch main
-RUN git checkout main
+RUN git checkout server && git pull
 RUN yarn install --network-timeout 10000000 && yarn build
 
 FROM nginx:stable-alpine

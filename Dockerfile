@@ -16,7 +16,7 @@ RUN apt-get update -y \
 RUN git clone https://github.com/petcomputacaoufrgs/DinoApp
 # Build
 WORKDIR /app/DinoApp
-RUN git checkout server \
+RUN git checkout main \
     && git pull \
     && yarn install --production --network-timeout 10000000 && yarn build
 

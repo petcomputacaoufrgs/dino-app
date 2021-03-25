@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: dinoapp
-          image: petcompufrgs/dinoapp:server
+          image: petcompufrgs/dinoapp:stable
           imagePullPolicy: Always
           ports:
             - containerPort: 80

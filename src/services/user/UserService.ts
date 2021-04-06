@@ -34,7 +34,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 	}
 
 	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
+		return []
 	}
 
 	getPicture(user: UserEntity | undefined): string | undefined {

@@ -36,7 +36,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 	}
 
 	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
+		return []
 	}
 
 	async convertModelToEntity(

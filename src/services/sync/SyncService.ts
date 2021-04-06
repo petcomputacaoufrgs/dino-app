@@ -165,7 +165,8 @@ class SyncService extends UpdatableService {
 
 	private syncNodeToDelete = async (node: SyncTreeNode, userAuthorizations: string[]): Promise<boolean> => {
 		const necessaryAuthorization = node.service.getSyncNecessaryAuthorities()
-        const hasNecessaryAuth = userAuthorizations.some(uAuth => necessaryAuthorization.some(nAuth => nAuth === uAuth))
+        const hasNecessaryAuth = necessaryAuthorization.length === 0 ? true : 
+			userAuthorizations.some(uAuth => necessaryAuthorization.some(nAuth => nAuth === uAuth))
 		
 		if (!hasNecessaryAuth) return true
 

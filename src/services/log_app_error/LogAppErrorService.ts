@@ -21,7 +21,7 @@ class LogAppErrorService extends SynchronizableService {
 	}
 
 	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
+		return []
 	}
 
 	protected getWebSocketSubscribers(): WebSocketSubscriber<any>[] {

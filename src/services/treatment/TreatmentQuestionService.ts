@@ -5,7 +5,7 @@ import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstant
 import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
-import TreatmentService from '../treatment/TreatmentService'
+import TreatmentService from './TreatmentService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import AuthEnum from '../../types/enum/AuthEnum'
@@ -24,12 +24,12 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		)
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
-	}
-
 	getSyncDependencies(): SynchronizableService[] {
 		return [TreatmentService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return []
 	}
 
 	async convertModelToEntity(

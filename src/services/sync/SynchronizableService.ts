@@ -16,7 +16,8 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 	abstract getSyncDependencies(): SynchronizableService[]
 
 	/**
-	 * @description Return list of necessary authorities to perform sync process
+	 * @description Return list of necessary authorities to perform sync process.
+	 * An user with anyone of this authorities can sync.
 	 */
 	abstract getSyncNecessaryAuthorities(): AuthEnum[] 
 

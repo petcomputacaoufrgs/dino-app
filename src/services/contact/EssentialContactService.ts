@@ -1,6 +1,6 @@
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
@@ -16,6 +16,7 @@ import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathServi
 import GoogleContactService from './GoogleContactService'
 import EssentialContactView from '../../types/contact/view/EssentialContactView'
 import StringUtils from '../../utils/StringUtils'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -27,12 +28,16 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			Database.essentialContact,
 			APIRequestMappingConstants.ESSENTIAL_CONTACT,
 			WebSocketTopicPathService,
-			APIMainPathsConstants.ESSENTIAL_CONTACT,
+			APIPathsConstants.ESSENTIAL_CONTACT,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [TreatmentService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

@@ -1,6 +1,7 @@
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import Database from '../../storage/Database'
+import AuthEnum from '../../types/enum/AuthEnum'
 import NoteColumnDataModel from '../../types/note/api/NoteColumnDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -20,12 +21,16 @@ class NoteColumnServiceImpl extends AutoSynchronizableService<
 			Database.noteColumn,
 			APIRequestMappingConstants.NOTE_COLUMN,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.NOTE_COLUMN,
+			APIPathsConstants.NOTE_COLUMN,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return []
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER]
 	}
 
 	async convertModelToEntity(

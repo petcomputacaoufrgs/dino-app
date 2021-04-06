@@ -3,13 +3,14 @@ import GoogleContactEntity from '../../types/contact/database/GoogleContactEntit
 import GoogleContactDataModel from '../../types/contact/api/GoogleContactDataModel'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import PhoneService from './PhoneService'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class GoogleContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -21,8 +22,12 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 			Database.googleContact,
 			APIRequestMappingConstants.GOOGLE_CONTACT,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.GOOGLE_CONTACT,
+			APIPathsConstants.GOOGLE_CONTACT,
 		)
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

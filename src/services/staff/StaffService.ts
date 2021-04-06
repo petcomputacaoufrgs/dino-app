@@ -1,6 +1,6 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
@@ -10,6 +10,7 @@ import StaffEntity from '../../types/staff/database/StaffEntity'
 import DateUtils from '../../utils/DateUtils'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class StaffServiceImpl extends AutoSynchronizableService<
 	number,
@@ -21,12 +22,16 @@ class StaffServiceImpl extends AutoSynchronizableService<
 			Database.staff,
 			APIRequestMappingConstants.STAFF,
 			WebSocketTopicPathService,
-			APIMainPathsConstants.STAFF,
+			APIPathsConstants.STAFF,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [UserService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

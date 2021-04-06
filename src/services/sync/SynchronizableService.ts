@@ -1,3 +1,4 @@
+import AuthEnum from '../../types/enum/AuthEnum'
 import SyncResolve from '../../types/sync/SyncResolve'
 import AuthService from '../auth/AuthService'
 import WebSocketSubscriberableService from '../websocket/WebSocketSubscriberableService'
@@ -13,6 +14,11 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 	 * websocket request arrive for any method in A, B and C so the service A's callback will only be called after B and C callback are completed.
 	 */
 	abstract getSyncDependencies(): SynchronizableService[]
+
+	/**
+	 * @description Return list of necessary authorities to perform sync process
+	 */
+	abstract getSyncNecessaryAuthorities(): AuthEnum[] 
 
 	/**
 	 * @description Function that performs save data synchronization with the API.

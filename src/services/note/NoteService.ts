@@ -1,5 +1,5 @@
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import NoteConstants from '../../constants/note/NoteConstants'
 import Database from '../../storage/Database'
 import NoteDataModel from '../../types/note/api/NoteDataModel'
@@ -12,6 +12,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
 import Utils from '../../utils/Utils'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class NoteServiceImpl extends AutoSynchronizableService<
 	number,
@@ -23,12 +24,16 @@ class NoteServiceImpl extends AutoSynchronizableService<
 			Database.note,
 			APIRequestMappingConstants.NOTE,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.NOTE,
+			APIPathsConstants.NOTE,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [NoteColumnService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER]
 	}
 
 	async convertModelToEntity(

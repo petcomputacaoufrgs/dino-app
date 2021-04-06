@@ -9,7 +9,7 @@ export default interface PrivateRouterContextType<S = LocationState> {
 
 	isAuthenticated: boolean
 
-	userPermission?: number
+	userPermission?: string
 
 	browserHistory?: History<S>
 }

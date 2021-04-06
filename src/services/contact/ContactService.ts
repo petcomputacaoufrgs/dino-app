@@ -2,7 +2,7 @@ import ContactDataModel from '../../types/contact/api/ContactDataModel'
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import StringUtils from '../../utils/StringUtils'
@@ -15,6 +15,7 @@ import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
 import EssentialContactView from '../../types/contact/view/EssentialContactView'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class ContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -26,12 +27,16 @@ class ContactServiceImpl extends AutoSynchronizableService<
 			Database.contact,
 			APIRequestMappingConstants.CONTACT,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.CONTACT,
+			APIPathsConstants.CONTACT,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [EssentialContactService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER]
 	}
 
 	async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {

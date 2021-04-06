@@ -2,7 +2,7 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserSettingsDataModel from '../../types/user/api/UserSettingsDataModel'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import TreatmentService from '../treatment/TreatmentService'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import ColorThemeEnum from '../../types/enum/ColorThemeEnum'
@@ -16,6 +16,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/enum/LanguageEnum'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -27,12 +28,16 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			Database.userSettings,
 			APIRequestMappingConstants.USER_SETTINGS,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.USER_SETTINGS,
+			APIPathsConstants.USER_SETTINGS,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [GoogleScopeService, TreatmentService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

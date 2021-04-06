@@ -1,5 +1,5 @@
 import APIConfig from '../../environment/api_config.json'
-import Path from './APIMainPathsConstants' 
+import Path from './APIPathsConstants' 
 
 class APIRequestMappingConstants {
 	ROOT = APIConfig.URL
@@ -18,11 +18,11 @@ class APIRequestMappingConstants {
 	USER_SETTINGS = `${this.ROOT}${Path.USER_SETTINGS}/`
 	STAFF = `${this.ROOT}${Path.STAFF}/`
 
-	GOOGLE_SCOPE = `${this.ROOT}auth/google/scope/`
-	private AUTH = `${this.ROOT}auth/`
+	GOOGLE_SCOPE = `${this.ROOT}private/auth/google/scope/`
+	private AUTH = `${this.ROOT}private/auth/`
 	private PUBLIC_AUTH = `${this.ROOT}public/auth/`
 	private APP_SETTINGS = `${this.ROOT}user_app_settings/`
-	private LOG_APP_ERROR = `${this.ROOT}log_app_error/`
+	private LOG_APP_ERROR = `${this.ROOT}private/log_app_error/`
 	AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 	GRANT_GOOGLE = `${this.AUTH}google/grant/`
 	REFRESH_AUTH_GOOGLE = `${this.AUTH}google/`

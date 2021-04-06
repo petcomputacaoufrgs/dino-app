@@ -1,4 +1,4 @@
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import LogoutMessage from '../../types/auth/api/LogoutMessage'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
@@ -12,7 +12,7 @@ class LogoutService extends WebSocketSubscriberableService {
 		return [
 			{
 				path: WebSocketQueuePathService.generateDestinationPath(
-					APIMainPathsConstants.LOGOUT_REQUEST,
+					APIPathsConstants.LOGOUT_REQUEST,
 				),
 				callback: this.webSocketCallback,
 			},

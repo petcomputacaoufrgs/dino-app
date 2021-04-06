@@ -1,5 +1,5 @@
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import DataConstants from '../../constants/app_data/DataConstants'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
@@ -15,6 +15,7 @@ import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
 import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
 	number,
@@ -26,12 +27,16 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 			Database.phone,
 			APIRequestMappingConstants.PHONE,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.PHONE,
+			APIPathsConstants.PHONE,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [ContactService, EssentialContactService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

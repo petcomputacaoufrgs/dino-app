@@ -1,6 +1,6 @@
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
@@ -8,6 +8,7 @@ import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathServi
 import Database from '../../storage/Database'
 import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from '../faq/FaqItemService'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -19,12 +20,16 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 			Database.treatment,
 			APIRequestMappingConstants.TREATMENT,
 			WebSocketTopicPathService,
-			APIMainPathsConstants.TREATMENT,
+			APIPathsConstants.TREATMENT,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return []
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

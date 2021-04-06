@@ -2,7 +2,7 @@ import AutoSynchronizableService from '../../sync/AutoSynchronizableService'
 import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeDataModel'
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
 import APIRequestMappingConstants from '../../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../../constants/api/APIPathsConstants'
 import SynchronizableWSUpdateModel from '../../../types/sync/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../../types/sync/api/web_socket/SynchronizableWSDeleteModel'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
@@ -10,6 +10,7 @@ import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
 import WebSocketQueuePathService from '../../websocket/path/WebSocketQueuePathService'
 import Database from '../../../storage/Database'
+import AuthEnum from '../../../types/enum/AuthEnum'
 
 class GoogleScopeServiceImpl extends AutoSynchronizableService<
 	number,
@@ -21,12 +22,16 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 			Database.googleScope,
 			APIRequestMappingConstants.GOOGLE_SCOPE,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.GOOGLE_SCOPE,
+			APIPathsConstants.GOOGLE_SCOPE,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return []
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

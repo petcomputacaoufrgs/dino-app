@@ -6,6 +6,7 @@ import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEnt
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 import Database from '../../storage/Database'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class LogAppErrorService extends SynchronizableService {
 	private table: Dexie.Table<LogAppErrorEntity, number>
@@ -17,6 +18,10 @@ class LogAppErrorService extends SynchronizableService {
 
 	getSyncDependencies(): SynchronizableService[] {
 		return []
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	protected getWebSocketSubscribers(): WebSocketSubscriber<any>[] {

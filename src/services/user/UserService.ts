@@ -4,7 +4,7 @@ import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserEntity from '../../types/user/database/UserEntity'
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
@@ -13,6 +13,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import DinoAgentService from '../../agent/DinoAgentService'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class UserServiceImpl extends AutoSynchronizableService<
 	number,
@@ -24,12 +25,16 @@ class UserServiceImpl extends AutoSynchronizableService<
 			Database.user,
 			APIRequestMappingConstants.USER,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.USER,
+			APIPathsConstants.USER,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return []
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	getPicture(user: UserEntity | undefined): string | undefined {
@@ -75,7 +80,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 		return model
 	}
 
-	async getPermission(): Promise<number | undefined> {
+	async getPermission(): Promise<string | undefined> {
 		const user = await this.getFirst()
 		if(user) {
 			return user.permission

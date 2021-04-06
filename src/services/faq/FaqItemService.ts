@@ -1,6 +1,6 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import FaqItemDataModel from '../../types/faq/api/FaqItemDataModel'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import StringUtils from '../../utils/StringUtils'
@@ -9,6 +9,7 @@ import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathServi
 import Database from '../../storage/Database'
 import TreatmentService from '../treatment/TreatmentService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
 	number,
@@ -20,12 +21,16 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 			Database.faqItem,
 			APIRequestMappingConstants.FAQ_ITEM,
 			WebSocketTopicPathService,
-			APIMainPathsConstants.FAQ_ITEM,
+			APIPathsConstants.FAQ_ITEM,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [TreatmentService]
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

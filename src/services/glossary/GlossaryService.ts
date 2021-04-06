@@ -3,12 +3,13 @@ import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstant
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
+import AuthEnum from '../../types/enum/AuthEnum'
 
 class GlossaryServiceImpl extends AutoSynchronizableService<
 	number,
@@ -20,12 +21,16 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 			Database.glossary,
 			APIRequestMappingConstants.GLOSSARY,
 			WebSocketTopicPathService,
-			APIMainPathsConstants.GLOSSARY,
+			APIPathsConstants.GLOSSARY,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return []
+	}
+
+	getSyncNecessaryAuthorities(): AuthEnum[] {
+		return [AuthEnum.USER, AuthEnum.STAFF, AuthEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

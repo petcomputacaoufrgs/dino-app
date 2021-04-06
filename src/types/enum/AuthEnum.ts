@@ -1,7 +1,7 @@
-enum AuthEnum {
+enum PermissionEnum {
   STAFF = "STAFF",
   ADMIN = "ADMIN",
 	USER = "USER",
 }
 
-export default AuthEnum
+export default PermissionEnum

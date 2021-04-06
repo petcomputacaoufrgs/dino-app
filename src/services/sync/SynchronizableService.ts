@@ -1,4 +1,4 @@
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 import SyncResolve from '../../types/sync/SyncResolve'
 import AuthService from '../auth/AuthService'
 import WebSocketSubscriberableService from '../websocket/WebSocketSubscriberableService'
@@ -19,12 +19,12 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 	 * @description Return list of necessary authorities to perform sync process.
 	 * An user with anyone of this authorities can sync.
 	 */
-	abstract getSyncNecessaryAuthorities(): AuthEnum[] 
+	abstract getSyncNecessaryPermissions(): PermissionEnum[] 
 
 	/**
 	 * @description Function that performs save data synchronization with the API.
 	 */
-	protected abstract syncSave(): Promise<boolean>
+	protected abstract sync(): Promise<boolean>
 
 	/**
 	 * @description Function that performs delete data synchronization with the API.
@@ -78,7 +78,7 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 			})
 		} else {
 			this.isSynchronizing = true
-			const result = await this.syncSave()
+			const result = await this.sync()
 			this.syncResult = result
 			this.isSynchronizing = false
 			this.resolveAllAfterReturn(result)

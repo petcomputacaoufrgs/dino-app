@@ -12,7 +12,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
 import Utils from '../../utils/Utils'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class NoteServiceImpl extends AutoSynchronizableService<
 	number,
@@ -32,8 +32,8 @@ class NoteServiceImpl extends AutoSynchronizableService<
 		return [NoteColumnService]
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.USER]
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return [PermissionEnum.USER]
 	}
 
 	async convertModelToEntity(

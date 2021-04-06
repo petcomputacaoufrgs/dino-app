@@ -25,7 +25,7 @@ import Database from '../../storage/Database'
 import UpdatableService from '../update/UpdatableService'
 import UserSettingsService from '../user/UserSettingsService'
 import LogoutCallback from '../../types/auth/service/LogoutCallback'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 import PathConstants from '../../constants/app/PathConstants'
 import HistoryService from '../history/HistoryService'
 import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
@@ -369,7 +369,7 @@ class AuthService extends UpdatableService {
 		return []
 	}
 
-	isStaff = (userPermission: string | undefined) => userPermission === AuthEnum.STAFF || userPermission === AuthEnum.ADMIN 
+	isStaff = (userPermission: string | undefined) => userPermission === PermissionEnum.STAFF || userPermission === PermissionEnum.ADMIN 
 	
 	redirectToHome(userPermission: string | undefined) {
 		HistoryService.push(this.isStaff(userPermission) ? PathConstants.STAFF_HOME : PathConstants.USER_HOME)

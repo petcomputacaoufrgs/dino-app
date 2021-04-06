@@ -10,7 +10,7 @@ import StaffEntity from '../../types/staff/database/StaffEntity'
 import DateUtils from '../../utils/DateUtils'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class StaffServiceImpl extends AutoSynchronizableService<
 	number,
@@ -30,8 +30,8 @@ class StaffServiceImpl extends AutoSynchronizableService<
 		return [UserService]
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.ADMIN]
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN]
 	}
 
 	async convertModelToEntity(

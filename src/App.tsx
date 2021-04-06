@@ -22,7 +22,7 @@ import SecondaryTab from './views/secondary_tab'
 import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
-import AuthEnum from './types/enum/AuthEnum'
+import PermissionEnum from './types/enum/AuthEnum'
 import UserMain from './views/main/user_main'
 import StaffMain from './views/main/staff_main'
 import './App.css'
@@ -85,7 +85,7 @@ const App: React.FC = () => {
 
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
-            updateUserPermission(hasUserPermission || AuthEnum.USER)
+            updateUserPermission(hasUserPermission || PermissionEnum.USER)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {
@@ -160,17 +160,17 @@ const App: React.FC = () => {
 				<PrivateRoute 
 					path={PathConstants.USER} 
 					component={UserMain} 
-					restrictedTo={[AuthEnum.USER]} 
+					restrictedTo={[PermissionEnum.USER]} 
         		/>
 				<PrivateRoute 
 					path={PathConstants.STAFF} 
 					component={StaffMain} 
-					restrictedTo={[AuthEnum.ADMIN, AuthEnum.STAFF]} 
+					restrictedTo={[PermissionEnum.ADMIN, PermissionEnum.STAFF]} 
 				/>
 				<PrivateRoute 
 					path={PathConstants.KIDS_SPACE} 
 					component={KidsSpace}
-					restrictedTo={[AuthEnum.USER]}
+					restrictedTo={[PermissionEnum.USER]}
 				/>
 				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
 				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />

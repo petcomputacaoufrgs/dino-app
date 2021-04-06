@@ -15,7 +15,7 @@ import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
 import EssentialContactView from '../../types/contact/view/EssentialContactView'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class ContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -35,8 +35,8 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		return [EssentialContactService]
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.USER]
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return [PermissionEnum.USER]
 	}
 
 	async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {

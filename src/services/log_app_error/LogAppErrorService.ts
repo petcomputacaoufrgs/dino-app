@@ -6,7 +6,7 @@ import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEnt
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 import Database from '../../storage/Database'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class LogAppErrorService extends SynchronizableService {
 	private table: Dexie.Table<LogAppErrorEntity, number>
@@ -20,7 +20,7 @@ class LogAppErrorService extends SynchronizableService {
 		return []
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 
@@ -28,7 +28,7 @@ class LogAppErrorService extends SynchronizableService {
 		return []
 	}
 
-	protected async syncSave(): Promise<boolean> {
+	protected async sync(): Promise<boolean> {
 		const logs = await this.getSavedLogs()
 		if (logs.length > 0) {
 			const items: LogAppErrorModel[] = logs.map(log => ({

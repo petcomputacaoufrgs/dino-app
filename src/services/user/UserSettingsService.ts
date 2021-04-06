@@ -16,7 +16,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/enum/LanguageEnum'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -36,7 +36,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return [GoogleScopeService, TreatmentService]
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

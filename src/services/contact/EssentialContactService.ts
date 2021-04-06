@@ -16,7 +16,7 @@ import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathServi
 import GoogleContactService from './GoogleContactService'
 import EssentialContactView from '../../types/contact/view/EssentialContactView'
 import StringUtils from '../../utils/StringUtils'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -36,7 +36,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		return [TreatmentService]
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

@@ -8,7 +8,7 @@ import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathServi
 import Database from '../../storage/Database'
 import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from '../faq/FaqItemService'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -28,7 +28,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

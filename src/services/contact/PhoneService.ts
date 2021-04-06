@@ -15,7 +15,7 @@ import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
 import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
 	number,
@@ -35,7 +35,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 		return [ContactService, EssentialContactService]
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

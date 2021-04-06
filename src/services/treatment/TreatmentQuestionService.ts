@@ -8,7 +8,7 @@ import Database from '../../storage/Database'
 import TreatmentService from './TreatmentService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 	number,
@@ -28,7 +28,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		return [TreatmentService]
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

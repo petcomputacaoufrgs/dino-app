@@ -10,7 +10,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import PhoneService from './PhoneService'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class GoogleContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -26,8 +26,8 @@ class GoogleContactServiceImpl extends AutoSynchronizableService<
 		)
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
-		return [AuthEnum.USER]
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return [PermissionEnum.USER]
 	}
 
 	getSyncDependencies(): SynchronizableService[] {

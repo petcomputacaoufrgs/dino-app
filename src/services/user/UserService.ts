@@ -13,7 +13,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import DinoAgentService from '../../agent/DinoAgentService'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 class UserServiceImpl extends AutoSynchronizableService<
 	number,
@@ -33,7 +33,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

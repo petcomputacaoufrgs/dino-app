@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react'
 import { Router } from 'react-router'
 import { History } from 'history'
 import PrivateRouterContextType from '../../types/context_provider/PrivateRouterContextType'
-import AuthEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/AuthEnum'
 
 /**
  * @description Contexto padrão para o router
@@ -41,9 +41,9 @@ export const usePrivateRouter = () => useContext(PrivateRouterContext)
 
 export const IsStaff = (): boolean => { 
 	const permission = usePrivateRouter().userPermission 
-	return permission === AuthEnum.STAFF || permission === AuthEnum.ADMIN 
+	return permission === PermissionEnum.STAFF || permission === PermissionEnum.ADMIN 
 } 
 
-export const IsNotClient = (): boolean => usePrivateRouter().userPermission !== AuthEnum.ADMIN 
+export const IsNotClient = (): boolean => usePrivateRouter().userPermission !== PermissionEnum.ADMIN 
 
 export default PrivateRouterProvider

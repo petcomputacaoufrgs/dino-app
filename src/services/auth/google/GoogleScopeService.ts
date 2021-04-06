@@ -10,7 +10,7 @@ import GoogleAgentService from '../../../agent/GoogleAgentService'
 import SynchronizableService from '../../sync/SynchronizableService'
 import WebSocketQueuePathService from '../../websocket/path/WebSocketQueuePathService'
 import Database from '../../../storage/Database'
-import AuthEnum from '../../../types/enum/AuthEnum'
+import PermissionEnum from '../../../types/enum/AuthEnum'
 
 class GoogleScopeServiceImpl extends AutoSynchronizableService<
 	number,
@@ -30,7 +30,7 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
-	getSyncNecessaryAuthorities(): AuthEnum[] {
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

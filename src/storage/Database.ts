@@ -8,7 +8,6 @@ import UserEntity from '../types/user/database/UserEntity'
 import ContactEntity from '../types/contact/database/ContactEntity'
 import EssentialContactEntity from '../types/contact/database/EssentialContactEntity'
 import PhoneEntity from '../types/contact/database/PhoneEntity'
-import GoogleContactEntity from '../types/contact/database/GoogleContactEntity'
 import FaqItemEntity from '../types/faq/database/FaqItemEntity'
 import TreatmentQuestionEntity from '../types/faq/database/TreatmentQuestionEntity'
 import TreatmentEntity from '../types/treatment/database/TreatmentEntity'
@@ -31,7 +30,6 @@ class Database extends Dexie {
 	glossary: Dexie.Table<GlossaryItemEntity, number>
 	contact: Dexie.Table<ContactEntity, number>
 	essentialContact: Dexie.Table<EssentialContactEntity, number>
-	googleContact: Dexie.Table<GoogleContactEntity, number>
 	phone: Dexie.Table<PhoneEntity, number>
 	user: Dexie.Table<UserEntity, number>
 	faqItem: Dexie.Table<FaqItemEntity, number>
@@ -54,10 +52,6 @@ class Database extends Dexie {
 			essentialContact: generateSynchronizableTableString(
 				'*treatmentLocalIds',
 				'isUniversal',
-			),
-			googleContact: generateSynchronizableTableString(
-				'localContactId',
-				'savedOnGoogleAPI',
 			),
 			phone: generateSynchronizableTableString(
 				'localContactId',
@@ -85,7 +79,6 @@ class Database extends Dexie {
 		this.glossary = this.table('glossary')
 		this.contact = this.table('contact')
 		this.essentialContact = this.table('essentialContact')
-		this.googleContact = this.table('googleContact')
 		this.phone = this.table('phone')
 		this.note = this.table('note')
 		this.noteColumn = this.table('noteColumn')

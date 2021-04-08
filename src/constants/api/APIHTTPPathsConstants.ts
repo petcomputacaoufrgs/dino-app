@@ -18,11 +18,11 @@ class APIRequestMappingConstants {
 	USER_SETTINGS = `${this.ROOT}${Path.USER_SETTINGS}/`
 	STAFF = `${this.ROOT}${Path.STAFF}/`
 
-	GOOGLE_SCOPE = `${this.ROOT}auth/google/scope/`
+	GOOGLE_SCOPE = `${this.ROOT}private/auth/google/scope/`
 	private PRIVATE_AUTH = `${this.ROOT}private/auth/`
 	private PUBLIC_AUTH = `${this.ROOT}public/auth/`
 	private APP_SETTINGS = `${this.ROOT}user_app_settings/`
-	private LOG_APP_ERROR = `${this.ROOT}log_app_error/`
+	private LOG_APP_ERROR = `${this.ROOT}private/log_app_error/`
 	AUTH_GOOGLE = `${this.PUBLIC_AUTH}google/`
 	REFRESH_AUTH = `${this.PUBLIC_AUTH}refresh/`
 	GRANT_GOOGLE = `${this.PRIVATE_AUTH}google/grant/`

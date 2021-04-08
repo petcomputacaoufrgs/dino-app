@@ -8,7 +8,6 @@ import ItemListMenu from '../../../../components/item_list_menu'
 import ContactView from '../../../../types/contact/view/ContactView'
 
 const ContactCard = ({ item, dialogOpen, onClose, onEdit, onDelete }: ContactCardProps) => {
-
 		const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 		const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -147,7 +147,8 @@ class SyncService extends UpdatableService {
 
 	private syncNodeToSave = async (node: SyncTreeNode, userAuthorizations: string[]): Promise<boolean> => {
 		const necessaryAuthorization = node.service.getSyncNecessaryPermissions()
-        const hasNecessaryAuth = userAuthorizations.some(uAuth => necessaryAuthorization.some(nAuth => nAuth === uAuth))
+        const hasNecessaryAuth = necessaryAuthorization.length === 0 || 
+			userAuthorizations.some(uAuth => necessaryAuthorization.some(nAuth => nAuth === uAuth))
 		
 		if (!hasNecessaryAuth) return true
 

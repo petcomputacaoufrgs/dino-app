@@ -13,7 +13,6 @@ import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import Utils from '../../utils/Utils'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
-import GoogleContactService from './GoogleContactService'
 import EssentialContactView from '../../types/contact/view/EssentialContactView'
 import StringUtils from '../../utils/StringUtils'
 import PermissionEnum from '../../types/enum/AuthEnum'
@@ -120,7 +119,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 				this.convertEntityToContactEntity(ec),
 			)
 			if (savedContact) {
-				await GoogleContactService.saveGoogleContact(savedContact)
 				savePhonesFromEssentialContact(ec, savedContact)
 			}
 		})

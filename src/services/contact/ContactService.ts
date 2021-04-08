@@ -4,12 +4,10 @@ import ContactEntity from '../../types/contact/database/ContactEntity'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
-import GoogleContactEntity from '../../types/contact/database/GoogleContactEntity'
 import StringUtils from '../../utils/StringUtils'
 import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
-import GoogleContactService from './GoogleContactService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
@@ -86,12 +84,6 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	async deleteUserEssentialContacts() {
 		const contacts = await this.getAllDerivatedFromEssential()
 
-		const googleContactDeletePromises = contacts.map(contact => {
-			return GoogleContactService.deleteByContact(contact)
-		})
-
-		await Promise.all(googleContactDeletePromises)
-
 		const phoneDeletePromises = contacts.map(contact => {
 			return PhoneService.deleteByContact(contact)
 		})
@@ -103,25 +95,18 @@ class ContactServiceImpl extends AutoSynchronizableService<
 
 	getContactViews(
 		contacts: ContactEntity[],
-		phones: PhoneEntity[],
-		googleContacts: GoogleContactEntity[],
+		phones: PhoneEntity[]
 	): ContactView[] {
 		return contacts
 			.map(
 				contact =>
 					({
 						contact: contact,
-						phones: PhoneService.filterByContact(contact, phones),
-						googleContact: GoogleContactService.getByContact(
-							contact,
-							googleContacts,
-						),
+						phones: PhoneService.filterByContact(contact, phones)
 					} as ContactView),
 			)
 			.sort((a, b) => this.contactViewSort(a, b))
 	}
-
-
 
 	filterContactViews(
 		contacts: Array<ContactView | EssentialContactView>,

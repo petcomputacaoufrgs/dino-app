@@ -23,7 +23,6 @@ import FontSizeEnum from '../../../types/enum/FontSizeEnum'
 import ColorThemeEnum from '../../../types/enum/ColorThemeEnum'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
-import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import TransitionSlide from '../../../components/slide_transition'
 import {DinoDialogHeader,DinoDialogContent,} from '../../../components/dialogs/dino_dialog'
@@ -173,7 +172,6 @@ const Settings: React.FC = () => {
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
-			GoogleContactService.activeGoogleContactsGrant()
 		}
 	}
 

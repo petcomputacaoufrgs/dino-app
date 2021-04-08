@@ -12,18 +12,15 @@ import GoogleScopeService from '../../../services/auth/google/GoogleScopeService
 import ContactView from '../../../types/contact/view/ContactView'
 import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
-import GoogleContactService from '../../../services/contact/GoogleContactService'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import EssentialContactView from '../../../types/contact/view/EssentialContactView'
 import { IsStaff } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Contacts: React.FC = () => {
-
 	const staff = IsStaff()
 	const language = useLanguage()
-
 	const [isLoading, setIsLoading] = useState(true)
 	const [contacts, setContacts] = useState<Array<ContactView | EssentialContactView>>([])
 	const [settings, setSettings] = useState<UserSettingsEntity>()
@@ -50,13 +47,11 @@ const Contacts: React.FC = () => {
 				updateContacts(eContactViews)
 			} else {
 				const contacts = await ContactService.getAll() 
-				const googleContacts = await GoogleContactService.getAll()
 				const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
 	
 				const contactViews = ContactService.getContactViews(
 					contacts,
 					phones,
-					googleContacts,
 				)
 
 				updateContacts(contactViews)
@@ -69,7 +64,6 @@ const Contacts: React.FC = () => {
 
 		ContactService.addUpdateEventListenner(loadData)
 		PhoneService.addUpdateEventListenner(loadData)
-		GoogleContactService.addUpdateEventListenner(loadData)
 		UserSettingsService.addUpdateEventListenner(loadData)
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
@@ -100,7 +94,6 @@ const Contacts: React.FC = () => {
 			finishLoading = () => {}
 			ContactService.removeUpdateEventListenner(loadData)
 			PhoneService.removeUpdateEventListenner(loadData)
-			GoogleContactService.removeUpdateEventListenner(loadData)
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}
@@ -116,7 +109,6 @@ const Contacts: React.FC = () => {
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
-			GoogleContactService.activeGoogleContactsGrant()
 		}
 	}
 

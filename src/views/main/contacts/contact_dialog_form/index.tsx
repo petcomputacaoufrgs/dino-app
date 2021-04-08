@@ -10,15 +10,14 @@ import ContactView from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
 import ContactService from '../../../../services/contact/ContactService'
 import PhoneService from '../../../../services/contact/PhoneService'
-import GoogleContactService from '../../../../services/contact/GoogleContactService'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import DinoHr from '../../../../components/dino_hr'
 import { IsStaff } from '../../../../context/private_router'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
-import './styles.css'
 import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
+import './styles.css'
 
 const getContact = (item?: ContactView): ContactEntity => item ? item.contact : { name: '', description: '',}
 
@@ -27,7 +26,6 @@ const getPhones = (item?: ContactView): PhoneEntity[] => item ? item.phones : [{
 const getTreatmentLocalIds = (item?: ContactView | EssentialContactView): number[] => (item as EssentialContactView)?.contact.treatmentLocalIds || []
 
 const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, item, items }) => {
-	
 	const staff = IsStaff()
 	const language = useLanguage()
 	const [contact, setContact] = useState(getContact(item))
@@ -104,13 +102,6 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClo
 
 				if (phonesToDelete.length > 0) {
 					await PhoneService.deleteAll(phonesToDelete)
-				}
-
-				if(item && 'googleContact' in item) {
-					await GoogleContactService.saveGoogleContact(
-						contact,
-						item.googleContact,
-					)
 				}
 			}
 

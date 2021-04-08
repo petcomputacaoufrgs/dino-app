@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ContactsConstants from '../../../../../constants/app_data/DataConstants'
 import ContactCardContentProps from './props'
-import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
+import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospitalRounded as HospitalIcon } from '@material-ui/icons'
 import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 import EssentialContactView from '../../../../../types/contact/view/EssentialContactView'
@@ -10,8 +10,7 @@ import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEn
 import DinoLoader from '../../../../../components/loader'
 import { IsStaff } from '../../../../../context/private_router'
 
-const ContactCardContent = ({ item }: ContactCardContentProps) => {
-
+const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
 		if (phone.type === ContactsConstants.CONTACT_PHONE_CODE_MOBILE) {
 			return <PhoneIcon />
@@ -95,7 +94,7 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 		if (isLoading) 
 			loadData()
 		
-	}, [isLoading])
+	}, [isLoading, treatmentIds])
 
 	const renderTreatmentListItem = (name: string) => {
 		return (

@@ -9,7 +9,6 @@ import ContactView from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
 import ContactService from '../../../../services/contact/ContactService'
-import GoogleContactService from '../../../../services/contact/GoogleContactService'
 import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
 import { IsStaff } from '../../../../context/private_router'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
@@ -28,15 +27,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const staff = IsStaff()
 
 	const handleAcceptDialogAndDeleteItem = async () => {
-
-		async function deleteGoogleContact (
-			contactToDelete: ContactView,
-		): Promise<void> {
-			if (contactToDelete.googleContact) {
-				await GoogleContactService.delete(contactToDelete.googleContact)
-			}
-		}
-
 		async function deletePhones (
 			contactToDelete: ContactView | EssentialContactView,
 		): Promise<void> {
@@ -50,7 +40,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 			if(staff) {
 				await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
 			} else {
-				await deleteGoogleContact(selectedItem)
 				await ContactService.delete(selectedItem.contact)
 			}
 		}

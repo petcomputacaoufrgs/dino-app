@@ -1,12 +1,12 @@
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import DinoAgentService from '../../agent/DinoAgentService'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import LogAppErrorListModel from '../../types/log_app_error/api/LogAppErrorListModel'
 import LogAppErrorEntity from '../../types/log_app_error/database/LogAppErrorEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
 import Database from '../../storage/Database'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
 
 class LogAppErrorService extends SynchronizableService {
 	private table: Dexie.Table<LogAppErrorEntity, number>
@@ -73,7 +73,7 @@ class LogAppErrorService extends SynchronizableService {
 			}
 
 			const request = await DinoAgentService.post(
-				APIRequestMappingConstants.SAVE_LOG_APP_ERROR,
+				APIHTTPPathsConstants.SAVE_LOG_APP_ERROR,
 			)
 
 			if (request.canGo) {
@@ -112,7 +112,7 @@ class LogAppErrorService extends SynchronizableService {
 
 	saveAll = async (models: LogAppErrorListModel): Promise<boolean> => {
 		const request = await DinoAgentService.post(
-			APIRequestMappingConstants.SAVE_ALL_LOG_APP_ERROR,
+			APIHTTPPathsConstants.SAVE_ALL_LOG_APP_ERROR,
 		)
 
 		if (request.canGo) {

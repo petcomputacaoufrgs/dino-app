@@ -1,5 +1,4 @@
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import DataConstants from '../../constants/app_data/DataConstants'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import PhoneDataModel from '../../types/contact/api/PhoneDataModel'
@@ -8,14 +7,12 @@ import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import ContactService from './ContactService'
-import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
-import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
-import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,18 +22,18 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.phone,
-			APIRequestMappingConstants.PHONE,
+			APIHTTPPathsConstants.PHONE,
 			WebSocketQueuePathService,
-			APIPathsConstants.PHONE,
+			APIWebSocketPathsConstants.PHONE,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
-		return [ContactService, EssentialContactService]
+		return [ContactService]
 	}
 
 	getSyncNecessaryPermissions(): PermissionEnum[] {
-		return []
+		return [PermissionEnum.USER]
 	}
 
 	async convertModelToEntity(
@@ -48,26 +45,10 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 		}
 
 		const contactId = model.contactId
-		const essentialContactId = model.essentialContactId
 		if (Utils.isNotEmpty(contactId)) {
 			const contact = await ContactService.getById(contactId!)
 			entity.localContactId = contact?.localId
-
-			if (Utils.isNotEmpty(model.originalEssentialPhoneId)) {
-				const originalEPhone = await this.getById(
-					model.originalEssentialPhoneId!,
-				)
-
-				if (originalEPhone) {
-					entity.localOriginalEssentialPhoneId = originalEPhone.localId
-				}
-			}
-		} else if (Utils.isNotEmpty(essentialContactId)) {
-			const essentialContact = await EssentialContactService.getById(
-				essentialContactId!,
-			)
-			entity.localEssentialContactId = essentialContact?.localId
-		} else return
+		}
 
 		return entity
 	}
@@ -80,32 +61,12 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 			type: entity.type,
 		}
 		const localContactId = entity.localContactId
-		const localEssentialContactId = entity.localEssentialContactId
 
 		if (Utils.isNotEmpty(localContactId)) {
 			const contact = await ContactService.getByLocalId(localContactId!)
 			model.contactId = contact?.id
-			if (Utils.isNotEmpty(entity.localOriginalEssentialPhoneId)) {
-				const originalEPhone = await this.getByLocalId(
-					entity.localOriginalEssentialPhoneId!,
-				)
 
-				if (originalEPhone && originalEPhone.id) {
-					model.originalEssentialPhoneId = originalEPhone.id
-					return model
-				}
-			} else {
-				return model
-			}
-		} else if (Utils.isNotEmpty(localEssentialContactId)) {
-			const essentialContact = await EssentialContactService.getByLocalId(
-				localEssentialContactId!,
-			)
-
-			if (essentialContact && essentialContact.id) {
-				model.essentialContactId = essentialContact.id
-				return model
-			}
+			return model
 		}
 	}
 
@@ -169,30 +130,6 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 		if (contact.localId) {
 			return phones.filter(phone => phone.localContactId === contact.localId)
 		}
-	}
-
-	filterByEssentialContact(
-		eContact: EssentialContactEntity,
-		phones: PhoneEntity[],
-	): PhoneEntity[] | undefined {
-		if (eContact.localId) {
-			return phones.filter(phone => phone.localEssentialContactId === eContact.localId)
-		}
-	}
-
-	getContactWithSamePhone(
-		items: ContactView[],
-		newPhones: PhoneEntity[],
-		currentContact?: ContactView,
-	): ContactView | undefined {
-		return items.find(
-			item =>
-				(!currentContact ||
-					item.contact.localId !== currentContact.contact.localId) &&
-				item.phones.some(phone =>
-					newPhones.some(newPhone => newPhone.number.includes(phone.number)),
-				),
-		)
 	}
 }
 

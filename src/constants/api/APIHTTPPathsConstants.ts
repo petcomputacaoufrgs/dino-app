@@ -1,22 +1,21 @@
 import APIConfig from '../../environment/api_config.json'
-import Path from './APIPathsConstants' 
 
-class APIRequestMappingConstants {
+class APIHTTPPathsConstants {
 	ROOT = APIConfig.URL
 	
-	GLOSSARY = `${this.ROOT}${Path.GLOSSARY}/`
-	FAQ_ITEM = `${this.ROOT}${Path.FAQ_ITEM}/`
-	TREATMENT_QUESTION = `${this.ROOT}${Path.TREATMENT_QUESTION}/`
-	NOTE = `${this.ROOT}${Path.NOTE}/`
-	NOTE_COLUMN = `${this.ROOT}${Path.NOTE_COLUMN}/`
-	USER = `${this.ROOT}${Path.USER}/`
-	CONTACT = `${this.ROOT}${Path.CONTACT}/`
-	ESSENTIAL_CONTACT = `${this.ROOT}${Path.ESSENTIAL_CONTACT}/`
-	PHONE = `${this.ROOT}${Path.PHONE}/`
-	GOOGLE_CONTACT = `${this.ROOT}${Path.GOOGLE_CONTACT}/`
-	TREATMENT = `${this.ROOT}${Path.TREATMENT}/`
-	USER_SETTINGS = `${this.ROOT}${Path.USER_SETTINGS}/`
-	STAFF = `${this.ROOT}${Path.STAFF}/`
+	GLOSSARY = `${this.ROOT}private/glossary/`
+	FAQ_ITEM = `${this.ROOT}private/faq_item/`
+	TREATMENT_QUESTION = `${this.ROOT}private/treatment_question/`
+	NOTE = `${this.ROOT}user/note/`
+	NOTE_COLUMN = `${this.ROOT}user/note_column/`
+	USER = `${this.ROOT}private/user/`
+	CONTACT = `${this.ROOT}user/contact/`
+	ESSENTIAL_CONTACT = `${this.ROOT}private/essential_contact/`
+	PHONE = `${this.ROOT}user/phone/`
+	ESSENTIAL_PHONE = `${this.ROOT}private/essential_phone/`
+	TREATMENT = `${this.ROOT}private/treatment/`
+	USER_SETTINGS = `${this.ROOT}private/settings/`
+	STAFF = `${this.ROOT}admin/staff/`
 
 	GOOGLE_SCOPE = `${this.ROOT}private/auth/google/scope/`
 	private PRIVATE_AUTH = `${this.ROOT}private/auth/`
@@ -39,4 +38,4 @@ class APIRequestMappingConstants {
 	DELETE_ACCOUNT = `${this.USER}delete_account/`
 }
 
-export default new APIRequestMappingConstants()
+export default new APIHTTPPathsConstants()

@@ -1,14 +1,14 @@
 import TreatmentQuestionDataModel from '../../types/faq/api/TreatmentQuestionDataModel'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import TreatmentQuestionEntity from '../../types/faq/database/TreatmentQuestionEntity'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import TreatmentService from './TreatmentService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 	number,
@@ -18,9 +18,9 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.treatmentQuestion,
-			APIRequestMappingConstants.TREATMENT_QUESTION,
+			APIHTTPPathsConstants.TREATMENT_QUESTION,
 			WebSocketTopicPathService,
-			APIPathsConstants.TREATMENT_QUESTION,
+			APIWebSocketPathsConstants.TREATMENT_QUESTION,
 		)
 	}
 

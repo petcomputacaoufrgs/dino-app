@@ -1,6 +1,5 @@
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
@@ -13,9 +12,8 @@ import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import Utils from '../../utils/Utils'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
-import EssentialContactView from '../../types/contact/view/EssentialContactView'
-import StringUtils from '../../utils/StringUtils'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,9 +23,9 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.essentialContact,
-			APIRequestMappingConstants.ESSENTIAL_CONTACT,
+			APIHTTPPathsConstants.ESSENTIAL_CONTACT,
 			WebSocketTopicPathService,
-			APIPathsConstants.ESSENTIAL_CONTACT,
+			APIWebSocketPathsConstants.ESSENTIAL_CONTACT,
 		)
 	}
 
@@ -155,26 +153,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		}
 
 		return contactEntity
-	}
-
-	getEssentialContactViews(
-		eContacts: EssentialContactEntity[],
-		phones: PhoneEntity[],
-	): EssentialContactView[] {
-		return eContacts
-			.map(e => ({
-						contact: e,
-						phones: PhoneService.filterByEssentialContact(e, phones),
-					} as EssentialContactView),
-			)
-			.sort((a, b) => a.contact.name > b.contact.name ? 1 : -1)
-	}
-
-	filterEssentialContactViews(
-		contacts: EssentialContactView[],
-		searchTerm: string,
-	): EssentialContactView[] {
-		return contacts.filter(item => StringUtils.contains(item.contact.name, searchTerm))
 	}
 }
 

@@ -1,5 +1,4 @@
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import NoteConstants from '../../constants/note/NoteConstants'
 import Database from '../../storage/Database'
 import NoteDataModel from '../../types/note/api/NoteDataModel'
@@ -12,7 +11,8 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
 import Utils from '../../utils/Utils'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class NoteServiceImpl extends AutoSynchronizableService<
 	number,
@@ -22,9 +22,9 @@ class NoteServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.note,
-			APIRequestMappingConstants.NOTE,
+			APIHTTPPathsConstants.NOTE,
 			WebSocketQueuePathService,
-			APIPathsConstants.NOTE,
+			APIWebSocketPathsConstants.NOTE,
 		)
 	}
 

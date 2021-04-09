@@ -3,8 +3,7 @@ import ImageToBase64Utils from '../../utils/ImageToBase64Utils'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserEntity from '../../types/user/database/UserEntity'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import GooglePhotoResponseModel from '../../types/google_api/people/GooglePhotosResponseModel'
 import GoogleUserService from './GoogleUserService'
 import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
@@ -13,7 +12,8 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import DinoAgentService from '../../agent/DinoAgentService'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class UserServiceImpl extends AutoSynchronizableService<
 	number,
@@ -23,9 +23,9 @@ class UserServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.user,
-			APIRequestMappingConstants.USER,
+			APIHTTPPathsConstants.USER,
 			WebSocketQueuePathService,
-			APIPathsConstants.USER,
+			APIWebSocketPathsConstants.USER,
 		)
 	}
 
@@ -139,7 +139,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 
 	public deleteAccount = async (): Promise<boolean> => {
 		const request = await DinoAgentService.delete(
-			APIRequestMappingConstants.DELETE_ACCOUNT,
+			APIHTTPPathsConstants.DELETE_ACCOUNT,
 		)
 
 		if (request.canGo) {

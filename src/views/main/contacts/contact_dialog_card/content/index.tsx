@@ -4,11 +4,11 @@ import ContactCardContentProps from './props'
 import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospitalRounded as HospitalIcon } from '@material-ui/icons'
 import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
-import EssentialContactView from '../../../../../types/contact/view/EssentialContactView'
 import TreatmentService from '../../../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import DinoLoader from '../../../../../components/loader'
 import { IsStaff } from '../../../../../context/private_router'
+import EssentialContactEntity from '../../../../../types/contact/database/EssentialContactEntity'
 
 const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
@@ -75,8 +75,7 @@ const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
 export default ContactCardContent
 
 const TreatmentList = ({item} : ContactCardContentProps) => {
-
-	const treatmentIds = (item as EssentialContactView).contact.treatmentLocalIds
+	const treatmentIds = (item.contact as EssentialContactEntity).treatmentLocalIds
 
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
 
@@ -104,7 +103,7 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 		)
 	}
 
-	const isUniversal = Boolean((item as EssentialContactView).contact.isUniversal)
+	const isUniversal = Boolean((item.contact as EssentialContactEntity).isUniversal)
 
 	return IsStaff() ? (
 		<List component='nav'>

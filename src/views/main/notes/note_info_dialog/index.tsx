@@ -8,13 +8,12 @@ import DateUtils from '../../../../utils/DateUtils'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
-import ArrayUtils from '../../../../utils/ArrayUtils'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
 import IconButton from '../../../../components/button/icon_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
-import './styles.css'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
+import './styles.css'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	note,
@@ -32,8 +31,6 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	const [tagList, setTagList] = useState(note.tags)
 
 	const [editedQuestion, setEditedQuestion] = useState(false)
-	const [editedAnswer, setEditedAnswer] = useState(false)
-	const [editedTagList, setEditedTagList] = useState(false)
 
 	const [questionWithError, setQuestionWithError] = useState(false)
 	const [questionErrorHelper, setQuestionErrorHelper] = useState('')
@@ -45,8 +42,6 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 		setQuestion(note.question)
 		setTagList(note.tags)
 		setEditedQuestion(false)
-		setEditedAnswer(false)
-		setEditedTagList(false)
 	}, [note])
 
 	const handleQuestionChange = (newQuestion: string) => {
@@ -68,17 +63,13 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	const handleAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value
 		const validAnswer = value.substring(0, NoteConstants.ANSWER_MAX_LENGTH)
-		const answerChanged = note.answer !== validAnswer.trim()
 
 		setAnswer(validAnswer)
-		setEditedAnswer(answerChanged)
 	}
 
 	const handleTagChange = (event: React.ChangeEvent<{}>, values: string[]) => {
 		if (values.length <= NoteConstants.TAG_LIMIT) {
-			const changed = ArrayUtils.notEqualIgnoreOrder(values, note.tags)
 			setTagList(values)
-			setEditedTagList(changed)
 		}
 	}
 
@@ -105,8 +96,6 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	const handleDeleteNote = () => {
 		setDeleteNoteDialogOpen(true)
 	}
-
-	const isEdited = () => editedTagList || editedAnswer || editedQuestion
 
 	const validateQuestion = async (newQuestion: string): Promise<boolean> => {
 		if (!newQuestion) {

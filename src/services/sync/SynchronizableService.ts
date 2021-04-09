@@ -1,4 +1,4 @@
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
 import SyncResolve from '../../types/sync/SyncResolve'
 import AuthService from '../auth/AuthService'
 import WebSocketSubscriberableService from '../websocket/WebSocketSubscriberableService'

@@ -1,7 +1,7 @@
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import Database from '../../storage/Database'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
 import NoteColumnDataModel from '../../types/note/api/NoteColumnDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -19,9 +19,9 @@ class NoteColumnServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.noteColumn,
-			APIRequestMappingConstants.NOTE_COLUMN,
+			APIHTTPPathsConstants.NOTE_COLUMN,
 			WebSocketQueuePathService,
-			APIPathsConstants.NOTE_COLUMN,
+			APIWebSocketPathsConstants.NOTE_COLUMN,
 		)
 	}
 

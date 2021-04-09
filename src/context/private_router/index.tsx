@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react'
 import { Router } from 'react-router'
 import { History } from 'history'
 import PrivateRouterContextType from '../../types/context_provider/PrivateRouterContextType'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
 
 /**
  * @description Contexto padrão para o router

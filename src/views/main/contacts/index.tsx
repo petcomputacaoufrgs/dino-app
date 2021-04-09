@@ -13,16 +13,17 @@ import ContactView from '../../../types/contact/view/ContactView'
 import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
-import EssentialContactView from '../../../types/contact/view/EssentialContactView'
 import { IsStaff } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
+import ContactViewService from '../../../services/contact/ContactViewService'
+import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Contacts: React.FC = () => {
 	const staff = IsStaff()
 	const language = useLanguage()
 	const [isLoading, setIsLoading] = useState(true)
-	const [contacts, setContacts] = useState<Array<ContactView | EssentialContactView>>([])
+	const [contacts, setContacts] = useState<ContactView[]>([])
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
@@ -30,40 +31,44 @@ const Contacts: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
 
-	const filteredContacts = ContactService.filterContactViews(contacts, searchTerm)
+	const filteredContacts = ContactViewService.filterContactViews(contacts, searchTerm)
 
 	useEffect(() => {
+		const loadUserData = async () => {
+			const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
+			updateSyncGoogleContacts(syncGoogleContacts)
+
+			return await ContactService.getAll()
+		} 
+
+		const loadContacts = async () => (
+			staff ? EssentialContactService.getAll() : loadUserData()
+		)
+
+		const loadPhones = async () => (
+			staff ? EssentialPhoneService.getAll() : PhoneService.getAll()
+		)
+
 		const loadData = async () => {
 			const settings = await UserSettingsService.getFirst()
-			const phones = await PhoneService.getAll()
+			const phones = await loadPhones()
+			const contacts = await loadContacts()
 
-			if(staff) {
-				const eContacts = await EssentialContactService.getAll() 
-				const eContactViews = EssentialContactService.getEssentialContactViews(
-					eContacts,
-					phones,
-				)
+			const contactViews = ContactViewService.getContactViews(
+				contacts,
+				phones,
+				staff
+			)
 
-				updateContacts(eContactViews)
-			} else {
-				const contacts = await ContactService.getAll() 
-				const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
-	
-				const contactViews = ContactService.getContactViews(
-					contacts,
-					phones,
-				)
-
-				updateContacts(contactViews)
-				updateSyncGoogleContacts(syncGoogleContacts)
-			}
-
+			updateContacts(contactViews)
 			updateSettings(settings)
 			finishLoading()
 		}
 
 		ContactService.addUpdateEventListenner(loadData)
 		PhoneService.addUpdateEventListenner(loadData)
+		EssentialContactService.addUpdateEventListenner(loadData)
+		EssentialPhoneService.addUpdateEventListenner(loadData)
 		UserSettingsService.addUpdateEventListenner(loadData)
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
@@ -94,6 +99,8 @@ const Contacts: React.FC = () => {
 			finishLoading = () => {}
 			ContactService.removeUpdateEventListenner(loadData)
 			PhoneService.removeUpdateEventListenner(loadData)
+			EssentialContactService.removeUpdateEventListenner(loadData)
+			EssentialPhoneService.removeUpdateEventListenner(loadData)
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}

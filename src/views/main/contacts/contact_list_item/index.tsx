@@ -12,9 +12,9 @@ import { Star, Public } from '@material-ui/icons'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
 import Utils from '../../../../utils/Utils'
+import ContactEntity from '../../../../types/contact/database/ContactEntity'
+import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import './styles.css'
-import ContactView from '../../../../types/contact/view/ContactView'
-import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
 
 const ContactItemList: React.FC<ContactItemListProps> = ({
 	item,
@@ -23,8 +23,8 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 }) => {
 	
 	const language = useLanguage()
-	const cameFromEssential = Utils.isNotEmpty((item as ContactView).contact.localEssentialContactId)
-	const isUniversalEssential = Boolean((item as EssentialContactView).contact.isUniversal)
+	const cameFromEssential = Utils.isNotEmpty((item.contact as ContactEntity).localEssentialContactId)
+	const isUniversalEssential = Boolean((item.contact as EssentialContactEntity).isUniversal)
 
 	return (
 		<div className='contacts__list__item'>

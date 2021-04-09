@@ -1,19 +1,15 @@
 import ContactDataModel from '../../types/contact/api/ContactDataModel'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
-import PhoneEntity from '../../types/contact/database/PhoneEntity'
-import StringUtils from '../../utils/StringUtils'
-import ContactView from '../../types/contact/view/ContactView'
 import SynchronizableService from '../sync/SynchronizableService'
 import PhoneService from './PhoneService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import EssentialContactService from './EssentialContactService'
 import Utils from '../../utils/Utils'
-import EssentialContactView from '../../types/contact/view/EssentialContactView'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class ContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -23,9 +19,9 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.contact,
-			APIRequestMappingConstants.CONTACT,
+			APIHTTPPathsConstants.CONTACT,
 			WebSocketQueuePathService,
-			APIPathsConstants.CONTACT,
+			APIWebSocketPathsConstants.CONTACT,
 		)
 	}
 
@@ -91,52 +87,6 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		await Promise.all(phoneDeletePromises)
 
 		await this.deleteAll(contacts)
-	}
-
-	getContactViews(
-		contacts: ContactEntity[],
-		phones: PhoneEntity[]
-	): ContactView[] {
-		return contacts
-			.map(
-				contact =>
-					({
-						contact: contact,
-						phones: PhoneService.filterByContact(contact, phones)
-					} as ContactView),
-			)
-			.sort((a, b) => this.contactViewSort(a, b))
-	}
-
-	filterContactViews(
-		contacts: Array<ContactView | EssentialContactView>,
-		searchTerm: string,
-	) {
-		return contacts.filter((item) => StringUtils.contains(item.contact.name, searchTerm))
-	}
-
-	private contactViewSort(a: ContactView, b: ContactView) {
-		const bComesFirst = 1
-		const aComesFirst = -1
-
-		const sortByName = () => {
-			return a.contact.name > b.contact.name ? bComesFirst : aComesFirst
-		}
-
-		const aIsEssential = Utils.isNotEmpty(a.contact.localEssentialContactId)
-		const bIsEssential = Utils.isNotEmpty(b.contact.localEssentialContactId)
-
-		if (aIsEssential) {
-			if (bIsEssential) {
-				return sortByName()
-			} else {
-				return aComesFirst
-			}
-		} else if (bIsEssential) {
-			return bComesFirst
-		}
-
-		return sortByName()
 	}
 }
 

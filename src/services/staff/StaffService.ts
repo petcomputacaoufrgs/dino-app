@@ -1,6 +1,5 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import Database from '../../storage/Database'
@@ -10,7 +9,8 @@ import StaffEntity from '../../types/staff/database/StaffEntity'
 import DateUtils from '../../utils/DateUtils'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class StaffServiceImpl extends AutoSynchronizableService<
 	number,
@@ -20,9 +20,9 @@ class StaffServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.staff,
-			APIRequestMappingConstants.STAFF,
+			APIHTTPPathsConstants.STAFF,
 			WebSocketTopicPathService,
-			APIPathsConstants.STAFF,
+			APIWebSocketPathsConstants.STAFF,
 		)
 	}
 

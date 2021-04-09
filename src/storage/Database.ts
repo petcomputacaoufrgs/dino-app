@@ -16,6 +16,7 @@ import GoogleScopeEntity from '../types/auth/google/database/GoogleScopeEntity'
 import AuthEntity from '../types/auth/database/AuthEntity'
 import TabEntity from '../types/tab_control/TabEntity'
 import StaffEntity from '../types/staff/database/StaffEntity'
+import EssentialPhoneEntity from '../types/contact/database/EssentialPhoneEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 12
@@ -31,6 +32,7 @@ class Database extends Dexie {
 	contact: Dexie.Table<ContactEntity, number>
 	essentialContact: Dexie.Table<EssentialContactEntity, number>
 	phone: Dexie.Table<PhoneEntity, number>
+	essentialPhone: Dexie.Table<EssentialPhoneEntity, number>
 	user: Dexie.Table<UserEntity, number>
 	faqItem: Dexie.Table<FaqItemEntity, number>
 	treatmentQuestion: Dexie.Table<TreatmentQuestionEntity, number>
@@ -51,11 +53,13 @@ class Database extends Dexie {
 			contact: generateSynchronizableTableString('localEssentialContactId'),
 			essentialContact: generateSynchronizableTableString(
 				'*treatmentLocalIds',
-				'isUniversal',
+				'isUniversal'
 			),
 			phone: generateSynchronizableTableString(
-				'localContactId',
-				'localEssentialContactId',
+				'localContactId'
+			),
+			essentialPhone: generateSynchronizableTableString(
+				'localEssentialContactId'
 			),
 			noteColumn: generateSynchronizableTableString(),
 			note: generateSynchronizableTableString('columnId', 'localColumnId'),
@@ -80,6 +84,7 @@ class Database extends Dexie {
 		this.contact = this.table('contact')
 		this.essentialContact = this.table('essentialContact')
 		this.phone = this.table('phone')
+		this.essentialPhone = this.table('essentialPhone')
 		this.note = this.table('note')
 		this.noteColumn = this.table('noteColumn')
 		this.faqItem = this.table('faqItem')

@@ -1,8 +1,7 @@
 import ContactView from '../../../../types/contact/view/ContactView'
-import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
 
 export default interface ContactCardProps {
-	item?: ContactView | EssentialContactView
+	item?: ContactView
 	dialogOpen: boolean
 	onClose: () => void
 	onEdit: () => void

@@ -1,6 +1,5 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIPathsConstants from '../../constants/api/APIPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import FaqItemDataModel from '../../types/faq/api/FaqItemDataModel'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import StringUtils from '../../utils/StringUtils'
@@ -9,7 +8,8 @@ import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathServi
 import Database from '../../storage/Database'
 import TreatmentService from '../treatment/TreatmentService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
-import PermissionEnum from '../../types/enum/AuthEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
 	number,
@@ -19,9 +19,9 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.faqItem,
-			APIRequestMappingConstants.FAQ_ITEM,
+			APIHTTPPathsConstants.FAQ_ITEM,
 			WebSocketTopicPathService,
-			APIPathsConstants.FAQ_ITEM,
+			APIWebSocketPathsConstants.FAQ_ITEM,
 		)
 	}
 

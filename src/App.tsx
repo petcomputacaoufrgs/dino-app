@@ -22,7 +22,7 @@ import SecondaryTab from './views/secondary_tab'
 import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
-import PermissionEnum from './types/enum/AuthEnum'
+import PermissionEnum from './types/enum/PermissionEnum'
 import UserMain from './views/main/user_main'
 import StaffMain from './views/main/staff_main'
 import './App.css'
@@ -179,8 +179,6 @@ const App: React.FC = () => {
 			</Switch>
 		</PrivateRouterProvider>
 	)
-
-	const renderLoad = (): JSX.Element => <Load />
 
 	return (
 		<div className='app'>

@@ -9,6 +9,8 @@ import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEn
 import DinoLoader from '../../../../../components/loader'
 import { IsStaff } from '../../../../../context/private_router'
 import EssentialContactEntity from '../../../../../types/contact/database/EssentialContactEntity'
+import { useLanguage } from '../../../../../context/language'
+import './styles.css'
 
 const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
@@ -75,6 +77,8 @@ const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
 export default ContactCardContent
 
 const TreatmentList = ({item} : ContactCardContentProps) => {
+	const language = useLanguage()
+
 	const treatmentIds = (item.contact as EssentialContactEntity).treatmentLocalIds
 
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
@@ -95,9 +99,9 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 		
 	}, [isLoading, treatmentIds])
 
-	const renderTreatmentListItem = (name: string) => {
+	const renderTreatmentListItem = (name: string, index?: number) => {
 		return (
-			<ListItem className='dino__text_wrap'>
+			<ListItem key={index} className='dino__text_wrap'>
 				<ListItemText primary={name}/>
 			</ListItem>
 		)
@@ -108,9 +112,9 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 	return IsStaff() ? (
 		<List component='nav'>
 			<SectionTitle/>
-			{ isUniversal ? renderTreatmentListItem('Este contato é universal e aparecerá em todas as agendas de usuários')
+			{ isUniversal ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT)
 			: <DinoLoader isLoading={isLoading}>
-					{treatments?.map(e => renderTreatmentListItem(e.name))}
+					{treatments?.map((e, index) => renderTreatmentListItem(e.name, index))}
 				</DinoLoader>}
 		</List>
 	) : <></>
@@ -118,8 +122,8 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 
 const SectionTitle = () => {
 	return (
-		<div style={{'margin': 0}}>
-			<p style={{'margin': 0, 'color': '#a6a6a6', 'textAlign': 'center'}}>{'Treatments'.toUpperCase()}</p>
+		<div className='contact_card__section_title'>
+			<p>{'Treatments'.toUpperCase()}</p>
 		</div>
 	)
 }

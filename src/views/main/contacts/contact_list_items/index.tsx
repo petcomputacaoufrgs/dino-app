@@ -39,11 +39,8 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
 		if (toDelete && selectedItem) {
 			await deletePhones(selectedItem)
-			if(staff) {
-				await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
-			} else {
-				await ContactService.delete(selectedItem.contact)
-			}
+			staff ? await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
+				: await ContactService.delete(selectedItem.contact)
 		}
 		setToDelete(false)
 	}

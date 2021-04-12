@@ -14,6 +14,7 @@ import Utils from '../../utils/Utils'
 import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import EssentialPhoneService from './EssentialPhoneService'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -114,7 +115,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		//TODO: Estudar possibilidade de uma saveAll em contatos também
 		essentialContacts.forEach(async ec => {
 			const savedContact = await ContactService.save(
-				this.convertEntityToContactEntity(ec),
+				this.convertEntityToContactEntity(ec)
 			)
 			if (savedContact) {
 				savePhonesFromEssentialContact(ec, savedContact)
@@ -126,16 +127,16 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			c: ContactEntity,
 		) => {
 			if (ec.localId) {
-				const phones = await PhoneService.getAllByEssentialContactLocalId(
+				const ePhones = await EssentialPhoneService.getAllByEssentialContactLocalId(
 					ec.localId,
 				)
-				if (phones.length > 0) {
-					const newContactPhones: PhoneEntity[] = phones.map(p => {
+				if (ePhones.length > 0) {
+					const newContactPhones: PhoneEntity[] = ePhones.map(ePhone => {
 						return {
 							localContactId: c.localId,
-							number: p.number,
-							type: p.type,
-							originalEssentialPhoneId: ec.id,
+							localEssentialPhoneId: ePhone.localId,
+							number: ePhone.number,
+							type: ePhone.type
 						}
 					})
 					await PhoneService.saveAll(newContactPhones)

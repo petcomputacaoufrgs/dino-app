@@ -236,12 +236,10 @@ const Settings: React.FC = () => {
 			const treatmentChangedWithEssentialContacts =
 				oldTreatment !== settings.treatmentLocalId &&
 				settings.includeEssentialContact
-			const disabledEssentialContacts =
-				oldIncludeEssentialContact !== settings.includeEssentialContact &&
-				oldIncludeEssentialContact
-			const enabledEssentialContacts =
-				oldIncludeEssentialContact !== settings.includeEssentialContact &&
-				settings.includeEssentialContact
+
+			const disabledEssentialContacts = oldIncludeEssentialContact && !settings.includeEssentialContact
+
+			const enabledEssentialContacts = !oldIncludeEssentialContact && settings.includeEssentialContact
 
 			if (treatmentChangedWithEssentialContacts || disabledEssentialContacts) {
 				await ContactService.deleteUserEssentialContacts()

@@ -13,6 +13,7 @@ import Database from '../../storage/Database'
 import Utils from '../../utils/Utils'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import EssentialPhoneService from './EssentialPhoneService'
 
 export class PhoneServiceImpl extends AutoSynchronizableService<
 	number,
@@ -50,6 +51,14 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 			entity.localContactId = contact?.localId
 		}
 
+		const essentialPhoneId = model.essentialPhoneId
+		if (Utils.isNotEmpty(essentialPhoneId)) {
+			const ePhone = await EssentialPhoneService.getById(essentialPhoneId!)
+			if (ePhone) {
+				entity.localEssentialPhoneId = ePhone.localId
+			}
+		}
+
 		return entity
 	}
 
@@ -60,6 +69,16 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 			number: entity.number,
 			type: entity.type,
 		}
+
+		const localEPhoneId = entity.localEssentialPhoneId
+
+		if (Utils.isNotEmpty(localEPhoneId)) {
+			const ePhone = await EssentialPhoneService.getByLocalId(localEPhoneId!)
+			if (ePhone) {
+				model.essentialPhoneId = ePhone.id
+			}
+		}
+
 		const localContactId = entity.localContactId
 
 		if (Utils.isNotEmpty(localContactId)) {
@@ -116,7 +135,6 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 				.where('localContactId')
 				.equals(contact.localId!)
 				.toArray()
-
 			if (phones.length > 0) {
 				await this.deleteAll(phones)
 			}

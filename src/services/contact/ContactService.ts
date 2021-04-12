@@ -40,11 +40,13 @@ class ContactServiceImpl extends AutoSynchronizableService<
 			color: model.color,
 		}
 
+		console.log(model)
+
 		if (Utils.isNotEmpty(model.essentialContactId)) {
 			const essentialContact = await EssentialContactService.getById(
 				model.essentialContactId!,
 			)
-
+			console.log(essentialContact)
 			if (essentialContact) {
 				entity.localEssentialContactId = essentialContact.localId
 			}
@@ -80,6 +82,7 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	async deleteUserEssentialContacts() {
 		const contacts = await this.getAllDerivatedFromEssential()
 
+		console.log(contacts)
 		const phoneDeletePromises = contacts.map(contact => {
 			return PhoneService.deleteByContact(contact)
 		})

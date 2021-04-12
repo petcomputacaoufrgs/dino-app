@@ -634,6 +634,8 @@ export default class PT implements LanguageBase {
 
 	SAVE = 'Salvar'
 
+	UNIVERSAL_CONTACT = 'Este contato é universal e aparecerá em todas as agendas de usuários'
+
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

@@ -298,6 +298,7 @@ export default interface LanguageBase {
 	USERS_QUESTIONS: string
 	SEND_TO_THE_PROFESSIONALS: string
 	SAVE: string
+	UNIVERSAL_CONTACT: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

@@ -64,6 +64,15 @@ class EssentialPhoneService extends AutoSynchronizableService<
 		}
     }
 
+	async getAllByEssentialContactLocalId(
+		localEssentialContactId: number,
+	): Promise<EssentialPhoneEntity[]> {
+		return this.table
+			.where('localEssentialContactId')
+			.equals(localEssentialContactId)
+			.toArray()
+	}
+
     filterByEssentialContact(eContact: EssentialContactEntity, ePhones: EssentialPhoneEntity[]) {
         if (eContact.localId) {
 			return ePhones.filter(ePhone => ePhone.localEssentialContactId === eContact.localId)

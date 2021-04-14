@@ -9,7 +9,6 @@ import PT from '../../constants/languages/PT'
 import EN from '../../constants/languages/EN'
 import FontSizeEnum from '../../types/enum/FontSizeEnum'
 import OptionType from '../../types/OptionType'
-import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
@@ -157,16 +156,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		} else {
 			return undefined
 		}
-	}
-
-	async getTreatment(
-		userSettings: UserSettingsEntity,
-	): Promise<TreatmentEntity | undefined> {
-		if (userSettings.treatmentLocalId) {
-			return TreatmentService.getByLocalId(userSettings.treatmentLocalId)
-		}
-
-		return undefined
 	}
 
 	getFirstSettingsDone = async (): Promise<boolean | undefined> => {

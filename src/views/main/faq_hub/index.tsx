@@ -17,6 +17,7 @@ import { useStaffData } from '../../../context/staff_data'
 import { Badge } from '@material-ui/core'
 import Faq from './faq'
 import ArrayUtils from '../../../utils/ArrayUtils'
+import Utils from '../../../utils/Utils'
 import './styles.css'
 
 const FaqHub: React.FC = () => {
@@ -32,25 +33,26 @@ const FaqHub: React.FC = () => {
 
 	useEffect(() => {
 		const loadData = async () => {
-			if(localId) {
-				const currentTreatment = await TreatmentService.getByLocalId(Number(localId))
+			const treatments = await TreatmentService.getAll()
+			updateTreatments(treatments)
+			if(Utils.isNotEmpty(localId)) {
+				const currentTreatment = treatments.find(treatment => treatment.localId === Number(localId))
 				updateTreatmentView(currentTreatment)
 				await updateFaqView(currentTreatment)
-			} else await loadUserTreatment()
+			} else await loadUserTreatment(treatments)
 
 			finishLoading()
 		} 
 
-		const loadUserTreatment = async () => {
-			const treatments = await TreatmentService.getAll()
-			if(treatments.length > 0) {
-				updateTreatments(treatments)
-				const userSettings = await UserSettingsService.getFirst()
-				if (userSettings) {
-					const currentTreatment = treatments?.find(t => t.localId === userSettings.treatmentLocalId)
-					updateTreatmentView(currentTreatment)
-					await updateFaqView(currentTreatment)
-				}
+		const loadUserTreatment = async (treatments: TreatmentEntity[]) => {
+			const userSettings = await UserSettingsService.getFirst()
+			if (userSettings && Utils.isNotEmpty(userSettings.treatmentLocalId)) {
+				const currentTreatment = treatments.find(treatment => treatment.localId === userSettings.treatmentLocalId)
+				updateTreatmentView(currentTreatment)
+				await updateFaqView(currentTreatment)
+			} else {
+				updateTreatmentView(undefined)
+				await updateFaqView(undefined)
 			}
 		}
 
@@ -58,6 +60,8 @@ const FaqHub: React.FC = () => {
 			if(treatment) {
 				const faqItems = await FaqItemService.getByTreatment(treatment)
 				setFaqView({treatment, faqItems})
+			} else {
+				setFaqView(undefined)
 			}
 		}
 
@@ -65,6 +69,8 @@ const FaqHub: React.FC = () => {
 			if(treatment) {
 				const view = staffData[treatment.localId!]
 				setTreatmentView(view)
+			} else {
+				setTreatmentView(undefined)
 			}
 		}
 
@@ -95,7 +101,7 @@ const FaqHub: React.FC = () => {
 			FaqItemService.removeUpdateEventListenner(loadData)
 			TreatmentQuestionService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading, localId, staffData])
+	}, [isLoading, localId, staffData, staff])
 
 	const NoFAQAvailable = () => {
 		return (

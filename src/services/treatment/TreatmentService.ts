@@ -3,7 +3,7 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from '../faq/FaqItemService'
@@ -19,7 +19,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.treatment,
 			APIHTTPPathsConstants.TREATMENT,
-			WebSocketTopicPathService,
+			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.TREATMENT,
 		)
 	}

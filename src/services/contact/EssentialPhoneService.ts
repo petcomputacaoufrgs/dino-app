@@ -8,7 +8,7 @@ import PermissionEnum from "../../types/enum/PermissionEnum"
 import Utils from "../../utils/Utils"
 import AutoSynchronizableService from "../sync/AutoSynchronizableService"
 import SynchronizableService from "../sync/SynchronizableService"
-import WebSocketTopicPathService from "../websocket/path/WebSocketTopicPathService"
+import WebSocketQueuePathService from "../websocket/path/WebSocketQueuePathService"
 import EssentialContactService from "./EssentialContactService"
 
 class EssentialPhoneService extends AutoSynchronizableService<
@@ -20,7 +20,7 @@ class EssentialPhoneService extends AutoSynchronizableService<
 		super(
 			Database.essentialPhone,
 			APIHTTPPathsConstants.ESSENTIAL_PHONE,
-			WebSocketTopicPathService,
+			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.ESSENTIAL_PHONE,
 		)
 	}

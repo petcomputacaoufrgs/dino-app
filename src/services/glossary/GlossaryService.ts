@@ -4,7 +4,7 @@ import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
@@ -20,7 +20,7 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.glossary,
 			APIHTTPPathsConstants.GLOSSARY,
-			WebSocketTopicPathService,
+			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.GLOSSARY,
 		)
 	}

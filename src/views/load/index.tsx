@@ -1,14 +1,14 @@
 import React from 'react'
-import './styles.css'
 import { ReactComponent as DinoLogoSVG } from '../../assets/logos/dinosaur_1.svg'
 import PetLogo from '../../assets/logos/pet.png'
 import HCLogo from '../../assets/logos/hc.png'
 import UFRGSLogo from '../../assets/logos/ufrgs.png'
+import './styles.css'
 
 const Load: React.FC = () => {
 	return (
 		<div className='load'>
-			<div className='load_header'>
+			<div className='load__header'>
 				<DinoLogoSVG className='load__dino_logo' title='DinoApp' />
 				<h1 className='load__dino_title'>DinoApp</h1>
 			</div>

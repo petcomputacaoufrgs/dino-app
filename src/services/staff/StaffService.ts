@@ -1,7 +1,7 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import UserService from '../user/UserService'
 import StaffDataModel from '../../types/staff/api/StaffDataModel'
@@ -21,7 +21,7 @@ class StaffServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.staff,
 			APIHTTPPathsConstants.STAFF,
-			WebSocketTopicPathService,
+			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.STAFF,
 		)
 	}

@@ -100,7 +100,6 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 	const saveContact = async () => {
 		async function savePhones(contact: ContactEntity | EssentialContactEntity) {
 			const newPhones = contactPhones.filter(phone => phone.number !== '')
-			console.log(newPhones)
 			if (staff) {
 				newPhones.forEach(ePhone => ((ePhone as EssentialPhoneEntity).localEssentialContactId = contact.localId))
 			} else {
@@ -108,7 +107,6 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 			}
 
 			if (newPhones.length > 0) {
-				console.log(newPhones)
 				staff ? await EssentialPhoneService.saveAll(newPhones) : await PhoneService.saveAll(newPhones)
 			}
 

@@ -5,7 +5,7 @@ import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import TreatmentService from './TreatmentService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
@@ -19,7 +19,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.treatmentQuestion,
 			APIHTTPPathsConstants.TREATMENT_QUESTION,
-			WebSocketTopicPathService,
+			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.TREATMENT_QUESTION,
 		)
 	}

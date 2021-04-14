@@ -29,13 +29,12 @@ import {DinoDialogHeader,DinoDialogContent,} from '../../../components/dialogs/d
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
-import './styles.css'
 import { IsStaff } from '../../../context/private_router'
+import './styles.css'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
 const Settings: React.FC = () => {
-
 	const staff = IsStaff()
 	const alert = useAlert()
 	const language = useLanguage()

@@ -11,7 +11,7 @@ import PhoneService from './PhoneService'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import Utils from '../../utils/Utils'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import EssentialPhoneService from './EssentialPhoneService'
@@ -25,7 +25,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		super(
 			Database.essentialContact,
 			APIHTTPPathsConstants.ESSENTIAL_CONTACT,
-			WebSocketTopicPathService,
+			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.ESSENTIAL_CONTACT,
 		)
 	}

@@ -23,20 +23,18 @@ import FontSizeEnum from '../../../types/enum/FontSizeEnum'
 import ColorThemeEnum from '../../../types/enum/ColorThemeEnum'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
-import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import TransitionSlide from '../../../components/slide_transition'
 import {DinoDialogHeader,DinoDialogContent,} from '../../../components/dialogs/dino_dialog'
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
-import './styles.css'
 import { IsStaff } from '../../../context/private_router'
+import './styles.css'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
 const Settings: React.FC = () => {
-
 	const staff = IsStaff()
 	const alert = useAlert()
 	const language = useLanguage()
@@ -173,7 +171,6 @@ const Settings: React.FC = () => {
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
-			GoogleContactService.activeGoogleContactsGrant()
 		}
 	}
 
@@ -238,12 +235,10 @@ const Settings: React.FC = () => {
 			const treatmentChangedWithEssentialContacts =
 				oldTreatment !== settings.treatmentLocalId &&
 				settings.includeEssentialContact
-			const disabledEssentialContacts =
-				oldIncludeEssentialContact !== settings.includeEssentialContact &&
-				oldIncludeEssentialContact
-			const enabledEssentialContacts =
-				oldIncludeEssentialContact !== settings.includeEssentialContact &&
-				settings.includeEssentialContact
+
+			const disabledEssentialContacts = oldIncludeEssentialContact && !settings.includeEssentialContact
+
+			const enabledEssentialContacts = !oldIncludeEssentialContact && settings.includeEssentialContact
 
 			if (treatmentChangedWithEssentialContacts || disabledEssentialContacts) {
 				await ContactService.deleteUserEssentialContacts()

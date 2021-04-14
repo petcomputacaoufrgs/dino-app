@@ -8,11 +8,11 @@ import PhoneService from '../../../../../services/contact/PhoneService'
 import Utils from '../../../../../utils/Utils'
 import '../../styles.css'
 import './styles.css'
+import ContactEntity from '../../../../../types/contact/database/ContactEntity'
 
 const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({ item, onClick, children }) => {
-
 	const language = useLanguage()
-	const isEssential = Utils.isNotEmpty(item.contact.localEssentialContactId)
+	const isEssential = Utils.isNotEmpty((item.contact as ContactEntity).localEssentialContactId)
 
 	return (
 		<div className='contact_dialog_content_header dino__text__wrap'>

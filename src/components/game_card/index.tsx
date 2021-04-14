@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import GameCardProps from './props'
 import './styles.css'
 
@@ -8,8 +8,6 @@ const GameCard: React.FC<GameCardProps> = ({
 	backgroundColor,
 	text,
 }) => {
-	const buttonRef = useRef<HTMLButtonElement>(null)
-
 	return (
 		<button
 			className='game_card'

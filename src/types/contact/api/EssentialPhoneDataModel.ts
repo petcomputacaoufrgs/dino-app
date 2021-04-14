@@ -1,8 +1,8 @@
 import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLocalIdModel'
 
-export default interface GoogleContactDataModel
+export default interface EssentialPhoneDataModel
 	extends SynchronizableDataLocalIdModel<number> {
-	resourceName?: string
-	contactId: number
-	savedOnGoogleAPI: boolean
+	number: string
+	type: number
+	essentialContactId?: number
 }

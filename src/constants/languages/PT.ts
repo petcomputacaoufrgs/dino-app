@@ -76,9 +76,9 @@ export default class PT implements LanguageBase {
 
 	DELETE_OPTION_TEXT = 'Deletar'
 
-	DELETE_ITEM_OPTION_TEXT ='Esta ação irá deletar o item para sempre.'
+	DELETE_ITEM_OPTION_TEXT ='Esta ação irá deletar o item permanentemente.'
 
-	DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato para sempre.'
+	DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato permanentemente.'
 
 	TERMS_OF_USE = 'Termos de Uso'
 
@@ -633,6 +633,8 @@ export default class PT implements LanguageBase {
 	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
 
 	SAVE = 'Salvar'
+
+	UNIVERSAL_CONTACT = 'Este contato é universal e aparecerá em todas as agendas de usuários'
 
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

@@ -9,50 +9,37 @@ import ContactView from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
 import ContactService from '../../../../services/contact/ContactService'
-import GoogleContactService from '../../../../services/contact/GoogleContactService'
-import EssentialContactView from '../../../../types/contact/view/EssentialContactView'
 import { IsStaff } from '../../../../context/private_router'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import ItemListMenu from '../../../../components/item_list_menu'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
+import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const [toEdit, setToEdit] = useState(false)
 	const [toView, setToView] = useState(false)
 	const [toDelete, setToDelete] = useState(false)
-	const [selectedItem, setSelectedItem] = useState<ContactView | EssentialContactView | undefined>(undefined)
+	const [selectedItem, setSelectedItem] = useState<ContactView | undefined>(undefined)
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const language = useLanguage()
 	const staff = IsStaff()
 
 	const handleAcceptDialogAndDeleteItem = async () => {
-
-		async function deleteGoogleContact (
+		async function deletePhones (
 			contactToDelete: ContactView,
 		): Promise<void> {
-			if (contactToDelete.googleContact) {
-				await GoogleContactService.delete(contactToDelete.googleContact)
-			}
-		}
-
-		async function deletePhones (
-			contactToDelete: ContactView | EssentialContactView,
-		): Promise<void> {
 			if (contactToDelete.phones.length > 0) {
-				await PhoneService.deleteAll(contactToDelete.phones)
+				staff ? await EssentialPhoneService.deleteAll(contactToDelete.phones) 
+					: await PhoneService.deleteAll(contactToDelete.phones)
 			}
 		}
 
 		if (toDelete && selectedItem) {
 			await deletePhones(selectedItem)
-			if(staff) {
-				await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
-			} else {
-				await deleteGoogleContact(selectedItem)
-				await ContactService.delete(selectedItem.contact)
-			}
+			staff ? await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
+				: await ContactService.delete(selectedItem.contact)
 		}
 		setToDelete(false)
 	}

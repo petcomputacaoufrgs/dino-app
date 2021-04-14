@@ -22,7 +22,7 @@ import SecondaryTab from './views/secondary_tab'
 import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
-import UserEnum from './types/enum/UserEnum'
+import PermissionEnum from './types/enum/PermissionEnum'
 import UserMain from './views/main/user_main'
 import StaffMain from './views/main/staff_main'
 import './App.css'
@@ -36,7 +36,7 @@ const App: React.FC = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 	const [isMainTab, setIsMainTab] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(true)
-	const [userPermission, setUserPermission] = useState<number | undefined>(undefined)
+	const [userPermission, setUserPermission] = useState<string | undefined>(undefined)
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -85,7 +85,7 @@ const App: React.FC = () => {
 
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
-            updateUserPermission(hasUserPermission || UserEnum.USER)
+            updateUserPermission(hasUserPermission || PermissionEnum.USER)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {
@@ -100,7 +100,7 @@ const App: React.FC = () => {
 			setIsMainTab(isMainTab)
 		}
 
-		let updateUserPermission = (userPermission: number) => {
+		let updateUserPermission = (userPermission: string) => {
          setUserPermission(userPermission)
 		}
 
@@ -160,17 +160,17 @@ const App: React.FC = () => {
 				<PrivateRoute 
 					path={PathConstants.USER} 
 					component={UserMain} 
-					restrictedTo={[UserEnum.USER, UserEnum.ADMIN]} 
-        />
+					restrictedTo={[PermissionEnum.USER]} 
+        		/>
 				<PrivateRoute 
 					path={PathConstants.STAFF} 
 					component={StaffMain} 
-					restrictedTo={[UserEnum.CLIENT, UserEnum.STAFF]} 
+					restrictedTo={[PermissionEnum.ADMIN, PermissionEnum.STAFF]} 
 				/>
 				<PrivateRoute 
 					path={PathConstants.KIDS_SPACE} 
 					component={KidsSpace}
-					restrictedTo={[UserEnum.USER, UserEnum.ADMIN]}
+					restrictedTo={[PermissionEnum.USER]}
 				/>
 				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
 				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
@@ -179,8 +179,6 @@ const App: React.FC = () => {
 			</Switch>
 		</PrivateRouterProvider>
 	)
-
-	const renderLoad = (): JSX.Element => <Load />
 
 	return (
 		<div className='app'>

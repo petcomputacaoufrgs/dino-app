@@ -1,13 +1,14 @@
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from '../faq/FaqItemService'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -17,13 +18,17 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.treatment,
-			APIRequestMappingConstants.TREATMENT,
-			WebSocketTopicPathService,
-			APIMainPathsConstants.TREATMENT,
+			APIHTTPPathsConstants.TREATMENT,
+			WebSocketQueuePathService,
+			APIWebSocketPathsConstants.TREATMENT,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
+
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

@@ -1,8 +1,7 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserSettingsDataModel from '../../types/user/api/UserSettingsDataModel'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import TreatmentService from '../treatment/TreatmentService'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import ColorThemeEnum from '../../types/enum/ColorThemeEnum'
@@ -16,6 +15,8 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/enum/LanguageEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,14 +26,18 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.userSettings,
-			APIRequestMappingConstants.USER_SETTINGS,
+			APIHTTPPathsConstants.USER_SETTINGS,
 			WebSocketQueuePathService,
-			APIMainPathsConstants.USER_SETTINGS,
+			APIWebSocketPathsConstants.USER_SETTINGS,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [GoogleScopeService, TreatmentService]
+	}
+
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return []
 	}
 
 	async convertModelToEntity(

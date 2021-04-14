@@ -1,6 +1,5 @@
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
 import Database from '../../storage/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
@@ -12,10 +11,10 @@ import PhoneService from './PhoneService'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import TreatmentService from '../treatment/TreatmentService'
 import Utils from '../../utils/Utils'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
-import GoogleContactService from './GoogleContactService'
-import EssentialContactView from '../../types/contact/view/EssentialContactView'
-import StringUtils from '../../utils/StringUtils'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import EssentialPhoneService from './EssentialPhoneService'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,14 +24,18 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.essentialContact,
-			APIRequestMappingConstants.ESSENTIAL_CONTACT,
-			WebSocketTopicPathService,
-			APIMainPathsConstants.ESSENTIAL_CONTACT,
+			APIHTTPPathsConstants.ESSENTIAL_CONTACT,
+			WebSocketQueuePathService,
+			APIWebSocketPathsConstants.ESSENTIAL_CONTACT,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [TreatmentService]
+	}
+
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return []
 	}
 
 	async convertModelToEntity(
@@ -112,10 +115,9 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		//TODO: Estudar possibilidade de uma saveAll em contatos também
 		essentialContacts.forEach(async ec => {
 			const savedContact = await ContactService.save(
-				this.convertEntityToContactEntity(ec),
+				this.convertEntityToContactEntity(ec)
 			)
 			if (savedContact) {
-				await GoogleContactService.saveGoogleContact(savedContact)
 				savePhonesFromEssentialContact(ec, savedContact)
 			}
 		})
@@ -125,16 +127,16 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			c: ContactEntity,
 		) => {
 			if (ec.localId) {
-				const phones = await PhoneService.getAllByEssentialContactLocalId(
+				const ePhones = await EssentialPhoneService.getAllByEssentialContactLocalId(
 					ec.localId,
 				)
-				if (phones.length > 0) {
-					const newContactPhones: PhoneEntity[] = phones.map(p => {
+				if (ePhones.length > 0) {
+					const newContactPhones: PhoneEntity[] = ePhones.map(ePhone => {
 						return {
 							localContactId: c.localId,
-							number: p.number,
-							type: p.type,
-							originalEssentialPhoneId: ec.id,
+							localEssentialPhoneId: ePhone.localId,
+							number: ePhone.number,
+							type: ePhone.type
 						}
 					})
 					await PhoneService.saveAll(newContactPhones)
@@ -152,26 +154,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		}
 
 		return contactEntity
-	}
-
-	getEssentialContactViews(
-		eContacts: EssentialContactEntity[],
-		phones: PhoneEntity[],
-	): EssentialContactView[] {
-		return eContacts
-			.map(e => ({
-						contact: e,
-						phones: PhoneService.filterByEssentialContact(e, phones),
-					} as EssentialContactView),
-			)
-			.sort((a, b) => a.contact.name > b.contact.name ? 1 : -1)
-	}
-
-	filterEssentialContactViews(
-		contacts: EssentialContactView[],
-		searchTerm: string,
-	): EssentialContactView[] {
-		return contacts.filter(item => StringUtils.contains(item.contact.name, searchTerm))
 	}
 }
 

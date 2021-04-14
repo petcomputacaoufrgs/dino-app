@@ -10,7 +10,7 @@ import './styles.css'
 
 const DinoRunner: React.FC = () => {
 	const language = useLanguage()
-
+	
 	const dinoRunnerGameContainer = useRef<HTMLDivElement>(null)
 	const dinoRunnerGameGrid = useRef<HTMLDivElement>(null)
 	const dinoRunnerGameCharacter = useRef<HTMLDivElement>(null)

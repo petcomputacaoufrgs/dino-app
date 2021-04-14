@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import ContactsConstants from '../../../../../constants/app_data/DataConstants'
 import ContactCardContentProps from './props'
-import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
+import { Typography, CardContent, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 import { Person as PersonIcon, Phone as PhoneIcon, Home as HomeIcon, LocalHospitalRounded as HospitalIcon } from '@material-ui/icons'
 import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
-import EssentialContactView from '../../../../../types/contact/view/EssentialContactView'
 import TreatmentService from '../../../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import DinoLoader from '../../../../../components/loader'
 import { IsStaff } from '../../../../../context/private_router'
+import EssentialContactEntity from '../../../../../types/contact/database/EssentialContactEntity'
+import { useLanguage } from '../../../../../context/language'
+import './styles.css'
 
-const ContactCardContent = ({ item }: ContactCardContentProps) => {
-
+const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
 		if (phone.type === ContactsConstants.CONTACT_PHONE_CODE_MOBILE) {
 			return <PhoneIcon />
@@ -76,8 +77,9 @@ const ContactCardContent = ({ item }: ContactCardContentProps) => {
 export default ContactCardContent
 
 const TreatmentList = ({item} : ContactCardContentProps) => {
+	const language = useLanguage()
 
-	const treatmentIds = (item as EssentialContactView).contact.treatmentLocalIds
+	const treatmentIds = (item.contact as EssentialContactEntity).treatmentLocalIds
 
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
 
@@ -95,24 +97,24 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 		if (isLoading) 
 			loadData()
 		
-	}, [isLoading])
+	}, [isLoading, treatmentIds])
 
-	const renderTreatmentListItem = (name: string) => {
+	const renderTreatmentListItem = (name: string, index?: number) => {
 		return (
-			<ListItem className='dino__text_wrap'>
+			<ListItem key={index} className='dino__text_wrap'>
 				<ListItemText primary={name}/>
 			</ListItem>
 		)
 	}
 
-	const isUniversal = Boolean((item as EssentialContactView).contact.isUniversal)
+	const isUniversal = Boolean((item.contact as EssentialContactEntity).isUniversal)
 
 	return IsStaff() ? (
 		<List component='nav'>
 			<SectionTitle/>
-			{ isUniversal ? renderTreatmentListItem('Este contato é universal e aparecerá em todas as agendas de usuários')
+			{ isUniversal ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT)
 			: <DinoLoader isLoading={isLoading}>
-					{treatments?.map(e => renderTreatmentListItem(e.name))}
+					{treatments?.map((e, index) => renderTreatmentListItem(e.name, index))}
 				</DinoLoader>}
 		</List>
 	) : <></>
@@ -120,8 +122,8 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 
 const SectionTitle = () => {
 	return (
-		<div style={{'margin': 0}}>
-			<p style={{'margin': 0, 'color': '#a6a6a6', 'textAlign': 'center'}}>{'Treatments'.toUpperCase()}</p>
+		<div className='contact_card__section_title'>
+			<p>{'Treatments'.toUpperCase()}</p>
 		</div>
 	)
 }

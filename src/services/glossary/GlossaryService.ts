@@ -1,14 +1,15 @@
 import GlossaryItemModel from '../../types/glossary/api/GlossaryItemDataModel'
-import APIRequestMappingConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import GlossaryItemDataModel from '../../types/glossary/api/GlossaryItemDataModel'
 import GlossaryItemEntity from '../../types/glossary/database/GlossaryItemEntity'
-import APIMainPathsConstants from '../../constants/api/APIMainPathsConstants'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import StringUtils from '../../utils/StringUtils'
 import LanguageBase from '../../constants/languages/LanguageBase'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class GlossaryServiceImpl extends AutoSynchronizableService<
 	number,
@@ -18,13 +19,17 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.glossary,
-			APIRequestMappingConstants.GLOSSARY,
-			WebSocketTopicPathService,
-			APIMainPathsConstants.GLOSSARY,
+			APIHTTPPathsConstants.GLOSSARY,
+			WebSocketQueuePathService,
+			APIWebSocketPathsConstants.GLOSSARY,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
+
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 

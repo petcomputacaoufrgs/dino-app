@@ -491,7 +491,7 @@ export default abstract class AutoSynchronizableService<
 	/**
 	 * @description Start entity save sync with API.
 	 */
-	protected syncSave = async (): Promise<boolean> => {
+	protected sync = async (): Promise<boolean> => {
 		const notSavedEntities = await this.dbGetAllNotSavedOnAPI()
 
 		const notSavedModels = await this.internalConvertEntitiesToModels(
@@ -685,8 +685,8 @@ export default abstract class AutoSynchronizableService<
 
 	private deleteAllRequestURL = (): string => `${this.deleteRequestURL()}all/`
 
-	private syncSaveRequestURL = (): string =>
-		`${this.getBaseRequestURL()}sync_save/`
+	private syncRequestURL = (): string =>
+		`${this.getBaseRequestURL()}sync/`
 
 	private apiSave = async (
 		data: DATA_MODEL,
@@ -782,7 +782,7 @@ export default abstract class AutoSynchronizableService<
 		toSave: Array<DATA_MODEL>,
 	): Promise<SynchronizableSyncResponseModel<ID, DATA_MODEL> | undefined> => {
 		try {
-			const request = await DinoAgentService.put(this.syncSaveRequestURL())
+			const request = await DinoAgentService.put(this.syncRequestURL())
 
 			if (request.canGo) {
 				const requestModel: SynchronizableSyncModel<ID, DATA_MODEL> = {

@@ -14,7 +14,6 @@ import { toggle } from '../../constants/toggle/Toggle'
 type getGroupedItemsType = (language: LanguageBase, handleLogoutClick: () => void) => MenuItemViewModel[][]
 
 const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
-
   const staff = IsStaff()
 
   const language = useLanguage()
@@ -39,7 +38,7 @@ const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
 	const handleLogoutDisagree = () => {
 		setOpenLogoutDialog(false)
 	}
-
+  
   return (
     <DinoLoader isLoading={language.loading} hideChildren>
       <DrawerNavigation

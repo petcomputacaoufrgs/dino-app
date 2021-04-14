@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import TreatmentQuestionService from '../../services/faq/TreatmentQuestionService'
+import TreatmentQuestionService from '../../services/treatment/TreatmentQuestionService'
 import TreatmentService from '../../services/treatment/TreatmentService'
 import TreatmentView from '../../types/faq/view/TreatmentView'
 

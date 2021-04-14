@@ -626,6 +626,8 @@ export default class EN implements LanguageBase {
 
 	SAVE = 'Save'
 
+	UNIVERSAL_CONTACT = 'This contact is universal and will appear for all user'
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

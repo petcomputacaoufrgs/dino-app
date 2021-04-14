@@ -6,7 +6,6 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import FaqItemService from '../../../services/faq/FaqItemService'
 import DinoLoader from '../../../components/loader'
 import NoTreatmentSelected from './no_treatment_selected'
-import './styles.css'
 import FaqView from '../../../types/faq/view/FaqView'
 import { useParams } from 'react-router-dom'
 import { IsStaff } from '../../../context/private_router'
@@ -18,22 +17,20 @@ import { useStaffData } from '../../../context/staff_data'
 import { Badge } from '@material-ui/core'
 import Faq from './faq'
 import ArrayUtils from '../../../utils/ArrayUtils'
-
+import './styles.css'
 
 const FaqHub: React.FC = () => {
-
 	const { localId } = useParams<{ localId?: string }>()
 	const language = useLanguage()
 	const staff = IsStaff()
 	const staffData = useStaffData()
-	const [isLoading, setIsLoading] = useState(true)
 
+	const [isLoading, setIsLoading] = useState(true)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>()
 	const [treatmentView, setTreatmentView] = useState<TreatmentView>()
 	const [faqView, setFaqView] = useState<FaqView>()
 
 	useEffect(() => {
-
 		const loadData = async () => {
 			if(localId) {
 				const currentTreatment = await TreatmentService.getByLocalId(Number(localId))
@@ -79,6 +76,7 @@ const FaqHub: React.FC = () => {
 			setIsLoading(false)
 		}
 
+		UserSettingsService.addUpdateEventListenner(loadData)
 		TreatmentService.addUpdateEventListenner(loadData)
 		FaqItemService.addUpdateEventListenner(loadData)
 		TreatmentQuestionService.addUpdateEventListenner(loadData)
@@ -92,6 +90,7 @@ const FaqHub: React.FC = () => {
 			updateTreatments = () => {}
 			updateTreatmentView = () => {}
 			finishLoading = () => {}
+			UserSettingsService.removeUpdateEventListenner(loadData)
 			TreatmentService.removeUpdateEventListenner(loadData)
 			FaqItemService.removeUpdateEventListenner(loadData)
 			TreatmentQuestionService.removeUpdateEventListenner(loadData)
@@ -109,7 +108,6 @@ const FaqHub: React.FC = () => {
 	const FaqAndUserQuestions: React.FC = () => {
 		return (		
 				<DinoTabPanel 
-					// currentTab={1} 
 					panels={[ 
 						{ Label: language.data.FAQ, Component: <Faq view={faqView}/> },
 						{ 

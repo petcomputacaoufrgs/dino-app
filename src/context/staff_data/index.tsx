@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import TreatmentQuestionService from '../../services/treatment/TreatmentQuestionService'
 import TreatmentService from '../../services/treatment/TreatmentService'
+import TreatmentQuestionEntity from '../../types/faq/database/TreatmentQuestionEntity'
 import TreatmentView from '../../types/faq/view/TreatmentView'
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import Utils from '../../utils/Utils'
 
 /**
  * @description Contexto padrão para os dados de staff
  */
-const StaffData = createContext([] as TreatmentView[])
+const StaffData = createContext(new Map<number, TreatmentView>())
 
 /**
  * @description Gera os dados necessários para as rotas privadas e de login
@@ -14,7 +17,7 @@ const StaffData = createContext([] as TreatmentView[])
 */
 const StaffDataProvider: React.FC = ({ children }) => {
   
-  const [value, setValue] = useState([] as TreatmentView[])
+  const [value, setValue] = useState(new Map<number, TreatmentView>())
 
 	useEffect(() => {
 
@@ -23,24 +26,29 @@ const StaffDataProvider: React.FC = ({ children }) => {
 
 			const treatments = await TreatmentService.getAll()
 
-			const treatmentViews = treatments.reduce((acum, t) => {
-				if(t.localId) {
-					acum[t.localId] = { treatment: t }
-				}
-				return acum
-			}, [] as TreatmentView[])
+			const treatmentMap = new Map<number, TreatmentView>()
 
+			populateMapWithTreatments(treatments, treatmentMap)
+
+			populateMapWithQuestions(treatmentQuestions, treatmentMap)
+
+			setValue(treatmentMap)
+		}
+
+		const populateMapWithTreatments = (treatments: TreatmentEntity[], treatmentMap: Map<number, TreatmentView>) => {
+			treatments.forEach(t => Utils.isNotEmpty(t.localId) && treatmentMap.set(t.localId!, { treatment: t }))
+		}
+
+		const populateMapWithQuestions = (treatmentQuestions: TreatmentQuestionEntity[], treatmentMap: Map<number, TreatmentView>) => {
 			treatmentQuestions.forEach((tq) => {
 				const localTreatmentId = tq.localTreatmentId
 				if(localTreatmentId) {
-					const treatmentView = treatmentViews[localTreatmentId]
-					if(treatmentView) {
-						treatmentView.questions ? treatmentView.questions.push(tq) : treatmentView.questions = [tq]
+					if(treatmentMap.has(localTreatmentId)) {
+						const treatment = treatmentMap.get(localTreatmentId) !
+						treatment.questions ? treatment.questions.push(tq) : treatment.questions = [tq]
 					}
 				}
 			})
-
-			setValue([...treatmentViews])
 		}
 
 		loadData()
@@ -61,7 +69,7 @@ export const useStaffData = () => useContext(StaffData)
 
 export const useTreatmentView = (treatmentLocalId?: number) => {
 	const staffData = useStaffData()
-	return treatmentLocalId ? staffData[treatmentLocalId] : undefined
+	return treatmentLocalId ? staffData.get(treatmentLocalId) : undefined
 }
 
 export default StaffDataProvider

@@ -67,7 +67,7 @@ const FaqHub: React.FC = () => {
 
 		let updateTreatmentView = (treatment?: TreatmentEntity) => {
 			if(treatment) {
-				const view = staffData[treatment.localId!]
+				const view = staffData.get(treatment.localId!)
 				setTreatmentView(view)
 			} else {
 				setTreatmentView(undefined)
@@ -125,7 +125,7 @@ const FaqHub: React.FC = () => {
 								>
 									{language.data.USERS_QUESTIONS}
 								</Badge>, 
-							Component: <TreatmentQuestionItems view={treatmentView} />
+							Component: <TreatmentQuestionItems />
 						}
 					]}
 				/> 

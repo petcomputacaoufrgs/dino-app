@@ -7,15 +7,21 @@ import MuiSearchBar from '../../../../components/mui_search_bar'
 import ListTitle from '../../../../components/list_title'
 import QuestionDialogForm from '../question_dialog_form'
 import AddButton from '../../../../components/button/circular_button/add_button'
-import TreatmentView from '../../../../types/faq/view/TreatmentView'
+import { useTreatmentView } from '../../../../context/staff_data'
+import { useParams } from 'react-router-dom'
 
-const TreatmentQuestionItems: React.FC<{ view?: TreatmentView }> = ({ view }) => {
+const TreatmentQuestionItems: React.FC = () => {
 
+  //não encontrava o localId
+  const { localId } = useParams<{ localId?: string }>()
+  
   const language = useLanguage()
 
   const [searchTerm, setSearchTerm] = useState('')
   const [toAdd, setToAdd] = useState(false)
+  const treatmentView = useTreatmentView(Number(localId))
 
+  //TODO what?
   const handleClick = () => {}
 
   return <> 
@@ -25,23 +31,23 @@ const TreatmentQuestionItems: React.FC<{ view?: TreatmentView }> = ({ view }) =>
     />
     <ListTitle title={language.data.USERS_QUESTIONS}/>
     {/* TODO: excluir isso pq staff n deve ter acesso. é só pra teste */}
-    { view ? 
+    { treatmentView ? 
       <>
         <AddButton
           handleAdd={() => setToAdd(true)}
           label={language.data.NEW_TREATMENT}
         />
         <QuestionDialogForm
-          treatment={view.treatment}
+          treatment={treatmentView.treatment}
           dialogOpen={toAdd}
           onClose={() => setToAdd(false)}
         />
-        {view.questions?.map((item, index) => 
+        {treatmentView.questions?.map((item, index) => 
           <div key={index}>
             <CardHeader
               avatar={<Avatar><AvatarIcon /></Avatar>}
               action={<OptionsIconButton dark onClick={handleClick} />}
-              title={view.treatment.name}
+              title={treatmentView.treatment.name}
               subheader={item.lastUpdate?.toDateString()}
             />
             <CardContent>

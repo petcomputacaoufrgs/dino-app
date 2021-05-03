@@ -18,6 +18,7 @@ import './styles.css'
 const Dinogotchi: React.FC = () => {
 	const [isInside, setInside] = useState(true)
 	const [open, setOpen] = useState(false)
+	const [happinessStatus, setHappinessStatus] = useState(0)
 
 	useEffect(() => {
 		return startCloudEngine()
@@ -61,6 +62,9 @@ const Dinogotchi: React.FC = () => {
 			{renderBackground()}
 			<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
 			<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(true)}} />
+			<div className='dinogotchi_screen__status_bar'>
+				{happinessStatus}
+			</div>
 			<div className='dinogotchi_screen__options'>
 				<CircularButton
 					icon={GameSVG}
@@ -70,7 +74,10 @@ const Dinogotchi: React.FC = () => {
 				/>
 				<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
 			</div>
-			<Dino className='dinogotchi_screen__dino_pet' onClick={() => {console.log('*carinho carinho')}}/>
+			<Dino className='dinogotchi_screen__dino_pet' onClick={() => 
+				{if(happinessStatus < 100) {
+					setHappinessStatus(happinessStatus + 5)
+				}}}/>
 			<button className='teste' onClick={() => document.documentElement.setAttribute('data-dino-color', 'emo')}> Troca </button>
 		</div>
 	)

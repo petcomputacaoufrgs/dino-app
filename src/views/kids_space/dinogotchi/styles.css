@@ -161,6 +161,12 @@
 	transform-origin: top;
 }
 
+.dinogotchi_screen__status_bar {
+	position: absolute;
+    left: auto;
+    right: 0;
+	color: black;
+}
 
 .teste {
 	position: absolute;

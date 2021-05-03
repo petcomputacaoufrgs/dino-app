@@ -3,19 +3,19 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 1080 1920" style="enable-background:new 0 0 1080 1920;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#69AF85;}
-	.st1{fill:#539B70;}
-	.st2{fill:#B460C6;}
-	.st3{fill:#FFFFFF;stroke:#3E6D51;stroke-width:2;stroke-miterlimit:10;}
+	.st0{fill: var(--dino-main-color);}
+	.st1{fill: var(--dino-dark-color);}
+	.st2{fill: var(--dino-back-color);}
+	.st3{fill:#FFFFFF;stroke: var(--dino-details-color);stroke-width:2;stroke-miterlimit:10;}
 	.st4{clip-path:url(#SVGID_2_);}
 	.st5{clip-path:url(#SVGID_2_);fill:#FFFFFF;}
 	.st6{clip-path:url(#SVGID_4_);}
 	.st7{clip-path:url(#SVGID_4_);fill:#FFFFFF;}
-	.st8{fill:#3F7555;}
-	.st9{opacity:0.35;fill:#F2F9D9;}
+	.st8{fill: var(--dino-face-details-color);}
+	.st9{opacity:0.35;fill: var(--dino-belly-color);}
 	.st10{opacity:0.4;}
 	.st11{fill:#FFFFFF;}
-	.st12{fill:#A3B5C9;}
+	.st12{fill: var(--catheter-color);}
 	.st13{clip-path:url(#SVGID_6_);}
 	.st14{clip-path:url(#SVGID_6_);fill:#FFFFFF;}
 	.st15{clip-path:url(#SVGID_8_);}
@@ -24,8 +24,8 @@
 	.st18{clip-path:url(#SVGID_10_);fill:#FFFFFF;}
 	.st19{clip-path:url(#SVGID_12_);}
 	.st20{clip-path:url(#SVGID_12_);fill:#FFFFFF;}
-	.st21{fill:#CAE2FF;}
-	.st22{fill:none;stroke:#F7263A;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st21{fill: var(--other-color);}
+	.st22{fill:none;stroke: var(--other-two-color);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st23{clip-path:url(#SVGID_14_);}
 	.st24{clip-path:url(#SVGID_14_);fill:#FFFFFF;}
 	.st25{clip-path:url(#SVGID_16_);}
@@ -42,11 +42,11 @@
 	.st36{clip-path:url(#SVGID_26_);fill:#FFFFFF;}
 	.st37{clip-path:url(#SVGID_28_);}
 	.st38{clip-path:url(#SVGID_28_);fill:#FFFFFF;}
-	.st39{fill:#3E6D51;}
-	.st40{fill:#F9E178;}
-	.st41{fill:#143321;}
-	.st42{opacity:0.5;fill:#539B70;}
-	.st43{fill:#43609B;}
+	.st39{fill: var(--dino-details-color);}
+	.st40{fill: var(--other-three-color);}
+	.st41{fill: var(--other-four-color);}
+	.st42{opacity:0.5;fill: var(--dino-dark-color);}
+	.st43{fill: var(--other-five-color);}
 </style>
 <g>
 	<g>

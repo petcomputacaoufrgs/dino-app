@@ -70,7 +70,8 @@ const Dinogotchi: React.FC = () => {
 				/>
 				<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
 			</div>
-			<Dino className='dinogotchi_screen__dino_pet' />
+			<Dino className='dinogotchi_screen__dino_pet' onClick={() => {console.log('*carinho carinho')}}/>
+			<button className='teste' onClick={() => document.documentElement.setAttribute('data-dino-color', 'emo')}> Troca </button>
 		</div>
 	)
 }

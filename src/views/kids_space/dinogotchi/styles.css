@@ -120,6 +120,9 @@
 
 .dinogotchi_screen__dino_pet {
 	position: absolute;
+	height: 115vh;
+    left: -30vmin;
+    bottom: -10vmin;
 }
 
 .dinogotchi_screen__options {

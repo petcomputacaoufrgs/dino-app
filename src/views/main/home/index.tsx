@@ -10,7 +10,7 @@ import { IsStaff } from '../../../context/private_router'
 
 const Home: React.FC = () => {
 
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 	const language = useLanguage()
 
 	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => {
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
 		)
 	}
 
-	const items = searchMainPages(staff ? MenuService.getStaffMainPages : MenuService.getMainPages)
+	const items = searchMainPages(isStaff ? MenuService.getStaffMainPages : MenuService.getMainPages)
 
 	return (
 		<div className='home'>

@@ -12,14 +12,14 @@ interface FaqItemProps {
 
 const FaqItem: React.FC<FaqItemProps> = ({ item, onClickMenu }) => {
   	
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 
   return (
     <Card className='faq__card'>
       <Accordion.Toggle as={Card.Header} eventKey={item.question}>
         <Card.Title className='faq__card_title dino__flex_row dino__text__wrap'>
           {item.question}
-          {staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
+          {isStaff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
         </Card.Title>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={item.question}>

@@ -13,7 +13,7 @@ import './styles.css'
 
 const Glossary: React.FC = () => {
 
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 	const language = useLanguage()
 
 	const [glossary, setGlossary] = useState<GlossaryItemEntity[]>([])
@@ -62,7 +62,7 @@ const Glossary: React.FC = () => {
 			<DinoLoader className='glossary_loader' isLoading={isLoading}>
 				<GlossaryItems items={filteredGlossary} />
 			</DinoLoader>
-			{ staff && 
+			{ isStaff && 
 				<AddButton
 					handleAdd={() => setAdd(true)}
 					label={language.data.NEW_GLOSSARY_ITEM}

@@ -17,7 +17,7 @@ interface TreatmentItemsProps {
 const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 
 	const language = useLanguage()
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 
 	const [selectedItem, setSelectedItem] = useState<TreatmentEntity>()
 	const [toEdit, setToEdit] = useState(false)
@@ -25,7 +25,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const handleAcceptDeleteDialog = async () => {
-		if (toDelete && selectedItem && staff) {
+		if (toDelete && selectedItem && isStaff) {
 			await TreatmentService.delete(selectedItem)
 		}
 		handleCloseDeleteDialog()

@@ -21,7 +21,7 @@ const AddContactDialogHeader = (
 		props.setContact({ ...props.contact, color })
 	}
 
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 
 	return (
 		<CardHeader
@@ -41,7 +41,7 @@ const AddContactDialogHeader = (
 					onClick={handleChangeColor}
 				/>
 			}
-			title={props.contact.name || (staff
+			title={props.contact.name || (isStaff
 					? language.data.CONTACTS_ADD_ESSENTIAL_CONTACT
 					: language.data.NEW_CONTACT)
 			}

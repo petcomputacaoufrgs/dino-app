@@ -40,13 +40,17 @@ const StaffDataProvider: React.FC = ({ children }) => {
 		}
 
 		const populateMapWithQuestions = (treatmentQuestions: TreatmentQuestionEntity[], treatmentMap: Map<number, TreatmentView>) => {
-			treatmentQuestions.forEach((tq) => {
+
+			const pushQuestionToTreatment = (localTreatmentId: number, tq: TreatmentQuestionEntity) => {
+				const treatment = treatmentMap.get(localTreatmentId)
+				if(treatment)
+					treatment.questions ? treatment.questions.push(tq) : treatment.questions = [tq]
+			}
+
+			treatmentQuestions.forEach(tq => {
 				const localTreatmentId = tq.localTreatmentId
-				if(localTreatmentId) {
-					if(treatmentMap.has(localTreatmentId)) {
-						const treatment = treatmentMap.get(localTreatmentId) !
-						treatment.questions ? treatment.questions.push(tq) : treatment.questions = [tq]
-					}
+				if(localTreatmentId && treatmentMap.has(localTreatmentId)) {
+					pushQuestionToTreatment(localTreatmentId, tq)
 				}
 			})
 		}
@@ -55,7 +59,6 @@ const StaffDataProvider: React.FC = ({ children }) => {
 
 		TreatmentQuestionService.addUpdateEventListenner(loadData)
 		return () => TreatmentQuestionService.removeUpdateEventListenner(loadData)
-
 	}, [])
 
   return (

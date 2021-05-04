@@ -37,7 +37,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 		item,
 		items
 	}) => {
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 	const language = useLanguage()
 	const [contact, setContact] = useState(getContact(item))
 	const [contactPhones, setContactPhones] = useState(getPhones(item))
@@ -63,7 +63,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 				return false
 			}
 
-			if (staff) {
+			if (isStaff) {
 				const hasAtLeastOnePhone = contactPhones.some(p => StringUtils.isNotEmpty(p.number))
 				if (!hasAtLeastOnePhone) {
 					setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
@@ -100,18 +100,18 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 	const saveContact = async () => {
 		async function savePhones(contact: ContactEntity | EssentialContactEntity) {
 			const newPhones = contactPhones.filter(phone => phone.number !== '')
-			if (staff) {
+			if (isStaff) {
 				newPhones.forEach(ePhone => ((ePhone as EssentialPhoneEntity).localEssentialContactId = contact.localId))
 			} else {
 				newPhones.forEach(phone => ((phone as PhoneEntity).localContactId = contact.localId))
 			}
 
 			if (newPhones.length > 0) {
-				staff ? await EssentialPhoneService.saveAll(newPhones) : await PhoneService.saveAll(newPhones)
+				isStaff ? await EssentialPhoneService.saveAll(newPhones) : await PhoneService.saveAll(newPhones)
 			}
 
 			if (phonesToDelete.length > 0) {
-				staff ? await EssentialPhoneService.deleteAll(phonesToDelete) : await PhoneService.deleteAll(phonesToDelete)
+				isStaff ? await EssentialPhoneService.deleteAll(phonesToDelete) : await PhoneService.deleteAll(phonesToDelete)
 			}
 		}
 
@@ -135,7 +135,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 			}
 		}
 
-		staff ? saveEssentialContactAndPhones() : saveContactAndPhones()
+		isStaff ? saveEssentialContactAndPhones() : saveContactAndPhones()
 	}
 
 	const handleAddPhone = () => {
@@ -147,7 +147,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 	}
 
 	const handleDeletePhone = (number: string) => {
-		if (!staff || contactPhones.length > 1) {
+		if (!isStaff || contactPhones.length > 1) {
 			const indexPhone = contactPhones.findIndex(
 				phone => phone.number === number,
 			)
@@ -200,7 +200,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 					handleDeletePhone={handleDeletePhone}
 					handleAddPhone={handleAddPhone}
 				>
-					{staff && renderSelectTreatments()}
+					{isStaff && renderSelectTreatments()}
 				</ContactFormDialogContent>
 			</DinoDialog>
 		</div>

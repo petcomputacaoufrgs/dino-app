@@ -14,7 +14,7 @@ import { toggle } from '../../constants/toggle/Toggle'
 type getGroupedItemsType = (language: LanguageBase, handleLogoutClick: () => void) => MenuItemViewModel[][]
 
 const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  const staff = IsStaff()
+  const isStaff = IsStaff()
 
   const language = useLanguage()
 
@@ -22,7 +22,7 @@ const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
     const searchGroupedItems = (getItems: getGroupedItemsType) => getItems(language.data, handleLogoutClick)
     
-		return searchGroupedItems(staff ? MenuService.getStaffGroupedMenuItems : MenuService.getGroupedMenuItems) 
+		return searchGroupedItems(isStaff ? MenuService.getStaffGroupedMenuItems : MenuService.getGroupedMenuItems) 
 	}
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)

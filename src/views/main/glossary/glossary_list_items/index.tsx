@@ -13,7 +13,7 @@ import ListTitle from '../../../../components/list_title'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	const language = useLanguage()
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 
 	const [toEdit, setToEdit] = useState(false)
 	const [toDelete, setToDelete] = useState(false)
@@ -45,7 +45,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 					/>
 				)}
 			</Accordion>
-			{ staff && (
+			{ isStaff && (
 				<>
 					<GlossaryItemForm
 						open={toEdit}

@@ -24,21 +24,21 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const language = useLanguage()
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 
 	const handleAcceptDialogAndDeleteItem = async () => {
 		async function deletePhones (
 			contactToDelete: ContactView,
 		): Promise<void> {
 			if (contactToDelete.phones.length > 0) {
-				staff ? await EssentialPhoneService.deleteAll(contactToDelete.phones) 
+				isStaff ? await EssentialPhoneService.deleteAll(contactToDelete.phones) 
 					: await PhoneService.deleteAll(contactToDelete.phones)
 			}
 		}
 
 		if (toDelete && selectedItem) {
 			await deletePhones(selectedItem)
-			staff ? await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
+			isStaff ? await EssentialContactService.delete(selectedItem.contact as EssentialContactEntity)
 				: await ContactService.delete(selectedItem.contact)
 		}
 		setToDelete(false)

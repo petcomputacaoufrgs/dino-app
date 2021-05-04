@@ -1,21 +1,49 @@
 import { Button } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SelectTreatment from '../../../../components/settings/select_treatment'
 import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
 import UserSettingsService from '../../../../services/user/UserSettingsService'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import { ReactComponent as SaveSVG } from '../../../../assets/icons/save.svg'
+import TreatmentService from '../../../../services/treatment/TreatmentService'
+import NoFAQAvailable from '../no_faq_available'
 
-interface NoTreatmentSelectedProps {
-  treatments: TreatmentEntity[]
-}
-
-const NoTreatmentSelected: React.FC<NoTreatmentSelectedProps> = ({ treatments }) => {
+const NoTreatmentSelected: React.FC = () => {
 
   const alert = useAlert()
   const language = useLanguage()
+  const [isLoading, setIsLoading] = useState(true)
   const [selectedTreatment, setSelectedTreatment] = useState<TreatmentEntity>()
+  const [treatments, setTreatments] = useState<TreatmentEntity[]>()
+
+  useEffect(() => {
+		const loadData = async () => {
+			const treatments = await TreatmentService.getAll()
+			updateTreatments(treatments)
+			finishLoading()
+		} 
+
+		let updateTreatments = (treatments: TreatmentEntity[]) => {
+			setTreatments(treatments)
+		}
+
+		let finishLoading = () => {
+			setIsLoading(false)
+		}
+
+		TreatmentService.addUpdateEventListenner(loadData)
+
+		if (isLoading) {
+			loadData()
+		}
+
+		return () => {
+			updateTreatments = () => {}
+			finishLoading = () => {}
+			TreatmentService.removeUpdateEventListenner(loadData)
+		}
+	}, [isLoading])
 
   const handleSaveUserTreatment = async () => {
 
@@ -33,6 +61,7 @@ const NoTreatmentSelected: React.FC<NoTreatmentSelectedProps> = ({ treatments })
   }
 
   return (
+    treatments ? 
     <div className='faq__fail_to_load'>
       <p>{language.data.NO_TREATMENT_SELECTED}</p>
       <SelectTreatment
@@ -48,6 +77,7 @@ const NoTreatmentSelected: React.FC<NoTreatmentSelectedProps> = ({ treatments })
         {language.data.SAVE}
       </Button>
     </div>
+    : <NoFAQAvailable />
   )
 }
 

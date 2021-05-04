@@ -15,7 +15,7 @@ import FaqView from '../../../../types/faq/view/FaqView'
 const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	
 	const language = useLanguage()
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 
 	const [toAdd, setToAdd] = useState(false)
 	const [toEdit, setToEdit] = useState(false)
@@ -54,7 +54,7 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 					)}
 				</Accordion>
 			)}
-			{staff && (
+			{isStaff && (
 				<>
 					<AddButton
 						handleAdd={() => setToAdd(true)}

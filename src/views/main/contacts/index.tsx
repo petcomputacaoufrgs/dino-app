@@ -20,7 +20,7 @@ import EssentialPhoneService from '../../../services/contact/EssentialPhoneServi
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Contacts: React.FC = () => {
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 	const language = useLanguage()
 	const [isLoading, setIsLoading] = useState(true)
 	const [contacts, setContacts] = useState<ContactView[]>([])
@@ -42,11 +42,11 @@ const Contacts: React.FC = () => {
 		} 
 
 		const loadContacts = async () => (
-			staff ? EssentialContactService.getAll() : loadUserData()
+			isStaff ? EssentialContactService.getAll() : loadUserData()
 		)
 
 		const loadPhones = async () => (
-			staff ? EssentialPhoneService.getAll() : PhoneService.getAll()
+			isStaff ? EssentialPhoneService.getAll() : PhoneService.getAll()
 		)
 
 		const loadData = async () => {
@@ -57,7 +57,7 @@ const Contacts: React.FC = () => {
 			const contactViews = ContactViewService.getContactViews(
 				contacts,
 				phones,
-				staff
+				isStaff
 			)
 
 			updateContacts(contactViews)
@@ -104,7 +104,7 @@ const Contacts: React.FC = () => {
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading, staff])
+	}, [isLoading, isStaff])
 
 	const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
 		setSearchTerm(event.target.value)
@@ -131,7 +131,7 @@ const Contacts: React.FC = () => {
 	}
 
 	const handleAddContact = () => {
-		if (settings && !staff) {
+		if (settings && !isStaff) {
 			if (!syncGoogleContacts && !settings.declineGoogleContacts) {
 				setOpenGrantDialog(true)
 				return

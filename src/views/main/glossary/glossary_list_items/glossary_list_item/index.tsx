@@ -17,7 +17,7 @@ interface GlossaryListItemProps {
   const GlossaryListItem: React.FC<GlossaryListItemProps> = ({ item, onClickMenu }) => {
 
     const language = useLanguage()	
-    const staff = IsStaff()
+    const isStaff = IsStaff()
 		const eventKey = String(item.localId)
 
 		return (
@@ -25,7 +25,7 @@ interface GlossaryListItemProps {
 				<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
 					<Card.Title className='glossary__card_title dino__flex_row dino__text__wrap'>
 						{item.title}
-						{staff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
+						{isStaff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
 					</Card.Title>
 				</Accordion.Toggle>
 				<Accordion.Collapse eventKey={eventKey}>
@@ -36,7 +36,7 @@ interface GlossaryListItemProps {
 						</Card.Text>
 						<Link
 							className='dino__history_link'
-							to={`${staff ? PathConstants.STAFF_GLOSSARY : PathConstants.USER_GLOSSARY}/${item.localId}`}
+							to={`${isStaff ? PathConstants.STAFF_GLOSSARY : PathConstants.USER_GLOSSARY}/${item.localId}`}
 						>
 							{language.data.READ_MORE}
 						</Link>

@@ -35,7 +35,7 @@ import './styles.css'
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
 const Settings: React.FC = () => {
-	const staff = IsStaff()
+	const isStaff = IsStaff()
 	const alert = useAlert()
 	const language = useLanguage()
 
@@ -335,7 +335,7 @@ const Settings: React.FC = () => {
 						setColorTheme={setSelectedColorTheme}
 					/>
 				</FormControl>
-				{!staff && (
+				{!isStaff && (
 					<>
 					<FormControl className='settings__form'>
 					<SelectTreatment

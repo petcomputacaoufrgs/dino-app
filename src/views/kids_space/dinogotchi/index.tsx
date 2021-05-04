@@ -16,6 +16,7 @@ import { startPaitingEngine } from './engine/painting'
 import GoBackButton from '../../../components/button/icon_button'
 import AccessDialog from '../../../components/kids_space_dialog/access_dialog'
 import './styles.css'
+import DinoColorConstants from '../../../constants/dinogotchi/DinoColorConstants'
 
 const Dinogotchi: React.FC = () => {
 	const [isInside, setInside] = useState(true)
@@ -89,10 +90,10 @@ const Dinogotchi: React.FC = () => {
 				<div className='speech_bubble'> Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas? </div>
 				<Dino className='dinogotchi_screen__dino_pet first_login' onClick={() => {console.log('*carinho carinho')}}/>
 				<div className='color_chooser'>
-					<button className='color_chooser__color_button green' onClick={() => selectColor('default')}></button>
-					<button className='color_chooser__color_button pink' onClick={() => selectColor('pink')}></button>
-					<button className='color_chooser__color_button blue' onClick={() => selectColor('blue')}></button>
-					<button className='color_chooser__color_button red' onClick={() => selectColor('red')}></button>
+					<button className='color_chooser__color_button green' onClick={() => selectColor(DinoColorConstants.DEFAULT)}></button>
+					<button className='color_chooser__color_button pink' onClick={() => selectColor(DinoColorConstants.PINK)}></button>
+					<button className='color_chooser__color_button blue' onClick={() => selectColor(DinoColorConstants.BLUE)}></button>
+					<button className='color_chooser__color_button red' onClick={() => selectColor(DinoColorConstants.RED)}></button>
 				</div>
 
 				<Button className='selection_button' onClick={() => setIsFirstLogin(false)}> Escolher </Button>

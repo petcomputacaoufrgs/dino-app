@@ -20,6 +20,7 @@ class APIWebSocketDestConstants {
 	USER_SETTINGS = 'user_settings'
 	GOOGLE_SCOPE = 'google_scope'
 	LOGOUT_REQUEST = 'logout_request'
+	KIDS_SPACE_SETTINGS = 'kids_space_settings'
 }
 
 export default new APIWebSocketDestConstants()

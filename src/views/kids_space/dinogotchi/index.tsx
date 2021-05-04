@@ -6,6 +6,7 @@ import CircularButton from '../../../components/button/circular_button'
 import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import { ReactComponent as AngryDinoSVG } from '../../../assets/kids_space/dinogotchi/angry.svg'
 import { ReactComponent as Dino } from '../../../assets/kids_space/dinogotchi/neutrop.svg'
+import { ReactComponent as SleepDino } from '../../../assets/kids_space/dinogotchi/dormindo.svg'
 import { ReactComponent as GoOutSVG } from '../../../assets/kids_space/dinogotchi/exit.svg'
 import { ReactComponent as GameSVG } from '../../../assets/kids_space/dinogotchi/gamepad.svg'
 import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogotchi/outside.svg'
@@ -76,7 +77,11 @@ const Dinogotchi: React.FC = () => {
 		)
 	}
 
-	const renderSleepDino = () => {}
+	const renderSleepDino = () => {
+		return (
+			<SleepDino className='dinogotchi_screen__dino_pet' onClick={() => setOpenChildArea(false)}/>
+		)
+	}
 
 	const meetDino = () => {
 		return (
@@ -86,8 +91,8 @@ const Dinogotchi: React.FC = () => {
 				<div className='color_chooser'>
 					<button className='color_chooser__color_button green' onClick={() => selectColor('default')}></button>
 					<button className='color_chooser__color_button pink' onClick={() => selectColor('pink')}></button>
-					<button className='color_chooser__color_button blue' onClick={() => document.documentElement.setAttribute('data-dino-color', 'blue')}></button>
-					<button className='color_chooser__color_button red' onClick={() => document.documentElement.setAttribute('data-dino-color', 'red')}></button>
+					<button className='color_chooser__color_button blue' onClick={() => selectColor('blue')}></button>
+					<button className='color_chooser__color_button red' onClick={() => selectColor('red')}></button>
 				</div>
 
 				<Button className='selection_button' onClick={() => setIsFirstLogin(false)}> Escolher </Button>

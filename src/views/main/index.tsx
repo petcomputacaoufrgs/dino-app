@@ -5,24 +5,35 @@ import DinoLoader from '../../components/loader/index'
 import DrawerNavigation from '../../components/drawer_navigation'
 import LogoutDialog from '../../components/logout_dialog'
 import { useLanguage } from '../../context/language/index'
-import { IsStaff } from '../../context/private_router'
+import { GetPermission } from '../../context/private_router'
 import MenuService from '../../services/menu/MenuService'
 import MenuItemViewModel from '../../types/menu/MenuItemViewModel'
 import LanguageBase from '../../constants/languages/LanguageBase'
 import { toggle } from '../../constants/toggle/Toggle'
+import PermissionEnum from '../../types/enum/PermissionEnum'
 
 type getGroupedItemsType = (language: LanguageBase, handleLogoutClick: () => void) => MenuItemViewModel[][]
 
 const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  const isStaff = IsStaff()
-
+    
   const language = useLanguage()
 
   const getGroupedItems = (): MenuItemViewModel[][] => {
 
     const searchGroupedItems = (getItems: getGroupedItemsType) => getItems(language.data, handleLogoutClick)
-    
-		return searchGroupedItems(isStaff ? MenuService.getStaffGroupedMenuItems : MenuService.getGroupedMenuItems) 
+
+    const getGroupedMenuByPermission = () => {
+
+      const userPermission = GetPermission()
+
+      switch(userPermission) {
+        case PermissionEnum.STAFF: return MenuService.getStaffGroupedMenuItems
+        case PermissionEnum.ADMIN: return MenuService.getAdminGroupedMenuItems
+        default: return MenuService.getGroupedMenuItems
+      }
+    }
+
+		return searchGroupedItems(getGroupedMenuByPermission()) 
 	}
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)

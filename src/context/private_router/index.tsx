@@ -44,6 +44,10 @@ export const IsStaff = (): boolean => {
 	return permission === PermissionEnum.STAFF || permission === PermissionEnum.ADMIN 
 } 
 
+export const GetPermission = (): string | undefined => { 
+	return usePrivateRouter().userPermission 
+} 
+
 export const IsNotClient = (): boolean => usePrivateRouter().userPermission !== PermissionEnum.ADMIN 
 
 export default PrivateRouterProvider

@@ -13,6 +13,7 @@ import Home from '../home'
 import Contacts from '../contacts'
 import Settings from '../settings'
 import StaffDataProvider from '../../../context/staff_data'
+import PermissionEnum from '../../../types/enum/PermissionEnum'
 
 const StaffMain: React.FC = () => {
 	return (
@@ -45,6 +46,7 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute 
 					path={PathConstants.STAFF_MODERATION} 
 					component={StaffModeration} 
+					restrictedTo={[PermissionEnum.ADMIN]}
 				/>
 				<StaffDataProvider>
 					<Switch>

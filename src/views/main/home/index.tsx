@@ -6,20 +6,29 @@ import Button from '../../../components/button'
 import './styles.css'
 import LanguageBase from '../../../constants/languages/LanguageBase'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
-import { IsStaff } from '../../../context/private_router'
+import { GetPermission, IsStaff } from '../../../context/private_router'
+import PermissionEnum from '../../../types/enum/PermissionEnum'
 
 const Home: React.FC = () => {
 
-	const isStaff = IsStaff()
 	const language = useLanguage()
 
-	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => {
-		return getMainPages(language.data).filter(
-			item => item.name !== language.data.MENU_HOME,
-		)
+	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => 
+		getMainPages(language.data).filter(item => item.name !== language.data.MENU_HOME)
+
+	// TODO centralizar isso algum dia
+	const getGroupedMenuByPermission = () => {
+
+		const userPermission = GetPermission()
+
+		switch(userPermission) {
+			case PermissionEnum.STAFF: return MenuService.getStaffMainPages
+			case PermissionEnum.ADMIN: return MenuService.getAdminMainPages
+			default: return MenuService.getMainPages
+		}
 	}
 
-	const items = searchMainPages(isStaff ? MenuService.getStaffMainPages : MenuService.getMainPages)
+	const items = searchMainPages(getGroupedMenuByPermission())
 
 	return (
 		<div className='home'>

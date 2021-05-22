@@ -39,7 +39,7 @@ const UserMain: React.FC = () => {
 						exact
 						path={PathConstants.USER_SETTINGS}
 						component={Settings}
-						/>
+					/>
 					<PrivateRoute
 						path={`${PathConstants.USER_GLOSSARY}/:localId`}
 						component={GlossaryItem}

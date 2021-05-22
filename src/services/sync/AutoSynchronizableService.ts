@@ -93,6 +93,7 @@ export default abstract class AutoSynchronizableService<
 	private async internalConvertModelToEntity(
 		model: DATA_MODEL,
 	): Promise<ENTITY | undefined> {
+		console.log(model)
 		const entity = await this.convertModelToEntity(model)
 
 		if (entity) {

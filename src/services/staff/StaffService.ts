@@ -37,7 +37,6 @@ class StaffServiceImpl extends AutoSynchronizableService<
 	async convertModelToEntity(
 		model: StaffDataModel,
 	): Promise<StaffEntity | undefined> {
-		console.log(model)
 		const entity: StaffEntity = {
 			email: model.email,
 			sentInvitationDate: DateUtils.convertDinoAPIStringDateToDate(

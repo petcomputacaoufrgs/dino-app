@@ -9,6 +9,7 @@ import FaqView from '../../types/faq/view/FaqView'
 import FaqItemService from '../faq/FaqItemService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import UserService from '../user/UserService'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,7 +26,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
-		return []
+		return [UserService]
 	}
 
 	getSyncNecessaryPermissions(): PermissionEnum[] {

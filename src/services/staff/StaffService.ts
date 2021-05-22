@@ -37,22 +37,16 @@ class StaffServiceImpl extends AutoSynchronizableService<
 	async convertModelToEntity(
 		model: StaffDataModel,
 	): Promise<StaffEntity | undefined> {
-
-    const entity: StaffEntity = {
-      email: model.email,
-      sentInvitationDate: DateUtils.convertDinoAPIStringDateToDate(
+		console.log(model)
+		const entity: StaffEntity = {
+			email: model.email,
+			sentInvitationDate: DateUtils.convertDinoAPIStringDateToDate(
 				model.sentInvitationDate,
-			)
+			),
+			userId: model.userId || undefined
 		}
-		
-		if(model.userId) {
-			const user = await UserService.getById(model.userId)
-			if (user) {
-				entity.userId = user.id
-			}
-		}
-    
-    return entity
+
+		return entity
 	}
 
 	async convertEntityToModel(

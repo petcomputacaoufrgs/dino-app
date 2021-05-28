@@ -15,7 +15,6 @@ interface TreatmentItemsProps {
 }
 
 const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
-
 	const language = useLanguage()
 	const isStaff = IsStaff()
 

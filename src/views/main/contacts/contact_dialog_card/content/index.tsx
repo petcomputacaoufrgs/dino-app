@@ -9,7 +9,7 @@ import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEn
 import DinoLoader from '../../../../../components/loader'
 import { IsStaff } from '../../../../../context/private_router'
 import EssentialContactEntity from '../../../../../types/contact/database/EssentialContactEntity'
-import { useLanguage } from '../../../../../context/language'
+import { LanguageContextType, useLanguage } from '../../../../../context/language'
 import './styles.css'
 
 const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
@@ -111,7 +111,7 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 
 	return IsStaff() ? (
 		<List component='nav'>
-			<SectionTitle/>
+			<SectionTitle language={language} />
 			{ isUniversal ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT)
 			: <DinoLoader isLoading={isLoading}>
 					{treatments?.map((e, index) => renderTreatmentListItem(e.name, index))}
@@ -120,10 +120,14 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 	) : <></>
 }
 
-const SectionTitle = () => {
+const SectionTitle: React.FC<{
+	language: LanguageContextType
+}> = ({
+	language
+}) => {
 	return (
 		<div className='contact_card__section_title'>
-			<p>{'Treatments'.toUpperCase()}</p>
+			<p>{language.data.TREATMENTS.toUpperCase()}</p>
 		</div>
 	)
 }

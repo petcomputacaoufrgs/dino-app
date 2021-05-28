@@ -33,9 +33,7 @@ const AddStaffForm = () => {
   return (
     <div className='add_staff'>
       <p className='add_staff__title'>{language.data.FORM_ADD_STAFF}</p>
-      {/* @TODO: fazer esse texto */}
-      <p>Funcionários são usuários com poderes adiministrativos de adicionar e blablabla. 
-        Apenas a conta do <i>Client</i> original é capaz de adicionar e remover outros funcionários.</p>
+      <p>{language.data.ADD_STAFF_TEXT}</p>
       <div className='dialog_form__content'>
         <EmailTextField 
           value={emailValue}

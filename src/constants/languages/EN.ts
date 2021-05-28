@@ -105,7 +105,7 @@ export default class EN implements LanguageBase {
 
 	MENU_STAFF_MODERATION = 'Staff Moderation' 
 
-	MENU_STAFF_TREATMENT = 'Treatments' 
+	TREATMENTS = 'Treatments' 
 
 	TITLE = 'Title'
 
@@ -633,6 +633,8 @@ export default class EN implements LanguageBase {
 	ANSWER = 'Answer'
 
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Question asnwer...'
+
+	ADD_STAFF_TEXT = "Staff users can add, remove and edit information that is displayed to patients and their responsibles, such as: hospital contacts, glossary items, etc. Only the hospital's management account is able to add and remove other staff users."
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 

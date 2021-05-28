@@ -57,7 +57,6 @@ const FaqHub: React.FC = () => {
 
 		const loadFaqItems = async (treatment: TreatmentEntity) => {
 			const faqItems = await FaqItemService.getByTreatment(treatment)
-			console.log(faqItems)
 			updateFaqView(treatment, faqItems)
 		}
 

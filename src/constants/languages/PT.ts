@@ -98,7 +98,7 @@ export default class PT implements LanguageBase {
 
 	MENU_STAFF_MODERATION = 'Moderação de Funcionários'
 
-	MENU_STAFF_TREATMENT = 'Tratamentos'
+	TREATMENTS = 'Tratamentos'
 
 	TITLE = 'Título'
 
@@ -641,6 +641,8 @@ export default class PT implements LanguageBase {
 	ANSWER = 'Responder'
 
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Resposta da pergunta...'
+
+	ADD_STAFF_TEXT = 'Funcionários são usuários que podem adicionar, remover e editar informações que são exibidas para os pacientes e seus responsáveis, como: contatos do hospital, itens do glossário, etc. Apenas a conta administradora do hospital é capaz de adicionar e remover outros funcionários.'
 
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

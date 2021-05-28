@@ -20,7 +20,7 @@ import Utils from '../../../../utils/Utils'
 const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 	const language = useLanguage()
 
-	const { localId } = useParams<{ localId?: string }>()
+	const { localId, tab } = useParams<{ localId?: string, tab?: string }>()
 
 	const isStaff = IsStaff()
 	const staffData = useStaffData()
@@ -82,23 +82,28 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 		}
 	}, [isLoading, localId, staffData, isStaff])
 
+	const panels = [
+		{ Label: language.data.FAQ, Component: <Faq view={view} /> },
+		{
+			Label:
+				<Badge
+					color="secondary"
+					variant="dot"
+					invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
+				>
+					{language.data.USERS_QUESTIONS}
+				</Badge>,
+			Component: <TreatmentQuestionItems />
+		}
+	]
+
+	const intTab = tab ? parseInt(tab) : 0
+	const currentTab = intTab >= 0 && intTab < panels.length ? intTab : 0
 
 	return (
 		<DinoTabPanel
-			panels={[
-				{ Label: language.data.FAQ, Component: <Faq view={view} /> },
-				{
-					Label:
-						<Badge
-							color="secondary"
-							variant="dot"
-							invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
-						>
-							{language.data.USERS_QUESTIONS}
-						</Badge>,
-					Component: <TreatmentQuestionItems />
-				}
-			]}
+			currentTab={currentTab}
+			panels={panels}
 		/>
 	)
 }

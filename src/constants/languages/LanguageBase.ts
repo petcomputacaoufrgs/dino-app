@@ -48,7 +48,7 @@ export default interface LanguageBase {
 	MENU_CALENDAR: string
 	MENU_ABOUT_US: string
 	MENU_STAFF_MODERATION: string
-	MENU_STAFF_TREATMENT: string
+	TREATMENTS: string
 	TITLE: string
 	SUBTITLE: string
 	TEXT: string
@@ -302,6 +302,7 @@ export default interface LanguageBase {
 	UNIVERSAL_CONTACT: string
 	ANSWER: string
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER: string
+	ADD_STAFF_TEXT: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

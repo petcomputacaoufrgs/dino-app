@@ -111,7 +111,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		])
 		essentialContacts.push(...results[0], ...results[1])
 
-		//TODO: Estudar possibilidade de uma saveAll em contatos também
 		essentialContacts.forEach(async ec => {
 			const savedContact = await ContactService.save(
 				this.convertEntityToContactEntity(ec)

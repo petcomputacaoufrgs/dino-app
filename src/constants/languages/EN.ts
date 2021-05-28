@@ -165,7 +165,7 @@ export default class EN implements LanguageBase {
 
 	FORM_ANSWER = 'Answer'
 
-	FORM_QUESTION_PLACEHOLDER = 'Question?'
+	FORM_QUESTION_PLACEHOLDER = 'Type your question...'
 
 	FORM_QUESTION_TITLE = 'Send us your question!'
 

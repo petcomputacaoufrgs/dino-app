@@ -14,7 +14,6 @@ interface TreatmentItemProps {
 }
 
 const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) => {
-
   const language = useLanguage()
   const treatmentData = useTreatmentView(item.localId)
   const questions = treatmentData ? treatmentData.questions || [] : []
@@ -23,7 +22,6 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
     <div className='treatment__list_item'>
     <ListItem >
       <ListItemText 
-        // TODO: Tirar isso aqui
         className='treatment__list_item__text'
         primary={item.name}
         secondary={

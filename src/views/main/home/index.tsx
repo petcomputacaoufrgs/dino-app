@@ -15,7 +15,6 @@ const Home: React.FC = () => {
 	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => 
 		getMainPages(language.data).filter(item => item.name !== language.data.MENU_HOME)
 
-	// TODO centralizar isso algum dia
 	const getGroupedMenuByPermission = () => {
 		const userPermission = GetPermission()
 

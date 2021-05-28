@@ -6,7 +6,6 @@ import AvatarIcon from '@material-ui/icons/QuestionAnswer'
 import MuiSearchBar from '../../../../components/mui_search_bar'
 import ListTitle from '../../../../components/list_title'
 import QuestionDialogForm from '../question_dialog_form'
-import AddButton from '../../../../components/button/circular_button/add_button'
 import { useTreatmentView } from '../../../../context/staff_data'
 import { useParams } from 'react-router-dom'
 import ItemListMenu from '../../../../components/item_list_menu'
@@ -62,13 +61,8 @@ const TreatmentQuestionItems: React.FC = () => {
       onChange={(e) => setSearchTerm(e.target.value as string)}
     />
     <ListTitle title={language.data.USERS_QUESTIONS} />
-    {/* TODO: excluir isso pq staff n deve ter acesso. é só pra teste */}
     { treatmentView ?
       <>
-        <AddButton
-          handleAdd={() => setToAdd(true)}
-          label={language.data.NEW_TREATMENT}
-        />
         <QuestionDialogForm
           treatment={treatmentView.treatment}
           dialogOpen={toAdd}

@@ -162,7 +162,7 @@ export default class PT implements LanguageBase {
 
 	FORM_ANSWER = 'Resposta'
 
-	FORM_QUESTION_PLACEHOLDER = 'Castores gostam de castanhas?'
+	FORM_QUESTION_PLACEHOLDER = 'Digite sua pergunta...'
 
 	FORM_QUESTION_TITLE = 'Mande sua pergunta!'
 

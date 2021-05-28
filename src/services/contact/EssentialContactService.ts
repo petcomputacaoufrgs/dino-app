@@ -94,10 +94,9 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		settings: UserSettingsEntity,
 	): Promise<EssentialContactEntity[]> {
 		if (Utils.isNotEmpty(settings.treatmentLocalId)) {
-			return this.table
+			return this.toList(this.table
 				.where('treatmentLocalIds')
-				.equals(settings.treatmentLocalId!)
-				.toArray()
+				.equals(settings.treatmentLocalId!))
 		} else return []
 	}
 

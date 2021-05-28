@@ -12,9 +12,9 @@ import Faq from './faq'
 import Utils from '../../../utils/Utils'
 import './styles.css'
 import FaqAndUserQuestions from './tab_faq_and_questions'
+import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
 
 const FaqHub: React.FC = () => {
-
 	const { localId } = useParams<{ localId?: string }>()
 	
 	const isStaff = IsStaff()
@@ -27,30 +27,46 @@ const FaqHub: React.FC = () => {
 			const treatments = await TreatmentService.getAll()
 			Utils.isNotEmpty(localId) 
 			?	await loadTreatmentById(treatments)
-			: await loadUserTreatment(treatments)
+			:	await loadUserTreatment(treatments)
 			
 			finishLoading()
 		} 
 
 		const loadTreatmentById = async (treatments: TreatmentEntity[]) => {
-			const currentTreatment = treatments.find(treatment => treatment.localId === Number(localId))
-			await updateFaqView(currentTreatment)
-		} 
+			const treatment = treatments.find(treatment => treatment.localId === Number(localId))
+			if (treatment) {
+				await loadFaqItems(treatment)
+				return
+			}
+
+			cleanFaqView()
+		}
 
 		const loadUserTreatment = async (treatments: TreatmentEntity[]) => {
 			const userSettings = await UserSettingsService.getFirst()
-			let currentTreatment = undefined
 			if (userSettings && Utils.isNotEmpty(userSettings.treatmentLocalId)) {
-				currentTreatment = treatments.find(treatment => treatment.localId === userSettings.treatmentLocalId)
+				const treatment = treatments.find(treatment => treatment.localId === userSettings.treatmentLocalId)
+				if (treatment) {
+					await loadFaqItems(treatment)
+					return
+				}
 			} 
-			updateFaqView(currentTreatment)
+
+			cleanFaqView()
 		}
 
-		let updateFaqView = async (treatment?: TreatmentEntity) => {
-			if(treatment) {
-				const faqItems = await FaqItemService.getByTreatment(treatment)
-				setFaqView({treatment, faqItems})
-			} else setFaqView(undefined)
+		const loadFaqItems = async (treatment: TreatmentEntity) => {
+			const faqItems = await FaqItemService.getByTreatment(treatment)
+			console.log(faqItems)
+			updateFaqView(treatment, faqItems)
+		}
+
+		let updateFaqView = (treatment: TreatmentEntity, faqItems: FaqItemEntity[]) => {
+			setFaqView({treatment, faqItems})
+		}
+
+		let cleanFaqView = () => {
+			setFaqView(undefined)
 		}
 
 		let finishLoading = () => {
@@ -66,7 +82,8 @@ const FaqHub: React.FC = () => {
 		}
 
 		return () => {
-			updateFaqView = async () => {}
+			updateFaqView = () => {}
+			cleanFaqView = () => {}
 			finishLoading = () => {}
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			FaqItemService.removeUpdateEventListenner(loadData)

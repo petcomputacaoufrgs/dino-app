@@ -13,7 +13,6 @@ import FaqItemService from '../../../../services/faq/FaqItemService'
 import FaqView from '../../../../types/faq/view/FaqView'
 
 const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
-	
 	const language = useLanguage()
 	const isStaff = IsStaff()
 
@@ -29,9 +28,10 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 		setSelectedItem(item)
 	}
 
-	const handleAcceptDeleteDialog = async () => {
+	const handleAcceptDeleteDialog = () => {
 		if (toDelete && selectedItem) {
-			await FaqItemService.delete(selectedItem)
+			FaqItemService.delete(selectedItem)
+			setSelectedItem(undefined)
 		}
 		handleCloseDeleteDialog()
 	}
@@ -73,7 +73,7 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 					/>}
 					{toDelete && <AgreementDialog
 						open={toDelete !== undefined}
-            question={language.data.deleteItemText(language.data.FAQ)}
+            			question={language.data.deleteItemText(language.data.FAQ)}
 						onAgree={handleAcceptDeleteDialog}
 						onDisagree={handleCloseDeleteDialog}
 					/>}

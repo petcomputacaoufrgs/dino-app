@@ -40,7 +40,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		if (treatment) {
 			const entity: TreatmentQuestionEntity = {
 				localTreatmentId: treatment.localId,
-				question: model.question,
+				question: model.question
 			}
 
 			return entity
@@ -56,7 +56,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 			if (treatment && treatment.id) {
 				const model: TreatmentQuestionDataModel = {
 					treatmentId: treatment.id,
-					question: entity.question,
+					question: entity.question
 				}
 
 				return model
@@ -66,7 +66,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 
 	getByTreatment = async (treatment: TreatmentEntity): Promise<TreatmentQuestionEntity[]> => {
 		if (treatment.localId) {
-			return this.table.where('localTreatmentId').equals(treatment.localId).toArray()
+			return this.toList(this.table.where('localTreatmentId').equals(treatment.localId))
 		}
 		return []
 	}

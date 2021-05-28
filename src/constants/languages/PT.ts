@@ -160,6 +160,8 @@ export default class PT implements LanguageBase {
 
 	FORM_QUESTION = 'Pergunta'
 
+	FORM_ANSWER = 'Resposta'
+
 	FORM_QUESTION_PLACEHOLDER = 'Castores gostam de castanhas?'
 
 	FORM_QUESTION_TITLE = 'Mande sua pergunta!'
@@ -635,6 +637,10 @@ export default class PT implements LanguageBase {
 	SAVE = 'Salvar'
 
 	UNIVERSAL_CONTACT = 'Este contato é universal e aparecerá em todas as agendas de usuários'
+
+	ANSWER = 'Responder'
+
+	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Resposta da pergunta...'
 
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

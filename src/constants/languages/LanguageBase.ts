@@ -77,6 +77,7 @@ export default interface LanguageBase {
 	FORM_TYPE: string
 	FORM_PHONE: string
 	FORM_QUESTION: string
+	FORM_ANSWER: string
 	FORM_QUESTION_PLACEHOLDER: string
 	FORM_QUESTION_TITLE: string
 	FORM_ADD_PHONE: string
@@ -299,6 +300,8 @@ export default interface LanguageBase {
 	SEND_TO_THE_PROFESSIONALS: string
 	SAVE: string
 	UNIVERSAL_CONTACT: string
+	ANSWER: string
+	TREATMENT_QUESTION_ANSWER_PLACEHOLDER: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

@@ -18,11 +18,10 @@ import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntit
 import Utils from '../../../../utils/Utils'
 
 const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
+	const language = useLanguage()
 
-  const language = useLanguage()
+	const { localId } = useParams<{ localId?: string }>()
 
-  const { localId } = useParams<{ localId?: string }>()
-	
 	const isStaff = IsStaff()
 	const staffData = useStaffData()
 
@@ -33,13 +32,13 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 	useEffect(() => {
 		const loadData = async () => {
 			const treatments = await TreatmentService.getAll()
-			if(Utils.isNotEmpty(localId)) {
+			if (Utils.isNotEmpty(localId)) {
 				const currentTreatment = treatments.find(treatment => treatment.localId === Number(localId))
 				updateTreatmentView(currentTreatment)
 			} else await loadUserTreatment(treatments)
 
 			finishLoading()
-		} 
+		}
 
 		const loadUserTreatment = async (treatments: TreatmentEntity[]) => {
 			const userSettings = await UserSettingsService.getFirst()
@@ -52,7 +51,7 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 		}
 
 		let updateTreatmentView = (treatment?: TreatmentEntity) => {
-			if(treatment) {
+			if (treatment) {
 				const view = staffData.get(treatment.localId!)
 				setTreatmentView(view)
 			} else {
@@ -74,8 +73,8 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 		}
 
 		return () => {
-			updateTreatmentView = () => {}
-			finishLoading = () => {}
+			updateTreatmentView = () => { }
+			finishLoading = () => { }
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			TreatmentService.removeUpdateEventListenner(loadData)
 			FaqItemService.removeUpdateEventListenner(loadData)
@@ -84,24 +83,24 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 	}, [isLoading, localId, staffData, isStaff])
 
 
-  return (		
-      <DinoTabPanel 
-        panels={[ 
-          { Label: language.data.FAQ, Component: <Faq view={view}/> },
-          { 
-            Label:  
-              <Badge 
-                color="secondary" 
-                variant="dot"
-                invisible={ArrayUtils.isEmpty(treatmentView?.questions)} 
-              >
-                {language.data.USERS_QUESTIONS}
-              </Badge>, 
-            Component: <TreatmentQuestionItems />
-          }
-        ]}
-      /> 
-  )
+	return (
+		<DinoTabPanel
+			panels={[
+				{ Label: language.data.FAQ, Component: <Faq view={view} /> },
+				{
+					Label:
+						<Badge
+							color="secondary"
+							variant="dot"
+							invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
+						>
+							{language.data.USERS_QUESTIONS}
+						</Badge>,
+					Component: <TreatmentQuestionItems />
+				}
+			]}
+		/>
+	)
 }
 
 export default FaqAndUserQuestions

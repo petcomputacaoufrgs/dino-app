@@ -163,6 +163,8 @@ export default class EN implements LanguageBase {
 
 	FORM_QUESTION = 'Question'
 
+	FORM_ANSWER = 'Answer'
+
 	FORM_QUESTION_PLACEHOLDER = 'Question?'
 
 	FORM_QUESTION_TITLE = 'Send us your question!'
@@ -627,6 +629,10 @@ export default class EN implements LanguageBase {
 	SAVE = 'Save'
 
 	UNIVERSAL_CONTACT = 'This contact is universal and will appear for all user'
+
+	ANSWER = 'Answer'
+
+	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Question asnwer...'
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 

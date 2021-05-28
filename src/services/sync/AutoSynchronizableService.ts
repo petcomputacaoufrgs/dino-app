@@ -1,4 +1,4 @@
-import { IndexableType } from 'dexie'
+import Dexie, { IndexableType } from 'dexie'
 import DinoAgentService from '../../agent/DinoAgentService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import SynchronizableDataResponseModel from '../../types/sync/api/response/SynchronizableDataResponseModel'
@@ -93,7 +93,6 @@ export default abstract class AutoSynchronizableService<
 	private async internalConvertModelToEntity(
 		model: DATA_MODEL,
 	): Promise<ENTITY | undefined> {
-		console.log(model)
 		const entity = await this.convertModelToEntity(model)
 
 		if (entity) {
@@ -548,6 +547,25 @@ export default abstract class AutoSynchronizableService<
 	//#endregion
 
 	//#region DATABASE
+
+	/**
+	 * @description Filter database query removing invalid data and returning a list.
+	 */
+	protected toList = (collection: Dexie.Collection<ENTITY, number>) => {
+		return this.filterValidData(collection).toArray()
+	}
+
+	/**
+	 * @description Filter database query removing invalid data and returning first item.
+	*/
+	protected toFirst = (collection: Dexie.Collection<ENTITY, number>) => {
+		return this.filterValidData(collection).first()
+	}
+
+	private filterValidData = (collection: Dexie.Collection<ENTITY, number>) => {
+		return collection
+			.filter(item => item.localState !== SynchronizableLocalState.DELETED_LOCALLY)
+	}
 
 	private dbGetById = async (id: ID) => {
 		return this.table.where('id').equals(id).first()

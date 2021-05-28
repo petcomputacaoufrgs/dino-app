@@ -73,7 +73,7 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	}
 
 	async getAllDerivatedFromEssential(): Promise<ContactEntity[]> {
-		return this.table.where('localEssentialContactId').aboveOrEqual(0).toArray()
+		return this.toList(this.table.where('localEssentialContactId').aboveOrEqual(0))
 	}
 
 	async deleteUserEssentialContacts() {

@@ -124,7 +124,7 @@ class NoteServiceImpl extends AutoSynchronizableService<
 		column: NoteColumnEntity,
 	): Promise<NoteEntity[]> {
 		if (Utils.isNotEmpty(column.localId)) {
-			return this.table.where('localColumnId').equals(column.localId!).toArray()
+			return this.toList(this.table.where('localColumnId').equals(column.localId!))
 		}
 
 		return []

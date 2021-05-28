@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LinkButton from '../../../../components/button/link_button'
 import MuiSearchBar from '../../../../components/mui_search_bar'
 import { useLanguage } from '../../../../context/language'
@@ -8,7 +8,6 @@ import FaqItems from '../faq_list_items'
 import QuestionDialogForm from '../question_dialog_form'
 
 const Faq: React.FC<{ view?: FaqView }> = ({ view }) => {
-
   const language = useLanguage()
   const [dialogOpen, setQuestionDialogOpen] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')

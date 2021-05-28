@@ -69,7 +69,7 @@ class StaffServiceImpl extends AutoSynchronizableService<
 	}
 
 	getByEmail = async (email: string): Promise<StaffEntity | undefined> => {
-			return this.table.where('email').equalsIgnoreCase(email).first()
+			return this.toFirst(this.table.where('email').equalsIgnoreCase(email))
 	}
 
 	isEmailInvalid = async (email: string, languageData: LanguageBase) => {

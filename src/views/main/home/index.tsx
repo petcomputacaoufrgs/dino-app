@@ -3,14 +3,13 @@ import MenuService from '../../../services/menu/MenuService'
 import IconButton from '../../../components/button/icon_button'
 import { useLanguage } from '../../../context/language'
 import Button from '../../../components/button'
-import './styles.css'
 import LanguageBase from '../../../constants/languages/LanguageBase'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
-import { GetPermission, IsStaff } from '../../../context/private_router'
+import { GetPermission } from '../../../context/private_router'
 import PermissionEnum from '../../../types/enum/PermissionEnum'
+import './styles.css'
 
 const Home: React.FC = () => {
-
 	const language = useLanguage()
 
 	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => 
@@ -18,7 +17,6 @@ const Home: React.FC = () => {
 
 	// TODO centralizar isso algum dia
 	const getGroupedMenuByPermission = () => {
-
 		const userPermission = GetPermission()
 
 		switch(userPermission) {

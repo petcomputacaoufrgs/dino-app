@@ -66,7 +66,7 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 	}
 
 	getByTitle = async (title: string): Promise<GlossaryItemEntity | undefined> => {
-		return this.table.where('title').equalsIgnoreCase(title).first()
+		return this.toFirst(this.table.where('title').equalsIgnoreCase(title))
 }
 
 	isTitleInvalid = async (item: GlossaryItemEntity, languageData: LanguageBase) => {

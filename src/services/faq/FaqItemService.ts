@@ -10,6 +10,7 @@ import TreatmentService from '../treatment/TreatmentService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import Utils from '../../utils/Utils'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
 	number,
@@ -52,13 +53,13 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	async convertEntityToModel(
 		entity: FaqItemEntity,
 	): Promise<FaqItemDataModel | undefined> {
-		if (entity.localTreatmentId) {
-			const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId)
+		if (Utils.isNotEmpty(entity.localTreatmentId)) {
+			const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId!)
 
-			if (treatment && treatment.id) {
+			if (treatment && Utils.isNotEmpty(treatment.id)) {
 				const model: FaqItemDataModel = {
 					answer: entity.answer,
-					treatmentId: treatment.id,
+					treatmentId: treatment.id!,
 					question: entity.question,
 				}
 
@@ -84,7 +85,7 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 
 	getByTreatment = async (treatment: TreatmentEntity): Promise<FaqItemEntity[]> => {
 		if (treatment.localId) {
-			return this.table.where('localTreatmentId').equals(treatment.localId).toArray()
+			return this.toList(this.table.where('localTreatmentId').equals(treatment.localId))
 		}
 
 		return []

@@ -54,11 +54,11 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	}
 
 	getAllByIds = (ids: number[]): Promise<TreatmentEntity[]> => {
-		return this.table.where('id').anyOf(ids).toArray()
+		return this.toList(this.table.where('id').anyOf(ids))
 	}
 
 	getAllByLocalIds = (localIds: number[]): Promise<TreatmentEntity[]> => {
-		return this.table.where('localId').anyOf(localIds).toArray()
+		return this.toList(this.table.where('localId').anyOf(localIds))
 	}
 
 	getFaqViewByFilter(
@@ -74,7 +74,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	}
 
 	getByName = (name: string): Promise<TreatmentEntity | undefined> => {
-		return this.table.where('name').equalsIgnoreCase(name).first()
+		return this.toFirst(this.table.where('name').equalsIgnoreCase(name))
 	}
 }
 

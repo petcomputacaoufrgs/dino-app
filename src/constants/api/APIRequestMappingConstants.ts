@@ -15,6 +15,7 @@ class APIRequestMappingConstants {
 	GOOGLE_CONTACT = `${this.URL}google_contact/`
 	TREATMENT = `${this.URL}public/treatment/`
 	USER_SETTINGS = `${this.URL}user_settings/`
+	KIDS_SPACE_SETTINGS = `${this.URL}kids_space_settings/`
 	GOOGLE_SCOPE = `${this.URL}auth/google/scope/`
 	private AUTH = `${this.URL}auth/`
 	private PUBLIC_AUTH = `${this.URL}public/auth/`

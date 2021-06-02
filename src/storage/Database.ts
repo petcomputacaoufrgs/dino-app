@@ -17,6 +17,7 @@ import UserSettingsEntity from '../types/user/database/UserSettingsEntity'
 import GoogleScopeEntity from '../types/auth/google/database/GoogleScopeEntity'
 import AuthEntity from '../types/auth/database/AuthEntity'
 import TabEntity from '../types/tab_control/TabEntity'
+import { KidsSpaceSettingsEntity } from '../types/kids_space/database/KidsSpaceSettingsEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 12
@@ -40,6 +41,7 @@ class Database extends Dexie {
 	treatment: Dexie.Table<TreatmentEntity, number>
 	googleScope: Dexie.Table<GoogleScopeEntity, number>
 	tab: Dexie.Table<TabEntity, number>
+	kidsSpaceSettings: Dexie.Table<KidsSpaceSettingsEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)
@@ -71,6 +73,7 @@ class Database extends Dexie {
 			faqUserQuestion: generateSynchronizableTableString(),
 			treatment: generateSynchronizableTableString(),
 			googleScope: generateSynchronizableTableString('name'),
+			kidsSpaceSettings: generateSynchronizableTableString(),
 			auth: '++id',
 			logAppError: '++id,title,file,error,date',
 			calendarEvent:
@@ -96,6 +99,7 @@ class Database extends Dexie {
 		this.treatment = this.table('treatment')
 		this.googleScope = this.table('googleScope')
 		this.tab = this.table('tab')
+		this.kidsSpaceSettings = this.table('kidsSpaceSettings')
 	}
 }
 

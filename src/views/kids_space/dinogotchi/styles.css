@@ -125,6 +125,10 @@
     bottom: -10vmin;
 }
 
+.dinogotchi_screen__dino_pet.first_login {
+	left: -50vmin;
+}
+
 .dinogotchi_screen__options {
 	position: absolute;
 	right: 7vw;
@@ -159,6 +163,66 @@
 .dinogotchi_screen__background .painting {
 	transform-box: fill-box;
 	transform-origin: top;
+}
+
+.teste {
+	position: absolute;
+}
+
+.color_chooser {
+	position: absolute;
+	top: 8vh;
+	background-color: #121212;
+	padding: 1.2rem;
+	border-radius: 0.5rem;
+}
+
+.color_chooser__color_button {
+  	border: none;
+	border-radius: 50%;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+	width: 10vmin;
+	height: 10vmin;
+	margin: 1vmin;
+}
+
+.color_chooser__color_button.green {
+	background-color: #69AF85;
+}
+
+.color_chooser__color_button.pink {
+	background-color: #FFAFCC;
+}
+
+.color_chooser__color_button.blue {
+	background-color: #89cff0;
+}
+
+.color_chooser__color_button.red {
+	background-color: #be5050;
+}
+
+.selection_button {
+	position:absolute;
+	top: 85vh;
+}
+
+.speech_bubble {
+	position: absolute;
+	background-color: #f5f5f5;
+	color: #121212;
+	border: #838383 solid 0.05rem;
+	border-radius: 0.4rem;
+	top: 30vh;
+	left: 50vw;
+	max-width: 40vw;
+	padding: 1rem;
+}
+
+.dinogotchi_loader {
+	position: initial;
 }
 
 @keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_one {

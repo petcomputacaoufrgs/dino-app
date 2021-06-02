@@ -256,6 +256,7 @@ export default interface LanguageBase {
 	NO_FAQ_AVAILABLE: string
 	KIDS_SPACE: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string
+	MEMORY_GAME_GAME_OVER: string
 	PLAY_AGAIN_MESSAGE: string
 	DINO_RUNNER_GAME_OVER_MSG_1: string
 	SECONDARY_TAB_MESSAGE: string
@@ -308,5 +309,19 @@ export default interface LanguageBase {
 	seeFAQItemsText(treatment: string): string
 	titleFAQTreatmentText(treatment: string): string
 	titleTreatmentQuestion(treatment: string): string
+	CHANGE_PASSWORD: string
+	CHANGE_PASSWORD_DIALOG: string
+	CANCEL: string
+	CHANGE: string
+	INSERT_OLD_PASSWORD: string
+	INSERT_NEW_PASSWORD: string
+	INSERT_NEW_PASSWORD_AGAIN: string
+	SETTING_PASSWORD_EXPLANATION: string
+	INSERT_PASSWORD: string
+	INSERT_PASSWORD_AGAIN: string
+	PASSWORD_MIN_LENGHT_ERROR_MESSAGE: string
+	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE: string
+	PASSWORD_CHANGED: string
+	WRONG_PASSWORD: string
 }
 

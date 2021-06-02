@@ -15,6 +15,7 @@ import UserSettingsEntity from '../types/user/database/UserSettingsEntity'
 import GoogleScopeEntity from '../types/auth/google/database/GoogleScopeEntity'
 import AuthEntity from '../types/auth/database/AuthEntity'
 import TabEntity from '../types/tab_control/TabEntity'
+import { KidsSpaceSettingsEntity } from '../types/kids_space/database/KidsSpaceSettingsEntity'
 import StaffEntity from '../types/staff/database/StaffEntity'
 import EssentialPhoneEntity from '../types/contact/database/EssentialPhoneEntity'
 
@@ -40,6 +41,7 @@ class Database extends Dexie {
 	googleScope: Dexie.Table<GoogleScopeEntity, number>
 	staff: Dexie.Table<StaffEntity, number>
 	tab: Dexie.Table<TabEntity, number>
+	kidsSpaceSettings: Dexie.Table<KidsSpaceSettingsEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)
@@ -69,6 +71,7 @@ class Database extends Dexie {
 			treatmentQuestion: generateSynchronizableTableString('localTreatmentId'),
 			treatment: generateSynchronizableTableString('name'),
 			googleScope: generateSynchronizableTableString('name'),
+			kidsSpaceSettings: generateSynchronizableTableString(),
 			auth: '++id',
 			logAppError: '++id,title,file,error,date',
 			calendarEvent:
@@ -94,6 +97,7 @@ class Database extends Dexie {
 		this.treatment = this.table('treatment')
 		this.googleScope = this.table('googleScope')
 		this.tab = this.table('tab')
+		this.kidsSpaceSettings = this.table('kidsSpaceSettings')
 	}
 }
 

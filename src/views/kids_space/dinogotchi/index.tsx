@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
+import Button from '../../../components/button'
 import CircularButton from '../../../components/button/circular_button'
 import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import { ReactComponent as AngryDinoSVG } from '../../../assets/kids_space/dinogotchi/angry.svg'
-import { ReactComponent as Dino } from '../../../assets/kids_space/dinogotchi/doctor.svg'
+import { ReactComponent as Dino } from '../../../assets/kids_space/dinogotchi/neutrop.svg'
+import { ReactComponent as SleepDino } from '../../../assets/kids_space/dinogotchi/dormindo.svg'
 import { ReactComponent as GoOutSVG } from '../../../assets/kids_space/dinogotchi/exit.svg'
 import { ReactComponent as GameSVG } from '../../../assets/kids_space/dinogotchi/gamepad.svg'
 import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogotchi/outside.svg'
@@ -13,11 +15,50 @@ import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import GoBackButton from '../../../components/button/icon_button'
 import AccessDialog from '../../../components/kids_space_dialog/access_dialog'
+import DinoColorConstants from '../../../constants/dinogotchi/DinoColorConstants'
+import KidsSpaceSettingsService from '../../../services/kids_space/KidsSpaceSettingsService'
+import { KidsSpaceSettingsEntity } from '../../../types/kids_space/database/KidsSpaceSettingsEntity'
+import Loader from '../../../components/loader'
 import './styles.css'
 
 const Dinogotchi: React.FC = () => {
 	const [isInside, setInside] = useState(true)
 	const [open, setOpen] = useState(false)
+	const [kidsSpaceSettings, setKidsSpaceSettings] = useState<KidsSpaceSettingsEntity | undefined>()
+	const [openChildArea, setOpenChildArea] = useState(true)
+	const [isLoading, setIsLoading] = useState(true)
+	const [selectedColor, setSelectedColor] = useState('default')
+
+	useEffect(() => {
+		const loadData = async () => {
+			const kidsSpaceSettings = await KidsSpaceSettingsService.getFirst()
+			if (kidsSpaceSettings) {
+				updateDate(kidsSpaceSettings)
+			}
+		}
+
+		let updateDate = (kidsSpaceSettings: KidsSpaceSettingsEntity) => {
+			setKidsSpaceSettings(kidsSpaceSettings)
+			selectColor(kidsSpaceSettings.color)
+			finishLoading()
+		}
+
+		let finishLoading = () => {
+			setIsLoading(false)
+		}
+
+		KidsSpaceSettingsService.addUpdateEventListenner(loadData)
+		
+		if (isLoading) {
+			loadData()
+		}
+
+		return () => {
+			updateDate = () => {}
+			finishLoading = () => {}
+			KidsSpaceSettingsService.removeUpdateEventListenner(loadData)
+		}
+	}, [isLoading])
 
 	useEffect(() => {
 		return startCloudEngine()
@@ -31,6 +72,16 @@ const Dinogotchi: React.FC = () => {
 
 	const handleChangeLocation = () => {
 		setInside(!isInside)
+	}
+
+	const handleChooseColor = () => {
+		if (kidsSpaceSettings) {
+			console.log("oi")
+			kidsSpaceSettings.color = selectedColor
+			kidsSpaceSettings.firstSettingsDone = true
+			setKidsSpaceSettings(kidsSpaceSettings)
+			KidsSpaceSettingsService.save(kidsSpaceSettings)
+		}
 	}
 
 	const renderBackground = (): JSX.Element => {
@@ -56,22 +107,66 @@ const Dinogotchi: React.FC = () => {
 		return <OutsideSVG className='dinogotchi_screen__background day' />
 	}
 
+	const renderAwakeDino = () => {
+		return (
+			<>
+				<Dino className='dinogotchi_screen__dino_pet' />
+				<div className='dinogotchi_screen__options'>
+					<CircularButton
+						icon={GameSVG}
+						onClick={() => {
+							HistoryService.push(PathConstants.GAME_MENU)
+						}}
+					/>
+					<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
+				</div>
+			</>
+		)
+	}
+
+	const renderSleepDino = () => {
+		return (
+			<SleepDino className='dinogotchi_screen__dino_pet' onClick={() => setOpenChildArea(false)}/>
+		)
+	}
+
+	const renderDino = () => {
+		const firstSettingsNotDone = !kidsSpaceSettings || !kidsSpaceSettings.firstSettingsDone
+
+		return firstSettingsNotDone ? meetDino() : openChildArea ? renderSleepDino() : renderAwakeDino()
+	}
+
+	const meetDino = () => {
+		return (
+			<>
+				<div className='speech_bubble'> Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas? </div>
+				<Dino className='dinogotchi_screen__dino_pet first_login' />
+				<div className='color_chooser'>
+					<button className='color_chooser__color_button green' onClick={() => selectColor(DinoColorConstants.DEFAULT)}></button>
+					<button className='color_chooser__color_button pink' onClick={() => selectColor(DinoColorConstants.PINK)}></button>
+					<button className='color_chooser__color_button blue' onClick={() => selectColor(DinoColorConstants.BLUE)}></button>
+					<button className='color_chooser__color_button red' onClick={() => selectColor(DinoColorConstants.RED)}></button>
+				</div>
+
+				<Button className='selection_button' onClick={handleChooseColor}> Escolher </Button>
+			</>
+		)
+	}
+
+	const selectColor = (color: string) => {
+		setSelectedColor(color)
+		document.documentElement.setAttribute('data-dino-color', color)
+	}
+
 	return (
-		<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
-			{renderBackground()}
-			<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
-			<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(true)}} />
-			<div className='dinogotchi_screen__options'>
-				<CircularButton
-					icon={GameSVG}
-					onClick={() => {
-						HistoryService.push(PathConstants.GAME_MENU)
-					}}
-				/>
-				<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
+		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
+			<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
+				{renderBackground()}
+				{renderDino()}
+				<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
+				<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(true)}} />
 			</div>
-			<Dino className='dinogotchi_screen__dino_pet' />
-		</div>
+		</Loader>
 	)
 }
 

@@ -12,11 +12,11 @@ const DinoLoader: React.FC<LoaderProps> = ({
 	disableBackground,
 	hideChildren,
 }): ReactElement => {
-	const [showLoader, setShowLoader] = useState(false)
+	const [showLoader, setShowLoader] = useState(isLoading)
 
 	useEffect(() => {
-		setShowLoader(loading)
-	}, [loading])
+		setShowLoader(isLoading)
+	}, [isLoading])
 
 	const getIconClassName = (): string => {
 		let className = StringUtils.concatUndefinedSafe(
@@ -46,7 +46,7 @@ const DinoLoader: React.FC<LoaderProps> = ({
 				<div className={getClassName()}>
 					{children}
 					<div className={getIconClassName()}>
-						<RingLoader size={40} color={'#B32E55'} loading={loading} />
+						<RingLoader size={40} color={'#B32E55'} loading={isLoading} />
 					</div>
 				</div>
 			) : (

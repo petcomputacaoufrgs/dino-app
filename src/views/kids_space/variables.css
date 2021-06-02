@@ -11,6 +11,7 @@
 	--dialog-circle-border-color: #694E73;
     --dialog-input-background-color: #C0B3C5;
 
+
 	/* ========================== */
 	/* =         Games          = */
 	/* ========================== */
@@ -30,41 +31,60 @@
 	--tic-tac-dino-background-color: #cec1e7;
 	--tic-tac-dino-square-background-color: #d8cdec;
 	--tic-tac-dino-display-background-color: #c1e7e1b3;
+
+	/* Memory Game */
+	--memory-game-primary-background-color: #ffda91;
+	--memory-game-secondary-background-color: #ffd175;
+	--memory-game-contrast-color: #76aaca;
+	--memory-game-piece-back-color: #805a46;
+
 	/* ========================== */
 	/* =         Dinos          = */
 	/* ========================== */
 	/* Dino verde */
-	--dino-green-dark-color: #498a68;
-	--dino-green-main-color: #5cb38e;
+	--dino-dark-color: #539B70;
+	--dino-main-color: #69AF85;
 	--dino-green-light-color: #9bdfc1;
+	--dino-back-color: #B460C6;
+	--dino-details-color: #3E6D51;
+	--dino-face-details-color: #3F7555;
+	--dino-belly-color: #F2F9D9;
+	--catheter-color: #A3B5C9;
+	--other-color: #CAE2FF;
+	--other-two-color: #F7263A;
+	--other-three-color: #F9E178;
+	--other-four-color: #143321;
+	--other-five-color: #43609B;
+}
 
-	/* Dino amarelo */
-	--dino-yellow-dark-color: #bfb08b;
-	--dino-yellow-main-color: #ffebba;
-	--dino-yellow-light-color: #fff5dc;
+[data-dino-color='pink'] {
+	--dino-dark-color: #e67ca3;
+	--dino-main-color: #FFAFCC;
+	--dino-details-color: #e08cab;
+	--dino-face-details-color: #af758a;
+	--dino-back-color: #279c92;
+}
 
-	/* Dino vermelho */
-	--dino-red-dark-color: #8f3c3c;
-	--dino-red-main-color: #be5050;
-	--dino-red-light-color: #dfa8a8;
+[data-dino-color='blue'] {
+	--dino-dark-color: #58aed6;
+	--dino-main-color: #89cff0;
+	--dino-details-color: #679bb4;
+	--dino-face-details-color: #43748b;
+	--dino-back-color: #F089CF;
+}
 
-	/* Dino blue */
-	--dino-blue-dark-color: #679bb4;
-	--dino-blue-main-color: #89cff0;
-	--dino-blue-light-color: #c4e7f7;
+[data-dino-color='red'] {
+	--dino-dark-color: #ad3636;
+	--dino-main-color: #be5050;
+	--dino-details-color: #8f3c3c;
+	--dino-face-details-color: #6b2828;
+	--dino-back-color: #F1CD16;
+}
 
-	/* Dino rosa */
-	--dino-pink-dark-color: #bf8399;
-	--dino-pink-main-color: #ffafcc;
-	--dino-pink-light-color: #ffd7e6;
-
-	/* Dino aqua */
-	--dino-aqua-dark-color: #7ca2a2;
-	--dino-aqua-main-color: #a5d8d8;
-	--dino-aqua-light-color: #d2ecec;
-
-	/* Dino roxo */
-	--dino-roxo-dark-color: #9e83ac;
-	--dino-roxo-main-color: #d2afe5;
-	--dino-roxo-light-color: #e9d7f2;
+[data-dino-color='emo'] {
+	--dino-dark-color: black;
+	--dino-main-color: #121212;
+	--dino-details-color: black;
+	--dino-face-details-color: black;
+	--dino-back-color: black;
 }

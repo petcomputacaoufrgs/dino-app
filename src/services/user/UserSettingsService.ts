@@ -49,7 +49,8 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
-			step: model.step,
+			settingsStep: model.settingsStep,
+			parentsAreaPassword: model.parentsAreaPassword
 		}
 
 		if (model.treatmentId) {
@@ -74,14 +75,15 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			step: entity.step,
+			settingsStep: entity.settingsStep,
+			parentsAreaPassword: entity.parentsAreaPassword
 		}
 
 		if (entity.treatmentLocalId) {
 			const treatment = await TreatmentService.getByLocalId(
 				entity.treatmentLocalId,
 			)
-			if (treatment && treatment.id) {
+			if (treatment && treatment.id !== undefined) {
 				model.treatmentId = treatment.id
 			}
 		}

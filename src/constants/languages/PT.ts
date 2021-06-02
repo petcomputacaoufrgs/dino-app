@@ -429,7 +429,7 @@ export default class PT implements LanguageBase {
 		'Tem certeza que deseja remover esta coluna?'
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
-		'Esta coluna possui anotações, tem certeza que deseja removê-la?'
+		'Tem certeza?'
 
 	NOTE_COLUMN_DELETE_DIALOG_DESC =
 		'Caso responda "SIM" esta coluna será removida permanentemente.'
@@ -617,6 +617,37 @@ export default class PT implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
+	
+	MEMORY_GAME_GAME_OVER = 'Você arrasou! Parabéns'
+
+
+	CHANGE_PASSWORD = 'Alterar senha de acesso a área dos responsáveis'
+
+	CHANGE_PASSWORD_DIALOG = 'Alterar senha'
+
+	CANCEL = 'Cancelar'
+
+	CHANGE = 'Alterar'
+
+	INSERT_OLD_PASSWORD = 'Digite a senha atual: '
+
+	INSERT_NEW_PASSWORD = 'Digite a nova senha: '
+
+	INSERT_NEW_PASSWORD_AGAIN = 'Digite novamente a nova senha: '
+
+	SETTING_PASSWORD_EXPLANATION = 'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter entre 8 e 24 caracteres.'
+
+	INSERT_PASSWORD = 'Digite a senha: '
+
+	INSERT_PASSWORD_AGAIN = 'Digite novamente a senha: '
+
+	PASSWORD_MIN_LENGHT_ERROR_MESSAGE = 'A senha deve ter entre 8 e 24 caracteres'
+
+	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'A senhas estão diferentes'
+
+	PASSWORD_CHANGED = 'Sucesso'
+
+	WRONG_PASSWORD = 'Senha incorreta'
 
 	EXAMPLE_EMAIL='examplo@email.com'
 

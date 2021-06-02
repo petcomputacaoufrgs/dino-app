@@ -430,7 +430,7 @@ export default class EN implements LanguageBase {
 		'Are you sure you want to delete this column?'
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
-		'This column has notes, are you sure you want to delete it?'
+		'Are you sure?'
 
 	NOTE_COLUMN_DELETE_DIALOG_DESC =
 		'If you answer "YES" this column will be removed permanently.'
@@ -645,4 +645,34 @@ export default class EN implements LanguageBase {
 	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`
 	
 	titleTreatmentQuestion = (treatment: string) => `Have a question about ${treatment}?`
+	
+	MEMORY_GAME_GAME_OVER = 'You nail it! Congratulations'
+
+	CHANGE_PASSWORD = 'Change password to parents area'
+
+	CHANGE_PASSWORD_DIALOG = 'Change password'
+
+	CANCEL = 'Cancel'
+
+	CHANGE = 'Change'
+
+	INSERT_OLD_PASSWORD = 'Current password: '
+
+	INSERT_NEW_PASSWORD = 'New password: '
+
+	INSERT_NEW_PASSWORD_AGAIN = 'Repeat new password: '
+
+	SETTING_PASSWORD_EXPLANATION = 'This password protects the kid from sensible content, because you can only access the parents area with this password. The password must be between 8 and 24 characters.'
+
+	INSERT_PASSWORD = 'Insert password: '
+
+	INSERT_PASSWORD_AGAIN = 'Repeat password: '
+
+	PASSWORD_MIN_LENGHT_ERROR_MESSAGE = 'The password must be between 8 and 24 characters'
+
+	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'The passwords are different'
+
+	PASSWORD_CHANGED = 'Success'
+
+	WRONG_PASSWORD = 'Wrong password'
 }

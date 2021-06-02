@@ -17,6 +17,7 @@ class APIWebSocketPathsConstants {
 	USER_SETTINGS = 'settings'
 	GOOGLE_SCOPE = 'google_scope'
 	STAFF = 'staff'
+	KIDS_SPACE_SETTINGS = 'kids_space_settings'
 }
 
 export default new APIWebSocketPathsConstants()

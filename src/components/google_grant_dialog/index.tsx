@@ -130,6 +130,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 					<h1>Sem conexão</h1>
 				</DinoDialogHeader>
 				<DinoDialogContent>
+					{/* TODO: traduzir */}
 					<p>Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.</p>
 					<p>Tente novamente quando estiver conectado.</p>
 				</DinoDialogContent>
@@ -147,10 +148,9 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 				open={open}
 			>
 				<DinoLoader isLoading={isLoading}>
-					{isConnected ? 
-						renderDialogContent()
-					: 
-						renderOfflineContent()
+					{isConnected 
+						?	renderDialogContent()
+						: renderOfflineContent()
 					}
 					
 				</DinoLoader>

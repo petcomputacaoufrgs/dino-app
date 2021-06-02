@@ -304,11 +304,6 @@ export default interface LanguageBase {
 	ANSWER: string
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER: string
 	ADD_STAFF_TEXT: string
-	itemAlreadyExists(item: string): string
-	deleteItemText(item: string): string
-	seeFAQItemsText(treatment: string): string
-	titleFAQTreatmentText(treatment: string): string
-	titleTreatmentQuestion(treatment: string): string
 	CHANGE_PASSWORD: string
 	CHANGE_PASSWORD_DIALOG: string
 	CANCEL: string
@@ -323,5 +318,10 @@ export default interface LanguageBase {
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE: string
 	PASSWORD_CHANGED: string
 	WRONG_PASSWORD: string
+	itemAlreadyExists(item: string): string
+	deleteItemText(item: string): string
+	seeFAQItemsText(treatment: string): string
+	titleFAQTreatmentText(treatment: string): string
+	titleTreatmentQuestion(treatment: string): string
 }
 

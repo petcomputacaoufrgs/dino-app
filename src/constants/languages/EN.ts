@@ -635,16 +635,6 @@ export default class EN implements LanguageBase {
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Question asnwer...'
 
 	ADD_STAFF_TEXT = "Staff users can add, remove and edit information that is displayed to patients and their responsibles, such as: hospital contacts, glossary items, etc. Only the hospital's management account is able to add and remove other staff users."
-
-	itemAlreadyExists = (item: string) => `${item} already exists`
-
-	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
-	
-	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
-	
-	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`
-	
-	titleTreatmentQuestion = (treatment: string) => `Have a question about ${treatment}?`
 	
 	MEMORY_GAME_GAME_OVER = 'You nail it! Congratulations'
 
@@ -675,4 +665,14 @@ export default class EN implements LanguageBase {
 	PASSWORD_CHANGED = 'Success'
 
 	WRONG_PASSWORD = 'Wrong password'
+
+	itemAlreadyExists = (item: string) => `${item} already exists`
+
+	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
+	
+	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
+	
+	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`
+	
+	titleTreatmentQuestion = (treatment: string) => `Have a question about ${treatment}?`
 }

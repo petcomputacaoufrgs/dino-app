@@ -19,16 +19,17 @@ import Loader from '../../../components/loader'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
-import FontSizeEnum from '../../../types/user/view/FontSizeEnum'
-import ColorThemeEnum from '../../../types/user/view/ColorThemeEnum'
+import FontSizeEnum from '../../../types/enum/FontSizeEnum'
+import ColorThemeEnum from '../../../types/enum/ColorThemeEnum'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
-import GoogleContactService from '../../../services/contact/GoogleContactService'
+//import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import TransitionSlide from '../../../components/slide_transition'
-import DinoDialogHeader, {
+import { 
+	DinoDialogHeader,
 	DinoDialogContent,
-} from '../../../components/dino_dialog'
+} from '../../../components/dialogs/dino_dialog'
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
@@ -189,7 +190,8 @@ const Settings: React.FC = () => {
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
-			GoogleContactService.activeGoogleContactsGrant()
+			//TODO: Cadê essa service? morreu? 
+			//GoogleContactService.activeGoogleContactsGrant() 
 		}
 	}
 
@@ -337,7 +339,7 @@ const Settings: React.FC = () => {
 		<div className='settings__save_button_container'>
 			<Button className='settings__save_button' onClick={handleSave}>
 				<SaveSVG className='settings__save_button__icon' />
-				{language.data.SETTINGS_SAVE}
+				{language.data.SAVE}
 			</Button>
 		</div>
 	)

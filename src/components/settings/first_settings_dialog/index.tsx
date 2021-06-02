@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Dialog, DialogActions } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import SelectTreatment from '../select_treatment'
 import DinoSwitch from '../../switch'
@@ -26,7 +25,6 @@ const FirstSettingsDialog: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
-	const [dialogOpen, setDialogOpen] = useState(true)
 	const [selectedLanguage, setSelectedLanguage] = useState(
 		language.data.LANGUAGE_CODE,
 	)
@@ -149,7 +147,7 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = step === NUMBER_DIALOGS - 1
 			settings.treatmentLocalId = selectedTreatment?.localId
-			settings.step = step
+			settings.settingsStep = step
 			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 
 			await UserSettingsService.save(settings)

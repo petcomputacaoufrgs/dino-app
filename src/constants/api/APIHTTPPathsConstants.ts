@@ -16,6 +16,7 @@ class APIHTTPPathsConstants {
 	TREATMENT = `${this.ROOT}private/treatment/`
 	USER_SETTINGS = `${this.ROOT}private/settings/`
 	STAFF = `${this.ROOT}admin/staff/`
+	KIDS_SPACE_SETTINGS = `${this.ROOT}kids_space_settings/`
 
 	GOOGLE_SCOPE = `${this.ROOT}private/auth/google/scope/`
 	private PRIVATE_AUTH = `${this.ROOT}private/auth/`
@@ -36,6 +37,7 @@ class APIHTTPPathsConstants {
 	SAVE_LOG_APP_ERROR = `${this.LOG_APP_ERROR}`
 	SAVE_ALL_LOG_APP_ERROR = `${this.LOG_APP_ERROR}all/`
 	DELETE_ACCOUNT = `${this.USER}delete_account/`
+
 }
 
 export default new APIHTTPPathsConstants()

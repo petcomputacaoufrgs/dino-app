@@ -1,5 +1,5 @@
-import APIRequestMappingConstants from "../../constants/api/APIRequestMappingConstants";
-import APIWebSocketDestConstants from "../../constants/api/APIWebSocketDestConstants";
+import APIHTTPPathsConstants from "../../constants/api/APIHTTPPathsConstants";
+import APIWebSocketDestConstants from "../../constants/api/APIWebSocketPathsConstants";
 import { KidsSpaceSettingsModel } from "../../types/kids_space/api/KidsSpaceSettingsModel";
 import { KidsSpaceSettingsEntity } from "../../types/kids_space/database/KidsSpaceSettingsEntity";
 import AutoSynchronizableService from "../sync/AutoSynchronizableService";
@@ -7,6 +7,7 @@ import SynchronizableService from "../sync/SynchronizableService";
 import UserService from "../user/UserService";
 import WebSocketQueuePathService from "../websocket/path/WebSocketQueuePathService";
 import Database from "../../storage/Database";
+import PermissionEnum from "../../types/enum/PermissionEnum"
 
 class KidsSpaceSettingsServiceImpl extends AutoSynchronizableService<
     number,
@@ -16,12 +17,16 @@ class KidsSpaceSettingsServiceImpl extends AutoSynchronizableService<
     constructor() {
         super(
 			Database.kidsSpaceSettings,
-			APIRequestMappingConstants.KIDS_SPACE_SETTINGS,
+			APIHTTPPathsConstants.KIDS_SPACE_SETTINGS,
 			WebSocketQueuePathService,
 			APIWebSocketDestConstants.KIDS_SPACE_SETTINGS,
 		)
     }
     
+    getSyncNecessaryPermissions(): PermissionEnum[] {
+		return []
+	}
+
     getSyncDependencies(): SynchronizableService[] {
 		return [UserService]
 	}

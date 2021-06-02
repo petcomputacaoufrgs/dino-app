@@ -5,7 +5,7 @@ import './styles.css'
 import StringUtils from '../../utils/StringUtils'
 
 const DinoLoader: React.FC<LoaderProps> = ({
-	isLoading: loading,
+	isLoading,
 	children,
 	className,
 	iconClassName,

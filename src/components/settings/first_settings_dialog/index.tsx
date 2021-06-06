@@ -46,7 +46,7 @@ const FirstSettingsDialog: React.FC = () => {
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
-		if (settings?.settingsStep !== 4 && parentsAreaPassword !== "") {
+		if (settings?.step !== 4 && parentsAreaPassword !== "") {
 			setParentsAreaPassword("")
 			setConfirmParentsAreaPassword("")
 			setPasswordErrorMessage(undefined)
@@ -147,7 +147,7 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = step === NUMBER_DIALOGS - 1
 			settings.treatmentLocalId = selectedTreatment?.localId
-			settings.settingsStep = step
+			settings.step = step
 			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 
 			await UserSettingsService.save(settings)
@@ -175,7 +175,7 @@ const FirstSettingsDialog: React.FC = () => {
 	const handleNextStep = () => {
 		if (settings) {
 			if (isInvalidPassword(settings)) return
-			settings.settingsStep += 1
+			settings.step += 1
 			UserSettingsService.save(settings)
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
 			const newEntity: UserSettingsEntity = {
@@ -185,7 +185,7 @@ const FirstSettingsDialog: React.FC = () => {
 				includeEssentialContact: true,
 				declineGoogleContacts: false,
 				firstSettingsDone: false,
-				settingsStep: 1,
+				step: 1,
 			}
 
 			UserSettingsService.save(newEntity)
@@ -246,7 +246,7 @@ const FirstSettingsDialog: React.FC = () => {
 	}
 
 	const isInvalidPassword = (settings: UserSettingsEntity): boolean => {
-		if (settings.settingsStep !== 4) return false
+		if (settings.step !== 4) return false
 
 		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)

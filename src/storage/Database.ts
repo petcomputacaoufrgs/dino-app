@@ -20,7 +20,7 @@ import StaffEntity from '../types/staff/database/StaffEntity'
 import EssentialPhoneEntity from '../types/contact/database/EssentialPhoneEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
-const DATABASE_VERSION = 13
+const DATABASE_VERSION = 18
 
 class Database extends Dexie {
 	auth: Dexie.Table<AuthEntity, number>

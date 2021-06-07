@@ -28,6 +28,8 @@ import StaffMain from './views/main/staff_main'
 import './App.css'
 import './MaterialUI.css'
 import './General.css'
+import { toggle } from './constants/toggle/Toggle'
+import TestInstanceService from './services/TestInstanceService'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -47,6 +49,7 @@ const App: React.FC = () => {
 			if (isAuthenticated) {
 				await loadSettings()
 				await loadUserPermission()
+				loadTestInstances()
 			} else {
 				DataThemeUtils.setBodyDataTheme(
 					UserSettingsService.getSystemColorThemeName(),
@@ -61,6 +64,16 @@ const App: React.FC = () => {
 			const isAuthenticated = await AuthService.isAuthenticated()
 			updateAuth(isAuthenticated)
 			return isAuthenticated
+		}
+
+		const loadTestInstances = async () => {
+			const dbSettings = await UserSettingsService.getFirst()
+			if (dbSettings) {
+				if(toggle.loadTestInstances && !dbSettings.firstSettingsDone) {
+					console.log("Carregando testes...")
+					TestInstanceService.loadInstances()
+				}
+			}
 		}
 
 		const loadSettings = async () => {

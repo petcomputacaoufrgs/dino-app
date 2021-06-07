@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AuthService from '../../services/auth/AuthService'
-import FirstSettingsDialog from '../../components/settings/first_settings_dialog'
+import FirstSettings from '../../components/settings/first_settings_dialog'
 import DinoLoader from '../../components/loader/index'
 import DrawerNavigation from '../../components/drawer_navigation'
 import LogoutDialog from '../../components/logout_dialog'
@@ -61,7 +61,7 @@ const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
         onDisagree={handleLogoutDisagree}
         open={openLogoutDialog}
       />
-      {toggle.showFirstLoginDialog && <FirstSettingsDialog />}
+      {toggle.showFirstLoginDialog && <FirstSettings />}
     </DinoLoader>
   )
 }

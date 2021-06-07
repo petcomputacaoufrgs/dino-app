@@ -9,9 +9,10 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import './styles.css'
 import HashUtils from '../../../utils/HashUtils'
-import FirstSettingsDialog from './dialogs'
+import FirstSettingsDialog, { firstSettingsDialogs } from './dialogs'
 
 const FirstSettings: React.FC = () => {
+
 	const language = useLanguage()
 
 	const [step, setStep] = useState(0)
@@ -104,13 +105,16 @@ const FirstSettings: React.FC = () => {
 	const handleCloseDialogs = () => setStep(-1)
 
 	const saveSettings = async () => {
-		if (settings) {
+
+		if (settings) {	
+			const LAST_DIALOG = firstSettingsDialogs.length - 1
+			
 			settings.language = selectedLanguage
 			settings.colorTheme = selectedColorTheme
 			settings.fontSize = selectedFontSize
 			settings.includeEssentialContact = selectedEssentialContactGrant
 			settings.declineGoogleContacts = false
-			settings.firstSettingsDone = step === 5//NUMBER_DIALOGS - 1
+			settings.firstSettingsDone = step === LAST_DIALOG
 			settings.treatmentLocalId = selectedTreatment?.localId
 			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 			settings.step = step
@@ -230,13 +234,15 @@ const FirstSettings: React.FC = () => {
 	}
 	
 	const isValidPassword = (settings: UserSettingsEntity): boolean => {
-		//TODO: vou mudar isso aqui
-		if (step === 4 && parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+
+		const index = firstSettingsDialogs.findIndex(d => d.id === "PASSWORD")
+
+		if (step === index && parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
 			return false
 		}
 	
-		if (step === 4 &&  parentsAreaPassword !== confirmParentsAreaPassword) {
+		if (step === index && parentsAreaPassword !== confirmParentsAreaPassword) {
 			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
 			return false
 		}

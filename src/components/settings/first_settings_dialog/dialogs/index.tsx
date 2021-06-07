@@ -9,6 +9,36 @@ import SelectLanguage from '../../select_language'
 import SelectTreatment from '../../select_treatment'
 import { useLanguage } from '../../../../context/language'
 import FirstSettingsDialogProps from './props'
+import { FirstSettingsDialogsProps } from './props'
+
+const Empty = () => <></>
+
+export const firstSettingsDialogs: FirstSettingsDialogsProps[] = [
+	{ 
+		id: "WELCOME",
+		component: Empty
+	},
+	{
+		id: "LANGUAGE",
+		component: Empty
+	},
+	{
+		id: "COLOR THEME",
+		component: Empty
+	},
+	{
+		id: "TREATMENT",
+		component: Empty
+	},
+	{
+		id: "PASSWORD",
+		component: Empty
+	},
+	{ 
+		id: "FINAL",
+		component: Empty
+	},
+]
 
 const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
   
@@ -77,7 +107,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
 
   const renderSetPasswordDialog = () => {
     return (
-      <div className='message_dialog set_password'>
+      <div className='first_settings__message_dialog set_password'>
         <p>
           {language.data.SETTING_PASSWORD_EXPLANATION}
         </p>
@@ -120,8 +150,8 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
       </div>
     )
   }
-
-  const firstLoginDialogs = [
+  
+  const firstSettingsDialogComponents = [
     { component: renderWelcomeMessageDialog },
     {
       title: language.data.FIRST_LOGIN_CHOOSE_LANGUAGE,
@@ -139,23 +169,28 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
       title: 'Crie uma senha para a área dos responsáveis', 
       component: renderSetPasswordDialog,
     },
-    { title: '', component: renderFinalMessageDialog },
+    { component: renderFinalMessageDialog },
   ]
 
-  const NUMBER_DIALOGS = firstLoginDialogs.length
+  firstSettingsDialogs.forEach((d, index) => {
+    d.component = firstSettingsDialogComponents[index].component
+    d.title = firstSettingsDialogComponents[index].title
+  })
+
+  const LAST_DIALOG = firstSettingsDialogs.length - 1
 
   const getDialog = () => {
-    if (props.step > -1 && props.step < NUMBER_DIALOGS) {
-      return firstLoginDialogs[props.step]
+    if (props.step > -1 && props.step <= LAST_DIALOG) {
+      return firstSettingsDialogs[props.step]
     }
-    return firstLoginDialogs[NUMBER_DIALOGS - 1]
+    return firstSettingsDialogs[LAST_DIALOG]
   }
 
   const renderDialogHeader = () => {
 
-    const isFirstOrLastDialog = props.step === 0 || props.step === NUMBER_DIALOGS - 1
+    const isFirstOrLastDialog = props.step === 0 || props.step === LAST_DIALOG
 
-    return !isFirstOrLastDialog && <DinoDialogHeader>{getDialog().title}</DinoDialogHeader>
+    return !isFirstOrLastDialog && <DinoDialogHeader>{getDialog().title || ''}</DinoDialogHeader>
   }
 
   return (
@@ -167,7 +202,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
       header={renderDialogHeader()}
       actions={
         <DinoStepper
-          steps={NUMBER_DIALOGS}
+          steps={LAST_DIALOG}
           activeStep={props.step}
           onNext={props.onNextStep}
           onBack={props.onBackStep}

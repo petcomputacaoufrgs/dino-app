@@ -2,6 +2,12 @@ import { ChangeEvent } from "react"
 import ColorThemeEnum from "../../../../types/enum/ColorThemeEnum"
 import TreatmentEntity from "../../../../types/treatment/database/TreatmentEntity"
 
+export interface FirstSettingsDialogsProps {
+  id: string,
+	title?: string,
+	component: () => JSX.Element
+}
+
 export default interface FirstSettingsDialogProps {
   step: number,
   onCloseDialogs: () =>  void,

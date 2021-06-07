@@ -31,7 +31,8 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 			contactToDelete: ContactView,
 		): Promise<void> {
 			if (contactToDelete.phones.length > 0) {
-				isStaff ? await EssentialPhoneService.deleteAll(contactToDelete.phones) 
+				isStaff 
+					? await EssentialPhoneService.deleteAll(contactToDelete.phones) 
 					: await PhoneService.deleteAll(contactToDelete.phones)
 			}
 		}

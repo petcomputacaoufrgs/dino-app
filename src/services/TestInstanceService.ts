@@ -1,8 +1,8 @@
-import { HasStaffPowers } from "../context/private_router"
 import EssentialContactEntity from "../types/contact/database/EssentialContactEntity"
 import GlossaryItemEntity from "../types/glossary/database/GlossaryItemEntity"
 import FaqItemEntity from "./../types/faq/database/FaqItemEntity"
 import TreatmentEntity from "./../types/treatment/database/TreatmentEntity"
+import AuthService from "./auth/AuthService"
 import EssentialContactService from "./contact/EssentialContactService"
 import FaqItemService from "./faq/FaqItemService"
 import GlossaryService from "./glossary/GlossaryService"
@@ -12,7 +12,7 @@ class TestInstanceService {
 
 	async loadInstances() {
 
-    const isStaff = HasStaffPowers()
+    const isStaff = await AuthService.hasStaffPowers()
 
     if(isStaff) {
       await this.loadTreatmentInstances()
@@ -74,13 +74,13 @@ class TestInstanceService {
       { 
         title: "[Test] Glossary Title 1",
         text: "[Test] Glossary Text 1",
-        subtitle: "[Test] Glossary subtitle 1",
+        subtitle: "[Test] Glossary sub 1",
         fullText: "[Test] Glossary fullText 1",
       },
       { 
         title: "[Test] Glossary Title 2",
         text: "[Test] Glossary Text 2",
-        subtitle: "[Test] Glossary subtitle 2",
+        subtitle: "[Test] Glossary sub 2",
         fullText: "[Test] Glossary fullText 2",
       },
     ] as GlossaryItemEntity[]

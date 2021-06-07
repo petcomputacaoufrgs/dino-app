@@ -31,7 +31,7 @@ class WebSocketService {
 					const baseUrl = this.getSocketBaseURL(responseData.webSocketToken)
 					this.socket = new SockJS(baseUrl)
 					this.stompClient = Stomp.over(this.socket)
-					//this.muteConnectionLogs()
+					this.muteConnectionLogs()
 					this.stompClient.connect({}, this.subscribe)
 					this.socket.onclose = () => {
 						this.handleWebSocketClosed()

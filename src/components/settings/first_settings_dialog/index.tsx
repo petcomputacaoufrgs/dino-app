@@ -46,12 +46,8 @@ const FirstSettingsDialog: React.FC = () => {
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
-		if (settings?.step !== 4 && parentsAreaPassword !== "") {
-			setParentsAreaPassword("")
-			setConfirmParentsAreaPassword("")
-			setPasswordErrorMessage(undefined)
-		}
-	}, [settings, parentsAreaPassword])
+		setSelectedLanguage(language.data.LANGUAGE_CODE)
+	}, [language])
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -80,22 +76,20 @@ const FirstSettingsDialog: React.FC = () => {
 		let updateSettings = (settings: UserSettingsEntity) => {
 			const colorThemeCode = UserSettingsService.getColorThemeCode(settings)
 			const fontSizeCode = UserSettingsService.getFontSizeCode(settings)
-			const essentialContactGrant = UserSettingsService.getEssentialContactGrant(
-				settings,
-			)
+			const essentialContactGrant = UserSettingsService.getEssentialContactGrant(settings)
+
 			setSelectedColorTheme(colorThemeCode)
 			setSelectedFontSize(fontSizeCode)
 			setSelectedEssentialContactGrant(essentialContactGrant || false)
 			setSettings(settings)
+
 		}
 
 		let updateTreatments = (treatments: TreatmentEntity[]) => {
 			setTreatments(treatments)
 		}
 
-		let finishLoading = () => {
-			setIsLoading(false)
-		}
+		let finishLoading = () => setIsLoading(false)
 
 		UserSettingsService.addUpdateEventListenner(loadData)
 		TreatmentService.addUpdateEventListenner(loadData)
@@ -114,13 +108,7 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}, [isLoading])
 
-	useEffect(() => {
-		setSelectedLanguage(language.data.LANGUAGE_CODE)
-	}, [language])
-
-	const handleCloseDialogs = () => {
-		setStep(-1)
-	}
+	const handleCloseDialogs = () => setStep(-1)
 
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
@@ -147,8 +135,8 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = step === NUMBER_DIALOGS - 1
 			settings.treatmentLocalId = selectedTreatment?.localId
-			settings.step = step
 			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
+			settings.step = step
 
 			await UserSettingsService.save(settings)
 
@@ -172,11 +160,13 @@ const FirstSettingsDialog: React.FC = () => {
 		setStep(step - 1)
 	}
 
-	const handleNextStep = () => {
+	const handleNextStep = async () => {
 		if (settings) {
-			if (isInvalidPassword(settings)) return
-			settings.step += 1
-			UserSettingsService.save(settings)
+			if (isValidPassword(settings)) {
+				if (step === settings.step) 
+					saveSettings()
+				setStep(step + 1)
+			}
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
 			const newEntity: UserSettingsEntity = {
 				language: selectedLanguage,
@@ -185,10 +175,11 @@ const FirstSettingsDialog: React.FC = () => {
 				includeEssentialContact: true,
 				declineGoogleContacts: false,
 				firstSettingsDone: false,
-				step: 1,
+				step: 0,
 			}
 
-			UserSettingsService.save(newEntity)
+			setSettings(newEntity)
+			saveSettings()
 		}
 	}
 
@@ -245,20 +236,19 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}
 
-	const isInvalidPassword = (settings: UserSettingsEntity): boolean => {
-		if (settings.step !== 4) return false
-
-		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+	const isValidPassword = (settings: UserSettingsEntity): boolean => {
+		//TODO: vou mudar isso aqui
+		if (step === 4 && parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
-			return true
+			return false
 		}
 
-		if (parentsAreaPassword !== confirmParentsAreaPassword) {
+		if (step === 4 &&  parentsAreaPassword !== confirmParentsAreaPassword) {
 			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
-			return true
+			return false
 		}
 
-		return false
+		return true
 	}
 
 	const renderSelectTreatmentDialogContent = () => {
@@ -351,6 +341,7 @@ const FirstSettingsDialog: React.FC = () => {
 		)
 	}
 
+	//TODO: traduzir
 	const renderFinalMessageDialog = () => {
 		return (
 			<div className='first_settings__message_dialog'>
@@ -391,10 +382,10 @@ const FirstSettingsDialog: React.FC = () => {
 	const NUMBER_DIALOGS = firstLoginDialogs.length
 
 	const getDialog = () => {
-		if (step < firstLoginDialogs.length) {
+		if (step > -1 && step < NUMBER_DIALOGS) {
 			return firstLoginDialogs[step]
 		}
-		return firstLoginDialogs[firstLoginDialogs.length - 1]
+		return firstLoginDialogs[NUMBER_DIALOGS - 1]
 	}
 
 	const renderDialogHeader = () => {

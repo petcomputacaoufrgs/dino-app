@@ -37,7 +37,7 @@ const Board: React.FC<BoardProps> = ({
             onGameOver()
             setBlocked(true)
         }
-    }, [blocked, score, onGameOver])
+    }, [blocked, score, onGameOver, pieceList.length])
 
     const handleOnClick = async(index: number) => {
         if(!pieceState[index].turned && !blocked) {

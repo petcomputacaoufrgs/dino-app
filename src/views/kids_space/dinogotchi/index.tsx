@@ -76,7 +76,6 @@ const Dinogotchi: React.FC = () => {
 
 	const handleChooseColor = () => {
 		if (kidsSpaceSettings) {
-			console.log("oi")
 			kidsSpaceSettings.color = selectedColor
 			kidsSpaceSettings.firstSettingsDone = true
 			setKidsSpaceSettings(kidsSpaceSettings)

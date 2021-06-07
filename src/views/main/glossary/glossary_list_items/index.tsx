@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Accordion from 'react-bootstrap/Accordion'
 import { useLanguage } from '../../../../context/language'
 import GlossaryItemProps from './props'
-import { IsStaff } from '../../../../context/private_router'
+import { HasStaffPowers } from '../../../../context/private_router'
 import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import GlossaryItemForm from '../glossary_item_form'
@@ -13,7 +13,7 @@ import ListTitle from '../../../../components/list_title'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	const language = useLanguage()
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 
 	const [toEdit, setToEdit] = useState(false)
 	const [toDelete, setToDelete] = useState(false)

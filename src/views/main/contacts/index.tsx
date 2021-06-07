@@ -13,14 +13,14 @@ import ContactView from '../../../types/contact/view/ContactView'
 import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
-import { IsStaff } from '../../../context/private_router'
+import { HasStaffPowers } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
 import ContactViewService from '../../../services/contact/ContactViewService'
 import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Contacts: React.FC = () => {
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 	const language = useLanguage()
 	const [isLoading, setIsLoading] = useState(true)
 	const [contacts, setContacts] = useState<ContactView[]>([])

@@ -7,7 +7,7 @@ import PhoneEntity from '../../../../../types/contact/database/PhoneEntity'
 import TreatmentService from '../../../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import DinoLoader from '../../../../../components/loader'
-import { IsStaff } from '../../../../../context/private_router'
+import { HasStaffPowers } from '../../../../../context/private_router'
 import EssentialContactEntity from '../../../../../types/contact/database/EssentialContactEntity'
 import { LanguageContextType, useLanguage } from '../../../../../context/language'
 import './styles.css'
@@ -109,7 +109,7 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 
 	const isUniversal = Boolean((item.contact as EssentialContactEntity).isUniversal)
 
-	return IsStaff() ? (
+	return HasStaffPowers() ? (
 		<List component='nav'>
 			<SectionTitle language={language} />
 			{ isUniversal ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT)

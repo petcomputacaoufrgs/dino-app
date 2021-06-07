@@ -9,7 +9,7 @@ import ContactView from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
 import ContactService from '../../../../services/contact/ContactService'
-import { IsStaff } from '../../../../context/private_router'
+import { HasStaffPowers } from '../../../../context/private_router'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import ItemListMenu from '../../../../components/item_list_menu'
@@ -24,7 +24,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const language = useLanguage()
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 
 	const handleAcceptDialogAndDeleteItem = async () => {
 		async function deletePhones (

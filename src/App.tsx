@@ -98,7 +98,7 @@ const App: React.FC = () => {
 
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
-            updateUserPermission(hasUserPermission || PermissionEnum.USER)
+      updateUserPermission(hasUserPermission || PermissionEnum.USER)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {

@@ -6,7 +6,7 @@ import OptionsIconButton from '../../../../../components/button/icon_button/opti
 import GlossaryItemEntity from '../../../../../types/glossary/database/GlossaryItemEntity'
 import Accordion from 'react-bootstrap/Accordion'
 import { useLanguage } from '../../../../../context/language'
-import { IsStaff } from '../../../../../context/private_router'
+import { HasStaffPowers } from '../../../../../context/private_router'
 import './styles.css'
 
 interface GlossaryListItemProps {
@@ -17,7 +17,7 @@ interface GlossaryListItemProps {
   const GlossaryListItem: React.FC<GlossaryListItemProps> = ({ item, onClickMenu }) => {
 
     const language = useLanguage()	
-    const isStaff = IsStaff()
+    const isStaff = HasStaffPowers()
 		const eventKey = String(item.localId)
 
 		return (

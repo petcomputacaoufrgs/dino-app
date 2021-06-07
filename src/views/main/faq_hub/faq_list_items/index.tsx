@@ -3,7 +3,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import ListTitle from '../../../../components/list_title'
 import AddButton from '../../../../components/button/circular_button/add_button'
 import FaqItemForm from '../faq_item_form'
-import { IsStaff } from '../../../../context/private_router'
+import { HasStaffPowers } from '../../../../context/private_router'
 import { useLanguage } from '../../../../context/language'
 import FaqItemEntity from '../../../../types/faq/database/FaqItemEntity'
 import ItemListMenu from '../../../../components/item_list_menu'
@@ -14,7 +14,7 @@ import FaqView from '../../../../types/faq/view/FaqView'
 
 const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	const language = useLanguage()
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 
 	const [toAdd, setToAdd] = useState(false)
 	const [toEdit, setToEdit] = useState(false)

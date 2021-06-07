@@ -6,7 +6,7 @@ import { useLanguage } from '../../../../context/language'
 import ArrayUtils from '../../../../utils/ArrayUtils'
 import TreatmentQuestionItems from '../treatment_question_list_items'
 import { useParams } from 'react-router-dom'
-import { IsStaff } from '../../../../context/private_router'
+import { HasStaffPowers } from '../../../../context/private_router'
 import { useStaffData } from '../../../../context/staff_data'
 import FaqItemService from '../../../../services/faq/FaqItemService'
 import TreatmentQuestionService from '../../../../services/treatment/TreatmentQuestionService'
@@ -22,7 +22,7 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 
 	const { localId, tab } = useParams<{ localId?: string, tab?: string }>()
 
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 	const staffData = useStaffData()
 
 	const [isLoading, setIsLoading] = useState(true)

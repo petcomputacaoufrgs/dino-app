@@ -1,3 +1,4 @@
+import { HasStaffPowers } from "../context/private_router"
 import EssentialContactEntity from "../types/contact/database/EssentialContactEntity"
 import GlossaryItemEntity from "../types/glossary/database/GlossaryItemEntity"
 import FaqItemEntity from "./../types/faq/database/FaqItemEntity"
@@ -10,10 +11,15 @@ import TreatmentService from "./treatment/TreatmentService"
 class TestInstanceService {
 
 	async loadInstances() {
-    await this.loadTreatmentInstances()
-    await this.loadFaqItemInstances()
-    await this.loadEssentialContacts()
-    await this.loadGlossary()
+
+    const isStaff = HasStaffPowers()
+
+    if(isStaff) {
+      await this.loadTreatmentInstances()
+      await this.loadFaqItemInstances()
+      await this.loadEssentialContacts()
+      await this.loadGlossary()
+    }
   }
 
   private async loadTreatmentInstances() {
@@ -51,13 +57,11 @@ class TestInstanceService {
       { 
         name: "[Test] EC Name 1",
         description: "",
-        color: undefined,
         isUniversal: 1
       },
       { 
         name: "[Test] EC Name 2",
         description: "",
-        color: undefined,
         isUniversal: 1
       },
     ] as EssentialContactEntity[]

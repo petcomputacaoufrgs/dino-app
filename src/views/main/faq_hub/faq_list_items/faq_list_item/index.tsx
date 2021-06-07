@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import FaqItemEntity from '../../../../../types/faq/database/FaqItemEntity'
-import { IsStaff } from '../../../../../context/private_router'
+import { HasStaffPowers } from '../../../../../context/private_router'
 
 interface FaqItemProps { 
   item: FaqItemEntity, 
@@ -12,7 +12,7 @@ interface FaqItemProps {
 
 const FaqItem: React.FC<FaqItemProps> = ({ item, onClickMenu }) => {
   	
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 
   return (
     <Card className='faq__card'>

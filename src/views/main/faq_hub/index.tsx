@@ -7,7 +7,7 @@ import DinoLoader from '../../../components/loader'
 import NoTreatmentSelected from './no_treatment_selected'
 import FaqView from '../../../types/faq/view/FaqView'
 import { useParams } from 'react-router-dom'
-import { IsStaff } from '../../../context/private_router'
+import { HasStaffPowers } from '../../../context/private_router'
 import Faq from './faq'
 import Utils from '../../../utils/Utils'
 import './styles.css'
@@ -17,7 +17,7 @@ import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
 const FaqHub: React.FC = () => {
 	const { localId } = useParams<{ localId?: string }>()
 	
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [faqView, setFaqView] = useState<FaqView>()

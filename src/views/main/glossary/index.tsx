@@ -5,7 +5,7 @@ import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEnt
 import DinoLoader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
 import GlossaryService from '../../../services/glossary/GlossaryService'
-import { IsStaff } from '../../../context/private_router'
+import { HasStaffPowers } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
 import GlossaryItemForm from './glossary_item_form'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -13,7 +13,7 @@ import './styles.css'
 
 const Glossary: React.FC = () => {
 
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 	const language = useLanguage()
 
 	const [glossary, setGlossary] = useState<GlossaryItemEntity[]>([])

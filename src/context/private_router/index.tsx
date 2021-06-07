@@ -39,7 +39,7 @@ const PrivateRouterProvider: React.FC<PrivateRouterContextType> = props => {
 
 export const usePrivateRouter = () => useContext(PrivateRouterContext)
 
-export const IsStaff = (): boolean => { 
+export const HasStaffPowers = (): boolean => { 
 	const permission = usePrivateRouter().userPermission 
 	return permission === PermissionEnum.STAFF || permission === PermissionEnum.ADMIN 
 } 

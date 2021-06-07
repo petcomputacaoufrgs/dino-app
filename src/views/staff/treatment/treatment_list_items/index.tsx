@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { List } from '@material-ui/core'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
-import { IsStaff } from '../../../../context/private_router'
+import { HasStaffPowers } from '../../../../context/private_router'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
 import ItemListMenu from '../../../../components/item_list_menu'
@@ -16,7 +16,7 @@ interface TreatmentItemsProps {
 
 const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 	const language = useLanguage()
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 
 	const [selectedItem, setSelectedItem] = useState<TreatmentEntity>()
 	const [toEdit, setToEdit] = useState(false)

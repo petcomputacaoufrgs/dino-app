@@ -7,7 +7,7 @@ import { useLanguage } from '../../../../../context/language'
 import '../../styles.css'
 import './styles.css'
 import ColorConstants from '../../../../../constants/app/ColorConstants'
-import { IsStaff } from '../../../../../context/private_router'
+import { HasStaffPowers } from '../../../../../context/private_router'
 
 const AddContactDialogHeader = (
 	props: ContactFormDialogHeaderProps,
@@ -21,7 +21,7 @@ const AddContactDialogHeader = (
 		props.setContact({ ...props.contact, color })
 	}
 
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 
 	return (
 		<CardHeader

@@ -14,7 +14,7 @@ import EssentialContactService from '../../../../services/contact/EssentialConta
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import DinoHr from '../../../../components/dino_hr'
-import { IsStaff } from '../../../../context/private_router'
+import { HasStaffPowers } from '../../../../context/private_router'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import EssentialPhoneEntity from '../../../../types/contact/database/EssentialPhoneEntity'
 import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
@@ -37,7 +37,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 		item,
 		items
 	}) => {
-	const isStaff = IsStaff()
+	const isStaff = HasStaffPowers()
 	const language = useLanguage()
 	const [contact, setContact] = useState(getContact(item))
 	const [contactPhones, setContactPhones] = useState(getPhones(item))

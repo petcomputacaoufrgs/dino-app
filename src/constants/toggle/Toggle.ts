@@ -1,4 +1,4 @@
 export const toggle = {
-	showFirstLoginDialog: true,
+	showFirstLoginDialog: false,
 	loadTestInstances: true,
 }

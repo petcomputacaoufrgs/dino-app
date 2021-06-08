@@ -202,7 +202,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
       header={renderDialogHeader()}
       actions={
         <DinoStepper
-          steps={LAST_DIALOG}
+          steps={LAST_DIALOG + 1}
           activeStep={props.step}
           onNext={props.onNextStep}
           onBack={props.onBackStep}

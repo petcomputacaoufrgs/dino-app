@@ -28,6 +28,10 @@ class ArrayUtils {
 		return newList.concat(...lists)
 	}
 
+	randomItem = <T>(list: T[]): T => {
+		return list[Math.floor(Math.random() * list.length)]
+	}
+
 	equal = <T>(list1: T[], list2: T[]): boolean =>
 		list1.length === list2.length &&
 		list1.every((value, index) => {

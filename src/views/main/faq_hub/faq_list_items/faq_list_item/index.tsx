@@ -14,15 +14,17 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, onClickMenu }) => {
   	
 	const isStaff = HasStaffPowers()
 
+  const eventKey = String(item.localId)
+
   return (
     <Card className='faq__card'>
-      <Accordion.Toggle as={Card.Header} eventKey={item.question}>
+      <Accordion.Toggle as={Card.Header} eventKey={eventKey}>
         <Card.Title className='faq__card_title dino__flex_row dino__text__wrap'>
           {item.question}
           {isStaff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
         </Card.Title>
       </Accordion.Toggle>
-      <Accordion.Collapse eventKey={item.question}>
+      <Accordion.Collapse eventKey={eventKey}>
         <Card.Body>
           <Card.Text>{item.answer}</Card.Text>
         </Card.Body>

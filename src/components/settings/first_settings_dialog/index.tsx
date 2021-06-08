@@ -6,10 +6,10 @@ import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
-import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import './styles.css'
 import HashUtils from '../../../utils/HashUtils'
 import FirstSettingsDialog from './dialogs'
+import DataConstants from '../../../constants/app_data/DataConstants'
 
 const FirstSettings: React.FC = () => {
 
@@ -164,7 +164,7 @@ const FirstSettings: React.FC = () => {
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setParentsAreaPassword(event.target.value)
 		}
 	}
@@ -172,7 +172,7 @@ const FirstSettings: React.FC = () => {
 	const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 	
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setConfirmParentsAreaPassword(event.target.value)
 		}
 	}

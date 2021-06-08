@@ -11,7 +11,7 @@ import { useLanguage } from '../../../../context/language'
 import FirstSettingsDialogProps from './props'
 import { FirstSettingsDialogsProps } from './props'
 import { HasStaffPowers } from '../../../../context/private_router'
-import UserSettingsConstants from '../../../../constants/user/UserSettingsConstants'
+import DataConstants from '../../../../constants/app_data/DataConstants'
 
 const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
   
@@ -191,7 +191,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
 
   const isValidPassword = () => {
 
-		if (props.parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+		if (props.parentsAreaPassword.length < DataConstants.USER_PASSWORD.MIN) {
 			props.onPasswordErrorMessageChange(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
       return false
 		}

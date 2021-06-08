@@ -35,9 +35,9 @@ import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
-import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import HashUtils from '../../../utils/HashUtils'
 import { HasStaffPowers } from '../../../context/private_router'
+import DataConstants from '../../../constants/app_data/DataConstants'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
@@ -224,7 +224,8 @@ const Settings: React.FC = () => {
 			return
 		}
 
-		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
+		//TODO falar vom a vic sobre essa mudança
+		if (parentsAreaPassword.length < DataConstants.USER_PASSWORD.MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
 			return
 		}
@@ -317,7 +318,7 @@ const Settings: React.FC = () => {
 	const handleChangeOldPassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setOldPassword(event.target.value)
 		}
 	}
@@ -325,7 +326,7 @@ const Settings: React.FC = () => {
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setParentsAreaPassword(event.target.value)
 		}
 	}
@@ -333,7 +334,7 @@ const Settings: React.FC = () => {
 	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setConfirmParentsAreaPassword(event.target.value)
 		}
 	}
@@ -347,7 +348,7 @@ const Settings: React.FC = () => {
 		</div>
 	)
 
-	//TODO refatorar!
+	//TODO refatorar! necessário modularização. talvez implementar com o DinoDialog já pronto
 	const renderDialogs = (): JSX.Element => (
 		<>
 			<GoogleGrantDialog
@@ -389,7 +390,7 @@ const Settings: React.FC = () => {
 							)}
 						</Button>
 					</div>
-				</Loader>
+				</Loader> 
 			</Dialog>
 			<Dialog
 				className='settings__change_password_dialog'

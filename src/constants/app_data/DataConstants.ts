@@ -21,16 +21,19 @@ class DataConstants {
 	static FAQ_USER_QUESTION = { MAX : 200, REQUIRED: true } as const
 
 	// *-------------* GLOSSARY *-------------*
-
+	
 	static GLOSSARY_TITLE = { MAX : 50, REQUIRED: true } as const
 	static GLOSSARY_SUBTITLE = { MAX : 20, REQUIRED: false } as const
 	static GLOSSARY_TEXT = { MAX : 1000, REQUIRED: false } as const
 	static GLOSSARY_FULLTEXT = { MAX : 10000, REQUIRED: false } as const
-
+	
 	// *-------------* STAFF *-------------*
-
+	
 	static STAFF_EMAIL = { MAX : 100, REQUIRED: true } as const
+	
+	// *-------------* USER *-------------*
 
+	static USER_PASSWORD = { MAX : 24, MIN: 8, REQUIRED: true } as const
 }
 
 export default DataConstants

@@ -9,10 +9,11 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import './styles.css'
 import HashUtils from '../../../utils/HashUtils'
-import FirstSettingsDialog, { firstSettingsDialogs } from './dialogs'
+import FirstSettingsDialog from './dialogs'
 
 const FirstSettings: React.FC = () => {
 
+	let done = false
 	const language = useLanguage()
 
 	const [step, setStep] = useState(0)
@@ -106,15 +107,13 @@ const FirstSettings: React.FC = () => {
 
 	const saveSettings = async () => {
 
-		if (settings) {	
-			const LAST_DIALOG = firstSettingsDialogs.length - 1
-			
+		if (settings) {
 			settings.language = selectedLanguage
 			settings.colorTheme = selectedColorTheme
 			settings.fontSize = selectedFontSize
 			settings.includeEssentialContact = selectedEssentialContactGrant
 			settings.declineGoogleContacts = false
-			settings.firstSettingsDone = step === LAST_DIALOG
+			settings.firstSettingsDone = done
 			settings.treatmentLocalId = selectedTreatment?.localId
 			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 			settings.step = step
@@ -143,11 +142,9 @@ const FirstSettings: React.FC = () => {
 	
 	const handleNextStep = async () => {
 		if (settings) {
-			if (isValidPassword(settings)) {
-				if (step === settings.step) 
-					saveSettings()
-				setStep(step + 1)
-			}
+			if (step === settings.step) 
+				saveSettings()
+			setStep(step + 1)
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
 			const newEntity: UserSettingsEntity = {
 				language: selectedLanguage,
@@ -172,12 +169,16 @@ const FirstSettings: React.FC = () => {
 		}
 	}
 	
-	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 	
 		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
 			setConfirmParentsAreaPassword(event.target.value)
 		}
+	}
+
+	const handlePasswordErrorMessageChange = (value?: string) => {
+		setPasswordErrorMessage(value)
 	}
 	
 	const handleEssentialContactGrantChange = (
@@ -193,7 +194,6 @@ const FirstSettings: React.FC = () => {
 			UserSettingsService.save(settings)
 		}
 	}
-	
 	
 	const handleSelectedTreatmentChange = (
 		newSelectedTreatment: TreatmentEntity,
@@ -233,22 +233,7 @@ const FirstSettings: React.FC = () => {
 		}
 	}
 	
-	const isValidPassword = (settings: UserSettingsEntity): boolean => {
-
-		const index = firstSettingsDialogs.findIndex(d => d.id === "PASSWORD")
-
-		if (step === index && parentsAreaPassword.length < UserSettingsConstants.PASSWORD_MIN) {
-			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
-			return false
-		}
-	
-		if (step === index && parentsAreaPassword !== confirmParentsAreaPassword) {
-			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
-			return false
-		}
-	
-		return true
-	}
+	const handleDoneChange = (value: boolean) => done = value
 
 	return (
 		<>
@@ -274,8 +259,10 @@ const FirstSettings: React.FC = () => {
 					parentsAreaPassword={parentsAreaPassword}
 					onChangePassword={handleChangePassword}
 					confirmParentsAreaPassword={confirmParentsAreaPassword}
-					onChangeConfirmPassword={handleChangeConfirmPassword}
+					onChangeConfirmPassword={handleConfirmPasswordChange}
 					passwordErrorMessage={passwordErrorMessage}
+					onPasswordErrorMessageChange={handlePasswordErrorMessageChange}
+					onDoneChange={handleDoneChange}
 				/>
 			)}
 		</>

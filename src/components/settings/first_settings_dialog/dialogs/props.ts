@@ -35,5 +35,7 @@ export default interface FirstSettingsDialogProps {
   confirmParentsAreaPassword: string,
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void,
   passwordErrorMessage?: string,
+  onPasswordErrorMessageChange: (value?: string) => void,
+  onDoneChange: (value: boolean) => void
 }
 

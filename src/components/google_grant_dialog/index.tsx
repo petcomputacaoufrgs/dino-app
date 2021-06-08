@@ -12,10 +12,12 @@ import UserService from '../../services/user/UserService'
 import DinoLoader from '../loader'
 import ConnectionService from '../../services/connection/ConnectionService'
 import './styles.css'
+import { HasStaffPowers } from '../../context/private_router'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 	({ scopes, title, text, open, onDecline, onAccept, onClose }, ref) => {
 		const alert = useAlert()
+		const isStaff = HasStaffPowers()
 
 		const [isLoading, setIsLoading] = useState(true)
 		const [user, setUser] = useState<UserEntity | undefined>()
@@ -145,7 +147,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 				maxWidth='xs'
 				onClose={onClose}
 				TransitionComponent={TransitionSlide}
-				open={open}
+				open={open && !isStaff}
 			>
 				<DinoLoader isLoading={isLoading}>
 					{isConnected 

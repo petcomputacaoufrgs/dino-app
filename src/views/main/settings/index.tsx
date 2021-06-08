@@ -23,6 +23,7 @@ import FontSizeEnum from '../../../types/enum/FontSizeEnum'
 import ColorThemeEnum from '../../../types/enum/ColorThemeEnum'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
+//TODO ver aqui
 //import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import TransitionSlide from '../../../components/slide_transition'
@@ -36,12 +37,14 @@ import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
 import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import HashUtils from '../../../utils/HashUtils'
+import { HasStaffPowers } from '../../../context/private_router'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
 const Settings: React.FC = () => {
 	const alert = useAlert()
 	const language = useLanguage()
+	const isStaff = 	HasStaffPowers()
 
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
@@ -344,6 +347,7 @@ const Settings: React.FC = () => {
 		</div>
 	)
 
+	//TODO refatorar!
 	const renderDialogs = (): JSX.Element => (
 		<>
 			<GoogleGrantDialog
@@ -472,38 +476,42 @@ const Settings: React.FC = () => {
 						setColorTheme={setSelectedColorTheme}
 					/>
 				</FormControl>
-				<FormControl className='settings__form'>
-					<SelectTreatment
-						availableTreatments={treatments}
-						setTreatment={setSelectedTreatment}
-						treatment={selectedTreatment}
-					/>
-				</FormControl>
-				<DinoHr invisible />
-				<FormControl className='settings__form'>
-					<DinoSwitch
-						selected={syncGoogleContacts}
-						setSelected={handleGoogleContactSwitchChanged}
-						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
-					/>
-				</FormControl>
-				<DinoHr />
-				<FormControl className='settings__form'>
-					<DinoSwitch
-						selected={selectedEssentialContactGrant}
-						setSelected={setSelectedEssentialContactGrant}
-						label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-					/>
-				</FormControl>
-				<DinoHr />
-				<FormControl>
-					<TextButton
-						onClick={handleChangePasswordClick}
-						className='settings__form__change_password'
-					>
-						{language.data.CHANGE_PASSWORD}
-					</TextButton>
-				</FormControl>
+				{!isStaff && (
+				<>
+					<FormControl className='settings__form'>
+						<SelectTreatment
+							availableTreatments={treatments}
+							setTreatment={setSelectedTreatment}
+							treatment={selectedTreatment}
+						/>
+					</FormControl>
+					<DinoHr invisible />
+					<FormControl className='settings__form'>
+						<DinoSwitch
+							selected={syncGoogleContacts}
+							setSelected={handleGoogleContactSwitchChanged}
+							label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
+						/>
+					</FormControl>
+					<DinoHr />
+					<FormControl className='settings__form'>
+						<DinoSwitch
+							selected={selectedEssentialContactGrant}
+							setSelected={setSelectedEssentialContactGrant}
+							label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
+						/>
+					</FormControl>
+					<DinoHr />
+					<FormControl>
+						<TextButton
+							onClick={handleChangePasswordClick}
+							className='settings__form__change_password'
+						>
+							{language.data.CHANGE_PASSWORD}
+						</TextButton>
+					</FormControl>
+				</>
+				)}
 				<DinoHr />	
 				<FormControl>
 					<TextButton

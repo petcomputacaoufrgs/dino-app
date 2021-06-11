@@ -26,6 +26,7 @@ class APIHTTPPathsConstants {
 	GRANT_GOOGLE = `${this.PRIVATE_AUTH}google/grant/`
 	REFRESH_AUTH_GOOGLE = `${this.PRIVATE_AUTH}google/refresh/`
 	WEB_SOCKET_AUTH = `${this.PRIVATE_AUTH}web_socket/`
+	DELETE_ACCOUNT = `${this.PRIVATE_AUTH}delete_account/`
 	//LOGOUT = `${this.PRIVATE_AUTH}logout/`
 
 	/* admin ------------------------------------------------------------------------ */
@@ -39,7 +40,6 @@ class APIHTTPPathsConstants {
 	PHONE = `${this.ROOT}${this.ROUTE_USER}phone/`
 	NOTE = `${this.ROOT}${this.ROUTE_USER}note/`
 	// TODO n esta de acordo na api
-	DELETE_ACCOUNT = `${this.ROUTE_USER}delete_account/`
 
 	/* no route ------------------------------------------------------------------------ */
 	

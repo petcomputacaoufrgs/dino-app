@@ -23,9 +23,7 @@ const FirstSettings: React.FC = () => {
 	const [selectedLanguage, setSelectedLanguage] = useState(
 		language.data.LANGUAGE_CODE,
 	)
-	const [selectedTreatment, setSelectedTreatment] = useState<
-		TreatmentEntity | undefined
-	>(undefined)
+	const [selectedTreatment, setSelectedTreatment] = useState<TreatmentEntity>()
 	const [selectedFontSize, setSelectedFontSize] = useState(
 		UserSettingsService.getDefaultFontSizeCode(),
 	)
@@ -77,7 +75,6 @@ const FirstSettings: React.FC = () => {
 			setSelectedFontSize(fontSizeCode)
 			setSelectedEssentialContactGrant(essentialContactGrant || false)
 			setSettings(settings)
-
 		}
 
 		let updateTreatments = (treatments: TreatmentEntity[]) => {

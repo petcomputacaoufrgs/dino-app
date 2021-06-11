@@ -1,27 +1,28 @@
-import ColorConstants from "../constants/app/ColorConstants"
-import DataConstants from "../constants/app_data/DataConstants"
-import ContactEntity from "../types/contact/database/ContactEntity"
-import EssentialContactEntity from "../types/contact/database/EssentialContactEntity"
-import EssentialPhoneEntity from "../types/contact/database/EssentialPhoneEntity"
-import PhoneEntity from "../types/contact/database/PhoneEntity"
-import TreatmentQuestionEntity from "../types/faq/database/TreatmentQuestionEntity"
-import GlossaryItemEntity from "../types/glossary/database/GlossaryItemEntity"
-import NoteColumnEntity from "../types/note/database/NoteColumnEntity"
-import NoteEntity from "../types/note/database/NoteEntity"
-import ArrayUtils from "../utils/ArrayUtils"
-import FaqItemEntity from "./../types/faq/database/FaqItemEntity"
-import TreatmentEntity from "./../types/treatment/database/TreatmentEntity"
-import AuthService from "./auth/AuthService"
-import ContactService from "./contact/ContactService"
-import EssentialContactService from "./contact/EssentialContactService"
-import EssentialPhoneService from "./contact/EssentialPhoneService"
-import PhoneService from "./contact/PhoneService"
-import FaqItemService from "./faq/FaqItemService"
-import GlossaryService from "./glossary/GlossaryService"
-import NoteColumnService from "./note/NoteColumnService"
-import NoteService from "./note/NoteService"
-import TreatmentQuestionService from "./treatment/TreatmentQuestionService"
-import TreatmentService from "./treatment/TreatmentService"
+import ColorConstants from "../../constants/app/ColorConstants"
+import DataConstants from "../../constants/app_data/DataConstants"
+import ContactEntity from "../../types/contact/database/ContactEntity"
+import EssentialContactEntity from "../../types/contact/database/EssentialContactEntity"
+import EssentialPhoneEntity from "../../types/contact/database/EssentialPhoneEntity"
+import PhoneEntity from "../../types/contact/database/PhoneEntity"
+import TreatmentQuestionEntity from "../../types/faq/database/TreatmentQuestionEntity"
+import GlossaryItemEntity from "../../types/glossary/database/GlossaryItemEntity"
+import NoteColumnEntity from "../../types/note/database/NoteColumnEntity"
+import NoteEntity from "../../types/note/database/NoteEntity"
+import ArrayUtils from "../../utils/ArrayUtils"
+import FaqItemEntity from "../../types/faq/database/FaqItemEntity"
+import TreatmentEntity from "../../types/treatment/database/TreatmentEntity"
+import AuthService from "../auth/AuthService"
+import ContactService from "../contact/ContactService"
+import EssentialContactService from "../contact/EssentialContactService"
+import EssentialPhoneService from "../contact/EssentialPhoneService"
+import PhoneService from "../contact/PhoneService"
+import FaqItemService from "../faq/FaqItemService"
+import GlossaryService from "../glossary/GlossaryService"
+import NoteColumnService from "../note/NoteColumnService"
+import NoteService from "../note/NoteService"
+import TreatmentQuestionService from "../treatment/TreatmentQuestionService"
+import TreatmentService from "../treatment/TreatmentService"
+import data from './glossary.json'
 
 class TestInstanceService {
 
@@ -106,14 +107,14 @@ class TestInstanceService {
   private async loadEssentialContacts() {
 
     const getRandomTreatments = () => {
-      const response = []
+      const response = new Set<number>() 
       const numberOfTreatments = Math.ceil(Math.random() * 3)
       for (let n = 0; n < numberOfTreatments; n++) {
         const randomTreatment = ArrayUtils.randomItem(treatments)
         if(randomTreatment.localId)
-          response.push(randomTreatment.localId)
+          response.add(randomTreatment.localId)
       }
-      return response
+      return Array.from(response)
     }
 
     const instancesUniversal: EssentialContactEntity[] = this.contactInstances.map(c => {
@@ -121,8 +122,6 @@ class TestInstanceService {
       ec.isUniversal = 1
       return ec
     })
-
-    console.log(instancesUniversal)
 
     await EssentialContactService.saveAll(instancesUniversal)
 
@@ -134,8 +133,6 @@ class TestInstanceService {
         ec.treatmentLocalIds = getRandomTreatments()
         return ec
     }) 
-
-    console.log(instancesNonUniversal)
 
     await EssentialContactService.saveAll(instancesNonUniversal)
   }
@@ -155,20 +152,27 @@ class TestInstanceService {
   }
 
   private async loadGlossary() {
-    const instances = [
-      { 
-        title: "[Test] Glossary Title 1",
-        text: "[Test] Glossary Text 1",
-        subtitle: "[Test] Subtitle 1",
-        fullText: "[Test] Glossary fullText 1",
-      },
-      { 
-        title: "[Test] Glossary Title 2",
-        text: "[Test] Glossary Text 2",
-        subtitle: "[Test] Subtitle 2",
-        fullText: "[Test] Glossary fullText 2",
-      },
-    ] as GlossaryItemEntity[]
+
+    let instances: GlossaryItemEntity[] = []
+
+    if(data) {
+      instances = data.itemList
+    } else {
+      instances = [
+        { 
+          title: "[Test] Glossary Title 1",
+          text: "[Test] Glossary Text 1",
+          subtitle: "[Test] Subtitle 1",
+          fullText: "[Test] Glossary fullText 1",
+        },
+        { 
+          title: "[Test] Glossary Title 2",
+          text: "[Test] Glossary Text 2",
+          subtitle: "[Test] Subtitle 2",
+          fullText: "[Test] Glossary fullText 2",
+        },
+      ] as GlossaryItemEntity[]
+    }
 
     await GlossaryService.saveAll(instances)
   }

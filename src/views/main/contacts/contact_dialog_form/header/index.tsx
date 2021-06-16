@@ -8,6 +8,7 @@ import '../../styles.css'
 import './styles.css'
 import ColorConstants from '../../../../../constants/app/ColorConstants'
 import { HasStaffPowers } from '../../../../../context/private_router'
+import { renderIcon } from '../..'
 
 const AddContactDialogHeader = (
 	props: ContactFormDialogHeaderProps,
@@ -30,7 +31,7 @@ const AddContactDialogHeader = (
 					aria-label={language.data.AVATAR_ALT}
 					className={`avatar__color-${props.contact.color}`}
 				>
-					{props.contact.name ? props.contact.name[0].toUpperCase() : '?'}
+					{renderIcon(props.contact)}
 				</Avatar>
 			}
 			action={

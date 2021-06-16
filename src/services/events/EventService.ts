@@ -69,7 +69,7 @@ class EventService {
 		const isDinoConnected = await ConnectionService.isDinoConnected()
 		const isAuthenticated = await AuthService.isAuthenticated()
 		if (isDinoConnected && isAuthenticated) {
-			const success = WebSocketService.connect()
+			const success = await WebSocketService.connect()
 			if (success) {
 				SyncService.sync()
 			}

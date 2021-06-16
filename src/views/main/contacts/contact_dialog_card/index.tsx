@@ -4,7 +4,7 @@ import ContactCardProps from './props'
 import ContactCardHeader from './header'
 import ContactCardContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import ItemListMenu from '../../../../components/item_list_menu'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
 
 const ContactCard = ({ item, dialogOpen, onClose, onEdit, onDelete }: ContactCardProps) => {

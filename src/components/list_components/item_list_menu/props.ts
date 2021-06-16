@@ -1,4 +1,4 @@
-import ContactView from '../../types/contact/view/ContactView'
+import ContactView from '../../../types/contact/view/ContactView'
 
 export default interface ItemListMenuProps {
 	anchor: HTMLElement | null

@@ -9,7 +9,7 @@ import { useLanguage } from '../../../context/language'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
-import ContactView from '../../../types/contact/view/ContactView'
+import ContactView, { ContactType } from '../../../types/contact/view/ContactView'
 import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
@@ -18,6 +18,24 @@ import AddButton from '../../../components/button/circular_button/add_button'
 import ContactViewService from '../../../services/contact/ContactViewService'
 import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Star, Public } from '@material-ui/icons'
+import ContactEntity from '../../../types/contact/database/ContactEntity'
+import EssentialContactEntity from '../../../types/contact/database/EssentialContactEntity'
+import Utils from '../../../utils/Utils'
+
+export const renderIcon = (contact: ContactType) => {
+	const cameFromEssential = Utils.isNotEmpty((contact as ContactEntity).localEssentialContactId)
+	const isUniversalEssential = Boolean((contact as EssentialContactEntity).isUniversal)
+
+	if(cameFromEssential)
+		return <Star /> 
+	if(isUniversalEssential) 
+		return <Public /> 
+	if(contact.name)
+		return contact.name[0].toUpperCase()
+		
+	return '?'	
+}
 
 const Contacts: React.FC = () => {
 	const isStaff = HasStaffPowers()

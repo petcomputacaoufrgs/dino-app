@@ -19,9 +19,15 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 	margin-left: 0;
 }
 
+body .colorDefault .MuiSvgIcon-root {
+	/* fill: var(--contrast-color); */
+	fill: #fafafa;
+}
+
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
+	/* fill: var(--contrast-color); */
 	fill: var(--contrast-color);
 }
 

@@ -4,14 +4,17 @@ import OptionsIconButton from '../../../../components/button/icon_button/options
 import { useLanguage } from '../../../../context/language'
 import AvatarIcon from '@material-ui/icons/QuestionAnswer'
 import MuiSearchBar from '../../../../components/mui_search_bar'
-import ListTitle from '../../../../components/list_title'
+import ListTitle from '../../../../components/list_components/list_title'
 import QuestionDialogForm from '../question_dialog_form'
 import { useTreatmentView } from '../../../../context/staff_data'
 import { useParams } from 'react-router-dom'
-import ItemListMenu from '../../../../components/item_list_menu'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import TreatmentAnswerDialog from './answer_dialog'
 import TreatmentQuestionEntity from '../../../../types/faq/database/TreatmentQuestionEntity'
 import TreatmentQuestionService from '../../../../services/treatment/TreatmentQuestionService'
+import TreatmentView from '../../../../types/faq/view/TreatmentView'
+import ArrayUtils from '../../../../utils/ArrayUtils'
+import NoItemsList from '../../../../components/list_components/no_items_list'
 
 const TreatmentQuestionItems: React.FC = () => {
   //não encontrava o localId
@@ -55,6 +58,32 @@ const TreatmentQuestionItems: React.FC = () => {
     setAnchorEl(null)
   }
 
+  const renderTreatmentQuestions = (treatmentView: TreatmentView) => {
+    if(ArrayUtils.isEmpty(treatmentView.questions)) {
+      return <NoItemsList />
+    }
+    return (treatmentView.questions!.map((item, index) =>
+      <div key={index}>
+        <CardHeader
+          avatar={<Avatar><AvatarIcon /></Avatar>}
+          action={
+            <OptionsIconButton
+              dark
+              onClick={(event) => handleShowItemMenu(event, item)}
+            />
+          }
+          title={treatmentView.treatment.name}
+          subheader={item.lastUpdate?.toDateString()}
+        />
+        <CardContent>
+          <ListItem divider>
+            <ListItemText primary={item.question} />
+          </ListItem>
+        </CardContent>
+      </div>
+    ))
+  }
+
   return <>
     <MuiSearchBar
       value={searchTerm}
@@ -75,26 +104,7 @@ const TreatmentQuestionItems: React.FC = () => {
             onClose={handleCloseAnswerDialog}
           />
         }
-        {treatmentView.questions?.map((item, index) =>
-          <div key={index}>
-            <CardHeader
-              avatar={<Avatar><AvatarIcon /></Avatar>}
-              action={
-                <OptionsIconButton
-                  dark
-                  onClick={(event) => handleShowItemMenu(event, item)}
-                />
-              }
-              title={treatmentView.treatment.name}
-              subheader={item.lastUpdate?.toDateString()}
-            />
-            <CardContent>
-              <ListItem divider>
-                <ListItemText primary={item.question} />
-              </ListItem>
-            </CardContent>
-          </div>
-        )}
+        {renderTreatmentQuestions(treatmentView)}
         <ItemListMenu
           anchor={anchorEl}
           setAnchor={setAnchorEl}

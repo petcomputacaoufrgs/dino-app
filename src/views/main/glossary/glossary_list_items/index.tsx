@@ -8,15 +8,15 @@ import AgreementDialog from '../../../../components/agreement_dialog'
 import GlossaryItemForm from '../glossary_item_form'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
 import GlossaryListItem from './glossary_list_item'
-import ItemListMenu from '../../../../components/item_list_menu'
-import ListTitle from '../../../../components/list_title'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
+import ListTitle from '../../../../components/list_components/list_title'
+import CRUD from '../../../../types/enum/CRUDEnum'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	const language = useLanguage()
 	const isStaff = HasStaffPowers()
 
-	const [toEdit, setToEdit] = useState(false)
-	const [toDelete, setToDelete] = useState(false)
+	const [toAction, setToAction] = useState(CRUD.NOP)
 	const [selectedItem, setSelectedItem] = useState<GlossaryItemEntity>()
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -26,9 +26,9 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
   }
 
 	const handleDelete = () => {
-		if(toDelete && selectedItem) {
+		if(toAction === CRUD.DELETE && selectedItem) {
 			GlossaryService.delete(selectedItem)
-			setToDelete(false)
+			setToAction(CRUD.NOP)
 			setSelectedItem(undefined)
 		}
 	}
@@ -48,21 +48,21 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 			{ isStaff && (
 				<>
 					<GlossaryItemForm
-						open={toEdit}
-						handleClose={() => setToEdit(false)}
+						open={toAction === CRUD.UPDATE}
+						handleClose={() => setToAction(CRUD.NOP)}
 						item={selectedItem}
 					/>
 					<AgreementDialog
-						open={toDelete}
+						open={toAction === CRUD.DELETE}
 						question={language.data.deleteItemText(language.data.GLOSSARY_ITEM)}
 						onAgree={handleDelete}
-						onDisagree={() => setToDelete(false)}
+						onDisagree={() => setToAction(CRUD.NOP)}
 					/>
 					<ItemListMenu
 						anchor={anchorEl}
 						setAnchor={setAnchorEl}
-						onEdit={() => setToEdit(true)}
-						onDelete={() => setToDelete(true)}
+						onEdit={() => setToAction(CRUD.UPDATE)}
+						onDelete={() => setToAction(CRUD.DELETE)}
 					/>
 				</>
 			)}

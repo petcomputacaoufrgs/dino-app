@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import { Avatar, CardContent, CardHeader, Dialog, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
-import ItemListMenu from '../../../../components/item_list_menu'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import TransitionSlide from '../../../../components/slide_transition'
 import AvatarIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';

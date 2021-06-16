@@ -5,10 +5,11 @@ import { useLanguage } from '../../../../context/language'
 import { HasStaffPowers } from '../../../../context/private_router'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
-import ItemListMenu from '../../../../components/item_list_menu'
-import ListTitle from '../../../../components/list_title'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
+import ListTitle from '../../../../components/list_components/list_title'
 import TreatmentForm from '../treatment_form'
 import TreatmentItemList from './treatment_list_item'
+import CRUDEnum from '../../../../types/enum/CRUDEnum'
 
 interface TreatmentItemsProps {
 	items: TreatmentEntity[],
@@ -18,20 +19,19 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 	const language = useLanguage()
 	const isStaff = HasStaffPowers()
 
+	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<TreatmentEntity>()
-	const [toEdit, setToEdit] = useState(false)
-	const [toDelete, setToDelete] = useState(false)
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const handleAcceptDeleteDialog = async () => {
-		if (toDelete && selectedItem && isStaff) {
+		if (toAction === CRUDEnum.DELETE && selectedItem && isStaff) {
 			await TreatmentService.delete(selectedItem)
 		}
-		handleCloseDeleteDialog()
+		handleCloseDialog()
 	}
 
-	const handleCloseDeleteDialog = () => {
-		setToDelete(false)
+	const handleCloseDialog = () => {
+		setToAction(CRUDEnum.NOP)
 	}
 
 	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>, item: TreatmentEntity) => {
@@ -51,27 +51,24 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 					/>
 				)}
 			</List>
-			{toEdit && (
+			{toAction === CRUDEnum.UPDATE && (
 				<TreatmentForm 
-					open={toEdit} 
-					onClose={() => setToEdit(false)} 
+					open={toAction === CRUDEnum.UPDATE} 
+					onClose={handleCloseDialog} 
 					treatment={selectedItem}
 				/>
 			)}
-			{toDelete && (
-				<AgreementDialog
-					open={toDelete !== undefined}
-					description={language.data.DELETE_CONTACT_OPTION_TEXT}
-					question={language.data.deleteItemText(language.data.CONTACT)}
-					onAgree={handleAcceptDeleteDialog}
-					onDisagree={handleCloseDeleteDialog}
-				/>
-			)}
+			<AgreementDialog
+				open={toAction === CRUDEnum.DELETE}
+				question={language.data.deleteItemText(language.data.TREATMENT)}
+				onAgree={handleAcceptDeleteDialog}
+				onDisagree={handleCloseDialog}
+			/>
 			<ItemListMenu
 				anchor={anchorEl}
 				setAnchor={setAnchorEl}
-				onEdit={() => setToEdit(true)}
-				onDelete={() => setToDelete(true)}
+				onEdit={() => setToAction(CRUDEnum.UPDATE)}
+				onDelete={() => setToAction(CRUDEnum.DELETE)}
 			/>
 		</>
 	)

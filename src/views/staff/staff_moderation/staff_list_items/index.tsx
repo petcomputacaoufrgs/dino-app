@@ -2,12 +2,13 @@ import { List } from '@material-ui/core'
 import React, { useState } from 'react'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/dino_dialog'
-import ItemListMenu from '../../../../components/item_list_menu'
-import ListTitle from '../../../../components/list_title'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
+import ListTitle from '../../../../components/list_components/list_title'
 import MuiSearchBar from '../../../../components/mui_search_bar'
 import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
 import StaffService from '../../../../services/staff/StaffService'
+import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import StaffEntity from '../../../../types/staff/database/StaffEntity'
 import StringUtils from '../../../../utils/StringUtils'
 import EmailTextField from '../email_textfield'
@@ -26,13 +27,11 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 
   const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
   const [selectedItem, setSelectedItem] = useState<StaffEntity | undefined>(undefined)
-  const [toView, setToView] = useState(false)
-  const [toDelete, setToDelete] = useState(false)
-  const [toEdit, setToEdit] = useState(false)
+  const [toAction, setToAction] = useState(CRUDEnum.NOP)
   const [error, setError] = useState<string>()
   const [searchTerm, setSearchTerm] = useState('')
   
-  const closeEditDialog = () => setToEdit(false)
+  const handleCloseDialog = () =>  setToAction(CRUDEnum.NOP)
 
   const handleEdit = async () => {
     if(selectedItem) {
@@ -46,7 +45,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
       if(!isInvalid) {
         StaffService.save(selectedItem)
         alert.showSuccessAlert(language.data.STAFF_SAVE_SUCCESS)
-        closeEditDialog()
+        handleCloseDialog()
         setSelectedItem(undefined)
       }
     }
@@ -61,7 +60,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 
   const handleClick = (item: StaffEntity) => {
     setSelectedItem(item)
-    setToView(true)
+    setToAction(CRUDEnum.READ)
   }
 
 	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>, item: StaffEntity) => {
@@ -91,16 +90,16 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
       <ItemListMenu
         anchor={anchor}
         setAnchor={setAnchor}
-        onEdit={() => setToEdit(true)}
-        onDelete={() => setToDelete(true)}
+        onEdit={() => setToAction(CRUDEnum.UPDATE)}
+        onDelete={() => setToAction(CRUDEnum.DELETE)}
         editUnavailable={selectedItem?.userId !== undefined}
       />
       {selectedItem && 
         <>
           <DinoDialog 
-            open={toEdit}
+            open={toAction === CRUDEnum.UPDATE}
             onSave={handleEdit}
-            onClose={closeEditDialog} 
+            onClose={handleCloseDialog} 
           >
             <DinoDialogContent>
               <EmailTextField 
@@ -111,17 +110,17 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
             </DinoDialogContent>
           </DinoDialog>
           <StaffCard 
-            open={toView}
+            open={toAction === CRUDEnum.READ}
             item={selectedItem}
-            onClose={() => setToView(false)}
-            onEdit={() => setToEdit(true)}
-            onDelete={() => setToDelete(true)}
+            onClose={handleCloseDialog}
+            onEdit={() => setToAction(CRUDEnum.UPDATE)}
+            onDelete={() => setToAction(CRUDEnum.DELETE)}
           />
           <AgreementDialog
-            open={toDelete}
+            open={toAction === CRUDEnum.DELETE}
             question={language.data.deleteItemText(language.data.STAFF)}
             onAgree={handleDelete}
-            onDisagree={() => setToDelete(false)}
+            onDisagree={handleCloseDialog}
           />
         </>
       }

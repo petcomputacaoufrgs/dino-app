@@ -656,6 +656,8 @@ export default class PT implements LanguageBase {
 	GLOSSARY_ITEM = 'Item de Glossário'
 
 	FAQ = 'FAQ'
+	
+	FAQ_ITEM = 'Item da FAQ'
 
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
 
@@ -675,6 +677,8 @@ export default class PT implements LanguageBase {
 
 	ADD_STAFF_TEXT = 'Funcionários são usuários que podem adicionar, remover e editar informações que são exibidas para os pacientes e seus responsáveis, como: contatos do hospital, itens do glossário, etc. Apenas a conta administradora do hospital é capaz de adicionar e remover outros funcionários.'
 
+	NO_ITEMS_LIST = 'Sem Itens'
+	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

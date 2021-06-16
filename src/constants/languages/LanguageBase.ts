@@ -12,6 +12,7 @@ export default interface LanguageBase {
 	GLOSSARY: string
 	GLOSSARY_ITEM: string
 	FAQ: string
+	FAQ_ITEM: string
 	FIRST_LOGIN_DIALOG_LABEL: string
 	FIRST_LOGIN_WELCOME_MESSAGE: string
 	FIRST_LOGIN_DONE_MESSAGE: string
@@ -318,6 +319,7 @@ export default interface LanguageBase {
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE: string
 	PASSWORD_CHANGED: string
 	WRONG_PASSWORD: string
+	NO_ITEMS_LIST: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

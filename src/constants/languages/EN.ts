@@ -94,6 +94,8 @@ export default class EN implements LanguageBase {
 	MENU_CONTACTS = 'Contacts'
 
 	FAQ = 'FAQ'
+
+	FAQ_ITEM = 'FAQ Item'
 	
 	MENU_SETTINGS = 'Settings'
 
@@ -665,6 +667,8 @@ export default class EN implements LanguageBase {
 	PASSWORD_CHANGED = 'Success'
 
 	WRONG_PASSWORD = 'Wrong password'
+
+	NO_ITEMS_LIST = 'No Items'
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 

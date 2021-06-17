@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import LinkButton from '../../../../components/button/link_button'
 import MuiSearchBar from '../../../../components/mui_search_bar'
+import { toggle } from '../../../../constants/toggle/Toggle'
 import { useLanguage } from '../../../../context/language'
 import { HasStaffPowers } from '../../../../context/private_router'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
@@ -23,7 +24,7 @@ const Faq: React.FC<{ view?: FaqView }> = ({ view }) => {
       { view ? 
         <>
           <FaqItems data={TreatmentService.getFaqViewByFilter(view, searchTerm)} />
-          {!isStaff && 
+          {(toggle.showTreatmentQuestionButtonToStaff || !isStaff) && 
             <LinkButton
               text={language.data.NOT_FOUND_QUESTION_FAQ}
               onClick={() => setQuestionDialogOpen(true)}

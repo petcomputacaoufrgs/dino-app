@@ -4,7 +4,9 @@ import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/di
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import FaqItemService from '../../../../services/faq/FaqItemService'
+import TreatmentQuestionService from '../../../../services/treatment/TreatmentQuestionService'
 import FaqItemEntity from '../../../../types/faq/database/FaqItemEntity'
+import TreatmentQuestionEntity from '../../../../types/faq/database/TreatmentQuestionEntity'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import StringUtils from '../../../../utils/StringUtils'
 
@@ -12,12 +14,13 @@ interface FaqItemFormProps {
   open: boolean,
   onClose: () => void,
   treatment: TreatmentEntity,
-  faqItem?: FaqItemEntity
+  faqItem?: FaqItemEntity,
+  treatmentQuestion?: TreatmentQuestionEntity
 }
 
-const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faqItem }) => {
+const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faqItem, treatmentQuestion }) => {
 
-  const [item, setItem] = useState(faqItem || { question: '', answer: '', localTreatmentId: treatment.localId })
+  const [item, setItem] = useState(faqItem || { question: treatmentQuestion?.question || '', answer: '', localTreatmentId: treatment.localId })
   const [errorQuestion, setErrorQuestion] = useState(false)
   const [errorAnswer, setErrorAnswer] = useState(false)
 
@@ -30,6 +33,8 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
     setErrorAnswer(errorA)
     if(!errorQ && !errorA) {
       FaqItemService.save(item)
+      if(treatmentQuestion)
+        TreatmentQuestionService.delete(treatmentQuestion)
       onClose()
     }
   }
@@ -46,6 +51,8 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
           margin='dense'
           required={DataConstants.FAQ_QUESTION.REQUIRED}
           fullWidth
+          multiline
+          rowsMax={10}
           label={language.data.FORM_QUESTION}
           type='name'
           inputProps={{ maxLength: DataConstants.FAQ_QUESTION.MAX }}
@@ -60,8 +67,8 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
           required={DataConstants.FAQ_ANSWER.REQUIRED}
           fullWidth
           multiline
-          rows={7}
-          label={'Answer'}
+          rowsMax={10}
+          label={language.data.FORM_ANSWER}
           type='name'
           inputProps={{ maxLength: DataConstants.FAQ_ANSWER.MAX }}
           helperText={(errorAnswer && language.data.EMPTY_FIELD_ERROR) || `${item.answer.length}/${DataConstants.FAQ_ANSWER.MAX}`}

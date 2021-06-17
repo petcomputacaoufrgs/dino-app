@@ -101,7 +101,7 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 
 	const renderTreatmentListItem = (name: string, index?: number) => {
 		return (
-			<ListItem key={index} className='dino__text_wrap'>
+			<ListItem key={index} className='dino__text__wrap'>
 				<ListItemText primary={name}/>
 			</ListItem>
 		)

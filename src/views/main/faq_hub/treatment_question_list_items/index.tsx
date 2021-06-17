@@ -9,12 +9,12 @@ import QuestionDialogForm from '../question_dialog_form'
 import { useTreatmentView } from '../../../../context/staff_data'
 import { useParams } from 'react-router-dom'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
-import TreatmentAnswerDialog from './answer_dialog'
 import TreatmentQuestionEntity from '../../../../types/faq/database/TreatmentQuestionEntity'
 import TreatmentQuestionService from '../../../../services/treatment/TreatmentQuestionService'
 import TreatmentView from '../../../../types/faq/view/TreatmentView'
 import ArrayUtils from '../../../../utils/ArrayUtils'
 import NoItemsList from '../../../../components/list_components/no_items_list'
+import FaqItemForm from '../faq_item_form'
 
 const TreatmentQuestionItems: React.FC = () => {
   //não encontrava o localId
@@ -75,8 +75,8 @@ const TreatmentQuestionItems: React.FC = () => {
           title={treatmentView.treatment.name}
           subheader={item.lastUpdate?.toDateString()}
         />
-        <CardContent>
-          <ListItem divider>
+        <CardContent style={{"paddingTop":'0'}}>
+          <ListItem style={{"paddingTop":'0'}} divider>
             <ListItemText primary={item.question} />
           </ListItem>
         </CardContent>
@@ -98,10 +98,11 @@ const TreatmentQuestionItems: React.FC = () => {
           onClose={() => setToAdd(false)}
         />
         {selectedQuestion && 
-          <TreatmentAnswerDialog
+          <FaqItemForm 
+						open={toAnswer} 
             treatmentQuestion={selectedQuestion}
-            dialogOpen={toAnswer}
-            onClose={handleCloseAnswerDialog}
+						onClose={handleCloseAnswerDialog}
+						treatment={treatmentView.treatment}
           />
         }
         {renderTreatmentQuestions(treatmentView)}

@@ -16,9 +16,8 @@ class DataConstants {
 
 	// *-------------* FAQ *-------------*
 
-	static FAQ_QUESTION = { MAX : 30, REQUIRED: true } as const
+	static FAQ_QUESTION = { MAX : 100, REQUIRED: true } as const
 	static FAQ_ANSWER = { MAX : 1000, REQUIRED: true } as const
-	static FAQ_USER_QUESTION = { MAX : 200, REQUIRED: true } as const
 
 	// *-------------* GLOSSARY *-------------*
 	

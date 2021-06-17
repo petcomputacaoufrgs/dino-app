@@ -36,7 +36,7 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, onC
 		}
 	}, [dialogOpen])
 
-	const getHelperText = () => (error && language.data.EMPTY_FIELD_ERROR) || `${question.length}/${Constants.FAQ_USER_QUESTION.MAX}`
+	const getHelperText = () => (error && language.data.EMPTY_FIELD_ERROR) || `${question.length}/${Constants.FAQ_QUESTION.MAX}`
 
 	return (
 		<div className='dialog-form'>
@@ -54,7 +54,7 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, onC
 					<p style={{ 'margin': '0' }}>{language.data.SEND_TO_THE_PROFESSIONALS}</p>
 					<TextField
 						className='dino__textfield'
-						required={Constants.FAQ_USER_QUESTION.REQUIRED}
+						required={Constants.FAQ_QUESTION.REQUIRED}
 						fullWidth
 						value={question}
 						onChange={(e) => setQuestion(e.target.value)}
@@ -64,8 +64,8 @@ const QuestionDialogForm: React.FC<QuestionDialogFormProps> = ({ dialogOpen, onC
 						placeholder={language.data.FORM_QUESTION_PLACEHOLDER}
 						type='question'
 						multiline
-						rowsMax={7}
-						inputProps={{ maxLength: Constants.FAQ_USER_QUESTION.MAX }}
+						rowsMax={10}
+						inputProps={{ maxLength: Constants.FAQ_QUESTION.MAX }}
 						helperText={getHelperText()}
 						error={error}
 					/>

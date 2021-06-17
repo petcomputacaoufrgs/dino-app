@@ -1,7 +1,7 @@
 type filter<T> = (value: T) => boolean
 
 class ArrayUtils {
-	isNotEmpty = <T>(list?: T[]) => !this.isEmpty()  
+	isNotEmpty = <T>(list?: T[]) => !this.isEmpty(list)  
 	
 	isEmpty = <T>(list?: T[]) => list === undefined || list.length === 0  
 

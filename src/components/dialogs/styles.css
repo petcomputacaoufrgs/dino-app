@@ -16,7 +16,7 @@
 	align-items: center;
 	margin-right: 8px;
 	color: white;
-	font-size: var(--large-font);
+	font-size: var(--default-font);
 }
 
 .dino_dialog__header h5,

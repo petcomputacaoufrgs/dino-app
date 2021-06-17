@@ -10,6 +10,8 @@ import ListTitle from '../../../../components/list_components/list_title'
 import TreatmentForm from '../treatment_form'
 import TreatmentItemList from './treatment_list_item'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
+import ArrayUtils from '../../../../utils/ArrayUtils'
+import NoItemsList from '../../../../components/list_components/no_items_list'
 
 interface TreatmentItemsProps {
 	items: TreatmentEntity[],
@@ -42,15 +44,17 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 	return (
 		<>
 		  <ListTitle title={language.data.TREATMENTS_AND_FAQS}/>
-			<List className='contacts__list'>
-				{items.map((item, index) => 
-					<TreatmentItemList 
-						key={index} 
-						item={item}
-						onClickMenu={handleClickMenu} 
-					/>
-				)}
-			</List>
+			{ArrayUtils.isNotEmpty(items) ?
+				<List className='contacts__list'>
+					{items.map((item, index) => 
+						<TreatmentItemList 
+							key={index} 
+							item={item}
+							onClickMenu={handleClickMenu} 
+						/>
+					)}
+				</List>
+			: <NoItemsList />}
 			{toAction === CRUDEnum.UPDATE && (
 				<TreatmentForm 
 					open={toAction === CRUDEnum.UPDATE} 

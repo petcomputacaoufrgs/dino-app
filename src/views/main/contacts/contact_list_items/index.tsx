@@ -17,6 +17,8 @@ import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
 import ListTitle from '../../../../components/list_components/list_title'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
+import NoItemsList from '../../../../components/list_components/no_items_list'
+import ArrayUtils from '../../../../utils/ArrayUtils'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
@@ -71,16 +73,18 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	return (
 		<>
 		  <ListTitle title={language.data.MENU_CONTACTS} />
-			<List className='contacts__list'>
-				{items.map((item, index) => 
-					<ContactItemList
-						key={index}
-						item={item}
-						onClick={handleViewOption}
-						onClickMenu={handleClickMenu}
-					/>
-				)}
-			</List>
+			{ArrayUtils.isNotEmpty(items) ? 
+				<List className='contacts__list'>
+					{items.map((item, index) => 
+						<ContactItemList
+							key={index}
+							item={item}
+							onClick={handleViewOption}
+							onClickMenu={handleClickMenu}
+						/>
+					)}
+				</List>
+			: <NoItemsList />}
 			{selectedItem && (
 				<>
 				<ContactCard

@@ -4,12 +4,14 @@ import AgreementDialog from '../../../../components/agreement_dialog'
 import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/dino_dialog'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import ListTitle from '../../../../components/list_components/list_title'
+import NoItemsList from '../../../../components/list_components/no_items_list'
 import MuiSearchBar from '../../../../components/mui_search_bar'
 import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
 import StaffService from '../../../../services/staff/StaffService'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import StaffEntity from '../../../../types/staff/database/StaffEntity'
+import ArrayUtils from '../../../../utils/ArrayUtils'
 import StringUtils from '../../../../utils/StringUtils'
 import EmailTextField from '../email_textfield'
 import StaffCard from '../staff_card'
@@ -77,16 +79,18 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
         onChange={(e) => setSearchTerm(e.target.value as string)}
       />
       <ListTitle title={language.data.STAFF}/>
-      <List>
-        {filteredData.map((item, index) => 
-          <StaffItem 
-            item={item} 
-            key={index} 
-            onClick={handleClick}
-            onClickMenu={handleClickMenu} 
-          />
-        )}
-      </List>
+      {ArrayUtils.isNotEmpty(filteredData) ? 
+        <List>
+          {filteredData.map((item, index) => 
+            <StaffItem 
+              item={item} 
+              key={index} 
+              onClick={handleClick}
+              onClickMenu={handleClickMenu} 
+            />
+          )}
+        </List>
+      : <NoItemsList />}
       <ItemListMenu
         anchor={anchor}
         setAnchor={setAnchor}

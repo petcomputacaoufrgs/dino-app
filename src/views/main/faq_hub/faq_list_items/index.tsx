@@ -12,6 +12,8 @@ import AgreementDialog from '../../../../components/agreement_dialog'
 import FaqItemService from '../../../../services/faq/FaqItemService'
 import FaqView from '../../../../types/faq/view/FaqView'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
+import NoItemsList from '../../../../components/list_components/no_items_list'
+import ArrayUtils from '../../../../utils/ArrayUtils'
 
 const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	const language = useLanguage()
@@ -41,7 +43,7 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	return (
 		<div className='faq-items dino__text__wrap'>
 			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
-			{data && (
+			{ArrayUtils.isNotEmpty(data.faqItems) ? (
 				<Accordion className='dino__accordion'>
 					{data.faqItems?.map((item, index) =>	
 						<FaqItem 
@@ -51,7 +53,7 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 						/>
 					)}
 				</Accordion>
-			)}
+			) : <NoItemsList />}
 			{isStaff && (
 				<>
 					<AddButton

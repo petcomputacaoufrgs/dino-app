@@ -11,6 +11,8 @@ import GlossaryListItem from './glossary_list_item'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import ListTitle from '../../../../components/list_components/list_title'
 import CRUD from '../../../../types/enum/CRUDEnum'
+import NoItemsList from '../../../../components/list_components/no_items_list'
+import ArrayUtils from '../../../../utils/ArrayUtils'
 
 const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	const language = useLanguage()
@@ -36,15 +38,17 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	return (
 		<div className='glossary__items'>
 			<ListTitle title={language.data.GLOSSARY}/>
-			<Accordion className='dino__accordion'>
-				{items.map((item, index) => 
-					<GlossaryListItem 
-						item={item} 
-						key={index}
-						onClickMenu={handleClickMenu} 
-					/>
-				)}
-			</Accordion>
+			{ArrayUtils.isNotEmpty(items) ? 
+				<Accordion className='dino__accordion'>
+					{items.map((item, index) => 
+						<GlossaryListItem 
+							item={item} 
+							key={index}
+							onClickMenu={handleClickMenu} 
+						/>
+					)}
+				</Accordion>
+			: <NoItemsList/>}
 			{ isStaff && (
 				<>
 					<GlossaryItemForm

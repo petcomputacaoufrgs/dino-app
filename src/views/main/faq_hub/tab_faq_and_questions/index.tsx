@@ -91,7 +91,7 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 					variant="dot"
 					invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
 				>
-					{language.data.USERS_QUESTIONS}
+					{language.data.QUESTIONS}
 				</Badge>,
 			Component: <TreatmentQuestionItems />
 		}

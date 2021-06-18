@@ -665,6 +665,8 @@ export default class PT implements LanguageBase {
 
 	USERS_QUESTIONS = 'Usuários Perguntam'
 
+	QUESTIONS = 'Perguntas'
+
 	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
 
 	SAVE = 'Salvar'

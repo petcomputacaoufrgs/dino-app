@@ -625,6 +625,8 @@ export default class EN implements LanguageBase {
 	INVALID_VALUE = 'Invalid value'
 
 	USERS_QUESTIONS = "User's Questions"
+	
+	QUESTIONS = 'Questions'
 
 	SEND_TO_THE_PROFESSIONALS = 'Send to the profissionals!'
 

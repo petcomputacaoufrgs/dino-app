@@ -299,6 +299,7 @@ export default interface LanguageBase {
 	TREATMENTS_AND_FAQS: string
 	INVALID_VALUE: string
 	USERS_QUESTIONS: string
+	QUESTIONS: string
 	SEND_TO_THE_PROFESSIONALS: string
 	SAVE: string
 	UNIVERSAL_CONTACT: string

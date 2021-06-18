@@ -51,4 +51,5 @@
 
 .faq__card_title {
 	font-size: var(--default-font);
+	margin-bottom: 0;
 }

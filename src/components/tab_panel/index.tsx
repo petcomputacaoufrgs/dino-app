@@ -17,7 +17,7 @@ function getProps(index: number) {
   const TabPanel = ({ children, value, index }: TabPanelProps) => {
     return (
       <div
-        className='tab_panel'
+        className='dino__tab__panel'
         role="tabpanel"
         hidden={value !== index}
         id={`full-width-tabpanel-${index}`}

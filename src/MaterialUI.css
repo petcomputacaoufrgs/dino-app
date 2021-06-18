@@ -84,3 +84,22 @@ body .MuiInputBase-root {
 .MuiFormHelperText-root.Mui-required.MuiFormHelperText-marginDense {
 	font-size: var(--very-small-font);
 }
+
+.MuiTabs-root .MuiTabs-indicator {
+	background-color: var(--home-icons);
+}
+
+.MuiTabs-root .MuiTab-textColorPrimary.Mui-selected {
+	color: var(--home-icons);
+}
+
+.MuiBadge-root .MuiBadge-colorSecondary {
+	background-color: var(--button-font-color);
+}
+
+.app .MuiFormLabel-root.Mui-focused {
+	color: var(--button-font-color);
+}
+.app .MuiInput-underline:after {
+	border-bottom: 2px solid var(--button-selected-font-color);
+}

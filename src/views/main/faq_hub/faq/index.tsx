@@ -3,7 +3,6 @@ import MuiSearchBar from '../../../../components/mui_search_bar'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
 import FaqView from '../../../../types/faq/view/FaqView'
 import FaqItems from '../faq_list_items'
-import QuestionDialogForm from '../question_dialog_form'
 
 const Faq: React.FC<{ view?: FaqView }> = ({ view }) => {
 	const [searchTerm, setSearchTerm] = useState('')

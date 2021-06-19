@@ -30,3 +30,8 @@
 	overflow-wrap: anywhere;
 	white-space: normal;
 }
+
+/* para dar um espaço para scrollar o ultimo item da lista sem o botao de add atrapalhar */
+.app .dino__list__padding {
+	padding-bottom: 4.5em;
+}

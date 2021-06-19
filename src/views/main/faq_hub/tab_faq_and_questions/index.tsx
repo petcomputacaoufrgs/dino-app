@@ -84,17 +84,7 @@ const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 
 	const panels = [
 		{ Label: language.data.FAQ, Component: <Faq view={view} /> },
-		{
-			Label:
-				<Badge
-					color="secondary"
-					variant="dot"
-					invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
-				>
-					{language.data.QUESTIONS}
-				</Badge>,
-			Component: <TreatmentQuestionItems />
-		}
+		{ Label: language.data.QUESTIONS, Component: <TreatmentQuestionItems />}
 	]
 
 	const intTab = tab ? parseInt(tab) : 0

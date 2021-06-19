@@ -53,7 +53,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
   }
  
   return (
-    <div className='treatment__dialog_form__content'>
       <DinoDialog 
         open={open}
         onSave={handleSave}
@@ -78,7 +77,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = ({ open, onClose, treatment 
             />
         </div>
       </DinoDialog>
-    </div>
   )
 }
 

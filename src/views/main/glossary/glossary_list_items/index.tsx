@@ -36,7 +36,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	}
 
 	return (
-		<div className='glossary__items'>
+		<div className='glossary__items dino__list__padding'>
 			<ListTitle title={language.data.GLOSSARY}/>
 			{ArrayUtils.isNotEmpty(items) ? 
 				<Accordion className='dino__accordion'>

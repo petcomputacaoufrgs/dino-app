@@ -74,7 +74,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 		<>
 		  <ListTitle title={language.data.MENU_CONTACTS} />
 			{ArrayUtils.isNotEmpty(items) ? 
-				<List className='contacts__list'>
+				<List className='contacts__list dino__list__padding'>
 					{items.map((item, index) => 
 						<ContactItemList
 							key={index}

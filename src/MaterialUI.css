@@ -86,20 +86,22 @@ body .MuiInputBase-root {
 }
 
 .MuiTabs-root .MuiTabs-indicator {
-	background-color: var(--home-icons);
+	background-color: var(--tab-highlight-color);
 }
 
 .MuiTabs-root .MuiTab-textColorPrimary.Mui-selected {
-	color: var(--home-icons);
+	color: var(--tab-highlight-color);
 }
 
 .MuiBadge-root .MuiBadge-colorSecondary {
 	background-color: var(--button-font-color);
 }
 
-.app .MuiFormLabel-root.Mui-focused {
-	color: var(--button-font-color);
+.app .MuiFormLabel-root.Mui-focused,
+.dino_dialog .MuiFormLabel-root.Mui-focused {
+	color: var(--highlight-color);
 }
-.app .MuiInput-underline:after {
-	border-bottom: 2px solid var(--button-selected-font-color);
+.app .MuiInput-underline:after,
+.dino_dialog .MuiInput-underline:after {
+	border-bottom: 2px solid var(--highlight-color);
 }

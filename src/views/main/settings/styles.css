@@ -53,8 +53,8 @@
 }
 
 .button.settings__save_button {
-	width: 70%;
-	height: 100%;
+	width: 50%;
+	height: 90%;
 	font-size: var(--large-font);
 }
 

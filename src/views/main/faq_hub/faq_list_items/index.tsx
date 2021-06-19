@@ -14,12 +14,16 @@ import FaqView from '../../../../types/faq/view/FaqView'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import NoItemsList from '../../../../components/list_components/no_items_list'
 import ArrayUtils from '../../../../utils/ArrayUtils'
+import { toggle } from '../../../../constants/toggle/Toggle'
+import LinkButton from '../../../../components/button/link_button'
+import QuestionDialogForm from '../question_dialog_form'
 
 const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	const language = useLanguage()
 	const isStaff = HasStaffPowers()
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<FaqItemEntity>()
+	const [dialogOpen, setQuestionDialogOpen] = useState(false)
 
 	const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
 
@@ -41,7 +45,7 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
   }
 
 	return (
-		<div className='faq-items dino__text__wrap'>
+		<div className='faq-items dino__text__wrap dino__list__padding'>
 			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
 			{ArrayUtils.isNotEmpty(data.faqItems) ? (
 				<Accordion className='dino__accordion'>
@@ -54,6 +58,16 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 					)}
 				</Accordion>
 			) : <NoItemsList />}
+			{(toggle.showTreatmentQuestionButtonToStaff || !isStaff) && 
+			<LinkButton
+				text={language.data.NOT_FOUND_QUESTION_FAQ}
+				onClick={() => setQuestionDialogOpen(true)}
+			/>}
+			<QuestionDialogForm
+				treatment={data.treatment}
+				dialogOpen={dialogOpen}
+				onClose={() => setQuestionDialogOpen(false)}
+			/>
 			{isStaff && (
 				<>
 					<AddButton

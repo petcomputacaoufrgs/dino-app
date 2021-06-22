@@ -1,17 +1,18 @@
+import { LanguageContextType } from "../../context/language"
 import ContactEntity from "../../types/contact/database/ContactEntity"
 import EssentialContactEntity from "../../types/contact/database/EssentialContactEntity"
 import ContactView, { ContactType, PhoneType } from "../../types/contact/view/ContactView"
+import FilterType from "../../types/filter/Filter"
 import StringUtils from "../../utils/StringUtils"
 import Utils from "../../utils/Utils"
 import EssentialPhoneService from "./EssentialPhoneService"
 import PhoneService from "./PhoneService"
 
-class ContactViewService {
-	getContactWithSamePhone(
+	export const getContactWithSamePhone = (
 		items: ContactView[],
 		newPhones: PhoneType[],
 		currentContact?: ContactView,
-	): ContactView | undefined {
+	): ContactView | undefined => {
 		return items.find(
 			item =>
 				(!currentContact ||
@@ -22,11 +23,11 @@ class ContactViewService {
 		)
 	}
 
-	getContactViews(
+	export const getContactViews = (
 		contacts: ContactType[],
 		phones: PhoneType[],
 		isStaff: boolean
-	): ContactView[] {
+	): ContactView[] => {
 		return contacts
 			.map(
 				contact =>
@@ -41,17 +42,17 @@ class ContactViewService {
 						)
 				} as ContactView),
 			)
-			.sort((a, b) => this.contactViewSort(a, b, isStaff))
+			.sort((a, b) => contactViewSort(a, b, isStaff))
 	}
 
-	filterContactViews(
+	export const filterContactViews = (
 		contacts: ContactView[],
 		searchTerm: string,
-	) {
+	) => {
 		return contacts.filter((item) => StringUtils.contains(item.contact.name, searchTerm))
 	}
 
-	private contactViewSort(a: ContactView, b: ContactView, isStaff: boolean) {
+	export const contactViewSort = (a: ContactView, b: ContactView, isStaff: boolean) => {
 		const bComesFirst = 1
 		const aComesFirst = -1
 
@@ -76,6 +77,38 @@ class ContactViewService {
 
 		return sortByName()
 	}
-}
 
-export default new ContactViewService()
+	export const getContactFilter = (hasStaffPowers: boolean, language: LanguageContextType) => {
+	
+		const userFilter: FilterType[] = [
+			{
+				checked: true,
+				label: language.data.ESSENTIAL_CONTACTS,
+				validator: (c: ContactType) => cameFromEssential(c)
+			},
+			{
+				checked: true,
+				label: language.data.YOUR_CONTACTS,
+				validator: (c: ContactType) => !cameFromEssential(c)
+			}
+		]
+	
+		const staffFilter: FilterType[] = [
+			{
+				checked: true,
+				label: language.data.UNIVERSAL_ESSENTIAL_CONTACTS,
+				validator: (c: ContactType) => isUniversalEssential(c)
+			},
+			{
+				checked: true,
+				label: language.data.TREATMENT_ESSENTIAL_CONTACTS,
+				validator: (c: ContactType) => !isUniversalEssential(c)
+			}
+		]
+	
+		return hasStaffPowers ? staffFilter : userFilter
+	}
+	
+	export const cameFromEssential = (contact: ContactType) => Utils.isNotEmpty((contact as ContactEntity).localEssentialContactId)
+	
+	export const isUniversalEssential = (contact: ContactType) => Boolean((contact as EssentialContactEntity).isUniversal)

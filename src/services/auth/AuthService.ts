@@ -372,7 +372,6 @@ class AuthService extends UpdatableService {
 	hasStaffPowers = async () => {
 		const userPermission = await UserService.getPermission()
 		return this.isStaff(userPermission)
-
 	}
 
 	isStaff = (userPermission: string | undefined) => userPermission === PermissionEnum.STAFF || userPermission === PermissionEnum.ADMIN 

@@ -18,8 +18,8 @@ import { HasStaffPowers } from '../../../../context/private_router'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import EssentialPhoneEntity from '../../../../types/contact/database/EssentialPhoneEntity'
 import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
-import ContactViewService from '../../../../services/contact/ContactViewService'
 import './styles.css'
+import { getContactWithSamePhone } from '../../../../services/contact/ContactViewService'
 
 const getContact = (item?: ContactView): ContactType =>
 	item ? item.contact : { name: '', description: '', }
@@ -71,7 +71,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 				}
 			}
 				
-			const hasViewWithSamePhone = ContactViewService.getContactWithSamePhone(items, contactPhones, item)
+			const hasViewWithSamePhone = getContactWithSamePhone(items, contactPhones, item)
 				
 			if (hasViewWithSamePhone) {
 				handleTakenNumber(hasViewWithSamePhone)

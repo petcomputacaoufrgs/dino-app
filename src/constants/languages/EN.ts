@@ -674,6 +674,14 @@ export default class EN implements LanguageBase {
 
 	FILTER = 'Filter'
 
+	ESSENTIAL_CONTACTS = "Essential Contacts"
+
+	YOUR_CONTACTS = "Your Contacts"
+
+	UNIVERSAL_ESSENTIAL_CONTACTS = "Universal " + this.ESSENTIAL_CONTACTS
+
+	TREATMENT_ESSENTIAL_CONTACTS = "Treatment " + this.ESSENTIAL_CONTACTS
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

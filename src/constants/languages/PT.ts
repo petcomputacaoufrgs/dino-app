@@ -682,6 +682,14 @@ export default class PT implements LanguageBase {
 	NO_ITEMS_LIST = 'Sem Itens'
 
 	FILTER = 'Filtro'
+
+	ESSENTIAL_CONTACTS = "Contatos Essenciais"
+
+	YOUR_CONTACTS = "Seus Contacts"
+
+	UNIVERSAL_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " Universais"
+
+	TREATMENT_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " de Tratamento"
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

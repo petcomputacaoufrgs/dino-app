@@ -15,19 +15,13 @@ import PhoneService from '../../../services/contact/PhoneService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import { HasStaffPowers } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
-import ContactViewService from '../../../services/contact/ContactViewService'
 import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Star, Public } from '@material-ui/icons'
-import ContactEntity from '../../../types/contact/database/ContactEntity'
-import EssentialContactEntity from '../../../types/contact/database/EssentialContactEntity'
-import Utils from '../../../utils/Utils'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
-
-const cameFromEssential = (contact: ContactType) => Utils.isNotEmpty((contact as ContactEntity).localEssentialContactId)
-
-const isUniversalEssential = (contact: ContactType) => Boolean((contact as EssentialContactEntity).isUniversal)
+import { cameFromEssential, filterContactViews, getContactFilter, getContactViews, 
+	isUniversalEssential } from '../../../services/contact/ContactViewService'
 
 export const renderIcon = (contact: ContactType) => {
 
@@ -42,7 +36,7 @@ export const renderIcon = (contact: ContactType) => {
 }
 
 const Contacts: React.FC = () => {
-	const isStaff = HasStaffPowers()
+	const hasStaffPowers = HasStaffPowers()
 	const language = useLanguage()
 	const [isLoading, setIsLoading] = useState(true)
 	const [contacts, setContacts] = useState<ContactView[]>([])
@@ -52,20 +46,9 @@ const Contacts: React.FC = () => {
 	const [toAdd, setToAdd] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
-	const [filters, setFilters] = useState([
-		{
-			checked: true,
-			label: "Essential Contacts",
-			validator: (c: ContactType) => cameFromEssential(c)
-		},
-		{
-			checked: true,
-			label: "Your Contacts",
-			validator: (c: ContactType) => !cameFromEssential(c)
-		}
-	])
+	const [filters, setFilters] = useState(getContactFilter(hasStaffPowers, language))
 
-	let searchContacts = ContactViewService.filterContactViews(contacts, searchTerm)
+	let searchContacts = filterContactViews(contacts, searchTerm)
 
 	const handleChangeChecked = (index: number) => {
 		const filter = filters[index]
@@ -84,11 +67,11 @@ const Contacts: React.FC = () => {
 		} 
 
 		const loadContacts = async () => (
-			isStaff ? EssentialContactService.getAll() : loadUserData()
+			hasStaffPowers ? EssentialContactService.getAll() : loadUserData()
 		)
 
 		const loadPhones = async () => (
-			isStaff ? EssentialPhoneService.getAll() : PhoneService.getAll()
+			hasStaffPowers ? EssentialPhoneService.getAll() : PhoneService.getAll()
 		)
 
 		const loadData = async () => {
@@ -96,10 +79,10 @@ const Contacts: React.FC = () => {
 			const phones = await loadPhones()
 			const contacts = await loadContacts()
 
-			const contactViews = ContactViewService.getContactViews(
+			const contactViews = getContactViews(
 				contacts,
 				phones,
-				isStaff
+				hasStaffPowers
 			)
 
 			updateContacts(contactViews)
@@ -146,7 +129,7 @@ const Contacts: React.FC = () => {
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading, isStaff])
+	}, [isLoading, hasStaffPowers])
 
 	const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
 		setSearchTerm(event.target.value)
@@ -173,7 +156,7 @@ const Contacts: React.FC = () => {
 	}
 
 	const handleAddContact = () => {
-		if (settings && !isStaff) {
+		if (settings && !hasStaffPowers) {
 			if (!syncGoogleContacts && !settings.declineGoogleContacts) {
 				setOpenGrantDialog(true)
 				return

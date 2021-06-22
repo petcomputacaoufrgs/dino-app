@@ -322,6 +322,10 @@ export default interface LanguageBase {
 	WRONG_PASSWORD: string
 	NO_ITEMS_LIST: string
 	FILTER: string
+	ESSENTIAL_CONTACTS: string
+	YOUR_CONTACTS: string
+	UNIVERSAL_ESSENTIAL_CONTACTS: string
+	TREATMENT_ESSENTIAL_CONTACTS: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

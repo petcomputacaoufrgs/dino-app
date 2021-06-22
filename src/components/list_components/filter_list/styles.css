@@ -12,3 +12,7 @@
 .filterlist svg{
   margin: 4px;
 }
+
+.filterlist .MuiButtonBase-root.MuiIconButton-root {
+  padding-left: 0;
+}

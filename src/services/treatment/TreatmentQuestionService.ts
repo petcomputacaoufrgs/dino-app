@@ -9,6 +9,8 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import TreatmentView from '../../types/faq/view/TreatmentView'
+import ArrayUtils from '../../utils/ArrayUtils'
 
 class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 	number,

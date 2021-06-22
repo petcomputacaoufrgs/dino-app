@@ -7,6 +7,8 @@ import { useLanguage } from '../../../../../context/language'
 import { useTreatmentView } from '../../../../../context/staff_data'
 import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import Icon from '@material-ui/icons/ContactSupport';
+import TreatmentQuestionService from '../../../../../services/treatment/TreatmentQuestionService'
+import ArrayUtils from '../../../../../utils/ArrayUtils'
 
 interface TreatmentItemProps {
   item: TreatmentEntity,
@@ -16,9 +18,9 @@ interface TreatmentItemProps {
 const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) => {
   const language = useLanguage()
   const history = useHistory()
-  const treatmentData = useTreatmentView(item.localId)
-  const questions = treatmentData ? treatmentData.questions || [] : []
+  const treatmentView = useTreatmentView(item.localId)
 
+  //TODO tirar literal de aba
   const redirectToUserQuestions = () => {
     history.push(`${PathConstants.STAFF_FAQ}/${item.localId}/1`);
   }
@@ -39,7 +41,7 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
           <Badge
             overlap="circle"
             color="secondary"
-            badgeContent={questions.length}
+            invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
             variant="dot"
           >
             <Icon onClick={redirectToUserQuestions} />

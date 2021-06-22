@@ -19,14 +19,14 @@ interface TreatmentItemsProps {
 
 const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 	const language = useLanguage()
-	const isStaff = HasStaffPowers()
+	const hasStaffPowers = HasStaffPowers()
 
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<TreatmentEntity>()
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
 	const handleAcceptDeleteDialog = async () => {
-		if (toAction === CRUDEnum.DELETE && selectedItem && isStaff) {
+		if (toAction === CRUDEnum.DELETE && selectedItem && hasStaffPowers) {
 			await TreatmentService.delete(selectedItem)
 		}
 		handleCloseDialog()
@@ -43,7 +43,6 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 
 	return (
 		<>
-		  <ListTitle title={language.data.TREATMENTS_AND_FAQS}/>
 			{ArrayUtils.isNotEmpty(items) ?
 				<List className='contacts__list dino__list__padding'>
 					{items.map((item, index) => 

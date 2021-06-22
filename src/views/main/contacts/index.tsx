@@ -20,8 +20,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Star, Public } from '@material-ui/icons'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
-import { cameFromEssential, filterContactViews, getContactFilter, getContactViews, 
+import { cameFromEssential, filterContactViews, getContactViews, 
 	isUniversalEssential } from '../../../services/contact/ContactViewService'
+import { getContactFilter } from '../../../utils/FilterUtils'
 
 export const renderIcon = (contact: ContactType) => {
 
@@ -48,15 +49,14 @@ const Contacts: React.FC = () => {
 	const [shouldDecline, setShouldDecline] = useState(false)
 	const [filters, setFilters] = useState(getContactFilter(hasStaffPowers, language))
 
-	let searchContacts = filterContactViews(contacts, searchTerm)
+	let filteredContacts = filterContactViews(contacts, searchTerm)
+	.filter(c => filters.some(f => f.checked && f.validator(c.contact)))
 
 	const handleChangeChecked = (index: number) => {
 		const filter = filters[index]
 		filter.checked = !filter.checked
 		setFilters([...filters])
 	} 
-
-	let filteredContacts = searchContacts.filter(c => filters.some(f => f.checked && f.validator(c.contact)))
 
 	useEffect(() => {
 		const loadUserData = async () => {
@@ -181,7 +181,7 @@ const Contacts: React.FC = () => {
 					value={searchTerm}
 					onChange={handleChange}
 				/>
-				<div className="dino__flex_row" style={{"flex": "auto"}}>
+				<div className="dino__flex_row dino__list_and_filter">
 					<ListTitle title={language.data.MENU_CONTACTS} />
 					<DinoFilterList 
 						filters={filters} 

@@ -682,6 +682,8 @@ export default class EN implements LanguageBase {
 
 	TREATMENT_ESSENTIAL_CONTACTS = "Treatment " + this.ESSENTIAL_CONTACTS
 
+	HAS_USER_QUESTIONS_ONLY = "With User Questions Only"
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

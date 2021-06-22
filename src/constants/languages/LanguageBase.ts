@@ -326,6 +326,7 @@ export default interface LanguageBase {
 	YOUR_CONTACTS: string
 	UNIVERSAL_ESSENTIAL_CONTACTS: string
 	TREATMENT_ESSENTIAL_CONTACTS: string
+	HAS_USER_QUESTIONS_ONLY: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

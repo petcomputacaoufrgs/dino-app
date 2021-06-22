@@ -690,6 +690,8 @@ export default class PT implements LanguageBase {
 	UNIVERSAL_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " Universais"
 
 	TREATMENT_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " de Tratamento"
+
+	HAS_USER_QUESTIONS_ONLY = "Apenas Com Perguntas de Usuários"
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

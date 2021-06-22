@@ -17,12 +17,11 @@ const MuiSearchBar = (props: SearchBarProps) => {
 	return (
 		<div className='mui-search-bar'>
 			<TextField
-				id='outlined-helperText'
 				fullWidth
 				variant='outlined'
 				value={props.value}
 				onChange={props.onChange}
-				aria-describedby='standard-weight-helper-text'
+				aria-describedby='search-bar'
 				size='small'
 				placeholder={props.placeholder || language.data.SEARCH_HOLDER}
 				InputProps={{

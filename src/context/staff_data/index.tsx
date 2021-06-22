@@ -70,7 +70,7 @@ const StaffDataProvider: React.FC = ({ children }) => {
 
 export const useStaffData = () => useContext(StaffData)
 
-export const useTreatmentView = (treatmentLocalId?: number) => {
+export const useTreatmentView = (treatmentLocalId?: number): TreatmentView | undefined => {
 	const staffData = useStaffData()
 	return treatmentLocalId ? staffData.get(treatmentLocalId) : undefined
 }

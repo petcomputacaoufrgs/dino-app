@@ -9,21 +9,30 @@ import TreatmentItems from './treatment_list_items'
 import AddButton from '../../../components/button/circular_button/add_button'
 import TreatmentForm from './treatment_form'
 import './styles.css'
+import DinoFilterList from '../../../components/list_components/filter_list'
+import ListTitle from '../../../components/list_components/list_title'
+import { getTreatmentFilter } from '../../../utils/FilterUtils'
+import { useStaffData } from '../../../context/staff_data'
 
-interface TreatmentProps {
-	ref: React.Ref<unknown>,
-}
-
-const Treatment: React.FC<TreatmentProps> = () => {
+const Treatment: React.FC<{ ref: React.Ref<unknown> }> = () => {
 
 	const language = useLanguage()
-
+	const staffData = useStaffData()
 	const [isLoading, setIsLoading] = useState(true)
 	const [treatments, setTreatments] = useState<Array<TreatmentEntity>>([])
 	const [toAdd, setToAdd] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
+	const [filters, setFilters] = useState(getTreatmentFilter(language))
 	
-	const filteredTreatments = treatments.filter(e => StringUtils.contains(e.name, searchTerm))
+	const filteredTreatments = treatments.filter(t => 
+		StringUtils.contains(t.name, searchTerm) && 
+		!filters.some(f => f.checked && !f.validator(staffData.get(t.localId!))))
+
+	const handleChangeChecked = (index: number) => {
+		const filter = filters[index]
+		filter.checked = !filter.checked
+		setFilters([...filters])
+	} 
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -67,6 +76,13 @@ const Treatment: React.FC<TreatmentProps> = () => {
 					value={searchTerm}
 					onChange={handleChange}
 				/>
+				<div className="dino__flex_row dino__list_and_filter">
+					<ListTitle title={language.data.TREATMENTS_AND_FAQS}/>
+					<DinoFilterList 
+						filters={filters} 
+						onChangeChecked={handleChangeChecked} 
+					/>
+				</div>
 				<TreatmentItems items={filteredTreatments} />
 				<AddButton
 					handleAdd={() => setToAdd(true)}

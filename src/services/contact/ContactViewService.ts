@@ -77,37 +77,6 @@ import PhoneService from "./PhoneService"
 
 		return sortByName()
 	}
-
-	export const getContactFilter = (hasStaffPowers: boolean, language: LanguageContextType) => {
-	
-		const userFilter: FilterType[] = [
-			{
-				checked: true,
-				label: language.data.ESSENTIAL_CONTACTS,
-				validator: (c: ContactType) => cameFromEssential(c)
-			},
-			{
-				checked: true,
-				label: language.data.YOUR_CONTACTS,
-				validator: (c: ContactType) => !cameFromEssential(c)
-			}
-		]
-	
-		const staffFilter: FilterType[] = [
-			{
-				checked: true,
-				label: language.data.UNIVERSAL_ESSENTIAL_CONTACTS,
-				validator: (c: ContactType) => isUniversalEssential(c)
-			},
-			{
-				checked: true,
-				label: language.data.TREATMENT_ESSENTIAL_CONTACTS,
-				validator: (c: ContactType) => !isUniversalEssential(c)
-			}
-		]
-	
-		return hasStaffPowers ? staffFilter : userFilter
-	}
 	
 	export const cameFromEssential = (contact: ContactType) => Utils.isNotEmpty((contact as ContactEntity).localEssentialContactId)
 	

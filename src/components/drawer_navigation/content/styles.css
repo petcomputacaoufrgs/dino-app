@@ -19,3 +19,11 @@
 .drawer__navigation__content__app_bar {
 	height: 2.813rem;
 }
+
+.MuiList-root.MuiMenu-list.MuiList-padding {
+	background-color: var(--background-main);
+}
+
+.MuiFormLabel-root.Mui-focused.Mui-focused {
+	color: var(--other-details);
+}

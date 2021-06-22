@@ -56,6 +56,7 @@
 	width: 70%;
 	height: 100%;
 	font-size: var(--large-font);
+	background-color: var(--other-details);
 }
 
 .settings__title.MuiTypography-root {
@@ -65,9 +66,13 @@
 }
 
 .settings__form__delete_account {
-	font-size: var(--small-font);
+	font-size: var(--default-small-font);
 	color: #ed2939;
 	text-transform: uppercase;
+}
+
+.settings__form__change_password {
+	font-size: var(--default-small-font);
 }
 
 .dino_hr.settings__last_line {

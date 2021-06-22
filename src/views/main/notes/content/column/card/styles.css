@@ -48,7 +48,7 @@
 
 .note__note_content__column__column_card__card__card_answer.MuiCardActions-root {
 	padding: 0.5rem 1rem 0.5rem 1rem;
-	background-color: var(--note-answer-background);
+	background-color: #EECDC8;
 }
 
 .note__note_content__column__column_card__card__card_answer.MuiCardActions-root
@@ -58,5 +58,5 @@
 	display: block;
 	text-overflow: ellipsis;
 	margin: 0;
-	font-size: var(--default-font);
+	font-size: var(--default-small-font);
 }

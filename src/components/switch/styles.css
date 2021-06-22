@@ -26,13 +26,25 @@
 	align-items: center;
 }
 
+.MuiSwitch-root.dino_switch__form__switch .PrivateSwitchBase-checked-2.Mui-checked {
+	opacity: 1;
+}
+
+.dino_switch__form .MuiSwitch-colorSecondary {
+	opacity: 0.4;
+}
+
 .dino_switch__form .MuiSwitch-colorSecondary.Mui-checked {
-	color: var(--button-selected-font-color);
+	color: var(--other-details);
 }
 
 .dino_switch__form .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
-	background-color: var(--button-selected-font-color);
+	background-color: var(--other-details);
 }
 .dino_switch__form .MuiSwitch-colorSecondary {
-	color: var(--button-font-color);
+	color: var(--other-details-2);
+}
+
+.dino_switch__form .MuiSwitch-track {
+	background-color: var(--other-details-2);
 }

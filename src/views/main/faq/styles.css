@@ -41,6 +41,7 @@
 }
 
 .faq__save_button {
+	background-color: #977569;
 	margin-top: 2rem;
 }
 
@@ -48,7 +49,7 @@
 	margin-right: 0.5rem;
 	width: 1.125rem;
 	height: 1.125rem;
-	fill: var(--contrast-color);
+	fill: var(--light-color);
 }
 
 .faq__loader {

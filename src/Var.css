@@ -17,9 +17,9 @@
 
 	/* // Light Mode // */
 	/* Fundos */
-	--login-background: #694e73;
-	--background-main: #f5f5f5;
-	--horizontal-menu-item: #688478;
+	--login-background: #A0D1BE;
+	--background-main: #E5DCD9;
+	--horizontal-menu-item: #977569;
 	--dialog-input: #e2e2e2;
 
 	/* Fontes */
@@ -27,13 +27,13 @@
 	--selection: #adc2b9;
 
 	/* Menu e cabecalho */
-	--header-and-menu: #694e73;
+	--header-and-menu: #A0D1BE;
 
 	/* Home */
-	--home-icons: #adc2b9;
+	--home-icons: #E1A69E;
 
 	/* Notas */
-	--board-background: #adc2b9;
+	--board-background: #E1A69E;
 	--column-border: #274035;
 	--column-font-color: #274035;
 
@@ -47,7 +47,8 @@
 	/* Outros */
 	--contrast-color: #2f2e2c;
 	--inv-contrast-color: #f5f5f5;
-	--other-details: #f5f5f5;
+	--other-details: #977569;
+	--other-details-2: #E1A69E;
 	--font-base: 'Poppins', sans-serif;
 	--font-secondary: 'Poppins', sans-serif;
 	--avatar-color-1: #f44336;
@@ -55,7 +56,7 @@
 	--avatar-color-3: #9c27b0;
 	--avatar-color-4: #2196f3;
 	--avatar-color-5: #4caf50;
-	--tag-color: #d1a300;
+	--tag-color: #F8E6C0;
 }
 
 [data-theme='dark'] {
@@ -156,4 +157,8 @@
 	--very-large-font: 3.0625rem;
 
 	--svg-size: 1.875rem;
+}
+
+.st0{
+	fill:#121212;
 }

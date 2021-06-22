@@ -2,7 +2,7 @@
 	height: 1.25rem;
 	display: flex;
 	flex-direction: row;
-	color: var(--column-border);
+	color: var(--dark-color);
 	align-items: center;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .note__note_content__column__column_header__button_div__button svg {
-	fill: var(--column-border);
+	fill: var(--dark-color);
 	height: var(--svg-size);
 	width: var(--svg-size);
 	margin-left: auto;

@@ -49,7 +49,7 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-	fill: var(--contrast-color);
+	fill: #BFB9B7;
 }
 
 body .MuiInput-underline:before {
@@ -77,13 +77,13 @@ body .MuiInput-underline:before {
 
 .MuiPaper-root.MuiMenu-paper,
 .MuiPaper-root.MuiDialog-paper {
-	background-color: var(--other-details);
+	background-color: var(--background-main);
 	color: var(--base-font-color);
 }
 
 .app .MuiPaper-root,
 .app .card {
-	background-color: var(--other-details);
+	background-color: #E8BCB6;
 	color: var(--base-font-color);
 }
 

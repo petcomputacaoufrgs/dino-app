@@ -22,14 +22,18 @@ import { Star, Public } from '@material-ui/icons'
 import ContactEntity from '../../../types/contact/database/ContactEntity'
 import EssentialContactEntity from '../../../types/contact/database/EssentialContactEntity'
 import Utils from '../../../utils/Utils'
+import DinoFilterList from '../../../components/list_components/filter_list'
+import ListTitle from '../../../components/list_components/list_title'
+
+const cameFromEssential = (contact: ContactType) => Utils.isNotEmpty((contact as ContactEntity).localEssentialContactId)
+
+const isUniversalEssential = (contact: ContactType) => Boolean((contact as EssentialContactEntity).isUniversal)
 
 export const renderIcon = (contact: ContactType) => {
-	const cameFromEssential = Utils.isNotEmpty((contact as ContactEntity).localEssentialContactId)
-	const isUniversalEssential = Boolean((contact as EssentialContactEntity).isUniversal)
 
-	if(cameFromEssential)
+	if(cameFromEssential(contact))
 		return <Star /> 
-	if(isUniversalEssential) 
+	if(isUniversalEssential(contact)) 
 		return <Public /> 
 	if(contact.name)
 		return contact.name[0].toUpperCase()
@@ -48,8 +52,28 @@ const Contacts: React.FC = () => {
 	const [toAdd, setToAdd] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
+	const [filters, setFilters] = useState([
+		{
+			checked: true,
+			label: "Essential Contacts",
+			validator: (c: ContactType) => cameFromEssential(c)
+		},
+		{
+			checked: true,
+			label: "Your Contacts",
+			validator: (c: ContactType) => !cameFromEssential(c)
+		}
+	])
 
-	const filteredContacts = ContactViewService.filterContactViews(contacts, searchTerm)
+	let searchContacts = ContactViewService.filterContactViews(contacts, searchTerm)
+
+	const handleChangeChecked = (index: number) => {
+		const filter = filters[index]
+		filter.checked = !filter.checked
+		setFilters([...filters])
+	} 
+
+	let filteredContacts = searchContacts.filter(c => filters.some(f => f.checked && f.validator(c.contact)))
 
 	useEffect(() => {
 		const loadUserData = async () => {
@@ -174,6 +198,13 @@ const Contacts: React.FC = () => {
 					value={searchTerm}
 					onChange={handleChange}
 				/>
+				<div className="dino__flex_row" style={{"flex": "auto"}}>
+					<ListTitle title={language.data.MENU_CONTACTS} />
+					<DinoFilterList 
+						filters={filters} 
+						onChangeChecked={handleChangeChecked} 
+					/>
+				</div>
 				<ContactItems items={filteredContacts} />
 			</DinoLoader>
 			<AddButton

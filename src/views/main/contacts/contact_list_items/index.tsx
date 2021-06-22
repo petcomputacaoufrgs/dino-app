@@ -15,7 +15,6 @@ import EssentialContactEntity from '../../../../types/contact/database/Essential
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
-import ListTitle from '../../../../components/list_components/list_title'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import NoItemsList from '../../../../components/list_components/no_items_list'
 import ArrayUtils from '../../../../utils/ArrayUtils'
@@ -24,7 +23,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<ContactView | undefined>(undefined)
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
 	const language = useLanguage()
 	const isStaff = HasStaffPowers()
@@ -72,7 +71,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
 	return (
 		<>
-		  <ListTitle title={language.data.MENU_CONTACTS} />
 			{ArrayUtils.isNotEmpty(items) ? 
 				<List className='contacts__list dino__list__padding'>
 					{items.map((item, index) => 

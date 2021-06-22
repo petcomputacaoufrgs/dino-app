@@ -1,7 +1,7 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { MenuItem } from '@material-ui/core'
-import IconButton from '../../../../../../components/button/icon_button'
+import DinoIconButton from '../../../../../../components/button/icon_button'
 import { ReactComponent as ClearIconSVG } from '../../../../../../assets/icons/close.svg'
 import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
@@ -74,7 +74,7 @@ const PhoneFields = ({
 					maxLength: Constants.CONTACT_PHONE_NUMBER.MAX,
 					endAdornment: (
 						<InputAdornment position='end'>
-							<IconButton
+							<DinoIconButton
 								ariaLabel={language.data.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
 								icon={ClearIconSVG}
 								className='clear_button'

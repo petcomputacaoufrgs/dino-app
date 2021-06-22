@@ -1,6 +1,7 @@
 .list__title {
 	padding: 0px 16px;
 	margin-bottom: 8px;
+	width: 100%;
 }
 
 .list__title p {

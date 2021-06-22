@@ -1,6 +1,6 @@
 import React from 'react'
 import MenuService from '../../../services/menu/MenuService'
-import IconButton from '../../../components/button/icon_button'
+import DinoIconButton from '../../../components/button/icon_button'
 import { useLanguage } from '../../../context/language'
 import Button from '../../../components/button'
 import LanguageBase from '../../../constants/languages/LanguageBase'
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
 					.filter(item => item.image)
 					.map((item, index) => (
 						<div className='home__grid__item' key={index}>
-							<IconButton
+							<DinoIconButton
 								icon={item.image!}
 								className='home__grid__button'
 								onClick={item.onClick}

@@ -9,7 +9,7 @@ import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
-import IconButton from '../../../../components/button/icon_button'
+import DinoIconButton from '../../../../components/button/icon_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
@@ -135,7 +135,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 						onChange={handleQuestionChange}
 						className='note__info_dialog__title__question'
 					/>
-					<IconButton
+					<DinoIconButton
 						className='note_info_dialog__delete_icon'
 						icon={DeleteOutlineIcon}
 						onClick={handleDeleteNote}

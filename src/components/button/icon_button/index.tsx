@@ -3,7 +3,7 @@ import Button from '..'
 import IconButtonProps from './props'
 import './style.css'
 
-const IconButton: React.FC<IconButtonProps> = props => {
+const DinoIconButton: React.FC<IconButtonProps> = props => {
 	const Icon = props.icon
 
 	const getClassName = (): string => {
@@ -31,4 +31,4 @@ const IconButton: React.FC<IconButtonProps> = props => {
 	)
 }
 
-export default IconButton
+export default DinoIconButton

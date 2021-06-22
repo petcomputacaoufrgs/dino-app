@@ -672,6 +672,8 @@ export default class EN implements LanguageBase {
 
 	NO_ITEMS_LIST = 'No Items'
 
+	FILTER = 'Filter'
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

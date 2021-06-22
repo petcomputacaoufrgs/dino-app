@@ -74,7 +74,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
           {!isStaff &&
             <DinoSwitch
               selected={props.selectedEssentialContactGrant}
-              setSelected={props.onEssentialContactGrantChange}
+              onChangeSelected={() => props.onEssentialContactGrantChange(!props.selectedEssentialContactGrant)}
               label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
           />}
         </SelectTreatment>

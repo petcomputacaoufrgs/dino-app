@@ -1,5 +1,5 @@
 import React from 'react'
-import IconButton from '../../../../../components/button/icon_button'
+import DinoIconButton from '../../../../../components/button/icon_button'
 import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/color_lens.svg'
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
@@ -35,7 +35,7 @@ const AddContactDialogHeader = (
 				</Avatar>
 			}
 			action={
-				<IconButton
+				<DinoIconButton
 					ariaLabel={language.data.COLOR_THEME_SELECTION_ARIA_LABEL}
 					icon={ChangeColorIconSVG}
 					dark

@@ -490,7 +490,7 @@ const Settings: React.FC = () => {
 					<FormControl className='settings__form'>
 						<DinoSwitch
 							selected={syncGoogleContacts}
-							setSelected={handleGoogleContactSwitchChanged}
+							onChangeSelected={handleGoogleContactSwitchChanged}
 							label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
 						/>
 					</FormControl>
@@ -498,7 +498,7 @@ const Settings: React.FC = () => {
 					<FormControl className='settings__form'>
 						<DinoSwitch
 							selected={selectedEssentialContactGrant}
-							setSelected={setSelectedEssentialContactGrant}
+							onChangeSelected={() => setSelectedEssentialContactGrant(false)}
 							label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
 						/>
 					</FormControl>

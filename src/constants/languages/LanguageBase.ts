@@ -321,6 +321,7 @@ export default interface LanguageBase {
 	PASSWORD_CHANGED: string
 	WRONG_PASSWORD: string
 	NO_ITEMS_LIST: string
+	FILTER: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

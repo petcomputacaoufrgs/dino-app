@@ -4,7 +4,7 @@ import { Divider } from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { Avatar } from '@material-ui/core'
-import IconButton from '../../button/icon_button'
+import DinoIconButton from '../../button/icon_button'
 import { ReactComponent as ChevronLeftIconSVG } from '../../../assets/icons/chevron_left.svg'
 import DinoLoader from '../../loader'
 import { useLanguage } from '../../../context/language'
@@ -120,7 +120,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 			<div className='drawer_navigation__drawer'>
 				<div className='drawer_navigation__drawer__visible'>
 					<div className='drawer_navigation__drawer__header'>
-						<IconButton
+						<DinoIconButton
 							ariaLabel={language.data.CLOSE_MENU_BUTTON_ARIA_LABEL}
 							icon={ChevronLeftIconSVG}
 							onClick={handleCloseClick}

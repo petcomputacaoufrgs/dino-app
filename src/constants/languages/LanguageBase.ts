@@ -14,9 +14,13 @@ export default interface LanguageBase {
 	FAQ: string
 	FAQ_ITEM: string
 	FIRST_LOGIN_DIALOG_LABEL: string
+	FIRST_LOGIN_WELCOME_MESSAGE_HEADER: string
 	FIRST_LOGIN_WELCOME_MESSAGE: string
 	FIRST_LOGIN_DONE_MESSAGE: string
+	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE: string
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE: string
 	FIRST_LOGIN_CHOOSE_TREATMENT: string
+	FIRST_LOGIN_CHOOSE_PASSWORD: string
 	FIRST_LOGIN_CHOOSE_COLOR_THEME: string
 	FIRST_LOGIN_CHOOSE_LANGUAGE: string
 	LOGIN_BUTTON_TEXT: string
@@ -327,6 +331,9 @@ export default interface LanguageBase {
 	UNIVERSAL_ESSENTIAL_CONTACTS: string
 	TREATMENT_ESSENTIAL_CONTACTS: string
 	HAS_USER_QUESTIONS_ONLY: string
+	RENDER_OFFLINE_CONTENT_PART_1: string
+	RENDER_OFFLINE_CONTENT_PART_2: string
+	NO_CONNECTION: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

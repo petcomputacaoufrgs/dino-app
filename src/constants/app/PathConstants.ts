@@ -71,6 +71,8 @@ class PathConstants {
 	TERMS_OF_USE = '/terms_of_use'
 
 	PRIVACY_POLICY = '/privacy_policy'
+	
+	USER_QUESTIONS_TAB = '1'
 }
 
 export default new PathConstants()

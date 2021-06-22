@@ -5,25 +5,16 @@ import OptionsIconButton from '../../../../../components/button/icon_button/opti
 import PathConstants from '../../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../../context/language'
 import { useTreatmentView } from '../../../../../context/staff_data'
-import TreatmentEntity from '../../../../../types/treatment/database/TreatmentEntity'
 import Icon from '@material-ui/icons/ContactSupport';
-import TreatmentQuestionService from '../../../../../services/treatment/TreatmentQuestionService'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
-
-interface TreatmentItemProps {
-  item: TreatmentEntity,
-  onClickMenu: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: TreatmentEntity) => void
-}
+import TreatmentItemProps from './props'
 
 const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) => {
   const language = useLanguage()
   const history = useHistory()
   const treatmentView = useTreatmentView(item.localId)
 
-  //TODO tirar literal de aba
-  const redirectToUserQuestions = () => {
-    history.push(`${PathConstants.STAFF_FAQ}/${item.localId}/1`);
-  }
+  const redirectToUserQuestions = () => history.push(`${PathConstants.STAFF_FAQ}/${item.localId}/${PathConstants.USER_QUESTIONS_TAB}`)
 
   return (
     <div className='treatment__list_item'>

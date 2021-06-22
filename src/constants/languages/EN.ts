@@ -25,11 +25,19 @@ export default class EN implements LanguageBase {
 
 	FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
 
-	FIRST_LOGIN_WELCOME_MESSAGE = 'Welcome!'
+	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Welcome!'
+
+	FIRST_LOGIN_WELCOME_MESSAGE = 'Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicinge lit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibus repudiandae ut labore!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
 
+	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE = 'Thank you for joining DinoApp!'
+
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE = 'Your settings can be updated at any time in the Settings section of the app.'
+
 	FIRST_LOGIN_CHOOSE_TREATMENT = 'Select your Treatment'
+
+	FIRST_LOGIN_CHOOSE_PASSWORD = 'Create a password for the guardian area'
 
 	FIRST_LOGIN_CHOOSE_COLOR_THEME = 'Select your Color Theme'
 
@@ -683,6 +691,12 @@ export default class EN implements LanguageBase {
 	TREATMENT_ESSENTIAL_CONTACTS = "Treatment " + this.ESSENTIAL_CONTACTS
 
 	HAS_USER_QUESTIONS_ONLY = "With User Questions Only"
+
+	RENDER_OFFLINE_CONTENT_PART_1 = 'In order to synchronize your contacts, a connection to an internet network is required.'
+	
+	RENDER_OFFLINE_CONTENT_PART_2 = 'Please try again when connected.'
+
+	NO_CONNECTION = 'No internet connection'
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 

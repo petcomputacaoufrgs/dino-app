@@ -51,7 +51,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
 			},
 			{
 				id: "PASSWORD",
-				title: 'Crie uma senha para a área dos responsáveis', 
+				title: language.data.FIRST_LOGIN_CHOOSE_PASSWORD, 
       	component: renderSetPasswordDialog,
 			}
 		]
@@ -112,19 +112,16 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
     return (
       <div className='first_settings__message_dialog'>
         <DinoLogoHeader
-          title={language.data.FIRST_LOGIN_WELCOME_MESSAGE}
+          title={language.data.FIRST_LOGIN_WELCOME_MESSAGE_HEADER}
           size='small'
         />
-        <p>
-          Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibus
-          repudiandae ut labore!
-        </p>
+        <p>{language.data.FIRST_LOGIN_WELCOME_MESSAGE}</p>
         <h6 className='citation'>— {language.data.DINOAPP_TEAM}</h6>
       </div>
     )
   }
 
+  //TODO repetido
   const renderSetPasswordDialog = () => {
     return (
       <div className='first_settings__message_dialog set_password'>
@@ -154,7 +151,6 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
     )
   }
 
-  //TODO: traduzir
   const renderFinalMessageDialog = () => {
     return (
       <div className='first_settings__message_dialog'>
@@ -162,11 +158,8 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
           title={language.data.FIRST_LOGIN_DONE_MESSAGE}
           size='small'
         />
-        <p>Obrigado por se juntar ao DinoApp!</p>
-        <p>
-          Suas configurações podem ser atualizadas a qualquer momento na aba de{' '}
-          <em>Configurações</em>
-        </p>
+        <p>{language.data.FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE}</p>
+        <p>{language.data.FIRST_LOGIN_CONFIGURATIONS_MESSAGE}</p>
       </div>
     )
   }

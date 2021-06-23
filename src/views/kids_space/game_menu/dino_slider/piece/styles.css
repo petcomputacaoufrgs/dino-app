@@ -8,48 +8,66 @@
   align-items: center;
   font-size: 45px;
   color: whitesmoke;
+  border-radius: 40%;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%), inset 0px 4px 4px rgb(255 255 255 / 25%);
 }
 
-.piece_2 {
-background-color: #EBDCD0;
+.piece_2{
+  background-color: #EBDCD0;
+  color: rgb(88, 83, 69);
 }
 
-.piece_4 {
-background-color: #E9DBBA;
+.piece_4{
+  background-color: #E9DBBA;
+  color: rgb(88, 83, 69);
 }
 
-.piece_8 {
-background-color: #E9A067;
+.piece_8{
+  background-color: #E9A067;
+  color: rgb(88, 83, 69);
 }
 
-.piece_16 {
-background-color: #F08151;
+.piece_16{
+  background-color: #F08151;
+  color: whitesmoke;
 }
 
-.piece_32 {
-background-color: #F2654F;
+.piece_32{
+  background-color: #F2654F;
+  color: whitesmoke;
 }
 
-.piece_64 {
-background-color: #F1462C;
+.piece_64{
+  background-color: #F1462C;
+  color: whitesmoke;
 }
 
-.piece_128 {
-background-color: #E7C65E;
+.piece_128{
+  background-color: #E7C65E;
+  color: rgb(88, 83, 69);
+  font-size: 40px;
 }
 
-.piece_256 {
-background-color: #E8C350;
+.piece_256{
+  background-color: #E8C350;
+  color: rgb(88, 83, 69);
+  font-size: 40px;
 }
 
-.piece_512 {
-background-color: #E8BE40;
+.piece_512{
+  background-color: #E8BE40;
+  color: rgb(88, 83, 69);
+  font-size: 40px;
 }
 
-.piece_1024 {
-background-color: #E8BB31;
+.piece_1024{
+  background-color: #E8BB31;
+  columns: rgb(59, 54, 47);
+  font-size: 30px;
 }
 
-.piece_2048 {
-background-color: #E7B723;
+.piece_2048{
+  background-color: #E7B723;
+  columns: rgb(61, 47, 47);
+  font-size: 30px;
 }

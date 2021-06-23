@@ -27,3 +27,7 @@
 .MuiFormLabel-root.Mui-focused.Mui-focused {
 	color: var(--other-details);
 }
+
+.MuiInputBase-root.Mui-focused.Mui-focused::after {
+	border-bottom-color: var(--other-details);
+}

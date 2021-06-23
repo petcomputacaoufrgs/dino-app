@@ -160,5 +160,5 @@
 }
 
 .st0{
-	fill:#121212;
+	fill: var(--base-font-color);
 }

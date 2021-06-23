@@ -7,6 +7,11 @@
 		0rem 0.375rem 0.625rem 0rem rgba(0, 0, 0, 0.14),
 		0rem 0.063rem 1.125rem 0rem rgba(0, 0, 0, 0.12);
 }
+
+.circular_button svg {
+	fill: var(--light-color)
+}
+
 .add_essential_contact_button.circular_button {
 	border-radius: 50%;
 	height: 1.75rem;

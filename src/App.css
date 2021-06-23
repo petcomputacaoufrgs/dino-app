@@ -98,3 +98,7 @@ body .MuiInput-underline:before {
 .MuiCardHeader-action button.button.icon_button {
 	margin: 0rem 0.125rem;
 }
+
+.MuiInputBase-root.MuiOutlinedInput-root.Mui-focused fieldset {
+	border-color: #977569;
+}

@@ -17,7 +17,7 @@
 .drawer_navigation__drawer__visible__menu__icon {
 	width: var(--very-large-font);
 	height: auto;
-	fill: var(--dark-color);
+	fill: var(--base-font-color);
 }
 
 .drawer_navigation__drawer__visible .MuiListItemIcon-root {
@@ -28,7 +28,7 @@
 
 .drawer_navigation__drawer__visible
 	.MuiTypography-root.MuiListItemText-primary {
-	color: var(--dark-color);
+	color: var(--base-font-color);
 }
 
 .drawer_navigation__drawer__invisible {

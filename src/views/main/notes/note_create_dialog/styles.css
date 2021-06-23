@@ -9,7 +9,7 @@
 }
 
 .note_create_dialog .MuiTypography-root.MuiTypography-h6 {
-	color: white;
+	color: var(--base-font-color);
 	font-size: var(--default-font);
 }
 

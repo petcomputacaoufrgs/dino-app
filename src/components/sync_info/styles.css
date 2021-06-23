@@ -33,28 +33,24 @@
 	animation: show_in 0.5s linear 0s;
 }
 
-.sync_info__icon.synced {
-	fill: rgb(47, 255, 0);
+.sync_info {
+	border-color: var(--light-color);
+}
+
+.sync_info__icon {
+	fill: var(--light-color);
 }
 
 .sync_info.synced {
-	border-color: rgb(47, 255, 0);
-}
-
-.sync_info__icon.synchronizing {
-	fill: rgb(173, 184, 167);
+	background-color: #779A5F;
 }
 
 .sync_info.synchronizing {
-	border-color: rgb(173, 184, 167);
-}
-
-.sync_info__icon.not_synced {
-	fill: rgb(184, 158, 158);
+	background-color: #A6A5A9;
 }
 
 .sync_info.not_synced {
-	border-color: rgb(184, 158, 158);
+	background-color: #CF4D5E;
 }
 
 @keyframes spin {

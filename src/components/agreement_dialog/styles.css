@@ -3,7 +3,7 @@
 }
 
 .alert__dialog_title .MuiTypography-root {
-	color: var(--light-color);
+	color: var(--base-font-color);
 	font-size: var(--default-font);
 }
 

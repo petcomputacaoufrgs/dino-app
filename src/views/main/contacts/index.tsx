@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { cameFromEssential, filterContactViews, getContactViews, isUniversalEssential } from '../../../services/contact/ContactViewService'
 import ContactItems from './contact_list_items'
-import MuiSearchBar from '../../../components/mui_search_bar'
+import DinoSearchBar from '../../../components/search_bar'
 import ContactFormDialog from './contact_dialog_form'
 import GoogleGrantDialog from '../../../components/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
@@ -16,13 +17,12 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 import { HasStaffPowers } from '../../../context/private_router'
 import AddButton from '../../../components/button/circular_button/add_button'
 import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { Star, Public } from '@material-ui/icons'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
-import { cameFromEssential, filterContactViews, getContactViews, 
-	isUniversalEssential } from '../../../services/contact/ContactViewService'
 import { getContactFilter } from '../../../utils/FilterUtils'
+import CRUDEnum from '../../../types/enum/CRUDEnum'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export const renderIcon = (contact: ContactType) => {
 
@@ -44,7 +44,7 @@ const Contacts: React.FC = () => {
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
-	const [toAdd, setToAdd] = useState(false)
+	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
 	const [filters, setFilters] = useState(getContactFilter(hasStaffPowers, language))
@@ -137,7 +137,7 @@ const Contacts: React.FC = () => {
 
 	const handleAcceptGoogleGrant = async () => {
 		setOpenGrantDialog(false)
-		setToAdd(true)
+		handleCreate()
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
@@ -146,13 +146,13 @@ const Contacts: React.FC = () => {
 
 	const handleCloseGoogleGrant = () => {
 		setOpenGrantDialog(false)
-		setToAdd(true)
+		handleCreate()
 	}
 
 	const handleDeclineGoogleGrant = () => {
 		setShouldDecline(true)
 		setOpenGrantDialog(false)
-		setToAdd(true)
+		handleCreate()
 	}
 
 	const handleAddContact = () => {
@@ -162,22 +162,23 @@ const Contacts: React.FC = () => {
 				return
 			}
 		}
-
-		setToAdd(true)
+		handleCreate()
 	}
 
 	const handleClose = () => {
-		setToAdd(false)
+		setToAction(CRUDEnum.NOP)
 		if (shouldDecline && settings) {
 			settings.declineGoogleContacts = true
 			UserSettingsService.save(settings)
 		}
 	}
 
+	const handleCreate = () => setToAction(CRUDEnum.CREATE)
+
 	return (
 		<div className='contacts'>
 			<DinoLoader className='contacts__loader' isLoading={isLoading}>
-				<MuiSearchBar
+				<DinoSearchBar
 					value={searchTerm}
 					onChange={handleChange}
 				/>
@@ -196,7 +197,7 @@ const Contacts: React.FC = () => {
 			/>
 			<ContactFormDialog
 				items={contacts}
-				dialogOpen={toAdd}
+				dialogOpen={toAction === CRUDEnum.CREATE}
 				onClose={handleClose}
 			/>
 			<GoogleGrantDialog

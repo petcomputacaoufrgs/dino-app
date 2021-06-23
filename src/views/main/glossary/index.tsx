@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import GlossaryItems from './glossary_list_items'
-import MuiSearchBar from '../../../components/mui_search_bar'
+import DinoSearchBar from '../../../components/search_bar'
 import GlossaryItemEntity from '../../../types/glossary/database/GlossaryItemEntity'
 import DinoLoader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
@@ -55,7 +55,7 @@ const Glossary: React.FC = () => {
 
 	return (
 		<div className='glossary'>
-			<MuiSearchBar
+			<DinoSearchBar
 				value={searchTerm}
 				onChange={handleChange}
 			/>

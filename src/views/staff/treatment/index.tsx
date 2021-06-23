@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DinoLoader from '../../../components/loader'
-import MuiSearchBar from '../../../components/mui_search_bar'
+import DinoSearchBar from '../../../components/search_bar'
 import { useLanguage } from '../../../context/language'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import StringUtils from '../../../utils/StringUtils'
@@ -72,7 +72,7 @@ const Treatment: React.FC<{ ref: React.Ref<unknown> }> = () => {
 	return (
 		<div className='treatments'>
 			<DinoLoader className='treatments__loader' isLoading={isLoading}>
-				<MuiSearchBar
+				<DinoSearchBar
 					value={searchTerm}
 					onChange={handleChange}
 				/>

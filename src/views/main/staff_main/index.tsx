@@ -52,11 +52,6 @@ const StaffMain: React.FC = () => {
 					<Switch>
 						<PrivateRoute
 							exact
-							path={`${PathConstants.STAFF_FAQ}/:localId`}
-							component={FaqHub}
-						/>
-						<PrivateRoute
-							exact
 							path={`${PathConstants.STAFF_FAQ}/:localId/:tab`}
 							component={FaqHub}
 						/>

@@ -3,7 +3,7 @@ import { Avatar, CardContent, CardHeader, ListItem, ListItemText } from '@materi
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import { useLanguage } from '../../../../context/language'
 import AvatarIcon from '@material-ui/icons/QuestionAnswer'
-import MuiSearchBar from '../../../../components/mui_search_bar'
+import DinoSearchBar from '../../../../components/search_bar'
 import ListTitle from '../../../../components/list_components/list_title'
 import QuestionDialogForm from '../question_dialog_form'
 import { useTreatmentView } from '../../../../context/staff_data'
@@ -85,7 +85,7 @@ const TreatmentQuestionItems: React.FC = () => {
   }
 
   return <>
-    <MuiSearchBar
+    <DinoSearchBar
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value as string)}
     />

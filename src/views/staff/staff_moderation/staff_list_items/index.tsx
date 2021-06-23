@@ -5,7 +5,7 @@ import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/di
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import ListTitle from '../../../../components/list_components/list_title'
 import NoItemsList from '../../../../components/list_components/no_items_list'
-import MuiSearchBar from '../../../../components/mui_search_bar'
+import DinoSearchBar from '../../../../components/search_bar'
 import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
 import StaffService from '../../../../services/staff/StaffService'
@@ -74,7 +74,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 
   return (
     <div>
-      <MuiSearchBar
+      <DinoSearchBar
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value as string)}
       />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ContactItemsProps from './props'
 import ContactCard from '../contact_dialog_card'
 import ContactItemList from './contact_list_item'
@@ -13,11 +13,11 @@ import { HasStaffPowers } from '../../../../context/private_router'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
-import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import NoItemsList from '../../../../components/list_components/no_items_list'
 import ArrayUtils from '../../../../utils/ArrayUtils'
+import { cameFromEssential } from '../../../../services/contact/ContactViewService'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
@@ -52,22 +52,14 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 		setSelectedItem(item)
 	}
 
-	const handleEditOption = () => {
-		setToAction(CRUDEnum.UPDATE)
-	}
+	const handleEditOption = () => setToAction(CRUDEnum.UPDATE)
 
-	const handleDeleteOption = () => {
-		setToAction(CRUDEnum.DELETE)
-	}
+	const handleDeleteOption = () => setToAction(CRUDEnum.DELETE)
 
 	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>, item: ContactView) => {
     setAnchorEl(event.currentTarget)
     setSelectedItem(item)
   }
-
-	const isEditUnavailable = selectedItem 
-	&& (selectedItem.contact as ContactEntity)
-	.localEssentialContactId !== undefined
 
 	return (
 		<>
@@ -110,7 +102,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 					setAnchor={setAnchorEl}
 					onEdit={handleEditOption}
 					onDelete={handleDeleteOption}
-					editUnavailable={isEditUnavailable}
+					editUnavailable={cameFromEssential(selectedItem.contact)}
 				/>
 				</>
 			)}

@@ -23,7 +23,7 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
           className='treatment__list_item__text'
           primary={item.name}
           secondary={
-            <Link className='dino__history_link' to={`${PathConstants.STAFF_FAQ}/${item.localId}`}>
+            <Link className='dino__history_link' to={`${PathConstants.STAFF_FAQ}/${item.localId}/${PathConstants.FAQ_TAB}`}>
               {language.data.seeFAQItemsText(language.data.TREATMENT)}
             </Link>
           }

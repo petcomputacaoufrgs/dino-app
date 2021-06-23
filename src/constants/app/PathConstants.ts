@@ -72,6 +72,8 @@ class PathConstants {
 
 	PRIVACY_POLICY = '/privacy_policy'
 	
+	FAQ_TAB = '0'
+
 	USER_QUESTIONS_TAB = '1'
 }
 

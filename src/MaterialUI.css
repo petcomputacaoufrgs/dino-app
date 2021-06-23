@@ -19,11 +19,6 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 	margin-left: 0;
 }
 
-body .colorDefault .MuiSvgIcon-root {
-	/* fill: var(--contrast-color); */
-	fill: #fafafa;
-}
-
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
@@ -104,4 +99,10 @@ body .MuiInputBase-root {
 .app .MuiInput-underline:after,
 .dino_dialog .MuiInput-underline:after {
 	border-bottom: 2px solid var(--highlight-color);
+}
+
+.colorDefault .MuiSvgIcon-root,
+.MuiCardHeader-root.contact_dialog_form_header .MuiSvgIcon-root {
+	/* fill: var(--contrast-color); */
+	fill: #fafafa;
 }

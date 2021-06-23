@@ -10,7 +10,7 @@ interface SearchBarProps {
 	placeholder?: string
 }
 
-const MuiSearchBar = (props: SearchBarProps) => {
+const DinoSearchBar = (props: SearchBarProps) => {
 
 	const language = useLanguage()
 	
@@ -38,4 +38,4 @@ const MuiSearchBar = (props: SearchBarProps) => {
 	)
 }
 
-export default MuiSearchBar
+export default DinoSearchBar

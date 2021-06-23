@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import MuiSearchBar from '../../../../components/mui_search_bar'
+import DinoSearchBar from '../../../../components/search_bar'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
 import FaqView from '../../../../types/faq/view/FaqView'
 import FaqItems from '../faq_list_items'
@@ -9,7 +9,7 @@ const Faq: React.FC<{ view?: FaqView }> = ({ view }) => {
 
   return (
     <>
-      <MuiSearchBar
+      <DinoSearchBar
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value as string)}
       />

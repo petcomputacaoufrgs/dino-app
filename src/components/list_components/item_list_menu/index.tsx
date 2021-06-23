@@ -36,15 +36,15 @@ const ItemListMenu = ({
 	}
 
 	const handleEdit = () => {
-		onEdit()
 		handleClose()
 		handleCloseDialog()
+		onEdit()
 	}
 
 	const handleDelete = () => {
-		onDelete()
 		handleClose()
 		handleCloseDialog()
+		onDelete()
 	}
 
 	return (
@@ -53,6 +53,11 @@ const ItemListMenu = ({
 			open={Boolean(anchor)}
 			onClose={handleClose}
 			className='item_list___menu_options'
+			getContentAnchorEl={null}
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'left',
+			}}
 		>
 			{renderEditMenuItem()}
 			<MenuItem onClick={handleDelete}>

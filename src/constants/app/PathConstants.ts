@@ -27,8 +27,6 @@ class PathConstants {
 
 	USER_CONTACTS: string = `${this.USER}/${this.CONTACTS}`
 
-	USER_GAMES: string = `${this.USER}/${this.GAMES}`
-
 	USER_SETTINGS: string = `${this.USER}/${this.SETTINGS}`
 
 	USER_FAQ: string = `${this.USER}/${this.FAQ}`
@@ -36,7 +34,6 @@ class PathConstants {
 	USER_NOTES: string = `${this.USER}/${this.NOTES}`
 
 	USER_CALENDAR = `${this.USER}/${this.CALENDAR}`
-
 
 	STAFF_HOME: string = `${this.STAFF}/${this.HOME}`
 
@@ -65,6 +62,8 @@ class PathConstants {
 	DINO_RUNNER_GAME = `${this.GAME_MENU}/dino_runner`
 	
 	TIC_TAC_DINO_GAME = `${this.GAME_MENU}/tic_tac_dino`
+
+	DINO_SLIDER_GAME = `${this.GAME_MENU}/dino_slider`
 
 	ABOUT_US = '/about_us'
 

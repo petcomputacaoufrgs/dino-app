@@ -11,6 +11,7 @@ import { HasStaffPowers } from '../../../../../context/private_router'
 import EssentialContactEntity from '../../../../../types/contact/database/EssentialContactEntity'
 import { LanguageContextType, useLanguage } from '../../../../../context/language'
 import './styles.css'
+import { isUniversalEssential } from '../../../../../services/contact/ContactViewService'
 
 const ContactCardContent: React.FC<ContactCardContentProps> = ({ item }) => {
 	const getTypePhoneIcon = (phone: PhoneEntity) => {
@@ -107,12 +108,10 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 		)
 	}
 
-	const isUniversal = Boolean((item.contact as EssentialContactEntity).isUniversal)
-
 	return HasStaffPowers() ? (
 		<List component='nav'>
 			<SectionTitle language={language} />
-			{ isUniversal ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT)
+			{ isUniversalEssential(item.contact) ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT)
 			: <DinoLoader isLoading={isLoading}>
 					{treatments?.map((e, index) => renderTreatmentListItem(e.name, index))}
 				</DinoLoader>}

@@ -43,6 +43,13 @@ const GameMenu: React.FC = () => {
 				text='Tic Tac Dino'
 				backgroundColor={'#E1BFFF'}
 			></GameCard>
+			<GameCard
+				onClick={() => {
+					HistoryService.push(PathConstants.DINO_SLIDER_GAME)
+				}}
+				text='Dino Slider'
+				backgroundColor={'#E1BFFF'}
+			></GameCard>
 		</div>
 	)
 }

@@ -21,11 +21,6 @@ const UserMain: React.FC = () => {
 					<PrivateRoute exact path={PathConstants.USER_HOME} component={Home} />
 					<PrivateRoute
 						exact
-						path={PathConstants.USER_GAMES}
-						component={() => <></>}
-					/>
-					<PrivateRoute
-						exact
 						path={PathConstants.USER_GLOSSARY}
 						component={Glossary}
 						/>

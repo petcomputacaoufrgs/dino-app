@@ -1,0 +1,55 @@
+.piece {
+  height: 80px;
+  width: 80px;
+  background-color: #C2B3A3;
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 45px;
+  color: whitesmoke;
+}
+
+.piece_2 {
+background-color: #EBDCD0;
+}
+
+.piece_4 {
+background-color: #E9DBBA;
+}
+
+.piece_8 {
+background-color: #E9A067;
+}
+
+.piece_16 {
+background-color: #F08151;
+}
+
+.piece_32 {
+background-color: #F2654F;
+}
+
+.piece_64 {
+background-color: #F1462C;
+}
+
+.piece_128 {
+background-color: #E7C65E;
+}
+
+.piece_256 {
+background-color: #E8C350;
+}
+
+.piece_512 {
+background-color: #E8BE40;
+}
+
+.piece_1024 {
+background-color: #E8BB31;
+}
+
+.piece_2048 {
+background-color: #E7B723;
+}

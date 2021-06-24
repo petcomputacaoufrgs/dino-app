@@ -13,7 +13,7 @@ import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogot
 import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotchi/inside.svg'
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
-import GoBackButton from '../../../components/button/icon_button'
+import DinoIconButton from '../../../components/button/icon_button'
 import AccessDialog from '../../../components/kids_space_dialog/access_dialog'
 import DinoColorConstants from '../../../constants/dinogotchi/DinoColorConstants'
 import KidsSpaceSettingsService from '../../../services/kids_space/KidsSpaceSettingsService'
@@ -162,8 +162,8 @@ const Dinogotchi: React.FC = () => {
 			<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 				{renderBackground()}
 				{renderDino()}
-				<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => {setOpen(false)}} onConfirm = {() => {HistoryService.push(PathConstants.HOME)}}/>
-				<GoBackButton icon={GoBackSVG} onClick={() => {setOpen(true)}} />
+				<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => setOpen(false)} onConfirm = {() => HistoryService.push(PathConstants.HOME)}/>
+				<DinoIconButton icon={GoBackSVG} onClick={() => setOpen(true)} />
 			</div>
 		</Loader>
 	)

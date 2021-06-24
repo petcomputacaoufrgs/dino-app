@@ -6,7 +6,7 @@ import GameOverDialog from "../../../../components/kids_space_dialog/game_over_d
 import Game from './components/Game'
 import '../../variables.css'
 import './styles.css'
-import GoBackButton from '../../../../components/button/go_back'
+import KidsSpaceGoBackButton from '../../../../components/button/go_back'
 
 const TicTacDino: React.FC = () => {
 	const language = useLanguage()
@@ -43,7 +43,7 @@ const TicTacDino: React.FC = () => {
 			>
 				<p>{message}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.GAME_MENU} />
+			<KidsSpaceGoBackButton />
 			<Game onEndGame={handleEndGame} gameStarted={gameStarted} />
 		</div>
 	)

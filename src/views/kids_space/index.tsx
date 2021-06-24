@@ -21,7 +21,11 @@ const KidsSpace: React.FC = () => {
 				path={PathConstants.KIDS_SPACE}
 				component={Dinogotchi}
 			/>
-			<PrivateRoute exact path={PathConstants.GAME_MENU} component={Menu} />
+			<PrivateRoute 
+				exact 
+				path={PathConstants.GAME_MENU} 
+				component={Menu} 
+			/>
 			<PrivateRoute
 				exact
 				path={PathConstants.MEMORY_GAME}

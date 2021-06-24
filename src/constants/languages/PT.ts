@@ -540,6 +540,18 @@ export default class PT implements LanguageBase {
 
 	KIDS_SPACE = 'Espaço infantil'
 
+	DINO_RUNNER_GAME = 'Dino Corredor'
+
+	MEMORY_GAME = 'Jogo da Memória'
+
+	DINO_SLIDER_GAME = 'Dino Slider'
+
+	TIC_TAC_DINO_GAME = 'Tic Tac Dino'
+
+	MUSICAL_DINO_GAME = 'Dino Musical'
+
+	SNAKE_GAME = 'Jogo da Cobra'
+
 	SECONDARY_TAB_MESSAGE =
 		'O dino já está aberto em outra guia do seu navegador. Você só pode abri-lo em uma guia por vez.'
 

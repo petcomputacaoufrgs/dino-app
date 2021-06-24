@@ -4,7 +4,7 @@ import HistoryService from '../../../../services/history/HistoryService'
 import { starGame } from './engine'
 import { useLanguage } from '../../../../context/language'
 import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
-import GoBackButton from '../../../../components/button/go_back'
+import KidsSpaceGoBackButton from '../../../../components/button/go_back'
 import './styles.css'
 
 const SnakeGame: React.FC = () => {
@@ -38,7 +38,7 @@ const SnakeGame: React.FC = () => {
 			>
 				<p>{language.data.SNAKE_GAME_GAME_OVER_MSG_1}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.GAME_MENU} />
+			<KidsSpaceGoBackButton />
 			<div id='snake_game__score_board' />
 			<div id='snake_game__game_board' />
 		</div>

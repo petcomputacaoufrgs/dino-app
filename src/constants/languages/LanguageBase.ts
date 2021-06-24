@@ -260,6 +260,12 @@ export default interface LanguageBase {
 	NO_TREATMENT_SELECTED: string
 	NO_FAQ_AVAILABLE: string
 	KIDS_SPACE: string
+	DINO_RUNNER_GAME: string
+	MEMORY_GAME: string
+	DINO_SLIDER_GAME: string
+	TIC_TAC_DINO_GAME: string
+	MUSICAL_DINO_GAME: string
+	SNAKE_GAME: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string
 	MEMORY_GAME_GAME_OVER: string
 	PLAY_AGAIN_MESSAGE: string

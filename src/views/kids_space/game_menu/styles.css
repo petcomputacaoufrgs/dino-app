@@ -5,12 +5,11 @@
 	font-size: var(--very-large-font);
 	overflow: auto;
 }
-
-.game_card {
-	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+.game_menu__go_back__button {
+	position: absolute;
 }
 
-.game_menu__go_back svg {
+.game_menu__go_back__button svg {
 	width: 3rem;
 	height: 3rem;
 	margin: 1rem;

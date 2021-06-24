@@ -589,6 +589,18 @@ export default class EN implements LanguageBase {
 
 	KIDS_SPACE = "Kid's space"
 
+	DINO_RUNNER_GAME = 'Dino Runner'
+
+	MEMORY_GAME = 'Memory Game'
+
+	DINO_SLIDER_GAME = 'Dino Slider'
+
+	TIC_TAC_DINO_GAME = 'Tic Tac Dino'
+
+	MUSICAL_DINO_GAME = 'Musical Dino'
+
+	SNAKE_GAME = 'Snake Game'
+
 	WINNER = 'Winner: '
 
 	NEXT_PLAYER = 'Next player: '

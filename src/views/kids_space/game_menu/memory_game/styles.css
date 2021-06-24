@@ -17,7 +17,3 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 12px;
 }
-
-.memory_game .game_over_dialog {
-    top: 35vh;
-}

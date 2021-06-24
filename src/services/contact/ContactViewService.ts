@@ -1,8 +1,6 @@
-import { LanguageContextType } from "../../context/language"
 import ContactEntity from "../../types/contact/database/ContactEntity"
 import EssentialContactEntity from "../../types/contact/database/EssentialContactEntity"
 import ContactView, { ContactType, PhoneType } from "../../types/contact/view/ContactView"
-import FilterType from "../../types/filter/Filter"
 import StringUtils from "../../utils/StringUtils"
 import Utils from "../../utils/Utils"
 import EssentialPhoneService from "./EssentialPhoneService"

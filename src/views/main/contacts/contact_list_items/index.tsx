@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ContactItemsProps from './props'
 import ContactCard from '../contact_dialog_card'
 import ContactItemList from './contact_list_item'

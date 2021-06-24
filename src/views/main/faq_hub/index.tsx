@@ -15,7 +15,7 @@ import FaqAndUserQuestions from './tab_faq_and_questions'
 import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
 
 const FaqHub: React.FC = () => {
-	const { localId, tab } = useParams<{ localId?: string, tab?: string }>()
+	const { localId } = useParams<{ localId?: string, tab?: string }>()
 	
 	const isStaff = HasStaffPowers()
 

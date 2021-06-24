@@ -15,6 +15,7 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
+	margin-bottom: 1vmin;
 	/* margin-top: 10vmin; */
 }
 

@@ -12,6 +12,8 @@ const SliderBoard: React.FC<{ restart: boolean, onGameOver: () => void }> = ({re
   const TO = 0
   const FROM = 1
 
+  const [gameState, setGameState] = useState([] as number[])
+
   const addNumber = (grid: number[]) => {
     let freeIndexes = new Array<number>()
 
@@ -26,15 +28,15 @@ const SliderBoard: React.FC<{ restart: boolean, onGameOver: () => void }> = ({re
   }
 
   const isGameOver = () => {
-    return ["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"]
-    .some(move => handleKeyDown(move, true))
+    const hasMoveLeft = ["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].some(move => handleKeyDown(move, true))
+    return !hasMoveLeft
   }
 
   const handleKeyDown = (key: string, accessMove?: boolean) => {
 
     const moveProps: HandleSwipeProps | undefined = moveFunctions[key]
 
-    return moveProps !== undefined ? handleSwipe(moveProps, accessMove) : false
+    return moveProps ? handleSwipe(moveProps, accessMove) : false
   }
 
   const initialize = () => {
@@ -44,9 +46,9 @@ const SliderBoard: React.FC<{ restart: boolean, onGameOver: () => void }> = ({re
     return newGrid
   }
 
-  const [gameState, setGameState] = useState([] as number[])
-
   useEffect(() => setGameState(initialize()), [restart])
+  
+  useEvent("keydown", (event: KeyboardEvent) => handleKeyDown(event.key))
 
   const handleSwipe = ({isOffline, selectLinePieces, nextPieceFrom}: HandleSwipeProps, accessMove?: boolean) => {
 
@@ -102,14 +104,14 @@ const SliderBoard: React.FC<{ restart: boolean, onGameOver: () => void }> = ({re
     nextPieceFrom: (pieces: number[]) => pieces[FROM] += LINES    
   }
 
-    const handleSwipeDown: HandleSwipeProps = {
-      isOffline: (piece: number, iterator: number) => piece < iterator,
-      selectLinePieces: (pieces: number[], iterator?: number) => {
-        pieces[TO] = iterator !== undefined ? (iterator + LINES * (LINES - 1)) : (pieces[TO] - LINES)
-        pieces[FROM] = pieces[TO] - LINES
-      },
-      nextPieceFrom: (pieces: number[]) => pieces[FROM] -= LINES
- }
+  const handleSwipeDown: HandleSwipeProps = {
+    isOffline: (piece: number, iterator: number) => piece < iterator,
+    selectLinePieces: (pieces: number[], iterator?: number) => {
+      pieces[TO] = iterator !== undefined ? (iterator + LINES * (LINES - 1)) : (pieces[TO] - LINES)
+      pieces[FROM] = pieces[TO] - LINES
+    },
+    nextPieceFrom: (pieces: number[]) => pieces[FROM] -= LINES
+  }
 
   const handleSwipeRight: HandleSwipeProps = {
     isOffline: (piece: number, iterator: number) => piece < (iterator * LINES),
@@ -126,14 +128,10 @@ const SliderBoard: React.FC<{ restart: boolean, onGameOver: () => void }> = ({re
     ArrowLeft: handleSwipeLeft,
     ArrowRight: handleSwipeRight,
   }
-  
-  useEvent("keydown", (event: KeyboardEvent) => handleKeyDown(event.key))
 
   return (
       <div className="board">
-          {gameState.map(
-              (number, index) => <Piece num={number} key={index}/>
-          )}
+          {gameState.map((number, index) => <Piece num={number} key={index}/>)}
       </div>
   )
 }

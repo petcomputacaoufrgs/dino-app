@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { useEvent } from '..'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
-import Utils from '../../../../../utils/Utils'
 import Piece from '../piece'
 import HandleSwipeProps from './props'
 import './styles.css'
 
-const SliderBoard = () => {
+const SliderBoard: React.FC<{ restart: boolean, onGameOver: () => void }> = ({restart, onGameOver}) => {
     
   const SQUARES = 16
-  const LINES = SQUARES/4 
+  const LINES = SQUARES / 4 
   const TO = 0
   const FROM = 1
 
   const addNumber = (grid: number[]) => {
     let freeIndexes = new Array<number>()
 
-    grid.forEach((p, index) => {
-      if(p === 0) freeIndexes.push(index)
+    grid.forEach((p, index) => { 
+      if(p === 0) freeIndexes.push(index) 
     })
     
-    if(Utils.isNotEmpty(freeIndexes)) {
+    if(ArrayUtils.isNotEmpty(freeIndexes)) {
       let randomIndex = ArrayUtils.randomItem(freeIndexes)
       grid[randomIndex] = Math.random() >= 0.2 ? 2 : 4
-    }
+    } else if(isGameOver()) onGameOver()
+  }
+
+  const isGameOver = () => {
+    return ["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"]
+    .some(move => handleKeyDown(move, true))
+  }
+
+  const handleKeyDown = (key: string, accessMove?: boolean) => {
+
+    const moveProps: HandleSwipeProps | undefined = moveFunctions[key]
+
+    return moveProps !== undefined ? handleSwipe(moveProps, accessMove) : false
   }
 
   const initialize = () => {
@@ -35,23 +46,9 @@ const SliderBoard = () => {
 
   const [gameState, setGameState] = useState([] as number[])
 
-  useEffect(() => setGameState(initialize()), [])
+  useEffect(() => setGameState(initialize()), [restart])
 
-  const handleKeyDown = (event: KeyboardEvent) => {
-
-    const move = {
-      ArrowUp: handleSwipeUp,
-      ArrowDown: handleSwipeDown,
-      ArrowLeft: handleSwipeLeft,
-      ArrowRight: handleSwipeRight,
-    }
-
-    const moveFunction: () => void | undefined = move[event.key]
-
-    if(moveFunction) moveFunction()
-  }
-
-  const handleSwipe = ({isOffline, selectLinePieces, nextPieceFrom}: HandleSwipeProps) => {
+  const handleSwipe = ({isOffline, selectLinePieces, nextPieceFrom}: HandleSwipeProps, accessMove?: boolean) => {
 
     const transfer = (array: number[], pieceTo: number, pieceFrom: number) => {
       array[pieceTo] += array[pieceFrom]
@@ -71,6 +68,7 @@ const SliderBoard = () => {
           nextPieceFrom(pieces)
         } 
         else if(newArray[pieces[TO]] === 0 || newArray[pieces[TO]] === newArray[pieces[FROM]]) {
+          if(accessMove) return true
           transfer(newArray, pieces[TO], pieces[FROM])
           nextPieceFrom(pieces)
         } 
@@ -78,67 +76,58 @@ const SliderBoard = () => {
       }
     }
 
-    addNumber(newArray)
-    setGameState([...newArray])
+    if(!accessMove) {
+      addNumber(newArray)
+      setGameState([...newArray])
+    }
+    
+    return false
   }
 
-  const handleSwipeLeft = () => {
-
-    const isOffline = (piece: number, iterator: number) => piece > (iterator * LINES) + LINES - 1
-    
-    const selectLinePieces = (pieces: number[], iterator?: number) => {
+  const handleSwipeLeft: HandleSwipeProps = {
+    isOffline: (piece: number, iterator: number) => piece > (iterator * LINES) + LINES - 1,    
+    selectLinePieces: (pieces: number[], iterator?: number) => {
       pieces[TO] = iterator !== undefined ? (iterator * LINES) : (pieces[TO] + 1)
       pieces[FROM] = pieces[TO] + 1
-    }
-
-    const nextPieceFrom = (pieces: number[]) => pieces[FROM]++
-
-    handleSwipe({isOffline, selectLinePieces, nextPieceFrom})
+    },
+    nextPieceFrom: (pieces: number[]) => pieces[FROM]++
 }
 
-  const handleSwipeUp = () => {
-
-    const isOffline = (piece: number, iterator: number) => piece > iterator + (LINES * (LINES - 1)) 
-
-    const selectLinePieces = (pieces: number[], iterator?: number) => {
+  const handleSwipeUp: HandleSwipeProps = {
+    isOffline: (piece: number, iterator: number) => piece > iterator + (LINES * (LINES - 1)),
+    selectLinePieces: (pieces: number[], iterator?: number) => {
       pieces[TO] = iterator !== undefined ? iterator : (pieces[TO] + LINES)
       pieces[FROM] = pieces[TO] + LINES
-    }
-
-    const nextPieceFrom = (pieces: number[]) => pieces[FROM] += LINES
-    
-    handleSwipe({isOffline, selectLinePieces, nextPieceFrom})	
+    },
+    nextPieceFrom: (pieces: number[]) => pieces[FROM] += LINES    
   }
 
-    const handleSwipeDown = () => {
-
-      const isOffline = (piece: number, iterator: number) => piece < iterator 
-
-      const selectLinePieces = (pieces: number[], iterator?: number) => {
+    const handleSwipeDown: HandleSwipeProps = {
+      isOffline: (piece: number, iterator: number) => piece < iterator,
+      selectLinePieces: (pieces: number[], iterator?: number) => {
         pieces[TO] = iterator !== undefined ? (iterator + LINES * (LINES - 1)) : (pieces[TO] - LINES)
         pieces[FROM] = pieces[TO] - LINES
-      }
-  
-      const nextPieceFrom = (pieces: number[]) => pieces[FROM] -= LINES
-      
-      handleSwipe({isOffline, selectLinePieces, nextPieceFrom})	
-  }
+      },
+      nextPieceFrom: (pieces: number[]) => pieces[FROM] -= LINES
+ }
 
-  const handleSwipeRight = () => {
-
-    const isOffline = (piece: number, iterator: number) => piece < (iterator * LINES) 
-
-    const selectLinePieces = (pieces: number[], iterator?: number) => {
+  const handleSwipeRight: HandleSwipeProps = {
+    isOffline: (piece: number, iterator: number) => piece < (iterator * LINES),
+    selectLinePieces: (pieces: number[], iterator?: number) => {
       pieces[TO] = iterator !== undefined ? (iterator * LINES + (LINES - 1)) : (pieces[TO] - 1)
       pieces[FROM] = pieces[TO] - 1
-    }
+    },
+    nextPieceFrom: (pieces: number[]) => pieces[FROM]--
+  }
 
-    const nextPieceFrom = (pieces: number[]) => pieces[FROM]--
-    
-    handleSwipe({isOffline, selectLinePieces, nextPieceFrom})
+  const moveFunctions = {
+    ArrowUp: handleSwipeUp,
+    ArrowDown: handleSwipeDown,
+    ArrowLeft: handleSwipeLeft,
+    ArrowRight: handleSwipeRight,
   }
   
-  useEvent("keydown", handleKeyDown)
+  useEvent("keydown", (event: KeyboardEvent) => handleKeyDown(event.key))
 
   return (
       <div className="board">

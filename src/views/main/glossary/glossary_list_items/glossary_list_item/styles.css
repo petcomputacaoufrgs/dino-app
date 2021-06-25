@@ -1,0 +1,11 @@
+.glossary__card_title.card-title {
+  font-size: var(--large-font);
+}
+
+.glossary__card__subtitle.card-subtitle {
+  font-size: var(--big-font);
+}
+
+.glossary__card__text {
+  font-size: var(--default-font);
+}

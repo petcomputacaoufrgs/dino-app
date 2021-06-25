@@ -3,7 +3,7 @@ import PathConstants from '../../../../constants/app/PathConstants'
 import HistoryService from '../../../../services/history/HistoryService'
 import { useLanguage } from '../../../../context/language'
 import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
-import GoBackButton from '../../../../components/button/go_back'
+import KidsSpaceGoBackButton from '../../../../components/button/go_back'
 import {ReactComponent as Braquiosaurus} from '../../../../assets/kids_space/memory_game/braquissaurus.svg'
 import {ReactComponent as Dinosaur} from '../../../../assets/kids_space/memory_game/dinosaur.svg'
 import {ReactComponent as Diplodocus} from '../../../../assets/kids_space/memory_game/diplodocus.svg'
@@ -57,7 +57,7 @@ const MemoryGame: React.FC = () => {
 			>
 				<p>{language.data.MEMORY_GAME_GAME_OVER}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.GAME_MENU} />
+			<KidsSpaceGoBackButton />
 			<Board pieceList={boardRandom} onGameOver= {handleGameOver} restart={restart}/>
 		</div>
 	)

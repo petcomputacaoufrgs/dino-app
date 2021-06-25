@@ -4,10 +4,10 @@ import { useLanguage } from '../../../context/language/index'
 import Button from '../../button'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
-import UserSettingsConstants from '../../../constants/user/UserSettingsConstants'
 import '../styles.css'
 import './styles.css'
 import HashUtils from '../../../utils/HashUtils'
+import DataConstants from '../../../constants/app_data/DataConstants'
 
 const AccessDialog: React.FC<AccessDialogProps> = ({
 	open,
@@ -76,7 +76,7 @@ const AccessDialog: React.FC<AccessDialogProps> = ({
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setParentsAreaPassword(event.target.value)
 		}
 	}

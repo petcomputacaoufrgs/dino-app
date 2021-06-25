@@ -1,0 +1,9 @@
+.add_button {
+	position: absolute;
+	bottom: 1.2rem;
+	right: 1.2rem;
+}
+
+button.button.circular_button.add_button svg {
+	transform: scale(2.0);
+}

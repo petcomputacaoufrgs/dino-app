@@ -106,15 +106,6 @@
 	margin-bottom: 0;
 }
 
-.dino_runner_game .game_over_dialog {
-	top: 35vh;
-	left: 10vw;
-}
-
-.dino_runner_game .game_over_dialog .game_over_dialog__buttons {
-	margin-bottom: 1vmin;
-}
-
 .dino_runner_game__grid__background #dino_runner__star_one {
 	animation-name: dino_runner_game__grid__background__start_one_and_four;
 	animation-timing-function: linear;

@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../../../../components/button/text_button'
 import NoteInfoDialogProps from './props'
 import {
-	Dialog,
 	DialogTitle,
-	DialogContent,
 	TextField,
-	DialogActions,
 } from '@material-ui/core'
-import TransitionSlide from '../../../../components/slide_transition'
 import DateUtils from '../../../../utils/DateUtils'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
-import ArrayUtils from '../../../../utils/ArrayUtils'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
-import IconButton from '../../../../components/button/icon_button'
+import DinoIconButton from '../../../../components/button/icon_button'
 import AgreementDialog from '../../../../components/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
+import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import './styles.css'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
@@ -36,8 +31,6 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	const [tagList, setTagList] = useState(note.tags)
 
 	const [editedQuestion, setEditedQuestion] = useState(false)
-	const [editedAnswer, setEditedAnswer] = useState(false)
-	const [editedTagList, setEditedTagList] = useState(false)
 
 	const [questionWithError, setQuestionWithError] = useState(false)
 	const [questionErrorHelper, setQuestionErrorHelper] = useState('')
@@ -49,8 +42,6 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 		setQuestion(note.question)
 		setTagList(note.tags)
 		setEditedQuestion(false)
-		setEditedAnswer(false)
-		setEditedTagList(false)
 	}, [note])
 
 	const handleQuestionChange = (newQuestion: string) => {
@@ -72,17 +63,13 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	const handleAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value
 		const validAnswer = value.substring(0, NoteConstants.ANSWER_MAX_LENGTH)
-		const answerChanged = note.answer !== validAnswer.trim()
 
 		setAnswer(validAnswer)
-		setEditedAnswer(answerChanged)
 	}
 
 	const handleTagChange = (event: React.ChangeEvent<{}>, values: string[]) => {
 		if (values.length <= NoteConstants.TAG_LIMIT) {
-			const changed = ArrayUtils.notEqualIgnoreOrder(values, note.tags)
 			setTagList(values)
-			setEditedTagList(changed)
 		}
 	}
 
@@ -110,8 +97,6 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 		setDeleteNoteDialogOpen(true)
 	}
 
-	const isEdited = () => editedTagList || editedAnswer || editedQuestion
-
 	const validateQuestion = async (newQuestion: string): Promise<boolean> => {
 		if (!newQuestion) {
 			setQuestionWithError(true)
@@ -138,29 +123,34 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	}
 
 	return (
-		<Dialog open={open} onClose={onClose} TransitionComponent={TransitionSlide}>
-			<DialogTitle disableTypography className='note_info_dialog__title'>
-				<DiscreetTextField
-					error={questionWithError}
-					helperText={questionErrorHelper}
-					text={question}
-					onChange={handleQuestionChange}
-					className='note__info_dialog__title__question'
-				/>
-				<IconButton
-					className='note_info_dialog__delete_icon'
-					icon={DeleteOutlineIcon}
-					onClick={handleDeleteNote}
-				/>
-			</DialogTitle>
-			<div className='note_info_dialog__last_update'>
-				<h4>
-					{DateUtils.getDateStringFormated(note.lastUpdate!, language.data)}
-				</h4>
-			</div>
-			<DialogContent className='note__info_dialog__content'>
-				<TextField
-					label={`${language.data.ANSWER_NOTE_DIALOG_TITLE} (${language.data.MAX} ${NoteConstants.ANSWER_MAX_LENGTH})`}
+
+		<DinoDialog 
+			open={open} onClose={onClose} onSave={handleSaveNote}
+			header={
+				<DialogTitle disableTypography className='note_info_dialog__title'>
+					<DiscreetTextField
+						error={questionWithError}
+						helperText={questionErrorHelper}
+						text={question}
+						onChange={handleQuestionChange}
+						className='note__info_dialog__title__question'
+					/>
+					<DinoIconButton
+						className='note_info_dialog__delete_icon'
+						icon={DeleteOutlineIcon}
+						onClick={handleDeleteNote}
+					/>
+					<div className='note_info_dialog__last_update'>
+						<h4>
+							{DateUtils.getDateStringFormated(note.lastUpdate!, language.data)}
+						</h4>
+					</div>
+				</DialogTitle>
+			}
+		>
+			<div className='note__info_dialog__content'>
+			<TextField
+					label={`${language.data.ANSWER_NOTE_DIALOG_TITLE}`}
 					type='text'
 					multiline
 					variant='standard'
@@ -179,7 +169,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 						<TextField
 							{...params}
 							fullWidth
-							label={`${language.data.NOTE_TAG_LABEL} (${language.data.MAX} ${NoteConstants.TAG_LIMIT})`}
+							label={`${language.data.NOTE_TAG_LABEL}`}
 							variant='standard'
 							inputProps={{
 								...params.inputProps,
@@ -188,25 +178,18 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 						/>
 					)}
 				/>
-			</DialogContent>
-			<DialogActions className='note__info_dialog__actions'>
-				{isEdited() && (
-					<Button onClick={handleSaveNote}>
-						{language.data.DIALOG_SAVE_BUTTON_TEXT}
-					</Button>
-				)}
-				<Button onClick={onClose}>{language.data.CLOSE_ARIA_LABEL}</Button>
-			</DialogActions>
-			<AgreementDialog
-				onAgree={handleDeleteNoteAgree}
-				onDisagree={handleDeleteNoteDisagree}
-				question={language.data.DELETE_NOTE_ALERT_TITLE}
-				description={language.data.DELETE_NOTE_ALERT_TEXT}
-				agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
-				disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
-				open={deleteNoteDialogOpen}
-			/>
-		</Dialog>
+				<AgreementDialog
+					onAgree={handleDeleteNoteAgree}
+					onDisagree={handleDeleteNoteDisagree}
+					question={language.data.DELETE_NOTE_ALERT_TITLE}
+					description={language.data.DELETE_NOTE_ALERT_TEXT}
+					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
+					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
+					open={deleteNoteDialogOpen}
+				/>
+				</div>
+		</DinoDialog>
+		
 	)
 }
 

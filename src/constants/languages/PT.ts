@@ -1,10 +1,11 @@
-import LanguageEnum from '../../types/user/view/LanguageEnum'
+import LanguageEnum from '../../types/enum/LanguageEnum'
 import LanguageBase from './LanguageBase'
 
 /**
  * @description Conjunto de textos em português
  */
 export default class PT implements LanguageBase {
+
 	APP_NAME = 'DinoApp'
 
 	DINOAPP_TEAM = 'Equipe DinoApp'
@@ -27,11 +28,19 @@ export default class PT implements LanguageBase {
 
 	FIRST_LOGIN_DIALOG_LABEL = 'Diálogo de Configurações Iniciais'
 
-	FIRST_LOGIN_WELCOME_MESSAGE = 'Bem vindo(a)!'
+	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Bem vindo(a)!'
+
+	FIRST_LOGIN_WELCOME_MESSAGE = 'Dino Message Lorem ipsum dolor sit amet consectetur adipisicin elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibu repudiandae ut labore!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
 
+	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE = 'Obrigado por se juntar ao DinoApp!'
+	
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE = 'Suas configurações podem ser atualizadas a qualquer momento na seção de Configurações do aplicativo.'
+
 	FIRST_LOGIN_CHOOSE_TREATMENT = 'Escolha seu Tratamento'
+
+	FIRST_LOGIN_CHOOSE_PASSWORD = 'Crie uma senha para a área dos responsáveis'
 
 	FIRST_LOGIN_CHOOSE_COLOR_THEME = 'Escolha seu Tema de Cores'
 
@@ -75,9 +84,9 @@ export default class PT implements LanguageBase {
 
 	DELETE_OPTION_TEXT = 'Deletar'
 
-	DELETE_CONTACT_QUESTION = 'Deletar contato?'
+	DELETE_ITEM_OPTION_TEXT ='Esta ação irá deletar o item permanentemente.'
 
-	DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato para sempre.'
+	DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato permanentemente.'
 
 	TERMS_OF_USE = 'Termos de Uso'
 
@@ -88,24 +97,30 @@ export default class PT implements LanguageBase {
 	MENU_GAMES = 'Jogos'
 
 	MENU_SETTINGS = 'Configurações'
-
-	MENU_GLOSSARY = 'Glossário'
-
+	
 	MENU_CONTACTS = 'Contatos'
-
-	MENU_FAQ = 'F.A.Q.'
 
 	MENU_LOGOUT = 'Sair'
 
 	MENU_ABOUT_US = 'Sobre Nós'
+
+	MENU_STAFF_MODERATION = 'Moderação de Funcionários'
+
+	TREATMENTS = 'Tratamentos'
+
+	TITLE = 'Título'
+
+	SUBTITLE = 'Subtítulo'
+
+	TEXT = 'Texto Prévio'
+
+	FULL_TEXT = 'Texto Completo'
 
 	SETTINGS_TITLE = 'Configurações'
 
 	SETTINGS_LANGUAGE = 'Escolher Idioma'
 
 	SETTINGS_TREATMENT = 'Escolha seu tratamento'
-
-	SETTINGS_SAVE = 'Salvar'
 
 	SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
 
@@ -139,8 +154,6 @@ export default class PT implements LanguageBase {
 
 	DIALOG_CANCEL_BUTTON_TEXT = 'Cancelar'
 
-	DIALOG_SAVE_BUTTON_TEXT = 'Salvar'
-
 	SEARCH_BUTTON_LABEL = 'Buscar...'
 
 	ANSWER_DIALOG_LABEL = 'Tela para responder uma questão anotada.'
@@ -155,21 +168,55 @@ export default class PT implements LanguageBase {
 
 	FORM_QUESTION = 'Pergunta'
 
-	FORM_QUESTION_PLACEHOLDER = 'Castores gostam de castanhas?'
+	FORM_ANSWER = 'Resposta'
+
+	FORM_QUESTION_PLACEHOLDER = 'Digite sua pergunta...'
 
 	FORM_QUESTION_TITLE = 'Mande sua pergunta!'
 
 	FORM_ADD_PHONE = 'Adicionar Telefone'
 
+	FORM_ADD_STAFF = 'Adicionar Funcionário(a)'
+
+	FORM_EMAIL = 'Adicionar E-mail'
+	
+	ADD_STAF_TAB = 'Adicionar'
+	
+	STAFF_LIST_TAB = 'Funcionários'
+
+	STAFF_SAVE_SUCCESS = 'Funcionários adicionados'
+
+	TREATMENT = 'Tratamento'
+
+	ADD_TREATMENT = `Adicione ${this.TREATMENT}`
+
+	STAFF_ADD_TREATMENT_NAME = 'Adicione Título de Tratamento'
+
+	PENDING = 'Pendente'
+
+	STAFF = 'Funcionários(as)'
+
+	EMAIL = 'E-mail'
+
+	MEMBER_OF_STAFF = 'Funcionário(a)'
+
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
-	CONTACTS_ADD_CONTACT = 'Novo Contato'
+	NEW_CONTACT = 'Novo Contato'
+	
+	NEW_TREATMENT = 'Novo Tratamento'
 
-	CONTACTS_MOBILE_PHONE = 'Móvel'
+	NEW_GLOSSARY_ITEM = 'Novo Item de Glossário'
 
-	CONTACTS_RESIDENTIAL_PHONE = 'Fixo'
+	ESSENTIAL_CONTACT_MUST_HAVE_PHONE = 'Contato Essencial deve ter um telefone'
 
-	CONTACTS_PUBLIC_SERVICE_PHONE = 'Serviço'
+	CONTACTS_ADD_ESSENTIAL_CONTACT = 'Novo Contato Essencial'
+
+	CONTACT_MOBILE_PHONE = 'Móvel'
+
+	CONTACT_RESIDENTIAL_PHONE = 'Fixo'
+
+	CONTACT_PUBLIC_SERVICE_PHONE = 'Serviço'
 
 	NO_AVAILABLE_TEXT = 'Sem Texto Disponível'
 
@@ -428,7 +475,7 @@ export default class PT implements LanguageBase {
 
 	LARGER_FONT_SIZE_NAME = 'Gigante'
 
-	CONTACT_DIALOG_FORM_SUBTITLE = 'Contato'
+	CONTACT = 'Contato'
 
 	CONTACT_NUMBER_ALREADY_EXISTS = 'Este número já está registrado no contato'
 
@@ -491,9 +538,19 @@ export default class PT implements LanguageBase {
 
 	NO_FAQ_AVAILABLE = 'Nenhuma F.A.Q disponível'
 
-	TREATMENT_SAVE = 'Salvar'
-
 	KIDS_SPACE = 'Espaço infantil'
+
+	DINO_RUNNER_GAME = 'Dino Corredor'
+
+	MEMORY_GAME = 'Jogo da Memória'
+
+	DINO_SLIDER_GAME = 'Dino Slider'
+
+	TIC_TAC_DINO_GAME = 'Tic Tac Dino'
+
+	MUSICAL_DINO_GAME = 'Dino Musical'
+
+	SNAKE_GAME = 'Jogo da Cobra'
 
 	SECONDARY_TAB_MESSAGE =
 		'O dino já está aberto em outra guia do seu navegador. Você só pode abri-lo em uma guia por vez.'
@@ -507,8 +564,6 @@ export default class PT implements LanguageBase {
 		'Atualização disponível! Reinicie o DinoApp para instalar.'
 
 	PWA_CONTROL_END_INTRO_BUTTON = 'Fim'
-
-	FIRST_SETTINGS_SAVE_BUTTON = 'Salvar'
 
 	PWA_INTRO_TITLE_0 = 'Bem vindo ao DinoApp!'
 
@@ -613,4 +668,66 @@ export default class PT implements LanguageBase {
 	PASSWORD_CHANGED = 'Sucesso'
 
 	WRONG_PASSWORD = 'Senha incorreta'
+
+	EXAMPLE_EMAIL='examplo@email.com'
+
+	GLOSSARY = 'Glossário'
+
+	GLOSSARY_ITEM = 'Item de Glossário'
+
+	FAQ = 'FAQ'
+	
+	FAQ_ITEM = 'Item da FAQ'
+
+	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
+
+	INVALID_VALUE = 'Valor inválido'
+
+	USERS_QUESTIONS = 'Usuários Perguntam'
+
+	QUESTIONS = 'Perguntas'
+
+	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
+
+	SAVE = 'Salvar'
+
+	UNIVERSAL_CONTACT = 'Este contato é universal e aparecerá em todas as agendas de usuários'
+
+	ANSWER = 'Responder'
+
+	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Resposta da pergunta...'
+
+	ADD_STAFF_TEXT = 'Funcionários são usuários que podem adicionar, remover e editar informações que são exibidas para os pacientes e seus responsáveis, como: contatos do hospital, itens do glossário, etc. Apenas a conta administradora do hospital é capaz de adicionar e remover outros funcionários.'
+
+	NO_ITEMS_LIST = 'Sem Itens'
+
+	FILTER = 'Filtro'
+
+	ESSENTIAL_CONTACTS = "Contatos Essenciais"
+
+	YOUR_CONTACTS = "Seus Contacts"
+
+	UNIVERSAL_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " Universais"
+
+	TREATMENT_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " de Tratamento"
+
+	HAS_USER_QUESTIONS_ONLY = "Apenas Com Perguntas de Usuários"
+
+	RENDER_OFFLINE_CONTENT_PART_1 = 'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
+	
+	RENDER_OFFLINE_CONTENT_PART_2 = 'Tente novamente quando estiver conectado.'
+
+	NO_CONNECTION = 'Sem conexão'
+	
+	itemAlreadyExists = (item: string) => `${item} já existente`
+
+	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
+
+	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`
+
+	titleFAQTreatmentText = (treatment: string) => `${this.FAQ} de ${treatment}`
+
+	titleTreatmentQuestion = (treatment: string) => `Tem uma pergunta sobre ${treatment}?`
+
 }
+

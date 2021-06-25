@@ -9,7 +9,7 @@
 }
 
 .icon_button.button_dark svg {
-	fill: var(--contrast-color);
+	fill: var(--base-font-color);
 }
 
 .icon_button.button_bigger svg {

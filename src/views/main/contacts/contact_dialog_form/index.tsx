@@ -1,184 +1,153 @@
 import React, { useState, useEffect } from 'react'
-import { ContactFormDialogProps } from './props'
-import ColorConstants from '../../../../constants/app/ColorConstants'
-import Button from '../../../../components/button/text_button'
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core'
+import ContactFormDialogProps from './props'
 import ContactFormDialogHeader from './header'
 import ContactFormDialogContent from './content'
-import TransitionSlide from '../../../../components/slide_transition'
 import ContactEntity from '../../../../types/contact/database/ContactEntity'
 import PhoneEntity from '../../../../types/contact/database/PhoneEntity'
-import ContactsConstants from '../../../../constants/contact/ContactsConstants'
+import Constants from '../../../../constants/app_data/DataConstants'
 import StringUtils from '../../../../utils/StringUtils'
-import ContactView from '../../../../types/contact/view/ContactView'
-import Utils from '../../../../utils/Utils'
+import ContactView, { ContactType, PhoneType } from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
 import ContactService from '../../../../services/contact/ContactService'
 import PhoneService from '../../../../services/contact/PhoneService'
-import GoogleContactService from '../../../../services/contact/GoogleContactService'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import SelectMultipleTreatments from '../../../../components/settings/select_multiple_treatments'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
+import DinoHr from '../../../../components/dino_hr'
+import { HasStaffPowers } from '../../../../context/private_router'
+import DinoDialog from '../../../../components/dialogs/dino_dialog'
+import EssentialPhoneEntity from '../../../../types/contact/database/EssentialPhoneEntity'
+import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
 import './styles.css'
+import { getContactWithSamePhone } from '../../../../services/contact/ContactViewService'
 
-const getContact = (item: ContactView | undefined): ContactEntity => {
-	return item
-		? item.contact
-		: {
-				name: '',
-				description: '',
-				color: undefined,
-		  }
-}
+const getContact = (item?: ContactView): ContactType =>
+	item ? item.contact : { name: '', description: '', }
 
-const getPhones = (item: ContactView | undefined): PhoneEntity[] => {
-	return item
-		? item.phones
-		: [
-				{
-					number: '',
-					type: ContactsConstants.MOBILE,
-				},
-		  ]
-}
+const getPhones = (item?: ContactView): PhoneType[] =>
+	item ? item.phones : [{ number: '', type: Constants.CONTACT_PHONE_CODE_MOBILE, }]
 
-const ContactFormDialog = React.forwardRef(
-	(
-		{ dialogOpen, onClose, action, item, items }: ContactFormDialogProps,
-		ref: React.Ref<unknown>,
-	) => {
-		const language = useLanguage()
-		const [contact, setContact] = useState(getContact(item))
-		const [contactPhones, setContactPhones] = useState(getPhones(item))
-		const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
-		const [invalidName, setInvalidName] = useState(false)
-		const [invalidPhone, setInvalidPhone] = useState({ number: '', text: '' })
-		const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<
-			number[]
-		>([])
+const getTreatmentLocalIds = (item?: ContactView): number[] => 
+	item ? (item?.contact as EssentialContactEntity).treatmentLocalIds || [] : []
 
-		useEffect(() => {
-			if (dialogOpen) {
-				setContact(getContact(item))
-				setContactPhones(getPhones(item))
-				setInvalidName(false)
-				setInvalidPhone({ number: 'dummy text', text: '' })
-				setSelectedTreatmentLocalIds([])
-			}
-		}, [dialogOpen, item])
+const ContactFormDialog: React.FC<ContactFormDialogProps> = (
+	{
+		dialogOpen,
+		onClose,
+		item,
+		items
+	}) => {
+	const isStaff = HasStaffPowers()
+	const language = useLanguage()
+	const [contact, setContact] = useState(getContact(item))
+	const [contactPhones, setContactPhones] = useState(getPhones(item))
+	const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
+	const [errorName, setErrorName] = useState<string>()
+	const [errorPhone, setErrorPhone] = useState<string>()
+	const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>(getTreatmentLocalIds(item))
+	
+	useEffect(() => {
+		if (dialogOpen) {
+			setContact(getContact(item))
+			setContactPhones(getPhones(item))
+			setErrorName(undefined)
+			setErrorPhone(undefined)
+			setSelectedTreatmentLocalIds(getTreatmentLocalIds(item))
+		}
+	}, [dialogOpen, item])
 
-		const handleSave = (): void => {
-			function validInfo(): string {
-				setInvalidName(StringUtils.isEmpty(contact.name))
-				setInvalidPhone({ number: '', text: '' })
-				return contact.name
+	const handleSave = () => {
+		function validInfo(): boolean {
+			if (StringUtils.isEmpty(contact.name)) {
+				setErrorName(language.data.EMPTY_FIELD_ERROR)
+				return false
 			}
 
-			function handleTakenNumber(viewWithSamePhone: ContactView) {
-				const phone = contactPhones.find(phone =>
-					viewWithSamePhone.phones
-						.map(phone => phone.number)
-						.includes(phone.number),
-				)
-				if (phone)
-					setInvalidPhone({
-						number: phone.number,
-						text: `${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`,
-					})
-			}
-
-			if (validInfo()) {
-				const viewWithSamePhone = PhoneService.getContactWithSamePhone(
-					items,
-					contactPhones,
-					item,
-				)
-
-				if (viewWithSamePhone) {
-					handleTakenNumber(viewWithSamePhone)
-				} else {
-					saveContact()
-					onClose()
+			if (isStaff) {
+				const hasAtLeastOnePhone = contactPhones.some(p => StringUtils.isNotEmpty(p.number))
+				if (!hasAtLeastOnePhone) {
+					setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
+					return false
 				}
+			}
+				
+			const hasViewWithSamePhone = getContactWithSamePhone(items, contactPhones, item)
+				
+			if (hasViewWithSamePhone) {
+				handleTakenNumber(hasViewWithSamePhone)
+					
+				return false
+			}
+
+			return true
+		}
+
+		function handleTakenNumber(viewWithSamePhone: ContactView) {
+			const phone = contactPhones.find(phone =>
+				viewWithSamePhone.phones
+					.map(phone => phone.number)
+					.includes(phone.number),
+			)
+			if (phone) setErrorPhone(`${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`)
+		}
+
+		if (validInfo()) {
+			saveContact()
+			onClose()
+		}
+	}
+
+	const saveContact = async () => {
+		async function savePhones(contact: ContactEntity | EssentialContactEntity) {
+			const newPhones = contactPhones.filter(phone => phone.number !== '')
+			if (isStaff) {
+				newPhones.forEach(ePhone => ((ePhone as EssentialPhoneEntity).localEssentialContactId = contact.localId))
+			} else {
+				newPhones.forEach(phone => ((phone as PhoneEntity).localContactId = contact.localId))
+			}
+
+			if (newPhones.length > 0) {
+				isStaff ? await EssentialPhoneService.saveAll(newPhones) : await PhoneService.saveAll(newPhones)
+			}
+
+			if (phonesToDelete.length > 0) {
+				isStaff ? await EssentialPhoneService.deleteAll(phonesToDelete) : await PhoneService.deleteAll(phonesToDelete)
 			}
 		}
 
-		const saveContact = async () => {
-			async function savePhones(
-				contact: ContactEntity | EssentialContactEntity,
-			) {
-				const newPhones = contactPhones.filter(phone => phone.number !== '')
-
-				if (action !== ContactsConstants.ACTION_ADD_ESSENTIAL) {
-					newPhones.forEach(phone => (phone.localContactId = contact.localId))
-				} else {
-					newPhones.forEach(
-						phone => (phone.localEssentialContactId = contact.localId),
-					)
-				}
-
-				if (newPhones.length > 0) {
-					await PhoneService.saveAll(newPhones)
-				}
-
-				if (phonesToDelete.length > 0) {
-					await PhoneService.deleteAll(phonesToDelete)
-				}
-
-				await GoogleContactService.saveGoogleContact(
-					contact,
-					item?.googleContact,
-				)
-			}
-
-			switch (action) {
-				case ContactsConstants.ACTION_EDIT:
-					if (item && Utils.isNotEmpty(item.contact.localId)) {
-						const savedContact = await ContactService.save(contact)
-						if (savedContact) {
-							await savePhones(savedContact)
-						}
-					}
-					break
-				case ContactsConstants.ACTION_ADD:
-					const savedContact = await ContactService.save(contact)
-					if (savedContact) {
-						await savePhones(savedContact)
-					}
-					break
-				case ContactsConstants.ACTION_ADD_ESSENTIAL:
-					const newEssentialContact: EssentialContactEntity = {
-						...contact,
-						treatmentLocalIds: selectedTreatmentLocalIds,
-						isUniversal: selectedTreatmentLocalIds.length > 0 ? 1 : 0,
-					}
-
-					const savedEssentialContact = await EssentialContactService.save(
-						newEssentialContact,
-					)
-					if (savedEssentialContact) {
-						await savePhones(savedEssentialContact)
-					}
-					break
+		async function saveContactAndPhones() {
+			const saved = await ContactService.save(contact)
+			if (saved) {
+				await savePhones(saved)
 			}
 		}
 
-		const handleChangeColor = () => {
-			const colors = ColorConstants.COLORS
-			const index = colors.findIndex(c => c === contact.color)
-			const color = colors[(index + 1) % colors.length]
-			setContact({ ...contact, color })
+		async function saveEssentialContactAndPhones() {
+			const essentialContact: EssentialContactEntity = {
+				...contact,
+				treatmentLocalIds: selectedTreatmentLocalIds,
+				isUniversal: selectedTreatmentLocalIds.length > 0 ? 0 : 1,
+			}
+
+			const saved = await EssentialContactService.save(essentialContact)
+			if (saved) {
+				await savePhones(saved)
+			}
 		}
 
-		const handleAddPhone = () => {
-			contactPhones.push({
-				number: '',
-				type: ContactsConstants.MOBILE,
-			})
-			setContactPhones([...contactPhones])
-		}
+		isStaff ? saveEssentialContactAndPhones() : saveContactAndPhones()
+	}
 
-		const handleDeletePhone = (number: string) => {
+	const handleAddPhone = () => {
+		contactPhones.push({
+			number: '',
+			type: Constants.CONTACT_PHONE_CODE_MOBILE,
+		})
+		setContactPhones([...contactPhones])
+	}
+
+	const handleDeletePhone = (number: string) => {
+		if (!isStaff || contactPhones.length > 1) {
 			const indexPhone = contactPhones.findIndex(
 				phone => phone.number === number,
 			)
@@ -186,91 +155,56 @@ const ContactFormDialog = React.forwardRef(
 			contactPhones.splice(indexPhone, 1)
 			setPhonesToDelete([...phonesToDelete])
 			setContactPhones([...contactPhones])
+		} else {
+			setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
 		}
+	}
 
-		const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-			const name = event.target.value as string
-			setContact({ ...contact, name })
-		}
+	const handleChangeTreatments = (ids: number[]) => {
+		setSelectedTreatmentLocalIds([...ids])
+	}
 
-		const handleChangeDescription = (
-			event: React.ChangeEvent<HTMLInputElement>,
-		) => {
-			const description = event.target.value as string
-			setContact({ ...contact, description })
-		}
-
-		const handleChangeType = (
-			event: React.ChangeEvent<HTMLInputElement>,
-			index: number,
-		) => {
-			contactPhones[index].type = Number(event.target.value)
-			setContactPhones([...contactPhones])
-		}
-
-		const handleChangeNumber = (
-			event: React.ChangeEvent<HTMLInputElement>,
-			index: number,
-		) => {
-			contactPhones[index].number = event.target.value as string
-			setContactPhones([...contactPhones])
-		}
-
+	const renderSelectTreatments = () => {
 		return (
-			<div className='contact__form'>
-				<Dialog
-					ref={ref}
-					style={{ margin: '0rem' }}
-					open={dialogOpen}
-					maxWidth='xl'
-					fullWidth
-					onClose={onClose}
-					TransitionComponent={TransitionSlide}
-					disableBackdropClick
-				>
+			<>
+				<DinoHr />
+				<SelectMultipleTreatments
+					selectedLocalIds={selectedTreatmentLocalIds}
+					handleChange={handleChangeTreatments}
+				/>
+			</>
+		)
+	}
+
+	return (
+		<div className="contact__form">
+			<DinoDialog
+				open={dialogOpen}
+				onClose={onClose}
+				onSave={handleSave}
+				header={
 					<ContactFormDialogHeader
-						action={action}
-						name={contact.name}
-						color={contact.color}
-						handleChangeColor={handleChangeColor}
+						contact={contact}
+						setContact={setContact}
 						handleCloseDialog={onClose}
 					/>
-					<DialogContent dividers>
-						<ContactFormDialogContent
-							name={contact.name}
-							description={contact.description || ''}
-							phones={contactPhones}
-							helperText={invalidPhone}
-							invalidName={invalidName}
-							handleChangeName={handleChangeName}
-							handleChangeDescription={handleChangeDescription}
-							handleChangeType={handleChangeType}
-							handleChangeNumber={handleChangeNumber}
-							handleDeletePhone={handleDeletePhone}
-							handleAddPhone={handleAddPhone}
-						>
-							{action === ContactsConstants.ACTION_ADD_ESSENTIAL ? (
-								<SelectMultipleTreatments
-									selectedLocalIds={selectedTreatmentLocalIds}
-									setSelectedLocalIds={setSelectedTreatmentLocalIds}
-								/>
-							) : (
-								<></>
-							)}
-						</ContactFormDialogContent>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={onClose}>
-							{language.data.DIALOG_CANCEL_BUTTON_TEXT}
-						</Button>
-						<Button onClick={handleSave}>
-							{language.data.DIALOG_SAVE_BUTTON_TEXT}
-						</Button>
-					</DialogActions>
-				</Dialog>
-			</div>
-		)
-	},
-)
+				}
+			>
+				<ContactFormDialogContent
+					contact={contact}
+					setContact={setContact}
+					phones={contactPhones}
+					setPhones={setContactPhones}
+					errorName={errorName}
+					errorPhone={errorPhone}
+					handleDeletePhone={handleDeletePhone}
+					handleAddPhone={handleAddPhone}
+				>
+					{isStaff && renderSelectTreatments()}
+				</ContactFormDialogContent>
+			</DinoDialog>
+		</div>
+	)
+}
 
 export default ContactFormDialog

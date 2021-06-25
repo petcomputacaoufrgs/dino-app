@@ -1,21 +1,21 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
 import UserSettingsDataModel from '../../types/user/api/UserSettingsDataModel'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import TreatmentService from '../treatment/TreatmentService'
 import LanguageBase from '../../constants/languages/LanguageBase'
-import ColorThemeEnum from '../../types/user/view/ColorThemeEnum'
+import ColorThemeEnum from '../../types/enum/ColorThemeEnum'
 import PT from '../../constants/languages/PT'
 import EN from '../../constants/languages/EN'
-import FontSizeEnum from '../../types/user/view/FontSizeEnum'
-import OptionType from '../../types/user/view/OptionType'
-import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import FontSizeEnum from '../../types/enum/FontSizeEnum'
+import OptionType from '../../types/OptionType'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
 import GoogleScopeService from '../auth/google/GoogleScopeService'
-import LanguageEnum from '../../types/user/view/LanguageEnum'
+import LanguageEnum from '../../types/enum/LanguageEnum'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -25,14 +25,18 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.userSettings,
-			APIRequestMappingConstants.USER_SETTINGS,
+			APIHTTPPathsConstants.USER_SETTINGS,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.USER_SETTINGS,
+			APIWebSocketPathsConstants.USER_SETTINGS,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
 		return [GoogleScopeService, TreatmentService]
+	}
+
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return []
 	}
 
 	async convertModelToEntity(
@@ -43,9 +47,9 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			declineGoogleContacts: model.declineGoogleContacts,
 			fontSize: model.fontSize,
 			includeEssentialContact: model.includeEssentialContact,
-			language: model.language ? model.language : this.getDefaultLanguageCode(),
+			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
-			settingsStep: model.settingsStep,
+			step: model.step,
 			parentsAreaPassword: model.parentsAreaPassword
 		}
 
@@ -60,6 +64,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return entity
 	}
 
+
 	async convertEntityToModel(
 		entity: UserSettingsEntity,
 	): Promise<UserSettingsDataModel | undefined> {
@@ -70,7 +75,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			settingsStep: entity.settingsStep,
+			step: entity.step,
 			parentsAreaPassword: entity.parentsAreaPassword
 		}
 
@@ -153,16 +158,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		} else {
 			return undefined
 		}
-	}
-
-	async getTreatment(
-		userSettings: UserSettingsEntity,
-	): Promise<TreatmentEntity | undefined> {
-		if (userSettings.treatmentLocalId) {
-			return TreatmentService.getByLocalId(userSettings.treatmentLocalId)
-		}
-
-		return undefined
 	}
 
 	getFirstSettingsDone = async (): Promise<boolean | undefined> => {

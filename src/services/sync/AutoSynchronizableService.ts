@@ -1,4 +1,4 @@
-import { IndexableType } from 'dexie'
+import Dexie, { IndexableType } from 'dexie'
 import DinoAgentService from '../../agent/DinoAgentService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import SynchronizableDataResponseModel from '../../types/sync/api/response/SynchronizableDataResponseModel'
@@ -74,6 +74,8 @@ export default abstract class AutoSynchronizableService<
 	onGetWebSocketSubscribers = (): WebSocketSubscriber<any>[] => {
 		return []
 	}
+
+	protected async beforeDelete(entity: ENTITY) {}
 
 	//#endregion
 
@@ -306,6 +308,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entity Entity to delete
 	 */
 	delete = async (entity: ENTITY) => {
+
+		await this.beforeDelete(entity)
+
 		if (entity.id === undefined) {
 			await this.dbDelete(entity)
 			this.triggerUpdateEvent()
@@ -358,6 +363,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entities Entities to delete
 	 */
 	deleteAll = async (entities: ENTITY[]) => {
+
+		await Promise.all(entities.map(entity => this.beforeDelete(entity)))
+
 		const filterById = ArrayUtils.partition(entities, entity =>
 			Utils.isNotEmpty(entity.id),
 		)
@@ -491,7 +499,7 @@ export default abstract class AutoSynchronizableService<
 	/**
 	 * @description Start entity save sync with API.
 	 */
-	protected syncSave = async (): Promise<boolean> => {
+	protected sync = async (): Promise<boolean> => {
 		const notSavedEntities = await this.dbGetAllNotSavedOnAPI()
 
 		const notSavedModels = await this.internalConvertEntitiesToModels(
@@ -547,6 +555,25 @@ export default abstract class AutoSynchronizableService<
 	//#endregion
 
 	//#region DATABASE
+
+	/**
+	 * @description Filter database query removing invalid data and returning a list.
+	 */
+	protected toList = (collection: Dexie.Collection<ENTITY, number>) => {
+		return this.filterValidData(collection).toArray()
+	}
+
+	/**
+	 * @description Filter database query removing invalid data and returning first item.
+	*/
+	protected toFirst = (collection: Dexie.Collection<ENTITY, number>) => {
+		return this.filterValidData(collection).first()
+	}
+
+	private filterValidData = (collection: Dexie.Collection<ENTITY, number>) => {
+		return collection
+			.filter(item => item.localState !== SynchronizableLocalState.DELETED_LOCALLY)
+	}
 
 	private dbGetById = async (id: ID) => {
 		return this.table.where('id').equals(id).first()
@@ -685,8 +712,8 @@ export default abstract class AutoSynchronizableService<
 
 	private deleteAllRequestURL = (): string => `${this.deleteRequestURL()}all/`
 
-	private syncSaveRequestURL = (): string =>
-		`${this.getBaseRequestURL()}sync_save/`
+	private syncRequestURL = (): string =>
+		`${this.getBaseRequestURL()}sync/`
 
 	private apiSave = async (
 		data: DATA_MODEL,
@@ -782,7 +809,7 @@ export default abstract class AutoSynchronizableService<
 		toSave: Array<DATA_MODEL>,
 	): Promise<SynchronizableSyncResponseModel<ID, DATA_MODEL> | undefined> => {
 		try {
-			const request = await DinoAgentService.put(this.syncSaveRequestURL())
+			const request = await DinoAgentService.put(this.syncRequestURL())
 
 			if (request.canGo) {
 				const requestModel: SynchronizableSyncModel<ID, DATA_MODEL> = {

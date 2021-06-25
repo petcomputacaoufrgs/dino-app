@@ -1,14 +1,16 @@
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import FaqItemDataModel from '../../types/faq/api/FaqItemDataModel'
 import FaqItemEntity from '../../types/faq/database/FaqItemEntity'
 import StringUtils from '../../utils/StringUtils'
-import FaqEntity from '../../types/faq/database/FaqEntity'
-import FaqService from './FaqService'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
+import TreatmentService from '../treatment/TreatmentService'
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import Utils from '../../utils/Utils'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
 	number,
@@ -18,25 +20,29 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.faqItem,
-			APIRequestMappingConstants.FAQ_ITEM,
-			WebSocketTopicPathService,
-			APIWebSocketDestConstants.FAQ_ITEM,
+			APIHTTPPathsConstants.FAQ_ITEM,
+			WebSocketQueuePathService,
+			APIWebSocketPathsConstants.FAQ_ITEM,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
-		return [FaqService]
+		return [TreatmentService]
+	}
+
+	getSyncNecessaryPermissions(): PermissionEnum[] {
+		return []
 	}
 
 	async convertModelToEntity(
 		model: FaqItemDataModel,
 	): Promise<FaqItemEntity | undefined> {
-		const faq = await FaqService.getById(model.faqId)
+		const treatment = await TreatmentService.getById(model.treatmentId)
 
-		if (faq) {
+		if (treatment) {
 			const entity: FaqItemEntity = {
 				answer: model.answer,
-				localFaqId: faq.localId,
+				localTreatmentId: treatment.localId,
 				question: model.question,
 			}
 
@@ -47,13 +53,13 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	async convertEntityToModel(
 		entity: FaqItemEntity,
 	): Promise<FaqItemDataModel | undefined> {
-		if (entity.localFaqId) {
-			const faq = await FaqService.getByLocalId(entity.localFaqId)
+		if (Utils.isNotEmpty(entity.localTreatmentId)) {
+			const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId!)
 
-			if (faq && faq.id) {
+			if (treatment && Utils.isNotEmpty(treatment.id)) {
 				const model: FaqItemDataModel = {
 					answer: entity.answer,
-					faqId: faq.id,
+					treatmentId: treatment.id!,
 					question: entity.question,
 				}
 
@@ -63,20 +69,23 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	}
 
 	getFaqItemByFilter(
-		faq: FaqEntity,
-		faqItem: FaqItemEntity[],
+		treatment: TreatmentEntity,
 		searchTerm: string,
+		faqItems?: FaqItemEntity[],
 	): FaqItemEntity[] {
-		return faqItem.filter(
-			item =>
-				item.localFaqId === faq.localId &&
-				StringUtils.contains(item.question, searchTerm),
-		)
+		if(faqItems) {
+			return faqItems.filter(
+				item =>
+					item.localTreatmentId === treatment.localId &&
+					StringUtils.contains(item.question, searchTerm),
+			)
+		}
+		return []
 	}
 
-	getByFaq = async (faq: FaqEntity): Promise<FaqItemEntity[]> => {
-		if (faq.localId) {
-			return this.table.where('localFaqId').equals(faq.localId).toArray()
+	getByTreatment = async (treatment: TreatmentEntity): Promise<FaqItemEntity[]> => {
+		if (treatment.localId) {
+			return this.toList(this.table.where('localTreatmentId').equals(treatment.localId))
 		}
 
 		return []

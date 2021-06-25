@@ -2,14 +2,17 @@ import React, { createContext, useContext } from 'react'
 import { Router } from 'react-router'
 import { History } from 'history'
 import PrivateRouterContextType from '../../types/context_provider/PrivateRouterContextType'
+import PermissionEnum from '../../types/enum/PermissionEnum'
 
 /**
  * @description Contexto padrão para o router
  */
 const PrivateRouterContext = createContext({
-	homePath: '',
+	userHomePath: '',
+	staffHomePath: '',
 	loginPath: '',
 	isAuthenticated: false,
+	userPermission: undefined
 } as PrivateRouterContextType)
 
 /**
@@ -35,5 +38,16 @@ const PrivateRouterProvider: React.FC<PrivateRouterContextType> = props => {
 }
 
 export const usePrivateRouter = () => useContext(PrivateRouterContext)
+
+export const HasStaffPowers = (): boolean => { 
+	const permission = usePrivateRouter().userPermission 
+	return permission === PermissionEnum.STAFF || permission === PermissionEnum.ADMIN 
+} 
+
+export const GetPermission = (): string | undefined => { 
+	return usePrivateRouter().userPermission 
+} 
+
+export const IsNotClient = (): boolean => usePrivateRouter().userPermission !== PermissionEnum.ADMIN 
 
 export default PrivateRouterProvider

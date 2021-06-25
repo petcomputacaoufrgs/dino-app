@@ -6,16 +6,18 @@ import AuthService from '../../services/auth/AuthService'
 import GrantStatusConstants from '../../constants/login/GrantStatusConstants'
 import { useAlert } from '../../context/alert'
 import { useLanguage } from '../../context/language'
-import { DinoDialogContent, DinoDialogHeader } from '../dino_dialog'
+import { DinoDialogContent, DinoDialogHeader } from '../dialogs/dino_dialog'
 import UserEntity from '../../types/user/database/UserEntity'
 import UserService from '../../services/user/UserService'
-import Loader from '../loader'
+import DinoLoader from '../loader'
 import ConnectionService from '../../services/connection/ConnectionService'
 import './styles.css'
+import { HasStaffPowers } from '../../context/private_router'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 	({ scopes, title, text, open, onDecline, onAccept, onClose }, ref) => {
 		const alert = useAlert()
+		const isStaff = HasStaffPowers()
 
 		const [isLoading, setIsLoading] = useState(true)
 		const [user, setUser] = useState<UserEntity | undefined>()
@@ -127,11 +129,11 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 		const renderOfflineContent = (): JSX.Element => (
 			<>
 				<DinoDialogHeader>
-					<h1>Sem conexão</h1>
+					<h1>{language.data.NO_CONNECTION}</h1>
 				</DinoDialogHeader>
 				<DinoDialogContent>
-					<p>Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.</p>
-					<p>Tente novamente quando estiver conectado.</p>
+					<p>{language.data.RENDER_OFFLINE_CONTENT_PART_1}</p>
+					<p>{language.data.RENDER_OFFLINE_CONTENT_PART_2}</p>
 				</DinoDialogContent>
 			</>
 		)
@@ -144,16 +146,15 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 				maxWidth='xs'
 				onClose={onClose}
 				TransitionComponent={TransitionSlide}
-				open={open}
+				open={open && !isStaff}
 			>
-				<Loader isLoading={isLoading}>
-					{isConnected ? 
-						renderDialogContent()
-					: 
-						renderOfflineContent()
+				<DinoLoader isLoading={isLoading}>
+					{isConnected 
+						?	renderDialogContent()
+						: renderOfflineContent()
 					}
 					
-				</Loader>
+				</DinoLoader>
 			</Dialog>
 		)
 	},

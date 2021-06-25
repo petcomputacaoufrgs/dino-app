@@ -1,7 +1,6 @@
 import React from 'react'
 import NoteColumnDialogContentProps from './props'
 import { TextField } from '@material-ui/core'
-import NoteColumnConstants from '../../../../../constants/note/NoteColumnConstants'
 import { useLanguage } from '../../../../../context/language'
 
 const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
@@ -18,19 +17,21 @@ const NoteColumnDialogContent: React.FC<NoteColumnDialogContentProps> = ({
 	}
 
 	return (
-		<TextField
-			required
-			fullWidth
-			value={title}
-			onChange={handleTitleChange}
-			error={invalidTitle}
-			helperText={invalidMessage}
-			autoFocus
-			margin='dense'
-			label={`${language.data.COLUMN_TITLE_LABEL} (${language.data.MAX} ${NoteColumnConstants.TITLE_MAX})`}
-			type='name'
-			ref={inputRef}
-		/>
+		<div className='note__column_dialog__content'>
+			<TextField
+				required
+				fullWidth
+				value={title}
+				onChange={handleTitleChange}
+				error={invalidTitle}
+				helperText={invalidMessage}
+				autoFocus
+				margin='dense'
+				label={`${language.data.COLUMN_TITLE_LABEL}`}
+				type='name'
+				ref={inputRef}
+			/>
+		</div>
 	)
 }
 

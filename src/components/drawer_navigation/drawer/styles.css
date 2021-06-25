@@ -105,7 +105,7 @@
 
 .drawer_navigation__drawer__visible
 	.MuiTypography-root.MuiListItemText-primary {
-	text-align: justify;
+	text-align: left;
 }
 
 .user__avatar {

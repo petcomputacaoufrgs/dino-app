@@ -11,7 +11,7 @@
 .settings .settings__form {
 	align-self: center;
 	width: 90%;
-	margin: 0.625rem 0rem;
+	margin: 10px;
 }
 
 .settings__title {
@@ -53,8 +53,8 @@
 }
 
 .button.settings__save_button {
-	width: 70%;
-	height: 100%;
+	width: 50%;
+	height: 90%;
 	font-size: var(--large-font);
 }
 

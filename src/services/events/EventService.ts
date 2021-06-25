@@ -3,12 +3,13 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import AuthService from '../auth/AuthService'
 import SyncService from '../sync/SyncService'
-import CalendarService from '../calendar/CalendarService'
+// import CalendarService from '../calendar/CalendarService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import WebSocketService from '../websocket/WebSocketService'
 import ErrorHandlerService from '../error_handler/ErrorHandlerService'
 import TabControlService from '../tab_control/TabControlService'
+import UserService from '../user/UserService'
 
 class EventService {
 	constructor() {
@@ -33,9 +34,9 @@ class EventService {
 	}
 
 	whenLogin = async () => {
-		CalendarService.addMocks()
+		//CalendarService.addMocks()
 		this.startWebSocketAndSync()
-		HistoryService.push(PathConstants.HOME)
+		AuthService.redirectToHome(await UserService.getPermission())
 	}
 
 	whenLogout = async () => {
@@ -68,7 +69,7 @@ class EventService {
 		const isDinoConnected = await ConnectionService.isDinoConnected()
 		const isAuthenticated = await AuthService.isAuthenticated()
 		if (isDinoConnected && isAuthenticated) {
-			const success = WebSocketService.connect()
+			const success = await WebSocketService.connect()
 			if (success) {
 				SyncService.sync()
 			}

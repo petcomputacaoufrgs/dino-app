@@ -9,10 +9,18 @@ export default interface LanguageBase {
 	NOT_FOUND_MESSAGE: string
 	NOT_FROND_REDIRECT_MESSAGE: string
 	WELCOME_MESSAGE: string
+	GLOSSARY: string
+	GLOSSARY_ITEM: string
+	FAQ: string
+	FAQ_ITEM: string
 	FIRST_LOGIN_DIALOG_LABEL: string
+	FIRST_LOGIN_WELCOME_MESSAGE_HEADER: string
 	FIRST_LOGIN_WELCOME_MESSAGE: string
 	FIRST_LOGIN_DONE_MESSAGE: string
+	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE: string
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE: string
 	FIRST_LOGIN_CHOOSE_TREATMENT: string
+	FIRST_LOGIN_CHOOSE_PASSWORD: string
 	FIRST_LOGIN_CHOOSE_COLOR_THEME: string
 	FIRST_LOGIN_CHOOSE_LANGUAGE: string
 	LOGIN_BUTTON_TEXT: string
@@ -33,23 +41,26 @@ export default interface LanguageBase {
 	CANCEL_OPTION_TEXT: string
 	EDIT_OPTION_TEXT: string
 	DELETE_OPTION_TEXT: string
-	DELETE_CONTACT_QUESTION: string
 	DELETE_CONTACT_OPTION_TEXT: string
+	DELETE_ITEM_OPTION_TEXT: string
 	TERMS_OF_USE: string
 	PRIVACY_POLICY: string
 	MENU_HOME: string
 	MENU_GAMES: string
-	MENU_GLOSSARY: string
 	MENU_CONTACTS: string
-	MENU_FAQ: string
 	MENU_SETTINGS: string
 	MENU_LOGOUT: string
 	MENU_CALENDAR: string
 	MENU_ABOUT_US: string
+	MENU_STAFF_MODERATION: string
+	TREATMENTS: string
+	TITLE: string
+	SUBTITLE: string
+	TEXT: string
+	FULL_TEXT: string
 	SETTINGS_TITLE: string
 	SETTINGS_LANGUAGE: string
 	SETTINGS_TREATMENT: string
-	SETTINGS_SAVE: string
 	SETTINGS_SAVE_SUCCESS: string
 	SETTINGS_SAVE_ERROR: string
 	MENU_NOTES: string
@@ -64,7 +75,6 @@ export default interface LanguageBase {
 	ANSWER_NOTE_DIALOG_TITLE: string
 	NOTE_TAG_LABEL: string
 	DIALOG_CANCEL_BUTTON_TEXT: string
-	DIALOG_SAVE_BUTTON_TEXT: string
 	SEARCH_BUTTON_LABEL: string
 	ANSWER_DIALOG_LABEL: string
 	FORM_NAME: string
@@ -72,14 +82,31 @@ export default interface LanguageBase {
 	FORM_TYPE: string
 	FORM_PHONE: string
 	FORM_QUESTION: string
+	FORM_ANSWER: string
 	FORM_QUESTION_PLACEHOLDER: string
 	FORM_QUESTION_TITLE: string
 	FORM_ADD_PHONE: string
+	FORM_ADD_STAFF: string
+	FORM_EMAIL: string
+	ADD_STAF_TAB: string
+	STAFF_LIST_TAB: string
+	STAFF_SAVE_SUCCESS: string
+	TREATMENT: string
+	ADD_TREATMENT: string
+	STAFF_ADD_TREATMENT_NAME: string
+	PENDING: string
+	STAFF: string
+	EMAIL: string
+	MEMBER_OF_STAFF: string
 	NOT_FOUND_QUESTION_FAQ: string
-	CONTACTS_ADD_CONTACT: string
-	CONTACTS_MOBILE_PHONE: string
-	CONTACTS_RESIDENTIAL_PHONE: string
-	CONTACTS_PUBLIC_SERVICE_PHONE: string
+	NEW_CONTACT: string
+	NEW_TREATMENT: string
+	NEW_GLOSSARY_ITEM: string
+	CONTACTS_ADD_ESSENTIAL_CONTACT: string
+	ESSENTIAL_CONTACT_MUST_HAVE_PHONE: string
+	CONTACT_MOBILE_PHONE: string
+	CONTACT_RESIDENTIAL_PHONE: string
+	CONTACT_PUBLIC_SERVICE_PHONE: string
 	CONTACT_CLEAR_BUTTON_ARIA_LABEL: string
 	COLOR_THEME_SELECTION_ARIA_LABEL: string
 	NO_AVAILABLE_TEXT: string
@@ -206,7 +233,7 @@ export default interface LanguageBase {
 	DEFAULT_FONT_SIZE_NAME: string
 	LARGE_FONT_SIZE_NAME: string
 	LARGER_FONT_SIZE_NAME: string
-	CONTACT_DIALOG_FORM_SUBTITLE: string
+	CONTACT: string
 	CONTACT_NUMBER_ALREADY_EXISTS: string
 	DIALOG_AGREE_TEXT: string
 	DIALOG_DECLINE_BUTTON_TEXT: string
@@ -232,8 +259,13 @@ export default interface LanguageBase {
 	NO_TREATMENTS_AVAILABLE: string
 	NO_TREATMENT_SELECTED: string
 	NO_FAQ_AVAILABLE: string
-	TREATMENT_SAVE: string
 	KIDS_SPACE: string
+	DINO_RUNNER_GAME: string
+	MEMORY_GAME: string
+	DINO_SLIDER_GAME: string
+	TIC_TAC_DINO_GAME: string
+	MUSICAL_DINO_GAME: string
+	SNAKE_GAME: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string
 	MEMORY_GAME_GAME_OVER: string
 	PLAY_AGAIN_MESSAGE: string
@@ -273,6 +305,17 @@ export default interface LanguageBase {
 	DELETE_ACCOUNT_MESSAGE: string
 	DELETE_ACCOUNT_SUCCESS_MESSAGE: string
 	DELETE_ACCOUNT_ERROR_MESSAGE: string
+	EXAMPLE_EMAIL: string
+	TREATMENTS_AND_FAQS: string
+	INVALID_VALUE: string
+	USERS_QUESTIONS: string
+	QUESTIONS: string
+	SEND_TO_THE_PROFESSIONALS: string
+	SAVE: string
+	UNIVERSAL_CONTACT: string
+	ANSWER: string
+	TREATMENT_QUESTION_ANSWER_PLACEHOLDER: string
+	ADD_STAFF_TEXT: string
 	CHANGE_PASSWORD: string
 	CHANGE_PASSWORD_DIALOG: string
 	CANCEL: string
@@ -287,4 +330,20 @@ export default interface LanguageBase {
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE: string
 	PASSWORD_CHANGED: string
 	WRONG_PASSWORD: string
+	NO_ITEMS_LIST: string
+	FILTER: string
+	ESSENTIAL_CONTACTS: string
+	YOUR_CONTACTS: string
+	UNIVERSAL_ESSENTIAL_CONTACTS: string
+	TREATMENT_ESSENTIAL_CONTACTS: string
+	HAS_USER_QUESTIONS_ONLY: string
+	RENDER_OFFLINE_CONTENT_PART_1: string
+	RENDER_OFFLINE_CONTENT_PART_2: string
+	NO_CONNECTION: string
+	itemAlreadyExists(item: string): string
+	deleteItemText(item: string): string
+	seeFAQItemsText(treatment: string): string
+	titleFAQTreatmentText(treatment: string): string
+	titleTreatmentQuestion(treatment: string): string
 }
+

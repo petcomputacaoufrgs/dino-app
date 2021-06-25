@@ -1,7 +1,8 @@
-import LanguageEnum from '../../types/user/view/LanguageEnum'
+import LanguageEnum from '../../types/enum/LanguageEnum'
 import LanguageBase from './LanguageBase'
 
 export default class EN implements LanguageBase {
+
 	APP_NAME = 'DinoApp'
 
 	DINOAPP_TEAM = 'DinoApp Team'
@@ -24,11 +25,19 @@ export default class EN implements LanguageBase {
 
 	FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
 
-	FIRST_LOGIN_WELCOME_MESSAGE = 'Welcome!'
+	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Welcome!'
+
+	FIRST_LOGIN_WELCOME_MESSAGE = 'Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicinge lit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibus repudiandae ut labore!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
 
+	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE = 'Thank you for joining DinoApp!'
+
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE = 'Your settings can be updated at any time in the Settings section of the app.'
+
 	FIRST_LOGIN_CHOOSE_TREATMENT = 'Select your Treatment'
+
+	FIRST_LOGIN_CHOOSE_PASSWORD = 'Create a password for the guardian area'
 
 	FIRST_LOGIN_CHOOSE_COLOR_THEME = 'Select your Color Theme'
 
@@ -72,10 +81,11 @@ export default class EN implements LanguageBase {
 
 	DELETE_OPTION_TEXT = 'Delete'
 
-	DELETE_CONTACT_QUESTION = 'Delete contact?'
-
 	DELETE_CONTACT_OPTION_TEXT =
 		'This action will permanently delete your contact.'
+
+	DELETE_ITEM_OPTION_TEXT =
+		'This action will permanently delete the item.'
 
 	TERMS_OF_USE = 'Terms of Use'
 
@@ -85,12 +95,16 @@ export default class EN implements LanguageBase {
 
 	MENU_GAMES = 'Games'
 
-	MENU_GLOSSARY = 'Glossary'
+	GLOSSARY = 'Glossary'
+
+	GLOSSARY_ITEM = 'Glossary Item'
 
 	MENU_CONTACTS = 'Contacts'
 
-	MENU_FAQ = 'F.A.Q.'
+	FAQ = 'FAQ'
 
+	FAQ_ITEM = 'FAQ Item'
+	
 	MENU_SETTINGS = 'Settings'
 
 	MENU_LOGOUT = 'Logout'
@@ -99,13 +113,23 @@ export default class EN implements LanguageBase {
 
 	MENU_ABOUT_US = 'About Us'
 
+	MENU_STAFF_MODERATION = 'Staff Moderation' 
+
+	TREATMENTS = 'Treatments' 
+
+	TITLE = 'Title'
+
+	SUBTITLE = 'Subtitle'
+
+	TEXT = 'Text'
+
+	FULL_TEXT = 'Full Text'
+	
 	SETTINGS_TITLE = 'Settings'
 
 	SETTINGS_LANGUAGE = 'Choose Language'
 
 	SETTINGS_TREATMENT = 'Choose treatment'
-
-	SETTINGS_SAVE = 'Save'
 
 	SETTINGS_SAVE_SUCCESS = 'Settings updated.'
 
@@ -135,8 +159,6 @@ export default class EN implements LanguageBase {
 
 	DIALOG_CANCEL_BUTTON_TEXT = 'Cancel'
 
-	DIALOG_SAVE_BUTTON_TEXT = 'Save'
-
 	SEARCH_BUTTON_LABEL = 'Search...'
 
 	ANSWER_DIALOG_LABEL = 'Model for answer a question note'
@@ -151,21 +173,55 @@ export default class EN implements LanguageBase {
 
 	FORM_QUESTION = 'Question'
 
-	FORM_QUESTION_PLACEHOLDER = 'Question?'
+	FORM_ANSWER = 'Answer'
+
+	FORM_QUESTION_PLACEHOLDER = 'Type your question...'
 
 	FORM_QUESTION_TITLE = 'Send us your question!'
 
 	FORM_ADD_PHONE = 'Add Phone'
 
+	FORM_ADD_STAFF = 'Add Staff'
+
+	FORM_EMAIL = 'Add Staff E-mail'
+
+	ADD_STAF_TAB = 'Add Staff'
+	
+	STAFF_LIST_TAB = 'Staff List'
+
+	STAFF_SAVE_SUCCESS = 'Staff successfully added'
+
+	TREATMENT = 'Treatment'
+
+	ADD_TREATMENT = `Add ${this.TREATMENT}`
+
+	STAFF_ADD_TREATMENT_NAME = 'Add Treatment Name'
+
+	PENDING = 'Pending'
+
+	STAFF = 'Staff'
+
+	EMAIL = 'E-mail'
+
+	MEMBER_OF_STAFF = 'Member of Staff'
+
 	NOT_FOUND_QUESTION_FAQ = 'Did not found your question?'
 
-	CONTACTS_ADD_CONTACT = 'New Contact'
+	NEW_CONTACT = 'New Contact'
 
-	CONTACTS_MOBILE_PHONE = 'Mobile'
+	NEW_TREATMENT = 'New Treatment'
 
-	CONTACTS_RESIDENTIAL_PHONE = 'Residential'
+	NEW_GLOSSARY_ITEM = 'New Glossary Item'
+	
+	ESSENTIAL_CONTACT_MUST_HAVE_PHONE = 'Essential Contact must have a phone'
 
-	CONTACTS_PUBLIC_SERVICE_PHONE = 'Public Service'
+	CONTACTS_ADD_ESSENTIAL_CONTACT = 'New Essential Contact'
+
+	CONTACT_MOBILE_PHONE = 'Mobile'
+
+	CONTACT_RESIDENTIAL_PHONE = 'Residential'
+
+	CONTACT_PUBLIC_SERVICE_PHONE = 'Public Service'
 
 	NO_AVAILABLE_TEXT = 'No Available Text'
 
@@ -205,7 +261,7 @@ export default class EN implements LanguageBase {
 
 	NO_OPTIONS = 'No options'
 
-	EMPTY_FIELD_ERROR = "Field can't be empty."
+	EMPTY_FIELD_ERROR = "Field cannot be empty."
 
 	QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
 
@@ -422,7 +478,7 @@ export default class EN implements LanguageBase {
 
 	LARGER_FONT_SIZE_NAME = 'Larger'
 
-	CONTACT_DIALOG_FORM_SUBTITLE = 'Contact'
+	CONTACT = 'Contact'
 
 	CONTACT_NUMBER_ALREADY_EXISTS =
 		'This number is already created in the contact'
@@ -485,8 +541,6 @@ export default class EN implements LanguageBase {
 
 	NO_FAQ_AVAILABLE = 'No F.A.Q available'
 
-	TREATMENT_SAVE = 'Save'
-
 	SECONDARY_TAB_MESSAGE =
 		'The dino is open in another browser tab. You can only use one tab.'
 
@@ -497,8 +551,6 @@ export default class EN implements LanguageBase {
 	APP_UPDATE_MESSAGE = 'Update available! Restart the DinoApp to install!'
 
 	PWA_CONTROL_END_INTRO_BUTTON = 'End'
-
-	FIRST_SETTINGS_SAVE_BUTTON = 'Save'
 
 	PWA_INTRO_TITLE_0 = 'Welcome to DinoApp!'
 
@@ -537,6 +589,18 @@ export default class EN implements LanguageBase {
 
 	KIDS_SPACE = "Kid's space"
 
+	DINO_RUNNER_GAME = 'Dino Runner'
+
+	MEMORY_GAME = 'Memory Game'
+
+	DINO_SLIDER_GAME = 'Dino Slider'
+
+	TIC_TAC_DINO_GAME = 'Tic Tac Dino'
+
+	MUSICAL_DINO_GAME = 'Musical Dino'
+
+	SNAKE_GAME = 'Snake Game'
+
 	WINNER = 'Winner: '
 
 	NEXT_PLAYER = 'Next player: '
@@ -573,6 +637,28 @@ export default class EN implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Error deleting your account, please try again later.'
+
+	EXAMPLE_EMAIL='example@email.com'
+
+	TREATMENTS_AND_FAQS = `Treatments & ${this.FAQ}s`
+
+	INVALID_VALUE = 'Invalid value'
+
+	USERS_QUESTIONS = "User's Questions"
+	
+	QUESTIONS = 'Questions'
+
+	SEND_TO_THE_PROFESSIONALS = 'Send to the profissionals!'
+
+	SAVE = 'Save'
+
+	UNIVERSAL_CONTACT = 'This contact is universal and will appear for all user'
+
+	ANSWER = 'Answer'
+
+	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Question asnwer...'
+
+	ADD_STAFF_TEXT = "Staff users can add, remove and edit information that is displayed to patients and their responsibles, such as: hospital contacts, glossary items, etc. Only the hospital's management account is able to add and remove other staff users."
 	
 	MEMORY_GAME_GAME_OVER = 'You nail it! Congratulations'
 
@@ -603,4 +689,34 @@ export default class EN implements LanguageBase {
 	PASSWORD_CHANGED = 'Success'
 
 	WRONG_PASSWORD = 'Wrong password'
+
+	NO_ITEMS_LIST = 'No Items'
+
+	FILTER = 'Filter'
+
+	ESSENTIAL_CONTACTS = "Essential Contacts"
+
+	YOUR_CONTACTS = "Your Contacts"
+
+	UNIVERSAL_ESSENTIAL_CONTACTS = "Universal " + this.ESSENTIAL_CONTACTS
+
+	TREATMENT_ESSENTIAL_CONTACTS = "Treatment " + this.ESSENTIAL_CONTACTS
+
+	HAS_USER_QUESTIONS_ONLY = "With User Questions Only"
+
+	RENDER_OFFLINE_CONTENT_PART_1 = 'In order to synchronize your contacts, a connection to an internet network is required.'
+	
+	RENDER_OFFLINE_CONTENT_PART_2 = 'Please try again when connected.'
+
+	NO_CONNECTION = 'No internet connection'
+
+	itemAlreadyExists = (item: string) => `${item} already exists`
+
+	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
+	
+	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
+	
+	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`
+	
+	titleTreatmentQuestion = (treatment: string) => `Have a question about ${treatment}?`
 }

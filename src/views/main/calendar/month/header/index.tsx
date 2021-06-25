@@ -2,7 +2,7 @@ import React from 'react'
 import HeaderProps from './props'
 import DateUtils from '../../../../../utils/DateUtils'
 import { ReactComponent as TodayCalendarSVG } from '../../../../../assets/icons/today_calendar.svg'
-import IconButton from '../../../../../components/button/icon_button'
+import DinoIconButton from '../../../../../components/button/icon_button'
 import { useLanguage } from '../../../../../context/language'
 import './styles.css'
 
@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ date, goToCurrentMonth }) => {
 			</h1>
 			<div className='calendar__month__header_buttons'>
 				<div className='calendar__month__header_buttons__today_button'>
-					<IconButton
+					<DinoIconButton
 						ariaLabel={language.data.CALENDAR_CURRENT_MONTH_ARIA_LABEL}
 						icon={TodayCalendarSVG}
 						onClick={goToCurrentMonth}

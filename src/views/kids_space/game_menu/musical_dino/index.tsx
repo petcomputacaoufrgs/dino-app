@@ -5,7 +5,7 @@ import { startGame } from './engine/index'
 import { ReactComponent as DinoSVG } from '../../../../assets/kids_space/dinogotchi/dino.svg'
 import { ReactComponent as GoBackSVG } from '../../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import { useLanguage } from '../../../../context/language'
-import IconButton from '../../../../components/button/icon_button'
+import DinoIconButton from '../../../../components/button/icon_button'
 import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
 import './styles.css'
 
@@ -55,7 +55,7 @@ const MusicalDino: React.FC = () => {
 				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
 			</GameOverDialog>
 			<div className='musical_dino__header'>
-				<IconButton
+				<DinoIconButton
 					icon={GoBackSVG}
 					onClick={() => {
 						HistoryService.push(PathConstants.GAME_MENU)

@@ -1,11 +1,10 @@
-.note_create_dialog .MuiFormControl-root.MuiTextField-root {
-	margin-bottom: 1rem;
+.note_create__dialog_content .MuiFormControl-root.MuiTextField-root {
+	margin-bottom: 16px;
 	width: 100%;
 }
 
-.note_create_dialog .MuiDialogTitle-root {
-	background-color: var(--header-and-menu);
-	margin-bottom: 0.5rem;
+.note_create__dialog_content {
+	padding: 20px 16px 8px;
 }
 
 .note_create_dialog .MuiTypography-root.MuiTypography-h6 {

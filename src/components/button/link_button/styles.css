@@ -1,5 +1,4 @@
 button.link_button {
-	text-decoration: underline;
 	color: var(--button-font-color);
 	border: none;
 	background: none;
@@ -7,10 +6,12 @@ button.link_button {
 	display: block;
 	padding: 0.438rem;
 	margin: auto;
+	font-size: var(--small-font);
 }
 
 button.link_button:hover,
 button.link_button:focus {
 	color: var(--button-selected-font-color);
 	outline: none;
+	text-decoration: underline;
 }

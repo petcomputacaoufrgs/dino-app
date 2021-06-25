@@ -23,7 +23,7 @@ const AboutUs: React.FC = () => {
 
 	return (
 		<div className='about_us'>
-			<ArrowBack />
+			<ArrowBack dark />
 			<div className='card__header'>
 				<DinoLogoHeader title={'Sobre Nós'} subtitle={'DinoApp'} />
 			</div>

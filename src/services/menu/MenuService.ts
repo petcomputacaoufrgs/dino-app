@@ -17,37 +17,37 @@ class MenuService {
 		{
 			image: HomeSVG,
 			name: language.MENU_HOME,
-			onClick: () => HistoryService.push(PathConstants.HOME),
+			onClick: () => HistoryService.push(PathConstants.USER_HOME),
 		},
 		{
 			image: GlossarySVG,
-			name: language.MENU_GLOSSARY,
-			onClick: () => HistoryService.push(PathConstants.GLOSSARY),
+			name: language.GLOSSARY,
+			onClick: () => HistoryService.push(PathConstants.USER_GLOSSARY),
 		},
 		{
 			image: ContactsSVG,
 			name: language.MENU_CONTACTS,
-			onClick: () => HistoryService.push(PathConstants.CONTACTS),
+			onClick: () => HistoryService.push(PathConstants.USER_CONTACTS),
 		},
 		{
 			image: NotesSVG,
 			name: language.MENU_NOTES,
-			onClick: () => HistoryService.push(PathConstants.NOTES),
+			onClick: () => HistoryService.push(PathConstants.USER_NOTES),
 		},
 		{
 			image: FaqSVG,
-			name: language.MENU_FAQ,
-			onClick: () => HistoryService.push(PathConstants.FAQ),
+			name: language.FAQ,
+			onClick: () => HistoryService.push(PathConstants.USER_FAQ),
 		},
 		{
 			image: CalendarSVG,
 			name: language.MENU_CALENDAR,
-			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.USER_SETTINGS),
 		},
 		{
 			image: SettingsSVG,
 			name: language.MENU_SETTINGS,
-			onClick: () => HistoryService.push(PathConstants.SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.USER_SETTINGS),
 		},
 		{
 			image: KidsSpaceSVG,
@@ -68,6 +68,59 @@ class MenuService {
 		},
 	]
 
+	getStaffMainPages = (language: LanguageBase): MenuItemViewModel[] => [
+		{
+			image: HomeSVG,
+			name: language.MENU_HOME,
+			onClick: () => HistoryService.push(PathConstants.STAFF_HOME),
+		},
+		{
+			image: GlossarySVG,
+			name: language.GLOSSARY,
+			onClick: () => HistoryService.push(PathConstants.STAFF_GLOSSARY),
+		},
+		{
+			image: ContactsSVG,
+			name: language.MENU_CONTACTS,
+			onClick: () => HistoryService.push(PathConstants.STAFF_CONTACTS),
+		},
+		{
+			image: SettingsSVG,
+			name: language.MENU_SETTINGS,
+			onClick: () => HistoryService.push(PathConstants.STAFF_SETTINGS),
+		},
+		{
+			image: SettingsSVG,
+			name: language.TREATMENTS,
+			onClick: () => HistoryService.push(PathConstants.TREATMENT),
+		},
+		{
+			image: SettingsSVG,
+			name: language.MENU_ABOUT_US,
+			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
+		},
+		{
+			name: language.PRIVACY_POLICY,
+			onClick: () => HistoryService.push(PathConstants.PRIVACY_POLICY),
+		},
+		{
+			name: language.TERMS_OF_USE,
+			onClick: () => HistoryService.push(PathConstants.TERMS_OF_USE),
+		},
+	]
+
+	getAdminMainPages = (language: LanguageBase): MenuItemViewModel[] => {
+		const adminMPs = this.getStaffMainPages(language)
+
+		adminMPs.push({
+			image: SettingsSVG,
+			name: language.MENU_STAFF_MODERATION,
+			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
+		})
+
+		return adminMPs
+	}
+
 	getGroupedMenuItems = (
 		language: LanguageBase,
 		handleLogoutClick: () => void,
@@ -81,6 +134,35 @@ class MenuService {
 			},
 		],
 	]
+
+	getStaffGroupedMenuItems = (
+		language: LanguageBase,
+		handleLogoutClick: () => void,
+	): MenuItemViewModel[][] => [
+		this.getStaffMainPages(language),
+		[
+			{
+				image: LogoutSVG,
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
+			},
+		],
+	]
+
+	getAdminGroupedMenuItems = (
+		language: LanguageBase,
+		handleLogoutClick: () => void,
+	): MenuItemViewModel[][] => [
+		this.getAdminMainPages(language),
+		[
+			{
+				image: LogoutSVG,
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
+			},
+		],
+	]
+
 }
 
 export default new MenuService()

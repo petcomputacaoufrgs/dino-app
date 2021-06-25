@@ -1,16 +1,31 @@
 import React from 'react'
 import MenuService from '../../../services/menu/MenuService'
-import IconButton from '../../../components/button/icon_button'
+import DinoIconButton from '../../../components/button/icon_button'
 import { useLanguage } from '../../../context/language'
 import Button from '../../../components/button'
+import LanguageBase from '../../../constants/languages/LanguageBase'
+import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
+import { GetPermission } from '../../../context/private_router'
+import PermissionEnum from '../../../types/enum/PermissionEnum'
 import './styles.css'
 
 const Home: React.FC = () => {
 	const language = useLanguage()
 
-	const items = MenuService.getMainPages(language.data).filter(
-		item => item.name !== language.data.MENU_HOME,
-	)
+	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => 
+		getMainPages(language.data).filter(item => item.name !== language.data.MENU_HOME)
+
+	const getGroupedMenuByPermission = () => {
+		const userPermission = GetPermission()
+
+		switch(userPermission) {
+			case PermissionEnum.STAFF: return MenuService.getStaffMainPages
+			case PermissionEnum.ADMIN: return MenuService.getAdminMainPages
+			default: return MenuService.getMainPages
+		}
+	}
+
+	const items = searchMainPages(getGroupedMenuByPermission())
 
 	return (
 		<div className='home'>
@@ -19,7 +34,7 @@ const Home: React.FC = () => {
 					.filter(item => item.image)
 					.map((item, index) => (
 						<div className='home__grid__item' key={index}>
-							<IconButton
+							<DinoIconButton
 								icon={item.image!}
 								className='home__grid__button'
 								onClick={item.onClick}
@@ -46,3 +61,4 @@ const Home: React.FC = () => {
 }
 
 export default Home
+

@@ -1,11 +1,17 @@
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
 import AutoSynchronizableService from '../sync/AutoSynchronizableService'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
 import TreatmentDataModel from '../../types/treatment/api/TreatmentDataModel'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import SynchronizableService from '../sync/SynchronizableService'
-import WebSocketTopicPathService from '../websocket/path/WebSocketTopicPathService'
+import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
+import FaqView from '../../types/faq/view/FaqView'
+import FaqItemService from '../faq/FaqItemService'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import UserService from '../user/UserService'
+import TreatmentQuestionService from './TreatmentQuestionService'
+import EssentialContactService from '../contact/EssentialContactService'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -15,13 +21,17 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.treatment,
-			APIRequestMappingConstants.TREATMENT,
-			WebSocketTopicPathService,
-			APIWebSocketDestConstants.TREATMENT,
+			APIHTTPPathsConstants.TREATMENT,
+			WebSocketQueuePathService,
+			APIWebSocketPathsConstants.TREATMENT,
 		)
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
+		return [UserService]
+	}
+
+	getSyncNecessaryPermissions(): PermissionEnum[] {
 		return []
 	}
 
@@ -46,11 +56,42 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	}
 
 	getAllByIds = (ids: number[]): Promise<TreatmentEntity[]> => {
-		return this.table.where('id').anyOf(ids).toArray()
+		return this.toList(this.table.where('id').anyOf(ids))
 	}
 
 	getAllByLocalIds = (localIds: number[]): Promise<TreatmentEntity[]> => {
-		return this.table.where('localId').anyOf(localIds).toArray()
+		return this.toList(this.table.where('localId').anyOf(localIds))
+	}
+
+	getFaqViewByFilter(
+		view: FaqView,
+		searchTerm: string,
+	): FaqView {
+			const newView = {
+				...view,
+				faqItems: FaqItemService.getFaqItemByFilter(view.treatment, searchTerm, view.faqItems),
+			}
+
+			return newView as FaqView
+	}
+
+	getByName = (name: string): Promise<TreatmentEntity | undefined> => {
+		return this.toFirst(this.table.where('name').equalsIgnoreCase(name))
+	}
+
+	beforeDelete = async (treatment: TreatmentEntity) => {
+
+		console.log("SADBHASDGVADFSSAAHSBSADSADSADDASBH")
+
+		const faqItems = await FaqItemService.getByTreatment(treatment)
+
+		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(treatment)
+
+		await EssentialContactService.removeTreatment(treatment)
+
+		await FaqItemService.deleteAll(faqItems)
+		
+		await TreatmentQuestionService.deleteAll(treatmentQuestions)
 	}
 }
 

@@ -9,6 +9,6 @@ export default interface UserSettingsDataModel
 	declineGoogleContacts: boolean
 	treatmentId?: number
 	firstSettingsDone: boolean
-	settingsStep: number
+	step: number
 	parentsAreaPassword?: string
 }

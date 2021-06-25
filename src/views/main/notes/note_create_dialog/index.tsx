@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../../../../components/button/text_button'
 import NoteCreateDialogProps from './props'
 import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import NoteConstants from '../../../../constants/note/NoteConstants'
-import { DialogTitle, DialogActions } from '@material-ui/core'
-import TransitionSlide from '../../../../components/slide_transition'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
+import DinoDialog, { DinoDialogHeader } from '../../../../components/dialogs/dino_dialog'
 
 const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 	onClose,
@@ -77,16 +73,12 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 
 	const renderDialogContent = (): JSX.Element => {
 		return (
-			<DialogContent>
+			<div className='note_create__dialog_content'>
 				<TextField
 					error={questionWithError}
 					helperText={questionErrorHelper}
 					label={
-						language.data.QUESTION_NOTE_DIALOG_TITLE +
-						' (' +
-						language.data.MAX +
-						NoteConstants.ANSWER_MAX_LENGTH +
-						')'
+						language.data.QUESTION_NOTE_DIALOG_TITLE
 					}
 					type='text'
 					multiline
@@ -105,7 +97,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 						<TextField
 							{...params}
 							fullWidth
-							label={`${language.data.NOTE_TAG_LABEL} (${language.data.MAX} ${NoteConstants.TAG_LIMIT})`}
+							label={`${language.data.NOTE_TAG_LABEL}`}
 							variant='outlined'
 							inputProps={{
 								...params.inputProps,
@@ -114,27 +106,18 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 						/>
 					)}
 				/>
-			</DialogContent>
+				</div>
 		)
 	}
 	return (
-		<Dialog
+		<DinoDialog
 			open={open}
-			className='note_create_dialog'
 			onClose={onClose}
-			TransitionComponent={TransitionSlide}
+			onSave={handleSave}
+			header={<DinoDialogHeader>{language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DinoDialogHeader>}
 		>
-			<DialogTitle>{language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}</DialogTitle>
-			{renderDialogContent()}
-			<DialogActions>
-				<Button onClick={onClose}>
-					{language.data.DIALOG_CANCEL_BUTTON_TEXT}
-				</Button>
-				<Button onClick={handleSave}>
-					{language.data.DIALOG_SAVE_BUTTON_TEXT}
-				</Button>
-			</DialogActions>
-		</Dialog>
+		 	{renderDialogContent()}
+		</DinoDialog>
 	)
 }
 

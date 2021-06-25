@@ -15,6 +15,7 @@ import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathServi
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import EssentialPhoneService from './EssentialPhoneService'
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -98,6 +99,22 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 				.where('treatmentLocalIds')
 				.equals(settings.treatmentLocalId!))
 		} else return []
+	}
+
+	async removeTreatment(
+		treatment: TreatmentEntity,
+	) {
+		if (Utils.isNotEmpty(treatment.localId)) {
+			const essentialContacts = await this.toList(this.table
+				.where('treatmentLocalIds')
+				.equals(treatment.localId!)
+				.filter(ec => ec.isUniversal === 0))
+
+			essentialContacts.forEach(ec => ec.treatmentLocalIds = ec.treatmentLocalIds?.filter(t => t !== treatment.localId))
+			// TODO REMOVER CONTATOS COM LISTA VAZIA
+
+			await this.saveAll(essentialContacts)
+		}
 	}
 
 	public async saveUserEssentialContacts(settings: UserSettingsEntity) {

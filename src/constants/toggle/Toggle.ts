@@ -1,5 +1,5 @@
 export const toggle = {
 	showFirstLoginDialog: true,
-	loadTestInstances: true,
+	loadTestInstances: false,
 	showTreatmentQuestionButtonToStaff: true
 }

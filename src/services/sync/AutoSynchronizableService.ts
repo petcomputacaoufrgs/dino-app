@@ -75,6 +75,8 @@ export default abstract class AutoSynchronizableService<
 		return []
 	}
 
+	protected async beforeDelete(entity: ENTITY) {}
+
 	//#endregion
 
 	//#region CONVERSION MODEL <-> ENTITY
@@ -306,6 +308,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entity Entity to delete
 	 */
 	delete = async (entity: ENTITY) => {
+
+		await this.beforeDelete(entity)
+
 		if (entity.id === undefined) {
 			await this.dbDelete(entity)
 			this.triggerUpdateEvent()
@@ -358,6 +363,9 @@ export default abstract class AutoSynchronizableService<
 	 * @param entities Entities to delete
 	 */
 	deleteAll = async (entities: ENTITY[]) => {
+
+		await Promise.all(entities.map(entity => this.beforeDelete(entity)))
+
 		const filterById = ArrayUtils.partition(entities, entity =>
 			Utils.isNotEmpty(entity.id),
 		)

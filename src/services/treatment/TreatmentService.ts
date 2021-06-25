@@ -10,6 +10,8 @@ import FaqItemService from '../faq/FaqItemService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import UserService from '../user/UserService'
+import TreatmentQuestionService from './TreatmentQuestionService'
+import EssentialContactService from '../contact/EssentialContactService'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -75,6 +77,21 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 
 	getByName = (name: string): Promise<TreatmentEntity | undefined> => {
 		return this.toFirst(this.table.where('name').equalsIgnoreCase(name))
+	}
+
+	beforeDelete = async (treatment: TreatmentEntity) => {
+
+		console.log("SADBHASDGVADFSSAAHSBSADSADSADDASBH")
+
+		const faqItems = await FaqItemService.getByTreatment(treatment)
+
+		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(treatment)
+
+		await EssentialContactService.removeTreatment(treatment)
+
+		await FaqItemService.deleteAll(faqItems)
+		
+		await TreatmentQuestionService.deleteAll(treatmentQuestions)
 	}
 }
 

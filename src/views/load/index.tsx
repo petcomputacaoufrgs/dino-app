@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as DinoLogoSVG } from '../../assets/logos/dinosaur_1.svg'
+import { ReactComponent as DinoLogoSVG } from '../../assets/new/logo.svg'
 import PetLogo from '../../assets/logos/pet.png'
 import HCLogo from '../../assets/logos/hc.png'
 import UFRGSLogo from '../../assets/logos/ufrgs.png'
@@ -10,7 +10,7 @@ const Load: React.FC = () => {
 		<div className='load'>
 			<div className='load__header'>
 				<DinoLogoSVG className='load__dino_logo' title='DinoApp' />
-				<h1 className='load__dino_title'>DinoApp</h1>
+				{/* <h1 className='load__dino_title'>DinoApp</h1> */}
 			</div>
 			<div className='load__team'>
 				<img src={PetLogo} className='load__team__pet' alt='PET Computação' />

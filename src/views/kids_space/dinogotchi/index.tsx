@@ -5,10 +5,11 @@ import Button from '../../../components/button'
 import CircularButton from '../../../components/button/circular_button'
 import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import { ReactComponent as AngryDinoSVG } from '../../../assets/kids_space/dinogotchi/angry.svg'
-import { ReactComponent as Dino } from '../../../assets/kids_space/dinogotchi/neutrop.svg'
+import { ReactComponent as Dino } from '../../../assets/new/dino_expressions/neutrop.svg'
 import { ReactComponent as SleepDino } from '../../../assets/kids_space/dinogotchi/dormindo.svg'
-import { ReactComponent as GoOutSVG } from '../../../assets/kids_space/dinogotchi/exit.svg'
-import { ReactComponent as GameSVG } from '../../../assets/kids_space/dinogotchi/gamepad.svg'
+import { ReactComponent as GoOutSVG } from '../../../assets/new/game_elements/sairdecasa.svg'
+import { ReactComponent as GameSVG } from '../../../assets/new/game_elements/jogo.svg'
+import { ReactComponent as GoToSleepSVG } from '../../../assets/new/game_elements/dormir.svg'
 import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogotchi/outside.svg'
 import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotchi/inside.svg'
 import { startCloudEngine } from './engine/clouds'
@@ -118,6 +119,7 @@ const Dinogotchi: React.FC = () => {
 						}}
 					/>
 					<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
+					<CircularButton icon={GoToSleepSVG} onClick={() => {}} />
 				</div>
 			</>
 		)

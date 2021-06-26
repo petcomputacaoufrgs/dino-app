@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PathConstants from '../../../../constants/app/PathConstants'
 import HistoryService from '../../../../services/history/HistoryService'
 import { startGame } from './engine/index'
-import { ReactComponent as DinoSVG } from '../../../../assets/kids_space/dinogotchi/dino.svg'
+import { ReactComponent as DinoSVG } from '../../../../assets/new/dino_expressions/felizp.svg'
 import { ReactComponent as GoBackSVG } from '../../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import { useLanguage } from '../../../../context/language'
 import DinoIconButton from '../../../../components/button/icon_button'
@@ -67,13 +67,13 @@ const MusicalDino: React.FC = () => {
 				<div className='musical_dino__dino_song_board__top'>
 					<div
 						id='musical_dino__topleft'
-						className='musical_dino__dino musical_dino__dino_green'
+						className='musical_dino__dino musical_dino__dino_light_pink'
 					>
 						<DinoSVG />
 					</div>
 					<div
 						id='musical_dino__topright'
-						className='musical_dino__dino musical_dino__dino_red'
+						className='musical_dino__dino musical_dino__dino_orange'
 					>
 						<DinoSVG />
 					</div>
@@ -81,13 +81,13 @@ const MusicalDino: React.FC = () => {
 				<div className='musical_dino__dino_song_board__bottom'>
 					<div
 						id='musical_dino__bottomleft'
-						className='musical_dino__dino musical_dino__dino_yellow'
+						className='musical_dino__dino musical_dino__dino_red'
 					>
 						<DinoSVG />
 					</div>
 					<div
 						id='musical_dino__bottomright'
-						className='musical_dino__dino musical_dino__dino_blue'
+						className='musical_dino__dino musical_dino__dino_dark_pink'
 					>
 						<DinoSVG />
 					</div>

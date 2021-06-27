@@ -51,7 +51,7 @@ export default interface LanguageBase {
 	MENU_SETTINGS: string
 	MENU_LOGOUT: string
 	MENU_CALENDAR: string
-	MENU_ABOUT_US: string
+	ABOUT_US: string
 	MENU_STAFF_MODERATION: string
 	TREATMENTS: string
 	TITLE: string

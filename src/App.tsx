@@ -195,13 +195,12 @@ const App: React.FC = () => {
 
 	return (
 		<div className='app'>
-			{showLoadScreen || isLoading ? (
-				<Load />
-			) : isMainTab ? (
-				renderApp()
-			) : (
-				<SecondaryTab />
-			)}
+			{showLoadScreen || isLoading 
+				? <Load />
+				: isMainTab 
+					? renderApp()
+					: <SecondaryTab />
+			}
 			<PWAControl />
 		</div>
 	)

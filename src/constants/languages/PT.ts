@@ -24,7 +24,7 @@ export default class PT implements LanguageBase {
 
 	NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
 
-	WELCOME_MESSAGE = 'Bem vindo(a) ao DinoApp!'
+	WELCOME_MESSAGE = 'Bem vindo(a)!'
 
 	FIRST_LOGIN_DIALOG_LABEL = 'Diálogo de Configurações Iniciais'
 
@@ -102,7 +102,7 @@ export default class PT implements LanguageBase {
 
 	MENU_LOGOUT = 'Sair'
 
-	MENU_ABOUT_US = 'Sobre Nós'
+	ABOUT_US = 'Sobre Nós'
 
 	MENU_STAFF_MODERATION = 'Moderação de Funcionários'
 

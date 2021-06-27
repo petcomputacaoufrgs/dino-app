@@ -21,7 +21,7 @@ export default class EN implements LanguageBase {
 
 	NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
 
-	WELCOME_MESSAGE = 'Welcome to DinoApp!'
+	WELCOME_MESSAGE = 'Welcome!'
 
 	FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
 
@@ -111,7 +111,7 @@ export default class EN implements LanguageBase {
 
 	MENU_CALENDAR = 'Calendar'
 
-	MENU_ABOUT_US = 'About Us'
+	ABOUT_US = 'About Us'
 
 	MENU_STAFF_MODERATION = 'Staff Moderation' 
 

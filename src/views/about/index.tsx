@@ -6,8 +6,12 @@ import Section from './section'
 import DinoLogoHeader from '../../components/dino_logo_header'
 import ArrowBack from '../../components/arrow_back'
 import './styles.css'
+import { useLanguage } from '../../context/language'
 
 const AboutUs: React.FC = () => {
+
+	const language = useLanguage()
+
 	const sections = [
 		{
 			title: 'PET Computação',
@@ -25,7 +29,7 @@ const AboutUs: React.FC = () => {
 		<div className='about_us'>
 			<ArrowBack dark />
 			<div className='card__header'>
-				<DinoLogoHeader title={'Sobre Nós'} subtitle={'DinoApp'} />
+				<DinoLogoHeader title={language.data.ABOUT_US}/>
 			</div>
 			<div className='card__content'>
 				<div className='card__typography'>

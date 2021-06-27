@@ -52,7 +52,7 @@ const Login = (): JSX.Element => {
 				<div className='login__content__button'>{renderLoginButton()}</div>
 				<div className='login__content__info dino__flex_row'>
 					<LinkButton
-						text={language.data.MENU_ABOUT_US}
+						text={language.data.ABOUT_US}
 						onClick={() => HistoryService.push(PathConstants.ABOUT_US)}
 					/>
 					<LinkButton

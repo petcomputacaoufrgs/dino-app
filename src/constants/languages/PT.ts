@@ -705,7 +705,7 @@ export default class PT implements LanguageBase {
 
 	ESSENTIAL_CONTACTS = "Contatos Essenciais"
 
-	YOUR_CONTACTS = "Seus Contacts"
+	YOUR_CONTACTS = "Seus Contatos"
 
 	UNIVERSAL_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " Universais"
 

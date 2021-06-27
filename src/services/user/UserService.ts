@@ -14,6 +14,7 @@ import Utils from '../../utils/Utils'
 import DinoAgentService from '../../agent/DinoAgentService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import { toggle } from '../../constants/toggle/Toggle'
 
 class UserServiceImpl extends AutoSynchronizableService<
 	number,
@@ -83,7 +84,9 @@ class UserServiceImpl extends AutoSynchronizableService<
 	async getPermission(): Promise<string | undefined> {
 		const user = await this.getFirst()
 		if(user) {
-			return user.permission
+			return toggle.overridePermission.override 
+				? toggle.overridePermission.permission
+				: user.permission
 		} 
 		return undefined
 	}

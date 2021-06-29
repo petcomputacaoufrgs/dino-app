@@ -4,6 +4,8 @@ import { Checkbox, FormControlLabel, IconButton, Menu } from '@material-ui/core'
 import { useLanguage } from "../../../context/language"
 import './styles.css'
 import DinoFilterListProps from "./props"
+import FilterType from "../../../types/filter/Filter"
+import FilterService from "../../../storage/local_storage/filter/FilterService"
 
 const DinoFilterList: React.FC<DinoFilterListProps> = (props) => {
 
@@ -14,6 +16,11 @@ const DinoFilterList: React.FC<DinoFilterListProps> = (props) => {
   const open = Boolean(anchorEl)
 
   const handleClose = () => setAnchorEl(null)
+
+  const handleChangeFilterValue = (filter: FilterType, index: number) => {
+    props.onChangeChecked(index)
+    FilterService.setFilter(filter.id, filter.checked)
+  }
 
   return (
     <div className='filterlist'>
@@ -34,11 +41,11 @@ const DinoFilterList: React.FC<DinoFilterListProps> = (props) => {
           horizontal: 'left',
         }}
       >
-      {props.filters.map((e, index) => 
+      {props.filters.map((f, index) => 
         <FormControlLabel
           key={index}
-          control={<Checkbox checked={e.checked} onChange={() => props.onChangeChecked(index)} />}
-          label={e.label}
+          control={<Checkbox checked={f.checked} onChange={e => handleChangeFilterValue(f, index)} />}
+          label={f.label}
         />
       )}
       </Menu>

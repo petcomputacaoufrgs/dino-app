@@ -702,7 +702,7 @@ export default class EN implements LanguageBase {
 
 	TREATMENT_ESSENTIAL_CONTACTS = "Treatment " + this.ESSENTIAL_CONTACTS
 
-	HAS_USER_QUESTIONS_ONLY = "With User Questions Only"
+	HAS_USER_QUESTIONS = "With User Questions Only"
 
 	RENDER_OFFLINE_CONTENT_PART_1 = 'In order to synchronize your contacts, a connection to an internet network is required.'
 	

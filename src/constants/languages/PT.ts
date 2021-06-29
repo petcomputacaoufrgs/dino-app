@@ -711,7 +711,7 @@ export default class PT implements LanguageBase {
 
 	TREATMENT_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " de Tratamento"
 
-	HAS_USER_QUESTIONS_ONLY = "Apenas Com Perguntas de Usuários"
+	HAS_USER_QUESTIONS = "Apenas Com Perguntas de Usuários"
 
 	RENDER_OFFLINE_CONTENT_PART_1 = 'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
 	

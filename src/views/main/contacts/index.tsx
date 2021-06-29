@@ -20,9 +20,9 @@ import EssentialPhoneService from '../../../services/contact/EssentialPhoneServi
 import { Star, Public } from '@material-ui/icons'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
-import { getContactFilter } from '../../../utils/FilterUtils'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import FilterService from '../../../storage/local_storage/filter/FilterService'
 
 export const renderIcon = (contact: ContactType) => {
 
@@ -47,7 +47,7 @@ const Contacts: React.FC = () => {
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
-	const [filters, setFilters] = useState(getContactFilter(hasStaffPowers, language))
+	const [filters, setFilters] = useState(FilterService.getContactFilters(hasStaffPowers, language))
 
 	let filteredContacts = filterContactViews(contacts, searchTerm)
 	.filter(c => filters.some(f => f.checked && f.validator(c.contact)))

@@ -1,5 +1,3 @@
-import GoogleSecrets from '../../../environment/google_config.json'
-
 /* eslint-disable no-undef */
 
 class GoogleOAuth2Service {
@@ -15,7 +13,7 @@ class GoogleOAuth2Service {
 
 	requestLogin = async (forceConsent, email) => {
 		const options = {
-			client_id: GoogleSecrets.client_id,
+			client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
 			scope: 'email profile openid',
 			response_type: 'code',
 			include_granted_scopes: true,

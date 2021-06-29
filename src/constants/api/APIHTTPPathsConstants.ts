@@ -1,7 +1,5 @@
-import APIConfig from '../../environment/api_config.json'
-
 class APIHTTPPathsConstants {
-	ROOT = APIConfig.URL
+	ROOT = process.env.REACT_APP_API_URL
 
 	ROUTE_PUBLIC = "public/"
 	ROUTE_PRIVATE = "private/"

@@ -1,7 +1,5 @@
-import APIConfig from '../../environment/api_config.json'
-
 class APIWebSocketPathsConstants {
-	ROOT = `${APIConfig.URL}private/websocket/`
+	ROOT = `${process.env.REACT_APP_API_URL}private/websocket/`
 	LOGOUT_REQUEST = 'logout_request'
 	GLOSSARY = 'glossary'
 	FAQ_ITEM = 'faq_item'

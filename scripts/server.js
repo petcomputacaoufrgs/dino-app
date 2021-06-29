@@ -11,7 +11,7 @@ app.use(compression())
 
 app.use((req, res) => {
 	if (req.protocol !== 'https') {
-		//res.redirect('https://' + req.headers.host + req.url)
+		res.redirect('https://' + req.headers.host + req.url)
 	}
 })
 

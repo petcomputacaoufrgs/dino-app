@@ -17,3 +17,10 @@
 	height: 2.188rem;
 	width: 2.188rem;
 }
+
+@media (orientation: landscape) {
+	.icon_button.button_bigger svg {
+		height: 3rem;
+		width: 3rem;
+	}
+}

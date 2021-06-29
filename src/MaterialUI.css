@@ -106,3 +106,29 @@ body .MuiInputBase-root {
 	/* fill: var(--contrast-color); */
 	fill: #fafafa;
 }
+
+@media (orientation: landscape) {
+	body .MuiFormLabel-root {
+		font-size: 1.4rem;
+	}
+
+	body .MuiInputBase-root {
+		font-size: 1.4rem;
+	}
+
+	body .MuiMenuItem-root {
+		font-size: 1.4rem;
+	}
+
+	body .MuiAutocomplete-popper {
+		font-size: 1.4rem;
+	}
+
+	body .MuiSvgIcon-root {
+		transform: scale(1.5);
+	}
+
+	label + .MuiInput-formControl {
+		margin-top: 30px !important;
+	}
+}

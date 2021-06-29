@@ -2,7 +2,7 @@ const express = require('express')
 const compression = require('compression')
 const favicon = require('express-favicon')
 const path = require('path')
-const port = 3000
+const port = process.env.PORT || 3000
 const app = express()
 
 app.use(express.static(path.join(__dirname, '../build')))

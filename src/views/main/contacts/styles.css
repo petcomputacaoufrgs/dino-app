@@ -47,3 +47,10 @@
 .contacts__loader {
 	height: 100%;
 }
+
+@media (orientation: landscape) {
+	.contacts{
+		width: 80vw;
+		margin: 0 10vw;
+	}
+}

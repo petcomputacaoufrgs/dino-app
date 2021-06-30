@@ -51,7 +51,7 @@ export default interface LanguageBase {
 	MENU_SETTINGS: string
 	MENU_LOGOUT: string
 	MENU_CALENDAR: string
-	MENU_ABOUT_US: string
+	ABOUT_US: string
 	MENU_STAFF_MODERATION: string
 	TREATMENTS: string
 	TITLE: string
@@ -336,10 +336,11 @@ export default interface LanguageBase {
 	YOUR_CONTACTS: string
 	UNIVERSAL_ESSENTIAL_CONTACTS: string
 	TREATMENT_ESSENTIAL_CONTACTS: string
-	HAS_USER_QUESTIONS_ONLY: string
+	HAS_USER_QUESTIONS: string
 	RENDER_OFFLINE_CONTENT_PART_1: string
 	RENDER_OFFLINE_CONTENT_PART_2: string
 	NO_CONNECTION: string
+	DINO_SLIDER__REDUCE: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

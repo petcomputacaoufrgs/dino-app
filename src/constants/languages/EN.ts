@@ -21,7 +21,7 @@ export default class EN implements LanguageBase {
 
 	NOT_FROND_REDIRECT_MESSAGE = 'Redirecting...'
 
-	WELCOME_MESSAGE = 'Welcome to DinoApp!'
+	WELCOME_MESSAGE = 'Welcome!'
 
 	FIRST_LOGIN_DIALOG_LABEL = 'Initial Configurations Dialog'
 
@@ -111,7 +111,7 @@ export default class EN implements LanguageBase {
 
 	MENU_CALENDAR = 'Calendar'
 
-	MENU_ABOUT_US = 'About Us'
+	ABOUT_US = 'About Us'
 
 	MENU_STAFF_MODERATION = 'Staff Moderation' 
 
@@ -702,13 +702,15 @@ export default class EN implements LanguageBase {
 
 	TREATMENT_ESSENTIAL_CONTACTS = "Treatment " + this.ESSENTIAL_CONTACTS
 
-	HAS_USER_QUESTIONS_ONLY = "With User Questions Only"
+	HAS_USER_QUESTIONS = "With User Questions Only"
 
 	RENDER_OFFLINE_CONTENT_PART_1 = 'In order to synchronize your contacts, a connection to an internet network is required.'
 	
 	RENDER_OFFLINE_CONTENT_PART_2 = 'Please try again when connected.'
 
 	NO_CONNECTION = 'No internet connection'
+
+	DINO_SLIDER__REDUCE = 'Reduce'
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 

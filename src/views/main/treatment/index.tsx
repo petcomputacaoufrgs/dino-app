@@ -11,8 +11,8 @@ import TreatmentForm from './treatment_form'
 import './styles.css'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
-import { getTreatmentFilter } from '../../../utils/FilterUtils'
 import { useStaffData } from '../../../context/staff_data'
+import FilterService from '../../../storage/local_storage/filter/FilterService'
 
 const Treatment: React.FC<{ ref: React.Ref<unknown> }> = () => {
 
@@ -22,7 +22,7 @@ const Treatment: React.FC<{ ref: React.Ref<unknown> }> = () => {
 	const [treatments, setTreatments] = useState<Array<TreatmentEntity>>([])
 	const [toAdd, setToAdd] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
-	const [filters, setFilters] = useState(getTreatmentFilter(language))
+	const [filters, setFilters] = useState(FilterService.getTreatmentFilters(language))
 	
 	const filteredTreatments = treatments.filter(t => 
 		StringUtils.contains(t.name, searchTerm) && 

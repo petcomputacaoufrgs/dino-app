@@ -24,7 +24,7 @@ export default class PT implements LanguageBase {
 
 	NOT_FROND_REDIRECT_MESSAGE = 'Redirecionado...'
 
-	WELCOME_MESSAGE = 'Bem vindo(a) ao DinoApp!'
+	WELCOME_MESSAGE = 'Bem vindo(a)!'
 
 	FIRST_LOGIN_DIALOG_LABEL = 'Diálogo de Configurações Iniciais'
 
@@ -102,7 +102,7 @@ export default class PT implements LanguageBase {
 
 	MENU_LOGOUT = 'Sair'
 
-	MENU_ABOUT_US = 'Sobre Nós'
+	ABOUT_US = 'Sobre Nós'
 
 	MENU_STAFF_MODERATION = 'Moderação de Funcionários'
 
@@ -705,19 +705,21 @@ export default class PT implements LanguageBase {
 
 	ESSENTIAL_CONTACTS = "Contatos Essenciais"
 
-	YOUR_CONTACTS = "Seus Contacts"
+	YOUR_CONTACTS = "Seus Contatos"
 
 	UNIVERSAL_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " Universais"
 
 	TREATMENT_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " de Tratamento"
 
-	HAS_USER_QUESTIONS_ONLY = "Apenas Com Perguntas de Usuários"
+	HAS_USER_QUESTIONS = "Apenas Com Perguntas de Usuários"
 
 	RENDER_OFFLINE_CONTENT_PART_1 = 'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
 	
 	RENDER_OFFLINE_CONTENT_PART_2 = 'Tente novamente quando estiver conectado.'
 
 	NO_CONNECTION = 'Sem conexão'
+
+	DINO_SLIDER__REDUCE = 'Reduzir'
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

@@ -29,6 +29,7 @@ import PermissionEnum from '../../types/enum/PermissionEnum'
 import PathConstants from '../../constants/app/PathConstants'
 import HistoryService from '../history/HistoryService'
 import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
+import FilterService from '../../storage/local_storage/filter/FilterService'
 
 class AuthService extends UpdatableService {
 	private logoutCallbacks: LogoutCallback[]
@@ -38,10 +39,6 @@ class AuthService extends UpdatableService {
 		super()
 		this.logoutCallbacks = []
 		this.table = Database.auth
-	}
-
-	onLogout = async () => {
-		this.dbClear()
 	}
 
 	subscribeAuthenticatedService = (callback: LogoutCallback) => {
@@ -166,6 +163,8 @@ class AuthService extends UpdatableService {
 
 	logout = async () => {
 		await this.dbClear()
+
+		FilterService.clear()
 
 		const onLogoutCallbacks = this.logoutCallbacks.map(callback => {
 			return callback()

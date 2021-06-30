@@ -38,17 +38,11 @@ const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
-	const handleLogoutClick = () => {
-		setOpenLogoutDialog(true)
-	}
+	const handleLogoutClick = () => setOpenLogoutDialog(true)
+ 
+	const handleLogoutAgree = () => AuthService.logout()
 
-	const handleLogoutAgree = () => {
-		AuthService.logout()
-	}
-
-	const handleLogoutDisagree = () => {
-		setOpenLogoutDialog(false)
-	}
+	const handleLogoutDisagree = () => setOpenLogoutDialog(false)
   
   return (
     <DinoLoader isLoading={language.loading} hideChildren>

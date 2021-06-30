@@ -9,6 +9,8 @@ import FilterEnum from "./FilterEnum"
 
 class FilterService extends BaseLocalStorage {
 
+  clear = () => Object.values(FilterEnum).forEach(f => this.remove(f))
+
   getFilter = (filter: string, defaultValue?: boolean): boolean => {
     const value = this.get(filter)
 

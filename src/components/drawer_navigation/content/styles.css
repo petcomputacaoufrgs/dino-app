@@ -19,3 +19,13 @@
 .drawer__navigation__content__app_bar {
 	height: 2.813rem;
 }
+
+@media (orientation: landscape) {
+	.drawer__navigation__content__app_bar {
+		height: 4rem;
+	}
+
+	.drawer__navigation__content__component {
+		height: calc(100% - 4rem);
+	}
+}

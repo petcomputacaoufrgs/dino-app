@@ -106,3 +106,38 @@ body .MuiInputBase-root {
 	/* fill: var(--contrast-color); */
 	fill: #fafafa;
 }
+
+@media (orientation: landscape) {
+	body .MuiListItemText-root .MuiTypography-body1 {
+		font-size: 1.6rem;
+	}
+
+	body .MuiAvatar-root {
+		width: 50px;
+		height: 50px;
+		margin-right: 10px;
+=======
+	body .MuiFormLabel-root {
+		font-size: 1.4rem;
+	}
+
+	body .MuiInputBase-root {
+		font-size: 1.4rem;
+	}
+
+	body .MuiMenuItem-root {
+		font-size: 1.4rem;
+	}
+
+	body .MuiAutocomplete-popper {
+		font-size: 1.4rem;
+	}
+
+	body .MuiSvgIcon-root {
+		transform: scale(1.5);
+	}
+
+	label + .MuiInput-formControl {
+		margin-top: 30px !important;
+	}
+}

@@ -22,5 +22,9 @@
 	.icon_button.button_bigger svg {
 		height: 3rem;
 		width: 3rem;
+  }
+	.icon_button svg {
+		width: 1.8rem;
+		height: 1.8rem;
 	}
 }

@@ -718,6 +718,8 @@ export default class PT implements LanguageBase {
 	RENDER_OFFLINE_CONTENT_PART_2 = 'Tente novamente quando estiver conectado.'
 
 	NO_CONNECTION = 'Sem conexão'
+
+	DINO_SLIDER__REDUCE = 'Reduzir'
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

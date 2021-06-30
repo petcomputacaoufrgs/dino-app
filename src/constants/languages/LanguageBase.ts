@@ -340,6 +340,7 @@ export default interface LanguageBase {
 	RENDER_OFFLINE_CONTENT_PART_1: string
 	RENDER_OFFLINE_CONTENT_PART_2: string
 	NO_CONNECTION: string
+	DINO_SLIDER__REDUCE: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

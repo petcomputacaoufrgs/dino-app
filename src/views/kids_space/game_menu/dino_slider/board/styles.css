@@ -5,3 +5,14 @@
   height: 100vh;
   padding: 40% 0;
 }
+
+.slider__switch {
+  position: absolute;
+  right: 0;
+  margin: 20px 8px;
+}
+
+.slider__switch .dino_switch__form p{
+  opacity: 70%;
+  margin-right: 0.2rem;
+}

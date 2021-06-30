@@ -710,6 +710,8 @@ export default class EN implements LanguageBase {
 
 	NO_CONNECTION = 'No internet connection'
 
+	DINO_SLIDER__REDUCE = 'Reduce'
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

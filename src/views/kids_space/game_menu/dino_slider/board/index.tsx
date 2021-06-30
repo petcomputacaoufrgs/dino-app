@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useEvent } from '..'
+import DinoSwitch from '../../../../../components/switch'
 import { toggle } from '../../../../../constants/toggle/Toggle'
+import { useLanguage } from '../../../../../context/language'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import Piece from '../piece'
 import SliderBoardProps, { HandleSwipeProps } from './props'
@@ -12,9 +14,10 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
   const LINES = PIECES / 4 
   const TO = 0
   const FROM = 1
-  let reduced = false
 
+  const language = useLanguage()
   const [gameState, setGameState] = useState([] as number[])
+  const [reduced, setReduced] = useState(false)
 
   const addNumber = (grid: number[]) => {
     let freeIndexes = new Array<number>()
@@ -143,11 +146,20 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
   }
 
   return (
+    <>
+      <div className='slider__switch'>
+        <DinoSwitch 
+          selected={reduced} 
+          onChangeSelected={() => setReduced(!reduced)} 
+          label={language.data.DINO_SLIDER__REDUCE}
+        />
+      </div>
       <div className="board">
           {gameState.map((number, index) => 
             <Piece reduced={reduced} num={number} key={index}/>
           )}
       </div>
+    </>
   )
 }
 

@@ -36,3 +36,13 @@
 .dino_switch__form .MuiSwitch-colorSecondary {
 	color: var(--button-font-color);
 }
+
+@media (orientation: landscape) {
+	.dino_switch__form {
+		font-size: 1.4rem;
+	}
+
+	.MuiSwitch-root.dino_switch__form__switch {
+		transform: scale(1.2);
+	}
+}

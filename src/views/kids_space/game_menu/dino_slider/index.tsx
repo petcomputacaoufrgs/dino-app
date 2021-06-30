@@ -26,11 +26,14 @@ const DinoSlider: React.FC = () => {
 	}
 
 	const handleRestart = () => {
-		setOpenDialog(false)
-		setRestart(true)
+    setOpenDialog(false)
+    setRestart(true)
 	}
 
-	const handleGameOver = () => setOpenDialog(true)
+	const handleGameOver = () => {
+    setRestart(false)
+    setOpenDialog(true)
+  }
 
   return (
     <>

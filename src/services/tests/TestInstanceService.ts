@@ -111,7 +111,7 @@ class TestInstanceService {
       const numberOfTreatments = Math.ceil(Math.random() * 3)
       for (let n = 0; n < numberOfTreatments; n++) {
         const randomTreatment = ArrayUtils.randomItem(treatments)
-        if(randomTreatment.localId)
+        if(randomTreatment.localId) 
           response.add(randomTreatment.localId)
       }
       return Array.from(response)
@@ -140,15 +140,18 @@ class TestInstanceService {
   private async loadEssentialPhones() {
 
     const ecs = await EssentialContactService.getAll()
+
+    const toSave: EssentialPhoneEntity[] = []
     
     ecs.forEach(ec => {
-
-      const randomEPhone: EssentialPhoneEntity = ArrayUtils.randomItem(this.phoneInstances)
-
-      randomEPhone.localEssentialContactId = ec.localId
-
-      EssentialPhoneService.save(randomEPhone)
+      toSave.push(...this.getRandomPhones().map((p: EssentialPhoneEntity) => {
+        const newPhone  = { ...p } 
+        newPhone.localEssentialContactId = ec.localId
+        return newPhone
+      }))
     })
+    
+    EssentialPhoneService.saveAll(toSave)
   }
 
   private async loadGlossary() {
@@ -184,16 +187,18 @@ class TestInstanceService {
   private async loadPhones() {
 
     const contacts = await ContactService.getAll()
+
+    const toSave = [] as PhoneEntity[]
     
     contacts.forEach(c => {
-
-      const randomPhone: PhoneEntity = ArrayUtils.randomItem(this.phoneInstances)
-
-      randomPhone.localContactId = c.localId
-
-      PhoneService.save(randomPhone)
+      toSave.push(...this.getRandomPhones().map((p: PhoneEntity) => {
+        const newPhone  = { ...p } 
+        newPhone.localContactId = c.localId
+        return newPhone
+      }))
     }) 
-
+    
+    PhoneService.saveAll(toSave)
   }
 
   private async loadNotes() {
@@ -275,6 +280,16 @@ class TestInstanceService {
       color: ColorConstants.COLORS[5]
     },
   ]
+
+  private getRandomPhones = () => {
+    const response = new Set<(PhoneEntity | EssentialPhoneEntity)>() 
+    const numberOfPhones = Math.ceil(Math.random() * 3)
+    for (let n = 0; n < numberOfPhones; n++) {
+      const randomPhone = ArrayUtils.randomItem(this.phoneInstances)
+      response.add(randomPhone)
+    }
+    return Array.from(response)
+  }
 
   private phoneInstances: (PhoneEntity | EssentialPhoneEntity)[] = [
     { 

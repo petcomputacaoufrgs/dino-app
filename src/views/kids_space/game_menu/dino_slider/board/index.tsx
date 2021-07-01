@@ -4,7 +4,7 @@ import DinoSwitch from '../../../../../components/switch'
 import { toggle } from '../../../../../constants/toggle/Toggle'
 import { useLanguage } from '../../../../../context/language'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
-import Piece from '../piece'
+import SliderPiece from '../piece'
 import SliderBoardProps, { HandleSwipeProps } from './props'
 import './styles.css'
 
@@ -156,7 +156,7 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
       </div>
       <div className="board">
           {gameState.map((number, index) => 
-            <Piece reduced={reduced} num={number} key={index}/>
+            <SliderPiece reduced={reduced} num={number} key={index}/>
           )}
       </div>
     </>

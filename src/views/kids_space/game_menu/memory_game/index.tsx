@@ -12,7 +12,7 @@ import {ReactComponent as Plateosaurus} from '../../../../assets/kids_space/memo
 import {ReactComponent as Stegosaurus} from '../../../../assets/kids_space/memory_game/stegosaurus.svg'
 import {ReactComponent as Triceratops} from '../../../../assets/kids_space/memory_game/triceratops.svg'
 import {ReactComponent as Tyrannosaurus} from '../../../../assets/kids_space/memory_game/tyrannosaurus-rex.svg'
-import Board from './components/board'
+import MemoryBoard from './components/board'
 import BoardPiece from './components/types/BoardPiece'
 import './styles.css'
 
@@ -58,7 +58,7 @@ const MemoryGame: React.FC = () => {
 				<p>{language.data.MEMORY_GAME_GAME_OVER}</p>
 			</GameOverDialog>
 			<KidsSpaceGoBackButton />
-			<Board pieceList={boardRandom} onGameOver= {handleGameOver} restart={restart}/>
+			<MemoryBoard pieceList={boardRandom} onGameOver= {handleGameOver} restart={restart}/>
 		</div>
 	)
 }

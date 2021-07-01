@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.css'
 
-const Piece: React.FC<{num: number, reduced?: boolean}> = ({num, reduced}) => 
+const SliderPiece: React.FC<{num: number, reduced?: boolean}> = ({num, reduced}) => 
     <div className={`piece piece_${num}` + (reduced ? ' reduced' : '')}>
         {num !== 0 
             ? reduced 
@@ -10,4 +10,4 @@ const Piece: React.FC<{num: number, reduced?: boolean}> = ({num, reduced}) =>
             : <></>}
     </div>
 
-export default Piece
+export default SliderPiece

@@ -11,9 +11,7 @@ const SnakeGame: React.FC = () => {
 	const language = useLanguage()
 	const [openDialog, setOpenDialog] = useState(false)
 
-	useEffect(() => {
-		starGame(handleGameOver)
-	}, [])
+	useEffect(() => starGame(handleGameOver), [])
 
 	const handleClose = () => {
 		setOpenDialog(false)

@@ -57,9 +57,7 @@ const MusicalDino: React.FC = () => {
 			<div className='musical_dino__header'>
 				<DinoIconButton
 					icon={GoBackSVG}
-					onClick={() => {
-						HistoryService.push(PathConstants.GAME_MENU)
-					}}
+					onClick={() => HistoryService.push(PathConstants.GAME_MENU)}
 				/>
 				<div id='musical_dino__header__turn'>0</div>
 			</div>
@@ -97,9 +95,7 @@ const MusicalDino: React.FC = () => {
 				<button
 					className='musical_dino__start_game__button'
 					id='musical_dino__start'
-					onClick={() => {
-						startGame(handleWin)
-					}}
+					onClick={() => startGame(handleWin)}
 				>
 					{language.data.START_GAME_TEXT}
 				</button>

@@ -10,7 +10,7 @@ import TreatmentService from '../treatment/TreatmentService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-import Utils from '../../utils/Utils'
+import { hasValue } from '../../utils/Utils'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
 	number,
@@ -53,10 +53,10 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	async convertEntityToModel(
 		entity: FaqItemEntity,
 	): Promise<FaqItemDataModel | undefined> {
-		if (Utils.isNotEmpty(entity.localTreatmentId)) {
+		if (hasValue(entity.localTreatmentId)) {
 			const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId!)
 
-			if (treatment && Utils.isNotEmpty(treatment.id)) {
+			if (treatment && hasValue(treatment.id)) {
 				const model: FaqItemDataModel = {
 					answer: entity.answer,
 					treatmentId: treatment.id!,

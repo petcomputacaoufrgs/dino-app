@@ -1,8 +1,8 @@
-import Utils from './Utils'
+import { hasNoValue } from './Utils'
 
 class StringUtils {
 	isEmpty(value: string | undefined): boolean {
-		return Utils.isEmpty(value) || value?.trim() === ''
+		return hasNoValue(value) || value?.trim() === ''
 	}
 
 	isNotEmpty = (value: string | undefined) => !this.isEmpty(value) 

@@ -10,7 +10,7 @@ import ContactService from './ContactService'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
-import Utils from '../../utils/Utils'
+import { hasValue } from '../../utils/Utils'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import EssentialPhoneService from './EssentialPhoneService'
@@ -46,13 +46,13 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 		}
 
 		const contactId = model.contactId
-		if (Utils.isNotEmpty(contactId)) {
+		if (hasValue(contactId)) {
 			const contact = await ContactService.getById(contactId!)
 			entity.localContactId = contact?.localId
 		}
 
 		const essentialPhoneId = model.essentialPhoneId
-		if (Utils.isNotEmpty(essentialPhoneId)) {
+		if (hasValue(essentialPhoneId)) {
 			const ePhone = await EssentialPhoneService.getById(essentialPhoneId!)
 			if (ePhone) {
 				entity.localEssentialPhoneId = ePhone.localId
@@ -72,7 +72,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 
 		const localEPhoneId = entity.localEssentialPhoneId
 
-		if (Utils.isNotEmpty(localEPhoneId)) {
+		if (hasValue(localEPhoneId)) {
 			const ePhone = await EssentialPhoneService.getByLocalId(localEPhoneId!)
 			if (ePhone) {
 				model.essentialPhoneId = ePhone.id
@@ -81,7 +81,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 
 		const localContactId = entity.localContactId
 
-		if (Utils.isNotEmpty(localContactId)) {
+		if (hasValue(localContactId)) {
 			const contact = await ContactService.getByLocalId(localContactId!)
 			model.contactId = contact?.id
 
@@ -129,7 +129,7 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 	}
 
 	async deleteByContact(contact: ContactEntity): Promise<void> {
-		if (Utils.isNotEmpty(contact.localId)) {
+		if (hasValue(contact.localId)) {
 			const phones = await this.toList(this.table
 				.where('localContactId')
 				.equals(contact.localId!))

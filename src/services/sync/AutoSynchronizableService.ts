@@ -20,7 +20,7 @@ import DateUtils from '../../utils/DateUtils'
 import SynchronizableService from './SynchronizableService'
 import WebSocketURLService from '../websocket/path/WebSocketPathService'
 import WebSocketSubscriber from '../../types/web_socket/WebSocketSubscriber'
-import Utils from '../../utils/Utils'
+import { hasValue } from '../../utils/Utils'
 
 /**
  * @description Generic service with basic methods (save and delete) that auto synchronize entity with API
@@ -103,9 +103,9 @@ export default abstract class AutoSynchronizableService<
 				model.lastUpdate!,
 			)
 
-			if (Utils.isNotEmpty(model.localId)) {
+			if (hasValue(model.localId)) {
 				entity.localId = model.localId
-			} else if (Utils.isNotEmpty(model.id)) {
+			} else if (hasValue(model.id)) {
 				const savedEntity = await this.dbGetById(model.id!)
 
 				if (savedEntity) {
@@ -367,7 +367,7 @@ export default abstract class AutoSynchronizableService<
 		await Promise.all(entities.map(entity => this.beforeDelete(entity)))
 
 		const filterById = ArrayUtils.partition(entities, entity =>
-			Utils.isNotEmpty(entity.id),
+			hasValue(entity.id),
 		)
 
 		await this.dbDeleteAll(filterById.notSelected)
@@ -456,7 +456,7 @@ export default abstract class AutoSynchronizableService<
 			entities.forEach(entity => (entity.localId = undefined))
 
 			const orderedEntities = entities
-				.filter(entity => Utils.isNotEmpty(entity.id))
+				.filter(entity => hasValue(entity.id))
 				.sort(this.sortEntityById)
 
 			const dbEntities = await this.dbGetAllById(orderedEntities)
@@ -585,7 +585,7 @@ export default abstract class AutoSynchronizableService<
 
 	private dbGetAllById = async (entities: ENTITY[]): Promise<ENTITY[]> => {
 		const ids = entities
-			.filter(entity => Utils.isNotEmpty(entity.id))
+			.filter(entity => hasValue(entity.id))
 			.map(entity => entity.id!)
 		return this.table.where('id').anyOf(ids).toArray()
 	}
@@ -624,7 +624,7 @@ export default abstract class AutoSynchronizableService<
 		const lastUpdate = this.getLastUpdate()
 
 		const entitiesIds = entities
-			.filter(entity => Utils.isNotEmpty(entity.localId))
+			.filter(entity => hasValue(entity.localId))
 			.map(entity => entity.localId!)
 
 		return await this.table
@@ -638,7 +638,7 @@ export default abstract class AutoSynchronizableService<
 
 	private dbDeleteAll = async (entities: ENTITY[]) => {
 		const localIds = entities
-			.filter(entity => Utils.isNotEmpty(Utils.isNotEmpty(entity.localId)))
+			.filter(entity => hasValue(hasValue(entity.localId)))
 			.map(entity => entity.localId!)
 
 		return this.table.where('localId').anyOf(localIds).delete()

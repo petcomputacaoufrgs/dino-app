@@ -13,6 +13,6 @@
 }
 
 .slider__switch .dino_switch__form p{
-  opacity: 70%;
   margin-right: 0.2rem;
+  color: var(--dark-color-transparency)
 }

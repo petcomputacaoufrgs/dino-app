@@ -10,12 +10,19 @@ import ContactService from './ContactService'
 import PhoneService from './PhoneService'
 import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import TreatmentService from '../treatment/TreatmentService'
-import Utils from '../../utils/Utils'
+
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import EssentialPhoneService from './EssentialPhoneService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import ArrayUtils from '../../utils/ArrayUtils'
+import { hasValue } from '../../utils/Utils'
+
+const TRUE = 1
+const FALSE = 0
+
+type removeTreatmentAcumType = { toSave: EssentialContactEntity[], toDelete: EssentialContactEntity[] }
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -46,17 +53,17 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			name: model.name,
 			description: model.description,
 			color: model.color,
-			isUniversal: 1,
+			isUniversal: TRUE,
 		}
 
 		if (model.treatmentIds) {
 			const treatments = await TreatmentService.getAllByIds(model.treatmentIds)
 			const treatmentLocalIds = treatments
-				.filter(treatment => Utils.isNotEmpty(treatment.localId))
+				.filter(treatment => hasValue(treatment.localId))
 				.map(treatment => treatment.localId!)
 
-			if (treatmentLocalIds.length > 0) {
-				entity.isUniversal = 0
+			if (ArrayUtils.isNotEmpty(treatmentLocalIds)) {
+				entity.isUniversal = FALSE
 				entity.treatmentLocalIds = treatmentLocalIds
 			}
 		}
@@ -78,7 +85,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 				entity.treatmentLocalIds,
 			)
 			model.treatmentIds = treatments
-				.filter(treatment => Utils.isNotEmpty(treatment.id))
+				.filter(treatment => hasValue(treatment.id))
 				.map(treatment => treatment.id!)
 		}
 
@@ -88,33 +95,43 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 	private async getUniversalEssentialContacts(): Promise<
 		EssentialContactEntity[]
 	> {
-		return this.table.where('isUniversal').equals(1).toArray()
+		return this.table.where('isUniversal').equals(TRUE).toArray()
 	}
 
 	private async getTreatmentEssentialContacts(
 		settings: UserSettingsEntity,
 	): Promise<EssentialContactEntity[]> {
-		if (Utils.isNotEmpty(settings.treatmentLocalId)) {
+		if (hasValue(settings.treatmentLocalId)) {
 			return this.toList(this.table
 				.where('treatmentLocalIds')
 				.equals(settings.treatmentLocalId!))
 		} else return []
 	}
 
-	async removeTreatment(
-		treatment: TreatmentEntity,
-	) {
-		if (Utils.isNotEmpty(treatment.localId)) {
-			const essentialContacts = await this.toList(this.table
-				.where('treatmentLocalIds')
-				.equals(treatment.localId!)
-				.filter(ec => ec.isUniversal === 0))
+	async removeTreatment(treatment: TreatmentEntity,) { 
 
-			essentialContacts.forEach(ec => ec.treatmentLocalIds = ec.treatmentLocalIds?.filter(t => t !== treatment.localId))
-			// TODO REMOVER CONTATOS COM LISTA VAZIA
+		if (hasValue(treatment.localId)) {
+			
+			const essentialContacts = await this.getTreatmentNonUniversalEContacts(treatment.localId!)
 
-			await this.saveAll(essentialContacts)
+			const acum = essentialContacts.reduce((acum, ec) => {
+
+				ec.treatmentLocalIds = ec.treatmentLocalIds?.filter(t => t !== treatment.localId)
+
+				acum[ArrayUtils.isNotEmpty(ec.treatmentLocalIds) ? "toSave" : "toDelete" ].push(ec)
+
+				return acum
+			}, { toSave: [], toDelete: [] } as removeTreatmentAcumType)
+
+			await Promise.all([this.saveAll(acum.toSave), this.deleteAll(acum.toDelete)])
 		}
+	}
+
+	private getTreatmentNonUniversalEContacts = async (treatmentLocalId: number) => {
+			return await this.toList(this.table
+				.where('treatmentLocalIds')
+				.equals(treatmentLocalId)
+				.filter(ec => ec.isUniversal === FALSE))
 	}
 
 	public async saveUserEssentialContacts(settings: UserSettingsEntity) {
@@ -145,7 +162,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 				const ePhones = await EssentialPhoneService.getAllByEssentialContactLocalId(
 					ec.localId,
 				)
-				if (ePhones.length > 0) {
+				if (ArrayUtils.isNotEmpty(ePhones)) {
 					const newContactPhones: PhoneEntity[] = ePhones.map(ePhone => {
 						return {
 							localContactId: c.localId,

@@ -21,7 +21,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, onClickMenu }) => {
       <Accordion.Toggle as={Card.Header} eventKey={eventKey}>
         <Card.Title className='faq__card_title dino__flex_row dino__text__wrap'>
           {item.question}
-          {isStaff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
+          {isStaff && <OptionsIconButton onClick={(e) => onClickMenu(e, item)} />}
         </Card.Title>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={eventKey}>

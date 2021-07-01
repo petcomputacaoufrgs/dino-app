@@ -37,7 +37,7 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
           >
             <Icon onClick={redirectToUserQuestions} />
           </Badge>
-          <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />
+          <OptionsIconButton onClick={(e) => onClickMenu(e, item)} />
         </ListItemSecondaryAction>
       </ListItem>
     </div>

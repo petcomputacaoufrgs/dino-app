@@ -40,8 +40,8 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
 
 	const renderOptions = () => {
 		if (treatments && !isLoading) {
-			return treatments.map(t => (
-				<MenuItem key={t.name} value={t.localId}>
+			return treatments.map((t, index) => (
+				<MenuItem key={index} value={t.localId}>
 					{t.name}
 				</MenuItem>
 			))

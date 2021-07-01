@@ -4,7 +4,7 @@
 }
 
 .icon_button svg {
-	fill: var(--light-color);
+	fill: var(--contrast-color);
 	margin: 0;
 }
 

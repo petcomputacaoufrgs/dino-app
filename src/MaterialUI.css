@@ -65,6 +65,9 @@ body .MuiInputBase-root {
 .MuiCardHeader-action button.button.icon_button {
 	margin: 0rem 0.125rem;
 }
+.MuiPaper-root.MuiDialog-paper .MuiCardHeader-action {
+	align-self: center;
+}
 
 .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
   text-overflow: ellipsis;

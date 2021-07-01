@@ -101,10 +101,10 @@ class UserServiceImpl extends AutoSynchronizableService<
 				const pictureUrlChanged = entity.pictureURL !== savedEntity.pictureURL
 
 				if (withoutSavedPicture || pictureUrlChanged) {
-					this.donwloadPicture(entity.pictureURL, entity.id!)
+					this.downloadPicture(entity.pictureURL, entity.id!)
 				}
 			} else {
-				this.donwloadPicture(entity.pictureURL, entity.id!)
+				this.downloadPicture(entity.pictureURL, entity.id!)
 			}
 		}
 	}
@@ -133,7 +133,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 					if (entity.pictureURL !== newPictureURL) {
 						entity.pictureURL = newPictureURL
 						await this.save(entity)
-						this.donwloadPicture(newPictureURL, entity.id!)
+						this.downloadPicture(newPictureURL, entity.id!)
 					}
 				}
 			}
@@ -158,7 +158,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 		return false
 	}
 
-	private donwloadPicture = (pictureURL: string, localId: number) => {
+	private downloadPicture = (pictureURL: string, localId: number) => {
 		try {
 			ImageToBase64Utils.getBase64FromImageSource(
 				pictureURL,

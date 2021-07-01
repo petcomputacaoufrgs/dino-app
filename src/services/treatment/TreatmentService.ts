@@ -81,17 +81,17 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 
 	beforeDelete = async (treatment: TreatmentEntity) => {
 
-		console.log("SADBHASDGVADFSSAAHSBSADSADSADDASBH")
+		console.log("beforeDelete TreatmentService")
 
 		const faqItems = await FaqItemService.getByTreatment(treatment)
 
 		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(treatment)
 
-		await EssentialContactService.removeTreatment(treatment)
-
-		await FaqItemService.deleteAll(faqItems)
-		
-		await TreatmentQuestionService.deleteAll(treatmentQuestions)
+		await Promise.all([
+			EssentialContactService.removeTreatment(treatment),
+			FaqItemService.deleteAll(faqItems),
+			TreatmentQuestionService.deleteAll(treatmentQuestions)
+		])
 	}
 }
 

@@ -56,8 +56,10 @@ const FaqHub: React.FC = () => {
 		}
 
 		const loadFaqItems = async (treatment: TreatmentEntity) => {
-			const faqItems = await FaqItemService.getByTreatment(treatment)
-			updateFaqView(treatment, faqItems)
+			const faqItems = FaqItemService.getByTreatment(treatment)
+			const universalfaqItems = FaqItemService.getUniversals()
+			const items = await Promise.all([faqItems, universalfaqItems])
+			updateFaqView(treatment, [...items[0], ...items[1]])
 		}
 
 		let updateFaqView = (treatment: TreatmentEntity, faqItems: FaqItemEntity[]) => {

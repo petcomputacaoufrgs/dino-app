@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core'
+import { TextField, Checkbox, FormControlLabel } from '@material-ui/core'
 import React, { useState } from 'react'
 import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/dino_dialog'
 import DataConstants from '../../../../constants/app_data/DataConstants'
@@ -23,18 +23,29 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
   const [item, setItem] = useState(faqItem || { question: treatmentQuestion?.question || '', answer: '', localTreatmentId: treatment.localId })
   const [errorQuestion, setErrorQuestion] = useState(false)
   const [errorAnswer, setErrorAnswer] = useState(false)
+  const [isUniversal, setIsUniversal] = useState(false)
 
   const language = useLanguage()
 
   const handleSave = () => {
-    const errorQ = StringUtils.isEmpty(item.question)
-    setErrorQuestion(errorQ)
-    const errorA = StringUtils.isEmpty(item.answer)
-    setErrorAnswer(errorA)
-    if(!errorQ && !errorA) {
-      FaqItemService.save(item)
-      if(treatmentQuestion)
+
+    const isValid = () => {
+      const errorQ = StringUtils.isEmpty(item.question)
+      setErrorQuestion(errorQ)
+      const errorA = StringUtils.isEmpty(item.answer)
+      setErrorAnswer(errorA)
+      return !errorQ && !errorA
+    }
+
+    if(isValid()) {
+      if(isUniversal)
+        item.localTreatmentId = DataConstants.FAQ_ITEM_UNIVERSAL
+      
+        FaqItemService.save(item)
+      
+      if(treatmentQuestion) //caso seja uma pergunta feita por um usuário, a deleta pois foi respondida
         TreatmentQuestionService.delete(treatmentQuestion)
+      
       onClose()
     }
   }
@@ -75,6 +86,11 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
           value={item.answer}
           onChange={(e) => setItem({ ...item, answer: e.target.value })}
           error={errorAnswer}
+        />
+        <hr/>
+        <FormControlLabel
+          label={"Is this an universal question?"} 
+          control={<Checkbox checked={isUniversal} onChange={e => setIsUniversal(!isUniversal)} />}
         />
       </DinoDialogContent>
     </DinoDialog>

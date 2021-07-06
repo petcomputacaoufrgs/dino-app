@@ -1,4 +1,4 @@
-.piece {
+.slider_dino .piece {
   font-size: 30px;
   font-weight: bold;
   height: 80px;
@@ -13,74 +13,74 @@
   box-shadow: 0px 4px 4px rgb(0 0 0 / 25%), inset 0px 4px 4px rgb(255 255 255 / 25%);
 }
 
-.piece.reduced {
+.slider_dino .piece.reduced {
   font-size: 45px;
 }
 
-.piece_2 {
+.slider_dino .piece_2 {
   font-size: 45px;
   background-color: #f28187;
   color: whitesmoke;
 }
 
-.piece_4 {
+.slider_dino .piece_4 {
   font-size: 45px;
   background-color: #f6c358 ;
   color: whitesmoke;
 
 }
 
-.piece_8 {
+.slider_dino .piece_8 {
   font-size: 45px;
   background-color: #8184ee;
   color: whitesmoke;
 
 }
 
-.piece_16 {
+.slider_dino .piece_16 {
   font-size: 45px;
   background-color: #ec9772;
   color: whitesmoke;
 
 }
 
-.piece_32 {
+.slider_dino .piece_32 {
   font-size: 45px;
   background-color: #bbcd85;
   color: rgb(88, 83, 69);
 }
 
-.piece_64 {
+.slider_dino .piece_64 {
   font-size: 45px;
   background-color: #7ac66b;
   color: whitesmoke;
 
 }
 
-.piece_128 {
+.slider_dino .piece_128 {
   background-color: #f4b469;
   font-size: 40px;
 }
 
-.piece_256 {
+.slider_dino .piece_256 {
   background-color: #b468e5;
   color: whitesmoke;
 
   font-size: 40px;
 }
 
-.piece_512 {
+.slider_dino .piece_512 {
   background-color: #a2c75d;
   color: whitesmoke;
   font-size: 40px;
 }
 
-.piece_1024 {
+.slider_dino .piece_1024 {
   background-color: #77aecc;
   color: whitesmoke;
 
 }
 
-.piece_2048 {
+.slider_dino .piece_2048 {
   background-color: #86e5a8;
 }

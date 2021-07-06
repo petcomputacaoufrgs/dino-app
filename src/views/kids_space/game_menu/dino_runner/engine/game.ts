@@ -106,7 +106,7 @@ async function generateObstacle() {
 		}
 
 		await sleep(20)
-		obstaclePosition -= 9 + (score * 0.05) // Jogo fica mais rápido de acordo com a quantidade de pontos
+		obstaclePosition -= 9 + (score * 0.15) // Jogo fica mais rápido de acordo com a quantidade de pontos
 		obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	}
 

@@ -69,7 +69,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	): FaqView {
 			const newView = {
 				...view,
-				faqItems: FaqItemService.getFaqItemByFilter(view.treatment, searchTerm, view.faqItems),
+				faqItems: FaqItemService.getFaqItemByFilter(searchTerm, view.faqItems),
 			}
 
 			return newView as FaqView

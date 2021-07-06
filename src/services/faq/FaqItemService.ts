@@ -48,6 +48,7 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 			answer: model.answer,
 			localTreatmentId: treatment?.localId,
 			question: model.question,
+			isUniversal: treatment?.localId === undefined ? DataConstants.TRUE : DataConstants.FALSE
 		}
 
 		return entity
@@ -72,16 +73,11 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	}
 
 	getFaqItemByFilter(
-		treatment: TreatmentEntity,
 		searchTerm: string,
 		faqItems?: FaqItemEntity[],
 	): FaqItemEntity[] {
 		if(faqItems) {
-			return faqItems.filter(
-				item =>
-					(item.localTreatmentId === treatment.localId || undefined === treatment.localId) 
-					&& StringUtils.contains(item.question, searchTerm),
-			)
+			return faqItems.filter(item => StringUtils.contains(item.question, searchTerm))
 		}
 		return []
 	}
@@ -95,7 +91,7 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	}
 
 	getUniversals = async (): Promise<FaqItemEntity[]> => {
-		return this.toList(this.table.where('localTreatmentId').equals(DataConstants.FAQ_ITEM_UNIVERSAL))
+		return this.toList(this.table.where('isUniversal').equals(DataConstants.TRUE))
 	}
 }
 

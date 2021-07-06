@@ -1,5 +1,8 @@
 class DataConstants {
 
+	static FALSE = 0 as const
+	static TRUE = 1 as const
+
 	// *-------------* CONTACT *-------------*
 	
 	static CONTACT_NAME = { MAX : 100, REQUIRED: true } as const
@@ -18,7 +21,6 @@ class DataConstants {
 
 	static FAQ_QUESTION = { MAX : 100, REQUIRED: true } as const
 	static FAQ_ANSWER = { MAX : 1000, REQUIRED: true } as const
-	static FAQ_ITEM_UNIVERSAL = -1 as const
 
 	// *-------------* GLOSSARY *-------------*
 	

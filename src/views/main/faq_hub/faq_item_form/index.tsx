@@ -20,10 +20,15 @@ interface FaqItemFormProps {
 
 const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faqItem, treatmentQuestion }) => {
 
-  const [item, setItem] = useState(faqItem || { question: treatmentQuestion?.question || '', answer: '', localTreatmentId: treatment.localId })
+  const [item, setItem] = useState<FaqItemEntity>(faqItem || 
+    {
+      question: treatmentQuestion?.question || '', answer: '', 
+      localTreatmentId: treatment.localId,
+      isUniversal: DataConstants.FALSE 
+    }
+  )
   const [errorQuestion, setErrorQuestion] = useState(false)
   const [errorAnswer, setErrorAnswer] = useState(false)
-  const [isUniversal, setIsUniversal] = useState(false)
 
   const language = useLanguage()
 
@@ -38,11 +43,9 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
     }
 
     if(isValid()) {
-      if(isUniversal)
-        item.localTreatmentId = DataConstants.FAQ_ITEM_UNIVERSAL
-      
-        FaqItemService.save(item)
-      
+      item.localTreatmentId = item.isUniversal === DataConstants.TRUE ? undefined : treatment.localId
+      FaqItemService.save(item)
+
       if(treatmentQuestion) //caso seja uma pergunta feita por um usuário, a deleta pois foi respondida
         TreatmentQuestionService.delete(treatmentQuestion)
       
@@ -90,7 +93,7 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
         <hr/>
         <FormControlLabel
           label={"Is this an universal question?"} 
-          control={<Checkbox checked={isUniversal} onChange={e => setIsUniversal(!isUniversal)} />}
+          control={<Checkbox checked={Boolean(item.isUniversal)} onChange={(e) => setItem({ ...item, isUniversal: Number(e.target.checked) as 0 | 1 })} />}
         />
       </DinoDialogContent>
     </DinoDialog>

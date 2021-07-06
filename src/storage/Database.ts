@@ -67,7 +67,7 @@ class Database extends Dexie {
 			note: generateSynchronizableTableString('columnId', 'localColumnId'),
 			user: generateSynchronizableTableString(),
 			staff: generateSynchronizableTableString('email'),
-			faqItem: generateSynchronizableTableString('localTreatmentId'),
+			faqItem: generateSynchronizableTableString('localTreatmentId', 'isUniversal'),
 			treatmentQuestion: generateSynchronizableTableString('localTreatmentId'),
 			treatment: generateSynchronizableTableString('name'),
 			googleScope: generateSynchronizableTableString('name'),

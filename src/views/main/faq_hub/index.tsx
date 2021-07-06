@@ -47,8 +47,7 @@ const FaqHub: React.FC = () => {
 			if (userSettings && hasValue(userSettings.treatmentLocalId)) {
 				const treatment = treatments.find(treatment => treatment.localId === userSettings.treatmentLocalId)
 				if (treatment) {
-					await loadFaqItems(treatment)
-					return
+					return await loadFaqItems(treatment)
 				}
 			} 
 
@@ -56,6 +55,7 @@ const FaqHub: React.FC = () => {
 		}
 
 		const loadFaqItems = async (treatment: TreatmentEntity) => {
+			console.log("oioi")
 			const faqItems = FaqItemService.getByTreatment(treatment)
 			const universalfaqItems = FaqItemService.getUniversals()
 			const items = await Promise.all([faqItems, universalfaqItems])

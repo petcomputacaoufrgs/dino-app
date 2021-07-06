@@ -256,4 +256,9 @@
 		max-width: 300px;
 		max-height: 300px;
 	}
+
+	.dino_runner_game__obstacle {
+		max-width: 200px;
+		max-height: 200px;
+	}
 }

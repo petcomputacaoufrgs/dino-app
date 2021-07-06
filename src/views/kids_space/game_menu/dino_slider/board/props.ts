@@ -6,4 +6,5 @@ export interface HandleSwipeProps {
 
 export default interface SliderBoardProps { 
   restart: boolean, onGameOver: () => void 
+  reduced: boolean
 }

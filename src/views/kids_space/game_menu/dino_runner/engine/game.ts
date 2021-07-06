@@ -9,6 +9,7 @@ let scoreBoard: HTMLElement | null
 let score = 0
 let isJumping = false
 let isGameOver = false
+let isFirstJump = true
 let position = 0
 let onGameEnd: () => void
 let handleStopBackgroundEngine: () => void
@@ -35,6 +36,7 @@ export function startDinoRunnerGame(
 function handleStartGame() {
 	isJumping = false
 	isGameOver = false
+	isFirstJump = true
 	position = 0
 	score = 0
 
@@ -42,7 +44,7 @@ function handleStartGame() {
 
 	handleStopBackgroundEngine = startBackgroundEngine()
 	if (dino && grid && container) {
-		container.onclick = control
+		container.onpointerdown = control
 		generateObstacle()
 	}
 }
@@ -56,37 +58,34 @@ async function control() {
 }
 
 async function jump(dino: HTMLElement) {
-	let gravity = 15
+	let gravity = 1
+	let y_velocity = 17
 	position = 0
 
-	//move up
-	while (position < 150) {
-		await sleep(20)
-		position = position + gravity
-		gravity = gravity * 0.95
+	//Movimento em forma de parábola
+	do {
+		position += y_velocity
+		y_velocity -= gravity
 		dino.style.transform = `translate3d(0, -${position}%, 0)`
-	}
-
-	gravity = 10
-	// move down
-	while (position > 0) {
 		await sleep(20)
-		position = position - gravity
-		gravity = gravity * 1.05
-		dino.style.transform = `translate3d(0, -${position}%, 0)`
-	}
+	}while (position > 0)
 
 	dino.style.transform = `translate3d(0, 0, 0)`
 }
 
 async function generateObstacle() {
-	let obstaclePosition = 500
+	let obstaclePosition = 550
 	let nextObstacleGenerated = false
-	let minDistance = 150
+	let minDistance = 250
 	const obstacle = document.createElement('div')
 	obstacle.classList.add('dino_runner_game__obstacle')
 	obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	grid!.appendChild(obstacle)
+
+	if(isFirstJump){
+		obstaclePosition = 1000 //dá um tempo melhor para o jogador pensar no primeiro pulo
+		isFirstJump = false
+	} 
 
 	while (obstaclePosition >= -300) {
 		if (!nextObstacleGenerated && obstaclePosition < minDistance * -1) {
@@ -107,19 +106,18 @@ async function generateObstacle() {
 		}
 
 		await sleep(20)
-		obstaclePosition -= 12.5
+		obstaclePosition -= 9 + (score * 0.05) // Jogo fica mais rápido de acordo com a quantidade de pontos
 		obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	}
 
 	score++
-	if (minDistance > -100) minDistance -= 25
 	setScore(score)
 	obstacle.remove()
 }
 
 async function generateNextObstacle() {
 	if (!isGameOver) {
-		const randomTime = getRandomInteger(0, 200)
+		const randomTime = getRandomInteger(0, 750)
 		await sleep(randomTime)
 		generateObstacle()
 	}

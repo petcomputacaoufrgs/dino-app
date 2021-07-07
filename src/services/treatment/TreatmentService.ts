@@ -81,8 +81,6 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 
 	beforeDelete = async (treatment: TreatmentEntity) => {
 
-		console.log("beforeDelete TreatmentService")
-
 		const faqItems = await FaqItemService.getByTreatment(treatment)
 
 		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(treatment)

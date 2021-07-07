@@ -46,19 +46,14 @@ const FaqHub: React.FC = () => {
 			const userSettings = await UserSettingsService.getFirst()
 			if (userSettings && hasValue(userSettings.treatmentLocalId)) {
 				const treatment = treatments.find(treatment => treatment.localId === userSettings.treatmentLocalId)
-				if (treatment) {
-					return await loadFaqItems(treatment)
-				}
+				if (treatment) return await loadFaqItems(treatment)
 			} 
 
 			cleanFaqView()
 		}
 
 		const loadFaqItems = async (treatment: TreatmentEntity) => {
-			console.log("oioi")
-			const faqItems = FaqItemService.getByTreatment(treatment)
-			const universalfaqItems = FaqItemService.getUniversals()
-			const items = await Promise.all([faqItems, universalfaqItems])
+			const items = await Promise.all([FaqItemService.getByTreatment(treatment), FaqItemService.getUniversals()])
 			updateFaqView(treatment, [...items[0], ...items[1]])
 		}
 

@@ -33,7 +33,7 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
             overlap="circle"
             color="secondary"
             invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
-            variant="dot"
+            badgeContent={treatmentView?.questions?.length}
           >
             <Icon onClick={redirectToUserQuestions} />
           </Badge>

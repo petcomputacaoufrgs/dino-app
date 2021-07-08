@@ -13,6 +13,11 @@
 	margin: 0;
 }
 
+.icon_button.button_light svg {
+	fill: var(--light-color);
+	margin: 0;
+}
+
 .icon_button.button_bigger svg {
 	height: 2.188rem;
 	width: 2.188rem;

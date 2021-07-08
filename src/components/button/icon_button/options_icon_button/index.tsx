@@ -8,7 +8,7 @@ import './styles.css'
 
 const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 	onClick,
-	dark,
+	lum,
 	bigger,
 }) => {
 	const language = useLanguage()
@@ -19,7 +19,7 @@ const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 			icon={MoreSVG}
 			ariaLabel={language.data.OPTIONS_ARIA_LABEL}
 			onClick={onClick}
-			dark={dark}
+			lum={lum}
 			bigger={bigger}
 		>
 			<MoreVert />

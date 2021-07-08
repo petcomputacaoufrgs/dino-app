@@ -110,6 +110,13 @@ body .MuiInputBase-root {
 	fill: #fafafa;
 }
 
+.treatment__list_item .MuiBadge-anchorOriginTopRightCircle {
+	top: 10%;
+	right: 10%;
+	transform: scale(0.8) translate(50%, -50%);
+	transform-origin: 100% 0%;
+}
+
 @media (orientation: landscape) {
 	body .MuiListItemText-root .MuiTypography-body1 {
 		font-size: 1.6rem;
@@ -142,5 +149,12 @@ body .MuiInputBase-root {
 
 	label + .MuiInput-formControl {
 		margin-top: 30px !important;
+	}
+
+	.treatment__list_item .MuiBadge-anchorOriginTopRightCircle {
+		top: -5%;
+    right: 0;
+    transform: scale(1) translate(50%, -50%);
+    transform-origin: 100% 0%;
 	}
 }

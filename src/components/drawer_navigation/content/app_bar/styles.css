@@ -11,7 +11,7 @@
 	fill: var(--light-color);
 }
 
-.drawer__navigation__app_bar__button svg {
+.drawer__navigation__app_bar__button.icon_button svg {
 	margin-left: 0.8rem;
 	margin-right: 0.8rem;
 }
@@ -21,7 +21,7 @@
 		height: 4rem;
 	}
 
-	.drawer__navigation__app_bar .button svg {
+	.drawer__navigation__app_bar.icon_button .button svg {
 		width: 3.2rem;
 		height: 3.2rem;
 		margin: 0 1.2rem;

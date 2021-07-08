@@ -1,9 +1,9 @@
 import React from 'react'
 import Button from '..'
-import IconButtonProps from './props'
+import DinoIconButtonProps from './props'
 import './style.css'
 
-const DinoIconButton: React.FC<IconButtonProps> = props => {
+const DinoIconButton: React.FC<DinoIconButtonProps> = props => {
 	const Icon = props.icon
 
 	const getClassName = (): string => {
@@ -13,12 +13,12 @@ const DinoIconButton: React.FC<IconButtonProps> = props => {
 			mainClass = mainClass.concat(' ').concat(props.className)
 		}
 
-		if (props.dark) {
-			mainClass = mainClass.concat(' button_dark')
-		}
-
 		if (props.bigger) {
 			mainClass = mainClass.concat(' button_bigger')
+		}
+
+		if (props.lum) {
+			mainClass = mainClass.concat(` button_${props.lum}`)
 		}
 
 		return mainClass

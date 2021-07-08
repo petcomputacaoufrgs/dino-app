@@ -33,7 +33,7 @@ const AddStaffForm = () => {
   return (
     <div className='add_staff'>
       <p className='add_staff__title'>{language.data.FORM_ADD_STAFF}</p>
-      <p>{language.data.ADD_STAFF_TEXT}</p>
+      <p className='add_staff__text'>{language.data.ADD_STAFF_TEXT}</p>
       <div className='dialog_form__content'>
         <EmailTextField 
           value={emailValue}
@@ -42,7 +42,7 @@ const AddStaffForm = () => {
         />
         <Button disabled={isNotClient} onClick={handleAddEmail} className='save_button'>
           <SaveSVG className='save_button__icon' />
-          {language.data.FORM_ADD_STAFF}
+          {language.data.ADD_OPTION_TEXT}
         </Button>
       </div>         
     </div>

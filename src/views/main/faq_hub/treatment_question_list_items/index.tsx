@@ -17,7 +17,7 @@ import NoItemsList from '../../../../components/list_components/no_items_list'
 import FaqItemForm from '../faq_item_form'
 
 const TreatmentQuestionItems: React.FC = () => {
-  //não encontrava o localId
+
   const { localId } = useParams<{ localId?: string }>()
 
   const language = useLanguage()
@@ -68,7 +68,6 @@ const TreatmentQuestionItems: React.FC = () => {
           avatar={<Avatar><AvatarIcon /></Avatar>}
           action={
             <OptionsIconButton
-              dark
               onClick={(event) => handleShowItemMenu(event, item)}
             />
           }

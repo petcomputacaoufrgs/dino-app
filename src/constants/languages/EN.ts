@@ -712,6 +712,8 @@ export default class EN implements LanguageBase {
 
 	DINO_SLIDER__REDUCE = 'Reduce'
 
+	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Bind item to all existent ${this.FAQ}s`
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`

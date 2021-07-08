@@ -17,8 +17,8 @@
   margin-right: 32px;
 }
 
-.treatment__list_item .icon_button__options {
-  margin-left: 8px;
+.treatment__list_item .icon_button, .treatment__list_item .MuiBadge-root {
+  margin-left: 1em;
 }
 
 .treatment__list_item .MuiTypography-root.MuiListItemText-secondary.MuiTypography-body2.MuiTypography-colorTextSecondary.MuiTypography-displayBlock .dino__history_link {

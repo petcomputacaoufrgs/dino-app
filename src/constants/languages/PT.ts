@@ -104,7 +104,7 @@ export default class PT implements LanguageBase {
 
 	ABOUT_US = 'Sobre Nós'
 
-	MENU_STAFF_MODERATION = 'Moderação de Funcionários'
+	MENU_STAFF_MODERATION = 'Equipe'
 
 	TREATMENTS = 'Tratamentos'
 
@@ -176,15 +176,15 @@ export default class PT implements LanguageBase {
 
 	FORM_ADD_PHONE = 'Adicionar Telefone'
 
-	FORM_ADD_STAFF = 'Adicionar Funcionário(a)'
+	FORM_ADD_STAFF = 'Adicionar Membro de Equipe'
 
 	FORM_EMAIL = 'Adicionar E-mail'
 	
 	ADD_STAF_TAB = 'Adicionar'
 	
-	STAFF_LIST_TAB = 'Funcionários'
+	STAFF_LIST_TAB = 'Equipe'
 
-	STAFF_SAVE_SUCCESS = 'Funcionários adicionados'
+	STAFF_SAVE_SUCCESS = 'Membro de equipe adicionado(a)'
 
 	TREATMENT = 'Tratamento'
 
@@ -194,11 +194,11 @@ export default class PT implements LanguageBase {
 
 	PENDING = 'Pendente'
 
-	STAFF = 'Funcionários(as)'
+	STAFF = 'Equipe'
 
 	EMAIL = 'E-mail'
 
-	MEMBER_OF_STAFF = 'Funcionário(a)'
+	MEMBER_OF_STAFF = 'Membro de Equipe'
 
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
@@ -697,7 +697,7 @@ export default class PT implements LanguageBase {
 
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Resposta da pergunta...'
 
-	ADD_STAFF_TEXT = 'Funcionários são usuários que podem adicionar, remover e editar informações que são exibidas para os pacientes e seus responsáveis, como: contatos do hospital, itens do glossário, etc. Apenas a conta administradora do hospital é capaz de adicionar e remover outros funcionários.'
+	ADD_STAFF_TEXT = `Membros de equipe são usuários que podem adicionar, remover e editar dados exibidos para o usuário comum: contatos do hospital, glossário, itens da ${this.FAQ}, etc. Apenas o e-mail registrado como administrador é capaz de adicionar e remover outros membros.`
 
 	NO_ITEMS_LIST = 'Sem Itens'
 
@@ -720,6 +720,8 @@ export default class PT implements LanguageBase {
 	NO_CONNECTION = 'Sem conexão'
 
 	DINO_SLIDER__REDUCE = 'Reduzir'
+
+	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Relacionar item a todas ${this.FAQ}s existentes`
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

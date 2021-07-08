@@ -7,7 +7,7 @@ export const toggle = {
 	showTreatmentQuestionButtonToStaff: true,
 	overridePermission: {
 		override: false,
-		permission: PermissionEnum.STAFF
+		permission: PermissionEnum.USER
 	},
 	testAll2048Pieces: false
 }

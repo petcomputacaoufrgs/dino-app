@@ -92,7 +92,7 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faq
         />
         <hr/>
         <FormControlLabel
-          label={"Is this an universal question?"} 
+          label={language.data.EMPTY_FIELD_ERROR} 
           control={<Checkbox checked={Boolean(item.isUniversal)} onChange={(e) => setItem({ ...item, isUniversal: Number(e.target.checked) as 0 | 1 })} />}
         />
       </DinoDialogContent>

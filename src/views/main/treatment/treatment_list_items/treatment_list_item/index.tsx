@@ -8,34 +8,36 @@ import { useTreatmentView } from '../../../../../context/staff_data'
 import Icon from '@material-ui/icons/ContactSupport';
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import TreatmentItemProps from './props'
+import DnsIcon from '@material-ui/icons/Dns';
+import DinoIconButton from '../../../../../components/button/icon_button'
 
 const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) => {
   const language = useLanguage()
   const history = useHistory()
   const treatmentView = useTreatmentView(item.localId)
 
-  const redirectToUserQuestions = () => history.push(`${PathConstants.STAFF_FAQ}/${item.localId}/${PathConstants.USER_QUESTIONS_TAB}`)
+  const redirectTo = (tab: string) => history.push(`${PathConstants.STAFF_FAQ}/${item.localId}/${tab}`)
 
   return (
     <div className='treatment__list_item'>
-      <ListItem >
+      <ListItem divider>
         <ListItemText
           className='treatment__list_item__text'
           primary={item.name}
-          secondary={
-            <Link className='dino__history_link' to={`${PathConstants.STAFF_FAQ}/${item.localId}/${PathConstants.FAQ_TAB}`}>
-              {language.data.seeFAQItemsText(language.data.TREATMENT)}
-            </Link>
-          }
         />
         <ListItemSecondaryAction>
+          <DinoIconButton
+            icon={DnsIcon}
+            ariaLabel={language.data.OPTIONS_ARIA_LABEL}
+            onClick={() => redirectTo(PathConstants.FAQ_TAB)}
+          />
           <Badge
             overlap="circle"
             color="secondary"
             invisible={ArrayUtils.isEmpty(treatmentView?.questions)}
             badgeContent={treatmentView?.questions?.length}
           >
-            <Icon onClick={redirectToUserQuestions} />
+            <Icon onClick={() => redirectTo(PathConstants.USER_QUESTIONS_TAB)} />
           </Badge>
           <OptionsIconButton onClick={(e) => onClickMenu(e, item)} />
         </ListItemSecondaryAction>

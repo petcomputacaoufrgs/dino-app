@@ -42,12 +42,8 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 
 	const handleCloseDialog = () => {
 		setToAction(CRUDEnum.NOP)
-		//setSelectedItem(undefined)
+		setSelectedItem(undefined)
   }
-
-	// React.useEffect(() => {
-	// 	console.log(selectedItem, toAction)
-	// }, [toAction, selectedItem])
 
 	return (
 		<div className='faq-items dino__text__wrap dino__list__padding'>

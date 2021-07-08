@@ -117,6 +117,10 @@ body .MuiInputBase-root {
 	transform-origin: 100% 0%;
 }
 
+body .MuiCheckbox-colorSecondary.Mui-checked {
+	color: var(--button-selected-font-color)
+}
+
 @media (orientation: landscape) {
 	body .MuiListItemText-root .MuiTypography-body1 {
 		font-size: 1.6rem;

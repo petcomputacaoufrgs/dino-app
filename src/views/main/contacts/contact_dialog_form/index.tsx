@@ -20,6 +20,8 @@ import EssentialPhoneEntity from '../../../../types/contact/database/EssentialPh
 import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
 import './styles.css'
 import { getContactWithSamePhone } from '../../../../services/contact/ContactViewService'
+import ArrayUtils from '../../../../utils/ArrayUtils'
+import DataConstants from '../../../../constants/app_data/DataConstants'
 
 const getContact = (item?: ContactView): ContactType =>
 	item ? item.contact : { name: '', description: '', }
@@ -30,21 +32,15 @@ const getPhones = (item?: ContactView): PhoneType[] =>
 const getTreatmentLocalIds = (item?: ContactView): number[] => 
 	item ? (item?.contact as EssentialContactEntity).treatmentLocalIds || [] : []
 
-const ContactFormDialog: React.FC<ContactFormDialogProps> = (
-	{
-		dialogOpen,
-		onClose,
-		item,
-		items
-	}) => {
-	const isStaff = HasStaffPowers()
+const ContactFormDialog: React.FC<ContactFormDialogProps> = ({ dialogOpen, onClose, item, items }) => {
 	const language = useLanguage()
-	const [contact, setContact] = useState(getContact(item))
-	const [contactPhones, setContactPhones] = useState(getPhones(item))
-	const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
+	const hasStaffPowers = HasStaffPowers()
 	const [errorName, setErrorName] = useState<string>()
 	const [errorPhone, setErrorPhone] = useState<string>()
+	const [contact, setContact] = useState(getContact(item))
+	const [contactPhones, setContactPhones] = useState(getPhones(item))
 	const [selectedTreatmentLocalIds, setSelectedTreatmentLocalIds] = useState<number[]>(getTreatmentLocalIds(item))
+	const [phonesToDelete, setPhonesToDelete] = useState<PhoneEntity[]>([])
 	
 	useEffect(() => {
 		if (dialogOpen) {
@@ -53,17 +49,19 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 			setErrorName(undefined)
 			setErrorPhone(undefined)
 			setSelectedTreatmentLocalIds(getTreatmentLocalIds(item))
+			setPhonesToDelete(new Array<PhoneEntity>())
 		}
 	}, [dialogOpen, item])
 
 	const handleSave = () => {
+
 		function validInfo(): boolean {
 			if (StringUtils.isEmpty(contact.name)) {
 				setErrorName(language.data.EMPTY_FIELD_ERROR)
 				return false
 			}
 
-			if (isStaff) {
+			if (hasStaffPowers) {
 				const hasAtLeastOnePhone = contactPhones.some(p => StringUtils.isNotEmpty(p.number))
 				if (!hasAtLeastOnePhone) {
 					setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
@@ -88,81 +86,64 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 					.map(phone => phone.number)
 					.includes(phone.number),
 			)
-			if (phone) setErrorPhone(`${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`)
+			if(phone) setErrorPhone(`${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`)
 		}
 
-		if (validInfo()) {
-			saveContact()
+		if(validInfo()) {
+			save()
 			onClose()
 		}
 	}
 
-	const saveContact = async () => {
-		async function savePhones(contact: ContactEntity | EssentialContactEntity) {
+	const save = async () => {
+
+		async function savePhones(contact: ContactType) {
+
 			const newPhones = contactPhones.filter(phone => phone.number !== '')
-			if (isStaff) {
-				newPhones.forEach(ePhone => ((ePhone as EssentialPhoneEntity).localEssentialContactId = contact.localId))
-			} else {
-				newPhones.forEach(phone => ((phone as PhoneEntity).localContactId = contact.localId))
+
+			hasStaffPowers 
+			? newPhones.forEach((ePhone: EssentialPhoneEntity) => ePhone.localEssentialContactId = contact.localId)
+			: newPhones.forEach((phone: PhoneEntity) => phone.localContactId = contact.localId)
+
+			if (ArrayUtils.isNotEmpty(newPhones)) {
+				hasStaffPowers ? await EssentialPhoneService.saveAll(newPhones) : await PhoneService.saveAll(newPhones)
 			}
 
-			if (newPhones.length > 0) {
-				isStaff ? await EssentialPhoneService.saveAll(newPhones) : await PhoneService.saveAll(newPhones)
-			}
-
-			if (phonesToDelete.length > 0) {
-				isStaff ? await EssentialPhoneService.deleteAll(phonesToDelete) : await PhoneService.deleteAll(phonesToDelete)
-			}
-		}
-
-		async function saveContactAndPhones() {
-			const saved = await ContactService.save(contact)
-			if (saved) {
-				await savePhones(saved)
+			if (ArrayUtils.isNotEmpty(phonesToDelete)) {
+				hasStaffPowers ? await EssentialPhoneService.deleteAll(phonesToDelete) : await PhoneService.deleteAll(phonesToDelete)
 			}
 		}
 
-		async function saveEssentialContactAndPhones() {
+		async function saveEssentialContact() {
+
 			const essentialContact: EssentialContactEntity = {
 				...contact,
 				treatmentLocalIds: selectedTreatmentLocalIds,
-				isUniversal: selectedTreatmentLocalIds.length > 0 ? 0 : 1,
+				isUniversal: ArrayUtils.isNotEmpty(selectedTreatmentLocalIds) ? DataConstants.FALSE : DataConstants.TRUE,
 			}
 
-			const saved = await EssentialContactService.save(essentialContact)
-			if (saved) {
-				await savePhones(saved)
-			}
+			return await EssentialContactService.save(essentialContact)
 		}
 
-		isStaff ? saveEssentialContactAndPhones() : saveContactAndPhones()
-	}
+		const saved: ContactType | undefined = hasStaffPowers ? await saveEssentialContact() : await ContactService.save(contact)
 
-	const handleAddPhone = () => {
-		contactPhones.push({
-			number: '',
-			type: Constants.CONTACT_PHONE_CODE_MOBILE,
-		})
-		setContactPhones([...contactPhones])
+		if(saved) savePhones(saved)
 	}
-
+	
 	const handleDeletePhone = (number: string) => {
-		if (!isStaff || contactPhones.length > 1) {
-			const indexPhone = contactPhones.findIndex(
-				phone => phone.number === number,
-			)
+		if (hasStaffPowers && contactPhones.length < 2) {
+			setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
+		} else {
+			const indexPhone = contactPhones.findIndex(phone => phone.number === number)
 			phonesToDelete.push(contactPhones[indexPhone])
 			contactPhones.splice(indexPhone, 1)
-			setPhonesToDelete([...phonesToDelete])
 			setContactPhones([...contactPhones])
-		} else {
-			setErrorPhone(language.data.ESSENTIAL_CONTACT_MUST_HAVE_PHONE)
-		}
+		} 
 	}
-
-	const handleChangeTreatments = (ids: number[]) => {
-		setSelectedTreatmentLocalIds([...ids])
-	}
+	
+	const handleAddPhone = () => setContactPhones([...contactPhones, ...getPhones()])	
+	
+	const handleChangeTreatments = (ids: number[]) => setSelectedTreatmentLocalIds([...ids])
 
 	const renderSelectTreatments = () => {
 		return (
@@ -200,7 +181,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = (
 					handleDeletePhone={handleDeletePhone}
 					handleAddPhone={handleAddPhone}
 				>
-					{isStaff && renderSelectTreatments()}
+					{hasStaffPowers && renderSelectTreatments()}
 				</ContactFormDialogContent>
 			</DinoDialog>
 		</div>

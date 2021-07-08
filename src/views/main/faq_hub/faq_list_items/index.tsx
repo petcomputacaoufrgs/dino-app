@@ -28,8 +28,8 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
 
 	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>, item: FaqItemEntity) => {
-		setAnchor(event.currentTarget)
 		setSelectedItem(item)
+		setAnchor(event.currentTarget)
 	}
 
 	const handleAcceptDeleteDialog = () => {
@@ -42,7 +42,12 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 
 	const handleCloseDialog = () => {
 		setToAction(CRUDEnum.NOP)
+		//setSelectedItem(undefined)
   }
+
+	// React.useEffect(() => {
+	// 	console.log(selectedItem, toAction)
+	// }, [toAction, selectedItem])
 
 	return (
 		<div className='faq-items dino__text__wrap dino__list__padding'>
@@ -74,17 +79,17 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 						handleAdd={() => setToAction(CRUDEnum.CREATE)}
 						label={language.data.FAQ}
 					/>
-					{toAction === CRUDEnum.CREATE && <FaqItemForm 
-						open={toAction === CRUDEnum.CREATE} 
+					<FaqItemForm
+						open={toAction === CRUDEnum.CREATE}
 						onClose={handleCloseDialog}
 						treatment={data.treatment}
-					/>}
-					{toAction === CRUDEnum.UPDATE && <FaqItemForm 
-						open={toAction === CRUDEnum.UPDATE} 
+					/>
+					<FaqItemForm
+						open={toAction === CRUDEnum.UPDATE}
 						onClose={handleCloseDialog}
 						treatment={data.treatment}
 						faqItem={selectedItem}
-					/>}
+					/>
 					<AgreementDialog
 						open={toAction === CRUDEnum.DELETE}
             question={language.data.deleteItemText(language.data.FAQ_ITEM)}

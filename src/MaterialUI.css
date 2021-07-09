@@ -124,10 +124,6 @@ body .MuiCheckbox-colorSecondary.Mui-checked {
 	body .MuiListItemText-root .MuiTypography-body1 {
 		font-size: 1.6rem;
 	}
-
-	.treatment__list_item .icon_button, .treatment__list_item .MuiBadge-root {
-		margin-left: 3em;
-	}  
 	
 	body .MuiAvatar-root {
 		width: 50px;
@@ -149,6 +145,10 @@ body .MuiCheckbox-colorSecondary.Mui-checked {
 	label + .MuiInput-formControl {
 		margin-top: 30px !important;
 	}
+	
+	.treatment__list_item .treatment__list_item__action .dino_icon_button__tooltip {
+		margin-left: 3em;
+	}  
 
 	.treatment__list_item .MuiBadge-anchorOriginTopRightCircle {
 		top: -5%;

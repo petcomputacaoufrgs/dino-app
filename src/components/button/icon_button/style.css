@@ -1,34 +1,34 @@
-.icon_button {
+.dino_icon_button__button {
 	background-color: transparent;
 	padding: 0;
 }
 
-.icon_button svg {
+.dino_icon_button__button svg {
 	fill: var(--contrast-color);
 	margin: 0;
 }
 
-.icon_button.button_dark svg {
+.dino_icon_button__button.button_dark svg {
 	fill: var(--dark-color);
 	margin: 0;
 }
 
-.icon_button.button_light svg {
+.dino_icon_button__button.button_light svg {
 	fill: var(--light-color);
 	margin: 0;
 }
 
-.icon_button.button_bigger svg {
+.dino_icon_button__button.button_bigger svg {
 	height: 2.188rem;
 	width: 2.188rem;
 }
 
 @media (orientation: landscape) {
-	.icon_button.button_bigger svg {
+	.dino_icon_button__button.button_bigger svg {
 		height: 3rem;
 		width: 3rem;
   }
-	.icon_button svg {
+	.dino_icon_button__button svg {
 		width: 1.8rem;
 		height: 1.8rem;
 	}

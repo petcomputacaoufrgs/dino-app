@@ -8,7 +8,7 @@ const DinoIconButton: React.FC<DinoIconButtonProps> = props => {
 	const Icon = props.icon
 
 	const getClassName = (): string => {
-		let mainClass = 'icon_button'
+		let mainClass = 'dino_icon_button__button'
 
 		if (props.className) {
 			mainClass = mainClass.concat(' ').concat(props.className)
@@ -26,13 +26,15 @@ const DinoIconButton: React.FC<DinoIconButtonProps> = props => {
 	}
 
 	return (
-		<Tooltip placement="top" title={props.ariaLabel || ''} arrow>
-      <div>
-				<Button {...props} className={getClassName()}>
-					<Icon />
-				</Button>
-			</div>
-		</Tooltip>
+		<div className="dino_icon_button">
+			<Tooltip placement="top" title={props.ariaLabel || ''} arrow className="dino_icon_button__tooltip">
+				<div>
+					<Button {...props} className={getClassName()}>
+						<Icon />
+					</Button>
+				</div>
+			</Tooltip>
+		</div>
 	)
 }
 

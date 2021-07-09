@@ -17,7 +17,7 @@
   margin-right: 32px;
 }
 
-.treatment__list_item .treatment__list_item__action button {
+.treatment__list_item .treatment__list_item__action .dino_icon_button__tooltip {
   margin-left: 1em;
 }
 

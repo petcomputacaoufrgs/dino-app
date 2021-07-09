@@ -46,7 +46,7 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
   }
 
 	return (
-		<div className='faq-items dino__text__wrap dino__list__padding'>
+		<div className='dino__text__wrap dino__list dino__list__padding'>
 			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
 			{ArrayUtils.isNotEmpty(data.faqItems) ? (
 				<Accordion className='dino__accordion'>

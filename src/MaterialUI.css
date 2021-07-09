@@ -126,6 +126,10 @@ body .MuiCheckbox-colorSecondary.Mui-checked {
 		font-size: 1.6rem;
 	}
 
+	.treatment__list_item .icon_button, .treatment__list_item .MuiBadge-root {
+		margin-left: 3em;
+	}  
+	
 	body .MuiAvatar-root {
 		width: 50px;
 		height: 50px;

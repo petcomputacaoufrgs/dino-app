@@ -43,7 +43,7 @@ const TreatmentItems: React.FC<TreatmentItemsProps> = ({ items }) => {
 	return (
 		<>
 			{ArrayUtils.isNotEmpty(items) ?
-				<List className='contacts__list dino__list__padding'>
+				<List className='contacts__list dino__list dino__list__padding'>
 					{items.map((item, index) => 
 						<TreatmentItemList 
 							key={index} 

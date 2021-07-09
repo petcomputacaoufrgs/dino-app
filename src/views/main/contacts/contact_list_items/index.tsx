@@ -64,7 +64,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	return (
 		<>
 			{ArrayUtils.isNotEmpty(items) ? 
-				<List className='contacts__list dino__list__padding'>
+				<List className='contacts__list dino__list dino__list__padding'>
 					{items.map((item, index) => 
 						<ContactItemList
 							key={index}

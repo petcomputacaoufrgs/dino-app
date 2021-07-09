@@ -1,6 +1,6 @@
 import React from 'react'
-import { ListItem, ListItemText, ListItemSecondaryAction, Badge } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
+import { ListItem, ListItemText, ListItemSecondaryAction, Badge, Tooltip, IconButton } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import PathConstants from '../../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../../context/language'
@@ -8,11 +8,12 @@ import { useTreatmentView } from '../../../../../context/staff_data'
 import Icon from '@material-ui/icons/ContactSupport';
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import TreatmentItemProps from './props'
-import DnsIcon from '@material-ui/icons/Dns';
+import DnsIcon from '@material-ui/icons/Dns'; 
+import DeleteIcon from '@material-ui/icons/Delete'; 
 import DinoIconButton from '../../../../../components/button/icon_button'
 
 const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) => {
-  const language = useLanguage()
+  const language = useLanguage()  
   const history = useHistory()
   const treatmentView = useTreatmentView(item.localId)
 
@@ -40,6 +41,11 @@ const TreatmentItemList: React.FC<TreatmentItemProps> = ({ item, onClickMenu }) 
             <Icon onClick={() => redirectTo(PathConstants.USER_QUESTIONS_TAB)} />
           </Badge>
           <OptionsIconButton onClick={(e) => onClickMenu(e, item)} />
+          {/* <Tooltip title="Delete">
+            <IconButton aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip> */}
         </ListItemSecondaryAction>
       </ListItem>
     </div>

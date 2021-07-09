@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
 	width: 70vw;
+    max-width: max-content;
+    min-width: fit-content;
     top: 27vh;
 	padding: 2rem 2rem 0 2rem;
 	border-radius: 1rem;

@@ -10,7 +10,7 @@ import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import NoteColumnService from './NoteColumnService'
 import NoteView from '../../types/note/view/NoteView'
-import Utils from '../../utils/Utils'
+import { hasValue } from '../../utils/Utils'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 
@@ -114,7 +114,7 @@ class NoteServiceImpl extends AutoSynchronizableService<
 	}
 
 	async deleteNotesByColumn(column: NoteColumnEntity) {
-		if (Utils.isNotEmpty(column.localId)) {
+		if (hasValue(column.localId)) {
 			const notes = await this.getAllByColumn(column)
 			await this.deleteAll(notes)
 		}
@@ -123,7 +123,7 @@ class NoteServiceImpl extends AutoSynchronizableService<
 	private async getAllByColumn(
 		column: NoteColumnEntity,
 	): Promise<NoteEntity[]> {
-		if (Utils.isNotEmpty(column.localId)) {
+		if (hasValue(column.localId)) {
 			return this.toList(this.table.where('localColumnId').equals(column.localId!))
 		}
 

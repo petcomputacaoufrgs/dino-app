@@ -2,7 +2,7 @@ import ContactEntity from "../../types/contact/database/ContactEntity"
 import EssentialContactEntity from "../../types/contact/database/EssentialContactEntity"
 import ContactView, { ContactType, PhoneType } from "../../types/contact/view/ContactView"
 import StringUtils from "../../utils/StringUtils"
-import Utils from "../../utils/Utils"
+import { hasValue } from "../../utils/Utils"
 import EssentialPhoneService from "./EssentialPhoneService"
 import PhoneService from "./PhoneService"
 
@@ -59,8 +59,8 @@ import PhoneService from "./PhoneService"
 		}
 
 		if (!isStaff) {
-			const aIsEssential = Utils.isNotEmpty((a.contact as ContactEntity).localEssentialContactId)
-			const bIsEssential = Utils.isNotEmpty((b.contact as ContactEntity).localEssentialContactId)
+			const aIsEssential = hasValue((a.contact as ContactEntity).localEssentialContactId)
+			const bIsEssential = hasValue((b.contact as ContactEntity).localEssentialContactId)
 
 			if (aIsEssential) {
 				if (bIsEssential) {
@@ -76,6 +76,6 @@ import PhoneService from "./PhoneService"
 		return sortByName()
 	}
 	
-	export const cameFromEssential = (contact: ContactType) => Utils.isNotEmpty((contact as ContactEntity).localEssentialContactId)
+	export const cameFromEssential = (contact: ContactType) => hasValue((contact as ContactEntity).localEssentialContactId)
 	
 	export const isUniversalEssential = (contact: ContactType) => Boolean((contact as EssentialContactEntity).isUniversal)

@@ -4,12 +4,17 @@
 }
 
 .icon_button svg {
-	fill: var(--light-color);
+	fill: var(--contrast-color);
 	margin: 0;
 }
 
 .icon_button.button_dark svg {
 	fill: var(--dark-color);
+	margin: 0;
+}
+
+.icon_button.button_light svg {
+	fill: var(--light-color);
 	margin: 0;
 }
 

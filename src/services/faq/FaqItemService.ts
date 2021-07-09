@@ -10,7 +10,8 @@ import TreatmentService from '../treatment/TreatmentService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-import Utils from '../../utils/Utils'
+import { hasValue } from '../../utils/Utils'
+import DataConstants from '../../constants/app_data/DataConstants'
 
 class FaqItemServiceImpl extends AutoSynchronizableService<
 	number,
@@ -37,48 +38,46 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	async convertModelToEntity(
 		model: FaqItemDataModel,
 	): Promise<FaqItemEntity | undefined> {
-		const treatment = await TreatmentService.getById(model.treatmentId)
 
-		if (treatment) {
-			const entity: FaqItemEntity = {
-				answer: model.answer,
-				localTreatmentId: treatment.localId,
-				question: model.question,
-			}
+		let treatment: TreatmentEntity | undefined
 
-			return entity
+		if(hasValue(model.treatmentId))
+			treatment = await TreatmentService.getById(model.treatmentId!)
+
+		const entity: FaqItemEntity = {
+			answer: model.answer,
+			localTreatmentId: treatment?.localId,
+			question: model.question,
+			isUniversal: treatment?.localId === undefined ? DataConstants.TRUE : DataConstants.FALSE
 		}
+
+		return entity
 	}
 
 	async convertEntityToModel(
 		entity: FaqItemEntity,
 	): Promise<FaqItemDataModel | undefined> {
-		if (Utils.isNotEmpty(entity.localTreatmentId)) {
-			const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId!)
 
-			if (treatment && Utils.isNotEmpty(treatment.id)) {
-				const model: FaqItemDataModel = {
-					answer: entity.answer,
-					treatmentId: treatment.id!,
-					question: entity.question,
-				}
+		let treatment: TreatmentEntity | undefined
 
-				return model
-			}
+		if(hasValue(entity.localTreatmentId))
+			treatment = await TreatmentService.getById(entity.localTreatmentId!)
+
+		const model: FaqItemDataModel = {
+			answer: entity.answer,
+			treatmentId: treatment?.id,
+			question: entity.question,
 		}
+
+		return model
 	}
 
 	getFaqItemByFilter(
-		treatment: TreatmentEntity,
 		searchTerm: string,
 		faqItems?: FaqItemEntity[],
 	): FaqItemEntity[] {
 		if(faqItems) {
-			return faqItems.filter(
-				item =>
-					item.localTreatmentId === treatment.localId &&
-					StringUtils.contains(item.question, searchTerm),
-			)
+			return faqItems.filter(item => StringUtils.contains(item.question, searchTerm))
 		}
 		return []
 	}
@@ -89,6 +88,10 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 		}
 
 		return []
+	}
+
+	getUniversals = async (): Promise<FaqItemEntity[]> => {
+		return this.toList(this.table.where('isUniversal').equals(DataConstants.TRUE))
 	}
 }
 

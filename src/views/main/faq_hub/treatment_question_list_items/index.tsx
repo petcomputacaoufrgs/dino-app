@@ -17,7 +17,7 @@ import NoItemsList from '../../../../components/list_components/no_items_list'
 import FaqItemForm from '../faq_item_form'
 
 const TreatmentQuestionItems: React.FC = () => {
-  //não encontrava o localId
+
   const { localId } = useParams<{ localId?: string }>()
 
   const language = useLanguage()
@@ -68,7 +68,6 @@ const TreatmentQuestionItems: React.FC = () => {
           avatar={<Avatar><AvatarIcon /></Avatar>}
           action={
             <OptionsIconButton
-              dark
               onClick={(event) => handleShowItemMenu(event, item)}
             />
           }
@@ -89,7 +88,7 @@ const TreatmentQuestionItems: React.FC = () => {
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value as string)}
     />
-    <ListTitle title={language.data.USERS_QUESTIONS} />
+    <ListTitle title={language.data.USER_QUESTIONS} />
     { treatmentView ?
       <>
         <QuestionDialogForm

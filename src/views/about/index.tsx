@@ -27,7 +27,7 @@ const AboutUs: React.FC = () => {
 
 	return (
 		<div className='about_us'>
-			<ArrowBack dark />
+			<ArrowBack />
 			<div className='card__header'>
 				<DinoLogoHeader title={language.data.ABOUT_US}/>
 			</div>

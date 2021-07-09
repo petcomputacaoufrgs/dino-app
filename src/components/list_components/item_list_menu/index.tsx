@@ -23,16 +23,14 @@ const ItemListMenu = ({
 		if (!editUnavailable) {
 			return (
 				<MenuItem onClick={handleEdit}>
-					{editText ? editText : language.data.EDIT_OPTION_TEXT}
+					{editText || language.data.EDIT_OPTION_TEXT}
 				</MenuItem>
 			)
 		}
 	}
 
 	const handleCloseDialog = () => {
-		if(onCloseDialog) {
-			onCloseDialog()
-		}
+		if(onCloseDialog) onCloseDialog()
 	}
 
 	const handleEdit = () => {

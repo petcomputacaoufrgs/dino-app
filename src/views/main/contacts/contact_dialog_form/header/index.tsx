@@ -38,7 +38,6 @@ const AddContactDialogHeader = (
 				<DinoIconButton
 					ariaLabel={language.data.COLOR_THEME_SELECTION_ARIA_LABEL}
 					icon={ChangeColorIconSVG}
-					dark
 					onClick={handleChangeColor}
 				/>
 			}

@@ -41,7 +41,7 @@ const StaffCard: React.FC<StaffCardProps> = forwardRef(({ open, onClose, item, o
       <>
         <CardHeader
           avatar={<Avatar><AvatarIcon /></Avatar>}
-          action={<OptionsIconButton dark onClick={handleClick} />}
+          action={<OptionsIconButton onClick={handleClick} />}
           title={item.name || language.data.MEMBER_OF_STAFF}
           subheader={item.sentInvitationDate.toDateString()}
         />

@@ -644,7 +644,7 @@ export default class EN implements LanguageBase {
 
 	INVALID_VALUE = 'Invalid value'
 
-	USERS_QUESTIONS = "User's Questions"
+	USER_QUESTIONS = "User's Questions"
 	
 	QUESTIONS = 'Questions'
 
@@ -711,6 +711,8 @@ export default class EN implements LanguageBase {
 	NO_CONNECTION = 'No internet connection'
 
 	DINO_SLIDER__REDUCE = 'Reduce'
+
+	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Bind item to all existent ${this.FAQ}s`
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 

@@ -125,6 +125,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 							icon={ChevronLeftIconSVG}
 							onClick={handleCloseClick}
 							bigger
+							lum='light'
 						/>
 					</div>
 					<Divider />

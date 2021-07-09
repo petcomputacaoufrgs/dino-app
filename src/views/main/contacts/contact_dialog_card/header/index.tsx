@@ -24,7 +24,7 @@ const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({ item, onClick, ch
 				}
 				action={
 					<div className='dino__flex_row'>
-						<OptionsIconButton dark onClick={onClick} />
+						<OptionsIconButton onClick={onClick} />
 					</div>
 				}
 				title={item.contact.name}

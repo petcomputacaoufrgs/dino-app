@@ -49,7 +49,7 @@
 }
 
 @media (orientation: landscape) {
-	.contacts{
+	body .dino__list {
 		width: 80vw;
 		margin: 0 10vw;
 	}

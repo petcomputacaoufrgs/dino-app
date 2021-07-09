@@ -33,14 +33,13 @@
 .settings__save_button {
 	width: 100%;
 	margin-top: auto;
-	padding-right: 1.563rem;
 }
 
 .settings__save_button__icon {
 	width: 1.125rem;
 	height: 1.125rem;
-	margin-right: 0.438rem;
-	fill: var(--inv-contrast-color);
+	margin-right: 0.6rem;
+	fill: var(--contrast-color);
 }
 
 .settings__save_button.MuiButtonBase-root {
@@ -55,7 +54,7 @@
 .button.settings__save_button {
 	width: 50%;
 	height: 90%;
-	font-size: var(--large-font);
+	font-size: var(--big-font);
 }
 
 .settings__title.MuiTypography-root {

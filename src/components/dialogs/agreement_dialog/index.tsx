@@ -1,12 +1,12 @@
 import React from 'react'
-import TextButton from '../button/text_button'
+import TextButton from '../../button/text_button'
 import AgreementDialogProps from './props'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { useLanguage } from '../../context/language'
+import { useLanguage } from '../../../context/language'
 import './styles.css'
 
 const AgreementDialog: React.FC<AgreementDialogProps> = ({

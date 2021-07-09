@@ -92,7 +92,7 @@ export default interface LanguageBase {
 	STAFF_LIST_TAB: string
 	STAFF_SAVE_SUCCESS: string
 	TREATMENT: string
-	ADD_TREATMENT: string
+	ADD_TREATMENT: string 
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	STAFF: string
@@ -308,7 +308,7 @@ export default interface LanguageBase {
 	EXAMPLE_EMAIL: string
 	TREATMENTS_AND_FAQS: string
 	INVALID_VALUE: string
-	USERS_QUESTIONS: string
+	USER_QUESTIONS: string
 	QUESTIONS: string
 	SEND_TO_THE_PROFESSIONALS: string
 	SAVE: string
@@ -341,10 +341,11 @@ export default interface LanguageBase {
 	RENDER_OFFLINE_CONTENT_PART_2: string
 	NO_CONNECTION: string
 	DINO_SLIDER__REDUCE: string
+	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string
 	titleFAQTreatmentText(treatment: string): string
 	titleTreatmentQuestion(treatment: string): string
+	//seeUserQuestionsText(treatment: string, quantity?: number): string
 }
-

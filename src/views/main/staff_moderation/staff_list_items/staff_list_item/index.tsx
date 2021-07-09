@@ -33,7 +33,7 @@ const StaffItem: React.FC<StaffItemProps> = ({ item, onClickMenu, onClick }) => 
         }>
       </ListItemText>
       <ListItemSecondaryAction>
-        <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />
+        <OptionsIconButton onClick={(e) => onClickMenu(e, item)} />
       </ListItemSecondaryAction>
     </ListItem>
   )

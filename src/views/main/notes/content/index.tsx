@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import NoteContentProps from './props'
 import './styles.css'
-import AgreementDialog from '../../../../components/agreement_dialog'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import {
 	DragDropContext,
 	DropResult,

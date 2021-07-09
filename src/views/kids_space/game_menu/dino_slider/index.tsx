@@ -36,7 +36,7 @@ const DinoSlider: React.FC = () => {
   }
 
   return (
-    <>
+    <div className="minigame slider_dino">
       <GameOverDialog
         onAgree={handleRestart}
         onDisagree={handleClose}
@@ -49,7 +49,7 @@ const DinoSlider: React.FC = () => {
         onGameOver={handleGameOver} 
         restart={restart}
       />
-    </>
+    </div>
   )}
 
 export default DinoSlider

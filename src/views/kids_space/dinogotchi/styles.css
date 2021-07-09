@@ -120,13 +120,13 @@
 
 .dinogotchi_screen__dino_pet {
 	position: absolute;
-	height: 115vh;
-    left: -30vmin;
-    bottom: -10vmin;
+	height: 75vh;
+    left: -26vmin;
+    bottom: 5vmin;
 }
 
 .dinogotchi_screen__dino_pet.first_login {
-	left: -50vmin;
+	left: -35vmin;
 }
 
 .dinogotchi_screen__options {
@@ -224,6 +224,18 @@
 .dinogotchi_loader {
 	position: initial;
 }
+
+
+#mascara,
+#bone,
+#laco,
+#moicano,
+#lenco,
+#gorro,
+#raiox {
+	display: none;
+}
+
 
 @keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_one {
 	from {

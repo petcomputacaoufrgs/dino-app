@@ -683,7 +683,7 @@ export default class PT implements LanguageBase {
 
 	INVALID_VALUE = 'Valor inválido'
 
-	USERS_QUESTIONS = 'Usuários Perguntam'
+	USER_QUESTIONS = 'Usuários Perguntam'
 
 	QUESTIONS = 'Perguntas'
 

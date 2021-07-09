@@ -17,7 +17,7 @@
   margin-right: 32px;
 }
 
-.treatment__list_item .icon_button, .treatment__list_item .MuiBadge-root {
+.treatment__list_item .treatment__list_item__action button {
   margin-left: 1em;
 }
 

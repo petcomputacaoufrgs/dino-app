@@ -88,7 +88,7 @@ const TreatmentQuestionItems: React.FC = () => {
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value as string)}
     />
-    <ListTitle title={language.data.USERS_QUESTIONS} />
+    <ListTitle title={language.data.USER_QUESTIONS} />
     { treatmentView ?
       <>
         <QuestionDialogForm

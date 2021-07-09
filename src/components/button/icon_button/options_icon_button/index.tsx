@@ -14,16 +14,16 @@ const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 	const language = useLanguage()
 
 	return (
-		<DinoIconButton
-			className='icon_button__options'
-			icon={MoreSVG}
-			ariaLabel={language.data.OPTIONS_ARIA_LABEL}
-			onClick={onClick}
-			lum={lum}
-			bigger={bigger}
-		>
-			<MoreVert />
-		</DinoIconButton>
+			<DinoIconButton
+				className='icon_button__options'
+				icon={MoreSVG}
+				ariaLabel={language.data.OPTIONS_ARIA_LABEL}
+				onClick={onClick}
+				lum={lum}
+				bigger={bigger}
+			>
+				<MoreVert />
+			</DinoIconButton>  
 	)
 }
 

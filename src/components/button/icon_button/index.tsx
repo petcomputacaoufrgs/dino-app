@@ -1,3 +1,4 @@
+import { Tooltip } from '@material-ui/core'
 import React from 'react'
 import Button from '..'
 import DinoIconButtonProps from './props'
@@ -25,9 +26,13 @@ const DinoIconButton: React.FC<DinoIconButtonProps> = props => {
 	}
 
 	return (
-		<Button {...props} className={getClassName()}>
-			<Icon />
-		</Button>
+		<Tooltip placement="top" title={props.ariaLabel || ''} arrow>
+      <div>
+				<Button {...props} className={getClassName()}>
+					<Icon />
+				</Button>
+			</div>
+		</Tooltip>
 	)
 }
 

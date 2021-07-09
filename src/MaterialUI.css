@@ -22,7 +22,6 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-	/* fill: var(--contrast-color); */
 	fill: var(--contrast-color);
 }
 
@@ -135,18 +134,10 @@ body .MuiCheckbox-colorSecondary.Mui-checked {
 		height: 50px;
 		margin-right: 10px;
 	}
-		body .MuiFormLabel-root {
-		font-size: 1.4rem;
-	}
-
-	body .MuiInputBase-root {
-		font-size: 1.4rem;
-	}
-
-	body .MuiMenuItem-root {
-		font-size: 1.4rem;
-	}
-
+	
+	body .MuiFormLabel-root,
+	body .MuiInputBase-root,
+	body .MuiMenuItem-root,
 	body .MuiAutocomplete-popper {
 		font-size: 1.4rem;
 	}

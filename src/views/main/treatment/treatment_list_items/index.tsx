@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { List } from '@material-ui/core'
-import AgreementDialog from '../../../../components/agreement_dialog'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
 import { HasStaffPowers } from '../../../../context/private_router'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'

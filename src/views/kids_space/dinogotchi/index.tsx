@@ -15,7 +15,7 @@ import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotc
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import DinoIconButton from '../../../components/button/icon_button'
-import AccessDialog from '../../../components/kids_space_dialog/access_dialog'
+import AccessDialog from '../../../components/dialogs/kids_space_dialog/access_dialog'
 import DinoColorConstants from '../../../constants/dinogotchi/DinoColorConstants'
 import KidsSpaceSettingsService from '../../../services/kids_space/KidsSpaceSettingsService'
 import { KidsSpaceSettingsEntity } from '../../../types/kids_space/database/KidsSpaceSettingsEntity'

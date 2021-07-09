@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import KidsSpaceGoBackButton from '../../../../components/button/go_back'
-import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
+import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../context/language'
 import HistoryService from '../../../../services/history/HistoryService'

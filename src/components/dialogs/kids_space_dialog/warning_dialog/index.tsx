@@ -1,6 +1,6 @@
 import React from 'react'
 import WarningDialogProps from './props'
-import { useLanguage } from '../../../context/language/index'
+import { useLanguage } from '../../../../context/language/index'
 import '../styles.css'
 import './styles.css'
 

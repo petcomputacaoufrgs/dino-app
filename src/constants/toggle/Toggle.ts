@@ -6,7 +6,7 @@ export const toggle = {
 	loadTestInstancesAtFirstLogin: false,
 	showTreatmentQuestionButtonToStaff: true,
 	overridePermission: {
-		override: false,
+		override: true,
 		permission: PermissionEnum.USER
 	},
 	testAll2048Pieces: false

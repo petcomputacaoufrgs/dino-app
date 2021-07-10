@@ -8,6 +8,7 @@ import { useLanguage } from '../../../../context/language'
 import DinoIconButton from '../../../../components/button/icon_button'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import './styles.css'
+import ArrowBack from '../../../../components/arrow_back'
 
 const BellSound = require('../../../../assets/kids_space/musical_dino/bell.mp3')
 const DrumOneSound = require('../../../../assets/kids_space/musical_dino/drum_1.mp3')
@@ -55,10 +56,7 @@ const MusicalDino: React.FC = () => {
 				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
 			</GameOverDialog>
 			<div className='musical_dino__header'>
-				<DinoIconButton
-					icon={GoBackSVG}
-					onClick={() => HistoryService.push(PathConstants.GAME_MENU)}
-				/>
+				<ArrowBack kids/>
 				<div id='musical_dino__header__turn'>0</div>
 			</div>
 			<div className='musical_dino__dino_song_board'>

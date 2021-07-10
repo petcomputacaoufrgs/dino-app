@@ -3,7 +3,6 @@ import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import Button from '../../../components/button'
 import CircularButton from '../../../components/button/circular_button'
-import { ReactComponent as GoBackSVG } from '../../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import { ReactComponent as AngryDinoSVG } from '../../../assets/kids_space/dinogotchi/angry.svg'
 import { ReactComponent as Dino } from '../../../assets/new/dino_expressions/neutrop.svg'
 import { ReactComponent as SleepDino } from '../../../assets/kids_space/dinogotchi/dormindo.svg'
@@ -14,13 +13,13 @@ import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogot
 import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotchi/inside.svg'
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
-import DinoIconButton from '../../../components/button/icon_button'
 import AccessDialog from '../../../components/dialogs/kids_space_dialog/access_dialog'
 import DinoColorConstants from '../../../constants/dinogotchi/DinoColorConstants'
 import KidsSpaceSettingsService from '../../../services/kids_space/KidsSpaceSettingsService'
 import { KidsSpaceSettingsEntity } from '../../../types/kids_space/database/KidsSpaceSettingsEntity'
 import Loader from '../../../components/loader'
 import './styles.css'
+import ArrowBack from '../../../components/arrow_back'
 
 const Dinogotchi: React.FC = () => {
 	const [isInside, setInside] = useState(true)
@@ -164,8 +163,13 @@ const Dinogotchi: React.FC = () => {
 			<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 				{renderBackground()}
 				{renderDino()}
-				<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => setOpen(false)} onConfirm = {() => HistoryService.push(PathConstants.HOME)}/>
-				<DinoIconButton icon={GoBackSVG} onClick={() => setOpen(true)} />
+				<AccessDialog 
+					open={open} 
+					icon={AngryDinoSVG} 
+					onClose={() => setOpen(false)} 
+					onConfirm = {() => HistoryService.push(PathConstants.HOME)} 
+				/>
+				<ArrowBack kids onClick={() => setOpen(true)} />
 			</div>
 		</Loader>
 	)

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import KidsSpaceGoBackButton from '../../../../components/button/go_back'
+import ArrowBack from '../../../../components/arrow_back'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../context/language'
 import HistoryService from '../../../../services/history/HistoryService'
 import SliderBoard from './board'
+import './styles.css'
 
 export const useEvent = (event: any, handler: {(this: Window, ev: any): any; (this: Window, ev: any): any;}, passive = false) => {
   useEffect(() => {
@@ -44,7 +45,7 @@ const DinoSlider: React.FC = () => {
       >
         <p>{language.data.MEMORY_GAME_GAME_OVER}</p>
       </GameOverDialog>
-      <KidsSpaceGoBackButton />
+      <ArrowBack kids />
       <SliderBoard 
         onGameOver={handleGameOver} 
         restart={restart}

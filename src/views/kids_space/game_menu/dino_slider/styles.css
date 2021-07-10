@@ -16,3 +16,7 @@
   margin-right: 0.2rem;
   color: var(--dark-color-transparency)
 }
+
+.minigame.slider_dino .arrow_back__kids svg {
+  fill: var(--dark-color-transparency);
+}

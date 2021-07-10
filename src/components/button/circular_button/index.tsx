@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '..'
+import DinoIconButton from '../icon_button'
 import CircularButtonProps from './props'
 import './styles.css'
 
@@ -16,11 +17,7 @@ const CircularButton: React.FC<CircularButtonProps> = props => {
 		return mainClass
 	}
 
-	return (
-		<Button {...props} className={getClassName()}>
-			<Icon />
-		</Button>
-	)
+	return <DinoIconButton className={getClassName()} icon={Icon} />
 }
 
 export default CircularButton

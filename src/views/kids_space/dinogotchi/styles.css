@@ -135,17 +135,18 @@
 	top: 15vh;
 }
 
-.dinogotchi_screen__options .circular_button {
+.dinogotchi_screen__options .circular {
 	height: 4.5rem;
 	width: 4.5rem;
 	background-color: #a594ab;
 	margin-bottom: 1.5rem;
-	padding: 0.85rem;
 }
 
-.dinogotchi_screen__options svg {
-	width: 4rem;
-	height: 4rem;
+.dinogotchi_screen__options .dino_icon_button.circular .dino_icon_button__button svg {
+	width: inherit;
+	height: inherit;
+	padding: 0;
+	transform: scale(1.2);
 }
 
 .dinogotchi_screen .dino_icon_button__button svg {
@@ -155,10 +156,6 @@
 .dinogotchi_screen__background .painting {
 	transform-box: fill-box;
 	transform-origin: top;
-}
-
-.teste {
-	position: absolute;
 }
 
 .color_chooser {

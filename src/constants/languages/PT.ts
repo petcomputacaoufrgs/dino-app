@@ -76,9 +76,9 @@ export default class PT implements LanguageBase {
 
 	DISAGREEMENT_BUTTON_ARIA_LABEL = 'Clique para negar'
 
-	ADD_OPTION_TEXT = 'ADICIONAR'
+	ADD_OPTION_TEXT = 'Adicionar'
 
-	CANCEL_OPTION_TEXT = 'CANCELAR'
+	CANCEL_OPTION_TEXT = 'Cancelar'
 
 	EDIT_OPTION_TEXT = 'Editar'
 

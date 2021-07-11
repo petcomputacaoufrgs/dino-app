@@ -1,8 +1,8 @@
 import React from 'react'
 import { useLanguage } from '../../../../context/language'
 import { ReactComponent as AddIconSVG } from '../../../../assets/icons/add.svg'
-import CircularButton from '..'
 import './styles.css'
+import DinoIconButton from '..'
 
 interface AddButtonProps {
   handleAdd: () => void,
@@ -14,11 +14,12 @@ const AddButton: React.FC<AddButtonProps> = ({ handleAdd, label }) => {
   const language = useLanguage()
   
   return (
-    <CircularButton
+    <DinoIconButton
       ariaLabel={`${language.data.ADD_OPTION_TEXT} ${label}`}
       className='add_button'
       icon={AddIconSVG}
       onClick={handleAdd}
+      circular
     />
   )
 }

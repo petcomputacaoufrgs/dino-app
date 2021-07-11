@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Accordion from 'react-bootstrap/Accordion'
 import ListTitle from '../../../../components/list_components/list_title'
-import AddButton from '../../../../components/button/circular_button/add_button'
+import AddButton from '../../../../components/button/icon_button/add_button'
 import FaqItemForm from '../faq_item_form'
 import { HasStaffPowers } from '../../../../context/private_router'
 import { useLanguage } from '../../../../context/language'

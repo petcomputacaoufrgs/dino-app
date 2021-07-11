@@ -4,6 +4,6 @@
 	right: 1.2rem;
 }
 
-button.button.circular_button.add_button svg {
-	transform: scale(2.0);
+.add_button.dino_icon_button.circular svg {
+	transform: scale(1.6);
 }

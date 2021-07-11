@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import Button from '../../../components/button'
-import CircularButton from '../../../components/button/circular_button'
 import { ReactComponent as AngryDinoSVG } from '../../../assets/kids_space/dinogotchi/angry.svg'
 import { ReactComponent as Dino } from '../../../assets/new/dino_expressions/neutrop.svg'
 import { ReactComponent as SleepDino } from '../../../assets/kids_space/dinogotchi/dormindo.svg'
@@ -20,6 +19,7 @@ import { KidsSpaceSettingsEntity } from '../../../types/kids_space/database/Kids
 import Loader from '../../../components/loader'
 import './styles.css'
 import ArrowBack from '../../../components/arrow_back'
+import DinoIconButton from '../../../components/button/icon_button'
 
 const Dinogotchi: React.FC = () => {
 	const [isInside, setInside] = useState(true)
@@ -111,24 +111,30 @@ const Dinogotchi: React.FC = () => {
 			<>
 				<Dino className='dinogotchi_screen__dino_pet' />
 				<div className='dinogotchi_screen__options'>
-					<CircularButton
+					<DinoIconButton 
+						circular
+						ariaLabel={"teste"}
 						icon={GameSVG}
-						onClick={() => {
-							HistoryService.push(PathConstants.GAME_MENU)
-						}}
+						onClick={() => HistoryService.push(PathConstants.GAME_MENU)}
 					/>
-					<CircularButton icon={GoOutSVG} onClick={handleChangeLocation} />
-					<CircularButton icon={GoToSleepSVG} onClick={() => {}} />
+					<DinoIconButton 
+						circular
+						ariaLabel={"teste"}
+						icon={GoOutSVG} 
+						onClick={handleChangeLocation}
+					/>
+					<DinoIconButton 
+						circular
+						ariaLabel={"teste"}
+ 						icon={GoToSleepSVG} 
+						onClick={() => {}} 
+					/>
 				</div>
 			</>
 		)
 	}
 
-	const renderSleepDino = () => {
-		return (
-			<SleepDino className='dinogotchi_screen__dino_pet' onClick={() => setOpenChildArea(false)}/>
-		)
-	}
+	const renderSleepDino = () => <SleepDino className='dinogotchi_screen__dino_pet' onClick={() => setOpenChildArea(false)}/>
 
 	const renderDino = () => {
 		const firstSettingsNotDone = !kidsSpaceSettings || !kidsSpaceSettings.firstSettingsDone

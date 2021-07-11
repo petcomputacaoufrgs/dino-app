@@ -48,7 +48,7 @@ const Button: React.FC<ButtonProps> = ({
 		<button
 			className={getClassName()}
 			disabled={disabled}
-			onClick={onClick}
+			onClick={(e) => { console.log("oi"); if(onClick) onClick(e)}}
 			ref={buttonRef}
 			aria-label={ariaLabel}
 		>

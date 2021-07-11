@@ -73,9 +73,9 @@ export default class EN implements LanguageBase {
 
 	DISAGREEMENT_BUTTON_ARIA_LABEL = 'Click here to disagree'
 
-	ADD_OPTION_TEXT = 'ADD'
+	ADD_OPTION_TEXT = 'Add'
 
-	CANCEL_OPTION_TEXT = 'CANCEL'
+	CANCEL_OPTION_TEXT = 'Cancel'
 
 	EDIT_OPTION_TEXT = 'Edit'
 

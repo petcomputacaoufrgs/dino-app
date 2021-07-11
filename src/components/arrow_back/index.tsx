@@ -6,7 +6,6 @@ import { useLanguage } from '../../context/language'
 import { ReactComponent as GoBackKidsSVG } from '../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import './styles.css'
 import PathConstants from '../../constants/app/PathConstants'
-import { useHistory } from 'react-router'
 
 interface ArrowBackProps {	
 	lum?: "dark" | "light", 

@@ -9,33 +9,42 @@ const DinoIconButton: React.FC<DinoIconButtonProps> = props => {
 
 	const getClassName = (): string => {
 		
-		let mainClass = 'dino_icon_button__button'
+		let mainClass = 'dino_icon_button'
 
 		if (props.className) {
-			mainClass = mainClass.concat(' ').concat(props.className)
+			mainClass = props.className.concat(' ').concat(mainClass)
 		}
 
-		if (props.bigger) {
-			mainClass = mainClass.concat(' button_bigger')
-		}
-
-		if (props.lum) {
-			mainClass = mainClass.concat(` button_${props.lum}`)
+		if (props.circular) {
+			mainClass = mainClass.concat(' ').concat("circular")
 		}
 
 		return mainClass
 	}
 
+	const getButtonClassName = (): string => {
+		
+		let buttonClass = 'dino_icon_button__button'
+
+		if (props.bigger) {
+			buttonClass = buttonClass.concat(' button_bigger')
+		}
+
+		if (props.lum) {
+			buttonClass = buttonClass.concat(` button_${props.lum}`)
+		}
+
+		return buttonClass
+	}
+
 	return (
-		<div className="dino_icon_button">
-			<Tooltip title={props.ariaLabel || ''} arrow className="dino_icon_button__tooltip">
-				<div>
-					<Button {...props} className={getClassName()}>
-						<Icon />
-					</Button>
-				</div>
-			</Tooltip>
-		</div>
+		<Tooltip title={props.ariaLabel || ''} arrow className={getClassName() + " dino_icon_button__tooltip"}>
+			<div>
+				<Button {...props} className={getButtonClassName()}>
+					<Icon />
+				</Button>
+			</div>
+		</Tooltip>
 	)
 }
 

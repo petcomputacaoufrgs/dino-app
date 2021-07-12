@@ -17,7 +17,6 @@ const ArrowBack: React.FC<ArrowBackProps> = ({ kids, onClick, lum })=> {
 	const language = useLanguage()
 
 	const handleClick = () => {
-		console.log("sdds")
 		if(onClick !== undefined) {
 			return onClick()
 		}

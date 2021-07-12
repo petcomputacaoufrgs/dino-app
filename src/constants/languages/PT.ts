@@ -709,6 +709,20 @@ export default class PT implements LanguageBase {
 	REDUCE = 'Reduzir'
 
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Relacionar item a todas ${this.FAQ}s existentes`
+
+	GO_TO_SLEEP = 'Ir dormir'
+
+	GO_OUTSIDE = 'Sair de casa'
+
+	RETURN_INSIDE = 'Retornar para casa'
+
+	GO_TO_GAME_MENU = 'Ir para o menu de jogos'
+
+	CHOOSE_COLOR_DINO_MESSAGE = "Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas?"
+
+	CHOOSE_ACESSORY_DINO_MESSAGE = "Hora de escolher um acessório legal!"
+
+	CHOOSE = 'Escolha'
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

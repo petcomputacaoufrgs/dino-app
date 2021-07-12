@@ -698,6 +698,20 @@ export default class EN implements LanguageBase {
 
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Bind item to all existent ${this.FAQ}s`
 
+	GO_TO_SLEEP = 'Go to sleep'
+
+	GO_OUTSIDE = 'Go outside'
+
+	RETURN_INSIDE = 'Return inside'
+
+	GO_TO_GAME_MENU = 'Go to game menu'
+
+	CHOOSE_COLOR_DINO_MESSAGE = "Hi, I'm Dino! Let's choose the color of my scales together?"
+
+	CHOOSE_ACESSORY_DINO_MESSAGE = "Time to pick a cool acessory!"
+
+	CHOOSE = 'Choose'
+	
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`

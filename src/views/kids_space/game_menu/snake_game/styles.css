@@ -71,11 +71,12 @@
     }
 
     #snake_game__score_board {
-        margin: 0 5vmin;
+        margin: 0 5vmin 0 0;
     }
 
 	#snake_game__game_board {
 		height: 100vmin;
 		width: 100vmin;
+		margin: auto;
 	}
 }

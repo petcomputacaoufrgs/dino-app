@@ -48,7 +48,24 @@
 	margin-bottom: 0;
 }
 
-@media (min-width:1224px) {
+@media (min-width:640px) {
+	#snake_game__game_board {
+		height: 80vmin;
+		width: 80vmin;
+	}
+
+    #snake_game__score_board {
+        margin-top: 1vh;
+    }
+}
+
+@media (min-width:680px) {
+    #snake_game__score_board {
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (min-width:1010px) {
     .snake_game {
         flex-direction: row-reverse;
     }
@@ -56,4 +73,9 @@
     #snake_game__score_board {
         margin: 0 5vmin;
     }
+
+	#snake_game__game_board {
+		height: 100vmin;
+		width: 100vmin;
+	}
 }

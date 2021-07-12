@@ -16,7 +16,6 @@ const DinoDialog: React.FC<DinoDialogProps> = ({ open, onClose: handleClose, onS
 			<Dialog
 				className='dino_dialog dino__text__wrap'
 				open={open}
-				maxWidth='xs'
 				onClose={handleClose}
 				TransitionComponent={TransitionSlide}
 				fullWidth

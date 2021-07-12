@@ -5,7 +5,6 @@ import TransitionSlide from '../slide_transition'
 import DinoStepper from '../dino_stepper'
 import * as ServiceWorkerRegistration from '../../ServiceWorkerRegistration'
 import { useAlert } from '../../context/alert'
-import PWAControlIntroContent from './intro_content'
 
 const NUMBER_OF_STEPS = 4
 
@@ -14,7 +13,7 @@ const PWAControl: React.FC = () => {
 	const language = useLanguage()
 
 	const [isFirstLoad, setFirstLoad] = useState(true)
-	const [openIntroDialog, setOpenIntroDialog] = useState(false)
+	const [openIntroDialog, setOpenIntroDialog] = useState(true)
 	const [introStep, setIntroStep] = useState(0)
 
 	const handleNextStep = () => {
@@ -63,7 +62,6 @@ const PWAControl: React.FC = () => {
 			disableBackdropClick
 			fullWidth
 		>
-			<PWAControlIntroContent step={introStep} />
 			<DialogActions>
 				<DinoStepper
 					steps={NUMBER_OF_STEPS}

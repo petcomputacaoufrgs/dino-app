@@ -164,8 +164,9 @@ const Dinogotchi: React.FC = () => {
 			<div className={`dinogotchi_screen ${isInside ? 'inside' : 'outside'}`}>
 				{renderBackground()}
 				{renderDino()}
-				<AccessDialog open={open} icon={AngryDinoSVG} onClose={() => setOpen(false)} onConfirm = {() => HistoryService.push(PathConstants.HOME)}/>
-				<DinoIconButton icon={GoBackSVG} onClick={() => setOpen(true)} />
+				{/* <AccessDialog open={open} icon={AngryDinoSVG} onClose={() => setOpen(false)} onConfirm = {() => HistoryService.push(PathConstants.HOME)}/> */}
+				<DinoIconButton icon={GoBackSVG} onClick={HistoryService.goBack} /> 
+				{/* () => setOpen(true)} /> */}
 			</div>
 		</Loader>
 	)

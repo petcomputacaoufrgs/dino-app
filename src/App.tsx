@@ -201,7 +201,7 @@ const App: React.FC = () => {
 					? renderApp()
 					: <SecondaryTab />
 			}
-			<PWAControl />
+			{/* <PWAControl /> */}
 		</div>
 	)
 }

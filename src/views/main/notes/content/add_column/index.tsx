@@ -28,7 +28,7 @@ const AddColumn: React.FC<AddColumnProps> = ({
 				disabled={maxColumns}
 			>
 				<h2 className='note__note_content__columns__add_column__button__text'>
-					{language.data.ADD_COLUMN_TEXT} (
+					{`${language.data.ADD_COLUMN_TEXT}`} (
 					<span
 						className={
 							maxColumns

@@ -17,7 +17,7 @@ const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 			<DinoIconButton
 				className='icon_button__options'
 				icon={MoreSVG}
-				ariaLabel={language.data.OPTIONS_ARIA_LABEL}
+				ariaLabel={language.data.OPTIONS}
 				onClick={onClick}
 				lum={lum}
 				bigger={bigger}

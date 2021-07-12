@@ -68,7 +68,7 @@ const PWAControl: React.FC = () => {
 				<DinoStepper
 					steps={NUMBER_OF_STEPS}
 					activeStep={introStep}
-					endMessage={language.data.PWA_CONTROL_END_INTRO_BUTTON}
+					endMessage={language.data.END}
 					onNext={handleNextStep}
 					onBack={handleBackStep}
 					onEnd={handleEnd}

@@ -43,7 +43,7 @@ const DinoSlider: React.FC = () => {
         onDisagree={handleClose}
         open={openDialog}
       >
-        <p>{language.data.MEMORY_GAME_GAME_OVER}</p>
+        <p>{language.data.SUCESS_GAME_OVER_LABEL}</p>
       </GameOverDialog>
       <ArrowBack kids />
       <SliderBoard 

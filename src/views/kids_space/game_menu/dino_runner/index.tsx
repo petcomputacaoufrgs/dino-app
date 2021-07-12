@@ -87,7 +87,7 @@ const DinoRunner: React.FC = () => {
 					className='dino_runner_game__start_game_button'
 					onClick={handleStartGame}
 				>
-					{language.data.START_GAME_TEXT}
+					{language.data.START_GAME}
 				</button>
 			)}
 		</div>

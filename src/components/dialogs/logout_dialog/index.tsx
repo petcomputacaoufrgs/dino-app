@@ -17,8 +17,8 @@ const LogoutDialog: React.FC<LogoutDialogProps> = ({
 		onDisagree: onDisagree,
 		question: language.data.LOGOUT_DIALOG_QUESTION,
 		description: language.data.LOGOUT_DIALOG_DESCRIPTION,
-		agreeOptionText: language.data.AGREEMENT_OPTION_TEXT,
-		disagreeOptionText: language.data.DISAGREEMENT_OPTION_TEXT,
+		agreeOptionText: language.data.YES,
+		disagreeOptionText: language.data.NO,
 		open: open,
 	}
 

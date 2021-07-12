@@ -109,7 +109,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
 			if (questionConflict) {
 				setQuestionWithError(true)
-				setQuestionErrorHelper(language.data.QUESTION_ALREADY_EXISTS_ERROR)
+				setQuestionErrorHelper(language.data.itemAlreadyExists(language.data.QUESTION))
 				return false
 			}
 		}
@@ -183,8 +183,8 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 					onDisagree={handleDeleteNoteDisagree}
 					question={language.data.DELETE_NOTE_ALERT_TITLE}
 					description={language.data.DELETE_NOTE_ALERT_TEXT}
-					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
-					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
+					agreeOptionText={language.data.YES}
+					disagreeOptionText={language.data.NO}
 					open={deleteNoteDialogOpen}
 				/>
 				</div>

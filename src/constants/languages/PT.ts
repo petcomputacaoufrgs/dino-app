@@ -66,23 +66,17 @@ export default class PT implements LanguageBase {
 	LOGOUT_DIALOG_QUESTION = 'Tem certeza que deseja sair do DinoApp?'
 
 	LOGOUT_DIALOG_DESCRIPTION =
-		"Se disser 'SIM' todos os dados referentes a sua conta serão removidos deste dispositivo."
-
-	AGREEMENT_OPTION_TEXT = 'SIM'
+		'Se disser \'SIM\' todos os dados referentes a sua conta serão removidos deste dispositivo.'
 
 	AGREEMENT_BUTTON_ARIA_LABEL = 'Clique para concordar'
 
-	DISAGREEMENT_OPTION_TEXT = 'NÃO'
-
 	DISAGREEMENT_BUTTON_ARIA_LABEL = 'Clique para negar'
 
-	ADD_OPTION_TEXT = 'Adicionar'
+	ADD = 'Adicionar'
 
-	CANCEL_OPTION_TEXT = 'Cancelar'
+	EDIT = 'Editar'
 
-	EDIT_OPTION_TEXT = 'Editar'
-
-	DELETE_OPTION_TEXT = 'Deletar'
+	DELETE = 'Deletar'
 
 	DELETE_ITEM_OPTION_TEXT ='Esta ação irá deletar o item permanentemente.'
 
@@ -92,9 +86,9 @@ export default class PT implements LanguageBase {
 
 	PRIVACY_POLICY = 'Política de Privacidade'
 
-	MENU_HOME = 'Home'
+	HOME = 'Home'
 
-	MENU_GAMES = 'Jogos'
+	GAMES = 'Jogos'
 
 	MENU_SETTINGS = 'Configurações'
 	
@@ -118,15 +112,15 @@ export default class PT implements LanguageBase {
 
 	SETTINGS_TITLE = 'Configurações'
 
-	SETTINGS_LANGUAGE = 'Escolher Idioma'
+	CHOOSE_LANGUAGE = 'Escolher Idioma'
 
-	SETTINGS_TREATMENT = 'Escolha seu tratamento'
+	CHOOSE_TREATMENT = 'Escolha seu tratamento'
 
-	SETTINGS_SAVE_SUCCESS = 'Configurações salvas.'
+	SETTINGS_UPDATED_SUCESS = 'Configurações salvas.'
 
-	SETTINGS_SAVE_ERROR = 'Erro salvando as novas configurações.'
+	SETTINGS_UPDATED_ERROR = 'Erro salvando as novas configurações.'
 
-	MENU_NOTES = 'Notas'
+	NOTES = 'Notas'
 
 	MENU_CALENDAR = 'Calendário'
 
@@ -258,8 +252,6 @@ export default class PT implements LanguageBase {
 	NO_OPTIONS = 'Sem opções'
 
 	EMPTY_FIELD_ERROR = 'Campo não pode ser vazio.'
-
-	QUESTION_ALREADY_EXISTS_ERROR = 'Questão já adicionada.'
 
 	DISCONNECTED_MESSAGE =
 		'Você está desconectado da Internet. Para salvar alterações locais conecte-se a Internet.'
@@ -413,9 +405,7 @@ export default class PT implements LanguageBase {
 
 	CLICK_TO_OPEN_MENU_ITEM = 'Clique para abrir '
 
-	ADD_ARIA_LABEL = 'Adicionar'
-
-	OPTIONS_ARIA_LABEL = 'Opções'
+	OPTIONS = 'Opções'
 
 	EVENT_COLOR_LABEL = 'Cor selecionada'
 
@@ -431,21 +421,17 @@ export default class PT implements LanguageBase {
 
 	COLUMN_MIN_LENGTH_ERROR = 'Mínimo 1 caractere.'
 
-	COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Título já existente'
-
 	NOTE_COLUMN_DELETE_DIALOG_QUESTION =
 		'Tem certeza que deseja remover esta coluna?'
 
-	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
+	ARE_YOU_SURE =
 		'Tem certeza?'
 
 	NOTE_COLUMN_DELETE_DIALOG_DESC =
-		'Caso responda "SIM" esta coluna será removida permanentemente.'
+		`Caso responda 'SIM' esta coluna será removida permanentemente.`
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
 		'Ao remover esta coluna você irá remover as anotações pertencentes a ela permanentemente.'
-
-	NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'SIM'
 
 	NOTE_COLUMN_ADD_NOTE_TEXT = 'Adicionar anotação'
 
@@ -563,7 +549,7 @@ export default class PT implements LanguageBase {
 	APP_UPDATE_MESSAGE =
 		'Atualização disponível! Reinicie o DinoApp para instalar.'
 
-	PWA_CONTROL_END_INTRO_BUTTON = 'Fim'
+	END = 'Fim'
 
 	PWA_INTRO_TITLE_0 = 'Bem vindo ao DinoApp!'
 
@@ -606,7 +592,7 @@ export default class PT implements LanguageBase {
 
 	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh não! O Dino encostou na bactéria.'
 
-	START_GAME_TEXT = 'Iniciar Jogo!'
+	START_GAME = 'Iniciar Jogo!'
 
 	MUSICAL_DINO_GAME_MSG_1 = 'Parabéns! Sua música ficou incrível!'
 
@@ -614,7 +600,7 @@ export default class PT implements LanguageBase {
 
 	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Bom jogo! Parabéns'
 
-	TIC_TAC_DINO_TIE = 'Empatou!'
+	TIE = 'Empatou!'
 
 	PASSWORD = 'Senha'
 
@@ -622,7 +608,7 @@ export default class PT implements LanguageBase {
 
 	ACCESS_PARENTS_AREA = 'Essa área é para adultos. Você é um adulto ou está acompanhado de um?'
 
-	ACCESS_BUTTON = 'Acessar'
+	ACCESS = 'Acessar'
 
 	YES = 'Sim'
 
@@ -638,12 +624,11 @@ export default class PT implements LanguageBase {
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
 	
-	MEMORY_GAME_GAME_OVER = 'Você arrasou! Parabéns'
+	SUCESS_GAME_OVER_LABEL = 'Você arrasou! Parabéns'
 
+	CHANGE_PASSWORD_LABEL = 'Alterar senha de acesso a área dos responsáveis'
 
-	CHANGE_PASSWORD = 'Alterar senha de acesso a área dos responsáveis'
-
-	CHANGE_PASSWORD_DIALOG = 'Alterar senha'
+	CHANGE_PASSWORD = 'Alterar senha'
 
 	CANCEL = 'Cancelar'
 
@@ -665,7 +650,7 @@ export default class PT implements LanguageBase {
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'A senhas estão diferentes'
 
-	PASSWORD_CHANGED = 'Sucesso'
+	SUCESS = 'Sucesso'
 
 	WRONG_PASSWORD = 'Senha incorreta'
 
@@ -677,7 +662,7 @@ export default class PT implements LanguageBase {
 
 	FAQ = 'FAQ'
 	
-	FAQ_ITEM = 'Item da FAQ'
+	FAQ_ITEM = `Item da ${this.FAQ}`
 
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
 
@@ -685,33 +670,35 @@ export default class PT implements LanguageBase {
 
 	USER_QUESTIONS = 'Usuários Perguntam'
 
+	QUESTION = 'Pergunta'
+
 	QUESTIONS = 'Perguntas'
 
 	SEND_TO_THE_PROFESSIONALS = 'Mande para os profissionais!'
 
 	SAVE = 'Salvar'
 
-	UNIVERSAL_CONTACT = 'Este contato é universal e aparecerá em todas as agendas de usuários'
+	UNIVERSAL_CONTACT_LABEL = 'Este contato é universal e aparecerá em todas as agendas de usuários'
 
 	ANSWER = 'Responder'
 
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Resposta da pergunta...'
 
-	ADD_STAFF_TEXT = `Membros de equipe são usuários que podem adicionar, remover e editar dados exibidos para o usuário comum: contatos do hospital, glossário, itens da ${this.FAQ}, etc. Apenas o e-mail registrado como administrador é capaz de adicionar e remover outros membros.`
+	ADD_STAFF_LABEL = `Membros de equipe são usuários que podem adicionar, remover e editar dados exibidos para o usuário comum: contatos do hospital, glossário, itens da ${this.FAQ}, etc. Apenas o e-mail registrado como administrador é capaz de adicionar e remover outros membros.`
 
 	NO_ITEMS_LIST = 'Sem Itens'
 
 	FILTER = 'Filtro'
 
-	ESSENTIAL_CONTACTS = "Contatos Essenciais"
+	ESSENTIAL_CONTACTS = 'Contatos Essenciais'
 
-	YOUR_CONTACTS = "Seus Contatos"
+	YOUR_CONTACTS = 'Seus Contatos'
 
-	UNIVERSAL_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " Universais"
+	UNIVERSAL_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} Universais'`
 
-	TREATMENT_ESSENTIAL_CONTACTS = this.ESSENTIAL_CONTACTS + " de Tratamento"
+	TREATMENT_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} de Tratamento'`
 
-	HAS_USER_QUESTIONS = "Apenas Com Perguntas de Usuários"
+	HAS_USER_QUESTIONS_FILTER_LABEL = 'Apenas Com Perguntas de Usuários'
 
 	RENDER_OFFLINE_CONTENT_PART_1 = 'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
 	
@@ -719,13 +706,13 @@ export default class PT implements LanguageBase {
 
 	NO_CONNECTION = 'Sem conexão'
 
-	DINO_SLIDER__REDUCE = 'Reduzir'
+	REDUCE = 'Reduzir'
 
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Relacionar item a todas ${this.FAQ}s existentes`
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
-	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
+	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`
 
 	seeFAQItemsText = (treatment: string) => `Ver ${this.FAQ} de ${treatment}`
 

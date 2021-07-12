@@ -29,7 +29,7 @@ const TicTacDino: React.FC = () => {
 		if (winner) {
 			setMessage(`${language.data.TIC_TAC_DINO_GAME_OVER_MSG_1} ${winner}!`)
 		} else {
-			setMessage(language.data.TIC_TAC_DINO_TIE)
+			setMessage(language.data.TIE)
 		}
 		setOpenDialog(true)
 		setGameStarted(false)

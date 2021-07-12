@@ -150,7 +150,7 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
         <DinoSwitch 
           selected={reduced} 
           onChangeSelected={() => setReduced(!reduced)} 
-          label={language.data.DINO_SLIDER__REDUCE}
+          label={language.data.REDUCE}
         />
       </div>
       <div className="board">

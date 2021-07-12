@@ -15,7 +15,7 @@ const AddButton: React.FC<AddButtonProps> = ({ handleAdd, label }) => {
   
   return (
     <DinoIconButton
-      ariaLabel={`${language.data.ADD_OPTION_TEXT} ${label}`}
+      ariaLabel={`${language.data.ADD} ${label}`}
       className='add_button'
       icon={AddIconSVG}
       onClick={handleAdd}

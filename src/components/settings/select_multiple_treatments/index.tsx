@@ -51,7 +51,7 @@ const SelectMultipleTreatments: React.FC<SelectMultipleTreatmentsProps> = ({
   return (
     <div className='select_multiple_treatments'>
         <FormControl className="select_multiple_treatments__form_control">
-          <InputLabel id="select_multiple_treatments__input_label">{language.data.SETTINGS_TREATMENT}</InputLabel>
+          <InputLabel id="select_multiple_treatments__input_label">{language.data.CHOOSE_TREATMENT}</InputLabel>
           <DinoLoader isLoading={isLoading}>
             <Select
               labelId="select_multiple_treatments__input_label"

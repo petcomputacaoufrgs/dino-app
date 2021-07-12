@@ -38,7 +38,12 @@ const DinoIconButton: React.FC<DinoIconButtonProps> = props => {
 	}
 
 	return (
-		<Tooltip title={props.ariaLabel || ''} arrow className={getClassName() + " dino_icon_button__tooltip"}>
+		<Tooltip 
+			className={getClassName() + " dino_icon_button__tooltip"}
+			title={props.ariaLabel || ''} 
+			enterDelay={500} 
+			arrow 
+		>
 			<div>
 				<Button {...props} className={getButtonClassName()}>
 					<Icon />

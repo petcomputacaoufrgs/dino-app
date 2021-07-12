@@ -93,7 +93,7 @@ const MusicalDino: React.FC = () => {
 					id='musical_dino__start'
 					onClick={() => startGame(handleWin)}
 				>
-					{language.data.START_GAME_TEXT}
+					{language.data.START_GAME}
 				</button>
 			</div>
 		</div>

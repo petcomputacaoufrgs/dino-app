@@ -22,7 +22,7 @@ const CalendarAddButton: React.FC = () => {
 		<div className='calendar__add_button'>
 			<Fab
 				color='primary'
-				aria-label={language.data.ADD_ARIA_LABEL}
+				aria-label={language.data.ADD}
 				onClick={handleAddClick}
 			>
 				<Add />

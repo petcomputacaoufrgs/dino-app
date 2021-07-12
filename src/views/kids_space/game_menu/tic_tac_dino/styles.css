@@ -52,3 +52,10 @@
 	border-radius: 0.7rem;
 	font-size: var(--big-font);
 }
+
+@media (orientation: landscape) {
+	.tic_tac_dino_game .tic_tac__board {
+		max-width: 70vmin;
+		max-height: 70vmin;
+	}
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ArrowBack from '../../../../components/arrow_back'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
+import DinoSwitch from '../../../../components/switch'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../context/language'
 import HistoryService from '../../../../services/history/HistoryService'
@@ -20,6 +21,7 @@ const DinoSlider: React.FC = () => {
 
   const [openDialog, setOpenDialog] = useState(false)
   const [restart, setRestart] = useState(false)
+  const [reduced, setReduced] = useState(false)
 
   const handleClose = () => {
 		setOpenDialog(false)
@@ -37,7 +39,7 @@ const DinoSlider: React.FC = () => {
   }
 
   return (
-    <div className="minigame slider_dino">
+    <div className="minigame dino_slider">
       <GameOverDialog
         onAgree={handleRestart}
         onDisagree={handleClose}
@@ -46,9 +48,17 @@ const DinoSlider: React.FC = () => {
         <p>{language.data.SUCESS_GAME_OVER_LABEL}</p>
       </GameOverDialog>
       <ArrowBack kids />
+      <div className='dino_slider__switch'>
+        <DinoSwitch 
+          selected={reduced} 
+          onChangeSelected={() => setReduced(!reduced)} 
+          label={language.data.DINO_SLIDER__REDUCE}
+        />
+      </div>
       <SliderBoard 
         onGameOver={handleGameOver} 
         restart={restart}
+        reduced={reduced}
       />
     </div>
   )}

@@ -7,7 +7,7 @@ import ArrayUtils from '../../../../../utils/ArrayUtils'
 import SliderPiece from '../piece'
 import SliderBoardProps, { HandleSwipeProps } from './props'
 
-const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
+const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver, reduced}) => {
     
   const PIECES = 16
   const LINES = PIECES / 4 
@@ -16,7 +16,6 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
 
   const language = useLanguage()
   const [gameState, setGameState] = useState([] as number[])
-  const [reduced, setReduced] = useState(false)
 
   const addNumber = (grid: number[]) => {
     let freeIndexes = new Array<number>()
@@ -146,14 +145,7 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
 
   return (
     <>
-      <div className='slider__switch'>
-        <DinoSwitch 
-          selected={reduced} 
-          onChangeSelected={() => setReduced(!reduced)} 
-          label={language.data.REDUCE}
-        />
-      </div>
-      <div className="board">
+      <div className="dino_slider__board">
           {gameState.map((number, index) => 
             <SliderPiece reduced={reduced} num={number} key={index}/>
           )}

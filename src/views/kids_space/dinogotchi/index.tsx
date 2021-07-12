@@ -3,13 +3,18 @@ import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import Button from '../../../components/button'
 import { ReactComponent as AngryDinoSVG } from '../../../assets/kids_space/dinogotchi/angry.svg'
-import { ReactComponent as Dino } from '../../../assets/new/dino_expressions/neutrop.svg'
-import { ReactComponent as SleepDino } from '../../../assets/kids_space/dinogotchi/dormindo.svg'
+import { ReactComponent as Dino } from '../../../assets/new/dino+expressoes+acessorios/dino_empé_neutro.svg'
+import { ReactComponent as SleepDino } from '../../../assets/new/dino+expressoes+acessorios/dino_dormindo.svg'
 import { ReactComponent as GoOutSVG } from '../../../assets/new/game_elements/sairdecasa.svg'
 import { ReactComponent as GameSVG } from '../../../assets/new/game_elements/jogo.svg'
 import { ReactComponent as GoToSleepSVG } from '../../../assets/new/game_elements/dormir.svg'
 import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogotchi/outside.svg'
 import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotchi/inside.svg'
+import { ReactComponent as Cap } from '../../../assets/new/acessories/bone.svg'
+import { ReactComponent as Hat } from '../../../assets/new/acessories/gorro.svg'
+import { ReactComponent as Lace } from '../../../assets/new/acessories/laco.svg'
+import { ReactComponent as Mohawk} from '../../../assets/new/acessories/moicano.svg' 
+import { ReactComponent as Headscarf} from '../../../assets/new/acessories/pano.svg'
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import AccessDialog from '../../../components/dialogs/kids_space_dialog/access_dialog'
@@ -28,6 +33,8 @@ const Dinogotchi: React.FC = () => {
 	const [openChildArea, setOpenChildArea] = useState(true)
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedColor, setSelectedColor] = useState('default')
+	const [selectedHat, setSelectedHat] = useState('none')
+	const [colorSelected, setColorSelected] = useState(false)
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -40,6 +47,7 @@ const Dinogotchi: React.FC = () => {
 		let updateDate = (kidsSpaceSettings: KidsSpaceSettingsEntity) => {
 			setKidsSpaceSettings(kidsSpaceSettings)
 			selectColor(kidsSpaceSettings.color)
+			setSelectedHat(kidsSpaceSettings.hat)
 			finishLoading()
 		}
 
@@ -58,7 +66,7 @@ const Dinogotchi: React.FC = () => {
 			finishLoading = () => {}
 			KidsSpaceSettingsService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading])
+	}, [isLoading, selectedHat])
 
 	useEffect(() => {
 		return startCloudEngine()
@@ -77,6 +85,7 @@ const Dinogotchi: React.FC = () => {
 	const handleChooseColor = () => {
 		if (kidsSpaceSettings) {
 			kidsSpaceSettings.color = selectedColor
+			kidsSpaceSettings.hat = selectedHat
 			kidsSpaceSettings.firstSettingsDone = true
 			setKidsSpaceSettings(kidsSpaceSettings)
 			KidsSpaceSettingsService.save(kidsSpaceSettings)
@@ -109,7 +118,7 @@ const Dinogotchi: React.FC = () => {
 	const renderAwakeDino = () => {
 		return (
 			<>
-				<Dino className='dinogotchi_screen__dino_pet' />
+				<Dino className={`dinogotchi_screen__dino_pet has_${selectedHat}`}/>
 				<div className='dinogotchi_screen__options'>
 					<DinoIconButton 
 						circular
@@ -139,21 +148,41 @@ const Dinogotchi: React.FC = () => {
 	const renderDino = () => {
 		const firstSettingsNotDone = !kidsSpaceSettings || !kidsSpaceSettings.firstSettingsDone
 
-		return firstSettingsNotDone ? meetDino() : openChildArea ? renderSleepDino() : renderAwakeDino()
+		return firstSettingsNotDone 
+		? colorSelected ? chooseDinoHat() : chooseDinoColor()
+		: openChildArea ? renderSleepDino() : renderAwakeDino()
 	}
 
-	const meetDino = () => {
+	const chooseDinoColor = () => {
 		return (
 			<>
 				<div className='speech_bubble'> Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas? </div>
 				<Dino className='dinogotchi_screen__dino_pet first_login' />
-				<div className='color_chooser'>
-					<button className='color_chooser__color_button green' onClick={() => selectColor(DinoColorConstants.DEFAULT)}></button>
-					<button className='color_chooser__color_button pink' onClick={() => selectColor(DinoColorConstants.PINK)}></button>
-					<button className='color_chooser__color_button blue' onClick={() => selectColor(DinoColorConstants.BLUE)}></button>
-					<button className='color_chooser__color_button red' onClick={() => selectColor(DinoColorConstants.RED)}></button>
+				<div className='dialog_chooser'>
+					<button className='dialog_chooser__button green' onClick={() => selectColor(DinoColorConstants.DEFAULT)}></button>
+					<button className='dialog_chooser__button pink' onClick={() => selectColor(DinoColorConstants.PINK)}></button>
+					<button className='dialog_chooser__button blue' onClick={() => selectColor(DinoColorConstants.BLUE)}></button>
+					<button className='dialog_chooser__button red' onClick={() => selectColor(DinoColorConstants.RED)}></button>
 				</div>
 
+				<Button className='selection_button' onClick={() => setColorSelected(true)}> Escolher </Button>
+			</>
+		)
+	}
+
+	const chooseDinoHat = () => {
+		return (
+			<> 
+				<div className='speech_bubble hat_choosing'> Hora de escolher um acessório legal! </div>
+				<div className="dialog_chooser hat_chooser">
+					<Cap className='dialog_chooser__button' onClick={() => setSelectedHat('bone')}/>
+					<Hat className='dialog_chooser__button' onClick={() => setSelectedHat('gorro')}/>
+					<Lace className='dialog_chooser__button' onClick={() => setSelectedHat('laco')}/>
+					<Mohawk className='dialog_chooser__button' onClick={() => setSelectedHat('moicano')}/>
+					<Headscarf className='dialog_chooser__button' onClick={() => setSelectedHat('lenco')}/>
+					<div onClick={() => setSelectedHat('none')}> X </div>
+				</div>
+				<Dino className='dinogotchi_screen__dino_pet first_login hat_choosing' />
 				<Button className='selection_button' onClick={handleChooseColor}> Escolher </Button>
 			</>
 		)

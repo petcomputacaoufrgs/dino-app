@@ -6,29 +6,23 @@
   align-items: center;
 }
 
-.dino_slider .board {
+.dino_slider .dino_slider__board {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   margin-top: 15vh;
-  width: 100vmin;
-  height: 100vmin;
+  width: 90vmin;
+  height: 90vmin;
+  margin: auto;
+
 }
 
-.slider__switch {
+.dino_slider__switch {
     max-width: 20vw;
     margin-left: auto;
     margin-right: 40px;
 }
 
-.slider__switch .dino_switch__form p{
+.dino_slider__switch .dino_switch__form p{
   margin-right: 0.2rem;
   color: var(--dark-color-transparency)
-}
-
-@media (orientation: landscape) {
-  .dino_slider .board {
-    margin-top: 5vh;
-    width: 85vmin;
-    height: 85vmin;
-  }
 }

@@ -1,8 +1,8 @@
-.slider_dino .piece {
+.dino_slider .dino_slider__piece {
   font-size: 30px;
   font-weight: bold;
-  height: 22vmin;
-  width: 22vmin;
+  height: 20vmin;
+  width: 20vmin;
   background-color: #C2B3A3;
   margin: 3px;
   display: flex;
@@ -15,80 +15,80 @@
   justify-self: center;
 }
 
-.slider_dino .piece.reduced {
+.dino_slider .dino_slider__piece .dino_slider__piece.reduced {
   font-size: 45px;
 }
 
-.slider_dino .piece_2 {
+.dino_slider .dino_slider__piece.piece_2 {
   font-size: 45px;
   background-color: #f28187;
   color: whitesmoke;
 }
 
-.slider_dino .piece_4 {
+.dino_slider .dino_slider__piece.piece_4 {
   font-size: 45px;
   background-color: #f6c358 ;
   color: whitesmoke;
 
 }
 
-.slider_dino .piece_8 {
+.dino_slider .dino_slider__piece.piece_8 {
   font-size: 45px;
   background-color: #8184ee;
   color: whitesmoke;
 
 }
 
-.slider_dino .piece_16 {
+.dino_slider .dino_slider__piece.piece_16 {
   font-size: 45px;
   background-color: #ec9772;
   color: whitesmoke;
 
 }
 
-.slider_dino .piece_32 {
+.dino_slider .dino_slider__piece.piece_32 {
   font-size: 45px;
   background-color: #bbcd85;
   color: rgb(88, 83, 69);
 }
 
-.slider_dino .piece_64 {
+.dino_slider .dino_slider__piece.piece_64 {
   font-size: 45px;
   background-color: #7ac66b;
   color: whitesmoke;
 
 }
 
-.slider_dino .piece_128 {
+.dino_slider .dino_slider__piece.piece_128 {
   background-color: #f4b469;
   font-size: 40px;
 }
 
-.slider_dino .piece_256 {
+.dino_slider .dino_slider__piece.piece_256 {
   background-color: #b468e5;
   color: whitesmoke;
 
   font-size: 40px;
 }
 
-.slider_dino .piece_512 {
+.dino_slider .dino_slider__piece.piece_512 {
   background-color: #a2c75d;
   color: whitesmoke;
   font-size: 40px;
 }
 
-.slider_dino .piece_1024 {
+.dino_slider .dino_slider__piece.piece_1024 {
   background-color: #77aecc;
   color: whitesmoke;
 
 }
 
-.slider_dino .piece_2048 {
+.dino_slider .dino_slider__piece.piece_2048 {
   background-color: #86e5a8;
 }
 
-@media (orientation: landscape) {
-  .dino_slider .piece {
+@media(vi) {
+  .dino_slider .dino_slider__piece {
     height: 18vmin;
     width: 18vmin;
   }

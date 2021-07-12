@@ -146,7 +146,7 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver, reduced})
 
   return (
     <>
-      <div className="board">
+      <div className="dino_slider__board">
           {gameState.map((number, index) => 
             <SliderPiece reduced={reduced} num={number} key={index}/>
           )}

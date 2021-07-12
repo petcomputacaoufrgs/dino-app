@@ -6,6 +6,7 @@ import PathConstants from '../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../context/language'
 import HistoryService from '../../../../services/history/HistoryService'
 import SliderBoard from './board'
+import './board/styles.css'
 
 export const useEvent = (event: any, handler: {(this: Window, ev: any): any; (this: Window, ev: any): any;}, passive = false) => {
   useEffect(() => {
@@ -38,7 +39,7 @@ const DinoSlider: React.FC = () => {
   }
 
   return (
-    <div className="minigame slider_dino">
+    <div className="minigame dino_slider">
       <GameOverDialog
         onAgree={handleRestart}
         onDisagree={handleClose}
@@ -47,7 +48,7 @@ const DinoSlider: React.FC = () => {
         <p>{language.data.MEMORY_GAME_GAME_OVER}</p>
       </GameOverDialog>
       <KidsSpaceGoBackButton />
-      <div className='slider__switch'>
+      <div className='dino_slider__switch'>
         <DinoSwitch 
           selected={reduced} 
           onChangeSelected={() => setReduced(!reduced)} 

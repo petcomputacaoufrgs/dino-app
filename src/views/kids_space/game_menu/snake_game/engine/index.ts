@@ -19,7 +19,7 @@ let gameOver = false
 let firstRender = true
 
 //Snake
-const SNAKE_SPEED = 250
+let snakeSpeed = 400
 
 //External function
 let onGameOver: () => void
@@ -35,11 +35,11 @@ let onGameOver: () => void
 export function starGame(handleGameOver: () => void) {
 	resetInput()
 	resetFood()
-	resetSnake()
+	resetSnake(snakeSpeed)
 	removeSnakeFromBoard()
 	removeFoodFromBoard()
 	setDefaultVars(handleGameOver)
-	setTimeout(main, SNAKE_SPEED)
+	setTimeout(main, snakeSpeed)
 }
 
 /**
@@ -65,7 +65,7 @@ function main() {
 		return
 	}
 
-	setTimeout(main, SNAKE_SPEED)
+	setTimeout(main, snakeSpeed)
 
 	// Update and render the game
 	const [snakeChanged, foodChanged] = update()
@@ -78,7 +78,7 @@ function main() {
  * @description update the food and the snake if necessary
  */
 function update() {
-	const snakeChanged = updateSnake()
+	const snakeChanged = updateSnake(snakeSpeed)
 	const foodChanged = updateFood()
 	checkDeath()
 

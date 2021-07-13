@@ -252,6 +252,11 @@
 }
 
 @media (orientation: landscape) {
+	.dino_runner_game__grid__background {
+		height: 115vh;
+		bottom: -2vh;
+	}
+
 	.dino_runner_game__grid__character {
 		max-width: 300px;
 		max-height: 300px;

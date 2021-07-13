@@ -111,7 +111,7 @@ const TreatmentList = ({item} : ContactCardContentProps) => {
 	return HasStaffPowers() ? (
 		<List component='nav'>
 			<SectionTitle language={language} />
-			{ isUniversalEssential(item.contact) ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT)
+			{ isUniversalEssential(item.contact) ? renderTreatmentListItem(language.data.UNIVERSAL_CONTACT_LABEL)
 			: <DinoLoader isLoading={isLoading}>
 					{treatments?.map((e, index) => renderTreatmentListItem(e.name, index))}
 				</DinoLoader>}

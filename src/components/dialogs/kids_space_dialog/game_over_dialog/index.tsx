@@ -24,10 +24,10 @@ const GameOverDialog: React.FC<GameOverDialogProps> = ({
   			</div>
 			<div className='game_over_dialog__buttons'>
 				<TextButton onClick={onDisagree}>
-					{language.data.DISAGREEMENT_OPTION_TEXT}
+					{language.data.NO}
 				</TextButton>
 				<TextButton onClick={onAgree}>
-					{language.data.AGREEMENT_OPTION_TEXT}
+					{language.data.YES}
 				</TextButton>
 			</div>
 		</div>}

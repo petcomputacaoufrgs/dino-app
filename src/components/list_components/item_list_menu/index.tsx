@@ -23,7 +23,7 @@ const ItemListMenu = ({
 		if (!editUnavailable) {
 			return (
 				<MenuItem onClick={handleEdit}>
-					{editText || language.data.EDIT_OPTION_TEXT}
+					{editText || language.data.EDIT}
 				</MenuItem>
 			)
 		}
@@ -59,7 +59,7 @@ const ItemListMenu = ({
 		>
 			{renderEditMenuItem()}
 			<MenuItem onClick={handleDelete}>
-				{language.data.DELETE_OPTION_TEXT}
+				{language.data.DELETE}
 			</MenuItem>
 		</Menu>
 	)

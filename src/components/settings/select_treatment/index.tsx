@@ -51,7 +51,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 				renderInput={params => (
 					<TextField
 						{...params}
-						label={language.data.SETTINGS_TREATMENT}
+						label={language.data.CHOOSE_TREATMENT}
 						variant='standard'
 						InputProps={{
 							...params.InputProps,

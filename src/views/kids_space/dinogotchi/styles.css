@@ -145,25 +145,18 @@
 	top: 15vh;
 }
 
-.dinogotchi_screen__options .circular_button {
+.dinogotchi_screen__options .circular {
 	height: 4.5rem;
 	width: 4.5rem;
 	background-color: #0C1E59;
 	margin-bottom: 1.5rem;
+}
+
+.dinogotchi_screen__options .dino_icon_button.circular .dino_icon_button__button svg {
+	width: inherit;
+	height: inherit;
 	padding: 0;
-}
-
-.dinogotchi_screen__options svg {
-	width: fit-content;
-	height: fit-content;
-}
-
-.dinogotchi_screen .dino_icon_button__button {
-	position:absolute;
-	top: 3vmin;
-	left: 3vmin;
-	width: 16vmin;
-	height: 16vmin;
+	transform: scale(1.2);
 }
 
 .dinogotchi_screen .dino_icon_button__button svg {
@@ -175,11 +168,7 @@
 	transform-origin: top;
 }
 
-.teste {
-	position: absolute;
-}
-
-.dialog_chooser {
+.color_chooser {
 	position: absolute;
 	top: 8vh;
 	background-color: #121212;

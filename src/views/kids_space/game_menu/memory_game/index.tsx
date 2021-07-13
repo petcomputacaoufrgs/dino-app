@@ -3,7 +3,6 @@ import PathConstants from '../../../../constants/app/PathConstants'
 import HistoryService from '../../../../services/history/HistoryService'
 import { useLanguage } from '../../../../context/language'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
-import KidsSpaceGoBackButton from '../../../../components/button/go_back'
 import {ReactComponent as Braquiosaurus} from '../../../../assets/new/dino+expressoes+acessorios/empty_dino.svg'
 import {ReactComponent as Dinosaur} from '../../../../assets/new/friends/triceratops.svg'
 import {ReactComponent as Diplodocus} from '../../../../assets/new/friends/trex.svg'
@@ -15,6 +14,7 @@ import {ReactComponent as Tyrannosaurus} from '../../../../assets/new/dino+expre
 import MemoryBoard from './components/board'
 import BoardPiece from './components/types/BoardPiece'
 import './styles.css'
+import ArrowBack from '../../../../components/arrow_back'
 
 const MemoryGame: React.FC = () => {
 	const language = useLanguage()
@@ -55,9 +55,9 @@ const MemoryGame: React.FC = () => {
 				onDisagree={handleClose}
 				open={openDialog}
 			>
-				<p>{language.data.MEMORY_GAME_GAME_OVER}</p>
+				<p>{language.data.SUCESS_GAME_OVER_LABEL}</p>
 			</GameOverDialog>
-			<KidsSpaceGoBackButton />
+			<ArrowBack kids />
 			<MemoryBoard pieceList={boardRandom} onGameOver= {handleGameOver} restart={restart}/>
 		</div>
 	)

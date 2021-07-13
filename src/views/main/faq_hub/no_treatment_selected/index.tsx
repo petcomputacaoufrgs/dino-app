@@ -53,10 +53,10 @@ const NoTreatmentSelected: React.FC = () => {
       if (selectedTreatment) {
         userSettings.treatmentLocalId = selectedTreatment.localId
         UserSettingsService.save(userSettings)
-        alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
+        alert.showSuccessAlert(language.data.SETTINGS_UPDATED_SUCESS)
       }
     } else {
-      alert.showErrorAlert(language.data.SETTINGS_SAVE_ERROR)
+      alert.showErrorAlert(language.data.SETTINGS_UPDATED_ERROR)
     }
   }
 

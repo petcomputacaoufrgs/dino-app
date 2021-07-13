@@ -6,7 +6,6 @@ import { useLanguage } from '../../../../../context/language'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
 import SliderPiece from '../piece'
 import SliderBoardProps, { HandleSwipeProps } from './props'
-import './styles.css'
 
 const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver, reduced}) => {
     

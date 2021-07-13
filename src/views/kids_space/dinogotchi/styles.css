@@ -271,6 +271,11 @@
 }
 
 @media (orientation: landscape) {
+	.dinogotchi_screen__background {
+		height: 115vh;
+		bottom: 0;
+	}
+
 	.dinogotchi_screen__dino_pet {
 		left: 10vmin;
 	}

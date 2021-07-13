@@ -35,8 +35,6 @@ export function startGame(handleWin: () => void) {
 	blocked = false
 
 	topLeft!.onclick = () => {
-		console.log('cliquei')
-		console.log(compTurn)
 		if (!compTurn && !blocked) {
 			playerOrder.push(1)
 			blocked = true
@@ -52,8 +50,6 @@ export function startGame(handleWin: () => void) {
 	}
 
 	topRight!.onclick = () => {
-		console.log('cliquei')
-		console.log(compTurn)
 		if (!compTurn && !blocked) {
 			playerOrder.push(2)
 			blocked = true
@@ -69,8 +65,6 @@ export function startGame(handleWin: () => void) {
 	}
 
 	bottomLeft!.onclick = () => {
-		console.log('cliquei')
-		console.log(compTurn)
 		if (!compTurn && !blocked) {
 			playerOrder.push(3)
 			blocked = true
@@ -86,8 +80,6 @@ export function startGame(handleWin: () => void) {
 	}
 
 	bottomRight!.onclick = () => {
-		console.log('cliquei')
-		console.log(compTurn)
 		if (!compTurn && !blocked) {
 			playerOrder.push(4)
 			blocked = true

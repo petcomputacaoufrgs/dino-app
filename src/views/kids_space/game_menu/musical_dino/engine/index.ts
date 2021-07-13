@@ -9,6 +9,7 @@ let compTurn: boolean
 let intervalId: NodeJS.Timeout | null
 let noise: boolean
 let win: boolean
+let blocked: boolean
 
 let topLeft: HTMLElement | null
 let topRight: HTMLElement | null
@@ -31,65 +32,78 @@ export function startGame(handleWin: () => void) {
 	win = true
 	noise = false
 	compTurn = false
+	blocked = false
 
 	topLeft!.onclick = () => {
-		if (!compTurn && playerOrder.length < turn) {
-			console.log(playerOrder)
+		console.log('cliquei')
+		console.log(compTurn)
+		if (!compTurn && !blocked) {
 			playerOrder.push(1)
+			blocked = true
 			check()
 			one()
 			if (!win) {
 				setTimeout(() => {
 					clearColor()
+					blocked = false
 				}, 300)
 			}
 		}
 	}
 
 	topRight!.onclick = () => {
-		if (!compTurn && playerOrder.length < turn) {
-			console.log(playerOrder)
+		console.log('cliquei')
+		console.log(compTurn)
+		if (!compTurn && !blocked) {
 			playerOrder.push(2)
+			blocked = true
 			check()
 			two()
 			if (!win) {
 				setTimeout(() => {
 					clearColor()
+					blocked = false
 				}, 300)
 			}
 		}
 	}
 
 	bottomLeft!.onclick = () => {
-		if (!compTurn && playerOrder.length < turn) {
-			console.log(playerOrder)
+		console.log('cliquei')
+		console.log(compTurn)
+		if (!compTurn && !blocked) {
 			playerOrder.push(3)
+			blocked = true
 			check()
 			three()
 			if (!win) {
 				setTimeout(() => {
 					clearColor()
+					blocked = false
 				}, 300)
 			}
 		}
 	}
 
 	bottomRight!.onclick = () => {
-		if (!compTurn && playerOrder.length < turn) {
-			console.log(playerOrder)
+		console.log('cliquei')
+		console.log(compTurn)
+		if (!compTurn && !blocked) {
 			playerOrder.push(4)
+			blocked = true
 			check()
 			four()
 			if (!win) {
 				setTimeout(() => {
 					clearColor()
+					blocked = false
 				}, 300)
 			}
 		}
 	}
 
 	if (win) {
-		startButton!.style.opacity = '0'
+		startButton!.style.display = 'none'
 		playGame()
 	}
 }
@@ -206,27 +220,30 @@ function check() {
 		winGame()
 	}
 
+	// error
 	if (good === false) {
 		flashColor()
+		flash = 0
+		playerOrder = []
+		good = true
+		compTurn = true
+		console.log('setado pra true')
 		setTimeout(() => {
 			clearColor()
-
-			flash = 0
-			playerOrder = []
-			good = true
-			compTurn = true
 			intervalId = setInterval(gameTurn, 800)
 		}, 800)
 
 		noise = false
 	}
 
+	// all good
 	if (turn === playerOrder.length && good && !win) {
 		turn++
 		turnDiv!.innerHTML = turn.toString()
 		playerOrder = []
 		flash = 0
 		compTurn = true
+		console.log('setado pra true')
 		intervalId = setInterval(gameTurn, 800)
 	}
 }

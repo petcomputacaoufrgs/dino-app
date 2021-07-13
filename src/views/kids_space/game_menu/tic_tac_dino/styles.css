@@ -29,10 +29,10 @@
 }
 
 .tic_tac_dino_game .Queridino {
-	background-image: url('../../../../assets/new/dino_expressions/felizp.svg');
+	background-image: url('../../../../assets/new/dino+expressoes+acessorios/empty_dino.svg');
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: 80%;
+	background-size: contain;
 }
 
 .tic_tac_dino_game .Amigossauro {

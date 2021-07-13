@@ -74,6 +74,7 @@ async function jump(dino: HTMLElement) {
 }
 
 async function generateObstacle() {
+	let increaseSpeed = 0
 	let obstaclePosition = 550
 	let nextObstacleGenerated = false
 	let minDistance = 250
@@ -106,7 +107,8 @@ async function generateObstacle() {
 		}
 
 		await sleep(20)
-		obstaclePosition -= 9 + (score * 0.15) // Jogo fica mais rápido de acordo com a quantidade de pontos
+		if(increaseSpeed < 7.5) increaseSpeed = score * 0.15
+		obstaclePosition -= 11 + increaseSpeed // Jogo fica mais rápido de acordo com a quantidade de pontos
 		obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	}
 
@@ -117,7 +119,7 @@ async function generateObstacle() {
 
 async function generateNextObstacle() {
 	if (!isGameOver) {
-		const randomTime = getRandomInteger(0, 750)
+		const randomTime = getRandomInteger(0, 800)
 		await sleep(randomTime)
 		generateObstacle()
 	}

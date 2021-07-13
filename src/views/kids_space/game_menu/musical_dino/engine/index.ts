@@ -30,9 +30,11 @@ export function startGame(handleWin: () => void) {
 
 	win = true
 	noise = false
+	compTurn = false
 
 	topLeft!.onclick = () => {
-		if (!compTurn) {
+		if (!compTurn && playerOrder.length < turn) {
+			console.log(playerOrder)
 			playerOrder.push(1)
 			check()
 			one()
@@ -45,7 +47,8 @@ export function startGame(handleWin: () => void) {
 	}
 
 	topRight!.onclick = () => {
-		if (!compTurn) {
+		if (!compTurn && playerOrder.length < turn) {
+			console.log(playerOrder)
 			playerOrder.push(2)
 			check()
 			two()
@@ -58,7 +61,8 @@ export function startGame(handleWin: () => void) {
 	}
 
 	bottomLeft!.onclick = () => {
-		if (!compTurn) {
+		if (!compTurn && playerOrder.length < turn) {
+			console.log(playerOrder)
 			playerOrder.push(3)
 			check()
 			three()
@@ -71,7 +75,8 @@ export function startGame(handleWin: () => void) {
 	}
 
 	bottomRight!.onclick = () => {
-		if (!compTurn) {
+		if (!compTurn && playerOrder.length < turn) {
+			console.log(playerOrder)
 			playerOrder.push(4)
 			check()
 			four()
@@ -85,11 +90,11 @@ export function startGame(handleWin: () => void) {
 
 	if (win) {
 		startButton!.style.opacity = '0'
-		play()
+		playGame()
 	}
 }
 
-function play() {
+function playGame() {
 	win = false
 	order = []
 	playerOrder = []
@@ -99,7 +104,7 @@ function play() {
 	good = true
 	turnDiv!.innerHTML = turn.toString()
 
-	for (var i = 0; i < TOTAL_TURNS; i++) {
+	for (let i = 0; i < TOTAL_TURNS; i++) {
 		order.push(Math.floor(Math.random() * 4) + 1)
 	}
 	compTurn = true
@@ -206,10 +211,10 @@ function check() {
 		setTimeout(() => {
 			clearColor()
 
-			compTurn = true
 			flash = 0
 			playerOrder = []
 			good = true
+			compTurn = true
 			intervalId = setInterval(gameTurn, 800)
 		}, 800)
 
@@ -220,8 +225,8 @@ function check() {
 		turn++
 		turnDiv!.innerHTML = turn.toString()
 		playerOrder = []
-		compTurn = true
 		flash = 0
+		compTurn = true
 		intervalId = setInterval(gameTurn, 800)
 	}
 }

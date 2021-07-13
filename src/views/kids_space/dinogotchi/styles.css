@@ -318,3 +318,38 @@
 		transform: translate3d(450%, 0, 0);
 	}
 }
+
+@media (orientation: landscape) {
+	.dinogotchi_screen__background {
+		height: 115vh;
+		bottom: 0;
+	}
+
+	.dinogotchi_screen__dino_pet {
+		left: 10vmin;
+	}
+
+	.dinogotchi_screen__dino_pet.first_login {
+		left: 0;
+	}
+
+	.color_chooser__color_button {
+		width: 8vmin;
+		height: 8vmin;
+	}
+
+	.selection_button {
+		width: 20vmin;
+		height: 8vmin;
+		font-size: var(--very-large-font);
+	}
+
+	.dinogotchi_screen .icon_button {
+		transform: scale(3);
+	}
+
+	.dinogotchi_screen__options .circular_button {
+		width: 7rem;
+		height: 7rem;
+	}
+}

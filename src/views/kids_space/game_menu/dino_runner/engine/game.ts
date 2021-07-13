@@ -107,7 +107,7 @@ async function generateObstacle() {
 		}
 
 		await sleep(20)
-		if(increaseSpeed < 7.5) increaseSpeed = score * 0.15
+		if(increaseSpeed < 7.5) increaseSpeed = score * 0.15 // Limite de velocidade
 		obstaclePosition -= 11 + increaseSpeed // Jogo fica mais rápido de acordo com a quantidade de pontos
 		obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	}

@@ -2,6 +2,8 @@ import sleep from '../../../../../utils/SleepUtils'
 import { getRandomInteger } from '../../../../../utils/RandomUtils'
 import { startBackgroundEngine } from './background'
 
+
+let screenWidth = window.innerWidth
 let dino: HTMLElement | null
 let grid: HTMLElement | null
 let container: HTMLElement | null
@@ -68,14 +70,14 @@ async function jump(dino: HTMLElement) {
 		y_velocity -= gravity
 		dino.style.transform = `translate3d(0, -${position}%, 0)`
 		await sleep(20)
-	}while (position > 0)
+	} while (position > 0)
 
 	dino.style.transform = `translate3d(0, 0, 0)`
 }
 
 async function generateObstacle() {
 	let increaseSpeed = 0
-	let obstaclePosition = 550
+	let obstaclePosition = screenWidth * 1.25
 	let nextObstacleGenerated = false
 	let minDistance = 250
 	const obstacle = document.createElement('div')
@@ -83,10 +85,10 @@ async function generateObstacle() {
 	obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	grid!.appendChild(obstacle)
 
-	if(isFirstJump){
-		obstaclePosition = 1000 //dá um tempo melhor para o jogador pensar no primeiro pulo
+	if (isFirstJump) {
+		obstaclePosition = screenWidth * 2.15 //dá um tempo melhor para o jogador pensar no primeiro pulo
 		isFirstJump = false
-	} 
+	}
 
 	while (obstaclePosition >= -300) {
 		if (!nextObstacleGenerated && obstaclePosition < minDistance * -1) {
@@ -107,7 +109,7 @@ async function generateObstacle() {
 		}
 
 		await sleep(20)
-		if(increaseSpeed < 7.5) increaseSpeed = score * 0.15 // Limite de velocidade
+		if (increaseSpeed < 7.5) increaseSpeed = score * 0.15 // Limite de velocidade
 		obstaclePosition -= 11 + increaseSpeed // Jogo fica mais rápido de acordo com a quantidade de pontos
 		obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	}

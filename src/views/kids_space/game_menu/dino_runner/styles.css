@@ -16,8 +16,8 @@
 }
 
 .dino_runner_game__grid__character {
-	width: 50vmin;
-	height: 50vmin;
+	width: 32.67vmin;
+    height: 50vmin;
 	max-width: 240px;
 	max-height: 360px;
 	background-repeat: no-repeat;
@@ -248,8 +248,8 @@
 	}
 
 	.dino_runner_game__obstacle {
-		max-width: 200px;
-		max-height: 200px;
+		max-width: 150px;
+		max-height: 150px;
 	}
 
 	.dino_runner_game__grid__background #dino_runner__moon {

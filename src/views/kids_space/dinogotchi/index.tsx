@@ -74,7 +74,7 @@ const Dinogotchi: React.FC = () => {
 		startPaitingEngine()
 	}, [state])
 
-	const handleChooseColor = () => {
+	const handleCustomization = () => {
 		if (kidsSpaceSettings) {
 			kidsSpaceSettings.color = selectedColor
 			kidsSpaceSettings.hat = selectedHat
@@ -137,12 +137,28 @@ const Dinogotchi: React.FC = () => {
 
 	const renderSleepDino = () => <SleepDino className='dinogotchi_screen__dino_pet sleep_dino' onClick={() => setState(DinoEnum.INSIDE)}/>
 
-	const renderDino = () => {
+	const renderDinogotchiScreen = () => {
 		const firstSettingsNotDone = !kidsSpaceSettings || !kidsSpaceSettings.firstSettingsDone
 
 		return firstSettingsNotDone 
-		? colorSelected ? chooseDinoHat() : chooseDinoColor()
-		: state === DinoEnum.ASLEEP ? renderSleepDino() : renderAwakeDino()
+		? customizeDino()
+		: renderDino()
+	}
+
+	const customizeDino = () => {
+		if(colorSelected) {
+			return chooseDinoHat()
+		} else {
+			return chooseDinoColor()
+		}
+	}
+
+	const renderDino = () => {
+		if (state === DinoEnum.ASLEEP) {
+			return renderSleepDino()
+		} else {
+			return renderAwakeDino()
+		}
 	}
 
 	const chooseDinoColor = () => {
@@ -184,8 +200,8 @@ const Dinogotchi: React.FC = () => {
 					<Headscarf onClick={() => setSelectedHat('lenco')}/>
 					<div onClick={() => setSelectedHat('none')}> X </div>
 				</div>
-				<Dino className={`dinogotchi_screen__dino_pet first_login hat_choosing has_${selectedHat}`} />
-				<Button className='selection_button' onClick={handleChooseColor}> {language.data.CHOOSE} </Button>
+				<Dino className={`dinogotchi_screen__dino_pet first_login has_${selectedHat}`} />
+				<Button className='selection_button' onClick={handleCustomization}> {language.data.CHOOSE} </Button>
 			</div>
 		)
 	}
@@ -199,7 +215,7 @@ const Dinogotchi: React.FC = () => {
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
 			<div className={`dinogotchi_screen ${state === DinoEnum.OUTSIDE ? 'outside' : 'inside'}`}>
 				{renderBackground()}
-				{renderDino()}
+				{renderDinogotchiScreen()}
 				{/* <AccessDialog 
 					open={open} 
 					icon={AngryDinoSVG} 

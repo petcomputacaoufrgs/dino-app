@@ -12,52 +12,53 @@ import LanguageBase from '../../constants/languages/LanguageBase'
 import { toggle } from '../../constants/toggle/Toggle'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 
-type getGroupedItemsType = (language: LanguageBase, handleLogoutClick: () => void) => MenuItemViewModel[][]
+type getGroupedItemsType = (
+	language: LanguageBase,
+	handleLogoutClick: () => void,
+) => MenuItemViewModel[][]
 
 const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
-    
-  const language = useLanguage()
+	const language = useLanguage()
 
-  const getGroupedItems = (): MenuItemViewModel[][] => {
+	const getGroupedItems = (): MenuItemViewModel[][] => {
+		const searchGroupedItems = (getItems: getGroupedItemsType) =>
+			getItems(language.data, handleLogoutClick)
 
-    const searchGroupedItems = (getItems: getGroupedItemsType) => getItems(language.data, handleLogoutClick)
+		const getGroupedMenuByPermission = () => {
+			const userPermission = GetPermission()
 
-    const getGroupedMenuByPermission = () => {
+			switch (userPermission) {
+				case PermissionEnum.STAFF:
+					return MenuService.getStaffGroupedMenuItems
+				case PermissionEnum.ADMIN:
+					return MenuService.getAdminGroupedMenuItems
+				default:
+					return MenuService.getGroupedMenuItems
+			}
+		}
 
-      const userPermission = GetPermission()
-
-      switch(userPermission) {
-        case PermissionEnum.STAFF: return MenuService.getStaffGroupedMenuItems
-        case PermissionEnum.ADMIN: return MenuService.getAdminGroupedMenuItems
-        default: return MenuService.getGroupedMenuItems
-      }
-    }
-
-		return searchGroupedItems(getGroupedMenuByPermission()) 
+		return searchGroupedItems(getGroupedMenuByPermission())
 	}
 
-  const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+	const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
 	const handleLogoutClick = () => setOpenLogoutDialog(true)
- 
+
 	const handleLogoutAgree = () => AuthService.logout()
 
 	const handleLogoutDisagree = () => setOpenLogoutDialog(false)
-  
-  return (
-    <DinoLoader isLoading={language.loading} hideChildren>
-      <DrawerNavigation
-        groupedItems={getGroupedItems()}
-        component={children}
-      />
-      <LogoutDialog
-        onAgree={handleLogoutAgree}
-        onDisagree={handleLogoutDisagree}
-        open={openLogoutDialog}
-      />
-      {toggle.showFirstLoginDialog && <FirstSettings />}
-    </DinoLoader>
-  )
+
+	return (
+		<DinoLoader isLoading={language.loading} hideChildren>
+			<DrawerNavigation groupedItems={getGroupedItems()} component={children} />
+			<LogoutDialog
+				onAgree={handleLogoutAgree}
+				onDisagree={handleLogoutDisagree}
+				open={openLogoutDialog}
+			/>
+			{toggle.showFirstLoginDialog && <FirstSettings />}
+		</DinoLoader>
+	)
 }
 
 export default Main

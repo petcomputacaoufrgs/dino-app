@@ -12,8 +12,8 @@ import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotc
 import { ReactComponent as Cap } from '../../../assets/new/acessories/bone.svg'
 import { ReactComponent as Hat } from '../../../assets/new/acessories/gorro.svg'
 import { ReactComponent as Lace } from '../../../assets/new/acessories/laco.svg'
-import { ReactComponent as Mohawk} from '../../../assets/new/acessories/moicano.svg' 
-import { ReactComponent as Headscarf} from '../../../assets/new/acessories/pano.svg'
+import { ReactComponent as Mohawk } from '../../../assets/new/acessories/moicano.svg'
+import { ReactComponent as Headscarf } from '../../../assets/new/acessories/pano.svg'
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
 import DinoColorConstants from '../../../constants/dinogotchi/DinoColorConstants'
@@ -29,7 +29,9 @@ import './styles.css'
 const Dinogotchi: React.FC = () => {
 	const language = useLanguage()
 	const [state, setState] = useState(DinoEnum.ASLEEP)
-	const [kidsSpaceSettings, setKidsSpaceSettings] = useState<KidsSpaceSettingsEntity | undefined>()
+	const [kidsSpaceSettings, setKidsSpaceSettings] = useState<
+		KidsSpaceSettingsEntity | undefined
+	>()
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedColor, setSelectedColor] = useState('default')
 	const [selectedHat, setSelectedHat] = useState('none')
@@ -55,7 +57,7 @@ const Dinogotchi: React.FC = () => {
 		}
 
 		KidsSpaceSettingsService.addUpdateEventListenner(loadData)
-		
+
 		if (isLoading) {
 			loadData()
 		}
@@ -68,9 +70,8 @@ const Dinogotchi: React.FC = () => {
 	}, [isLoading, selectedHat])
 
 	useEffect(() => {
-		if (state === DinoEnum.OUTSIDE)
-			return startCloudEngine()
-			
+		if (state === DinoEnum.OUTSIDE) return startCloudEngine()
+
 		startPaitingEngine()
 	}, [state])
 
@@ -86,9 +87,9 @@ const Dinogotchi: React.FC = () => {
 
 	const renderBackground = (): JSX.Element => {
 		const currentHour = new Date().getHours()
-		return state === DinoEnum.OUTSIDE 
-		? renderOusideBackground(currentHour)
-		: renderInsideBackground(currentHour)
+		return state === DinoEnum.OUTSIDE
+			? renderOusideBackground(currentHour)
+			: renderInsideBackground(currentHour)
 	}
 
 	const renderInsideBackground = (currentHour: number): JSX.Element => {
@@ -108,74 +109,133 @@ const Dinogotchi: React.FC = () => {
 	const renderAwakeDino = () => {
 		return (
 			<>
-				<Dino className={`dinogotchi_screen__dino_pet has_${selectedHat}`}/>
+				<Dino className={`dinogotchi_screen__dino_pet has_${selectedHat}`} />
 				<div className='dinogotchi_screen__options'>
-					<DinoIconButton 
+					<DinoIconButton
 						circular
 						ariaLabel={language.data.GO_TO_GAME_MENU}
 						icon={GameSVG}
 						onClick={() => HistoryService.push(PathConstants.GAME_MENU)}
 					/>
-					<DinoIconButton 
+					<DinoIconButton
 						circular
-						ariaLabel={state !== DinoEnum.OUTSIDE ? language.data.GO_OUTSIDE : language.data.RETURN_INSIDE}
-						icon={GoOutSVG} 
-						onClick={() => setState(state !== DinoEnum.OUTSIDE ? DinoEnum.OUTSIDE : DinoEnum.INSIDE)}
+						ariaLabel={
+							state !== DinoEnum.OUTSIDE
+								? language.data.GO_OUTSIDE
+								: language.data.RETURN_INSIDE
+						}
+						icon={GoOutSVG}
+						onClick={() =>
+							setState(
+								state !== DinoEnum.OUTSIDE ? DinoEnum.OUTSIDE : DinoEnum.INSIDE,
+							)
+						}
 					/>
-					{state !== DinoEnum.OUTSIDE &&
-						<DinoIconButton 
+					{state !== DinoEnum.OUTSIDE && (
+						<DinoIconButton
 							circular
 							ariaLabel={language.data.GO_TO_SLEEP}
-							icon={GoToSleepSVG} 
-							onClick={() => setState(DinoEnum.ASLEEP)} 
+							icon={GoToSleepSVG}
+							onClick={() => setState(DinoEnum.ASLEEP)}
 						/>
-					}
+					)}
 				</div>
 			</>
 		)
 	}
 
-	const renderSleepDino = () => <SleepDino className='dinogotchi_screen__dino_pet sleep_dino' onClick={() => setState(DinoEnum.INSIDE)}/>
+	const renderSleepDino = () => (
+		<SleepDino
+			className='dinogotchi_screen__dino_pet sleep_dino'
+			onClick={() => setState(DinoEnum.INSIDE)}
+		/>
+	)
 
 	const renderDino = () => {
-		const firstSettingsNotDone = !kidsSpaceSettings || !kidsSpaceSettings.firstSettingsDone
+		const firstSettingsNotDone =
+			!kidsSpaceSettings || !kidsSpaceSettings.firstSettingsDone
 
-		return firstSettingsNotDone 
-		? colorSelected ? chooseDinoHat() : chooseDinoColor()
-		: state === DinoEnum.ASLEEP ? renderSleepDino() : renderAwakeDino()
+		return firstSettingsNotDone
+			? colorSelected
+				? chooseDinoHat()
+				: chooseDinoColor()
+			: state === DinoEnum.ASLEEP
+			? renderSleepDino()
+			: renderAwakeDino()
 	}
 
 	const chooseDinoColor = () => {
 		return (
 			<>
-				<div className='speech_bubble'> {language.data.CHOOSE_COLOR_DINO_MESSAGE} </div>
+				<div className='speech_bubble'>
+					{' '}
+					{language.data.CHOOSE_COLOR_DINO_MESSAGE}{' '}
+				</div>
 				<Dino className='dinogotchi_screen__dino_pet first_login' />
 				<div className='dialog_chooser'>
-					<button className='dialog_chooser__button green' onClick={() => selectColor(DinoColorConstants.DEFAULT)}></button>
-					<button className='dialog_chooser__button pink' onClick={() => selectColor(DinoColorConstants.PINK)}></button>
-					<button className='dialog_chooser__button blue' onClick={() => selectColor(DinoColorConstants.BLUE)}></button>
-					<button className='dialog_chooser__button red' onClick={() => selectColor(DinoColorConstants.RED)}></button>
+					<button
+						className='dialog_chooser__button green'
+						onClick={() => selectColor(DinoColorConstants.DEFAULT)}
+					></button>
+					<button
+						className='dialog_chooser__button pink'
+						onClick={() => selectColor(DinoColorConstants.PINK)}
+					></button>
+					<button
+						className='dialog_chooser__button blue'
+						onClick={() => selectColor(DinoColorConstants.BLUE)}
+					></button>
+					<button
+						className='dialog_chooser__button red'
+						onClick={() => selectColor(DinoColorConstants.RED)}
+					></button>
 				</div>
 
-				<Button className='selection_button' onClick={() => setColorSelected(true)}> Escolher </Button>
+				<Button
+					className='selection_button'
+					onClick={() => setColorSelected(true)}
+				>
+					{' '}
+					Escolher{' '}
+				</Button>
 			</>
 		)
 	}
 
 	const chooseDinoHat = () => {
 		return (
-			<> 
-				<div className='speech_bubble hat_choosing'>{language.data.CHOOSE_ACESSORY_DINO_MESSAGE} </div>
-				<div className="dialog_chooser hat_chooser">
-					<Cap className='dialog_chooser__button' onClick={() => setSelectedHat('bone')}/>
-					<Hat className='dialog_chooser__button' onClick={() => setSelectedHat('gorro')}/>
-					<Lace className='dialog_chooser__button' onClick={() => setSelectedHat('laco')}/>
-					<Mohawk className='dialog_chooser__button' onClick={() => setSelectedHat('moicano')}/>
-					<Headscarf className='dialog_chooser__button' onClick={() => setSelectedHat('lenco')}/>
+			<>
+				<div className='speech_bubble hat_choosing'>
+					{language.data.CHOOSE_ACESSORY_DINO_MESSAGE}{' '}
+				</div>
+				<div className='dialog_chooser hat_chooser'>
+					<Cap
+						className='dialog_chooser__button'
+						onClick={() => setSelectedHat('bone')}
+					/>
+					<Hat
+						className='dialog_chooser__button'
+						onClick={() => setSelectedHat('gorro')}
+					/>
+					<Lace
+						className='dialog_chooser__button'
+						onClick={() => setSelectedHat('laco')}
+					/>
+					<Mohawk
+						className='dialog_chooser__button'
+						onClick={() => setSelectedHat('moicano')}
+					/>
+					<Headscarf
+						className='dialog_chooser__button'
+						onClick={() => setSelectedHat('lenco')}
+					/>
 					<div onClick={() => setSelectedHat('none')}> X </div>
 				</div>
 				<Dino className='dinogotchi_screen__dino_pet first_login hat_choosing' />
-				<Button className='selection_button' onClick={handleChooseColor}> {language.data.CHOOSE} </Button>
+				<Button className='selection_button' onClick={handleChooseColor}>
+					{' '}
+					{language.data.CHOOSE}{' '}
+				</Button>
 			</>
 		)
 	}
@@ -187,7 +247,11 @@ const Dinogotchi: React.FC = () => {
 
 	return (
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
-			<div className={`dinogotchi_screen ${state === DinoEnum.OUTSIDE ? 'outside' : 'inside'}`}>
+			<div
+				className={`dinogotchi_screen ${
+					state === DinoEnum.OUTSIDE ? 'outside' : 'inside'
+				}`}
+			>
 				{renderBackground()}
 				{renderDino()}
 				{/* <AccessDialog 
@@ -196,7 +260,10 @@ const Dinogotchi: React.FC = () => {
 					onClose={() => setOpen(false)} 
 					onConfirm = {() => HistoryService.push(PathConstants.HOME)} 
 				/> */}
-				<ArrowBack kids onClick={() => HistoryService.push(PathConstants.USER_HOME)} />
+				<ArrowBack
+					kids
+					onClick={() => HistoryService.push(PathConstants.USER_HOME)}
+				/>
 			</div>
 		</Loader>
 	)

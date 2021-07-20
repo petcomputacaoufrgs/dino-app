@@ -129,9 +129,9 @@
 	left: -35vmin;
 }
 
-.dinogotchi_screen__dino_pet.hat_choosing {
+.hat_selection .dinogotchi_screen__dino_pet {
 	top: 80vmin;
-	left: -15vmin;
+	left: -36vmin;
 	height: 90vh;
 }
 
@@ -168,32 +168,39 @@
 	transform-origin: top;
 }
 
-.color_chooser {
+.hat_selection .dialog_chooser svg {
+	width: 25vmin;
+	height: 25vmin;
+}
+
+.hat_selection .dialog_chooser div {
+	font-size: 2.5rem;
+	font-weight: bold;
+	color: #121212;
+}
+
+.dialog_chooser {
 	position: absolute;
-	top: 8vh;
-	background-color: #121212;
-	padding: 1.2rem;
-	border-radius: 0.5rem;
-}
-
-.hat_chooser {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	padding: 0.5rem;
+	top: 3vh;
+	right: 3vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
-	text-align: center;
+	z-index: 5;
+	background-color: #fafafabf;
+	border-radius: 0.8rem;
+	padding: 0.5rem;
 }
-
 
 .dialog_chooser__button {
 	border: none;
 	border-radius: 50%;
-	text-align: center;
 	text-decoration: none;
-	display: inline-block;
-	width: 10vmin;
-	height: 10vmin;
-	margin: 1vmin;
+	width: 17vmin;
+	height: 17vmin;
+	margin: 0.5rem;
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .hat_chooser .dialog_chooser__button {
@@ -219,19 +226,42 @@
 
 .selection_button {
 	position:absolute;
+    width: 30vw;
 	top: 85vh;
+    left: 35vw;
+	background-color: #A977B5;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .speech_bubble {
 	position: absolute;
-	background-color: #f5f5f5;
+	font-size: 1rem;
 	color: #121212;
-	border: #838383 solid 0.05rem;
+	left: 3vw;
+}
+
+.speech_bubble__square {
+	width: 60vw;
 	border-radius: 0.4rem;
-	top: 30vh;
-	left: 50vw;
-	max-width: 40vw;
 	padding: 1rem;
+	background-color: #fafafa;
+}
+
+.speech_bubble__triangle {
+	width: 0; 
+	height: 0;
+	margin: 0 1rem 0 auto;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 20px solid #fafafa;
+}
+
+.color_selection .speech_bubble {
+	top: 12vh;
+}
+
+.hat_selection .speech_bubble {
+	top: 28vh;
 }
 
 .speech_bubble.hat_choosing {

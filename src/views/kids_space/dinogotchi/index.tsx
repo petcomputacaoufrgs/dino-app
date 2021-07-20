@@ -147,8 +147,13 @@ const Dinogotchi: React.FC = () => {
 
 	const chooseDinoColor = () => {
 		return (
-			<>
-				<div className='speech_bubble'> {language.data.CHOOSE_COLOR_DINO_MESSAGE} </div>
+			<div className='color_selection'>
+				<div className='speech_bubble'>
+					<div className='speech_bubble__square'>
+						<p>{language.data.CHOOSE_COLOR_DINO_MESSAGE}</p>
+					</div>
+					<div className='speech_bubble__triangle'></div>
+				</div>
 				<Dino className='dinogotchi_screen__dino_pet first_login' />
 				<div className='dialog_chooser'>
 					<button className='dialog_chooser__button green' onClick={() => selectColor(DinoColorConstants.DEFAULT)}></button>
@@ -158,25 +163,30 @@ const Dinogotchi: React.FC = () => {
 				</div>
 
 				<Button className='selection_button' onClick={() => setColorSelected(true)}> Escolher </Button>
-			</>
+			</div>
 		)
 	}
 
 	const chooseDinoHat = () => {
 		return (
-			<> 
-				<div className='speech_bubble hat_choosing'>{language.data.CHOOSE_ACESSORY_DINO_MESSAGE} </div>
-				<div className="dialog_chooser hat_chooser">
-					<Cap className='dialog_chooser__button' onClick={() => setSelectedHat('bone')}/>
-					<Hat className='dialog_chooser__button' onClick={() => setSelectedHat('gorro')}/>
-					<Lace className='dialog_chooser__button' onClick={() => setSelectedHat('laco')}/>
-					<Mohawk className='dialog_chooser__button' onClick={() => setSelectedHat('moicano')}/>
-					<Headscarf className='dialog_chooser__button' onClick={() => setSelectedHat('lenco')}/>
+			<div className='hat_selection'>
+				<div className='speech_bubble'>
+					<div className='speech_bubble__square'>
+						<p>{language.data.CHOOSE_ACESSORY_DINO_MESSAGE}</p>
+					</div>
+					<div className='speech_bubble__triangle'></div>
+				</div>
+				<div className="dialog_chooser">
+					<Cap onClick={() => {setSelectedHat('bone')}}/>
+					<Hat onClick={() => setSelectedHat('gorro')}/>
+					<Lace onClick={() => setSelectedHat('laco')}/>
+					<Mohawk onClick={() => setSelectedHat('moicano')}/>
+					<Headscarf onClick={() => setSelectedHat('lenco')}/>
 					<div onClick={() => setSelectedHat('none')}> X </div>
 				</div>
-				<Dino className='dinogotchi_screen__dino_pet first_login hat_choosing' />
+				<Dino className={`dinogotchi_screen__dino_pet first_login hat_choosing has_${selectedHat}`} />
 				<Button className='selection_button' onClick={handleChooseColor}> {language.data.CHOOSE} </Button>
-			</>
+			</div>
 		)
 	}
 

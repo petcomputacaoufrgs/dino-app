@@ -74,6 +74,9 @@ const DinoRunner: React.FC = () => {
 					ref={dinoRunnerGameCharacter}
 					className='dino_runner_game__grid__character'
 				></div>
+				<div
+					className='dino_runner_game__obstacle'
+				></div>
 			</div>
 			<div className='dino_runner_game__score_board_container'>
 				<div

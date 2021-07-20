@@ -2,6 +2,7 @@ import sleep from '../../../../../utils/SleepUtils'
 import { getRandomInteger } from '../../../../../utils/RandomUtils'
 import { startBackgroundEngine } from './background'
 
+let goBackButton
 let dino: HTMLElement | null
 let grid: HTMLElement | null
 let container: HTMLElement | null
@@ -22,13 +23,23 @@ export function startDinoRunnerGame(
 	dinoScoreBoard: HTMLDivElement,
 ) {
 	onGameEnd = handleGameEnd
-
 	dino = character
 	grid = dinoGrid
 	container = dinoContainer
 	scoreBoard = dinoScoreBoard
-
 	setScore(0)
+
+	goBackButton = document.getElementsByClassName('dino_icon_button')[0]
+	goBackButton.addEventListener('click', () => {
+		isJumping = false
+		isFirstJump = true
+		position = 0
+
+		dino = null
+		grid = null
+		container = null
+		scoreBoard = null
+	})
 
 	return [handleStopBackgroundEngine, handleStartGame]
 }
@@ -68,7 +79,7 @@ async function jump(dino: HTMLElement) {
 		y_velocity -= gravity
 		dino.style.transform = `translate3d(0, -${position}%, 0)`
 		await sleep(20)
-	}while (position > 0)
+	} while (position > 0)
 
 	dino.style.transform = `translate3d(0, 0, 0)`
 }
@@ -81,40 +92,44 @@ async function generateObstacle() {
 	const obstacle = document.createElement('div')
 	obstacle.classList.add('dino_runner_game__obstacle')
 	obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
-	grid!.appendChild(obstacle)
 
-	if(isFirstJump){
-		obstaclePosition = 1000 //dá um tempo melhor para o jogador pensar no primeiro pulo
-		isFirstJump = false
-	} 
+	if (grid) {
+		grid.appendChild(obstacle)
 
-	while (obstaclePosition >= -300) {
-		if (!nextObstacleGenerated && obstaclePosition < minDistance * -1) {
-			nextObstacleGenerated = true
-			generateNextObstacle()
+		if (isFirstJump) {
+			obstaclePosition = 1000 //dá um tempo melhor para o jogador pensar no primeiro pulo
+			isFirstJump = false
 		}
 
-		const hasCollision =
-			obstaclePosition > -160 && obstaclePosition < -50 && position < 50
+		while (obstaclePosition >= -300) {
+			if (!nextObstacleGenerated && obstaclePosition < minDistance * -1) {
+				nextObstacleGenerated = true
+				generateNextObstacle()
+			}
 
-		if (isGameOver) break
+			const hasCollision =
+				obstaclePosition > -160 && obstaclePosition < -50 && position < 50
 
-		if (hasCollision) {
-			isGameOver = true
-			handleStopBackgroundEngine()
-			onGameEnd()
-			break
+			if (isGameOver) break
+
+			if (hasCollision) {
+				isGameOver = true
+				handleStopBackgroundEngine()
+				onGameEnd()
+				break
+			}
+
+			await sleep(20)
+			if (increaseSpeed < 7.5) increaseSpeed = score * 0.15 // Limite de velocidade
+			obstaclePosition -= 11 + increaseSpeed // Jogo fica mais rápido de acordo com a quantidade de pontos
+			obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 		}
 
-		await sleep(20)
-		if(increaseSpeed < 7.5) increaseSpeed = score * 0.15 // Limite de velocidade
-		obstaclePosition -= 11 + increaseSpeed // Jogo fica mais rápido de acordo com a quantidade de pontos
-		obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
+		score++
+		setScore(score)
+		obstacle.remove()
 	}
 
-	score++
-	setScore(score)
-	obstacle.remove()
 }
 
 async function generateNextObstacle() {

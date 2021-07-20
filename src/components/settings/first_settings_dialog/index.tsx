@@ -10,6 +10,7 @@ import './styles.css'
 import HashUtils from '../../../utils/HashUtils'
 import FirstSettingsDialog from './dialogs'
 import DataConstants from '../../../constants/app_data/DataConstants'
+import { toggle } from '../../../constants/toggle/Toggle'
 
 const FirstSettings: React.FC = () => {
 
@@ -234,7 +235,7 @@ const FirstSettings: React.FC = () => {
 
 	return (
 		<>
-			{!isLoading && settings && !settings.firstSettingsDone && (
+			{!isLoading && settings && (!settings.firstSettingsDone || toggle.firstLogin) && (
 				<FirstSettingsDialog 
 					step={step}
 					onCloseDialogs={handleCloseDialogs}

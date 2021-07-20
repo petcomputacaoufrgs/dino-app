@@ -22,7 +22,6 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-	/* fill: var(--contrast-color); */
 	fill: var(--contrast-color);
 }
 
@@ -65,6 +64,9 @@ body .MuiInputBase-root {
 .MuiCardHeader-action button.button.icon_button {
 	margin: 0rem 0.125rem;
 }
+.MuiPaper-root.MuiDialog-paper .MuiCardHeader-action {
+	align-self: center;
+}
 
 .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
   text-overflow: ellipsis;
@@ -105,4 +107,53 @@ body .MuiInputBase-root {
 .MuiCardHeader-root.contact_dialog_form_header .MuiSvgIcon-root {
 	/* fill: var(--contrast-color); */
 	fill: #fafafa;
+}
+
+.treatment__list_item .MuiBadge-anchorOriginTopRightCircle {
+	top: 10%;
+	right: 10%;
+	transform: scale(0.8) translate(50%, -50%);
+	transform-origin: 100% 0%;
+}
+
+body .MuiCheckbox-colorSecondary.Mui-checked {
+	color: var(--button-selected-font-color)
+}
+
+@media (orientation: landscape) {
+	body .MuiListItemText-root .MuiTypography-body1 {
+		font-size: 1.6rem;
+	}
+	
+	body .MuiAvatar-root {
+		width: 50px;
+		height: 50px;
+		margin-right: 10px;
+	}
+	
+	body .MuiFormLabel-root,
+	body .MuiInputBase-root,
+	body .MuiMenuItem-root,
+	body .MuiAutocomplete-popper {
+		font-size: 1.4rem;
+	}
+
+	body .MuiSvgIcon-root {
+		transform: scale(1.5);
+	}
+
+	label + .MuiInput-formControl {
+		margin-top: 30px !important;
+	}
+	
+	.treatment__list_item .treatment__list_item__action .dino_icon_button__tooltip {
+		margin-left: 3em;
+	}  
+
+	.treatment__list_item .MuiBadge-anchorOriginTopRightCircle {
+		top: -5%;
+    right: 0;
+    transform: scale(1) translate(50%, -50%);
+    transform-origin: 100% 0%;
+	}
 }

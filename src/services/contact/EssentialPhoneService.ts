@@ -5,7 +5,7 @@ import EssentialPhoneDataModel from "../../types/contact/api/EssentialPhoneDataM
 import EssentialContactEntity from "../../types/contact/database/EssentialContactEntity"
 import EssentialPhoneEntity from "../../types/contact/database/EssentialPhoneEntity"
 import PermissionEnum from "../../types/enum/PermissionEnum"
-import Utils from "../../utils/Utils"
+import { hasValue } from "../../utils/Utils"
 import AutoSynchronizableService from "../sync/AutoSynchronizableService"
 import SynchronizableService from "../sync/SynchronizableService"
 import WebSocketQueuePathService from "../websocket/path/WebSocketQueuePathService"
@@ -40,7 +40,7 @@ class EssentialPhoneService extends AutoSynchronizableService<
 		}
 
         const essentialContactId = model.essentialContactId
-		if (Utils.isNotEmpty(essentialContactId)) {
+		if (hasValue(essentialContactId)) {
 			const essentialContact = await EssentialContactService.getById(essentialContactId!)
 			entity.localEssentialContactId = essentialContact?.localId
 		}
@@ -56,7 +56,7 @@ class EssentialPhoneService extends AutoSynchronizableService<
 
 		const localEssentialContactId = entity.localEssentialContactId
 
-		if (Utils.isNotEmpty(localEssentialContactId)) {
+		if (hasValue(localEssentialContactId)) {
 			const essentialContact = await EssentialContactService.getByLocalId(localEssentialContactId!)
 			model.essentialContactId = essentialContact?.id
 

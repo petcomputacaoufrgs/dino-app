@@ -34,6 +34,7 @@ class KidsSpaceSettingsServiceImpl extends AutoSynchronizableService<
     async convertModelToEntity(model: KidsSpaceSettingsModel): Promise<KidsSpaceSettingsEntity | undefined> {
         const entity: KidsSpaceSettingsEntity = {
             color: model.color,
+            hat: model.hat,
             firstSettingsDone: model.firstSettingsDone
         }
         
@@ -43,6 +44,7 @@ class KidsSpaceSettingsServiceImpl extends AutoSynchronizableService<
     async convertEntityToModel(entity: KidsSpaceSettingsEntity): Promise<KidsSpaceSettingsModel | undefined> {
         const model: KidsSpaceSettingsModel = {
             color: entity.color,
+            hat: entity.hat,
             firstSettingsDone: entity.firstSettingsDone
         } 
 

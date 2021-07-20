@@ -25,7 +25,7 @@ interface GlossaryListItemProps {
 				<Accordion.Toggle as={Card.Header} eventKey={eventKey}>
 					<Card.Title className='glossary__card_title dino__flex_row dino__text__wrap'>
 						{item.title}
-						{isStaff && <OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />}
+						{isStaff && <OptionsIconButton onClick={(e) => onClickMenu(e, item)} />}
 					</Card.Title>
 				</Accordion.Toggle>
 				<Accordion.Collapse eventKey={eventKey}>

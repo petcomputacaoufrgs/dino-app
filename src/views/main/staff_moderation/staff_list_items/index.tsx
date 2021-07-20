@@ -1,6 +1,6 @@
 import { List } from '@material-ui/core'
 import React, { useState } from 'react'
-import AgreementDialog from '../../../../components/agreement_dialog'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/dino_dialog'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import ListTitle from '../../../../components/list_components/list_title'

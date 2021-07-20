@@ -3,7 +3,7 @@ import AuthService from '../../services/auth/AuthService'
 import FirstSettings from '../../components/settings/first_settings_dialog'
 import DinoLoader from '../../components/loader/index'
 import DrawerNavigation from '../../components/drawer_navigation'
-import LogoutDialog from '../../components/logout_dialog'
+import LogoutDialog from '../../components/dialogs/logout_dialog'
 import { useLanguage } from '../../context/language/index'
 import { GetPermission } from '../../context/private_router'
 import MenuService from '../../services/menu/MenuService'
@@ -38,17 +38,11 @@ const Main: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
-	const handleLogoutClick = () => {
-		setOpenLogoutDialog(true)
-	}
+	const handleLogoutClick = () => setOpenLogoutDialog(true)
+ 
+	const handleLogoutAgree = () => AuthService.logout()
 
-	const handleLogoutAgree = () => {
-		AuthService.logout()
-	}
-
-	const handleLogoutDisagree = () => {
-		setOpenLogoutDialog(false)
-	}
+	const handleLogoutDisagree = () => setOpenLogoutDialog(false)
   
   return (
     <DinoLoader isLoading={language.loading} hideChildren>

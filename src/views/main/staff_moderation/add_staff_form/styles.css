@@ -8,3 +8,6 @@
 .dialog_form__content button.dialog_form__content__save_button {
   padding: 16px;
 }
+.add_staff__text {
+  text-align: center;
+}

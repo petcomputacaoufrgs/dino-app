@@ -23,7 +23,7 @@
 	margin-bottom: 0.625rem;
 }
 
-.privacy_policy .icon_button.arrow_back svg {
+.privacy_policy .dino_icon_button__button.arrow_back svg {
 	fill: var(--contrast-color);
 }
 

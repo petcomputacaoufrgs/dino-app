@@ -69,7 +69,7 @@ const App: React.FC = () => {
 		const loadTestInstances = async () => {
 			const dbSettings = await UserSettingsService.getFirst()
 			if (dbSettings) {
-				if(toggle.loadTestInstances && !dbSettings.firstSettingsDone) {
+				if(toggle.loadTestInstancesAtFirstLogin && (!dbSettings.firstSettingsDone || toggle.firstLogin)) {
 					console.log("Carregando testes...")
 					TestInstanceService.loadInstances()
 				}
@@ -176,8 +176,8 @@ const App: React.FC = () => {
 					restrictedTo={[PermissionEnum.USER]} 
         		/>
 				<PrivateRoute 
-					path={PathConstants.STAFF} 
-					component={StaffMain} 
+					path={PathConstants.STAFF}
+					component={StaffMain}
 					restrictedTo={[PermissionEnum.ADMIN, PermissionEnum.STAFF]} 
 				/>
 				<PrivateRoute 
@@ -195,13 +195,12 @@ const App: React.FC = () => {
 
 	return (
 		<div className='app'>
-			{showLoadScreen || isLoading ? (
-				<Load />
-			) : isMainTab ? (
-				renderApp()
-			) : (
-				<SecondaryTab />
-			)}
+			{showLoadScreen || isLoading 
+				? <Load />
+				: isMainTab 
+					? renderApp()
+					: <SecondaryTab />
+			}
 			<PWAControl />
 		</div>
 	)

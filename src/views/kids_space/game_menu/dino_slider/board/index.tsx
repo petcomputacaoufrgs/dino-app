@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useEvent } from '..'
+import DinoSwitch from '../../../../../components/switch'
+import { toggle } from '../../../../../constants/toggle/Toggle'
+import { useLanguage } from '../../../../../context/language'
 import ArrayUtils from '../../../../../utils/ArrayUtils'
-import Piece from '../piece'
+import SliderPiece from '../piece'
 import SliderBoardProps, { HandleSwipeProps } from './props'
-import './styles.css'
 
-const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
+const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver, reduced}) => {
     
   const PIECES = 16
   const LINES = PIECES / 4 
   const TO = 0
   const FROM = 1
 
+  const language = useLanguage()
   const [gameState, setGameState] = useState([] as number[])
 
   const addNumber = (grid: number[]) => {
@@ -42,7 +45,16 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
   }
 
   const initialize = () => {
-    let newGrid = new Array<number>(PIECES).fill(0)
+
+    const getPow2Grid = () => {
+      const arr = new Array<number>()
+      for (let i = 1; i <= PIECES; i++) {
+        arr.push(i <= 12 ? Math.pow(2, i) : 0)
+      }
+      return arr
+    }
+
+    let newGrid = toggle.testAll2048Pieces ? getPow2Grid() : new Array<number>(PIECES).fill(0)
     addNumber(newGrid)
     addNumber(newGrid)
     return newGrid
@@ -132,9 +144,13 @@ const SliderBoard: React.FC<SliderBoardProps> = ({restart, onGameOver}) => {
   }
 
   return (
-      <div className="board">
-          {gameState.map((number, index) => <Piece num={number} key={index}/>)}
+    <>
+      <div className="dino_slider__board">
+          {gameState.map((number, index) => 
+            <SliderPiece reduced={reduced} num={number} key={index}/>
+          )}
       </div>
+    </>
   )
 }
 

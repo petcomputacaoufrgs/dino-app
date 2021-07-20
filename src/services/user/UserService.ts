@@ -10,10 +10,11 @@ import GooglePeopleAPIUtils from '../../utils/GooglePeopleAPIUtils'
 import SynchronizableService from '../sync/SynchronizableService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import Database from '../../storage/Database'
-import Utils from '../../utils/Utils'
+import { hasValue } from '../../utils/Utils'
 import DinoAgentService from '../../agent/DinoAgentService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import { toggle } from '../../constants/toggle/Toggle'
 
 class UserServiceImpl extends AutoSynchronizableService<
 	number,
@@ -83,14 +84,16 @@ class UserServiceImpl extends AutoSynchronizableService<
 	async getPermission(): Promise<string | undefined> {
 		const user = await this.getFirst()
 		if(user) {
-			return user.permission
+			return toggle.overridePermission.override 
+				? toggle.overridePermission.permission
+				: user.permission
 		} 
 		return undefined
 	}
 
 	protected async onSaveEntity(entity: UserEntity) {
 		await this.clearDatabase()
-		if (Utils.isNotEmpty(entity.id)) {
+		if (hasValue(entity.id)) {
 			const savedEntity = await this.getByLocalId(entity.id!)
 
 			if (savedEntity) {
@@ -98,10 +101,10 @@ class UserServiceImpl extends AutoSynchronizableService<
 				const pictureUrlChanged = entity.pictureURL !== savedEntity.pictureURL
 
 				if (withoutSavedPicture || pictureUrlChanged) {
-					this.donwloadPicture(entity.pictureURL, entity.id!)
+					this.downloadPicture(entity.pictureURL, entity.id!)
 				}
 			} else {
-				this.donwloadPicture(entity.pictureURL, entity.id!)
+				this.downloadPicture(entity.pictureURL, entity.id!)
 			}
 		}
 	}
@@ -115,7 +118,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 	}
 
 	async verifyGoogleUserPhoto(entity: UserEntity) {
-		if (Utils.isNotEmpty(entity.id)) {
+		if (hasValue(entity.id)) {
 			const photoModel = await GoogleUserService.getUserGoogleAPIPhoto()
 
 			if (photoModel) {
@@ -130,7 +133,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 					if (entity.pictureURL !== newPictureURL) {
 						entity.pictureURL = newPictureURL
 						await this.save(entity)
-						this.donwloadPicture(newPictureURL, entity.id!)
+						this.downloadPicture(newPictureURL, entity.id!)
 					}
 				}
 			}
@@ -155,7 +158,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 		return false
 	}
 
-	private donwloadPicture = (pictureURL: string, localId: number) => {
+	private downloadPicture = (pictureURL: string, localId: number) => {
 		try {
 			ImageToBase64Utils.getBase64FromImageSource(
 				pictureURL,
@@ -173,7 +176,7 @@ class UserServiceImpl extends AutoSynchronizableService<
 		success: boolean,
 		id?: any,
 	) => {
-		if (success && Utils.isNotEmpty(id)) {
+		if (success && hasValue(id)) {
 			const savedEntity = await this.getById(id)
 			if (savedEntity) {
 				savedEntity.pictureBase64 = base64Image

@@ -69,7 +69,7 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	): FaqView {
 			const newView = {
 				...view,
-				faqItems: FaqItemService.getFaqItemByFilter(view.treatment, searchTerm, view.faqItems),
+				faqItems: FaqItemService.getFaqItemByFilter(searchTerm, view.faqItems),
 			}
 
 			return newView as FaqView
@@ -81,17 +81,15 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 
 	beforeDelete = async (treatment: TreatmentEntity) => {
 
-		console.log("SADBHASDGVADFSSAAHSBSADSADSADDASBH")
-
 		const faqItems = await FaqItemService.getByTreatment(treatment)
 
 		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(treatment)
 
-		await EssentialContactService.removeTreatment(treatment)
-
-		await FaqItemService.deleteAll(faqItems)
-		
-		await TreatmentQuestionService.deleteAll(treatmentQuestions)
+		await Promise.all([
+			EssentialContactService.removeTreatment(treatment),
+			FaqItemService.deleteAll(faqItems),
+			TreatmentQuestionService.deleteAll(treatmentQuestions)
+		])
 	}
 }
 

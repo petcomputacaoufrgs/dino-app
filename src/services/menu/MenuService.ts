@@ -16,7 +16,7 @@ class MenuService {
 	getMainPages = (language: LanguageBase): MenuItemViewModel[] => [
 		{
 			image: HomeSVG,
-			name: language.MENU_HOME,
+			name: language.HOME,
 			onClick: () => HistoryService.push(PathConstants.USER_HOME),
 		},
 		{
@@ -31,7 +31,7 @@ class MenuService {
 		},
 		{
 			image: NotesSVG,
-			name: language.MENU_NOTES,
+			name: language.NOTES,
 			onClick: () => HistoryService.push(PathConstants.USER_NOTES),
 		},
 		{
@@ -55,7 +55,7 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.KIDS_SPACE),
 		},
 		{
-			name: language.MENU_ABOUT_US,
+			name: language.ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},
 		{
@@ -71,7 +71,7 @@ class MenuService {
 	getStaffMainPages = (language: LanguageBase): MenuItemViewModel[] => [
 		{
 			image: HomeSVG,
-			name: language.MENU_HOME,
+			name: language.HOME,
 			onClick: () => HistoryService.push(PathConstants.STAFF_HOME),
 		},
 		{
@@ -96,7 +96,7 @@ class MenuService {
 		},
 		{
 			image: SettingsSVG,
-			name: language.MENU_ABOUT_US,
+			name: language.ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},
 		{

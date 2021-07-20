@@ -41,7 +41,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 		const questionConflict = questionAlreadyExists(newQuestion)
 		if (questionConflict) {
 			setQuestionWithError(true)
-			setQuestionErrorHelper(language.data.QUESTION_ALREADY_EXISTS_ERROR)
+			setQuestionErrorHelper(language.data.itemAlreadyExists(language.data.QUESTION))
 
 			return
 		}

@@ -6,13 +6,13 @@ import TreatmentService from '../../../services/treatment/TreatmentService'
 import StringUtils from '../../../utils/StringUtils'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import TreatmentItems from './treatment_list_items'
-import AddButton from '../../../components/button/circular_button/add_button'
+import AddButton from '../../../components/button/icon_button/add_button'
 import TreatmentForm from './treatment_form'
 import './styles.css'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
-import { getTreatmentFilter } from '../../../utils/FilterUtils'
 import { useStaffData } from '../../../context/staff_data'
+import FilterService from '../../../storage/local_storage/filter/FilterService'
 
 const Treatment: React.FC<{ ref: React.Ref<unknown> }> = () => {
 
@@ -22,7 +22,7 @@ const Treatment: React.FC<{ ref: React.Ref<unknown> }> = () => {
 	const [treatments, setTreatments] = useState<Array<TreatmentEntity>>([])
 	const [toAdd, setToAdd] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
-	const [filters, setFilters] = useState(getTreatmentFilter(language))
+	const [filters, setFilters] = useState(FilterService.getTreatmentFilters(language))
 	
 	const filteredTreatments = treatments.filter(t => 
 		StringUtils.contains(t.name, searchTerm) && 

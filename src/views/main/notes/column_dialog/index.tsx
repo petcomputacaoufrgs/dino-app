@@ -67,7 +67,7 @@ const NoteColumnDialog = forwardRef(
 
 			const titleConflict = props.titleAlreadyExists(title)
 			if (titleConflict) {
-				setInvalidMessage(language.data.COLUMN_TITLE_ALREADY_EXISTS_ERROR)
+				setInvalidMessage(language.data.itemAlreadyExists(language.data.TITLE))
 				return false
 			}
 

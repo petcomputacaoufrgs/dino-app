@@ -3,7 +3,7 @@ import { cameFromEssential, filterContactViews, getContactViews, isUniversalEsse
 import ContactItems from './contact_list_items'
 import DinoSearchBar from '../../../components/search_bar'
 import ContactFormDialog from './contact_dialog_form'
-import GoogleGrantDialog from '../../../components/google_grant_dialog'
+import GoogleGrantDialog from '../../../components/dialogs/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import DinoLoader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
@@ -15,14 +15,14 @@ import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import { HasStaffPowers } from '../../../context/private_router'
-import AddButton from '../../../components/button/circular_button/add_button'
+import AddButton from '../../../components/button/icon_button/add_button'
 import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
 import { Star, Public } from '@material-ui/icons'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
-import { getContactFilter } from '../../../utils/FilterUtils'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import FilterService from '../../../storage/local_storage/filter/FilterService'
 
 export const renderIcon = (contact: ContactType) => {
 
@@ -47,7 +47,7 @@ const Contacts: React.FC = () => {
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
-	const [filters, setFilters] = useState(getContactFilter(hasStaffPowers, language))
+	const [filters, setFilters] = useState(FilterService.getContactFilters(hasStaffPowers, language))
 
 	let filteredContacts = filterContactViews(contacts, searchTerm)
 	.filter(c => filters.some(f => f.checked && f.validator(c.contact)))

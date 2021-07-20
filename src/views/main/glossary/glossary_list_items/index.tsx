@@ -4,7 +4,7 @@ import { useLanguage } from '../../../../context/language'
 import GlossaryItemProps from './props'
 import { HasStaffPowers } from '../../../../context/private_router'
 import GlossaryItemEntity from '../../../../types/glossary/database/GlossaryItemEntity'
-import AgreementDialog from '../../../../components/agreement_dialog'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import GlossaryItemForm from '../glossary_item_form'
 import GlossaryService from '../../../../services/glossary/GlossaryService'
 import GlossaryListItem from './glossary_list_item'
@@ -36,7 +36,7 @@ const GlossaryItems = ({ items }: GlossaryItemProps): JSX.Element => {
 	}
 
 	return (
-		<div className='glossary__items dino__list__padding'>
+		<div className='glossary__items dino__list dino__list__padding'>
 			<ListTitle title={language.data.GLOSSARY}/>
 			{ArrayUtils.isNotEmpty(items) ? 
 				<Accordion className='dino__accordion'>

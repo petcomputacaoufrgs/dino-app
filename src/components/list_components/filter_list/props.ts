@@ -1,7 +1,6 @@
+import FilterType from "../../../types/filter/Filter"
+
 export default interface DinoFilterListProps {
-  filters: {
-    checked: boolean,
-    label: string
-  }[],
+  filters: FilterType[],
   onChangeChecked: (index: number) => void,
 }

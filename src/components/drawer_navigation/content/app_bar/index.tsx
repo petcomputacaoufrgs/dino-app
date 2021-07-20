@@ -16,8 +16,9 @@ const AppBar: React.FC<AppBarProps> = ({ onDrawerOpen }) => {
 				icon={MenuIconSVG}
 				onClick={onDrawerOpen}
 				className='drawer__navigation__app_bar__button'
+				lum="light"
 			/>
-			<ArrowBack />
+			<ArrowBack lum="light" />
 		</div>
 	)
 }

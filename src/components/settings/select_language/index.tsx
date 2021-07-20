@@ -20,7 +20,7 @@ const SelectLanguage: React.FC<SelectLanguageProps> = ({
 	return (
 		<>
 			<InputLabel shrink id='language_select_label'>
-				{language.data.SETTINGS_LANGUAGE}
+				{language.data.CHOOSE_LANGUAGE}
 			</InputLabel>
 			<Select
 				labelId='language_select_label'

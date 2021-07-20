@@ -86,15 +86,37 @@ p.home__grid__item__name {
 }
 
 @media (orientation: landscape) {
+	.home .home__grid {
+		grid-template-columns: 30% 30% 30%;
+		gap: 0 4%;
+		margin: 2vh 5vw 4vh 5vw;
+	}
+
+	.home .info__grid {
+		width: 90%;
+		grid-template-columns: 30% 30% 30%;
+		gap: 0 4%;
+	}
+
+	.info__grid__item {
+		height: 5vh;
+		margin: 0 5vw;
+	}
+
 	.home .home__avatar {
 		margin-top: 2.5rem;
 		width: 12.5rem;
 		height: 12.5rem;
 	}
 
-	.home .home__grid__button .img {
-		width: 90%;
-		height: 80%;
+	.home .home__grid__button {
+		width: 25vw;
+		height: 20vh;
+	}
+
+	.home .home__grid__button svg {
+		width: 18vh;
+		height: 18vh;
 	}
 
 	.home__grid__item {

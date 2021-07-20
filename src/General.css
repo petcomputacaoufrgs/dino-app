@@ -2,7 +2,7 @@
 	margin-right: 0.5rem;
 	width: 18px;
 	height: 18px;
-	fill: var(--contrast-color);
+	fill: var(--light-color);
 }
 
 .dino__history_link {

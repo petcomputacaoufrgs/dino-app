@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ day, onClose }) => {
 				<div className='calendar__day__modal__header__info__close'>
 					<Fab
 						color='primary'
-						aria-label={language.data.ADD_ARIA_LABEL}
+						aria-label={language.data.ADD}
 						onClick={onClose}
 					>
 						<ExpandMoreIcon />

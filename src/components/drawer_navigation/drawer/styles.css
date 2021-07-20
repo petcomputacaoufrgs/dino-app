@@ -121,3 +121,36 @@
 	width: 2rem;
 	height: 2rem;
 }
+
+@media (orientation: landscape) {
+	.drawer_navigation__drawer {
+		width: 20rem;
+		margin-left: -20rem;
+	}
+
+	.drawer_navigation__drawer__visible {
+		width: 20rem;
+	}
+
+	.drawer_navigation__drawer__visible
+	.MuiTypography-root.MuiListItemText-primary {
+		font-size: 1.25rem;
+	}
+
+	.drawer_navigation__drawer__visible .user .username {
+		font-size: 1.2rem;
+	}
+
+	.user__avatar__loader,
+	.user__avatar .avatar {
+		width: 11rem;
+		height: 11rem;
+	}
+
+	.user__avatar__sync_info {
+		width: 2.5rem;
+		height: 2.5rem;
+		right: 3.5rem;
+		bottom: 0.7rem;
+	}
+}

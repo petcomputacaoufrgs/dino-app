@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import NoteContentProps from './props'
 import './styles.css'
-import AgreementDialog from '../../../../components/agreement_dialog'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import {
 	DragDropContext,
 	DropResult,
@@ -216,15 +216,15 @@ const NoteContent: React.FC<NoteContentProps> = ({
 					question={
 						currentNoteView.notes.length === 0
 							? language.data.NOTE_COLUMN_DELETE_DIALOG_QUESTION
-							: language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION
+							: language.data.ARE_YOU_SURE
 					}
 					description={
 						currentNoteView.notes.length === 0
 							? language.data.NOTE_COLUMN_DELETE_DIALOG_DESC
 							: language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
 					}
-					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
-					agreeOptionText={language.data.NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT}
+					disagreeOptionText={language.data.NO}
+					agreeOptionText={language.data.YES}
 					onAgree={handleDeleteColumnAgree}
 					onDisagree={handleDeleteColumnDisagree}
 					open={deleteNoteColumnDialogOpen}

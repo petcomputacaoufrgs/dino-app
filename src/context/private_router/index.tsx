@@ -3,6 +3,7 @@ import { Router } from 'react-router'
 import { History } from 'history'
 import PrivateRouterContextType from '../../types/context_provider/PrivateRouterContextType'
 import PermissionEnum from '../../types/enum/PermissionEnum'
+import { toggle } from '../../constants/toggle/Toggle'
 
 /**
  * @description Contexto padrão para o router
@@ -39,8 +40,10 @@ const PrivateRouterProvider: React.FC<PrivateRouterContextType> = props => {
 
 export const usePrivateRouter = () => useContext(PrivateRouterContext)
 
-export const HasStaffPowers = (): boolean => { 
-	const permission = usePrivateRouter().userPermission 
+export const HasStaffPowers = (): boolean => {
+	let permission = usePrivateRouter().userPermission 
+	if(toggle.overridePermission.override)
+		permission = toggle.overridePermission.permission
 	return permission === PermissionEnum.STAFF || permission === PermissionEnum.ADMIN 
 } 
 

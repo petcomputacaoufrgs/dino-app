@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import Button from '../../../components/button'
 import SelectTreatment from '../../../components/settings/select_treatment'
-import GoogleGrantDialog from '../../../components/google_grant_dialog'
+import GoogleGrantDialog from '../../../components/dialogs/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import SelectColorTheme from '../../../components/settings/select_color_theme'
 import SelectLanguage from '../../../components/settings/select_language'
@@ -238,7 +238,7 @@ const Settings: React.FC = () => {
 		settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 		await UserSettingsService.save(settings)
 
-		alert.showSuccessAlert(language.data.PASSWORD_CHANGED)
+		alert.showSuccessAlert(language.data.SUCESS)
 
 		setOpenChangePasswordDialog(false)
 	}
@@ -289,7 +289,7 @@ const Settings: React.FC = () => {
 				settings.treatmentLocalId = selectedTreatment.localId
 			}
 
-			alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
+			alert.showSuccessAlert(language.data.SETTINGS_UPDATED_SUCESS)
 
 			await UserSettingsService.save(settings)
 
@@ -311,7 +311,7 @@ const Settings: React.FC = () => {
 				EssentialContactService.saveUserEssentialContacts(settings)
 			}
 		} else {
-			alert.showErrorAlert(language.data.SETTINGS_SAVE_ERROR)
+			alert.showErrorAlert(language.data.SETTINGS_UPDATED_ERROR)
 		}
 	}
 
@@ -402,7 +402,7 @@ const Settings: React.FC = () => {
 			>
 				<Loader isLoading={isLoading}>
 					<DinoDialogHeader>
-						<h1>{language.data.CHANGE_PASSWORD_DIALOG}</h1>
+						<h1>{language.data.CHANGE_PASSWORD}</h1>
 					</DinoDialogHeader>
 					<DinoDialogContent>
 						<form>
@@ -508,7 +508,7 @@ const Settings: React.FC = () => {
 							onClick={handleChangePasswordClick}
 							className='settings__form__change_password'
 						>
-							{language.data.CHANGE_PASSWORD}
+							{language.data.CHANGE_PASSWORD_LABEL}
 						</TextButton>
 					</FormControl>
 				</>

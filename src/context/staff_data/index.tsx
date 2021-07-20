@@ -4,7 +4,7 @@ import TreatmentService from '../../services/treatment/TreatmentService'
 import TreatmentQuestionEntity from '../../types/faq/database/TreatmentQuestionEntity'
 import TreatmentView from '../../types/faq/view/TreatmentView'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
-import Utils from '../../utils/Utils'
+import { hasValue } from '../../utils/Utils'
 
 /**
  * @description Contexto padrão para os dados de staff
@@ -36,7 +36,7 @@ const StaffDataProvider: React.FC = ({ children }) => {
 		}
 
 		const populateMapWithTreatments = (treatments: TreatmentEntity[], treatmentMap: Map<number, TreatmentView>) => {
-			treatments.forEach(t => Utils.isNotEmpty(t.localId) && treatmentMap.set(t.localId!, { treatment: t }))
+			treatments.forEach(t => hasValue(t.localId) && treatmentMap.set(t.localId!, { treatment: t }))
 		}
 
 		const populateMapWithQuestions = (treatmentQuestions: TreatmentQuestionEntity[], treatmentMap: Map<number, TreatmentView>) => {

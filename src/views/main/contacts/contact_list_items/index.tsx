@@ -4,7 +4,7 @@ import ContactCard from '../contact_dialog_card'
 import ContactItemList from './contact_list_item'
 import { List } from '@material-ui/core'
 import ContactFormDialog from '../contact_dialog_form'
-import AgreementDialog from '../../../../components/agreement_dialog'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import ContactView from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
 import PhoneService from '../../../../services/contact/PhoneService'
@@ -64,7 +64,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	return (
 		<>
 			{ArrayUtils.isNotEmpty(items) ? 
-				<List className='contacts__list dino__list__padding'>
+				<List className='contacts__list dino__list dino__list__padding'>
 					{items.map((item, index) => 
 						<ContactItemList
 							key={index}

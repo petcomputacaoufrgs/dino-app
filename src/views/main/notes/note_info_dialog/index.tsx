@@ -10,7 +10,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import DiscreetTextField from '../../../../components/discreet_text_field'
 import { ReactComponent as DeleteOutlineIcon } from '../../../../assets/icons/delete.svg'
 import DinoIconButton from '../../../../components/button/icon_button'
-import AgreementDialog from '../../../../components/agreement_dialog'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import './styles.css'
@@ -109,7 +109,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
 			if (questionConflict) {
 				setQuestionWithError(true)
-				setQuestionErrorHelper(language.data.QUESTION_ALREADY_EXISTS_ERROR)
+				setQuestionErrorHelper(language.data.itemAlreadyExists(language.data.QUESTION))
 				return false
 			}
 		}
@@ -183,8 +183,8 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 					onDisagree={handleDeleteNoteDisagree}
 					question={language.data.DELETE_NOTE_ALERT_TITLE}
 					description={language.data.DELETE_NOTE_ALERT_TEXT}
-					agreeOptionText={language.data.AGREEMENT_OPTION_TEXT}
-					disagreeOptionText={language.data.DISAGREEMENT_OPTION_TEXT}
+					agreeOptionText={language.data.YES}
+					disagreeOptionText={language.data.NO}
 					open={deleteNoteDialogOpen}
 				/>
 				</div>

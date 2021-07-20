@@ -9,10 +9,10 @@ import FaqView from '../../../types/faq/view/FaqView'
 import { useParams } from 'react-router-dom'
 import { HasStaffPowers } from '../../../context/private_router'
 import Faq from './faq'
-import Utils from '../../../utils/Utils'
 import './styles.css'
 import FaqAndUserQuestions from './tab_faq_and_questions'
 import FaqItemEntity from '../../../types/faq/database/FaqItemEntity'
+import { hasValue } from '../../../utils/Utils'
 
 const FaqHub: React.FC = () => {
 	const { localId } = useParams<{ localId?: string, tab?: string }>()
@@ -25,7 +25,7 @@ const FaqHub: React.FC = () => {
 	useEffect(() => {
 		const loadData = async () => {
 			const treatments = await TreatmentService.getAll()
-			Utils.isNotEmpty(localId) 
+			hasValue(localId) 
 			?	await loadTreatmentById(treatments)
 			:	await loadUserTreatment(treatments)
 			
@@ -44,20 +44,17 @@ const FaqHub: React.FC = () => {
 
 		const loadUserTreatment = async (treatments: TreatmentEntity[]) => {
 			const userSettings = await UserSettingsService.getFirst()
-			if (userSettings && Utils.isNotEmpty(userSettings.treatmentLocalId)) {
+			if (userSettings && hasValue(userSettings.treatmentLocalId)) {
 				const treatment = treatments.find(treatment => treatment.localId === userSettings.treatmentLocalId)
-				if (treatment) {
-					await loadFaqItems(treatment)
-					return
-				}
+				if (treatment) return await loadFaqItems(treatment)
 			} 
 
 			cleanFaqView()
 		}
 
 		const loadFaqItems = async (treatment: TreatmentEntity) => {
-			const faqItems = await FaqItemService.getByTreatment(treatment)
-			updateFaqView(treatment, faqItems)
+			const items = await Promise.all([FaqItemService.getByTreatment(treatment), FaqItemService.getUniversals()])
+			updateFaqView(treatment, [...items[0], ...items[1]])
 		}
 
 		let updateFaqView = (treatment: TreatmentEntity, faqItems: FaqItemEntity[]) => {

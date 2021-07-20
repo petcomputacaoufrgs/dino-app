@@ -38,7 +38,7 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 					secondary={PhoneService.getPhoneTypes(item.phones, language.data)}
 				/>
 				<ListItemSecondaryAction>
-					<OptionsIconButton dark onClick={(e) => onClickMenu(e, item)} />
+					<OptionsIconButton onClick={(e) => onClickMenu(e, item)} />
 				</ListItemSecondaryAction>
 			</ListItem>
 

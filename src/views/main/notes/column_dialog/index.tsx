@@ -79,7 +79,7 @@ const NoteColumnDialog = forwardRef(
 						onChange={e => handleTitleChange(e.target.value)}
 						errorMessage={invalidMessage}
 						label={`${language.data.COLUMN_TITLE_LABEL}`}
-						maxLength={DataConstants.NOTE_COLUMN_NAME.MAX}
+						dataProps={DataConstants.NOTE_COLUMN_NAME}
 						required={DataConstants.NOTE_COLUMN_NAME.REQUIRED}
 					/>
 				</div>

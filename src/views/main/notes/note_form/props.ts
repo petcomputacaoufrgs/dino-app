@@ -1,6 +1,6 @@
 import NoteEntity from '../../../../types/note/database/NoteEntity'
 
-export default interface NoteInfoDialogProps {
+export default interface NoteFormProps {
 	note: NoteEntity
 	open: boolean
 	tagOptions: string[]

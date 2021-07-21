@@ -16,8 +16,8 @@ export const DinoTextfield: React.FC<DinoTexfieldProps> = props => {
 
 	const getHelperText = () => {
 		const formatMaxLength = () => {
-			if (props.value)
-				return `${(props.value as string).length}/${props.maxLength}`
+			if (props.value && props.dataProps)
+				return `${(props.value as string).length}/${props.dataProps.MAX}`
 		}
 
 		return props.helperText || props.errorMessage || formatMaxLength()
@@ -25,14 +25,15 @@ export const DinoTextfield: React.FC<DinoTexfieldProps> = props => {
 
 	return (
 		<TextField
-			className={getClassName()}
 			fullWidth
 			margin='dense'
 			type='text'
-			{...props}
-			inputProps={props.inputProps || { maxLength: props.maxLength }}
+			inputProps={props.inputProps || { maxLength: props.dataProps?.MAX }}
+			required={props.dataProps?.REQUIRED}
 			error={props.error || props.errorMessage !== undefined}
 			helperText={getHelperText()}
+			{...props}
+			className={getClassName()}
 		/>
 	)
 }

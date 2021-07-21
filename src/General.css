@@ -11,7 +11,7 @@
 }
 
 .dino__textfield .MuiFormHelperText-root {
-	text-align: right;
+	text-align: right !important;
 	display: block;
 	color: var(--contrast-color);
 }

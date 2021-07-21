@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import NoteCreateDialogProps from './props'
-import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import { useLanguage } from '../../../../context/language'
@@ -72,7 +71,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 					onChange={handleQuestionChange}
 					errorMessage={errorMessage}
 					label={`${language.data.QUESTION_NOTE_DIALOG_TITLE}`}
-					maxLength={DataConstants.NOTE_QUESTION.MAX}
+					dataProps={DataConstants.NOTE_QUESTION}
 					required={DataConstants.NOTE_QUESTION.REQUIRED}
 				/>
 				<Autocomplete
@@ -90,7 +89,7 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 								...params.inputProps,
 								maxLength: DataConstants.NOTE_TAG.MAX,
 							}}
-							maxLength={DataConstants.NOTE_TAG.MAX}
+							dataProps={DataConstants.NOTE_TAG}
 						/>
 					)}
 				/>

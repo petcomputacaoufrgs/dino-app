@@ -1,3 +1,8 @@
+export interface DataConstantProps {
+	readonly MAX: number
+	readonly REQUIRED: boolean
+}
+
 class DataConstants {
 	static FALSE = 0 as const
 	static TRUE = 1 as const

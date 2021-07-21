@@ -3,6 +3,9 @@
 	flex-direction: row;
 	outline: none;
 	white-space: nowrap;
+}
+
+.note_info_dialog__title .MuiCardHeader-root {
 	width: 100%;
 }
 

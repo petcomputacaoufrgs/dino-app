@@ -1,12 +1,6 @@
-export interface DinoTexfieldProps {
-	className?: string
-	rows?: number
-	rowsMax?: number
-	multiline?: boolean
-	required: boolean
-	value: string
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-	label: string
+import { StandardTextFieldProps } from '@material-ui/core/TextField'
+
+export interface DinoTexfieldProps extends StandardTextFieldProps {
 	maxLength: number
 	errorMessage?: string
 }

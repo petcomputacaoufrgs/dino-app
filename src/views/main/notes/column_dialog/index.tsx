@@ -1,32 +1,28 @@
-import React, { forwardRef, useState, useEffect, useRef } from 'react'
+import React, { forwardRef, useState, useEffect } from 'react'
 import './styles.css'
 import NoteColumnDialogProps from './props'
-import NoteColumnDialogContent from './content'
 import NoteColumnConstants from '../../../../constants/note/NoteColumnConstants'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import { useLanguage } from '../../../../context/language'
-import DinoDialog, { DinoDialogHeader } from '../../../../components/dialogs/dino_dialog'
+import DinoDialog from '../../../../components/dialogs/dino_dialog'
+import DataConstants from '../../../../constants/app_data/DataConstants'
+import { DinoTextfield } from '../../../../components/textfield'
 
 const NoteColumnDialog = forwardRef(
 	(props: NoteColumnDialogProps, ref: React.Ref<JSX.Element>): JSX.Element => {
 		const language = useLanguage()
 
-		const inputRef = useRef<HTMLInputElement>(null)
-
 		const [newTitle, setNewTitle] = useState<string>(
 			props.column ? props.column.title : '',
 		)
-		const [invalidTitle, setInvalidTitle] = useState<boolean>(false)
-		const [invalidMessage, setInvalidMessage] = useState<string>('')
+		const [invalidMessage, setInvalidMessage] = useState<string>()
 
 		useEffect(() => {
 			setNewTitle(props.column ? props.column.title : '')
-			setInvalidTitle(false)
 		}, [props.open, props.column])
 
 		const handleSave = async () => {
 			const invalidTitle = !isTitleValid(newTitle)
-			setInvalidTitle(invalidTitle)
 
 			if (invalidTitle) {
 				return
@@ -71,28 +67,22 @@ const NoteColumnDialog = forwardRef(
 				return false
 			}
 
-			setInvalidMessage('')
+			setInvalidMessage(undefined)
 			return true
 		}
 
 		return (
-			<DinoDialog
-				open={props.open}
-				header={
-					<DinoDialogHeader>
-					{props.column ? language.data.COLUMN_EDIT_LABEL : language.data.COLUMN_ADD_LABEL}
-					</DinoDialogHeader>
-				}
-				onSave={handleSave}
-				onClose={props.onClose}
-			>
-				<NoteColumnDialogContent
-					title={newTitle}
-					onTitleChange={handleTitleChange}
-					invalidTitle={invalidTitle}
-					invalidMessage={invalidMessage}
-					inputRef={inputRef}
-				/>
+			<DinoDialog open={props.open} onSave={handleSave} onClose={props.onClose}>
+				<div className='note__column_dialog__content'>
+					<DinoTextfield
+						value={newTitle}
+						onChange={e => handleTitleChange(e.target.value)}
+						errorMessage={invalidMessage}
+						label={`${language.data.COLUMN_TITLE_LABEL}`}
+						maxLength={DataConstants.NOTE_COLUMN_NAME.MAX}
+						required={DataConstants.NOTE_COLUMN_NAME.REQUIRED}
+					/>
+				</div>
 			</DinoDialog>
 		)
 	},

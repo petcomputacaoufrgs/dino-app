@@ -144,7 +144,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
 	}
 
 	const handleClickNote = (note: NoteEntity) => {
-		console.log('re')
 		setCurrentNote(note)
 		setNoteInfoDialogOpen(true)
 	}
@@ -181,7 +180,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
 	const handleCloseNoteInfoDialog = () => {
 		setNoteInfoDialogOpen(false)
-		setCurrentNote(undefined)
+		setTimeout(() => setCurrentNote(undefined), 100) //pra finalizar a animação
 	}
 
 	//#endregion
@@ -217,8 +216,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
 							? language.data.NOTE_COLUMN_DELETE_DIALOG_DESC
 							: language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
 					}
-					disagreeOptionText={language.data.NO}
-					agreeOptionText={language.data.YES}
 					onAgree={handleDeleteColumnAgree}
 					onDisagree={handleDeleteColumnDisagree}
 					open={deleteNoteColumnDialogOpen}
@@ -234,7 +231,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 			{currentNote && (
 				<NoteForm
 					note={currentNote}
-					open={noteInfoDialogOpen}
+					open={currentNote && noteInfoDialogOpen}
 					tagOptions={tags}
 					onSave={handleSaveNote}
 					onDelete={handleDeleteNote}

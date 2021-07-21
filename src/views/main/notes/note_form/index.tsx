@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import NoteFormProps from './props'
-import { CardHeader } from '@material-ui/core'
 import DateUtils from '../../../../utils/DateUtils'
 import NoteConstants from '../../../../constants/note/NoteConstants'
-import Autocomplete from '@material-ui/lab/Autocomplete'
 import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import './styles.css'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { DinoTextfield } from '../../../../components/textfield'
-import CreateIcon from '@material-ui/icons/Create'
-import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import StringUtils from '../../../../utils/StringUtils'
 import { NoteTagTextfield } from '../tag_textfield'
@@ -46,15 +42,12 @@ const NoteForm: React.FC<NoteFormProps> = ({
 		}
 	}
 
-	const handleSaveNote = async () => {
-		if (isValidData()) {
-			onSave(question, answer, tagList)
-		}
+	const handleSaveNote = () => {
+		if (isValidData()) onSave(question, answer, tagList)
 	}
 
 	const handleDeleteNoteAgree = () => {
 		onDelete()
-
 		setDeleteNoteDialogOpen(false)
 	}
 

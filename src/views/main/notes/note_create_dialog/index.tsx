@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import NoteCreateDialogProps from './props'
-import Autocomplete from '@material-ui/lab/Autocomplete'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
-import DinoDialog, {
-	DinoDialogHeader,
-} from '../../../../components/dialogs/dino_dialog'
+import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { NoteTagTextfield } from '../tag_textfield'

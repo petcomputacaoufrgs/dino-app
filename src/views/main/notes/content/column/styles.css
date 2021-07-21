@@ -5,10 +5,6 @@
 	margin-left: 0.313rem;
 }
 
-.note__note_content__column.desktop {
-	width: 15%;
-}
-
 .note__note_content__column__draggable {
 	border: 0.063rem solid var(--column-border);
 	background-color: var(--board-background);

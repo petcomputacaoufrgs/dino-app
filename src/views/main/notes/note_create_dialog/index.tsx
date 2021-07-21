@@ -11,6 +11,7 @@ import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { NoteTagTextfield } from '../tag_textfield'
 import { NoteCardHeader } from '../card_header'
+import DateUtils from '../../../../utils/DateUtils'
 
 const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 	onClose,
@@ -91,8 +92,8 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 			onSave={handleSave}
 			header={
 				<NoteCardHeader
-					title={question}
-					subheader={language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}
+					title={language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}
+					subheader={DateUtils.getDateStringFormated(new Date(), language.data)}
 				/>
 			}
 		>

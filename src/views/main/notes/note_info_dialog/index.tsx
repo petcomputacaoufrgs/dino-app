@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import NoteInfoDialogProps from './props'
-import {
-	DialogTitle,
-	TextField,
-} from '@material-ui/core'
+import { CardHeader, DialogTitle, TextField } from '@material-ui/core'
 import DateUtils from '../../../../utils/DateUtils'
 import NoteConstants from '../../../../constants/note/NoteConstants'
 import Autocomplete from '@material-ui/lab/Autocomplete'
@@ -14,6 +11,11 @@ import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import { useLanguage } from '../../../../context/language'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import './styles.css'
+import DataConstants from '../../../../constants/app_data/DataConstants'
+import { DinoTextfield } from '../../../../components/textfield'
+import CreateIcon from '@material-ui/icons/Create'
+import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
 
 const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	note,
@@ -47,7 +49,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 	const handleQuestionChange = (newQuestion: string) => {
 		const validQuestion = newQuestion.substring(
 			0,
-			NoteConstants.QUESTION_MAX_LENGTH,
+			DataConstants.NOTE_QUESTION.MAX,
 		)
 		const questionChanged = note.question !== validQuestion.trim()
 
@@ -62,7 +64,7 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
 	const handleAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value
-		const validAnswer = value.substring(0, NoteConstants.ANSWER_MAX_LENGTH)
+		const validAnswer = value.substring(0, DataConstants.NOTE_ANSWER.MAX)
 
 		setAnswer(validAnswer)
 	}
@@ -109,7 +111,9 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 
 			if (questionConflict) {
 				setQuestionWithError(true)
-				setQuestionErrorHelper(language.data.itemAlreadyExists(language.data.QUESTION))
+				setQuestionErrorHelper(
+					language.data.itemAlreadyExists(language.data.QUESTION),
+				)
 				return false
 			}
 		}
@@ -122,38 +126,39 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 		return true
 	}
 
-	return (
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
-		<DinoDialog 
-			open={open} onClose={onClose} onSave={handleSaveNote}
+	const handleOpenOptions = (event: React.MouseEvent<HTMLButtonElement>) =>
+		setAnchorEl(event.currentTarget)
+
+	return (
+		<DinoDialog
+			open={open}
+			onClose={onClose}
+			onSave={handleSaveNote}
 			header={
-				<DialogTitle disableTypography className='note_info_dialog__title'>
-					<DiscreetTextField
-						error={questionWithError}
-						helperText={questionErrorHelper}
-						text={question}
-						onChange={handleQuestionChange}
-						className='note__info_dialog__title__question'
+				<div className='note_info_dialog__title'>
+					<CardHeader
+						avatar={<CreateIcon />}
+						action={
+							<div className='dino__flex_row'>
+								<OptionsIconButton onClick={handleOpenOptions} />
+							</div>
+						}
+						title={question}
+						subheader={DateUtils.getDateStringFormated(
+							note.lastUpdate!,
+							language.data,
+						)}
 					/>
-					<DinoIconButton
-						className='note_info_dialog__delete_icon'
-						icon={DeleteOutlineIcon}
-						onClick={handleDeleteNote}
-					/>
-					<div className='note_info_dialog__last_update'>
-						<h4>
-							{DateUtils.getDateStringFormated(note.lastUpdate!, language.data)}
-						</h4>
-					</div>
-				</DialogTitle>
+				</div>
 			}
 		>
 			<div className='note__info_dialog__content'>
-			<TextField
+				<DinoTextfield
 					label={`${language.data.ANSWER_NOTE_DIALOG_TITLE}`}
-					type='text'
+					maxLength={DataConstants.NOTE_ANSWER.MAX}
 					multiline
-					variant='standard'
 					value={answer}
 					onChange={handleAnswerChange}
 					className='note__info_dialog__content__answer'
@@ -166,15 +171,14 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 					onChange={handleTagChange}
 					options={tagOptions}
 					renderInput={params => (
-						<TextField
+						<DinoTextfield
 							{...params}
-							fullWidth
 							label={`${language.data.NOTE_TAG_LABEL}`}
-							variant='standard'
 							inputProps={{
 								...params.inputProps,
-								maxLength: NoteConstants.TAG_MAX_LENGTH,
+								maxLength: DataConstants.NOTE_TAG.MAX,
 							}}
+							maxLength={DataConstants.NOTE_TAG.MAX}
 						/>
 					)}
 				/>
@@ -187,9 +191,13 @@ const NoteInfoDialog: React.FC<NoteInfoDialogProps> = ({
 					disagreeOptionText={language.data.NO}
 					open={deleteNoteDialogOpen}
 				/>
-				</div>
+			</div>
+			<ItemListMenu
+				anchor={anchorEl}
+				setAnchor={setAnchorEl}
+				onDelete={onDelete}
+			/>
 		</DinoDialog>
-		
 	)
 }
 

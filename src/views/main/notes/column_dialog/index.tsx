@@ -80,7 +80,6 @@ const NoteColumnDialog = forwardRef(
 						errorMessage={invalidMessage}
 						label={`${language.data.COLUMN_TITLE_LABEL}`}
 						dataProps={DataConstants.NOTE_COLUMN_NAME}
-						required={DataConstants.NOTE_COLUMN_NAME.REQUIRED}
 					/>
 				</div>
 			</DinoDialog>

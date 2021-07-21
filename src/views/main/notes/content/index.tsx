@@ -12,7 +12,6 @@ import NoteContentColumn from './column'
 import NoteDroppableType from '../../../../constants/note/NoteDroppableType'
 import AddColumn from './add_column'
 import NoteColumnDialog from '../column_dialog'
-import NoteCreateDialog from '../note_create_dialog'
 import NoteForm from '../note_form'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../../../types/note/database/NoteEntity'
@@ -224,7 +223,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 					open={deleteNoteColumnDialogOpen}
 				/>
 			)}
-			<NoteCreateDialog
+			<NoteForm
 				open={noteCreateDialogOpen}
 				tagOptions={tags}
 				onSave={handleSaveNewNote}

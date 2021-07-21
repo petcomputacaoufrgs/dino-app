@@ -14,6 +14,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import StringUtils from '../../../../utils/StringUtils'
+import { NoteTagTextfield } from '../tag_textfield'
 
 const NoteForm: React.FC<NoteFormProps> = ({
 	note,
@@ -129,24 +130,10 @@ const NoteForm: React.FC<NoteFormProps> = ({
 					value={answer}
 					onChange={e => setAnswer(e.target.value)}
 				/>
-				<Autocomplete
-					multiple
-					freeSolo
+				<NoteTagTextfield
 					value={tagList}
-					limitTags={1}
 					onChange={handleTagChange}
 					options={tagOptions}
-					renderInput={params => (
-						<DinoTextfield
-							{...params}
-							label={`${language.data.NOTE_TAG_LABEL}`}
-							inputProps={{
-								...params.inputProps,
-								maxLength: DataConstants.NOTE_TAG.MAX,
-							}}
-							dataProps={DataConstants.NOTE_TAG}
-						/>
-					)}
 				/>
 				<AgreementDialog
 					onAgree={handleDeleteNoteAgree}

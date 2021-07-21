@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: row;
 	outline: none;
-	white-space: nowrap;
 }
 
 .note__card__header .MuiCardHeader-root {
@@ -10,8 +9,9 @@
 }
 
 .note__card__header :is(.MuiCardHeader-root, .MuiCardHeader-content, span) {
+	white-space: nowrap;
 	text-overflow: ellipsis;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 .note__card__header.MuiDialogTitle-root {

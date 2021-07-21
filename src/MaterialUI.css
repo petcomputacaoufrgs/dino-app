@@ -84,10 +84,6 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 	width: 135%;
 }
 
-.MuiFormHelperText-root.Mui-required.MuiFormHelperText-marginDense {
-	font-size: var(--very-small-font);
-}
-
 .MuiTabs-root .MuiTabs-indicator {
 	background-color: var(--tab-highlight-color);
 }

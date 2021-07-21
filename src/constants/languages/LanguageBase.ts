@@ -335,6 +335,7 @@ export default interface LanguageBase {
 	NO_CONNECTION: string
 	REDUCE: string
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL: string
+<<<<<<< Updated upstream
 	GO_TO_SLEEP: string
 	GO_OUTSIDE: string
 	RETURN_INSIDE: string
@@ -342,6 +343,9 @@ export default interface LanguageBase {
 	CHOOSE_COLOR_DINO_MESSAGE: string
 	CHOOSE_ACESSORY_DINO_MESSAGE: string
 	CHOOSE: string
+=======
+	REPORT_BUG: string
+>>>>>>> Stashed changes
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

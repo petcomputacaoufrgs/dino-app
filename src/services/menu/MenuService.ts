@@ -132,6 +132,11 @@ class MenuService {
 				name: language.MENU_LOGOUT,
 				onClick: handleLogoutClick,
 			},
+			{
+				image: LogoutSVG,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
+			}
 		],
 	]
 
@@ -146,6 +151,11 @@ class MenuService {
 				name: language.MENU_LOGOUT,
 				onClick: handleLogoutClick,
 			},
+			{
+				image: LogoutSVG,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
+			}
 		],
 	]
 

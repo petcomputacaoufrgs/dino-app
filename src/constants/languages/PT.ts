@@ -710,6 +710,7 @@ export default class PT implements LanguageBase {
 
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Relacionar item a todas ${this.FAQ}s existentes`
 
+<<<<<<< Updated upstream
 	GO_TO_SLEEP = 'Ir dormir'
 
 	GO_OUTSIDE = 'Sair de casa'
@@ -723,6 +724,9 @@ export default class PT implements LanguageBase {
 	CHOOSE_ACESSORY_DINO_MESSAGE = "Hora de escolher um acessório legal!"
 
 	CHOOSE = 'Escolha'
+=======
+	REPORT_BUG = `Reportar um problema`
+>>>>>>> Stashed changes
 	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

@@ -74,6 +74,10 @@ class PathConstants {
 	FAQ_TAB = '0'
 
 	USER_QUESTIONS_TAB = '1'
+
+	USER_REPORT_BUG: string = `${this.USER}/report`
+
+	STAFF_REPORT_BUG: string = `${this.STAFF}/report`
 }
 
 export default new PathConstants()

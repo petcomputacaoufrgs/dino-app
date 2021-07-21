@@ -698,6 +698,7 @@ export default class EN implements LanguageBase {
 
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Bind item to all existent ${this.FAQ}s`
 
+<<<<<<< Updated upstream
 	GO_TO_SLEEP = 'Go to sleep'
 
 	GO_OUTSIDE = 'Go outside'
@@ -712,6 +713,10 @@ export default class EN implements LanguageBase {
 
 	CHOOSE = 'Choose'
 	
+=======
+	REPORT_BUG = `Report a bug`
+
+>>>>>>> Stashed changes
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`

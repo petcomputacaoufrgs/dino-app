@@ -30,6 +30,7 @@ import './MaterialUI.css'
 import './General.css'
 import { toggle } from './constants/toggle/Toggle'
 import TestInstanceService from './services/tests/TestInstanceService'
+import ReportBug from './views/report_bug'
 
 const LOAD_SCREEN_TIME = 2250
 

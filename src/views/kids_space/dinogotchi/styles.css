@@ -304,6 +304,7 @@
 	visibility: visible;
 }
 
+
 @keyframes dinogotchi_screen__background__dinogotchi__inside__cloud_one {
 	from {
 		transform: translate3d(-300%, 0, 0);

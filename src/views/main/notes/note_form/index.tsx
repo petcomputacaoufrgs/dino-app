@@ -15,6 +15,7 @@ import OptionsIconButton from '../../../../components/button/icon_button/options
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import StringUtils from '../../../../utils/StringUtils'
 import { NoteTagTextfield } from '../tag_textfield'
+import { NoteCardHeader } from '../card_header'
 
 const NoteForm: React.FC<NoteFormProps> = ({
 	note,
@@ -71,7 +72,7 @@ const NoteForm: React.FC<NoteFormProps> = ({
 			return false
 		}
 
-		const questionConflict = questionAlreadyExists(question)
+		const questionConflict = questionAlreadyExists(question, note.localId)
 
 		if (questionConflict) {
 			setErrorQuestionMessage(
@@ -95,21 +96,14 @@ const NoteForm: React.FC<NoteFormProps> = ({
 			onClose={onClose}
 			onSave={handleSaveNote}
 			header={
-				<div className='note_info_dialog__title'>
-					<CardHeader
-						avatar={<CreateIcon />}
-						action={
-							<div className='dino__flex_row'>
-								<OptionsIconButton onClick={handleOpenOptions} />
-							</div>
-						}
-						title={question}
-						subheader={DateUtils.getDateStringFormated(
-							note.lastUpdate!,
-							language.data,
-						)}
-					/>
-				</div>
+				<NoteCardHeader
+					title={question}
+					subheader={DateUtils.getDateStringFormated(
+						note.lastUpdate!,
+						language.data,
+					)}
+					onClickOptions={handleOpenOptions}
+				/>
 			}
 		>
 			<div className='note__info_dialog__content'>

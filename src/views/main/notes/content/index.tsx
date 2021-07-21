@@ -18,6 +18,7 @@ import NoteEntity from '../../../../types/note/database/NoteEntity'
 import NoteView from '../../../../types/note/view/NoteView'
 import { useLanguage } from '../../../../context/language'
 import NoteColumnService from '../../../../services/note/NoteColumnService'
+import NoteCreateDialog from '../note_create_dialog'
 
 const NoteContent: React.FC<NoteContentProps> = ({
 	tags,
@@ -223,7 +224,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 					open={deleteNoteColumnDialogOpen}
 				/>
 			)}
-			<NoteForm
+			<NoteCreateDialog
 				open={noteCreateDialogOpen}
 				tagOptions={tags}
 				onSave={handleSaveNewNote}

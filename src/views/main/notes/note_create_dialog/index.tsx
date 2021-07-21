@@ -9,6 +9,8 @@ import DinoDialog, {
 } from '../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
+import { NoteTagTextfield } from '../tag_textfield'
+import { NoteCardHeader } from '../card_header'
 
 const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 	onClose,
@@ -70,28 +72,14 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 					value={question}
 					onChange={handleQuestionChange}
 					errorMessage={errorMessage}
+					multiline
 					label={`${language.data.QUESTION_NOTE_DIALOG_TITLE}`}
 					dataProps={DataConstants.NOTE_QUESTION}
-					required={DataConstants.NOTE_QUESTION.REQUIRED}
 				/>
-				<Autocomplete
-					multiple
-					freeSolo
+				<NoteTagTextfield
 					value={tagList}
-					limitTags={1}
 					onChange={handleTagChange}
 					options={tagOptions}
-					renderInput={params => (
-						<DinoTextfield
-							{...params}
-							label={`${language.data.NOTE_TAG_LABEL}`}
-							inputProps={{
-								...params.inputProps,
-								maxLength: DataConstants.NOTE_TAG.MAX,
-							}}
-							dataProps={DataConstants.NOTE_TAG}
-						/>
-					)}
 				/>
 			</div>
 		)
@@ -102,9 +90,10 @@ const NoteCreateDialog: React.FC<NoteCreateDialogProps> = ({
 			onClose={onClose}
 			onSave={handleSave}
 			header={
-				<DinoDialogHeader>
-					{language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}
-				</DinoDialogHeader>
+				<NoteCardHeader
+					title={question}
+					subheader={language.data.NOTE_EDIT_DIALOG_NEW_NOTE_TITLE}
+				/>
 			}
 		>
 			{renderDialogContent()}

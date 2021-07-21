@@ -7,5 +7,5 @@ export default interface NoteFormProps {
 	onSave: (question: string, answer: string, tagList: string[]) => void
 	onDelete: () => void
 	onClose: () => void
-	questionAlreadyExists: (question: string) => boolean
+	questionAlreadyExists: (question: string, localId?: number) => boolean
 }

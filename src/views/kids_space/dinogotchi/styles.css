@@ -319,6 +319,17 @@
 	}
 }
 
+
+@media (width: 375px) and (height: 812px) {
+	.dinogotchi_screen__dino_pet.first_login {
+		left: -48vmin;
+	}
+
+	.dinogotchi_screen__dino_pet {
+		left: -32vmin;
+	}
+}
+
 @media (orientation: landscape) {
 	.dinogotchi_screen__background {
 		height: 115vh;

@@ -28,8 +28,6 @@ const DinoDialog: React.FC<DinoDialogProps> = ({
 		return native
 	}
 
-	console.log(getClassName())
-
 	return (
 		<Dialog
 			className={getClassName()}

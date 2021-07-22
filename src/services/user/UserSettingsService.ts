@@ -16,6 +16,7 @@ import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/enum/LanguageEnum'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -50,7 +51,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
 			step: model.step,
-			parentsAreaPassword: model.parentsAreaPassword
+			parentsAreaPassword: model.parentsAreaPassword,
 		}
 
 		if (model.treatmentId) {
@@ -64,7 +65,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return entity
 	}
 
-
 	async convertEntityToModel(
 		entity: UserSettingsEntity,
 	): Promise<UserSettingsDataModel | undefined> {
@@ -76,7 +76,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
 			step: entity.step,
-			parentsAreaPassword: entity.parentsAreaPassword
+			parentsAreaPassword: entity.parentsAreaPassword,
 		}
 
 		if (entity.treatmentLocalId) {
@@ -170,7 +170,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 	}
 
-	getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
+	getLanguage = (userSettings?: UserSettingsEntity): LanguageBase => {
 		if (userSettings && userSettings.language === LanguageEnum.ENGLISH) {
 			return new EN()
 		} else {
@@ -257,6 +257,22 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 
 		return 'light'
+	}
+
+	getTreatment = (
+		treatments: TreatmentEntity[],
+		userSettings?: UserSettingsEntity,
+	) => {
+		if (userSettings) {
+			const treatment = treatments.find(
+				treatment => treatment.localId === userSettings.treatmentLocalId,
+			)
+			if (treatment) {
+				return treatment
+			}
+		}
+
+		return undefined
 	}
 }
 

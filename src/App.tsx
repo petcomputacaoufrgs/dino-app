@@ -39,7 +39,9 @@ const App: React.FC = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 	const [isMainTab, setIsMainTab] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(true)
-	const [userPermission, setUserPermission] = useState<string | undefined>(undefined)
+	const [userPermission, setUserPermission] = useState<string | undefined>(
+		undefined,
+	)
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -70,8 +72,11 @@ const App: React.FC = () => {
 		const loadTestInstances = async () => {
 			const dbSettings = await UserSettingsService.getFirst()
 			if (dbSettings) {
-				if(toggle.loadTestInstancesAtFirstLogin && (!dbSettings.firstSettingsDone || toggle.firstLogin)) {
-					console.log("Carregando testes...")
+				if (
+					toggle.loadTestInstancesAtFirstLogin &&
+					(!dbSettings.firstSettingsDone || toggle.firstLogin)
+				) {
+					console.log('Carregando testes...')
 					TestInstanceService.loadInstances()
 				}
 			}
@@ -99,7 +104,7 @@ const App: React.FC = () => {
 
 		const loadUserPermission = async () => {
 			const hasUserPermission = await UserService.getPermission()
-      updateUserPermission(hasUserPermission || PermissionEnum.USER)
+			updateUserPermission(hasUserPermission || PermissionEnum.USER)
 		}
 
 		let updateSettings = (settings: UserSettingsEntity) => {
@@ -115,7 +120,7 @@ const App: React.FC = () => {
 		}
 
 		let updateUserPermission = (userPermission: string) => {
-         setUserPermission(userPermission)
+			setUserPermission(userPermission)
 		}
 
 		let finishLoading = () => {
@@ -171,18 +176,22 @@ const App: React.FC = () => {
 		>
 			<Switch>
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
-				<PrivateRoute 
-					path={PathConstants.USER} 
-					component={UserMain} 
-					restrictedTo={[PermissionEnum.USER]} 
-        		/>
-				<PrivateRoute 
+				<PrivateRoute
+					path={PathConstants.USER}
+					component={UserMain}
+					restrictedTo={[PermissionEnum.USER]}
+				/>
+				<PrivateRoute
 					path={PathConstants.STAFF}
 					component={StaffMain}
-					restrictedTo={[PermissionEnum.ADMIN, PermissionEnum.STAFF]} 
+					restrictedTo={[PermissionEnum.ADMIN, PermissionEnum.STAFF]}
 				/>
-				<PrivateRoute 
-					path={PathConstants.KIDS_SPACE} 
+				<PrivateRoute
+					path={PathConstants.USER_REPORT_BUG}
+					component={ReportBug}
+				/>
+				<PrivateRoute
+					path={PathConstants.KIDS_SPACE}
 					component={KidsSpace}
 					restrictedTo={[PermissionEnum.USER]}
 				/>
@@ -196,12 +205,13 @@ const App: React.FC = () => {
 
 	return (
 		<div className='app'>
-			{showLoadScreen || isLoading 
-				? <Load />
-				: isMainTab 
-					? renderApp()
-					: <SecondaryTab />
-			}
+			{showLoadScreen || isLoading ? (
+				<Load />
+			) : isMainTab ? (
+				renderApp()
+			) : (
+				<SecondaryTab />
+			)}
 			<PWAControl />
 		</div>
 	)

@@ -55,39 +55,39 @@ class UserServiceImpl extends AutoSynchronizableService<
 		await this.saveFromDataModelLocally(model)
 	}
 
-  async convertModelToEntity(
-    model: UserDataModel
-  ): Promise<UserEntity | undefined> {
-    const entity: UserEntity = {
-      email: model.email,
-      name: model.name,
-      pictureURL: model.pictureURL,
-      permission: model.permission
-    }
+	async convertModelToEntity(
+		model: UserDataModel,
+	): Promise<UserEntity | undefined> {
+		const entity: UserEntity = {
+			email: model.email,
+			name: model.name,
+			pictureURL: model.pictureURL,
+			permission: model.permission,
+		}
 
 		return entity
 	}
 
-  async convertEntityToModel(
-    entity: UserEntity
-  ): Promise<UserDataModel | undefined> {
-    const model: UserDataModel = {
-      email: entity.email,
-      name: entity.name,
-      pictureURL: entity.pictureURL,
-      permission: entity.permission
-    }
+	async convertEntityToModel(
+		entity: UserEntity,
+	): Promise<UserDataModel | undefined> {
+		const model: UserDataModel = {
+			email: entity.email,
+			name: entity.name,
+			pictureURL: entity.pictureURL,
+			permission: entity.permission,
+		}
 
 		return model
 	}
 
 	async getPermission(): Promise<string | undefined> {
 		const user = await this.getFirst()
-		if(user) {
-			return toggle.overridePermission.override 
+		if (user) {
+			return toggle.overridePermission.override
 				? toggle.overridePermission.permission
 				: user.permission
-		} 
+		}
 		return undefined
 	}
 
@@ -190,8 +190,6 @@ class UserServiceImpl extends AutoSynchronizableService<
 	) => {
 		return model.photos.find(photo => photo.metadata.primary)
 	}
-
-
 }
 
 export default new UserServiceImpl()

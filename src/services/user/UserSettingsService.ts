@@ -17,6 +17,7 @@ import LanguageEnum from '../../types/enum/LanguageEnum'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import { LanguageContextType } from '../../context/language'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -273,6 +274,18 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 
 		return undefined
+	}
+
+	getDefaultSettings = (language: LanguageContextType) => {
+		return {
+			language: language.data.LANGUAGE_CODE,
+			fontSize: this.getDefaultFontSizeCode(),
+			colorTheme: this.getDefaultColorThemeCode(),
+			includeEssentialContact: true,
+			declineGoogleContacts: false,
+			firstSettingsDone: false,
+			step: 0,
+		} as UserSettingsEntity
 	}
 }
 

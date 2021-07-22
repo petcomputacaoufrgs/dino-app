@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react'
 import ColorThemeEnum from '../../../../types/enum/ColorThemeEnum'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../../../../types/user/database/UserSettingsEntity'
+import { SelectPasswordProps } from '../../select_password'
 
 export interface FirstSettingsDialogsProps {
 	id: string
@@ -9,7 +10,7 @@ export interface FirstSettingsDialogsProps {
 	component: () => JSX.Element
 }
 
-export default interface FirstSettingsDialogProps {
+export default interface FirstSettingsDialogProps extends SelectPasswordProps {
 	settings: UserSettingsEntity
 	step: number
 	onCloseDialogs: () => void
@@ -18,11 +19,5 @@ export default interface FirstSettingsDialogProps {
 	onSave: () => void
 	onCancel: () => void
 	treatments: TreatmentEntity[]
-	parentsAreaPassword: string
-	onChangeConfirmPassword: (event: ChangeEvent<HTMLInputElement>) => void
-	confirmParentsAreaPassword: string
-	onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void
-	passwordErrorMessage?: string
-	onPasswordErrorMessageChange: (value?: string) => void
 	onDoneChange: (value: boolean) => void
 }

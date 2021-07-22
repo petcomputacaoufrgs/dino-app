@@ -62,12 +62,11 @@ const FirstSettings: React.FC = () => {
 
 	const handleCloseDialogs = () => setStep(-1)
 
+	//TODO comparar mudanças
 	const saveSettings = async () => {
 		if (settings) {
-			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = done
-			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
-			settings.step = step
+			//settings.step = step
 
 			await UserSettingsService.save(settings)
 
@@ -92,45 +91,13 @@ const FirstSettings: React.FC = () => {
 	}
 
 	const handleNextStep = async () => {
-		if (settings) {
-			if (step === settings.step) saveSettings()
-			setStep(step + 1)
-		} else {
-			const newEntity: UserSettingsEntity = {
-				language: language.data.LANGUAGE_CODE,
-				fontSize: UserSettingsService.getDefaultFontSizeCode(),
-				colorTheme: UserSettingsService.getDefaultColorThemeCode(),
-				includeEssentialContact: true,
-				declineGoogleContacts: false,
-				firstSettingsDone: false,
-				step: 0,
-			}
-
+		if (settings === undefined) {
+			const newEntity = UserSettingsService.getDefaultSettings(language)
 			setSettings(newEntity)
 			saveSettings()
 		}
-	}
 
-	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-		const newValue = event.target.value
-
-		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
-			setParentsAreaPassword(event.target.value)
-		}
-	}
-
-	const handleConfirmPasswordChange = (
-		event: ChangeEvent<HTMLInputElement>,
-	) => {
-		const newValue = event.target.value
-
-		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
-			setConfirmParentsAreaPassword(event.target.value)
-		}
-	}
-
-	const handlePasswordErrorMessageChange = (value?: string) => {
-		setPasswordErrorMessage(value)
+		setStep(step + 1)
 	}
 
 	const handleDoneChange = (value: boolean) => (done = value)
@@ -149,13 +116,17 @@ const FirstSettings: React.FC = () => {
 						onSave={handleSave}
 						onCancel={handleCancel}
 						treatments={treatments}
-						parentsAreaPassword={parentsAreaPassword}
-						onChangePassword={handleChangePassword}
-						confirmParentsAreaPassword={confirmParentsAreaPassword}
-						onChangeConfirmPassword={handleConfirmPasswordChange}
-						passwordErrorMessage={passwordErrorMessage}
-						onPasswordErrorMessageChange={handlePasswordErrorMessageChange}
 						onDoneChange={handleDoneChange}
+						parentsAreaPassword={parentsAreaPassword}
+						onChangePassword={e => setParentsAreaPassword(e.target.value)}
+						confirmParentsAreaPassword={confirmParentsAreaPassword}
+						onChangeConfirmPassword={e =>
+							setConfirmParentsAreaPassword(e.target.value)
+						}
+						passwordErrorMessage={passwordErrorMessage}
+						onPasswordErrorMessageChange={value =>
+							setPasswordErrorMessage(value)
+						}
 					/>
 				)}
 		</>

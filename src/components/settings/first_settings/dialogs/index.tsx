@@ -12,6 +12,7 @@ import { FirstSettingsDialogsProps } from './props'
 import { HasStaffPowers } from '../../../../context/private_router'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { SelectEssentialContactGrant } from '../../select_essential_contact_grant'
+import { SelectPassword } from '../../select_password'
 
 const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = props => {
 	const language = useLanguage()
@@ -61,95 +62,57 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = props => {
 		return dialogs.concat(finalDialog)
 	}
 
-	const renderSelectTreatmentDialogContent = () => {
-		return (
-			<div className='first_settings__message_dialog'>
-				<SelectTreatment
-					settings={props.settings}
-					availableTreatments={props.treatments}
-				>
-					<SelectEssentialContactGrant settings={props.settings} />
-				</SelectTreatment>
-			</div>
-		)
-	}
+	const renderSelectTreatmentDialogContent = () => (
+		<div className='first_settings__message_dialog'>
+			<SelectTreatment
+				settings={props.settings}
+				availableTreatments={props.treatments}
+			>
+				<SelectEssentialContactGrant settings={props.settings} />
+			</SelectTreatment>
+		</div>
+	)
 
-	const renderSelectColorThemeDialogContent = () => {
-		return (
-			<div className='first_settings__message_dialog'>
-				<SelectColorTheme settings={props.settings} />
-			</div>
-		)
-	}
+	const renderSelectColorThemeDialogContent = () => (
+		<div className='first_settings__message_dialog'>
+			<SelectColorTheme settings={props.settings} />
+		</div>
+	)
 
-	const renderSelectLanguageDialogContent = () => {
-		return (
-			<div className='first_settings__message_dialog'>
-				<SelectLanguage settings={props.settings} />
-				<SelectFontSize settings={props.settings} />
-			</div>
-		)
-	}
+	const renderSelectLanguageDialogContent = () => (
+		<div className='first_settings__message_dialog'>
+			<SelectLanguage settings={props.settings} />
+			<SelectFontSize settings={props.settings} />
+		</div>
+	)
 
-	const renderWelcomeMessageDialog = () => {
-		return (
-			<div className='first_settings__message_dialog'>
-				<DinoLogoHeader
-					title={language.data.FIRST_LOGIN_WELCOME_MESSAGE_HEADER}
-					size='small'
-				/>
-				<p>{language.data.FIRST_LOGIN_WELCOME_MESSAGE}</p>
-				<h6 className='citation'>— {language.data.DINOAPP_TEAM}</h6>
-			</div>
-		)
-	}
+	const renderWelcomeMessageDialog = () => (
+		<div className='first_settings__message_dialog'>
+			<DinoLogoHeader
+				title={language.data.FIRST_LOGIN_WELCOME_MESSAGE_HEADER}
+				size='small'
+			/>
+			<p>{language.data.FIRST_LOGIN_WELCOME_MESSAGE}</p>
+			<h6 className='citation'>— {language.data.DINOAPP_TEAM}</h6>
+		</div>
+	)
 
-	//TODO repetido
-	const renderSetPasswordDialog = () => {
-		return (
-			<div className='first_settings__message_dialog set_password'>
-				<p>{language.data.SETTING_PASSWORD_EXPLANATION}</p>
-				<form>
-					<label htmlFor='pass'>{language.data.INSERT_PASSWORD} </label>
-					<input
-						autoComplete='off'
-						value={props.parentsAreaPassword}
-						onChange={props.onChangePassword}
-						type='password'
-						name='password'
-						required
-					/>
-					<label htmlFor='pass'> {language.data.INSERT_PASSWORD_AGAIN} </label>
-					<input
-						autoComplete='off'
-						value={props.confirmParentsAreaPassword}
-						onChange={props.onChangeConfirmPassword}
-						type='password'
-						name='password'
-						required
-					/>
-					{props.passwordErrorMessage && (
-						<p className='set_password__error_message'>
-							{props.passwordErrorMessage}
-						</p>
-					)}
-				</form>
-			</div>
-		)
-	}
+	const renderSetPasswordDialog = () => (
+		<div className='first_settings__message_dialog'>
+			<SelectPassword {...props} />
+		</div>
+	)
 
-	const renderFinalMessageDialog = () => {
-		return (
-			<div className='first_settings__message_dialog'>
-				<DinoLogoHeader
-					title={language.data.FIRST_LOGIN_DONE_MESSAGE}
-					size='small'
-				/>
-				<p>{language.data.FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE}</p>
-				<p>{language.data.FIRST_LOGIN_CONFIGURATIONS_MESSAGE}</p>
-			</div>
-		)
-	}
+	const renderFinalMessageDialog = () => (
+		<div className='first_settings__message_dialog'>
+			<DinoLogoHeader
+				title={language.data.FIRST_LOGIN_DONE_MESSAGE}
+				size='small'
+			/>
+			<p>{language.data.FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE}</p>
+			<p>{language.data.FIRST_LOGIN_CONFIGURATIONS_MESSAGE}</p>
+		</div>
+	)
 
 	const dialogs = renderFirstSettingsDialogs()
 

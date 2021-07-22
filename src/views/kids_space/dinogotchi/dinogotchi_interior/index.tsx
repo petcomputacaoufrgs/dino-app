@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import PathConstants from '../../../../constants/app/PathConstants'
-import HistoryService from '../../../../services/history/HistoryService'
 import Button from '../../../../components/button'
 import { ReactComponent as Dino } from '../../../../assets/new/dino+expressoes+acessorios/dino_empé_neutro.svg'
 import { ReactComponent as SleepDino } from '../../../../assets/new/dino+expressoes+acessorios/dino_dormindo.svg'
-import { ReactComponent as GoOutSVG } from '../../../../assets/new/game_elements/sairdecasa.svg'
-import { ReactComponent as GameSVG } from '../../../../assets/new/game_elements/jogo.svg'
-import { ReactComponent as GoToSleepSVG } from '../../../../assets/new/game_elements/dormir.svg'
 import { ReactComponent as Cap } from '../../../../assets/new/acessories/bone.svg'
 import { ReactComponent as Hat } from '../../../../assets/new/acessories/gorro.svg'
 import { ReactComponent as Lace } from '../../../../assets/new/acessories/laco.svg'
@@ -15,13 +10,17 @@ import { ReactComponent as Headscarf} from '../../../../assets/new/acessories/pa
 import DinoColorConstants from '../../../../constants/dinogotchi/DinoColorConstants'
 import KidsSpaceSettingsService from '../../../../services/kids_space/KidsSpaceSettingsService'
 import { KidsSpaceSettingsEntity } from '../../../../types/kids_space/database/KidsSpaceSettingsEntity'
-import DinoIconButton from '../../../../components/button/icon_button'
 import DinoEnum from '../../../../types/enum/DinoEnum'
 import { useLanguage } from '../../../../context/language'
 import Loader from '../../../../components/loader'
-import '../styles.css'
+import AwakeDino from './awake_dino'
+import './styles.css'
 
-const DinogotchiInterior: React.FC = () => {
+interface DinogotchiInteriorProps {
+	handleBackgroundChange: () => void
+}
+
+const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({handleBackgroundChange}) => {
     const language = useLanguage()
 	const [state, setState] = useState(DinoEnum.ASLEEP)
 	const [kidsSpaceSettings, setKidsSpaceSettings] = useState<KidsSpaceSettingsEntity | undefined>()
@@ -73,35 +72,10 @@ const DinogotchiInterior: React.FC = () => {
 		}
 	}
 
-	const renderAwakeDino = () => {
-		return (
-			<>
-				<Dino className={`dinogotchi_screen__dino_pet has_${selectedHat}`}/>
-				<div className='dinogotchi_screen__options'>
-					<DinoIconButton 
-						circular
-						ariaLabel={language.data.GO_TO_GAME_MENU}
-						icon={GameSVG}
-						onClick={() => HistoryService.push(PathConstants.GAME_MENU)}
-					/>
-					<DinoIconButton 
-						circular
-						ariaLabel={state !== DinoEnum.OUTSIDE ? language.data.GO_OUTSIDE : language.data.RETURN_INSIDE}
-						icon={GoOutSVG} 
-						onClick={() => setState(state !== DinoEnum.OUTSIDE ? DinoEnum.OUTSIDE : DinoEnum.INSIDE)}
-					/>
-					{state !== DinoEnum.OUTSIDE &&
-						<DinoIconButton 
-							circular
-							ariaLabel={language.data.GO_TO_SLEEP}
-							icon={GoToSleepSVG} 
-							onClick={() => setState(DinoEnum.ASLEEP)} 
-						/>
-					}
-				</div>
-			</>
-		)
+	const setSleepDino = () => {
+		setState(DinoEnum.ASLEEP)
 	}
+
 
 	const renderSleepDino = () => <SleepDino className={`dinogotchi_screen__dino_pet sleep_dino has_${selectedHat}`} onClick={() => setState(DinoEnum.INSIDE)}/>
 
@@ -125,7 +99,7 @@ const DinogotchiInterior: React.FC = () => {
 		if (state === DinoEnum.ASLEEP) {
 			return renderSleepDino()
 		} else {
-			return renderAwakeDino()
+			return <AwakeDino hat={selectedHat} state={state} handleGoSleep={setSleepDino} handleBackgroundChange={handleBackgroundChange}/>
 		}
 	}
 

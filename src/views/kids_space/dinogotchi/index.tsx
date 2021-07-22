@@ -5,24 +5,22 @@ import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogot
 import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotchi/inside.svg'
 import { startCloudEngine } from './engine/clouds'
 import { startPaitingEngine } from './engine/painting'
-import Loader from '../../../components/loader'
 import ArrowBack from '../../../components/arrow_back'
 import DinoEnum from '../../../types/enum/DinoEnum'
 import DinogotchiInterior from './dinogotchi_interior'
 import './styles.css'
 
 const Dinogotchi: React.FC = () => {
-	const [state, setState] = useState(DinoEnum.ASLEEP)
+	const [background, setBackground] = useState(DinoEnum.INSIDE)
 
 	useEffect(() => {
-		if (state === DinoEnum.OUTSIDE)
-			return startCloudEngine()
+		startCloudEngine()
 		startPaitingEngine()
-	}, [state])
+	}, [])
 
 	const renderBackground = (): JSX.Element => {
 		const currentHour = new Date().getHours()
-		return state === DinoEnum.OUTSIDE 
+		return background === DinoEnum.OUTSIDE 
 		? renderOusideBackground(currentHour)
 		: renderInsideBackground(currentHour)
 	}
@@ -41,10 +39,14 @@ const Dinogotchi: React.FC = () => {
 		return <OutsideSVG className='dinogotchi_screen__background day' />
 	}
 
+	const changeBackground = () => {
+		setBackground(background === DinoEnum.INSIDE ? DinoEnum.OUTSIDE : DinoEnum.INSIDE)
+	}
+
 	return (
-		<div className={`dinogotchi_screen ${state === DinoEnum.OUTSIDE ? 'outside' : 'inside'}`}>
+		<div className={`dinogotchi_screen ${background === DinoEnum.OUTSIDE ? 'outside' : 'inside'}`}>
 			{renderBackground()}
-			<DinogotchiInterior/>
+			<DinogotchiInterior handleBackgroundChange={changeBackground}/>
 			{/* <AccessDialog 
 				open={open} 
 				icon={AngryDinoSVG} 

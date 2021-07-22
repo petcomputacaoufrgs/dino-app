@@ -1,13 +1,5 @@
-import { Button } from '@material-ui/core'
-import TextField, {
-	OutlinedTextFieldProps,
-	StandardTextFieldProps,
-} from '@material-ui/core/TextField'
-import { TextFieldProps } from 'material-ui'
-import language from 'material-ui/svg-icons/action/language'
 import React, { useEffect, useState } from 'react'
 import { SaveButton } from '../../components/button/save_button'
-import TextButton from '../../components/button/text_button'
 import { useLanguage } from '../../context/language'
 import { ReportDiv } from './report_div'
 import './styles.css'
@@ -36,6 +28,8 @@ const ReportBug: React.FC = () => {
 				modi veniam aperiam dicta reprehenderit maiores deleniti, error odit id
 				possimus, ratione quod tempora, quis suscipit aliquid quisquam.
 				Laboriosam, veritatis?`}
+				error={error !== undefined}
+				helperText={error}
 			/>
 			<ReportDiv
 				title={`Reportar o Problema`}

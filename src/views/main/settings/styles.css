@@ -59,6 +59,7 @@
 
 .settings__delete_account_dialog__buttons__delete_button {
 	margin-left: 1rem;
+	background-color: #ed2939;
 }
 
 .settings__change_password_dialog input {

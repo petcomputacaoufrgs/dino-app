@@ -18,8 +18,6 @@ export default interface FirstSettingsDialogProps {
 	onSave: () => void
 	onCancel: () => void
 	treatments: TreatmentEntity[]
-	selectedEssentialContactGrant: boolean
-	onEssentialContactGrantChange: (includeEssentialContact: boolean) => void
 	parentsAreaPassword: string
 	onChangeConfirmPassword: (event: ChangeEvent<HTMLInputElement>) => void
 	confirmParentsAreaPassword: string

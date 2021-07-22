@@ -20,8 +20,6 @@ const FirstSettings: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
-	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] =
-		useState(UserSettingsService.getDefaultEssentialContactGrant())
 	const [parentsAreaPassword, setParentsAreaPassword] = useState('')
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] =
 		useState('')
@@ -33,20 +31,12 @@ const FirstSettings: React.FC = () => {
 			const settings = await UserSettingsService.getFirst()
 
 			if (settings) {
-				updateSettings(settings)
+				setSettings(settings)
 			}
 
 			updateTreatments(treatments)
 
 			finishLoading()
-		}
-
-		let updateSettings = (settings: UserSettingsEntity) => {
-			const essentialContactGrant =
-				UserSettingsService.getEssentialContactGrant(settings)
-
-			setSelectedEssentialContactGrant(essentialContactGrant || false)
-			setSettings(settings)
 		}
 
 		let updateTreatments = (treatments: TreatmentEntity[]) => {
@@ -63,7 +53,6 @@ const FirstSettings: React.FC = () => {
 		}
 
 		return () => {
-			updateSettings = () => {}
 			updateTreatments = () => {}
 			finishLoading = () => {}
 			UserSettingsService.removeUpdateEventListenner(loadData)
@@ -75,7 +64,6 @@ const FirstSettings: React.FC = () => {
 
 	const saveSettings = async () => {
 		if (settings) {
-			settings.includeEssentialContact = selectedEssentialContactGrant
 			settings.declineGoogleContacts = false
 			settings.firstSettingsDone = done
 			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
@@ -145,20 +133,6 @@ const FirstSettings: React.FC = () => {
 		setPasswordErrorMessage(value)
 	}
 
-	const handleEssentialContactGrantChange = (
-		includeEssentialContact: boolean,
-	) => {
-		setSelectedEssentialContactGrant(includeEssentialContact)
-
-		if (
-			settings &&
-			settings.includeEssentialContact !== includeEssentialContact
-		) {
-			settings.includeEssentialContact = includeEssentialContact
-			UserSettingsService.save(settings)
-		}
-	}
-
 	const handleDoneChange = (value: boolean) => (done = value)
 
 	return (
@@ -175,8 +149,6 @@ const FirstSettings: React.FC = () => {
 						onSave={handleSave}
 						onCancel={handleCancel}
 						treatments={treatments}
-						selectedEssentialContactGrant={selectedEssentialContactGrant}
-						onEssentialContactGrantChange={handleEssentialContactGrantChange}
 						parentsAreaPassword={parentsAreaPassword}
 						onChangePassword={handleChangePassword}
 						confirmParentsAreaPassword={confirmParentsAreaPassword}

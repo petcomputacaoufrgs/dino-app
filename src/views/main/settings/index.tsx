@@ -38,8 +38,9 @@ import HashUtils from '../../../utils/HashUtils'
 import { HasStaffPowers } from '../../../context/private_router'
 import DataConstants from '../../../constants/app_data/DataConstants'
 import { SaveButton } from '../../../components/button/save_button'
+import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
 
-const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
+const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 10
 
 const Settings: React.FC = () => {
 	const alert = useAlert()
@@ -53,8 +54,6 @@ const Settings: React.FC = () => {
 	)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] =
-		useState(false)
 	const [openChangePasswordDialog, setOpenChangePasswordDialog] =
 		useState(false)
 	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
@@ -82,28 +81,12 @@ const Settings: React.FC = () => {
 			const syncGoogleContacs = await GoogleScopeService.hasContactGrant()
 
 			if (settings) {
-				if (treatments) {
-					updateTreatments(treatments)
-				}
-				updateSettings(settings)
+				if (treatments) setTreatments(treatments)
+				setSettings(settings)
 			}
 			updateSyncGoogleContacts(syncGoogleContacs, settings)
 
 			finishLoading()
-		}
-
-		let updateTreatments = (treatments: TreatmentEntity[]) => {
-			setTreatments(treatments)
-		}
-
-		let updateSettings = (settings: UserSettingsEntity) => {
-			const essentialContactGrant =
-				UserSettingsService.getEssentialContactGrant(settings)
-
-			setSelectedEssentialContactGrant(
-				essentialContactGrant !== undefined ? essentialContactGrant : false,
-			)
-			setSettings(settings)
 		}
 
 		let updateSyncGoogleContacts = (
@@ -127,8 +110,6 @@ const Settings: React.FC = () => {
 		}
 
 		return () => {
-			updateSettings = () => {}
-			updateTreatments = () => {}
 			updateSyncGoogleContacts = () => {}
 			finishLoading = () => {}
 			UserSettingsService.removeUpdateEventListenner(loadData)
@@ -136,10 +117,6 @@ const Settings: React.FC = () => {
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}
 	}, [isLoading])
-
-	// useEffect(() => {
-	// 	setSelectedLanguage(language.data.LANGUAGE_CODE)
-	// }, [language])
 
 	useEffect(() => {
 		const reduceTimeToDeleteAccount = () => {
@@ -153,9 +130,7 @@ const Settings: React.FC = () => {
 		}
 
 		return () => {
-			if (timeout) {
-				clearTimeout(timeout)
-			}
+			if (timeout) clearTimeout(timeout)
 		}
 	}, [timeToDeleteAccount])
 
@@ -164,9 +139,7 @@ const Settings: React.FC = () => {
 
 		if (!syncGoogleContacts) {
 			setOpenGoogleContactDialog(true)
-		} else {
-			setSyncGoogleContacts(false)
-		}
+		} else setSyncGoogleContacts(false)
 	}
 	const handleAgreeContactsGrantDialog = async () => {
 		setOpenGoogleContactDialog(false)
@@ -186,13 +159,10 @@ const Settings: React.FC = () => {
 		setOpenGoogleContactDialog(false)
 	}
 
-	const handleCloseContactsGrantDialog = () => {
-		setOpenGoogleContactDialog(false)
-	}
+	const handleCloseContactsGrantDialog = () => setOpenGoogleContactDialog(false)
 
-	const handleCloseChangePasswordDialog = () => {
+	const handleCloseChangePasswordDialog = () =>
 		setOpenChangePasswordDialog(false)
-	}
 
 	const handlePasswordChange = async () => {
 		if (!settings) return
@@ -230,13 +200,9 @@ const Settings: React.FC = () => {
 		setOpenDeleteAccountDialog(true)
 	}
 
-	const handleCloseDeleteAccountDialog = () => {
-		setOpenDeleteAccountDialog(false)
-	}
+	const handleCloseDeleteAccountDialog = () => setOpenDeleteAccountDialog(false)
 
-	const handleChangePasswordClick = () => {
-		setOpenChangePasswordDialog(true)
-	}
+	const handleChangePasswordClick = () => setOpenChangePasswordDialog(true)
 
 	const handleDeleteAccount = async () => {
 		if (timeToDeleteAccount === 0) {
@@ -253,11 +219,6 @@ const Settings: React.FC = () => {
 
 	const handleSave = async () => {
 		if (settings) {
-			const oldTreatment = settings.treatmentLocalId
-			const oldIncludeEssentialContact = settings.includeEssentialContact
-
-			settings.includeEssentialContact = selectedEssentialContactGrant
-
 			const userDeclinedGoogleContacts =
 				!settings.declineGoogleContacts && !syncGoogleContacts
 
@@ -268,27 +229,7 @@ const Settings: React.FC = () => {
 			alert.showSuccessAlert(language.data.SETTINGS_UPDATED_SUCESS)
 
 			await UserSettingsService.save(settings)
-
-			const treatmentChangedWithEssentialContacts =
-				oldTreatment !== settings.treatmentLocalId &&
-				settings.includeEssentialContact
-			const disabledEssentialContacts =
-				oldIncludeEssentialContact !== settings.includeEssentialContact &&
-				oldIncludeEssentialContact
-			const enabledEssentialContacts =
-				oldIncludeEssentialContact !== settings.includeEssentialContact &&
-				settings.includeEssentialContact
-
-			if (treatmentChangedWithEssentialContacts || disabledEssentialContacts) {
-				await ContactService.deleteUserEssentialContacts()
-			}
-
-			if (treatmentChangedWithEssentialContacts || enabledEssentialContacts) {
-				EssentialContactService.saveUserEssentialContacts(settings)
-			}
-		} else {
-			alert.showErrorAlert(language.data.SETTINGS_UPDATED_ERROR)
-		}
+		} else alert.showErrorAlert(language.data.SETTINGS_UPDATED_ERROR)
 	}
 
 	const handleChangeOldPassword = (event: ChangeEvent<HTMLInputElement>) => {
@@ -469,11 +410,7 @@ const Settings: React.FC = () => {
 						</FormControl>
 						<DinoHr />
 						<FormControl className='settings__form'>
-							<DinoSwitch
-								selected={selectedEssentialContactGrant}
-								onChangeSelected={() => setSelectedEssentialContactGrant(false)}
-								label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-							/>
+							<SelectEssentialContactGrant settings={settings} />
 						</FormControl>
 						<DinoHr />
 						<FormControl>

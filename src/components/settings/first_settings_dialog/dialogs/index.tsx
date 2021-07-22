@@ -2,7 +2,6 @@ import React from 'react'
 import DinoDialog, { DinoDialogHeader } from '../../../dialogs/dino_dialog'
 import DinoLogoHeader from '../../../dino_logo_header'
 import DinoStepper from '../../../dino_stepper'
-import DinoSwitch from '../../../switch'
 import SelectColorTheme from '../../select_color_theme'
 import SelectFontSize from '../../select_font_size'
 import SelectLanguage from '../../select_language'
@@ -12,6 +11,7 @@ import FirstSettingsDialogProps from './props'
 import { FirstSettingsDialogsProps } from './props'
 import { HasStaffPowers } from '../../../../context/private_router'
 import DataConstants from '../../../../constants/app_data/DataConstants'
+import { SelectEssentialContactGrant } from '../../select_essential_contact_grant'
 
 const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = props => {
 	const language = useLanguage()
@@ -68,17 +68,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = props => {
 					settings={props.settings}
 					availableTreatments={props.treatments}
 				>
-					{!isStaff && (
-						<DinoSwitch
-							selected={props.selectedEssentialContactGrant}
-							onChangeSelected={() =>
-								props.onEssentialContactGrantChange(
-									!props.selectedEssentialContactGrant,
-								)
-							}
-							label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-						/>
-					)}
+					<SelectEssentialContactGrant settings={props.settings} />
 				</SelectTreatment>
 			</div>
 		)

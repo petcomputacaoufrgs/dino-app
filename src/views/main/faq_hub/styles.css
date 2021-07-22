@@ -1,7 +1,7 @@
 .faq__content {
 	position: absolute;
 	width: 100%;
-	height: 100%; 
+	height: 100%;
 	overflow-y: auto;
 	font-size: var(--default-font);
 }
@@ -52,4 +52,8 @@
 .faq__card_title {
 	font-size: var(--default-font);
 	margin-bottom: 0;
+}
+
+.faq_item__form .dino_dialog__content {
+	padding: 0px 16px;
 }

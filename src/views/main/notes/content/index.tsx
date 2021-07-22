@@ -12,13 +12,13 @@ import NoteContentColumn from './column'
 import NoteDroppableType from '../../../../constants/note/NoteDroppableType'
 import AddColumn from './add_column'
 import NoteColumnDialog from '../column_dialog'
-import NoteCreateDialog from '../note_create_dialog'
-import NoteInfoDialog from '../note_info_dialog'
+import NoteForm from '../note_form'
 import NoteColumnEntity from '../../../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../../../types/note/database/NoteEntity'
 import NoteView from '../../../../types/note/view/NoteView'
 import { useLanguage } from '../../../../context/language'
 import NoteColumnService from '../../../../services/note/NoteColumnService'
+import NoteCreateDialog from '../note_create_dialog'
 
 const NoteContent: React.FC<NoteContentProps> = ({
 	tags,
@@ -36,16 +36,11 @@ const NoteContent: React.FC<NoteContentProps> = ({
 }) => {
 	const language = useLanguage()
 
-	const [currentNote, setCurrentNote] = useState<NoteEntity | undefined>(
-		undefined,
-	)
-	const [currentNoteView, setCurrentNoteView] = useState<NoteView | undefined>(
-		undefined,
-	)
+	const [currentNote, setCurrentNote] = useState<NoteEntity>()
+	const [currentNoteView, setCurrentNoteView] = useState<NoteView>()
 	const [noteColumnDialogOpen, setNoteColumnDialogOpen] = useState(false)
-	const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] = useState(
-		false,
-	)
+	const [deleteNoteColumnDialogOpen, setDeleteNoteColumnDialogOpen] =
+		useState(false)
 	const [noteCreateDialogOpen, setNoteCreateDialogOpen] = useState(false)
 	const [noteInfoDialogOpen, setNoteInfoDialogOpen] = useState(false)
 	const [dragging, setDragging] = useState(false)
@@ -185,7 +180,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 
 	const handleCloseNoteInfoDialog = () => {
 		setNoteInfoDialogOpen(false)
-		setCurrentNote(undefined)
+		setTimeout(() => setCurrentNote(undefined), 100) //pra finalizar a animação
 	}
 
 	//#endregion
@@ -195,9 +190,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
 		onDragEnd(result)
 	}
 
-	const handleDragStart = () => {
-		setDragging(true)
-	}
+	const handleDragStart = () => setDragging(true)
 
 	const getColumnMaxOrder = (): number => noteViews.length
 
@@ -223,8 +216,6 @@ const NoteContent: React.FC<NoteContentProps> = ({
 							? language.data.NOTE_COLUMN_DELETE_DIALOG_DESC
 							: language.data.NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC
 					}
-					disagreeOptionText={language.data.NO}
-					agreeOptionText={language.data.YES}
 					onAgree={handleDeleteColumnAgree}
 					onDisagree={handleDeleteColumnDisagree}
 					open={deleteNoteColumnDialogOpen}
@@ -238,9 +229,9 @@ const NoteContent: React.FC<NoteContentProps> = ({
 				questionAlreadyExists={questionAlreadyExists}
 			/>
 			{currentNote && (
-				<NoteInfoDialog
+				<NoteForm
 					note={currentNote}
-					open={noteInfoDialogOpen}
+					open={currentNote && noteInfoDialogOpen}
 					tagOptions={tags}
 					onSave={handleSaveNote}
 					onDelete={handleDeleteNote}

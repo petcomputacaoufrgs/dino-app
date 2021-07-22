@@ -20,7 +20,7 @@ async function handleDinoClick() {
     const hearts = document.getElementById('dinogotchi_screen__hearts')
     if (hearts) {
         hearts.classList.add('petting')
-        await sleep(1500)
+        await sleep(300)
         hearts.classList.remove('petting')
     }
 

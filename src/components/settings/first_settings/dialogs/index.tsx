@@ -14,7 +14,7 @@ import DataConstants from '../../../../constants/app_data/DataConstants'
 import { SelectEssentialContactGrant } from '../../select_essential_contact_grant'
 import { SelectPassword } from '../../select_password'
 
-const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = props => {
+const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 	const language = useLanguage()
 
 	const isStaff = HasStaffPowers()
@@ -169,6 +169,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = props => {
 
 	return (
 		<DinoDialog
+			className='first-settings'
 			aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
 			open={props.step > -1}
 			onSave={props.onSave}
@@ -191,4 +192,4 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = props => {
 	)
 }
 
-export default FirstSettingsDialog
+export default FirstSettingsDialogs

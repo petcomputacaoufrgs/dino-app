@@ -8,7 +8,7 @@ import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import './styles.css'
 import HashUtils from '../../../utils/HashUtils'
-import FirstSettingsDialog from './dialogs'
+import FirstSettingsDialogs from './dialogs'
 import DataConstants from '../../../constants/app_data/DataConstants'
 import { toggle } from '../../../constants/toggle/Toggle'
 
@@ -65,6 +65,7 @@ const FirstSettings: React.FC = () => {
 	//TODO comparar mudanças
 	const saveSettings = async () => {
 		if (settings) {
+			console.log(done)
 			settings.firstSettingsDone = done
 			//settings.step = step
 
@@ -107,7 +108,7 @@ const FirstSettings: React.FC = () => {
 			{!isLoading &&
 				settings &&
 				(!settings.firstSettingsDone || toggle.firstLogin) && (
-					<FirstSettingsDialog
+					<FirstSettingsDialogs
 						settings={settings}
 						step={step}
 						onCloseDialogs={handleCloseDialogs}

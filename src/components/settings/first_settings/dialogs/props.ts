@@ -20,4 +20,5 @@ export default interface FirstSettingsDialogProps extends SelectPasswordProps {
 	onCancel: () => void
 	treatments: TreatmentEntity[]
 	onDoneChange: (value: boolean) => void
+	onPasswordErrorMessageChange: (value?: string) => void
 }

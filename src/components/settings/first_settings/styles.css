@@ -1,13 +1,3 @@
-.first_settings {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: black;
-	opacity: 0.5;
-}
-
 .first-settings .dino_dialog__actions {
 	padding: 16px;
 }

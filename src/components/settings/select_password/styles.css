@@ -1,7 +1,3 @@
-.set_password__error_message {
-	color: #ff7676;
-}
-
 .message_dialog.set_password p {
 	font-size: var(--default-font);
 }

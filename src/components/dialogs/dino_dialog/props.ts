@@ -5,4 +5,6 @@ export default interface DinoDialogProps {
 	onSave: () => void
 	header?: React.ReactNode
 	actions?: React.ReactNode
+	labelSave?: string
+	labelClose?: string
 }

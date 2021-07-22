@@ -15,6 +15,8 @@ const DinoDialog: React.FC<DinoDialogProps> = ({
 	header,
 	actions,
 	children,
+	labelSave,
+	labelClose,
 }) => {
 	const language = useLanguage()
 
@@ -26,29 +28,34 @@ const DinoDialog: React.FC<DinoDialogProps> = ({
 		return native
 	}
 
+	console.log(getClassName())
+
 	return (
-		<div>
-			<Dialog
-				className={getClassName()}
-				open={open}
-				onClose={onClose}
-				TransitionComponent={TransitionSlide}
-				fullWidth
-				disableBackdropClick
-				disableEscapeKeyDown
-			>
-				{header}
-				<DialogContent dividers>{children}</DialogContent>
-				{actions ? (
-					<div className='dino_dialog__actions'>{actions}</div>
-				) : (
+		<Dialog
+			className={getClassName()}
+			open={open}
+			onClose={onClose}
+			TransitionComponent={TransitionSlide}
+			fullWidth
+			disableBackdropClick
+			disableEscapeKeyDown
+		>
+			{header}
+			<DialogContent dividers>{children}</DialogContent>
+
+			<div className='dino_dialog__actions'>
+				{actions || (
 					<DialogActions>
-						<TextButton onClick={onClose}>{language.data.CANCEL}</TextButton>
-						<TextButton onClick={onSave}>{language.data.SAVE}</TextButton>
+						<TextButton onClick={onClose}>
+							{labelClose || language.data.CANCEL}
+						</TextButton>
+						<TextButton onClick={onSave}>
+							{labelSave || language.data.SAVE}
+						</TextButton>
 					</DialogActions>
 				)}
-			</Dialog>
-		</div>
+			</div>
+		</Dialog>
 	)
 }
 

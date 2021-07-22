@@ -13,7 +13,6 @@ import Home from '../../home'
 import Contacts from '../../contacts'
 import Settings from '../../settings'
 import StaffDataProvider from '../../../../context/staff_data'
-import PermissionEnum from '../../../../types/enum/PermissionEnum'
 import ReportBug from '../../../report_bug'
 
 const StaffMain: React.FC = () => {

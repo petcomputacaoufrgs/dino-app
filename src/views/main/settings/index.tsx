@@ -1,9 +1,8 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAlert } from '../../../context/alert'
 import { useLanguage } from '../../../context/language'
 import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
-import Button from '../../../components/button'
 import SelectTreatment from '../../../components/settings/select_treatment'
 import GoogleGrantDialog from '../../../components/dialogs/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
@@ -18,27 +17,21 @@ import Loader from '../../../components/loader'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
-import FontSizeEnum from '../../../types/enum/FontSizeEnum'
-import ColorThemeEnum from '../../../types/enum/ColorThemeEnum'
-import EssentialContactService from '../../../services/contact/EssentialContactService'
-import ContactService from '../../../services/contact/ContactService'
 //TODO ver aqui
 //import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
-import TransitionSlide from '../../../components/slide_transition'
-import {
-	DinoDialogHeader,
+import DinoDialog, {
 	DinoDialogContent,
 } from '../../../components/dialogs/dino_dialog'
-import { Dialog } from '@material-ui/core'
+import { DialogActions } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
 import HashUtils from '../../../utils/HashUtils'
 import { HasStaffPowers } from '../../../context/private_router'
 import DataConstants from '../../../constants/app_data/DataConstants'
-import { SaveButton } from '../../../components/button/save_button'
 import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
+import { SelectPassword } from '../../../components/settings/select_password'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 10
 
@@ -210,13 +203,12 @@ const Settings: React.FC = () => {
 			if (success) {
 				alert.showSuccessAlert(language.data.DELETE_ACCOUNT_SUCCESS_MESSAGE)
 				AuthService.logout()
-			} else {
-				alert.showErrorAlert(language.data.DELETE_ACCOUNT_ERROR_MESSAGE)
-			}
+			} else alert.showErrorAlert(language.data.DELETE_ACCOUNT_ERROR_MESSAGE)
 			setOpenDeleteAccountDialog(false)
 		}
 	}
 
+	//TODO ver
 	const handleSave = async () => {
 		if (settings) {
 			const userDeclinedGoogleContacts =
@@ -232,146 +224,109 @@ const Settings: React.FC = () => {
 		} else alert.showErrorAlert(language.data.SETTINGS_UPDATED_ERROR)
 	}
 
-	const handleChangeOldPassword = (event: ChangeEvent<HTMLInputElement>) => {
-		const newValue = event.target.value
-
-		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
-			setOldPassword(event.target.value)
-		}
-	}
-
-	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-		const newValue = event.target.value
-
-		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
-			setParentsAreaPassword(event.target.value)
-		}
-	}
-
-	const handleChangeConfirmPassword = (
-		event: ChangeEvent<HTMLInputElement>,
-	) => {
-		const newValue = event.target.value
-
-		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
-			setConfirmParentsAreaPassword(event.target.value)
-		}
-	}
-
-	//TODO refatorar! necessário modularização. talvez implementar com o DinoDialog já pronto
-	const renderDialogs = (): JSX.Element => (
-		<>
-			<GoogleGrantDialog
-				onAccept={handleAgreeContactsGrantDialog}
-				onDecline={handleDisagreeContactsGrantDialog}
-				onClose={handleCloseContactsGrantDialog}
-				open={openGoogleContactDialog}
-				scopes={[GoogleScope.CONTACT_SCOPE]}
-				text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
-				title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
-			/>
-			<Dialog
-				className='settings__delete_account_dialog'
-				fullWidth
-				maxWidth='xs'
-				onClose={handleCloseDeleteAccountDialog}
-				TransitionComponent={TransitionSlide}
-				open={openDeleteAccountDialog}
-			>
-				<Loader isLoading={isLoading}>
-					<DinoDialogHeader>
-						<h1>{language.data.DELETE_ACCOUNT}</h1>
-					</DinoDialogHeader>
-					<DinoDialogContent>
-						<p>{language.data.DELETE_ACCOUNT_MESSAGE}</p>
-					</DinoDialogContent>
-					<div className='settings__delete_account_dialog__buttons'>
-						<Button onClick={handleCloseDeleteAccountDialog}>
-							{language.data.NO}
-						</Button>
-						<Button
-							onClick={handleDeleteAccount}
-							className='settings__delete_account_dialog__buttons__delete_button'
-						>
-							{timeToDeleteAccount === 0 ? (
-								<>{language.data.YES}</>
-							) : (
-								<>{timeToDeleteAccount}</>
-							)}
-						</Button>
-					</div>
-				</Loader>
-			</Dialog>
-			<Dialog
-				className='settings__change_password_dialog'
-				fullWidth
-				maxWidth='xs'
-				onClose={handleCloseChangePasswordDialog}
-				TransitionComponent={TransitionSlide}
-				open={openChangePasswordDialog}
-			>
-				<Loader isLoading={isLoading}>
-					<DinoDialogHeader>
-						<h1>{language.data.CHANGE_PASSWORD}</h1>
-					</DinoDialogHeader>
-					<DinoDialogContent>
-						<form>
-							<label htmlFor='pass'>{language.data.INSERT_OLD_PASSWORD}</label>
-							<input
-								autoComplete='off'
-								value={oldPassword}
-								onChange={handleChangeOldPassword}
-								type='password'
-								name='password'
-								required
-							/>
-							<label htmlFor='pass'>{language.data.INSERT_NEW_PASSWORD}</label>
-							<input
-								autoComplete='off'
-								value={parentsAreaPassword}
-								onChange={handleChangePassword}
-								type='password'
-								name='password'
-								required
-							/>
-							<label htmlFor='pass'>
-								{language.data.INSERT_NEW_PASSWORD_AGAIN}
-							</label>
-							<input
-								autoComplete='off'
-								value={confirmParentsAreaPassword}
-								onChange={handleChangeConfirmPassword}
-								type='password'
-								name='password'
-								required
-							/>
-							{passwordErrorMessage && (
-								<p className='settings__change_password_dialog__error_message'>
-									{passwordErrorMessage}
-								</p>
-							)}
-						</form>
-						<a
-							href={
-								'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'
-							}
-						>
-							{' '}
-							{language.data.FORGOT_PASSWORD}
-						</a>
-					</DinoDialogContent>
-					<div className='settings__change_password_dialog__buttons'>
-						<Button onClick={handleCloseChangePasswordDialog}>
-							{language.data.CANCEL}
-						</Button>
-						<Button onClick={handlePasswordChange}>
-							{language.data.CHANGE}
-						</Button>
-					</div>
-				</Loader>
-			</Dialog>
-		</>
+	const renderDeleteAccountDialog = (): JSX.Element => (
+		<DinoDialog
+			className='settings__delete_account_dialog'
+			onSave={handleDeleteAccount}
+			onClose={handleCloseDeleteAccountDialog}
+			open={openDeleteAccountDialog}
+			header={<h3>{language.data.DELETE_ACCOUNT}</h3>}
+			actions={
+				<DialogActions>
+					<TextButton
+						className='settings__delete_account_dialog__buttons'
+						onClick={handleCloseDeleteAccountDialog}
+					>
+						{language.data.NO}
+					</TextButton>
+					<TextButton
+						className='settings__delete_account_dialog__buttons delete_button'
+						onClick={handleDeleteAccount}
+					>
+						{timeToDeleteAccount === 0
+							? language.data.YES
+							: timeToDeleteAccount}
+					</TextButton>
+				</DialogActions>
+			}
+		>
+			<Loader isLoading={isLoading}>
+				<DinoDialogContent>
+					<p>{language.data.DELETE_ACCOUNT_MESSAGE}</p>
+				</DinoDialogContent>
+			</Loader>
+		</DinoDialog>
 	)
+
+	const renderPasswordDialog = () => (
+		<DinoDialog
+			className='settings__change_password_dialog'
+			onClose={handleCloseChangePasswordDialog}
+			open={openChangePasswordDialog}
+			onSave={handlePasswordChange}
+			labelSave={language.data.CHANGE}
+			labelClose={language.data.CANCEL}
+		>
+			<Loader isLoading={isLoading}>
+				<DinoDialogContent>
+					<SelectPassword
+						oldPassword={oldPassword}
+						onChangeOldPassword={e => setOldPassword(e.target.value)}
+						parentsAreaPassword={parentsAreaPassword}
+						onChangePassword={e => setParentsAreaPassword(e.target.value)}
+						confirmParentsAreaPassword={confirmParentsAreaPassword}
+						onChangeConfirmPassword={e =>
+							setConfirmParentsAreaPassword(e.target.value)
+						}
+						passwordErrorMessage={passwordErrorMessage}
+						showOldPasswordField
+					/>
+					<a
+						className='forgot_password__link'
+						href={
+							'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'
+						}
+					>
+						{' '}
+						{language.data.FORGOT_PASSWORD}
+					</a>
+				</DinoDialogContent>
+			</Loader>
+		</DinoDialog>
+	)
+
+	const renderUserOnlySection = () =>
+		!isStaff && (
+			<>
+				<FormControl className='settings__form'>
+					<SelectTreatment
+						availableTreatments={treatments}
+						settings={settings}
+					/>
+				</FormControl>
+				<DinoHr invisible />
+				<FormControl className='settings__form'>
+					<DinoSwitch
+						selected={syncGoogleContacts}
+						onChangeSelected={handleGoogleContactSwitchChanged}
+						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
+					/>
+				</FormControl>
+				<DinoHr />
+				<FormControl className='settings__form'>
+					<SelectEssentialContactGrant settings={settings} />
+				</FormControl>
+				<DinoHr />
+				<FormControl>
+					<TextButton
+						onClick={handleChangePasswordClick}
+						className='settings__form__change_password'
+					>
+						{language.data.CHANGE_PASSWORD_LABEL}
+					</TextButton>
+				</FormControl>
+			</>
+		)
 
 	return (
 		<Loader isLoading={isLoading} hideChildren>
@@ -392,37 +347,7 @@ const Settings: React.FC = () => {
 				<FormControl className='settings__form'>
 					<SelectColorTheme settings={settings} />
 				</FormControl>
-				{!isStaff && (
-					<>
-						<FormControl className='settings__form'>
-							<SelectTreatment
-								availableTreatments={treatments}
-								settings={settings}
-							/>
-						</FormControl>
-						<DinoHr invisible />
-						<FormControl className='settings__form'>
-							<DinoSwitch
-								selected={syncGoogleContacts}
-								onChangeSelected={handleGoogleContactSwitchChanged}
-								label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
-							/>
-						</FormControl>
-						<DinoHr />
-						<FormControl className='settings__form'>
-							<SelectEssentialContactGrant settings={settings} />
-						</FormControl>
-						<DinoHr />
-						<FormControl>
-							<TextButton
-								onClick={handleChangePasswordClick}
-								className='settings__form__change_password'
-							>
-								{language.data.CHANGE_PASSWORD_LABEL}
-							</TextButton>
-						</FormControl>
-					</>
-				)}
+				{renderUserOnlySection()}
 				<DinoHr />
 				<FormControl>
 					<TextButton
@@ -432,9 +357,17 @@ const Settings: React.FC = () => {
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
-				<DinoHr className='settings__last_line' />
-				<SaveButton onClick={handleSave} />
-				{renderDialogs()}
+				{renderPasswordDialog()}
+				{renderDeleteAccountDialog()}
+				<GoogleGrantDialog
+					onAccept={handleAgreeContactsGrantDialog}
+					onDecline={handleDisagreeContactsGrantDialog}
+					onClose={handleCloseContactsGrantDialog}
+					open={openGoogleContactDialog}
+					scopes={[GoogleScope.CONTACT_SCOPE]}
+					text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
+					title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
+				/>
 			</div>
 		</Loader>
 	)

@@ -8,6 +8,9 @@ import './styles.css'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 
+/**
+ * @see já salva
+ */
 const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 	children,
 	availableTreatments,
@@ -26,11 +29,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 
 	const handleChange = (newSelectedTreatment: TreatmentEntity) => {
 		setSelectedTreatment(newSelectedTreatment)
-
-		if (settings && settings.treatmentLocalId !== newSelectedTreatment.id) {
-			settings.treatmentLocalId = newSelectedTreatment.localId
-			UserSettingsService.save(settings)
-		}
+		UserSettingsService.saveSettingsTreatment(newSelectedTreatment, settings)
 	}
 
 	return (
@@ -52,9 +51,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 						const entity = availableTreatments.find(
 							treatment => treatment.name === newValue,
 						)
-						if (entity) {
-							handleChange(entity)
-						}
+						if (entity) handleChange(entity)
 					}
 				}}
 				renderInput={params => (

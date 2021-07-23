@@ -2,18 +2,8 @@ import React from 'react'
 import DataConstants from '../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../context/language'
 import { DinoTextfield } from '../../textfield'
+import { SelectPasswordProps } from './props'
 import './styles.css'
-
-export interface SelectPasswordProps {
-	oldPassword?: string
-	onChangeOldPassword?: (event: React.ChangeEvent<HTMLInputElement>) => void
-	parentsAreaPassword: string
-	onChangeConfirmPassword: (event: React.ChangeEvent<HTMLInputElement>) => void
-	confirmParentsAreaPassword: string
-	onChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void
-	passwordErrorMessage?: string
-	showOldPasswordField?: boolean
-}
 
 export const SelectPassword: React.FC<SelectPasswordProps> = props => {
 	const language = useLanguage()

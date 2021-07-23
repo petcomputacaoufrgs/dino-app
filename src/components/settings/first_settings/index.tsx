@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLanguage } from '../../../context/language'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import AuthService from '../../../services/auth/AuthService'
@@ -7,10 +7,9 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import './styles.css'
-import HashUtils from '../../../utils/HashUtils'
 import FirstSettingsDialogs from './dialogs'
-import DataConstants from '../../../constants/app_data/DataConstants'
 import { toggle } from '../../../constants/toggle/Toggle'
+import HashUtils from '../../../utils/HashUtils'
 
 const FirstSettings: React.FC = () => {
 	let done = false
@@ -67,6 +66,7 @@ const FirstSettings: React.FC = () => {
 		if (settings) {
 			console.log(done)
 			settings.firstSettingsDone = done
+			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 			//settings.step = step
 
 			await UserSettingsService.save(settings)

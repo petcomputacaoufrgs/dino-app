@@ -5,6 +5,9 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import DinoSwitch from '../../switch'
 
+/**
+ * @see já salva
+ */
 export const SelectEssentialContactGrant: React.FC<{
 	settings?: UserSettingsEntity
 }> = ({ settings }) => {
@@ -12,40 +15,15 @@ export const SelectEssentialContactGrant: React.FC<{
 	const isStaff = HasStaffPowers()
 
 	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] =
-		useState(UserSettingsService.getDefaultEssentialContactGrant())
+		useState(UserSettingsService.getEssentialContactGrant(settings))
 
 	const handleChange = (includeEssentialContact: boolean) => {
 		setSelectedEssentialContactGrant(includeEssentialContact)
 
-		// const oldIncludeEssentialContact = settings.includeEssentialContact
-
-		// 	settings.includeEssentialContact = selectedEssentialContactGrant
-
-		// 	const treatmentChangedWithEssentialContacts =
-		// 		oldTreatment !== settings.treatmentLocalId &&
-		// 		settings.includeEssentialContact
-		// 	const disabledEssentialContacts =
-		// 		oldIncludeEssentialContact !== settings.includeEssentialContact &&
-		// 		oldIncludeEssentialContact
-		// 	const enabledEssentialContacts =
-		// 		oldIncludeEssentialContact !== settings.includeEssentialContact &&
-		// 		settings.includeEssentialContact
-
-		// 	if (treatmentChangedWithEssentialContacts || disabledEssentialContacts) {
-		// 		await ContactService.deleteUserEssentialContacts()
-		// 	}
-
-		// 	if (treatmentChangedWithEssentialContacts || enabledEssentialContacts) {
-		// 		EssentialContactService.saveUserEssentialContacts(settings)
-		// 	}
-
-		if (
-			settings &&
-			settings.includeEssentialContact !== includeEssentialContact
-		) {
-			settings.includeEssentialContact = includeEssentialContact
-			UserSettingsService.save(settings)
-		}
+		UserSettingsService.saveSettingsEssentialContactGrant(
+			includeEssentialContact,
+			settings,
+		)
 	}
 
 	return !isStaff ? (

@@ -7,7 +7,6 @@ let turn: number
 let good: boolean
 let compTurn: boolean
 let intervalId: NodeJS.Timeout | null
-let noise: boolean
 let win: boolean
 let blocked: boolean
 
@@ -30,7 +29,7 @@ export function startGame(handleWin: () => void) {
 	turnDiv = document.getElementById('musical_dino__header__turn')
 
 	win = true
-	noise = false
+	
 	compTurn = false
 	blocked = false
 
@@ -138,54 +137,46 @@ function gameTurn() {
 }
 
 function one() {
-	if (noise) {
-		const audio = document.getElementById(
-			'musical_dino__clip1',
-		) as HTMLAudioElement | null
-		if (audio) {
-			audio.play()
-		}
+	const audio = document.getElementById(
+		'musical_dino__clip1',
+	) as HTMLAudioElement | null
+	if (audio) {
+		audio.play()
 	}
-	noise = true
+	
 	topLeft!.classList.add('musical_dino__dino_moving')
 }
 
 function two() {
-	if (noise) {
-		const audio = document.getElementById(
-			'musical_dino__clip2',
-		) as HTMLAudioElement | null
-		if (audio) {
-			audio.play()
-		}
-	}
-	noise = true
+	const audio = document.getElementById(
+		'musical_dino__clip2',
+	) as HTMLAudioElement | null
+	if (audio) {
+		audio.play()
+	}	
+
 	topRight!.classList.add('musical_dino__dino_moving')
 }
 
 function three() {
-	if (noise) {
-		const audio = document.getElementById(
-			'musical_dino__clip3',
-		) as HTMLAudioElement | null
-		if (audio) {
-			audio.play()
-		}
+	const audio = document.getElementById(
+		'musical_dino__clip3',
+	) as HTMLAudioElement | null
+	if (audio) {
+		audio.play()
 	}
-	noise = true
+
 	bottomLeft!.classList.add('musical_dino__dino_moving')
 }
 
 function four() {
-	if (noise) {
-		const audio = document.getElementById(
-			'musical_dino__clip4',
-		) as HTMLAudioElement | null
-		if (audio) {
-			audio.play()
-		}
+	const audio = document.getElementById(
+		'musical_dino__clip4',
+	) as HTMLAudioElement | null
+	if (audio) {
+		audio.play()
 	}
-	noise = true
+
 	bottomRight!.classList.add('musical_dino__dino_moving')
 }
 
@@ -224,8 +215,6 @@ function check() {
 			clearColor()
 			intervalId = setInterval(gameTurn, 800)
 		}, 800)
-
-		noise = false
 	}
 
 	// all good

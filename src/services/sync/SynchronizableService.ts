@@ -16,10 +16,18 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 	abstract getSyncDependencies(): SynchronizableService[]
 
 	/**
-	 * @description Return list of necessary authorities to perform sync process.
-	 * An user with anyone of this authorities can sync.
+	 * @description Return list of permissions that can read this service entity.
+	 * An user with anyone of this authorities can read this entity.
+	 * If empty anyone with authentication can read
 	 */
-	abstract getSyncNecessaryPermissions(): PermissionEnum[] 
+	abstract getPermissionsWhichCanRead(): PermissionEnum[]
+
+	/**
+	 * @description Return list of permissions that can edit this service entity.
+	 * An user with anyone of this authorities can edit this entity.
+	 * If empty anyone with authentication can edit
+	 */
+	abstract getPermissionsWhichCanEdit(): PermissionEnum[]
 
 	/**
 	 * @description Function that performs save data synchronization with the API.
@@ -57,6 +65,55 @@ export default abstract class SynchronizableService extends WebSocketSubscribera
 		this.syncResolves = []
 		this.subscribeInSyncService()
 		this.subscribeLogoutCallback()
+	}
+
+	/**
+	 * @description check if user has necessary permission to modify this service entity
+	 */
+	hasNecessaryPermissionToEdit = async (): Promise<boolean> => {
+		const necessaryPermissions = this.getPermissionsWhichCanEdit()
+		if (this.anyPermissionIsNecessary(necessaryPermissions)) return true
+		return this.userHasAnyNecessaryPermission(necessaryPermissions)
+	}
+
+	/**
+	 * @description check if user has not necessary permission to modify this service entity
+	 */
+	hasNotNecessaryPermissionToEdit = async (): Promise<boolean> => {
+		return !this.hasNecessaryPermissionToEdit()
+	}
+
+	/**
+	 * @description check if user has necessary permission to read this service entity
+	 */
+	hasNecessaryPermissionToRead = async (): Promise<boolean> => {
+		const necessaryPermissions = this.getPermissionsWhichCanRead()
+		if (this.anyPermissionIsNecessary(necessaryPermissions)) return true
+		return this.userHasAnyNecessaryPermission(necessaryPermissions)
+	}
+
+	/**
+	 * @description check if user has not necessary permission to read this service entity
+	 */
+	hasNotNecessaryPermissionToRead = async (): Promise<boolean> => {
+		return !(await this.hasNecessaryPermissionToRead())
+	}
+
+	private anyPermissionIsNecessary = (
+		necessaryPermissions: PermissionEnum[],
+	): boolean => {
+		return necessaryPermissions.length === 0 ? true : false
+	}
+
+	private userHasAnyNecessaryPermission = async (
+		necessaryPermissions: string[],
+	): Promise<boolean> => {
+		const userPermissions = await AuthService.getPermissions()
+		return userPermissions.some(userPermission =>
+			necessaryPermissions.some(
+				necessaryPermission => necessaryPermission === userPermission,
+			),
+		)
 	}
 
 	/**

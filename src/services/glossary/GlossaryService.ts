@@ -29,7 +29,11 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.STAFF, PermissionEnum.ADMIN]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
@@ -65,18 +69,25 @@ class GlossaryServiceImpl extends AutoSynchronizableService<
 			.sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
 	}
 
-	getByTitle = async (title: string): Promise<GlossaryItemEntity | undefined> => {
+	getByTitle = async (
+		title: string,
+	): Promise<GlossaryItemEntity | undefined> => {
 		return this.toFirst(this.table.where('title').equalsIgnoreCase(title))
-}
+	}
 
-	isTitleInvalid = async (item: GlossaryItemEntity, languageData: LanguageBase) => {
-		if(StringUtils.isEmpty(item.title)) {
+	isTitleInvalid = async (
+		item: GlossaryItemEntity,
+		languageData: LanguageBase,
+	) => {
+		if (StringUtils.isEmpty(item.title)) {
 			return languageData.EMPTY_FIELD_ERROR
 		}
 
 		const dbItem = await this.getByTitle(item.title)
 
-		return dbItem && dbItem.localId !== item.localId ? languageData.itemAlreadyExists(languageData.TITLE) :	undefined
+		return dbItem && dbItem.localId !== item.localId
+			? languageData.itemAlreadyExists(languageData.TITLE)
+			: undefined
 	}
 }
 

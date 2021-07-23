@@ -18,9 +18,6 @@ class EventService {
 
 	whenStart = () => {
 		ErrorHandlerService.register()
-		if (process.env.NODE_ENV === 'development') {
-			this.startWebSocketAndSync()
-		}
 	}
 
 	whenTabLoad = async () => {

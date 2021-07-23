@@ -22,7 +22,10 @@ import { hasValue } from '../../utils/Utils'
 const TRUE = 1
 const FALSE = 0
 
-type removeTreatmentAcumType = { toSave: EssentialContactEntity[], toDelete: EssentialContactEntity[] }
+type removeTreatmentAcumType = {
+	toSave: EssentialContactEntity[]
+	toDelete: EssentialContactEntity[]
+}
 
 class EssentialContactServiceImpl extends AutoSynchronizableService<
 	number,
@@ -42,7 +45,11 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		return [TreatmentService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN, PermissionEnum.STAFF]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
@@ -102,36 +109,51 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		settings: UserSettingsEntity,
 	): Promise<EssentialContactEntity[]> {
 		if (hasValue(settings.treatmentLocalId)) {
-			return this.toList(this.table
-				.where('treatmentLocalIds')
-				.equals(settings.treatmentLocalId!))
+			return this.toList(
+				this.table
+					.where('treatmentLocalIds')
+					.equals(settings.treatmentLocalId!),
+			)
 		} else return []
 	}
 
-	async removeTreatment(treatment: TreatmentEntity,) { 
-
+	async removeTreatment(treatment: TreatmentEntity) {
 		if (hasValue(treatment.localId)) {
-			
-			const essentialContacts = await this.getTreatmentNonUniversalEContacts(treatment.localId!)
+			const essentialContacts = await this.getTreatmentNonUniversalEContacts(
+				treatment.localId!,
+			)
 
-			const acum = essentialContacts.reduce((acum, ec) => {
+			const acum = essentialContacts.reduce(
+				(acum, ec) => {
+					ec.treatmentLocalIds = ec.treatmentLocalIds?.filter(
+						t => t !== treatment.localId,
+					)
 
-				ec.treatmentLocalIds = ec.treatmentLocalIds?.filter(t => t !== treatment.localId)
+					acum[
+						ArrayUtils.isNotEmpty(ec.treatmentLocalIds) ? 'toSave' : 'toDelete'
+					].push(ec)
 
-				acum[ArrayUtils.isNotEmpty(ec.treatmentLocalIds) ? "toSave" : "toDelete" ].push(ec)
+					return acum
+				},
+				{ toSave: [], toDelete: [] } as removeTreatmentAcumType,
+			)
 
-				return acum
-			}, { toSave: [], toDelete: [] } as removeTreatmentAcumType)
-
-			await Promise.all([this.saveAll(acum.toSave), this.deleteAll(acum.toDelete)])
+			await Promise.all([
+				this.saveAll(acum.toSave),
+				this.deleteAll(acum.toDelete),
+			])
 		}
 	}
 
-	private getTreatmentNonUniversalEContacts = async (treatmentLocalId: number) => {
-			return await this.toList(this.table
+	private getTreatmentNonUniversalEContacts = async (
+		treatmentLocalId: number,
+	) => {
+		return await this.toList(
+			this.table
 				.where('treatmentLocalIds')
 				.equals(treatmentLocalId)
-				.filter(ec => ec.isUniversal === FALSE))
+				.filter(ec => ec.isUniversal === FALSE),
+		)
 	}
 
 	public async saveUserEssentialContacts(settings: UserSettingsEntity) {
@@ -147,7 +169,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 
 		essentialContacts.forEach(async ec => {
 			const savedContact = await ContactService.save(
-				this.convertEntityToContactEntity(ec)
+				this.convertEntityToContactEntity(ec),
 			)
 			if (savedContact) {
 				savePhonesFromEssentialContact(ec, savedContact)
@@ -159,16 +181,17 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			c: ContactEntity,
 		) => {
 			if (ec.localId) {
-				const ePhones = await EssentialPhoneService.getAllByEssentialContactLocalId(
-					ec.localId,
-				)
+				const ePhones =
+					await EssentialPhoneService.getAllByEssentialContactLocalId(
+						ec.localId,
+					)
 				if (ArrayUtils.isNotEmpty(ePhones)) {
 					const newContactPhones: PhoneEntity[] = ePhones.map(ePhone => {
 						return {
 							localContactId: c.localId,
 							localEssentialPhoneId: ePhone.localId,
 							number: ePhone.number,
-							type: ePhone.type
+							type: ePhone.type,
 						}
 					})
 					await PhoneService.saveAll(newContactPhones)
@@ -177,7 +200,9 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		}
 	}
 
-	private convertEntityToContactEntity(entity: EssentialContactEntity): ContactEntity {
+	private convertEntityToContactEntity(
+		entity: EssentialContactEntity,
+	): ContactEntity {
 		const contactEntity: ContactEntity = {
 			name: entity.name,
 			description: entity.description,

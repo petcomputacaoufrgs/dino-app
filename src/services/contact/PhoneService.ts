@@ -33,7 +33,11 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 		return [ContactService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.USER]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return [PermissionEnum.USER]
 	}
 
@@ -90,15 +94,19 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 	}
 
 	async getAllByContactLocalId(localContactId: number): Promise<PhoneEntity[]> {
-		return this.toList(this.table.where('localContactId').equals(localContactId))
+		return this.toList(
+			this.table.where('localContactId').equals(localContactId),
+		)
 	}
 
 	async getAllByEssentialContactLocalId(
 		localEssentialContactId: number,
 	): Promise<PhoneEntity[]> {
-		return this.toList(this.table
-			.where('localEssentialContactId')
-			.equals(localEssentialContactId))
+		return this.toList(
+			this.table
+				.where('localEssentialContactId')
+				.equals(localEssentialContactId),
+		)
 	}
 
 	getPhoneTypes = (
@@ -130,9 +138,9 @@ export class PhoneServiceImpl extends AutoSynchronizableService<
 
 	async deleteByContact(contact: ContactEntity): Promise<void> {
 		if (hasValue(contact.localId)) {
-			const phones = await this.toList(this.table
-				.where('localContactId')
-				.equals(contact.localId!))
+			const phones = await this.toList(
+				this.table.where('localContactId').equals(contact.localId!),
+			)
 			if (phones.length > 0) {
 				await this.deleteAll(phones)
 			}

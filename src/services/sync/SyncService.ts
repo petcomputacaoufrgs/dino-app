@@ -38,15 +38,12 @@ class SyncService extends UpdatableService {
 		}
 
 		if (isAuthenticated) {
-			const userPermissions = await AuthService.getPermissions()
-			if (userPermissions) {
-				if (this.syncState === SyncStateEnum.SYNCHRONIZING) {
-					return new Promise<boolean>(resolve => {
-						this.resolves.push(resolve)
-					})
-				} else {
-					return this.doSync(userPermissions)
-				}
+			if (this.syncState === SyncStateEnum.SYNCHRONIZING) {
+				return new Promise<boolean>(resolve => {
+					this.resolves.push(resolve)
+				})
+			} else {
+				return this.doSync()
 			}
 		}
 
@@ -62,9 +59,9 @@ class SyncService extends UpdatableService {
 		return this.syncState
 	}
 
-	private doSync = async (userPermission: string[]): Promise<boolean> => {
+	private doSync = async (): Promise<boolean> => {
 		this.setSynchronizing()
-		const result: boolean = await this.syncTree(userPermission)
+		const result: boolean = await this.syncTree()
 		if (result) {
 			this.setSynced()
 		} else {
@@ -110,51 +107,40 @@ class SyncService extends UpdatableService {
 		this.triggerUpdateEvent()
 	}
 
-	private syncTree = async (userPermission: string[]): Promise<boolean> => {
-		const deleteResult = await this.syncDelete(userPermission)
-		const saveResult = await this.syncSave(userPermission)
+	private syncTree = async (): Promise<boolean> => {
+		const deleteResult = await this.syncDelete()
+		const saveResult = await this.syncSave()
 		return deleteResult && saveResult
 	}
 
-	private syncSave = async (userPermission: string[]): Promise<boolean> => {
-		const result = await this.syncNodesToSave(this.tree.saveRoot, userPermission)
+	private syncSave = async (): Promise<boolean> => {
+		const result = await this.syncNodesToSave(this.tree.saveRoot)
 		this.cleanServiceResults()
 		return result
 	}
 
-	private syncDelete = async (userPermission: string[]): Promise<boolean> => {
-		const result = await this.syncNodesToDelete(this.tree.deleteRoot, userPermission)
+	private syncDelete = async (): Promise<boolean> => {
+		const result = await this.syncNodesToDelete(this.tree.deleteRoot)
 		this.cleanServiceResults()
 		return result
 	}
 
-	private syncNodesToSave = async (
-		nodes: SyncTreeNode[], 
-		userPermission: string[]
-	): Promise<boolean> => {
-		const executionList = nodes.map(node => this.syncNodeToSave(node, userPermission))
+	private syncNodesToSave = async (nodes: SyncTreeNode[]): Promise<boolean> => {
+		const executionList = nodes.map(node => this.syncNodeToSave(node))
 		return this.processExecutionList(executionList)
 	}
 
 	private syncNodesToDelete = async (
 		nodes: SyncTreeNode[],
-		userPermission: string[]
-
 	): Promise<boolean> => {
-		const executionList = nodes.map(node => this.syncNodeToDelete(node, userPermission))
+		const executionList = nodes.map(node => this.syncNodeToDelete(node))
 		return this.processExecutionList(executionList)
 	}
 
-	private syncNodeToSave = async (node: SyncTreeNode, userAuthorizations: string[]): Promise<boolean> => {
-		const necessaryAuthorization = node.service.getSyncNecessaryPermissions()
-        const hasNecessaryAuth = necessaryAuthorization.length === 0 || 
-			userAuthorizations.some(uAuth => necessaryAuthorization.some(nAuth => nAuth === uAuth))
-		
-		if (!hasNecessaryAuth) return true
-
+	private syncNodeToSave = async (node: SyncTreeNode): Promise<boolean> => {
 		const dependencies = node.dependencies
 		if (dependencies.length > 0) {
-			const executionList = dependencies.map(node => this.syncNodeToSave(node, userAuthorizations))
+			const executionList = dependencies.map(node => this.syncNodeToSave(node))
 			const success = await this.processExecutionList(executionList)
 			if (!success) return false
 		}
@@ -164,16 +150,10 @@ class SyncService extends UpdatableService {
 		return result
 	}
 
-	private syncNodeToDelete = async (node: SyncTreeNode, userAuthorizations: string[]): Promise<boolean> => {
-		const necessaryAuthorization = node.service.getSyncNecessaryPermissions()
-        const hasNecessaryAuth = necessaryAuthorization.length === 0 ? true : 
-			userAuthorizations.some(uAuth => necessaryAuthorization.some(nAuth => nAuth === uAuth))
-		
-		if (!hasNecessaryAuth) return true
-
+	private syncNodeToDelete = async (node: SyncTreeNode): Promise<boolean> => {
 		const dependents = node.dependents
 		if (dependents.length > 0) {
-			const executionList = dependents.map(node => this.syncNodeToDelete(node, userAuthorizations))
+			const executionList = dependents.map(node => this.syncNodeToDelete(node))
 			const success = await this.processExecutionList(executionList)
 			if (!success) return false
 		}

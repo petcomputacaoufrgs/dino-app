@@ -357,7 +357,7 @@ class AuthService extends UpdatableService {
 	private async saveUserAuthData(responseBody: AuthResponseDataModel) {
 		await UserService.updateUser(responseBody.user)
 	}
-	
+
 	private async saveUser(responseBody: AuthResponseDataModel) {
 		await UserService.updateUser(responseBody.user)
 	}
@@ -373,12 +373,17 @@ class AuthService extends UpdatableService {
 		return this.isStaff(userPermission)
 	}
 
-	isStaff = (userPermission: string | undefined) => userPermission === PermissionEnum.STAFF || userPermission === PermissionEnum.ADMIN 
-	
-	redirectToHome(userPermission: string | undefined) {
-		HistoryService.push(this.isStaff(userPermission) ? PathConstants.STAFF_HOME : PathConstants.USER_HOME)
-	}
+	isStaff = (userPermission: string | undefined) =>
+		userPermission === PermissionEnum.STAFF ||
+		userPermission === PermissionEnum.ADMIN
 
+	redirectToHome(userPermission: string | undefined) {
+		HistoryService.push(
+			this.isStaff(userPermission)
+				? PathConstants.STAFF_HOME
+				: PathConstants.USER_HOME,
+		)
+	}
 }
 
 export default new AuthService()

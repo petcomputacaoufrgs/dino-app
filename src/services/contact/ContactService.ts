@@ -29,7 +29,11 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		return [EssentialContactService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.USER]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return [PermissionEnum.USER]
 	}
 
@@ -73,7 +77,9 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	}
 
 	async getAllDerivatedFromEssential(): Promise<ContactEntity[]> {
-		return this.toList(this.table.where('localEssentialContactId').aboveOrEqual(0))
+		return this.toList(
+			this.table.where('localEssentialContactId').aboveOrEqual(0),
+		)
 	}
 
 	async deleteUserEssentialContacts() {

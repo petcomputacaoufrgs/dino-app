@@ -37,7 +37,6 @@ class APIHTTPPathsConstants {
 	CONTACT = `${this.ROOT}${this.ROUTE_USER}contact/`
 	PHONE = `${this.ROOT}${this.ROUTE_USER}phone/`
 	NOTE = `${this.ROOT}${this.ROUTE_USER}note/`
-	// TODO n esta de acordo na api
 
 	/* no route ------------------------------------------------------------------------ */
 	

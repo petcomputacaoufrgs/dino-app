@@ -32,7 +32,11 @@ class NoteServiceImpl extends AutoSynchronizableService<
 		return [NoteColumnService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.USER]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return [PermissionEnum.USER]
 	}
 
@@ -124,7 +128,9 @@ class NoteServiceImpl extends AutoSynchronizableService<
 		column: NoteColumnEntity,
 	): Promise<NoteEntity[]> {
 		if (hasValue(column.localId)) {
-			return this.toList(this.table.where('localColumnId').equals(column.localId!))
+			return this.toList(
+				this.table.where('localColumnId').equals(column.localId!),
+			)
 		}
 
 		return []

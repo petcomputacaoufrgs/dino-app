@@ -116,7 +116,9 @@ const fillArrayRandomly = () => {
  * @description display current score in game
  */
 const displayScore = () => {
-	turnDiv!.innerHTML = currentTurn.toString()
+	if (turnDiv) {
+		turnDiv.innerHTML = currentTurn.toString()
+	}
 }
 
 /**

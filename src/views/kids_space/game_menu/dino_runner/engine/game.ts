@@ -11,7 +11,6 @@ let scoreBoard: HTMLElement | null
 let score = 0
 let isJumping = false
 let isGameOver = false
-let isFirstJump = true
 let position = 0
 let onGameEnd: () => void
 let handleStopBackgroundEngine: () => void
@@ -38,7 +37,6 @@ export function startDinoRunnerGame(
 function handleStartGame() {
 	isJumping = false
 	isGameOver = false
-	isFirstJump = true
 	position = 0
 	score = 0
 
@@ -84,11 +82,6 @@ async function generateObstacle() {
 	obstacle.classList.add('dino_runner_game__obstacle')
 	obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 	grid!.appendChild(obstacle)
-
-	if (isFirstJump) {
-		obstaclePosition = screenWidth * 2.15 //dá um tempo melhor para o jogador pensar no primeiro pulo
-		isFirstJump = false
-	}
 
 	while (obstaclePosition >= -300) {
 		if (!nextObstacleGenerated && obstaclePosition < minDistance * -1) {

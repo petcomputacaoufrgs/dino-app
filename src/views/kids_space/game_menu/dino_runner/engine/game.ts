@@ -2,19 +2,39 @@ import sleep from '../../../../../utils/SleepUtils'
 import { getRandomInteger } from '../../../../../utils/RandomUtils'
 import { startBackgroundEngine } from './background'
 
-let goBackButton
+//#region Constants
+// Elements to keep track of
+let goBackButton: Element
 let dino: HTMLElement | null
 let grid: HTMLElement | null
 let container: HTMLElement | null
 let scoreBoard: HTMLElement | null
+
+// Score
 let score = 0
+
+// Control states
 let isJumping = false
 let isGameOver = false
 let isFirstJump = true
+
+// Que porra é essa?
 let position = 0
+
+// Functions to handle events
 let onGameEnd: () => void
 let handleStopBackgroundEngine: () => void
+//#endregion
 
+/**
+ * @description set all HTML elements and events
+ * @param handleGameEnd div where the game renders
+ * @param dinoContainer div where the game renders
+ * @param dinoGrid div containg the game grid 
+ * @param character div containg the character
+ * @param dinoScoreBoard div containing the score display
+ * @return list with the functions to handle the start of game and to handle the stop of animation
+ */
 export function startDinoRunnerGame(
 	handleGameEnd: () => void,
 	dinoContainer: HTMLDivElement,
@@ -44,13 +64,15 @@ export function startDinoRunnerGame(
 	return [handleStopBackgroundEngine, handleStartGame]
 }
 
+/**
+ * @description set variables to start the game, start animations and generate obstacles
+ */
 function handleStartGame() {
 	isJumping = false
 	isGameOver = false
 	isFirstJump = true
 	position = 0
 	score = 0
-
 	setScore(0)
 
 	handleStopBackgroundEngine = startBackgroundEngine()
@@ -60,6 +82,9 @@ function handleStartGame() {
 	}
 }
 
+/**
+ * @description verify if the character is jumping or not
+ */
 async function control() {
 	if (dino && !isGameOver && !isJumping) {
 		isJumping = true
@@ -68,13 +93,17 @@ async function control() {
 	}
 }
 
+/**
+ * @description make the jump animation
+ * @param dino div containing the character
+ */
 async function jump(dino: HTMLElement) {
 	let gravity = 1
 	let y_velocity = 17
 	position = 0
 
-	//Movimento em forma de parábola
 	do {
+		// projectile motion
 		position += y_velocity
 		y_velocity -= gravity
 		dino.style.transform = `translate3d(0, -${position}%, 0)`
@@ -84,6 +113,9 @@ async function jump(dino: HTMLElement) {
 	dino.style.transform = `translate3d(0, 0, 0)`
 }
 
+/**
+ * @description generate a new obstacle in the screen and control the score
+ */
 async function generateObstacle() {
 	let increaseSpeed = 0
 	let obstaclePosition = 550
@@ -132,6 +164,9 @@ async function generateObstacle() {
 
 }
 
+/**
+ * @description set an interval to call the next obstacle
+ */
 async function generateNextObstacle() {
 	if (!isGameOver) {
 		const randomTime = getRandomInteger(0, 800)
@@ -140,6 +175,9 @@ async function generateNextObstacle() {
 	}
 }
 
+/**
+ * @description display the current score on screen
+ */
 function setScore(score: number) {
 	if (scoreBoard) {
 		scoreBoard!.innerHTML = `<p>${score}</p>`

@@ -1,4 +1,4 @@
-const TOTAL_TURNS = 3
+const TOTAL_TURNS = 20
 
 //#region Variables
 // States and control variables

@@ -195,8 +195,6 @@ const Settings: React.FC = () => {
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
-			//TODO: Cadê essa service? morreu?
-			//GoogleContactService.activeGoogleContactsGrant()
 		}
 	}
 

@@ -18,6 +18,10 @@ import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import { LanguageContextType } from '../../context/language'
+import EssentialContactService from '../contact/EssentialContactService'
+import ContactService from '../contact/ContactService'
+import ContactEntity from '../../types/contact/database/ContactEntity'
+import DataConstants from '../../constants/app_data/DataConstants'
 
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
@@ -153,13 +157,14 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 
 	getEssentialContactGrant(
 		userSettings: UserSettingsEntity | undefined,
-	): boolean | undefined {
+	): boolean {
 		if (userSettings) {
 			return userSettings.includeEssentialContact
-		} else {
-			return undefined
 		}
+		return this.getDefaultEssentialContactGrant()
 	}
+
+	getDefaultEssentialContactGrant = () => true
 
 	getFirstSettingsDone = async (): Promise<boolean | undefined> => {
 		const userSettings = await this.getFirst()
@@ -202,10 +207,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 
 	getDefaultColorThemeCode = () => {
 		return ColorThemeEnum.DEVICE
-	}
-
-	getDefaultEssentialContactGrant = () => {
-		return true
 	}
 
 	getColorThemeName = (userSettings: UserSettingsEntity): string => {
@@ -268,9 +269,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			const treatment = treatments.find(
 				treatment => treatment.localId === userSettings.treatmentLocalId,
 			)
-			if (treatment) {
-				return treatment
-			}
+			if (treatment) return treatment
 		}
 
 		return undefined
@@ -286,6 +285,77 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			firstSettingsDone: false,
 			step: 0,
 		} as UserSettingsEntity
+	}
+
+	saveSettingsTreatment = async (
+		newTreatment: TreatmentEntity,
+		settings?: UserSettingsEntity,
+	) => {
+		if (settings && settings.treatmentLocalId !== newTreatment.id) {
+			settings.treatmentLocalId = newTreatment.localId
+			this.save(settings)
+
+			// if (settings.includeEssentialContact) {
+			// 	const contactsFromECs =
+			// 		await ContactService.getAllDerivatedFromEssential()
+
+			// 	const alreadyAddedContacts = Array<ContactEntity>()
+			// 	const toDeleteFromOldTreatment = Array<ContactEntity>()
+
+			// 	for (const c of contactsFromECs) {
+			// 		const ec = await EssentialContactService.getByLocalId(
+			// 			c.localEssentialContactId!,
+			// 		)
+
+			// 		if (ec && ec.isUniversal === DataConstants.FALSE) {
+			// 			// verifica se o contato do usuário (que vem de um EC) precisa ser deletado ou mantido de acordo com o novo tratamento
+			// 			ec.treatmentLocalIds?.some(
+			// 				treatmentLocalId => treatmentLocalId === newTreatment.localId,
+			// 			)
+			// 				? alreadyAddedContacts.push(c)
+			// 				: toDeleteFromOldTreatment.push(c)
+			// 		}
+			// 	}
+
+			// 	const newEcs =
+			// 		await EssentialContactService.getTreatmentEssentialContacts(settings)
+
+			// 	// faz interseccção entre todos os contatos do novo tratamento e os que o usuário já tem
+			// 	const ECsToSaveFromNewTreatment = newEcs.filter(
+			// 		newEc =>
+			// 			!alreadyAddedContacts.some(
+			// 				alreadyAddedContact =>
+			// 					alreadyAddedContact.localEssentialContactId === newEc.localId,
+			// 			),
+			// 	)
+
+			// 	await Promise.all([
+			// 		EssentialContactService.saveContactsFromEssentialContacts(
+			// 			ECsToSaveFromNewTreatment,
+			// 		),
+			// 		ContactService.deleteAll(toDeleteFromOldTreatment),
+			// 	])
+
+			// 	console.log(ECsToSaveFromNewTreatment, toDeleteFromOldTreatment)
+			// }
+		}
+	}
+
+	saveSettingsEssentialContactGrant = (
+		newIncludeEssentialContact: boolean,
+		settings?: UserSettingsEntity,
+	) => {
+		if (
+			settings &&
+			settings.includeEssentialContact !== newIncludeEssentialContact
+		) {
+			settings.includeEssentialContact = newIncludeEssentialContact
+			this.save(settings)
+
+			if (newIncludeEssentialContact) {
+				EssentialContactService.saveUserEssentialContacts(settings)
+			} else ContactService.deleteUserEssentialContacts()
+		}
 	}
 }
 

@@ -162,14 +162,17 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 			treatmentContactPromise,
 		])
 		essentialContacts.push(...results[0], ...results[1])
+		await this.saveContactsFromEssentialContacts(essentialContacts)
+	}
 
+	public async saveContactsFromEssentialContacts(
+		essentialContacts: EssentialContactEntity[],
+	) {
 		essentialContacts.forEach(async ec => {
 			const savedContact = await ContactService.save(
 				this.convertEntityToContactEntity(ec),
 			)
-			if (savedContact) {
-				savePhonesFromEssentialContact(ec, savedContact)
-			}
+			if (savedContact) savePhonesFromEssentialContact(ec, savedContact)
 		})
 
 		const savePhonesFromEssentialContact = async (

@@ -5,7 +5,6 @@ import LanguageBase from './LanguageBase'
  * @description Conjunto de textos em português
  */
 export default class PT implements LanguageBase {
-
 	APP_NAME = 'DinoApp'
 
 	DINOAPP_TEAM = 'Equipe DinoApp'
@@ -30,13 +29,16 @@ export default class PT implements LanguageBase {
 
 	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Bem vindo(a)!'
 
-	FIRST_LOGIN_WELCOME_MESSAGE = 'Dino Message Lorem ipsum dolor sit amet consectetur adipisicin elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibu repudiandae ut labore!'
+	FIRST_LOGIN_WELCOME_MESSAGE =
+		'Dino Message Lorem ipsum dolor sit amet consectetur adipisicin elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibu repudiandae ut labore!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
 
-	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE = 'Obrigado por se juntar ao DinoApp!'
-	
-	FIRST_LOGIN_CONFIGURATIONS_MESSAGE = 'Suas configurações podem ser atualizadas a qualquer momento na seção de Configurações do aplicativo.'
+	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE =
+		'Obrigado por se juntar ao DinoApp!'
+
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE =
+		'Suas configurações podem ser atualizadas a qualquer momento na seção de Configurações do aplicativo.'
 
 	FIRST_LOGIN_CHOOSE_TREATMENT = 'Escolha seu Tratamento'
 
@@ -66,7 +68,7 @@ export default class PT implements LanguageBase {
 	LOGOUT_DIALOG_QUESTION = 'Tem certeza que deseja sair do DinoApp?'
 
 	LOGOUT_DIALOG_DESCRIPTION =
-		'Se disser \'SIM\' todos os dados referentes a sua conta serão removidos deste dispositivo.'
+		"Se disser 'SIM' todos os dados referentes a sua conta serão removidos deste dispositivo."
 
 	AGREEMENT_BUTTON_ARIA_LABEL = 'Clique para concordar'
 
@@ -78,9 +80,10 @@ export default class PT implements LanguageBase {
 
 	DELETE = 'Deletar'
 
-	DELETE_ITEM_OPTION_TEXT ='Esta ação irá deletar o item permanentemente.'
+	DELETE_ITEM_OPTION_TEXT = 'Esta ação irá deletar o item permanentemente.'
 
-	DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato permanentemente.'
+	DELETE_CONTACT_OPTION_TEXT =
+		'Esta ação irá deletar seu contato permanentemente.'
 
 	TERMS_OF_USE = 'Termos de Uso'
 
@@ -91,7 +94,7 @@ export default class PT implements LanguageBase {
 	GAMES = 'Jogos'
 
 	MENU_SETTINGS = 'Configurações'
-	
+
 	MENU_CONTACTS = 'Contatos'
 
 	MENU_LOGOUT = 'Sair'
@@ -173,9 +176,9 @@ export default class PT implements LanguageBase {
 	FORM_ADD_STAFF = 'Adicionar Membro de Equipe'
 
 	FORM_EMAIL = 'Adicionar E-mail'
-	
+
 	ADD_STAF_TAB = 'Adicionar'
-	
+
 	STAFF_LIST_TAB = 'Equipe'
 
 	STAFF_SAVE_SUCCESS = 'Membro de equipe adicionado(a)'
@@ -197,7 +200,7 @@ export default class PT implements LanguageBase {
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
 	NEW_CONTACT = 'Novo Contato'
-	
+
 	NEW_TREATMENT = 'Novo Tratamento'
 
 	NEW_GLOSSARY_ITEM = 'Novo Item de Glossário'
@@ -424,11 +427,9 @@ export default class PT implements LanguageBase {
 	NOTE_COLUMN_DELETE_DIALOG_QUESTION =
 		'Tem certeza que deseja remover esta coluna?'
 
-	ARE_YOU_SURE =
-		'Tem certeza?'
+	ARE_YOU_SURE = 'Tem certeza?'
 
-	NOTE_COLUMN_DELETE_DIALOG_DESC =
-		`Caso responda 'SIM' esta coluna será removida permanentemente.`
+	NOTE_COLUMN_DELETE_DIALOG_DESC = `Caso responda 'SIM' esta coluna será removida permanentemente.`
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
 		'Ao remover esta coluna você irá remover as anotações pertencentes a ela permanentemente.'
@@ -606,7 +607,8 @@ export default class PT implements LanguageBase {
 
 	FORGOT_PASSWORD = 'Esqueceu sua senha?'
 
-	ACCESS_PARENTS_AREA = 'Essa área é para adultos. Você é um adulto ou está acompanhado de um?'
+	ACCESS_PARENTS_AREA =
+		'Essa área é para adultos. Você é um adulto ou está acompanhado de um?'
 
 	ACCESS = 'Acessar'
 
@@ -623,7 +625,7 @@ export default class PT implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
-	
+
 	SUCESS_GAME_OVER_LABEL = 'Você arrasou! Parabéns'
 
 	CHANGE_PASSWORD_LABEL = 'Alterar senha de acesso a área dos responsáveis'
@@ -640,7 +642,8 @@ export default class PT implements LanguageBase {
 
 	INSERT_NEW_PASSWORD_AGAIN = 'Digite novamente a nova senha: '
 
-	SETTING_PASSWORD_EXPLANATION = 'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter entre 8 e 24 caracteres.'
+	SETTING_PASSWORD_EXPLANATION =
+		'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter entre 8 e 24 caracteres.'
 
 	INSERT_PASSWORD = 'Digite a senha: '
 
@@ -654,14 +657,14 @@ export default class PT implements LanguageBase {
 
 	WRONG_PASSWORD = 'Senha incorreta'
 
-	EXAMPLE_EMAIL='examplo@email.com'
+	EXAMPLE_EMAIL = 'examplo@email.com'
 
 	GLOSSARY = 'Glossário'
 
 	GLOSSARY_ITEM = 'Item de Glossário'
 
 	FAQ = 'FAQ'
-	
+
 	FAQ_ITEM = `Item da ${this.FAQ}`
 
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
@@ -678,7 +681,8 @@ export default class PT implements LanguageBase {
 
 	SAVE = 'Salvar'
 
-	UNIVERSAL_CONTACT_LABEL = 'Este contato é universal e aparecerá em todas as agendas de usuários'
+	UNIVERSAL_CONTACT_LABEL =
+		'Este contato é universal e aparecerá em todas as agendas de usuários'
 
 	ANSWER = 'Responder'
 
@@ -700,8 +704,9 @@ export default class PT implements LanguageBase {
 
 	HAS_USER_QUESTIONS_FILTER_LABEL = 'Apenas Com Perguntas de Usuários'
 
-	RENDER_OFFLINE_CONTENT_PART_1 = 'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
-	
+	RENDER_OFFLINE_CONTENT_PART_1 =
+		'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
+
 	RENDER_OFFLINE_CONTENT_PART_2 = 'Tente novamente quando estiver conectado.'
 
 	NO_CONNECTION = 'Sem conexão'
@@ -714,16 +719,19 @@ export default class PT implements LanguageBase {
 
 	GO_OUTSIDE = 'Sair de casa'
 
+	CUSTOMIZE = 'Customizar'
+
 	RETURN_INSIDE = 'Retornar para casa'
 
 	GO_TO_GAME_MENU = 'Ir para o menu de jogos'
 
-	CHOOSE_COLOR_DINO_MESSAGE = "Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas?"
+	CHOOSE_COLOR_DINO_MESSAGE =
+		'Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas?'
 
-	CHOOSE_ACESSORY_DINO_MESSAGE = "Hora de escolher um acessório legal!"
+	CHOOSE_ACESSORY_DINO_MESSAGE = 'Hora de escolher um acessório legal!'
 
 	CHOOSE = 'Escolha'
-	
+
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`
@@ -732,7 +740,6 @@ export default class PT implements LanguageBase {
 
 	titleFAQTreatmentText = (treatment: string) => `${this.FAQ} de ${treatment}`
 
-	titleTreatmentQuestion = (treatment: string) => `Tem uma pergunta sobre ${treatment}?`
-
+	titleTreatmentQuestion = (treatment: string) =>
+		`Tem uma pergunta sobre ${treatment}?`
 }
-

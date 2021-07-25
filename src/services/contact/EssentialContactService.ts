@@ -14,10 +14,10 @@ import TreatmentService from '../treatment/TreatmentService'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-import EssentialPhoneService from './EssentialPhoneService'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import ArrayUtils from '../../utils/ArrayUtils'
 import { hasValue } from '../../utils/Utils'
+import EssentialPhoneService from './EssentialPhoneService'
 
 const TRUE = 1
 const FALSE = 0
@@ -95,6 +95,16 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		return model
 	}
 
+	public async getUserEssentialContacts(settings?: UserSettingsEntity) {
+		const universalContactsPromise = this.getUniversalEssentialContacts()
+		const treatmentContactPromise = this.getTreatmentEssentialContacts(settings)
+		const results = await Promise.all([
+			universalContactsPromise,
+			treatmentContactPromise,
+		])
+		return [...results[0], ...results[1]]
+	}
+
 	private async getUniversalEssentialContacts(): Promise<
 		EssentialContactEntity[]
 	> {
@@ -102,9 +112,9 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 	}
 
 	async getTreatmentEssentialContacts(
-		settings: UserSettingsEntity,
+		settings?: UserSettingsEntity,
 	): Promise<EssentialContactEntity[]> {
-		if (hasValue(settings.treatmentLocalId)) {
+		if (settings && hasValue(settings.treatmentLocalId)) {
 			return this.toList(
 				this.table
 					.where('treatmentLocalIds')
@@ -113,6 +123,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		} else return []
 	}
 
+	//TODO to API
 	async removeTreatment(treatment: TreatmentEntity) {
 		if (hasValue(treatment.localId)) {
 			const essentialContacts = await this.getTreatmentNonUniversalEContacts(
@@ -152,6 +163,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		)
 	}
 
+	//TODO to API
 	public async saveUserEssentialContacts(settings: UserSettingsEntity) {
 		const essentialContacts: EssentialContactEntity[] = []
 
@@ -165,6 +177,7 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		await this.saveContactsFromEssentialContacts(essentialContacts)
 	}
 
+	//TODO to API
 	public async saveContactsFromEssentialContacts(
 		essentialContacts: EssentialContactEntity[],
 	) {

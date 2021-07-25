@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { cameFromEssential, filterContactViews, getContactViews, isUniversalEssential } from '../../../services/contact/ContactViewService'
+import {
+	isEssential,
+	contactViewSort,
+	filterContactViews,
+	getContactViewsForContacts,
+	getContactViewsForEssentialContacts,
+	isUniversalEssential,
+} from '../../../services/contact/ContactViewService'
 import ContactItems from './contact_list_items'
 import DinoSearchBar from '../../../components/search_bar'
 import ContactFormDialog from './contact_dialog_form'
@@ -10,7 +17,9 @@ import { useLanguage } from '../../../context/language'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
-import ContactView, { ContactType } from '../../../types/contact/view/ContactView'
+import ContactView, {
+	ContactType,
+} from '../../../types/contact/view/ContactView'
 import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
@@ -25,15 +34,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import FilterService from '../../../storage/local_storage/filter/FilterService'
 
 export const renderIcon = (contact: ContactType) => {
+	if (isEssential(contact)) return <Star />
+	if (isUniversalEssential(contact)) return <Public />
+	if (contact.name) return contact.name[0].toUpperCase()
 
-	if(cameFromEssential(contact))
-		return <Star /> 
-	if(isUniversalEssential(contact)) 
-		return <Public /> 
-	if(contact.name)
-		return contact.name[0].toUpperCase()
-		
-	return '?'	
+	return '?'
 }
 
 const Contacts: React.FC = () => {
@@ -47,43 +52,47 @@ const Contacts: React.FC = () => {
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
-	const [filters, setFilters] = useState(FilterService.getContactFilters(hasStaffPowers, language))
+	const [filters, setFilters] = useState(
+		FilterService.getContactFilters(hasStaffPowers, language),
+	)
 
-	let filteredContacts = filterContactViews(contacts, searchTerm)
-	.filter(c => filters.some(f => f.checked && f.validator(c.contact)))
+	let filteredContacts = filterContactViews(contacts, searchTerm).filter(c =>
+		filters.some(f => f.checked && f.validator(c.contact)),
+	)
 
 	const handleChangeChecked = (index: number) => {
 		const filter = filters[index]
 		filter.checked = !filter.checked
 		setFilters([...filters])
-	} 
+	}
 
 	useEffect(() => {
 		const loadUserData = async () => {
 			const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
 			updateSyncGoogleContacts(syncGoogleContacts)
+			return ContactService.getAll()
+		}
 
-			return await ContactService.getAll()
-		} 
-
-		const loadContacts = async () => (
-			hasStaffPowers ? EssentialContactService.getAll() : loadUserData()
-		)
-
-		const loadPhones = async () => (
-			hasStaffPowers ? EssentialPhoneService.getAll() : PhoneService.getAll()
-		)
+		const loadContacts = async () => {
+			return hasStaffPowers
+				? await EssentialContactService.getAll()
+				: await loadUserData()
+		}
 
 		const loadData = async () => {
 			const settings = await UserSettingsService.getFirst()
-			const phones = await loadPhones()
 			const contacts = await loadContacts()
 
-			const contactViews = getContactViews(
-				contacts,
-				phones,
-				hasStaffPowers
-			)
+			const contactViews = await getContactViewsForContacts(contacts)
+
+			if (!hasStaffPowers && settings?.includeEssentialContact) {
+				const userECs = await EssentialContactService.getUserEssentialContacts(
+					settings,
+				)
+
+				const ECviews = await getContactViewsForEssentialContacts(userECs)
+				contactViews.push(...ECviews)
+			}
 
 			updateContacts(contactViews)
 			updateSettings(settings)
@@ -98,7 +107,7 @@ const Contacts: React.FC = () => {
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
 		let updateContacts = (contactViews: ContactView[]) => {
-			setContacts(contactViews)
+			setContacts(contactViews.sort((a, b) => contactViewSort(a, b)))
 		}
 
 		let updateSettings = (settings: UserSettingsEntity | undefined) => {
@@ -178,15 +187,12 @@ const Contacts: React.FC = () => {
 	return (
 		<div className='contacts'>
 			<DinoLoader className='contacts__loader' isLoading={isLoading}>
-				<DinoSearchBar
-					value={searchTerm}
-					onChange={handleChange}
-				/>
-				<div className="dino__flex_row dino__list_and_filter">
+				<DinoSearchBar value={searchTerm} onChange={handleChange} />
+				<div className='dino__flex_row dino__list_and_filter'>
 					<ListTitle title={language.data.MENU_CONTACTS} />
-					<DinoFilterList 
-						filters={filters} 
-						onChangeChecked={handleChangeChecked} 
+					<DinoFilterList
+						filters={filters}
+						onChangeChecked={handleChangeChecked}
 					/>
 				</div>
 				<ContactItems items={filteredContacts} />

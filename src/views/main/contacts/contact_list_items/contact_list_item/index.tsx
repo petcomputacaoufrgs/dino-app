@@ -16,9 +16,8 @@ import { renderIcon } from '../..'
 const ContactItemList: React.FC<ContactItemListProps> = ({
 	item,
 	onClick,
-	onClickMenu
+	onClickMenu,
 }) => {
-	
 	const language = useLanguage()
 
 	return (
@@ -38,10 +37,9 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 					secondary={PhoneService.getPhoneTypes(item.phones, language.data)}
 				/>
 				<ListItemSecondaryAction>
-					<OptionsIconButton onClick={(e) => onClickMenu(e, item)} />
+					<OptionsIconButton onClick={e => onClickMenu(e, item)} />
 				</ListItemSecondaryAction>
 			</ListItem>
-
 		</div>
 	)
 }

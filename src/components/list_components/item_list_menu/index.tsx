@@ -10,23 +10,13 @@ const ItemListMenu = ({
 	onEdit,
 	onDelete,
 	onCloseDialog,
-	editUnavailable,
+	disable,
 	editText,
 }: ItemListMenuProps) => {
 	const language = useLanguage()
 
 	const handleClose = () => {
 		setAnchor(null)
-	}
-
-	const renderEditMenuItem = () => {
-		if (!editUnavailable && onEdit) {
-			return (
-				<MenuItem onClick={handleEdit}>
-					{editText || language.data.EDIT}
-				</MenuItem>
-			)
-		}
 	}
 
 	const handleCloseDialog = () => {
@@ -42,6 +32,7 @@ const ItemListMenu = ({
 	}
 
 	const handleDelete = () => {
+		console.log('noo')
 		handleClose()
 		handleCloseDialog()
 		onDelete()
@@ -59,8 +50,12 @@ const ItemListMenu = ({
 				horizontal: 'left',
 			}}
 		>
-			{renderEditMenuItem()}
-			<MenuItem onClick={handleDelete}>{language.data.DELETE}</MenuItem>
+			<MenuItem disabled={disable} onClick={handleEdit}>
+				{editText || language.data.EDIT}
+			</MenuItem>
+			<MenuItem disabled={disable} onClick={handleDelete}>
+				{language.data.DELETE}
+			</MenuItem>
 		</Menu>
 	)
 }

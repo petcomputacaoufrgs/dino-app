@@ -54,22 +54,16 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 		setSelectedItem(item)
 	}
 
-	const handleEditOption = () => {
-		if (selectedItem && !isEssential(selectedItem.contact))
-			setToAction(CRUDEnum.UPDATE)
-	}
+	const handleEditOption = () => setToAction(CRUDEnum.UPDATE)
 
-	const handleDeleteOption = () => {
-		if (selectedItem && !isEssential(selectedItem.contact))
-			setToAction(CRUDEnum.DELETE)
-	}
+	const handleDeleteOption = () => setToAction(CRUDEnum.DELETE)
 
 	const handleClickMenu = (
 		event: React.MouseEvent<HTMLButtonElement>,
-		item: ContactView,
+		item?: ContactView,
 	) => {
 		setAnchorEl(event.currentTarget)
-		setSelectedItem(item)
+		if (item) setSelectedItem(item)
 	}
 
 	return (
@@ -94,8 +88,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						dialogOpen={toAction === CRUDEnum.READ}
 						onClose={() => setToAction(CRUDEnum.NOP)}
 						item={selectedItem}
-						onEdit={handleEditOption}
-						onDelete={handleDeleteOption}
+						onClickMenu={handleClickMenu}
 					/>
 					<ContactFormDialog
 						dialogOpen={toAction === CRUDEnum.UPDATE}
@@ -115,7 +108,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						setAnchor={setAnchorEl}
 						onEdit={handleEditOption}
 						onDelete={handleDeleteOption}
-						disable={isEssential(selectedItem.contact)}
+						disable={!isStaff && isEssential(selectedItem.contact)}
 					/>
 				</>
 			)}

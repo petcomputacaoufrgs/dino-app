@@ -11,14 +11,8 @@ const ContactCard = ({
 	item,
 	dialogOpen,
 	onClose,
-	onEdit,
-	onDelete,
+	onClickMenu,
 }: ContactCardProps) => {
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
-		setAnchorEl(event.currentTarget)
-
 	return item ? (
 		<Dialog
 			style={{ padding: 0 }}
@@ -27,16 +21,7 @@ const ContactCard = ({
 			open={dialogOpen}
 			onBackdropClick={onClose}
 		>
-			<ContactCardHeader item={item} onClick={handleClick}>
-				<ItemListMenu
-					anchor={anchorEl}
-					setAnchor={setAnchorEl}
-					onEdit={onEdit}
-					onDelete={onDelete}
-					onCloseDialog={onClose}
-					disable={isEssential(item.contact)}
-				/>
-			</ContactCardHeader>
+			<ContactCardHeader item={item} onClick={onClickMenu}></ContactCardHeader>
 			<ContactCardContent item={item} />
 		</Dialog>
 	) : (

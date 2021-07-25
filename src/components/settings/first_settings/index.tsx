@@ -64,16 +64,9 @@ const FirstSettings: React.FC = () => {
 	//TODO comparar mudanças
 	const saveSettings = async () => {
 		if (settings) {
-			console.log(done)
 			settings.firstSettingsDone = done
 			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
-			//settings.step = step
-
 			await UserSettingsService.save(settings)
-
-			if (settings.includeEssentialContact) {
-				EssentialContactService.saveUserEssentialContacts(settings)
-			}
 		}
 	}
 

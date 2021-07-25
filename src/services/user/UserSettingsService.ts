@@ -287,6 +287,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		} as UserSettingsEntity
 	}
 
+	//TODO to API
 	saveSettingsTreatment = async (
 		newTreatment: TreatmentEntity,
 		settings?: UserSettingsEntity,
@@ -341,6 +342,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 	}
 
+	//TODO to API
 	saveSettingsEssentialContactGrant = (
 		newIncludeEssentialContact: boolean,
 		settings?: UserSettingsEntity,

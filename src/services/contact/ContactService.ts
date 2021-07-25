@@ -33,6 +33,13 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		return [PermissionEnum.USER]
 	}
 
+	getPermissionsWhichCanRead(): PermissionEnum[] {
+		return []
+	}
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return []
+	}
+
 	async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
 		const entity: ContactEntity = {
 			name: model.name,
@@ -73,9 +80,12 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	}
 
 	async getAllDerivatedFromEssential(): Promise<ContactEntity[]> {
-		return this.toList(this.table.where('localEssentialContactId').aboveOrEqual(0))
+		return this.toList(
+			this.table.where('localEssentialContactId').aboveOrEqual(0),
+		)
 	}
 
+	//TODO to API
 	async deleteUserEssentialContacts() {
 		const contacts = await this.getAllDerivatedFromEssential()
 

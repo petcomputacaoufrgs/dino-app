@@ -17,13 +17,16 @@ export const SelectEssentialContactGrant: React.FC<{
 	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] =
 		useState(UserSettingsService.getEssentialContactGrant(settings))
 
-	const handleChange = (includeEssentialContact: boolean) => {
-		setSelectedEssentialContactGrant(includeEssentialContact)
+	const handleChange = (newIncludeEssentialContact: boolean) => {
+		setSelectedEssentialContactGrant(newIncludeEssentialContact)
 
-		UserSettingsService.saveSettingsEssentialContactGrant(
-			includeEssentialContact,
-			settings,
-		)
+		if (
+			settings &&
+			settings.includeEssentialContact !== newIncludeEssentialContact
+		) {
+			settings.includeEssentialContact = newIncludeEssentialContact
+			UserSettingsService.save(settings)
+		}
 	}
 
 	return !isStaff ? (

@@ -29,7 +29,13 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 
 	const handleChange = (newSelectedTreatment: TreatmentEntity) => {
 		setSelectedTreatment(newSelectedTreatment)
-		UserSettingsService.saveSettingsTreatment(newSelectedTreatment, settings)
+		if (
+			settings &&
+			settings.treatmentLocalId !== newSelectedTreatment.localId
+		) {
+			settings.treatmentLocalId = newSelectedTreatment.localId
+			UserSettingsService.save(settings)
+		}
 	}
 
 	return (

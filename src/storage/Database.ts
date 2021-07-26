@@ -18,6 +18,7 @@ import TabEntity from '../types/tab_control/TabEntity'
 import { KidsSpaceSettingsEntity } from '../types/kids_space/database/KidsSpaceSettingsEntity'
 import StaffEntity from '../types/staff/database/StaffEntity'
 import EssentialPhoneEntity from '../types/contact/database/EssentialPhoneEntity'
+import ReportEntity from '../types/report/database/ReportEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 18
@@ -42,6 +43,7 @@ class Database extends Dexie {
 	staff: Dexie.Table<StaffEntity, number>
 	tab: Dexie.Table<TabEntity, number>
 	kidsSpaceSettings: Dexie.Table<KidsSpaceSettingsEntity, number>
+	report: Dexie.Table<ReportEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)
@@ -55,23 +57,25 @@ class Database extends Dexie {
 			contact: generateSynchronizableTableString('localEssentialContactId'),
 			essentialContact: generateSynchronizableTableString(
 				'*treatmentLocalIds',
-				'isUniversal'
+				'isUniversal',
 			),
-			phone: generateSynchronizableTableString(
-				'localContactId'
-			),
+			phone: generateSynchronizableTableString('localContactId'),
 			essentialPhone: generateSynchronizableTableString(
-				'localEssentialContactId'
+				'localEssentialContactId',
 			),
 			noteColumn: generateSynchronizableTableString(),
 			note: generateSynchronizableTableString('columnId', 'localColumnId'),
 			user: generateSynchronizableTableString(),
 			staff: generateSynchronizableTableString('email'),
-			faqItem: generateSynchronizableTableString('localTreatmentId', 'isUniversal'),
+			faqItem: generateSynchronizableTableString(
+				'localTreatmentId',
+				'isUniversal',
+			),
 			treatmentQuestion: generateSynchronizableTableString('localTreatmentId'),
 			treatment: generateSynchronizableTableString('name'),
 			googleScope: generateSynchronizableTableString('name'),
 			kidsSpaceSettings: generateSynchronizableTableString(),
+			report: generateSynchronizableTableString('userId'),
 			auth: '++id',
 			logAppError: '++id,title,file,error,date',
 			calendarEvent:
@@ -98,6 +102,7 @@ class Database extends Dexie {
 		this.googleScope = this.table('googleScope')
 		this.tab = this.table('tab')
 		this.kidsSpaceSettings = this.table('kidsSpaceSettings')
+		this.report = this.table('report')
 	}
 }
 

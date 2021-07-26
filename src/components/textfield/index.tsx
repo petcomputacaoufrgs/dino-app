@@ -1,10 +1,13 @@
 import React from 'react'
-import TextField, { StandardTextFieldProps } from '@material-ui/core/TextField'
+import TextField, {
+	OutlinedTextFieldProps,
+	StandardTextFieldProps,
+} from '@material-ui/core/TextField'
 import StringUtils from '../../utils/StringUtils'
 import { DinoTexfieldProps } from './props'
 
 export const DinoTextfield: React.FC<
-	DinoTexfieldProps & StandardTextFieldProps
+	DinoTexfieldProps & (StandardTextFieldProps | OutlinedTextFieldProps)
 > = props => {
 	const { dataProps, errorMessage, ...muiProps } = props
 

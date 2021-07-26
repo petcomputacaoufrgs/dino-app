@@ -26,13 +26,12 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 import { HasStaffPowers } from '../../../context/private_router'
 import AddButton from '../../../components/button/icon_button/add_button'
 import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
-import { Star, Public, LiveTvTwoTone } from '@material-ui/icons'
+import { Star, Public } from '@material-ui/icons'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FilterService from '../../../storage/local_storage/filter/FilterService'
-import EssentialContactEntity from '../../../types/contact/database/EssentialContactEntity'
 import ContactEntity from '../../../types/contact/database/ContactEntity'
 
 export const renderIcon = (contact: ContactType) => {

@@ -5,9 +5,8 @@ import { DinoTexfieldProps } from './props'
 
 export const DinoTextfield: React.FC<
 	DinoTexfieldProps & StandardTextFieldProps
-> = propsAll => {
-	const dinoProps = propsAll as DinoTexfieldProps
-	const muiProps = propsAll as StandardTextFieldProps
+> = props => {
+	const { dataProps, errorMessage, ...muiProps } = props
 
 	const getClassName = () => {
 		const nativeClassName = 'dino__textfield'
@@ -21,13 +20,11 @@ export const DinoTextfield: React.FC<
 
 	const getHelperText = () => {
 		const formatMaxLength = () => {
-			if (dinoProps.dataProps)
-				return `${((muiProps.value as string) || '').length}/${
-					dinoProps.dataProps.MAX
-				}`
+			if (dataProps)
+				return `${((muiProps.value as string) || '').length}/${dataProps.MAX}`
 		}
 
-		return muiProps.helperText || dinoProps.errorMessage || formatMaxLength()
+		return muiProps.helperText || errorMessage || formatMaxLength()
 	}
 
 	return (
@@ -35,11 +32,9 @@ export const DinoTextfield: React.FC<
 			fullWidth
 			margin='dense'
 			type='text'
-			inputProps={
-				muiProps.inputProps || { maxLength: dinoProps.dataProps?.MAX }
-			}
-			required={dinoProps.dataProps?.REQUIRED}
-			error={muiProps.error || dinoProps.errorMessage !== undefined}
+			inputProps={muiProps.inputProps || { maxLength: dataProps?.MAX }}
+			required={dataProps?.REQUIRED}
+			error={muiProps.error || errorMessage !== undefined}
 			helperText={getHelperText()}
 			{...muiProps}
 			className={getClassName()}

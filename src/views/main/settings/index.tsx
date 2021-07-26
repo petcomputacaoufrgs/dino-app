@@ -134,23 +134,6 @@ const Settings: React.FC = () => {
 			setOpenGoogleContactDialog(true)
 		} else setSyncGoogleContacts(false)
 	}
-	const handleAgreeContactsGrantDialog = async () => {
-		setOpenGoogleContactDialog(false)
-		if (settings) {
-			settings.declineGoogleContacts = false
-			await UserSettingsService.save(settings)
-			//TODO: Cadê essa service? morreu?
-			//GoogleContactService.activeGoogleContactsGrant()
-		}
-	}
-
-	const handleDisagreeContactsGrantDialog = () => {
-		if (settings) {
-			settings.declineGoogleContacts = true
-			UserSettingsService.save(settings)
-		}
-		setOpenGoogleContactDialog(false)
-	}
 
 	const handleCloseContactsGrantDialog = () => setOpenGoogleContactDialog(false)
 
@@ -360,13 +343,10 @@ const Settings: React.FC = () => {
 				{renderPasswordDialog()}
 				{renderDeleteAccountDialog()}
 				<GoogleGrantDialog
-					onAccept={handleAgreeContactsGrantDialog}
-					onDecline={handleDisagreeContactsGrantDialog}
+					settings={settings}
 					onClose={handleCloseContactsGrantDialog}
 					open={openGoogleContactDialog}
 					scopes={[GoogleScope.CONTACT_SCOPE]}
-					text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
-					title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
 				/>
 			</div>
 		</Loader>

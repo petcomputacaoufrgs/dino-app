@@ -51,7 +51,6 @@ const Contacts: React.FC = () => {
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [searchTerm, setSearchTerm] = useState('')
-	const [shouldDecline, setShouldDecline] = useState(false)
 	const [filters, setFilters] = useState(
 		FilterService.getContactFilters(hasStaffPowers, language),
 	)
@@ -144,22 +143,7 @@ const Contacts: React.FC = () => {
 		setSearchTerm(event.target.value)
 	}
 
-	const handleAcceptGoogleGrant = async () => {
-		setOpenGrantDialog(false)
-		handleCreate()
-		if (settings) {
-			settings.declineGoogleContacts = false
-			await UserSettingsService.save(settings)
-		}
-	}
-
 	const handleCloseGoogleGrant = () => {
-		setOpenGrantDialog(false)
-		handleCreate()
-	}
-
-	const handleDeclineGoogleGrant = () => {
-		setShouldDecline(true)
 		setOpenGrantDialog(false)
 		handleCreate()
 	}
@@ -174,13 +158,7 @@ const Contacts: React.FC = () => {
 		handleCreate()
 	}
 
-	const handleClose = () => {
-		setToAction(CRUDEnum.NOP)
-		if (shouldDecline && settings) {
-			settings.declineGoogleContacts = true
-			UserSettingsService.save(settings)
-		}
-	}
+	const handleClose = () => setToAction(CRUDEnum.NOP)
 
 	const handleCreate = () => setToAction(CRUDEnum.CREATE)
 
@@ -207,13 +185,10 @@ const Contacts: React.FC = () => {
 				onClose={handleClose}
 			/>
 			<GoogleGrantDialog
-				onAccept={handleAcceptGoogleGrant}
-				onDecline={handleDeclineGoogleGrant}
+				settings={settings}
 				onClose={handleCloseGoogleGrant}
 				open={openGrantDialog}
 				scopes={[GoogleScope.CONTACT_SCOPE]}
-				text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
-				title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
 			/>
 		</div>
 	)

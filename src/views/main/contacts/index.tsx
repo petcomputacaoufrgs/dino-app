@@ -26,16 +26,18 @@ import EssentialContactService from '../../../services/contact/EssentialContactS
 import { HasStaffPowers } from '../../../context/private_router'
 import AddButton from '../../../components/button/icon_button/add_button'
 import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
-import { Star, Public } from '@material-ui/icons'
+import { Star, Public, LiveTvTwoTone } from '@material-ui/icons'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FilterService from '../../../storage/local_storage/filter/FilterService'
+import EssentialContactEntity from '../../../types/contact/database/EssentialContactEntity'
+import ContactEntity from '../../../types/contact/database/ContactEntity'
 
 export const renderIcon = (contact: ContactType) => {
-	if (isEssential(contact)) return <Star />
 	if (isUniversalEssential(contact)) return <Public />
+	if (isEssential(contact)) return <Star />
 	if (contact.name) return contact.name[0].toUpperCase()
 
 	return '?'
@@ -66,31 +68,30 @@ const Contacts: React.FC = () => {
 	}
 
 	useEffect(() => {
-		const loadUserData = async () => {
+		const loadUserData = async (): Promise<ContactEntity[]> => {
 			const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
 			updateSyncGoogleContacts(syncGoogleContacts)
 			return ContactService.getAll()
 		}
 
-		const loadContacts = async () => {
-			return hasStaffPowers
-				? await EssentialContactService.getAll()
-				: await loadUserData()
-		}
-
 		const loadData = async () => {
 			const settings = await UserSettingsService.getFirst()
-			const contacts = await loadContacts()
+			let contactViews: ContactView[] = []
 
-			const contactViews = await getContactViewsForContacts(contacts)
+			if (hasStaffPowers) {
+				const contacts = await EssentialContactService.getAll()
+				contactViews = await getContactViewsForEssentialContacts(contacts)
+			} else {
+				const contacts = await loadUserData()
+				contactViews = await getContactViewsForContacts(contacts)
 
-			if (!hasStaffPowers && settings?.includeEssentialContact) {
-				const userECs = await EssentialContactService.getUserEssentialContacts(
-					settings,
-				)
+				if (settings?.includeEssentialContact) {
+					const userECs =
+						await EssentialContactService.getUserEssentialContacts(settings)
 
-				const ECviews = await getContactViewsForEssentialContacts(userECs)
-				contactViews.push(...ECviews)
+					const ECviews = await getContactViewsForEssentialContacts(userECs)
+					contactViews.push(...ECviews)
+				}
 			}
 
 			updateContacts(contactViews)

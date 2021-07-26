@@ -17,8 +17,6 @@ import Loader from '../../../components/loader'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
-//TODO ver aqui
-//import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import DinoDialog, {
 	DinoDialogContent,
@@ -112,9 +110,8 @@ const Settings: React.FC = () => {
 	}, [isLoading])
 
 	useEffect(() => {
-		const reduceTimeToDeleteAccount = () => {
+		const reduceTimeToDeleteAccount = () =>
 			setTimeToDeleteAccount(timeToDeleteAccount - 1)
-		}
 
 		let timeout: NodeJS.Timeout
 
@@ -150,7 +147,6 @@ const Settings: React.FC = () => {
 			return
 		}
 
-		//TODO falar vom a vic sobre essa mudança
 		if (parentsAreaPassword.length < DataConstants.USER_PASSWORD.MIN) {
 			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
 			return
@@ -189,22 +185,6 @@ const Settings: React.FC = () => {
 			} else alert.showErrorAlert(language.data.DELETE_ACCOUNT_ERROR_MESSAGE)
 			setOpenDeleteAccountDialog(false)
 		}
-	}
-
-	//TODO ver
-	const handleSave = async () => {
-		if (settings) {
-			const userDeclinedGoogleContacts =
-				!settings.declineGoogleContacts && !syncGoogleContacts
-
-			if (userDeclinedGoogleContacts) {
-				settings.declineGoogleContacts = true
-			}
-
-			alert.showSuccessAlert(language.data.SETTINGS_UPDATED_SUCESS)
-
-			await UserSettingsService.save(settings)
-		} else alert.showErrorAlert(language.data.SETTINGS_UPDATED_ERROR)
 	}
 
 	const renderDeleteAccountDialog = (): JSX.Element => (

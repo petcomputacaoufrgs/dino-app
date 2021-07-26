@@ -32,7 +32,6 @@ const ItemListMenu = ({
 	}
 
 	const handleDelete = () => {
-		console.log('noo')
 		handleClose()
 		handleCloseDialog()
 		onDelete()

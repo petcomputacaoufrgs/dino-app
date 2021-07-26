@@ -5,11 +5,10 @@ import AuthService from '../../../services/auth/AuthService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
-import EssentialContactService from '../../../services/contact/EssentialContactService'
-import './styles.css'
 import FirstSettingsDialogs from './dialogs'
 import { toggle } from '../../../constants/toggle/Toggle'
 import HashUtils from '../../../utils/HashUtils'
+import './styles.css'
 
 const FirstSettings: React.FC = () => {
 	let done = false
@@ -29,13 +28,15 @@ const FirstSettings: React.FC = () => {
 			const treatments = await TreatmentService.getAll()
 			const settings = await UserSettingsService.getFirst()
 
-			if (settings) {
-				setSettings(settings)
-			}
+			if (settings) updateSettings(settings)
 
 			updateTreatments(treatments)
 
 			finishLoading()
+		}
+
+		let updateSettings = (settings: UserSettingsEntity) => {
+			setSettings(settings)
 		}
 
 		let updateTreatments = (treatments: TreatmentEntity[]) => {
@@ -53,6 +54,7 @@ const FirstSettings: React.FC = () => {
 
 		return () => {
 			updateTreatments = () => {}
+			updateSettings = () => {}
 			finishLoading = () => {}
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			TreatmentService.removeUpdateEventListenner(loadData)
@@ -61,7 +63,6 @@ const FirstSettings: React.FC = () => {
 
 	const handleCloseDialogs = () => setStep(-1)
 
-	//TODO comparar mudanças
 	const saveSettings = async () => {
 		if (settings) {
 			settings.firstSettingsDone = done

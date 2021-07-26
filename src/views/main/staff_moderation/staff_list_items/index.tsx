@@ -10,6 +10,7 @@ import NoItemsList from '../../../../components/list_components/no_items_list'
 import DinoSearchBar from '../../../../components/search_bar'
 import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
+import { IsNotClient } from '../../../../context/private_router'
 import StaffService from '../../../../services/staff/StaffService'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import StaffEntity from '../../../../types/staff/database/StaffEntity'
@@ -27,6 +28,7 @@ interface ListStaffProps {
 const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 	const language = useLanguage()
 	const alert = useAlert()
+	const isNotClient = IsNotClient()
 
 	const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
 	const [selectedItem, setSelectedItem] = useState<StaffEntity | undefined>(
@@ -105,7 +107,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 				setAnchor={setAnchor}
 				onEdit={() => setToAction(CRUDEnum.UPDATE)}
 				onDelete={() => setToAction(CRUDEnum.DELETE)}
-				disable={selectedItem?.userId !== undefined}
+				disable={isNotClient || selectedItem?.userId !== undefined}
 			/>
 			{selectedItem && (
 				<>

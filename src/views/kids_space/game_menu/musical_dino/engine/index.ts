@@ -219,7 +219,6 @@ function check() {
 		playerOrder = []
 		good = true
 		compTurn = true
-		console.log('setado pra true')
 		setTimeout(() => {
 			clearColor()
 			intervalId = setInterval(gameTurn, 800)
@@ -235,7 +234,6 @@ function check() {
 		playerOrder = []
 		flash = 0
 		compTurn = true
-		console.log('setado pra true')
 		intervalId = setInterval(gameTurn, 800)
 	}
 }

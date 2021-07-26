@@ -96,6 +96,11 @@ class MenuService {
 		},
 		{
 			image: SettingsSVG,
+			name: language.MENU_STAFF_MODERATION,
+			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
+		},
+		{
+			image: SettingsSVG,
 			name: language.ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},
@@ -108,18 +113,6 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.TERMS_OF_USE),
 		},
 	]
-
-	getAdminMainPages = (language: LanguageBase): MenuItemViewModel[] => {
-		const adminMPs = this.getStaffMainPages(language)
-
-		adminMPs.push({
-			image: SettingsSVG,
-			name: language.MENU_STAFF_MODERATION,
-			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
-		})
-
-		return adminMPs
-	}
 
 	getGroupedMenuItems = (
 		language: LanguageBase,
@@ -136,7 +129,7 @@ class MenuService {
 				image: LogoutSVG,
 				name: language.REPORT_BUG,
 				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
-			}
+			},
 		],
 	]
 
@@ -155,24 +148,9 @@ class MenuService {
 				image: LogoutSVG,
 				name: language.REPORT_BUG,
 				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
-			}
-		],
-	]
-
-	getAdminGroupedMenuItems = (
-		language: LanguageBase,
-		handleLogoutClick: () => void,
-	): MenuItemViewModel[][] => [
-		this.getAdminMainPages(language),
-		[
-			{
-				image: LogoutSVG,
-				name: language.MENU_LOGOUT,
-				onClick: handleLogoutClick,
 			},
 		],
 	]
-
 }
 
 export default new MenuService()

@@ -9,22 +9,17 @@ import FaqView from '../../../../types/faq/view/FaqView'
 const FaqAndUserQuestions: React.FC<{ view?: FaqView }> = ({ view }) => {
 	const language = useLanguage()
 
-	const { localId, tab } = useParams<{ localId?: string, tab?: string }>()
+	const { localId, tab } = useParams<{ localId?: string; tab?: string }>()
 
 	const panels = [
 		{ Label: language.data.FAQ, Component: <Faq view={view} /> },
-		{ Label: language.data.QUESTIONS, Component: <TreatmentQuestionItems />}
+		{ Label: language.data.QUESTIONS, Component: <TreatmentQuestionItems /> },
 	]
 
 	const intTab = tab ? parseInt(tab) : 0
 	const currentTab = intTab >= 0 && intTab < panels.length ? intTab : 0
 
-	return (
-		<DinoTabPanel
-			currentTab={currentTab}
-			panels={panels}
-		/>
-	)
+	return <DinoTabPanel currentTab={currentTab} panels={panels} />
 }
 
 export default FaqAndUserQuestions

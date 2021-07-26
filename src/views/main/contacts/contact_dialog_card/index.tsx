@@ -4,8 +4,6 @@ import ContactCardProps from './props'
 import ContactCardHeader from './header'
 import ContactCardContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import ItemListMenu from '../../../../components/list_components/item_list_menu'
-import { isEssential } from '../../../../services/contact/ContactViewService'
 
 const ContactCard = ({
 	item,

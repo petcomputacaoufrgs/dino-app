@@ -101,7 +101,7 @@ const FirstSettings: React.FC = () => {
 		<>
 			{!isLoading &&
 				settings &&
-				(!settings.firstSettingsDone || toggle.firstLogin) && (
+				(!settings.firstSettingsDone || toggle.forceFirstLogin) && (
 					<FirstSettingsDialogs
 						settings={settings}
 						step={step}

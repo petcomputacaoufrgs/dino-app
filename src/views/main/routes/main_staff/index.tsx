@@ -42,7 +42,6 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute
 					path={PathConstants.STAFF_MODERATION}
 					component={StaffModeration}
-					// restrictedTo={[PermissionEnum.ADMIN]}
 				/>
 				<PrivateRoute
 					path={PathConstants.STAFF_REPORT_BUG}

@@ -37,13 +37,6 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		return [PermissionEnum.USER]
 	}
 
-	getPermissionsWhichCanRead(): PermissionEnum[] {
-		return []
-	}
-	getPermissionsWhichCanEdit(): PermissionEnum[] {
-		return []
-	}
-
 	async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
 		const entity: ContactEntity = {
 			name: model.name,

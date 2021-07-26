@@ -35,7 +35,7 @@ class StaffServiceImpl extends AutoSynchronizableService<
 	}
 
 	getPermissionsWhichCanRead(): PermissionEnum[] {
-		return [PermissionEnum.ADMIN]
+		return [PermissionEnum.ADMIN, PermissionEnum.STAFF]
 	}
 
 	async convertModelToEntity(

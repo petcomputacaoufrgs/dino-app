@@ -74,7 +74,7 @@ const App: React.FC = () => {
 			if (dbSettings) {
 				if (
 					toggle.loadTestInstancesAtFirstLogin &&
-					(!dbSettings.firstSettingsDone || toggle.firstLogin)
+					(!dbSettings.firstSettingsDone || toggle.forceFirstLogin)
 				) {
 					console.log('Carregando testes...')
 					TestInstanceService.loadInstances()

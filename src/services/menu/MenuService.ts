@@ -147,7 +147,7 @@ class MenuService {
 			{
 				image: LogoutSVG,
 				name: language.REPORT_BUG,
-				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
+				onClick: () => HistoryService.push(PathConstants.STAFF_REPORT_BUG),
 			},
 		],
 	]

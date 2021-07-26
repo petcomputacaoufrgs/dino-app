@@ -15,6 +15,7 @@ import { useLanguage } from '../../../../context/language'
 import Loader from '../../../../components/loader'
 import AwakeDino from './awake_dino'
 import './styles.css'
+import StatusIndicator from '../../../../components/status_indicator'
 
 interface DinogotchiInteriorProps {
 	handleBackgroundChange: () => void
@@ -192,6 +193,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 	return (
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
 			{renderDinogotchiScreen()}
+			<StatusIndicator />
 		</Loader>
 	)
 }

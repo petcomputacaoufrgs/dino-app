@@ -29,7 +29,11 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		return [EssentialContactService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.USER]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return [PermissionEnum.USER]
 	}
 

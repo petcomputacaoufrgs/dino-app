@@ -27,22 +27,13 @@
 - https://console.developers.google.com/
 
 ## Configuração
-#### Para executar o projeto crie os arquivos "api_config.json" e "google_config.json" em "src/environment" com os seguintes conteúdos:
+#### Para executar o projeto crie o arquivo .env na pasta raiz do projeto com o seguinte conteúdo:
 
 ### api_config.json
 
 ```javascript
-{
-    "URL":"{Endereço da DinoAPI}/"
-}
-```
-
-### google_config.json
-
-```javascript
-{
-    "client_id": "{Google Cloud Client Id}"
-}
+REACT_APP_API_URL={URL DE DEPLOY DA SUA API COM '/' AO FINAL}
+REACT_APP_GOOGLE_CLIENT_ID={DEVELOPMENT GOOGLE CLIENT ID}
 ```
 
 ## Execução

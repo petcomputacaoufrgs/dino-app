@@ -337,6 +337,7 @@ export default interface LanguageBase {
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL: string
 	GO_TO_SLEEP: string
 	GO_OUTSIDE: string
+	CUSTOMIZE: string
 	RETURN_INSIDE: string
 	GO_TO_GAME_MENU: string
 	CHOOSE_COLOR_DINO_MESSAGE: string

@@ -30,7 +30,11 @@ class StaffServiceImpl extends AutoSynchronizableService<
 		return [UserService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return [PermissionEnum.ADMIN]
 	}
 

@@ -31,7 +31,11 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		return [UserService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN, PermissionEnum.STAFF]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 

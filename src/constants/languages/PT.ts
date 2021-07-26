@@ -719,6 +719,8 @@ export default class PT implements LanguageBase {
 
 	GO_OUTSIDE = 'Sair de casa'
 
+	CUSTOMIZE = 'Customizar'
+
 	RETURN_INSIDE = 'Retornar para casa'
 
 	GO_TO_GAME_MENU = 'Ir para o menu de jogos'

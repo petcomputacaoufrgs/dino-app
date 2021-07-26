@@ -15,7 +15,7 @@ const SliderBoard: React.FC<SliderBoardProps> = ({
 	const TO = 0
 	const FROM = 1
 
-	const [gameState, setGameState] = useState([] as number[])
+	const [gameState, setGameState] = useState<number[]>([])
 
 	const addNumber = (grid: number[]) => {
 		let freeIndexes = new Array<number>()

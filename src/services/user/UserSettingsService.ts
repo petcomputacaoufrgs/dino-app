@@ -39,7 +39,11 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return [GoogleScopeService, TreatmentService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return []
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 

@@ -13,7 +13,7 @@ const PrivateRouterContext = createContext({
 	staffHomePath: '',
 	loginPath: '',
 	isAuthenticated: false,
-	userPermission: undefined
+	userPermission: undefined,
 } as PrivateRouterContextType)
 
 /**
@@ -41,16 +41,19 @@ const PrivateRouterProvider: React.FC<PrivateRouterContextType> = props => {
 export const usePrivateRouter = () => useContext(PrivateRouterContext)
 
 export const HasStaffPowers = (): boolean => {
-	let permission = usePrivateRouter().userPermission 
-	if(toggle.overridePermission.override)
+	let permission = usePrivateRouter().userPermission
+	if (toggle.overridePermission.override)
 		permission = toggle.overridePermission.permission
-	return permission === PermissionEnum.STAFF || permission === PermissionEnum.ADMIN 
-} 
+	return (
+		permission === PermissionEnum.STAFF || permission === PermissionEnum.ADMIN
+	)
+}
 
-export const GetPermission = (): string | undefined => { 
-	return usePrivateRouter().userPermission 
-} 
+export const GetPermission = (): string | undefined => {
+	return usePrivateRouter().userPermission
+}
 
-export const IsNotClient = (): boolean => usePrivateRouter().userPermission !== PermissionEnum.ADMIN 
+export const IsNotClient = (): boolean =>
+	usePrivateRouter().userPermission !== PermissionEnum.ADMIN
 
 export default PrivateRouterProvider

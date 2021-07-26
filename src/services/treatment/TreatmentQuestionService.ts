@@ -28,7 +28,11 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		return [TreatmentService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.USER]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
@@ -40,7 +44,7 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		if (treatment) {
 			const entity: TreatmentQuestionEntity = {
 				localTreatmentId: treatment.localId,
-				question: model.question
+				question: model.question,
 			}
 
 			return entity
@@ -51,12 +55,14 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		entity: TreatmentQuestionEntity,
 	): Promise<TreatmentQuestionDataModel | undefined> {
 		if (entity.localTreatmentId) {
-			const treatment = await TreatmentService.getByLocalId(entity.localTreatmentId)
+			const treatment = await TreatmentService.getByLocalId(
+				entity.localTreatmentId,
+			)
 
 			if (treatment && treatment.id) {
 				const model: TreatmentQuestionDataModel = {
 					treatmentId: treatment.id,
-					question: entity.question
+					question: entity.question,
 				}
 
 				return model
@@ -64,9 +70,13 @@ class TreatmentQuestionServiceImpl extends AutoSynchronizableService<
 		}
 	}
 
-	getByTreatment = async (treatment: TreatmentEntity): Promise<TreatmentQuestionEntity[]> => {
+	getByTreatment = async (
+		treatment: TreatmentEntity,
+	): Promise<TreatmentQuestionEntity[]> => {
 		if (treatment.localId) {
-			return this.toList(this.table.where('localTreatmentId').equals(treatment.localId))
+			return this.toList(
+				this.table.where('localTreatmentId').equals(treatment.localId),
+			)
 		}
 		return []
 	}

@@ -80,11 +80,3 @@
 	--dino-face-details-color: #6b2828;
 	--dino-back-color: #F1CD16;
 }
-
-[data-dino-color='emo'] {
-	--dino-dark-color: black;
-	--dino-main-color: #121212;
-	--dino-details-color: black;
-	--dino-face-details-color: black;
-	--dino-back-color: black;
-}

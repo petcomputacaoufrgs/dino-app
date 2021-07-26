@@ -711,6 +711,8 @@ export default class EN implements LanguageBase {
 
 	GO_OUTSIDE = 'Go outside'
 
+	CUSTOMIZE = 'Customize'
+
 	RETURN_INSIDE = 'Return inside'
 
 	GO_TO_GAME_MENU = 'Go to game menu'

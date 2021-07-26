@@ -34,7 +34,11 @@ class UserServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return []
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
@@ -82,6 +86,9 @@ class UserServiceImpl extends AutoSynchronizableService<
 	}
 
 	async getPermission(): Promise<string | undefined> {
+		if (toggle.overridePermission.override)
+			return toggle.overridePermission.permission
+
 		const user = await this.getFirst()
 		if (user) {
 			return toggle.overridePermission.override

@@ -29,7 +29,11 @@ class EssentialPhoneService extends AutoSynchronizableService<
 		return [EssentialContactService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN, PermissionEnum.STAFF]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 

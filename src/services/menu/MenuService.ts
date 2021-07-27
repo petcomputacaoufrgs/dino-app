@@ -42,7 +42,7 @@ class MenuService {
 		{
 			image: CalendarSVG,
 			name: language.MENU_CALENDAR,
-			onClick: () => HistoryService.push(PathConstants.USER_SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.USER_CALENDAR),
 		},
 		{
 			image: SettingsSVG,
@@ -118,39 +118,39 @@ class MenuService {
 		language: LanguageBase,
 		handleLogoutClick: () => void,
 	): MenuItemViewModel[][] => [
-		this.getMainPages(language),
-		[
-			{
-				image: LogoutSVG,
-				name: language.MENU_LOGOUT,
-				onClick: handleLogoutClick,
-			},
-			{
-				image: LogoutSVG,
-				name: language.REPORT_BUG,
-				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
-			},
-		],
-	]
+			this.getMainPages(language),
+			[
+				{
+					image: LogoutSVG,
+					name: language.MENU_LOGOUT,
+					onClick: handleLogoutClick,
+				},
+				{
+					image: LogoutSVG,
+					name: language.REPORT_BUG,
+					onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
+				},
+			],
+		]
 
 	getStaffGroupedMenuItems = (
 		language: LanguageBase,
 		handleLogoutClick: () => void,
 	): MenuItemViewModel[][] => [
-		this.getStaffMainPages(language),
-		[
-			{
-				image: LogoutSVG,
-				name: language.MENU_LOGOUT,
-				onClick: handleLogoutClick,
-			},
-			{
-				image: LogoutSVG,
-				name: language.REPORT_BUG,
-				onClick: () => HistoryService.push(PathConstants.STAFF_REPORT_BUG),
-			},
-		],
-	]
+			this.getStaffMainPages(language),
+			[
+				{
+					image: LogoutSVG,
+					name: language.MENU_LOGOUT,
+					onClick: handleLogoutClick,
+				},
+				{
+					image: LogoutSVG,
+					name: language.REPORT_BUG,
+					onClick: () => HistoryService.push(PathConstants.STAFF_REPORT_BUG),
+				},
+			],
+		]
 }
 
 export default new MenuService()

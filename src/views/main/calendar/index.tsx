@@ -1,70 +1,59 @@
 import React, { useState } from 'react'
-import Month from './month'
-import CalendarAddButton from './add_button'
-import DateUtils from '../../../utils/DateUtils'
-import HorizontalPagination from '../../../components/horizontal_pagination'
+import AddButton from '../../../components/button/icon_button/add_button'
+import DinoDialog from '../../../components/dialogs/dino_dialog'
+import { DinoTextfield } from '../../../components/textfield'
+import DataConstants from '../../../constants/app_data/DataConstants'
+import CalendarService from '../../../services/calendar/CalendarService'
+import EventEntity from '../../../types/calendar/database/EventEntity'
+import StringUtils from '../../../utils/StringUtils'
 import './styles.css'
 
-const HALF_MONTH_RANGE = 3
-const UPDATE_MARGIN = 2
+const Calendar = () => {
+    const [open, setOpen] = useState(false)
+    const [error, setError] = useState<string>()
+    const handleSave = () => {
+        if (StringUtils.isEmpty(title)) {
+            setError('Inválido!!!!!')
+            return
+        }
+        const event: EventEntity = {
+            title,
+            description
+        }
 
-const Calendar: React.FC = () => {
-	const [mainDate, setMainDate] = useState(new Date())
-	const [slide, setSlide] = useState(HALF_MONTH_RANGE)
+        CalendarService.save(event)
+        setOpen(false)
+    }
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
 
-	const handleSlideChange = (newSlide: number) => {
-		const indexBasedInMainSlide = newSlide - HALF_MONTH_RANGE
-
-		if (indexBasedInMainSlide > UPDATE_MARGIN) {
-			setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
-			setSlide(HALF_MONTH_RANGE)
-		} else if (indexBasedInMainSlide < UPDATE_MARGIN * -1) {
-			setMainDate(DateUtils.addMonth(mainDate, indexBasedInMainSlide))
-			setSlide(HALF_MONTH_RANGE)
-		}
-	}
-
-	const getMonthElementList = (): React.FC[] => {
-		const months: React.FC[] = []
-
-		let start = HALF_MONTH_RANGE * -1
-
-		while (start <= HALF_MONTH_RANGE) {
-			months.push(getMonthElement(start))
-			start++
-		}
-
-		return months
-	}
-
-	const getMonthElement = (diff: number): React.FC => () => {
-		const date = DateUtils.addMonth(mainDate, diff)
-		return (
-			<Month
-				date={date}
-				goToCurrentMonth={goToCurrentMonth}
-				isCurrentMonth={DateUtils.isEqualMonth(date, new Date())}
-			/>
-		)
-	}
-
-	const goToCurrentMonth = () => {
-		setMainDate(new Date())
-		setSlide(HALF_MONTH_RANGE)
-	}
-
-	return (
-		<>
-			<div className='calendar'>
-				<HorizontalPagination
-					onSlideChange={handleSlideChange}
-					slide={slide}
-					pages={getMonthElementList()}
-				/>
-			</div>
-			<CalendarAddButton />
-		</>
-	)
+    return (
+        <div>
+            <AddButton label='evento' handleAdd={() => setOpen(true)} />
+            <DinoDialog open={open} onClose={() => setOpen(false)} onSave={handleSave}
+                header={
+                    <div
+                        className='calendar_dialog__header'>
+                        <div className='calendar_dialog__header_title'>Adicionar Evento</div>
+                    </div>}
+            >
+                <div className="calendar_dialog__content">
+                    <DinoTextfield
+                        label='Título'
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value as string)}
+                        dataProps={DataConstants.CALENDAR_EVENT_TITLE}
+                        errorMessage={error}
+                    />
+                    <DinoTextfield
+                        label='Descrição'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value as string)}
+                        dataProps={DataConstants.CALENDAR_EVENT_DESCRIPTION} />
+                </div>
+            </DinoDialog>
+        </div>
+    )
 }
 
 export default Calendar

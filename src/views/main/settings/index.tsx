@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
 import { useAlert } from '../../../context/alert'
 import { useLanguage } from '../../../context/language'
-import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
+import { ReactComponent as SaveSVG } from '../../../assets/icons/general_use/save.svg'
 import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import Button from '../../../components/button'

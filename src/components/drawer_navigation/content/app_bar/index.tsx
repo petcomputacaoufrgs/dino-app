@@ -2,7 +2,7 @@ import React from 'react'
 import AppBarProps from './props'
 import DinoIconButton from '../../../button/icon_button'
 import ArrowBack from '../../../arrow_back'
-import { ReactComponent as MenuIconSVG } from '../../../../assets/icons/menu.svg'
+import { ReactComponent as MenuIconSVG } from '../../../../assets/icons/general_use/menu.svg'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
 

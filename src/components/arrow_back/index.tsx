@@ -1,7 +1,7 @@
 import React from 'react'
 import DinoIconButton from '../../components/button/icon_button'
 import HistoryService from '../../services/history/HistoryService'
-import { ReactComponent as ArrowBackIconSVG } from '../../assets/icons/arrow_back.svg'
+import { ReactComponent as ArrowBackIconSVG } from '../../assets/icons/general_use/arrow_back.svg'
 import { useLanguage } from '../../context/language'
 import { ReactComponent as GoBackKidsSVG } from '../../assets/kids_space/dinogotchi/go_back_arrow.svg'
 import './styles.css'

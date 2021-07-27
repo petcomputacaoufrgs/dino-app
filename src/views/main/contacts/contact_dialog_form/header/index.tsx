@@ -1,6 +1,6 @@
 import React from 'react'
 import DinoIconButton from '../../../../../components/button/icon_button'
-import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/color_lens.svg'
+import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/general_use/color_lens.svg'
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import { useLanguage } from '../../../../../context/language'

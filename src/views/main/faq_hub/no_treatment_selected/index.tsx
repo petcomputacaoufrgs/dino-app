@@ -5,7 +5,7 @@ import { useAlert } from '../../../../context/alert'
 import { useLanguage } from '../../../../context/language'
 import UserSettingsService from '../../../../services/user/UserSettingsService'
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
-import { ReactComponent as SaveSVG } from '../../../../assets/icons/save.svg'
+import { ReactComponent as SaveSVG } from '../../../../assets/icons/general_use/save.svg'
 import TreatmentService from '../../../../services/treatment/TreatmentService'
 import NoFAQAvailable from '../no_faq_available'
 

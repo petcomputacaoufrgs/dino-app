@@ -5,7 +5,7 @@ import { useLanguage } from '../../../../context/language'
 import { IsNotClient } from '../../../../context/private_router'
 import StaffService from '../../../../services/staff/StaffService'
 import EmailTextField from '../email_textfield'
-import { ReactComponent as SaveSVG } from '../../../../assets/icons/save.svg'
+import { ReactComponent as SaveSVG } from '../../../../assets/icons/general_use/save.svg'
 import './styles.css'
 
 const AddStaffForm = () => {

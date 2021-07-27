@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLanguage } from '../../../../context/language'
-import { ReactComponent as AddIconSVG } from '../../../../assets/icons/add.svg'
+import { ReactComponent as AddIconSVG } from '../../../../assets/icons/general_use/add.svg'
 import './styles.css'
 import DinoIconButton from '..'
 

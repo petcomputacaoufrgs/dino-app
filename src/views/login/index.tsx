@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAlert } from '../../context/alert'
-import { ReactComponent as Dinosaur1 } from '../../assets/logos/logo.svg'
+import { ReactComponent as Dinosaur1 } from '../../assets/logos/dino_logo.svg'
 import { ReactComponent as Dinosaur2 } from '../../assets/icons/dino/dinosaur_2.svg'
 import GoogleLoginButton from '../../components/button/google_login'
 import { useLanguage } from '../../context/language'

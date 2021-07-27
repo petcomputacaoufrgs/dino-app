@@ -1,6 +1,6 @@
 import React from 'react'
 import DinoIconButton from '../../../../../components/button/icon_button'
-import { ReactComponent as CloseIconSVG } from '../../../../../assets/icons/close.svg'
+import { ReactComponent as CloseIconSVG } from '../../../../../assets/icons/general_use/close.svg'
 import HeaderProps from './props'
 import { useLanguage } from '../../../../../context/language'
 import './styles.css'

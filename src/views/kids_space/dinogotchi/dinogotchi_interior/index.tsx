@@ -7,6 +7,7 @@ import { ReactComponent as Hat } from '../../../../assets/new/acessories/gorro.s
 import { ReactComponent as Lace } from '../../../../assets/new/acessories/laco.svg'
 import { ReactComponent as Mohawk } from '../../../../assets/new/acessories/moicano.svg'
 import { ReactComponent as Headscarf } from '../../../../assets/new/acessories/pano.svg'
+import { ReactComponent as ClosetSVG } from '../../../../assets/kids_space/dinogotchi/customize.svg'
 import DinoColorConstants from '../../../../constants/dinogotchi/DinoColorConstants'
 import KidsSpaceSettingsService from '../../../../services/kids_space/KidsSpaceSettingsService'
 import { KidsSpaceSettingsEntity } from '../../../../types/kids_space/database/KidsSpaceSettingsEntity'
@@ -15,6 +16,8 @@ import { useLanguage } from '../../../../context/language'
 import Loader from '../../../../components/loader'
 import AwakeDino from './awake_dino'
 import './styles.css'
+import DinoIconButton from '../../../../components/button/icon_button'
+
 
 interface DinogotchiInteriorProps {
 	handleBackgroundChange: () => void
@@ -38,6 +41,10 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 			const kidsSpaceSettings = await KidsSpaceSettingsService.getFirst()
 			if (kidsSpaceSettings) {
 				updateData(kidsSpaceSettings)
+
+				if (!kidsSpaceSettings.firstSettingsDone) {
+					setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)
+				}
 			}
 		}
 
@@ -107,7 +114,6 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					hat={selectedHat}
 					state={state}
 					onChangeState={state => setState(state)}
-					onChangeCustomizeState={state => setCustomizeState(state)}
 					onBackgroundChange={handleBackgroundChange}
 				/>
 			)
@@ -191,6 +197,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 
 	return (
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
+			<DinoIconButton ariaLabel={language.data.CUSTOMIZE} icon={ClosetSVG} className='customize_dino' onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}/>
 			{renderDinogotchiScreen()}
 		</Loader>
 	)

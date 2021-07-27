@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PathConstants from '../../../../../constants/app/PathConstants'
 import HistoryService from '../../../../../services/history/HistoryService'
-import { ReactComponent as Dino } from '../../../../../assets/kids_space/dino+expressoes+acessorios/dino_empé_neutro.svg'
+import { ReactComponent as Dino } from '../../../../../assets/kids_space/dinos/dino_empé_neutro.svg'
 import { ReactComponent as GoOutSVG } from '../../../../../assets/kids_space/game_elements/sairdecasa.svg'
 import { ReactComponent as GameSVG } from '../../../../../assets/kids_space/game_elements/jogo.svg'
 import { ReactComponent as GoToSleepSVG } from '../../../../../assets/kids_space/game_elements/dormir.svg'

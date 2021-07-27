@@ -4,7 +4,6 @@ import HistoryService from '../../../services/history/HistoryService'
 import { ReactComponent as OutsideSVG } from '../../../assets/kids_space/dinogotchi/outside.svg'
 import { ReactComponent as InsideSVG } from '../../../assets/kids_space/dinogotchi/inside.svg'
 import { startCloudEngine } from './engine/clouds'
-import { startPaitingEngine } from './engine/painting'
 import ArrowBack from '../../../components/arrow_back'
 import DinoEnum from '../../../types/enum/DinoEnum'
 import DinogotchiInterior from './dinogotchi_interior'
@@ -15,7 +14,6 @@ const Dinogotchi: React.FC = () => {
 
 	useEffect(() => {
 		startCloudEngine()
-		startPaitingEngine()
 	}, [])
 
 	const renderBackground = (): JSX.Element => {

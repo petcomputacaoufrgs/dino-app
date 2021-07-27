@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as DinoLogoSVG } from '../../assets/new/logo.svg'
+import { ReactComponent as DinoLogoSVG } from '../../assets/logos/logo.svg'
 import PetLogo from '../../assets/logos/pet.png'
 import HCLogo from '../../assets/logos/hc.png'
 import UFRGSLogo from '../../assets/logos/ufrgs.png'

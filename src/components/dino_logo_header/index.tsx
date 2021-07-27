@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as DinoLogo } from '../../assets/new/logo.svg'
+import { ReactComponent as DinoLogo } from '../../assets/logos/logo.svg'
 import DinoHr from '../../components/dino_hr'
 import DinoLogoHeaderProps from './props'
 import './styles.css'

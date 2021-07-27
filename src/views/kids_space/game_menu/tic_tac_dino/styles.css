@@ -29,14 +29,14 @@
 }
 
 .tic_tac_dino_game .Queridino {
-	background-image: url('../../../../assets/new/dino+expressoes+acessorios/empty_dino.svg');
+	background-image: url('../../../../assets/kids_space/dino+expressoes+acessorios/empty_dino.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
 }
 
 .tic_tac_dino_game .Amigossauro {
-	background-image: url('../../../../assets/new/friends/triceratops.svg');
+	background-image: url('../../../../assets/kids_space/friends/triceratops.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;

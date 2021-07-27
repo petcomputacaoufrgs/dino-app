@@ -38,6 +38,10 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 			const kidsSpaceSettings = await KidsSpaceSettingsService.getFirst()
 			if (kidsSpaceSettings) {
 				updateData(kidsSpaceSettings)
+
+				if (!kidsSpaceSettings.firstSettingsDone) {
+					setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)
+				}
 			}
 		}
 

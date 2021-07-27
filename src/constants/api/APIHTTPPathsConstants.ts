@@ -15,6 +15,7 @@ class APIHTTPPathsConstants {
 	ESSENTIAL_PHONE = `${this.ROOT}${this.ROUTE_PRIVATE}essential_phone/`
 	TREATMENT = `${this.ROOT}${this.ROUTE_PRIVATE}treatment/`
 	TREATMENT_QUESTION = `${this.ROOT}${this.ROUTE_PRIVATE}treatment_question/`
+	REPORT = `${this.ROOT}${this.ROUTE_PRIVATE}report/`
 	USER = `${this.ROOT}${this.ROUTE_PRIVATE}user/`
 	USER_SETTINGS = `${this.ROOT}${this.ROUTE_PRIVATE}settings/`
 	private LOG_APP_ERROR = `${this.ROOT}${this.ROUTE_PRIVATE}log_app_error/`

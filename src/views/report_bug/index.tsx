@@ -11,14 +11,23 @@ import ReportEntity from '../../types/report/database/ReportEntity'
 import StringUtils from '../../utils/StringUtils'
 import './styles.css'
 
+const getDefault = () => {
+	return {
+		what: '',
+		where: '',
+		how: '',
+		userLocalId: undefined,
+	} as ReportEntity
+}
+
 const ReportBug: React.FC = () => {
 	const language = useLanguage()
 	const alert = useAlert()
 	const [error, setError] = useState<string>()
-	const [report, setReport] = useState<ReportEntity>({ what: '' })
+	const [report, setReport] = useState<ReportEntity>(getDefault())
 
 	const initialize = () => {
-		setReport({ what: '' })
+		setReport(getDefault())
 		setError(undefined)
 	}
 
@@ -89,6 +98,7 @@ const ReportBug: React.FC = () => {
 					onChange={handleChangeHow}
 					variant='outlined'
 					multiline
+					rows={10}
 					dataProps={DataConstants.REPORT_HOW}
 				/>
 			</div>
@@ -105,7 +115,6 @@ const ReportBug: React.FC = () => {
 					value={report.where}
 					onChange={handleChangeWhere}
 					variant='outlined'
-					rows={10}
 					multiline
 					dataProps={DataConstants.REPORT_WHERE}
 				/>

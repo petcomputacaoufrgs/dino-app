@@ -18,9 +18,9 @@ class ReportServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.report,
-			APIHTTPPathsConstants.TREATMENT_QUESTION,
+			APIHTTPPathsConstants.REPORT,
 			WebSocketQueuePathService,
-			APIWebSocketPathsConstants.TREATMENT_QUESTION,
+			APIWebSocketPathsConstants.REPORT,
 		)
 	}
 

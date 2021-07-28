@@ -88,7 +88,7 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.STAFF_CONTACTS),
 		},
 		{
-			image: ModerationSVG,
+			image: SettingsSVG,
 			name: language.MENU_SETTINGS,
 			onClick: () => HistoryService.push(PathConstants.STAFF_SETTINGS),
 		},
@@ -98,7 +98,6 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.TREATMENT),
 		},
 		{
-			image: SettingsSVG,
 			name: language.ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},
@@ -116,7 +115,7 @@ class MenuService {
 		const adminMPs = this.getStaffMainPages(language)
 
 		adminMPs.push({
-			image: SettingsSVG,
+			image: ModerationSVG,
 			name: language.MENU_STAFF_MODERATION,
 			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
 		})

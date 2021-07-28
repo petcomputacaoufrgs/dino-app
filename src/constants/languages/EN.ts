@@ -470,7 +470,7 @@ export default class EN implements LanguageBase {
 
 	CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Click here to clean'
 
-	COLOR_THEME_SELECTION_ARIA_LABEL = 'Click here to change the contact color'
+	COLOR_THEME_SELECTION_ARIA_LABEL = "Click here to change the item's color"
 
 	DIALOG_AGREE_TEXT = 'Accept'
 

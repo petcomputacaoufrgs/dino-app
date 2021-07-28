@@ -468,7 +468,7 @@ export default class PT implements LanguageBase {
 
 	CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Clique aqui para limpar'
 
-	COLOR_THEME_SELECTION_ARIA_LABEL = 'Clique aqui para mudar a cor do contato'
+	COLOR_THEME_SELECTION_ARIA_LABEL = 'Clique aqui para mudar a cor do item'
 
 	DIALOG_AGREE_TEXT = 'Aceito'
 

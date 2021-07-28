@@ -19,7 +19,7 @@
 }
 
 #snake_game__game_board {
-	background-image: url(../../../../assets/kids_space/snake/inner_board_background.png);
+	background-image: url(../../../../assets/kids_space/games/snake/inner_board_background.png);
 	background-size: contain;
 	height: 100vmin;
 	width: 100vmin;

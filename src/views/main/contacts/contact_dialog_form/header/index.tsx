@@ -1,6 +1,6 @@
 import React from 'react'
 import DinoIconButton from '../../../../../components/button/icon_button'
-import { ReactComponent as ChangeColorIconSVG } from '../../../../../assets/icons/general_use/color_lens.svg'
+import ColorLensIcon from '@material-ui/icons/ColorLens';
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import { useLanguage } from '../../../../../context/language'
@@ -37,7 +37,7 @@ const AddContactDialogHeader = (
 			action={
 				<DinoIconButton
 					ariaLabel={language.data.COLOR_THEME_SELECTION_ARIA_LABEL}
-					icon={ChangeColorIconSVG}
+					icon={ColorLensIcon}
 					onClick={handleChangeColor}
 				/>
 			}

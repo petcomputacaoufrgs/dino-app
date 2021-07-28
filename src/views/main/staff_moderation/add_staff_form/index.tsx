@@ -5,7 +5,7 @@ import { useLanguage } from '../../../../context/language'
 import { IsNotClient } from '../../../../context/private_router'
 import StaffService from '../../../../services/staff/StaffService'
 import EmailTextField from '../email_textfield'
-import { ReactComponent as SaveSVG } from '../../../../assets/icons/general_use/save.svg'
+import SaveIcon from '@material-ui/icons/Save';
 import './styles.css'
 
 const AddStaffForm = () => {
@@ -41,7 +41,7 @@ const AddStaffForm = () => {
           error={error}
         />
         <Button disabled={isNotClient} onClick={handleAddEmail} className='save_button'>
-          <SaveSVG className='save_button__icon' />
+          <SaveIcon className='save_button__icon' />
           {language.data.ADD}
         </Button>
       </div>         

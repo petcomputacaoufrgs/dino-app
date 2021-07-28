@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLanguage } from '../../../../context/language'
-import { ReactComponent as AddIconSVG } from '../../../../assets/icons/general_use/add.svg'
+import AddIcon from '@material-ui/icons/Add';
 import './styles.css'
 import DinoIconButton from '..'
 
@@ -17,7 +17,7 @@ const AddButton: React.FC<AddButtonProps> = ({ handleAdd, label }) => {
     <DinoIconButton
       ariaLabel={`${language.data.ADD} ${label}`}
       className='add_button'
-      icon={AddIconSVG}
+      icon={AddIcon}
       onClick={handleAdd}
       circular
     />

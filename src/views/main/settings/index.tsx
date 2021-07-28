@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
 import { useAlert } from '../../../context/alert'
 import { useLanguage } from '../../../context/language'
-import { ReactComponent as SaveSVG } from '../../../assets/icons/general_use/save.svg'
+import SaveIcon from '@material-ui/icons/Save';
 import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import Button from '../../../components/button'
@@ -347,7 +347,7 @@ const Settings: React.FC = () => {
 	const renderSaveButton = (): JSX.Element => (
 		<div className='settings__save_button_container'>
 			<Button className='settings__save_button' onClick={handleSave}>
-				<SaveSVG className='settings__save_button__icon' />
+				<SaveIcon className='settings__save_button__icon' />
 				{language.data.SAVE}
 			</Button>
 		</div>

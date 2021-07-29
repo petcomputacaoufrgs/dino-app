@@ -80,20 +80,20 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		return this.toFirst(this.table.where('name').equalsIgnoreCase(name))
 	}
 
-	//TODO to API
-	beforeDelete = async (treatment: TreatmentEntity) => {
-		const faqItems = await FaqItemService.getByTreatment(treatment)
+	// 	//TODO to API
+	// 	beforeDelete = async (treatment: TreatmentEntity) => {
+	// 		const faqItems = await FaqItemService.getByTreatment(treatment)
 
-		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(
-			treatment,
-		)
+	// 		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(
+	// 			treatment,
+	// 		)
 
-		await Promise.all([
-			EssentialContactService.removeTreatment(treatment),
-			FaqItemService.deleteAll(faqItems),
-			TreatmentQuestionService.deleteAll(treatmentQuestions),
-		])
-	}
+	// 		await Promise.all([
+	// 			EssentialContactService.removeTreatment(treatment),
+	// 			FaqItemService.deleteAll(faqItems),
+	// 			TreatmentQuestionService.deleteAll(treatmentQuestions),
+	// 		])
+	// 	}
 }
 
 export default new TreatmentServiceImpl()

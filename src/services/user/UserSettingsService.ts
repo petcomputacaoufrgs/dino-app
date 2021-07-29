@@ -286,24 +286,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			step: 0,
 		} as UserSettingsEntity
 	}
-
-	//TODO to API
-	saveSettingsEssentialContactGrant = (
-		newIncludeEssentialContact: boolean,
-		settings?: UserSettingsEntity,
-	) => {
-		if (
-			settings &&
-			settings.includeEssentialContact !== newIncludeEssentialContact
-		) {
-			settings.includeEssentialContact = newIncludeEssentialContact
-			this.save(settings)
-
-			if (newIncludeEssentialContact) {
-				EssentialContactService.saveUserEssentialContacts(settings)
-			} else ContactService.deleteUserEssentialContacts()
-		}
-	}
 }
 
 export default new UserSettingsServiceImpl()

@@ -167,55 +167,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		)
 	}
 
-	//TODO to API
-	public async saveUserEssentialContacts(settings: UserSettingsEntity) {
-		const essentialContacts: EssentialContactEntity[] = []
-
-		const universalContactsPromise = this.getUniversalEssentialContacts()
-		const treatmentContactPromise = this.getTreatmentEssentialContacts(settings)
-		const results = await Promise.all([
-			universalContactsPromise,
-			treatmentContactPromise,
-		])
-		essentialContacts.push(...results[0], ...results[1])
-		await this.saveContactsFromEssentialContacts(essentialContacts)
-	}
-
-	//TODO to API
-	public async saveContactsFromEssentialContacts(
-		essentialContacts: EssentialContactEntity[],
-	) {
-		essentialContacts.forEach(async ec => {
-			const savedContact = await ContactService.save(
-				this.convertEntityToContactEntity(ec),
-			)
-			if (savedContact) savePhonesFromEssentialContact(ec, savedContact)
-		})
-
-		const savePhonesFromEssentialContact = async (
-			ec: EssentialContactEntity,
-			c: ContactEntity,
-		) => {
-			if (ec.localId) {
-				const ePhones =
-					await EssentialPhoneService.getAllByEssentialContactLocalId(
-						ec.localId,
-					)
-				if (ArrayUtils.isNotEmpty(ePhones)) {
-					const newContactPhones: PhoneEntity[] = ePhones.map(ePhone => {
-						return {
-							localContactId: c.localId,
-							localEssentialPhoneId: ePhone.localId,
-							number: ePhone.number,
-							type: ePhone.type,
-						}
-					})
-					await PhoneService.saveAll(newContactPhones)
-				}
-			}
-		}
-	}
-
 	private convertEntityToContactEntity(
 		entity: EssentialContactEntity,
 	): ContactEntity {

@@ -31,8 +31,8 @@ class TestInstanceService {
 		if (isStaff) {
 			await this.loadTreatmentInstances()
 			await this.loadFaqItemInstances()
-			await this.loadEssentialContacts()
-			await this.loadEssentialPhones()
+			//await this.loadEssentialContacts()
+			//await this.loadEssentialPhones()
 			await this.loadGlossary()
 		} else {
 			await this.loadContacts()

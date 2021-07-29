@@ -60,8 +60,8 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 		}
 
 		return () => {
-			updateData = () => {}
-			finishLoading = () => {}
+			updateData = () => { }
+			finishLoading = () => { }
 			KidsSpaceSettingsService.removeUpdateEventListenner(loadData)
 		}
 	}, [isLoading, selectedHat])
@@ -193,7 +193,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 	return (
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
 			{renderDinogotchiScreen()}
-			<StatusIndicator />
+			<StatusIndicator fillHealth={50} fillEnergy={70} fillHappiness={45} />
 		</Loader>
 	)
 }

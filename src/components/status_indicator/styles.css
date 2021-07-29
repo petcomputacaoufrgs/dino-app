@@ -19,9 +19,9 @@
 
 .status_bg {
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    height: 70%;
     position: absolute;
+    clip-path: circle(50% at 50% 20%);
 }
 
 .status_health {
@@ -42,4 +42,7 @@
     height: 4rem;
     position: relative;
     margin-left: 1rem; 
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
 }

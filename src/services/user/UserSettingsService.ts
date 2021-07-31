@@ -18,9 +18,6 @@ import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import { LanguageContextType } from '../../context/language'
-import EssentialContactService from '../contact/EssentialContactService'
-import ContactService from '../contact/ContactService'
-
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
 	UserSettingsDataModel,

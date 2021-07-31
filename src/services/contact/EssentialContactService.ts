@@ -53,6 +53,16 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
+	protected async beforeDelete(entity: EssentialContactEntity) {
+		if (entity.localId) {
+			const essentialPhones =
+				await EssentialPhoneService.getAllByEssentialContactLocalId(
+					entity.localId,
+				)
+			await EssentialPhoneService.deleteAll(essentialPhones)
+		}
+	}
+
 	async convertModelToEntity(
 		model: EssentialContactDataModel,
 	): Promise<EssentialContactEntity> {
@@ -127,7 +137,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		} else return []
 	}
 
-	//TODO to API
 	async removeTreatment(treatment: TreatmentEntity) {
 		if (hasValue(treatment.localId)) {
 			const essentialContacts = await this.getTreatmentNonUniversalEContacts(
@@ -165,19 +174,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 				.equals(treatmentLocalId)
 				.filter(ec => ec.isUniversal === FALSE),
 		)
-	}
-
-	private convertEntityToContactEntity(
-		entity: EssentialContactEntity,
-	): ContactEntity {
-		const contactEntity: ContactEntity = {
-			name: entity.name,
-			description: entity.description,
-			color: entity.color,
-			localEssentialContactId: entity.localId,
-		}
-
-		return contactEntity
 	}
 }
 

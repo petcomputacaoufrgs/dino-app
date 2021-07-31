@@ -30,16 +30,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const isStaff = HasStaffPowers()
 
 	const handleAcceptDialogAndDeleteItem = async () => {
-		async function deletePhones(contactToDelete: ContactView): Promise<void> {
-			if (contactToDelete.phones.length > 0) {
-				isStaff
-					? await EssentialPhoneService.deleteAll(contactToDelete.phones)
-					: await PhoneService.deleteAll(contactToDelete.phones)
-			}
-		}
-
 		if (toAction === CRUDEnum.DELETE && selectedItem) {
-			await deletePhones(selectedItem)
 			isStaff
 				? await EssentialContactService.delete(
 						selectedItem.contact as EssentialContactEntity,

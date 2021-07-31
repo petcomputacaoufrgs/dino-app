@@ -106,7 +106,7 @@ const Contacts: React.FC = () => {
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
 		let updateContacts = (contactViews: ContactView[]) => {
-			setContacts(contactViews.sort((a, b) => contactViewSort(a, b)))
+			setContacts(contactViewSort(contactViews))
 		}
 
 		let updateSettings = (settings: UserSettingsEntity | undefined) => {

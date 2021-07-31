@@ -65,11 +65,13 @@ export const filterContactViews = (
 	)
 }
 
-export const contactViewSort = (a: ContactView, b: ContactView) => {
-	const bComesFirst = 1
-	const aComesFirst = -1
-
-	return a.contact.name > b.contact.name ? bComesFirst : aComesFirst
+export const contactViewSort = (contactViews: ContactView[]) => {
+	return contactViews.sort((a, b) =>
+		StringUtils.normalize(a.contact.name) >
+		StringUtils.normalize(b.contact.name)
+			? 1
+			: -1,
+	)
 }
 
 export const isEssential = (contact: ContactType): boolean =>

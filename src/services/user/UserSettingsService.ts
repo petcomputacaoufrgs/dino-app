@@ -280,7 +280,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: true,
 			declineGoogleContacts: false,
 			firstSettingsDone: false,
-			step: 0,
 		} as UserSettingsEntity
 	}
 }

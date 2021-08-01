@@ -62,7 +62,7 @@ class FilterService extends BaseLocalStorage {
       {
         id: FilterEnum.HAS_USER_QUESTIONS,
         checked: this.getFilter(FilterEnum.HAS_USER_QUESTIONS),
-        label: language.data.HAS_USER_QUESTIONS,
+        label: language.data.HAS_USER_QUESTIONS_FILTER_LABEL,
         validator: (t?: TreatmentView) => ArrayUtils.isNotEmpty(t?.questions),
       }
     ] as FilterType[]

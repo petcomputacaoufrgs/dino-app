@@ -1,12 +1,7 @@
 .note__note_content__column {
 	flex: 0 0 auto;
 	height: 100%;
-	margin-right: 0.313rem;
-	margin-left: 0.313rem;
-}
-
-.note__note_content__column.desktop {
-	width: 15%;
+	padding: 0 0.313rem;
 }
 
 .note__note_content__column__draggable {

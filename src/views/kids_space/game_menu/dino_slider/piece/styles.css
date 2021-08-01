@@ -1,86 +1,85 @@
-.slider_dino .piece {
+.dino_slider .dino_slider__piece {
   font-size: 30px;
   font-weight: bold;
-  height: 80px;
-  width: 80px;
-  background-color: #C2B3A3;
+  height: 20vmin;
+  width: 20vmin;
+  background-color: #ff860d;
   margin: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(88, 83, 69);
+  color: #FFFFFF;
   border-radius: 40%;
   box-shadow: 0px 4px 4px rgb(0 0 0 / 25%), inset 0px 4px 4px rgb(255 255 255 / 25%);
+  align-self: center;
+  justify-self: center;
 }
 
-.slider_dino .piece.reduced {
+.dino_slider .dino_slider__piece .dino_slider__piece.reduced {
   font-size: 45px;
 }
 
-.slider_dino .piece_2 {
-  font-size: 45px;
-  background-color: #f28187;
-  color: whitesmoke;
+.dino_slider .dino_slider__piece.piece_0{
+  background-color: #C2B3A3;
+  color: #C2B3A3;
 }
 
-.slider_dino .piece_4 {
+.dino_slider .dino_slider__piece.piece_2 {
   font-size: 45px;
-  background-color: #f6c358 ;
-  color: whitesmoke;
-
+  background-color: #e9b90c;
 }
 
-.slider_dino .piece_8 {
+.dino_slider .dino_slider__piece.piece_4 {
   font-size: 45px;
-  background-color: #8184ee;
-  color: whitesmoke;
-
+  background-color: #c6e030;
 }
 
-.slider_dino .piece_16 {
+.dino_slider .dino_slider__piece.piece_8 {
   font-size: 45px;
-  background-color: #ec9772;
-  color: whitesmoke;
-
+  background-color: #93FF60;
 }
 
-.slider_dino .piece_32 {
+.dino_slider .dino_slider__piece.piece_16 {
   font-size: 45px;
-  background-color: #bbcd85;
-  color: rgb(88, 83, 69);
+  background-color: #50d693;
 }
 
-.slider_dino .piece_64 {
+.dino_slider .dino_slider__piece.piece_32 {
   font-size: 45px;
-  background-color: #7ac66b;
-  color: whitesmoke;
-
+  background-color: #31d4cc;
 }
 
-.slider_dino .piece_128 {
-  background-color: #f4b469;
+.dino_slider .dino_slider__piece.piece_64 {
+  font-size: 45px;
+  background-color: #60B0FF;
+}
+
+.dino_slider .dino_slider__piece.piece_128 {
   font-size: 40px;
+  background-color: #6060FF;
 }
 
-.slider_dino .piece_256 {
-  background-color: #b468e5;
-  color: whitesmoke;
-
+.dino_slider .dino_slider__piece.piece_256 {
   font-size: 40px;
+  background-color: #B060FF;
 }
 
-.slider_dino .piece_512 {
-  background-color: #a2c75d;
-  color: whitesmoke;
+.dino_slider .dino_slider__piece.piece_512 {
   font-size: 40px;
+  background-color: #FF60FF;
 }
 
-.slider_dino .piece_1024 {
-  background-color: #77aecc;
-  color: whitesmoke;
-
+.dino_slider .dino_slider__piece.piece_1024 {
+  background-color: #FF409F;
 }
 
-.slider_dino .piece_2048 {
-  background-color: #86e5a8;
+.dino_slider .dino_slider__piece.piece_2048 {
+  background-color: #FF4040;
+}
+
+@media(vi) {
+  .dino_slider .dino_slider__piece {
+    height: 18vmin;
+    width: 18vmin;
+  }
 }

@@ -33,20 +33,17 @@ export default interface LanguageBase {
 	AVATAR_ALT: string
 	LOGOUT_DIALOG_QUESTION: string
 	LOGOUT_DIALOG_DESCRIPTION: string
-	AGREEMENT_OPTION_TEXT: string
 	AGREEMENT_BUTTON_ARIA_LABEL: string
-	DISAGREEMENT_OPTION_TEXT: string
 	DISAGREEMENT_BUTTON_ARIA_LABEL: string
-	ADD_OPTION_TEXT: string
-	CANCEL_OPTION_TEXT: string
-	EDIT_OPTION_TEXT: string
-	DELETE_OPTION_TEXT: string
+	ADD: string
+	EDIT: string
+	DELETE: string
 	DELETE_CONTACT_OPTION_TEXT: string
 	DELETE_ITEM_OPTION_TEXT: string
 	TERMS_OF_USE: string
 	PRIVACY_POLICY: string
-	MENU_HOME: string
-	MENU_GAMES: string
+	HOME: string
+	GAMES: string
 	MENU_CONTACTS: string
 	MENU_SETTINGS: string
 	MENU_LOGOUT: string
@@ -59,11 +56,11 @@ export default interface LanguageBase {
 	TEXT: string
 	FULL_TEXT: string
 	SETTINGS_TITLE: string
-	SETTINGS_LANGUAGE: string
-	SETTINGS_TREATMENT: string
-	SETTINGS_SAVE_SUCCESS: string
-	SETTINGS_SAVE_ERROR: string
-	MENU_NOTES: string
+	CHOOSE_LANGUAGE: string
+	CHOOSE_TREATMENT: string
+	SETTINGS_UPDATED_SUCESS: string
+	SETTINGS_UPDATED_ERROR: string
+	NOTES: string
 	NOTES_HEADER_IMAGE_DESC: string
 	ADD_BUTTON: string
 	NOTE_STATE_DONE: string
@@ -74,7 +71,6 @@ export default interface LanguageBase {
 	NOTE_DELETE_BUTTON: string
 	ANSWER_NOTE_DIALOG_TITLE: string
 	NOTE_TAG_LABEL: string
-	DIALOG_CANCEL_BUTTON_TEXT: string
 	SEARCH_BUTTON_LABEL: string
 	ANSWER_DIALOG_LABEL: string
 	FORM_NAME: string
@@ -92,7 +88,7 @@ export default interface LanguageBase {
 	STAFF_LIST_TAB: string
 	STAFF_SAVE_SUCCESS: string
 	TREATMENT: string
-	ADD_TREATMENT: string 
+	ADD_TREATMENT: string
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	STAFF: string
@@ -129,7 +125,6 @@ export default interface LanguageBase {
 	LOADING: string
 	NO_OPTIONS: string
 	EMPTY_FIELD_ERROR: string
-	QUESTION_ALREADY_EXISTS_ERROR: string
 	DISCONNECTED_MESSAGE: string
 	CONNECTED_MESSAGE: string
 	SYNC_STARTED: string
@@ -204,8 +199,7 @@ export default interface LanguageBase {
 	OPEN_MENU_ARIA_LABEL: string
 	CLOSE_MENU_ARIA_LABEL: string
 	CLICK_TO_OPEN_MENU_ITEM: string
-	ADD_ARIA_LABEL: string
-	OPTIONS_ARIA_LABEL: string
+	OPTIONS: string
 	EVENT_COLOR_LABEL: string
 	MAX: string
 	ADD_COLUMN_TEXT: string
@@ -213,12 +207,10 @@ export default interface LanguageBase {
 	COLUMN_EDIT_LABEL: string
 	COLUMN_TITLE_LABEL: string
 	COLUMN_MIN_LENGTH_ERROR: string
-	COLUMN_TITLE_ALREADY_EXISTS_ERROR: string
 	NOTE_COLUMN_DELETE_DIALOG_QUESTION: string
-	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION: string
+	ARE_YOU_SURE: string
 	NOTE_COLUMN_DELETE_DIALOG_DESC: string
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC: string
-	NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT: string
 	NOTE_COLUMN_ADD_NOTE_TEXT: string
 	NOTE_EDIT_DIALOG_NEW_NOTE_TITLE: string
 	QUESTION_NOTE_DIALOG_TITLE: string
@@ -267,14 +259,14 @@ export default interface LanguageBase {
 	MUSICAL_DINO_GAME: string
 	SNAKE_GAME: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string
-	MEMORY_GAME_GAME_OVER: string
+	SUCESS_GAME_OVER_LABEL: string
 	PLAY_AGAIN_MESSAGE: string
 	DINO_RUNNER_GAME_OVER_MSG_1: string
 	SECONDARY_TAB_MESSAGE: string
 	SECONDARY_TAB_BUTTON_TEXT: string
 	APP_READY_FOR_OFFLINE_USE_MESSAGE: string
 	APP_UPDATE_MESSAGE: string
-	PWA_CONTROL_END_INTRO_BUTTON: string
+	END: string
 	PWA_INTRO_TITLE_0: string
 	PWA_INTRO_0_TEXT_1: string
 	PWA_INTRO_0_TEXT_2: string
@@ -291,14 +283,14 @@ export default interface LanguageBase {
 	PWA_INTRO_2_TEXT_4: string
 	WINNER: string
 	NEXT_PLAYER: string
-	START_GAME_TEXT: string
+	START_GAME: string
 	MUSICAL_DINO_GAME_MSG_1: string
 	TIC_TAC_DINO_GAME_OVER_MSG_1: string
-	TIC_TAC_DINO_TIE: string
+	TIE: string
 	PASSWORD: string
 	FORGOT_PASSWORD: string
 	ACCESS_PARENTS_AREA: string
-	ACCESS_BUTTON: string
+	ACCESS: string
 	YES: string
 	NO: string
 	DELETE_ACCOUNT: string
@@ -309,15 +301,16 @@ export default interface LanguageBase {
 	TREATMENTS_AND_FAQS: string
 	INVALID_VALUE: string
 	USER_QUESTIONS: string
+	QUESTION: string
 	QUESTIONS: string
 	SEND_TO_THE_PROFESSIONALS: string
 	SAVE: string
-	UNIVERSAL_CONTACT: string
+	UNIVERSAL_CONTACT_LABEL: string
 	ANSWER: string
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER: string
-	ADD_STAFF_TEXT: string
+	ADD_STAFF_LABEL: string
+	CHANGE_PASSWORD_LABEL: string
 	CHANGE_PASSWORD: string
-	CHANGE_PASSWORD_DIALOG: string
 	CANCEL: string
 	CHANGE: string
 	INSERT_OLD_PASSWORD: string
@@ -328,7 +321,7 @@ export default interface LanguageBase {
 	INSERT_PASSWORD_AGAIN: string
 	PASSWORD_MIN_LENGHT_ERROR_MESSAGE: string
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE: string
-	PASSWORD_CHANGED: string
+	SUCESS: string
 	WRONG_PASSWORD: string
 	NO_ITEMS_LIST: string
 	FILTER: string
@@ -336,16 +329,23 @@ export default interface LanguageBase {
 	YOUR_CONTACTS: string
 	UNIVERSAL_ESSENTIAL_CONTACTS: string
 	TREATMENT_ESSENTIAL_CONTACTS: string
-	HAS_USER_QUESTIONS: string
+	HAS_USER_QUESTIONS_FILTER_LABEL: string
 	RENDER_OFFLINE_CONTENT_PART_1: string
 	RENDER_OFFLINE_CONTENT_PART_2: string
 	NO_CONNECTION: string
-	DINO_SLIDER__REDUCE: string
+	REDUCE: string
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL: string
+	GO_TO_SLEEP: string
+	GO_OUTSIDE: string
+	CUSTOMIZE: string
+	RETURN_INSIDE: string
+	GO_TO_GAME_MENU: string
+	CHOOSE_COLOR_DINO_MESSAGE: string
+	CHOOSE_ACESSORY_DINO_MESSAGE: string
+	CHOOSE: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string
 	titleFAQTreatmentText(treatment: string): string
 	titleTreatmentQuestion(treatment: string): string
-	//seeUserQuestionsText(treatment: string, quantity?: number): string
 }

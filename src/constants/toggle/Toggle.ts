@@ -1,13 +1,13 @@
-import PermissionEnum from "../../types/enum/PermissionEnum"
+import PermissionEnum from '../../types/enum/PermissionEnum'
 
 export const toggle = {
-	firstLogin: true,
+	forceFirstLogin: false,
 	showFirstLoginDialog: true,
 	loadTestInstancesAtFirstLogin: false,
-	showTreatmentQuestionButtonToStaff: true,
+	showTreatmentQuestionButtonToStaff: false,
 	overridePermission: {
 		override: false,
-		permission: PermissionEnum.USER
+		permission: PermissionEnum.STAFF,
 	},
-	testAll2048Pieces: false
+	testAll2048Pieces: false,
 }

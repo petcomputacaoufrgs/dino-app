@@ -2,7 +2,6 @@ import LanguageEnum from '../../types/enum/LanguageEnum'
 import LanguageBase from './LanguageBase'
 
 export default class EN implements LanguageBase {
-
 	APP_NAME = 'DinoApp'
 
 	DINOAPP_TEAM = 'DinoApp Team'
@@ -27,13 +26,15 @@ export default class EN implements LanguageBase {
 
 	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Welcome!'
 
-	FIRST_LOGIN_WELCOME_MESSAGE = 'Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicinge lit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibus repudiandae ut labore!'
+	FIRST_LOGIN_WELCOME_MESSAGE =
+		'Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicinge lit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibus repudiandae ut labore!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
 
 	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE = 'Thank you for joining DinoApp!'
 
-	FIRST_LOGIN_CONFIGURATIONS_MESSAGE = 'Your settings can be updated at any time in the Settings section of the app.'
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE =
+		'Your settings can be updated at any time in the Settings section of the app.'
 
 	FIRST_LOGIN_CHOOSE_TREATMENT = 'Select your Treatment'
 
@@ -65,35 +66,26 @@ export default class EN implements LanguageBase {
 	LOGOUT_DIALOG_DESCRIPTION =
 		'If you answer "YES" all your account data will be removed from this device'
 
-	AGREEMENT_OPTION_TEXT = 'YES'
-
 	AGREEMENT_BUTTON_ARIA_LABEL = 'Click here to agree'
-
-	DISAGREEMENT_OPTION_TEXT = 'NO'
 
 	DISAGREEMENT_BUTTON_ARIA_LABEL = 'Click here to disagree'
 
-	ADD_OPTION_TEXT = 'ADD'
+	EDIT = 'Edit'
 
-	CANCEL_OPTION_TEXT = 'CANCEL'
-
-	EDIT_OPTION_TEXT = 'Edit'
-
-	DELETE_OPTION_TEXT = 'Delete'
+	DELETE = 'Delete'
 
 	DELETE_CONTACT_OPTION_TEXT =
 		'This action will permanently delete your contact.'
 
-	DELETE_ITEM_OPTION_TEXT =
-		'This action will permanently delete the item.'
+	DELETE_ITEM_OPTION_TEXT = 'This action will permanently delete the item.'
 
 	TERMS_OF_USE = 'Terms of Use'
 
 	PRIVACY_POLICY = 'Privacy Policy'
 
-	MENU_HOME = 'Home'
+	HOME = 'Home'
 
-	MENU_GAMES = 'Games'
+	GAMES = 'Games'
 
 	GLOSSARY = 'Glossary'
 
@@ -104,7 +96,7 @@ export default class EN implements LanguageBase {
 	FAQ = 'FAQ'
 
 	FAQ_ITEM = 'FAQ Item'
-	
+
 	MENU_SETTINGS = 'Settings'
 
 	MENU_LOGOUT = 'Logout'
@@ -113,9 +105,9 @@ export default class EN implements LanguageBase {
 
 	ABOUT_US = 'About Us'
 
-	MENU_STAFF_MODERATION = 'Staff Moderation' 
+	MENU_STAFF_MODERATION = 'Staff Moderation'
 
-	TREATMENTS = 'Treatments' 
+	TREATMENTS = 'Treatments'
 
 	TITLE = 'Title'
 
@@ -124,18 +116,18 @@ export default class EN implements LanguageBase {
 	TEXT = 'Text'
 
 	FULL_TEXT = 'Full Text'
-	
+
 	SETTINGS_TITLE = 'Settings'
 
-	SETTINGS_LANGUAGE = 'Choose Language'
+	CHOOSE_LANGUAGE = 'Choose Language'
 
-	SETTINGS_TREATMENT = 'Choose treatment'
+	CHOOSE_TREATMENT = 'Choose treatment'
 
-	SETTINGS_SAVE_SUCCESS = 'Settings updated.'
+	SETTINGS_UPDATED_SUCESS = 'Settings updated.'
 
-	SETTINGS_SAVE_ERROR = 'Error saving new settings.'
+	SETTINGS_UPDATED_ERROR = 'Error saving new settings.'
 
-	MENU_NOTES = 'Notes'
+	NOTES = 'Notes'
 
 	NOTES_HEADER_IMAGE_DESC = 'Image with a opened notebook and a hand writing.'
 
@@ -186,7 +178,7 @@ export default class EN implements LanguageBase {
 	FORM_EMAIL = 'Add Staff E-mail'
 
 	ADD_STAF_TAB = 'Add Staff'
-	
+
 	STAFF_LIST_TAB = 'Staff List'
 
 	STAFF_SAVE_SUCCESS = 'Staff successfully added'
@@ -212,7 +204,7 @@ export default class EN implements LanguageBase {
 	NEW_TREATMENT = 'New Treatment'
 
 	NEW_GLOSSARY_ITEM = 'New Glossary Item'
-	
+
 	ESSENTIAL_CONTACT_MUST_HAVE_PHONE = 'Essential Contact must have a phone'
 
 	CONTACTS_ADD_ESSENTIAL_CONTACT = 'New Essential Contact'
@@ -261,9 +253,7 @@ export default class EN implements LanguageBase {
 
 	NO_OPTIONS = 'No options'
 
-	EMPTY_FIELD_ERROR = "Field cannot be empty."
-
-	QUESTION_ALREADY_EXISTS_ERROR = 'Question already exists.'
+	EMPTY_FIELD_ERROR = 'Field cannot be empty.'
 
 	DISCONNECTED_MESSAGE =
 		"You're disconnected of the Internet. Connect again to save local data."
@@ -416,9 +406,9 @@ export default class EN implements LanguageBase {
 
 	CLICK_TO_OPEN_MENU_ITEM = 'Click to open '
 
-	ADD_ARIA_LABEL = 'Add'
+	ADD = 'Add'
 
-	OPTIONS_ARIA_LABEL = 'Options'
+	OPTIONS = 'Options'
 
 	EVENT_COLOR_LABEL = 'Selected color'
 
@@ -434,21 +424,16 @@ export default class EN implements LanguageBase {
 
 	COLUMN_MIN_LENGTH_ERROR = 'Minimum one character.'
 
-	COLUMN_TITLE_ALREADY_EXISTS_ERROR = 'Title already exists'
-
 	NOTE_COLUMN_DELETE_DIALOG_QUESTION =
 		'Are you sure you want to delete this column?'
 
-	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_QUESTION =
-		'Are you sure?'
+	ARE_YOU_SURE = 'Are you sure?'
 
 	NOTE_COLUMN_DELETE_DIALOG_DESC =
 		'If you answer "YES" this column will be removed permanently.'
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
 		'If you remove this column related notes will be deleted permanently.'
-
-	NOTE_COLUMN_DELETE_DIALOG_AGREE_TEXT = 'YES'
 
 	NOTE_COLUMN_ADD_NOTE_TEXT = 'Add note'
 
@@ -539,7 +524,7 @@ export default class EN implements LanguageBase {
 
 	NO_TREATMENT_SELECTED = 'Select a treatment'
 
-	NO_FAQ_AVAILABLE = 'No F.A.Q available'
+	NO_FAQ_AVAILABLE = `No ${this.FAQ} available`
 
 	SECONDARY_TAB_MESSAGE =
 		'The dino is open in another browser tab. You can only use one tab.'
@@ -550,7 +535,7 @@ export default class EN implements LanguageBase {
 
 	APP_UPDATE_MESSAGE = 'Update available! Restart the DinoApp to install!'
 
-	PWA_CONTROL_END_INTRO_BUTTON = 'End'
+	END = 'End'
 
 	PWA_INTRO_TITLE_0 = 'Welcome to DinoApp!'
 
@@ -610,19 +595,20 @@ export default class EN implements LanguageBase {
 
 	DINO_RUNNER_GAME_OVER_MSG_1 = 'Oh no! Dino touched a bacterium.'
 
-	START_GAME_TEXT = 'Start Game!'
+	START_GAME = 'Start Game!'
 
 	TIC_TAC_DINO_GAME_OVER_MSG_1 = 'Good game! Congratulations '
 
-	TIC_TAC_DINO_TIE = 'Tie!'
+	TIE = 'Tie!'
 
 	PASSWORD = 'Password'
 
 	FORGOT_PASSWORD = 'Forgot your password?'
 
-	ACCESS_PARENTS_AREA = 'This area is for adults. Are you an adult or accompanied by an adult?'
+	ACCESS_PARENTS_AREA =
+		'This area is for adults. Are you an adult or accompanied by an adult?'
 
-	ACCESS_BUTTON = 'Access'
+	ACCESS = 'Access'
 
 	YES = 'Yes'
 
@@ -638,33 +624,37 @@ export default class EN implements LanguageBase {
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Error deleting your account, please try again later.'
 
-	EXAMPLE_EMAIL='example@email.com'
+	EXAMPLE_EMAIL = 'example@email.com'
 
 	TREATMENTS_AND_FAQS = `Treatments & ${this.FAQ}s`
 
 	INVALID_VALUE = 'Invalid value'
 
 	USER_QUESTIONS = "User's Questions"
-	
+
+	QUESTION = 'Question'
+
 	QUESTIONS = 'Questions'
 
 	SEND_TO_THE_PROFESSIONALS = 'Send to the profissionals!'
 
 	SAVE = 'Save'
 
-	UNIVERSAL_CONTACT = 'This contact is universal and will appear for all user'
+	UNIVERSAL_CONTACT_LABEL =
+		'This contact is universal and will appear for all user'
 
 	ANSWER = 'Answer'
 
 	TREATMENT_QUESTION_ANSWER_PLACEHOLDER = 'Question asnwer...'
 
-	ADD_STAFF_TEXT = "Staff users can add, remove and edit information that is displayed to patients and their responsibles, such as: hospital contacts, glossary items, etc. Only the hospital's management account is able to add and remove other staff users."
-	
-	MEMORY_GAME_GAME_OVER = 'You nail it! Congratulations'
+	ADD_STAFF_LABEL =
+		"Staff users can add, remove and edit information that is displayed to patients and their responsibles, such as: hospital contacts, glossary items, etc. Only the hospital's management account is able to add and remove other staff users."
 
-	CHANGE_PASSWORD = 'Change password to parents area'
+	SUCESS_GAME_OVER_LABEL = 'You nail it! Congratulations'
 
-	CHANGE_PASSWORD_DIALOG = 'Change password'
+	CHANGE_PASSWORD_LABEL = 'Change password to parents area'
+
+	CHANGE_PASSWORD = 'Change password'
 
 	CANCEL = 'Cancel'
 
@@ -676,17 +666,19 @@ export default class EN implements LanguageBase {
 
 	INSERT_NEW_PASSWORD_AGAIN = 'Repeat new password: '
 
-	SETTING_PASSWORD_EXPLANATION = 'This password protects the kid from sensible content, because you can only access the parents area with this password. The password must be between 8 and 24 characters.'
+	SETTING_PASSWORD_EXPLANATION =
+		'This password protects the kid from sensible content, because you can only access the parents area with this password. The password must be between 8 and 24 characters.'
 
 	INSERT_PASSWORD = 'Insert password: '
 
 	INSERT_PASSWORD_AGAIN = 'Repeat password: '
 
-	PASSWORD_MIN_LENGHT_ERROR_MESSAGE = 'The password must be between 8 and 24 characters'
+	PASSWORD_MIN_LENGHT_ERROR_MESSAGE =
+		'The password must be between 8 and 24 characters'
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'The passwords are different'
 
-	PASSWORD_CHANGED = 'Success'
+	SUCESS = 'Success'
 
 	WRONG_PASSWORD = 'Wrong password'
 
@@ -694,33 +686,53 @@ export default class EN implements LanguageBase {
 
 	FILTER = 'Filter'
 
-	ESSENTIAL_CONTACTS = "Essential Contacts"
+	ESSENTIAL_CONTACTS = 'Essential Contacts'
 
-	YOUR_CONTACTS = "Your Contacts"
+	YOUR_CONTACTS = 'Your Contacts'
 
-	UNIVERSAL_ESSENTIAL_CONTACTS = "Universal " + this.ESSENTIAL_CONTACTS
+	UNIVERSAL_ESSENTIAL_CONTACTS = 'Universal ' + this.ESSENTIAL_CONTACTS
 
-	TREATMENT_ESSENTIAL_CONTACTS = "Treatment " + this.ESSENTIAL_CONTACTS
+	TREATMENT_ESSENTIAL_CONTACTS = 'Treatment ' + this.ESSENTIAL_CONTACTS
 
-	HAS_USER_QUESTIONS = "With User Questions Only"
+	HAS_USER_QUESTIONS_FILTER_LABEL = 'With User Questions Only'
 
-	RENDER_OFFLINE_CONTENT_PART_1 = 'In order to synchronize your contacts, a connection to an internet network is required.'
-	
+	RENDER_OFFLINE_CONTENT_PART_1 =
+		'In order to synchronize your contacts, a connection to an internet network is required.'
+
 	RENDER_OFFLINE_CONTENT_PART_2 = 'Please try again when connected.'
 
 	NO_CONNECTION = 'No internet connection'
 
-	DINO_SLIDER__REDUCE = 'Reduce'
+	REDUCE = 'Reduce'
 
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL = `Bind item to all existent ${this.FAQ}s`
 
+	GO_TO_SLEEP = 'Go to sleep'
+
+	GO_OUTSIDE = 'Go outside'
+
+	CUSTOMIZE = 'Customize'
+
+	RETURN_INSIDE = 'Return inside'
+
+	GO_TO_GAME_MENU = 'Go to game menu'
+
+	CHOOSE_COLOR_DINO_MESSAGE =
+		"Hi, I'm Dino! Let's choose the color of my scales together?"
+
+	CHOOSE_ACESSORY_DINO_MESSAGE = 'Time to pick a cool acessory!'
+
+	CHOOSE = 'Choose'
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
-	deleteItemText = (item: string) => `${this.DELETE_OPTION_TEXT} ${item.toLowerCase()}?`
-	
-	seeFAQItemsText = (treatment: string) => `See ${treatment.toLowerCase()}'s ${this.FAQ}`
-	
+	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`
+
+	seeFAQItemsText = (treatment: string) =>
+		`See ${treatment.toLowerCase()}'s ${this.FAQ}`
+
 	titleFAQTreatmentText = (treatment: string) => `${treatment} ${this.FAQ}`
-	
-	titleTreatmentQuestion = (treatment: string) => `Have a question about ${treatment}?`
+
+	titleTreatmentQuestion = (treatment: string) =>
+		`Have a question about ${treatment}?`
 }

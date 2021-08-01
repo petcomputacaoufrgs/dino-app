@@ -27,9 +27,9 @@
 .musical_dino__start_game {
 	width: 100vw;
 	position: absolute;
+	display: flex;
 	justify-content: center;
 	bottom: 10vmin;
-    left: 30vw;
 }
 
 .musical_dino__start_game__button {
@@ -69,15 +69,11 @@
 }
 
 .musical_dino__dino {
-	width: 40vmin;
-	height: 60vmin;
-	max-width: 200px;
-	max-height: 200px;
-	margin: 5vmin;
+	margin: 2vmin;
 }
 
 .musical_dino__dino svg {
-	height: 55vmin;
+	width: 25vh;
 }
 
 .musical_dino__dino_moving svg {

@@ -2,9 +2,9 @@ import React from 'react'
 import PathConstants from '../../../constants/app/PathConstants'
 import HistoryService from '../../../services/history/HistoryService'
 import GameCard from '../../../components/game_card'
-import KidsSpaceGoBackButton from '../../../components/button/go_back'
 import './styles.css'
 import { useLanguage } from '../../../context/language'
+import ArrowBack from '../../../components/arrow_back'
 
 
 const GameMenu: React.FC = () => {
@@ -12,11 +12,9 @@ const GameMenu: React.FC = () => {
 	const language = useLanguage() 
 	
 	return (
+		<>
+		<ArrowBack kids lum="light" onClick={() => HistoryService.push(PathConstants.KIDS_SPACE)} />
 		<div className='game_menu'>
-			<KidsSpaceGoBackButton
-				className='game_menu__go_back__button'
-				path={PathConstants.KIDS_SPACE}
-			/>
 			<GameCard
 				onClick={() => HistoryService.push(PathConstants.DINO_RUNNER_GAME)}
 				text={language.data.DINO_RUNNER_GAME}
@@ -48,6 +46,7 @@ const GameMenu: React.FC = () => {
 				backgroundColor={'#E1BFFF'}
 			/>
 		</div>
+		</>
 	)
 }
 

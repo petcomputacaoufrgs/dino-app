@@ -30,7 +30,11 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return []
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 

@@ -13,7 +13,7 @@ const Home: React.FC = () => {
 	const language = useLanguage()
 
 	const searchMainPages = (getMainPages: (language: LanguageBase) => MenuItemViewModel[]) => 
-		getMainPages(language.data).filter(item => item.name !== language.data.MENU_HOME)
+		getMainPages(language.data).filter(item => item.name !== language.data.HOME)
 
 	const getGroupedMenuByPermission = () => {
 		const userPermission = GetPermission()

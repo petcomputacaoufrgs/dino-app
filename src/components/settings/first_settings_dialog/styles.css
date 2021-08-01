@@ -33,7 +33,7 @@
 }
 
 .first_settings__message_dialog { 
-	padding: 16px 20px;
+	padding: 16px 20px 0px;
 }
 
 .first_settings__message_dialog .citation {
@@ -68,4 +68,21 @@
 
 .set_password__error_message {
 	color: #FF7676;
+}
+
+.first_settings__message_dialog__sync_item .sync_info {
+	border-radius: 50%;
+	background-color: var(--header-and-menu);
+	min-width: 3rem;
+	min-height: 3rem;
+	max-width: 3rem;
+	max-height: 3rem;
+	margin: 0 1rem 1rem 0rem;
+}
+
+.first_settings__message_dialog__sync_item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 0.5rem;
 }

@@ -98,7 +98,7 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.TREATMENT),
 		},
 		{
-			image: SettingsSVG,
+			image: ModerationSVG,
 			name: language.MENU_STAFF_MODERATION,
 			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
 		},

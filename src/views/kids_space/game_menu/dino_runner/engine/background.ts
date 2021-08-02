@@ -2,6 +2,10 @@ import SkyAnimation from '../../../animation/SkyAnimation'
 
 const STAR_SPEED = 1500
 
+/**
+ * @description set all stars to be animated and start the animation
+ * @return funtion to stop the animation
+ */
 export function startBackgroundEngine() {
 	const stars = [
 		document.getElementById('dino_runner__star_one'),

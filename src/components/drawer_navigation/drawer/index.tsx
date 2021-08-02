@@ -5,7 +5,7 @@ import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import MenuItemViewModel from '../../../types/menu/MenuItemViewModel'
 import { Avatar } from '@material-ui/core'
 import DinoIconButton from '../../button/icon_button'
-import { ReactComponent as ChevronLeftIconSVG } from '../../../assets/icons/chevron_left.svg'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import DinoLoader from '../../loader'
 import { useLanguage } from '../../../context/language'
 import UserEntity from '../../../types/user/database/UserEntity'
@@ -122,7 +122,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, groupedItems, onClose }) => {
 					<div className='drawer_navigation__drawer__header'>
 						<DinoIconButton
 							ariaLabel={language.data.CLOSE_MENU_BUTTON_ARIA_LABEL}
-							icon={ChevronLeftIconSVG}
+							icon={ChevronLeftIcon}
 							onClick={handleCloseClick}
 							bigger
 							lum='light'

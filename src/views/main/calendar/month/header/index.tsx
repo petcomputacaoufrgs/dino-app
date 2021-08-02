@@ -1,7 +1,7 @@
 import React from 'react'
 import HeaderProps from './props'
 import DateUtils from '../../../../../utils/DateUtils'
-import { ReactComponent as TodayCalendarSVG } from '../../../../../assets/icons/today_calendar.svg'
+import { ReactComponent as TodayCalendarSVG } from '../../../../../assets/icons/general_use/today_calendar.svg'
 import DinoIconButton from '../../../../../components/button/icon_button'
 import { useLanguage } from '../../../../../context/language'
 import './styles.css'

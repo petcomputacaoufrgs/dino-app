@@ -38,7 +38,7 @@
 	height: 25vmin;
 	max-width: 150px;
 	max-height: 150px;
-	background-image: url('../../../../assets/kids_space/dino_runner/fear.svg');
+	background-image: url('../../../../assets/kids_space/games/dino_runner/fear.svg');
 }
 
 .dino_runner_game__obstacle {
@@ -46,7 +46,7 @@
 	height: 15vmin;
 	max-width: 100px;
 	max-height: 100px;
-	background-image: url('../../../../assets/kids_space/dino_runner/bacteria.svg');
+	background-image: url('../../../../assets/kids_space/games/dino_runner/bacteria.svg');
 }
 
 .dino_runner_game__start_game_button {

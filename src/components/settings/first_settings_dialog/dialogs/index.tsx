@@ -12,6 +12,8 @@ import FirstSettingsDialogProps from './props'
 import { FirstSettingsDialogsProps } from './props'
 import { HasStaffPowers } from '../../../../context/private_router'
 import DataConstants from '../../../../constants/app_data/DataConstants'
+import SyncStateEnum from '../../../../types/sync/SyncStateEnum'
+import SyncInfo from '../../../sync_info'
 
 const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
   
@@ -21,15 +23,32 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
 
   const renderFirstSettingsDialogs = (): FirstSettingsDialogsProps[] => {
 
-    const finalDialog = {
+    const finalDialog: FirstSettingsDialogsProps = {
       id: "FINAL",
+      title: language.data.FIRST_LOGIN_DONE_MESSAGE,
       component: renderFinalMessageDialog
     }
 
-		const basicDialogs = [
-      { 
-        id: "WELCOME",
-        component: renderWelcomeMessageDialog
+		const basicDialogs: FirstSettingsDialogsProps[] = [
+      {
+        id: "INTRO",
+        title: language.data.PWA_INTRO_TITLE_0,
+        component: renderIntro,
+      },
+      {
+        id: "NO INTERNET",
+        title: language.data.PWA_INTRO_TITLE_1,
+        component: renderNoInternet,
+      },
+      {
+        id: "DINO CLOUD",
+        title: language.data.PWA_INTRO_TITLE_2,
+        component: dinoCloud,
+      },
+      {
+        id: "DINO CLOUD ICONS",
+        title: language.data.PWA_INTRO_TITLE_3,
+        component: dinoCloudIcons,
       },
       {
         id: "LANGUAGE",
@@ -43,17 +62,18 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
       }
     ]
 
-    const userLockedDialogs = [
+    const userLockedDialogs: FirstSettingsDialogsProps[] = [
 			{
 				id: "TREATMENT",
 				title: language.data.FIRST_LOGIN_CHOOSE_TREATMENT,
       	component: renderSelectTreatmentDialogContent,
-			},
-			{
-				id: "PASSWORD",
-				title: language.data.FIRST_LOGIN_CHOOSE_PASSWORD, 
-      	component: renderSetPasswordDialog,
 			}
+      // ,
+			// {
+			// 	id: "PASSWORD",
+			// 	title: language.data.FIRST_LOGIN_CHOOSE_PASSWORD, 
+      // 	component: renderSetPasswordDialog,
+			// }
 		]
 
     let dialogs = basicDialogs
@@ -63,9 +83,48 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
     return dialogs.concat(finalDialog)
 	}
 
+  const renderIntro = () => (
+		<div className='first_settings__message_dialog'>
+			<p>{language.data.PWA_INTRO_0_TEXT_1}</p>
+			<p>{language.data.PWA_INTRO_0_TEXT_2}</p>
+		</div>
+	)
+
+  const renderNoInternet = () =>  (
+		<div className='first_settings__message_dialog'>
+			<p>{language.data.PWA_INTRO_1_TEXT_1}</p>
+			<p>{language.data.PWA_INTRO_1_TEXT_2}</p>
+		</div>
+	)
+
+  const dinoCloud = () => (
+		<div className='first_settings__message_dialog'>
+			<p>{language.data.PWA_INTRO_2_TEXT_1}</p>
+			<p>{language.data.PWA_INTRO_2_TEXT_2}</p>
+		</div>
+	)
+
+  const dinoCloudIcons = () => (
+		<div className='first_settings__message_dialog'>
+			<p>{language.data.PWA_INTRO_3_TEXT_1}</p>
+			<div className='first_settings__message_dialog__sync_item'>
+				<SyncInfo state={SyncStateEnum.NOT_SYNCED}/>
+				<p>{language.data.PWA_INTRO_3_TEXT_2}</p>
+			</div>
+			<div className='first_settings__message_dialog__sync_item'>
+				<SyncInfo state={SyncStateEnum.SYNCHRONIZING}/>
+				<p>{language.data.PWA_INTRO_3_TEXT_3}</p>
+			</div>
+			<div className='first_settings__message_dialog__sync_item'>
+				<SyncInfo state={SyncStateEnum.SYNCED}/>
+				<p>{language.data.PWA_INTRO_2_TEXT_4}</p>
+			</div>
+		</div>
+	)
+
   const renderSelectTreatmentDialogContent = () => {
     return (
-      <div className='first_settings__message_dialog'>
+      <div style={{paddingBottom: "16px"}} className='first_settings__message_dialog'>
         <SelectTreatment
           treatment={props.selectedTreatment}
           setTreatment={props.onSelectedTreatmentChange}
@@ -84,7 +143,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
 
   const renderSelectColorThemeDialogContent = () => {
     return (
-      <div className='first_settings__message_dialog'>
+      <div style={{paddingBottom: "16px"}} className='first_settings__message_dialog' >
         <SelectColorTheme
           colorTheme={props.selectedColorTheme}
           setColorTheme={props.onSelectedColorThemeChange}
@@ -95,7 +154,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
 
   const renderSelectLanguageDialogContent = () => {
     return (
-      <div className='first_settings__message_dialog'>
+      <div style={{paddingBottom: "16px"}} className='first_settings__message_dialog'>
         <SelectLanguage
           languageName={props.selectedLanguage}
           setLanguage={props.onSelectedLanguageChange}
@@ -108,23 +167,10 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
     )
   }
 
-  const renderWelcomeMessageDialog = () => {
-    return (
-      <div className='first_settings__message_dialog'>
-        <DinoLogoHeader
-          title={language.data.FIRST_LOGIN_WELCOME_MESSAGE_HEADER}
-          size='small'
-        />
-        <p>{language.data.FIRST_LOGIN_WELCOME_MESSAGE}</p>
-        <h6 className='citation'>— {language.data.DINOAPP_TEAM}</h6>
-      </div>
-    )
-  }
-
   //TODO repetido
   const renderSetPasswordDialog = () => {
     return (
-      <div className='first_settings__message_dialog set_password'>
+      <div style={{paddingBottom: "16px"}} className='first_settings__message_dialog set_password'>
         <p>
           {language.data.SETTING_PASSWORD_EXPLANATION}
         </p>
@@ -154,10 +200,6 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
   const renderFinalMessageDialog = () => {
     return (
       <div className='first_settings__message_dialog'>
-        <DinoLogoHeader
-          title={language.data.FIRST_LOGIN_DONE_MESSAGE}
-          size='small'
-        />
         <p>{language.data.FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE}</p>
         <p>{language.data.FIRST_LOGIN_CONFIGURATIONS_MESSAGE}</p>
       </div>
@@ -175,12 +217,7 @@ const FirstSettingsDialog: React.FC<FirstSettingsDialogProps> = (props) => {
     return dialogs[LAST_DIALOG]
   }
 
-  const renderDialogHeader = () => {
-
-    const isFirstOrLastDialog = props.step === 0 || props.step === LAST_DIALOG
-
-    return !isFirstOrLastDialog && <DinoDialogHeader>{getDialog().title || ''}</DinoDialogHeader>
-  }
+  const renderDialogHeader = () => <DinoDialogHeader>{getDialog().title}</DinoDialogHeader>
 
   const isValidPassword = () => {
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useEvent } from '..'
-import { toggle } from '../../../../../constants/toggle/Toggle'
-import ArrayUtils from '../../../../../utils/ArrayUtils'
+import { useEvent } from '../../../dino_slider'
+import { toggle } from '../../../../../../constants/toggle/Toggle'
+import ArrayUtils from '../../../../../../utils/ArrayUtils'
 import SliderPiece from '../piece'
 import SliderBoardProps, { HandleSwipeProps } from './props'
 

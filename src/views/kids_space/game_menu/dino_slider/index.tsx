@@ -5,7 +5,7 @@ import DinoSwitch from '../../../../components/switch'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../context/language'
 import HistoryService from '../../../../services/history/HistoryService'
-import SliderBoard from './board'
+import SliderBoard from './components/board'
 import './styles.css'
 
 export const useEvent = (event: any, handler: {(this: Window, ev: any): any; (this: Window, ev: any): any;}, passive = false) => {

@@ -20,7 +20,7 @@ const DinoStepper: React.FC<DinoStepperProps> = ({
 	return (
 		<MobileStepper
 			className='dino_stepper'
-			variant='dots'
+			variant='progress'
 			steps={steps}
 			position='static'
 			activeStep={activeStep}

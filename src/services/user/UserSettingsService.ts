@@ -222,8 +222,10 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				case 2:
 					return 'dark'
 				case 3:
-					return 'high_contrast'
+					return 'cotton_candy_light'
 				case 4:
+					return 'eggplant_dark'
+				case 5:
 					return this.getSystemColorThemeName()
 				default:
 					return this.getSystemColorThemeName()

@@ -101,16 +101,20 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				name: language.DEVICE_DEFAULT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.LIGHT,
+				code: ColorThemeEnum.DEFAULT_LIGHT,
 				name: language.LIGHT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DARK,
+				code: ColorThemeEnum.DEFAULT_DARK,
 				name: language.DARK_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DALTONIAN,
-				name: language.DALTONIAN_THEME_NAME,
+				code: ColorThemeEnum.COTTON_CANDY,
+				name: language.COTTON_CANDY_THEME_NAME,
+			},
+			{
+				code: ColorThemeEnum.EGGPLANT,
+				name: language.EGGPLANT_THEME_NAME,
 			},
 		]
 	}

@@ -29,7 +29,11 @@ class NoteColumnServiceImpl extends AutoSynchronizableService<
 		return []
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.USER]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return [PermissionEnum.USER]
 	}
 

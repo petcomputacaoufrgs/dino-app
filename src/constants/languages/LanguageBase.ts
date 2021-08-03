@@ -226,7 +226,6 @@ export default interface LanguageBase {
 	LARGE_FONT_SIZE_NAME: string
 	LARGER_FONT_SIZE_NAME: string
 	CONTACT: string
-	CONTACT_NUMBER_ALREADY_EXISTS: string
 	DIALOG_AGREE_TEXT: string
 	DIALOG_DECLINE_BUTTON_TEXT: string
 	GRANT_FAIL_BY_EXTERNAL_ERROR: string

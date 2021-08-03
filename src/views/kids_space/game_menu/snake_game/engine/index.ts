@@ -9,7 +9,6 @@ import { updateFood, renderFood, score, resetFood } from './food'
 import { resetInput } from './input'
 
 //#region Constants
-
 //HTML Elements
 let gameBoard: HTMLElement | null
 let scoreBoard: HTMLElement | null
@@ -27,7 +26,6 @@ let onGameOver: () => void
 //#endregion
 
 //#region Functions
-
 /**
  * @description Initialize the game
  * @param handleGameOver Callback for game over event

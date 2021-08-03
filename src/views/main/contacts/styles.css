@@ -1,12 +1,20 @@
 .contacts {
 	height: 100%;
 }
+.contacts .contacts__list.MuiList-padding {
+	padding-top: 0;
+}
 
-.contacts
-	.contacts__list__item__content
-	.MuiListItem-gutters
-	.MuiListItem-divider {
+.contacts .contacts__list__item__content .MuiListItem-gutters .MuiListItem {
 	padding: 0.5rem;
+}
+
+.contacts__list__char_divider h4 {
+	padding: 0.6em 1.15em 0;
+}
+
+.contacts__list__char_divider .dino_hr {
+	margin: 0 16px 4px;
 }
 
 .contacts .contacts__list__item__content .MuiCardContent-root {

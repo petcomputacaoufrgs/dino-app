@@ -5,10 +5,6 @@
 	flex: 0 0 auto;
 }
 
-.note__note_content__columns__add_column.desktop {
-	width: 15%;
-}
-
 .note__note_content__columns__add_column__button {
 	border: 0.063rem solid;
 	border-color: var(--column-border);

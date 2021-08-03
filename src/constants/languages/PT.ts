@@ -5,7 +5,6 @@ import LanguageBase from './LanguageBase'
  * @description Conjunto de textos em português
  */
 export default class PT implements LanguageBase {
-
 	APP_NAME = 'DinoApp'
 
 	DINOAPP_TEAM = 'Equipe DinoApp'
@@ -30,13 +29,16 @@ export default class PT implements LanguageBase {
 
 	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Bem vindo(a)!'
 
-	FIRST_LOGIN_WELCOME_MESSAGE = 'Dino Message Lorem ipsum dolor sit amet consectetur adipisicin elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibu repudiandae ut labore!'
+	FIRST_LOGIN_WELCOME_MESSAGE =
+		'Dino Message Lorem ipsum dolor sit amet consectetur adipisicin elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibu repudiandae ut labore!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
 
-	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE = 'Obrigado por se juntar ao DinoApp!'
-	
-	FIRST_LOGIN_CONFIGURATIONS_MESSAGE = 'Suas configurações podem ser atualizadas a qualquer momento na seção de Configurações do aplicativo.'
+	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE =
+		'Obrigado por se juntar ao DinoApp!'
+
+	FIRST_LOGIN_CONFIGURATIONS_MESSAGE =
+		'Suas configurações podem ser atualizadas a qualquer momento na seção de Configurações do aplicativo.'
 
 	FIRST_LOGIN_CHOOSE_TREATMENT = 'Escolha seu Tratamento'
 
@@ -66,7 +68,7 @@ export default class PT implements LanguageBase {
 	LOGOUT_DIALOG_QUESTION = 'Tem certeza que deseja sair do DinoApp?'
 
 	LOGOUT_DIALOG_DESCRIPTION =
-		'Se disser \'SIM\' todos os dados referentes a sua conta serão removidos deste dispositivo.'
+		"Se disser 'SIM' todos os dados referentes a sua conta serão removidos deste dispositivo."
 
 	AGREEMENT_BUTTON_ARIA_LABEL = 'Clique para concordar'
 
@@ -78,9 +80,10 @@ export default class PT implements LanguageBase {
 
 	DELETE = 'Deletar'
 
-	DELETE_ITEM_OPTION_TEXT ='Esta ação irá deletar o item permanentemente.'
+	DELETE_ITEM_OPTION_TEXT = 'Esta ação irá deletar o item permanentemente.'
 
-	DELETE_CONTACT_OPTION_TEXT = 'Esta ação irá deletar seu contato permanentemente.'
+	DELETE_CONTACT_OPTION_TEXT =
+		'Esta ação irá deletar seu contato permanentemente.'
 
 	TERMS_OF_USE = 'Termos de Uso'
 
@@ -91,7 +94,7 @@ export default class PT implements LanguageBase {
 	GAMES = 'Jogos'
 
 	MENU_SETTINGS = 'Configurações'
-	
+
 	MENU_CONTACTS = 'Contatos'
 
 	MENU_LOGOUT = 'Sair'
@@ -173,9 +176,9 @@ export default class PT implements LanguageBase {
 	FORM_ADD_STAFF = 'Adicionar Membro de Equipe'
 
 	FORM_EMAIL = 'Adicionar E-mail'
-	
+
 	ADD_STAF_TAB = 'Adicionar'
-	
+
 	STAFF_LIST_TAB = 'Equipe'
 
 	STAFF_SAVE_SUCCESS = 'Membro de equipe adicionado(a)'
@@ -197,7 +200,7 @@ export default class PT implements LanguageBase {
 	NOT_FOUND_QUESTION_FAQ = 'Não encontrou sua pergunta?'
 
 	NEW_CONTACT = 'Novo Contato'
-	
+
 	NEW_TREATMENT = 'Novo Tratamento'
 
 	NEW_GLOSSARY_ITEM = 'Novo Item de Glossário'
@@ -424,11 +427,9 @@ export default class PT implements LanguageBase {
 	NOTE_COLUMN_DELETE_DIALOG_QUESTION =
 		'Tem certeza que deseja remover esta coluna?'
 
-	ARE_YOU_SURE =
-		'Tem certeza?'
+	ARE_YOU_SURE = 'Tem certeza?'
 
-	NOTE_COLUMN_DELETE_DIALOG_DESC =
-		`Caso responda 'SIM' esta coluna será removida permanentemente.`
+	NOTE_COLUMN_DELETE_DIALOG_DESC = `Caso responda 'SIM' esta coluna será removida permanentemente.`
 
 	NOTE_COLUMN_WITH_NOTES_DELETE_DIALOG_DESC =
 		'Ao remover esta coluna você irá remover as anotações pertencentes a ela permanentemente.'
@@ -606,7 +607,8 @@ export default class PT implements LanguageBase {
 
 	FORGOT_PASSWORD = 'Esqueceu sua senha?'
 
-	ACCESS_PARENTS_AREA = 'Essa área é para adultos. Você é um adulto ou está acompanhado de um?'
+	ACCESS_PARENTS_AREA =
+		'Essa área é para adultos. Você é um adulto ou está acompanhado de um?'
 
 	ACCESS = 'Acessar'
 
@@ -623,7 +625,7 @@ export default class PT implements LanguageBase {
 
 	DELETE_ACCOUNT_ERROR_MESSAGE =
 		'Ocorreu um erro ao excluir sua conta. Tente novamente mais tarde.'
-	
+
 	SUCESS_GAME_OVER_LABEL = 'Você arrasou! Parabéns'
 
 	CHANGE_PASSWORD_LABEL = 'Alterar senha de acesso a área dos responsáveis'
@@ -640,7 +642,8 @@ export default class PT implements LanguageBase {
 
 	INSERT_NEW_PASSWORD_AGAIN = 'Digite novamente a nova senha: '
 
-	SETTING_PASSWORD_EXPLANATION = 'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter entre 8 e 24 caracteres.'
+	SETTING_PASSWORD_EXPLANATION =
+		'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter entre 8 e 24 caracteres.'
 
 	INSERT_PASSWORD = 'Digite a senha: '
 
@@ -654,14 +657,14 @@ export default class PT implements LanguageBase {
 
 	WRONG_PASSWORD = 'Senha incorreta'
 
-	EXAMPLE_EMAIL='examplo@email.com'
+	EXAMPLE_EMAIL = 'examplo@email.com'
 
 	GLOSSARY = 'Glossário'
 
 	GLOSSARY_ITEM = 'Item de Glossário'
 
 	FAQ = 'FAQ'
-	
+
 	FAQ_ITEM = `Item da ${this.FAQ}`
 
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
@@ -678,7 +681,8 @@ export default class PT implements LanguageBase {
 
 	SAVE = 'Salvar'
 
-	UNIVERSAL_CONTACT_LABEL = 'Este contato é universal e aparecerá em todas as agendas de usuários'
+	UNIVERSAL_CONTACT_LABEL =
+		'Este contato é universal e aparecerá em todas as agendas de usuários'
 
 	ANSWER = 'Responder'
 
@@ -700,8 +704,9 @@ export default class PT implements LanguageBase {
 
 	HAS_USER_QUESTIONS_FILTER_LABEL = 'Apenas Com Perguntas de Usuários'
 
-	RENDER_OFFLINE_CONTENT_PART_1 = 'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
-	
+	RENDER_OFFLINE_CONTENT_PART_1 =
+		'Para que possamos fazer a sincronização com os contatos é necessário uma conexão com uma rede de internet.'
+
 	RENDER_OFFLINE_CONTENT_PART_2 = 'Tente novamente quando estiver conectado.'
 
 	NO_CONNECTION = 'Sem conexão'
@@ -714,16 +719,31 @@ export default class PT implements LanguageBase {
 
 	GO_OUTSIDE = 'Sair de casa'
 
+	CUSTOMIZE = 'Customizar'
+
 	RETURN_INSIDE = 'Retornar para casa'
 
 	GO_TO_GAME_MENU = 'Ir para o menu de jogos'
 
-	CHOOSE_COLOR_DINO_MESSAGE = "Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas?"
+	CHOOSE_COLOR_DINO_MESSAGE =
+		'Olá, eu sou o Dino! Vamos escolher a cor das minhas escamas?'
 
-	CHOOSE_ACESSORY_DINO_MESSAGE = "Hora de escolher um acessório legal!"
+	CHOOSE_ACESSORY_DINO_MESSAGE = 'Hora de escolher um acessório legal!'
 
 	CHOOSE = 'Escolha'
-	
+
+	ABOUT_US_PET = 'PET Computação'
+
+	ABOUT_US_PET_TEXT = `O PET (Programa de Educação Tutorial) Computação, criado em 1988, é um grupo composto por estudantes de graduação dos cursos de Ciência da Computação e Engenharia da Computação. Coordenado por um professor tutor. O projeto é formado por uma equipe diversa, voltada ao desenvolvimento individual de seus estudantes e também ao fortalecimento da comunidade acadêmica, tanto do Instituto de Informática quanto externa.\nO PET Computação se baseia na Tríade Acadêmica de Ensino, Pesquisa e Extensão, e tem como objetivo providenciar a oportunidade dos membros explorarem áreas de interesse além do currículo de seus cursos.\nOs projetos desenvolvidos pelo grupo abrangem o desenvolvimento de softwares e aplicações mobile; ministração de minicursos relacionados à computação; projetos de pesquisa e desenvolvimento de artigos acadêmicos; organização de eventos para a comunidade do Instituto, dentre outros. Também são realizados projetos em parceria com outros grupos PET da UFRGS (PETelos).`
+
+	ABOUT_US_HCPA = 'Hospital de Clínicas'
+
+	ABOUT_US_HCPA_TEXT = `Ser um referencial público em saúde, prestando assistência de excelência, gerando conhecimento, formando e agregando pessoas de alta qualificação. Essa é a missão do Hospital de Clínicas de Porto Alegre (HCPA), instituição pública integrante da rede de hospitais universitários do Ministério da Educação (MEC) e vinculada academicamente à Universidade Federal do Rio Grande do Sul (UFRGS).\nAtuando desde 1971, é um dos principais esteios da assistência pública à saúde da população do Rio Grande do Sul, oferecendo atendimento de excelência e alta complexidade em amplo rol de especialidades. As atividades de ensino de graduação e pós-graduação, lado a lado com a UFRGS, formam gerações de profissionais familiarizados e comprometidos com as melhores práticas e a humanização da assistência. A pesquisa produzida no HCPA, por sua vez, introduz novos conhecimentos, técnicas e tecnologias que beneficiam toda a sociedade, além de formar novas gerações de pesquisadores, alimentando um ciclo de renovação e evolução permanentes.\nA adoção de padrões internacionais de qualidade e segurança, o cuidado humanizado e o atendimento integral ao cidadão são compromissos firmados diariamente com os pacientes e a comunidade. `
+
+	ABOUT_US_UFRGS = 'UFRGS'
+
+	ABOUT_US_UFRGS_TEXT = `A Universidade Federal do Rio Grande do Sul, com sede em Porto Alegre , capital do Estado do Rio Grande do Sul, é uma instituição centenária, reconhecida nacional e internacionalmente. Ministra cursos em todas as áreas do conhecimento e em todos os níveis, desde o Ensino Fundamental até a Pós-Graduação.\nA qualificação do seu corpo docente, composto em sua maioria por mestres e doutores, a atualização permanente da infraestrutura dos laboratórios e bibliotecas, o incremento à assistência estudantil, bem como a priorização de sua inserção nacional e internacional são políticas em constante desenvolvimento.\nPor seus prédios circulam, diariamente, cerca de 40 mil pessoas em busca de um dos mais qualificados ensino do país. Este, aliado à pesquisa, com reconhecidos níveis de excelência, e a extensão, a qual proporciona diversificadas atividades à comunidade, faz com que a UFRGS alcance altos níveis de avaliação.\nA UFRGS, como instituição pública a serviço da sociedade e comprometida com o futuro e com a consciência crítica, respeita as diferenças, prioriza a experimentação e, principalmente, reafirma seu compromisso com a educação e a produção do conhecimento, inspirada nos ideais de liberdade e solidariedade.`
+
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`
@@ -732,7 +752,6 @@ export default class PT implements LanguageBase {
 
 	titleFAQTreatmentText = (treatment: string) => `${this.FAQ} de ${treatment}`
 
-	titleTreatmentQuestion = (treatment: string) => `Tem uma pergunta sobre ${treatment}?`
-
+	titleTreatmentQuestion = (treatment: string) =>
+		`Tem uma pergunta sobre ${treatment}?`
 }
-

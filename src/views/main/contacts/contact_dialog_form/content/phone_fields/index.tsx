@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { MenuItem } from '@material-ui/core'
 import DinoIconButton from '../../../../../../components/button/icon_button'
-import { ReactComponent as ClearIconSVG } from '../../../../../../assets/icons/close.svg'
+import CloseIcon from '@material-ui/icons/Close';
 import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
@@ -39,7 +39,7 @@ const PhoneFields = ({
 
 	const getNumberFormat = () => {
 		return type === Constants.CONTACT_PHONE_CODE_RESIDENTIAL
-			? '(23)4567-2345' 
+			? '(23)4567-2345'
 			: type === Constants.CONTACT_PHONE_CODE_PUBLIC_SERVICE
 			? '194'
 			: '(89)89898-9898'
@@ -67,32 +67,34 @@ const PhoneFields = ({
 					</MenuItem>
 				))}
 			</TextField>
-			<NumberFormat
-				customInput={TextField}
-				format={getNumberMask()}
-				InputProps={{
-					maxLength: Constants.CONTACT_PHONE_NUMBER.MAX,
-					endAdornment: (
-						<InputAdornment position='end'>
-							<DinoIconButton
-								ariaLabel={language.data.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
-								icon={ClearIconSVG}
-								className='clear_button'
-								onClick={() => handleDeletePhone(number)}
-							/>
-						</InputAdornment>
-					),
-				}}
-				fullWidth
-				placeholder={getNumberFormat()}
-				error={error}
-				value={number}
-				onChange={onChangeNumber}
-				margin='dense'
-				label={language.data.FORM_PHONE}
-				type='tel'
-				helperText={helperText}
-			/>
+			<div className='number_format'>
+				<NumberFormat
+					customInput={TextField}
+					format={getNumberMask()}
+					InputProps={{
+						maxLength: Constants.CONTACT_PHONE_NUMBER.MAX,
+						endAdornment: (
+							<InputAdornment position='end'>
+								<DinoIconButton
+									ariaLabel={language.data.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
+									icon={CloseIcon}
+									className='clear_button'
+									onClick={() => handleDeletePhone(number)}
+								/>
+							</InputAdornment>
+						),
+					}}
+					fullWidth
+					placeholder={getNumberFormat()}
+					error={error}
+					value={number}
+					onChange={onChangeNumber}
+					margin='dense'
+					label={language.data.FORM_PHONE}
+					type='tel'
+					helperText={helperText}
+				/>
+			</div>
 		</>
 	)
 }

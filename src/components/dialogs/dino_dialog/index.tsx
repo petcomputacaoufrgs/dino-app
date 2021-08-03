@@ -7,35 +7,46 @@ import TransitionSlide from '../../slide_transition'
 import DinoDialogProps from './props'
 import '../styles.css'
 
-const DinoDialog: React.FC<DinoDialogProps> = ({ open, onClose: handleClose, onSave: handleSave, header, actions, children }) => {
-
+const DinoDialog: React.FC<DinoDialogProps> = ({
+	open,
+	className,
+	onClose,
+	onSave,
+	header,
+	actions,
+	children,
+}) => {
 	const language = useLanguage()
+
+	const getClassName = () => {
+		const native = 'dino_dialog dino__text__wrap'
+		if (className) {
+			return `${className} ${native}`
+		}
+		return native
+	}
 
 	return (
 		<div>
 			<Dialog
-				className='dino_dialog dino__text__wrap'
+				className={getClassName()}
 				open={open}
-				onClose={handleClose}
+				onClose={onClose}
 				TransitionComponent={TransitionSlide}
 				fullWidth
 				disableBackdropClick
 				disableEscapeKeyDown
 			>
-				{ header }
-				<DialogContent dividers>
-					{children}
-				</DialogContent>
-				{ actions ?  <div className='dino_dialog__actions'>{actions}</div> : 
+				{header}
+				<DialogContent dividers>{children}</DialogContent>
+				{actions ? (
+					<div className='dino_dialog__actions'>{actions}</div>
+				) : (
 					<DialogActions>
-						<TextButton onClick={handleClose}>
-							{language.data.CANCEL}
-						</TextButton>
-						<TextButton onClick={handleSave}>
-							{language.data.SAVE}
-						</TextButton>
+						<TextButton onClick={onClose}>{language.data.CANCEL}</TextButton>
+						<TextButton onClick={onSave}>{language.data.SAVE}</TextButton>
 					</DialogActions>
-				}
+				)}
 			</Dialog>
 		</div>
 	)

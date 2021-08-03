@@ -1,4 +1,5 @@
 export default interface DinoDialogProps {
+	className?: string
 	open: boolean
 	onClose: () => void
 	onSave: () => void

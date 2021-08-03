@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import PathConstants from '../../../../constants/app/PathConstants'
 import HistoryService from '../../../../services/history/HistoryService'
 import { startGame } from './engine/index'
-import { ReactComponent as DinoSVG } from '../../../../assets/new/dino_expressions/felizp.svg'
+import { ReactComponent as DinoSVG } from '../../../../assets/kids_space/dinos/felizp.svg'
 import { useLanguage } from '../../../../context/language'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
 
-const BellSound = require('../../../../assets/kids_space/musical_dino/bell.mp3')
-const DrumOneSound = require('../../../../assets/kids_space/musical_dino/drum_1.mp3')
-const DrumTwoSound = require('../../../../assets/kids_space/musical_dino/drum_2.mp3')
-const GuitarSound = require('../../../../assets/kids_space/musical_dino/guitar.mp3')
+const FluteSound = require('../../../../assets/kids_space/games/musical_dino/flute.mp3')
+const MarimbaSound = require('../../../../assets/kids_space/games/musical_dino/marimba.mp3')
+const PianoSound = require('../../../../assets/kids_space/games/musical_dino/piano.mp3')
+const StringSound = require('../../../../assets/kids_space/games/musical_dino/string.mp3')
 
 const MusicalDino: React.FC = () => {
 	const language = useLanguage()
@@ -34,16 +34,16 @@ const MusicalDino: React.FC = () => {
 	return (
 		<div className='musical_dino'>
 			<audio id='musical_dino__clip1'>
-				<source src={BellSound.default}></source>
+				<source src={FluteSound.default}></source>
 			</audio>
 			<audio id='musical_dino__clip2'>
-				<source src={DrumOneSound.default}></source>
+				<source src={MarimbaSound.default}></source>
 			</audio>
 			<audio id='musical_dino__clip3'>
-				<source src={DrumTwoSound.default}></source>
+				<source src={PianoSound.default}></source>
 			</audio>
 			<audio id='musical_dino__clip4'>
-				<source src={GuitarSound.default}></source>
+				<source src={StringSound.default}></source>
 			</audio>
 			<GameOverDialog
 				onAgree={handleRestart}

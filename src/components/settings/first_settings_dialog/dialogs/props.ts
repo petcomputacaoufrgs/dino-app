@@ -4,7 +4,7 @@ import TreatmentEntity from "../../../../types/treatment/database/TreatmentEntit
 
 export interface FirstSettingsDialogsProps {
   id: string,
-	title?: string,
+	title: string,
 	component: () => JSX.Element
 }
 

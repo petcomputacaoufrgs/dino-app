@@ -35,7 +35,11 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return [GoogleScopeService, TreatmentService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return []
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
@@ -50,7 +54,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
 			step: model.step,
-			parentsAreaPassword: model.parentsAreaPassword
+			parentsAreaPassword: model.parentsAreaPassword,
 		}
 
 		if (model.treatmentId) {
@@ -64,7 +68,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return entity
 	}
 
-
 	async convertEntityToModel(
 		entity: UserSettingsEntity,
 	): Promise<UserSettingsDataModel | undefined> {
@@ -76,7 +79,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
 			step: entity.step,
-			parentsAreaPassword: entity.parentsAreaPassword
+			parentsAreaPassword: entity.parentsAreaPassword,
 		}
 
 		if (entity.treatmentLocalId) {

@@ -88,7 +88,7 @@ export default interface LanguageBase {
 	STAFF_LIST_TAB: string
 	STAFF_SAVE_SUCCESS: string
 	TREATMENT: string
-	ADD_TREATMENT: string 
+	ADD_TREATMENT: string
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	STAFF: string
@@ -337,11 +337,18 @@ export default interface LanguageBase {
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL: string
 	GO_TO_SLEEP: string
 	GO_OUTSIDE: string
+	CUSTOMIZE: string
 	RETURN_INSIDE: string
 	GO_TO_GAME_MENU: string
 	CHOOSE_COLOR_DINO_MESSAGE: string
 	CHOOSE_ACESSORY_DINO_MESSAGE: string
 	CHOOSE: string
+	ABOUT_US_PET: string
+	ABOUT_US_PET_TEXT: string
+	ABOUT_US_HCPA: string
+	ABOUT_US_HCPA_TEXT: string
+	ABOUT_US_UFRGS: string
+	ABOUT_US_UFRGS_TEXT: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

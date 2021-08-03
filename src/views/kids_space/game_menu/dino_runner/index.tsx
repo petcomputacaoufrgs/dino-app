@@ -61,13 +61,6 @@ const DinoRunner: React.FC = () => {
 
 	return (
 		<div ref={dinoRunnerGameContainer} className='minigame dino_runner_game'>
-			<GameOverDialog
-				onAgree={handleRestart}
-				onDisagree={handleClose}
-				open={openDialog}
-			>
-				<p>{language.data.DINO_RUNNER_GAME_OVER_MSG_1}</p>
-			</GameOverDialog>
 			<ArrowBack kids />
 			<div ref={dinoRunnerGameGrid} className='dino_runner_game__grid'>
 				<div

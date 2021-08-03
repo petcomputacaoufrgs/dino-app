@@ -18,6 +18,7 @@ import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import NoItemsList from '../../../../components/list_components/no_items_list'
 import ArrayUtils from '../../../../utils/ArrayUtils'
 import { isEssential } from '../../../../services/contact/ContactViewService'
+import DinoHr from '../../../../components/dino_hr'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)

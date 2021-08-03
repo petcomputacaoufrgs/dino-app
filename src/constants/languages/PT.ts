@@ -732,7 +732,7 @@ export default class PT implements LanguageBase {
 
 	CHOOSE = 'Escolha'
 
-	REPORT_BUG = `Reportar um problema`
+	REPORT_BUG = 'Reportar um problema'
 
 	ABOUT_US_PET = 'PET Computação'
 

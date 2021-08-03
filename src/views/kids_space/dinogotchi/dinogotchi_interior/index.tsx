@@ -151,8 +151,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					className='selection_button'
 					onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_HAT)}
 				>
-					{' '}
-					Escolher{' '}
+					Escolher
 				</Button>
 			</div>
 		)
@@ -181,8 +180,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					className={`dinogotchi_screen__dino_pet first_login has_${selectedHat}`}
 				/>
 				<Button className='selection_button' onClick={handleCustomization}>
-					{' '}
-					{language.data.CHOOSE}{' '}
+					{language.data.CHOOSE}
 				</Button>
 			</div>
 		)

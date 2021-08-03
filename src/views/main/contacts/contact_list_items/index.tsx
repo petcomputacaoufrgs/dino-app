@@ -71,7 +71,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
 	let prevChar: string
 
-	const isNextChar = (contact: ContactType) => {
+	const renderCharDivider = (contact: ContactType) => {
 		const newChar = contact.name[0].toUpperCase()
 		if (prevChar !== newChar) {
 			prevChar = newChar
@@ -90,7 +90,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 				<List className='contacts__list dino__list dino__list__padding'>
 					{items.map((item, index) => (
 						<div key={index}>
-							{isNextChar(item.contact)}
+							{renderCharDivider(item.contact)}
 							<ContactItemList
 								item={item}
 								onClick={handleViewOption}
@@ -115,7 +115,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						dialogOpen={toAction === CRUDEnum.UPDATE}
 						onClose={() => setToAction(CRUDEnum.NOP)}
 						item={selectedItem}
-						items={items}
 					/>
 					<AgreementDialog
 						open={toAction === CRUDEnum.DELETE}

@@ -732,6 +732,8 @@ export default class PT implements LanguageBase {
 
 	CHOOSE = 'Escolha'
 
+	REPORT_BUG = 'Reportar um problema'
+
 	ABOUT_US_PET = 'PET Computação'
 
 	ABOUT_US_PET_TEXT = `\tO PET (Programa de Educação Tutorial) Computação, criado em 1988, é um grupo composto por estudantes de graduação dos cursos de Ciência da Computação e Engenharia da Computação. Coordenado por um professor tutor. O projeto é formado por uma equipe diversa, voltada ao desenvolvimento individual de seus estudantes e também ao fortalecimento da comunidade acadêmica, tanto do Instituto de Informática quanto externa.\n\tO PET Computação se baseia na Tríade Acadêmica de Ensino, Pesquisa e Extensão, e tem como objetivo providenciar a oportunidade dos membros explorarem áreas de interesse além do currículo de seus cursos.\n\tOs projetos desenvolvidos pelo grupo abrangem o desenvolvimento de softwares e aplicações mobile; ministração de minicursos relacionados à computação; projetos de pesquisa e desenvolvimento de artigos acadêmicos; organização de eventos para a comunidade do Instituto, dentre outros. Também são realizados projetos em parceria com outros grupos PET da UFRGS (PETelos).`

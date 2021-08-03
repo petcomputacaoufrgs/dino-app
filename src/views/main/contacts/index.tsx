@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {
-	cameFromEssential,
+	isEssential,
+	contactViewSort,
 	filterContactViews,
-	getContactViews,
+	getContactViewsForContacts,
+	getContactViewsForEssentialContacts,
 	isUniversalEssential,
 } from '../../../services/contact/ContactViewService'
 import ContactItems from './contact_list_items'
@@ -30,10 +32,11 @@ import ListTitle from '../../../components/list_components/list_title'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FilterService from '../../../storage/local_storage/filter/FilterService'
+import ContactEntity from '../../../types/contact/database/ContactEntity'
 
 export const renderIcon = (contact: ContactType) => {
-	if (cameFromEssential(contact)) return <Star />
 	if (isUniversalEssential(contact)) return <Public />
+	if (isEssential(contact)) return <Star />
 	if (contact.name) return contact.name[0].toUpperCase()
 
 	return '?'
@@ -49,7 +52,6 @@ const Contacts: React.FC = () => {
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [searchTerm, setSearchTerm] = useState('')
-	const [shouldDecline, setShouldDecline] = useState(false)
 	const [filters, setFilters] = useState(
 		FilterService.getContactFilters(hasStaffPowers, language),
 	)
@@ -65,25 +67,31 @@ const Contacts: React.FC = () => {
 	}
 
 	useEffect(() => {
-		const loadUserData = async () => {
+		const loadUserData = async (): Promise<ContactEntity[]> => {
 			const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
 			updateSyncGoogleContacts(syncGoogleContacts)
-
-			return await ContactService.getAll()
+			return ContactService.getAll()
 		}
-
-		const loadContacts = async () =>
-			hasStaffPowers ? EssentialContactService.getAll() : loadUserData()
-
-		const loadPhones = async () =>
-			hasStaffPowers ? EssentialPhoneService.getAll() : PhoneService.getAll()
 
 		const loadData = async () => {
 			const settings = await UserSettingsService.getFirst()
-			const phones = await loadPhones()
-			const contacts = await loadContacts()
+			let contactViews: ContactView[] = []
 
-			const contactViews = getContactViews(contacts, phones, hasStaffPowers)
+			if (hasStaffPowers) {
+				const contacts = await EssentialContactService.getAll()
+				contactViews = await getContactViewsForEssentialContacts(contacts)
+			} else {
+				const contacts = await loadUserData()
+				contactViews = await getContactViewsForContacts(contacts)
+
+				if (settings?.includeEssentialContact) {
+					const userECs =
+						await EssentialContactService.getUserEssentialContacts(settings)
+
+					const ECviews = await getContactViewsForEssentialContacts(userECs)
+					contactViews.push(...ECviews)
+				}
+			}
 
 			updateContacts(contactViews)
 			updateSettings(settings)
@@ -98,7 +106,7 @@ const Contacts: React.FC = () => {
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
 		let updateContacts = (contactViews: ContactView[]) => {
-			setContacts(contactViews)
+			setContacts(contactViewSort(contactViews))
 		}
 
 		let updateSettings = (settings: UserSettingsEntity | undefined) => {
@@ -135,22 +143,7 @@ const Contacts: React.FC = () => {
 		setSearchTerm(event.target.value)
 	}
 
-	const handleAcceptGoogleGrant = async () => {
-		setOpenGrantDialog(false)
-		handleCreate()
-		if (settings) {
-			settings.declineGoogleContacts = false
-			await UserSettingsService.save(settings)
-		}
-	}
-
 	const handleCloseGoogleGrant = () => {
-		setOpenGrantDialog(false)
-		handleCreate()
-	}
-
-	const handleDeclineGoogleGrant = () => {
-		setShouldDecline(true)
 		setOpenGrantDialog(false)
 		handleCreate()
 	}
@@ -165,13 +158,7 @@ const Contacts: React.FC = () => {
 		handleCreate()
 	}
 
-	const handleClose = () => {
-		setToAction(CRUDEnum.NOP)
-		if (shouldDecline && settings) {
-			settings.declineGoogleContacts = true
-			UserSettingsService.save(settings)
-		}
-	}
+	const handleClose = () => setToAction(CRUDEnum.NOP)
 
 	const handleCreate = () => setToAction(CRUDEnum.CREATE)
 
@@ -197,13 +184,10 @@ const Contacts: React.FC = () => {
 				onClose={handleClose}
 			/>
 			<GoogleGrantDialog
-				onAccept={handleAcceptGoogleGrant}
-				onDecline={handleDeclineGoogleGrant}
+				settings={settings}
 				onClose={handleCloseGoogleGrant}
 				open={openGrantDialog}
 				scopes={[GoogleScope.CONTACT_SCOPE]}
-				text={language.data.GOOGLE_CONTACT_GRANT_TEXT}
-				title={language.data.GOOGLE_CONTACT_GRANT_TITLE}
 			/>
 		</div>
 	)

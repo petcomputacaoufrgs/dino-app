@@ -342,6 +342,7 @@ export default interface LanguageBase {
 	CHOOSE_COLOR_DINO_MESSAGE: string
 	CHOOSE_ACESSORY_DINO_MESSAGE: string
 	CHOOSE: string
+	REPORT_BUG: string
 	ABOUT_US_PET: string
 	ABOUT_US_PET_TEXT: string
 	ABOUT_US_HCPA: string

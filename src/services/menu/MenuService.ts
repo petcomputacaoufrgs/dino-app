@@ -98,6 +98,11 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.TREATMENT),
 		},
 		{
+			image: ModerationSVG,
+			name: language.MENU_STAFF_MODERATION,
+			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
+		},
+		{
 			name: language.ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},
@@ -111,60 +116,43 @@ class MenuService {
 		},
 	]
 
-	getAdminMainPages = (language: LanguageBase): MenuItemViewModel[] => {
-		const adminMPs = this.getStaffMainPages(language)
-
-		adminMPs.push({
-			image: ModerationSVG,
-			name: language.MENU_STAFF_MODERATION,
-			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
-		})
-
-		return adminMPs
-	}
-
 	getGroupedMenuItems = (
 		language: LanguageBase,
 		handleLogoutClick: () => void,
 	): MenuItemViewModel[][] => [
-			this.getMainPages(language),
-			[
-				{
-					image: LogoutSVG,
-					name: language.MENU_LOGOUT,
-					onClick: handleLogoutClick,
-				},
-			],
-		]
+		this.getMainPages(language),
+		[
+			{
+				image: LogoutSVG,
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
+			},
+			{
+				image: LogoutSVG,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
+			},
+		],
+	]
 
 	getStaffGroupedMenuItems = (
 		language: LanguageBase,
 		handleLogoutClick: () => void,
 	): MenuItemViewModel[][] => [
-			this.getStaffMainPages(language),
-			[
-				{
-					image: LogoutSVG,
-					name: language.MENU_LOGOUT,
-					onClick: handleLogoutClick,
-				},
-			],
-		]
-
-	getAdminGroupedMenuItems = (
-		language: LanguageBase,
-		handleLogoutClick: () => void,
-	): MenuItemViewModel[][] => [
-			this.getAdminMainPages(language),
-			[
-				{
-					image: LogoutSVG,
-					name: language.MENU_LOGOUT,
-					onClick: handleLogoutClick,
-				},
-			],
-		]
-
+		this.getStaffMainPages(language),
+		[
+			{
+				image: LogoutSVG,
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
+			},
+			{
+				image: LogoutSVG,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.STAFF_REPORT_BUG),
+			},
+		],
+	]
 }
 
 export default new MenuService()

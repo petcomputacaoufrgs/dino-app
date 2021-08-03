@@ -724,6 +724,8 @@ export default class EN implements LanguageBase {
 
 	CHOOSE = 'Choose'
 
+	REPORT_BUG = `Report a bug`
+
 	ABOUT_US_PET = 'PET Computação'
 
 	ABOUT_US_PET_TEXT = `\tPET (Tutorial Education Program) Computação, created in 1988, is a group composed of undergraduate students of Computer Science and Computer Engineering. It is formed by a diverse team coordinated by a professor, and it’s targeted towards the students’ individual development as well as the strengthening of the academic community, composed of both the Informatics Institute itself and the external community.\n\tThe program is based on the academic triad: Teaching, Research and Extension, and its goal is to provide for the members the opportunity of exploring areas of interest beyond the courses’ curricula.\n\tProjects developed by the group include the development of software and mobile applications; teaching of mini courses related to computing; research and writing of academic articles; organization of events for the Institute community; among others. Moreover, there are also projects done in partnership with other PET groups from UFRGS (Federal University of Rio Grande do Sul) – PETelos (PET links).`

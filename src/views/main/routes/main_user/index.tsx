@@ -12,6 +12,7 @@ import NotFound from '../../../not_found/index'
 import FaqHub from '../../faq_hub'
 import Calendar from '../../calendar'
 import Main from '../..'
+import ReportBug from '../../../report_bug'
 
 const UserMain: React.FC = () => {
 
@@ -45,6 +46,7 @@ const UserMain: React.FC = () => {
 						component={FaqHub} 
 						/>
 					<PrivateRoute path={PathConstants.USER_CALENDAR} component={Calendar} />
+					<PrivateRoute path={PathConstants.USER_REPORT_BUG} component={ReportBug}  />
 					<PrivateRoute path={'/'} component={NotFound} />
 				</Switch>
 			</Main>

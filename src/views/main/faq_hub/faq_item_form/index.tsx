@@ -61,8 +61,6 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({
 		}
 
 		if (isValid()) {
-			item.localTreatmentId =
-				item.isUniversal === DataConstants.TRUE ? undefined : treatment.localId
 			FaqItemService.save(item)
 
 			if (treatmentQuestion)
@@ -71,6 +69,16 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({
 
 			onClose()
 		}
+	}
+
+	const handleChangeUniversal = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		checked: boolean,
+	) => {
+		item.localTreatmentId = checked ? undefined : treatment.localId
+		item.isUniversal = Number(checked) as 0 | 1
+		console.log('changed', item)
+		setItem({ ...item })
 	}
 
 	return (
@@ -105,12 +113,7 @@ const FaqItemForm: React.FC<FaqItemFormProps> = ({
 					control={
 						<Checkbox
 							checked={Boolean(item.isUniversal)}
-							onChange={e =>
-								setItem({
-									...item,
-									isUniversal: Number(e.target.checked) as 0 | 1,
-								})
-							}
+							onChange={handleChangeUniversal}
 						/>
 					}
 				/>

@@ -9,17 +9,15 @@ import ContactView, {
 	ContactType,
 } from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
-import PhoneService from '../../../../services/contact/PhoneService'
 import ContactService from '../../../../services/contact/ContactService'
 import { HasStaffPowers } from '../../../../context/private_router'
 import EssentialContactService from '../../../../services/contact/EssentialContactService'
 import EssentialContactEntity from '../../../../types/contact/database/EssentialContactEntity'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
-import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import NoItemsList from '../../../../components/list_components/no_items_list'
 import ArrayUtils from '../../../../utils/ArrayUtils'
-import { cameFromEssential } from '../../../../services/contact/ContactViewService'
+import { isEssential } from '../../../../services/contact/ContactViewService'
 import DinoHr from '../../../../components/dino_hr'
 
 const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
@@ -33,16 +31,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 	const isStaff = HasStaffPowers()
 
 	const handleAcceptDialogAndDeleteItem = async () => {
-		async function deletePhones(contactToDelete: ContactView): Promise<void> {
-			if (contactToDelete.phones.length > 0) {
-				isStaff
-					? await EssentialPhoneService.deleteAll(contactToDelete.phones)
-					: await PhoneService.deleteAll(contactToDelete.phones)
-			}
-		}
-
 		if (toAction === CRUDEnum.DELETE && selectedItem) {
-			await deletePhones(selectedItem)
 			isStaff
 				? await EssentialContactService.delete(
 						selectedItem.contact as EssentialContactEntity,
@@ -63,10 +52,10 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
 	const handleClickMenu = (
 		event: React.MouseEvent<HTMLButtonElement>,
-		item: ContactView,
+		item?: ContactView,
 	) => {
 		setAnchorEl(event.currentTarget)
-		setSelectedItem(item)
+		if (item) setSelectedItem(item)
 	}
 
 	let prevChar: string
@@ -108,8 +97,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						dialogOpen={toAction === CRUDEnum.READ}
 						onClose={() => setToAction(CRUDEnum.NOP)}
 						item={selectedItem}
-						onEdit={handleEditOption}
-						onDelete={handleDeleteOption}
+						onClickMenu={handleClickMenu}
 					/>
 					<ContactFormDialog
 						dialogOpen={toAction === CRUDEnum.UPDATE}
@@ -128,7 +116,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						setAnchor={setAnchorEl}
 						onEdit={handleEditOption}
 						onDelete={handleDeleteOption}
-						editUnavailable={cameFromEssential(selectedItem.contact)}
+						disable={!isStaff && isEssential(selectedItem.contact)}
 					/>
 				</>
 			)}

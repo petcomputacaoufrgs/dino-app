@@ -9,25 +9,36 @@ import { hasValue } from '../../utils/Utils'
 import EssentialPhoneService from './EssentialPhoneService'
 import PhoneService from './PhoneService'
 
-export const getContactViews = (
-	contacts: ContactType[],
-	phones: PhoneType[],
-	isStaff: boolean,
-): ContactView[] => {
-	return contacts
-		.map(
-			contact =>
-				({
-					contact: contact,
-					phones: isStaff
-						? EssentialPhoneService.filterByEssentialContact(
-								contact as EssentialContactEntity,
-								phones,
-						  )
-						: PhoneService.filterByContact(contact, phones),
-				} as ContactView),
-		)
-		.sort((a, b) => contactViewSort(a, b, isStaff))
+export const getContactViewsForContacts = async (
+	contacts: ContactEntity[],
+): Promise<ContactView[]> => {
+	const getPhones = (contact: ContactEntity) =>
+		PhoneService.getAllByContactLocalId(contact.localId!)
+
+	const makeView = async (contact: ContactEntity) => {
+		return {
+			contact: contact,
+			phones: await getPhones(contact),
+		} as ContactView
+	}
+
+	return await Promise.all(contacts.map(makeView))
+}
+
+export const getContactViewsForEssentialContacts = async (
+	contacts: EssentialContactEntity[],
+): Promise<ContactView[]> => {
+	const getEssentialPhones = (contact: EssentialContactEntity) =>
+		EssentialPhoneService.getAllByEssentialContactLocalId(contact.localId!)
+
+	const makeView = async (contact: EssentialContactEntity) => {
+		return {
+			contact: contact,
+			phones: await getEssentialPhones(contact),
+		} as ContactView
+	}
+
+	return await Promise.all(contacts.map(makeView))
 }
 
 export const filterContactViews = (
@@ -39,42 +50,18 @@ export const filterContactViews = (
 	)
 }
 
-export const contactViewSort = (
-	a: ContactView,
-	b: ContactView,
-	isStaff: boolean,
-) => {
-	const bComesFirst = 1
-	const aComesFirst = -1
-
-	const sortByName = () => {
-		return a.contact.name > b.contact.name ? bComesFirst : aComesFirst
-	}
-
-	if (!isStaff) {
-		const aIsEssential = hasValue(
-			(a.contact as ContactEntity).localEssentialContactId,
-		)
-		const bIsEssential = hasValue(
-			(b.contact as ContactEntity).localEssentialContactId,
-		)
-
-		if (aIsEssential) {
-			if (bIsEssential) {
-				return sortByName()
-			} else {
-				return aComesFirst
-			}
-		} else if (bIsEssential) {
-			return bComesFirst
-		}
-	}
-
-	return sortByName()
+export const contactViewSort = (contactViews: ContactView[]) => {
+	return contactViews.sort((a, b) =>
+		StringUtils.normalize(a.contact.name) >
+		StringUtils.normalize(b.contact.name)
+			? 1
+			: -1,
+	)
 }
 
-export const cameFromEssential = (contact: ContactType) =>
-	hasValue((contact as ContactEntity).localEssentialContactId)
+export const isEssential = (contact: ContactType): boolean =>
+	hasValue((contact as EssentialContactEntity).isUniversal)
 
 export const isUniversalEssential = (contact: ContactType) =>
+	isEssential(contact) &&
 	Boolean((contact as EssentialContactEntity).isUniversal)

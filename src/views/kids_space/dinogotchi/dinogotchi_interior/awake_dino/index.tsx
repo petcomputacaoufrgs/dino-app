@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PathConstants from '../../../../../constants/app/PathConstants'
 import HistoryService from '../../../../../services/history/HistoryService'
 import { ReactComponent as Dino } from '../../../../../assets/kids_space/dinos/dino_empé_neutro.svg'

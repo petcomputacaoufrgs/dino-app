@@ -16,6 +16,7 @@
 }
 
 .dino_runner_game__grid__character {
+	margin-left: -3rem;
 	width: 32.67vmin;
     height: 50vmin;
 	max-width: 240px;

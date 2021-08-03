@@ -9,21 +9,6 @@ import { hasValue } from '../../utils/Utils'
 import EssentialPhoneService from './EssentialPhoneService'
 import PhoneService from './PhoneService'
 
-export const getContactWithSamePhone = (
-	items: ContactView[],
-	newPhones: PhoneType[],
-	currentContact?: ContactView,
-): ContactView | undefined => {
-	return items.find(
-		item =>
-			(!currentContact ||
-				item.contact.localId !== currentContact.contact.localId) &&
-			item.phones.some(phone =>
-				newPhones.some(newPhone => newPhone.number.includes(phone.number)),
-			),
-	)
-}
-
 export const getContactViewsForContacts = async (
 	contacts: ContactEntity[],
 ): Promise<ContactView[]> => {

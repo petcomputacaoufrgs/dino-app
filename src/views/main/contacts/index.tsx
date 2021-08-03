@@ -180,7 +180,6 @@ const Contacts: React.FC = () => {
 				label={language.data.NEW_CONTACT}
 			/>
 			<ContactFormDialog
-				items={contacts}
 				dialogOpen={toAction === CRUDEnum.CREATE}
 				onClose={handleClose}
 			/>

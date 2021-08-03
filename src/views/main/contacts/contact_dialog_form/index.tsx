@@ -21,7 +21,6 @@ import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import EssentialPhoneEntity from '../../../../types/contact/database/EssentialPhoneEntity'
 import EssentialPhoneService from '../../../../services/contact/EssentialPhoneService'
 import './styles.css'
-import { getContactWithSamePhone } from '../../../../services/contact/ContactViewService'
 import ArrayUtils from '../../../../utils/ArrayUtils'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 
@@ -40,7 +39,6 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({
 	dialogOpen,
 	onClose,
 	item,
-	items,
 }) => {
 	const language = useLanguage()
 	const hasStaffPowers = HasStaffPowers()
@@ -81,31 +79,7 @@ const ContactFormDialog: React.FC<ContactFormDialogProps> = ({
 				}
 			}
 
-			const hasViewWithSamePhone = getContactWithSamePhone(
-				items,
-				contactPhones,
-				item,
-			)
-
-			if (hasViewWithSamePhone) {
-				handleTakenNumber(hasViewWithSamePhone)
-
-				return false
-			}
-
 			return true
-		}
-
-		function handleTakenNumber(viewWithSamePhone: ContactView) {
-			const phone = contactPhones.find(phone =>
-				viewWithSamePhone.phones
-					.map(phone => phone.number)
-					.includes(phone.number),
-			)
-			if (phone)
-				setErrorPhone(
-					`${language.data.CONTACT_NUMBER_ALREADY_EXISTS} ${viewWithSamePhone.contact.name}`,
-				)
 		}
 
 		if (validInfo()) {

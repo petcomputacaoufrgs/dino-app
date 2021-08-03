@@ -5,7 +5,9 @@ import ContactItemList from './contact_list_item'
 import { List } from '@material-ui/core'
 import ContactFormDialog from '../contact_dialog_form'
 import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
-import ContactView from '../../../../types/contact/view/ContactView'
+import ContactView, {
+	ContactType,
+} from '../../../../types/contact/view/ContactView'
 import { useLanguage } from '../../../../context/language'
 import ContactService from '../../../../services/contact/ContactService'
 import { HasStaffPowers } from '../../../../context/private_router'
@@ -55,17 +57,34 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 		if (item) setSelectedItem(item)
 	}
 
+	let prevChar: string
+
+	const renderCharDivider = (contact: ContactType) => {
+		const newChar = contact.name[0].toUpperCase()
+		if (prevChar !== newChar) {
+			prevChar = newChar
+			return (
+				<div className='contacts__list__char_divider'>
+					<h4>{newChar}</h4>
+					<DinoHr />
+				</div>
+			)
+		}
+	}
+
 	return (
 		<>
 			{ArrayUtils.isNotEmpty(items) ? (
 				<List className='contacts__list dino__list dino__list__padding'>
 					{items.map((item, index) => (
-						<ContactItemList
-							key={index}
-							item={item}
-							onClick={handleViewOption}
-							onClickMenu={handleClickMenu}
-						/>
+						<div key={index}>
+							{renderCharDivider(item.contact)}
+							<ContactItemList
+								item={item}
+								onClick={handleViewOption}
+								onClickMenu={handleClickMenu}
+							/>
+						</div>
 					))}
 				</List>
 			) : (
@@ -83,7 +102,6 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 						dialogOpen={toAction === CRUDEnum.UPDATE}
 						onClose={() => setToAction(CRUDEnum.NOP)}
 						item={selectedItem}
-						items={items}
 					/>
 					<AgreementDialog
 						open={toAction === CRUDEnum.DELETE}

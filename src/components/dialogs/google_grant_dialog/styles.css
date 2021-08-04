@@ -12,6 +12,6 @@
 }
 
 .google_grant_dialog__buttons__accept_button.MuiButtonBase-root {
-	background-color: var(--header-and-menu);
+	background-color: var(--buttons-background);
 	margin-left: 0.5rem;
 }

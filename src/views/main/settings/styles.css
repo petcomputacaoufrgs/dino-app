@@ -39,12 +39,12 @@
 	width: 1.125rem;
 	height: 1.125rem;
 	margin-right: 0.6rem;
-	fill: var(--contrast-color);
+	fill: var(--buttons-font-color);
 }
 
 .settings__save_button.MuiButtonBase-root {
 	margin-top: 3.125rem;
-	background-color: var(--header-and-menu);
+	background-color: var(--buttons-background);
 }
 
 .settings__save_button.MuiButtonBase-root .MuiButton-label {
@@ -104,7 +104,7 @@
 	width: 100%;
 	padding: 0.2rem;
 	border-radius: 1rem;
-	background-color: var(--dialog-input);
+	background-color: var(--dialog-background);
 	color: var(--base-font-color);
 	border: none;
 }

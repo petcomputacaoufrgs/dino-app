@@ -22,7 +22,7 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-	fill: var(--contrast-color);
+	fill: var(--buttons-background);
 }
 
 body .MuiInput-underline:before {
@@ -85,11 +85,11 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 .MuiTabs-root .MuiTabs-indicator {
-	background-color: var(--tab-highlight-color);
+	background-color: var(--selection-tab-background);
 }
 
 .MuiTabs-root .MuiTab-textColorPrimary.Mui-selected {
-	color: var(--tab-highlight-color);
+	color: var(--selected-tab-header-font-color);
 }
 
 .MuiBadge-root .MuiBadge-colorSecondary {
@@ -98,17 +98,16 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 
 .app .MuiFormLabel-root.Mui-focused,
 .dino_dialog .MuiFormLabel-root.Mui-focused {
-	color: var(--highlight-color);
+	color: var(--focused-input-font-color);
 }
 .app .MuiInput-underline:after,
 .dino_dialog .MuiInput-underline:after {
-	border-bottom: 2px solid var(--highlight-color);
+	border-bottom: 2px solid var(--focused-input-font-color);
 }
 
 .colorDefault .MuiSvgIcon-root,
 .MuiCardHeader-root.contact_dialog_form_header .MuiSvgIcon-root {
-	/* fill: var(--contrast-color); */
-	fill: #fafafa;
+	fill: var(--buttons-font-color);
 }
 
 .treatment__list_item .MuiBadge-anchorOriginTopRightCircle {

@@ -1,5 +1,5 @@
 .dino_dialog__header {
-	background-color: var(--header-and-menu);
+	background-color: var(--menu-and-headers-background);
 	display: flex;
 	flex-direction: row;
 	padding: 1rem;

@@ -1,5 +1,5 @@
 button.link_button {
-	color: var(--button-font-color);
+	color: var(--buttons-font-color);
 	border: none;
 	background: none;
 	cursor: pointer;

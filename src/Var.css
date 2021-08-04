@@ -1,6 +1,7 @@
 :root {
 	/* Definicoes gerais */
 	--font-base: 'Poppins', sans-serif;
+	--font-secondary: 'Poppins', sans-serif;
 	--dark-color: #121212;
 	--light-color: #f5f5f5;
 
@@ -16,51 +17,68 @@
 	--svg-size: 1.125rem;
 
 	/* // Light Mode // */
-	/* Fundos */
+	/* aqui tem coisas que eu nao sabia oq botar */
 	--login-background: #694e73;
-	--background-main: #f5f5f5;
-	--horizontal-menu-item: #688478;
-	--dialog-input: #e2e2e2;
-
-	/* Fontes */
-	--base-font-color: #121212;
-	--selection: #adc2b9;
-
-	/* Menu e cabecalho */
-	--header-and-menu: #694e73;
-
-	/* Home */
-	--home-icons: #adc2b9;
-
-	/* Notas */
 	--board-background: #adc2b9;
-	--column-border: #274035;
 	--column-font-color: #274035;
-
 	--note-background: #f5f5f5;
 	--note-answer-background: #c2c2c2;
-
-	/* Botoes */
 	--button-font-color: #694e73;
-	--button-selected-font-color: #b054d1;
-	--circular-button: #adc2b9;
-
-	/* Realce */
-	--highlight-color: #694e73;
-	--tab-highlight-color: #694e73;
-
-	/* Outros */
 	--contrast-color: #2f2e2c;
 	--inv-contrast-color: #f5f5f5;
 	--other-details: #f5f5f5;
-	--font-base: 'Poppins', sans-serif;
-	--font-secondary: 'Poppins', sans-serif;
+	
+	/* esse não escontrei equivalente no figma */
+	--button-selected-font-color: #b054d1;
+	/* esse eu imagino q n vai mais ter, mas deixei por enquanto */
+	--column-border: #274035;
+	/* essa eu n achei em lugar nenhum :P */
+	--selection: #adc2b9; 
+
+	/* Variáveis novas */
+	/* Fontes */
+	--base-font-color: #121212;
+	--buttons-font-color: #FAFAFA;
+	--menu-and-titles-font-color: #71584F;
+	--notes-font-color: #121212;
+	--selected-tab-header-font-color: #F8E6C0;
+	--link-font-color: #977569;
+	--hover-link-font-color: #b48b7c;
+	--focused-input-font-color: #977569;
+	--delete-account-font-color: #ED2939;
+	
+	/* Fundos */
+	--background-color: #E5DCD9;
+	--menu-cards-background: #E1A69E;
+	--menu-buttons-background: #A97D77;
+	--menu-and-headers-background: #A0D1BE;
+	--dialog-background: #E5DCD9;
+	
+	--buttons-background: #977569;
+	--list-item-header-background: #CBBAB4;
+	--list-item-description-baclground: #D8CBC7;
+	--note-column-background: #E1A69E;
+	--note-card-background: #E8BCB6;
+	
+	--tag-background: #F8E6C0;
+	--selection-box-background: #CBBAB4;
+	
+	--selection-tab-background: #CBBAB4;
+	
+	--search-bar-border-color: #BFB9B7;
+	--search-bar-font-color: #BFB9B799;
+	
+	/* [IGUAL PRA TODOS] */
+	--calendar-medication-background: #4B75C3;
+	--calendar-event-background: #D783BB;
+	--calendar-reminder-background: #F0994D;
+	--calendar-event-cards-font-color: #FAFAFA;
+
 	--avatar-color-1: #f44336;
 	--avatar-color-2: #e91e63;
 	--avatar-color-3: #9c27b0;
 	--avatar-color-4: #2196f3;
 	--avatar-color-5: #4caf50;
-	--tag-color: #d1a300;
 }
 
 [data-theme='dark'] {
@@ -107,6 +125,37 @@
 	--avatar-color-4: #0c3d64;
 	--avatar-color-5: #255727;
 	--tag-color: #d1a300;
+
+	/* mudando */
+	--base-font-color: #FAFAFA;
+	--buttons-font-color: #FAFAFA;
+	--menu-and-titles-font-color: #FAFAFA;
+	--notes-font-color: #121212;
+	--selected-tab-header-font-color: #6CCBB5;
+	--link-font-color: #3BBA9C;
+	--hover-link-font-color: #41d8b5;
+	--focused-input-font-color: #3BBA9C;
+	--delete-account-font-color: #F25F6B;
+
+	--background-color: #36393F;
+	--dialog-background: #36393F;
+	--menu-and-headers-background: #202225;
+	--menu-cards-background: #3BBA9C;
+	--menu-buttons-background: #6CCBB5;
+
+	--list-item-header-background: #202225;
+	--list-item-description-baclground: #686B6F;
+	--note-column-background: #3BBA9C;
+	--note-card-background: #6CCBB5;
+
+	--buttons-background: #3BBA9C;
+	--tag-background: #202225;
+	--selection-box-background: #202225;
+
+	--selection-tab-background: #202225;
+
+	--search-bar-border-color: #686B6F;
+	--search-bar-font-color: #686B6F99;
 }
 
 [data-theme='cotton_candy_light'] {
@@ -147,6 +196,37 @@
 	--inv-contrast-color: #f5f5f5;
 	--other-details: #f5f5f5;
 	--tag-color: #a594ab;
+
+	/* mudando */
+	--base-font-color: #121212;
+	--buttons-font-color: #121212;
+	--menu-and-titles-font-color: #121212;
+	--notes-font-color: #121212;
+	--selected-tab-header-font-color: #EC284C;
+	--link-font-color: #EC284C;
+	--hover-link-font-color: #f14262;
+	--focused-input-font-color: #3969AA;
+	--delete-account-font-color: #EC284C;
+
+	--background-color: #FFF9F9;
+	--dialog-background: #FFF9F9;
+	--menu-and-headers-background: #FFADC6;
+	--menu-cards-background: #A9CDFF;
+	--menu-buttons-background: #74F1D4;
+
+	--list-item-header-background: #FDD8D8;
+	--list-item-description-baclground: #F9E6E6;
+	--note-column-background: #A9CDFF;
+	--note-card-background: #FAFAFA;
+
+	--buttons-background: #74F1D4;
+	--tag-background: #FFDAA1;
+	--selection-box-background: #F9E6E6;
+
+	--selection-tab-background: #FDD8D8;
+
+	--search-bar-border-color: #E1E1E1;
+	--search-bar-font-color: #E1E1E199;
 }
 
 [data-theme='eggplant_dark'] {
@@ -187,6 +267,37 @@
 	--inv-contrast-color: #f5f5f5;
 	--other-details: #f5f5f5;
 	--tag-color: #a594ab;
+
+	/* mudando */
+	--base-font-color: #FAFAFA;
+	--buttons-font-color: #FAFAFA;
+	--menu-and-titles-font-color: #FAFAFA;
+	--notes-font-color: #FAFAFA;
+	--selected-tab-header-font-color: #E2B2E2;
+	--link-font-color: #E2B2E2;
+	--hover-link-font-color: #f8d4f8;
+	--focused-input-font-color: #E2B2E2;
+	--delete-account-font-color: #F25F6B;
+
+	--background-color: #22252A;
+	--dialog-background: #36393F;
+	--menu-and-headers-background: #22252A;
+	--menu-cards-background: #4A154B;
+	--menu-buttons-background: #4A154B;
+
+	--list-item-header-background: #36393F;
+	--list-item-description-baclground: #686B6F;
+	--note-column-background: #4A154B;
+	--note-card-background: #613262;
+
+	--buttons-background: #4A154B;
+	--tag-background: #22252A;
+	--selection-box-background: #22252A;
+
+	--selection-tab-background: #36393F;
+
+	--search-bar-border-color: #686B6F;
+	--search-bar-font-color: #686B6F99;
 }
 
 [data-font-size='large'] {

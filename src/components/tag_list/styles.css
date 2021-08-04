@@ -27,5 +27,5 @@
 }
 
 .MuiChip-root.MuiAutocomplete-tag {
-	background-color: var(--tag-color);
+	background-color: var(--tag-background);
 }

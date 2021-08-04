@@ -6,7 +6,7 @@
 }
 
 .dino__history_link {
-	color: var(--button-font-color);
+	color: var(--link-font-color);
 	font-size: var(--default-font);
 }
 

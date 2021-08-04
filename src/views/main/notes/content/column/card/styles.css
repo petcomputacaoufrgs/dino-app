@@ -43,7 +43,7 @@
 
 .note__note_content__column__column_card.MuiPaper-rounded {
 	border-radius: 0.5rem;
-	background-color: var(--note-background);
+	background-color: var(--note-card-background);
 }
 
 .note__note_content__column__column_card__card__card_answer.MuiCardActions-root {

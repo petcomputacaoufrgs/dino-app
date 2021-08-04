@@ -10,7 +10,7 @@
 	font-weight: 500;
 	text-transform: uppercase;
 	background-color: var(--buttons-background);
-	color: var(--light-color);
+	color: var(--buttons-font-color);
 	text-decoration: none;
 }
 

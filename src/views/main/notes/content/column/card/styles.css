@@ -4,11 +4,12 @@
 }
 
 .note__note_content__column__column_card .MuiTypography-root {
-	color: var(--dark-color);
+	color: var(--notes-font-color);
 }
 
 .note__note_content__column__column_card__card__card_content .MuiChip-label {
-	color: var(--dark-color);
+	color: var(--base-font-color);
+	font-weight: bold;
 	font-size: var(--small-font);
 }
 

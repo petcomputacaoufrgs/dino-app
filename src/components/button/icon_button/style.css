@@ -11,7 +11,7 @@
 }
 
 .dino_icon_button .dino_icon_button__button svg {
-	fill: var(--buttons-background);
+	fill: var(--base-font-color);
 	margin: 0;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .dino_icon_button .dino_icon_button__button.button_light svg {
-	fill: var(--light-color);
+	fill: var(--base-font-color);
 }
 
 .dino_icon_button .dino_icon_button__button.button_bigger svg {

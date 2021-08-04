@@ -2,7 +2,7 @@
 	height: 1.25rem;
 	display: flex;
 	flex-direction: row;
-	color: var(--column-border);
+	color: var(--notes-font-color);
 	align-items: center;
 }
 
@@ -37,4 +37,8 @@
 	width: var(--svg-size);
 	margin-left: auto;
 	margin-right: 0;
+}
+
+.note__note_content__column__column_header .dino_icon_button__button svg {
+	fill: var(--notes-font-color);
 }

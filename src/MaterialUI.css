@@ -22,7 +22,7 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-	fill: var(--buttons-background);
+	fill: var(--base-font-color);
 }
 
 body .MuiInput-underline:before {
@@ -49,7 +49,7 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 
 .MuiPaper-root.MuiMenu-paper,
 .MuiPaper-root.MuiDialog-paper {
-	background-color: var(--other-details);
+	background-color: var(--dialog-background);
 	color: var(--base-font-color);
 }
 
@@ -64,7 +64,7 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 .MuiAutocomplete-popper {
-	background-color: var(--other-details);
+	background-color: var(--background-color);
 }
 
 .MuiCardHeader-action button.button.icon_button {
@@ -119,6 +119,11 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 
 body .MuiCheckbox-colorSecondary.Mui-checked {
 	color: var(--button-selected-font-color);
+}
+
+
+body .MuiFormHelperText-root.MuiFormHelperText-marginDense {
+	color: var(--base-font-color);
 }
 
 @media (orientation: landscape) {

@@ -67,7 +67,10 @@
 	
 	--search-bar-border-color: #BFB9B7;
 	--search-bar-font-color: #BFB9B799;
-	
+
+	--switch-color: #977569;
+	--switch-slider-background: #977569b3;
+
 	/* [IGUAL PRA TODOS] */
 	--calendar-medication-background: #4B75C3;
 	--calendar-event-background: #D783BB;
@@ -156,6 +159,9 @@
 
 	--search-bar-border-color: #686B6F;
 	--search-bar-font-color: #686B6F99;
+
+	--switch-color: #3BBA9C;
+	--switch-slider-background: #3BBA9Cb3;
 }
 
 [data-theme='cotton_candy_light'] {
@@ -227,6 +233,9 @@
 
 	--search-bar-border-color: #E1E1E1;
 	--search-bar-font-color: #E1E1E199;
+
+	--switch-color: #74F1D4;
+	--switch-slider-background: #74F1D4b3;
 }
 
 [data-theme='eggplant_dark'] {
@@ -298,6 +307,9 @@
 
 	--search-bar-border-color: #686B6F;
 	--search-bar-font-color: #686B6F99;
+
+	--switch-color: #613262;
+	--switch-slider-background: #613262b3;
 }
 
 [data-font-size='large'] {

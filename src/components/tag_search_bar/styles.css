@@ -12,6 +12,10 @@
 	border-radius: 0.625rem;
 }
 
+.tag_search_bar .MuiSvgIcon-root {
+	fill: var(--search-bar-font-color);
+}
+
 .tag_search_bar
 	.MuiOutlinedInput-root.Mui-focused
 	.MuiOutlinedInput-notchedOutline {

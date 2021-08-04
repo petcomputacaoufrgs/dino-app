@@ -17,7 +17,10 @@
 .drawer_navigation__drawer__visible__menu__icon {
 	width: var(--very-large-font);
 	height: auto;
-	fill: var(--light-color);
+}
+
+.drawer_navigation__drawer__visible__menu__icon .st0{
+	fill: var(--base-font-color);
 }
 
 .drawer_navigation__drawer__visible .MuiListItemIcon-root {
@@ -28,7 +31,7 @@
 
 .drawer_navigation__drawer__visible
 	.MuiTypography-root.MuiListItemText-primary {
-	color: var(--light-color);
+	color: var(--base-font-color);
 }
 
 .drawer_navigation__drawer__invisible {
@@ -38,7 +41,7 @@
 	left: 0rem;
 	height: 100%;
 	width: 100vw;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: #0000004d;
 	border: none;
 }
 
@@ -70,7 +73,7 @@
 }
 
 .drawer_navigation__drawer__visible .user {
-	color: var(--light-color);
+	color: var(--base-font-color);
 	padding: 0.5rem 1rem;
 }
 

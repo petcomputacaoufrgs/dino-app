@@ -9,6 +9,10 @@
 	border-radius: 0.625rem;
 }
 
+.mui-search-bar .MuiSvgIcon-root {
+	fill: var(--search-bar-font-color)
+}
+
 .mui-search-bar .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
 .MuiOutlinedInput-root:focus {
 	border-color: var(--search-bar-border-color);

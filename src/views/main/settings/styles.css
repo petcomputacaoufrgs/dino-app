@@ -61,6 +61,7 @@
 	font-weight: 700;
 	font-size: var(--big-font);
 	margin-bottom: 1.5rem;
+	color: var(--menu-and-titles-font-color);
 }
 
 .settings__form__delete_account {

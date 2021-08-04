@@ -26,7 +26,7 @@ class ContactServiceImpl extends AutoSynchronizableService<
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
-		return [EssentialContactService]
+		return []
 	}
 
 	getPermissionsWhichCanEdit(): PermissionEnum[] {
@@ -35,6 +35,13 @@ class ContactServiceImpl extends AutoSynchronizableService<
 
 	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return [PermissionEnum.USER]
+	}
+
+	protected async beforeDelete(entity: ContactEntity) {
+		if (entity.localId) {
+			const phones = await PhoneService.getAllByContactLocalId(entity.localId)
+			await PhoneService.deleteAll(phones)
+		}
 	}
 
 	async convertModelToEntity(model: ContactDataModel): Promise<ContactEntity> {
@@ -74,25 +81,6 @@ class ContactServiceImpl extends AutoSynchronizableService<
 		}
 
 		return model
-	}
-
-	async getAllDerivatedFromEssential(): Promise<ContactEntity[]> {
-		return this.toList(
-			this.table.where('localEssentialContactId').aboveOrEqual(0),
-		)
-	}
-
-	//TODO to API
-	async deleteUserEssentialContacts() {
-		const contacts = await this.getAllDerivatedFromEssential()
-
-		const phoneDeletePromises = contacts.map(contact => {
-			return PhoneService.deleteByContact(contact)
-		})
-
-		await Promise.all(phoneDeletePromises)
-
-		await this.deleteAll(contacts)
 	}
 }
 

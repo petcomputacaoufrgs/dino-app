@@ -242,32 +242,32 @@ class TestInstanceService {
 
 	private contactInstances: (ContactEntity | EssentialContactEntity)[] = [
 		{
-			name: '[Test] Contact Name 1',
+			name: 'A [Test] Contact 1',
 			description: '[Test] Contact Description 1',
 			color: ColorConstants.COLORS[0],
 		},
 		{
-			name: '[Test] Contact Name 2',
+			name: 'B [Test] Contact 2',
 			description: '[Test] Contact Description 2',
 			color: ColorConstants.COLORS[1],
 		},
 		{
-			name: '[Test] Contact Name 3',
+			name: 'C [Test] Contact 3',
 			description: '[Test] Contact Description 3',
 			color: ColorConstants.COLORS[2],
 		},
 		{
-			name: '[Test] Contact Name 4',
+			name: 'D [Test] Contact 4',
 			description: '[Test] Contact Description 4',
 			color: ColorConstants.COLORS[3],
 		},
 		{
-			name: '[Test] Contact Name 5',
+			name: 'A [Test] Contact 5',
 			description: '[Test] Contact Description 5',
 			color: ColorConstants.COLORS[4],
 		},
 		{
-			name: '[Test] Contact Name 6',
+			name: 'B [Test] Contact 6',
 			description: '[Test] Contact Description 6',
 			color: ColorConstants.COLORS[5],
 		},

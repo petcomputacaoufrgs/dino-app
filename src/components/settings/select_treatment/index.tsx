@@ -24,9 +24,6 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 		TreatmentEntity | undefined
 	>(UserSettingsService.getTreatment(availableTreatments, settings))
 
-	const renderChildren = () =>
-		children && <div className='select_treatment__children'>{children}</div>
-
 	const handleChange = (newSelectedTreatment: TreatmentEntity) => {
 		setSelectedTreatment(newSelectedTreatment)
 		if (
@@ -72,7 +69,7 @@ const SelectTreatment: React.FC<SelectTreatmentProps> = ({
 					/>
 				)}
 			/>
-			{renderChildren()}
+			{children && <div className='select_treatment__children'>{children}</div>}
 		</>
 	)
 }

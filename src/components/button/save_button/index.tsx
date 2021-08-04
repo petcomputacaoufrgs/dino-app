@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '..'
 import { useLanguage } from '../../../context/language'
-import { ReactComponent as SaveSVG } from '../../../assets/icons/save.svg'
+import { ReactComponent as SaveSVG } from '../../../assets/icons/general_use/save.svg'
 import './styles.css'
 import ButtonProps from '../props'
 

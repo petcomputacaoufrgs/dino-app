@@ -19,7 +19,6 @@ import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
 import TabControlService from './services/tab_control/TabControlService'
 import SecondaryTab from './views/secondary_tab'
-import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
 import PermissionEnum from './types/enum/PermissionEnum'
@@ -212,7 +211,6 @@ const App: React.FC = () => {
 			) : (
 				<SecondaryTab />
 			)}
-			<PWAControl />
 		</div>
 	)
 }

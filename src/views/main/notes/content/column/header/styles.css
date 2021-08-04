@@ -32,7 +32,6 @@
 }
 
 .note__note_content__column__column_header__button_div__button svg {
-	fill: var(--column-border);
 	height: var(--svg-size);
 	width: var(--svg-size);
 	margin-left: auto;

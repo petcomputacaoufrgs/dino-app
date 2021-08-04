@@ -12,7 +12,7 @@
 }
 
 .select-faq__button .MuiButton-outlinedPrimary {
-	border-color: var(--column-font-color);
+	border-color: var(--base-font-color);
 }
 
 .select_faq_button {

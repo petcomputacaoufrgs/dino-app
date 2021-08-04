@@ -55,7 +55,11 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 
 .app .MuiPaper-root,
 .app .card {
-	background-color: var(--other-details);
+	background-color: var(--selection-tab-background);
+	color: var(--base-font-color);
+}
+
+.app .MuiPaper-root .MuiButtonBase-root {
 	color: var(--base-font-color);
 }
 
@@ -85,7 +89,7 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 .MuiTabs-root .MuiTabs-indicator {
-	background-color: var(--selection-tab-background);
+	background-color: var(--selected-tab-header-font-color);
 }
 
 .MuiTabs-root .MuiTab-textColorPrimary.Mui-selected {
@@ -93,7 +97,7 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 .MuiBadge-root .MuiBadge-colorSecondary {
-	background-color: var(--button-font-color);
+	background-color: var(--badge-color);
 }
 
 .app .MuiFormLabel-root.Mui-focused,
@@ -118,7 +122,7 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 body .MuiCheckbox-colorSecondary.Mui-checked {
-	color: var(--button-selected-font-color);
+	color: var(--hover-link-font-color);
 }
 
 

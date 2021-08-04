@@ -40,6 +40,7 @@
 	--list-item-description-baclground: #D8CBC7;
 	--note-column-background: #E1A69E;
 	--note-card-background: #E8BCB6;
+	--note-card-answer-background: #DBB4AF;
 	
 	--tag-background: #F8E6C0;
 	--selection-box-background: #CBBAB4;
@@ -53,18 +54,6 @@
 	/* Switchs */
 	--switch-color: #977569;
 	--switch-slider-background: #977569b3;
-
-	/* Outras */
-	--login-background: #694e73;
-	--column-font-color: #274035;
-	--note-background: #f5f5f5;
-	--note-answer-background: #c2c2c2;
-	--button-font-color: #694e73;
-	--button-selected-font-color: #b054d1;
-	--contrast-color: #2f2e2c;
-	--inv-contrast-color: #f5f5f5;
-	--other-details: #f5f5f5;
-	--column-border: #274035;
 
 	--avatar-color-1: #f44336;
 	--avatar-color-2: #e91e63;
@@ -104,6 +93,7 @@
 	--list-item-description-baclground: #686B6F;
 	--note-column-background: #3BBA9C;
 	--note-card-background: #6CCBB5;
+	--note-card-answer-background: #6EC2AE;
 
 	--buttons-background: #3BBA9C;
 	--tag-background: #202225;
@@ -118,18 +108,6 @@
 	/* Switchs */
 	--switch-color: #3BBA9C;
 	--switch-slider-background: #3BBA9Cb3;
-	
-	/* Outras */
-	--login-background: #2f2e2c;
-	--column-font-color: #f5f5f5;
-	--note-background: #b4a3ba;
-	--note-answer-background: #a692ae;
-	--button-font-color: #b054d1;
-	--button-selected-font-color: #694e73;
-	--column-border: #2d1b35;
-	--contrast-color: #f5f5f5;
-	--inv-contrast-color: #2f2e2c;
-	--other-details: #474747;
 
 	--avatar-color-1: #6e1f1a;
 	--avatar-color-2: #682552;
@@ -162,6 +140,7 @@
 	--list-item-description-baclground: #F9E6E6;
 	--note-column-background: #A9CDFF;
 	--note-card-background: #FAFAFA;
+	--note-card-answer-background: #EBEBEB;
 	
 	--buttons-background: #74F1D4;
 	--tag-background: #FFDAA1;
@@ -176,18 +155,6 @@
 	/* Switchs */
 	--switch-color: #74F1D4;
 	--switch-slider-background: #74F1D4b3;
-
-	/* Outras */
-	--login-background: #694e73;
-	--column-font-color: #f5f5f5;
-	--note-background: #fff3cb;
-	--note-answer-background: #efe1b1;
-	--button-font-color: #442950;
-	--button-selected-font-color: #b054d1;
-	--column-border: #d1a300;
-	--contrast-color: #2f2e2c;
-	--inv-contrast-color: #f5f5f5;
-	--other-details: #f5f5f5;
 }
 
 [data-theme='eggplant_dark'] {
@@ -214,6 +181,7 @@
 	--list-item-description-baclground: #686B6F;
 	--note-column-background: #4A154B;
 	--note-card-background: #613262;
+	--note-card-answer-background: #653C66;
 
 	--buttons-background: #4A154B;
 	--tag-background: #22252A;
@@ -228,18 +196,6 @@
 	/* Switchs */
 	--switch-color: #613262;
 	--switch-slider-background: #613262b3;
-
-	/* Outras */
-	--login-background: #694e73;
-	--column-font-color: #f5f5f5;
-	--note-background: #fff3cb;
-	--note-answer-background: #efe1b1;
-	--button-font-color: #442950;
-	--button-selected-font-color: #b054d1;
-	--column-border: #d1a300;
-	--contrast-color: #2f2e2c;
-	--inv-contrast-color: #f5f5f5;
-	--other-details: #f5f5f5;
 
 	--avatar-color-1: #6e1f1a;
 	--avatar-color-2: #682552;

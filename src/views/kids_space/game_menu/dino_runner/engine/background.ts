@@ -1,6 +1,6 @@
 import SkyAnimation from '../../../animation/SkyAnimation'
 
-const STAR_SPEED = 1500
+const STAR_SPEED = 3000
 
 /**
  * @description set all stars to be animated and start the animation

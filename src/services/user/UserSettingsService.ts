@@ -16,7 +16,8 @@ import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/enum/LanguageEnum'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import { LanguageContextType } from '../../context/language'
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
 	UserSettingsDataModel,
@@ -53,7 +54,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
-			step: model.step,
 			parentsAreaPassword: model.parentsAreaPassword,
 		}
 
@@ -78,7 +78,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			step: entity.step,
 			parentsAreaPassword: entity.parentsAreaPassword,
 		}
 
@@ -159,13 +158,14 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 
 	getEssentialContactGrant(
 		userSettings: UserSettingsEntity | undefined,
-	): boolean | undefined {
+	): boolean {
 		if (userSettings) {
 			return userSettings.includeEssentialContact
-		} else {
-			return undefined
 		}
+		return this.getDefaultEssentialContactGrant()
 	}
+
+	getDefaultEssentialContactGrant = () => true
 
 	getFirstSettingsDone = async (): Promise<boolean | undefined> => {
 		const userSettings = await this.getFirst()
@@ -177,7 +177,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 	}
 
-	getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
+	getLanguage = (userSettings?: UserSettingsEntity): LanguageBase => {
 		if (userSettings && userSettings.language === LanguageEnum.ENGLISH) {
 			return new EN()
 		} else {
@@ -208,10 +208,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 
 	getDefaultColorThemeCode = () => {
 		return ColorThemeEnum.DEVICE
-	}
-
-	getDefaultEssentialContactGrant = () => {
-		return true
 	}
 
 	getColorThemeName = (userSettings: UserSettingsEntity): string => {
@@ -266,6 +262,31 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 
 		return 'light'
+	}
+
+	getTreatment = (
+		treatments: TreatmentEntity[],
+		userSettings?: UserSettingsEntity,
+	) => {
+		if (userSettings) {
+			const treatment = treatments.find(
+				treatment => treatment.localId === userSettings.treatmentLocalId,
+			)
+			if (treatment) return treatment
+		}
+
+		return undefined
+	}
+
+	getDefaultSettings = (language: LanguageContextType) => {
+		return {
+			language: language.data.LANGUAGE_CODE,
+			fontSize: this.getDefaultFontSizeCode(),
+			colorTheme: this.getDefaultColorThemeCode(),
+			includeEssentialContact: true,
+			declineGoogleContacts: false,
+			firstSettingsDone: false,
+		} as UserSettingsEntity
 	}
 }
 

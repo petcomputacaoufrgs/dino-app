@@ -734,6 +734,20 @@ export default class PT implements LanguageBase {
 
 	CHOOSE = 'Escolha'
 
+	REPORT_BUG = 'Reportar um problema'
+
+	ABOUT_US_PET = 'PET Computação'
+
+	ABOUT_US_PET_TEXT = `\tO PET (Programa de Educação Tutorial) Computação, criado em 1988, é um grupo composto por estudantes de graduação dos cursos de Ciência da Computação e Engenharia da Computação. Coordenado por um professor tutor. O projeto é formado por uma equipe diversa, voltada ao desenvolvimento individual de seus estudantes e também ao fortalecimento da comunidade acadêmica, tanto do Instituto de Informática quanto externa.\n\tO PET Computação se baseia na Tríade Acadêmica de Ensino, Pesquisa e Extensão, e tem como objetivo providenciar a oportunidade dos membros explorarem áreas de interesse além do currículo de seus cursos.\n\tOs projetos desenvolvidos pelo grupo abrangem o desenvolvimento de softwares e aplicações mobile; ministração de minicursos relacionados à computação; projetos de pesquisa e desenvolvimento de artigos acadêmicos; organização de eventos para a comunidade do Instituto, dentre outros. Também são realizados projetos em parceria com outros grupos PET da UFRGS (PETelos).`
+
+	ABOUT_US_HCPA = 'Hospital de Clínicas'
+
+	ABOUT_US_HCPA_TEXT = `\tSer um referencial público em saúde, prestando assistência de excelência, gerando conhecimento, formando e agregando pessoas de alta qualificação. Essa é a missão do Hospital de Clínicas de Porto Alegre (HCPA), instituição pública integrante da rede de hospitais universitários do Ministério da Educação (MEC) e vinculada academicamente à Universidade Federal do Rio Grande do Sul (UFRGS).\n\tAtuando desde 1971, é um dos principais esteios da assistência pública à saúde da população do Rio Grande do Sul, oferecendo atendimento de excelência e alta complexidade em amplo rol de especialidades. As atividades de ensino de graduação e pós-graduação, lado a lado com a UFRGS, formam gerações de profissionais familiarizados e comprometidos com as melhores práticas e a humanização da assistência. A pesquisa produzida no HCPA, por sua vez, introduz novos conhecimentos, técnicas e tecnologias que beneficiam toda a sociedade, além de formar novas gerações de pesquisadores, alimentando um ciclo de renovação e evolução permanentes.\n\tA adoção de padrões internacionais de qualidade e segurança, o cuidado humanizado e o atendimento integral ao cidadão são compromissos firmados diariamente com os pacientes e a comunidade.`
+
+	ABOUT_US_UFRGS = 'UFRGS'
+
+	ABOUT_US_UFRGS_TEXT = `\tA Universidade Federal do Rio Grande do Sul, com sede em Porto Alegre , capital do Estado do Rio Grande do Sul, é uma instituição centenária, reconhecida nacional e internacionalmente. Ministra cursos em todas as áreas do conhecimento e em todos os níveis, desde o Ensino Fundamental até a Pós-Graduação.\n\tA qualificação do seu corpo docente, composto em sua maioria por mestres e doutores, a atualização permanente da infraestrutura dos laboratórios e bibliotecas, o incremento à assistência estudantil, bem como a priorização de sua inserção nacional e internacional são políticas em constante desenvolvimento.\n\tPor seus prédios circulam, diariamente, cerca de 40 mil pessoas em busca de um dos mais qualificados ensino do país. Este, aliado à pesquisa, com reconhecidos níveis de excelência, e a extensão, a qual proporciona diversificadas atividades à comunidade, faz com que a UFRGS alcance altos níveis de avaliação.\n\tA UFRGS, como instituição pública a serviço da sociedade e comprometida com o futuro e com a consciência crítica, respeita as diferenças, prioriza a experimentação e, principalmente, reafirma seu compromisso com a educação e a produção do conhecimento, inspirada nos ideais de liberdade e solidariedade.`
+
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`

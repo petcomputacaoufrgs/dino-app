@@ -227,7 +227,6 @@ export default interface LanguageBase {
 	LARGE_FONT_SIZE_NAME: string
 	LARGER_FONT_SIZE_NAME: string
 	CONTACT: string
-	CONTACT_NUMBER_ALREADY_EXISTS: string
 	DIALOG_AGREE_TEXT: string
 	DIALOG_DECLINE_BUTTON_TEXT: string
 	GRANT_FAIL_BY_EXTERNAL_ERROR: string
@@ -344,6 +343,13 @@ export default interface LanguageBase {
 	CHOOSE_COLOR_DINO_MESSAGE: string
 	CHOOSE_ACESSORY_DINO_MESSAGE: string
 	CHOOSE: string
+	REPORT_BUG: string
+	ABOUT_US_PET: string
+	ABOUT_US_PET_TEXT: string
+	ABOUT_US_HCPA: string
+	ABOUT_US_HCPA_TEXT: string
+	ABOUT_US_UFRGS: string
+	ABOUT_US_UFRGS_TEXT: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

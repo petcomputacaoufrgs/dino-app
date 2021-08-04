@@ -47,13 +47,15 @@ const DinoSlider: React.FC = () => {
       >
         <p>{language.data.SUCESS_GAME_OVER_LABEL}</p>
       </GameOverDialog>
-      <ArrowBack kids />
-      <div className='dino_slider__switch'>
-        <DinoSwitch 
-          selected={reduced} 
-          onChangeSelected={() => setReduced(!reduced)} 
-          label={language.data.REDUCE}
-        />
+      <div className="dino_slider__header">
+        <ArrowBack kids />
+        <div className='dino_slider__switch'>
+          <DinoSwitch 
+           selected={reduced} 
+            onChangeSelected={() => setReduced(!reduced)} 
+            label={language.data.REDUCE}
+          />
+        </div>
       </div>
       <SliderBoard 
         onGameOver={handleGameOver} 

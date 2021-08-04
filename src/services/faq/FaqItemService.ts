@@ -44,8 +44,9 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	): Promise<FaqItemEntity | undefined> {
 		let treatment: TreatmentEntity | undefined
 
-		if (hasValue(model.treatmentId))
+		if (hasValue(model.treatmentId)) {
 			treatment = await TreatmentService.getById(model.treatmentId!)
+		}
 
 		const entity: FaqItemEntity = {
 			answer: model.answer,
@@ -65,8 +66,9 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	): Promise<FaqItemDataModel | undefined> {
 		let treatment: TreatmentEntity | undefined
 
-		if (hasValue(entity.localTreatmentId))
-			treatment = await TreatmentService.getById(entity.localTreatmentId!)
+		if (hasValue(entity.localTreatmentId)) {
+			treatment = await TreatmentService.getByLocalId(entity.localTreatmentId!)
+		}
 
 		const model: FaqItemDataModel = {
 			answer: entity.answer,

@@ -2,7 +2,7 @@ import sleep from '../../../../../utils/SleepUtils'
 import { getRandomInteger } from '../../../../../utils/RandomUtils'
 import { startBackgroundEngine } from './background'
 
-const INITIAL_OBSTACLE_POSITION = 550
+const INITIAL_OBSTACLE_POSITION = 850
 const MIN_DISTANCE = 250
 const OUT_OF_SCREEN_POSITION = -300
 
@@ -67,8 +67,8 @@ const addExitGameListener = () => {
 	const goBackButton = document.getElementsByClassName('dino_icon_button')[0]
 	goBackButton.addEventListener('click', () => {
 		isJumping = false
+		score = 0
 		dinoYPosition = 0
-
 		dino = null
 		grid = null
 		container = null
@@ -82,6 +82,7 @@ const addExitGameListener = () => {
 function handleStartGame() {
 	isJumping = false
 	isGameOver = false
+	score = 0
 	dinoYPosition = 0
 	setScore(0)
 
@@ -153,8 +154,8 @@ async function runGame() {
 			}
 
 			await sleep(20)
-			if (increaseSpeed < 7.5) increaseSpeed = score * 0.15 // Limite de velocidade
-			obstaclePosition -= 11 + increaseSpeed // Jogo fica mais rápido de acordo com a quantidade de pontos
+			if (increaseSpeed < 7.5) increaseSpeed = score * 0.1 // Limite de velocidade
+			obstaclePosition -= 10 + increaseSpeed // Jogo fica mais rápido de acordo com a quantidade de pontos
 			obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 		}
 

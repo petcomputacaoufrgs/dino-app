@@ -99,13 +99,16 @@ class TestInstanceService {
 
 	private async loadEssentialContacts() {
 		const getRandomTreatments = () => {
-			const response = new Set<number>()
-			const numberOfTreatments = Math.ceil(Math.random() * 3)
-			for (let n = 0; n < numberOfTreatments; n++) {
-				const randomTreatment = ArrayUtils.randomItem(treatments)
-				if (randomTreatment.localId) response.add(randomTreatment.localId)
+			if (ArrayUtils.isNotEmpty(treatments)) {
+				const response = new Set<number>()
+				const numberOfTreatments = Math.ceil(Math.random() * 3)
+				for (let n = 0; n < numberOfTreatments; n++) {
+					const randomTreatment = ArrayUtils.randomItem(treatments)
+					if (randomTreatment.localId) response.add(randomTreatment.localId)
+				}
+				return Array.from(response)
 			}
-			return Array.from(response)
+			return undefined
 		}
 
 		const instancesUniversal: EssentialContactEntity[] =
@@ -118,6 +121,8 @@ class TestInstanceService {
 		await EssentialContactService.saveAll(instancesUniversal)
 
 		const treatments = await TreatmentService.getAll()
+
+		console.log(treatments)
 
 		const instancesNonUniversal: EssentialContactEntity[] =
 			this.contactInstances.map(c => {

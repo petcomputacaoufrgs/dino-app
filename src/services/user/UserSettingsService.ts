@@ -54,7 +54,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
-			parentsAreaPassword: model.parentsAreaPassword,
 		}
 
 		if (model.treatmentId) {
@@ -78,7 +77,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			parentsAreaPassword: entity.parentsAreaPassword,
 		}
 
 		if (entity.treatmentLocalId) {

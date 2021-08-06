@@ -23,10 +23,15 @@
 	fill: var(--base-font-color);
 }
 
+.drawer_navigation__drawer__visible__menu__icon .st1{
+	stroke: var(--base-font-color);
+}
+
 .drawer_navigation__drawer__visible .MuiListItemIcon-root {
 	margin-bottom: 0.25rem;
 	margin-right: 0.625rem;
 	min-width: 0rem;
+	max-height: 1.6rem;
 }
 
 .drawer_navigation__drawer__visible

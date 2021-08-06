@@ -16,44 +16,52 @@
 
 	--svg-size: 1.125rem;
 
-	/* // Light - Teddy Bear // */
+	--calendar-medication-background: #4b75c3;
+	--calendar-event-background: #d783bb;
+	--calendar-reminder-background: #f0994d;
+	--calendar-event-cards-font-color: #fafafa;
+
+	/* #region LIGHT - TEDDY-BEAR // */
 	/* Fontes */
 	--base-font-color: #121212;
-	--buttons-font-color: #FAFAFA;
-	--menu-and-titles-font-color: #71584F;
+	--buttons-font-color: #fafafa;
+	--menu-and-titles-font-color: #71584f;
 	--notes-font-color: #121212;
-	--selected-tab-header-font-color: #F8E6C0;
+	--selected-tab-header-font-color: #f8e6c0;
 	--link-font-color: #977569;
 	--hover-link-font-color: #b48b7c;
 	--focused-input-font-color: #977569;
-	--delete-account-font-color: #ED2939;
-	
+	--delete-account-font-color: #ed2939;
+
 	/* Fundos */
-	--background-color: #E5DCD9;
-	--menu-cards-background: #E1A69E;
-	--menu-buttons-background: #A97D77;
-	--menu-and-headers-background: #A0D1BE;
-	--dialog-background: #E5DCD9;
-	
+	--background-color: #e5dcd9;
+	--menu-cards-background: #e1a69e;
+	--menu-buttons-background: #a97d77;
+	--menu-and-headers-background: #a0d1be;
+	--dialog-background: #e5dcd9;
+
 	--buttons-background: #977569;
-	--list-item-header-background: #CBBAB4;
-	--list-item-description-baclground: #D8CBC7;
-	--note-column-background: #E1A69E;
-	--note-card-background: #E8BCB6;
-	--note-card-answer-background: #DBB4AF;
-	
-	--tag-background: #F8E6C0;
-	--selection-box-background: #CBBAB4;
-	
-	--selection-tab-background: #CBBAB4;
-	
+	--list-item-header-background: #cbbab4;
+	--list-item-description-baclground: #d8cbc7;
+	--note-column-background: #e1a69e;
+	--note-card-background: #e8bcb6;
+	--note-card-answer-background: #dbb4af;
+
+	--tag-background: #f8e6c0;
+	--selection-box-background: #cbbab4;
+
+	--selection-tab-background: #cbbab4;
+
 	/* Barra de Pesquisa */
-	--search-bar-border-color: #BFB9B7;
-	--search-bar-font-color: #BFB9B799;
+	--search-bar-border-color: #bfb9b7;
+	--search-bar-font-color: #bfb9b799;
 
 	/* Switchs */
 	--switch-color: #977569;
 	--switch-slider-background: #977569b3;
+
+	/* Badge */
+	--badge-color: #e1a69e;
 
 	--avatar-color-1: #f44336;
 	--avatar-color-2: #e91e63;
@@ -61,53 +69,51 @@
 	--avatar-color-4: #2196f3;
 	--avatar-color-5: #4caf50;
 
-	/* [IGUAL PRA TODOS] */
-	--calendar-medication-background: #4B75C3;
-	--calendar-event-background: #D783BB;
-	--calendar-reminder-background: #F0994D;
-	--calendar-event-cards-font-color: #FAFAFA;
-
+	/* #endregion */
 }
 
+/* #region DARK - MINT */
 [data-theme='dark'] {
-	/* // Dark - Mint // */
 	/* Fontes */
-	--base-font-color: #FAFAFA;
-	--buttons-font-color: #FAFAFA;
-	--menu-and-titles-font-color: #FAFAFA;
+	--base-font-color: #fafafa;
+	--buttons-font-color: #fafafa;
+	--menu-and-titles-font-color: #fafafa;
 	--notes-font-color: #121212;
-	--selected-tab-header-font-color: #6CCBB5;
-	--link-font-color: #3BBA9C;
+	--selected-tab-header-font-color: #6ccbb5;
+	--link-font-color: #3bba9c;
 	--hover-link-font-color: #41d8b5;
-	--focused-input-font-color: #3BBA9C;
-	--delete-account-font-color: #F25F6B;
+	--focused-input-font-color: #3bba9c;
+	--delete-account-font-color: #f25f6b;
 
 	/* Fundos */
-	--background-color: #36393F;
-	--dialog-background: #36393F;
+	--background-color: #36393f;
+	--dialog-background: #36393f;
 	--menu-and-headers-background: #202225;
-	--menu-cards-background: #3BBA9C;
-	--menu-buttons-background: #6CCBB5;
+	--menu-cards-background: #3bba9c;
+	--menu-buttons-background: #6ccbb5;
 
 	--list-item-header-background: #202225;
-	--list-item-description-baclground: #686B6F;
-	--note-column-background: #3BBA9C;
-	--note-card-background: #6CCBB5;
-	--note-card-answer-background: #6EC2AE;
+	--list-item-description-baclground: #686b6f;
+	--note-column-background: #3bba9c;
+	--note-card-background: #6ccbb5;
+	--note-card-answer-background: #6ec2ae;
 
-	--buttons-background: #3BBA9C;
+	--buttons-background: #3bba9c;
 	--tag-background: #202225;
 	--selection-box-background: #202225;
 
 	--selection-tab-background: #202225;
 
 	/* Barra de Pesquisa */
-	--search-bar-border-color: #686B6F;
-	--search-bar-font-color: #686B6F99;
+	--search-bar-border-color: #686b6f;
+	--search-bar-font-color: #686b6f99;
 
 	/* Switchs */
-	--switch-color: #3BBA9C;
-	--switch-slider-background: #3BBA9Cb3;
+	--switch-color: #3bba9c;
+	--switch-slider-background: #3bba9cb3;
+
+	/* Badge */
+	--badge-color: #3bba9c;
 
 	--avatar-color-1: #6e1f1a;
 	--avatar-color-2: #682552;
@@ -115,87 +121,92 @@
 	--avatar-color-4: #0c3d64;
 	--avatar-color-5: #255727;
 }
+/* #endregion */
 
+/* #region LIGHT - COTTON CANDY */
 [data-theme='cotton_candy_light'] {
-	/* // Light - Cotton Candy // */
 	/* Fontes */
 	--base-font-color: #121212;
 	--buttons-font-color: #121212;
 	--menu-and-titles-font-color: #121212;
 	--notes-font-color: #121212;
-	--selected-tab-header-font-color: #EC284C;
-	--link-font-color: #EC284C;
+	--selected-tab-header-font-color: #ec284c;
+	--link-font-color: #ec284c;
 	--hover-link-font-color: #f14262;
-	--focused-input-font-color: #3969AA;
-	--delete-account-font-color: #EC284C;
-	
+	--focused-input-font-color: #3969aa;
+	--delete-account-font-color: #ec284c;
+
 	/* Fundos */
-	--background-color: #FFF9F9;
-	--dialog-background: #FFF9F9;
-	--menu-and-headers-background: #FFADC6;
-	--menu-cards-background: #A9CDFF;
-	--menu-buttons-background: #74F1D4;
-	
-	--list-item-header-background: #FDD8D8;
-	--list-item-description-baclground: #F9E6E6;
-	--note-column-background: #A9CDFF;
-	--note-card-background: #FAFAFA;
-	--note-card-answer-background: #EBEBEB;
-	
-	--buttons-background: #74F1D4;
-	--tag-background: #FFDAA1;
-	--selection-box-background: #F9E6E6;
-	
-	--selection-tab-background: #FDD8D8;
-	
+	--background-color: #fff9f9;
+	--dialog-background: #fff9f9;
+	--menu-and-headers-background: #ffadc6;
+	--menu-cards-background: #a9cdff;
+	--menu-buttons-background: #74f1d4;
+
+	--list-item-header-background: #fdd8d8;
+	--list-item-description-baclground: #f9e6e6;
+	--note-column-background: #a9cdff;
+	--note-card-background: #fafafa;
+	--note-card-answer-background: #ebebeb;
+
+	--buttons-background: #74f1d4;
+	--tag-background: #ffdaa1;
+	--selection-box-background: #f9e6e6;
+
+	--selection-tab-background: #fdd8d8;
+
 	/* Barra de Pesquisa */
-	--search-bar-border-color: #E1E1E1;
-	--search-bar-font-color: #E1E1E199;
-	
+	--search-bar-border-color: #e1e1e1;
+	--search-bar-font-color: #e1e1e199;
+
 	/* Switchs */
-	--switch-color: #74F1D4;
-	--switch-slider-background: #74F1D4b3;
+	--switch-color: #74f1d4;
+	--switch-slider-background: #74f1d4b3;
 }
+/* #endregion */
 
+/* #region DARK - EGGPLANT */
 [data-theme='eggplant_dark'] {
-	/* // Dark - Eggplant // */
 	/* Fontes */
-	--base-font-color: #FAFAFA;
-	--buttons-font-color: #FAFAFA;
-	--menu-and-titles-font-color: #FAFAFA;
-	--notes-font-color: #FAFAFA;
-	--selected-tab-header-font-color: #E2B2E2;
-	--link-font-color: #E2B2E2;
+	--base-font-color: #fafafa;
+	--buttons-font-color: #fafafa;
+	--menu-and-titles-font-color: #fafafa;
+	--notes-font-color: #fafafa;
+	--selected-tab-header-font-color: #e2b2e2;
+	--link-font-color: #e2b2e2;
 	--hover-link-font-color: #f8d4f8;
-	--focused-input-font-color: #E2B2E2;
-	--delete-account-font-color: #F25F6B;
+	--focused-input-font-color: #e2b2e2;
+	--delete-account-font-color: #f25f6b;
 
 	/* Fundos */
-	--background-color: #22252A;
-	--dialog-background: #36393F;
-	--menu-and-headers-background: #22252A;
-	--menu-cards-background: #4A154B;
-	--menu-buttons-background: #4A154B;
+	--background-color: #22252a;
+	--dialog-background: #36393f;
+	--menu-and-headers-background: #22252a;
+	--menu-cards-background: #4a154b;
+	--menu-buttons-background: #4a154b;
 
-	--list-item-header-background: #36393F;
-	--list-item-description-baclground: #686B6F;
-	--note-column-background: #4A154B;
+	--list-item-header-background: #36393f;
+	--list-item-description-baclground: #686b6f;
+	--note-column-background: #4a154b;
 	--note-card-background: #613262;
-	--note-card-answer-background: #653C66;
+	--note-card-answer-background: #653c66;
 
-	--buttons-background: #4A154B;
-	--tag-background: #22252A;
-	--selection-box-background: #22252A;
+	--buttons-background: #4a154b;
+	--tag-background: #22252a;
+	--selection-box-background: #22252a;
 
-	--selection-tab-background: #36393F;
+	--selection-tab-background: #36393f;
 
 	/* Barra de Pesquisa */
-	--search-bar-border-color: #686B6F;
-	--search-bar-font-color: #686B6F99;
+	--search-bar-border-color: #686b6f;
+	--search-bar-font-color: #686b6f99;
 
 	/* Switchs */
 	--switch-color: #613262;
 	--switch-slider-background: #613262b3;
+
+	/* Badge */
+	--badge-color: #613262;
 
 	--avatar-color-1: #6e1f1a;
 	--avatar-color-2: #682552;
@@ -203,6 +214,7 @@
 	--avatar-color-4: #0c3d64;
 	--avatar-color-5: #255727;
 }
+/* #endregion */
 
 [data-font-size='large'] {
 	--very-small-font: 0.9425rem;

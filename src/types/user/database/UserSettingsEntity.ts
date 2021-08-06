@@ -9,5 +9,4 @@ export default interface UserSettingsEntity
 	declineGoogleContacts: boolean
 	firstSettingsDone: boolean
 	treatmentLocalId?: number
-	parentsAreaPassword?: string
 }

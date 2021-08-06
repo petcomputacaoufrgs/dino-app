@@ -161,6 +161,8 @@ export default interface LanguageBase {
 	HOUR: string
 	DAYS: string
 	DAY: string
+	MONTH: string
+	YEAR: string
 	AND: string
 	BEFORE: string
 	ADD_EVENT_TITLE: string

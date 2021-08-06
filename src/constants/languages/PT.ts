@@ -336,7 +336,11 @@ export default class PT implements LanguageBase {
 
 	DAY = 'dia'
 
-	ADD_EVENT_TITLE = 'Novo Evento'
+	MONTH = 'mês'
+
+	YEAR = 'ano'
+
+	ADD_EVENT_TITLE = 'Adicionar Evento'
 
 	EVENT_TYPE_LABEL = 'Tipo de Evento'
 
@@ -350,7 +354,7 @@ export default class PT implements LanguageBase {
 
 	EVENT_END_TIME_LABEL = 'Horário de termino'
 
-	DATE_PICKER_DAY_FORMAT = 'dd/MM/yyyy'
+	DATE_PICKER_DAY_FORMAT = 'DD/MM/AAAA'
 
 	EVENT_REPEAT_NOT_REPEAT = 'Náo se repete'
 

@@ -243,7 +243,7 @@ export default class EN implements LanguageBase {
 
 	INVALID_MONTH = 'Invalid month'
 
-	STRING_DATE_FORMAT = 'MM DD, YYYY'
+	STRING_DATE_FORMAT = 'MM/DD/YYYY'
 
 	DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
 
@@ -334,7 +334,11 @@ export default class EN implements LanguageBase {
 
 	DAY = 'day'
 
-	ADD_EVENT_TITLE = 'New Event'
+	MONTH = 'month'
+
+	YEAR = 'year'
+
+	ADD_EVENT_TITLE = 'Add Event'
 
 	EVENT_TYPE_LABEL = 'Event Type'
 

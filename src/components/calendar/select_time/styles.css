@@ -1,0 +1,13 @@
+.time__selector{
+    margin-top:2rem;
+    display: flex;
+}
+
+.both_time__selector{
+    display: inline-flex;
+    margin-right: 2rem;
+}
+
+.individual_time__selector{
+    margin-right: 1rem;   
+}

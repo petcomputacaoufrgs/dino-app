@@ -57,7 +57,7 @@ class DataConstants {
 	// *-------------* CALENDAR *-------------*
 
 	static CALENDAR_EVENT_TITLE = { MAX: 100, REQUIRED: true } as const
-	static CALENDAR_EVENT_DESCRIPTION = { MAX: 500, REQUIRED: false } as const
+	static CALENDAR_EVENT_DESCRIPTION = { MAX: 1000, REQUIRED: false } as const
 }
 
 export default DataConstants

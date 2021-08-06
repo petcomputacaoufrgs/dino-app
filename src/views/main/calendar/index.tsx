@@ -1,7 +1,5 @@
-import { Language } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import AddButton from '../../../components/button/icon_button/add_button'
-import { ColorPalette } from '../../../components/color_pallete'
 import DinoDialog from '../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../components/textfield'
 import DataConstants from '../../../constants/app_data/DataConstants'
@@ -9,13 +7,16 @@ import { useLanguage } from '../../../context/language'
 import CalendarService from '../../../services/calendar/CalendarService'
 import CalendarEventEntity from '../../../types/calendar/database/CalendarEventEntity'
 import StringUtils from '../../../utils/StringUtils'
+import SelectEventType from '../../../components/calendar/select_event_type'
+import SelectDate from '../../../components/calendar/select_date'
+import SelectTime from '../../../components/calendar/select_time'
 import './styles.css'
 
 const getDefaultItem = () => {
 	return { title: '' } as CalendarEventEntity
 }
 
-const Calendar = () => {
+const Calendar: React.FC = () => {
 	const language = useLanguage()
 	const [open, setOpen] = useState(false)
 	const [error, setError] = useState<string>()
@@ -29,8 +30,6 @@ const Calendar = () => {
 		CalendarService.save(item)
 		setOpen(false)
 	}
-
-	const colors = ['red', 'blue', 'green', 'purple']
 
 	useEffect(() => {
 		if (open) setItem(getDefaultItem())
@@ -48,7 +47,6 @@ const Calendar = () => {
 						<div className='calendar_dialog__header_title'>
 							{language.data.ADD_EVENT_TITLE}
 						</div>
-						<ColorPalette colors={colors} onClick={() => {}} />
 					</div>
 				}
 			>
@@ -60,6 +58,9 @@ const Calendar = () => {
 						dataProps={DataConstants.CALENDAR_EVENT_TITLE}
 						errorMessage={error}
 					/>
+					<SelectEventType/>
+					<SelectDate/>
+					<SelectTime/>
 					<DinoTextfield
 						label={language.data.FORM_DESCRIPTION}
 						value={item.description}

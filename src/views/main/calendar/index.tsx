@@ -10,6 +10,7 @@ import StringUtils from '../../../utils/StringUtils'
 import SelectEventType from '../../../components/calendar/select_event_type'
 import SelectDate from '../../../components/calendar/select_date'
 import SelectTime from '../../../components/calendar/select_time'
+import MonthNavBar from '../../../components/calendar/month_nav_bar'
 import './styles.css'
 
 const getDefaultItem = () => {
@@ -37,6 +38,7 @@ const Calendar: React.FC = () => {
 
 	return (
 		<div>
+			<MonthNavBar />
 			<AddButton label='evento' handleAdd={() => setOpen(true)} />
 			<DinoDialog
 				open={open}
@@ -58,9 +60,9 @@ const Calendar: React.FC = () => {
 						dataProps={DataConstants.CALENDAR_EVENT_TITLE}
 						errorMessage={error}
 					/>
-					<SelectEventType/>
-					<SelectDate/>
-					<SelectTime/>
+					<SelectEventType />
+					<SelectDate />
+					<SelectTime />
 					<DinoTextfield
 						label={language.data.FORM_DESCRIPTION}
 						value={item.description}

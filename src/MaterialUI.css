@@ -130,6 +130,10 @@ body .MuiFormHelperText-root.MuiFormHelperText-marginDense {
 	color: var(--base-font-color);
 }
 
+span.MuiBadge-badge.MuiBadge-anchorOriginTopRightCircle.MuiBadge-colorSecondary {
+	background-color: var(--badge-color);
+}
+
 @media (orientation: landscape) {
 	body .MuiListItemText-root .MuiTypography-body1 {
 		font-size: 1.6rem;

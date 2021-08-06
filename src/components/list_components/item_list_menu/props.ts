@@ -6,6 +6,6 @@ export default interface ItemListMenuProps {
 	onEdit?: () => void
 	onDelete: () => void
 	onCloseDialog?: () => void
-	editUnavailable?: boolean
+	disable?: boolean
 	editText?: string
 }

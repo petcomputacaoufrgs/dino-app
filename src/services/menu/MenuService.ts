@@ -8,6 +8,9 @@ import { ReactComponent as SettingsSVG } from '../../assets/icons/menu_icons/set
 import { ReactComponent as LogoutSVG } from '../../assets/icons/menu_icons/logout.svg'
 import { ReactComponent as CalendarSVG } from '../../assets/icons/menu_icons/calendar.svg'
 import { ReactComponent as KidsSpaceSVG } from '../../assets/icons/menu_icons/kids_area.svg'
+import { ReactComponent as ModerationSVG } from '../../assets/icons/menu_icons/moderation.svg'
+import { ReactComponent as TreatmentSVG } from '../../assets/icons/menu_icons/treatments.svg'
+
 import LanguageBase from '../../constants/languages/LanguageBase'
 import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
@@ -90,12 +93,16 @@ class MenuService {
 			onClick: () => HistoryService.push(PathConstants.STAFF_SETTINGS),
 		},
 		{
-			image: SettingsSVG,
+			image: TreatmentSVG,
 			name: language.TREATMENTS,
 			onClick: () => HistoryService.push(PathConstants.TREATMENT),
 		},
 		{
-			image: SettingsSVG,
+			image: ModerationSVG,
+			name: language.MENU_STAFF_MODERATION,
+			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
+		},
+		{
 			name: language.ABOUT_US,
 			onClick: () => HistoryService.push(PathConstants.ABOUT_US),
 		},
@@ -109,18 +116,6 @@ class MenuService {
 		},
 	]
 
-	getAdminMainPages = (language: LanguageBase): MenuItemViewModel[] => {
-		const adminMPs = this.getStaffMainPages(language)
-
-		adminMPs.push({
-			image: SettingsSVG,
-			name: language.MENU_STAFF_MODERATION,
-			onClick: () => HistoryService.push(PathConstants.STAFF_MODERATION),
-		})
-
-		return adminMPs
-	}
-
 	getGroupedMenuItems = (
 		language: LanguageBase,
 		handleLogoutClick: () => void,
@@ -131,6 +126,11 @@ class MenuService {
 				image: LogoutSVG,
 				name: language.MENU_LOGOUT,
 				onClick: handleLogoutClick,
+			},
+			{
+				image: LogoutSVG,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
 			},
 		],
 	]
@@ -146,23 +146,13 @@ class MenuService {
 				name: language.MENU_LOGOUT,
 				onClick: handleLogoutClick,
 			},
-		],
-	]
-
-	getAdminGroupedMenuItems = (
-		language: LanguageBase,
-		handleLogoutClick: () => void,
-	): MenuItemViewModel[][] => [
-		this.getAdminMainPages(language),
-		[
 			{
 				image: LogoutSVG,
-				name: language.MENU_LOGOUT,
-				onClick: handleLogoutClick,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.STAFF_REPORT_BUG),
 			},
 		],
 	]
-
 }
 
 export default new MenuService()

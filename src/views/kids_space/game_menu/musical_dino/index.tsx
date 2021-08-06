@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import PathConstants from '../../../../constants/app/PathConstants'
 import HistoryService from '../../../../services/history/HistoryService'
 import { startGame } from './engine/index'
-import { ReactComponent as DinoSVG } from '../../../../assets/new/dino_expressions/felizp.svg'
+import { ReactComponent as DinoSVG } from '../../../../assets/kids_space/dinos/felizp.svg'
 import { useLanguage } from '../../../../context/language'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
 
-const FluteSound = require('../../../../assets/kids_space/musical_dino/flute.mp3')
-const MarimbaSound = require('../../../../assets/kids_space/musical_dino/marimba.mp3')
-const PianoSound = require('../../../../assets/kids_space/musical_dino/piano.mp3')
-const StringSound = require('../../../../assets/kids_space/musical_dino/string.mp3')
+const FluteSound = require('../../../../assets/kids_space/games/musical_dino/flute.mp3')
+const MarimbaSound = require('../../../../assets/kids_space/games/musical_dino/marimba.mp3')
+const PianoSound = require('../../../../assets/kids_space/games/musical_dino/piano.mp3')
+const StringSound = require('../../../../assets/kids_space/games/musical_dino/string.mp3')
 
 const MusicalDino: React.FC = () => {
 	const language = useLanguage()

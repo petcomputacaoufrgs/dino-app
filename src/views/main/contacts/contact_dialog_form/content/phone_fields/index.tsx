@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { MenuItem } from '@material-ui/core'
 import DinoIconButton from '../../../../../../components/button/icon_button'
-import { ReactComponent as ClearIconSVG } from '../../../../../../assets/icons/close.svg'
+import CloseIcon from '@material-ui/icons/Close';
 import PhoneFieldsProps from './props'
 import NumberFormat from 'react-number-format'
 import strUtils from '../../../../../../utils/StringUtils'
@@ -77,7 +77,7 @@ const PhoneFields = ({
 							<InputAdornment position='end'>
 								<DinoIconButton
 									ariaLabel={language.data.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
-									icon={ClearIconSVG}
+									icon={CloseIcon}
 									className='clear_button'
 									onClick={() => handleDeletePhone(number)}
 								/>

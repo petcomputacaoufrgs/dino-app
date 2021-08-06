@@ -47,6 +47,12 @@ class DataConstants {
 	// *-------------* USER *-------------*
 
 	static USER_PASSWORD = { MAX: 24, MIN: 8, REQUIRED: true } as const
+
+	// *-------------* REPORT *-------------*
+
+	static REPORT_WHAT = { MAX: 1000, REQUIRED: true } as const
+	static REPORT_WHERE = { MAX: 100, REQUIRED: false } as const
+	static REPORT_HOW = { MAX: 1000, REQUIRED: false } as const
 }
 
 export default DataConstants

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PathConstants from '../../../../../constants/app/PathConstants'
 import HistoryService from '../../../../../services/history/HistoryService'
-import { ReactComponent as Dino } from '../../../../../assets/new/dino+expressoes+acessorios/dino_empé_neutro.svg'
-import { ReactComponent as GoOutSVG } from '../../../../../assets/new/game_elements/sairdecasa.svg'
-import { ReactComponent as GameSVG } from '../../../../../assets/new/game_elements/jogo.svg'
-import { ReactComponent as GoToSleepSVG } from '../../../../../assets/new/game_elements/dormir.svg'
-import { ReactComponent as HeartsSVG } from '../../../../../assets/kids_space/dinogotchi/hearts.svg'
-import { ReactComponent as HeartSVG } from '../../../../../assets/kids_space/dinogotchi/heart.svg'
+import { ReactComponent as Dino } from '../../../../../assets/kids_space/dinos/dino_empé_neutro.svg'
+import { ReactComponent as GoOutSVG } from '../../../../../assets/kids_space/icon_button/sairdecasa.svg'
+import { ReactComponent as GameSVG } from '../../../../../assets/kids_space/icon_button/jogo.svg'
+import { ReactComponent as GoToSleepSVG } from '../../../../../assets/kids_space/icon_button/dormir.svg'
+import { ReactComponent as HeartsSVG } from '../../../../../assets/kids_space/hearts.svg'
+import { ReactComponent as CapSVG } from '../../../../../assets/kids_space/dino_acessories/cap.svg'
 import DinoIconButton from '../../../../../components/button/icon_button'
 import DinoEnum from '../../../../../types/enum/DinoEnum'
 import { useLanguage } from '../../../../../context/language'
@@ -54,7 +54,7 @@ const AwakeDino: React.FC<AwakeDinoProps> = ({
 				<DinoIconButton
 					circular
 					ariaLabel={language.data.CUSTOMIZE}
-					icon={HeartSVG}
+					icon={CapSVG}
 					onClick={() => onChangeCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}
 				/>
 				<DinoIconButton

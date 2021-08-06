@@ -90,7 +90,12 @@ class UserServiceImpl extends AutoSynchronizableService<
 			return toggle.overridePermission.permission
 
 		const user = await this.getFirst()
-		return user?.permission
+		if (user) {
+			return toggle.overridePermission.override
+				? toggle.overridePermission.permission
+				: user.permission
+		}
+		return undefined
 	}
 
 	protected async onSaveEntity(entity: UserEntity) {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../../../../components/button'
-import { ReactComponent as Dino } from '../../../../assets/new/dino+expressoes+acessorios/dino_empé_neutro.svg'
-import { ReactComponent as SleepDino } from '../../../../assets/new/dino+expressoes+acessorios/dino_dormindo.svg'
-import { ReactComponent as Cap } from '../../../../assets/new/acessories/bone.svg'
-import { ReactComponent as Hat } from '../../../../assets/new/acessories/gorro.svg'
-import { ReactComponent as Lace } from '../../../../assets/new/acessories/laco.svg'
-import { ReactComponent as Mohawk } from '../../../../assets/new/acessories/moicano.svg'
-import { ReactComponent as Headscarf } from '../../../../assets/new/acessories/pano.svg'
+import { ReactComponent as Dino } from '../../../../assets/kids_space/dinos/dino_empé_neutro.svg'
+import { ReactComponent as SleepDino } from '../../../../assets/kids_space/dinos/dino_dormindo.svg'
+import { ReactComponent as Cap } from '../../../../assets/kids_space/dino_acessories/cap.svg'
+import { ReactComponent as Hat } from '../../../../assets/kids_space/dino_acessories/hat.svg'
+import { ReactComponent as Lace } from '../../../../assets/kids_space/dino_acessories/lace.svg'
+import { ReactComponent as Mohawk } from '../../../../assets/kids_space/dino_acessories/mohawk.svg'
+import { ReactComponent as Headscarf } from '../../../../assets/kids_space/dino_acessories/headscarf.svg'
 import DinoColorConstants from '../../../../constants/dinogotchi/DinoColorConstants'
 import KidsSpaceSettingsService from '../../../../services/kids_space/KidsSpaceSettingsService'
 import { KidsSpaceSettingsEntity } from '../../../../types/kids_space/database/KidsSpaceSettingsEntity'
@@ -39,6 +39,10 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 			const kidsSpaceSettings = await KidsSpaceSettingsService.getFirst()
 			if (kidsSpaceSettings) {
 				updateData(kidsSpaceSettings)
+
+				if (!kidsSpaceSettings.firstSettingsDone) {
+					setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)
+				}
 			}
 		}
 
@@ -148,8 +152,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					className='selection_button'
 					onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_HAT)}
 				>
-					{' '}
-					Escolher{' '}
+					Escolher
 				</Button>
 			</div>
 		)
@@ -178,8 +181,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					className={`dinogotchi_screen__dino_pet first_login has_${selectedHat}`}
 				/>
 				<Button className='selection_button' onClick={handleCustomization}>
-					{' '}
-					{language.data.CHOOSE}{' '}
+					{language.data.CHOOSE}
 				</Button>
 			</div>
 		)

@@ -6,7 +6,7 @@
 }
 
 .memory_game .piece__back {
-    background-image: url('../../../../../../assets/kids_space/memory_game/back_card.svg');
+    background-image: url('../../../../../../assets/kids_space/games/memory_game/back_card.svg');
     background-color: var(--memory-game-piece-back-color);
     background-size: cover;
     height: inherit;

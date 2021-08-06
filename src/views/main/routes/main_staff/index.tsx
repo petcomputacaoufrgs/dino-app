@@ -13,17 +13,13 @@ import Home from '../../home'
 import Contacts from '../../contacts'
 import Settings from '../../settings'
 import StaffDataProvider from '../../../../context/staff_data'
-import PermissionEnum from '../../../../types/enum/PermissionEnum'
+import ReportBug from '../../../report_bug'
 
 const StaffMain: React.FC = () => {
 	return (
-		<Main>	
+		<Main>
 			<Switch>
-				<PrivateRoute 
-					exact 
-					path={PathConstants.STAFF_HOME} 
-					component={Home} 
-				/>
+				<PrivateRoute exact path={PathConstants.STAFF_HOME} component={Home} />
 				<PrivateRoute
 					exact
 					path={PathConstants.STAFF_GLOSSARY}
@@ -43,10 +39,13 @@ const StaffMain: React.FC = () => {
 					path={`${PathConstants.STAFF_GLOSSARY}/:localId`}
 					component={GlossaryItem}
 				/>
-				<PrivateRoute 
-					path={PathConstants.STAFF_MODERATION} 
-					component={StaffModeration} 
-					restrictedTo={[PermissionEnum.ADMIN]}
+				<PrivateRoute
+					path={PathConstants.STAFF_MODERATION}
+					component={StaffModeration}
+				/>
+				<PrivateRoute
+					path={PathConstants.STAFF_REPORT_BUG}
+					component={ReportBug}
 				/>
 				<StaffDataProvider>
 					<Switch>
@@ -55,9 +54,9 @@ const StaffMain: React.FC = () => {
 							path={`${PathConstants.STAFF_FAQ}/:localId/:tab`}
 							component={FaqHub}
 						/>
-						<PrivateRoute 
-							path={PathConstants.TREATMENT} 
-							component={Treatment} 
+						<PrivateRoute
+							path={PathConstants.TREATMENT}
+							component={Treatment}
 						/>
 						<PrivateRoute path={'/'} component={NotFound} />
 					</Switch>

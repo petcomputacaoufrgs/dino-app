@@ -17,6 +17,7 @@ import Loader from '../../../../components/loader'
 import AwakeDino from './awake_dino'
 import './styles.css'
 import DinoIconButton from '../../../../components/button/icon_button'
+import StatusIndicator from '../../../../components/status_indicator'
 
 
 interface DinogotchiInteriorProps {
@@ -66,8 +67,8 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 		}
 
 		return () => {
-			updateData = () => {}
-			finishLoading = () => {}
+			updateData = () => { }
+			finishLoading = () => { }
 			KidsSpaceSettingsService.removeUpdateEventListenner(loadData)
 		}
 	}, [isLoading, selectedHat])
@@ -153,8 +154,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					className='selection_button'
 					onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_HAT)}
 				>
-					{' '}
-					Escolher{' '}
+					Escolher
 				</Button>
 			</div>
 		)
@@ -183,8 +183,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					className={`dinogotchi_screen__dino_pet first_login has_${selectedHat}`}
 				/>
 				<Button className='selection_button' onClick={handleCustomization}>
-					{' '}
-					{language.data.CHOOSE}{' '}
+					{language.data.CHOOSE}
 				</Button>
 			</div>
 		)
@@ -199,6 +198,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
 			<DinoIconButton ariaLabel={language.data.CUSTOMIZE} icon={ClosetSVG} className='customize_dino' onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}/>
 			{renderDinogotchiScreen()}
+			<StatusIndicator fillHealth={40} fillEnergy={70} fillHappiness={100} />
 		</Loader>
 	)
 }

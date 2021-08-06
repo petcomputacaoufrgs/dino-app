@@ -1,7 +1,7 @@
 import React from 'react'
 import { MoreVert } from '@material-ui/icons'
 import OptionsIconButtonProps from './props'
-import { ReactComponent as MoreSVG } from '../../../../assets/icons/more_vert.svg'
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DinoIconButton from '..'
 import { useLanguage } from '../../../../context/language'
 import './styles.css'
@@ -16,7 +16,7 @@ const OptionsIconButton: React.FC<OptionsIconButtonProps> = ({
 	return (
 			<DinoIconButton
 				className='icon_button__options'
-				icon={MoreSVG}
+				icon={MoreVertIcon}
 				ariaLabel={language.data.OPTIONS}
 				onClick={onClick}
 				lum={lum}

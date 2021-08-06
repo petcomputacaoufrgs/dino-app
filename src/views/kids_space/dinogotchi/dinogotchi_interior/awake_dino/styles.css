@@ -19,7 +19,7 @@
 .dinogotchi_screen__hearts {
 	position: absolute;
 	top: 12vh;
-    left: 55vw;
+	left: 55vw;
 	width: 100px;
 	height: auto;
 	z-index: 5;

@@ -19,7 +19,6 @@ import AuthService from './services/auth/AuthService'
 import AboutUs from './views/about'
 import TabControlService from './services/tab_control/TabControlService'
 import SecondaryTab from './views/secondary_tab'
-import PWAControl from './components/pwa_control'
 import KidsSpace from './views/kids_space'
 import UserService from './services/user/UserService'
 import PermissionEnum from './types/enum/PermissionEnum'
@@ -30,6 +29,7 @@ import './MaterialUI.css'
 import './General.css'
 import { toggle } from './constants/toggle/Toggle'
 import TestInstanceService from './services/tests/TestInstanceService'
+import ReportBug from './views/report_bug'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -186,6 +186,10 @@ const App: React.FC = () => {
 					restrictedTo={[PermissionEnum.ADMIN, PermissionEnum.STAFF]}
 				/>
 				<PrivateRoute
+					path={PathConstants.USER_REPORT_BUG}
+					component={ReportBug}
+				/>
+				<PrivateRoute
 					path={PathConstants.KIDS_SPACE}
 					component={KidsSpace}
 					restrictedTo={[PermissionEnum.USER]}
@@ -207,7 +211,6 @@ const App: React.FC = () => {
 			) : (
 				<SecondaryTab />
 			)}
-			<PWAControl />
 		</div>
 	)
 }

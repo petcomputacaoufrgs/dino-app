@@ -5,6 +5,7 @@ class APIWebSocketPathsConstants {
 	FAQ_ITEM = 'faq_item'
 	TREATMENT = 'treatment'
 	TREATMENT_QUESTION = 'treatment_question'
+	REPORT = 'report'
 	CONTACT = 'contact'
 	ESSENTIAL_CONTACT = 'essential_contact'
 	PHONE = 'phone'

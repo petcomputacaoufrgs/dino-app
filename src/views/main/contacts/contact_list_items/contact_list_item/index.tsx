@@ -16,14 +16,13 @@ import { renderIcon } from '../..'
 const ContactItemList: React.FC<ContactItemListProps> = ({
 	item,
 	onClick,
-	onClickMenu
+	onClickMenu,
 }) => {
-	
 	const language = useLanguage()
 
 	return (
 		<div className='contacts__list__item'>
-			<ListItem button divider onClick={() => onClick(item)}>
+			<ListItem button onClick={() => onClick(item)}>
 				<ListItemAvatar>
 					<Avatar
 						aria-label={language.data.AVATAR_ALT}
@@ -38,10 +37,9 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 					secondary={PhoneService.getPhoneTypes(item.phones, language.data)}
 				/>
 				<ListItemSecondaryAction>
-					<OptionsIconButton onClick={(e) => onClickMenu(e, item)} />
+					<OptionsIconButton onClick={e => onClickMenu(e, item)} />
 				</ListItemSecondaryAction>
 			</ListItem>
-
 		</div>
 	)
 }

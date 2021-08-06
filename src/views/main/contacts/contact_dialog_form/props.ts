@@ -4,5 +4,4 @@ export default interface ContactFormDialogProps {
 	dialogOpen: boolean
 	onClose: () => void
 	item?: ContactView
-	items: ContactView[]
 }

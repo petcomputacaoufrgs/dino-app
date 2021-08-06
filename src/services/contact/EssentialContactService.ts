@@ -5,10 +5,6 @@ import Database from '../../storage/Database'
 import EssentialContactDataModel from '../../types/contact/api/EssentialContactDataModel'
 import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
 import UserSettingsEntity from '../../types/user/database/UserSettingsEntity'
-import ContactEntity from '../../types/contact/database/ContactEntity'
-import ContactService from './ContactService'
-import PhoneService from './PhoneService'
-import PhoneEntity from '../../types/contact/database/PhoneEntity'
 import TreatmentService from '../treatment/TreatmentService'
 
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
@@ -51,6 +47,16 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 
 	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
+	}
+
+	protected async beforeDelete(entity: EssentialContactEntity) {
+		if (entity.localId) {
+			const essentialPhones =
+				await EssentialPhoneService.getAllByEssentialContactLocalId(
+					entity.localId,
+				)
+			await EssentialPhoneService.deleteAll(essentialPhones)
+		}
 	}
 
 	async convertModelToEntity(
@@ -127,7 +133,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 		} else return []
 	}
 
-	//TODO to API
 	async removeTreatment(treatment: TreatmentEntity) {
 		if (hasValue(treatment.localId)) {
 			const essentialContacts = await this.getTreatmentNonUniversalEContacts(
@@ -165,68 +170,6 @@ class EssentialContactServiceImpl extends AutoSynchronizableService<
 				.equals(treatmentLocalId)
 				.filter(ec => ec.isUniversal === FALSE),
 		)
-	}
-
-	//TODO to API
-	public async saveUserEssentialContacts(settings: UserSettingsEntity) {
-		const essentialContacts: EssentialContactEntity[] = []
-
-		const universalContactsPromise = this.getUniversalEssentialContacts()
-		const treatmentContactPromise = this.getTreatmentEssentialContacts(settings)
-		const results = await Promise.all([
-			universalContactsPromise,
-			treatmentContactPromise,
-		])
-		essentialContacts.push(...results[0], ...results[1])
-		await this.saveContactsFromEssentialContacts(essentialContacts)
-	}
-
-	//TODO to API
-	public async saveContactsFromEssentialContacts(
-		essentialContacts: EssentialContactEntity[],
-	) {
-		essentialContacts.forEach(async ec => {
-			const savedContact = await ContactService.save(
-				this.convertEntityToContactEntity(ec),
-			)
-			if (savedContact) savePhonesFromEssentialContact(ec, savedContact)
-		})
-
-		const savePhonesFromEssentialContact = async (
-			ec: EssentialContactEntity,
-			c: ContactEntity,
-		) => {
-			if (ec.localId) {
-				const ePhones =
-					await EssentialPhoneService.getAllByEssentialContactLocalId(
-						ec.localId,
-					)
-				if (ArrayUtils.isNotEmpty(ePhones)) {
-					const newContactPhones: PhoneEntity[] = ePhones.map(ePhone => {
-						return {
-							localContactId: c.localId,
-							localEssentialPhoneId: ePhone.localId,
-							number: ePhone.number,
-							type: ePhone.type,
-						}
-					})
-					await PhoneService.saveAll(newContactPhones)
-				}
-			}
-		}
-	}
-
-	private convertEntityToContactEntity(
-		entity: EssentialContactEntity,
-	): ContactEntity {
-		const contactEntity: ContactEntity = {
-			name: entity.name,
-			description: entity.description,
-			color: entity.color,
-			localEssentialContactId: entity.localId,
-		}
-
-		return contactEntity
 	}
 }
 

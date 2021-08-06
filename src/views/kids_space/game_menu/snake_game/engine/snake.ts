@@ -1,20 +1,20 @@
 /* --> Imports <-- */
 import { getInputDirection } from './input'
 
-import HEAD_UP from '../../../../../assets/kids_space/snake/head_up.png'
-import HEAD_DOWN from '../../../../../assets/kids_space/snake/head_down.png'
-import HEAD_LEFT from '../../../../../assets/kids_space/snake/head_left.png'
-import HEAD_RIGHT from '../../../../../assets/kids_space/snake/head_right.png'
-import BODY_H from '../../../../../assets/kids_space/snake/body_h.png'
-import BODY_V from '../../../../../assets/kids_space/snake/body_v.png'
-import CURVE_DL from '../../../../../assets/kids_space/snake/curve_dl.png'
-import CURVE_DR from '../../../../../assets/kids_space/snake/curve_dr.png'
-import CURVE_UL from '../../../../../assets/kids_space/snake/curve_ul.png'
-import CURVE_UR from '../../../../../assets/kids_space/snake/curve_ur.png'
-import RABA_UP from '../../../../../assets/kids_space/snake/raba_up.png'
-import RABA_DOWN from '../../../../../assets/kids_space/snake/raba_down.png'
-import RABA_LEFT from '../../../../../assets/kids_space/snake/raba_left.png'
-import RABA_RIGHT from '../../../../../assets/kids_space/snake/raba_right.png'
+import HEAD_UP from '../../../../../assets/kids_space/games/snake/head_up.png'
+import HEAD_DOWN from '../../../../../assets/kids_space/games/snake/head_down.png'
+import HEAD_LEFT from '../../../../../assets/kids_space/games/snake/head_left.png'
+import HEAD_RIGHT from '../../../../../assets/kids_space/games/snake/head_right.png'
+import BODY_H from '../../../../../assets/kids_space/games/snake/body_h.png'
+import BODY_V from '../../../../../assets/kids_space/games/snake/body_v.png'
+import CURVE_DL from '../../../../../assets/kids_space/games/snake/curve_dl.png'
+import CURVE_DR from '../../../../../assets/kids_space/games/snake/curve_dr.png'
+import CURVE_UL from '../../../../../assets/kids_space/games/snake/curve_ul.png'
+import CURVE_UR from '../../../../../assets/kids_space/games/snake/curve_ur.png'
+import RABA_UP from '../../../../../assets/kids_space/games/snake/raba_up.png'
+import RABA_DOWN from '../../../../../assets/kids_space/games/snake/raba_down.png'
+import RABA_LEFT from '../../../../../assets/kids_space/games/snake/raba_left.png'
+import RABA_RIGHT from '../../../../../assets/kids_space/games/snake/raba_right.png'
 
 type CoordinatePosition = {
 	x: number
@@ -68,7 +68,7 @@ export function resetSnake(snakeSpeed: number) {
 export function updateSnake(snakeSpeed: number) {
 	if (grow) {
 		addSegments()
-		if(snakeSpeed > 130) snakeSpeed -= 10 //increase speed as the snake gets bigger
+		if (snakeSpeed > 130) snakeSpeed -= 10 //increase speed as the snake gets bigger
 	}
 	// Get the head direction (changed by the user)
 	const inputDirection = getInputDirection()

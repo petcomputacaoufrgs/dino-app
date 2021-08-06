@@ -47,6 +47,13 @@ p.home__grid__item__name {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-width: 9.72rem;
+	min-height: 9.72rem;
+}
+
+.home .home__grid__button #treatment_icon {
+	fill: transparent;
+	transform: scale(1.5);
 }
 
 .home .home__grid__button svg {

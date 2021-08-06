@@ -12,6 +12,7 @@ import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsCon
 import UserService from '../user/UserService'
 import TreatmentQuestionService from './TreatmentQuestionService'
 import EssentialContactService from '../contact/EssentialContactService'
+import StringUtils from '../../utils/StringUtils'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -70,7 +71,9 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	getFaqViewByFilter(view: FaqView, searchTerm: string): FaqView {
 		const newView = {
 			...view,
-			faqItems: FaqItemService.getFaqItemByFilter(searchTerm, view.faqItems),
+			faqItems: view.faqItems?.filter(item =>
+				StringUtils.contains(item.question, searchTerm),
+			),
 		}
 
 		return newView as FaqView
@@ -80,7 +83,6 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		return this.toFirst(this.table.where('name').equalsIgnoreCase(name))
 	}
 
-	//TODO to API
 	beforeDelete = async (treatment: TreatmentEntity) => {
 		const faqItems = await FaqItemService.getByTreatment(treatment)
 

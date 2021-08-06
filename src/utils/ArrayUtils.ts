@@ -1,12 +1,20 @@
+import StringUtils from './StringUtils'
+
 type filter<T> = (value: T) => boolean
 
 class ArrayUtils {
-	isNotEmpty = <T>(list?: T[]) => !this.isEmpty(list)  
-	
-	isEmpty = <T>(list?: T[]) => list === undefined || list.length === 0  
+	isNotEmpty = <T>(list?: T[]) => !this.isEmpty(list)
+
+	isEmpty = <T>(list?: T[]) => list === undefined || list.length === 0
 
 	suffle = <T>(list: T[]) => {
 		list.sort(() => Math.random() - 0.5)
+	}
+
+	sortAlphabetical = <T>(array: Array<T>, attr: string): Array<T> => {
+		return array.sort((a, b) =>
+			StringUtils.normalize(a[attr]) < StringUtils.normalize(b[attr]) ? -1 : 1,
+		)
 	}
 
 	removeRepeatedValues = <T>(list: T[]): T[] => {

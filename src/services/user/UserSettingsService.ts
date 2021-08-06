@@ -18,9 +18,6 @@ import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
 import { LanguageContextType } from '../../context/language'
-import EssentialContactService from '../contact/EssentialContactService'
-import ContactService from '../contact/ContactService'
-
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
 	UserSettingsDataModel,
@@ -283,26 +280,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: true,
 			declineGoogleContacts: false,
 			firstSettingsDone: false,
-			step: 0,
 		} as UserSettingsEntity
-	}
-
-	//TODO to API
-	saveSettingsEssentialContactGrant = (
-		newIncludeEssentialContact: boolean,
-		settings?: UserSettingsEntity,
-	) => {
-		if (
-			settings &&
-			settings.includeEssentialContact !== newIncludeEssentialContact
-		) {
-			settings.includeEssentialContact = newIncludeEssentialContact
-			this.save(settings)
-
-			if (newIncludeEssentialContact) {
-				EssentialContactService.saveUserEssentialContacts(settings)
-			} else ContactService.deleteUserEssentialContacts()
-		}
 	}
 }
 

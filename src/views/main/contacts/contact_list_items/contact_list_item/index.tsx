@@ -22,7 +22,7 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 
 	return (
 		<div className='contacts__list__item'>
-			<ListItem button divider onClick={() => onClick(item)}>
+			<ListItem button onClick={() => onClick(item)}>
 				<ListItemAvatar>
 					<Avatar
 						aria-label={language.data.AVATAR_ALT}

@@ -193,7 +193,7 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 	return (
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
 			{renderDinogotchiScreen()}
-			<StatusIndicator fillHealth={50} fillEnergy={70} fillHappiness={45} />
+			<StatusIndicator fillHealth={40} fillEnergy={70} fillHappiness={100} />
 		</Loader>
 	)
 }

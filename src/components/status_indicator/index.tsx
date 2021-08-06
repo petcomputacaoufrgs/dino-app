@@ -15,16 +15,16 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({ fillHealth, fillEnerg
     return (
         <div className='status_wrapper dino__flex_row'>
             <div className='status_item'>
-                <div className='status_bg status_health' style={{ clipPath: `circle(50% at 50% ${fillHealth - 50}%`, height: `${fillHealth}%`}}></div>
+                <div className='status_bg status_health' style={{backgroundImage: `linear-gradient(to bottom, transparent ${100 - fillHealth}%, #FF6961 0% ${fillHealth}%)`}}></div>
                 <HealthStatus />
 
             </div>
             <div className='status_item'>
-                <div className='status_bg status_energy' style={{ clipPath: `circle(50% at 50% ${fillEnergy - 50}%`, height: `${fillEnergy}%`}}></div>
+                <div className='status_bg status_energy' style={{backgroundImage: `linear-gradient(to bottom, transparent ${100 - fillEnergy}%, #00db52 0% ${fillEnergy}%)`}}></div>
                 <EnergyStatus />
             </div>
             <div className='status_item'>
-                <div className='status_bg status_happiness' style={{ clipPath: `circle(50% at 50% ${fillHappiness - 50}%`, height: `${fillHappiness}%`}}></div>
+                <div className='status_bg status_happiness' style={{backgroundImage: `linear-gradient(to bottom, transparent ${100 - fillHappiness}%, #FCD754 0% ${fillHappiness}%)`}}></div>
                 <HappinessStatus />
             </div>
         </div>

@@ -10,7 +10,8 @@
 .status_wrapper svg {
     width: 100%;
     height: 100%;
-    position: absolute;  
+    grid-area: 1/1;
+    z-index: 2;
 }
 
 .status_wrapper svg .st0, .status_wrapper svg .st2{
@@ -18,31 +19,17 @@
 }
 
 .status_bg {
+    justify-self: center;
+    align-self: end;
     width: 100%;
-    height: 70%;
-    position: absolute;
-    clip-path: circle(50% at 50% 20%);
-}
-
-.status_health {
-    background-color: #FF6961;
-}
-
-.status_energy {
-    background-color: #00db52;
-}
-
-.status_happiness {
-    background-color: #FCD754;
-
+    height: 100%;
+    border-radius: 50%;
+    grid-area: 1/1;
 }
 
 .status_item {
     width: 4rem;
     height: 4rem;
-    position: relative;
     margin-left: 1rem; 
-    display: flex;
-    align-items: flex-end;
-    flex-direction: row;
+    display: grid;
 }

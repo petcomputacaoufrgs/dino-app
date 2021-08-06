@@ -12,7 +12,7 @@
 }
 
 .select-faq__button .MuiButton-outlinedPrimary {
-	border-color: var(--column-font-color);
+	border-color: var(--base-font-color);
 }
 
 .select_faq_button {
@@ -47,6 +47,11 @@
 
 .faq__fail_to_load .faq__save_button {
 	margin-top: 2rem;
+	background-color: var(--buttons-background);
+}
+
+.faq__fail_to_load .faq__save_button .MuiButton-label {
+	color: var(--buttons-font-color);
 }
 
 .faq__card_title {

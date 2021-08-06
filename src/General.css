@@ -6,14 +6,14 @@
 }
 
 .dino__history_link {
-	color: var(--button-font-color);
+	color: var(--link-font-color);
 	font-size: var(--default-font);
 }
 
 .dino__textfield .MuiFormHelperText-root {
 	text-align: right;
 	display: block;
-	color: var(--contrast-color);
+	color: var(--base-font-color);
 	margin-bottom: -8px;
 }
 

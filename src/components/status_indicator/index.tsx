@@ -1,8 +1,8 @@
 import React from 'react'
 import './styles.css'
-import { ReactComponent as HealthStatus } from '../../assets/new/game_elements/saude.svg'
-import { ReactComponent as EnergyStatus } from '../../assets/new/game_elements/energia.svg'
-import { ReactComponent as HappinessStatus } from '../../assets/new/game_elements/felicidade.svg'
+import { ReactComponent as HealthStatus } from '../../assets/kids_space/status/saude.svg'
+import { ReactComponent as EnergyStatus } from '../../assets/kids_space/status/energia.svg'
+import { ReactComponent as HappinessStatus } from '../../assets/kids_space/status/felicidade.svg'
 
 interface StatusIndicatorProps {
     fillHealth: number,

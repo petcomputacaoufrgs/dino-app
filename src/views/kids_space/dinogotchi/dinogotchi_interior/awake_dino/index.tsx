@@ -51,12 +51,6 @@ const AwakeDino: React.FC<AwakeDinoProps> = ({
 				/>
 				<DinoIconButton
 					circular
-					ariaLabel={language.data.CUSTOMIZE}
-					icon={CapSVG}
-					onClick={() => onChangeCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}
-				/>
-				<DinoIconButton
-					circular
 					ariaLabel={
 						state !== DinoEnum.OUTSIDE
 							? language.data.GO_OUTSIDE

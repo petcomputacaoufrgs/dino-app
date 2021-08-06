@@ -7,9 +7,9 @@
 
 .dinogotchi_screen .customize_dino {
 	position: absolute;
-	width: 3.3rem;
-	height: 3.3rem;
-	margin: 1rem 2rem;
+	width: 3rem;
+	height: 3rem;
+	margin: 1rem 1.5rem;
 	right: 0;
 	top: 0;
 }
@@ -185,5 +185,14 @@
 
 	.dinogotchi_screen .icon_button {
 		transform: scale(3);
+	}
+
+	.dinogotchi_screen .customize_dino {
+		transform: scale(2);
+	}
+
+	.status_item {
+		width: 6rem;
+		height: 6rem;
 	}
 }

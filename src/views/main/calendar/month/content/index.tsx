@@ -39,7 +39,7 @@ const Content: React.FC<ContentProps> = ({ date, isCurrentMonth }) => {
 			monthDays.push(...nextMonthDays.splice(7, 7))
 		}
 
-		const days = monthDays
+		const days = monthDays[0]
 			.filter((day: Date) => {
 				return day.getDay() === dayOfWeek
 			})

@@ -1,0 +1,9 @@
+.add_button {
+	position: absolute;
+	bottom: 1.2rem;
+	right: 1.2rem;
+}
+
+.add_button.dino_icon_button.circular svg {
+	transform: scale(1.6);
+}

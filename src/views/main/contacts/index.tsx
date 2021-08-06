@@ -1,67 +1,99 @@
 import React, { useEffect, useState } from 'react'
+import { cameFromEssential, filterContactViews, getContactViews, isUniversalEssential } from '../../../services/contact/ContactViewService'
 import ContactItems from './contact_list_items'
-import MuiSearchBar from '../../../components/mui_search_bar'
+import DinoSearchBar from '../../../components/search_bar'
 import ContactFormDialog from './contact_dialog_form'
-import Contants from '../../../constants/contact/ContactsConstants'
-import GoogleGrantDialog from '../../../components/google_grant_dialog'
+import GoogleGrantDialog from '../../../components/dialogs/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
-import { ReactComponent as AddIconSVG } from '../../../assets/icons/add.svg'
-import CircularButton from '../../../components/button/circular_button'
-import Loader from '../../../components/loader'
+import DinoLoader from '../../../components/loader'
 import { useLanguage } from '../../../context/language'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
-import ContactView from '../../../types/contact/view/ContactView'
+import ContactView, { ContactType } from '../../../types/contact/view/ContactView'
 import ContactService from '../../../services/contact/ContactService'
 import PhoneService from '../../../services/contact/PhoneService'
-import GoogleContactService from '../../../services/contact/GoogleContactService'
+import EssentialContactService from '../../../services/contact/EssentialContactService'
+import { HasStaffPowers } from '../../../context/private_router'
+import AddButton from '../../../components/button/icon_button/add_button'
+import EssentialPhoneService from '../../../services/contact/EssentialPhoneService'
+import { Star, Public } from '@material-ui/icons'
+import DinoFilterList from '../../../components/list_components/filter_list'
+import ListTitle from '../../../components/list_components/list_title'
+import CRUDEnum from '../../../types/enum/CRUDEnum'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import FilterService from '../../../storage/local_storage/filter/FilterService'
+
+export const renderIcon = (contact: ContactType) => {
+
+	if(cameFromEssential(contact))
+		return <Star /> 
+	if(isUniversalEssential(contact)) 
+		return <Public /> 
+	if(contact.name)
+		return contact.name[0].toUpperCase()
+		
+	return '?'	
+}
 
 const Contacts: React.FC = () => {
+	const hasStaffPowers = HasStaffPowers()
 	const language = useLanguage()
-
 	const [isLoading, setIsLoading] = useState(true)
 	const [contacts, setContacts] = useState<ContactView[]>([])
-	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
-		undefined,
-	)
+	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
-	const [add, setAdd] = useState(false)
-	const [addEssential, setAddEssential] = useState(false)
+	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [searchTerm, setSearchTerm] = useState('')
 	const [shouldDecline, setShouldDecline] = useState(false)
+	const [filters, setFilters] = useState(FilterService.getContactFilters(hasStaffPowers, language))
 
-	const filteredContacts = ContactService.filterContactViews(
-		contacts,
-		searchTerm,
-	)
+	let filteredContacts = filterContactViews(contacts, searchTerm)
+	.filter(c => filters.some(f => f.checked && f.validator(c.contact)))
+
+	const handleChangeChecked = (index: number) => {
+		const filter = filters[index]
+		filter.checked = !filter.checked
+		setFilters([...filters])
+	} 
 
 	useEffect(() => {
+		const loadUserData = async () => {
+			const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
+			updateSyncGoogleContacts(syncGoogleContacts)
+
+			return await ContactService.getAll()
+		} 
+
+		const loadContacts = async () => (
+			hasStaffPowers ? EssentialContactService.getAll() : loadUserData()
+		)
+
+		const loadPhones = async () => (
+			hasStaffPowers ? EssentialPhoneService.getAll() : PhoneService.getAll()
+		)
+
 		const loadData = async () => {
 			const settings = await UserSettingsService.getFirst()
-			const syncGoogleContacts = await GoogleScopeService.hasContactGrant()
-			const contacts = await ContactService.getAll()
-			const phones = await PhoneService.getAll()
-			const googleContacts = await GoogleContactService.getAll()
+			const phones = await loadPhones()
+			const contacts = await loadContacts()
 
-			const contactViews = ContactService.getContactViews(
+			const contactViews = getContactViews(
 				contacts,
 				phones,
-				googleContacts,
+				hasStaffPowers
 			)
 
 			updateContacts(contactViews)
-			updateSyncGoogleContacts(syncGoogleContacts)
 			updateSettings(settings)
 			finishLoading()
 		}
 
 		ContactService.addUpdateEventListenner(loadData)
 		PhoneService.addUpdateEventListenner(loadData)
-		GoogleContactService.addUpdateEventListenner(loadData)
+		EssentialContactService.addUpdateEventListenner(loadData)
+		EssentialPhoneService.addUpdateEventListenner(loadData)
 		UserSettingsService.addUpdateEventListenner(loadData)
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
@@ -92,11 +124,12 @@ const Contacts: React.FC = () => {
 			finishLoading = () => {}
 			ContactService.removeUpdateEventListenner(loadData)
 			PhoneService.removeUpdateEventListenner(loadData)
-			GoogleContactService.removeUpdateEventListenner(loadData)
+			EssentialContactService.removeUpdateEventListenner(loadData)
+			EssentialPhoneService.removeUpdateEventListenner(loadData)
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}
-	}, [isLoading])
+	}, [isLoading, hasStaffPowers])
 
 	const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
 		setSearchTerm(event.target.value)
@@ -104,85 +137,68 @@ const Contacts: React.FC = () => {
 
 	const handleAcceptGoogleGrant = async () => {
 		setOpenGrantDialog(false)
-		setAdd(true)
+		handleCreate()
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
-			GoogleContactService.activeGoogleContactsGrant()
 		}
 	}
 
 	const handleCloseGoogleGrant = () => {
 		setOpenGrantDialog(false)
-		setAdd(true)
+		handleCreate()
 	}
 
 	const handleDeclineGoogleGrant = () => {
 		setShouldDecline(true)
 		setOpenGrantDialog(false)
-		setAdd(true)
+		handleCreate()
 	}
 
 	const handleAddContact = () => {
-		if (settings) {
+		if (settings && !hasStaffPowers) {
 			if (!syncGoogleContacts && !settings.declineGoogleContacts) {
 				setOpenGrantDialog(true)
 				return
 			}
 		}
-
-		setAdd(true)
-	}
-
-	const handleAddEssentialContact = () => {
-		setAddEssential(true)
+		handleCreate()
 	}
 
 	const handleClose = () => {
-		setAdd(false)
+		setToAction(CRUDEnum.NOP)
 		if (shouldDecline && settings) {
 			settings.declineGoogleContacts = true
 			UserSettingsService.save(settings)
 		}
 	}
 
-	const handleCloseEssential = () => {
-		setAddEssential(false)
-	}
+	const handleCreate = () => setToAction(CRUDEnum.CREATE)
 
 	return (
 		<div className='contacts'>
-			<Loader className='contacts__loader' isLoading={isLoading}>
-				<MuiSearchBar
+			<DinoLoader className='contacts__loader' isLoading={isLoading}>
+				<DinoSearchBar
 					value={searchTerm}
 					onChange={handleChange}
-					placeholder={language.data.SEARCH_HOLDER}
 				/>
-				{settings && <ContactItems settings={settings} items={filteredContacts} />}
-				<CircularButton
-					ariaLabel={language.data.CONTACTS_ADD_CONTACT}
-					className='add_contact_button'
-					icon={AddIconSVG}
-					onClick={handleAddContact}
-				/>
-				<CircularButton
-					ariaLabel={language.data.CONTACTS_ADD_CONTACT + ' (Essential)'}
-					className='add_essential_contact_button'
-					icon={AddIconSVG}
-					onClick={handleAddEssentialContact}
-				/>
-			</Loader>
-			<ContactFormDialog
-				items={contacts}
-				action={Contants.ACTION_ADD}
-				dialogOpen={add}
-				onClose={handleClose}
+				<div className="dino__flex_row dino__list_and_filter">
+					<ListTitle title={language.data.MENU_CONTACTS} />
+					<DinoFilterList 
+						filters={filters} 
+						onChangeChecked={handleChangeChecked} 
+					/>
+				</div>
+				<ContactItems items={filteredContacts} />
+			</DinoLoader>
+			<AddButton
+				handleAdd={handleAddContact}
+				label={language.data.NEW_CONTACT}
 			/>
 			<ContactFormDialog
 				items={contacts}
-				action={Contants.ACTION_ADD_ESSENTIAL}
-				dialogOpen={addEssential}
-				onClose={handleCloseEssential}
+				dialogOpen={toAction === CRUDEnum.CREATE}
+				onClose={handleClose}
 			/>
 			<GoogleGrantDialog
 				onAccept={handleAcceptGoogleGrant}

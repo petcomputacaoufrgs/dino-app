@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLanguage } from '../../../context/language'
-import DinoDialogHeader, { DinoDialogContent } from '../../dino_dialog'
+import {DinoDialogHeader, DinoDialogContent } from '../../dialogs/dino_dialog'
 import PWAControlIntroContentProps from './props'
 import PWAControlIntroContentStepOne from './step_one'
 import PWAControlIntroContentStepThree from './step_three'

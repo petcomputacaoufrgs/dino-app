@@ -43,6 +43,11 @@
 	/* Botoes */
 	--button-font-color: #694e73;
 	--button-selected-font-color: #b054d1;
+	--circular-button: #adc2b9;
+
+	/* Realce */
+	--highlight-color: #694e73;
+	--tab-highlight-color: #694e73;
 
 	/* Outros */
 	--contrast-color: #2f2e2c;
@@ -62,7 +67,7 @@
 	/* Fundos */
 	--login-background: #2f2e2c;
 	--background-main: #2f2e2c;
-	--horizontal-menu-item: #c2ae64;
+	--horizontal-menu-item: #694e73;
 	--dialog-input: #5A5A5A;
 
 	/* Fontes */
@@ -73,7 +78,7 @@
 	--header-and-menu: #121212;
 
 	/* Home */
-	--home-icons: #ffeaa3;
+	--home-icons: #694e73;
 
 	/* Notas */
 	--board-background: #796980;
@@ -86,6 +91,11 @@
 	/* Botoes */
 	--button-font-color: #b054d1;
 	--button-selected-font-color: #694e73;
+	--circular-button: #474747;
+
+	/* Realce */
+	--highlight-color: #694e73;
+	--tab-highlight-color: #f5f5f5;
 
 	/* Outros */
 	--contrast-color: #f5f5f5;
@@ -126,6 +136,11 @@
 	/* Botoes */
 	--button-font-color: #442950;
 	--button-selected-font-color: #b054d1;
+	--circular-button: #688478;
+	
+	/* Realce */
+	--highlight-color: #688478;
+	--tab-highlight-color: #688478;
 
 	/* Outros */
 	--contrast-color: #2f2e2c;

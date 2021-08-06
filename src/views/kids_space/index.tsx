@@ -10,6 +10,7 @@ import MusicalDino from './game_menu/musical_dino'
 import TicTacDino from './game_menu/tic_tac_dino'
 import MemoryGame from './game_menu/memory_game'
 import './variables.css'
+import DinoSlider from './game_menu/dino_slider'
 
 const KidsSpace: React.FC = () => {
 	return (
@@ -19,7 +20,11 @@ const KidsSpace: React.FC = () => {
 				path={PathConstants.KIDS_SPACE}
 				component={Dinogotchi}
 			/>
-			<Route exact path={PathConstants.GAME_MENU} component={Menu} />
+			<Route 
+				exact 
+				path={PathConstants.GAME_MENU} 
+				component={Menu} 
+			/>
 			<Route
 				exact
 				path={PathConstants.MEMORY_GAME}
@@ -44,6 +49,11 @@ const KidsSpace: React.FC = () => {
 				exact
 				path={PathConstants.MUSICAL_DINO_GAME}
 				component={MusicalDino}
+			/>
+			<Route
+				exact
+				path={PathConstants.DINO_SLIDER_GAME}
+				component={DinoSlider}
 			/>
 			<Route path={'/'} component={NotFound} />
 		</Switch>

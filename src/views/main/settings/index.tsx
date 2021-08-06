@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import Button from '../../../components/button'
 import SelectTreatment from '../../../components/settings/select_treatment'
-import GoogleGrantDialog from '../../../components/google_grant_dialog'
+import GoogleGrantDialog from '../../../components/dialogs/google_grant_dialog'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import SelectColorTheme from '../../../components/settings/select_color_theme'
 import SelectLanguage from '../../../components/settings/select_language'
@@ -19,16 +19,16 @@ import Loader from '../../../components/loader'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
-import FontSizeEnum from '../../../types/user/view/FontSizeEnum'
-import ColorThemeEnum from '../../../types/user/view/ColorThemeEnum'
+import FontSizeEnum from '../../../types/enum/FontSizeEnum'
+import ColorThemeEnum from '../../../types/enum/ColorThemeEnum'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import ContactService from '../../../services/contact/ContactService'
-import GoogleContactService from '../../../services/contact/GoogleContactService'
 import TextButton from '../../../components/button/text_button'
 import TransitionSlide from '../../../components/slide_transition'
-import DinoDialogHeader, {
+import {
+	DinoDialogHeader,
 	DinoDialogContent,
-} from '../../../components/dino_dialog'
+} from '../../../components/dialogs/dino_dialog'
 import { Dialog } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
@@ -36,18 +36,25 @@ import UserSettingsConstants from '../../../constants/auth/ResponsibleAuthConsta
 import RecoverPasswordDialog from '../../../components/responsible_dialog/recover_password_dialog'
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
 import ResponsibleAuthConstants from '../../../constants/auth/ResponsibleAuthConstants'
+import HashUtils from '../../../utils/HashUtils'
+import { HasStaffPowers } from '../../../context/private_router'
+import DataConstants from '../../../constants/app_data/DataConstants'
 import './styles.css'
+
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 2
 
 const Settings: React.FC = () => {
 	const alert = useAlert()
 	const language = useLanguage()
+	const isStaff = HasStaffPowers()
 
 	const [openRecoverDialog, setOpenRecoverDialog] = useState(false)
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
-	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(undefined)
+	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
+		undefined,
+	)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
 	const [selectedLanguage, setSelectedLanguage] = useState(
@@ -57,25 +64,23 @@ const Settings: React.FC = () => {
 	const [selectedColorTheme, setSelectedColorTheme] = useState(
 		ColorThemeEnum.DEVICE,
 	)
-	const [
-		selectedEssentialContactGrant,
-		setSelectedEssentialContactGrant,
-	] = useState(false)
+	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] =
+		useState(false)
 	const [selectedTreatment, setSelectedTreatment] = useState<
 		TreatmentEntity | undefined
 	>(undefined)
-	const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false)
+	const [openChangePasswordDialog, setOpenChangePasswordDialog] =
+		useState(false)
 	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
 	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
-
 	const [oldPassword, setOldPassword] = useState("")
-	const [responsibleNewPassword, setResponsibleNewPassword] = useState("")
+	const [parentsAreaPassword, setParentsAreaPassword] = useState('')
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
 		if(!openChangePasswordDialog) {
-			setResponsibleNewPassword("")
+			setParentsAreaPassword("")
 			setConfirmParentsAreaPassword("")
 			setOldPassword("")
 			setPasswordErrorMessage(undefined)
@@ -87,7 +92,7 @@ const Settings: React.FC = () => {
 			const treatments = await TreatmentService.getAll()
 			const settings = await UserSettingsService.getFirst()
 			const syncGoogleContacs = await GoogleScopeService.hasContactGrant()
-			
+
 			if (settings) {
 				if (treatments) {
 					const treatment = treatments.find(
@@ -116,9 +121,8 @@ const Settings: React.FC = () => {
 		let updateSettings = (settings: UserSettingsEntity) => {
 			const colorThemeCode = UserSettingsService.getColorThemeCode(settings)
 			const fontSizeCode = UserSettingsService.getFontSizeCode(settings)
-			const essentialContactGrant = UserSettingsService.getEssentialContactGrant(
-				settings,
-			)
+			const essentialContactGrant =
+				UserSettingsService.getEssentialContactGrant(settings)
 			setSelectedColorTheme(colorThemeCode)
 			setSelectedFontSize(fontSizeCode)
 			setSelectedEssentialContactGrant(
@@ -127,7 +131,10 @@ const Settings: React.FC = () => {
 			setSettings(settings)
 		}
 
-		let updateSyncGoogleContacts = (syncGoogleContacts: boolean, settings?: UserSettingsEntity) => {
+		let updateSyncGoogleContacts = (
+			syncGoogleContacts: boolean,
+			settings?: UserSettingsEntity,
+		) => {
 			if (!settings || settings.declineGoogleContacts) return
 			setSyncGoogleContacts(syncGoogleContacts)
 		}
@@ -180,7 +187,7 @@ const Settings: React.FC = () => {
 
 	const handleGoogleContactSwitchChanged = () => {
 		if (!settings) return
-		
+
 		if (!syncGoogleContacts) {
 			setOpenGoogleContactDialog(true)
 		} else {
@@ -193,7 +200,6 @@ const Settings: React.FC = () => {
 		if (settings) {
 			settings.declineGoogleContacts = false
 			await UserSettingsService.save(settings)
-			GoogleContactService.activeGoogleContactsGrant()
 		}
 	}
 
@@ -216,6 +222,8 @@ const Settings: React.FC = () => {
 	const handlePasswordChange = async () => {
 		if (!settings) return
 
+		const encryptedOldPassword = await HashUtils.sha256(oldPassword)
+
 		const isValidOldPassword = await ResponsibleAuthService.verifyPassword(oldPassword)
 
 		if (!isValidOldPassword) {
@@ -223,7 +231,7 @@ const Settings: React.FC = () => {
 			return
 		}
 
-		if (responsibleNewPassword.length < UserSettingsConstants.PASSWORD_LENGTH_MIN) {
+		if (parentsAreaPassword.length < UserSettingsConstants.PASSWORD_LENGTH_MIN) {
 			setPasswordErrorMessage(
 				language.data.PASSWORD_LENGHT_ERROR_MESSAGE(
 					ResponsibleAuthConstants.PASSWORD_LENGTH_MIN, ResponsibleAuthConstants.PASSWORD_LENGTH_MAX)
@@ -231,12 +239,23 @@ const Settings: React.FC = () => {
 			return
 		}
 
-		if (responsibleNewPassword !== confirmParentsAreaPassword) {
+		if (parentsAreaPassword !== confirmParentsAreaPassword) {
 			setPasswordErrorMessage(language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE)
+		}
+
+		if (parentsAreaPassword.length < DataConstants.USER_PASSWORD.MIN) {
+			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
+			return
+		}
+
+		if (parentsAreaPassword !== confirmParentsAreaPassword) {
+			setPasswordErrorMessage(
+				language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE,
+			)
 			return
 		}
 		
-		const success = await ResponsibleAuthService.changeAuth(responsibleNewPassword)
+		const success = await ResponsibleAuthService.changeAuth(parentsAreaPassword)
 
 		if (success) {
 			alert.showSuccessAlert(language.data.SUCCESS)
@@ -244,6 +263,11 @@ const Settings: React.FC = () => {
 			alert.showErrorAlert(language.data.ERROR_CHANGING_PASSWORD)
 		}
 		
+		settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
+		await UserSettingsService.save(settings)
+
+		alert.showSuccessAlert(language.data.SUCESS)
+
 		setOpenChangePasswordDialog(false)
 	}
 
@@ -283,8 +307,9 @@ const Settings: React.FC = () => {
 			settings.colorTheme = selectedColorTheme
 			settings.includeEssentialContact = selectedEssentialContactGrant
 
-			const userDeclinedGoogleContacts = !settings.declineGoogleContacts && !syncGoogleContacts
-			
+			const userDeclinedGoogleContacts =
+				!settings.declineGoogleContacts && !syncGoogleContacts
+
 			if (userDeclinedGoogleContacts) {
 				settings.declineGoogleContacts = true
 			}
@@ -293,7 +318,7 @@ const Settings: React.FC = () => {
 				settings.treatmentLocalId = selectedTreatment.localId
 			}
 
-			alert.showSuccessAlert(language.data.SETTINGS_SAVE_SUCCESS)
+			alert.showSuccessAlert(language.data.SETTINGS_UPDATED_SUCESS)
 
 			await UserSettingsService.save(settings)
 
@@ -315,14 +340,14 @@ const Settings: React.FC = () => {
 				EssentialContactService.saveUserEssentialContacts(settings)
 			}
 		} else {
-			alert.showErrorAlert(language.data.SETTINGS_SAVE_ERROR)
+			alert.showErrorAlert(language.data.SETTINGS_UPDATED_ERROR)
 		}
 	}
 
 	const handleChangeOldPassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setOldPassword(event.target.value)
 		}
 	}
@@ -330,15 +355,18 @@ const Settings: React.FC = () => {
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 		
-		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
-			setResponsibleNewPassword(event.target.value)
+
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
+			setParentsAreaPassword(event.target.value)
 		}
 	}
 
-	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleChangeConfirmPassword = (
+		event: ChangeEvent<HTMLInputElement>,
+	) => {
 		const newValue = event.target.value
 
-		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setConfirmParentsAreaPassword(event.target.value)
 		}
 	}
@@ -358,7 +386,7 @@ const Settings: React.FC = () => {
 		<div className='settings__save_button_container'>
 			<Button className='settings__save_button' onClick={handleSave}>
 				<SaveSVG className='settings__save_button__icon' />
-				{language.data.SETTINGS_SAVE}
+				{language.data.SAVE}
 			</Button>
 		</div>
 	)
@@ -417,47 +445,61 @@ const Settings: React.FC = () => {
 			>
 				<Loader isLoading={isLoading}>
 					<DinoDialogHeader>
-						<h1>{language.data.CHANGE_PASSWORD_DIALOG}</h1>
+						<h1>{language.data.CHANGE_PASSWORD}</h1>
 					</DinoDialogHeader>
 					<DinoDialogContent>
 						<form>
-							<label htmlFor="pass">{language.data.INSERT_OLD_PASSWORD}</label>
-							<input 
-								autoComplete="off"
-								value={oldPassword} 
+							<label htmlFor='pass'>{language.data.INSERT_OLD_PASSWORD}</label>
+							<input
+								autoComplete='off'
+								value={oldPassword}
 								onChange={handleChangeOldPassword}
 								type="password" 
 								name="password" 
 								required />
-							<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD}</label>
-							<input 
-								autoComplete="off"
-								value={responsibleNewPassword} 
+							<label htmlFor='pass'>{language.data.INSERT_NEW_PASSWORD}</label>
+							<input
+								autoComplete='off'
+								value={parentsAreaPassword}
 								onChange={handleChangePassword}
-								type="password" 
-								name="password" 
-								required />
-							<label htmlFor="pass">{language.data.INSERT_NEW_PASSWORD_AGAIN}</label>
-							<input 
-								autoComplete="off"
+								type='password'
+								name='password'
+								required
+							/>
+							<label htmlFor='pass'>
+								{language.data.INSERT_NEW_PASSWORD_AGAIN}
+							</label>
+							<input
+								autoComplete='off'
 								value={confirmParentsAreaPassword}
 								onChange={handleChangeConfirmPassword}
-								type="password" 
-								name="password" 
-								required />
-								{passwordErrorMessage && <p className="settings__change_password_dialog__error_message">{passwordErrorMessage}</p>}
+								type='password'
+								name='password'
+								required
+							/>
+							{passwordErrorMessage && (
+								<p className='settings__change_password_dialog__error_message'>
+									{passwordErrorMessage}
+								</p>
+							)}
 						</form>
 						<TextButton onClick={handleRecoverPassword}>
 							{language.data.FORGOT_PASSWORD}
 						</TextButton>
+						<a
+							href={
+								'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'
+							}
+						>
+							{' '}
+							{language.data.FORGOT_PASSWORD}
+						</a>
 					</DinoDialogContent>
 					<div className='settings__change_password_dialog__buttons'>
 						<Button onClick={handleCloseChangePasswordDialog}>
 							{language.data.CANCEL}
 						</Button>
-						<Button
-							onClick={handlePasswordChange}
-						>
+						<Button onClick={handlePasswordChange}>
 							{language.data.CHANGE}
 						</Button>
 					</div>
@@ -494,39 +536,43 @@ const Settings: React.FC = () => {
 						setColorTheme={setSelectedColorTheme}
 					/>
 				</FormControl>
-				<FormControl className='settings__form'>
-					<SelectTreatment
-						availableTreatments={treatments}
-						setTreatment={setSelectedTreatment}
-						treatment={selectedTreatment}
-					/>
-				</FormControl>
-				<DinoHr invisible />
-				<FormControl className='settings__form'>
-					<DinoSwitch
-						selected={syncGoogleContacts}
-						setSelected={handleGoogleContactSwitchChanged}
-						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
-					/>
-				</FormControl>
+				{!isStaff && (
+					<>
+						<FormControl className='settings__form'>
+							<SelectTreatment
+								availableTreatments={treatments}
+								setTreatment={setSelectedTreatment}
+								treatment={selectedTreatment}
+							/>
+						</FormControl>
+						<DinoHr invisible />
+						<FormControl className='settings__form'>
+							<DinoSwitch
+								selected={syncGoogleContacts}
+								onChangeSelected={handleGoogleContactSwitchChanged}
+								label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
+							/>
+						</FormControl>
+						<DinoHr />
+						<FormControl className='settings__form'>
+							<DinoSwitch
+								selected={selectedEssentialContactGrant}
+								onChangeSelected={() => setSelectedEssentialContactGrant(false)}
+								label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
+							/>
+						</FormControl>
+						<DinoHr />
+						<FormControl>
+							<TextButton
+								onClick={handleChangePasswordClick}
+								className='settings__form__change_password'
+							>
+								{language.data.CHANGE_PASSWORD_LABEL}
+							</TextButton>
+						</FormControl>
+					</>
+				)}
 				<DinoHr />
-				<FormControl className='settings__form'>
-					<DinoSwitch
-						selected={selectedEssentialContactGrant}
-						setSelected={setSelectedEssentialContactGrant}
-						label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-					/>
-				</FormControl>
-				<DinoHr />
-				<FormControl>
-					<TextButton
-						onClick={handleChangePasswordClick}
-						className='settings__form__change_password'
-					>
-						{language.data.CHANGE_PASSWORD}
-					</TextButton>
-				</FormControl>
-				<DinoHr />	
 				<FormControl>
 					<TextButton
 						onClick={handlerDeleteAccountClick}

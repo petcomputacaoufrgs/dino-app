@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import BoardProps from './props'
-import Piece from '../piece'
+import MemoryPiece from '../piece'
+import { sleep } from '../../../../../../utils/SleepUtils'
 import './styles.css'
-import SleepUtils from '../../../../../../utils/SleepUtils'
 
 const BASE_ANIMATION_DELAY = 500
 
-const Board: React.FC<BoardProps> = ({
+function sleep(ms:number) {
+    return new Promise<void>(resolve => setTimeout(resolve, ms));
+}
+
+const MemoryBoard: React.FC<BoardProps> = ({
     pieceList,
     onGameOver,
     restart
@@ -34,7 +38,7 @@ const Board: React.FC<BoardProps> = ({
             onGameOver()
             setBlocked(true)
         }
-    }, [blocked, score, onGameOver])
+    }, [blocked, score, onGameOver, pieceList.length])
 
     const handleOnClick = async(index: number) => {
         if(!pieceState[index].turned && !blocked) {
@@ -46,14 +50,14 @@ const Board: React.FC<BoardProps> = ({
                 setPieceState([...pieceState])
                 setBlocked(true)
                 
-                await SleepUtils.sleep(BASE_ANIMATION_DELAY)
+                await sleep(BASE_ANIMATION_DELAY)
 
                 if (pieceState[turnedPieceIndex].image === pieceState[index].image) {
                     setScore(score + 1)
                     
                     setVisibility(false)
 
-                    await SleepUtils.sleep(BASE_ANIMATION_DELAY)
+                    await sleep(BASE_ANIMATION_DELAY)
 
                     setBlocked(false)
                     setVisibility(true)
@@ -63,7 +67,7 @@ const Board: React.FC<BoardProps> = ({
                 } else {
                     setTurnBack(true)
 
-                    await SleepUtils.sleep(BASE_ANIMATION_DELAY)
+                    await sleep(BASE_ANIMATION_DELAY)
 
                     setTurnBack(false)
                     setBlocked(false)
@@ -81,13 +85,9 @@ const Board: React.FC<BoardProps> = ({
     }
 
     return (
-        <>
-        <div className="score_board">
-            {score}
-        </div>
         <div className="Board">
             {pieceState.map((piece, index) => 
-                <Piece 
+                <MemoryPiece 
                     key={index} 
                     piece={piece} 
                     turnedBack={turnBack} 
@@ -96,8 +96,7 @@ const Board: React.FC<BoardProps> = ({
                 />
             )}
         </div>
-        </>
     )
 }
 
-export default Board
+export default MemoryBoard

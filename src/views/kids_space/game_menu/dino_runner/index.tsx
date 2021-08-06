@@ -4,13 +4,13 @@ import { useLanguage } from '../../../../context/language'
 import HistoryService from '../../../../services/history/HistoryService'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { ReactComponent as BackgroundSVG } from '../../../../assets/kids_space/dino_runner/background.svg'
-import GameOverDialog from '../../../../components/kids_space_dialog/game_over_dialog'
-import GoBackButton from '../../../../components/button/go_back'
+import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import './styles.css'
+import ArrowBack from '../../../../components/arrow_back'
 
 const DinoRunner: React.FC = () => {
 	const language = useLanguage()
-
+	
 	const dinoRunnerGameContainer = useRef<HTMLDivElement>(null)
 	const dinoRunnerGameGrid = useRef<HTMLDivElement>(null)
 	const dinoRunnerGameCharacter = useRef<HTMLDivElement>(null)
@@ -68,7 +68,7 @@ const DinoRunner: React.FC = () => {
 			>
 				<p>{language.data.DINO_RUNNER_GAME_OVER_MSG_1}</p>
 			</GameOverDialog>
-			<GoBackButton path={PathConstants.GAME_MENU} />
+			<ArrowBack kids />
 			<div ref={dinoRunnerGameGrid} className='dino_runner_game__grid'>
 				<div
 					ref={dinoRunnerGameCharacter}
@@ -87,7 +87,7 @@ const DinoRunner: React.FC = () => {
 					className='dino_runner_game__start_game_button'
 					onClick={handleStartGame}
 				>
-					{language.data.START_GAME_TEXT}
+					{language.data.START_GAME}
 				</button>
 			)}
 		</div>

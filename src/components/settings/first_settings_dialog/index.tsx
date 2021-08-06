@@ -1,64 +1,50 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Dialog, DialogActions } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
-import SelectTreatment from '../select_treatment'
-import DinoSwitch from '../../switch'
-import SelectLanguage from '../select_language'
-import SelectColorTheme from '../select_color_theme'
-import DinoDialogHeader, { DinoDialogContent } from '../../dino_dialog'
-import DinoLogoHeader from '../../dino_logo_header'
-import DinoStepper from '../../dino_stepper'
-import SelectFontSize from '../select_font_size'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import AuthService from '../../../services/auth/AuthService'
 import TreatmentEntity from '../../../types/treatment/database/TreatmentEntity'
-import TransitionSlide from '../../slide_transition'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import EssentialContactService from '../../../services/contact/EssentialContactService'
 import UserSettingsConstants from '../../../constants/auth/ResponsibleAuthConstants'
 import ResponsibleAuthService from '../../../services/auth/ResponsibleAuthService'
-import { useAlert } from '../../../context/alert/index'
-import Loader from '../../loader'
 import ConnectionService from '../../../services/connection/ConnectionService'
 import ResponsibleAuthConstants from '../../../constants/auth/ResponsibleAuthConstants'
+import HashUtils from '../../../utils/HashUtils'
+import FirstSettingsDialog from './dialogs'
+import DataConstants from '../../../constants/app_data/DataConstants'
+import { toggle } from '../../../constants/toggle/Toggle'
 import './styles.css'
 
-const FirstSettingsDialog: React.FC = () => {
+const FirstSettings: React.FC = () => {
+	let done = false
 	const language = useLanguage()
-	const alert = useAlert()
 
+	const [step, setStep] = useState(0)
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
-	const [dialogOpen, setDialogOpen] = useState(true)
 	const [selectedLanguage, setSelectedLanguage] = useState(
 		language.data.LANGUAGE_CODE,
 	)
-	const [selectedTreatment, setSelectedTreatment] = useState<
-		TreatmentEntity | undefined
-	>(undefined)
+	const [selectedTreatment, setSelectedTreatment] = useState<TreatmentEntity>()
 	const [selectedFontSize, setSelectedFontSize] = useState(
 		UserSettingsService.getDefaultFontSizeCode(),
 	)
 	const [selectedColorTheme, setSelectedColorTheme] = useState(
 		UserSettingsService.getDefaultColorThemeCode(),
 	)
-	const [
-		selectedEssentialContactGrant,
-		setSelectedEssentialContactGrant,
-	] = useState(UserSettingsService.getDefaultEssentialContactGrant())
-	const [responsiblePassword, setParentsAreaPassword] = useState("")
-	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] = useState("")
-	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("")
+
+	const [selectedEssentialContactGrant, setSelectedEssentialContactGrant] =
+		useState(UserSettingsService.getDefaultEssentialContactGrant())
+	const [parentsAreaPassword, setParentsAreaPassword] = useState('')
+	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] =
+		useState('')
+	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
-		if (settings?.settingsStep !== 4 && responsiblePassword !== "") {
-			setParentsAreaPassword("")
-			setConfirmParentsAreaPassword("")
-			setPasswordErrorMessage("")
-		}
-	}, [settings, responsiblePassword])
+		setSelectedLanguage(language.data.LANGUAGE_CODE)
+	}, [language])
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -87,9 +73,9 @@ const FirstSettingsDialog: React.FC = () => {
 		let updateSettings = (settings: UserSettingsEntity) => {
 			const colorThemeCode = UserSettingsService.getColorThemeCode(settings)
 			const fontSizeCode = UserSettingsService.getFontSizeCode(settings)
-			const essentialContactGrant = UserSettingsService.getEssentialContactGrant(
-				settings,
-			)
+			const essentialContactGrant =
+				UserSettingsService.getEssentialContactGrant(settings)
+
 			setSelectedColorTheme(colorThemeCode)
 			setSelectedFontSize(fontSizeCode)
 			setSelectedEssentialContactGrant(essentialContactGrant || false)
@@ -100,9 +86,7 @@ const FirstSettingsDialog: React.FC = () => {
 			setTreatments(treatments)
 		}
 
-		let finishLoading = () => {
-			setIsLoading(false)
-		}
+		let finishLoading = () => setIsLoading(false)
 
 		UserSettingsService.addUpdateEventListenner(loadData)
 		TreatmentService.addUpdateEventListenner(loadData)
@@ -121,30 +105,23 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}, [isLoading])
 
-	useEffect(() => {
-		setSelectedLanguage(language.data.LANGUAGE_CODE)
-	}, [language])
-
-	const handleCloseDialogs = () => {
-		setDialogOpen(false)
-	}
-
 	const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
-		
-		if (passwordErrorMessage.length > 0) {
+
+		if (passwordErrorMessage === undefined || passwordErrorMessage.length > 0) {
 			setPasswordErrorMessage("")
 		}
 
-		if (newValue.length <= UserSettingsConstants.PASSWORD_LENGTH_MAX) {
+		if (newValue.length <= DataConstants.USER_PASSWORD.MAX) {
 			setParentsAreaPassword(event.target.value)
 		}
+		setIsLoading(false)
 	}
 
-	const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value
 
-		if (passwordErrorMessage.length > 0) {
+		if (passwordErrorMessage === undefined || passwordErrorMessage.length > 0) {
 			setPasswordErrorMessage("")
 		}
 
@@ -153,6 +130,14 @@ const FirstSettingsDialog: React.FC = () => {
 		}
 	}
 
+	const handlePasswordErrorMessageChange = (value?: string) => { 
+		if (value) {
+			setPasswordErrorMessage(value)
+		}
+	}
+
+	const handleCloseDialogs = () => setStep(-1)
+
 	const saveSettings = async () => {
 		if (settings) {
 			settings.language = selectedLanguage
@@ -160,8 +145,10 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.fontSize = selectedFontSize
 			settings.includeEssentialContact = selectedEssentialContactGrant
 			settings.declineGoogleContacts = false
-			settings.firstSettingsDone = true
+			settings.firstSettingsDone = done
 			settings.treatmentLocalId = selectedTreatment?.localId
+			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
+			settings.step = step
 
 			await UserSettingsService.save(settings)
 
@@ -182,30 +169,13 @@ const FirstSettingsDialog: React.FC = () => {
 	}
 
 	const handleBackStep = () => {
-		if (settings) {
-			settings.settingsStep -= 1
-
-			UserSettingsService.save(settings)
-		}
+		setStep(step - 1)
 	}
 
 	const handleNextStep = async () => {
-		setIsLoading(true)
 		if (settings) {
-			if (settings.settingsStep === 4) {
-				if (isValidPassword()) {
-					const authCreated = await createResponsibleAuth()
-					if (!authCreated) {
-						alert.showErrorAlert(language.data.ERROR_CREATING_PASSWORD)
-					} else {
-						settings.settingsStep += 1
-					}
-				}
-			} else {
-				settings.settingsStep += 1
-			}
-
-			UserSettingsService.save(settings)
+			if (step === settings.step) saveSettings()
+			setStep(step + 1)
 		} else if (selectedLanguage && selectedFontSize && selectedColorTheme) {
 			const newEntity: UserSettingsEntity = {
 				language: selectedLanguage,
@@ -214,12 +184,12 @@ const FirstSettingsDialog: React.FC = () => {
 				includeEssentialContact: true,
 				declineGoogleContacts: false,
 				firstSettingsDone: false,
-				settingsStep: 1,
+				step: 0,
 			}
 
-			UserSettingsService.save(newEntity)
+			setSettings(newEntity)
+			saveSettings()
 		}
-		setIsLoading(false)
 	}
 
 	const handleEssentialContactGrantChange = (
@@ -232,7 +202,7 @@ const FirstSettingsDialog: React.FC = () => {
 			settings.includeEssentialContact !== includeEssentialContact
 		) {
 			settings.includeEssentialContact = includeEssentialContact
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -243,7 +213,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.treatmentLocalId !== newSelectedTreatment.id) {
 			settings.treatmentLocalId = newSelectedTreatment.localId
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -252,7 +222,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.colorTheme !== newColorTheme) {
 			settings.colorTheme = newColorTheme
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -261,7 +231,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.language !== newLanguage) {
 			settings.language = newLanguage
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -270,7 +240,7 @@ const FirstSettingsDialog: React.FC = () => {
 
 		if (settings && settings.fontSize !== newFontSize) {
 			settings.fontSize = newFontSize
-			UserSettingsService.saveOnlyLocally(settings)
+			UserSettingsService.save(settings)
 		}
 	}
 
@@ -298,191 +268,42 @@ const FirstSettingsDialog: React.FC = () => {
 		return ResponsibleAuthService.createAuth(responsiblePassword)
 	}
 
-	const renderSelectTreatmentDialogContent = () => {
-		return (
-			<SelectTreatment
-				treatment={selectedTreatment}
-				setTreatment={handleSelectedTreatmentChange}
-				availableTreatments={treatments}
-			>
-				<DinoSwitch
-					selected={selectedEssentialContactGrant}
-					setSelected={handleEssentialContactGrantChange}
-					label={language.data.SELECT_TREATMENT_LOAD_CONTACT_GRANT}
-				/>
-			</SelectTreatment>
-		)
-	}
-
-	const renderSelectColorThemeDialogContent = () => {
-		return (
-			<SelectColorTheme
-				colorTheme={selectedColorTheme}
-				setColorTheme={handleSelectedColorThemeChange}
-			/>
-		)
-	}
-
-	const renderSelectLanguageDialogContent = () => {
-		return (
-			<>
-				<SelectLanguage
-					languageName={selectedLanguage}
-					setLanguage={handleSelectedLanguageChange}
-				/>
-				<SelectFontSize
-					fontSize={selectedFontSize}
-					setFontSize={handleSelectedFontSizeChange}
-				/>
-			</>
-		)
-	}
-
-	const renderWelcomeMessageDialog = () => {
-		return (
-			<div className='message_dialog'>
-				<DinoLogoHeader
-					title={language.data.FIRST_LOGIN_WELCOME_MESSAGE}
-					size='small'
-				/>
-				<p>
-					Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicing
-					elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibus
-					repudiandae ut labore!
-				</p>
-				<h6 className='citation'>— {language.data.DINOAPP_TEAM}</h6>
-			</div>
-		)
-	}
-
-	const renderSetPasswordDialog = () => {
-		return (
-			<div className='message_dialog set_password'>
-				<p>
-					{language.data.SETTING_PASSWORD_EXPLANATION}
-				</p>
-				<form>
-					<label htmlFor="pass">{language.data.INSERT_PASSWORD} </label>
-					<input 
-						autoComplete="off"
-						value={responsiblePassword} 
-						onChange={handleChangePassword}
-						type="password" 
-						name="password" 
-						required />
-					<label htmlFor="pass"> {language.data.INSERT_PASSWORD_AGAIN} </label>
-					<input 
-						autoComplete="off"
-						value={confirmParentsAreaPassword}
-						onChange={handleChangeConfirmPassword}
-						type="password" 
-						name="password" 
-						required />
-					{passwordErrorMessage && <p className="set_password__error_message">{passwordErrorMessage}</p>}
-				</form>
-			</div>
-		)
-	}
-
-	const renderFinalMessageDialog = () => {
-		return (
-			<div className='message_dialog'>
-				<DinoLogoHeader
-					title={language.data.FIRST_LOGIN_DONE_MESSAGE}
-					size='small'
-				/>
-				<p>Obrigado por se juntar ao DinoApp!</p>
-				<p>
-					Suas configurações podem ser atualizadas a qualquer momento na aba de{' '}
-					<em>Configurações</em>
-				</p>
-			</div>
-		)
-	}
-
-	const firstLoginDialogs = [
-		{ title: '', component: renderWelcomeMessageDialog },
-		{
-			title: language.data.FIRST_LOGIN_CHOOSE_LANGUAGE,
-			component: renderSelectLanguageDialogContent,
-		},
-		{
-			title: language.data.FIRST_LOGIN_CHOOSE_COLOR_THEME,
-			component: renderSelectColorThemeDialogContent,
-		},
-		{
-			title: language.data.FIRST_LOGIN_CHOOSE_TREATMENT,
-			component: renderSelectTreatmentDialogContent,
-		},
-		{
-			title: language.data.FIRST_SETTINGS_PASSWORD_STEP_TITLE, 
-			component: renderSetPasswordDialog,
-		},
-		{ title: '', component: renderFinalMessageDialog },
-	]
-
-	const NUMBER_DIALOGS = firstLoginDialogs.length
-
-	const isFirstOrLastDialog = (index: number) =>
-		index === 0 || index === NUMBER_DIALOGS - 1
-
-	const getDialog = (step: number) => {
-		if (step < firstLoginDialogs.length) {
-			return firstLoginDialogs[step]
-		}
-		return firstLoginDialogs[firstLoginDialogs.length - 1]
-	}
-
-	const renderDialogContent = () => {
-		const step = settings ? settings.settingsStep : 0
-		const dialog = getDialog(step)
-
-		return (
-			<>
-				{isFirstOrLastDialog(step) ? (
-					<></>
-				) : (
-					<DinoDialogHeader>
-						<h5>{dialog.title}</h5>
-					</DinoDialogHeader>
-				)}
-				<DinoDialogContent>{dialog.component()}</DinoDialogContent>
-			</>
-		)
-	}
+	const handleDoneChange = (value: boolean) => done = value
 
 	return (
 		<>
-			{settings && !settings.firstSettingsDone && (
-				<div className='first_settings'>
-					<Dialog
-						className='first_settings__dialog'
-						aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
-						open={dialogOpen}
-						TransitionComponent={TransitionSlide}
-						disableEscapeKeyDown
-						disableBackdropClick
-						fullWidth
-					>
-						<Loader isLoading={isLoading}>
-							{renderDialogContent()}
-							<DialogActions>
-								<DinoStepper
-									steps={NUMBER_DIALOGS}
-									activeStep={settings ? settings.settingsStep : 0}
-									endMessage={language.data.DIALOG_SAVE_BUTTON_TEXT}
-									onNext={handleNextStep}
-									onBack={handleBackStep}
-									onEnd={handleSave}
-									onCancel={handleCancel}
-								/>
-							</DialogActions>
-						</Loader>
-					</Dialog>
-				</div>
-			)}
+			{!isLoading &&
+				settings &&
+				(!settings.firstSettingsDone || toggle.forceFirstLogin) && (
+					<FirstSettingsDialog
+						step={step}
+						onCloseDialogs={handleCloseDialogs}
+						onNextStep={handleNextStep}
+						onBackStep={handleBackStep}
+						onSave={handleSave}
+						onCancel={handleCancel}
+						treatments={treatments}
+						selectedTreatment={selectedTreatment}
+						onSelectedTreatmentChange={handleSelectedTreatmentChange}
+						selectedColorTheme={selectedColorTheme}
+						onSelectedColorThemeChange={handleSelectedColorThemeChange}
+						selectedLanguage={selectedLanguage}
+						onSelectedLanguageChange={handleSelectedLanguageChange}
+						selectedFontSize={selectedFontSize}
+						onSelectedFontSizeChange={handleSelectedFontSizeChange}
+						selectedEssentialContactGrant={selectedEssentialContactGrant}
+						onEssentialContactGrantChange={handleEssentialContactGrantChange}
+						parentsAreaPassword={parentsAreaPassword}
+						onChangePassword={handleChangePassword}
+						confirmParentsAreaPassword={confirmParentsAreaPassword}
+						onChangeConfirmPassword={handleConfirmPasswordChange}
+						passwordErrorMessage={passwordErrorMessage}
+						onPasswordErrorMessageChange={handlePasswordErrorMessageChange}
+						onDoneChange={handleDoneChange}
+					/>
+				)}
 		</>
 	)
 }
 
-export default FirstSettingsDialog
+export default FirstSettings

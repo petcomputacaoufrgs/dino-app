@@ -1,6 +1,5 @@
 import Superagent from 'superagent'
 import GoogleAuthRequestModel from '../../types/auth/google/api/GoogleAuthRequestModel'
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
 import AuthResponseDataModel from '../../types/auth/api/AuthResponseModel'
 import LoginStatusConstants from '../../constants/login/LoginStatusConstants'
 import UserService from '../user/UserService'
@@ -29,6 +28,11 @@ import LogoutCallback from '../../types/auth/service/LogoutCallback'
 import UserEntity from '../../types/user/database/UserEntity'
 import DinoPermission from '../../types/auth/api/DinoPermissions'
 import ResponsibleAuthService from './ResponsibleAuthService'
+import PermissionEnum from '../../types/enum/PermissionEnum'
+import PathConstants from '../../constants/app/PathConstants'
+import HistoryService from '../history/HistoryService'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
+import FilterService from '../../storage/local_storage/filter/FilterService'
 
 class AuthService extends UpdatableService {
 	private logoutCallbacks: LogoutCallback[]
@@ -38,10 +42,6 @@ class AuthService extends UpdatableService {
 		super()
 		this.logoutCallbacks = []
 		this.table = Database.auth
-	}
-
-	onLogout = async () => {
-		this.dbClear()
 	}
 
 	subscribeAuthenticatedService = (callback: LogoutCallback) => {
@@ -88,7 +88,7 @@ class AuthService extends UpdatableService {
 
 	refreshGoogleAuth = async (): Promise<AuthEntity | undefined> => {
 		const request = await DinoAgentService.get(
-			APIRequestMappingConstants.REFRESH_AUTH_GOOGLE,
+			APIHTTPPathsConstants.REFRESH_AUTH_GOOGLE,
 		)
 		if (request.canGo) {
 			try {
@@ -120,7 +120,7 @@ class AuthService extends UpdatableService {
 			}
 
 			const response = await Superagent.put(
-				APIRequestMappingConstants.REFRESH_AUTH,
+				APIHTTPPathsConstants.REFRESH_AUTH,
 			).send(model)
 
 			const responseBody: AuthRefreshResponseModel = response.body
@@ -149,7 +149,7 @@ class AuthService extends UpdatableService {
 		WebSocketAuthResponseModel | undefined
 	> => {
 		const request = await DinoAgentService.get(
-			APIRequestMappingConstants.WEB_SOCKET_AUTH,
+			APIHTTPPathsConstants.WEB_SOCKET_AUTH,
 		)
 		if (request.canGo) {
 			try {
@@ -166,6 +166,8 @@ class AuthService extends UpdatableService {
 
 	logout = async () => {
 		await this.dbClear()
+
+		FilterService.clear()
 
 		const onLogoutCallbacks = this.logoutCallbacks.map(callback => {
 			return callback()
@@ -238,7 +240,7 @@ class AuthService extends UpdatableService {
 
 		try {
 			const request = await DinoAgentService.post(
-				APIRequestMappingConstants.AUTH_GOOGLE,
+				APIHTTPPathsConstants.AUTH_GOOGLE,
 			)
 			if (request.canGo) {
 				const response = await request.setBody(authRequestModel).go()
@@ -248,8 +250,9 @@ class AuthService extends UpdatableService {
 				if (body.success) {
 					await this.saveGoogleAuthData(body.data)
 					await this.saveUserSettings(body.data)
+					await this.saveUser(body.data)
 					this.triggerUpdateEvent()
-					EventService.whenLogin()
+					await EventService.whenLogin()
 					return [LoginStatusConstants.SUCCESS, undefined]
 				}
 
@@ -279,7 +282,7 @@ class AuthService extends UpdatableService {
 
 		try {
 			const request = await DinoAgentService.post(
-				APIRequestMappingConstants.GRANT_GOOGLE,
+				APIHTTPPathsConstants.GRANT_GOOGLE,
 			)
 			if (request.canGo) {
 				await request.authenticate()
@@ -377,6 +380,33 @@ class AuthService extends UpdatableService {
 
 	private async saveUserAuthData(responseBody: AuthResponseDataModel) {
 		await UserService.updateUser(responseBody.user)
+	}
+
+	private async saveUser(responseBody: AuthResponseDataModel) {
+		await UserService.updateUser(responseBody.user)
+	}
+
+	getPermissions = async () => {
+		const userPermission = await UserService.getPermission()
+		if (userPermission) return [userPermission]
+		return []
+	}
+
+	hasStaffPowers = async () => {
+		const userPermission = await UserService.getPermission()
+		return this.isStaff(userPermission)
+	}
+
+	isStaff = (userPermission: string | undefined) =>
+		userPermission === PermissionEnum.STAFF ||
+		userPermission === PermissionEnum.ADMIN
+
+	redirectToHome(userPermission: string | undefined) {
+		HistoryService.push(
+			this.isStaff(userPermission)
+				? PathConstants.STAFF_HOME
+				: PathConstants.USER_HOME,
+		)
 	}
 }
 

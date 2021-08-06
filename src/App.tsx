@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Login from './views/login'
-import Main from './views/main'
-import AuthProvider from './context/auth'
 import LoginRoute from './components/route/login/index'
+import PrivateRouterProvider from './context/private_router'
+import PrivateRoute from './components/private_route'
 import PathConstants from './constants/app/PathConstants'
 import HistoryService from './services/history/HistoryService'
 import { Switch } from 'react-router'
@@ -25,8 +25,15 @@ import UserService from './services/user/UserService'
 import ResponsibleAuthService from './services/auth/ResponsibleAuthService'
 import ResponsibleRoute from './components/route/authenticated/responsible'
 import KidsRoute from './components/route/authenticated/kids/index'
-import './App.css'
 import PublicRoute from './components/route/public'
+import PermissionEnum from './types/enum/PermissionEnum'
+import UserMain from './views/main/routes/main_user'
+import StaffMain from './views/main/routes/main_staff'
+import './App.css'
+import './MaterialUI.css'
+import './General.css'
+import { toggle } from './constants/toggle/Toggle'
+import TestInstanceService from './services/tests/TestInstanceService'
 
 const LOAD_SCREEN_TIME = 2250
 
@@ -38,6 +45,9 @@ const App: React.FC = () => {
 	const [isKidsMode, setKidsMode] = useState(false)
 	const [isMainTab, setIsMainTab] = useState(false)
 	const [showLoadScreen, setShowLoadScreen] = useState(true)
+	const [userPermission, setUserPermission] = useState<string | undefined>(
+		undefined,
+	)
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -49,13 +59,16 @@ const App: React.FC = () => {
 
 			if (isAuthenticated) {
 				await loadSettings()
+				await loadUserPermission()
+				loadTestInstances()
 			} else {
 				DataThemeUtils.setBodyDataTheme(
 					UserSettingsService.getSystemColorThemeName(),
 				)
 			}
-			
+
 			await loadTabInfo()
+			updateAuth(isAuthenticated)
 			finishLoading()
 		}
 
@@ -70,6 +83,19 @@ const App: React.FC = () => {
 			const isKidsMode = ResponsibleAuthService.isKidsMode()
 			updateResponsibleAuth(isResponsibleAuthenticated, isKidsMode)
 			return isResponsibleAuthenticated
+		}
+
+		const loadTestInstances = async () => {
+			const dbSettings = await UserSettingsService.getFirst()
+			if (dbSettings) {
+				if (
+					toggle.loadTestInstancesAtFirstLogin &&
+					(!dbSettings.firstSettingsDone || toggle.forceFirstLogin)
+				) {
+					console.log('Carregando testes...')
+					TestInstanceService.loadInstances()
+				}
+			}
 		}
 
 		const loadSettings = async () => {
@@ -97,6 +123,11 @@ const App: React.FC = () => {
 			setKidsMode(isKidsMode)
 		}
 
+		const loadUserPermission = async () => {
+			const hasUserPermission = await UserService.getPermission()
+			updateUserPermission(hasUserPermission || PermissionEnum.USER)
+		}
+
 		let updateSettings = (settings: UserSettingsEntity) => {
 			const colorTheme = UserSettingsService.getColorThemeName(settings)
 			DataThemeUtils.setBodyDataTheme(colorTheme)
@@ -109,6 +140,10 @@ const App: React.FC = () => {
 
 		let updateTabInfo = (isMainTab: boolean) => {
 			setIsMainTab(isMainTab)
+		}
+
+		let updateUserPermission = (userPermission: string) => {
+			setUserPermission(userPermission)
 		}
 
 		let finishLoading = () => {
@@ -129,6 +164,7 @@ const App: React.FC = () => {
 			updateSettings = () => {}
 			updateAuth = () => {}
 			updateResponsibleAuth = () => {}
+			updateUserPermission = () => {}
 			updateTabInfo = () => {}
 			UserService.removeUpdateEventListenner(loadData)
 			AuthService.removeUpdateEventListenner(loadData)
@@ -155,9 +191,12 @@ const App: React.FC = () => {
 		ViewportService.maximizeViewport()
 	}, [])
 
+	//TODO: Ver o que seria o componente Main
 	const renderApp = (): JSX.Element => (
-		<AuthProvider
+		<PrivateRouterProvider
 			loginPath={PathConstants.LOGIN}
+			userHomePath={PathConstants.USER_HOME}
+			staffHomePath={PathConstants.STAFF_HOME}
 			responsibleHomePath={PathConstants.RESPONSIBLE_HOME}
 			kidsHomePath={PathConstants.KIDS_SPACE}
 			isAuthenticated={isAuthenticated}
@@ -165,6 +204,7 @@ const App: React.FC = () => {
 			isFirstSettingsDone={isFirstSettingsDone}
 			isKidsMode={isKidsMode}
 			browserHistory={HistoryService}
+			userPermission={userPermission}
 		>
 			<Switch>
 				<LoginRoute exact path={PathConstants.LOGIN} component={Login} />
@@ -178,8 +218,27 @@ const App: React.FC = () => {
 				/>
 				<PublicRoute exact path={PathConstants.ABOUT_US} component={AboutUs} />
 				<PublicRoute path={'/'} component={NotFound} />
+				<PrivateRoute
+					path={PathConstants.RESPONSIBLE}
+					component={UserMain}
+					restrictedTo={[PermissionEnum.USER]}
+				/>
+				<PrivateRoute
+					path={PathConstants.STAFF}
+					component={StaffMain}
+					restrictedTo={[PermissionEnum.ADMIN, PermissionEnum.STAFF]}
+				/>
+				<PrivateRoute
+					path={PathConstants.KIDS_SPACE}
+					component={KidsSpace}
+					restrictedTo={[PermissionEnum.USER]}
+				/>
+				<Route path={PathConstants.TERMS_OF_USE} component={TermsOfUse} />
+				<Route path={PathConstants.PRIVACY_POLICY} component={PrivacyPolicy} />
+				<Route path={PathConstants.ABOUT_US} component={AboutUs} />
+				<Route path={'/'} component={NotFound} />
 			</Switch>
-		</AuthProvider>
+		</PrivateRouterProvider>
 	)
 
 	return (

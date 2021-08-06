@@ -53,19 +53,22 @@ function startSnakeBody(snakeBody: CoordinatePosition[]) {
 /**
  * @description clear snake's body and return it to the default values
  */
-export function resetSnake() {
+export function resetSnake(snakeSpeed: number) {
 	snakeBody.splice(0, snakeBody.length)
 	startSnakeBody(snakeBody)
 	started = false
+	snakeSpeed = 300
 }
 
 /**
  * @description update the snake vector with the new segment position at each time interval
+ * @param speed of the snake
  * @returns true if snake's position has been changed otherwise false
  */
-export function updateSnake() {
+export function updateSnake(snakeSpeed: number) {
 	if (grow) {
 		addSegments()
+		if(snakeSpeed > 130) snakeSpeed -= 10 //increase speed as the snake gets bigger
 	}
 	// Get the head direction (changed by the user)
 	const inputDirection = getInputDirection()

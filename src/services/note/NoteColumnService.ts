@@ -1,7 +1,8 @@
-import APIRequestMappingConstants from '../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../constants/api/APIWebSocketDestConstants'
+import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
+import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import Database from '../../storage/Database'
 import DinoPermission from '../../types/auth/api/DinoPermissions'
+import PermissionEnum from '../../types/enum/PermissionEnum'
 import NoteColumnDataModel from '../../types/note/api/NoteColumnDataModel'
 import NoteColumnEntity from '../../types/note/database/NoteColumnEntity'
 import NoteEntity from '../../types/note/database/NoteEntity'
@@ -19,9 +20,9 @@ class NoteColumnServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.noteColumn,
-			APIRequestMappingConstants.NOTE_COLUMN,
+			APIHTTPPathsConstants.NOTE_COLUMN,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.NOTE_COLUMN,
+			APIWebSocketPathsConstants.NOTE_COLUMN,
 		)
 	}
 
@@ -31,6 +32,14 @@ class NoteColumnServiceImpl extends AutoSynchronizableService<
 
 	getSyncDependencies(): SynchronizableService[] {
 		return []
+	}
+
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.USER]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
+		return [PermissionEnum.USER]
 	}
 
 	async convertModelToEntity(

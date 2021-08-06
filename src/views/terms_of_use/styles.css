@@ -26,7 +26,7 @@
 	margin-bottom: 0.625rem;
 }
 
-.terms_of_use .icon_button.arrow_back svg {
+.terms_of_use .dino_icon_button__button.arrow_back svg {
 	fill: var(--contrast-color);
 }
 
@@ -51,7 +51,7 @@
 }
 
 .terms_of_use span {
-	font-size: var(--default-small-font);
+	font-size: var(--small-font);
 	text-align: center;
 	color: #636363;
 }

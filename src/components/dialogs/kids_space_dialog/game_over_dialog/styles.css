@@ -1,0 +1,33 @@
+.game_over_dialog {
+	background-color: var(--dialog-background-color);
+	width: 80vw;
+	left: 10vw;
+	height: auto;
+	top: 35vh;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	padding-left: 1rem;
+	padding-right: 1rem;
+	top: 35vh;
+	left: 10vw;
+}
+
+.game_over_dialog__content {
+	padding-top: 1.5rem;
+	text-align: center;
+}
+
+.game_over_dialog__buttons {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	margin-bottom: 1vmin;
+}
+
+.game_over_dialog__buttons .button {
+	background-color: var(--light-color);
+	color: var(--dialog-background-color);
+	font-size: var(--default-font);
+	margin-left: 1.5rem;
+}

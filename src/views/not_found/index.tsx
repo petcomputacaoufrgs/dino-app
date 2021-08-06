@@ -1,24 +1,22 @@
 import React from 'react'
 import PageNotFound from '../../assets/icons/page_not_found.svg'
-import HistoryService from '../../services/history/HistoryService'
-import PathConstants from '../../constants/app/PathConstants'
 import { useLanguage } from '../../context/language'
-import Loader from '../../components/loader'
+import DinoLoader from '../../components/loader'
 import './styles.css'
+import { usePrivateRouter } from '../../context/private_router'
+import AuthService from '../../services/auth/AuthService'
 
 const redirectTimeout = 2000
 
 const NotFound: React.FC = () => {
 	const language = useLanguage()
 
-	const redirectToHome = () => {
-		HistoryService.push(PathConstants.RESPONSIBLE_HOME)
-	}
+	const router = usePrivateRouter()
 
-	setTimeout(redirectToHome, redirectTimeout)
+	setTimeout(() => AuthService.redirectToHome(router.userPermission), redirectTimeout)
 
 	return (
-		<Loader isLoading={language.loading}>
+		<DinoLoader isLoading={language.loading}>
 			<div className='not_found'>
 				<p className='not_found__text'>
 					{language.data.NOT_FOUND_MESSAGE} &nbsp; :(
@@ -32,7 +30,7 @@ const NotFound: React.FC = () => {
 					alt='Página não encontrada'
 				/>
 			</div>
-		</Loader>
+		</DinoLoader>
 	)
 }
 

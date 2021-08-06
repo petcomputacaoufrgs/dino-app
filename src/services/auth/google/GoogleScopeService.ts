@@ -1,8 +1,7 @@
 import AutoSynchronizableService from '../../sync/AutoSynchronizableService'
 import GoogleScopeDataModel from '../../../types/auth/google/api/GoogleScopeDataModel'
 import GoogleScopeEntity from '../../../types/auth/google/database/GoogleScopeEntity'
-import APIRequestMappingConstants from '../../../constants/api/APIRequestMappingConstants'
-import APIWebSocketDestConstants from '../../../constants/api/APIWebSocketDestConstants'
+import APIHTTPPathsConstants from '../../../constants/api/APIHTTPPathsConstants'
 import SynchronizableWSUpdateModel from '../../../types/sync/api/web_socket/SynchronizableWSUpdateModel'
 import SynchronizableWSDeleteModel from '../../../types/sync/api/web_socket/SynchronizableWSDeleteModel'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
@@ -11,6 +10,8 @@ import SynchronizableService from '../../sync/SynchronizableService'
 import WebSocketQueuePathService from '../../websocket/path/WebSocketQueuePathService'
 import Database from '../../../storage/Database'
 import DinoPermission from '../../../types/auth/api/DinoPermissions'
+import PermissionEnum from '../../../types/enum/PermissionEnum'
+import APIWebSocketPathsConstants from '../../../constants/api/APIWebSocketPathsConstants'
 
 class GoogleScopeServiceImpl extends AutoSynchronizableService<
 	number,
@@ -20,9 +21,9 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.googleScope,
-			APIRequestMappingConstants.GOOGLE_SCOPE,
+			APIHTTPPathsConstants.GOOGLE_SCOPE,
 			WebSocketQueuePathService,
-			APIWebSocketDestConstants.GOOGLE_SCOPE,
+			APIWebSocketPathsConstants.GOOGLE_SCOPE,
 		)
 	}
 
@@ -31,6 +32,14 @@ class GoogleScopeServiceImpl extends AutoSynchronizableService<
 	}
 
 	getSyncDependencies(): SynchronizableService[] {
+		return []
+	}
+
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return []
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 

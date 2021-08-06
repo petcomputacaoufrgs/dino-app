@@ -17,7 +17,6 @@ interface AwakeDinoProps {
 	hat: string
 	state: DinoEnum
 	onChangeState: (state: DinoEnum) => void
-	onChangeCustomizeState: (state: DinoEnum) => void
 	onBackgroundChange: () => void
 }
 
@@ -25,7 +24,6 @@ const AwakeDino: React.FC<AwakeDinoProps> = ({
 	hat,
 	state,
 	onChangeState,
-	onChangeCustomizeState,
 	onBackgroundChange,
 }) => {
 	const language = useLanguage()
@@ -50,12 +48,6 @@ const AwakeDino: React.FC<AwakeDinoProps> = ({
 					ariaLabel={language.data.GO_TO_GAME_MENU}
 					icon={GameSVG}
 					onClick={() => HistoryService.push(PathConstants.GAME_MENU)}
-				/>
-				<DinoIconButton
-					circular
-					ariaLabel={language.data.CUSTOMIZE}
-					icon={CapSVG}
-					onClick={() => onChangeCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}
 				/>
 				<DinoIconButton
 					circular

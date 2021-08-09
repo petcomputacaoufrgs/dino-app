@@ -504,7 +504,7 @@ export default class PT implements LanguageBase {
 	GOOGLE_CONTACT_GRANT_TEXT =
 		'Gostaríamos de permissão para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. \nNunca leremos nem modificaremos outros contatos além dos contatos criados no DinoApp.'
 
-	GOOGLE_CONTACT_GRANT_TITLE = 'Seus contatos em qualquer lugar'
+	GOOGLE_GRANT_TITLE = 'Sua conta google sincronizada'
 
 	ARROW_BACK_ARIA_LABEL = 'Retorno para a última página'
 

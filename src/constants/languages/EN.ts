@@ -505,7 +505,7 @@ export default class EN implements LanguageBase {
 	GOOGLE_CONTACT_GRANT_TEXT =
 		"We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."
 
-	GOOGLE_CONTACT_GRANT_TITLE = 'Your contacts anywhere'
+	GOOGLE_GRANT_TITLE = 'Your google account synchronized'
 
 	ARROW_BACK_ARIA_LABEL = 'Return to last page'
 

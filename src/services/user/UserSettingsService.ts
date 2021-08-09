@@ -165,6 +165,13 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return this.getDefaultEssentialContactGrant()
 	}
 
+	getCalendar(userSettings: UserSettingsEntity | undefined): boolean {
+		if (userSettings) {
+			return userSettings.includeEssentialContact
+		}
+		return this.getDefaultEssentialContactGrant()
+	}
+
 	getDefaultEssentialContactGrant = () => true
 
 	getFirstSettingsDone = async (): Promise<boolean | undefined> => {

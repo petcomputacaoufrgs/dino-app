@@ -4,8 +4,6 @@ import { useLanguage } from '../../../context/language'
 import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import SelectTreatment from '../../../components/settings/select_treatment'
-import GoogleGrantDialog from '../../../components/dialogs/google_grant_dialog'
-import GoogleScope from '../../../types/auth/google/GoogleScope'
 import SelectColorTheme from '../../../components/settings/select_color_theme'
 import SelectLanguage from '../../../components/settings/select_language'
 import DinoSwitch from '../../../components/switch'
@@ -28,21 +26,28 @@ import './styles.css'
 import { HasStaffPowers } from '../../../context/private_router'
 import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
 import { SelectPassword } from '../../../components/settings/select_password'
+import {
+	GoogleCalendarGrantDialog,
+	GoogleContactGrantDialog,
+} from '../../../components/dialogs/google_grant_dialogs/dialogs'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 10
 
 const Settings: React.FC = () => {
 	const alert = useAlert()
 	const language = useLanguage()
-	const isStaff = HasStaffPowers()
+	const hasStaffPowers = HasStaffPowers()
 
 	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
+	const [openGoogleCalendarDialog, setOpenGoogleCalendarDialog] =
+		useState(false)
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
 		undefined,
 	)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
+	const [syncGoogleCalendar, setSyncGoogleCalendar] = useState(false)
 	const [openChangePasswordDialog, setOpenChangePasswordDialog] =
 		useState(false)
 	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
@@ -68,22 +73,30 @@ const Settings: React.FC = () => {
 			const treatments = await TreatmentService.getAll()
 			const settings = await UserSettingsService.getFirst()
 			const syncGoogleContacs = await GoogleScopeService.hasContactGrant()
+			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
 
 			if (settings) {
 				if (treatments) setTreatments(treatments)
 				setSettings(settings)
 			}
-			updateSyncGoogleContacts(syncGoogleContacs, settings)
+			updateSyncGoogleGrants(syncGoogleContacs, syncGoogleCalendar, settings)
 
 			finishLoading()
 		}
 
-		let updateSyncGoogleContacts = (
+		let updateSyncGoogleGrants = (
 			syncGoogleContacts: boolean,
+			syncGoogleCalendar: boolean,
 			settings?: UserSettingsEntity,
 		) => {
-			if (!settings || settings.declineGoogleContacts) return
-			setSyncGoogleContacts(syncGoogleContacts)
+			if (settings) {
+				setSyncGoogleContacts(
+					!settings.declineGoogleContacts && syncGoogleContacts,
+				)
+				setSyncGoogleCalendar(
+					!settings.declineGoogleCalendar && syncGoogleCalendar,
+				)
+			}
 		}
 
 		let finishLoading = () => {
@@ -99,7 +112,7 @@ const Settings: React.FC = () => {
 		}
 
 		return () => {
-			updateSyncGoogleContacts = () => {}
+			updateSyncGoogleGrants = () => {}
 			finishLoading = () => {}
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			TreatmentService.removeUpdateEventListenner(loadData)
@@ -128,6 +141,14 @@ const Settings: React.FC = () => {
 		if (!syncGoogleContacts) {
 			setOpenGoogleContactDialog(true)
 		} else setSyncGoogleContacts(false)
+	}
+
+	const handleGoogleCalendarSwitchChanged = () => {
+		if (!settings) return
+
+		if (!syncGoogleCalendar) {
+			setOpenGoogleCalendarDialog(true)
+		} else setSyncGoogleCalendar(false)
 	}
 
 	const handleCloseContactsGrantDialog = () => setOpenGoogleContactDialog(false)
@@ -226,7 +247,7 @@ const Settings: React.FC = () => {
 	)
 
 	const renderUserOnlySection = () =>
-		!isStaff && (
+		!hasStaffPowers && (
 			<>
 				<FormControl className='settings__form'>
 					<SelectTreatment
@@ -240,6 +261,14 @@ const Settings: React.FC = () => {
 						selected={syncGoogleContacts}
 						onChangeSelected={handleGoogleContactSwitchChanged}
 						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
+					/>
+				</FormControl>
+				<DinoHr />
+				<FormControl className='settings__form'>
+					<DinoSwitch
+						selected={syncGoogleCalendar}
+						onChangeSelected={handleGoogleCalendarSwitchChanged}
+						label={'Mude o grant de calendário ablu blu blé'}
 					/>
 				</FormControl>
 				<DinoHr />
@@ -289,11 +318,15 @@ const Settings: React.FC = () => {
 				</FormControl>
 				{renderPasswordDialog()}
 				{renderDeleteAccountDialog()}
-				<GoogleGrantDialog
+				<GoogleContactGrantDialog
 					settings={settings}
 					onClose={handleCloseContactsGrantDialog}
-					open={openGoogleContactDialog}
-					scopes={[GoogleScope.CONTACT_SCOPE]}
+					open={openGoogleContactDialog && !hasStaffPowers}
+				/>
+				<GoogleCalendarGrantDialog
+					settings={settings}
+					onClose={() => setOpenGoogleCalendarDialog(false)}
+					open={openGoogleCalendarDialog && !hasStaffPowers}
 				/>
 			</div>
 		</Loader>

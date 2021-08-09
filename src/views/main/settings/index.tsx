@@ -218,7 +218,6 @@ const Settings: React.FC = () => {
 							'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'
 						}
 					>
-						{' '}
 						{language.data.FORGOT_PASSWORD}
 					</a>
 				</DinoDialogContent>

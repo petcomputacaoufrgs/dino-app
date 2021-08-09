@@ -5,6 +5,15 @@
     bottom: 5vmin;
 }
 
+.dinogotchi_screen .customize_dino {
+	position: absolute;
+	width: 3rem;
+	height: 3rem;
+	margin: 1rem 1.5rem;
+	right: 0;
+	top: 0;
+}
+
 .dinogotchi_screen__dino_pet.first_login {
 	left: -35vmin;
 }
@@ -178,8 +187,12 @@
 		transform: scale(3);
 	}
 
-	.dinogotchi_screen__options .circular_button {
-		width: 7rem;
-		height: 7rem;
+	.dinogotchi_screen .customize_dino {
+		transform: scale(2);
+	}
+
+	.status_item {
+		width: 6rem;
+		height: 6rem;
 	}
 }

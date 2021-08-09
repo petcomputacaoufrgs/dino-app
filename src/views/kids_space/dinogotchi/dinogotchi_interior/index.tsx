@@ -7,6 +7,7 @@ import { ReactComponent as Hat } from '../../../../assets/kids_space/dino_acesso
 import { ReactComponent as Lace } from '../../../../assets/kids_space/dino_acessories/lace.svg'
 import { ReactComponent as Mohawk } from '../../../../assets/kids_space/dino_acessories/mohawk.svg'
 import { ReactComponent as Headscarf } from '../../../../assets/kids_space/dino_acessories/headscarf.svg'
+import { ReactComponent as ClosetSVG } from '../../../../assets/kids_space/dinogotchi/customize.svg'
 import DinoColorConstants from '../../../../constants/dinogotchi/DinoColorConstants'
 import KidsSpaceSettingsService from '../../../../services/kids_space/KidsSpaceSettingsService'
 import { KidsSpaceSettingsEntity } from '../../../../types/kids_space/database/KidsSpaceSettingsEntity'
@@ -15,6 +16,9 @@ import { useLanguage } from '../../../../context/language'
 import Loader from '../../../../components/loader'
 import AwakeDino from './awake_dino'
 import './styles.css'
+import DinoIconButton from '../../../../components/button/icon_button'
+import StatusIndicator from '../../../../components/status_indicator'
+
 
 interface DinogotchiInteriorProps {
 	handleBackgroundChange: () => void
@@ -63,8 +67,8 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 		}
 
 		return () => {
-			updateData = () => {}
-			finishLoading = () => {}
+			updateData = () => { }
+			finishLoading = () => { }
 			KidsSpaceSettingsService.removeUpdateEventListenner(loadData)
 		}
 	}, [isLoading, selectedHat])
@@ -111,7 +115,6 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					hat={selectedHat}
 					state={state}
 					onChangeState={state => setState(state)}
-					onChangeCustomizeState={state => setCustomizeState(state)}
 					onBackgroundChange={handleBackgroundChange}
 				/>
 			)
@@ -193,7 +196,9 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 
 	return (
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
+			<DinoIconButton ariaLabel={language.data.CUSTOMIZE} icon={ClosetSVG} className='customize_dino' onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}/>
 			{renderDinogotchiScreen()}
+			<StatusIndicator fillHealth={40} fillEnergy={70} fillHappiness={100} />
 		</Loader>
 	)
 }

@@ -22,7 +22,7 @@ body .MuiDialogActions-spacing > :not(:first-child) {
 body .MuiIconButton-root,
 body .MuiSelect-icon,
 body .MuiSvgIcon-root {
-	fill: var(--contrast-color);
+	fill: var(--base-font-color);
 }
 
 body .MuiInput-underline:before {
@@ -49,13 +49,17 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 
 .MuiPaper-root.MuiMenu-paper,
 .MuiPaper-root.MuiDialog-paper {
-	background-color: var(--other-details);
+	background-color: var(--dialog-background);
 	color: var(--base-font-color);
 }
 
 .app .MuiPaper-root,
 .app .card {
-	background-color: var(--other-details);
+	background-color: var(--selection-tab-background);
+	color: var(--base-font-color);
+}
+
+.app .MuiPaper-root .MuiButtonBase-root {
 	color: var(--base-font-color);
 }
 
@@ -64,7 +68,7 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 .MuiAutocomplete-popper {
-	background-color: var(--other-details);
+	background-color: var(--background-color);
 }
 
 .MuiCardHeader-action button.button.icon_button {
@@ -85,30 +89,29 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 .MuiTabs-root .MuiTabs-indicator {
-	background-color: var(--tab-highlight-color);
+	background-color: var(--selected-tab-header-font-color);
 }
 
 .MuiTabs-root .MuiTab-textColorPrimary.Mui-selected {
-	color: var(--tab-highlight-color);
+	color: var(--selected-tab-header-font-color);
 }
 
 .MuiBadge-root .MuiBadge-colorSecondary {
-	background-color: var(--button-font-color);
+	background-color: var(--badge-color);
 }
 
 .app .MuiFormLabel-root.Mui-focused,
 .dino_dialog .MuiFormLabel-root.Mui-focused {
-	color: var(--highlight-color);
+	color: var(--focused-input-font-color);
 }
 .app .MuiInput-underline:after,
 .dino_dialog .MuiInput-underline:after {
-	border-bottom: 2px solid var(--highlight-color);
+	border-bottom: 2px solid var(--focused-input-font-color);
 }
 
 .colorDefault .MuiSvgIcon-root,
 .MuiCardHeader-root.contact_dialog_form_header .MuiSvgIcon-root {
-	/* fill: var(--contrast-color); */
-	fill: #fafafa;
+	fill: var(--buttons-font-color);
 }
 
 .treatment__list_item .MuiBadge-anchorOriginTopRightCircle {
@@ -119,7 +122,11 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 }
 
 body .MuiCheckbox-colorSecondary.Mui-checked {
-	color: var(--button-selected-font-color);
+	color: var(--hover-link-font-color);
+}
+
+body .MuiFormHelperText-root.MuiFormHelperText-marginDense {
+	color: var(--base-font-color);
 }
 
 @media (orientation: landscape) {

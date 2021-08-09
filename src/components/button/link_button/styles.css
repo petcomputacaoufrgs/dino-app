@@ -1,5 +1,5 @@
 button.link_button {
-	color: var(--button-font-color);
+	color: var(--buttons-font-color);
 	border: none;
 	background: none;
 	cursor: pointer;
@@ -11,7 +11,7 @@ button.link_button {
 
 button.link_button:hover,
 button.link_button:focus {
-	color: var(--button-selected-font-color);
+	color: var(--hover-link-font-color);
 	outline: none;
 	text-decoration: underline;
 }

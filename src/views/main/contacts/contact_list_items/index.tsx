@@ -60,12 +60,12 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 
 	let prevChar: string
 
-	const renderCharDivider = (contact: ContactType) => {
-		const newChar = contact.name[0].toUpperCase()
+	const renderCharDivider = (str: string) => {
+		const newChar = str[0].toUpperCase()
 		if (prevChar !== newChar) {
 			prevChar = newChar
 			return (
-				<div className='contacts__list__char_divider'>
+				<div className='dino__list__char_divider'>
 					<h4>{newChar}</h4>
 					<DinoHr />
 				</div>
@@ -79,7 +79,7 @@ const ContactItems: React.FC<ContactItemsProps> = ({ items }) => {
 				<List className='contacts__list dino__list dino__list__padding'>
 					{items.map((item, index) => (
 						<div key={index}>
-							{renderCharDivider(item.contact)}
+							{renderCharDivider(item.contact.name)}
 							<ContactItemList
 								item={item}
 								onClick={handleViewOption}

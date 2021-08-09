@@ -7,7 +7,6 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import TreatmentService from '../../../services/treatment/TreatmentService'
 import FirstSettingsDialogs from './dialogs'
 import { toggle } from '../../../constants/toggle/Toggle'
-import HashUtils from '../../../utils/HashUtils'
 import './styles.css'
 
 const FirstSettings: React.FC = () => {
@@ -66,7 +65,6 @@ const FirstSettings: React.FC = () => {
 	const saveSettings = async () => {
 		if (settings) {
 			settings.firstSettingsDone = done
-			settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
 			await UserSettingsService.save(settings)
 		}
 	}

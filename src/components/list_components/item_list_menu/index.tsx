@@ -12,6 +12,7 @@ const ItemListMenu = ({
 	onCloseDialog,
 	disable,
 	editText,
+	hideEdit,
 }: ItemListMenuProps) => {
 	const language = useLanguage()
 
@@ -49,9 +50,11 @@ const ItemListMenu = ({
 				horizontal: 'left',
 			}}
 		>
-			<MenuItem disabled={disable} onClick={handleEdit}>
-				{editText || language.data.EDIT}
-			</MenuItem>
+			{!hideEdit && (
+				<MenuItem disabled={disable} onClick={handleEdit}>
+					{editText || language.data.EDIT}
+				</MenuItem>
+			)}
 			<MenuItem disabled={disable} onClick={handleDelete}>
 				{language.data.DELETE}
 			</MenuItem>

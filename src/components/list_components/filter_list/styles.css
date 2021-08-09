@@ -1,6 +1,6 @@
 .filterlist .filterlist__label {
   font-size: var(--default-font);
-  color: var(--contrast-color);
+  color: var(--base-font-color);
   display: flex;
   margin-right: 4px;
 }

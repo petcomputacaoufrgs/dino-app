@@ -25,9 +25,7 @@ import { DialogActions } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
 import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
-import HashUtils from '../../../utils/HashUtils'
 import { HasStaffPowers } from '../../../context/private_router'
-import DataConstants from '../../../constants/app_data/DataConstants'
 import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
 import { SelectPassword } from '../../../components/settings/select_password'
 
@@ -137,36 +135,6 @@ const Settings: React.FC = () => {
 	const handleCloseChangePasswordDialog = () =>
 		setOpenChangePasswordDialog(false)
 
-	const handlePasswordChange = async () => {
-		if (!settings) return
-
-		const encryptedOldPassword = await HashUtils.sha256(oldPassword)
-
-		if (encryptedOldPassword !== settings.parentsAreaPassword) {
-			setPasswordErrorMessage(language.data.WRONG_PASSWORD)
-			return
-		}
-
-		if (parentsAreaPassword.length < DataConstants.USER_PASSWORD.MIN) {
-			setPasswordErrorMessage(language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE)
-			return
-		}
-
-		if (parentsAreaPassword !== confirmParentsAreaPassword) {
-			setPasswordErrorMessage(
-				language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE,
-			)
-			return
-		}
-
-		settings.parentsAreaPassword = await HashUtils.sha256(parentsAreaPassword)
-		await UserSettingsService.save(settings)
-
-		alert.showSuccessAlert(language.data.SUCESS)
-
-		setOpenChangePasswordDialog(false)
-	}
-
 	const handlerDeleteAccountClick = () => {
 		setTimeToDeleteAccount(AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS)
 		setOpenDeleteAccountDialog(true)
@@ -226,7 +194,7 @@ const Settings: React.FC = () => {
 			className='settings__change_password_dialog'
 			onClose={handleCloseChangePasswordDialog}
 			open={openChangePasswordDialog}
-			onSave={handlePasswordChange}
+			onSave={handleCloseChangePasswordDialog} //TODO: fazer função que salva nova senha na KidSpaceSettings
 			labelSave={language.data.CHANGE}
 			labelClose={language.data.CANCEL}
 		>

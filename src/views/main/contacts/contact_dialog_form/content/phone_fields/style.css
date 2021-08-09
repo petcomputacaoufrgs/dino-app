@@ -4,7 +4,6 @@
 }
 
 .clear_button svg {
-	fill: var(--contrast-color);
 	width: 1.5rem;
 	margin-left: auto;
 }

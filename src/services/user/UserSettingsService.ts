@@ -54,7 +54,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
-			parentsAreaPassword: model.parentsAreaPassword,
 		}
 
 		if (model.treatmentId) {
@@ -78,7 +77,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			parentsAreaPassword: entity.parentsAreaPassword,
 		}
 
 		if (entity.treatmentLocalId) {
@@ -100,16 +98,20 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				name: language.DEVICE_DEFAULT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.LIGHT,
+				code: ColorThemeEnum.DEFAULT_LIGHT,
 				name: language.LIGHT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DARK,
+				code: ColorThemeEnum.DEFAULT_DARK,
 				name: language.DARK_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DALTONIAN,
-				name: language.DALTONIAN_THEME_NAME,
+				code: ColorThemeEnum.COTTON_CANDY,
+				name: language.COTTON_CANDY_THEME_NAME,
+			},
+			{
+				code: ColorThemeEnum.EGGPLANT,
+				name: language.EGGPLANT_THEME_NAME,
 			},
 		]
 	}
@@ -214,8 +216,10 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				case 2:
 					return 'dark'
 				case 3:
-					return 'high_contrast'
+					return 'cotton_candy_light'
 				case 4:
+					return 'eggplant_dark'
+				case 5:
 					return this.getSystemColorThemeName()
 				default:
 					return this.getSystemColorThemeName()

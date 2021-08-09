@@ -1,9 +1,6 @@
 import ContactEntity from '../../types/contact/database/ContactEntity'
 import EssentialContactEntity from '../../types/contact/database/EssentialContactEntity'
-import ContactView, {
-	ContactType,
-	PhoneType,
-} from '../../types/contact/view/ContactView'
+import ContactView, { ContactType } from '../../types/contact/view/ContactView'
 import StringUtils from '../../utils/StringUtils'
 import { hasValue } from '../../utils/Utils'
 import EssentialPhoneService from './EssentialPhoneService'

@@ -3,5 +3,5 @@
 }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
-	color: var(--column-font-color);
+	color: var(--notes-font-color);
 }

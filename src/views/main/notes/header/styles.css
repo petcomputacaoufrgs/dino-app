@@ -13,7 +13,6 @@
 	width: 2.5rem;
 	height: auto;
 	margin-right: 0.5rem;
-	fill: var(--contrast-color);
 }
 
 .notes__header .MuiChip-label.MuiChip-labelSmall {

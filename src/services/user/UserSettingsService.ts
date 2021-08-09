@@ -50,6 +50,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		const entity: UserSettingsEntity = {
 			colorTheme: model.colorTheme,
 			declineGoogleContacts: model.declineGoogleContacts,
+			declineGoogleCalendar: model.declineGoogleCalendar,
 			fontSize: model.fontSize,
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
@@ -73,6 +74,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		const model: UserSettingsDataModel = {
 			colorTheme: entity.colorTheme,
 			declineGoogleContacts: entity.declineGoogleContacts,
+			declineGoogleCalendar: entity.declineGoogleCalendar,
 			fontSize: entity.fontSize,
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
@@ -283,6 +285,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			colorTheme: this.getDefaultColorThemeCode(),
 			includeEssentialContact: true,
 			declineGoogleContacts: false,
+			declineGoogleCalendar: false,
 			firstSettingsDone: false,
 		} as UserSettingsEntity
 	}

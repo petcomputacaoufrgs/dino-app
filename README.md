@@ -29,12 +29,12 @@
 ## Configuração
 #### Para executar o projeto crie o arquivo .env na pasta raiz do projeto com o seguinte conteúdo:
 
-### api_config.json
-
 ```javascript
 REACT_APP_API_URL={URL DE DEPLOY DA SUA API COM '/' AO FINAL}
 REACT_APP_GOOGLE_CLIENT_ID={DEVELOPMENT GOOGLE CLIENT ID}
 ```
+
+#### Você pode usar a API de desenvolvimento: https://queridino-api-dev.herokuapp.com/
 
 ## Execução
 ### Instalação

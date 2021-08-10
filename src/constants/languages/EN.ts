@@ -503,7 +503,10 @@ export default class EN implements LanguageBase {
 	GRANT_DECLINED = 'You can active this at any time.'
 
 	GOOGLE_CONTACT_GRANT_TEXT =
-		"We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."
+		"We would like permissions to save and synchronize your DinoApp's contacts to your Google Contacts account. We will never read or modify other contacts outside DinoApp's contacts."
+
+	GOOGLE_CALENDAR_GRANT_TEXT =
+		"We would like permissions to save and synchronize your DinoApp's events to your Google Calendar account. We will never read or modify other events outside DinoApp's events."
 
 	GOOGLE_GRANT_TITLE = 'Your google account synchronized'
 

@@ -18,6 +18,7 @@ import GoogleScopeService from '../../../services/auth/google/GoogleScopeService
 import TextButton from '../../../components/button/text_button'
 import DinoDialog, {
 	DinoDialogContent,
+	DinoDialogHeader,
 } from '../../../components/dialogs/dino_dialog'
 import { DialogActions } from '@material-ui/core'
 import UserService from '../../../services/user/UserService'
@@ -29,44 +30,39 @@ import { SelectPassword } from '../../../components/settings/select_password'
 import {
 	GoogleCalendarGrantDialog,
 	GoogleContactGrantDialog,
-} from '../../../components/dialogs/google_grant_dialogs/dialogs'
+} from '../../../components/dialogs/google_grant_dialog'
 
-const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 10
+const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 15
+
+enum DialogEnum {
+	NOP = 0,
+	GoogleContactGrantDialog = 1,
+	GoogleCalendarGrantDialog = 2,
+	ChangePasswordDialog = 3,
+	DeleteAccountDialog = 4,
+}
 
 const Settings: React.FC = () => {
 	const alert = useAlert()
 	const language = useLanguage()
 	const hasStaffPowers = HasStaffPowers()
 
-	const [openGoogleContactDialog, setOpenGoogleContactDialog] = useState(false)
-	const [openGoogleCalendarDialog, setOpenGoogleCalendarDialog] =
-		useState(false)
+	const [settingsDialogOpen, setSettingsDialogOpen] = useState(DialogEnum.NOP)
 	const [isLoading, setIsLoading] = useState(true)
-	const [settings, setSettings] = useState<UserSettingsEntity | undefined>(
-		undefined,
-	)
+	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
-	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-	const [syncGoogleCalendar, setSyncGoogleCalendar] = useState(false)
-	const [openChangePasswordDialog, setOpenChangePasswordDialog] =
+	const [syncGoogleContactsSwitch, setSyncGoogleContactsSwitch] =
 		useState(false)
-	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
+	const [syncGoogleCalendarSwitch, setSyncGoogleCalendarSwitch] =
+		useState(false)
 	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
-
 	const [oldPassword, setOldPassword] = useState('')
 	const [parentsAreaPassword, setParentsAreaPassword] = useState('')
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] =
 		useState('')
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
-	useEffect(() => {
-		if (!openChangePasswordDialog) {
-			setParentsAreaPassword('')
-			setConfirmParentsAreaPassword('')
-			setOldPassword('')
-			setPasswordErrorMessage(undefined)
-		}
-	}, [openChangePasswordDialog])
+	const isDialogOpen = (dialog: DialogEnum) => settingsDialogOpen === dialog
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -90,10 +86,10 @@ const Settings: React.FC = () => {
 			settings?: UserSettingsEntity,
 		) => {
 			if (settings) {
-				setSyncGoogleContacts(
+				setSyncGoogleContactsSwitch(
 					!settings.declineGoogleContacts && syncGoogleContacts,
 				)
-				setSyncGoogleCalendar(
+				setSyncGoogleCalendarSwitch(
 					!settings.declineGoogleCalendar && syncGoogleCalendar,
 				)
 			}
@@ -138,32 +134,25 @@ const Settings: React.FC = () => {
 	const handleGoogleContactSwitchChanged = () => {
 		if (!settings) return
 
-		if (!syncGoogleContacts) {
-			setOpenGoogleContactDialog(true)
-		} else setSyncGoogleContacts(false)
+		if (!syncGoogleContactsSwitch) {
+			setSettingsDialogOpen(DialogEnum.GoogleContactGrantDialog)
+		} else setSyncGoogleContactsSwitch(false)
 	}
 
 	const handleGoogleCalendarSwitchChanged = () => {
 		if (!settings) return
 
-		if (!syncGoogleCalendar) {
-			setOpenGoogleCalendarDialog(true)
-		} else setSyncGoogleCalendar(false)
+		if (!syncGoogleCalendarSwitch) {
+			setSettingsDialogOpen(DialogEnum.GoogleCalendarGrantDialog)
+		} else setSyncGoogleCalendarSwitch(false)
 	}
 
-	const handleCloseContactsGrantDialog = () => setOpenGoogleContactDialog(false)
-
-	const handleCloseChangePasswordDialog = () =>
-		setOpenChangePasswordDialog(false)
+	const handleCloseDialog = () => setSettingsDialogOpen(DialogEnum.NOP)
 
 	const handlerDeleteAccountClick = () => {
 		setTimeToDeleteAccount(AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS)
-		setOpenDeleteAccountDialog(true)
+		setSettingsDialogOpen(DialogEnum.DeleteAccountDialog)
 	}
-
-	const handleCloseDeleteAccountDialog = () => setOpenDeleteAccountDialog(false)
-
-	const handleChangePasswordClick = () => setOpenChangePasswordDialog(true)
 
 	const handleDeleteAccount = async () => {
 		if (timeToDeleteAccount === 0) {
@@ -172,7 +161,7 @@ const Settings: React.FC = () => {
 				alert.showSuccessAlert(language.data.DELETE_ACCOUNT_SUCCESS_MESSAGE)
 				AuthService.logout()
 			} else alert.showErrorAlert(language.data.DELETE_ACCOUNT_ERROR_MESSAGE)
-			setOpenDeleteAccountDialog(false)
+			handleCloseDialog()
 		}
 	}
 
@@ -180,17 +169,15 @@ const Settings: React.FC = () => {
 		<DinoDialog
 			className='settings__delete_account_dialog'
 			onSave={handleDeleteAccount}
-			onClose={handleCloseDeleteAccountDialog}
-			open={openDeleteAccountDialog}
-			header={<h3>{language.data.DELETE_ACCOUNT}</h3>}
+			onClose={handleCloseDialog}
+			open={isDialogOpen(DialogEnum.DeleteAccountDialog)}
+			header={
+				<DinoDialogHeader>
+					<h4>{language.data.DELETE_ACCOUNT}</h4>
+				</DinoDialogHeader>
+			}
 			actions={
 				<DialogActions>
-					<TextButton
-						className='settings__delete_account_dialog__buttons'
-						onClick={handleCloseDeleteAccountDialog}
-					>
-						{language.data.NO}
-					</TextButton>
 					<TextButton
 						className='settings__delete_account_dialog__buttons delete_button'
 						onClick={handleDeleteAccount}
@@ -198,6 +185,12 @@ const Settings: React.FC = () => {
 						{timeToDeleteAccount === 0
 							? language.data.YES
 							: timeToDeleteAccount}
+					</TextButton>
+					<TextButton
+						className='settings__delete_account_dialog__buttons'
+						onClick={handleCloseDialog}
+					>
+						{language.data.NO}
 					</TextButton>
 				</DialogActions>
 			}
@@ -213,9 +206,9 @@ const Settings: React.FC = () => {
 	const renderPasswordDialog = () => (
 		<DinoDialog
 			className='settings__change_password_dialog'
-			onClose={handleCloseChangePasswordDialog}
-			open={openChangePasswordDialog}
-			onSave={handleCloseChangePasswordDialog} //TODO: fazer função que salva nova senha na KidSpaceSettings
+			onClose={handleCloseDialog}
+			open={isDialogOpen(DialogEnum.ChangePasswordDialog)}
+			onSave={handleCloseDialog} //TODO: fazer função que salva nova senha na KidSpaceSettings
 			labelSave={language.data.CHANGE}
 			labelClose={language.data.CANCEL}
 		>
@@ -258,7 +251,7 @@ const Settings: React.FC = () => {
 				<DinoHr invisible />
 				<FormControl className='settings__form'>
 					<DinoSwitch
-						selected={syncGoogleContacts}
+						selected={syncGoogleContactsSwitch}
 						onChangeSelected={handleGoogleContactSwitchChanged}
 						label={language.data.SAVE_CONTACT_ON_GOOGLE_GRANT}
 					/>
@@ -266,7 +259,7 @@ const Settings: React.FC = () => {
 				<DinoHr />
 				<FormControl className='settings__form'>
 					<DinoSwitch
-						selected={syncGoogleCalendar}
+						selected={syncGoogleCalendarSwitch}
 						onChangeSelected={handleGoogleCalendarSwitchChanged}
 						label={'Mude o grant de calendário ablu blu blé'}
 					/>
@@ -278,12 +271,24 @@ const Settings: React.FC = () => {
 				<DinoHr />
 				<FormControl>
 					<TextButton
-						onClick={handleChangePasswordClick}
+						onClick={() =>
+							setSettingsDialogOpen(DialogEnum.ChangePasswordDialog)
+						}
 						className='settings__form__change_password'
 					>
 						{language.data.CHANGE_PASSWORD_LABEL}
 					</TextButton>
 				</FormControl>
+				<GoogleContactGrantDialog
+					settings={settings}
+					onClose={handleCloseDialog}
+					open={isDialogOpen(DialogEnum.GoogleContactGrantDialog)}
+				/>
+				<GoogleCalendarGrantDialog
+					settings={settings}
+					onClose={handleCloseDialog}
+					open={isDialogOpen(DialogEnum.GoogleCalendarGrantDialog)}
+				/>
 			</>
 		)
 
@@ -316,18 +321,8 @@ const Settings: React.FC = () => {
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
-				{renderPasswordDialog()}
+				{/* TODO fazer a verificação de senha {renderPasswordDialog()} */}
 				{renderDeleteAccountDialog()}
-				<GoogleContactGrantDialog
-					settings={settings}
-					onClose={handleCloseContactsGrantDialog}
-					open={openGoogleContactDialog && !hasStaffPowers}
-				/>
-				<GoogleCalendarGrantDialog
-					settings={settings}
-					onClose={() => setOpenGoogleCalendarDialog(false)}
-					open={openGoogleCalendarDialog && !hasStaffPowers}
-				/>
 			</div>
 		</Loader>
 	)

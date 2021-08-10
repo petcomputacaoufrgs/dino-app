@@ -8,7 +8,7 @@ import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsCon
 import CalendarEventDataModel from '../../types/calendar/api/CalendarEventDataModel'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
 
-class CalendarServiceImpl extends AutoSynchronizableService<
+class CalendarEventServiceImpl extends AutoSynchronizableService<
 	number,
 	CalendarEventDataModel,
 	CalendarEventEntity
@@ -57,4 +57,4 @@ class CalendarServiceImpl extends AutoSynchronizableService<
 	}
 }
 
-export default new CalendarServiceImpl()
+export default new CalendarEventServiceImpl()

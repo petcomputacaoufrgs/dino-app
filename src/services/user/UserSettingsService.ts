@@ -55,6 +55,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
+			googleCalendarId: model.googleCalendarId,
 		}
 
 		if (model.treatmentId) {
@@ -79,6 +80,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
+			googleCalendarId: entity.googleCalendarId,
 		}
 
 		if (entity.treatmentLocalId) {

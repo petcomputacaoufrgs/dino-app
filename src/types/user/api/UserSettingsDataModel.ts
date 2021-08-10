@@ -10,5 +10,5 @@ export default interface UserSettingsDataModel
 	declineGoogleCalendar: boolean
 	treatmentId?: number
 	firstSettingsDone: boolean
-	parentsAreaPassword?: string
+	googleCalendarId?: string
 }

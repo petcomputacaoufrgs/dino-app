@@ -9,5 +9,6 @@ export default interface UserSettingsEntity
 	declineGoogleContacts: boolean
 	declineGoogleCalendar: boolean
 	firstSettingsDone: boolean
+	googleCalendarId?: string
 	treatmentLocalId?: number
 }

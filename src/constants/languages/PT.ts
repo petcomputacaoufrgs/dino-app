@@ -340,6 +340,8 @@ export default class PT implements LanguageBase {
 
 	YEAR = 'ano'
 
+	EVENT = 'Evento'
+
 	ADD_EVENT_TITLE = 'Adicionar Evento'
 
 	EVENT_TYPE_LABEL = 'Tipo de Evento'

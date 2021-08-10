@@ -165,6 +165,7 @@ export default interface LanguageBase {
 	YEAR: string
 	AND: string
 	BEFORE: string
+	EVENT: string
 	ADD_EVENT_TITLE: string
 	EVENT_TYPE_LABEL: string
 	EVENT_NAME_LABEL: string

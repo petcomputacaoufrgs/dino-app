@@ -1,76 +1,96 @@
 import React, { useEffect, useState } from 'react'
 import AddButton from '../../../components/button/icon_button/add_button'
-import DinoDialog from '../../../components/dialogs/dino_dialog'
-import { DinoTextfield } from '../../../components/textfield'
-import DataConstants from '../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../context/language'
-import CalendarService from '../../../services/calendar/CalendarService'
 import CalendarEventEntity from '../../../types/calendar/database/CalendarEventEntity'
-import StringUtils from '../../../utils/StringUtils'
-import SelectEventType from '../../../components/calendar/select_event_type'
-import SelectDate from '../../../components/calendar/select_date'
-import SelectTime from '../../../components/calendar/select_time'
 import MonthNavBar from '../../../components/calendar/month_nav_bar'
 import './styles.css'
-
-const getDefaultItem = () => {
-	return { title: '' } as CalendarEventEntity
-}
+import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
+import CalendarEventService from '../../../services/calendar/CalendarEventService'
+import UserSettingsService from '../../../services/user/UserSettingsService'
+import CalendarEntity from '../../../types/calendar/database/CalendarEntity'
+import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
+import CRUDEnum from '../../../types/enum/CRUDEnum'
+import { EventDialogForm } from './event_dialog_form'
+import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
-	const [open, setOpen] = useState(false)
-	const [error, setError] = useState<string>()
-	const [item, setItem] = useState<CalendarEventEntity>(getDefaultItem())
-
-	const handleSave = async () => {
-		if (StringUtils.isEmpty(item.title)) {
-			return setError(language.data.EMPTY_FIELD_ERROR)
-		}
-
-		CalendarService.save(item)
-		setOpen(false)
-	}
+	const [isLoading, setIsLoading] = useState(true)
+	const [events, setEvents] = useState<CalendarEventEntity[]>([])
+	const [settings, setSettings] = useState<UserSettingsEntity>()
+	const [openGrantDialog, setOpenGrantDialog] = useState(false)
+	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 
 	useEffect(() => {
-		if (open) setItem(getDefaultItem())
-	}, [open])
+		const loadUserData = async (): Promise<CalendarEventEntity[]> => {
+			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
+			if (settings && !settings.declineGoogleCalendar) {
+				if (!syncGoogleCalendar) setOpenGrantDialog(true)
+			}
+			return CalendarEventService.getAll()
+		}
+
+		const loadData = async () => {
+			const settings = await UserSettingsService.getFirst()
+			updateSettings(settings)
+
+			const events = await loadUserData()
+			events.push({ title: 'mock title' })
+
+			updateEvents(events)
+			finishLoading()
+		}
+
+		CalendarEventService.addUpdateEventListenner(loadData)
+		UserSettingsService.addUpdateEventListenner(loadData)
+		GoogleScopeService.addUpdateEventListenner(loadData)
+
+		let updateEvents = (events: CalendarEventEntity[]) => {
+			setEvents(events)
+		}
+
+		let updateSettings = (settings: UserSettingsEntity | undefined) => {
+			setSettings(settings)
+		}
+
+		let finishLoading = () => {
+			setIsLoading(false)
+		}
+
+		if (isLoading) {
+			loadData()
+		}
+
+		return () => {
+			updateEvents = () => {}
+			updateSettings = () => {}
+			finishLoading = () => {}
+			CalendarEventService.removeUpdateEventListenner(loadData)
+			UserSettingsService.removeUpdateEventListenner(loadData)
+			GoogleScopeService.removeUpdateEventListenner(loadData)
+		}
+	}, [isLoading])
+
+	const handleClose = () => setToAction(CRUDEnum.NOP)
 
 	return (
-		<div>
+		<div className='calendar'>
 			<MonthNavBar />
-			<AddButton label='evento' handleAdd={() => setOpen(true)} />
-			<DinoDialog
-				open={open}
-				onClose={() => setOpen(false)}
-				onSave={handleSave}
-				header={
-					<div className='calendar_dialog__header dino__flex_row'>
-						<div className='calendar_dialog__header_title'>
-							{language.data.ADD_EVENT_TITLE}
-						</div>
-					</div>
-				}
-			>
-				<div className='calendar_dialog__content'>
-					<DinoTextfield
-						label={language.data.TITLE}
-						value={item.title}
-						onChange={e => setItem({ ...item, title: e.target.value })}
-						dataProps={DataConstants.CALENDAR_EVENT_TITLE}
-						errorMessage={error}
-					/>
-					<SelectEventType />
-					<SelectDate />
-					<SelectTime />
-					<DinoTextfield
-						label={language.data.FORM_DESCRIPTION}
-						value={item.description}
-						onChange={e => setItem({ ...item, description: e.target.value })}
-						dataProps={DataConstants.CALENDAR_EVENT_DESCRIPTION}
-					/>
-				</div>
-			</DinoDialog>
+			{events.map(e => (
+				<div>{e.title}</div>
+			))}
+			<AddButton
+				label={language.data.EVENT}
+				handleAdd={() => setToAction(CRUDEnum.CREATE)}
+			/>
+			<EventDialogForm
+				open={toAction === CRUDEnum.CREATE}
+				onClose={handleClose}
+			/>
+			<GoogleCalendarGrantDialog
+				open={openGrantDialog}
+				onClose={() => setOpenGrantDialog(false)}
+			/>
 		</div>
 	)
 }

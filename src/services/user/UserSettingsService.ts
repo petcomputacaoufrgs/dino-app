@@ -293,8 +293,8 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			fontSize: this.getDefaultFontSizeCode(),
 			colorTheme: this.getDefaultColorThemeCode(),
 			includeEssentialContact: true,
-			declineGoogleContacts: false,
-			declineGoogleCalendar: false,
+			declineGoogleContacts: true,
+			declineGoogleCalendar: true,
 			firstSettingsDone: false,
 		} as UserSettingsEntity
 	}

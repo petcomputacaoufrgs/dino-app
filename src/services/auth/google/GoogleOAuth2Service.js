@@ -63,19 +63,6 @@ class GoogleOAuth2Service {
 			})
 		})
 	}
-
-	// getEvents(googleCalendarId) {
-	// 	if (googleCalendarId) {
-	// 		console.log('nop')
-	// 	} else {
-	// 		const request = gapi.client.calendar.calendarList.list()
-
-	// 		request.execute(resp => {
-	// 			const calendars = resp.items
-	// 			console.log(calendars)
-	// 		})
-	// 	}
-	// }
 }
 
 export default new GoogleOAuth2Service()

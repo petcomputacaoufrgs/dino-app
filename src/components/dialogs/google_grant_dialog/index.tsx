@@ -216,6 +216,7 @@ export const GoogleCalendarGrantDialog = (props: GoogleContactGrantProps) => {
 	const handleSaveDecline = (decline: boolean) => {
 		if (props.settings) {
 			props.settings.declineGoogleCalendar = decline
+			console.log(decline)
 			UserSettingsService.save(props.settings)
 		}
 		props.onClose()

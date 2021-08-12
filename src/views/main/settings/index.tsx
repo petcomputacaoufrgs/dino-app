@@ -68,29 +68,30 @@ const Settings: React.FC = () => {
 		const loadData = async () => {
 			const treatments = await TreatmentService.getAll()
 			const settings = await UserSettingsService.getFirst()
-			const syncGoogleContacs = await GoogleScopeService.hasContactGrant()
-			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
 
 			if (settings) {
 				if (treatments) setTreatments(treatments)
 				setSettings(settings)
 			}
-			updateSyncGoogleGrants(syncGoogleContacs, syncGoogleCalendar, settings)
+			await updateSyncGoogleGrantSwitches(settings)
 
 			finishLoading()
 		}
 
-		let updateSyncGoogleGrants = (
-			syncGoogleContacts: boolean,
-			syncGoogleCalendar: boolean,
+		let updateSyncGoogleGrantSwitches = async (
 			settings?: UserSettingsEntity,
 		) => {
 			if (settings) {
+				const hasContactGrant = await GoogleScopeService.hasContactGrant()
+				const hasCalendarGrant = await GoogleScopeService.hasCalendarGrant()
+
+				console.log(hasCalendarGrant, !settings.declineGoogleCalendar)
+
 				setSyncGoogleContactsSwitch(
-					!settings.declineGoogleContacts && syncGoogleContacts,
+					hasContactGrant && !settings.declineGoogleContacts,
 				)
 				setSyncGoogleCalendarSwitch(
-					!settings.declineGoogleCalendar && syncGoogleCalendar,
+					hasCalendarGrant && !settings.declineGoogleCalendar,
 				)
 			}
 		}
@@ -108,7 +109,7 @@ const Settings: React.FC = () => {
 		}
 
 		return () => {
-			updateSyncGoogleGrants = () => {}
+			updateSyncGoogleGrantSwitches = async () => {}
 			finishLoading = () => {}
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			TreatmentService.removeUpdateEventListenner(loadData)

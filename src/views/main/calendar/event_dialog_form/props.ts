@@ -1,7 +1,7 @@
-import CalendarEventEntity from '../../../../types/calendar/database/CalendarEventEntity'
+import { EventView } from '../../../../components/calendar/calendar_event';
 
 export default interface EventDialogFormProps {
 	open: boolean
 	onClose: () => void
-	item?: CalendarEventEntity
+	item?: EventView
 }

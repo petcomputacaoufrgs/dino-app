@@ -245,6 +245,22 @@ export default class EN implements LanguageBase {
 
 	STRING_DATE_FORMAT = 'MM/DD/YYYY'
 
+	SUNDAY_ABREVIATION = 'Sun'
+
+	MONDAY_ABREVIATION = 'Mon'
+
+	TUESDAY_ABREVIATION = 'Tue'
+
+	WEDNESDAY_ABREVIATION = 'Wed'
+
+	THURSDAY_ABREVIATION = 'Thu'
+
+	FRIDAY_ABREVIATION = 'Fri'
+
+	SATURDAY_ABREVIATION = 'Sat'
+
+	EMPTY_EVENT_LIST = 'no scheduled events'
+
 	DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
 
 	DELETE_NOTE_ALERT_TEXT = 'If you agree this note will be deleted permanently.'

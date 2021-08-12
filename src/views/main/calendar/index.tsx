@@ -12,6 +12,8 @@ import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import { EventDialogForm } from './event_dialog_form'
 import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
+import CalendarDay from '../../../components/calendar/calendar_day'
+import { EventView } from '../../../components/calendar/calendar_event'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -20,6 +22,7 @@ const Calendar: React.FC = () => {
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
+	const [selectedItem, setSelectedItem] = useState<EventView>()
 
 	useEffect(() => {
 		const loadUserData = async (): Promise<CalendarEventEntity[]> => {
@@ -62,9 +65,9 @@ const Calendar: React.FC = () => {
 		}
 
 		return () => {
-			updateEvents = () => {}
-			updateSettings = () => {}
-			finishLoading = () => {}
+			updateEvents = () => { }
+			updateSettings = () => { }
+			finishLoading = () => { }
 			CalendarEventService.removeUpdateEventListenner(loadData)
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
@@ -76,9 +79,8 @@ const Calendar: React.FC = () => {
 	return (
 		<div className='calendar'>
 			<MonthNavBar />
-			{events.map(e => (
-				<div>{e.title}</div>
-			))}
+			<CalendarDay dayOfMonth='01' dayOfWeek={language.data.MONDAY_ABREVIATION} events={[{ name: 'Lembrete Top', time: '10:00 - 11:00', color: '#d783bb' }, { name: 'Eventão', time: '9:00 - 22:00', color: '#d783bb' }]} />
+			<CalendarDay dayOfMonth='02' dayOfWeek={language.data.TUESDAY_ABREVIATION} events={[]} />
 			<AddButton
 				label={language.data.EVENT}
 				handleAdd={() => setToAction(CRUDEnum.CREATE)}
@@ -86,6 +88,11 @@ const Calendar: React.FC = () => {
 			<EventDialogForm
 				open={toAction === CRUDEnum.CREATE}
 				onClose={handleClose}
+			/>
+			<EventDialogForm
+				open={toAction === CRUDEnum.UPDATE}
+				onClose={handleClose}
+				item={selectedItem}
 			/>
 			<GoogleCalendarGrantDialog
 				open={openGrantDialog}

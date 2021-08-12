@@ -245,6 +245,22 @@ export default class PT implements LanguageBase {
 
 	STRING_DATE_FORMAT = 'DD de MM de YYYY'
 
+	SUNDAY_ABREVIATION = 'Dom'
+
+	MONDAY_ABREVIATION = 'Seg'
+
+	TUESDAY_ABREVIATION = 'Ter'
+
+	WEDNESDAY_ABREVIATION = 'Qua'
+
+	THURSDAY_ABREVIATION = 'Qui'
+
+	FRIDAY_ABREVIATION = 'Sex'
+
+	SATURDAY_ABREVIATION = 'Sab'
+
+	EMPTY_EVENT_LIST = 'sem eventos agendados'
+
 	DELETE_NOTE_ALERT_TITLE = 'Tem certeza que deseja excluir esta anotação?'
 
 	DELETE_NOTE_ALERT_TEXT =

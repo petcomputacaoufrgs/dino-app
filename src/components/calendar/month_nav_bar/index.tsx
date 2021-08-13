@@ -3,6 +3,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack'
 import React, { useState } from 'react'
 import { useLanguage } from '../../../context/language'
 import DinoIconButton from '../../button/icon_button'
+import './styles.css'
 
 const MonthNavBar: React.FC = () => {
     const language = useLanguage()
@@ -41,9 +42,11 @@ const MonthNavBar: React.FC = () => {
     }
 
     return (
-        <div className='dino__flex_row'>
+        <div className='month_nav_bar_wrapper dino__flex_row'>
             <DinoIconButton icon={ArrowBack} onClick={clickPrevious}></DinoIconButton>
-            <div style={{ margin: 'auto' }}>{month} {year}</div>
+            <div className='month_and_year_wrapper'>
+                <div className='month_and_year_text'>{month} {year}</div>
+            </div>
             <DinoIconButton icon={ArrowForward} onClick={clickNext}></DinoIconButton>
         </div>
     )

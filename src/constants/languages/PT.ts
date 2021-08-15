@@ -645,13 +645,13 @@ export default class PT implements LanguageBase {
 	INSERT_NEW_PASSWORD_AGAIN = 'Digite novamente a nova senha: '
 
 	SETTING_PASSWORD_EXPLANATION =
-		'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha. A senha deve ter entre 8 e 24 caracteres.'
+		'Essa senha é responsável por proteger a criança de conteúdos sensíveis, já que só será possível acessar a área adulta com o uso dessa senha.'
 
 	INSERT_PASSWORD = 'Digite a senha: '
 
 	INSERT_PASSWORD_AGAIN = 'Digite novamente a senha: '
 
-	PASSWORD_MIN_LENGHT_ERROR_MESSAGE = 'A senha deve ter entre 8 e 24 caracteres'
+	PASSWORD_LENGHT_ERROR_MESSAGE = 'Tamanho inválido'
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'A senhas estão diferentes'
 

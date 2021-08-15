@@ -30,6 +30,26 @@ export const SelectPassword: React.FC<SelectPasswordProps> = props => {
 				type='password'
 				name='password'
 				errorMessage={props.passwordErrorMessage}
+				/*
+				helperText={
+					passwordErrorMessage ||
+					`${parentsAreaPassword.length - DataConstants.USER_PASSWORD.MIN}/${
+						DataConstants.USER_PASSWORD.MAX - DataConstants.USER_PASSWORD.MIN
+					}`
+				}
+				inputProps={{
+					maxLength: DataConstants.USER_PASSWORD.MAX,
+					endAdornment: (
+						<InputAdornment position='end'>
+							<DinoIconButton
+								ariaLabel={language.data.CONTACT_CLEAR_BUTTON_ARIA_LABEL}
+								icon={Visibility}
+								className='see_password_button'
+								onClick={() => (visible = !visible)}
+							/>
+						</InputAdornment>
+					),
+				}}*/
 			/>
 			<DinoTextfield
 				label={language.data.INSERT_PASSWORD_AGAIN}

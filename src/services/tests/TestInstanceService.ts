@@ -44,9 +44,9 @@ class TestInstanceService {
 
 	private async loadTreatmentInstances() {
 		const instances = [
-			{ name: '[Test] Treatment Name 1' },
-			{ name: '[Test] Treatment Name 2' },
-			{ name: '[Test] Treatment Name 3' },
+			{ name: 'Treatment Name 1' },
+			{ name: 'Treatment Name 2' },
+			{ name: 'Treatment Name 3' },
 		] as TreatmentEntity[]
 
 		await TreatmentService.saveAll(instances)
@@ -58,18 +58,18 @@ class TestInstanceService {
 		treatments.forEach(t => {
 			const instances = [
 				{
-					question: `[Test] FaqItem Question 1`,
-					answer: `[Test] FaqItem Answer 1`,
+					question: `FaqItem Question 1`,
+					answer: `FaqItem Answer 1`,
 					localTreatmentId: t.localId,
 				},
 				{
-					question: `[Test] FaqItem Question 2`,
-					answer: `[Test] FaqItem Answer 2`,
+					question: `FaqItem Question 2`,
+					answer: `FaqItem Answer 2`,
 					localTreatmentId: t.localId,
 				},
 				{
-					question: `[Test] FaqItem Question 3`,
-					answer: `[Test] FaqItem Answer 3`,
+					question: `FaqItem Question 3`,
+					answer: `FaqItem Answer 3`,
 					localTreatmentId: t.localId,
 				},
 			] as FaqItemEntity[]
@@ -84,11 +84,11 @@ class TestInstanceService {
 		treatments.forEach(t => {
 			const instances = [
 				{
-					question: `[Test] Treatment Question 1`,
+					question: `Treatment Question 1`,
 					localTreatmentId: t.localId,
 				},
 				{
-					question: `[Test] Treatment Question 2`,
+					question: `Treatment Question 2`,
 					localTreatmentId: t.localId,
 				},
 			] as TreatmentQuestionEntity[]
@@ -161,16 +161,16 @@ class TestInstanceService {
 		} else {
 			instances = [
 				{
-					title: '[Test] Glossary Title 1',
-					text: '[Test] Glossary Text 1',
-					subtitle: '[Test] Subtitle 1',
-					fullText: '[Test] Glossary fullText 1',
+					title: 'Glossary Title 1',
+					text: 'Glossary Text 1',
+					subtitle: 'Subtitle 1',
+					fullText: 'Glossary fullText 1',
 				},
 				{
-					title: '[Test] Glossary Title 2',
-					text: '[Test] Glossary Text 2',
-					subtitle: '[Test] Subtitle 2',
-					fullText: '[Test] Glossary fullText 2',
+					title: 'Glossary Title 2',
+					text: 'Glossary Text 2',
+					subtitle: 'Subtitle 2',
+					fullText: 'Glossary fullText 2',
 				},
 			] as GlossaryItemEntity[]
 		}
@@ -179,7 +179,10 @@ class TestInstanceService {
 	}
 
 	private async loadContacts() {
-		await ContactService.saveAll(this.contactInstances)
+		await ContactService.saveAll([
+			...this.contactInstances,
+			...this.contactInstances,
+		])
 	}
 
 	private async loadPhones() {
@@ -204,11 +207,11 @@ class TestInstanceService {
 		const columnInstances = [
 			{
 				order: 0,
-				title: '[Test] Column Title 1',
+				title: 'Column Title 1',
 			},
 			{
 				order: 1,
-				title: '[Test] Column Title 2',
+				title: 'Column Title 2',
 			},
 		] as NoteColumnEntity[]
 
@@ -220,23 +223,23 @@ class TestInstanceService {
 			const noteInstances = [
 				{
 					order: 0,
-					question: '[Test] Note Question 1',
-					answer: '[Test] Note Answer 1',
-					tags: ['[Test] Note Tag 1'],
+					question: 'Note Question 1',
+					answer: 'Note Answer 1',
+					tags: ['Note Tag 1'],
 					columnLocalId: c.localId,
 				},
 				{
 					order: 1,
-					question: '[Test] Note Question 2',
-					answer: '[Test] Note Answer 2',
-					tags: ['[Test] Note Tag 2'],
+					question: 'Note Question 2',
+					answer: 'Note Answer 2',
+					tags: ['Note Tag 2'],
 					columnLocalId: c.localId,
 				},
 				{
 					order: 2,
-					question: '[Test] Note Question 3',
-					answer: '[Test] Note Answer 3',
-					tags: ['[Test] Note Tag 3'],
+					question: 'Note Question 3',
+					answer: 'Note Answer 3',
+					tags: ['Note Tag 3'],
 					columnLocalId: c.localId,
 				},
 			] as NoteEntity[]
@@ -247,33 +250,33 @@ class TestInstanceService {
 
 	private contactInstances: (ContactEntity | EssentialContactEntity)[] = [
 		{
-			name: 'A [Test] Contact 1',
-			description: '[Test] Contact Description 1',
+			name: 'A Contact 1',
+			description: 'Contact Description 1',
 			color: ColorConstants.COLORS[0],
 		},
 		{
-			name: 'B [Test] Contact 2',
-			description: '[Test] Contact Description 2',
+			name: 'B Contact 2',
+			description: 'Contact Description 2',
 			color: ColorConstants.COLORS[1],
 		},
 		{
-			name: 'C [Test] Contact 3',
-			description: '[Test] Contact Description 3',
+			name: 'C Contact 3',
+			description: 'Contact Description 3',
 			color: ColorConstants.COLORS[2],
 		},
 		{
-			name: 'D [Test] Contact 4',
-			description: '[Test] Contact Description 4',
+			name: 'D Contact 4',
+			description: 'Contact Description 4',
 			color: ColorConstants.COLORS[3],
 		},
 		{
-			name: 'A [Test] Contact 5',
-			description: '[Test] Contact Description 5',
+			name: 'A Contact 5',
+			description: 'Contact Description 5',
 			color: ColorConstants.COLORS[4],
 		},
 		{
-			name: 'B [Test] Contact 6',
-			description: '[Test] Contact Description 6',
+			name: 'B Contact 6',
+			description: 'Contact Description 6',
 			color: ColorConstants.COLORS[5],
 		},
 	]

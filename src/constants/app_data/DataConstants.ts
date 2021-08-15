@@ -46,7 +46,7 @@ class DataConstants {
 
 	// *-------------* USER *-------------*
 
-	static USER_PASSWORD = { MAX: 24, MIN: 8, REQUIRED: true } as const
+	static USER_PASSWORD = { MAX: 24, MIN: 6, REQUIRED: true } as const
 
 	// *-------------* REPORT *-------------*
 

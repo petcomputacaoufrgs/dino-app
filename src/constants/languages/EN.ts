@@ -669,14 +669,13 @@ export default class EN implements LanguageBase {
 	INSERT_NEW_PASSWORD_AGAIN = 'Repeat new password: '
 
 	SETTING_PASSWORD_EXPLANATION =
-		'This password protects the kid from sensible content, because you can only access the parents area with this password. The password must be between 8 and 24 characters.'
+		'This password protects the kid from sensible content, because you can only access the parents area with this password.'
 
 	INSERT_PASSWORD = 'Insert password: '
 
 	INSERT_PASSWORD_AGAIN = 'Repeat password: '
 
-	PASSWORD_MIN_LENGHT_ERROR_MESSAGE =
-		'The password must be between 8 and 24 characters'
+	PASSWORD_LENGHT_ERROR_MESSAGE = 'Invalid length'
 
 	PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE = 'The passwords are different'
 

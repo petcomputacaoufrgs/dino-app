@@ -28,6 +28,8 @@ import './styles.css'
 import { HasStaffPowers } from '../../../context/private_router'
 import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
 import { SelectPassword } from '../../../components/settings/select_password'
+import KidsSpaceSettingsService from '../../../services/kids_space/KidsSpaceSettingsService'
+import DataConstants from '../../../constants/app_data/DataConstants'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 10
 
@@ -53,7 +55,6 @@ const Settings: React.FC = () => {
 	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] =
 		useState('')
 	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
-
 	useEffect(() => {
 		if (!openChangePasswordDialog) {
 			setParentsAreaPassword('')
@@ -62,7 +63,6 @@ const Settings: React.FC = () => {
 			setPasswordErrorMessage(undefined)
 		}
 	}, [openChangePasswordDialog])
-
 	useEffect(() => {
 		const loadData = async () => {
 			const treatments = await TreatmentService.getAll()
@@ -135,6 +135,17 @@ const Settings: React.FC = () => {
 	const handleCloseChangePasswordDialog = () =>
 		setOpenChangePasswordDialog(false)
 
+	const handleSavePassword = async () => {
+		const errorMessage = KidsSpaceSettingsService.invalidPasswordError(
+			parentsAreaPassword,
+			confirmParentsAreaPassword,
+			language,
+		)
+		if (errorMessage) {
+			return setPasswordErrorMessage(errorMessage)
+		} else KidsSpaceSettingsService.saveParentsAreaPassword(parentsAreaPassword)
+	}
+
 	const handlerDeleteAccountClick = () => {
 		setTimeToDeleteAccount(AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS)
 		setOpenDeleteAccountDialog(true)
@@ -194,7 +205,7 @@ const Settings: React.FC = () => {
 			className='settings__change_password_dialog'
 			onClose={handleCloseChangePasswordDialog}
 			open={openChangePasswordDialog}
-			onSave={handleCloseChangePasswordDialog} //TODO: fazer função que salva nova senha na KidSpaceSettings
+			onSave={handleSavePassword}
 			labelSave={language.data.CHANGE}
 			labelClose={language.data.CANCEL}
 		>

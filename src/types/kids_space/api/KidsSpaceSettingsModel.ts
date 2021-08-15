@@ -1,7 +1,9 @@
-import SynchronizableDataLocalIdModel from "../../sync/api/SynchronizableDataLocalIdModel"
+import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLocalIdModel'
 
-export interface KidsSpaceSettingsModel extends SynchronizableDataLocalIdModel<number> {
-    firstSettingsDone: boolean
-    color: string
-    hat: string
+export interface KidsSpaceSettingsModel
+	extends SynchronizableDataLocalIdModel<number> {
+	firstSettingsDone: boolean
+	color: string
+	hat: string
+	parentsAreaPassword?: string
 }

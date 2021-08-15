@@ -13,6 +13,7 @@ import { HasStaffPowers } from '../../../../context/private_router'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { SelectEssentialContactGrant } from '../../select_essential_contact_grant'
 import { SelectPassword } from '../../select_password'
+import KidsSpaceSettingsService from '../../../../services/kids_space/KidsSpaceSettingsService'
 
 const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 	const language = useLanguage()
@@ -136,21 +137,15 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 	}
 
 	const isValidPassword = () => {
-		if (props.parentsAreaPassword.length < DataConstants.USER_PASSWORD.MIN) {
-			props.onPasswordErrorMessageChange(
-				language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE,
-			)
+		const errorMessage = KidsSpaceSettingsService.invalidPasswordError(
+			props.parentsAreaPassword,
+			props.confirmParentsAreaPassword,
+			language,
+		)
+		if (errorMessage) {
+			props.onPasswordErrorMessageChange(errorMessage)
 			return false
 		}
-
-		if (props.parentsAreaPassword !== props.confirmParentsAreaPassword) {
-			props.onPasswordErrorMessageChange(
-				language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE,
-			)
-			return false
-		}
-
-		props.onPasswordErrorMessageChange(undefined)
 		return true
 	}
 

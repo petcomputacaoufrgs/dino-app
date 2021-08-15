@@ -8,6 +8,7 @@ import TreatmentService from '../../../services/treatment/TreatmentService'
 import FirstSettingsDialogs from './dialogs'
 import { toggle } from '../../../constants/toggle/Toggle'
 import './styles.css'
+import KidsSpaceSettingsService from '../../../services/kids_space/KidsSpaceSettingsService'
 
 const FirstSettings: React.FC = () => {
 	let done = false
@@ -88,6 +89,7 @@ const FirstSettings: React.FC = () => {
 			const newEntity = UserSettingsService.getDefaultSettings(language)
 			setSettings(newEntity)
 			saveSettings()
+			KidsSpaceSettingsService.saveParentsAreaPassword(parentsAreaPassword)
 		}
 
 		setStep(step + 1)

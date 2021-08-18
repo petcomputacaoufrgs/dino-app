@@ -15,50 +15,56 @@ const SelectDate: React.FC = () => {
     const yearList = ['2021', '2022', '2023', '2024', '2025']
     
     return(
-        <div className='date__selector'>
-            <InputLabel shrink>
-				{language.data.EVENT_DATE_ICON_ALT}
-			</InputLabel>
-            <div className='teste'>
-                <div className='date__selects'>
-                    <Select
-                        displayEmpty={true}
-                        renderValue={() => selectedDay ? selectedDay : language.data.DAY}
-                        onChange={e => setSelectedDay(e.target.value as string)}
-                    >
-                        {dayList.map((option, index) => (
-                            <MenuItem key={index} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </div>
-                <div className='date__selects'>
-                    <Select
-                        displayEmpty={true}
-                        renderValue={() => selectedMonth ? selectedMonth : language.data.MONTH}
-                        onChange={e => setSelectedMonth(e.target.value as string)}
-                        fullWidth
-                    >
-                        {monthList.map((option, index) => (
-                            <MenuItem key={index} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </div>
-                <div className='date__selects'>
-                    <Select
-                        displayEmpty={true}
-                        renderValue={() => selectedYear ? selectedYear : language.data.YEAR}
-                        onChange={e => setSelectedYear(e.target.value as string)}
-                    >
-                        {yearList.map((option, index) => (
-                            <MenuItem key={index} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
+        <div>
+            <div className='date__selector'>
+                <InputLabel shrink>
+                    {language.data.EVENT_DATE_ICON_ALT}
+                </InputLabel>
+            </div>
+            <div className='.container-fluid'>
+                <div className='row'>
+                    <div className='col-3 day_date__selector'>
+                        <Select
+                            displayEmpty={true}
+                            renderValue={() => selectedDay ? selectedDay : language.data.DAY}
+                            onChange={e => setSelectedDay(e.target.value as string)}
+                            fullWidth
+                        >
+                            {dayList.map((option, index) => (
+                                <MenuItem key={index} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className='col-5 month_date__selector'>
+                        <Select
+                            displayEmpty={true}
+                            renderValue={() => selectedMonth ? selectedMonth : language.data.MONTH}
+                            onChange={e => setSelectedMonth(e.target.value as string)}
+                            fullWidth
+                        >
+                            {monthList.map((option, index) => (
+                                <MenuItem key={index} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className='col-4 year_date__selector'>
+                        <Select
+                            displayEmpty={true}
+                            renderValue={() => selectedYear ? selectedYear : language.data.YEAR}
+                            onChange={e => setSelectedYear(e.target.value as string)}
+                            fullWidth
+                        >
+                            {yearList.map((option, index) => (
+                                <MenuItem key={index} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </div>
                 </div>
             </div>
         </div>

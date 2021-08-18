@@ -376,7 +376,7 @@ export default class EN implements LanguageBase {
 
 	EVENT_DATE_ICON_ALT = 'Choose event date'
 
-	EVENT_REPEAT_ICON_ALT = 'Choose event repetition'
+	EVENT_REPEAT_ICON_ALT = 'Event repetition'
 
 	EVENT_REPEAT_END_DATE_LABEL = 'Repetition end'
 

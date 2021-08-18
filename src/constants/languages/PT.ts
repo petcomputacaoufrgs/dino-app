@@ -356,11 +356,11 @@ export default class PT implements LanguageBase {
 
 	DATE_PICKER_DAY_FORMAT = 'DD/MM/AAAA'
 
-	EVENT_REPEAT_NOT_REPEAT = 'Náo se repete'
+	EVENT_REPEAT_NOT_REPEAT = 'Não se repete'
 
 	EVENT_REPEAT_EVERY_DAY = 'Todos os dias'
 
-	EVENT_REPEAT_EVERY_WEEK = 'Todas as semenas'
+	EVENT_REPEAT_EVERY_WEEK = 'Todas as semanas'
 
 	EVENT_REPEAT_EVERY_MONTH = 'Todos os meses'
 
@@ -378,7 +378,7 @@ export default class PT implements LanguageBase {
 
 	EVENT_DATE_ICON_ALT = 'Escolha a data do evento'
 
-	EVENT_REPEAT_ICON_ALT = 'Escolha a repetição do evento'
+	EVENT_REPEAT_ICON_ALT = 'Repetição do evento'
 
 	EVENT_REPEAT_END_DATE_LABEL = 'Final da repetição'
 

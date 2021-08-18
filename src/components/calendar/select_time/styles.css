@@ -1,13 +1,9 @@
 .time__selector{
     margin-top:2rem;
+}
+
+.drop_down__flex_row{
     display: flex;
-}
-
-.both_time__selector{
-    display: inline-flex;
-    margin-right: 2rem;
-}
-
-.individual_time__selector{
-    margin-right: 1rem;   
+    flex-direction: row;
+    justify-content: space-between;
 }

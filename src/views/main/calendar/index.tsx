@@ -10,9 +10,11 @@ import StringUtils from '../../../utils/StringUtils'
 import SelectEventType from '../../../components/calendar/select_event_type'
 import SelectDate from '../../../components/calendar/select_date'
 import SelectTime from '../../../components/calendar/select_time'
+import SelectRepeat from '../../../components/calendar/select_repeat'
+import SelectNotification from '../../../components/calendar/select_notification'
 import './styles.css'
 
-const getDefaultItem = () => {
+const getDefaultItem = () => { 
 	return { title: '' } as CalendarEventEntity
 }
 
@@ -60,7 +62,18 @@ const Calendar: React.FC = () => {
 					/>
 					<SelectEventType/>
 					<SelectDate/>
-					<SelectTime/>
+					<div className='.container-fluid'>
+						<div className='row'>		
+							<div className='col-6 left_block__selector'>
+								<SelectTime timeLabel = {language.data.EVENT_INIT_TIME_LABEL}/>
+							</div>
+							<div className='col-6 right_block__selector'>
+								<SelectTime timeLabel = {language.data.EVENT_END_TIME_LABEL}/>
+							</div>
+						</div>
+					</div>
+					<SelectRepeat/>
+					<SelectNotification/>
 					<DinoTextfield
 						label={language.data.FORM_DESCRIPTION}
 						value={item.description}

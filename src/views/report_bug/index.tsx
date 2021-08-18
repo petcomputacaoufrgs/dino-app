@@ -66,7 +66,7 @@ const ReportBug: React.FC = () => {
 	return (
 		<div className='report_bug'>
 			<div className='report_bug__div'>
-				<h3>{'WHAT'}</h3>
+				<h3>{language.data.WHAT}</h3>
 				<DinoHr />
 				<p>
 					{language.data.BUG_REPORT_WHAT}
@@ -82,7 +82,7 @@ const ReportBug: React.FC = () => {
 				/>
 			</div>
 			<div className='report_bug__div'>
-				<h3>{'HOW'}</h3>
+				<h3>{language.data.HOW}</h3>
 				<DinoHr />
 				<p>
 					{language.data.BUG_REPORT_HOW}
@@ -97,7 +97,7 @@ const ReportBug: React.FC = () => {
 				/>
 			</div>
 			<div className='report_bug__div'>
-				<h3>{'WHERE'}</h3>
+				<h3>{language.data.WHERE}</h3>
 				<DinoHr />
 				<p>
 					{language.data.BUG_REPORT_WHERE}

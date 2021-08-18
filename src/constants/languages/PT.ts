@@ -748,11 +748,17 @@ export default class PT implements LanguageBase {
 
 	ABOUT_US_UFRGS_TEXT = `\tA Universidade Federal do Rio Grande do Sul, com sede em Porto Alegre , capital do Estado do Rio Grande do Sul, é uma instituição centenária, reconhecida nacional e internacionalmente. Ministra cursos em todas as áreas do conhecimento e em todos os níveis, desde o Ensino Fundamental até a Pós-Graduação.\n\tA qualificação do seu corpo docente, composto em sua maioria por mestres e doutores, a atualização permanente da infraestrutura dos laboratórios e bibliotecas, o incremento à assistência estudantil, bem como a priorização de sua inserção nacional e internacional são políticas em constante desenvolvimento.\n\tPor seus prédios circulam, diariamente, cerca de 40 mil pessoas em busca de um dos mais qualificados ensino do país. Este, aliado à pesquisa, com reconhecidos níveis de excelência, e a extensão, a qual proporciona diversificadas atividades à comunidade, faz com que a UFRGS alcance altos níveis de avaliação.\n\tA UFRGS, como instituição pública a serviço da sociedade e comprometida com o futuro e com a consciência crítica, respeita as diferenças, prioriza a experimentação e, principalmente, reafirma seu compromisso com a educação e a produção do conhecimento, inspirada nos ideais de liberdade e solidariedade.`
 
-	BUG_REPORT_WHAT = `Conte-nos, em detalhes, qual foi o problema que encontrou. O que aconteceu? Lhe impediu de utilizar o aplicativo?`
+	WHAT = 'O QUE'
 
-	BUG_REPORT_HOW = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
+	WHERE = 'ONDE'
 
-	BUG_REPORT_WHERE = `Agora nos conte como o bug veio a acontecer. Você consegue replicá-lo? Ele acontece sempre quando você realiza uma determinada ação ou foi apenas uma vez?`
+	HOW = 'COMO'
+
+	BUG_REPORT_WHAT = `Conte-nos, em detalhes, qual foi o problema que encontrou. O que aconteceu? Impediu-lhe de utilizar o aplicativo?`
+
+	BUG_REPORT_HOW = `Agora nos conte como o bug veio a acontecer. Você consegue replicá-lo? Ele acontece sempre quando você realiza uma determinada ação ou foi apenas uma vez?`
+
+	BUG_REPORT_WHERE = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
 
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

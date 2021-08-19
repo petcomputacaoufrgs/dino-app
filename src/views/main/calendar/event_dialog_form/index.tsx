@@ -12,7 +12,7 @@ import StringUtils from '../../../../utils/StringUtils'
 import EventDialogFormProps from './props'
 
 const getEvent = (item?: CalendarEventEntity) =>
-	item || { title: '', description: '' }
+	item || { title: '', description: '', date: '', time: '' }
 
 export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 	const language = useLanguage()

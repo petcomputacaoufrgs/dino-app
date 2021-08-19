@@ -10,7 +10,7 @@
 	font-size: var(--small-font);
 }
 .event_type__list__item {
-	margin-bottom: 1rem;
+	margin-bottom: 0.7rem;
 }
 
 .MuiListItemSecondaryAction-root {

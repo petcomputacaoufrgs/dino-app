@@ -1,6 +1,7 @@
 import React from 'react'
-import { ReactComponent as CalendarSVG } from '../../../assets/icons/menu_icons/calendar.svg'
-import { ReactComponent as FAQSVG } from '../../../assets/icons/menu_icons/faq.svg'
+import { ReactComponent as PillSVG } from '../../../assets/icons/general_use/pill.svg'
+import { ReactComponent as ClockSVG } from '../../../assets/icons/general_use/clock.svg'
+import { ReactComponent as ClipboardSVG } from '../../../assets/icons/general_use/clipboard.svg'
 import OptionsIconButton from '../../button/icon_button/options_icon_button'
 import './styles.css'
 import {
@@ -20,8 +21,9 @@ const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
 		let Icon = <></>
 		if (item.icon) {
 			const icons = {
-				faq: <FAQSVG />,
-				calendar: <CalendarSVG />,
+				pill: <PillSVG />,
+				clipboard: <ClipboardSVG />,
+				clock: <ClockSVG />,
 			}
 			Icon = icons[item.icon] || <></>
 		}

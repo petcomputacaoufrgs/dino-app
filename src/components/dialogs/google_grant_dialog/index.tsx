@@ -12,7 +12,6 @@ import './styles.css'
 import GoogleScope from '../../../types/auth/google/GoogleScope'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import TextButton from '../../button/text_button'
-import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 
 interface GoogleGrantDialogProps {
@@ -216,7 +215,6 @@ export const GoogleCalendarGrantDialog = (props: GoogleContactGrantProps) => {
 	const handleSaveDecline = (decline: boolean) => {
 		if (props.settings) {
 			props.settings.declineGoogleCalendar = decline
-			console.log(decline)
 			UserSettingsService.save(props.settings)
 		}
 		props.onClose()

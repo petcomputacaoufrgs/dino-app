@@ -85,8 +85,6 @@ const Settings: React.FC = () => {
 				const hasContactGrant = await GoogleScopeService.hasContactGrant()
 				const hasCalendarGrant = await GoogleScopeService.hasCalendarGrant()
 
-				console.log(hasCalendarGrant, !settings.declineGoogleCalendar)
-
 				setSyncGoogleContactsSwitch(
 					hasContactGrant && !settings.declineGoogleContacts,
 				)

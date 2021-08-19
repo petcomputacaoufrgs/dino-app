@@ -5,5 +5,5 @@ export default interface CalendarEventTypeDataModel
 	title: string
 	color?: string
 	icon?: string
-	isUniversal: boolean
+	userId?: number
 }

@@ -5,5 +5,5 @@ export default interface CalendarEventTypeEntity
 	title: string
 	color?: string
 	icon?: string
-	isUniversal: 0 | 1
+	userId?: number
 }

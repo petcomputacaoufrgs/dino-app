@@ -7,6 +7,8 @@ import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
 import CalendarEventDataModel from '../../types/calendar/api/CalendarEventDataModel'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
+import { hasValue } from '../../utils/Utils'
+import CalendarEventTypeService from './CalendarEventTypeService'
 
 class CalendarEventServiceImpl extends AutoSynchronizableService<
 	number,
@@ -40,6 +42,13 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 		const entity: CalendarEventEntity = {
 			title: model.title,
 			description: model.description,
+			time: model.time,
+			date: model.date,
+		}
+
+		if (hasValue(model.typeId)) {
+			const typeEvent = await CalendarEventTypeService.getById(model.typeId!)
+			if (typeEvent) entity.typeLocalId = typeEvent.localId
 		}
 
 		return entity
@@ -51,6 +60,15 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 		const model: CalendarEventDataModel = {
 			title: entity.title,
 			description: entity.description,
+			time: entity.time,
+			date: entity.date,
+		}
+
+		if (hasValue(entity.typeLocalId)) {
+			const typeEvent = await CalendarEventTypeService.getByLocalId(
+				entity.typeLocalId!,
+			)
+			if (typeEvent) model.typeId = typeEvent.id
 		}
 
 		return model

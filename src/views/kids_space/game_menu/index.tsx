@@ -20,32 +20,32 @@ const GameMenu: React.FC = () => {
 				<GameCard
 					onClick={() => HistoryService.push(PathConstants.DINO_RUNNER_GAME)}
 					text={language.data.DINO_RUNNER_GAME}
-					backgroundColor={'#FFA19C'}
+					backgroundColor={'#e34d53'}
 				/>
 				<GameCard
 					onClick={() => HistoryService.push(PathConstants.MEMORY_GAME)}
 					text={language.data.MEMORY_GAME}
-					backgroundColor={'#FFD28C'}
+					backgroundColor={'#f0994d'}
 				/>
 				<GameCard
 					onClick={() => HistoryService.push(PathConstants.DINO_SLIDER_GAME)}
 					text={language.data.DINO_SLIDER_GAME}
-					backgroundColor={'#FFFB8C'}
+					backgroundColor={'#e5d66e'}
 				/>
 				<GameCard
 					onClick={() => HistoryService.push(PathConstants.SNAKE_GAME)}
 					text={language.data.SNAKE_GAME}
-					backgroundColor={'#C0FFB6'}
+					backgroundColor={'#45a764'}
 				/>
 				<GameCard
 					onClick={() => HistoryService.push(PathConstants.MUSICAL_DINO_GAME)}
 					text={language.data.MUSICAL_DINO_GAME}
-					backgroundColor={'#B0FCFF'}
-				/>
+					backgroundColor={'#4b75c3'}
+					/>
 				<GameCard
 					onClick={() => HistoryService.push(PathConstants.TIC_TAC_DINO_GAME)}
 					text={language.data.TIC_TAC_DINO_GAME}
-					backgroundColor={'#E1BFFF'}
+					backgroundColor={'#97618b'}
 				/>
 			</div>
 		</>

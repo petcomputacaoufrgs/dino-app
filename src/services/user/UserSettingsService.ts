@@ -50,11 +50,12 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		const entity: UserSettingsEntity = {
 			colorTheme: model.colorTheme,
 			declineGoogleContacts: model.declineGoogleContacts,
+			declineGoogleCalendar: model.declineGoogleCalendar,
 			fontSize: model.fontSize,
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
-			parentsAreaPassword: model.parentsAreaPassword,
+			googleCalendarId: model.googleCalendarId,
 		}
 
 		if (model.treatmentId) {
@@ -74,11 +75,12 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		const model: UserSettingsDataModel = {
 			colorTheme: entity.colorTheme,
 			declineGoogleContacts: entity.declineGoogleContacts,
+			declineGoogleCalendar: entity.declineGoogleCalendar,
 			fontSize: entity.fontSize,
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			parentsAreaPassword: entity.parentsAreaPassword,
+			googleCalendarId: entity.googleCalendarId,
 		}
 
 		if (entity.treatmentLocalId) {
@@ -100,16 +102,20 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				name: language.DEVICE_DEFAULT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.LIGHT,
+				code: ColorThemeEnum.DEFAULT_LIGHT,
 				name: language.LIGHT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DARK,
+				code: ColorThemeEnum.DEFAULT_DARK,
 				name: language.DARK_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DALTONIAN,
-				name: language.DALTONIAN_THEME_NAME,
+				code: ColorThemeEnum.COTTON_CANDY,
+				name: language.COTTON_CANDY_THEME_NAME,
+			},
+			{
+				code: ColorThemeEnum.EGGPLANT,
+				name: language.EGGPLANT_THEME_NAME,
 			},
 		]
 	}
@@ -155,6 +161,13 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 	getEssentialContactGrant(
 		userSettings: UserSettingsEntity | undefined,
 	): boolean {
+		if (userSettings) {
+			return userSettings.includeEssentialContact
+		}
+		return this.getDefaultEssentialContactGrant()
+	}
+
+	getCalendar(userSettings: UserSettingsEntity | undefined): boolean {
 		if (userSettings) {
 			return userSettings.includeEssentialContact
 		}
@@ -214,8 +227,10 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				case 2:
 					return 'dark'
 				case 3:
-					return 'high_contrast'
+					return 'cotton_candy_light'
 				case 4:
+					return 'eggplant_dark'
+				case 5:
 					return this.getSystemColorThemeName()
 				default:
 					return this.getSystemColorThemeName()
@@ -278,7 +293,8 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			fontSize: this.getDefaultFontSizeCode(),
 			colorTheme: this.getDefaultColorThemeCode(),
 			includeEssentialContact: true,
-			declineGoogleContacts: false,
+			declineGoogleContacts: true,
+			declineGoogleCalendar: true,
 			firstSettingsDone: false,
 		} as UserSettingsEntity
 	}

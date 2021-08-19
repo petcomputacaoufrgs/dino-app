@@ -245,6 +245,22 @@ export default class PT implements LanguageBase {
 
 	STRING_DATE_FORMAT = 'DD de MM de YYYY'
 
+	SUNDAY_ABREVIATION = 'Dom'
+
+	MONDAY_ABREVIATION = 'Seg'
+
+	TUESDAY_ABREVIATION = 'Ter'
+
+	WEDNESDAY_ABREVIATION = 'Qua'
+
+	THURSDAY_ABREVIATION = 'Qui'
+
+	FRIDAY_ABREVIATION = 'Sex'
+
+	SATURDAY_ABREVIATION = 'Sab'
+
+	EMPTY_EVENT_LIST = 'sem eventos agendados'
+
 	DELETE_NOTE_ALERT_TITLE = 'Tem certeza que deseja excluir esta anotação?'
 
 	DELETE_NOTE_ALERT_TEXT =
@@ -339,6 +355,8 @@ export default class PT implements LanguageBase {
 	MONTH = 'mês'
 
 	YEAR = 'ano'
+
+	EVENT = 'Evento'
 
 	ADD_EVENT_TITLE = 'Adicionar Evento'
 
@@ -448,11 +466,13 @@ export default class PT implements LanguageBase {
 
 	NOTE_SEARCH_CLEAN = 'Nenhuma anotação corresponde a pesquisa atual.'
 
-	LIGHT_THEME_NAME = 'Claro'
+	LIGHT_THEME_NAME = 'Ursinho de Pelúcia (Claro)'
 
-	DARK_THEME_NAME = 'Escuro'
+	DARK_THEME_NAME = 'Menta (Escuro)'
 
-	DALTONIAN_THEME_NAME = 'Alto contraste'
+	COTTON_CANDY_THEME_NAME = 'Algodão Doce (Claro)'
+
+	EGGPLANT_THEME_NAME = 'Beringela (Escuro)'
 
 	DEVICE_DEFAULT_THEME_NAME = 'Padrão do sistema'
 
@@ -500,9 +520,12 @@ export default class PT implements LanguageBase {
 	GRANT_DECLINED = 'Você pode ativar esta função futuramente.'
 
 	GOOGLE_CONTACT_GRANT_TEXT =
-		'Gostaríamos de permissão para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. \nNunca leremos nem modificaremos outros contatos além dos contatos criados no DinoApp.'
+		'Gostaríamos de permissão para salvar e sincronizar seus contatos do DinoApp na sua conta de Contatos do Google.\nNunca leremos nem modificaremos outros contatos além dos contatos criados no DinoApp.'
 
-	GOOGLE_CONTACT_GRANT_TITLE = 'Seus contatos em qualquer lugar'
+	GOOGLE_CALENDAR_GRANT_TEXT =
+		'Gostaríamos de permissão para salvar e sincronizar seus eventos do DinoApp na sua conta de Agenda do Google.\nNunca leremos nem modificaremos outros eventos além dos eventos criados no DinoApp.'
+
+	GOOGLE_GRANT_TITLE = 'Sua conta google sincronizada'
 
 	ARROW_BACK_ARIA_LABEL = 'Retorno para a última página'
 

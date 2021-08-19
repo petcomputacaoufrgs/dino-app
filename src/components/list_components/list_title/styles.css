@@ -11,6 +11,7 @@
 
 .list__title .MuiTypography-root.MuiTypography-body1 {
 	text-align: left;
+	color: var(--menu-and-titles-font-color);
 }
 
 @media (orientation: landscape) {

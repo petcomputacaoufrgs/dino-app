@@ -1,5 +1,3 @@
-import ContactView from '../../../types/contact/view/ContactView'
-
 export default interface ItemListMenuProps {
 	anchor: HTMLElement | null
 	setAnchor: React.Dispatch<React.SetStateAction<HTMLElement | null>>
@@ -8,4 +6,5 @@ export default interface ItemListMenuProps {
 	onCloseDialog?: () => void
 	disable?: boolean
 	editText?: string
+	hideEdit?: boolean
 }

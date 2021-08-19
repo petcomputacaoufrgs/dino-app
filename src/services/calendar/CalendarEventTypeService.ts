@@ -5,20 +5,20 @@ import Database from '../../storage/Database'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-import CalendarEventDataModel from '../../types/calendar/api/CalendarEventDataModel'
-import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
+import CalendarEventTypeDataModel from '../../types/calendar/api/CalendarEventTypeDataModel'
+import CalendarEventTypeEntity from '../../types/calendar/database/CalendarEventTypeEntity'
 
-class CalendarServiceImpl extends AutoSynchronizableService<
+class CalendarEventServiceImpl extends AutoSynchronizableService<
 	number,
-	CalendarEventDataModel,
-	CalendarEventEntity
+	CalendarEventTypeDataModel,
+	CalendarEventTypeEntity
 > {
 	constructor() {
 		super(
-			Database.calendarEvent,
-			APIHTTPPathsConstants.CALENDAR_EVENT,
+			Database.calendarEventType,
+			APIHTTPPathsConstants.CALENDAR_EVENT_TYPE,
 			WebSocketQueuePathService,
-			APIWebSocketPathsConstants.CALENDAR_EVENT,
+			APIWebSocketPathsConstants.CALENDAR_EVENT_TYPE,
 		)
 	}
 
@@ -27,7 +27,7 @@ class CalendarServiceImpl extends AutoSynchronizableService<
 	}
 
 	getPermissionsWhichCanEdit(): PermissionEnum[] {
-		return [PermissionEnum.USER]
+		return []
 	}
 
 	getPermissionsWhichCanRead(): PermissionEnum[] {
@@ -35,26 +35,30 @@ class CalendarServiceImpl extends AutoSynchronizableService<
 	}
 
 	async convertModelToEntity(
-		model: CalendarEventDataModel,
-	): Promise<CalendarEventEntity | undefined> {
-		const entity: CalendarEventEntity = {
+		model: CalendarEventTypeDataModel,
+	): Promise<CalendarEventTypeEntity | undefined> {
+		const entity: CalendarEventTypeEntity = {
 			title: model.title,
-			description: model.description,
+			color: model.color,
+			icon: model.icon,
+			userId: model.userId,
 		}
 
 		return entity
 	}
 
 	async convertEntityToModel(
-		entity: CalendarEventEntity,
-	): Promise<CalendarEventDataModel | undefined> {
-		const model: CalendarEventDataModel = {
+		entity: CalendarEventTypeEntity,
+	): Promise<CalendarEventTypeDataModel | undefined> {
+		const model: CalendarEventTypeDataModel = {
 			title: entity.title,
-			description: entity.description,
+			color: entity.color,
+			icon: entity.icon,
+			userId: entity.userId,
 		}
 
 		return model
 	}
 }
 
-export default new CalendarServiceImpl()
+export default new CalendarEventServiceImpl()

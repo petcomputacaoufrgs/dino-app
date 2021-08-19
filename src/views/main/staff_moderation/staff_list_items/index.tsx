@@ -4,6 +4,7 @@ import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import DinoDialog, {
 	DinoDialogContent,
 } from '../../../../components/dialogs/dino_dialog'
+import DinoHr from '../../../../components/dino_hr'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import ListTitle from '../../../../components/list_components/list_title'
 import NoItemsList from '../../../../components/list_components/no_items_list'
@@ -21,11 +22,9 @@ import StaffCard from '../staff_card'
 import StaffItem from './staff_list_item'
 import './styles.css'
 
-interface ListStaffProps {
+const ListStaff: React.FC<{
 	items: StaffEntity[]
-}
-
-const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
+}> = ({ items }) => {
 	const language = useLanguage()
 	const alert = useAlert()
 	const isNotClient = IsNotClient()
@@ -71,15 +70,30 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 
 	const handleClickMenu = (
 		event: React.MouseEvent<HTMLButtonElement>,
-		item: StaffEntity,
+		item?: StaffEntity,
 	) => {
 		setAnchor(event.currentTarget)
-		setSelectedItem(item)
+		if (item) setSelectedItem(item)
 	}
 
 	const filteredData = items.filter(item =>
 		StringUtils.contains(item.email, searchTerm),
 	)
+
+	let prevChar: string
+
+	const renderCharDivider = (str: string) => {
+		const newChar = str[0].toUpperCase()
+		if (prevChar !== newChar) {
+			prevChar = newChar
+			return (
+				<div className='dino__list__char_divider'>
+					<h4>{newChar}</h4>
+					<DinoHr />
+				</div>
+			)
+		}
+	}
 
 	return (
 		<div>
@@ -91,12 +105,14 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 			{ArrayUtils.isNotEmpty(filteredData) ? (
 				<List>
 					{filteredData.map((item, index) => (
-						<StaffItem
-							item={item}
-							key={index}
-							onClick={handleClick}
-							onClickMenu={handleClickMenu}
-						/>
+						<div key={index}>
+							{renderCharDivider(item.email)}
+							<StaffItem
+								item={item}
+								onClick={handleClick}
+								onClickMenu={handleClickMenu}
+							/>
+						</div>
 					))}
 				</List>
 			) : (
@@ -107,7 +123,8 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 				setAnchor={setAnchor}
 				onEdit={() => setToAction(CRUDEnum.UPDATE)}
 				onDelete={() => setToAction(CRUDEnum.DELETE)}
-				disable={isNotClient || selectedItem?.userId !== undefined}
+				disable={isNotClient}
+				hideEdit
 			/>
 			{selectedItem && (
 				<>
@@ -130,8 +147,7 @@ const ListStaff: React.FC<ListStaffProps> = ({ items }) => {
 						open={toAction === CRUDEnum.READ}
 						item={selectedItem}
 						onClose={handleCloseDialog}
-						onEdit={() => setToAction(CRUDEnum.UPDATE)}
-						onDelete={() => setToAction(CRUDEnum.DELETE)}
+						onClickMenu={handleClickMenu}
 					/>
 					<AgreementDialog
 						open={toAction === CRUDEnum.DELETE}

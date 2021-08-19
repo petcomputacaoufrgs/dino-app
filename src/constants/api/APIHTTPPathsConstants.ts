@@ -4,7 +4,7 @@ class APIHTTPPathsConstants {
 	ROUTE_PUBLIC = 'public/'
 	ROUTE_PRIVATE = 'private/'
 	ROUTE_USER = 'user/'
-	ROUTE_ADMIN = 'admin/'
+	ROUTE_STAFF = 'staff/'
 
 	/* private ------------------------------------------------------------------------ */
 
@@ -27,11 +27,8 @@ class APIHTTPPathsConstants {
 	WEB_SOCKET_AUTH = `${this.PRIVATE_AUTH}web_socket/`
 	DELETE_ACCOUNT = `${this.PRIVATE_AUTH}delete_account/`
 	CALENDAR_EVENT = `${this.ROOT}${this.ROUTE_PRIVATE}calendar_event/`
+	CALENDAR_EVENT_TYPE = `${this.ROOT}${this.ROUTE_PRIVATE}calendar_event_type/`
 	//LOGOUT = `${this.PRIVATE_AUTH}logout/`
-
-	/* admin ------------------------------------------------------------------------ */
-
-	STAFF = `${this.ROOT}${this.ROUTE_ADMIN}staff/`
 
 	/* user ------------------------------------------------------------------------ */
 
@@ -39,6 +36,10 @@ class APIHTTPPathsConstants {
 	CONTACT = `${this.ROOT}${this.ROUTE_USER}contact/`
 	PHONE = `${this.ROOT}${this.ROUTE_USER}phone/`
 	NOTE = `${this.ROOT}${this.ROUTE_USER}note/`
+
+	/* staff ------------------------------------------------------------------------ */
+
+	STAFF = `${this.ROOT}${this.ROUTE_STAFF}staff_management/`
 
 	/* no route ------------------------------------------------------------------------ */
 

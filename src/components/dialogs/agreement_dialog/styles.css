@@ -1,5 +1,5 @@
 .alert__dialog_title {
-	background-color: var(--header-and-menu);
+	background-color: var(--menu-and-headers-background);
 }
 
 .alert__dialog_title .MuiTypography-root {

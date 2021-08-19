@@ -245,6 +245,22 @@ export default class EN implements LanguageBase {
 
 	STRING_DATE_FORMAT = 'MM/DD/YYYY'
 
+	SUNDAY_ABREVIATION = 'Sun'
+
+	MONDAY_ABREVIATION = 'Mon'
+
+	TUESDAY_ABREVIATION = 'Tue'
+
+	WEDNESDAY_ABREVIATION = 'Wed'
+
+	THURSDAY_ABREVIATION = 'Thu'
+
+	FRIDAY_ABREVIATION = 'Fri'
+
+	SATURDAY_ABREVIATION = 'Sat'
+
+	EMPTY_EVENT_LIST = 'no scheduled events'
+
 	DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
 
 	DELETE_NOTE_ALERT_TEXT = 'If you agree this note will be deleted permanently.'
@@ -337,6 +353,8 @@ export default class EN implements LanguageBase {
 	MONTH = 'month'
 
 	YEAR = 'year'
+
+	EVENT = 'event'
 
 	ADD_EVENT_TITLE = 'Add Event'
 
@@ -449,11 +467,13 @@ export default class EN implements LanguageBase {
 
 	NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
 
-	LIGHT_THEME_NAME = 'Light'
+	LIGHT_THEME_NAME = 'Teddy Bear (Light)'
 
-	DARK_THEME_NAME = 'Dark'
+	DARK_THEME_NAME = 'Mint (Dark)'
 
-	DALTONIAN_THEME_NAME = 'High contrast'
+	COTTON_CANDY_THEME_NAME = 'Cotton Candy (Light)'
+
+	EGGPLANT_THEME_NAME = 'Eggplant (Dark)'
 
 	DEVICE_DEFAULT_THEME_NAME = 'System default'
 
@@ -501,9 +521,12 @@ export default class EN implements LanguageBase {
 	GRANT_DECLINED = 'You can active this at any time.'
 
 	GOOGLE_CONTACT_GRANT_TEXT =
-		"We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."
+		"We would like permissions to save and synchronize your DinoApp's contacts to your Google Contacts account. We will never read or modify other contacts outside DinoApp's contacts."
 
-	GOOGLE_CONTACT_GRANT_TITLE = 'Your contacts anywhere'
+	GOOGLE_CALENDAR_GRANT_TEXT =
+		"We would like permissions to save and synchronize your DinoApp's events to your Google Calendar account. We will never read or modify other events outside DinoApp's events."
+
+	GOOGLE_GRANT_TITLE = 'Your google account synchronized'
 
 	ARROW_BACK_ARIA_LABEL = 'Return to last page'
 

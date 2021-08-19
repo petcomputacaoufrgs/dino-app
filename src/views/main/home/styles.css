@@ -33,7 +33,7 @@
 	height: 2.5rem;
 	font-size: var(--big-font);
 	font-weight: 700;
-	color: var(--contrast-color);
+	color: var(--menu-and-titles-font-color);
 	margin-top: 4px;
 	text-align: center;
 }
@@ -43,7 +43,7 @@ p.home__grid__item__name {
 }
 
 .home .home__grid__button {
-	background-color: var(--home-icons);
+	background-color: var(--menu-cards-background);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -76,7 +76,7 @@ p.home__grid__item__name {
 .info__grid__item {
 	width: 100%;
 	height: 2.5rem;
-	background-color: var(--horizontal-menu-item);
+	background-color: var(--menu-buttons-background);
 	font-size: var(--big-font);
 	font-weight: 700;
 	text-align: center;

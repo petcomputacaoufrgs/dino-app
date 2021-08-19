@@ -27,9 +27,9 @@ const CalendarDay: React.FC<DayView> = ({
                     <div className="empty_event_list">
                         <p>{language.data.EMPTY_EVENT_LIST}</p>
                     </div> :
-                    events.map(e => (
+                    events.map((e, index) => (
                         <div className="day_event_wrapper">
-                            <CalendarEvent item={e} />
+                            <CalendarEvent key={index} item={e} />
                         </div>
                     ))}
             </div>

@@ -14,6 +14,8 @@ import { EventDialogForm } from './event_dialog_form'
 import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
 import CalendarDay from '../../../components/calendar/calendar_day'
 import { EventView } from '../../../components/calendar/calendar_event'
+import CalendarSettings from '../../../components/calendar/calendar_settings'
+import DinoTabPanel from '../../../components/tab_panel'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -23,6 +25,39 @@ const Calendar: React.FC = () => {
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<EventView>()
+
+	const renderCalendar = () => {
+		return (
+			<div className='calendar'>
+				<MonthNavBar />
+				<CalendarDay dayOfMonth='01' dayOfWeek={language.data.MONDAY_ABREVIATION} events={[{ name: 'Lembrete Top', time: '10:00 - 11:00', color: '#d783bb' }, { name: 'Eventão', time: '9:00 - 22:00', color: '#d783bb' }]} />
+				<CalendarDay dayOfMonth='02' dayOfWeek={language.data.TUESDAY_ABREVIATION} events={[]} />
+				<AddButton
+					label={language.data.EVENT}
+					handleAdd={() => setToAction(CRUDEnum.CREATE)}
+				/>
+				<EventDialogForm
+					open={toAction === CRUDEnum.CREATE}
+					onClose={handleClose}
+				/>
+				<EventDialogForm
+					open={toAction === CRUDEnum.UPDATE}
+					onClose={handleClose}
+					item={selectedItem}
+				/>
+				<GoogleCalendarGrantDialog
+					open={openGrantDialog}
+					onClose={() => setOpenGrantDialog(false)}
+				/>
+			</div>
+		)
+	}
+
+	const renderCalendarSettings = () => {
+		return (
+			<CalendarSettings />
+		)
+	}
 
 	useEffect(() => {
 		const loadUserData = async (): Promise<CalendarEventEntity[]> => {
@@ -77,29 +112,12 @@ const Calendar: React.FC = () => {
 	const handleClose = () => setToAction(CRUDEnum.NOP)
 
 	return (
-		<div className='calendar'>
-			<MonthNavBar />
-			<CalendarDay dayOfMonth='01' dayOfWeek={language.data.MONDAY_ABREVIATION} events={[{ name: 'Lembrete Top', time: '10:00 - 11:00', color: '#d783bb' }, { name: 'Eventão', time: '9:00 - 22:00', color: '#d783bb' }]} />
-			<CalendarDay dayOfMonth='02' dayOfWeek={language.data.TUESDAY_ABREVIATION} events={[]} />
-			<AddButton
-				label={language.data.EVENT}
-				handleAdd={() => setToAction(CRUDEnum.CREATE)}
-			/>
-			<EventDialogForm
-				open={toAction === CRUDEnum.CREATE}
-				onClose={handleClose}
-			/>
-			<EventDialogForm
-				open={toAction === CRUDEnum.UPDATE}
-				onClose={handleClose}
-				item={selectedItem}
-			/>
-			<GoogleCalendarGrantDialog
-				open={openGrantDialog}
-				onClose={() => setOpenGrantDialog(false)}
-			/>
-		</div>
+		<DinoTabPanel panels={[
+			{ Label: 'Calendário', Component: renderCalendar() },
+			{ Label: 'Configurações', Component: renderCalendarSettings() }
+		]} />
 	)
+
 }
 
 export default Calendar

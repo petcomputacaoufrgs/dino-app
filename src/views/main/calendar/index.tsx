@@ -28,7 +28,7 @@ const Calendar: React.FC = () => {
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
-	const [selectedItem, setSelectedItem] = useState<CalendarDayView>()
+	const [selectedItem, setSelectedItem] = useState<CalendarEventView>()
 
 	useEffect(() => {
 		const loadUserData = async (): Promise<CalendarDayView[]> => {
@@ -50,14 +50,21 @@ const Calendar: React.FC = () => {
 				const type = types.find(t => t.localId === e.typeLocalId)
 
 				const eventView: CalendarEventView = {
-					title: e.title,
-					description: e.description,
-					time: e.time,
+					event: {
+						title: e.title,
+						description: e.description,
+						time: e.time,
+						date: e.date,
+					},
 					color: type?.color,
+					icon: type?.icon,
 				}
 
 				const index = Number(e.date) - 1
-				month[index].events.push(eventView)
+				const day = month[index]
+				if (day) {
+					day.events.push(eventView)
+				}
 			})
 
 			return month
@@ -103,7 +110,15 @@ const Calendar: React.FC = () => {
 		}
 	}, [isLoading])
 
-	const handleClose = () => setToAction(CRUDEnum.NOP)
+	const handleClose = () => {
+		setToAction(CRUDEnum.NOP)
+		setSelectedItem(undefined)
+	}
+
+	const handleClick = (item: CalendarEventView) => {
+		setSelectedItem(item)
+		setToAction(CRUDEnum.READ)
+	}
 
 	const renderCalendar = () => {
 		return (
@@ -115,6 +130,7 @@ const Calendar: React.FC = () => {
 						dayOfMonth={e.dayOfMonth}
 						dayOfWeek={language.data.MONDAY_ABREVIATION}
 						events={e.events}
+						onClick={handleClick}
 					/>
 				))}
 				<AddButton
@@ -125,6 +141,7 @@ const Calendar: React.FC = () => {
 					open={toAction === CRUDEnum.CREATE || toAction === CRUDEnum.UPDATE}
 					onClose={handleClose}
 					item={selectedItem}
+					eventTypes={eventTypes}
 				/>
 				<GoogleCalendarGrantDialog
 					open={openGrantDialog}

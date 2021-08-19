@@ -7,21 +7,58 @@ import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import CalendarEventService from '../../../../services/calendar/CalendarEventService'
-import CalendarEventEntity from '../../../../types/calendar/database/CalendarEventEntity'
+import CalendarEventTypeEntity from '../../../../types/calendar/database/CalendarEventTypeEntity'
+import { CalendarEventView } from '../../../../types/calendar/view/CalendarView'
 import StringUtils from '../../../../utils/StringUtils'
 import EventDialogFormProps from './props'
 
-const getEvent = (item?: CalendarEventEntity) =>
-	item || { title: '', description: '', date: '', time: '' }
+export type EventTypeView = { color?: string; icon?: string; title?: string }
+
+const getEvent = (item?: CalendarEventView) =>
+	item?.event || { title: '', description: '', date: '', time: '' }
+
+const getType = (
+	item?: CalendarEventView,
+	eventTypes?: CalendarEventTypeEntity[],
+) => {
+	if (item) {
+		const eventType = eventTypes?.find(
+			t => t.localId === item?.event.typeLocalId,
+		)
+		console.log(eventTypes, eventType)
+		return {
+			color: eventType?.color,
+			icon: eventType?.icon,
+			title: eventType?.title,
+		}
+	}
+	return undefined
+}
 
 export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 	const language = useLanguage()
 
-	const [event, setEvent] = useState(getEvent())
+	const [event, setEvent] = useState(getEvent(props.item))
+	const [type, setType] = useState<EventTypeView | undefined>(
+		getType(props.item, props.eventTypes),
+	)
 	const [error, setError] = useState<string>()
 
+	const handleChangeType = (index: number) => {
+		if (props.eventTypes) {
+			const newType = props.eventTypes[index]
+			setType(newType)
+			event.typeLocalId = newType.localId
+			setEvent({ ...event })
+		}
+	}
+
 	useEffect(() => {
-		if (props.open) setEvent(getEvent())
+		if (props.open) {
+			setEvent(getEvent(props.item))
+			setType(getType(props.item, props.eventTypes))
+			console.log(getType(props.item, props.eventTypes))
+		}
 	}, [props.open])
 
 	const handleSave = async () => {
@@ -39,7 +76,10 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 			onClose={props.onClose}
 			onSave={handleSave}
 			header={
-				<div className='calendar_dialog__header dino__flex_row'>
+				<div
+					className='calendar_dialog__header dino__flex_row'
+					style={{ backgroundColor: type?.color }}
+				>
 					<div className='calendar_dialog__header_title'>
 						{language.data.ADD_EVENT_TITLE}
 					</div>
@@ -54,7 +94,10 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					dataProps={DataConstants.CALENDAR_EVENT_TITLE}
 					errorMessage={error}
 				/>
-				<SelectEventType />
+				<SelectEventType
+					onChangeType={handleChangeType}
+					eventTypesView={props.eventTypes}
+				/>
 				<SelectDate />
 				<SelectTime />
 				<DinoTextfield

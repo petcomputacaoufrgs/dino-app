@@ -1,8 +1,9 @@
+import CalendarEventEntity from '../database/CalendarEventEntity'
+
 export interface CalendarEventView {
-	title: string
-	description?: string
+	event: CalendarEventEntity
 	color?: string
-	time: string
+	icon?: string
 }
 
 export interface CalendarDayView {

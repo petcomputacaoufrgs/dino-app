@@ -8,6 +8,7 @@ const CalendarDay: React.FC<{
 	dayOfWeek: string
 	dayOfMonth: string
 	events: CalendarEventView[]
+	onClick: (item: CalendarEventView) => void
 }> = props => {
 	const language = useLanguage()
 
@@ -19,13 +20,13 @@ const CalendarDay: React.FC<{
 			</div>
 			<div className='day_event_list_wrapper'>
 				{props.events.length === 0 ? (
-					<div className='empty_event_list' key={0}>
+					<div className='empty_event_list'>
 						<p>{language.data.EMPTY_EVENT_LIST}</p>
 					</div>
 				) : (
 					props.events.map((e, index) => (
-						<div className='day_event_wrapper'>
-							<CalendarEvent key={index} item={e} />
+						<div key={index} className='day_event_wrapper'>
+							<CalendarEvent item={e} onClick={props.onClick} />
 						</div>
 					))
 				)}

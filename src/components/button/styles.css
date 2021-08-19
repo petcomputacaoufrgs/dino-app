@@ -34,3 +34,7 @@
 .button.disabled {
 	opacity: 0.5;
 }
+
+.button.save_button {
+	color: var(--base-font-color)
+}

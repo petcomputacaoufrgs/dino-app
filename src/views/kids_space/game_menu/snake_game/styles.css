@@ -10,6 +10,12 @@
 	margin: 0;
 }
 
+.snake_game .dino_icon_button__button svg {
+	width: 3rem;
+	height: 3rem;
+	fill: var(--snake-game-details-color);
+}
+
 .snake_game__food {
 	width: 100%;
 }
@@ -29,7 +35,7 @@
 }
 
 #snake_game__score_board {
-	background-color: var(--snake-game-score-background-color);
+	background-color: var(--snake-game-details-color);
 	color: var(--dark-color);
 	width: 5rem;
 	height: 5rem;

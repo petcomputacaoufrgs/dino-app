@@ -12,8 +12,6 @@ import { CalendarEventView } from '../../../../types/calendar/view/CalendarView'
 import StringUtils from '../../../../utils/StringUtils'
 import EventDialogFormProps from './props'
 
-export type EventTypeView = { color?: string; icon?: string; title?: string }
-
 const getEvent = (item?: CalendarEventView) =>
 	item?.event || { title: '', description: '', date: '', time: '' }
 
@@ -25,12 +23,7 @@ const getType = (
 		const eventType = eventTypes?.find(
 			t => t.localId === item?.event.typeLocalId,
 		)
-		console.log(eventTypes, eventType)
-		return {
-			color: eventType?.color,
-			icon: eventType?.icon,
-			title: eventType?.title,
-		}
+		return eventType
 	}
 	return undefined
 }
@@ -39,7 +32,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 	const language = useLanguage()
 
 	const [event, setEvent] = useState(getEvent(props.item))
-	const [type, setType] = useState<EventTypeView | undefined>(
+	const [type, setType] = useState<CalendarEventTypeEntity | undefined>(
 		getType(props.item, props.eventTypes),
 	)
 	const [error, setError] = useState<string>()
@@ -48,8 +41,6 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 		if (props.eventTypes) {
 			const newType = props.eventTypes[index]
 			setType(newType)
-			event.typeLocalId = newType.localId
-			setEvent({ ...event })
 		}
 	}
 
@@ -57,7 +48,6 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 		if (props.open) {
 			setEvent(getEvent(props.item))
 			setType(getType(props.item, props.eventTypes))
-			console.log(getType(props.item, props.eventTypes))
 		}
 	}, [props.open])
 
@@ -65,6 +55,8 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 		if (StringUtils.isEmpty(event.title)) {
 			return setError(language.data.EMPTY_FIELD_ERROR)
 		}
+
+		event.typeLocalId = type?.localId
 
 		CalendarEventService.save(event)
 		props.onClose()
@@ -96,7 +88,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 				/>
 				<SelectEventType
 					onChangeType={handleChangeType}
-					eventTypesView={props.eventTypes}
+					eventTypes={props.eventTypes}
 				/>
 				<SelectDate />
 				<SelectTime />

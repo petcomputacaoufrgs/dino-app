@@ -3,10 +3,9 @@ import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import './styles.css'
 import CalendarEventTypeEntity from '../../../types/calendar/database/CalendarEventTypeEntity'
-import { EventTypeView } from '../../../views/main/calendar/event_dialog_form'
 
 const SelectEventType: React.FC<{
-	eventTypesView?: EventTypeView[]
+	eventTypes?: CalendarEventTypeEntity[]
 	onChangeType: (index: number) => void
 }> = props => {
 	const language = useLanguage()
@@ -21,10 +20,10 @@ const SelectEventType: React.FC<{
 				value={type}
 				onChange={e => setType(e.target.value as string)}
 			>
-				{props.eventTypesView?.map((option, index) => (
+				{props.eventTypes?.map((option, index) => (
 					<MenuItem
 						key={index}
-						value={option.color}
+						value={option.localId}
 						onClick={e => props.onChangeType(index)}
 					>
 						{option.title}

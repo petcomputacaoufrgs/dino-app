@@ -2,10 +2,15 @@
     margin-top: 1rem;
 }
 
-.date__selects{
-    margin-right:1rem;
+.month_date__selector{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
-.teste{
-    display:flex;
+.year_date__selector{
+    padding-left: 0rem;
+}
+
+.day_date__selector{
+    padding-right: 0rem;
 }

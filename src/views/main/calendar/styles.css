@@ -16,3 +16,11 @@
 .calendar_dialog__content {
 	padding: 1.3rem;
 }
+
+.left_block__selector{
+    padding-right: 1rem;
+}
+
+.right_block__selector{
+	padding-right: 1rem;
+}

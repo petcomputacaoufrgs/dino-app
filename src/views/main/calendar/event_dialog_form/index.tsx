@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import SelectDate from '../../../../components/calendar/select_date'
 import SelectEventType from '../../../../components/calendar/select_event_type'
+import SelectNotification from '../../../../components/calendar/select_notification'
+import SelectRepeat from '../../../../components/calendar/select_repeat'
 import SelectTime from '../../../../components/calendar/select_time'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../components/textfield'
@@ -91,7 +93,18 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					eventTypes={props.eventTypes}
 				/>
 				<SelectDate />
-				<SelectTime />
+				<div className='.container-fluid'>
+						<div className='row'>		
+							<div className='col-6 left_block__selector'>
+								<SelectTime timeLabel = {language.data.EVENT_INIT_TIME_LABEL}/>
+							</div>
+							<div className='col-6 right_block__selector'>
+								<SelectTime timeLabel = {language.data.EVENT_END_TIME_LABEL}/>
+							</div>
+						</div>
+					</div>
+				<SelectRepeat/>
+				<SelectNotification/>
 				<DinoTextfield
 					label={language.data.FORM_DESCRIPTION}
 					value={event.description}

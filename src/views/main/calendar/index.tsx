@@ -52,21 +52,14 @@ const Calendar: React.FC = () => {
 				const type = types.find(t => t.localId === e.typeLocalId)
 
 				const eventView: CalendarEventView = {
-					event: {
-						title: e.title,
-						description: e.description,
-						time: e.time,
-						date: e.date,
-					},
+					event: e,
 					color: type?.color,
 					icon: type?.icon,
 				}
 
 				const index = Number(e.date) - 1
 				const day = month[index]
-				if (day) {
-					day.events.push(eventView)
-				}
+				if (day) day.events.push(eventView)
 			})
 
 			return month

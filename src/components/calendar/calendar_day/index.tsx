@@ -16,7 +16,11 @@ const CalendarDay: React.FC<{
 		<div className='day_wrapper dino__flex_row'>
 			<div className='day_number_wrapper'>
 				<p className='week_day'>{props.dayOfWeek}</p>
-				<p className='month_day'>{props.dayOfMonth}</p>
+				<p className='month_day'>
+					{props.dayOfMonth.length === 1
+						? '0' + props.dayOfMonth
+						: props.dayOfMonth}
+				</p>
 			</div>
 			<div className='day_event_list_wrapper'>
 				{props.events.length === 0 ? (

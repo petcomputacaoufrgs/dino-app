@@ -89,22 +89,23 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					errorMessage={error}
 				/>
 				<SelectEventType
-					onChangeType={handleChangeType}
+					value={type}
+					onClickOption={handleChangeType}
 					eventTypes={props.eventTypes}
 				/>
 				<SelectDate />
 				<div className='.container-fluid'>
-						<div className='row'>		
-							<div className='col-6 left_block__selector'>
-								<SelectTime timeLabel = {language.data.EVENT_INIT_TIME_LABEL}/>
-							</div>
-							<div className='col-6 right_block__selector'>
-								<SelectTime timeLabel = {language.data.EVENT_END_TIME_LABEL}/>
-							</div>
+					<div className='row'>
+						<div className='col-6 left_block__selector'>
+							<SelectTime timeLabel={language.data.EVENT_INIT_TIME_LABEL} />
+						</div>
+						<div className='col-6 right_block__selector'>
+							<SelectTime timeLabel={language.data.EVENT_END_TIME_LABEL} />
 						</div>
 					</div>
-				<SelectRepeat/>
-				<SelectNotification/>
+				</div>
+				<SelectRepeat />
+				<SelectNotification />
 				<DinoTextfield
 					label={language.data.FORM_DESCRIPTION}
 					value={event.description}

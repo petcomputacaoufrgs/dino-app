@@ -5,26 +5,29 @@ import './styles.css'
 import CalendarEventTypeEntity from '../../../types/calendar/database/CalendarEventTypeEntity'
 
 const SelectEventType: React.FC<{
+	value?: CalendarEventTypeEntity
+	onClickOption: (index: number) => void
 	eventTypes?: CalendarEventTypeEntity[]
-	onChangeType: (index: number) => void
 }> = props => {
 	const language = useLanguage()
 
-	const [type, setType] = useState<string>()
+	const [selectedTypeLocalId, setSelectedTypeLocalId] = useState(
+		props.value?.localId,
+	)
 
 	return (
 		<div className='event_type__selector'>
 			<InputLabel shrink>{language.data.EVENT_TYPE_ICON_ALT}</InputLabel>
 			<Select
 				fullWidth
-				value={type}
-				onChange={e => setType(e.target.value as string)}
+				value={selectedTypeLocalId}
+				onChange={e => setSelectedTypeLocalId(e.target.value as number)}
 			>
 				{props.eventTypes?.map((option, index) => (
 					<MenuItem
 						key={index}
 						value={option.localId}
-						onClick={e => props.onChangeType(index)}
+						onClick={e => props.onClickOption(index)}
 					>
 						{option.title}
 					</MenuItem>

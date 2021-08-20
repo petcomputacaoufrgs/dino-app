@@ -66,13 +66,10 @@ const ReportBug: React.FC = () => {
 	return (
 		<div className='report_bug'>
 			<div className='report_bug__div'>
-				<h3>{'WHAT'}</h3>
+				<h3>{language.data.WHAT}</h3>
 				<DinoHr />
 				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde incidunt
-					ratione iste quibusdam fuga ipsa ullam recusandae alias? Laborum
-					reiciendis iusto sunt, maxime quasi modi perspiciatis nam illum quae
-					aperiam?
+					{language.data.BUG_REPORT_WHAT}
 				</p>
 				<DinoTextfield
 					value={report.what}
@@ -85,13 +82,10 @@ const ReportBug: React.FC = () => {
 				/>
 			</div>
 			<div className='report_bug__div'>
-				<h3>{'HOW'}</h3>
+				<h3>{language.data.HOW}</h3>
 				<DinoHr />
 				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde incidunt
-					ratione iste quibusdam fuga ipsa ullam recusandae alias? Laborum
-					reiciendis iusto sunt, maxime quasi modi perspiciatis nam illum quae
-					aperiam?
+					{language.data.BUG_REPORT_HOW}
 				</p>
 				<DinoTextfield
 					value={report.how}
@@ -103,13 +97,10 @@ const ReportBug: React.FC = () => {
 				/>
 			</div>
 			<div className='report_bug__div'>
-				<h3>{'WHERE'}</h3>
+				<h3>{language.data.WHERE}</h3>
 				<DinoHr />
 				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde incidunt
-					ratione iste quibusdam fuga ipsa ullam recusandae alias? Laborum
-					reiciendis iusto sunt, maxime quasi modi perspiciatis nam illum quae
-					aperiam?
+					{language.data.BUG_REPORT_WHERE}
 				</p>
 				<DinoTextfield
 					value={report.where}

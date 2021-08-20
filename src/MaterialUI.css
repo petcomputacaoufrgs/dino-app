@@ -109,8 +109,7 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 	border-bottom: 2px solid var(--focused-input-font-color);
 }
 
-.colorDefault .MuiSvgIcon-root,
-.MuiCardHeader-root.contact_dialog_form_header .MuiSvgIcon-root {
+.MuiAvatar-root.colorDefault .MuiSvgIcon-root {
 	fill: var(--buttons-font-color);
 }
 

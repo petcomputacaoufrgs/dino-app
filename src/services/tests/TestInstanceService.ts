@@ -22,7 +22,8 @@ import NoteColumnService from '../note/NoteColumnService'
 import NoteService from '../note/NoteService'
 import TreatmentQuestionService from '../treatment/TreatmentQuestionService'
 import TreatmentService from '../treatment/TreatmentService'
-import data from './glossary.json'
+import glossaryData from './glossary.json'
+import faqItemData from './faqItem.json'
 import CalendarEventTypeEntity from '../../types/calendar/database/CalendarEventTypeEntity'
 import CalendarEventTypeService from '../calendar/CalendarEventTypeService'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
@@ -53,6 +54,7 @@ class TestInstanceService {
 			{ name: '[Test] Treatment Name 1' },
 			{ name: '[Test] Treatment Name 2' },
 			{ name: '[Test] Treatment Name 3' },
+			{ name: 'Nutrição' },
 		] as TreatmentEntity[]
 
 		await TreatmentService.saveAll(instances)
@@ -60,28 +62,38 @@ class TestInstanceService {
 
 	private async loadFaqItemInstances() {
 		const treatments = await TreatmentService.getAll()
+		let instances: FaqItemEntity[] = []
 
-		treatments.forEach(t => {
-			const instances = [
-				{
-					question: `[Test] FaqItem Question 1`,
-					answer: `[Test] FaqItem Answer 1`,
-					localTreatmentId: t.localId,
-				},
-				{
-					question: `[Test] FaqItem Question 2`,
-					answer: `[Test] FaqItem Answer 2`,
-					localTreatmentId: t.localId,
-				},
-				{
-					question: `[Test] FaqItem Question 3`,
-					answer: `[Test] FaqItem Answer 3`,
-					localTreatmentId: t.localId,
-				},
-			] as FaqItemEntity[]
+		if (faqItemData) {
+			instances = faqItemData.itemList as FaqItemEntity[]
+			const nutrition = treatments.find(t => t.name === "Nutrição")
+			if (nutrition) {
+				instances.forEach(i => i.localTreatmentId = nutrition.localId)
+			}
+		} else {
+			treatments.forEach(t => {
+				instances = [
+					{
+						question: `[Test] FaqItem Question 1`,
+						answer: `[Test] FaqItem Answer 1`,
+						localTreatmentId: t.localId,
+					},
+					{
+						question: `[Test] FaqItem Question 2`,
+						answer: `[Test] FaqItem Answer 2`,
+						localTreatmentId: t.localId,
+					},
+					{
+						question: `[Test] FaqItem Question 3`,
+						answer: `[Test] FaqItem Answer 3`,
+						localTreatmentId: t.localId,
+					},
+				] as FaqItemEntity[]
 
-			FaqItemService.saveAll(instances)
-		})
+			})
+		}
+
+		FaqItemService.saveAll(instances)
 	}
 
 	private async loadTreatmentQuestionInstances() {
@@ -160,8 +172,8 @@ class TestInstanceService {
 	private async loadGlossary() {
 		let instances: GlossaryItemEntity[] = []
 
-		if (data) {
-			instances = data.itemList
+		if (glossaryData) {
+			instances = glossaryData.itemList
 		} else {
 			instances = [
 				{

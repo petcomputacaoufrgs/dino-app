@@ -22,10 +22,6 @@ import {
 } from '../../../types/calendar/view/CalendarView'
 import CalendarEventTypeService from '../../../services/calendar/CalendarEventTypeService'
 
-const getDefaultItem = () => { 
-	return { title: '' } as CalendarEventEntity
-
-}
 const Calendar: React.FC = () => {
 	const language = useLanguage()
 	const [isLoading, setIsLoading] = useState(true)

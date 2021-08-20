@@ -2,14 +2,8 @@ import React, { useEffect, useState } from 'react'
 import AddButton from '../../../components/button/icon_button/add_button'
 import { useLanguage } from '../../../context/language'
 import MonthNavBar from '../../../components/calendar/month_nav_bar'
-import CalendarService from '../../../services/calendar/CalendarService'
 import CalendarEventEntity from '../../../types/calendar/database/CalendarEventEntity'
 import StringUtils from '../../../utils/StringUtils'
-import SelectEventType from '../../../components/calendar/select_event_type'
-import SelectDate from '../../../components/calendar/select_date'
-import SelectTime from '../../../components/calendar/select_time'
-import SelectRepeat from '../../../components/calendar/select_repeat'
-import SelectNotification from '../../../components/calendar/select_notification'
 import './styles.css'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
 import CalendarEventService from '../../../services/calendar/CalendarEventService'
@@ -173,51 +167,6 @@ const Calendar: React.FC = () => {
 				},
 			]}
 		/>
-		<div>
-			<AddButton label='evento' handleAdd={() => setOpen(true)} />
-			<DinoDialog
-				open={open}
-				onSave={handleSave}
-				onClose={() => setOpen(false)}
-				header={
-					<div className='calendar_dialog__header dino__flex_row'>
-							{language.data.ADD_EVENT_TITLE}
-						</div>
-					</div>
-						<div className='calendar_dialog__header_title'>
-			>
-				}
-				<div className='calendar_dialog__content'>
-					<DinoTextfield
-						value={item.title}
-						label={language.data.TITLE}
-						onChange={e => setItem({ ...item, title: e.target.value })}
-						dataProps={DataConstants.CALENDAR_EVENT_TITLE}
-						errorMessage={error}
-					<SelectEventType/>
-					<SelectDate/>
-					/>
-					<div className='.container-fluid'>
-						<div className='row'>		
-							<div className='col-6 left_block__selector'>
-								<SelectTime timeLabel = {language.data.EVENT_INIT_TIME_LABEL}/>
-								<SelectTime timeLabel = {language.data.EVENT_END_TIME_LABEL}/>
-							</div>
-							<div className='col-6 right_block__selector'>
-							</div>
-						</div>
-					</div>
-					<SelectRepeat/>
-					<SelectNotification/>
-					<DinoTextfield
-						label={language.data.FORM_DESCRIPTION}
-						value={item.description}
-						onChange={e => setItem({ ...item, description: e.target.value })}
-						dataProps={DataConstants.CALENDAR_EVENT_DESCRIPTION}
-					/>
-				</div>
-			</DinoDialog>
-		</div>
 	)
 }
 

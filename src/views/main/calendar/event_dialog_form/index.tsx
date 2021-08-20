@@ -99,7 +99,8 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					eventTypesView={props.eventTypes}
 				/>
 				<SelectDate />
-				<SelectTime />
+				<SelectTime timeLabel={language.data.EVENT_INIT_TIME_LABEL}/>
+				<SelectTime timeLabel={language.data.EVENT_END_TIME_LABEL}/>
 				<DinoTextfield
 					label={language.data.FORM_DESCRIPTION}
 					value={event.description}

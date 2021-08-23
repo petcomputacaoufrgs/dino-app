@@ -445,13 +445,13 @@ export default class EN implements LanguageBase {
 
 	NOTE_SEARCH_CLEAN = 'Any annotations match with the current search.'
 
-	LIGHT_THEME_NAME = 'Teddy Bear (Light)'
+	TEDDY_BEAR_LIGHT_THEME_NAME = 'Teddy Bear (Light)'
 
-	DARK_THEME_NAME = 'Mint (Dark)'
+	MINT_DARK_THEME_NAME = 'Mint (Dark)'
 
-	COTTON_CANDY_THEME_NAME = 'Cotton Candy (Light)'
+	COTTON_CANDY_LIGHT_THEME_NAME = 'Cotton Candy (Light)'
 
-	EGGPLANT_THEME_NAME = 'Eggplant (Dark)'
+	EGGPLANT_DARK_THEME_NAME = 'Eggplant (Dark)'
 
 	DEVICE_DEFAULT_THEME_NAME = 'System default'
 

@@ -444,13 +444,13 @@ export default class PT implements LanguageBase {
 
 	NOTE_SEARCH_CLEAN = 'Nenhuma anotação corresponde a pesquisa atual.'
 
-	LIGHT_THEME_NAME = 'Ursinho de Pelúcia (Claro)'
+	TEDDY_BEAR_LIGHT_THEME_NAME = 'Ursinho de Pelúcia (Claro)'
 
-	DARK_THEME_NAME = 'Menta (Escuro)'
+	MINT_DARK_THEME_NAME = 'Menta (Escuro)'
 
-	COTTON_CANDY_THEME_NAME = 'Algodão Doce (Claro)'
+	COTTON_CANDY_LIGHT_THEME_NAME = 'Algodão Doce (Claro)'
 
-	EGGPLANT_THEME_NAME = 'Beringela (Escuro)'
+	EGGPLANT_DARK_THEME_NAME = 'Beringela (Escuro)'
 
 	DEVICE_DEFAULT_THEME_NAME = 'Padrão do sistema'
 

@@ -73,7 +73,7 @@
 }
 
 /* #region DARK - MINT */
-[data-theme='dark'] {
+[data-theme='mint_dark'] {
 	/* Fontes */
 	--base-font-color: #fafafa;
 	--buttons-font-color: #fafafa;
@@ -166,7 +166,7 @@
 /* #endregion */
 
 /* #region DARK - EGGPLANT */
-[data-theme='eggplant_dark'] {
+[data-theme='dark'] {
 	/* Fontes */
 	--base-font-color: #fafafa;
 	--buttons-font-color: #fafafa;

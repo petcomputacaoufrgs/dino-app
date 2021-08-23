@@ -98,20 +98,20 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				name: language.DEVICE_DEFAULT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DEFAULT_LIGHT,
-				name: language.LIGHT_THEME_NAME,
+				code: ColorThemeEnum.TEDDY_BEAR_LIGHT,
+				name: language.TEDDY_BEAR_LIGHT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DEFAULT_DARK,
-				name: language.DARK_THEME_NAME,
+				code: ColorThemeEnum.MINT_DARK,
+				name: language.MINT_DARK_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.COTTON_CANDY,
-				name: language.COTTON_CANDY_THEME_NAME,
+				code: ColorThemeEnum.COTTON_CANDY_LIGHT,
+				name: language.COTTON_CANDY_LIGHT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.EGGPLANT,
-				name: language.EGGPLANT_THEME_NAME,
+				code: ColorThemeEnum.EGGPLANT_DARK,
+				name: language.EGGPLANT_DARK_THEME_NAME,
 			},
 		]
 	}
@@ -211,16 +211,14 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 	getColorThemeName = (userSettings: UserSettingsEntity): string => {
 		if (userSettings) {
 			switch (userSettings.colorTheme) {
-				case 1:
+				case ColorThemeEnum.TEDDY_BEAR_LIGHT:
 					return 'light'
-				case 2:
-					return 'dark'
-				case 3:
+				case ColorThemeEnum.MINT_DARK:
+					return 'mint_dark'
+				case ColorThemeEnum.COTTON_CANDY_LIGHT:
 					return 'cotton_candy_light'
-				case 4:
-					return 'eggplant_dark'
-				case 5:
-					return this.getSystemColorThemeName()
+				case ColorThemeEnum.EGGPLANT_DARK:
+					return 'dark'
 				default:
 					return this.getSystemColorThemeName()
 			}

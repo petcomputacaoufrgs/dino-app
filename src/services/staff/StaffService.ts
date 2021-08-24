@@ -60,7 +60,7 @@ class StaffServiceImpl extends AutoSynchronizableService<
 			sentInvitationDate: DateUtils.convertDateToDinoAPIStringDate(
 				entity.sentInvitationDate,
 			),
-			userId: entity.localId,
+			userId: entity.id,
 		}
 
 		return model

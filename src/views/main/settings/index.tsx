@@ -279,6 +279,7 @@ const Settings: React.FC = () => {
 					<SelectColorTheme settings={settings} />
 				</FormControl>
 				{renderUserOnlySection()}
+				<div style={{ marginTop: '1rem' }} />
 				<DinoHr />
 				<FormControl>
 					<TextButton

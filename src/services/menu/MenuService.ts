@@ -123,14 +123,14 @@ class MenuService {
 		this.getMainPages(language),
 		[
 			{
-				image: LogoutSVG,
-				name: language.MENU_LOGOUT,
-				onClick: handleLogoutClick,
+				image: SettingsSVG,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
 			},
 			{
 				image: LogoutSVG,
-				name: language.REPORT_BUG,
-				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
 			},
 		],
 	]
@@ -142,14 +142,14 @@ class MenuService {
 		this.getStaffMainPages(language),
 		[
 			{
-				image: LogoutSVG,
-				name: language.MENU_LOGOUT,
-				onClick: handleLogoutClick,
+				image: SettingsSVG,
+				name: language.REPORT_BUG,
+				onClick: () => HistoryService.push(PathConstants.STAFF_REPORT_BUG),
 			},
 			{
 				image: LogoutSVG,
-				name: language.REPORT_BUG,
-				onClick: () => HistoryService.push(PathConstants.STAFF_REPORT_BUG),
+				name: language.MENU_LOGOUT,
+				onClick: handleLogoutClick,
 			},
 		],
 	]

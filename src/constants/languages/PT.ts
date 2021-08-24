@@ -274,7 +274,9 @@ export default class PT implements LanguageBase {
 
 	DISCONNECTED = 'Desconectado'
 
-	SELECT_FAQ_BUTTON = 'Busque FAQ'
+	FAQ = 'F.A.Q.'
+
+	SELECT_FAQ_BUTTON = `Busque ${this.FAQ}`
 
 	SELECT_TREATMENT_LOAD_CONTACT_GRANT =
 		'Carregar contatos essenciais referentes ao meu tratamento'
@@ -665,8 +667,6 @@ export default class PT implements LanguageBase {
 
 	GLOSSARY_ITEM = 'Item de Glossário'
 
-	FAQ = 'FAQ'
-
 	FAQ_ITEM = `Item da ${this.FAQ}`
 
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
@@ -700,9 +700,9 @@ export default class PT implements LanguageBase {
 
 	YOUR_CONTACTS = 'Seus Contatos'
 
-	UNIVERSAL_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} Universais'`
+	UNIVERSAL_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} Universais`
 
-	TREATMENT_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} de Tratamento'`
+	TREATMENT_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} de Tratamento`
 
 	HAS_USER_QUESTIONS_FILTER_LABEL = 'Apenas Com Perguntas de Usuários'
 

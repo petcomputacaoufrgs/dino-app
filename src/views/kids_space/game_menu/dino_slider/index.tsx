@@ -51,7 +51,7 @@ const DinoSlider: React.FC = () => {
         <ArrowBack kids />
         <div className='dino_slider__switch'>
           <DinoSwitch 
-           selected={reduced} 
+            selected={reduced} 
             onChangeSelected={() => setReduced(!reduced)} 
             label={language.data.REDUCE}
           />

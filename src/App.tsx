@@ -69,7 +69,8 @@ const App: React.FC = () => {
 
 		const loadTestInstances = async () => {
 			const dbSettings = await UserSettingsService.getFirst()
-			if (dbSettings) {
+			const userPermission = await UserService.getPermission()
+			if (dbSettings && userPermission) {
 				const isAdminsFirstLogin =
 					toggle.loadTestInstancesAtFirstLogin &&
 					userPermission === PermissionEnum.ADMIN &&

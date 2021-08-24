@@ -1,5 +1,5 @@
 import React from 'react'
-import PageNotFound from '../../assets/icons/page_not_found.svg'
+import PageNotFound from '../../assets/icons/general_use/page_not_found.svg'
 import { useLanguage } from '../../context/language'
 import DinoLoader from '../../components/loader'
 import './styles.css'

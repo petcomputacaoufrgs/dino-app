@@ -6,6 +6,12 @@
 	padding-top: 8vh;
 }
 
+.tic_tac_dino_game .dino_icon_button__button svg {
+	width: 3rem;
+	height: 3rem;
+	fill: var(--tic-tac-dino-go-back-arrow-color);
+}
+
 .tic_tac_dino_game .tic_tac__board {
 	margin: 3em auto;
 	background: var(--tic-tac-dino-background-color);
@@ -29,14 +35,14 @@
 }
 
 .tic_tac_dino_game .Queridino {
-	background-image: url('../../../../assets/new/dino+expressoes+acessorios/empty_dino.svg');
+	background-image: url('../../../../assets/kids_space/dinos/empty_dino.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
 }
 
 .tic_tac_dino_game .Amigossauro {
-	background-image: url('../../../../assets/new/friends/triceratops.svg');
+	background-image: url('../../../../assets/kids_space/friends/triceratops.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;

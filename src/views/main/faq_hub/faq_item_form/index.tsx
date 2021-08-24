@@ -1,6 +1,9 @@
-import { TextField, Checkbox, FormControlLabel } from '@material-ui/core'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import DinoDialog, { DinoDialogContent } from '../../../../components/dialogs/dino_dialog'
+import DinoDialog, {
+	DinoDialogContent,
+} from '../../../../components/dialogs/dino_dialog'
+import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import FaqItemService from '../../../../services/faq/FaqItemService'
@@ -11,105 +14,112 @@ import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntit
 import StringUtils from '../../../../utils/StringUtils'
 
 interface FaqItemFormProps {
-  open: boolean,
-  onClose: () => void,
-  treatment: TreatmentEntity,
-  faqItem?: FaqItemEntity,
-  treatmentQuestion?: TreatmentQuestionEntity
+	open: boolean
+	onClose: () => void
+	treatment: TreatmentEntity
+	faqItem?: FaqItemEntity
+	treatmentQuestion?: TreatmentQuestionEntity
 }
 
+const FaqItemForm: React.FC<FaqItemFormProps> = ({
+	open,
+	onClose,
+	treatment,
+	faqItem,
+	treatmentQuestion,
+}) => {
+	const getItem = (): FaqItemEntity =>
+		faqItem || {
+			question: treatmentQuestion?.question || '',
+			answer: '',
+			localTreatmentId: treatment.localId,
+			isUniversal: DataConstants.FALSE,
+		}
 
-const FaqItemForm: React.FC<FaqItemFormProps> = ({ open, onClose, treatment, faqItem, treatmentQuestion }) => {
+	const [item, setItem] = useState<FaqItemEntity>(getItem())
 
-  const getItem = (): FaqItemEntity => faqItem || { 
-    question: treatmentQuestion?.question || '', answer: '', 
-    localTreatmentId: treatment.localId, 
-    isUniversal: DataConstants.FALSE 
-  }
+	useEffect(() => {
+		if (open) setItem(getItem())
+	}, [open])
 
-  const [item, setItem] = useState<FaqItemEntity>(getItem())
+	const [errorQuestion, setErrorQuestion] = useState<string>()
+	const [errorAnswer, setErrorAnswer] = useState<string>()
 
-  useEffect(() => {
-    if(open) setItem(getItem())
-  }, [open])
+	const language = useLanguage()
 
-  const ERROR_QUESTION = 1
-  const ERROR_ANSWER = 2
+	const handleSave = () => {
+		const isValid = () => {
+			if (StringUtils.isEmpty(item.question)) {
+				setErrorQuestion(language.data.EMPTY_FIELD_ERROR)
+				return false
+			}
+			if (StringUtils.isEmpty(item.answer)) {
+				setErrorAnswer(language.data.EMPTY_FIELD_ERROR)
+				return false
+			}
+			return true
+		}
 
-  const [error, setError] = useState(0)
+		if (isValid()) {
+			FaqItemService.save(item)
 
-  const language = useLanguage()
+			if (treatmentQuestion)
+				//caso seja uma pergunta feita por um usuário, a deleta pois foi respondida
+				TreatmentQuestionService.delete(treatmentQuestion)
 
-  const handleSave = () => {
+			onClose()
+		}
+	}
 
-    const isValid = () => {
-      if(StringUtils.isEmpty(item.question)) {
-        setError(ERROR_QUESTION)
-        return false
-      }
-      if(StringUtils.isEmpty(item.answer)){
-        setError(ERROR_ANSWER)
-        return false
-      }
-      return true 
-    }
+	const handleChangeUniversal = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		checked: boolean,
+	) => {
+		item.localTreatmentId = checked ? undefined : treatment.localId
+		item.isUniversal = Number(checked) as 0 | 1
+		console.log('changed', item)
+		setItem({ ...item })
+	}
 
-    if(isValid()) {
-      item.localTreatmentId = item.isUniversal === DataConstants.TRUE ? undefined : treatment.localId
-      FaqItemService.save(item)
-
-      if(treatmentQuestion) //caso seja uma pergunta feita por um usuário, a deleta pois foi respondida
-        TreatmentQuestionService.delete(treatmentQuestion)
-      
-      onClose()
-    }
-  }
-
-  return (
-    <DinoDialog
-      open={open}
-      onClose={onClose}
-      onSave={handleSave}
-    >
-      <DinoDialogContent>
-        <TextField
-          className='dino__textfield'
-          margin='dense'
-          required={DataConstants.FAQ_QUESTION.REQUIRED}
-          fullWidth
-          multiline
-          rowsMax={10}
-          label={language.data.FORM_QUESTION}
-          type='name'
-          inputProps={{ maxLength: DataConstants.FAQ_QUESTION.MAX }}
-          helperText={(error === ERROR_QUESTION && language.data.EMPTY_FIELD_ERROR) || `${item.question.length}/${DataConstants.FAQ_QUESTION.MAX}` }
-          value={item.question}
-          onChange={(e) => setItem({ ...item, question: e.target.value })}
-          error={error === ERROR_QUESTION}
-        />
-        <TextField
-        	className='dino__textfield'
-          margin='dense'
-          required={DataConstants.FAQ_ANSWER.REQUIRED}
-          fullWidth
-          multiline
-          rowsMax={10}
-          label={language.data.FORM_ANSWER}
-          type='name'
-          inputProps={{ maxLength: DataConstants.FAQ_ANSWER.MAX }}
-          helperText={(error === ERROR_ANSWER && language.data.EMPTY_FIELD_ERROR) || `${item.answer.length}/${DataConstants.FAQ_ANSWER.MAX}`}
-          value={item.answer}
-          onChange={(e) => setItem({ ...item, answer: e.target.value })}
-          error={error === ERROR_ANSWER}
-        />
-        <hr/>
-        <FormControlLabel
-          label={language.data.SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL} 
-          control={<Checkbox checked={Boolean(item.isUniversal)} onChange={(e) => setItem({ ...item, isUniversal: Number(e.target.checked) as 0 | 1 })} />}
-        />
-      </DinoDialogContent>
-    </DinoDialog>
-  )
+	return (
+		<DinoDialog
+			className='faq_item__form'
+			open={open}
+			onClose={onClose}
+			onSave={handleSave}
+		>
+			<DinoDialogContent>
+				<DinoTextfield
+					dataProps={DataConstants.FAQ_QUESTION}
+					multiline
+					rowsMax={10}
+					label={language.data.FORM_QUESTION}
+					value={item.question}
+					onChange={e => setItem({ ...item, question: e.target.value })}
+					errorMessage={errorQuestion}
+				/>
+				<DinoTextfield
+					multiline
+					rowsMax={10}
+					label={language.data.FORM_ANSWER}
+					dataProps={DataConstants.FAQ_ANSWER}
+					value={item.answer}
+					onChange={e => setItem({ ...item, answer: e.target.value })}
+					errorMessage={errorAnswer}
+				/>
+				<hr />
+				<FormControlLabel
+					label={language.data.SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL}
+					control={
+						<Checkbox
+							checked={Boolean(item.isUniversal)}
+							onChange={handleChangeUniversal}
+						/>
+					}
+				/>
+			</DinoDialogContent>
+		</DinoDialog>
+	)
 }
 
 export default FaqItemForm

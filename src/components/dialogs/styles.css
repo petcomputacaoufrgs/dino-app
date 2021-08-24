@@ -1,5 +1,5 @@
 .dino_dialog__header {
-	background-color: var(--header-and-menu);
+	background-color: var(--menu-and-headers-background);
 	display: flex;
 	flex-direction: row;
 	padding: 1rem;
@@ -27,10 +27,6 @@
 .dino_dialog__content {
 	padding: 1.3rem;
 	font-size: var(--default-font);
-}
-
-.dino_dialog .dino_dialog__actions {
-	padding: 8px;
 }
 
 .dino_dialog .MuiDialogContent-dividers {

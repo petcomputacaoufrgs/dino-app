@@ -12,6 +12,7 @@ import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsCon
 import UserService from '../user/UserService'
 import TreatmentQuestionService from './TreatmentQuestionService'
 import EssentialContactService from '../contact/EssentialContactService'
+import StringUtils from '../../utils/StringUtils'
 
 class TreatmentServiceImpl extends AutoSynchronizableService<
 	number,
@@ -31,7 +32,11 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		return [UserService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN, PermissionEnum.STAFF]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
@@ -63,16 +68,15 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 		return this.toList(this.table.where('localId').anyOf(localIds))
 	}
 
-	getFaqViewByFilter(
-		view: FaqView,
-		searchTerm: string,
-	): FaqView {
-			const newView = {
-				...view,
-				faqItems: FaqItemService.getFaqItemByFilter(searchTerm, view.faqItems),
-			}
+	getFaqViewByFilter(view: FaqView, searchTerm: string): FaqView {
+		const newView = {
+			...view,
+			faqItems: view.faqItems?.filter(item =>
+				StringUtils.contains(item.question, searchTerm),
+			),
+		}
 
-			return newView as FaqView
+		return newView as FaqView
 	}
 
 	getByName = (name: string): Promise<TreatmentEntity | undefined> => {
@@ -80,15 +84,16 @@ class TreatmentServiceImpl extends AutoSynchronizableService<
 	}
 
 	beforeDelete = async (treatment: TreatmentEntity) => {
-
 		const faqItems = await FaqItemService.getByTreatment(treatment)
 
-		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(treatment)
+		const treatmentQuestions = await TreatmentQuestionService.getByTreatment(
+			treatment,
+		)
 
 		await Promise.all([
 			EssentialContactService.removeTreatment(treatment),
 			FaqItemService.deleteAll(faqItems),
-			TreatmentQuestionService.deleteAll(treatmentQuestions)
+			TreatmentQuestionService.deleteAll(treatmentQuestions),
 		])
 	}
 }

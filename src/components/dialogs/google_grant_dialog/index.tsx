@@ -3,7 +3,6 @@ import GoogleGrantDialogProps from './props'
 import { Dialog, Button } from '@material-ui/core'
 import TransitionSlide from '../../slide_transition'
 import AuthService from '../../../services/auth/AuthService'
-import GrantStatusConstants from '../../../constants/login/GrantStatusConstants'
 import { useAlert } from '../../../context/alert'
 import { useLanguage } from '../../../context/language'
 import { DinoDialogContent, DinoDialogHeader } from '../dino_dialog'
@@ -13,9 +12,10 @@ import DinoLoader from '../../loader'
 import ConnectionService from '../../../services/connection/ConnectionService'
 import './styles.css'
 import { HasStaffPowers } from '../../../context/private_router'
+import UserSettingsService from '../../../services/user/UserSettingsService'
 
 const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
-	({ scopes, title, text, open, onDecline, onAccept, onClose }, ref) => {
+	({ scopes, open, settings, onClose }, ref) => {
 		const alert = useAlert()
 		const isStaff = HasStaffPowers()
 
@@ -77,39 +77,58 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 
 				setRefreshNecessary(false)
 
-				if (response === GrantStatusConstants.SUCCESS) {
+				const onSucess = () => {
 					alert.showSuccessAlert(language.data.GRANT_FAIL_BY_EXTERNAL_SUCCESS)
-					onAccept()
-				} else if (response === GrantStatusConstants.EXTERNAL_SERVICE_ERROR) {
-					alert.showErrorAlert(language.data.GRANT_FAIL_BY_EXTERNAL_ERROR)
-				} else if (response === GrantStatusConstants.REQUEST_CANCELED) {
-					alert.showInfoAlert(language.data.GRANT_CANCELED)
-				} else if (response === GrantStatusConstants.INVALID_ACCOUNT) {
-					alert.showInfoAlert(language.data.GRANT_FAIL_BY_INVALID_ACCOUNT)
-				} else if (response === GrantStatusConstants.REFRESH_TOKEN_NECESSARY) {
+					onClose()
+					if (settings) {
+						settings.declineGoogleContacts = false
+						UserSettingsService.save(settings)
+					}
+				}
+
+				const onRefreshTokenNecessary = () => {
 					setRefreshNecessary(true)
 					alert.showInfoAlert(language.data.GRANT_RESFRESH_TOKEN_NECESSARY)
-				} else if (response === GrantStatusConstants.DISCONNECTED) {
+				}
+
+				const onDisconnect = () => {
 					alert.showErrorAlert(language.data.GRANT_FAIL_BY_DISCONNECTION)
 					onClose()
-				} else if (response === GrantStatusConstants.UNKNOW_API_ERROR) {
-					alert.showErrorAlert(language.data.GRANT_FAIL_BY_UNKNOW_ERROR)
 				}
+
+				const alerts = [
+					onSucess,
+					() =>
+						alert.showErrorAlert(language.data.GRANT_FAIL_BY_EXTERNAL_ERROR),
+					() => alert.showInfoAlert(language.data.GRANT_CANCELED),
+					() =>
+						alert.showInfoAlert(language.data.GRANT_FAIL_BY_INVALID_ACCOUNT),
+					onRefreshTokenNecessary,
+					onDisconnect,
+					() => alert.showErrorAlert(language.data.GRANT_FAIL_BY_UNKNOW_ERROR),
+				]
+
+				const responseFoo = alerts[response]
+				responseFoo()
 			}
 		}
 
 		const handleDecline = async () => {
 			alert.showInfoAlert(language.data.GRANT_DECLINED)
-			onDecline()
+			onClose()
+			if (settings) {
+				settings.declineGoogleContacts = true
+				UserSettingsService.save(settings)
+			}
 		}
 
 		const renderDialogContent = (): JSX.Element => (
 			<>
 				<DinoDialogHeader>
-					<h1>{title}</h1>
+					<h1>{language.data.GOOGLE_CONTACT_GRANT_TITLE}</h1>
 				</DinoDialogHeader>
 				<DinoDialogContent>
-					<p>{text}</p>
+					<p>{language.data.GOOGLE_CONTACT_GRANT_TEXT}</p>
 				</DinoDialogContent>
 				<div className='google_grant_dialog__buttons'>
 					<Button onClick={handleDecline}>
@@ -149,11 +168,7 @@ const GoogleGrantDialog = React.forwardRef<JSX.Element, GoogleGrantDialogProps>(
 				open={open && !isStaff}
 			>
 				<DinoLoader isLoading={isLoading}>
-					{isConnected 
-						?	renderDialogContent()
-						: renderOfflineContent()
-					}
-					
+					{isConnected ? renderDialogContent() : renderOfflineContent()}
 				</DinoLoader>
 			</Dialog>
 		)

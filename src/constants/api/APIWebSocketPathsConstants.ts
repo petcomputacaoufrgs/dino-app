@@ -5,6 +5,7 @@ class APIWebSocketPathsConstants {
 	FAQ_ITEM = 'faq_item'
 	TREATMENT = 'treatment'
 	TREATMENT_QUESTION = 'treatment_question'
+	REPORT = 'report'
 	CONTACT = 'contact'
 	ESSENTIAL_CONTACT = 'essential_contact'
 	PHONE = 'phone'
@@ -14,7 +15,7 @@ class APIWebSocketPathsConstants {
 	USER = 'user'
 	USER_SETTINGS = 'settings'
 	GOOGLE_SCOPE = 'google_scope'
-	STAFF = 'staff'
+	STAFF = 'staff_management'
 	KIDS_SPACE_SETTINGS = 'kids_space_settings'
 }
 

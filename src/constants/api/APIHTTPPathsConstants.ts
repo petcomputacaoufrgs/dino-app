@@ -1,11 +1,11 @@
 class APIHTTPPathsConstants {
 	ROOT = process.env.REACT_APP_API_URL
 
-	ROUTE_PUBLIC = "public/"
-	ROUTE_PRIVATE = "private/"
-	ROUTE_USER = "user/"
-	ROUTE_ADMIN = "admin/"
-	
+	ROUTE_PUBLIC = 'public/'
+	ROUTE_PRIVATE = 'private/'
+	ROUTE_USER = 'user/'
+	ROUTE_STAFF = 'staff/'
+
 	/* private ------------------------------------------------------------------------ */
 
 	GLOSSARY = `${this.ROOT}${this.ROUTE_PRIVATE}glossary/`
@@ -15,6 +15,7 @@ class APIHTTPPathsConstants {
 	ESSENTIAL_PHONE = `${this.ROOT}${this.ROUTE_PRIVATE}essential_phone/`
 	TREATMENT = `${this.ROOT}${this.ROUTE_PRIVATE}treatment/`
 	TREATMENT_QUESTION = `${this.ROOT}${this.ROUTE_PRIVATE}treatment_question/`
+	REPORT = `${this.ROOT}${this.ROUTE_PRIVATE}report/`
 	USER = `${this.ROOT}${this.ROUTE_PRIVATE}user/`
 	USER_SETTINGS = `${this.ROOT}${this.ROUTE_PRIVATE}settings/`
 	private LOG_APP_ERROR = `${this.ROOT}${this.ROUTE_PRIVATE}log_app_error/`
@@ -27,23 +28,22 @@ class APIHTTPPathsConstants {
 	DELETE_ACCOUNT = `${this.PRIVATE_AUTH}delete_account/`
 	//LOGOUT = `${this.PRIVATE_AUTH}logout/`
 
-	/* admin ------------------------------------------------------------------------ */
-	
-	STAFF = `${this.ROOT}${this.ROUTE_ADMIN}staff/`
-
 	/* user ------------------------------------------------------------------------ */
 
 	NOTE_COLUMN = `${this.ROOT}${this.ROUTE_USER}note_column/`
 	CONTACT = `${this.ROOT}${this.ROUTE_USER}contact/`
 	PHONE = `${this.ROOT}${this.ROUTE_USER}phone/`
 	NOTE = `${this.ROOT}${this.ROUTE_USER}note/`
-	// TODO n esta de acordo na api
+
+	/* staff ------------------------------------------------------------------------ */
+
+	STAFF = `${this.ROOT}${this.ROUTE_STAFF}staff_management/`
 
 	/* no route ------------------------------------------------------------------------ */
-	
+
 	KIDS_SPACE_SETTINGS = `${this.ROOT}kids_space_settings/`
 	private APP_SETTINGS = `${this.ROOT}user_app_settings/`
-		
+
 	/* public ------------------------------------------------------------------------ */
 
 	// APP_SETTINGS_VERSION = `${this.APP_SETTINGS}version/`

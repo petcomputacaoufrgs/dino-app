@@ -31,24 +31,31 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 		return [TreatmentService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN, PermissionEnum.STAFF]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
 	async convertModelToEntity(
 		model: FaqItemDataModel,
 	): Promise<FaqItemEntity | undefined> {
-
 		let treatment: TreatmentEntity | undefined
 
-		if(hasValue(model.treatmentId))
+		if (hasValue(model.treatmentId)) {
 			treatment = await TreatmentService.getById(model.treatmentId!)
+		}
 
 		const entity: FaqItemEntity = {
 			answer: model.answer,
 			localTreatmentId: treatment?.localId,
 			question: model.question,
-			isUniversal: treatment?.localId === undefined ? DataConstants.TRUE : DataConstants.FALSE
+			isUniversal:
+				treatment?.localId === undefined
+					? DataConstants.TRUE
+					: DataConstants.FALSE,
 		}
 
 		return entity
@@ -57,11 +64,11 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 	async convertEntityToModel(
 		entity: FaqItemEntity,
 	): Promise<FaqItemDataModel | undefined> {
-
 		let treatment: TreatmentEntity | undefined
 
-		if(hasValue(entity.localTreatmentId))
-			treatment = await TreatmentService.getById(entity.localTreatmentId!)
+		if (hasValue(entity.localTreatmentId)) {
+			treatment = await TreatmentService.getByLocalId(entity.localTreatmentId!)
+		}
 
 		const model: FaqItemDataModel = {
 			answer: entity.answer,
@@ -76,22 +83,30 @@ class FaqItemServiceImpl extends AutoSynchronizableService<
 		searchTerm: string,
 		faqItems?: FaqItemEntity[],
 	): FaqItemEntity[] {
-		if(faqItems) {
-			return faqItems.filter(item => StringUtils.contains(item.question, searchTerm))
+		if (faqItems) {
+			return faqItems.filter(item =>
+				StringUtils.contains(item.question, searchTerm),
+			)
 		}
 		return []
 	}
 
-	getByTreatment = async (treatment: TreatmentEntity): Promise<FaqItemEntity[]> => {
+	getByTreatment = async (
+		treatment: TreatmentEntity,
+	): Promise<FaqItemEntity[]> => {
 		if (treatment.localId) {
-			return this.toList(this.table.where('localTreatmentId').equals(treatment.localId))
+			return this.toList(
+				this.table.where('localTreatmentId').equals(treatment.localId),
+			)
 		}
 
 		return []
 	}
 
 	getUniversals = async (): Promise<FaqItemEntity[]> => {
-		return this.toList(this.table.where('isUniversal').equals(DataConstants.TRUE))
+		return this.toList(
+			this.table.where('isUniversal').equals(DataConstants.TRUE),
+		)
 	}
 }
 

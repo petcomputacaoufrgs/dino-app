@@ -88,7 +88,7 @@ export default interface LanguageBase {
 	STAFF_LIST_TAB: string
 	STAFF_SAVE_SUCCESS: string
 	TREATMENT: string
-	ADD_TREATMENT: string 
+	ADD_TREATMENT: string
 	STAFF_ADD_TREATMENT_NAME: string
 	PENDING: string
 	STAFF: string
@@ -216,9 +216,10 @@ export default interface LanguageBase {
 	QUESTION_NOTE_DIALOG_TITLE: string
 	NOTE_INFO_DIALOG_COLUMN_TITLE: string
 	NOTE_SEARCH_CLEAN: string
-	LIGHT_THEME_NAME: string
-	DARK_THEME_NAME: string
-	DALTONIAN_THEME_NAME: string
+	TEDDY_BEAR_LIGHT_THEME_NAME: string
+	MINT_DARK_THEME_NAME: string
+	COTTON_CANDY_LIGHT_THEME_NAME: string
+	EGGPLANT_DARK_THEME_NAME: string
 	DEVICE_DEFAULT_THEME_NAME: string
 	COLOR_THEME_SELECTION_TITLE: string
 	FONT_SIZE_SELECTION_TITLE: string
@@ -226,7 +227,6 @@ export default interface LanguageBase {
 	LARGE_FONT_SIZE_NAME: string
 	LARGER_FONT_SIZE_NAME: string
 	CONTACT: string
-	CONTACT_NUMBER_ALREADY_EXISTS: string
 	DIALOG_AGREE_TEXT: string
 	DIALOG_DECLINE_BUTTON_TEXT: string
 	GRANT_FAIL_BY_EXTERNAL_ERROR: string
@@ -337,11 +337,25 @@ export default interface LanguageBase {
 	SHOW_FAQ_ITEM_IN_ALL_FAQS_LABEL: string
 	GO_TO_SLEEP: string
 	GO_OUTSIDE: string
+	CUSTOMIZE: string
 	RETURN_INSIDE: string
 	GO_TO_GAME_MENU: string
 	CHOOSE_COLOR_DINO_MESSAGE: string
 	CHOOSE_ACESSORY_DINO_MESSAGE: string
 	CHOOSE: string
+	REPORT_BUG: string
+	ABOUT_US_PET: string
+	ABOUT_US_PET_TEXT: string
+	ABOUT_US_HCPA: string
+	ABOUT_US_HCPA_TEXT: string
+	ABOUT_US_UFRGS: string
+	ABOUT_US_UFRGS_TEXT: string
+	BUG_REPORT_WHAT: string
+	BUG_REPORT_WHERE: string
+	BUG_REPORT_HOW: string
+	WHAT: string
+	WHERE: string
+	HOW: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

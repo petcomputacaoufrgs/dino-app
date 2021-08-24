@@ -16,7 +16,8 @@ import GoogleScopeService from '../auth/google/GoogleScopeService'
 import LanguageEnum from '../../types/enum/LanguageEnum'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-
+import TreatmentEntity from '../../types/treatment/database/TreatmentEntity'
+import { LanguageContextType } from '../../context/language'
 class UserSettingsServiceImpl extends AutoSynchronizableService<
 	number,
 	UserSettingsDataModel,
@@ -35,7 +36,11 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return [GoogleScopeService, TreatmentService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
+		return []
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
 		return []
 	}
 
@@ -49,8 +54,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: model.includeEssentialContact,
 			language: model.language || this.getDefaultLanguageCode(),
 			firstSettingsDone: model.firstSettingsDone,
-			step: model.step,
-			parentsAreaPassword: model.parentsAreaPassword
 		}
 
 		if (model.treatmentId) {
@@ -64,7 +67,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return entity
 	}
 
-
 	async convertEntityToModel(
 		entity: UserSettingsEntity,
 	): Promise<UserSettingsDataModel | undefined> {
@@ -75,8 +77,6 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 			includeEssentialContact: entity.includeEssentialContact,
 			language: entity.language,
 			firstSettingsDone: entity.firstSettingsDone,
-			step: entity.step,
-			parentsAreaPassword: entity.parentsAreaPassword
 		}
 
 		if (entity.treatmentLocalId) {
@@ -98,16 +98,20 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 				name: language.DEVICE_DEFAULT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.LIGHT,
-				name: language.LIGHT_THEME_NAME,
+				code: ColorThemeEnum.TEDDY_BEAR_LIGHT,
+				name: language.TEDDY_BEAR_LIGHT_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DARK,
-				name: language.DARK_THEME_NAME,
+				code: ColorThemeEnum.MINT_DARK,
+				name: language.MINT_DARK_THEME_NAME,
 			},
 			{
-				code: ColorThemeEnum.DALTONIAN,
-				name: language.DALTONIAN_THEME_NAME,
+				code: ColorThemeEnum.COTTON_CANDY_LIGHT,
+				name: language.COTTON_CANDY_LIGHT_THEME_NAME,
+			},
+			{
+				code: ColorThemeEnum.EGGPLANT_DARK,
+				name: language.EGGPLANT_DARK_THEME_NAME,
 			},
 		]
 	}
@@ -152,13 +156,14 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 
 	getEssentialContactGrant(
 		userSettings: UserSettingsEntity | undefined,
-	): boolean | undefined {
+	): boolean {
 		if (userSettings) {
 			return userSettings.includeEssentialContact
-		} else {
-			return undefined
 		}
+		return this.getDefaultEssentialContactGrant()
 	}
+
+	getDefaultEssentialContactGrant = () => true
 
 	getFirstSettingsDone = async (): Promise<boolean | undefined> => {
 		const userSettings = await this.getFirst()
@@ -170,7 +175,7 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 	}
 
-	getLanguage = (userSettings: UserSettingsEntity): LanguageBase => {
+	getLanguage = (userSettings?: UserSettingsEntity): LanguageBase => {
 		if (userSettings && userSettings.language === LanguageEnum.ENGLISH) {
 			return new EN()
 		} else {
@@ -203,21 +208,17 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		return ColorThemeEnum.DEVICE
 	}
 
-	getDefaultEssentialContactGrant = () => {
-		return true
-	}
-
 	getColorThemeName = (userSettings: UserSettingsEntity): string => {
 		if (userSettings) {
 			switch (userSettings.colorTheme) {
-				case 1:
+				case ColorThemeEnum.TEDDY_BEAR_LIGHT:
 					return 'light'
-				case 2:
+				case ColorThemeEnum.MINT_DARK:
+					return 'mint_dark'
+				case ColorThemeEnum.COTTON_CANDY_LIGHT:
+					return 'cotton_candy_light'
+				case ColorThemeEnum.EGGPLANT_DARK:
 					return 'dark'
-				case 3:
-					return 'high_contrast'
-				case 4:
-					return this.getSystemColorThemeName()
 				default:
 					return this.getSystemColorThemeName()
 			}
@@ -257,6 +258,31 @@ class UserSettingsServiceImpl extends AutoSynchronizableService<
 		}
 
 		return 'light'
+	}
+
+	getTreatment = (
+		treatments: TreatmentEntity[],
+		userSettings?: UserSettingsEntity,
+	) => {
+		if (userSettings) {
+			const treatment = treatments.find(
+				treatment => treatment.localId === userSettings.treatmentLocalId,
+			)
+			if (treatment) return treatment
+		}
+
+		return undefined
+	}
+
+	getDefaultSettings = (language: LanguageContextType) => {
+		return {
+			language: language.data.LANGUAGE_CODE,
+			fontSize: this.getDefaultFontSizeCode(),
+			colorTheme: this.getDefaultColorThemeCode(),
+			includeEssentialContact: true,
+			declineGoogleContacts: false,
+			firstSettingsDone: false,
+		} as UserSettingsEntity
 	}
 }
 

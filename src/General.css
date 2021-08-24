@@ -6,14 +6,15 @@
 }
 
 .dino__history_link {
-	color: var(--button-font-color);
+	color: var(--link-font-color);
 	font-size: var(--default-font);
 }
 
 .dino__textfield .MuiFormHelperText-root {
 	text-align: right;
 	display: block;
-	color: var(--contrast-color);
+	color: var(--base-font-color);
+	margin-bottom: -8px;
 }
 
 .dino__flex_row {
@@ -38,4 +39,12 @@
 .app .dino__list_and_filter {
 	flex: auto;
 	align-items: flex-end;
+}
+
+.dino__list__char_divider h4 {
+	padding: 0.6em 1.15em 0;
+}
+
+.dino__list__char_divider .dino_hr {
+	margin: 0 16px 4px;
 }

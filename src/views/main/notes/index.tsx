@@ -94,9 +94,11 @@ const Notes: React.FC = () => {
 
 	//#region Note
 
-	const questionAlreadyExists = (question: string): boolean =>
+	const questionAlreadyExists = (question: string, localId?: number): boolean =>
 		noteViews.some(noteView =>
-			noteView.notes.some(note => note.question === question),
+			noteView.notes.some(
+				note => note.question === question && localId !== note.localId,
+			),
 		)
 
 	const handleSaveNewNote = (

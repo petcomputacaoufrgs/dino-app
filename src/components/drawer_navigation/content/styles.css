@@ -8,7 +8,7 @@
 .drawer__navigation__content__component {
 	position: relative;
 	height: calc(100% - 2.813rem);
-	background-color: var(--background-main);
+	background-color: var(--background-color);
 }
 
 .drawer__navigation__content__component__scrollable {

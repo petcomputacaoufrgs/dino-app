@@ -30,8 +30,12 @@ class StaffServiceImpl extends AutoSynchronizableService<
 		return [UserService]
 	}
 
-	getSyncNecessaryPermissions(): PermissionEnum[] {
+	getPermissionsWhichCanEdit(): PermissionEnum[] {
 		return [PermissionEnum.ADMIN]
+	}
+
+	getPermissionsWhichCanRead(): PermissionEnum[] {
+		return [PermissionEnum.ADMIN, PermissionEnum.STAFF]
 	}
 
 	async convertModelToEntity(
@@ -42,7 +46,7 @@ class StaffServiceImpl extends AutoSynchronizableService<
 			sentInvitationDate: DateUtils.convertDinoAPIStringDateToDate(
 				model.sentInvitationDate,
 			),
-			userId: model.userId || undefined
+			userId: model.userId || undefined,
 		}
 
 		return entity
@@ -51,39 +55,32 @@ class StaffServiceImpl extends AutoSynchronizableService<
 	async convertEntityToModel(
 		entity: StaffEntity,
 	): Promise<StaffDataModel | undefined> {
-    const model: StaffDataModel = {
-      email: entity.email,
-      sentInvitationDate: DateUtils.convertDateToDinoAPIStringDate(
+		const model: StaffDataModel = {
+			email: entity.email,
+			sentInvitationDate: DateUtils.convertDateToDinoAPIStringDate(
 				entity.sentInvitationDate,
 			),
-    }
-
-		if(entity.userId) {
-			const user = await UserService.getById(entity.userId)
-			if (user) {
-				entity.userId = user.id
-			}
+			userId: entity.id,
 		}
-    
-    return model
+
+		return model
 	}
 
 	getByEmail = async (email: string): Promise<StaffEntity | undefined> => {
-			return this.toFirst(this.table.where('email').equalsIgnoreCase(email))
+		return this.toFirst(this.table.where('email').equalsIgnoreCase(email))
 	}
 
 	isEmailInvalid = async (email: string, languageData: LanguageBase) => {
+		const isInvalid = !StringUtils.validateEmail(email)
+		if (isInvalid) {
+			return languageData.INVALID_VALUE
+		}
 
-    const isInvalid = !StringUtils.validateEmail(email)
-    if(isInvalid) {
-      return languageData.INVALID_VALUE
-    }
+		const alreadyExists = await this.getByEmail(email)
 
-    const alreadyExists = await this.getByEmail(email)
-
-    if(alreadyExists) {
-      return languageData.itemAlreadyExists(languageData.EMAIL)
-    }
+		if (alreadyExists) {
+			return languageData.itemAlreadyExists(languageData.EMAIL)
+		}
 
 		return undefined
 	}

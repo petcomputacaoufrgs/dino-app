@@ -16,7 +16,7 @@
 	/* =         Games          = */
 	/* ========================== */
 	/* Dinno Runner */
-	--dino-runner-game-background-color: #ffe1ed;
+	--dino-runner-game-background-color: #1e344b;
 	--dino-runner-game-details-color: #e274a0;
 	--dino-runner-game-board-background: #1e344b;
 
@@ -25,12 +25,16 @@
 	--musical-dino-game-button-background-color: #B94189;
 
 	/* Snake */
-	--snake-game-score-background-color: #f5f5f5;
+	--snake-game-details-color: #f5f5f5;
+
+	/* Dino Slider */
+	--dino-slider-game-button-background-color: #B054D1;
 
 	/* Tic Tac Dino */
 	--tic-tac-dino-background-color: #cec1e7;
 	--tic-tac-dino-square-background-color: #d8cdec;
 	--tic-tac-dino-display-background-color: #c1e7e1b3;
+	--tic-tac-dino-go-back-arrow-color: #5E6A85;
 
 	/* Memory Game */
 	--memory-game-primary-background-color: #ffda91;
@@ -79,12 +83,4 @@
 	--dino-details-color: #8f3c3c;
 	--dino-face-details-color: #6b2828;
 	--dino-back-color: #F1CD16;
-}
-
-[data-dino-color='emo'] {
-	--dino-dark-color: black;
-	--dino-main-color: #121212;
-	--dino-details-color: black;
-	--dino-face-details-color: black;
-	--dino-back-color: black;
 }

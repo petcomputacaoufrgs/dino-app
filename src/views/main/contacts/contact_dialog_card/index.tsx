@@ -4,36 +4,27 @@ import ContactCardProps from './props'
 import ContactCardHeader from './header'
 import ContactCardContent from './content'
 import TransitionSlide from '../../../../components/slide_transition'
-import ItemListMenu from '../../../../components/list_components/item_list_menu'
-import { cameFromEssential } from '../../../../services/contact/ContactViewService'
 
-const ContactCard = ({ item, dialogOpen, onClose, onEdit, onDelete }: ContactCardProps) => {
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
-	
-	return item ?
+const ContactCard = ({
+	item,
+	dialogOpen,
+	onClose,
+	onClickMenu,
+}: ContactCardProps) => {
+	return item ? (
 		<Dialog
 			style={{ padding: 0 }}
 			fullWidth
-			//onClose={onClose}
 			TransitionComponent={TransitionSlide}
 			open={dialogOpen}
 			onBackdropClick={onClose}
 		>
-			<ContactCardHeader item={item} onClick={handleClick}>
-				<ItemListMenu
-					anchor={anchorEl}
-					setAnchor={setAnchorEl}
-					onEdit={onEdit}
-					onDelete={onDelete}
-					onCloseDialog={onClose}
-					editUnavailable={cameFromEssential(item.contact)}
-				/>
-			</ContactCardHeader>
+			<ContactCardHeader item={item} onClick={onClickMenu}></ContactCardHeader>
 			<ContactCardContent item={item} />
 		</Dialog>
-		: <></>
+	) : (
+		<></>
+	)
 }
 
 export default ContactCard

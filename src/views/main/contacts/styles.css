@@ -1,11 +1,11 @@
 .contacts {
 	height: 100%;
 }
+.contacts .contacts__list.MuiList-padding {
+	padding-top: 0;
+}
 
-.contacts
-	.contacts__list__item__content
-	.MuiListItem-gutters
-	.MuiListItem-divider {
+.contacts .contacts__list__item__content .MuiListItem-gutters .MuiListItem {
 	padding: 0.5rem;
 }
 

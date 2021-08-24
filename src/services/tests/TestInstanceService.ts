@@ -44,12 +44,7 @@ class TestInstanceService {
 	}
 
 	private async loadTreatmentInstances() {
-		const instances = [
-			{ name: '[Test] Treatment Name 1' },
-			{ name: '[Test] Treatment Name 2' },
-			{ name: '[Test] Treatment Name 3' },
-			{ name: 'Nutrição' },
-		] as TreatmentEntity[]
+		const instances = [{ name: '[Treatment Name]' }] as TreatmentEntity[]
 
 		await TreatmentService.saveAll(instances)
 	}
@@ -60,32 +55,15 @@ class TestInstanceService {
 
 		if (faqItemData) {
 			instances = faqItemData.itemList as FaqItemEntity[]
-			const nutrition = treatments.find(t => t.name === "Nutrição")
-			if (nutrition) {
-				instances.forEach(i => i.localTreatmentId = nutrition.localId)
-			}
-		} else {
-			treatments.forEach(t => {
-				instances = [
-					{
-						question: `[Test] FaqItem Question 1`,
-						answer: `[Test] FaqItem Answer 1`,
-						localTreatmentId: t.localId,
-					},
-					{
-						question: `[Test] FaqItem Question 2`,
-						answer: `[Test] FaqItem Answer 2`,
-						localTreatmentId: t.localId,
-					},
-					{
-						question: `[Test] FaqItem Question 3`,
-						answer: `[Test] FaqItem Answer 3`,
-						localTreatmentId: t.localId,
-					},
-				] as FaqItemEntity[]
-
-			})
 		}
+
+		treatments.forEach(t => {
+			instances.push({
+				question: `[Question]`,
+				answer: `[Answer]`,
+				localTreatmentId: t.localId,
+			} as FaqItemEntity)
+		})
 
 		FaqItemService.saveAll(instances)
 	}
@@ -96,11 +74,7 @@ class TestInstanceService {
 		treatments.forEach(t => {
 			const instances = [
 				{
-					question: `[Test] Treatment Question 1`,
-					localTreatmentId: t.localId,
-				},
-				{
-					question: `[Test] Treatment Question 2`,
+					question: `[Treatment Question]`,
 					localTreatmentId: t.localId,
 				},
 			] as TreatmentQuestionEntity[]
@@ -124,7 +98,7 @@ class TestInstanceService {
 		}
 
 		const instancesUniversal: EssentialContactEntity[] =
-			this.contactInstances.map(c => {
+			this.universalContactInstances.map(c => {
 				const ec = c as EssentialContactEntity
 				ec.isUniversal = 1
 				return ec
@@ -133,8 +107,6 @@ class TestInstanceService {
 		await EssentialContactService.saveAll(instancesUniversal)
 
 		const treatments = await TreatmentService.getAll()
-
-		console.log(treatments)
 
 		const instancesNonUniversal: EssentialContactEntity[] =
 			this.contactInstances.map(c => {
@@ -173,16 +145,10 @@ class TestInstanceService {
 		} else {
 			instances = [
 				{
-					title: '[Test] Glossary Title 1',
-					text: '[Test] Glossary Text 1',
-					subtitle: '[Test] Subtitle 1',
-					fullText: '[Test] Glossary fullText 1',
-				},
-				{
-					title: '[Test] Glossary Title 2',
-					text: '[Test] Glossary Text 2',
-					subtitle: '[Test] Subtitle 2',
-					fullText: '[Test] Glossary fullText 2',
+					title: '[Glossary Title]',
+					text: '[Glossary Text]',
+					subtitle: '[Glossary Subtitle]',
+					fullText: '[Glossary FullText]',
 				},
 			] as GlossaryItemEntity[]
 		}
@@ -259,33 +225,39 @@ class TestInstanceService {
 
 	private contactInstances: (ContactEntity | EssentialContactEntity)[] = [
 		{
-			name: 'A [Test] Contact 1',
-			description: '[Test] Contact Description 1',
+			name: 'A Contact 1',
+			description: 'Contact Description 1',
 			color: ColorConstants.COLORS[0],
 		},
 		{
-			name: 'B [Test] Contact 2',
-			description: '[Test] Contact Description 2',
+			name: 'B Contact 2',
+			description: 'Contact Description 2',
 			color: ColorConstants.COLORS[1],
 		},
 		{
-			name: 'C [Test] Contact 3',
-			description: '[Test] Contact Description 3',
+			name: 'C Contact 3',
+			description: 'Contact Description 3',
 			color: ColorConstants.COLORS[2],
 		},
+	]
+
+	private universalContactInstances: (
+		| ContactEntity
+		| EssentialContactEntity
+	)[] = [
 		{
-			name: 'D [Test] Contact 4',
-			description: '[Test] Contact Description 4',
+			name: 'A Universal Contact 4',
+			description: 'Contact Description 4',
 			color: ColorConstants.COLORS[3],
 		},
 		{
-			name: 'A [Test] Contact 5',
-			description: '[Test] Contact Description 5',
+			name: 'B Universal Contact 5',
+			description: 'Contact Description 5',
 			color: ColorConstants.COLORS[4],
 		},
 		{
-			name: 'B [Test] Contact 6',
-			description: '[Test] Contact Description 6',
+			name: 'C Universal Contact 6',
+			description: 'Contact Description 6',
 			color: ColorConstants.COLORS[5],
 		},
 	]

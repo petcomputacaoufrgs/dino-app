@@ -15,8 +15,8 @@
   justify-self: center;
 }
 
-.dino_slider .dino_slider__piece .dino_slider__piece.reduced {
-  font-size: 11vmin;
+.dino_slider .dino_slider__piece.reduced {
+  font-size: 11vmin !important;
 }
 
 .dino_slider .dino_slider__piece.piece_0{

@@ -133,7 +133,7 @@ const App: React.FC = () => {
 
 		if (isLoading) {
 			loadData()
-			if (isAuthenticated) loadTestInstances()
+			loadTestInstances()
 		}
 
 		return () => {

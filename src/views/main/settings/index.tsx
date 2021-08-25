@@ -292,10 +292,14 @@ const Settings: React.FC = () => {
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
-				<DinoHr />
-				<FormControl>
-					<TextButton onClick={loadTestInstances}>Load data</TextButton>
-				</FormControl>
+				{toggle.loadDataInstances && (
+					<>
+						<DinoHr />
+						<FormControl>
+							<TextButton onClick={handleLoadInstances}>Load data</TextButton>
+						</FormControl>
+					</>
+				)}
 				{renderPasswordDialog()}
 				{renderDeleteAccountDialog()}
 				<GoogleGrantDialog
@@ -311,17 +315,10 @@ const Settings: React.FC = () => {
 
 export default Settings
 
-export const loadTestInstances = async () => {
+export const handleLoadInstances = async () => {
 	const userPermission = await UserService.getPermission()
-	if (userPermission) {
-		console.log(userPermission, toggle.loadTestInstancesAtFirstLogin)
-
-		const isAdminsFirstLogin =
-			toggle.loadTestInstancesAtFirstLogin &&
-			userPermission === PermissionEnum.ADMIN
-		if (isAdminsFirstLogin) {
-			console.log('Carregando dados...')
-			TestInstanceService.loadInstances()
-		}
+	if (userPermission && userPermission === PermissionEnum.ADMIN) {
+		console.log('Carregando dados...')
+		TestInstanceService.loadInstances()
 	}
 }

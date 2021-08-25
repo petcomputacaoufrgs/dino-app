@@ -318,9 +318,7 @@ export const loadTestInstances = async () => {
 
 		const isAdminsFirstLogin =
 			toggle.loadTestInstancesAtFirstLogin &&
-			userPermission === PermissionEnum.ADMIN &&
-			toggle.forceFirstLogin
-
+			userPermission === PermissionEnum.ADMIN
 		if (isAdminsFirstLogin) {
 			console.log('Carregando dados...')
 			TestInstanceService.loadInstances()

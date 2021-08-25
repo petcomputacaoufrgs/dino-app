@@ -28,6 +28,9 @@ import './styles.css'
 import { HasStaffPowers } from '../../../context/private_router'
 import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
 import { SelectPassword } from '../../../components/settings/select_password'
+import { toggle } from '../../../constants/toggle/Toggle'
+import TestInstanceService from '../../../services/tests/TestInstanceService'
+import PermissionEnum from '../../../types/enum/PermissionEnum'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 10
 
@@ -289,6 +292,10 @@ const Settings: React.FC = () => {
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
+				<DinoHr />
+				<FormControl>
+					<TextButton onClick={loadTestInstances}>Load data</TextButton>
+				</FormControl>
 				{renderPasswordDialog()}
 				{renderDeleteAccountDialog()}
 				<GoogleGrantDialog
@@ -303,3 +310,20 @@ const Settings: React.FC = () => {
 }
 
 export default Settings
+
+export const loadTestInstances = async () => {
+	const userPermission = await UserService.getPermission()
+	if (userPermission) {
+		console.log(userPermission, toggle.loadTestInstancesAtFirstLogin)
+
+		const isAdminsFirstLogin =
+			toggle.loadTestInstancesAtFirstLogin &&
+			userPermission === PermissionEnum.ADMIN &&
+			toggle.forceFirstLogin
+
+		if (isAdminsFirstLogin) {
+			console.log('Carregando dados...')
+			TestInstanceService.loadInstances()
+		}
+	}
+}

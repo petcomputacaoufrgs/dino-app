@@ -67,28 +67,6 @@ const App: React.FC = () => {
 			return isAuthenticated
 		}
 
-		const loadTestInstances = async () => {
-			const dbSettings = await UserSettingsService.getFirst()
-			const userPermission = await UserService.getPermission()
-			console.log(dbSettings, userPermission)
-			if (dbSettings && userPermission) {
-				console.log(
-					dbSettings.firstSettingsDone,
-					toggle.loadTestInstancesAtFirstLogin,
-				)
-
-				const isAdminsFirstLogin =
-					toggle.loadTestInstancesAtFirstLogin &&
-					userPermission === PermissionEnum.ADMIN &&
-					(!dbSettings.firstSettingsDone || toggle.forceFirstLogin)
-
-				if (isAdminsFirstLogin) {
-					console.log('Carregando dados...')
-					TestInstanceService.loadInstances()
-				}
-			}
-		}
-
 		const loadSettings = async () => {
 			const dbSettings = await UserSettingsService.getFirst()
 			if (dbSettings) {
@@ -140,7 +118,6 @@ const App: React.FC = () => {
 
 		if (isLoading) {
 			loadData()
-			loadTestInstances()
 		}
 
 		return () => {

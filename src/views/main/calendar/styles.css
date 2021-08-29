@@ -1,5 +1,5 @@
 .calendar_dialog__header {
-	background-color: #fafafa69;
+	background-color: var(--calendar-default-background);
 	color: #fafafa;
 	padding: 1rem;
 }
@@ -17,10 +17,10 @@
 	padding: 1.3rem;
 }
 
-.left_block__selector{
-    padding-right: 1rem;
+.left_block__selector {
+	padding-right: 1rem;
 }
 
-.right_block__selector{
+.right_block__selector {
 	padding-right: 1rem;
 }

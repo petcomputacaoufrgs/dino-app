@@ -1,5 +1,6 @@
 import { InputLabel } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+import ColorConstants from '../../../../constants/app/ColorConstants'
 import { useLanguage } from '../../../../context/language'
 import CalendarEventTypeService from '../../../../services/calendar/CalendarEventTypeService'
 import CalendarEventTypeEntity from '../../../../types/calendar/database/CalendarEventTypeEntity'
@@ -46,7 +47,7 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 					</InputLabel>
 					<div
 						className='calendar_event_type_form__color'
-						style={{ backgroundColor: type.color || '#fafafa69' }}
+						style={{ backgroundColor: type.color }}
 					/>
 				</div>
 			</DinoDialog>

@@ -1,6 +1,7 @@
 .calendar_event_type_form__color {
 	border-radius: 6px;
 	width: 100%;
+	background-color: var(--calendar-default-background);
 	height: 28px;
 }
 

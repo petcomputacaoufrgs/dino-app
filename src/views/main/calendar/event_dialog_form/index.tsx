@@ -27,7 +27,7 @@ const getType = (
 		)
 		return eventType
 	}
-	return undefined
+	return (eventTypes && eventTypes[0]) || undefined
 }
 
 export const EventDialogForm: React.FC<EventDialogFormProps> = props => {

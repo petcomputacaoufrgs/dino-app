@@ -43,6 +43,7 @@
 
 .dino__list__char_divider h4 {
 	padding: 0.6em 1.15em 0;
+	color: var(--menu-and-titles-font-color);
 }
 
 .dino__list__char_divider .dino_hr {

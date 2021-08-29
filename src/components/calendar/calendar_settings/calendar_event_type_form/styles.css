@@ -1,0 +1,12 @@
+.calendar_event_type_form__color {
+	border-radius: 6px;
+	width: 100%;
+	height: 28px;
+}
+
+.calendar_event_type_form__content {
+	padding: 0 1.3em 1.3em;
+}
+.calendar_event_type_form__content .calendar_event_type_form__color_label {
+	margin-top: 1.3em;
+}

@@ -76,6 +76,7 @@ const Calendar: React.FC = () => {
 		}
 
 		CalendarEventService.addUpdateEventListenner(loadData)
+		CalendarEventTypeService.addUpdateEventListenner(loadData)
 		UserSettingsService.addUpdateEventListenner(loadData)
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
@@ -100,6 +101,7 @@ const Calendar: React.FC = () => {
 			updateSettings = () => {}
 			finishLoading = () => {}
 			CalendarEventService.removeUpdateEventListenner(loadData)
+			CalendarEventTypeService.removeUpdateEventListenner(loadData)
 			UserSettingsService.removeUpdateEventListenner(loadData)
 			GoogleScopeService.removeUpdateEventListenner(loadData)
 		}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import CalendarEventTypeItem from '../calendar_settings_item'
+import CalendarEventTypeItem from './calendar_event_type_item'
 import CalendarEventTypeEntity from '../../../types/calendar/database/CalendarEventTypeEntity'
 import ItemListMenu from '../../list_components/item_list_menu'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import './styles.css'
+import { CalendarEventTypeForm } from './calendar_event_type_form'
 
 const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 	({ eventTypes }) => {
@@ -18,6 +19,11 @@ const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 		const handleViewOption = (item: CalendarEventTypeEntity) => {
 			setToAction(CRUDEnum.READ)
 			setSelectedItem(item)
+		}
+
+		const handleClose = () => {
+			setSelectedItem(undefined)
+			setToAction(CRUDEnum.NOP)
 		}
 
 		const handleClickMenu = (
@@ -40,6 +46,11 @@ const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 						/>
 					))}
 				</div>
+				<CalendarEventTypeForm
+					open={toAction === CRUDEnum.CREATE || toAction === CRUDEnum.UPDATE}
+					item={selectedItem}
+					onClose={handleClose}
+				/>
 				<ItemListMenu
 					anchor={anchorEl}
 					setAnchor={setAnchorEl}

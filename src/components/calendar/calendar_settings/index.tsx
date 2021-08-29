@@ -5,6 +5,7 @@ import ItemListMenu from '../../list_components/item_list_menu'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import './styles.css'
 import { CalendarEventTypeForm } from './calendar_event_type_form'
+import AddButton from '../../button/icon_button/add_button'
 
 const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 	({ eventTypes }) => {
@@ -51,6 +52,7 @@ const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 					item={selectedItem}
 					onClose={handleClose}
 				/>
+				<AddButton handleAdd={() => setToAction(CRUDEnum.CREATE)} />
 				<ItemListMenu
 					anchor={anchorEl}
 					setAnchor={setAnchorEl}

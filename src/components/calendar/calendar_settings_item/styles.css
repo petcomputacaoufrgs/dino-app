@@ -13,5 +13,6 @@
 
 .event_type_item__icon svg {
 	width: 100%;
-	padding: 0.5rem;
+	height: inherit;
+	padding: 0 0.5rem;
 }

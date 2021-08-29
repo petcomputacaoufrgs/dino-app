@@ -88,6 +88,14 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					dataProps={DataConstants.CALENDAR_EVENT_TITLE}
 					errorMessage={error}
 				/>
+				<DinoTextfield
+					multiline
+					rowsMax={5}
+					label={language.data.FORM_DESCRIPTION}
+					value={event.description}
+					onChange={e => setEvent({ ...event, description: e.target.value })}
+					dataProps={DataConstants.CALENDAR_EVENT_DESCRIPTION}
+				/>
 				<SelectEventType
 					value={type}
 					onClickOption={handleChangeType}
@@ -106,12 +114,6 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 				</div>
 				<SelectRepeat />
 				<SelectNotification />
-				<DinoTextfield
-					label={language.data.FORM_DESCRIPTION}
-					value={event.description}
-					onChange={e => setEvent({ ...event, description: e.target.value })}
-					dataProps={DataConstants.CALENDAR_EVENT_DESCRIPTION}
-				/>
 			</div>
 		</DinoDialog>
 	)

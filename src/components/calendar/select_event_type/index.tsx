@@ -19,8 +19,9 @@ const SelectEventType: React.FC<{
 		<div className='event_type__selector'>
 			<InputLabel shrink>{language.data.EVENT_TYPE_ICON_ALT}</InputLabel>
 			<Select
+				required
+				value={selectedTypeLocalId || ''}
 				fullWidth
-				value={selectedTypeLocalId}
 				onChange={e => setSelectedTypeLocalId(e.target.value as number)}
 			>
 				{props.eventTypes?.map((option, index) => (

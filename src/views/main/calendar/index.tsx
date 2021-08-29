@@ -106,8 +106,8 @@ const Calendar: React.FC = () => {
 	}, [isLoading])
 
 	const handleClose = () => {
-		setToAction(CRUDEnum.NOP)
 		setSelectedItem(undefined)
+		setToAction(CRUDEnum.NOP)
 	}
 
 	const handleClick = (item: CalendarEventView) => {

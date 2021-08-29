@@ -12,8 +12,7 @@ import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import { EventDialogForm } from './event_dialog_form'
 import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
-import CalendarDay from '../../../components/calendar/calendar_day'
-import CalendarSettings from '../../../components/calendar/calendar_settings'
+import CalendarSettings from './calendar_settings'
 import DinoTabPanel from '../../../components/tab_panel'
 import CalendarEventTypeEntity from '../../../types/calendar/database/CalendarEventTypeEntity'
 import {
@@ -21,6 +20,7 @@ import {
 	CalendarEventView,
 } from '../../../types/calendar/view/CalendarView'
 import CalendarEventTypeService from '../../../services/calendar/CalendarEventTypeService'
+import CalendarDay from './calendar_day'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()

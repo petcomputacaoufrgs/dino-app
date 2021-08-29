@@ -1,4 +1,4 @@
-import CalendarEventTypeEntity from '../../../../types/calendar/database/CalendarEventTypeEntity'
+import CalendarEventTypeEntity from '../../../../../types/calendar/database/CalendarEventTypeEntity'
 
 export interface CalendarEventTypeItemProps {
 	item: CalendarEventTypeEntity

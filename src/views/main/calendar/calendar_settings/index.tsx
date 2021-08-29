@@ -6,9 +6,13 @@ import CRUDEnum from '../../../../types/enum/CRUDEnum'
 import { CalendarEventTypeForm } from './calendar_event_type_form'
 import AddButton from '../../../../components/button/icon_button/add_button'
 import './styles.css'
+import { useLanguage } from '../../../../context/language'
+import CalendarEventTypeService from '../../../../services/calendar/CalendarEventTypeService'
+import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 
 const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 	({ eventTypes }) => {
+		const language = useLanguage()
 		const [toAction, setToAction] = useState(CRUDEnum.NOP)
 		const [selectedItem, setSelectedItem] = useState<CalendarEventTypeEntity>()
 		const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -16,6 +20,10 @@ const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 		const handleEditOption = () => setToAction(CRUDEnum.UPDATE)
 
 		const handleDeleteOption = () => setToAction(CRUDEnum.DELETE)
+
+		const handleAcceptDialogAndDeleteItem = () => {
+			if (selectedItem) CalendarEventTypeService.delete(selectedItem)
+		}
 
 		const handleViewOption = (item: CalendarEventTypeEntity) => {
 			setToAction(CRUDEnum.READ)
@@ -52,13 +60,25 @@ const CalendarSettings: React.FC<{ eventTypes?: CalendarEventTypeEntity[] }> =
 					item={selectedItem}
 					onClose={handleClose}
 				/>
-				<AddButton handleAdd={() => setToAction(CRUDEnum.CREATE)} />
+				<AddButton
+					label={language.data.EVENT_TYPE_LABEL}
+					handleAdd={() => setToAction(CRUDEnum.CREATE)}
+				/>
 				<ItemListMenu
 					anchor={anchorEl}
 					setAnchor={setAnchorEl}
 					onEdit={handleEditOption}
 					onDelete={handleDeleteOption}
 					disable={selectedItem?.userId === undefined}
+				/>
+				<AgreementDialog
+					open={toAction === CRUDEnum.DELETE}
+					description={language.data.DELETE_ITEM_OPTION_TEXT}
+					question={language.data.deleteItemText(
+						language.data.EVENT_TYPE_LABEL,
+					)}
+					onAgree={handleAcceptDialogAndDeleteItem}
+					onDisagree={() => setToAction(CRUDEnum.NOP)}
 				/>
 			</div>
 		)

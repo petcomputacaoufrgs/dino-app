@@ -29,9 +29,7 @@ const CalendarDay: React.FC<{
 					</div>
 				) : (
 					props.events.map((e, index) => (
-						<div key={index} className='day_event_wrapper'>
-							<CalendarEvent item={e} onClick={props.onClick} />
-						</div>
+						<CalendarEvent key={index} item={e} onClick={props.onClick} />
 					))
 				)}
 			</div>

@@ -1,14 +1,17 @@
-.event_wrapper {
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
+.event {
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	background-color: var(--calendar-default-background);
+	width: 100%;
+	margin-bottom: 0.25rem;
 }
 
-.event_wrapper p {
-    font-size: var(--default-font);
-    color: var(--light-color);
-    margin: 0;
+.event p {
+	font-size: var(--default-font);
+	color: var(--light-color);
+	margin: 0;
 }
 
 .event_title {
-    font-weight: bold;
+	font-weight: bold;
 }

@@ -9,7 +9,7 @@ const CalendarEvent: React.FC<{
 	return (
 		<div
 			style={{ backgroundColor: item.color }}
-			className='event_wrapper'
+			className='event'
 			onClick={() => onClick(item)}
 		>
 			<p className='event_title'>{item.event.title}</p>

@@ -21,6 +21,7 @@ import {
 } from '../../../types/calendar/view/CalendarView'
 import CalendarEventTypeService from '../../../services/calendar/CalendarEventTypeService'
 import CalendarDay from './calendar_day'
+import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -117,6 +118,12 @@ const Calendar: React.FC = () => {
 		setToAction(CRUDEnum.READ)
 	}
 
+	const handleDeleteOption = () => setToAction(CRUDEnum.DELETE)
+
+	const handleAcceptDialogAndDeleteItem = () => {
+		if (selectedItem) CalendarEventService.delete(selectedItem.event)
+	}
+
 	const renderCalendar = () => {
 		return (
 			<div className='calendar'>
@@ -143,6 +150,13 @@ const Calendar: React.FC = () => {
 				<GoogleCalendarGrantDialog
 					open={openGrantDialog}
 					onClose={() => setOpenGrantDialog(false)}
+				/>
+				<AgreementDialog
+					open={toAction === CRUDEnum.DELETE}
+					description={language.data.DELETE_ITEM_OPTION_TEXT}
+					question={language.data.deleteItemText(language.data.EVENT)}
+					onAgree={handleAcceptDialogAndDeleteItem}
+					onDisagree={() => setToAction(CRUDEnum.NOP)}
 				/>
 			</div>
 		)

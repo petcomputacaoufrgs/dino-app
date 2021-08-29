@@ -1,6 +1,6 @@
 import React from 'react'
-import { useLanguage } from '../../../context/language'
-import { CalendarEventView } from '../../../types/calendar/view/CalendarView'
+import { useLanguage } from '../../../../context/language'
+import { CalendarEventView } from '../../../../types/calendar/view/CalendarView'
 import CalendarEvent from '../calendar_event'
 import './styles.css'
 

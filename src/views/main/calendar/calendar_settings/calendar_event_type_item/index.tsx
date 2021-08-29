@@ -1,9 +1,8 @@
 import React from 'react'
-import { ReactComponent as PillSVG } from '../../../../assets/icons/general_use/pill.svg'
-import { ReactComponent as ClockSVG } from '../../../../assets/icons/general_use/clock.svg'
-import { ReactComponent as ClipboardSVG } from '../../../../assets/icons/general_use/clipboard.svg'
+import { ReactComponent as PillSVG } from '../../../../../assets/icons/general_use/pill.svg'
+import { ReactComponent as ClockSVG } from '../../../../../assets/icons/general_use/clock.svg'
+import { ReactComponent as ClipboardSVG } from '../../../../../assets/icons/general_use/clipboard.svg'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
-import './styles.css'
 import {
 	ListItem,
 	ListItemText,
@@ -11,6 +10,7 @@ import {
 	ListItemSecondaryAction,
 } from '@material-ui/core'
 import { CalendarEventTypeItemProps } from './props'
+import './styles.css'
 
 const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
 	item,

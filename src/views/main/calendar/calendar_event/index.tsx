@@ -1,5 +1,5 @@
 import React from 'react'
-import { CalendarEventView } from '../../../types/calendar/view/CalendarView'
+import { CalendarEventView } from '../../../../types/calendar/view/CalendarView'
 import './styles.css'
 
 const CalendarEvent: React.FC<{

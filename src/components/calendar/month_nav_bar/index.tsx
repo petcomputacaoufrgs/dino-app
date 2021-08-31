@@ -8,18 +8,18 @@ import './styles.css'
 
 const MonthNavBar: React.FC<{
 	date: Date
-	handleChangeDate: (currentDate: Date) => void
+	onChangeDate: (currentDate: Date) => void
 }> = props => {
 	const language = useLanguage()
 
 	const clickPrevious = () => {
 		const currentDate = DateUtils.getLastMonth(props.date)
-		props.handleChangeDate(currentDate)
+		props.onChangeDate(currentDate)
 	}
 
 	const clickNext = () => {
 		const currentDate = DateUtils.getNextMonth(props.date)
-		props.handleChangeDate(currentDate)
+		props.onChangeDate(currentDate)
 	}
 
 	return (
@@ -27,8 +27,10 @@ const MonthNavBar: React.FC<{
 			<DinoIconButton icon={ArrowBack} onClick={clickPrevious}></DinoIconButton>
 			<div className='month_and_year_wrapper'>
 				<div className='month_and_year_text'>
-					{DateUtils.getMonthName(props.date.getMonth(), language.data)}{' '}
-					{props.date.getFullYear()}
+					{`${DateUtils.getMonthName(
+						props.date.getMonth(),
+						language.data,
+					)} ${props.date.getFullYear()}`}
 				</div>
 			</div>
 			<DinoIconButton icon={ArrowForward} onClick={clickNext}></DinoIconButton>

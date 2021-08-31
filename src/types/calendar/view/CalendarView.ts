@@ -8,5 +8,6 @@ export interface CalendarEventView {
 
 export interface CalendarDayView {
 	dayOfMonth: string
+	dayOfWeek: string
 	events: CalendarEventView[]
 }

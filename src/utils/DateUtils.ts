@@ -15,15 +15,15 @@ class DateUtils {
 
 	getEndOfDay = (date: Date): Date => moment(date).endOf('day').toDate()
 
-	isToday = (date: Date): boolean => this.isEqualDay(date, new Date())
+	isToday = (date: Date): boolean => this.isSameDay(date, new Date())
 
-	isEqualHour = (d1: Date, d2: Date): boolean =>
-		d1.getHours() === d2.getHours() && this.isEqualDay(d1, d2)
+	isSameHour = (d1: Date, d2: Date): boolean =>
+		d1.getHours() === d2.getHours() && this.isSameDay(d1, d2)
 
-	isEqualDay = (d1: Date, d2: Date): boolean =>
-		d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
+	isSameDay = (d1: Date, d2: Date): boolean =>
+		d1.getDate() === d2.getDate() && this.isSameMonth(d1, d2)
 
-	isEqualMonth = (d1: Date, d2: Date): boolean =>
+	isSameMonth = (d1: Date, d2: Date): boolean =>
 		d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
 
 	getLastMonth = (date: Date): Date => {
@@ -71,6 +71,23 @@ class DateUtils {
 			language.OCTOBER,
 			language.NOVEMBER,
 			language.DECEMBER,
+		]
+		const monthName: string | undefined = monthNames[monthNumber]
+		return monthName || language.INVALID_MONTH
+	}
+
+	getWeekDayAbreviation = (
+		monthNumber: number,
+		language: LanguageBase,
+	): string => {
+		const monthNames = [
+			language.SUNDAY_ABREVIATION,
+			language.MONDAY_ABREVIATION,
+			language.TUESDAY_ABREVIATION,
+			language.WEDNESDAY_ABREVIATION,
+			language.THURSDAY_ABREVIATION,
+			language.FRIDAY_ABREVIATION,
+			language.SATURDAY_ABREVIATION,
 		]
 		const monthName: string | undefined = monthNames[monthNumber]
 		return monthName || language.INVALID_MONTH

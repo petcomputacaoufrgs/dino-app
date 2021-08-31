@@ -10,7 +10,7 @@ import CalendarEventService from '../../../services/calendar/CalendarEventServic
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
-import { EventDialogForm } from './event_dialog_form'
+import { EventDialogForm, getNewEventView } from './event_dialog_form'
 import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
 import CalendarSettings from './calendar_settings'
 import DinoTabPanel from '../../../components/tab_panel'
@@ -27,6 +27,17 @@ import DataThemeUtils from '../../../utils/DataThemeUtils'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
+
+	const weekDayNamesAbr = [
+		language.data.SUNDAY_ABREVIATION,
+		language.data.MONDAY_ABREVIATION,
+		language.data.TUESDAY_ABREVIATION,
+		language.data.WEDNESDAY_ABREVIATION,
+		language.data.THURSDAY_ABREVIATION,
+		language.data.FRIDAY_ABREVIATION,
+		language.data.SATURDAY_ABREVIATION,
+	]
+
 	const [isLoading, setIsLoading] = useState(true)
 	const [date, setDate] = useState<Date>(new Date())
 	const [dayViews, setDayViews] = useState<CalendarDayView[]>()
@@ -37,28 +48,33 @@ const Calendar: React.FC = () => {
 	const [selectedItem, setSelectedItem] = useState<CalendarEventView>()
 
 	useEffect(() => {
-		const loadUserData = async (): Promise<CalendarDayView[]> => {
-			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
-			if (settings && !settings.declineGoogleCalendar) {
-				if (!syncGoogleCalendar) setOpenGrantDialog(true)
-			}
-			const events = await CalendarEventService.getAll()
-			const types = await CalendarEventTypeService.getAll()
-
-			setEventTypes(types)
-
+		const makeViewOfMonth = () => {
+			const firstWeekDay = new Date(
+				date.getFullYear(),
+				date.getMonth(),
+			).getDay()
 			const monthLength = DateUtils.getMonthDaysLength(date.getMonth())
 			const month = new Array<CalendarDayView>(monthLength)
 			for (let index = 0; index < monthLength; index++) {
 				const day = index + 1
 				month[index] = {
 					dayOfMonth: day < 10 ? '0' + day : `${day}`,
+					dayOfWeek:
+						weekDayNamesAbr[(index + firstWeekDay) % weekDayNamesAbr.length],
 					events: [],
 				}
 			}
+			return month
+		}
+
+		const pushEventViewsToMonth = async (monthView: CalendarDayView[]) => {
+			const events = await CalendarEventService.getAll()
+			const types = await CalendarEventTypeService.getAll()
+
+			setEventTypes(types)
 
 			events.forEach(e => {
-				const type = types.find(t => t.localId === e.typeLocalId)
+				const type = types.find(t => t.localId === e.typeLocalId) //TODO otimizar
 
 				const eventView: CalendarEventView = {
 					event: e,
@@ -67,12 +83,23 @@ const Calendar: React.FC = () => {
 				}
 
 				const index = e.date.getDate() - 1
-				const day = month[index]
-				if (day && DateUtils.isEqualMonth(e.date, date))
+				const day: CalendarDayView | undefined = monthView[index]
+				if (day && DateUtils.isSameMonth(e.date, date))
 					day.events.push(eventView)
 			})
+		}
 
-			return month
+		const loadUserData = async (): Promise<CalendarDayView[]> => {
+			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
+			if (settings && !settings.declineGoogleCalendar) {
+				if (!syncGoogleCalendar) setOpenGrantDialog(true)
+			}
+
+			const monthView = makeViewOfMonth()
+
+			await pushEventViewsToMonth(monthView)
+
+			return monthView
 		}
 
 		const loadData = async () => {
@@ -94,7 +121,7 @@ const Calendar: React.FC = () => {
 			setDayViews(dayViews)
 		}
 
-		let updateSettings = (settings: UserSettingsEntity | undefined) => {
+		let updateSettings = (settings?: UserSettingsEntity) => {
 			setSettings(settings)
 		}
 
@@ -127,29 +154,38 @@ const Calendar: React.FC = () => {
 		setToAction(CRUDEnum.READ)
 	}
 
+	const handleClickEmpty = (dayOfMonth: string) => {
+		const clickedDate = new Date(
+			date.getFullYear(),
+			date.getMonth(),
+			Number(dayOfMonth),
+		)
+		const newEventView = getNewEventView(clickedDate)
+		setSelectedItem(newEventView)
+		setToAction(CRUDEnum.CREATE)
+	}
+
 	const handleDeleteOption = () => setToAction(CRUDEnum.DELETE)
 
 	const handleAcceptDialogAndDeleteItem = () => {
 		if (selectedItem) CalendarEventService.delete(selectedItem.event)
 	}
 
+	const handleChangeDate = (currentDate: Date) => {
+		setDate(currentDate)
+		setIsLoading(true)
+	}
+
 	const renderCalendar = () => {
 		return (
 			<div className='calendar'>
-				<MonthNavBar
-					date={date}
-					handleChangeDate={currentDate => {
-						setDate(currentDate)
-						setIsLoading(true)
-					}}
-				/>
+				<MonthNavBar date={date} onChangeDate={handleChangeDate} />
 				{dayViews?.map((e, index) => (
 					<CalendarDay
 						key={index}
-						dayOfMonth={e.dayOfMonth}
-						dayOfWeek={language.data.MONDAY_ABREVIATION}
-						events={e.events}
-						onClick={handleClick}
+						item={e}
+						onClickEvent={handleClick}
+						onClickEmpty={handleClickEmpty}
 					/>
 				))}
 				<AddButton

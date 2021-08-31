@@ -34,6 +34,10 @@ class DateUtils {
 		return moment(date).add(1, 'M').startOf('month').toDate()
 	}
 
+	getNextDay = (date: Date): Date => {
+		return moment(date).add(1, 'day').startOf('day').toDate()
+	}
+
 	addMonth = (date: Date, diff: number): Date => {
 		return moment(date).add(diff, 'M').startOf('month').toDate()
 	}
@@ -54,34 +58,41 @@ class DateUtils {
 	}
 
 	getMonthName = (monthNumber: number, language: LanguageBase): string => {
-		switch (monthNumber) {
-			case 0:
-				return language.JANUARY
-			case 1:
-				return language.FEBRUARY
-			case 2:
-				return language.MARCH
-			case 3:
-				return language.APRIL
-			case 4:
-				return language.MAY
-			case 5:
-				return language.JUNE
-			case 6:
-				return language.JULY
-			case 7:
-				return language.AUGUST
-			case 8:
-				return language.SEPTEMBER
-			case 9:
-				return language.OCTOBER
-			case 10:
-				return language.NOVEMBER
-			case 11:
-				return language.DECEMBER
-			default:
-				return language.INVALID_MONTH
-		}
+		const monthNames = [
+			language.JANUARY,
+			language.FEBRUARY,
+			language.MARCH,
+			language.APRIL,
+			language.MAY,
+			language.JUNE,
+			language.JULY,
+			language.AUGUST,
+			language.SEPTEMBER,
+			language.OCTOBER,
+			language.NOVEMBER,
+			language.DECEMBER,
+		]
+		const monthName: string | undefined = monthNames[monthNumber]
+		return monthName || language.INVALID_MONTH
+	}
+
+	getMonthDaysLength = (monthNumber: number, yearNumber?: number) => {
+		const monthDaysLength = [
+			31,
+			yearNumber && yearNumber % 4 === 0 ? 29 : 28,
+			31,
+			30,
+			31,
+			30,
+			31,
+			31,
+			30,
+			31,
+			30,
+			31,
+		]
+		const length: number | undefined = monthDaysLength[monthNumber]
+		return length || 0
 	}
 }
 

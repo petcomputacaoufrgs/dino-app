@@ -362,9 +362,9 @@ export default interface LanguageBase {
 	ABOUT_US_HCPA_TEXT: string
 	ABOUT_US_UFRGS: string
 	ABOUT_US_UFRGS_TEXT: string
-	BUG_REPORT_WHAT: string
-	BUG_REPORT_WHERE: string
-	BUG_REPORT_HOW: string
+	_BUG_REPORT_WHAT: string
+	_BUG_REPORT_WHERE: string
+	_BUG_REPORT_HOW: string
 	WHAT: string
 	WHERE: string
 	HOW: string

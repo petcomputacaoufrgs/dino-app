@@ -779,11 +779,11 @@ export default class PT implements LanguageBase {
 
 	HOW = 'COMO'
 
-	BUG_REPORT_WHAT = `Conte-nos, em detalhes, qual foi o problema que encontrou. O que aconteceu? Impediu-lhe de utilizar o aplicativo?`
+	_BUG_REPORT_WHAT = `Conte-nos, em detalhes, qual foi o problema que encontrou. O que aconteceu? Impediu-lhe de utilizar o aplicativo?`
 
-	BUG_REPORT_HOW = `Agora nos conte como o bug veio a acontecer. Você consegue replicá-lo? Ele acontece sempre quando você realiza uma determinada ação ou foi apenas uma vez?`
+	_BUG_REPORT_HOW = `Agora nos conte como o bug veio a acontecer. Você consegue replicá-lo? Ele acontece sempre quando você realiza uma determinada ação ou foi apenas uma vez?`
 
-	BUG_REPORT_WHERE = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
+	_BUG_REPORT_WHERE = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
 
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

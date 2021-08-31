@@ -771,11 +771,11 @@ export default class EN implements LanguageBase {
 
 	ABOUT_US_UFRGS_TEXT = `\tThe Federal University of Rio Grande do Sul, based in Porto Alegre, capital of the state of Rio Grande do Sul, is a centenary institution, recognized both nationally and internationally. It comprises courses in all fields of knowledge and at all levels, from elementary school to post-graduation.\n\tUFRGS has, as policies in constant development, the qualification of its faculty members, composed primarily by masters and doctors, the constant updating of laboratories and libraries’ infrastructure, the incrementing of student assistance, as well as the prioritizing of its national and international insertion.\n\tThrough its buildings, every day, about 40 thousand people circulate in search of one of the country’s most qualified teaching institutions. This fact, allied to research with recognized levels of excellency, and extension, which provides diverse activities to the community, makes UFRGS one of the universities with the highest evaluations in Brazil.\n\tUFRGS, as a public institution in service of society that is committed to the future and to critical thinking, respects differences, prioritizes experimentation and, most of all, reaffirms its compromise with education and the production of knowledge, inspired by the ideals of liberty and solidarity.`
 
-	BUG_REPORT_WHAT = `Tell us, in detail, what was the problem that you found. What happened? Did it stop you from using the application?`
+	_BUG_REPORT_WHAT = `Tell us, in detail, what was the problem that you found. What happened? Did it stop you from using the application?`
 
-	BUG_REPORT_HOW = `Now please explain how the bug came to happen. Can you replicate it? Does it happen everytime you perform a certain action or was it a one time occurence?`
+	_BUG_REPORT_HOW = `Now please explain how the bug came to happen. Can you replicate it? Does it happen everytime you perform a certain action or was it a one time occurence?`
 
-	BUG_REPORT_WHERE = `In which area did you find the bug? For example, was it in one of the games, in the Kid’s Space, in the notes section or somewhere else?`
+	_BUG_REPORT_WHERE = `In which area did you find the bug? For example, was it in one of the games, in the Kid’s Space, in the notes section or somewhere else?`
 
 	itemAlreadyExists = (item: string) => `${item} already exists`
 

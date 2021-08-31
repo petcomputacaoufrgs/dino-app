@@ -28,6 +28,7 @@ import CalendarEventTypeEntity from '../../types/calendar/database/CalendarEvent
 import CalendarEventTypeService from '../calendar/CalendarEventTypeService'
 import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
 import CalendarEventService from '../calendar/CalendarEventService'
+import DateUtils from '../../utils/DateUtils'
 
 class TestInstanceService {
 	async loadInstances() {
@@ -40,12 +41,12 @@ class TestInstanceService {
 			await this.loadEssentialPhones()
 			await this.loadGlossary()
 		} else {
-			await this.loadCalendarEventTypes()
+			// await this.loadCalendarEventTypes()
 			await this.loadCalendarEvents()
-			await this.loadContacts()
-			await this.loadPhones()
-			await this.loadNotes()
-			await this.loadTreatmentQuestionInstances()
+			// await this.loadContacts()
+			// await this.loadPhones()
+			// await this.loadNotes()
+			// await this.loadTreatmentQuestionInstances()
 		}
 	}
 
@@ -66,9 +67,9 @@ class TestInstanceService {
 
 		if (faqItemData) {
 			instances = faqItemData.itemList as FaqItemEntity[]
-			const nutrition = treatments.find(t => t.name === "Nutrição")
+			const nutrition = treatments.find(t => t.name === 'Nutrição')
 			if (nutrition) {
-				instances.forEach(i => i.localTreatmentId = nutrition.localId)
+				instances.forEach(i => (i.localTreatmentId = nutrition.localId))
 			}
 		} else {
 			treatments.forEach(t => {
@@ -89,7 +90,6 @@ class TestInstanceService {
 						localTreatmentId: t.localId,
 					},
 				] as FaqItemEntity[]
-
 			})
 		}
 
@@ -222,23 +222,25 @@ class TestInstanceService {
 			return undefined
 		}
 
+		const now = new Date()
+
 		const instances = [
 			{
 				title: 'Lembrete Top',
 				time: '10:00 - 11:00',
-				date: '01',
+				date: now,
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Eventão',
 				time: '9:00 - 22:00',
-				date: '02',
+				date: DateUtils.getNextDay(now),
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Eventão 2',
 				time: '14:00 - 18:00',
-				date: '04',
+				date: DateUtils.getNextMonth(now),
 				typeLocalId: getRandomTypeLocalId(),
 			},
 		] as CalendarEventEntity[]

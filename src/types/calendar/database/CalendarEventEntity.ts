@@ -6,5 +6,5 @@ export default interface CalendarEventEntity
 	description?: string
 	typeLocalId?: number
 	time: string
-	date: string
+	date: Date
 }

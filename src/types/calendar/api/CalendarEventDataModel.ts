@@ -5,6 +5,6 @@ export default interface CalendarEventDataModel
 	title: string
 	description?: string
 	time: string
-	date: string
+	date: Date
 	typeId?: number
 }

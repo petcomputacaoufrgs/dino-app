@@ -22,10 +22,13 @@ import {
 import CalendarEventTypeService from '../../../services/calendar/CalendarEventTypeService'
 import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
+import DateUtils from '../../../utils/DateUtils'
+import DataThemeUtils from '../../../utils/DataThemeUtils'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
 	const [isLoading, setIsLoading] = useState(true)
+	const [date, setDate] = useState<Date>(new Date())
 	const [dayViews, setDayViews] = useState<CalendarDayView[]>()
 	const [eventTypes, setEventTypes] = useState<CalendarEventTypeEntity[]>()
 	const [settings, setSettings] = useState<UserSettingsEntity>()
@@ -44,9 +47,14 @@ const Calendar: React.FC = () => {
 
 			setEventTypes(types)
 
-			const month = new Array<CalendarDayView>(31)
-			for (let index = 0; index < 31; index++) {
-				month[index] = { dayOfMonth: `${index + 1}`, events: [] }
+			const monthLength = DateUtils.getMonthDaysLength(date.getMonth())
+			const month = new Array<CalendarDayView>(monthLength)
+			for (let index = 0; index < monthLength; index++) {
+				const day = index + 1
+				month[index] = {
+					dayOfMonth: day < 10 ? '0' + day : `${day}`,
+					events: [],
+				}
 			}
 
 			events.forEach(e => {
@@ -58,9 +66,10 @@ const Calendar: React.FC = () => {
 					icon: type?.icon,
 				}
 
-				const index = Number(e.date) - 1
+				const index = e.date.getDate() - 1
 				const day = month[index]
-				if (day) day.events.push(eventView)
+				if (day && DateUtils.isEqualMonth(e.date, date))
+					day.events.push(eventView)
 			})
 
 			return month
@@ -127,7 +136,13 @@ const Calendar: React.FC = () => {
 	const renderCalendar = () => {
 		return (
 			<div className='calendar'>
-				<MonthNavBar />
+				<MonthNavBar
+					date={date}
+					handleChangeDate={currentDate => {
+						setDate(currentDate)
+						setIsLoading(true)
+					}}
+				/>
 				{dayViews?.map((e, index) => (
 					<CalendarDay
 						key={index}

@@ -15,7 +15,7 @@ import StringUtils from '../../../../utils/StringUtils'
 import EventDialogFormProps from './props'
 
 const getEvent = (item?: CalendarEventView) =>
-	item?.event || { title: '', description: '', date: '', time: '' }
+	item?.event || { title: '', description: '', date: new Date(), time: '' }
 
 const getType = (
 	item?: CalendarEventView,

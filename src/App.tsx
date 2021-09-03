@@ -24,9 +24,8 @@ import UserService from './services/user/UserService'
 import PermissionEnum from './types/enum/PermissionEnum'
 import UserMain from './views/main/routes/main_user'
 import StaffMain from './views/main/routes/main_staff'
-import { toggle } from './constants/toggle/Toggle'
-import TestInstanceService from './services/tests/TestInstanceService'
 import ReportBug from './views/report_bug'
+import PWAControl from './components/pwa_control'
 import './MaterialUI.css'
 import './General.css'
 import './App.css'
@@ -190,6 +189,7 @@ const App: React.FC = () => {
 
 	return (
 		<div className='app'>
+			<PWAControl />
 			{showLoadScreen || isLoading ? (
 				<Load />
 			) : isMainTab ? (

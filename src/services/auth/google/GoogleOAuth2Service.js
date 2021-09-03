@@ -17,7 +17,7 @@ class GoogleOAuth2Service {
 			scope: 'email profile openid',
 			response_type: 'code',
 			include_granted_scopes: true,
-			uxMode: 'redirect',
+			ux_mode: 'redirect',
 		}
 
 		if (email) {
@@ -48,7 +48,7 @@ class GoogleOAuth2Service {
 			response_type: 'code',
 			login_hint: email,
 			include_granted_scopes: true,
-			uxMode: 'redirect',
+			ux_mode: 'redirect',
 		}
 
 		if (refreshTokenNecessary) {

@@ -52,7 +52,8 @@ const PWAControl: React.FC = () => {
 		}
 	}, [isFirstLoad, alert, language, setIntroStep])
 
-	return (
+	return <></>
+	/*return (
 		<Dialog
 			className='pwa_control__intro_dialog'
 			aria-labelledby={language.data.FIRST_LOGIN_DIALOG_LABEL}
@@ -73,7 +74,7 @@ const PWAControl: React.FC = () => {
 				/>
 			</DialogActions>
 		</Dialog>
-	)
+	)*/
 }
 
 export default PWAControl

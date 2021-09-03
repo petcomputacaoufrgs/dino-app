@@ -6,7 +6,7 @@ import DinoStepper from '../dino_stepper'
 import * as ServiceWorkerRegistration from '../../ServiceWorkerRegistration'
 import { useAlert } from '../../context/alert'
 
-const NUMBER_OF_STEPS = 4
+const NUMBER_OF_STEPS = 0
 
 const PWAControl: React.FC = () => {
 	const alert = useAlert()

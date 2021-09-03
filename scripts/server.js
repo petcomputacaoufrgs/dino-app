@@ -15,7 +15,7 @@ app.use((req, res) => {
 	}
 })
 
-app.get('*', function (req, res) {
+app.use(function (req, res, next) {
 	res.sendFile(path.join(__dirname, '../build', 'index.html'))
 })
 

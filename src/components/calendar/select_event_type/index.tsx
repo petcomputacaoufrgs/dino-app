@@ -3,6 +3,7 @@ import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import './styles.css'
 import CalendarEventTypeEntity from '../../../types/calendar/database/CalendarEventTypeEntity'
+import ArrayUtils from '../../../utils/ArrayUtils'
 
 const SelectEventType: React.FC<{
 	value?: CalendarEventTypeEntity
@@ -11,8 +12,13 @@ const SelectEventType: React.FC<{
 }> = props => {
 	const language = useLanguage()
 
+	const getFirstType = () => {
+		if (ArrayUtils.isNotEmpty(props.eventTypes))
+			return props.eventTypes![0].localId
+	}
+
 	const [selectedTypeLocalId, setSelectedTypeLocalId] = useState(
-		props.value?.localId,
+		props.value?.localId || getFirstType(),
 	)
 
 	return (
@@ -20,11 +26,7 @@ const SelectEventType: React.FC<{
 			<InputLabel shrink>{language.data.EVENT_TYPE_ICON_ALT}</InputLabel>
 			<Select
 				required
-				value={
-					selectedTypeLocalId ||
-					(props.eventTypes && props.eventTypes[0].localId) ||
-					''
-				}
+				value={selectedTypeLocalId || ''}
 				fullWidth
 				onChange={e => setSelectedTypeLocalId(e.target.value as number)}
 			>

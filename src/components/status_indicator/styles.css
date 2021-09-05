@@ -32,3 +32,11 @@
     margin-left: 1rem; 
     display: grid;
 }
+
+@media screen and (min-width: 768px) {
+    .status_wrapper {
+        left: 50%;
+        margin-left: -5rem;
+    }
+}
+

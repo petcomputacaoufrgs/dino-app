@@ -4,7 +4,6 @@ import {
 	DayView,
 	EventView,
 } from '../../../../types/calendar/view/CalendarView'
-import DateUtils from '../../../../utils/DateUtils'
 import CalendarEvent from '../calendar_event'
 import './styles.css'
 

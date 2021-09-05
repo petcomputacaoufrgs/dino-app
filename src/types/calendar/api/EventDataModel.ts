@@ -4,8 +4,7 @@ export default interface EventDataModel
 	extends SynchronizableDataLocalIdModel<number> {
 	title: string
 	description?: string
-	beginTime: string
+	date: Date
 	endTime?: string
 	typeId?: number
-	date: Date
 }

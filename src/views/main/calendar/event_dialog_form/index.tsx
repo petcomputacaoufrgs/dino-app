@@ -19,7 +19,6 @@ const getEvent = (item?: EventView) =>
 		title: '',
 		description: '',
 		date: new Date(),
-		beginTime: '',
 	}
 
 export const getNewEventView = (date: Date): EventView => {

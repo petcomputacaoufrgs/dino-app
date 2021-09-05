@@ -18,9 +18,9 @@ class EventServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.event,
-			APIHTTPPathsConstants.CALENDAR_EVENT,
+			APIHTTPPathsConstants.EVENT,
 			WebSocketQueuePathService,
-			APIWebSocketPathsConstants.CALENDAR_EVENT,
+			APIWebSocketPathsConstants.EVENT,
 		)
 	}
 
@@ -42,9 +42,8 @@ class EventServiceImpl extends AutoSynchronizableService<
 		const entity: EventEntity = {
 			title: model.title,
 			description: model.description,
-			beginTime: model.beginTime,
-			endTime: model.endTime,
 			date: model.date,
+			endTime: model.endTime,
 		}
 
 		if (hasValue(model.typeId)) {
@@ -61,9 +60,8 @@ class EventServiceImpl extends AutoSynchronizableService<
 		const model: EventDataModel = {
 			title: entity.title,
 			description: entity.description,
-			beginTime: entity.beginTime,
-			endTime: entity.endTime,
 			date: entity.date,
+			endTime: entity.endTime,
 		}
 
 		if (hasValue(entity.typeLocalId)) {

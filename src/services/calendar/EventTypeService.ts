@@ -16,9 +16,9 @@ class EventServiceImpl extends AutoSynchronizableService<
 	constructor() {
 		super(
 			Database.eventType,
-			APIHTTPPathsConstants.CALENDAR_EVENT_TYPE,
+			APIHTTPPathsConstants.EVENT_TYPE,
 			WebSocketQueuePathService,
-			APIWebSocketPathsConstants.CALENDAR_EVENT_TYPE,
+			APIWebSocketPathsConstants.EVENT_TYPE,
 		)
 	}
 

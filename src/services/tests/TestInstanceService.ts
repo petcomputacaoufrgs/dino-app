@@ -227,27 +227,23 @@ class TestInstanceService {
 		const instances = [
 			{
 				title: 'Medicação',
-				beginTime: '10:00',
 				endTime: '11:00',
 				date: now,
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Internação',
-				beginTime: '9:00',
 				endTime: '22:00',
 				date: DateUtils.getNextDay(now),
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Medicação',
-				beginTime: '10:00',
 				date: DateUtils.getNextDay(now),
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Exercício',
-				beginTime: '14:00',
 				endTime: '18:00',
 				date: DateUtils.getNextMonth(now),
 				typeLocalId: getRandomTypeLocalId(),

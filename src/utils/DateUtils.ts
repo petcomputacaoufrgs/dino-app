@@ -57,6 +57,15 @@ class DateUtils {
 			.replace('YYYY', stringYear)
 	}
 
+	getTimeStringFormated = (date: Date, endTime?: string): string => {
+		const time =
+			StringUtils.toStringWithZeros(date.getHours(), 2) +
+			':' +
+			StringUtils.toStringWithZeros(date.getMinutes(), 2)
+
+		return endTime ? time.concat(' - ' + endTime) : time
+	}
+
 	getMonthName = (monthNumber: number, language: LanguageBase): string => {
 		const monthNames = [
 			language.JANUARY,

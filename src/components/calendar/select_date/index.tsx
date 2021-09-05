@@ -26,6 +26,7 @@ const SelectDate: React.FC = () => {
 		language.data.NOVEMBER,
 		language.data.DECEMBER,
 	]
+
 	const yearList = ['2021', '2022', '2023', '2024', '2025']
 
 	return (

@@ -19,7 +19,7 @@ const getEvent = (item?: CalendarEventView) =>
 		title: '',
 		description: '',
 		date: new Date(),
-		time: '',
+		beginTime: '',
 	}
 
 export const getNewEventView = (date: Date): CalendarEventView => {

@@ -5,6 +5,7 @@ export default interface CalendarEventEntity
 	title: string
 	description?: string
 	typeLocalId?: number
-	time: string
+	beginTime: string
+	endTime?: string
 	date: Date
 }

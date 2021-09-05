@@ -4,7 +4,7 @@ export default interface CalendarEventDataModel
 	extends SynchronizableDataLocalIdModel<number> {
 	title: string
 	description?: string
-	time: string
-	date: Date
+	beginTime: string
+	endTime?: string
 	typeId?: number
 }

@@ -42,7 +42,7 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 		const entity: CalendarEventEntity = {
 			title: model.title,
 			description: model.description,
-			time: model.time,
+			beginTime: model.time,
 			date: model.date,
 		}
 
@@ -60,7 +60,7 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 		const model: CalendarEventDataModel = {
 			title: entity.title,
 			description: entity.description,
-			time: entity.time,
+			time: entity.beginTime,
 			date: entity.date,
 		}
 

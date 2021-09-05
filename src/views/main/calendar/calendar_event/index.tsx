@@ -13,7 +13,7 @@ const CalendarEvent: React.FC<{
 			onClick={() => onClick(item)}
 		>
 			<p className='event_title'>{item.event.title}</p>
-			<p className='event_time'>{item.event.time}</p>
+			<p className='event_time'>{item.event.beginTime}</p>
 		</div>
 	)
 }

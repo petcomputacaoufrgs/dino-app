@@ -8,16 +8,16 @@ import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsCon
 import EventDataModel from '../../types/calendar/api/EventDataModel'
 import EventEntity from '../../types/calendar/database/EventEntity'
 import { hasValue } from '../../utils/Utils'
-import CalendarEventTypeService from './CalendarEventTypeService'
+import CalendarEventTypeService from './EventTypeService'
 
-class CalendarEventServiceImpl extends AutoSynchronizableService<
+class EventServiceImpl extends AutoSynchronizableService<
 	number,
 	EventDataModel,
 	EventEntity
 > {
 	constructor() {
 		super(
-			Database.calendarEvent,
+			Database.event,
 			APIHTTPPathsConstants.CALENDAR_EVENT,
 			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.CALENDAR_EVENT,
@@ -42,7 +42,8 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 		const entity: EventEntity = {
 			title: model.title,
 			description: model.description,
-			beginTime: model.time,
+			beginTime: model.beginTime,
+			endTime: model.endTime,
 			date: model.date,
 		}
 
@@ -60,7 +61,8 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 		const model: EventDataModel = {
 			title: entity.title,
 			description: entity.description,
-			time: entity.beginTime,
+			beginTime: entity.beginTime,
+			endTime: entity.endTime,
 			date: entity.date,
 		}
 
@@ -75,4 +77,4 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 	}
 }
 
-export default new CalendarEventServiceImpl()
+export default new EventServiceImpl()

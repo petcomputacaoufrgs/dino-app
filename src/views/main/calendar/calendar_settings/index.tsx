@@ -7,7 +7,7 @@ import { CalendarEventTypeForm } from './calendar_event_type_form'
 import AddButton from '../../../../components/button/icon_button/add_button'
 import './styles.css'
 import { useLanguage } from '../../../../context/language'
-import CalendarEventTypeService from '../../../../services/calendar/CalendarEventTypeService'
+import CalendarEventTypeService from '../../../../services/calendar/EventTypeService'
 import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 
 const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({

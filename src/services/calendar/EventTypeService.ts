@@ -8,14 +8,14 @@ import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsCon
 import CalendarEventTypeDataModel from '../../types/calendar/api/EventTypeDataModel'
 import EventTypeEntity from '../../types/calendar/database/EventTypeEntity'
 
-class CalendarEventServiceImpl extends AutoSynchronizableService<
+class EventServiceImpl extends AutoSynchronizableService<
 	number,
 	CalendarEventTypeDataModel,
 	EventTypeEntity
 > {
 	constructor() {
 		super(
-			Database.calendarEventType,
+			Database.eventType,
 			APIHTTPPathsConstants.CALENDAR_EVENT_TYPE,
 			WebSocketQueuePathService,
 			APIWebSocketPathsConstants.CALENDAR_EVENT_TYPE,
@@ -61,4 +61,4 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 	}
 }
 
-export default new CalendarEventServiceImpl()
+export default new EventServiceImpl()

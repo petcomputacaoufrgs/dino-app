@@ -44,8 +44,8 @@ class Database extends Dexie {
 	tab: Dexie.Table<TabEntity, number>
 	kidsSpaceSettings: Dexie.Table<KidsSpaceSettingsEntity, number>
 	report: Dexie.Table<ReportEntity, number>
-	calendarEvent: Dexie.Table<EventEntity, number>
-	calendarEventType: Dexie.Table<EventTypeEntity, number>
+	event: Dexie.Table<EventEntity, number>
+	eventType: Dexie.Table<EventTypeEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)
@@ -78,8 +78,8 @@ class Database extends Dexie {
 			googleScope: generateSynchronizableTableString('name'),
 			kidsSpaceSettings: generateSynchronizableTableString(),
 			report: generateSynchronizableTableString(),
-			calendarEvent: generateSynchronizableTableString(),
-			calendarEventType: generateSynchronizableTableString(),
+			event: generateSynchronizableTableString(),
+			eventType: generateSynchronizableTableString(),
 			auth: '++id',
 			logAppError: '++id,title,file,error,date',
 			tab: '++id,isMain',
@@ -99,14 +99,13 @@ class Database extends Dexie {
 		this.faqItem = this.table('faqItem')
 		this.treatmentQuestion = this.table('treatmentQuestion')
 		this.logAppError = this.table('logAppError')
-		this.calendarEvent = this.table('calendarEvent')
 		this.treatment = this.table('treatment')
 		this.googleScope = this.table('googleScope')
 		this.tab = this.table('tab')
 		this.kidsSpaceSettings = this.table('kidsSpaceSettings')
 		this.report = this.table('report')
-		this.calendarEvent = this.table('calendarEvent')
-		this.calendarEventType = this.table('calendarEventType')
+		this.event = this.table('event')
+		this.eventType = this.table('eventType')
 	}
 }
 

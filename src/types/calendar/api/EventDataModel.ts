@@ -7,4 +7,5 @@ export default interface EventDataModel
 	beginTime: string
 	endTime?: string
 	typeId?: number
+	date: Date
 }

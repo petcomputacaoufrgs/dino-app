@@ -9,12 +9,12 @@ import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
 import CalendarEventService from '../../../../services/calendar/CalendarEventService'
-import CalendarEventTypeEntity from '../../../../types/calendar/database/CalendarEventTypeEntity'
-import { CalendarEventView } from '../../../../types/calendar/view/CalendarView'
+import EventTypeEntity from '../../../../types/calendar/database/EventTypeEntity'
+import { EventView } from '../../../../types/calendar/view/CalendarView'
 import StringUtils from '../../../../utils/StringUtils'
 import EventDialogFormProps from './props'
 
-const getEvent = (item?: CalendarEventView) =>
+const getEvent = (item?: EventView) =>
 	item?.event || {
 		title: '',
 		description: '',
@@ -22,16 +22,13 @@ const getEvent = (item?: CalendarEventView) =>
 		beginTime: '',
 	}
 
-export const getNewEventView = (date: Date): CalendarEventView => {
+export const getNewEventView = (date: Date): EventView => {
 	const event = getEvent()
 	event.date = date
 	return { event }
 }
 
-const getType = (
-	item?: CalendarEventView,
-	eventTypes?: CalendarEventTypeEntity[],
-) => {
+const getType = (item?: EventView, eventTypes?: EventTypeEntity[]) => {
 	if (item) {
 		const eventType = eventTypes?.find(
 			t => t.localId === item?.event.typeLocalId,
@@ -45,7 +42,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 	const language = useLanguage()
 
 	const [event, setEvent] = useState(getEvent(props.item))
-	const [type, setType] = useState<CalendarEventTypeEntity | undefined>(
+	const [type, setType] = useState<EventTypeEntity | undefined>(
 		getType(props.item, props.eventTypes),
 	)
 	const [error, setError] = useState<string>()

@@ -24,9 +24,9 @@ import TreatmentQuestionService from '../treatment/TreatmentQuestionService'
 import TreatmentService from '../treatment/TreatmentService'
 import glossaryData from './glossary.json'
 import faqItemData from './faqItem.json'
-import CalendarEventTypeEntity from '../../types/calendar/database/CalendarEventTypeEntity'
+import EventTypeEntity from '../../types/calendar/database/EventTypeEntity'
 import CalendarEventTypeService from '../calendar/CalendarEventTypeService'
-import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
+import EventEntity from '../../types/calendar/database/EventEntity'
 import CalendarEventService from '../calendar/CalendarEventService'
 import DateUtils from '../../utils/DateUtils'
 
@@ -207,7 +207,7 @@ class TestInstanceService {
 				color: '#ab5e13',
 				userId: 1,
 			},
-		] as CalendarEventTypeEntity[]
+		] as EventTypeEntity[]
 
 		await CalendarEventTypeService.saveAll(instances)
 	}
@@ -249,7 +249,7 @@ class TestInstanceService {
 				date: DateUtils.getNextMonth(now),
 				typeLocalId: getRandomTypeLocalId(),
 			},
-		] as CalendarEventEntity[]
+		] as EventEntity[]
 
 		await CalendarEventService.saveAll(instances)
 	}

@@ -5,15 +5,15 @@ import Database from '../../storage/Database'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-import CalendarEventDataModel from '../../types/calendar/api/CalendarEventDataModel'
-import CalendarEventEntity from '../../types/calendar/database/CalendarEventEntity'
+import EventDataModel from '../../types/calendar/api/EventDataModel'
+import EventEntity from '../../types/calendar/database/EventEntity'
 import { hasValue } from '../../utils/Utils'
 import CalendarEventTypeService from './CalendarEventTypeService'
 
 class CalendarEventServiceImpl extends AutoSynchronizableService<
 	number,
-	CalendarEventDataModel,
-	CalendarEventEntity
+	EventDataModel,
+	EventEntity
 > {
 	constructor() {
 		super(
@@ -37,9 +37,9 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 	}
 
 	async convertModelToEntity(
-		model: CalendarEventDataModel,
-	): Promise<CalendarEventEntity | undefined> {
-		const entity: CalendarEventEntity = {
+		model: EventDataModel,
+	): Promise<EventEntity | undefined> {
+		const entity: EventEntity = {
 			title: model.title,
 			description: model.description,
 			beginTime: model.time,
@@ -55,9 +55,9 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 	}
 
 	async convertEntityToModel(
-		entity: CalendarEventEntity,
-	): Promise<CalendarEventDataModel | undefined> {
-		const model: CalendarEventDataModel = {
+		entity: EventEntity,
+	): Promise<EventDataModel | undefined> {
+		const model: EventDataModel = {
 			title: entity.title,
 			description: entity.description,
 			time: entity.beginTime,

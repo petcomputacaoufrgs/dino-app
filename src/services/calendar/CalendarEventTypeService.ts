@@ -5,13 +5,13 @@ import Database from '../../storage/Database'
 import WebSocketQueuePathService from '../websocket/path/WebSocketQueuePathService'
 import PermissionEnum from '../../types/enum/PermissionEnum'
 import APIWebSocketPathsConstants from '../../constants/api/APIWebSocketPathsConstants'
-import CalendarEventTypeDataModel from '../../types/calendar/api/CalendarEventTypeDataModel'
-import CalendarEventTypeEntity from '../../types/calendar/database/CalendarEventTypeEntity'
+import CalendarEventTypeDataModel from '../../types/calendar/api/EventTypeDataModel'
+import EventTypeEntity from '../../types/calendar/database/EventTypeEntity'
 
 class CalendarEventServiceImpl extends AutoSynchronizableService<
 	number,
 	CalendarEventTypeDataModel,
-	CalendarEventTypeEntity
+	EventTypeEntity
 > {
 	constructor() {
 		super(
@@ -36,8 +36,8 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 
 	async convertModelToEntity(
 		model: CalendarEventTypeDataModel,
-	): Promise<CalendarEventTypeEntity | undefined> {
-		const entity: CalendarEventTypeEntity = {
+	): Promise<EventTypeEntity | undefined> {
+		const entity: EventTypeEntity = {
 			title: model.title,
 			color: model.color,
 			icon: model.icon,
@@ -48,7 +48,7 @@ class CalendarEventServiceImpl extends AutoSynchronizableService<
 	}
 
 	async convertEntityToModel(
-		entity: CalendarEventTypeEntity,
+		entity: EventTypeEntity,
 	): Promise<CalendarEventTypeDataModel | undefined> {
 		const model: CalendarEventTypeDataModel = {
 			title: entity.title,

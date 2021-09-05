@@ -1,9 +1,9 @@
-import CalendarEventTypeEntity from '../../../../types/calendar/database/CalendarEventTypeEntity'
-import { CalendarEventView } from '../../../../types/calendar/view/CalendarView'
+import EventTypeEntity from '../../../../types/calendar/database/EventTypeEntity'
+import { EventView } from '../../../../types/calendar/view/CalendarView'
 
 export default interface EventDialogFormProps {
 	open: boolean
 	onClose: () => void
-	item?: CalendarEventView
-	eventTypes?: CalendarEventTypeEntity[]
+	item?: EventView
+	eventTypes?: EventTypeEntity[]
 }

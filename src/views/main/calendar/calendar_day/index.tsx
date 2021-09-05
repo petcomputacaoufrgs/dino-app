@@ -1,16 +1,16 @@
 import React from 'react'
 import { useLanguage } from '../../../../context/language'
 import {
-	CalendarDayView,
-	CalendarEventView,
+	DayView,
+	EventView,
 } from '../../../../types/calendar/view/CalendarView'
 import DateUtils from '../../../../utils/DateUtils'
 import CalendarEvent from '../calendar_event'
 import './styles.css'
 
 const CalendarDay: React.FC<{
-	item: CalendarDayView
-	onClickEvent: (item: CalendarEventView) => void
+	item: DayView
+	onClickEvent: (item: EventView) => void
 	onClickEmpty: (dayOfMonth: string) => void
 }> = props => {
 	const language = useLanguage()

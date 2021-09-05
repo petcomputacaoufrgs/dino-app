@@ -1,13 +1,13 @@
-import CalendarEventEntity from '../database/CalendarEventEntity'
+import EventEntity from '../database/EventEntity'
 
-export interface CalendarEventView {
-	event: CalendarEventEntity
+export interface EventView {
+	event: EventEntity
 	color?: string
 	icon?: string
 }
 
-export interface CalendarDayView {
+export interface DayView {
 	dayOfMonth: string
 	dayOfWeek: string
-	events: CalendarEventView[]
+	events: EventView[]
 }

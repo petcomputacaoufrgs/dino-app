@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ColorConstants from '../../../../../constants/app/ColorConstants'
 import { useLanguage } from '../../../../../context/language'
 import CalendarEventTypeService from '../../../../../services/calendar/CalendarEventTypeService'
-import CalendarEventTypeEntity from '../../../../../types/calendar/database/CalendarEventTypeEntity'
+import EventTypeEntity from '../../../../../types/calendar/database/EventTypeEntity'
 import DinoDialog from '../../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../../components/textfield'
 import './styles.css'
@@ -11,11 +11,11 @@ import './styles.css'
 interface CalendarEventTypeFormProps {
 	open: boolean
 	onClose: () => void
-	item?: CalendarEventTypeEntity
+	item?: EventTypeEntity
 }
 
-const getItem = (item?: CalendarEventTypeEntity) =>
-	item || ({ title: '' } as CalendarEventTypeEntity)
+const getItem = (item?: EventTypeEntity) =>
+	item || ({ title: '' } as EventTypeEntity)
 
 export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 	props => {

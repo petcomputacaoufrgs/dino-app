@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AddButton from '../../../components/button/icon_button/add_button'
 import { useLanguage } from '../../../context/language'
 import MonthNavBar from '../../../components/calendar/month_nav_bar'
-import CalendarEventEntity from '../../../types/calendar/database/CalendarEventEntity'
+import EventEntity from '../../../types/calendar/database/EventEntity'
 import StringUtils from '../../../utils/StringUtils'
 import './styles.css'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
@@ -14,11 +14,8 @@ import { EventDialogForm, getNewEventView } from './event_dialog_form'
 import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
 import CalendarSettings from './calendar_settings'
 import DinoTabPanel from '../../../components/tab_panel'
-import CalendarEventTypeEntity from '../../../types/calendar/database/CalendarEventTypeEntity'
-import {
-	CalendarDayView,
-	CalendarEventView,
-} from '../../../types/calendar/view/CalendarView'
+import EventTypeEntity from '../../../types/calendar/database/EventTypeEntity'
+import { DayView, EventView } from '../../../types/calendar/view/CalendarView'
 import CalendarEventTypeService from '../../../services/calendar/CalendarEventTypeService'
 import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
@@ -40,12 +37,12 @@ const Calendar: React.FC = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [date, setDate] = useState<Date>(new Date())
-	const [dayViews, setDayViews] = useState<CalendarDayView[]>()
-	const [eventTypes, setEventTypes] = useState<CalendarEventTypeEntity[]>()
+	const [dayViews, setDayViews] = useState<DayView[]>()
+	const [eventTypes, setEventTypes] = useState<EventTypeEntity[]>()
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
-	const [selectedItem, setSelectedItem] = useState<CalendarEventView>()
+	const [selectedItem, setSelectedItem] = useState<EventView>()
 
 	useEffect(() => {
 		const makeViewOfMonth = () => {
@@ -54,7 +51,7 @@ const Calendar: React.FC = () => {
 				date.getMonth(),
 			).getDay()
 			const monthLength = DateUtils.getMonthDaysLength(date.getMonth())
-			const month = new Array<CalendarDayView>(monthLength)
+			const month = new Array<DayView>(monthLength)
 			for (let index = 0; index < monthLength; index++) {
 				const day = index + 1
 				month[index] = {
@@ -67,7 +64,7 @@ const Calendar: React.FC = () => {
 			return month
 		}
 
-		const pushEventViewsToMonth = async (monthView: CalendarDayView[]) => {
+		const pushEventViewsToMonth = async (monthView: DayView[]) => {
 			const events = await CalendarEventService.getAll()
 			const types = await CalendarEventTypeService.getAll()
 
@@ -76,20 +73,20 @@ const Calendar: React.FC = () => {
 			events.forEach(e => {
 				const type = types.find(t => t.localId === e.typeLocalId) //TODO otimizar
 
-				const eventView: CalendarEventView = {
+				const eventView: EventView = {
 					event: e,
 					color: type?.color,
 					icon: type?.icon,
 				}
 
 				const index = e.date.getDate() - 1
-				const day: CalendarDayView | undefined = monthView[index]
+				const day: DayView | undefined = monthView[index]
 				if (day && DateUtils.isSameMonth(e.date, date))
 					day.events.push(eventView)
 			})
 		}
 
-		const loadUserData = async (): Promise<CalendarDayView[]> => {
+		const loadUserData = async (): Promise<DayView[]> => {
 			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
 			if (settings && !settings.declineGoogleCalendar) {
 				if (!syncGoogleCalendar) setOpenGrantDialog(true)
@@ -117,7 +114,7 @@ const Calendar: React.FC = () => {
 		UserSettingsService.addUpdateEventListenner(loadData)
 		GoogleScopeService.addUpdateEventListenner(loadData)
 
-		let updateDayViews = (dayViews: CalendarDayView[]) => {
+		let updateDayViews = (dayViews: DayView[]) => {
 			setDayViews(dayViews)
 		}
 
@@ -149,7 +146,7 @@ const Calendar: React.FC = () => {
 		setToAction(CRUDEnum.NOP)
 	}
 
-	const handleClick = (item: CalendarEventView) => {
+	const handleClick = (item: EventView) => {
 		setSelectedItem(item)
 		setToAction(CRUDEnum.READ)
 	}

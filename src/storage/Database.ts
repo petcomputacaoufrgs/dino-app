@@ -18,8 +18,8 @@ import { KidsSpaceSettingsEntity } from '../types/kids_space/database/KidsSpaceS
 import StaffEntity from '../types/staff/database/StaffEntity'
 import EssentialPhoneEntity from '../types/contact/database/EssentialPhoneEntity'
 import ReportEntity from '../types/report/database/ReportEntity'
-import CalendarEventEntity from '../types/calendar/database/CalendarEventEntity'
-import CalendarEventTypeEntity from '../types/calendar/database/CalendarEventTypeEntity'
+import EventEntity from '../types/calendar/database/EventEntity'
+import EventTypeEntity from '../types/calendar/database/EventTypeEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 18
@@ -44,8 +44,8 @@ class Database extends Dexie {
 	tab: Dexie.Table<TabEntity, number>
 	kidsSpaceSettings: Dexie.Table<KidsSpaceSettingsEntity, number>
 	report: Dexie.Table<ReportEntity, number>
-	calendarEvent: Dexie.Table<CalendarEventEntity, number>
-	calendarEventType: Dexie.Table<CalendarEventTypeEntity, number>
+	calendarEvent: Dexie.Table<EventEntity, number>
+	calendarEventType: Dexie.Table<EventTypeEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)

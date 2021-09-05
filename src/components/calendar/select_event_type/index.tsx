@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import './styles.css'
-import CalendarEventTypeEntity from '../../../types/calendar/database/CalendarEventTypeEntity'
+import EventTypeEntity from '../../../types/calendar/database/EventTypeEntity'
 import ArrayUtils from '../../../utils/ArrayUtils'
 
 const SelectEventType: React.FC<{
-	value?: CalendarEventTypeEntity
+	value?: EventTypeEntity
 	onClickOption: (index: number) => void
-	eventTypes?: CalendarEventTypeEntity[]
+	eventTypes?: EventTypeEntity[]
 }> = props => {
 	const language = useLanguage()
 

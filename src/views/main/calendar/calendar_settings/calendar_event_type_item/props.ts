@@ -1,10 +1,10 @@
-import CalendarEventTypeEntity from '../../../../../types/calendar/database/CalendarEventTypeEntity'
+import EventTypeEntity from '../../../../../types/calendar/database/EventTypeEntity'
 
 export interface CalendarEventTypeItemProps {
-	item: CalendarEventTypeEntity
+	item: EventTypeEntity
 	onClickMenu: (
 		event: React.MouseEvent<HTMLButtonElement>,
-		item?: CalendarEventTypeEntity | undefined,
+		item?: EventTypeEntity | undefined,
 	) => void
-	onClick: (item: CalendarEventTypeEntity) => void
+	onClick: (item: EventTypeEntity) => void
 }

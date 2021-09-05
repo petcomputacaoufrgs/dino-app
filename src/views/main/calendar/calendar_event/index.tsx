@@ -1,10 +1,10 @@
 import React from 'react'
-import { CalendarEventView } from '../../../../types/calendar/view/CalendarView'
+import { EventView } from '../../../../types/calendar/view/CalendarView'
 import './styles.css'
 
 const CalendarEvent: React.FC<{
-	item: CalendarEventView
-	onClick: (item: CalendarEventView) => void
+	item: EventView
+	onClick: (item: EventView) => void
 }> = ({ item, onClick }) => {
 	return (
 		<div

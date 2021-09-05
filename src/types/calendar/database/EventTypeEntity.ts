@@ -1,7 +1,6 @@
 import SynchronizableEntity from '../../sync/database/SynchronizableEntity'
 
-export default interface CalendarEventTypeEntity
-	extends SynchronizableEntity<number> {
+export default interface EventTypeEntity extends SynchronizableEntity<number> {
 	title: string
 	color?: string
 	icon?: string

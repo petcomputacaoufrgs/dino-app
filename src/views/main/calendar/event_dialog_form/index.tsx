@@ -5,6 +5,7 @@ import SelectNotification from '../../../../components/calendar/select_notificat
 import SelectRepeat from '../../../../components/calendar/select_repeat'
 import SelectTime from '../../../../components/calendar/select_time'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
+import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'
@@ -52,6 +53,9 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 			setType(newType)
 		}
 	}
+
+	const initTime = props.item?.event.initTime?.split(':')
+	const endTime = props.item?.event.endTime?.split(':')
 
 	useEffect(() => {
 		if (props.open) {
@@ -112,10 +116,14 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 				<div className='.container-fluid'>
 					<div className='row'>
 						<div className='col-6 left_block__selector'>
-							<SelectTime timeLabel={language.data.EVENT_INIT_TIME_LABEL} />
+							<SelectTime timeLabel={language.data.EVENT_INIT_TIME_LABEL}
+										hour={initTime? initTime[0] : ''}
+										minute={initTime? initTime[1] : ''}/>
 						</div>
 						<div className='col-6 right_block__selector'>
-							<SelectTime timeLabel={language.data.EVENT_END_TIME_LABEL} />
+							<SelectTime timeLabel={language.data.EVENT_END_TIME_LABEL} 
+										hour={endTime? endTime[0] : ''}
+										minute={endTime? endTime[1] : ''}/>
 						</div>
 					</div>
 				</div>

@@ -4,11 +4,13 @@ import './styles.css'
 
 interface SelectTimeProps {
 	timeLabel: string
+	hour?: string
+	minute?: string
 }
 
 const SelectTime: React.FC<SelectTimeProps> = props => {
-	const [hour, setHour] = useState<string>('')
-	const [minute, setMinute] = useState<string>('')
+	const [hour, setHour] = useState<string>(props.hour || '')
+	const [minute, setMinute] = useState<string>(props.minute || '')
 
 	const hourList = Array.from({ length: 24 }, (_, i) => `${i}`)
 

@@ -350,11 +350,11 @@ export default class PT implements LanguageBase {
 
 	HOUR = 'hora'
 
-	DAY = 'dia'
+	DAY = 'Dia'
 
-	MONTH = 'mês'
+	MONTH = 'Mês'
 
-	YEAR = 'ano'
+	YEAR = 'Ano'
 
 	EVENT = 'Evento'
 
@@ -373,6 +373,8 @@ export default class PT implements LanguageBase {
 	EVENT_END_TIME_LABEL = 'Horário de termino'
 
 	DATE_PICKER_DAY_FORMAT = 'DD/MM/AAAA'
+
+	EVENT_REPEAT = 'Repetir'
 
 	EVENT_REPEAT_NOT_REPEAT = 'Não se repete'
 
@@ -407,6 +409,8 @@ export default class PT implements LanguageBase {
 	EVENT_ADD_ALARM_LABEL = 'Tempo'
 
 	EVENT_ADD_ALARM_TYPE_LABEL = 'Medida de tempo'
+
+	EVENT_ALERT = 'Notificar'
 
 	EVENT_ADD_ALERT = 'Adicionar notificação'
 

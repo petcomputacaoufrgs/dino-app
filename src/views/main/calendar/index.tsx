@@ -11,6 +11,7 @@ import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import { EventDialogForm, getNewEventView } from './event_dialog_form'
+import CardEvent from './calendar_card_event'
 import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
 import CalendarSettings from './calendar_settings'
 import DinoTabPanel from '../../../components/tab_panel'
@@ -21,6 +22,7 @@ import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
 import DataThemeUtils from '../../../utils/DataThemeUtils'
+import { PinDropSharp } from '@material-ui/icons'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -205,6 +207,11 @@ const Calendar: React.FC = () => {
 					question={language.data.deleteItemText(language.data.EVENT)}
 					onAgree={handleAcceptDialogAndDeleteItem}
 					onDisagree={() => setToAction(CRUDEnum.NOP)}
+				/>
+				<CardEvent
+					open={toAction === CRUDEnum.READ}
+					onClose={handleClose}
+					item={selectedItem}
 				/>
 			</div>
 		)

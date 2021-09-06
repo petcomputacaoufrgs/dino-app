@@ -182,6 +182,7 @@ export default interface LanguageBase {
 	EVENT_END_DATE_LABEL: string
 	EVENT_END_TIME_LABEL: string
 	DATE_PICKER_DAY_FORMAT: string
+	EVENT_REPEAT: string
 	EVENT_REPEAT_NOT_REPEAT: string
 	EVENT_REPEAT_EVERY_DAY: string
 	EVENT_REPEAT_EVERY_WEEK: string
@@ -199,6 +200,7 @@ export default interface LanguageBase {
 	EVENT_ALERT_ALT: string
 	EVENT_ADD_ALARM_LABEL: string
 	EVENT_ADD_ALARM_TYPE_LABEL: string
+	EVENT_ALERT: string
 	EVENT_ADD_ALERT: string
 	EVENT_INVALID_ALARM_TYPE: string
 	EVENT_ALARM_ZERO: string

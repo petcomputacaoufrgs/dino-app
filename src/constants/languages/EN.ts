@@ -348,11 +348,11 @@ export default class EN implements LanguageBase {
 
 	HOUR = 'hour'
 
-	DAY = 'day'
+	DAY = 'Day'
 
-	MONTH = 'month'
+	MONTH = 'Month'
 
-	YEAR = 'year'
+	YEAR = 'Year'
 
 	EVENT = 'event'
 
@@ -371,6 +371,8 @@ export default class EN implements LanguageBase {
 	EVENT_END_TIME_LABEL = 'End time'
 
 	DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
+
+	EVENT_REPEAT = 'Repeat'
 
 	EVENT_REPEAT_NOT_REPEAT = 'Not repeat'
 
@@ -405,6 +407,8 @@ export default class EN implements LanguageBase {
 	EVENT_ADD_ALARM_LABEL = 'Time'
 
 	EVENT_ADD_ALARM_TYPE_LABEL = 'Time measure'
+
+	EVENT_ALERT = 'Alert'
 
 	EVENT_ADD_ALERT = 'Add notification'
 

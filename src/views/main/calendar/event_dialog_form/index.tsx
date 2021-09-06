@@ -54,8 +54,15 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 		}
 	}
 
-	const initTime = props.item?.event.initTime?.split(':')
+	let beginHour = ''
+	let beginMinute = ''
 	const endTime = props.item?.event.endTime?.split(':')
+	
+	if(props.item)
+	{
+		beginHour = StringUtils.toStringWithZeros(props.item?.event.date.getHours(), 2)
+		beginMinute = StringUtils.toStringWithZeros(props.item?.event.date.getMinutes(), 2)
+	}
 
 	useEffect(() => {
 		if (props.open) {
@@ -112,13 +119,14 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					onClickOption={handleChangeType}
 					eventTypes={props.eventTypes}
 				/>
-				<SelectDate />
+				<SelectDate 
+					item={props.item}/>
 				<div className='.container-fluid'>
 					<div className='row'>
 						<div className='col-6 left_block__selector'>
 							<SelectTime timeLabel={language.data.EVENT_INIT_TIME_LABEL}
-										hour={initTime? initTime[0] : ''}
-										minute={initTime? initTime[1] : ''}/>
+										hour={beginHour}
+										minute={beginMinute}/>
 						</div>
 						<div className='col-6 right_block__selector'>
 							<SelectTime timeLabel={language.data.EVENT_END_TIME_LABEL} 

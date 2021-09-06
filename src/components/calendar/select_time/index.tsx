@@ -9,8 +9,8 @@ interface SelectTimeProps {
 }
 
 const SelectTime: React.FC<SelectTimeProps> = props => {
-	const [hour, setHour] = useState<string>(props.hour || '')
-	const [minute, setMinute] = useState<string>(props.minute || '')
+	const [hour, setHour] = useState(props.hour || '')
+	const [minute, setMinute] = useState(props.minute || '')
 
 	const hourList = Array.from({ length: 24 }, (_, i) => `${i}`)
 

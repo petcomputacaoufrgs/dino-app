@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
+import { EventView } from '../../../types/calendar/view/CalendarView'
 import './styles.css'
 
-const SelectDate: React.FC = () => {
+interface SelectDateProps{
+	item?: EventView 
+}
+
+const SelectDate: React.FC<SelectDateProps> = (props) => {
 	const language = useLanguage()
 
-	const [selectedDay, setSelectedDay] = useState<string>('')
-	const [selectedMonth, setSelectedMonth] = useState<string>('')
-	const [selectedYear, setSelectedYear] = useState<string>('')
-
 	const dayList = Array.from({ length: 31 }, (_, i) => `${i + 1}`)
-
 	const monthList = [
 		language.data.JANUARY,
 		language.data.FEBRUARY,
@@ -26,8 +26,11 @@ const SelectDate: React.FC = () => {
 		language.data.NOVEMBER,
 		language.data.DECEMBER,
 	]
-
 	const yearList = ['2021', '2022', '2023', '2024', '2025']
+
+	const [selectedDay, setSelectedDay] = useState(props.item?.event.date.getDate() || '')
+	const [selectedMonth, setSelectedMonth] = useState(props.item? monthList[props.item?.event.date.getMonth()] : '')
+	const [selectedYear, setSelectedYear] = useState(props.item?.event.date.getFullYear() || '')
 
 	return (
 		<div>
@@ -38,7 +41,6 @@ const SelectDate: React.FC = () => {
 				<div className='row'>
 					<div className='col-3 day_date__selector'>
 						<Select
-							value={selectedDay}
 							displayEmpty
 							renderValue={() => selectedDay || language.data.DAY}
 							onChange={e => setSelectedDay(e.target.value as string)}
@@ -53,7 +55,6 @@ const SelectDate: React.FC = () => {
 					</div>
 					<div className='col-5 month_date__selector'>
 						<Select
-							value={selectedMonth}
 							displayEmpty
 							renderValue={() => selectedMonth || language.data.MONTH}
 							onChange={e => setSelectedMonth(e.target.value as string)}
@@ -68,7 +69,6 @@ const SelectDate: React.FC = () => {
 					</div>
 					<div className='col-4 year_date__selector'>
 						<Select
-							value={selectedYear}
 							displayEmpty
 							renderValue={() => selectedYear || language.data.YEAR}
 							onChange={e => setSelectedYear(e.target.value as string)}

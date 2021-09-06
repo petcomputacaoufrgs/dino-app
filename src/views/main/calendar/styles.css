@@ -24,3 +24,8 @@
 .right_block__selector {
 	padding-right: 1rem;
 }
+
+.svg__selector svg{
+    fill: var(--base-font-color);
+    margin-right: 0.5rem;
+}

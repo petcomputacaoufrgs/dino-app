@@ -18,7 +18,7 @@ const SelectRepeat: React.FC = () => {
 
 	return (
 		<div className='repeat__selector dino__flex_row'>
-			<div className='repeat_svg__selector'>
+			<div className='svg__selector'>
 				<RepeatSVG />
 			</div>
 			<Select

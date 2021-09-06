@@ -16,7 +16,7 @@ const SelectNotification: React.FC = () => {
 
 	return (
 		<div className='notification__selector dino__flex_row'>
-			<div className='notification_svg__selector'>
+			<div className='svg__selector'>
 				<AlertSVG />
 			</div>
 			<Select

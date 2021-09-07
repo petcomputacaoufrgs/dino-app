@@ -21,8 +21,7 @@ import CalendarEventTypeService from '../../../services/calendar/EventTypeServic
 import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
-import DataThemeUtils from '../../../utils/DataThemeUtils'
-import { PinDropSharp } from '@material-ui/icons'
+import ItemListMenu from '../../../components/list_components/item_list_menu'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -36,7 +35,7 @@ const Calendar: React.FC = () => {
 		language.data.FRIDAY_ABREVIATION,
 		language.data.SATURDAY_ABREVIATION,
 	]
-
+	
 	const [isLoading, setIsLoading] = useState(true)
 	const [date, setDate] = useState<Date>(new Date())
 	const [dayViews, setDayViews] = useState<DayView[]>()
@@ -45,7 +44,8 @@ const Calendar: React.FC = () => {
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<EventView>()
-
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+	
 	useEffect(() => {
 		const makeViewOfMonth = () => {
 			const firstWeekDay = new Date(
@@ -164,6 +164,8 @@ const Calendar: React.FC = () => {
 		setToAction(CRUDEnum.CREATE)
 	}
 
+	const handleEditOption = () => setToAction(CRUDEnum.UPDATE)
+
 	const handleDeleteOption = () => setToAction(CRUDEnum.DELETE)
 
 	const handleAcceptDialogAndDeleteItem = () => {
@@ -174,6 +176,15 @@ const Calendar: React.FC = () => {
 		setDate(currentDate)
 		setIsLoading(true)
 	}
+
+	const handleClickMenu = (
+		event: React.MouseEvent<HTMLButtonElement>,
+		item?: EventView,
+	) => {
+		setAnchorEl(event.currentTarget)
+		if (item) setSelectedItem(item)
+	}
+
 
 	const renderCalendar = () => {
 		return (
@@ -210,8 +221,15 @@ const Calendar: React.FC = () => {
 				/>
 				<CardEvent
 					open={toAction === CRUDEnum.READ}
-					onClose={handleClose}
 					item={selectedItem}
+					onClose={handleClose}
+					onClickMenu={handleClickMenu}
+				/>
+				<ItemListMenu
+					anchor={anchorEl}
+					setAnchor={setAnchorEl}
+					onEdit={handleEditOption}
+					onDelete={handleDeleteOption}
 				/>
 			</div>
 		)

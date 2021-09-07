@@ -3,5 +3,8 @@
 }
 
 .time_wrapper{
+    margin-left: 1rem;
+    margin-right: 1rem;
     justify-content: space-between;
+    font-size: var(--big-font);
 }

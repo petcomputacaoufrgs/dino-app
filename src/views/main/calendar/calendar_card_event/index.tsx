@@ -7,12 +7,18 @@ import { ReactComponent as RepeatSVG } from '../../../../assets/icons/general_us
 import { ReactComponent as AlertSVG } from '../../../../assets/icons/general_use/add_alert.svg'
 import OptionsIconButton from '../../../../components/button/icon_button/options_icon_button'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
+import DateUtils from '../../../../utils/DateUtils'
 import './styles.css'
 
 const CardEvent: React.FC<CardEventProps> = (props) => {
-    const language = useLanguage()
+	let beginTime: string | undefined
+	let endTime: string | undefined
 
+	const language = useLanguage()
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+	beginTime = props.item?  DateUtils.getTimeStringFormated(props.item.event.date) : undefined
+	endTime = props.item?.event.endTime? props.item.event.endTime : undefined
 
 	const handleClickMenu = (
 		event: React.MouseEvent<HTMLButtonElement>,
@@ -30,7 +36,7 @@ const CardEvent: React.FC<CardEventProps> = (props) => {
 						className='calendar_dialog__header'
 						style={{backgroundColor: props.item?.color}}
 					>
-						<div className='dino__flex_row'>
+						<div className='dino__flex_row card_header__wrapper'>
 							<div>
 								<div className='calendar_dialog__header_title'>
 									{props.item?.event.title}
@@ -39,7 +45,7 @@ const CardEvent: React.FC<CardEventProps> = (props) => {
 									{language.data.DAY + ' ' + props.item?.event.date.getDate()}
 								</div>
 							</div>
-							<div>
+							<div className='card_event__icon_button'>
 								<OptionsIconButton onClick={e => handleClickMenu(e)} />
 							</div>
 						</div>
@@ -48,8 +54,16 @@ const CardEvent: React.FC<CardEventProps> = (props) => {
 			>
 				<div className='calendar_dialog__content'>
 					<div className='dino__flex_row time_wrapper'>
-						<p>{language.data.DATE_FROM + ': ' + props.item?.event.endTime}</p>
-						<p>{language.data.DATE_FROM + ': ' + props.item?.event.endTime}</p>
+						<p>
+							{beginTime? 
+						      	(language.data.DATE_FROM + ': ' + beginTime) : ''
+							}
+						</p>
+						<p>
+							{endTime? 
+						      	(language.data.DATE_FROM + ': ' + endTime) : ''
+							}
+						</p>
 					</div>
 					<DinoHr/>
 					<div>

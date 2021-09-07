@@ -2,6 +2,10 @@
     font-size: var(--big-font);
 }
 
+.card_header__wrapper{
+    justify-content: space-between;
+}
+
 .time_wrapper{
     margin-left: 1rem;
     margin-right: 1rem;
@@ -11,4 +15,8 @@
 
 .repeat_alert_text{
     font-size: (--big-font);
+}
+
+.card_event__icon_button .dino_icon_button__button svg {
+	fill: #FAFAFA;
 }

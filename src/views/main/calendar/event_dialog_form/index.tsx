@@ -5,7 +5,6 @@ import SelectNotification from '../../../../components/calendar/select_notificat
 import SelectRepeat from '../../../../components/calendar/select_repeat'
 import SelectTime from '../../../../components/calendar/select_time'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
-import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import { DinoTextfield } from '../../../../components/textfield'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 import { useLanguage } from '../../../../context/language'

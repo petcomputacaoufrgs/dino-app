@@ -1,0 +1,7 @@
+.day_subtitle{
+    font-size: var(--big-font);
+}
+
+.time_wrapper{
+    justify-content: space-between;
+}

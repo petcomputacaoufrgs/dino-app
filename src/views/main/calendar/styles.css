@@ -10,7 +10,8 @@
 .calendar_dialog__header_title {
 	text-align: initial;
 	margin-right: 8px;
-	font-size: var(--default-font);
+	font-size: var(--big-font);
+	font-weight: bold;
 }
 
 .calendar_dialog__content {

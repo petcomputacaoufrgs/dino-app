@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import AddButton from '../../../components/button/icon_button/add_button'
 import { useLanguage } from '../../../context/language'
 import MonthNavBar from '../../../components/calendar/month_nav_bar'
-import EventEntity from '../../../types/calendar/database/EventEntity'
-import StringUtils from '../../../utils/StringUtils'
 import './styles.css'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
 import CalendarEventService from '../../../services/calendar/EventService'
@@ -21,7 +19,6 @@ import CalendarEventTypeService from '../../../services/calendar/EventTypeServic
 import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
-import ItemListMenu from '../../../components/list_components/item_list_menu'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -44,7 +41,6 @@ const Calendar: React.FC = () => {
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<EventView>()
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	
 	useEffect(() => {
 		const makeViewOfMonth = () => {
@@ -177,14 +173,6 @@ const Calendar: React.FC = () => {
 		setIsLoading(true)
 	}
 
-	const handleClickMenu = (
-		event: React.MouseEvent<HTMLButtonElement>,
-		item?: EventView,
-	) => {
-		setAnchorEl(event.currentTarget)
-		if (item) setSelectedItem(item)
-	}
-
 
 	const renderCalendar = () => {
 		return (
@@ -223,11 +211,6 @@ const Calendar: React.FC = () => {
 					open={toAction === CRUDEnum.READ}
 					item={selectedItem}
 					onClose={handleClose}
-					onClickMenu={handleClickMenu}
-				/>
-				<ItemListMenu
-					anchor={anchorEl}
-					setAnchor={setAnchorEl}
 					onEdit={handleEditOption}
 					onDelete={handleDeleteOption}
 				/>

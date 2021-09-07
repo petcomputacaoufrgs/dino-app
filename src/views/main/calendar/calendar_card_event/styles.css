@@ -8,3 +8,7 @@
     justify-content: space-between;
     font-size: var(--big-font);
 }
+
+.repeat_alert_text{
+    font-size: (--big-font);
+}

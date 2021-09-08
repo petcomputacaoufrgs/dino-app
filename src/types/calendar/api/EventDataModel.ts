@@ -7,4 +7,6 @@ export default interface EventDataModel
 	date: Date
 	endTime?: string
 	typeId?: number
+	repeat?: string
+	alert?: string
 }

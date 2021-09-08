@@ -6,4 +6,6 @@ export default interface EventEntity extends SynchronizableEntity<number> {
 	typeLocalId?: number
 	date: Date
 	endTime?: string
+	repeat?: string
+	alert?: string
 }

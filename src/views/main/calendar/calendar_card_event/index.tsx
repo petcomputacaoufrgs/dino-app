@@ -73,13 +73,13 @@ const CardEvent: React.FC<CardEventProps> = (props) => {
 						<div className='svg__selector'>
 							<RepeatSVG />
 						</div>
-						<p className='repeat_alert_text'>{language.data.EVENT_REPEAT + ': '}</p>
+						<p className='repeat_alert_text'>{language.data.EVENT_REPEAT + ': ' + props.item?.event.repeat}</p>
 					</div>
 					<div className='dino__flex_row'>
 						<div className='svg__selector'>
 							<AlertSVG />
 						</div>
-						<p className='repeat_alert_text'>{language.data.EVENT_ALERT + ': '}</p>
+						<p className='repeat_alert_text'>{language.data.EVENT_ALERT + ': ' + props.item?.event.alert}</p>
 					</div>
 				</div>
 			</DinoDialog>

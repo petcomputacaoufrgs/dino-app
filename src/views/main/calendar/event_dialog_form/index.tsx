@@ -134,8 +134,8 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 						</div>
 					</div>
 				</div>
-				<SelectRepeat />
-				<SelectNotification />
+				<SelectRepeat item={props.item}/>
+				<SelectNotification item={props.item}/>
 			</div>
 		</DinoDialog>
 	)

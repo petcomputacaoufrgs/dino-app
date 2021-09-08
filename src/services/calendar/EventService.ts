@@ -44,6 +44,8 @@ class EventServiceImpl extends AutoSynchronizableService<
 			description: model.description,
 			date: model.date,
 			endTime: model.endTime,
+			repeat: model.repeat,
+			alert: model.alert,
 		}
 
 		if (hasValue(model.typeId)) {
@@ -62,6 +64,8 @@ class EventServiceImpl extends AutoSynchronizableService<
 			description: entity.description,
 			date: entity.date,
 			endTime: entity.endTime,
+			repeat: entity.repeat,
+			alert: entity.alert,
 		}
 
 		if (hasValue(entity.typeLocalId)) {

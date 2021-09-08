@@ -3,10 +3,11 @@ import { MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import { ReactComponent as RepeatSVG } from '../../../assets/icons/general_use/repeat.svg'
 import './styles.css'
+import { EventView } from '../../../types/calendar/view/CalendarView'
 
-const SelectRepeat: React.FC = () => {
+const SelectRepeat: React.FC<{item?: EventView}> = (props) => {
 	const language = useLanguage()
-	const [selectedRepeat, setSelectedRepeat] = useState<string>('')
+	const [selectedRepeat, setSelectedRepeat] = useState(props.item?.event.repeat)
 
 	const repeatList = [
 		language.data.EVENT_REPEAT_NOT_REPEAT,

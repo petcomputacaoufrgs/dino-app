@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import { ReactComponent as AlertSVG } from '../../../assets/icons/general_use/add_alert.svg'
+import { EventView } from '../../../types/calendar/view/CalendarView'
 import './styles.css'
 
-const SelectNotification: React.FC = () => {
+const SelectNotification: React.FC<{item?: EventView}> = (props) => {
 	const language = useLanguage()
 	const notificationList = [
 		'Um dia antes',
@@ -12,7 +13,7 @@ const SelectNotification: React.FC = () => {
 		'30 minutos antes',
 		'15 minutos antes',
 	]
-	const [selectedNotification, setSelectedNotification] = useState<string>('')
+	const [selectedNotification, setSelectedNotification] = useState(props.item?.event.alert)
 
 	return (
 		<div className='notification__selector dino__flex_row'>

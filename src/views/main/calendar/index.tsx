@@ -166,6 +166,7 @@ const Calendar: React.FC = () => {
 
 	const handleAcceptDialogAndDeleteItem = () => {
 		if (selectedItem) CalendarEventService.delete(selectedItem.event)
+		setToAction(CRUDEnum.NOP)
 	}
 
 	const handleChangeDate = (currentDate: Date) => {

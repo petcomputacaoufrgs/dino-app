@@ -197,10 +197,10 @@ const Calendar: React.FC = () => {
 					item={selectedItem}
 					eventTypes={eventTypes}
 				/>
-				<GoogleCalendarGrantDialog
+				{/*<GoogleCalendarGrantDialog
 					open={openGrantDialog}
 					onClose={() => setOpenGrantDialog(false)}
-				/>
+				/>*/}
 				<AgreementDialog
 					open={toAction === CRUDEnum.DELETE}
 					description={language.data.DELETE_ITEM_OPTION_TEXT}

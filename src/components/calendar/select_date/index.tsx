@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import { EventView } from '../../../types/calendar/view/CalendarView'
+import StringUtils from '../../../utils/StringUtils'
 import './styles.css'
 
 interface SelectDateProps{
@@ -30,7 +31,7 @@ const SelectDate: React.FC<SelectDateProps> = (props) => {
 
 	const [selectedDay, setSelectedDay] = useState(props.item?.event.date.getDate() || '')
 	const [selectedMonth, setSelectedMonth] = useState(props.item? monthList[props.item?.event.date.getMonth()] : '')
-	const [selectedYear, setSelectedYear] = useState(props.item?.event.date.getFullYear() || '')
+	const [selectedYear, setSelectedYear] = useState(props.item? StringUtils.toStringWithZeros(props.item.event.date.getFullYear(), 4) : '')
 
 	return (
 		<div>

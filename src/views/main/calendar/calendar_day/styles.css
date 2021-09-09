@@ -1,11 +1,16 @@
 .day_wrapper {
 	width: 95%;
 	margin: auto;
+	padding-bottom: 0.5em;
 }
 
 .day_number_wrapper {
 	width: 20%;
 	text-align: center;
+}
+.day_number_wrapper.today {
+	border-radius: 40%;
+	background-color: #cbbab4;
 }
 
 .day_number_wrapper p {
@@ -34,5 +39,6 @@
 	font-size: var(--default-font);
 	color: var(--base-font-color);
 	text-align: center;
+	opacity: 0.5;
 	margin: 0;
 }

@@ -11,12 +11,13 @@ const CalendarDay: React.FC<{
 	item: DayView
 	onClickEvent: (item: EventView) => void
 	onClickEmpty: (dayOfMonth: string) => void
+	today?: boolean
 }> = props => {
 	const language = useLanguage()
 
 	return (
 		<div className='day_wrapper dino__flex_row'>
-			<div className='day_number_wrapper'>
+			<div className={'day_number_wrapper' + (props.today ? ' today' : '')}>
 				<p className='week_day'>{props.item.dayOfWeek}</p>
 				<p className='month_day'>{props.item.dayOfMonth}</p>
 			</div>

@@ -32,8 +32,9 @@ const Calendar: React.FC = () => {
 		language.data.FRIDAY_ABREVIATION,
 		language.data.SATURDAY_ABREVIATION,
 	]
-	
+
 	const [isLoading, setIsLoading] = useState(true)
+	const [todayIndex, setTodayIndex] = useState<number>()
 	const [date, setDate] = useState<Date>(new Date())
 	const [dayViews, setDayViews] = useState<DayView[]>()
 	const [eventTypes, setEventTypes] = useState<EventTypeEntity[]>()
@@ -41,8 +42,15 @@ const Calendar: React.FC = () => {
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<EventView>()
-	
+
 	useEffect(() => {
+		const makeTodayIndex = () => {
+			const now = new Date()
+			if (DateUtils.isSameMonth(now, date)) {
+				setTodayIndex(now.getDate() - 1)
+			}
+		}
+
 		const makeViewOfMonth = () => {
 			const firstWeekDay = new Date(
 				date.getFullYear(),
@@ -59,6 +67,7 @@ const Calendar: React.FC = () => {
 					events: [],
 				}
 			}
+			makeTodayIndex()
 			return month
 		}
 
@@ -174,7 +183,6 @@ const Calendar: React.FC = () => {
 		setIsLoading(true)
 	}
 
-
 	const renderCalendar = () => {
 		return (
 			<div className='calendar'>
@@ -185,6 +193,7 @@ const Calendar: React.FC = () => {
 						item={e}
 						onClickEvent={handleClick}
 						onClickEmpty={handleClickEmpty}
+						today={todayIndex === index}
 					/>
 				))}
 				<AddButton

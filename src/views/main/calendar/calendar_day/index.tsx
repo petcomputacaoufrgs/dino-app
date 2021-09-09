@@ -4,7 +4,7 @@ import {
 	DayView,
 	EventView,
 } from '../../../../types/calendar/view/CalendarView'
-import CalendarEvent from '../calendar_event'
+import CalendarEventListItem from '../calendar_event'
 import './styles.css'
 
 const CalendarDay: React.FC<{
@@ -31,7 +31,11 @@ const CalendarDay: React.FC<{
 					</div>
 				) : (
 					props.item.events.map((e, index) => (
-						<CalendarEvent key={index} item={e} onClick={props.onClickEvent} />
+						<CalendarEventListItem
+							key={index}
+							item={e}
+							onClick={props.onClickEvent}
+						/>
 					))
 				)}
 			</div>

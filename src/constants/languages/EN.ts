@@ -410,6 +410,8 @@ export default class EN implements LanguageBase {
 
 	EVENT_ALERT = 'Alert'
 
+	EVENT_ALERT_NOT_DEFINED = 'Notification not defined'
+
 	EVENT_ADD_ALERT = 'Add notification'
 
 	EVENT_INVALID_ALARM_TYPE = 'invalid type'

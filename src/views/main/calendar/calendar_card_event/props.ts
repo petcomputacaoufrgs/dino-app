@@ -1,7 +1,7 @@
 import { EventView } from '../../../../types/calendar/view/CalendarView'
 
 export default interface CardEventProps {
-	item?: EventView
+	item: EventView
 	open: boolean
 	onClose: () => void
 	onEdit?: () => void

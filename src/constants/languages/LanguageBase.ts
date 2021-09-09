@@ -201,6 +201,7 @@ export default interface LanguageBase {
 	EVENT_ADD_ALARM_LABEL: string
 	EVENT_ADD_ALARM_TYPE_LABEL: string
 	EVENT_ALERT: string
+	EVENT_ALERT_NOT_DEFINED: string
 	EVENT_ADD_ALERT: string
 	EVENT_INVALID_ALARM_TYPE: string
 	EVENT_ALARM_ZERO: string

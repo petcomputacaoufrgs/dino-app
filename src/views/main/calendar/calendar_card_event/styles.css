@@ -1,22 +1,14 @@
-.day_subtitle{
-    font-size: var(--big-font);
+.card_header__wrapper {
+	justify-content: space-between;
 }
 
-.card_header__wrapper{
-    justify-content: space-between;
-}
-
-.time_wrapper{
-    margin-left: 1rem;
-    margin-right: 1rem;
-    justify-content: space-between;
-    font-size: var(--big-font);
-}
-
-.repeat_alert_text{
-    font-size: (--big-font);
+.calendar_dialog__header .MuiTypography-root {
+	color: var(--calendar-event-cards-font-color);
 }
 
 .card_event__icon_button .dino_icon_button__button svg {
-	fill: #FAFAFA;
+	fill: var(--calendar-event-cards-font-color);
+}
+.event_section {
+	padding: 0.4em 0;
 }

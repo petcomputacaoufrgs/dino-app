@@ -3,7 +3,9 @@
 	border-radius: 10px;
 	background-color: var(--calendar-default-background);
 	width: 100%;
-	margin-bottom: 0.25rem;
+}
+.event:not(:first-child) {
+	margin-top: 0.25rem;
 }
 
 .event p {

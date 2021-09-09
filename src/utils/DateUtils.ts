@@ -57,6 +57,16 @@ class DateUtils {
 			.replace('YYYY', stringYear)
 	}
 
+	getExtendedDateStringFormated = (
+		date: Date,
+		language: LanguageBase,
+	): string => {
+		const weekDayName = this.getWeekDay(date.getDay(), language)
+		const monthName = this.getMonthName(date.getMonth(), language)
+		const stringDay = StringUtils.toStringWithZeros(date.getDate(), 2)
+		return `${weekDayName}, ${stringDay} ${monthName} ${date.getFullYear()}`
+	}
+
 	getTimeStringFormated = (date: Date, endTime?: string): string => {
 		const time =
 			StringUtils.toStringWithZeros(date.getHours(), 2) +
@@ -85,11 +95,8 @@ class DateUtils {
 		return monthName || language.INVALID_MONTH
 	}
 
-	getWeekDayAbreviation = (
-		monthNumber: number,
-		language: LanguageBase,
-	): string => {
-		const monthNames = [
+	getWeekDayNamesAbrArray = (language: LanguageBase): string[] => {
+		return [
 			language.SUNDAY_ABREVIATION,
 			language.MONDAY_ABREVIATION,
 			language.TUESDAY_ABREVIATION,
@@ -98,8 +105,20 @@ class DateUtils {
 			language.FRIDAY_ABREVIATION,
 			language.SATURDAY_ABREVIATION,
 		]
-		const monthName: string | undefined = monthNames[monthNumber]
-		return monthName || language.INVALID_MONTH
+	}
+
+	getWeekDay = (weekDayNumber: number, language: LanguageBase): string => {
+		const weekDayNames = [
+			language.SUNDAY_NAME,
+			language.MONDAY_NAME,
+			language.TUESDAY_NAME,
+			language.WEDNESDAY_NAME,
+			language.THURSDAY_NAME,
+			language.FRIDAY_NAME,
+			language.SATURDAY_NAME,
+		]
+		const weekDayName: string | undefined = weekDayNames[weekDayNumber]
+		return weekDayName || language.INVALID_WEEKDAY
 	}
 
 	getMonthDaysLength = (monthNumber: number, yearNumber?: number) => {

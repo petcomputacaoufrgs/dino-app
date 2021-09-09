@@ -23,16 +23,6 @@ import DateUtils from '../../../utils/DateUtils'
 const Calendar: React.FC = () => {
 	const language = useLanguage()
 
-	const weekDayNamesAbr = [
-		language.data.SUNDAY_ABREVIATION,
-		language.data.MONDAY_ABREVIATION,
-		language.data.TUESDAY_ABREVIATION,
-		language.data.WEDNESDAY_ABREVIATION,
-		language.data.THURSDAY_ABREVIATION,
-		language.data.FRIDAY_ABREVIATION,
-		language.data.SATURDAY_ABREVIATION,
-	]
-
 	const [isLoading, setIsLoading] = useState(true)
 	const [todayIndex, setTodayIndex] = useState<number>()
 	const [date, setDate] = useState<Date>(new Date())
@@ -48,7 +38,7 @@ const Calendar: React.FC = () => {
 			const now = new Date()
 			if (DateUtils.isSameMonth(now, date)) {
 				setTodayIndex(now.getDate() - 1)
-			}
+			} else setTodayIndex(undefined)
 		}
 
 		const makeViewOfMonth = () => {
@@ -56,7 +46,11 @@ const Calendar: React.FC = () => {
 				date.getFullYear(),
 				date.getMonth(),
 			).getDay()
-			const monthLength = DateUtils.getMonthDaysLength(date.getMonth())
+			const monthLength = DateUtils.getMonthDaysLength(
+				date.getMonth(),
+				date.getFullYear(),
+			)
+			const weekDayNamesAbr = DateUtils.getWeekDayNamesAbrArray(language.data)
 			const month = new Array<DayView>(monthLength)
 			for (let index = 0; index < monthLength; index++) {
 				const day = index + 1
@@ -206,10 +200,10 @@ const Calendar: React.FC = () => {
 					item={selectedItem}
 					eventTypes={eventTypes}
 				/>
-				{/*<GoogleCalendarGrantDialog
+				{/* <GoogleCalendarGrantDialog
 					open={openGrantDialog}
 					onClose={() => setOpenGrantDialog(false)}
-				/>*/}
+				/> */}
 				<AgreementDialog
 					open={toAction === CRUDEnum.DELETE}
 					description={language.data.DELETE_ITEM_OPTION_TEXT}
@@ -217,13 +211,15 @@ const Calendar: React.FC = () => {
 					onAgree={handleAcceptDialogAndDeleteItem}
 					onDisagree={() => setToAction(CRUDEnum.NOP)}
 				/>
-				<CardEvent
-					open={toAction === CRUDEnum.READ}
-					item={selectedItem}
-					onClose={handleClose}
-					onEdit={handleEditOption}
-					onDelete={handleDeleteOption}
-				/>
+				{selectedItem && (
+					<CardEvent
+						open={toAction === CRUDEnum.READ}
+						item={selectedItem}
+						onClose={handleClose}
+						onEdit={handleEditOption}
+						onDelete={handleDeleteOption}
+					/>
+				)}
 			</div>
 		)
 	}

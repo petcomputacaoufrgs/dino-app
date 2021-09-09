@@ -9,80 +9,92 @@ import OptionsIconButton from '../../../../components/button/icon_button/options
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import DateUtils from '../../../../utils/DateUtils'
 import './styles.css'
+import { CardHeader, Dialog, Typography } from '@material-ui/core'
+import TransitionSlide from '../../../../components/slide_transition'
 
-const CardEvent: React.FC<CardEventProps> = (props) => {
-	let beginTime: string | undefined
-	let endTime: string | undefined
-
+const CardEvent: React.FC<CardEventProps> = props => {
 	const language = useLanguage()
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-	beginTime = props.item?  DateUtils.getTimeStringFormated(props.item.event.date) : undefined
-	endTime = props.item?.event.endTime? props.item.event.endTime : undefined
-
-	const handleClickMenu = (
-		event: React.MouseEvent<HTMLButtonElement>,
-	) => {
+	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget)
 	}
-	
-    return(
+
+	const EventSection: React.FC<{ title: string; value: string }> = props => {
+		return (
+			<div className='event_section dino__flex_row'>
+				<div className='svg__selector'>{props.children}</div>
+				<Typography
+					className='event_section__text'
+					variant='subtitle1'
+					color='textSecondary'
+					component='p'
+				>
+					{props.title + ': ' + props.value}
+				</Typography>
+			</div>
+		)
+	}
+
+	return (
 		<div>
-			<DinoDialog
+			<Dialog
+				style={{ padding: 0 }}
+				fullWidth
+				TransitionComponent={TransitionSlide}
+				onBackdropClick={props.onClose}
 				open={props.open}
 				onClose={props.onClose}
-				header={
-					<div
-						className='calendar_dialog__header'
-						style={{backgroundColor: props.item?.color}}
-					>
-						<div className='dino__flex_row card_header__wrapper'>
-							<div>
-								<div className='calendar_dialog__header_title'>
-									{props.item?.event.title}
-								</div>
-								<div className='day_subtitle'>
-									{language.data.DAY + ' ' + props.item?.event.date.getDate()}
-								</div>
-							</div>
-							<div className='card_event__icon_button'>
-								<OptionsIconButton onClick={e => handleClickMenu(e)} />
-							</div>
-						</div>
-					</div>
-				}
 			>
+				<CardHeader
+					className='calendar_dialog__header'
+					style={{ backgroundColor: props.item?.color }}
+					action={
+						<div className='card_event__icon_button'>
+							<OptionsIconButton onClick={e => handleClickMenu(e)} />
+						</div>
+					}
+					title={
+						<div className='calendar_dialog__header_title'>
+							{props.item.event.title}
+						</div>
+					}
+					subheader={
+						<div className='day_subtitle'>
+							<div>
+								{DateUtils.getExtendedDateStringFormated(
+									props.item.event.date,
+									language.data,
+								)}
+							</div>
+							<div>
+								{DateUtils.getTimeStringFormated(
+									props.item.event.date,
+									props.item.event.endTime,
+								)}
+							</div>
+						</div>
+					}
+				></CardHeader>
 				<div className='calendar_dialog__content'>
-					<div className='dino__flex_row time_wrapper'>
-						<p>
-							{beginTime? 
-						      	(language.data.DATE_FROM + ': ' + beginTime) : ''
-							}
-						</p>
-						<p>
-							{endTime? 
-						      	(language.data.DATE_FROM + ': ' + endTime) : ''
-							}
-						</p>
-					</div>
-					<DinoHr/>
-					<div>
-
-					</div>
-					<div className='dino__flex_row'>
-						<div className='svg__selector'>
-							<RepeatSVG />
-						</div>
-						<p className='repeat_alert_text'>{language.data.EVENT_REPEAT + ': ' + props.item?.event.repeat}</p>
-					</div>
-					<div className='dino__flex_row'>
-						<div className='svg__selector'>
-							<AlertSVG />
-						</div>
-						<p className='repeat_alert_text'>{language.data.EVENT_ALERT + ': ' + props.item?.event.alert}</p>
-					</div>
+					<EventSection
+						title={language.data.EVENT_REPEAT}
+						value={
+							props.item?.event.repeat || language.data.EVENT_REPEAT_NOT_REPEAT
+						}
+					>
+						<RepeatSVG />
+					</EventSection>
+					<EventSection
+						title={language.data.EVENT_ALERT}
+						value={
+							props.item?.event.alert || language.data.EVENT_ALERT_NOT_DEFINED
+						}
+					>
+						<AlertSVG />
+					</EventSection>
 				</div>
-			</DinoDialog>
+			</Dialog>
 			<ItemListMenu
 				anchor={anchorEl}
 				setAnchor={setAnchorEl}
@@ -90,7 +102,7 @@ const CardEvent: React.FC<CardEventProps> = (props) => {
 				onDelete={props.onDelete}
 			/>
 		</div>
-    )
+	)
 }
 
 export default CardEvent

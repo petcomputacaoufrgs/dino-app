@@ -3,7 +3,7 @@ import { EventView } from '../../../../types/calendar/view/CalendarView'
 import DateUtils from '../../../../utils/DateUtils'
 import './styles.css'
 
-const CalendarEvent: React.FC<{
+const CalendarEventListItem: React.FC<{
 	item: EventView
 	onClick: (item: EventView) => void
 }> = ({ item, onClick }) => {
@@ -21,4 +21,4 @@ const CalendarEvent: React.FC<{
 	)
 }
 
-export default CalendarEvent
+export default CalendarEventListItem

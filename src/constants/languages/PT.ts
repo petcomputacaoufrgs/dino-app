@@ -412,6 +412,8 @@ export default class PT implements LanguageBase {
 
 	EVENT_ALERT = 'Notificar'
 
+	EVENT_ALERT_NOT_DEFINED = 'Notificação não definida'
+
 	EVENT_ADD_ALERT = 'Adicionar notificação'
 
 	EVENT_INVALID_ALARM_TYPE = 'tipo inválido'

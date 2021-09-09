@@ -210,8 +210,6 @@ export const GoogleContactGrantDialog = (props: GoogleContactGrantProps) => {
 }
 
 export const GoogleCalendarGrantDialog = (props: GoogleContactGrantProps) => {
-	const language = useLanguage()
-
 	const handleSaveDecline = (decline: boolean) => {
 		if (props.settings) {
 			props.settings.declineGoogleCalendar = decline

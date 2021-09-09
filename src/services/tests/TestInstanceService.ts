@@ -43,10 +43,10 @@ class TestInstanceService {
 		} else {
 			await this.loadCalendarEventTypes()
 			await this.loadCalendarEvents()
-			// await this.loadContacts()
-			// await this.loadPhones()
-			// await this.loadNotes()
-			// await this.loadTreatmentQuestionInstances()
+			await this.loadContacts()
+			await this.loadPhones()
+			await this.loadNotes()
+			await this.loadTreatmentQuestionInstances()
 		}
 	}
 

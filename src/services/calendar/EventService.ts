@@ -9,6 +9,7 @@ import EventDataModel from '../../types/calendar/api/EventDataModel'
 import EventEntity from '../../types/calendar/database/EventEntity'
 import { hasValue } from '../../utils/Utils'
 import CalendarEventTypeService from './EventTypeService'
+import DateUtils from '../../utils/DateUtils'
 
 class EventServiceImpl extends AutoSynchronizableService<
 	number,
@@ -42,7 +43,7 @@ class EventServiceImpl extends AutoSynchronizableService<
 		const entity: EventEntity = {
 			title: model.title,
 			description: model.description,
-			date: model.date,
+			date: DateUtils.convertDinoAPIStringDateToDate(model.date),
 			endTime: model.endTime,
 			repeat: model.repeat,
 			alert: model.alert,
@@ -62,7 +63,7 @@ class EventServiceImpl extends AutoSynchronizableService<
 		const model: EventDataModel = {
 			title: entity.title,
 			description: entity.description,
-			date: entity.date,
+			date: DateUtils.convertDateToDinoAPIStringDate(entity.date),
 			endTime: entity.endTime,
 			repeat: entity.repeat,
 			alert: entity.alert,

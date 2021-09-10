@@ -19,7 +19,7 @@ const ContactCard = ({
 			open={dialogOpen}
 			onBackdropClick={onClose}
 		>
-			<ContactCardHeader item={item} onClick={onClickMenu}></ContactCardHeader>
+			<ContactCardHeader item={item} onClick={onClickMenu} />
 			<ContactCardContent item={item} />
 		</Dialog>
 	) : (

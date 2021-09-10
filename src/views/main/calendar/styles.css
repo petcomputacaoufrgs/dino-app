@@ -26,7 +26,20 @@
 	padding-right: 1rem;
 }
 
-.svg__selector svg{
-    fill: var(--base-font-color);
-    margin-right: 0.5rem;
+.svg__selector svg {
+	fill: var(--base-font-color);
+	margin: 0 0.5rem 0.5rem 0;
+}
+
+svg.event_type__icon {
+	fill: none;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	padding: 0.2em;
+}
+
+svg.event_type__icon.large {
+	width: 3em;
+	height: 3em;
 }

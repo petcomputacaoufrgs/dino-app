@@ -19,6 +19,27 @@ import CalendarEventTypeService from '../../../services/calendar/EventTypeServic
 import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
+import { ReactComponent as PillSVG } from '../../../assets/icons/general_use/pill.svg'
+import { ReactComponent as ClockSVG } from '../../../assets/icons/general_use/clock.svg'
+import { ReactComponent as ClipboardSVG } from '../../../assets/icons/general_use/clipboard.svg'
+
+type SVGType = React.FunctionComponent<
+	React.SVGProps<SVGSVGElement> & {
+		title?: string | undefined
+	}
+>
+
+export const getIcon = (icon?: string) => {
+	if (icon) {
+		const icons = {
+			pill: PillSVG,
+			clipboard: ClipboardSVG,
+			clock: ClockSVG,
+		}
+		return (icons[icon] as SVGType) || PillSVG
+	}
+	return PillSVG
+}
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -74,11 +95,7 @@ const Calendar: React.FC = () => {
 			events.forEach(e => {
 				const type = types.find(t => t.localId === e.typeLocalId) //TODO otimizar
 
-				const eventView: EventView = {
-					event: e,
-					color: type?.color,
-					icon: type?.icon,
-				}
+				const eventView: EventView = { event: e, type: type }
 
 				const index = e.date.getDate() - 1
 				const day: DayView | undefined = monthView[index]
@@ -143,13 +160,13 @@ const Calendar: React.FC = () => {
 	}, [isLoading])
 
 	const handleClose = () => {
-		setSelectedItem(undefined)
 		setToAction(CRUDEnum.NOP)
+		setSelectedItem(undefined)
 	}
 
 	const handleClick = (item: EventView) => {
-		setSelectedItem(item)
 		setToAction(CRUDEnum.READ)
+		setSelectedItem(item)
 	}
 
 	const handleClickEmpty = (dayOfMonth: string) => {
@@ -169,7 +186,7 @@ const Calendar: React.FC = () => {
 
 	const handleAcceptDialogAndDeleteItem = () => {
 		if (selectedItem) CalendarEventService.delete(selectedItem.event)
-		setToAction(CRUDEnum.NOP)
+		handleClose()
 	}
 
 	const handleChangeDate = (currentDate: Date) => {

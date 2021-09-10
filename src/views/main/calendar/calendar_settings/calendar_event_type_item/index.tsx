@@ -1,7 +1,4 @@
 import React from 'react'
-import { ReactComponent as PillSVG } from '../../../../../assets/icons/general_use/pill.svg'
-import { ReactComponent as ClockSVG } from '../../../../../assets/icons/general_use/clock.svg'
-import { ReactComponent as ClipboardSVG } from '../../../../../assets/icons/general_use/clipboard.svg'
 import OptionsIconButton from '../../../../../components/button/icon_button/options_icon_button'
 import {
 	ListItem,
@@ -11,24 +8,14 @@ import {
 } from '@material-ui/core'
 import { CalendarEventTypeItemProps } from './props'
 import './styles.css'
+import { getIcon } from '../..'
 
 const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
 	item,
 	onClick,
 	onClickMenu,
 }) => {
-	const getIcon = () => {
-		let Icon = <></>
-		if (item.icon) {
-			const icons = {
-				pill: <PillSVG />,
-				clipboard: <ClipboardSVG />,
-				clock: <ClockSVG />,
-			}
-			Icon = icons[item.icon] || <></>
-		}
-		return Icon
-	}
+	const TypeIconSVG = getIcon(item.icon)
 
 	return (
 		<div className='event_type__list__item'>
@@ -38,12 +25,10 @@ const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
 				className='event_type__list__item'
 			>
 				<ListItemAvatar>
-					<div
-						className='event_type_item__icon'
+					<TypeIconSVG
+						className='event_type__icon large'
 						style={{ backgroundColor: item.color }}
-					>
-						{getIcon()}
-					</div>
+					/>
 				</ListItemAvatar>
 				<ListItemText className='list__item__text' primary={item.title} />
 				<ListItemSecondaryAction>

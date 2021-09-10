@@ -227,6 +227,8 @@ class TestInstanceService {
 		const instances = [
 			{
 				title: 'Medicação',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 				beginTime: '10:00',
 				endTime: '11:00',
 				date: now,
@@ -244,6 +246,8 @@ class TestInstanceService {
 			},
 			{
 				title: 'Medicação',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 				date: DateUtils.getNextDay(now),
 				typeLocalId: getRandomTypeLocalId(),
 			},

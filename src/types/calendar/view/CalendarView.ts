@@ -1,9 +1,9 @@
 import EventEntity from '../database/EventEntity'
+import EventTypeEntity from '../database/EventTypeEntity'
 
 export interface EventView {
 	event: EventEntity
-	color?: string
-	icon?: string
+	type?: EventTypeEntity
 }
 
 export interface DayView {

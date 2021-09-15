@@ -1,5 +1,5 @@
 .color_palette__color_option {
-	border-radius: 50%;
+	border-radius: 6px;
 	width: 1.5rem;
 	height: 1.5rem;
 }
@@ -12,5 +12,5 @@
 	padding: 0.5rem;
 	display: grid;
 	grid-gap: 0.5rem;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
 }

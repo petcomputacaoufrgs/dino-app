@@ -7,6 +7,7 @@ import EventTypeEntity from '../../../../../types/calendar/database/EventTypeEnt
 import DinoDialog from '../../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../../components/textfield'
 import './styles.css'
+import { ColorPalette } from '../../../../../components/color_pallete'
 
 interface CalendarEventTypeFormProps {
 	open: boolean
@@ -20,6 +21,7 @@ const getItem = (item?: EventTypeEntity) =>
 export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 	props => {
 		const language = useLanguage()
+		const colors = ['#2196F3', '#F44336', '#4CAF50', '#E91E63', '#9C27B0']
 
 		const [type, setType] = useState(getItem(props.item))
 
@@ -49,6 +51,7 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 						className='calendar_event_type_form__color'
 						style={{ backgroundColor: type.color }}
 					/>
+					<ColorPalette colors={colors} onClick={(color) => { setType({ ...type, color }) }} />
 				</div>
 			</DinoDialog>
 		)

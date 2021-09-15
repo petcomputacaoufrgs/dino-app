@@ -11,3 +11,13 @@
 .calendar_event_type_form__content .calendar_event_type_form__color_label {
 	margin-top: 1.3em;
 }
+
+.calendar_event_type_form__icon svg{
+	margin-right: 2em;
+}
+
+.calendar_event_type_form__icon svg:focus {
+	box-shadow: 0 0 0 2pt #ff9d00;
+	border: none;
+	outline: none;
+}

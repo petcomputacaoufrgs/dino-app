@@ -8,6 +8,9 @@ import DinoDialog from '../../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../../components/textfield'
 import './styles.css'
 import { ColorPalette } from '../../../../../components/color_pallete'
+import { ReactComponent as PillSVG } from '../../../../../assets/icons/general_use/pill.svg'
+import { ReactComponent as ClockSVG } from '../../../../../assets/icons/general_use/clock.svg'
+import { ReactComponent as ClipboardSVG } from '../../../../../assets/icons/general_use/clipboard.svg'
 
 interface CalendarEventTypeFormProps {
 	open: boolean
@@ -52,6 +55,26 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 						style={{ backgroundColor: type.color }}
 					/>
 					<ColorPalette colors={colors} onClick={(color) => { setType({ ...type, color }) }} />
+					<div className='calendar_event_type_form__icon'>
+						<PillSVG
+							className='event_type__icon'
+							style={{ backgroundColor: type.color }}
+							onClick={() => { setType({ ...type, icon: 'pill' }) }}
+							tabIndex={0}
+						/>
+						<ClockSVG
+							className='event_type__icon'
+							style={{ backgroundColor: type.color }}
+							onClick={() => { setType({ ...type, icon: 'clock' }) }}
+							tabIndex={1}
+						/>
+						<ClipboardSVG
+							className='event_type__icon'
+							style={{ backgroundColor: type.color }}
+							onClick={() => { setType({ ...type, icon: 'clipboard' }) }}
+							tabIndex={2}
+						/>
+					</div>
 				</div>
 			</DinoDialog>
 		)

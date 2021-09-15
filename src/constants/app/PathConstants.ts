@@ -78,6 +78,8 @@ class PathConstants {
 	USER_REPORT_BUG: string = `${this.USER}/report`
 
 	STAFF_REPORT_BUG: string = `${this.STAFF}/report`
+
+	STAFF_USER_LIST = `${this.STAFF}/STAFF_USER_LIST`
 }
 
 export default new PathConstants()

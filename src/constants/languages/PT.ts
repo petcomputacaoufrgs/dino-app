@@ -760,6 +760,8 @@ export default class PT implements LanguageBase {
 
 	BUG_REPORT_WHERE = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
 
+	STAFF_USER_LIST = 'Lista de Usuários'
+
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`

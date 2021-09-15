@@ -14,6 +14,7 @@ import Contacts from '../../contacts'
 import Settings from '../../settings'
 import StaffDataProvider from '../../../../context/staff_data'
 import ReportBug from '../../../report_bug'
+import UserSelection from '../../../../components/user_selection'
 
 const StaffMain: React.FC = () => {
 	return (
@@ -46,6 +47,10 @@ const StaffMain: React.FC = () => {
 				<PrivateRoute
 					path={PathConstants.STAFF_REPORT_BUG}
 					component={ReportBug}
+				/>
+				<PrivateRoute
+					path={PathConstants.STAFF_USER_LIST}
+					component={UserSelection}
 				/>
 				<StaffDataProvider>
 					<Switch>

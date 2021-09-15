@@ -752,6 +752,8 @@ export default class EN implements LanguageBase {
 
 	BUG_REPORT_WHERE = `In which area did you find the bug? For example, was it in one of the games, in the Kid’s Space, in the notes section or somewhere else?`
 
+	STAFF_USER_LIST = 'User List'
+
 	itemAlreadyExists = (item: string) => `${item} already exists`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`

@@ -356,6 +356,7 @@ export default interface LanguageBase {
 	WHAT: string
 	WHERE: string
 	HOW: string
+	STAFF_USER_LIST: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

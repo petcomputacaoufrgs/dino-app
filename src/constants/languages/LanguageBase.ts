@@ -353,9 +353,12 @@ export default interface LanguageBase {
 	BUG_REPORT_WHAT: string
 	BUG_REPORT_WHERE: string
 	BUG_REPORT_HOW: string
+	BUG_REPORT_UPLOAD: string
 	WHAT: string
 	WHERE: string
 	HOW: string
+	UPLOAD: string
+	SELECT_IMAGE: string
 	itemAlreadyExists(item: string): string
 	deleteItemText(item: string): string
 	seeFAQItemsText(treatment: string): string

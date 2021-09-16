@@ -754,12 +754,18 @@ export default class PT implements LanguageBase {
 
 	HOW = 'COMO'
 
+	UPLOAD = 'ENVIE UMA IMAGEM'
+
+	SELECT_IMAGE = 'Selecione uma imagem'
+
 	BUG_REPORT_WHAT = `Conte-nos, em detalhes, qual foi o problema que encontrou. O que aconteceu? Impediu-lhe de utilizar o aplicativo?`
 
 	BUG_REPORT_HOW = `Agora nos conte como o bug veio a acontecer. Você consegue replicá-lo? Ele acontece sempre quando você realiza uma determinada ação ou foi apenas uma vez?`
 
 	BUG_REPORT_WHERE = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
 
+	BUG_REPORT_UPLOAD = 'Envie uma captura de tela para nos mostrar o problema.'
+	
 	itemAlreadyExists = (item: string) => `${item} já existente`
 
 	deleteItemText = (item: string) => `${this.DELETE} ${item.toLowerCase()}?`

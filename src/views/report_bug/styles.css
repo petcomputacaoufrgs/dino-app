@@ -6,3 +6,21 @@
 .report_bug .report_bug__div {
 	padding-bottom: 2em;
 }
+
+input[type='file']{
+	display: none
+}
+
+label{
+	padding: 0.5rem 0.5rem;
+	width: 9rem;
+	background: var(--buttons-background);
+	color: var(--base-font-color);
+	text-align: center;
+	border-radius: 0.5rem;
+}
+
+.report__save_button{
+	display: flex;
+	justify-content: center;
+}

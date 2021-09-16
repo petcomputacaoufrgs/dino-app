@@ -25,20 +25,22 @@ const ReportBug: React.FC = () => {
 	const alert = useAlert()
 	const [error, setError] = useState<string>()
 	const [report, setReport] = useState<ReportEntity>(getDefault())
+	const [cardFile, setCardFile] = useState();
 
+	
 	const initialize = () => {
 		setReport(getDefault())
 		setError(undefined)
 	}
-
+	
 	useEffect(() => initialize(), [])
-
+	
 	const handleSave = async () => {
 		if (StringUtils.isEmpty(report.what)) {
 			setError(language.data.EMPTY_FIELD_ERROR)
 			return
 		}
-
+		
 		const user = await UserService.getFirst()
 		if (user && user.localId) {
 			report.userLocalId = user.localId
@@ -47,22 +49,24 @@ const ReportBug: React.FC = () => {
 		alert.showSuccessAlert(language.data.SUCESS)
 		initialize()
 	}
-
+	
 	const handleChangeWhat = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const what = event.target.value as string
 		setReport({ ...report, what })
 	}
-
+	
 	const handleChangeWhere = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const where = event.target.value as string
 		setReport({ ...report, where })
 	}
-
+	
 	const handleChangeHow = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const how = event.target.value as string
 		setReport({ ...report, how })
 	}
-
+	
+	const handleUploadFile = (e: any) => setCardFile(e.target.files[0]);
+	
 	return (
 		<div className='report_bug'>
 			<div className='report_bug__div'>
@@ -109,6 +113,17 @@ const ReportBug: React.FC = () => {
 					multiline
 					dataProps={DataConstants.REPORT_WHERE}
 				/>
+			</div>
+			<div className='report_bug__div'>
+				<h3>{language.data.UPLOAD}</h3>
+				<DinoHr />
+				<p>
+					{language.data.BUG_REPORT_UPLOAD}
+				</p>
+				<div className='report__save_button'>
+					<label htmlFor='file_button'>Enviar arquivo</label>
+					<input className='' type="file" onChange={handleUploadFile} accept="image/*" id='file_button'/>
+				</div>
 			</div>
 			<SaveButton onClick={handleSave} />
 		</div>

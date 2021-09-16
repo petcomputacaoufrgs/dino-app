@@ -31,7 +31,6 @@ class EventService {
 	}
 
 	whenLogin = async () => {
-		//CalendarService.addMocks()
 		this.startWebSocketAndSync()
 		AuthService.redirectToHome(await UserService.getPermission())
 	}

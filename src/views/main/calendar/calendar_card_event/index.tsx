@@ -10,7 +10,7 @@ import DateUtils from '../../../../utils/DateUtils'
 import './styles.css'
 import { CardHeader, Dialog } from '@material-ui/core'
 import TransitionSlide from '../../../../components/slide_transition'
-import { getIcon } from '..'
+import { getIcon } from '../../../../services/calendar/EventTypeViewService'
 
 const CardEvent: React.FC<CardEventProps> = props => {
 	const language = useLanguage()

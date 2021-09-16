@@ -8,26 +8,20 @@ import './styles.css'
 export const ColorPalette: React.FC<{
 	colors: string[]
 	onClick: (color: string) => void
-}> = ({ colors, onClick }) => {
-	const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
-
-	const handleClickChooseColor = (
-		event: React.MouseEvent<HTMLButtonElement>,
-	) => {
-		setAnchorEl(event.currentTarget)
-	}
-
+	anchorEl: HTMLButtonElement | null
+	onClose: () => void
+}> = ({ colors, onClick, anchorEl, onClose, children }) => {
 	return (
 		<div className='color_palette'>
-			<ChooseColorIconButton onClick={handleClickChooseColor} />
+			{children}
 			<Popover
 				className='color_palette__popover'
 				open={Boolean(anchorEl)}
 				anchorEl={anchorEl}
-				onClose={() => setAnchorEl(null)}
+				onClose={onClose}
 				anchorOrigin={{
 					vertical: 'bottom',
-					horizontal: 'left',
+					horizontal: 'center',
 				}}
 				transformOrigin={{
 					vertical: 'top',

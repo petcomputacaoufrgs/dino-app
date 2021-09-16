@@ -1,6 +1,5 @@
 import { InputLabel } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import ColorConstants from '../../../../../constants/app/ColorConstants'
 import { useLanguage } from '../../../../../context/language'
 import CalendarEventTypeService from '../../../../../services/calendar/EventTypeService'
 import EventTypeEntity from '../../../../../types/calendar/database/EventTypeEntity'
@@ -8,9 +7,7 @@ import DinoDialog from '../../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../../components/textfield'
 import './styles.css'
 import { ColorPalette } from '../../../../../components/color_pallete'
-import { ReactComponent as PillSVG } from '../../../../../assets/icons/general_use/pill.svg'
-import { ReactComponent as ClockSVG } from '../../../../../assets/icons/general_use/clock.svg'
-import { ReactComponent as ClipboardSVG } from '../../../../../assets/icons/general_use/clipboard.svg'
+import { getAllIcons } from '../../../../../services/calendar/EventTypeViewService'
 
 interface CalendarEventTypeFormProps {
 	open: boolean
@@ -27,6 +24,14 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 		const colors = ['#2196F3', '#F44336', '#4CAF50', '#E91E63', '#9C27B0']
 
 		const [type, setType] = useState(getItem(props.item))
+
+		const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+			null,
+		)
+
+		const handleClickChooseColor = event => {
+			setAnchorEl(event.currentTarget)
+		}
 
 		useEffect(() => {
 			if (props.open) {
@@ -47,33 +52,38 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 						value={type.title}
 						onChange={e => setType({ ...type, title: e.target.value })}
 					/>
-					<InputLabel className='calendar_event_type_form__color_label'>
+					<InputLabel className='calendar_event_type_form__label'>
 						{language.data.EVENT_COLOR_LABEL}
 					</InputLabel>
-					<div
-						className='calendar_event_type_form__color'
-						style={{ backgroundColor: type.color }}
-					/>
-					<ColorPalette colors={colors} onClick={(color) => { setType({ ...type, color }) }} />
+					<ColorPalette
+						colors={colors}
+						onClick={color => setType({ ...type, color })}
+						anchorEl={anchorEl}
+						onClose={() => setAnchorEl(null)}
+					>
+						<div
+							className='calendar_event_type_form__color'
+							style={{ backgroundColor: type.color }}
+							onClick={handleClickChooseColor}
+						/>
+					</ColorPalette>
+					<InputLabel className='calendar_event_type_form__label'>
+						{language.data.EVENT_DATE_ICON_ALT}
+					</InputLabel>
 					<div className='calendar_event_type_form__icon'>
-						<PillSVG
-							className='event_type__icon'
-							style={{ backgroundColor: type.color }}
-							onClick={() => { setType({ ...type, icon: 'pill' }) }}
-							tabIndex={0}
-						/>
-						<ClockSVG
-							className='event_type__icon'
-							style={{ backgroundColor: type.color }}
-							onClick={() => { setType({ ...type, icon: 'clock' }) }}
-							tabIndex={1}
-						/>
-						<ClipboardSVG
-							className='event_type__icon'
-							style={{ backgroundColor: type.color }}
-							onClick={() => { setType({ ...type, icon: 'clipboard' }) }}
-							tabIndex={2}
-						/>
+						{getAllIcons().map((iconObj, index) => (
+							<iconObj.Icon
+								className={
+									'event_type__icon' +
+									(type.icon === iconObj.name ? ' selected' : '')
+								}
+								style={{ backgroundColor: type.color }}
+								onClick={() => {
+									setType({ ...type, icon: iconObj.name })
+								}}
+								tabIndex={index}
+							/>
+						))}
 					</div>
 				</div>
 			</DinoDialog>

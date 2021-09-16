@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { CalendarEventTypeItemProps } from './props'
 import './styles.css'
-import { getIcon } from '../..'
+import { getIcon } from '../../../../../services/calendar/EventTypeViewService'
 
 const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
 	item,

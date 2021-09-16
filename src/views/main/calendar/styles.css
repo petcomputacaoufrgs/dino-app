@@ -43,3 +43,9 @@ svg.event_type__icon.large {
 	width: 3em;
 	height: 3em;
 }
+
+svg.event_type__icon.selected {
+	box-shadow: 0 0 0 2pt #ff9d00;
+	border: none;
+	outline: none;
+}

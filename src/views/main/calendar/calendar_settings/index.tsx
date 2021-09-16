@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import CalendarEventTypeItem from './calendar_event_type_item'
+import CalendarEventTypeItem from './event_type_item'
 import EventTypeEntity from '../../../../types/calendar/database/EventTypeEntity'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
-import { CalendarEventTypeForm } from './calendar_event_type_form'
+import { CalendarEventTypeForm } from './event_type_form'
 import AddButton from '../../../../components/button/icon_button/add_button'
 import './styles.css'
 import { useLanguage } from '../../../../context/language'
@@ -70,7 +70,7 @@ const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 				setAnchor={setAnchorEl}
 				onEdit={handleEditOption}
 				onDelete={handleDeleteOption}
-			//disable={selectedItem?.userId === undefined}
+				//disable={selectedItem?.userId === undefined}
 			/>
 			<AgreementDialog
 				open={toAction === CRUDEnum.DELETE}

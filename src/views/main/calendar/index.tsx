@@ -19,27 +19,6 @@ import CalendarEventTypeService from '../../../services/calendar/EventTypeServic
 import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
-import { ReactComponent as PillSVG } from '../../../assets/icons/general_use/pill.svg'
-import { ReactComponent as ClockSVG } from '../../../assets/icons/general_use/clock.svg'
-import { ReactComponent as ClipboardSVG } from '../../../assets/icons/general_use/clipboard.svg'
-
-type SVGType = React.FunctionComponent<
-	React.SVGProps<SVGSVGElement> & {
-		title?: string | undefined
-	}
->
-
-export const getIcon = (icon?: string) => {
-	if (icon) {
-		const icons = {
-			pill: PillSVG,
-			clipboard: ClipboardSVG,
-			clock: ClockSVG,
-		}
-		return (icons[icon] as SVGType) || PillSVG
-	}
-	return PillSVG
-}
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()

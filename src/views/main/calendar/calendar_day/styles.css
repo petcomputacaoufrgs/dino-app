@@ -2,12 +2,20 @@
 	width: 95%;
 	margin: auto;
 	padding-bottom: 0.5em;
+	align-items: flex-start;
+}
+
+.day_left_column_wrapper {
+	width: 20%;
+	display: flex;
+	justify-content: space-around;
+	margin-right: 0.75em;
 }
 
 .day_number_wrapper {
-	width: 20%;
+	height: 4rem;
+	width: 4rem;
 	text-align: center;
-	margin-right: 0.75em;
 }
 .day_number_wrapper.today {
 	border-radius: 50%;

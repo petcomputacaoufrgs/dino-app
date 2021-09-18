@@ -440,6 +440,8 @@ export default class PT implements LanguageBase {
 
 	EVENT_COLOR_LABEL = 'Cor selecionada'
 
+	EVENT_COLOR_ICON = 'Ícone selecionado'
+
 	MAX = 'máx. '
 
 	ADD_COLUMN_TEXT = '+ Adicionar coluna'

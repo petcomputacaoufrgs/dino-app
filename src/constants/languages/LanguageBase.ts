@@ -215,6 +215,7 @@ export default interface LanguageBase {
 	CLICK_TO_OPEN_MENU_ITEM: string
 	OPTIONS: string
 	EVENT_COLOR_LABEL: string
+	EVENT_COLOR_ICON: string
 	MAX: string
 	ADD_COLUMN_TEXT: string
 	COLUMN_ADD_LABEL: string

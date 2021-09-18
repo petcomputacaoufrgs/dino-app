@@ -440,6 +440,8 @@ export default class EN implements LanguageBase {
 
 	EVENT_COLOR_LABEL = 'Selected color'
 
+	EVENT_COLOR_ICON = 'Selected icon'
+
 	MAX = 'max. '
 
 	ADD_COLUMN_TEXT = '+ Add column'

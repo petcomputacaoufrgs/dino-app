@@ -22,7 +22,7 @@ import EventEntity from '../types/calendar/database/EventEntity'
 import EventTypeEntity from '../types/calendar/database/EventTypeEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
-const DATABASE_VERSION = 18
+const DATABASE_VERSION = 19
 
 class Database extends Dexie {
 	auth: Dexie.Table<AuthEntity, number>

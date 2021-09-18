@@ -3,7 +3,7 @@ import SynchronizableDataLocalIdModel from '../../sync/api/SynchronizableDataLoc
 export default interface EventTypeDataModel
 	extends SynchronizableDataLocalIdModel<number> {
 	title: string
-	color?: string
+	color?: number
 	icon?: string
 	userId?: number
 }

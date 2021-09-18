@@ -4,6 +4,13 @@ export interface HandleSwipeProps {
   nextPieceFrom: (pieces: number[]) => void
 }
 
+export interface SliderPieceProps {
+  reduced: boolean,
+  value: number,
+  position: [number, number],
+  zIndex: number
+}
+
 export default interface SliderBoardProps { 
   restart: boolean, onGameOver: () => void 
   reduced: boolean

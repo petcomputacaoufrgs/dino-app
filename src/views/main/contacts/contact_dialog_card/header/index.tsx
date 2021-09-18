@@ -8,7 +8,11 @@ import '../../styles.css'
 import './styles.css'
 import { renderIcon } from '../..'
 
-const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({ item, onClick, children }) => {
+const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({
+	item,
+	onClick,
+	children,
+}) => {
 	const language = useLanguage()
 
 	return (
@@ -17,7 +21,7 @@ const ContactCardHeader: React.FC<ContactCardHeaderProps> = ({ item, onClick, ch
 				avatar={
 					<Avatar
 						aria-label={language.data.AVATAR_ALT}
-						className={`avatar__color-${item.contact.color} colorDefault`}
+						className={`dino_icon__color-${item.contact.color}`}
 					>
 						{renderIcon(item.contact)}
 					</Avatar>

@@ -26,7 +26,7 @@ const ContactItemList: React.FC<ContactItemListProps> = ({
 				<ListItemAvatar>
 					<Avatar
 						aria-label={language.data.AVATAR_ALT}
-						className={`avatar__color-${item.contact.color} colorDefault`}
+						className={`dino_icon__color-${item.contact.color}`}
 					>
 						{renderIcon(item.contact)}
 					</Avatar>

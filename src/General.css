@@ -49,3 +49,39 @@
 .dino__list__char_divider .dino_hr {
 	margin: 0 16px 4px;
 }
+
+body .dino_icon__color-undefined {
+	background-color: #bdbdbd;
+}
+
+body .dino_icon__color-1 {
+	background-color: Var(--dino-icon-color-1);
+}
+
+body .dino_icon__color-2 {
+	background-color: Var(--dino-icon-color-2);
+}
+
+body .dino_icon__color-3 {
+	background-color: Var(--dino-icon-color-3);
+}
+
+body .dino_icon__color-4 {
+	background-color: Var(--dino-icon-color-4);
+}
+
+body .dino_icon__color-5 {
+	background-color: Var(--dino-icon-color-5);
+}
+
+body .dino_icon__color-64 {
+	background-color: Var(--menu-and-headers-background);
+}
+
+body .dino_icon__color-65 {
+	background-color: Var(--menu-cards-background);
+}
+
+body .dino_icon__color-66 {
+	background-color: Var(--menu-buttons-background);
+}

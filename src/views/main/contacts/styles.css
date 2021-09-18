@@ -24,26 +24,6 @@
 	font-size: var(--default-font);
 }
 
-.MuiAvatar-root.MuiAvatar-circle.avatar__color-1 {
-	background-color: Var(--avatar-color-1);
-}
-
-.MuiAvatar-root.MuiAvatar-circle.avatar__color-2 {
-	background-color: Var(--avatar-color-2);
-}
-
-.MuiAvatar-root.MuiAvatar-circle.avatar__color-3 {
-	background-color: Var(--avatar-color-3);
-}
-
-.MuiAvatar-root.MuiAvatar-circle.avatar__color-4 {
-	background-color: Var(--avatar-color-4);
-}
-
-.MuiAvatar-root.MuiAvatar-circle.avatar__color-5 {
-	background-color: Var(--avatar-color-5);
-}
-
 .contacts__loader {
 	height: 100%;
 }

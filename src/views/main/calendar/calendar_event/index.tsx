@@ -9,8 +9,7 @@ const CalendarEventListItem: React.FC<{
 }> = ({ item, onClick }) => {
 	return (
 		<div
-			style={{ backgroundColor: item.type?.color }}
-			className='event'
+			className={`event dino_icon__color-${item.type?.color}`}
 			onClick={() => onClick(item)}
 		>
 			<p className='event_title'>{item.event.title}</p>

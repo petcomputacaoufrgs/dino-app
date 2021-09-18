@@ -67,8 +67,7 @@ const CardEvent: React.FC<CardEventProps> = props => {
 				onClose={props.onClose}
 			>
 				<CardHeader
-					className='event_card__header'
-					style={{ backgroundColor: props.item?.type?.color }}
+					className={`event_card__header dino_icon__color-${props.item?.type?.color}`}
 					action={
 						<div className='event_card__icon_button'>
 							<OptionsIconButton onClick={e => handleClickMenu(e)} />
@@ -101,8 +100,7 @@ const CardEvent: React.FC<CardEventProps> = props => {
 						<>
 							<EventSVGSection title={props.item.type?.title}>
 								<TypeIconSVG
-									className='event_type__icon small'
-									style={{ backgroundColor: props.item.type.color }}
+									className={`event_type__icon small dino_icon__color-${props.item?.type?.color}`}
 								/>
 							</EventSVGSection>
 							<DinoHr />

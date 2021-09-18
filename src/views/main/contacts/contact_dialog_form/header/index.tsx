@@ -1,6 +1,6 @@
 import React from 'react'
 import DinoIconButton from '../../../../../components/button/icon_button'
-import ColorLensIcon from '@material-ui/icons/ColorLens';
+import ColorLensIcon from '@material-ui/icons/ColorLens'
 import { Avatar, CardHeader } from '@material-ui/core'
 import ContactFormDialogHeaderProps from './props'
 import { useLanguage } from '../../../../../context/language'
@@ -29,7 +29,7 @@ const AddContactDialogHeader = (
 			avatar={
 				<Avatar
 					aria-label={language.data.AVATAR_ALT}
-					className={`avatar__color-${props.contact.color}`}
+					className={`dino_icon__color-${props.contact.color}`}
 				>
 					{renderIcon(props.contact)}
 				</Avatar>

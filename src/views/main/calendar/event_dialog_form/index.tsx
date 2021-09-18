@@ -56,11 +56,16 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 	let beginHour = ''
 	let beginMinute = ''
 	const endTime = props.item?.event.endTime?.split(':')
-	
-	if(props.item)
-	{
-		beginHour = StringUtils.toStringWithZeros(props.item?.event.date.getHours(), 2)
-		beginMinute = StringUtils.toStringWithZeros(props.item?.event.date.getMinutes(), 2)
+
+	if (props.item) {
+		beginHour = StringUtils.toStringWithZeros(
+			props.item?.event.date.getHours(),
+			2,
+		)
+		beginMinute = StringUtils.toStringWithZeros(
+			props.item?.event.date.getMinutes(),
+			2,
+		)
 	}
 
 	useEffect(() => {
@@ -88,8 +93,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 			onSave={handleSave}
 			header={
 				<div
-					className='calendar_dialog__header dino__flex_row'
-					style={{ backgroundColor: type?.color }}
+					className={`calendar_dialog__header dino__flex_row dino_icon__color-${type?.color}`}
 				>
 					<div className='calendar_dialog__header_title'>
 						{language.data.ADD_EVENT_TITLE}
@@ -118,24 +122,27 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					onClickOption={handleChangeType}
 					eventTypes={props.eventTypes}
 				/>
-				<SelectDate 
-					item={props.item}/>
+				<SelectDate item={props.item} />
 				<div className='.container-fluid'>
 					<div className='row'>
 						<div className='col-6 left_block__selector'>
-							<SelectTime timeLabel={language.data.EVENT_INIT_TIME_LABEL}
-										hour={beginHour}
-										minute={beginMinute}/>
+							<SelectTime
+								timeLabel={language.data.EVENT_INIT_TIME_LABEL}
+								hour={beginHour}
+								minute={beginMinute}
+							/>
 						</div>
 						<div className='col-6 right_block__selector'>
-							<SelectTime timeLabel={language.data.EVENT_END_TIME_LABEL} 
-										hour={endTime? endTime[0] : ''}
-										minute={endTime? endTime[1] : ''}/>
+							<SelectTime
+								timeLabel={language.data.EVENT_END_TIME_LABEL}
+								hour={endTime ? endTime[0] : ''}
+								minute={endTime ? endTime[1] : ''}
+							/>
 						</div>
 					</div>
 				</div>
-				<SelectRepeat item={props.item}/>
-				<SelectNotification item={props.item}/>
+				<SelectRepeat item={props.item} />
+				<SelectNotification item={props.item} />
 			</div>
 		</DinoDialog>
 	)

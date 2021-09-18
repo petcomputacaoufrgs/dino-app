@@ -26,8 +26,7 @@ const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
 			>
 				<ListItemAvatar>
 					<TypeIconSVG
-						className='event_type__icon large'
-						style={{ backgroundColor: item.color }}
+						className={`event_type__icon large dino_icon__color-${item.color}`}
 					/>
 				</ListItemAvatar>
 				<ListItemText className='list__item__text' primary={item.title} />

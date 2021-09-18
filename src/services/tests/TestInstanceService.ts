@@ -195,16 +195,20 @@ class TestInstanceService {
 	}
 	private async loadCalendarEventTypes() {
 		const instances = [
-			{ icon: 'clock', title: 'Evento', color: '#afd153', userId: 1 },
+			{
+				icon: 'clock',
+				title: 'Evento',
+				color: ColorConstants.THEME_COLORS[0],
+			},
 			{
 				icon: 'clipboard',
 				title: 'Lembrete',
-				color: '#ab1e53',
+				color: ColorConstants.THEME_COLORS[1],
 			},
 			{
 				icon: 'pill',
-				title: 'Personalizadooooo',
-				color: '#ab5e13',
+				title: 'Personalizadooo',
+				color: ColorConstants.THEME_COLORS[2],
 				userId: 1,
 			},
 		] as EventTypeEntity[]

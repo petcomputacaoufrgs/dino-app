@@ -4,13 +4,23 @@ import PaletteIcon from '@material-ui/icons/Palette'
 import DinoIconButton from '../button/icon_button'
 import { useLanguage } from '../../context/language'
 import './styles.css'
+import ColorConstants from '../../constants/app/ColorConstants'
+import DinoHr from '../dino_hr'
 
 export const ColorPalette: React.FC<{
-	colors: string[]
-	onClick: (color: string) => void
+	onClick: (color?: number) => void
 	anchorEl: HTMLButtonElement | null
 	onClose: () => void
-}> = ({ colors, onClick, anchorEl, onClose, children }) => {
+}> = ({ onClick, anchorEl, onClose, children }) => {
+	const renderColorOption = (index: number, c?: number) => (
+		<div
+			key={index}
+			tabIndex={index}
+			className={`color_palette__color_option dino_icon__color-${c}`}
+			onClick={() => onClick(c)}
+		/>
+	)
+
 	return (
 		<div className='color_palette'>
 			{children}
@@ -28,15 +38,19 @@ export const ColorPalette: React.FC<{
 					horizontal: 'center',
 				}}
 			>
-				{colors.map((c, index) => (
-					<div
-						key={index}
-						tabIndex={index}
-						className='color_palette__color_option'
-						style={{ backgroundColor: c }}
-						onClick={() => onClick(c)}
-					/>
-				))}
+				<div className='color_palette__popover__wrapper'>
+					<div className='color_palette__popover__options'>
+						{ColorConstants.THEME_COLORS.map((c, index) =>
+							renderColorOption(index, c),
+						)}
+					</div>
+					<DinoHr />
+					<div className='color_palette__popover__options'>
+						{ColorConstants.COLORS.map((c, index) =>
+							renderColorOption(index, c),
+						)}
+					</div>
+				</div>
 			</Popover>
 		</div>
 	)

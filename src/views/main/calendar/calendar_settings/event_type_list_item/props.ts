@@ -1,6 +1,6 @@
 import EventTypeEntity from '../../../../../types/calendar/database/EventTypeEntity'
 
-export interface CalendarEventTypeItemProps {
+export interface EventTypeItemProps {
 	item: EventTypeEntity
 	onClickMenu: (
 		event: React.MouseEvent<HTMLButtonElement>,

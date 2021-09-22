@@ -6,11 +6,11 @@ import {
 	ListItemAvatar,
 	ListItemSecondaryAction,
 } from '@material-ui/core'
-import { CalendarEventTypeItemProps } from './props'
+import { EventTypeItemProps } from './props'
 import './styles.css'
 import { getIcon } from '../../../../../services/calendar/EventTypeViewService'
 
-const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
+const EventTypeListItem: React.FC<EventTypeItemProps> = ({
 	item,
 	onClick,
 	onClickMenu,
@@ -38,4 +38,4 @@ const CalendarEventTypeItem: React.FC<CalendarEventTypeItemProps> = ({
 	)
 }
 
-export default CalendarEventTypeItem
+export default EventTypeListItem

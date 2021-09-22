@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import CalendarEventTypeItem from './event_type_item'
 import EventTypeEntity from '../../../../types/calendar/database/EventTypeEntity'
 import ItemListMenu from '../../../../components/list_components/item_list_menu'
 import CRUDEnum from '../../../../types/enum/CRUDEnum'
@@ -9,6 +8,7 @@ import './styles.css'
 import { useLanguage } from '../../../../context/language'
 import CalendarEventTypeService from '../../../../services/calendar/EventTypeService'
 import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
+import EventTypeListItem from './event_type_list_item'
 
 const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 	eventTypes,
@@ -27,8 +27,12 @@ const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 	}
 
 	const handleViewOption = (item: EventTypeEntity) => {
-		setToAction(CRUDEnum.READ)
+		handleEditOption()
 		setSelectedItem(item)
+	}
+	const handleAddOption = () => {
+		setSelectedItem(undefined)
+		setToAction(CRUDEnum.CREATE)
 	}
 
 	const handleClose = () => {
@@ -48,7 +52,7 @@ const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 		<div className='calendar_settings'>
 			<div className='event_type__list'>
 				{eventTypes?.map((e, index) => (
-					<CalendarEventTypeItem
+					<EventTypeListItem
 						key={index}
 						item={e}
 						onClick={handleViewOption}
@@ -63,14 +67,14 @@ const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 			/>
 			<AddButton
 				label={language.data.EVENT_TYPE_LABEL}
-				handleAdd={() => setToAction(CRUDEnum.CREATE)}
+				handleAdd={handleAddOption}
 			/>
 			<ItemListMenu
 				anchor={anchorEl}
 				setAnchor={setAnchorEl}
 				onEdit={handleEditOption}
 				onDelete={handleDeleteOption}
-				//disable={selectedItem?.userId === undefined}
+				disable={selectedItem?.userId === undefined}
 			/>
 			<AgreementDialog
 				open={toAction === CRUDEnum.DELETE}

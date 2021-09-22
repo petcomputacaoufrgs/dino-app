@@ -35,7 +35,9 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 
 		useEffect(() => {
 			if (props.open) {
-				setType(getItem(props.item))
+				const item = getItem(props.item)
+				setType(item)
+				console.log(item)
 			}
 		}, [props.open])
 

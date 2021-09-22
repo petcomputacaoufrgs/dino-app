@@ -50,8 +50,11 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 	overflow-x: clip;
 }
 
+/* TODO */
 .MuiPaper-root.MuiMenu-paper,
-.MuiPaper-root.MuiDialog-paper {
+.MuiPaper-root.MuiDialog-paper,
+.MuiPaper-root.MuiPopover-paper {
+	/* .MuiAutocomplete-noOptions { TODO see this stuff*/
 	background-color: var(--dialog-background);
 	color: var(--base-font-color);
 }

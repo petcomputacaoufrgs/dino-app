@@ -24,12 +24,12 @@ import UserService from './services/user/UserService'
 import PermissionEnum from './types/enum/PermissionEnum'
 import UserMain from './views/main/routes/main_user'
 import StaffMain from './views/main/routes/main_staff'
-import './App.css'
-import './MaterialUI.css'
-import './General.css'
 import { toggle } from './constants/toggle/Toggle'
 import DataInstanceService from './services/data/DataInstanceService'
 import ReportBug from './views/report_bug'
+import './App.css'
+import './MaterialUI.css'
+import './General.css'
 
 const LOAD_SCREEN_TIME = 2250
 

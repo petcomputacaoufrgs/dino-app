@@ -19,6 +19,7 @@ import CalendarEventTypeService from '../../../services/calendar/EventTypeServic
 import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
+import StringUtils from '../../../utils/StringUtils'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -65,11 +66,11 @@ const Calendar: React.FC = () => {
 			return month
 		}
 
-		const pushEventViewsToMonth = async (monthView: DayView[]) => {
+		const pushEventViewsToMonth = async (
+			monthView: DayView[],
+			types: EventTypeEntity[],
+		) => {
 			const events = await CalendarEventService.getAll()
-			const types = await CalendarEventTypeService.getAll()
-
-			setEventTypes(types)
 
 			events.forEach(e => {
 				const type = types.find(t => t.localId === e.typeLocalId) //TODO otimizar
@@ -83,7 +84,9 @@ const Calendar: React.FC = () => {
 			})
 		}
 
-		const loadUserData = async (): Promise<DayView[]> => {
+		const loadUserData = async (
+			types: EventTypeEntity[],
+		): Promise<DayView[]> => {
 			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
 			if (settings && !settings.declineGoogleCalendar) {
 				if (!syncGoogleCalendar) setOpenGrantDialog(true)
@@ -91,7 +94,7 @@ const Calendar: React.FC = () => {
 
 			const monthView = makeViewOfMonth()
 
-			await pushEventViewsToMonth(monthView)
+			await pushEventViewsToMonth(monthView, types)
 
 			return monthView
 		}
@@ -100,7 +103,10 @@ const Calendar: React.FC = () => {
 			const settings = await UserSettingsService.getFirst()
 			updateSettings(settings)
 
-			const dayViews = await loadUserData()
+			const types = await CalendarEventTypeService.getAll()
+			updateEventTypes(types)
+
+			const dayViews = await loadUserData(types)
 
 			updateDayViews(dayViews)
 			finishLoading()
@@ -113,6 +119,16 @@ const Calendar: React.FC = () => {
 
 		let updateDayViews = (dayViews: DayView[]) => {
 			setDayViews(dayViews)
+		}
+
+		let updateEventTypes = (types: EventTypeEntity[]) => {
+			setEventTypes(
+				types.sort((a, b) =>
+					StringUtils.normalize(a.title) > StringUtils.normalize(b.title)
+						? 1
+						: -1,
+				),
+			)
 		}
 
 		let updateSettings = (settings?: UserSettingsEntity) => {
@@ -129,6 +145,7 @@ const Calendar: React.FC = () => {
 
 		return () => {
 			updateDayViews = () => {}
+			updateEventTypes = () => {}
 			updateSettings = () => {}
 			finishLoading = () => {}
 			CalendarEventService.removeUpdateEventListenner(loadData)

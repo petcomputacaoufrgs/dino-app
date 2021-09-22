@@ -30,8 +30,15 @@ import EventEntity from '../../types/calendar/database/EventEntity'
 import CalendarEventService from '../calendar/EventService'
 import DateUtils from '../../utils/DateUtils'
 
-class TestInstanceService {
-	async loadInstances() {
+class DataInstanceService {
+	async loadDefaultUserData() {
+		const isStaff = await AuthService.hasStaffPowers()
+		if (!isStaff) {
+			await this.loadCalendarEventTypes()
+		}
+	}
+
+	async loadTestInstances() {
 		const isStaff = await AuthService.hasStaffPowers()
 
 		if (isStaff) {
@@ -41,7 +48,6 @@ class TestInstanceService {
 			await this.loadEssentialPhones()
 			await this.loadGlossary()
 		} else {
-			await this.loadCalendarEventTypes()
 			await this.loadCalendarEvents()
 			await this.loadContacts()
 			await this.loadPhones()
@@ -197,19 +203,18 @@ class TestInstanceService {
 		const instances = [
 			{
 				icon: 'clock',
-				title: 'Evento',
+				title: 'Evento', //TODO botar tradução aqui
 				color: ColorConstants.THEME_COLORS[0],
 			},
 			{
 				icon: 'clipboard',
-				title: 'Lembrete',
+				title: 'Consulta',
 				color: ColorConstants.THEME_COLORS[1],
 			},
 			{
 				icon: 'pill',
-				title: 'Personalizadooo',
+				title: 'Remédio',
 				color: ColorConstants.THEME_COLORS[2],
-				userId: 1,
 			},
 		] as EventTypeEntity[]
 
@@ -394,4 +399,4 @@ class TestInstanceService {
 	]
 }
 
-export default new TestInstanceService()
+export default new DataInstanceService()

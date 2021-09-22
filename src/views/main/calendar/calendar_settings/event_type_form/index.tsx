@@ -34,11 +34,7 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 		}
 
 		useEffect(() => {
-			if (props.open) {
-				const item = getItem(props.item)
-				setType(item)
-				console.log(item)
-			}
+			if (props.open) setType(getItem(props.item))
 		}, [props.open])
 
 		const handleSave = () => {
@@ -77,9 +73,7 @@ export const CalendarEventTypeForm: React.FC<CalendarEventTypeFormProps> =
 								className={`event_type__icon ${
 									type.icon === iconObj.name ? ' selected' : ''
 								} dino_icon__color-${type.color}`}
-								onClick={() => {
-									setType({ ...type, icon: iconObj.name })
-								}}
+								onClick={() => setType({ ...type, icon: iconObj.name })}
 								tabIndex={index}
 							/>
 						))}

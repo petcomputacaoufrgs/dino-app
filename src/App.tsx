@@ -28,7 +28,7 @@ import './App.css'
 import './MaterialUI.css'
 import './General.css'
 import { toggle } from './constants/toggle/Toggle'
-import TestInstanceService from './services/tests/TestInstanceService'
+import DataInstanceService from './services/data/DataInstanceService'
 import ReportBug from './views/report_bug'
 
 const LOAD_SCREEN_TIME = 2250
@@ -51,7 +51,7 @@ const App: React.FC = () => {
 			if (isAuthenticated) {
 				await loadSettings()
 				await loadUserPermission()
-				loadTestInstances()
+				loadDataInstances()
 			} else {
 				DataThemeUtils.setBodyDataTheme(
 					UserSettingsService.getSystemColorThemeName(),
@@ -68,15 +68,15 @@ const App: React.FC = () => {
 			return isAuthenticated
 		}
 
-		const loadTestInstances = async () => {
+		const loadDataInstances = async () => {
 			const dbSettings = await UserSettingsService.getFirst()
 			if (dbSettings) {
-				if (
-					toggle.loadTestInstancesAtFirstLogin &&
-					(!dbSettings.firstSettingsDone || toggle.forceFirstLogin)
-				) {
-					console.log('Carregando testes...')
-					TestInstanceService.loadInstances()
+				if (!dbSettings.firstSettingsDone || toggle.forceFirstLogin) {
+					DataInstanceService.loadDefaultUserData()
+					if (toggle.loadTestInstancesAtFirstLogin) {
+						console.log('Carregando testes...')
+						DataInstanceService.loadTestInstances()
+					}
 				}
 			}
 		}

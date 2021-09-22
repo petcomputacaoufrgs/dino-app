@@ -5,5 +5,4 @@ export default interface EventTypeDataModel
 	title: string
 	color?: number
 	icon?: string
-	userId?: number
 }

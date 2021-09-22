@@ -74,7 +74,6 @@ const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 				setAnchor={setAnchorEl}
 				onEdit={handleEditOption}
 				onDelete={handleDeleteOption}
-				disable={selectedItem?.userId === undefined}
 			/>
 			<AgreementDialog
 				open={toAction === CRUDEnum.DELETE}

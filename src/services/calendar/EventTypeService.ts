@@ -41,7 +41,6 @@ class EventServiceImpl extends AutoSynchronizableService<
 			title: model.title,
 			color: model.color,
 			icon: model.icon,
-			userId: model.userId,
 		}
 
 		return entity
@@ -54,7 +53,6 @@ class EventServiceImpl extends AutoSynchronizableService<
 			title: entity.title,
 			color: entity.color,
 			icon: entity.icon,
-			userId: entity.userId,
 		}
 
 		return model

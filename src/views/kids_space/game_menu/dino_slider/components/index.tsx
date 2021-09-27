@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { toggle } from '../../../../../../constants/toggle/Toggle'
-import ArrayUtils from '../../../../../../utils/ArrayUtils'
+import { toggle } from '../../../../../constants/toggle/Toggle'
+import ArrayUtils from '../../../../../utils/ArrayUtils'
 import SliderBoardProps, {SliderPieceProps, HandleSwipeProps} from './props'
 import './styles.css'
 
@@ -21,7 +21,6 @@ const SliderPiece: React.FC<SliderPieceProps> = (props) => {
 	const isNew = prevValue === undefined
 	const hasChanged = prevValue !== props.value && props.value !== 0
 	const shallAnimate = isNew || hasChanged
-	const zIndex = props.zIndex
 
 	useEffect(() => {
 		if (shallAnimate) {
@@ -31,10 +30,7 @@ const SliderPiece: React.FC<SliderPieceProps> = (props) => {
   	}, [shallAnimate, scale])
 
   	const style = {
-		top: props.position[0]*100,
-		left: props.position[1]*100,
-		transform: `scale(${scale})`,	
-		zIndex	
+		transform: `scale(${scale})`,		
   	};
 	
 	return(
@@ -242,7 +238,7 @@ const SliderBoard: React.FC<SliderBoardProps> = ({
 		<>
 			<div className='dino_slider__board'>
 				{gameState.map((number, index) => (
-					<SliderPiece reduced={reduced} value={number} key={index} position={[Math.floor(index/4), index % 4]} zIndex={index}/>
+					<SliderPiece reduced={reduced} value={number} key={index}/>
 				))}
 			</div>
 		</>

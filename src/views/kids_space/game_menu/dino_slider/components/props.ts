@@ -7,8 +7,6 @@ export interface HandleSwipeProps {
 export interface SliderPieceProps {
   reduced: boolean,
   value: number,
-  position: [number, number],
-  zIndex: number
 }
 
 export default interface SliderBoardProps { 

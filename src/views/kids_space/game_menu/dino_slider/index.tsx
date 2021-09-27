@@ -5,7 +5,7 @@ import DinoSwitch from '../../../../components/switch'
 import PathConstants from '../../../../constants/app/PathConstants'
 import { useLanguage } from '../../../../context/language'
 import HistoryService from '../../../../services/history/HistoryService'
-import SliderBoard from './components/board'
+import SliderBoard from './components'
 import './styles.css'
 
 const DinoSlider: React.FC = () => {

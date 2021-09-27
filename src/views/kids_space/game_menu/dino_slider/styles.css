@@ -8,8 +8,7 @@
 
 .dino_slider .dino_slider__board {
   display: grid;
-  grid-template-columns: 22vmin 22vmin 22vmin 22vmin;
-  margin-top: 15vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 90vmin;
   height: 90vmin;
   margin: auto;

@@ -74,6 +74,10 @@ body .dino_icon__color-5 {
 	background-color: Var(--dino-icon-color-5);
 }
 
+body .dino_icon__color-null {
+	background-color: Var(--dino-icon-color-null);
+}
+
 body .dino_icon__color-64 {
 	background-color: Var(--menu-and-headers-background);
 }

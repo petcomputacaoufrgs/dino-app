@@ -20,9 +20,11 @@ import CalendarDay from './calendar_day'
 import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
 import StringUtils from '../../../utils/StringUtils'
+import { HasStaffPowers } from '../../../context/private_router'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
+	const hasStaffPowers = HasStaffPowers()
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [todayIndex, setTodayIndex] = useState<number>()
@@ -33,6 +35,7 @@ const Calendar: React.FC = () => {
 	const [openGrantDialog, setOpenGrantDialog] = useState(false)
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<EventView>()
+	const [syncGoogleCalendar, setSyncGoogleCalendar] = useState(false)
 
 	useEffect(() => {
 		const makeTodayIndex = () => {
@@ -77,9 +80,9 @@ const Calendar: React.FC = () => {
 
 				const eventView: EventView = { event: e, type: type }
 
-				const index = e.date.getDate() - 1
+				const index = e.start.getDate() - 1
 				const day: DayView | undefined = monthView[index]
-				if (day && DateUtils.isSameMonth(e.date, date))
+				if (day && DateUtils.isSameMonth(e.start, date))
 					day.events.push(eventView)
 			})
 		}
@@ -88,9 +91,7 @@ const Calendar: React.FC = () => {
 			types: EventTypeEntity[],
 		): Promise<DayView[]> => {
 			const syncGoogleCalendar = await GoogleScopeService.hasCalendarGrant()
-			if (settings && !settings.declineGoogleCalendar) {
-				if (!syncGoogleCalendar) setOpenGrantDialog(true)
-			}
+			setSyncGoogleCalendar(syncGoogleCalendar)
 
 			const monthView = makeViewOfMonth()
 
@@ -160,6 +161,19 @@ const Calendar: React.FC = () => {
 		setSelectedItem(undefined)
 	}
 
+	const handleAdd = () => {
+		if (
+			settings &&
+			!settings.declineGoogleCalendar &&
+			!hasStaffPowers &&
+			!syncGoogleCalendar
+		) {
+			return setOpenGrantDialog(true)
+		}
+
+		setToAction(CRUDEnum.CREATE)
+	}
+
 	const handleClick = (item: EventView) => {
 		setToAction(CRUDEnum.READ)
 		setSelectedItem(item)
@@ -203,20 +217,17 @@ const Calendar: React.FC = () => {
 						today={todayIndex === index}
 					/>
 				))}
-				<AddButton
-					label={language.data.EVENT}
-					handleAdd={() => setToAction(CRUDEnum.CREATE)}
-				/>
+				<AddButton label={language.data.EVENT} handleAdd={handleAdd} />
 				<EventDialogForm
 					open={toAction === CRUDEnum.CREATE || toAction === CRUDEnum.UPDATE}
 					onClose={handleClose}
 					item={selectedItem}
 					eventTypes={eventTypes}
 				/>
-				{/* <GoogleCalendarGrantDialog
+				<GoogleCalendarGrantDialog
 					open={openGrantDialog}
 					onClose={() => setOpenGrantDialog(false)}
-				/> */}
+				/>
 				<AgreementDialog
 					open={toAction === CRUDEnum.DELETE}
 					description={language.data.DELETE_ITEM_OPTION_TEXT}

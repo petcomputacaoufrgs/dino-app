@@ -42,6 +42,14 @@ class DateUtils {
 		return moment(date).add(diff, 'M').startOf('month').toDate()
 	}
 
+	addMinute = (date: Date, diff: number): Date => {
+		return moment(date).add(diff, 'minutes').toDate()
+	}
+
+	addHour = (date: Date, diff: number): Date => {
+		return moment(date).add(diff, 'hours').toDate()
+	}
+
 	getDateStringFormated = (date: Date, language: LanguageBase): string => {
 		const stringDate = language.STRING_DATE_FORMAT
 
@@ -67,13 +75,18 @@ class DateUtils {
 		return `${weekDayName}, ${stringDay} ${monthName} ${date.getFullYear()}`
 	}
 
-	getTimeStringFormated = (date: Date, endTime?: string): string => {
-		const time =
-			StringUtils.toStringWithZeros(date.getHours(), 2) +
+	getTimeStringFormated = (start: Date, end: Date): string => {
+		const startTime =
+			StringUtils.toStringWithZeros(start.getHours(), 2) +
 			':' +
-			StringUtils.toStringWithZeros(date.getMinutes(), 2)
+			StringUtils.toStringWithZeros(start.getMinutes(), 2)
 
-		return endTime ? time.concat(' - ' + endTime) : time
+		const endTime =
+			StringUtils.toStringWithZeros(end.getHours(), 2) +
+			':' +
+			StringUtils.toStringWithZeros(end.getMinutes(), 2)
+
+		return startTime.concat(' - ', endTime)
 	}
 
 	getMonthName = (monthNumber: number, language: LanguageBase): string => {
@@ -93,6 +106,23 @@ class DateUtils {
 		]
 		const monthName: string | undefined = monthNames[monthNumber]
 		return monthName || language.INVALID_MONTH
+	}
+
+	getMonthNames = (language: LanguageBase): string[] => {
+		return [
+			language.JANUARY,
+			language.FEBRUARY,
+			language.MARCH,
+			language.APRIL,
+			language.MAY,
+			language.JUNE,
+			language.JULY,
+			language.AUGUST,
+			language.SEPTEMBER,
+			language.OCTOBER,
+			language.NOVEMBER,
+			language.DECEMBER,
+		]
 	}
 
 	getWeekDayNamesAbrArray = (language: LanguageBase): string[] => {

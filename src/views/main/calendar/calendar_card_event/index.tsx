@@ -82,14 +82,14 @@ const CardEvent: React.FC<CardEventProps> = props => {
 						<div>
 							<div>
 								{DateUtils.getExtendedDateStringFormated(
-									props.item.event.date,
+									props.item.event.start,
 									language.data,
 								)}
 							</div>
 							<div>
 								{DateUtils.getTimeStringFormated(
-									props.item.event.date,
-									props.item.event.endTime,
+									props.item.event.start,
+									props.item.event.end,
 								)}
 							</div>
 						</div>

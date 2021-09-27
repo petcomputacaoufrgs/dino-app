@@ -232,40 +232,42 @@ class DataInstanceService {
 		}
 
 		const now = new Date()
+		const tomorrow = DateUtils.getNextDay(now)
+		const nextMonth = DateUtils.getNextMonth(now)
 
 		const instances = [
 			{
 				title: 'Medicação',
 				description:
 					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-				beginTime: '10:00',
-				endTime: '11:00',
-				date: now,
+				start: now,
+				end: DateUtils.addHour(now, 1),
 				repeat: 'Todas as semanas',
 				alert: 'Uma hora antes',
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Internação',
-				endTime: '22:00',
 				repeat: 'Todos os dias',
 				alert: '15 minutos antes',
-				date: DateUtils.getNextDay(now),
+				start: tomorrow,
+				end: DateUtils.addHour(tomorrow, 1),
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Medicação',
 				description:
 					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-				date: DateUtils.getNextDay(now),
+				start: tomorrow,
+				end: DateUtils.addHour(tomorrow, 2),
 				typeLocalId: getRandomTypeLocalId(),
 			},
 			{
 				title: 'Exercício',
-				endTime: '18:00',
 				repeat: 'Todos os meses',
 				alert: 'Um dia antes',
-				date: DateUtils.getNextMonth(now),
+				start: nextMonth,
+				end: DateUtils.addHour(nextMonth, 2),
 				typeLocalId: getRandomTypeLocalId(),
 			},
 		] as EventEntity[]

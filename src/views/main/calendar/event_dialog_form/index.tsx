@@ -11,6 +11,7 @@ import { useLanguage } from '../../../../context/language'
 import CalendarEventService from '../../../../services/calendar/EventService'
 import EventTypeEntity from '../../../../types/calendar/database/EventTypeEntity'
 import { EventView } from '../../../../types/calendar/view/CalendarView'
+import DateUtils from '../../../../utils/DateUtils'
 import StringUtils from '../../../../utils/StringUtils'
 import EventDialogFormProps from './props'
 
@@ -18,12 +19,13 @@ const getEvent = (item?: EventView) =>
 	item?.event || {
 		title: '',
 		description: '',
-		date: new Date(),
+		start: new Date(),
+		end: DateUtils.addHour(new Date(), 1),
 	}
 
 export const getNewEventView = (date: Date): EventView => {
 	const event = getEvent()
-	event.date = date
+	event.start = date
 	return { event }
 }
 
@@ -51,21 +53,6 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 			const newType = props.eventTypes[index]
 			setType(newType)
 		}
-	}
-
-	let beginHour = ''
-	let beginMinute = ''
-	const endTime = props.item?.event.endTime?.split(':')
-
-	if (props.item) {
-		beginHour = StringUtils.toStringWithZeros(
-			props.item?.event.date.getHours(),
-			2,
-		)
-		beginMinute = StringUtils.toStringWithZeros(
-			props.item?.event.date.getMinutes(),
-			2,
-		)
 	}
 
 	useEffect(() => {
@@ -122,21 +109,25 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					onClickOption={handleChangeType}
 					eventTypes={props.eventTypes}
 				/>
-				<SelectDate item={props.item} />
+				<SelectDate
+					value={event.start}
+					onChange={value => setEvent({ ...event, start: value })}
+				/>
 				<div className='.container-fluid'>
 					<div className='row'>
 						<div className='col-6 left_block__selector'>
 							<SelectTime
 								timeLabel={language.data.EVENT_INIT_TIME_LABEL}
-								hour={beginHour}
-								minute={beginMinute}
+								value={event.start}
+								onChange={value => setEvent({ ...event, start: value })}
 							/>
 						</div>
 						<div className='col-6 right_block__selector'>
 							<SelectTime
 								timeLabel={language.data.EVENT_END_TIME_LABEL}
-								hour={endTime ? endTime[0] : ''}
-								minute={endTime ? endTime[1] : ''}
+								value={event.end}
+								minValue={event.start}
+								onChange={value => setEvent({ ...event, end: value })}
 							/>
 						</div>
 					</div>

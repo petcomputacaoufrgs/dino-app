@@ -14,7 +14,7 @@ const CalendarEventListItem: React.FC<{
 		>
 			<p className='event_title'>{item.event.title}</p>
 			<p className='event_time'>
-				{DateUtils.getTimeStringFormated(item.event.date, item.event.endTime)}
+				{DateUtils.getTimeStringFormated(item.event.start, item.event.end)}
 			</p>
 		</div>
 	)

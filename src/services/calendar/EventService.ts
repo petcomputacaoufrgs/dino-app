@@ -43,8 +43,8 @@ class EventServiceImpl extends AutoSynchronizableService<
 		const entity: EventEntity = {
 			title: model.title,
 			description: model.description,
-			date: DateUtils.convertDinoAPIStringDateToDate(model.date),
-			endTime: model.endTime,
+			start: DateUtils.convertDinoAPIStringDateToDate(model.start),
+			end: DateUtils.convertDinoAPIStringDateToDate(model.end),
 			repeat: model.repeat,
 			alert: model.alert,
 		}
@@ -63,8 +63,8 @@ class EventServiceImpl extends AutoSynchronizableService<
 		const model: EventDataModel = {
 			title: entity.title,
 			description: entity.description,
-			date: DateUtils.convertDateToDinoAPIStringDate(entity.date),
-			endTime: entity.endTime,
+			start: DateUtils.convertDateToDinoAPIStringDate(entity.start),
+			end: DateUtils.convertDateToDinoAPIStringDate(entity.end),
 			repeat: entity.repeat,
 			alert: entity.alert,
 		}

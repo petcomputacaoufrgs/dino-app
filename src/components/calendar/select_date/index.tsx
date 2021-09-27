@@ -1,37 +1,37 @@
 import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
-import { EventView } from '../../../types/calendar/view/CalendarView'
-import StringUtils from '../../../utils/StringUtils'
 import './styles.css'
+import DateUtils from '../../../utils/DateUtils'
 
-interface SelectDateProps{
-	item?: EventView 
+interface SelectDateProps {
+	value: Date
+	onChange(date: Date): void
 }
 
-const SelectDate: React.FC<SelectDateProps> = (props) => {
+const SelectDate: React.FC<SelectDateProps> = props => {
 	const language = useLanguage()
 
 	const dayList = Array.from({ length: 31 }, (_, i) => `${i + 1}`)
-	const monthList = [
-		language.data.JANUARY,
-		language.data.FEBRUARY,
-		language.data.MARCH,
-		language.data.APRIL,
-		language.data.MAY,
-		language.data.JUNE,
-		language.data.JULY,
-		language.data.AUGUST,
-		language.data.SEPTEMBER,
-		language.data.OCTOBER,
-		language.data.NOVEMBER,
-		language.data.DECEMBER,
-	]
+	const monthList = DateUtils.getMonthNames(language.data)
 	const yearList = ['2021', '2022', '2023', '2024', '2025']
 
-	const [selectedDay, setSelectedDay] = useState(props.item?.event.date.getDate() || '')
-	const [selectedMonth, setSelectedMonth] = useState(props.item? monthList[props.item?.event.date.getMonth()] : '')
-	const [selectedYear, setSelectedYear] = useState(props.item? StringUtils.toStringWithZeros(props.item.event.date.getFullYear(), 4) : '')
+	const handleChangeDay = e => {
+		props.value.setDate(Number(e.target.value))
+		props.onChange(props.value)
+	}
+
+	const handleChangeMonth = e => {
+		props.value.setMonth(Number(e.target.value))
+		props.onChange(props.value)
+	}
+
+	const handleChangeYear = e => {
+		props.value.setMinutes(Number(e.target.value))
+		props.onChange(props.value)
+	}
+
+	console.log(props.value)
 
 	return (
 		<div>
@@ -42,9 +42,8 @@ const SelectDate: React.FC<SelectDateProps> = (props) => {
 				<div className='row'>
 					<div className='col-3 day_date__selector'>
 						<Select
-							displayEmpty
-							renderValue={() => selectedDay || language.data.DAY}
-							onChange={e => setSelectedDay(e.target.value as string)}
+							value={props.value.getDate()}
+							onChange={handleChangeDay}
 							fullWidth
 						>
 							{dayList.map((option, index) => (
@@ -56,9 +55,10 @@ const SelectDate: React.FC<SelectDateProps> = (props) => {
 					</div>
 					<div className='col-5 month_date__selector'>
 						<Select
+							value={props.value.getMonth()}
 							displayEmpty
-							renderValue={() => selectedMonth || language.data.MONTH}
-							onChange={e => setSelectedMonth(e.target.value as string)}
+							renderValue={() => monthList[props.value.getMonth()]}
+							onChange={handleChangeMonth}
 							fullWidth
 						>
 							{monthList.map((option, index) => (
@@ -70,9 +70,9 @@ const SelectDate: React.FC<SelectDateProps> = (props) => {
 					</div>
 					<div className='col-4 year_date__selector'>
 						<Select
+							value={props.value.getFullYear()}
 							displayEmpty
-							renderValue={() => selectedYear || language.data.YEAR}
-							onChange={e => setSelectedYear(e.target.value as string)}
+							onChange={handleChangeYear}
 							fullWidth
 						>
 							{yearList.map((option, index) => (

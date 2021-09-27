@@ -52,11 +52,6 @@ p.home__grid__item__name {
 	min-height: 9.72rem;
 }
 
-.home .home__grid__button #treatment_icon {
-	fill: transparent;
-	transform: scale(1.5);
-}
-
 .home .home__grid__button svg {
 	width: 100%;
 	height: auto;

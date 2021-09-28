@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
+import { useLanguage } from '../../../context/language'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import TextField from '@material-ui/core/TextField'
+import StringUtils from '../../../utils/StringUtils'
 import './styles.css'
-import DateUtils from '../../../utils/DateUtils'
 
 interface SelectTimeProps {
 	timeLabel: string
@@ -11,8 +14,12 @@ interface SelectTimeProps {
 }
 
 const SelectTime: React.FC<SelectTimeProps> = props => {
+	const language = useLanguage()
 	const diffHours = props.minValue ? props.minValue.getHours() : 0
 	const diffMinutes = props.minValue ? props.minValue.getMinutes() : 0
+
+	const [hourInput, setHourInput] = useState('')
+	const [minuteInput, setMinuteInput] = useState('')
 
 	const hourList = Array.from(
 		{ length: 24 - diffHours },
@@ -25,45 +32,63 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 	)
 
 	const handleChangeHour = e => {
-		props.value.setHours(Number(e.target.value))
-		props.onChange(props.value)
+		if(e.target.value){
+			props.value.setHours(Number(e.target.value))
+			props.onChange(props.value)
+		}
 	}
 
 	const handleChangeMinute = e => {
-		props.value.setMinutes(Number(e.target.value))
-		props.onChange(props.value)
+		if(e.target.value){
+			props.value.setMinutes(Number(e.target.value))
+			props.onChange(props.value)
+		}
 	}
 
 	return (
 		<div className='time__selector'>
-			<div>
+			<div className='container-fluid padding_adjustment'>
 				<InputLabel shrink>{props.timeLabel}</InputLabel>
-				<div className='drop_down__flex_row'>
-					<div>
-						<Select
-							value={props.value.getHours()}
-							displayEmpty
+				<div className='row'>
+					<div className='col-6 padding_adjustment'>
+						<Autocomplete
+							value={hourInput? hourInput : StringUtils.toStringWithZeros(props.value.getHours(), 2)}
+							onInputChange={(event, newInputValue) => setHourInput(newInputValue)}
+							options={hourList}
+							noOptionsText={''}
 							onChange={handleChangeHour}
-						>
-							{hourList.map((option, index) => (
-								<MenuItem key={index} value={option}>
-									{option}
-								</MenuItem>
-							))}
-						</Select>
+							renderInput={params => (
+								<TextField
+									{...params}
+									label={language.data.HOUR}
+									variant='standard'
+									InputProps={{
+										...params.InputProps,
+										endAdornment: <>{params.InputProps.endAdornment}</>,
+									}}
+								/>
+							)}
+						/>
 					</div>
-					<div>
-						<Select
-							value={props.value.getMinutes()}
-							displayEmpty
+					<div className='col-6 padding_adjustment'>
+						<Autocomplete
+							value={minuteInput? minuteInput : StringUtils.toStringWithZeros(props.value.getMinutes(), 2)}
+							onInputChange={(event, newInputValue) => setMinuteInput(newInputValue)}
+							options={minuteList}
+							noOptionsText={''}
 							onChange={handleChangeMinute}
-						>
-							{minuteList.map((option, index) => (
-								<MenuItem key={index} value={option}>
-									{option}
-								</MenuItem>
-							))}
-						</Select>
+							renderInput={params => (
+								<TextField
+									{...params}
+									label={language.data.MINUTE}
+									variant='standard'
+									InputProps={{
+										...params.InputProps,
+										endAdornment: <>{params.InputProps.endAdornment}</>,
+									}}
+								/>
+							)}
+						/>
 					</div>
 				</div>
 			</div>

@@ -7,3 +7,8 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.padding_adjustment{
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}

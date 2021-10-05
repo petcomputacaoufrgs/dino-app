@@ -180,7 +180,7 @@
 	.selection_button {
 		width: 20vmin;
 		height: 8vmin;
-		font-size: var(--very-large-font);
+		font-size: var(--large-font);
 	}
 
 	.dinogotchi_screen .icon_button {

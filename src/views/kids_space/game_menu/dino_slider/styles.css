@@ -9,11 +9,9 @@
 .dino_slider .dino_slider__board {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  margin-top: 15vh;
   width: 90vmin;
   height: 90vmin;
   margin: auto;
-
 }
 
 .dino_slider__header .dino_icon_button__button svg {

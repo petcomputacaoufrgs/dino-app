@@ -652,7 +652,7 @@ export default class EN implements LanguageBase {
 	ADD_STAFF_LABEL =
 		"Staff users can add, remove and edit information that is displayed to patients and their responsibles, such as: hospital contacts, glossary items, etc. Only the hospital's management account is able to add and remove other staff users."
 
-	SUCESS_GAME_OVER_LABEL = 'You nail it! Congratulations'
+	SUCESS_GAME_OVER_LABEL = 'You nailed it! Congratulations!'
 
 	CHANGE_PASSWORD_LABEL = 'Change password to parents area'
 
@@ -722,7 +722,7 @@ export default class EN implements LanguageBase {
 	CHOOSE_COLOR_DINO_MESSAGE =
 		"Hi, I'm Dino! Let's choose the color of my scales together?"
 
-	CHOOSE_ACESSORY_DINO_MESSAGE = 'Time to pick a cool acessory!'
+	CHOOSE_ACESSORY_DINO_MESSAGE = 'Time to pick a cool accessory!'
 
 	CHOOSE = 'Choose'
 

@@ -1,8 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import { toggle } from '../../../../../../constants/toggle/Toggle'
-import ArrayUtils from '../../../../../../utils/ArrayUtils'
-import SliderPiece from '../piece'
-import SliderBoardProps, { HandleSwipeProps } from './props'
+import React, { useEffect, useState, useRef } from 'react'
+import { toggle } from '../../../../../constants/toggle/Toggle'
+import ArrayUtils from '../../../../../utils/ArrayUtils'
+import SliderBoardProps, {SliderPieceProps, HandleSwipeProps} from './props'
+import './styles.css'
+
+const usePrevProps = (value: number) => {
+	const ref = useRef<number>();
+
+	useEffect(()=> {
+		ref.current = value;
+	})
+
+	return ref.current;
+}
+
+const SliderPiece: React.FC<SliderPieceProps> = (props) => {
+	const [scale, setScale] = useState(1)
+	
+	const prevValue = usePrevProps(props.value)
+	const isNew = prevValue === undefined
+	const hasChanged = prevValue !== props.value && props.value !== 0
+	const shallAnimate = isNew || hasChanged
+
+	useEffect(() => {
+		if (shallAnimate) {
+		setScale(1.1)
+		setTimeout(() => setScale(1), 100)
+		}
+  	}, [shallAnimate, scale])
+
+  	const style = {
+		transform: `scale(${scale})`,		
+  	};
+	
+	return(
+		<div className={'dino_slider__piece' + (props.reduced ? ` reduced piece_${props.value}` : ` piece_${props.value}`)} style={style}>
+			{props.value !== 0 
+				? props.reduced 
+					? Math.log2(props.value) 
+					: props.value 
+				: <></>}
+		</div>
+	)
+}
 
 export const useEvent = (
 	event: any,
@@ -198,7 +238,7 @@ const SliderBoard: React.FC<SliderBoardProps> = ({
 		<>
 			<div className='dino_slider__board'>
 				{gameState.map((number, index) => (
-					<SliderPiece reduced={reduced} num={number} key={index} />
+					<SliderPiece reduced={reduced} value={number} key={index}/>
 				))}
 			</div>
 		</>

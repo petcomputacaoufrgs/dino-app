@@ -39,13 +39,7 @@ class ReportServiceImpl extends AutoSynchronizableService<
 	async convertModelToEntity(
 		model: ReportDataModel,
 	): Promise<ReportEntity | undefined> {
-		let user: UserEntity | undefined
-
-		if (model.userId) {
-			user = await UserService.getById(model.userId)
-		}
 		const entity: ReportEntity = {
-			userLocalId: user?.localId,
 			what: model.what,
 			how: model.how,
 			where: model.where,
@@ -57,14 +51,7 @@ class ReportServiceImpl extends AutoSynchronizableService<
 	async convertEntityToModel(
 		entity: ReportEntity,
 	): Promise<ReportDataModel | undefined> {
-		let user: UserEntity | undefined
-
-		if (entity.userLocalId) {
-			user = await UserService.getByLocalId(entity.userLocalId)
-		}
-
 		const model: ReportDataModel = {
-			userId: user?.id,
 			what: entity.what,
 			how: entity.how,
 			where: entity.where,

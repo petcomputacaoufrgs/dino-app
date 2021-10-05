@@ -5,5 +5,4 @@ export default interface ReportDataModel
 	what: string
 	how?: string
 	where?: string
-	userId?: number
 }

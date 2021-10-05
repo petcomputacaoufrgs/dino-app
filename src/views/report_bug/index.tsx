@@ -25,7 +25,7 @@ const ReportBug: React.FC = () => {
 	const alert = useAlert()
 	const [error, setError] = useState<string>()
 	const [report, setReport] = useState<ReportEntity>(getDefault())
-	const [cardFile, setCardFile] = useState<any>()
+	const [selectedFile, setSelectedFile] = useState<any>()
 
 	const initialize = () => {
 		setReport(getDefault())
@@ -33,8 +33,8 @@ const ReportBug: React.FC = () => {
 	}
 
 	useEffect(() => {
-		console.log(cardFile)
-	}, [cardFile])
+		console.log(selectedFile)
+	}, [selectedFile])
 
 	useEffect(() => initialize(), [])
 
@@ -69,11 +69,12 @@ const ReportBug: React.FC = () => {
 			console.log('aui?')
 			return removeFile()
 		}
-		setCardFile(e.target.files[0])
+		setSelectedFile(e.target.files[0])
+		console.log(selectedFile)
 	}
 
 	const removeFile = () => {
-		setCardFile(undefined)
+		setSelectedFile(undefined)
 	}
 	return (
 		<div className='report_bug'>
@@ -130,9 +131,11 @@ const ReportBug: React.FC = () => {
 					/>
 					<div className='select_file_button__file_name__containter'>
 						<p className='select_file_button__file_name'>
-							{cardFile?.name || 'Não selecionado'}
+							{selectedFile?.name || 'Não selecionado'}
 						</p>
-						{cardFile && <CloseIcon fontSize='small' onClick={removeFile} />}
+						{selectedFile && (
+							<CloseIcon fontSize='small' onClick={removeFile} />
+						)}
 					</div>
 				</div>
 			</div>

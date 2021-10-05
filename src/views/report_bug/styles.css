@@ -11,7 +11,7 @@ input[type='file'] {
 	display: none;
 }
 
-label {
+.report__save_button label {
 	padding: 0.5rem 0.5rem;
 	margin: 0;
 	background: var(--buttons-background);

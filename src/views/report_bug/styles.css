@@ -7,20 +7,47 @@
 	padding-bottom: 2em;
 }
 
-input[type='file']{
-	display: none
+input[type='file'] {
+	display: none;
 }
 
-label{
+label {
 	padding: 0.5rem 0.5rem;
-	width: 9rem;
+	margin: 0;
 	background: var(--buttons-background);
 	color: var(--base-font-color);
 	text-align: center;
 	border-radius: 0.5rem;
+	font-size: var(--small-font);
+	text-transform: uppercase;
+	min-width: fit-content;
 }
 
-.report__save_button{
+p.select_file_button__file_name {
+	font-size: var(--small-font);
+	overflow-x: inherit;
+	text-overflow: ellipsis;
+}
+
+.select_file_button__file_name__containter {
 	display: flex;
-	justify-content: center;
+	flex-direction: row;
+	align-self: center;
+	margin-left: 1em;
+	white-space: nowrap;
+	overflow-x: hidden;
+	align-items: center;
+}
+
+.select_file_button__file_name__containter .MuiSvgIcon-root {
+	margin-bottom: 0.5em;
+}
+
+.select_file_button__file_name__containter .select_file_button__file_name {
+	margin-bottom: 0;
+}
+
+.report__save_button {
+	display: flex;
+	justify-content: start;
 }

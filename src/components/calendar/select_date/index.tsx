@@ -55,7 +55,8 @@ const SelectDate: React.FC<SelectDateProps> = props => {
 				<div className='row'>
 					<div className='col-3 day_date__selector'>
 						<Autocomplete
-							value={dayInput? dayInput : StringUtils.toStringWithZeros(props.value.getDate(), 2)}
+							value={dayInput}
+							disableClearable
 							onInputChange={(event, newInputValue) => setDayInput(newInputValue)}
 							options={dayList}
 							noOptionsText={''}
@@ -75,7 +76,8 @@ const SelectDate: React.FC<SelectDateProps> = props => {
 					</div>
 					<div className='col-5 month_date__selector'>
 						<Autocomplete
-							value={monthInput? monthInput : monthList[props.value.getMonth()]}
+							value={monthInput}
+							disableClearable
 							onInputChange={(event, newInputValue) => setMonthInput(newInputValue)}
 							options={monthList}
 							noOptionsText={''}
@@ -95,7 +97,8 @@ const SelectDate: React.FC<SelectDateProps> = props => {
 					</div>
 					<div className='col-4 year_date__selector'>
 						<Autocomplete
-							value={yearInput? yearInput : StringUtils.toStringWithZeros(props.value.getFullYear(), 2)}
+							value={yearInput}
+							disableClearable
 							onInputChange={(event, newInputValue) => setYearInput(newInputValue)}
 							options={yearList}
 							noOptionsText={''}

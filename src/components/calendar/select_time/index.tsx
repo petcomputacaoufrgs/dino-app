@@ -3,7 +3,6 @@ import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { useLanguage } from '../../../context/language'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
-import StringUtils from '../../../utils/StringUtils'
 import './styles.css'
 
 interface SelectTimeProps {
@@ -52,10 +51,10 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 				<div className='row'>
 					<div className='col-6 padding_adjustment'>
 						<Autocomplete
-							value={hourInput? hourInput : StringUtils.toStringWithZeros(props.value.getHours(), 2)}
+							value={hourInput}
+							disableClearable
 							onInputChange={(event, newInputValue) => setHourInput(newInputValue)}
 							options={hourList}
-							noOptionsText={''}
 							onChange={handleChangeHour}
 							renderInput={params => (
 								<TextField
@@ -72,7 +71,8 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 					</div>
 					<div className='col-6 padding_adjustment'>
 						<Autocomplete
-							value={minuteInput? minuteInput : StringUtils.toStringWithZeros(props.value.getMinutes(), 2)}
+							value={minuteInput}
+							disableClearable
 							onInputChange={(event, newInputValue) => setMinuteInput(newInputValue)}
 							options={minuteList}
 							noOptionsText={''}

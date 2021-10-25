@@ -27,8 +27,7 @@ export default class EN implements LanguageBase {
 	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Welcome!'
 
 	FIRST_LOGIN_WELCOME_MESSAGE =
-		'Mensagem do Dino Lorem ipsum dolor sit amet consectetur adipisicinge lit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibus repudiandae ut labore!'
-
+		'DinoApp is an web application made in partnership with the Hospital de Clinicas de Porto Alegre and its main objective is to encourage children undergoing treatment for childhood cancer to follow their medical routine.\nDinoApp is currently in its testing phase for a future public release, we, from the PET Computação team, thank you for your participation in this important phase of the project!'
 	FIRST_LOGIN_DONE_MESSAGE = 'All Good!'
 
 	FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE = 'Thank you for joining DinoApp!'

@@ -30,7 +30,7 @@ export default class PT implements LanguageBase {
 	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Bem vindo(a)!'
 
 	FIRST_LOGIN_WELCOME_MESSAGE =
-		'Dino Message Lorem ipsum dolor sit amet consectetur adipisicin elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibu repudiandae ut labore!'
+		'O DinoApp é um aplicativo feito em parceria com o Hospital de Clínicas de Porto Alegre e tem como principal objetivo incentivar crianças em tratamento de câncer infantil a seguirem sua rotina médica.\nO "Dino" se encontra atualmente em fase de testes para eventual lançamento público, nós da equipe PET Computação agradecemos a sua participação nesta fase importante!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
 

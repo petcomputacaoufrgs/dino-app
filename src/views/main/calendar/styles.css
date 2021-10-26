@@ -49,3 +49,7 @@ svg.event_type__icon.selected {
 	border: none;
 	outline: none;
 }
+
+.calendar_dialog__content .container_time {
+	overflow: hidden;
+}

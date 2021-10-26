@@ -1,14 +1,15 @@
-.time__selector{
-    margin-top:2rem;
+.time__selector {
+	margin-top: 2rem;
 }
 
-.drop_down__flex_row{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.drop_down__flex_row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
-.padding_adjustment{
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+.time__selector .time__wrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 8px;
 }

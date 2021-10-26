@@ -17,9 +17,6 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 	const diffHours = props.minValue ? props.minValue.getHours() : 0
 	const diffMinutes = props.minValue ? props.minValue.getMinutes() : 0
 
-	const [hourInput, setHourInput] = useState('')
-	const [minuteInput, setMinuteInput] = useState('')
-
 	const hourList = Array.from(
 		{ length: 24 - diffHours },
 		(_, i) => `${i + diffHours}`,
@@ -30,67 +27,69 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 		(_, i) => `${i + diffMinutes}`,
 	)
 
-	const handleChangeHour = e => {
-		if(e.target.value){
-			props.value.setHours(Number(e.target.value))
-			props.onChange(props.value)
-		}
+	const handleChangeHour = (value: string) => {
+		props.value.setHours(Number(value))
+		props.onChange(props.value)
 	}
 
-	const handleChangeMinute = e => {
-		if(e.target.value){
-			props.value.setMinutes(Number(e.target.value))
-			props.onChange(props.value)
-		}
+	const handleChangeMinute = (value: string) => {
+		props.value.setMinutes(Number(value))
+		props.onChange(props.value)
 	}
+
+	console.log(props.value.getHours().toString())
 
 	return (
 		<div className='time__selector'>
-			<div className='container-fluid padding_adjustment'>
-				<InputLabel shrink>{props.timeLabel}</InputLabel>
-				<div className='row'>
-					<div className='col-6 padding_adjustment'>
-						<Autocomplete
-							value={hourInput}
-							disableClearable
-							onInputChange={(event, newInputValue) => setHourInput(newInputValue)}
-							options={hourList}
-							onChange={handleChangeHour}
-							renderInput={params => (
-								<TextField
-									{...params}
-									label={language.data.HOUR}
-									variant='standard'
-									InputProps={{
-										...params.InputProps,
-										endAdornment: <>{params.InputProps.endAdornment}</>,
-									}}
-								/>
-							)}
+			<InputLabel margin='dense' shrink>
+				{props.timeLabel}
+			</InputLabel>
+			<div className='time__wrapper dino__flex_row'>
+				<Autocomplete
+					value={props.value.getHours().toString()}
+					disableClearable
+					onInputChange={(event, newInputValue) => {
+						if (newInputValue) {
+							const entity = hourList.find(value => value === newInputValue)
+							if (entity) handleChangeHour(entity)
+						}
+					}}
+					options={hourList}
+					renderInput={params => (
+						<TextField
+							{...params}
+							label={language.data.HOUR}
+							variant='standard'
+							InputProps={{
+								...params.InputProps,
+								endAdornment: <>{params.InputProps.endAdornment}</>,
+							}}
 						/>
-					</div>
-					<div className='col-6 padding_adjustment'>
-						<Autocomplete
-							value={minuteInput}
-							disableClearable
-							onInputChange={(event, newInputValue) => setMinuteInput(newInputValue)}
-							options={minuteList}
-							noOptionsText={''}
-							onChange={handleChangeMinute}
-							renderInput={params => (
-								<TextField
-									{...params}
-									label={language.data.MINUTE}
-									variant='standard'
-									InputProps={{
-										...params.InputProps,
-										endAdornment: <>{params.InputProps.endAdornment}</>,
-									}}
-								/>
-							)}
+					)}
+				/>
+				<Autocomplete
+					value={props.value.getMinutes().toString()}
+					disableClearable
+					onInputChange={(event, newInputValue) => {
+						if (newInputValue) {
+							const entity = minuteList.find(value => value === newInputValue)
+							if (entity) handleChangeMinute(entity)
+						}
+					}}
+					options={minuteList}
+					noOptionsText={''}
+					renderInput={params => (
+						<TextField
+							{...params}
+							label={language.data.MINUTE}
+							variant='standard'
+							InputProps={{
+								...params.InputProps,
+								endAdornment: <>{params.InputProps.endAdornment}</>,
+							}}
 						/>
-					</div>
-				</div>
+					)}
+				/>
 			</div>
 		</div>
 	)

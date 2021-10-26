@@ -6,6 +6,7 @@ import DateUtils from '../../../utils/DateUtils'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import StringUtils from '../../../utils/StringUtils'
+import { Language } from '@material-ui/icons'
 
 interface SelectDateProps {
 	value: Date
@@ -19,32 +20,20 @@ const SelectDate: React.FC<SelectDateProps> = props => {
 	const monthList = DateUtils.getMonthNames(language.data)
 	const yearList = ['2021', '2022', '2023', '2024', '2025']
 
-	const [dayInput, setDayInput] = useState('')
-	const [monthInput, setMonthInput] = useState('')
-	const [yearInput, setYearInput] = useState('')
-	
-	const handleChangeDay = e => {
-		if(e.target.value){
-			props.value.setDate(Number(e.target.value))
-			props.onChange(props.value)
-		}
+	const handleChangeDay = (value: string) => {
+		props.value.setDate(Number(value))
+		props.onChange(props.value)
 	}
 
-	const handleChangeMonth = e => {
-		if(e.target.value){
-			props.value.setMonth(Number(e.target.value))
-			props.onChange(props.value)
-		}
+	const handleChangeMonth = (value: number) => {
+		props.value.setMonth(value)
+		props.onChange(props.value)
 	}
 
-	const handleChangeYear = e => {
-		if(e.target.value){
-			props.value.setMinutes(Number(e.target.value))
-			props.onChange(props.value)
-		}
+	const handleChangeYear = (value: string) => {
+		props.value.setMinutes(Number(value))
+		props.onChange(props.value)
 	}
-
-	console.log(props.value)
 
 	return (
 		<div>
@@ -55,12 +44,16 @@ const SelectDate: React.FC<SelectDateProps> = props => {
 				<div className='row'>
 					<div className='col-3 day_date__selector'>
 						<Autocomplete
-							value={dayInput}
-							disableClearable
-							onInputChange={(event, newInputValue) => setDayInput(newInputValue)}
+							value={props.value.getDate().toString()}
+							onInputChange={(event, newInputValue) => {
+								if (newInputValue) {
+									const entity = dayList.find(day => day === newInputValue)
+									if (entity) handleChangeDay(entity)
+								}
+							}}
 							options={dayList}
-							noOptionsText={''}
-							onChange={handleChangeDay}
+							disableClearable
+							noOptionsText={language.data.NO_OPTIONS}
 							renderInput={params => (
 								<TextField
 									{...params}
@@ -76,12 +69,20 @@ const SelectDate: React.FC<SelectDateProps> = props => {
 					</div>
 					<div className='col-5 month_date__selector'>
 						<Autocomplete
-							value={monthInput}
+							value={monthList[props.value.getMonth()]}
 							disableClearable
-							onInputChange={(event, newInputValue) => setMonthInput(newInputValue)}
+							onInputChange={(event, newInputValue) => {
+								if (newInputValue) {
+									console.log(newInputValue)
+									const index = monthList.findIndex(
+										value =>
+											value.toLowerCase() === newInputValue.toLowerCase(),
+									)
+									if (index > -1) handleChangeMonth(index)
+								}
+							}}
 							options={monthList}
-							noOptionsText={''}
-							onChange={handleChangeMonth}
+							noOptionsText={language.data.NO_OPTIONS}
 							renderInput={params => (
 								<TextField
 									{...params}
@@ -97,12 +98,16 @@ const SelectDate: React.FC<SelectDateProps> = props => {
 					</div>
 					<div className='col-4 year_date__selector'>
 						<Autocomplete
-							value={yearInput}
+							value={props.value.getFullYear().toString()}
 							disableClearable
-							onInputChange={(event, newInputValue) => setYearInput(newInputValue)}
+							onInputChange={(event, newInputValue) => {
+								if (newInputValue) {
+									const entity = yearList.find(value => value === newInputValue)
+									if (entity) handleChangeYear(entity)
+								}
+							}}
 							options={yearList}
-							noOptionsText={''}
-							onChange={handleChangeYear}
+							noOptionsText={language.data.NO_OPTIONS}
 							renderInput={params => (
 								<TextField
 									{...params}

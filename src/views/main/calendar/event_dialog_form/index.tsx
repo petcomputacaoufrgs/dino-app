@@ -113,24 +113,18 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 					value={event.start}
 					onChange={value => setEvent({ ...event, start: value })}
 				/>
-				<div className='.container-fluid'>
-					<div className='row'>
-						<div className='col-6 left_block__selector'>
-							<SelectTime
-								timeLabel={language.data.EVENT_INIT_TIME_LABEL}
-								value={event.start}
-								onChange={value => setEvent({ ...event, start: value })}
-							/>
-						</div>
-						<div className='col-6 right_block__selector'>
-							<SelectTime
-								timeLabel={language.data.EVENT_END_TIME_LABEL}
-								value={event.end}
-								minValue={event.start}
-								onChange={value => setEvent({ ...event, end: value })}
-							/>
-						</div>
-					</div>
+				<div className='container_time'>
+					<SelectTime
+						timeLabel={language.data.EVENT_INIT_TIME_LABEL}
+						value={event.start}
+						onChange={value => setEvent({ ...event, start: value })}
+					/>
+					<SelectTime
+						timeLabel={language.data.EVENT_END_TIME_LABEL}
+						value={event.end}
+						minValue={event.start}
+						onChange={value => setEvent({ ...event, end: value })}
+					/>
 				</div>
 				<SelectRepeat item={props.item} />
 				<SelectNotification item={props.item} />

@@ -171,6 +171,9 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 						<div className='speech_bubble__triangle'></div>
 					</div>
 				)}
+				<Dino
+					className={`dinogotchi_screen__dino_pet first_login has_${selectedHat}`}
+				/>
 				<div className='dialog_chooser'>
 					<Cap onClick={() => setSelectedHat('bone')} />
 					<Hat onClick={() => setSelectedHat('gorro')} />
@@ -179,9 +182,6 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 					<Headscarf onClick={() => setSelectedHat('lenco')} />
 					<div onClick={() => setSelectedHat('none')}> X </div>
 				</div>
-				<Dino
-					className={`dinogotchi_screen__dino_pet first_login has_${selectedHat}`}
-				/>
 				<Button className='selection_button' onClick={handleCustomization}>
 					{language.data.CHOOSE}
 				</Button>

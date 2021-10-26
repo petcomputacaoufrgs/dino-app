@@ -334,19 +334,19 @@ export default class EN implements LanguageBase {
 
 	INVALID_EVENT_TYPE = 'Invalid event type'
 
-	MINUTES = 'minutes'
+	MINUTES = 'Minutes'
 
-	HOURS = 'hours'
+	HOURS = 'Hours'
 
-	DAYS = 'days'
+	DAYS = 'Days'
 
 	AND = 'and'
 
-	BEFORE = 'before'
+	BEFORE = 'Before'
 
-	MINUTE = 'minute'
+	MINUTE = 'Minute'
 
-	HOUR = 'hour'
+	HOUR = 'Hour'
 
 	DAY = 'Day'
 

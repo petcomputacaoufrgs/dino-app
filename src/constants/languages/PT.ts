@@ -336,19 +336,19 @@ export default class PT implements LanguageBase {
 
 	INVALID_EVENT_TYPE = 'Tipo de evento inválido'
 
-	MINUTES = 'minutos '
+	MINUTES = 'Minutos '
 
-	HOURS = 'horas'
+	HOURS = 'Horas'
 
-	DAYS = 'dias'
+	DAYS = 'Dias'
 
 	AND = 'e'
 
-	BEFORE = 'antes'
+	BEFORE = 'Antes'
 
-	MINUTE = 'minuto'
+	MINUTE = 'Minuto'
 
-	HOUR = 'hora'
+	HOUR = 'Hora'
 
 	DAY = 'Dia'
 

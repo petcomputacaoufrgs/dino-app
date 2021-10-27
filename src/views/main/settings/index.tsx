@@ -247,7 +247,7 @@ const Settings: React.FC = () => {
 				<FormControl className='settings__form'>
 					<SelectEssentialContactGrant settings={settings} />
 				</FormControl>
-				<DinoHr />
+				{/* <DinoHr />
 				<FormControl>
 					<TextButton
 						onClick={handleChangePasswordClick}
@@ -255,7 +255,7 @@ const Settings: React.FC = () => {
 					>
 						{language.data.CHANGE_PASSWORD_LABEL}
 					</TextButton>
-				</FormControl>
+				</FormControl> */}
 			</>
 		)
 
@@ -289,7 +289,7 @@ const Settings: React.FC = () => {
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
-				{renderPasswordDialog()}
+				{/* {renderPasswordDialog()} */}
 				{renderDeleteAccountDialog()}
 				<GoogleGrantDialog
 					settings={settings}

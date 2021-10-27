@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ArrowBack from '../../../../components/arrow_back'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import DinoSwitch from '../../../../components/switch'

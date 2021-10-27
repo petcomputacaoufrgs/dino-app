@@ -21,7 +21,7 @@ import EssentialPhoneEntity from '../types/contact/database/EssentialPhoneEntity
 import ReportEntity from '../types/report/database/ReportEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
-const DATABASE_VERSION = 30.1
+const DATABASE_VERSION = 31
 
 class Database extends Dexie {
 	auth: Dexie.Table<AuthEntity, number>

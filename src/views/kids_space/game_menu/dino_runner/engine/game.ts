@@ -159,7 +159,9 @@ async function runGame() {
 			obstacle.style.transform = `translate3d(${obstaclePosition}%, 0, 0)`
 		}
 
-		score++
+		if (!isGameOver) {
+			score++
+		}
 		setScore(score)
 		obstacle.remove()
 	}

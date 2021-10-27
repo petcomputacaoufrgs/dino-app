@@ -53,9 +53,19 @@
 	transition: visibility 0.2s 0.2s;
 }
 
+@media screen and (min-width: 768px){
+	.dinogotchi_screen__hearts{
+		left: 40vmin;
+	}
+}
+
 @media (orientation: landscape) {
 	.dinogotchi_screen__options .circular_button {
 		width: 7rem;
 		height: 7rem;
+	}
+
+	.dinogotchi_screen__hearts{
+		left: 50vmin;
 	}
 }

@@ -267,7 +267,7 @@ const Settings: React.FC = () => {
 				<FormControl className='settings__form'>
 					<SelectEssentialContactGrant settings={settings} />
 				</FormControl>
-				<DinoHr />
+				{/* <DinoHr />
 				<FormControl>
 					<TextButton
 						onClick={() =>
@@ -277,17 +277,7 @@ const Settings: React.FC = () => {
 					>
 						{language.data.CHANGE_PASSWORD_LABEL}
 					</TextButton>
-				</FormControl>
-				<GoogleContactGrantDialog
-					settings={settings}
-					onClose={handleCloseDialog}
-					open={isDialogOpen(DialogEnum.GoogleContactGrantDialog)}
-				/>
-				<GoogleCalendarGrantDialog
-					settings={settings}
-					onClose={handleCloseDialog}
-					open={isDialogOpen(DialogEnum.GoogleCalendarGrantDialog)}
-				/>
+				</FormControl> */}
 			</>
 		)
 
@@ -311,6 +301,7 @@ const Settings: React.FC = () => {
 					<SelectColorTheme settings={settings} />
 				</FormControl>
 				{renderUserOnlySection()}
+				<div style={{ marginTop: '1rem' }} />
 				<DinoHr />
 				<FormControl>
 					<TextButton
@@ -320,7 +311,7 @@ const Settings: React.FC = () => {
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
-				{/* TODO fazer a verificação de senha {renderPasswordDialog()} */}
+				{/* {renderPasswordDialog()} */}
 				{renderDeleteAccountDialog()}
 			</div>
 		</Loader>

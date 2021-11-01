@@ -1,32 +1,17 @@
-.settings__save_button_container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 8vh;
-}
-
-.settings__save_button {
+.save_button {
 	width: 100%;
-	margin-top: auto;
+	margin: auto;
+	margin-top: 1rem;
+	max-width: 50vh;
 }
 
-.settings__save_button__icon {
+.save_button__icon {
 	width: 1.125rem;
 	height: 1.125rem;
 	margin-right: 0.6rem;
 	fill: var(--inv-contrast-color);
 }
 
-.settings__save_button.MuiButtonBase-root {
-	margin-top: 3.125rem;
-	background-color: var(--header-and-menu);
-}
-
-.settings__save_button.MuiButtonBase-root .MuiButton-label {
+.save_button .MuiButton-label {
 	color: var(--light-color);
-}
-
-.button.settings__save_button {
-	max-width: 350px;
-	font-size: var(--big-font);
 }

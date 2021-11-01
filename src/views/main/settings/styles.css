@@ -19,44 +19,6 @@
 	text-align: center;
 }
 
-.settings__save_button_container {
-	position: fixed;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 80vw;
-	height: 8vh;
-	left: 10vw;
-	bottom: 1.5rem;
-}
-
-.settings__save_button {
-	width: 100%;
-	margin-top: auto;
-}
-
-.settings__save_button__icon {
-	width: 1.125rem;
-	height: 1.125rem;
-	margin-right: 0.6rem;
-	fill: var(--buttons-font-color);
-}
-
-.settings__save_button.MuiButtonBase-root {
-	margin-top: 3.125rem;
-	background-color: var(--buttons-background);
-}
-
-.settings__save_button.MuiButtonBase-root .MuiButton-label {
-	color: var(--light-color);
-}
-
-.button.settings__save_button {
-	width: 50%;
-	height: 90%;
-	font-size: var(--big-font);
-}
-
 .settings__title.MuiTypography-root {
 	font-weight: 700;
 	font-size: var(--big-font);
@@ -105,20 +67,4 @@
 
 .settings__change_password_dialog__error_message {
 	color: #ff7676;
-}
-
-@media (orientation: landscape) {
-	.settings__save_button_container {
-		bottom: 4.5rem;
-	}
-
-	.button.settings__save_button {
-		font-size: 1.4rem;
-	}
-
-	.button.settings__save_button svg {
-		width: 2.5rem;
-		height: 2.5rem;
-		margin-right: 1rem;
-	}
 }

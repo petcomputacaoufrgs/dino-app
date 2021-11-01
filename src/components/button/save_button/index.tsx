@@ -9,11 +9,9 @@ export const SaveButton: React.FC<ButtonProps> = props => {
 	const language = useLanguage()
 
 	return (
-		<div className='settings__save_button_container'>
-			<Button className='settings__save_button' {...props}>
-				<SaveSVG className='settings__save_button__icon' />
-				{language.data.SAVE}
-			</Button>
-		</div>
+		<Button className='save_button' {...props}>
+			<SaveSVG className='save_button__icon' />
+			{language.data.SAVE}
+		</Button>
 	)
 }

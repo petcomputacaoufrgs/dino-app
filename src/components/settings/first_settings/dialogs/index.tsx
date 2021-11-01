@@ -48,11 +48,11 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 				title: language.data.FIRST_LOGIN_CHOOSE_TREATMENT,
 				component: renderSelectTreatmentDialogContent,
 			},
-			{
-				id: 'PASSWORD',
-				title: language.data.FIRST_LOGIN_CHOOSE_PASSWORD,
-				component: renderSetPasswordDialog,
-			},
+			// { //TODO Kids password
+			// 	id: 'PASSWORD',
+			// 	title: language.data.FIRST_LOGIN_CHOOSE_PASSWORD,
+			// 	component: renderSetPasswordDialog,
+			// },
 		]
 
 		let dialogs = basicDialogs

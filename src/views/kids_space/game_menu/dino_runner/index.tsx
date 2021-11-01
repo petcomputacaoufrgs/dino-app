@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { startDinoRunnerGame } from './engine/game'
 import { useLanguage } from '../../../../context/language'
 import { ReactComponent as BackgroundSVG } from '../../../../assets/kids_space/games/dino_runner/background.svg'
-import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
+import './styles.css'
 
 const DinoRunner: React.FC = () => {
 	const language = useLanguage()

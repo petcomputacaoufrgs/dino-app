@@ -68,7 +68,7 @@ const ReportBug: React.FC = () => {
 			<div className='report_bug__div'>
 				<h3>{language.data.WHAT}</h3>
 				<DinoHr />
-				<p>{language.data._BUG_REPORT_WHAT}</p>
+				<p>{language.data.PROBLEM_REPORT_WHAT}</p>
 				<DinoTextfield
 					value={report.what}
 					onChange={handleChangeWhat}
@@ -82,7 +82,7 @@ const ReportBug: React.FC = () => {
 			<div className='report_bug__div'>
 				<h3>{language.data.HOW}</h3>
 				<DinoHr />
-				<p>{language.data._BUG_REPORT_HOW}</p>
+				<p>{language.data.PROBLEM_REPORT_HOW}</p>
 				<DinoTextfield
 					value={report.how}
 					onChange={handleChangeHow}
@@ -95,7 +95,7 @@ const ReportBug: React.FC = () => {
 			<div className='report_bug__div'>
 				<h3>{language.data.WHERE}</h3>
 				<DinoHr />
-				<p>{language.data._BUG_REPORT_WHERE}</p>
+				<p>{language.data.PROBLEM_REPORT_WHERE}</p>
 				<DinoTextfield
 					value={report.where}
 					onChange={handleChangeWhere}

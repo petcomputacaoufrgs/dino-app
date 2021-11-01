@@ -30,7 +30,7 @@ export default class PT implements LanguageBase {
 	FIRST_LOGIN_WELCOME_MESSAGE_HEADER = 'Bem vindo(a)!'
 
 	FIRST_LOGIN_WELCOME_MESSAGE =
-		'Dino Message Lorem ipsum dolor sit amet consectetur adipisicin elit. Nisi illum officiis vero debitis quia nam iusto. Necessitatibu repudiandae ut labore!'
+		'O DinoApp é um aplicativo feito em parceria com o Hospital de Clínicas de Porto Alegre e tem como principal objetivo incentivar crianças em tratamento de câncer infantil a seguirem sua rotina médica.\nO "Dino" se encontra atualmente em fase de testes para eventual lançamento público, nós da equipe PET Computação agradecemos a sua participação nesta fase importante!'
 
 	FIRST_LOGIN_DONE_MESSAGE = 'Tudo Certo!'
 
@@ -290,7 +290,9 @@ export default class PT implements LanguageBase {
 
 	DISCONNECTED = 'Desconectado'
 
-	SELECT_FAQ_BUTTON = 'Busque FAQ'
+	FAQ = 'F.A.Q.'
+
+	SELECT_FAQ_BUTTON = `Busque ${this.FAQ}`
 
 	SELECT_TREATMENT_LOAD_CONTACT_GRANT =
 		'Carregar contatos essenciais referentes ao meu tratamento'
@@ -474,13 +476,13 @@ export default class PT implements LanguageBase {
 
 	NOTE_SEARCH_CLEAN = 'Nenhuma anotação corresponde a pesquisa atual.'
 
-	LIGHT_THEME_NAME = 'Ursinho de Pelúcia (Claro)'
+	TEDDY_BEAR_LIGHT_THEME_NAME = 'Ursinho de Pelúcia (Claro)'
 
-	DARK_THEME_NAME = 'Menta (Escuro)'
+	MINT_DARK_THEME_NAME = 'Menta (Escuro)'
 
-	COTTON_CANDY_THEME_NAME = 'Algodão Doce (Claro)'
+	COTTON_CANDY_LIGHT_THEME_NAME = 'Algodão Doce (Claro)'
 
-	EGGPLANT_THEME_NAME = 'Beringela (Escuro)'
+	EGGPLANT_DARK_THEME_NAME = 'Beringela (Escuro)'
 
 	DEVICE_DEFAULT_THEME_NAME = 'Padrão do sistema'
 
@@ -698,8 +700,6 @@ export default class PT implements LanguageBase {
 
 	GLOSSARY_ITEM = 'Item de Glossário'
 
-	FAQ = 'FAQ'
-
 	FAQ_ITEM = `Item da ${this.FAQ}`
 
 	TREATMENTS_AND_FAQS = `Tratamentos & ${this.FAQ}s`
@@ -733,9 +733,9 @@ export default class PT implements LanguageBase {
 
 	YOUR_CONTACTS = 'Seus Contatos'
 
-	UNIVERSAL_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} Universais'`
+	UNIVERSAL_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} Universais`
 
-	TREATMENT_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} de Tratamento'`
+	TREATMENT_ESSENTIAL_CONTACTS = `${this.ESSENTIAL_CONTACTS} de Tratamento`
 
 	HAS_USER_QUESTIONS_FILTER_LABEL = 'Apenas Com Perguntas de Usuários'
 
@@ -787,11 +787,11 @@ export default class PT implements LanguageBase {
 
 	HOW = 'COMO'
 
-	_BUG_REPORT_WHAT = `Conte-nos, em detalhes, qual foi o problema que encontrou. O que aconteceu? Impediu-lhe de utilizar o aplicativo?`
+	PROBLEM_REPORT_WHAT = `Conte-nos, em detalhes, qual foi o problema que encontrou. O que aconteceu? Impediu-lhe de utilizar o aplicativo?`
 
-	_BUG_REPORT_HOW = `Agora nos conte como o bug veio a acontecer. Você consegue replicá-lo? Ele acontece sempre quando você realiza uma determinada ação ou foi apenas uma vez?`
+	PROBLEM_REPORT_HOW = `Agora nos conte como o bug veio a acontecer. Você consegue replicá-lo? Ele acontece sempre quando você realiza uma determinada ação ou foi apenas uma vez?`
 
-	_BUG_REPORT_WHERE = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
+	PROBLEM_REPORT_WHERE = `Em qual área você encontrou o problema? Por exemplo, foi em algum jogo, na área infantil, na seção de notas ou em algum outro lugar?`
 
 	itemAlreadyExists = (item: string) => `${item} já existente`
 

@@ -231,10 +231,10 @@ export default interface LanguageBase {
 	QUESTION_NOTE_DIALOG_TITLE: string
 	NOTE_INFO_DIALOG_COLUMN_TITLE: string
 	NOTE_SEARCH_CLEAN: string
-	LIGHT_THEME_NAME: string
-	DARK_THEME_NAME: string
-	COTTON_CANDY_THEME_NAME: string
-	EGGPLANT_THEME_NAME: string
+	TEDDY_BEAR_LIGHT_THEME_NAME: string
+	MINT_DARK_THEME_NAME: string
+	COTTON_CANDY_LIGHT_THEME_NAME: string
+	EGGPLANT_DARK_THEME_NAME: string
 	DEVICE_DEFAULT_THEME_NAME: string
 	COLOR_THEME_SELECTION_TITLE: string
 	FONT_SIZE_SELECTION_TITLE: string
@@ -366,9 +366,9 @@ export default interface LanguageBase {
 	ABOUT_US_HCPA_TEXT: string
 	ABOUT_US_UFRGS: string
 	ABOUT_US_UFRGS_TEXT: string
-	_BUG_REPORT_WHAT: string
-	_BUG_REPORT_WHERE: string
-	_BUG_REPORT_HOW: string
+	PROBLEM_REPORT_WHAT: string
+	PROBLEM_REPORT_WHERE: string
+	PROBLEM_REPORT_HOW: string
 	WHAT: string
 	WHERE: string
 	HOW: string

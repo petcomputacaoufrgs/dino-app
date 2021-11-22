@@ -37,8 +37,6 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 		props.onChange(props.value)
 	}
 
-	console.log(props.value.getHours().toString())
-
 	return (
 		<div className='time__selector'>
 			<InputLabel margin='dense' shrink>

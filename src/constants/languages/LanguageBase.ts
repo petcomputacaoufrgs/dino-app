@@ -144,6 +144,7 @@ export default interface LanguageBase {
 	SELECT_FAQ_BUTTON: string
 	SELECT_TREATMENT_LOAD_CONTACT_GRANT: string
 	SAVE_CONTACT_ON_GOOGLE_GRANT: string
+	SAVE_CALENDAR_EVENT_GOOGLE_GRANT: string
 	SUNDAY_NAME: string
 	MONDAY_NAME: string
 	TUESDAY_NAME: string

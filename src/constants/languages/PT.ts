@@ -300,6 +300,9 @@ export default class PT implements LanguageBase {
 	SAVE_CONTACT_ON_GOOGLE_GRANT =
 		'Salvar contatos do DinoApp em minha conta Google'
 
+	SAVE_CALENDAR_EVENT_GOOGLE_GRANT =
+		'Salvar eventos de calendário do DinoApp em minha conta Google'
+
 	SUNDAY_NAME = 'Domingo'
 
 	MONDAY_NAME = 'Segunda'

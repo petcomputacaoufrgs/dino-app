@@ -27,10 +27,6 @@ import './styles.css'
 import { HasStaffPowers } from '../../../context/private_router'
 import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
 import { SelectPassword } from '../../../components/settings/select_password'
-import {
-	GoogleCalendarGrantDialog,
-	GoogleContactGrantDialog,
-} from '../../../components/dialogs/google_grant_dialog'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 15
 
@@ -140,7 +136,6 @@ const Settings: React.FC = () => {
 
 	const handleGoogleCalendarSwitchChanged = () => {
 		if (!settings) return
-
 		if (!syncGoogleCalendarSwitch) {
 			setSettingsDialogOpen(DialogEnum.GoogleCalendarGrantDialog)
 		} else setSyncGoogleCalendarSwitch(false)
@@ -260,7 +255,7 @@ const Settings: React.FC = () => {
 					<DinoSwitch
 						selected={syncGoogleCalendarSwitch}
 						onChangeSelected={handleGoogleCalendarSwitchChanged}
-						label={'Mude o grant de calendário ablu blu blé'}
+						label={language.data.SAVE_CALENDAR_EVENT_GOOGLE_GRANT}
 					/>
 				</FormControl>
 				<DinoHr />

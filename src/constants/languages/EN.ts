@@ -295,6 +295,9 @@ export default class EN implements LanguageBase {
 
 	SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
 
+	SAVE_CALENDAR_EVENT_GOOGLE_GRANT =
+		'Save DinoApp calendar events on my Google account'
+
 	SUNDAY_NAME = 'Sunday'
 
 	MONDAY_NAME = 'Monday'

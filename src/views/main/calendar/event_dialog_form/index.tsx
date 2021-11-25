@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SelectDate from '../../../../components/calendar/select_date'
 import SelectEventType from '../../../../components/calendar/select_event_type'
-import SelectNotification from '../../../../components/calendar/select_notification'
-import SelectRepeat from '../../../../components/calendar/select_repeat'
 import SelectTime from '../../../../components/calendar/select_time'
 import DinoDialog from '../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../components/textfield'
@@ -59,6 +57,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 		if (props.open) {
 			setEvent(getEvent(props.item))
 			setType(getType(props.item, props.eventTypes))
+			console.log(event)
 		}
 	}, [props.open])
 
@@ -75,6 +74,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 
 	return (
 		<DinoDialog
+			fullScreen
 			open={props.open}
 			onClose={props.onClose}
 			onSave={handleSave}
@@ -126,8 +126,8 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 						onChange={value => setEvent({ ...event, end: value })}
 					/>
 				</div>
-				<SelectRepeat item={props.item} />
-				<SelectNotification item={props.item} />
+				{/* <SelectRepeat item={props.item} />
+				<SelectNotification item={props.item} /> */}
 			</div>
 		</DinoDialog>
 	)

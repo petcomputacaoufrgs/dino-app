@@ -7,4 +7,5 @@ export default interface DinoDialogProps {
 	actions?: React.ReactNode
 	labelSave?: string
 	labelClose?: string
+	fullScreen?: boolean
 }

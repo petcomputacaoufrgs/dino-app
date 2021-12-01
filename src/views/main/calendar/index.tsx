@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AddButton from '../../../components/button/icon_button/add_button'
 import { useLanguage } from '../../../context/language'
 import MonthNavBar from '../../../components/calendar/month_nav_bar'
@@ -36,6 +36,8 @@ const Calendar: React.FC = () => {
 	const [toAction, setToAction] = useState(CRUDEnum.NOP)
 	const [selectedItem, setSelectedItem] = useState<EventView>()
 	const [syncGoogleCalendar, setSyncGoogleCalendar] = useState(false)
+
+	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
 		const makeTodayIndex = () => {
@@ -144,6 +146,11 @@ const Calendar: React.FC = () => {
 			loadData()
 		}
 
+		ref.current?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center',
+		})
+
 		return () => {
 			updateDayViews = () => {}
 			updateEventTypes = () => {}
@@ -204,18 +211,20 @@ const Calendar: React.FC = () => {
 		setIsLoading(true)
 	}
 
+	const isToday = (index: number) => index === todayIndex
 	const renderCalendar = () => {
 		return (
 			<div className='calendar'>
 				<MonthNavBar date={date} onChangeDate={handleChangeDate} />
 				{dayViews?.map((e, index) => (
-					<CalendarDay
-						key={index}
-						item={e}
-						onClickEvent={handleClick}
-						onClickEmpty={handleClickEmpty}
-						today={todayIndex === index}
-					/>
+					<div ref={isToday(index) ? ref : undefined} key={index}>
+						<CalendarDay
+							item={e}
+							onClickEvent={handleClick}
+							onClickEmpty={handleClickEmpty}
+							today={isToday(index)}
+						/>
+					</div>
 				))}
 				<AddButton label={language.data.EVENT} handleAdd={handleAdd} />
 				<EventDialogForm

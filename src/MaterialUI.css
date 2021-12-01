@@ -130,9 +130,9 @@ body .MuiCheckbox-colorSecondary.Mui-checked {
 	color: var(--hover-link-font-color);
 }
 
-body .MuiFormHelperText-root.MuiFormHelperText-marginDense {
+/* body .MuiFormHelperText-root.MuiFormHelperText-marginDense {
 	color: var(--base-font-color);
-}
+} */
 
 @media (orientation: landscape) {
 	body .MuiListItemText-root .MuiTypography-body1 {

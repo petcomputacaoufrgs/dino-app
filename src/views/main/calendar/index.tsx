@@ -7,7 +7,7 @@ import CalendarEventService from '../../../services/calendar/EventService'
 import UserSettingsService from '../../../services/user/UserSettingsService'
 import UserSettingsEntity from '../../../types/user/database/UserSettingsEntity'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
-import { EventDialogForm, getNewEventView } from './event_dialog_form'
+import { EventDialogForm, getEvent } from './event_dialog_form'
 import CardEvent from './calendar_card_event'
 import { GoogleCalendarGrantDialog } from '../../../components/dialogs/google_grant_dialog'
 import CalendarSettings from './calendar_settings'
@@ -192,8 +192,8 @@ const Calendar: React.FC = () => {
 			date.getMonth(),
 			Number(dayOfMonth),
 		)
-		const newEventView = getNewEventView(clickedDate)
-		setSelectedItem(newEventView)
+		const event = getEvent(undefined, clickedDate)
+		setSelectedItem({ event })
 		setToAction(CRUDEnum.CREATE)
 	}
 

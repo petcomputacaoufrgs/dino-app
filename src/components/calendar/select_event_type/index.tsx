@@ -29,6 +29,8 @@ const SelectEventType: React.FC<{
 				value={selectedTypeLocalId || ''}
 				fullWidth
 				onChange={e => setSelectedTypeLocalId(e.target.value as number)}
+				displayEmpty
+				renderValue={() => language.data.NO_OPTIONS}
 			>
 				{props.eventTypes?.map((option, index) => (
 					<MenuItem

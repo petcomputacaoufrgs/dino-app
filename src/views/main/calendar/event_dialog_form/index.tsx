@@ -13,19 +13,13 @@ import DateUtils from '../../../../utils/DateUtils'
 import StringUtils from '../../../../utils/StringUtils'
 import EventDialogFormProps from './props'
 
-const getEvent = (item?: EventView) =>
+export const getEvent = (item?: EventView, date?: Date) =>
 	item?.event || {
 		title: '',
 		description: '',
-		start: new Date(),
-		end: DateUtils.addHour(new Date(), 1),
+		start: date || new Date(),
+		end: DateUtils.addHour(date || new Date(), 1),
 	}
-
-export const getNewEventView = (date: Date): EventView => {
-	const event = getEvent()
-	event.start = date
-	return { event }
-}
 
 const getType = (item?: EventView, eventTypes?: EventTypeEntity[]) => {
 	if (!eventTypes || eventTypes.length < 1) return undefined
@@ -49,6 +43,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 		getType(props.item, props.eventTypes),
 	)
 	const [error, setError] = useState<string>()
+	const [errorDate, setErrorDate] = useState<string>()
 
 	const handleChangeType = (index: number) => {
 		if (props.eventTypes) {
@@ -62,11 +57,19 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 			setEvent(getEvent(props.item))
 			setType(getType(props.item, props.eventTypes))
 		}
+		return () => {
+			setError(undefined)
+			setErrorDate(undefined)
+		}
 	}, [props.open])
 
 	const handleSave = async () => {
 		if (StringUtils.isEmpty(event.title)) {
 			return setError(language.data.EMPTY_FIELD_ERROR)
+		}
+		if (DateUtils.isAfter(event.start, event.end)) {
+			console.log(event.start, event.end)
+			return setErrorDate(language.data.INVALID_VALUE)
 		}
 
 		event.typeLocalId = type?.localId
@@ -127,6 +130,7 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 						value={event.end}
 						minValue={event.start}
 						onChange={value => setEvent({ ...event, end: value })}
+						errorDate={errorDate}
 					/>
 				</div>
 				{/* <SelectRepeat item={props.item} />

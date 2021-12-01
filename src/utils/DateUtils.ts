@@ -26,6 +26,8 @@ class DateUtils {
 	isSameMonth = (d1: Date, d2: Date): boolean =>
 		d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
 
+	isAfter = (d1: Date, d2: Date): boolean => moment(d1).isAfter(d2)
+
 	getLastMonth = (date: Date): Date => {
 		return moment(date).add(-1, 'M').startOf('month').toDate()
 	}

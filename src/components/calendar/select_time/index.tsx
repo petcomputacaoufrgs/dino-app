@@ -10,6 +10,7 @@ interface SelectTimeProps {
 	value: Date
 	minValue?: Date
 	onChange(date: Date): void
+	errorDate?: string
 }
 
 const SelectTime: React.FC<SelectTimeProps> = props => {
@@ -37,6 +38,11 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 		props.onChange(props.value)
 	}
 
+	const errorProps = {
+		error: props.errorDate !== undefined,
+		helperText: props.errorDate,
+	}
+
 	return (
 		<div className='time__selector'>
 			<InputLabel margin='dense' shrink>
@@ -56,12 +62,14 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 					renderInput={params => (
 						<TextField
 							{...params}
+							className='dino__textfield'
 							label={language.data.HOUR}
 							variant='standard'
 							InputProps={{
 								...params.InputProps,
 								endAdornment: <>{params.InputProps.endAdornment}</>,
 							}}
+							{...errorProps}
 						/>
 					)}
 				/>
@@ -79,12 +87,14 @@ const SelectTime: React.FC<SelectTimeProps> = props => {
 					renderInput={params => (
 						<TextField
 							{...params}
+							className='dino__textfield'
 							label={language.data.MINUTE}
 							variant='standard'
 							InputProps={{
 								...params.InputProps,
 								endAdornment: <>{params.InputProps.endAdornment}</>,
 							}}
+							{...errorProps}
 						/>
 					)}
 				/>

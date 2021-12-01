@@ -28,13 +28,17 @@ export const getNewEventView = (date: Date): EventView => {
 }
 
 const getType = (item?: EventView, eventTypes?: EventTypeEntity[]) => {
+	if (!eventTypes || eventTypes.length < 1) return undefined
+
+	let response: EventTypeEntity | undefined
+
 	if (item) {
-		const eventType = eventTypes?.find(
-			t => t.localId === item?.event.typeLocalId,
+		response = eventTypes?.find(
+			t => t.localId === item?.event.typeLocalId, //TODO fazer um map?
 		)
-		return eventType
 	}
-	return (eventTypes && eventTypes[0]) || undefined
+
+	return response || eventTypes[0]
 }
 
 export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
@@ -57,7 +61,6 @@ export const EventDialogForm: React.FC<EventDialogFormProps> = props => {
 		if (props.open) {
 			setEvent(getEvent(props.item))
 			setType(getType(props.item, props.eventTypes))
-			console.log(event)
 		}
 	}, [props.open])
 

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import AddButton from '../../../components/button/icon_button/add_button'
 import { useLanguage } from '../../../context/language'
 import MonthNavBar from '../../../components/calendar/month_nav_bar'
-import './styles.css'
 import GoogleScopeService from '../../../services/auth/google/GoogleScopeService'
 import CalendarEventService from '../../../services/calendar/EventService'
 import UserSettingsService from '../../../services/user/UserSettingsService'
@@ -21,6 +20,7 @@ import AgreementDialog from '../../../components/dialogs/agreement_dialog'
 import DateUtils from '../../../utils/DateUtils'
 import StringUtils from '../../../utils/StringUtils'
 import { HasStaffPowers } from '../../../context/private_router'
+import './styles.css'
 
 const Calendar: React.FC = () => {
 	const language = useLanguage()
@@ -212,6 +212,7 @@ const Calendar: React.FC = () => {
 	}
 
 	const isToday = (index: number) => index === todayIndex
+
 	const renderCalendar = () => {
 		return (
 			<div className='calendar'>

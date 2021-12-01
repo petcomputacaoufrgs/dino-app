@@ -9,6 +9,9 @@ import { useLanguage } from '../../../../context/language'
 import CalendarEventTypeService from '../../../../services/calendar/EventTypeService'
 import AgreementDialog from '../../../../components/dialogs/agreement_dialog'
 import EventTypeListItem from './event_type_list_item'
+import ArrayUtils from '../../../../utils/ArrayUtils'
+import NoItemsList from '../../../../components/list_components/no_items_list'
+import ListTitle from '../../../../components/list_components/list_title'
 
 const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 	eventTypes,
@@ -50,16 +53,21 @@ const CalendarSettings: React.FC<{ eventTypes?: EventTypeEntity[] }> = ({
 
 	return (
 		<div className='calendar_settings'>
-			<div className='event_type__list'>
-				{eventTypes?.map((e, index) => (
-					<EventTypeListItem
-						key={index}
-						item={e}
-						onClick={handleViewOption}
-						onClickMenu={handleClickMenu}
-					/>
-				))}
-			</div>
+			<ListTitle title={language.data.EVENT_TYPES} />
+			{ArrayUtils.isNotEmpty(eventTypes) ? (
+				<div className='event_type__list'>
+					{eventTypes?.map((e, index) => (
+						<EventTypeListItem
+							key={index}
+							item={e}
+							onClick={handleViewOption}
+							onClickMenu={handleClickMenu}
+						/>
+					))}
+				</div>
+			) : (
+				<NoItemsList />
+			)}
 			<CalendarEventTypeForm
 				open={toAction === CRUDEnum.CREATE || toAction === CRUDEnum.UPDATE}
 				item={selectedItem}

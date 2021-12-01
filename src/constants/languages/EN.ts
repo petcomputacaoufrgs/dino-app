@@ -358,6 +358,8 @@ export default class EN implements LanguageBase {
 
 	EVENT = 'event'
 
+	EVENT_TYPES = 'Event Types'
+
 	ADD_EVENT_TITLE = 'Add Event'
 
 	EVENT_TYPE_LABEL = 'Event Type'

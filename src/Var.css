@@ -16,6 +16,7 @@
 
 	--svg-size: 1.125rem;
 
+	--calendar-default-background: #a6a6a6;
 	--calendar-medication-background: #4b75c3;
 	--calendar-event-background: #d783bb;
 	--calendar-reminder-background: #f0994d;
@@ -63,11 +64,12 @@
 	/* Badge */
 	--badge-color: #e1a69e;
 
-	--avatar-color-1: #f44336;
-	--avatar-color-2: #e91e63;
-	--avatar-color-3: #9c27b0;
-	--avatar-color-4: #2196f3;
-	--avatar-color-5: #4caf50;
+	--dino-icon-color-1: #f44336;
+	--dino-icon-color-2: #e91e63;
+	--dino-icon-color-3: #9c27b0;
+	--dino-icon-color-4: #2196f3;
+	--dino-icon-color-5: #4caf50;
+	--dino-icon-color-null: #bdbdbd;
 
 	/* #endregion */
 }
@@ -115,11 +117,11 @@
 	/* Badge */
 	--badge-color: #3bba9c;
 
-	--avatar-color-1: #6e1f1a;
-	--avatar-color-2: #682552;
-	--avatar-color-3: #53195e;
-	--avatar-color-4: #0c3d64;
-	--avatar-color-5: #255727;
+	--dino-icon-color-1: #6e1f1a;
+	--dino-icon-color-2: #682552;
+	--dino-icon-color-3: #53195e;
+	--dino-icon-color-4: #0c3d64;
+	--dino-icon-color-5: #255727;
 }
 /* #endregion */
 
@@ -208,11 +210,11 @@
 	/* Badge */
 	--badge-color: #613262;
 
-	--avatar-color-1: #6e1f1a;
-	--avatar-color-2: #682552;
-	--avatar-color-3: #53195e;
-	--avatar-color-4: #0c3d64;
-	--avatar-color-5: #255727;
+	--dino-icon-color-1: #6e1f1a;
+	--dino-icon-color-2: #682552;
+	--dino-icon-color-3: #53195e;
+	--dino-icon-color-4: #0c3d64;
+	--dino-icon-color-5: #255727;
 }
 /* #endregion */
 

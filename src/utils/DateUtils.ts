@@ -15,16 +15,18 @@ class DateUtils {
 
 	getEndOfDay = (date: Date): Date => moment(date).endOf('day').toDate()
 
-	isToday = (date: Date): boolean => this.isEqualDay(date, new Date())
+	isToday = (date: Date): boolean => this.isSameDay(date, new Date())
 
-	isEqualHour = (d1: Date, d2: Date): boolean =>
-		d1.getHours() === d2.getHours() && this.isEqualDay(d1, d2)
+	isSameHour = (d1: Date, d2: Date): boolean =>
+		d1.getHours() === d2.getHours() && this.isSameDay(d1, d2)
 
-	isEqualDay = (d1: Date, d2: Date): boolean =>
-		d1.getDate() === d2.getDate() && this.isEqualMonth(d1, d2)
+	isSameDay = (d1: Date, d2: Date): boolean =>
+		d1.getDate() === d2.getDate() && this.isSameMonth(d1, d2)
 
-	isEqualMonth = (d1: Date, d2: Date): boolean =>
+	isSameMonth = (d1: Date, d2: Date): boolean =>
 		d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
+
+	isAfter = (d1: Date, d2: Date): boolean => moment(d1).isAfter(d2)
 
 	getLastMonth = (date: Date): Date => {
 		return moment(date).add(-1, 'M').startOf('month').toDate()
@@ -34,8 +36,20 @@ class DateUtils {
 		return moment(date).add(1, 'M').startOf('month').toDate()
 	}
 
+	getNextDay = (date: Date): Date => {
+		return moment(date).add(1, 'day').startOf('day').toDate()
+	}
+
 	addMonth = (date: Date, diff: number): Date => {
 		return moment(date).add(diff, 'M').startOf('month').toDate()
+	}
+
+	addMinute = (date: Date, diff: number): Date => {
+		return moment(date).add(diff, 'minutes').toDate()
+	}
+
+	addHour = (date: Date, diff: number): Date => {
+		return moment(date).add(diff, 'hours').toDate()
 	}
 
 	getDateStringFormated = (date: Date, language: LanguageBase): string => {
@@ -53,56 +67,109 @@ class DateUtils {
 			.replace('YYYY', stringYear)
 	}
 
-	getMonthName = (monthNumber: number, language: LanguageBase): string => {
-		switch (monthNumber) {
-			case 0:
-				return language.JANUARY
-			case 1:
-				return language.FEBRUARY
-			case 2:
-				return language.MARCH
-			case 3:
-				return language.APRIL
-			case 4:
-				return language.MAY
-			case 5:
-				return language.JUNE
-			case 6:
-				return language.JULY
-			case 7:
-				return language.AUGUST
-			case 8:
-				return language.SEPTEMBER
-			case 9:
-				return language.OCTOBER
-			case 10:
-				return language.NOVEMBER
-			case 11:
-				return language.DECEMBER
-			default:
-				return language.INVALID_MONTH
-		}
+	getExtendedDateStringFormated = (
+		date: Date,
+		language: LanguageBase,
+	): string => {
+		const weekDayName = this.getWeekDay(date.getDay(), language)
+		const monthName = this.getMonthName(date.getMonth(), language)
+		const stringDay = StringUtils.toStringWithZeros(date.getDate(), 2)
+		return `${weekDayName}, ${stringDay} ${monthName} ${date.getFullYear()}`
 	}
 
-	getWeekDayName = (weekDayNumber: number, language: LanguageBase): string => {
-		switch (weekDayNumber) {
-			case 0:
-				return language.SUNDAY_NAME
-			case 1:
-				return language.MONDAY_NAME
-			case 2:
-				return language.TUESDAY_NAME
-			case 3:
-				return language.WEDNESDAY_NAME
-			case 4:
-				return language.THURSDAY_NAME
-			case 5:
-				return language.FRIDAY_NAME
-			case 6:
-				return language.SATURDAY_NAME
-			default:
-				return language.INVALID_WEEKDAY
-		}
+	getTimeStringFormated = (start: Date, end: Date): string => {
+		const startTime =
+			StringUtils.toStringWithZeros(start.getHours(), 2) +
+			':' +
+			StringUtils.toStringWithZeros(start.getMinutes(), 2)
+
+		const endTime =
+			StringUtils.toStringWithZeros(end.getHours(), 2) +
+			':' +
+			StringUtils.toStringWithZeros(end.getMinutes(), 2)
+
+		return startTime.concat(' - ', endTime)
+	}
+
+	getMonthName = (monthNumber: number, language: LanguageBase): string => {
+		const monthNames = [
+			language.JANUARY,
+			language.FEBRUARY,
+			language.MARCH,
+			language.APRIL,
+			language.MAY,
+			language.JUNE,
+			language.JULY,
+			language.AUGUST,
+			language.SEPTEMBER,
+			language.OCTOBER,
+			language.NOVEMBER,
+			language.DECEMBER,
+		]
+		const monthName: string | undefined = monthNames[monthNumber]
+		return monthName || language.INVALID_MONTH
+	}
+
+	getMonthNames = (language: LanguageBase): string[] => {
+		return [
+			language.JANUARY,
+			language.FEBRUARY,
+			language.MARCH,
+			language.APRIL,
+			language.MAY,
+			language.JUNE,
+			language.JULY,
+			language.AUGUST,
+			language.SEPTEMBER,
+			language.OCTOBER,
+			language.NOVEMBER,
+			language.DECEMBER,
+		]
+	}
+
+	getWeekDayNamesAbrArray = (language: LanguageBase): string[] => {
+		return [
+			language.SUNDAY_ABREVIATION,
+			language.MONDAY_ABREVIATION,
+			language.TUESDAY_ABREVIATION,
+			language.WEDNESDAY_ABREVIATION,
+			language.THURSDAY_ABREVIATION,
+			language.FRIDAY_ABREVIATION,
+			language.SATURDAY_ABREVIATION,
+		]
+	}
+
+	getWeekDay = (weekDayNumber: number, language: LanguageBase): string => {
+		const weekDayNames = [
+			language.SUNDAY_NAME,
+			language.MONDAY_NAME,
+			language.TUESDAY_NAME,
+			language.WEDNESDAY_NAME,
+			language.THURSDAY_NAME,
+			language.FRIDAY_NAME,
+			language.SATURDAY_NAME,
+		]
+		const weekDayName: string | undefined = weekDayNames[weekDayNumber]
+		return weekDayName || language.INVALID_WEEKDAY
+	}
+
+	getMonthDaysLength = (monthNumber: number, yearNumber?: number) => {
+		const monthDaysLength = [
+			31,
+			yearNumber && yearNumber % 4 === 0 ? 29 : 28,
+			31,
+			30,
+			31,
+			30,
+			31,
+			31,
+			30,
+			31,
+			30,
+			31,
+		]
+		const length: number | undefined = monthDaysLength[monthNumber]
+		return length || 0
 	}
 }
 

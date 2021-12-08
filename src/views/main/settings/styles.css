@@ -36,11 +36,6 @@
 	margin: 0;
 }
 
-.settings__delete_account_dialog h3 {
-	padding: 16px;
-	margin: 0;
-}
-
 .settings__delete_account_dialog__buttons {
 	font-size: var(--default-font);
 	margin-left: 1rem;

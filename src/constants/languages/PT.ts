@@ -245,6 +245,22 @@ export default class PT implements LanguageBase {
 
 	STRING_DATE_FORMAT = 'DD de MM de YYYY'
 
+	SUNDAY_ABREVIATION = 'Dom'
+
+	MONDAY_ABREVIATION = 'Seg'
+
+	TUESDAY_ABREVIATION = 'Ter'
+
+	WEDNESDAY_ABREVIATION = 'Qua'
+
+	THURSDAY_ABREVIATION = 'Qui'
+
+	FRIDAY_ABREVIATION = 'Sex'
+
+	SATURDAY_ABREVIATION = 'Sab'
+
+	EMPTY_EVENT_LIST = 'sem eventos agendados'
+
 	DELETE_NOTE_ALERT_TITLE = 'Tem certeza que deseja excluir esta anotação?'
 
 	DELETE_NOTE_ALERT_TEXT =
@@ -284,6 +300,9 @@ export default class PT implements LanguageBase {
 	SAVE_CONTACT_ON_GOOGLE_GRANT =
 		'Salvar contatos do DinoApp em minha conta Google'
 
+	SAVE_CALENDAR_EVENT_GOOGLE_GRANT =
+		'Salvar eventos de calendário do DinoApp em minha conta Google'
+
 	SUNDAY_NAME = 'Domingo'
 
 	MONDAY_NAME = 'Segunda'
@@ -322,23 +341,31 @@ export default class PT implements LanguageBase {
 
 	INVALID_EVENT_TYPE = 'Tipo de evento inválido'
 
-	MINUTES = 'minutos '
+	MINUTES = 'Minutos '
 
-	HOURS = 'horas'
+	HOURS = 'Horas'
 
-	DAYS = 'dias'
+	DAYS = 'Dias'
 
 	AND = 'e'
 
-	BEFORE = 'antes'
+	BEFORE = 'Antes'
 
-	MINUTE = 'minuto'
+	MINUTE = 'Minuto'
 
-	HOUR = 'hora'
+	HOUR = 'Hora'
 
-	DAY = 'dia'
+	DAY = 'Dia'
 
-	ADD_EVENT_TITLE = 'Novo Evento'
+	MONTH = 'Mês'
+
+	YEAR = 'Ano'
+
+	EVENT = 'Evento'
+
+	EVENT_TYPES = 'Tipos de Evento'
+
+	ADD_EVENT_TITLE = 'Adicionar Evento'
 
 	EVENT_TYPE_LABEL = 'Tipo de Evento'
 
@@ -352,13 +379,15 @@ export default class PT implements LanguageBase {
 
 	EVENT_END_TIME_LABEL = 'Horário de termino'
 
-	DATE_PICKER_DAY_FORMAT = 'dd/MM/yyyy'
+	DATE_PICKER_DAY_FORMAT = 'DD/MM/AAAA'
 
-	EVENT_REPEAT_NOT_REPEAT = 'Náo se repete'
+	EVENT_REPEAT = 'Repetir'
+
+	EVENT_REPEAT_NOT_REPEAT = 'Não se repete'
 
 	EVENT_REPEAT_EVERY_DAY = 'Todos os dias'
 
-	EVENT_REPEAT_EVERY_WEEK = 'Todas as semenas'
+	EVENT_REPEAT_EVERY_WEEK = 'Todas as semanas'
 
 	EVENT_REPEAT_EVERY_MONTH = 'Todos os meses'
 
@@ -376,7 +405,7 @@ export default class PT implements LanguageBase {
 
 	EVENT_DATE_ICON_ALT = 'Escolha a data do evento'
 
-	EVENT_REPEAT_ICON_ALT = 'Escolha a repetição do evento'
+	EVENT_REPEAT_ICON_ALT = 'Repetição do evento'
 
 	EVENT_REPEAT_END_DATE_LABEL = 'Final da repetição'
 
@@ -387,6 +416,10 @@ export default class PT implements LanguageBase {
 	EVENT_ADD_ALARM_LABEL = 'Tempo'
 
 	EVENT_ADD_ALARM_TYPE_LABEL = 'Medida de tempo'
+
+	EVENT_ALERT = 'Notificar'
+
+	EVENT_ALERT_NOT_DEFINED = 'Notificação não definida'
 
 	EVENT_ADD_ALERT = 'Adicionar notificação'
 
@@ -413,6 +446,8 @@ export default class PT implements LanguageBase {
 	OPTIONS = 'Opções'
 
 	EVENT_COLOR_LABEL = 'Cor selecionada'
+
+	EVENT_COLOR_ICON = 'Ícone selecionado'
 
 	MAX = 'máx. '
 
@@ -472,7 +507,7 @@ export default class PT implements LanguageBase {
 
 	CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Clique aqui para limpar'
 
-	COLOR_THEME_SELECTION_ARIA_LABEL = 'Clique aqui para mudar a cor do contato'
+	COLOR_THEME_SELECTION_ARIA_LABEL = 'Clique aqui para mudar a cor do item'
 
 	DIALOG_AGREE_TEXT = 'Aceito'
 
@@ -500,9 +535,12 @@ export default class PT implements LanguageBase {
 	GRANT_DECLINED = 'Você pode ativar esta função futuramente.'
 
 	GOOGLE_CONTACT_GRANT_TEXT =
-		'Gostaríamos de permissão para salvar e editar seus contatos do DinoApp na sua conta do Google. Assim você terá seus contatos de emergência em diversos aplicativos diferentes. \nNunca leremos nem modificaremos outros contatos além dos contatos criados no DinoApp.'
+		'Gostaríamos de permissão para salvar e sincronizar seus contatos do DinoApp na sua conta de Contatos do Google.\nNunca leremos nem modificaremos outros contatos além dos contatos criados no DinoApp.'
 
-	GOOGLE_CONTACT_GRANT_TITLE = 'Seus contatos em qualquer lugar'
+	GOOGLE_CALENDAR_GRANT_TEXT =
+		'Gostaríamos de permissão para salvar e sincronizar seus eventos do DinoApp na sua conta de Agenda do Google.\nNunca leremos nem modificaremos outros eventos além dos eventos criados no DinoApp.'
+
+	GOOGLE_GRANT_TITLE = 'Sua conta google sincronizada'
 
 	ARROW_BACK_ARIA_LABEL = 'Retorno para a última página'
 

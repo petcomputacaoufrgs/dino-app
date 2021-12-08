@@ -6,7 +6,6 @@ import UserSettingsEntity from '../../../../types/user/database/UserSettingsEnti
 import UserSettingsService from '../../../../services/user/UserSettingsService'
 import '../styles.css'
 import './styles.css'
-import HashUtils from '../../../../utils/HashUtils'
 import DataConstants from '../../../../constants/app_data/DataConstants'
 
 const AccessDialog: React.FC<AccessDialogProps> = ({

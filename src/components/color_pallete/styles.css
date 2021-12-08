@@ -1,0 +1,18 @@
+.color_palette__color_option {
+	border-radius: 6px;
+	width: 4rem;
+	height: 1.5rem;
+}
+
+.color_palette__color_option:focus {
+	box-shadow: 0 0 0 2pt #ff9d00;
+}
+
+.color_palette__popover .color_palette__popover__options {
+	display: grid;
+	grid-gap: 0.5rem;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+.color_palette__popover__wrapper {
+	padding: 0.5rem;
+}

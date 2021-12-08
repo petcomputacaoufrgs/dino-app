@@ -1,0 +1,19 @@
+.event {
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	background-color: var(--calendar-default-background);
+	width: 100%;
+}
+.event:not(:first-child) {
+	margin-top: 0.25rem;
+}
+
+.event p {
+	font-size: var(--default-font);
+	color: var(--light-color);
+	margin: 0;
+}
+
+.event_title {
+	font-weight: bold;
+}

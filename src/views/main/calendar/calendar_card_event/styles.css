@@ -1,0 +1,43 @@
+.card_header__wrapper {
+	justify-content: space-between;
+}
+
+.event_card__header .MuiTypography-root {
+	color: var(--calendar-event-cards-font-color);
+}
+.event_card__header .MuiPaper-root.MuiDialog-paper .MuiCardHeader-action {
+	padding-top: 0.6em;
+	align-self: flex-start;
+}
+
+.event_card__icon_button .dino_icon_button__button svg {
+	fill: var(--calendar-event-cards-font-color);
+}
+
+.event_svg_section {
+	padding: 0.4em 0;
+}
+.event_svg_section p {
+	margin-bottom: 0;
+}
+
+.event_svg_section__text {
+	display: inline-flex;
+	font-family: Poppins;
+}
+
+.event_svg_section__text .event_svg_section__text__value {
+	font-size: var(--default-small-font);
+	line-height: 18px;
+	color: #858585;
+}
+
+.event_card__content {
+	padding: 1.3rem;
+}
+
+.event_card__content__section_header {
+	font-family: Poppins;
+	font-size: var(--small-font);
+	color: #858585;
+}

@@ -120,6 +120,14 @@ export default interface LanguageBase {
 	DECEMBER: string
 	INVALID_MONTH: string
 	STRING_DATE_FORMAT: string
+	SUNDAY_ABREVIATION: string
+	MONDAY_ABREVIATION: string
+	TUESDAY_ABREVIATION: string
+	WEDNESDAY_ABREVIATION: string
+	THURSDAY_ABREVIATION: string
+	FRIDAY_ABREVIATION: string
+	SATURDAY_ABREVIATION: string
+	EMPTY_EVENT_LIST: string
 	DELETE_NOTE_ALERT_TITLE: string
 	DELETE_NOTE_ALERT_TEXT: string
 	LOADING: string
@@ -136,6 +144,7 @@ export default interface LanguageBase {
 	SELECT_FAQ_BUTTON: string
 	SELECT_TREATMENT_LOAD_CONTACT_GRANT: string
 	SAVE_CONTACT_ON_GOOGLE_GRANT: string
+	SAVE_CALENDAR_EVENT_GOOGLE_GRANT: string
 	SUNDAY_NAME: string
 	MONDAY_NAME: string
 	TUESDAY_NAME: string
@@ -161,8 +170,12 @@ export default interface LanguageBase {
 	HOUR: string
 	DAYS: string
 	DAY: string
+	MONTH: string
+	YEAR: string
 	AND: string
 	BEFORE: string
+	EVENT: string
+	EVENT_TYPES: string
 	ADD_EVENT_TITLE: string
 	EVENT_TYPE_LABEL: string
 	EVENT_NAME_LABEL: string
@@ -171,6 +184,7 @@ export default interface LanguageBase {
 	EVENT_END_DATE_LABEL: string
 	EVENT_END_TIME_LABEL: string
 	DATE_PICKER_DAY_FORMAT: string
+	EVENT_REPEAT: string
 	EVENT_REPEAT_NOT_REPEAT: string
 	EVENT_REPEAT_EVERY_DAY: string
 	EVENT_REPEAT_EVERY_WEEK: string
@@ -188,6 +202,8 @@ export default interface LanguageBase {
 	EVENT_ALERT_ALT: string
 	EVENT_ADD_ALARM_LABEL: string
 	EVENT_ADD_ALARM_TYPE_LABEL: string
+	EVENT_ALERT: string
+	EVENT_ALERT_NOT_DEFINED: string
 	EVENT_ADD_ALERT: string
 	EVENT_INVALID_ALARM_TYPE: string
 	EVENT_ALARM_ZERO: string
@@ -201,6 +217,7 @@ export default interface LanguageBase {
 	CLICK_TO_OPEN_MENU_ITEM: string
 	OPTIONS: string
 	EVENT_COLOR_LABEL: string
+	EVENT_COLOR_ICON: string
 	MAX: string
 	ADD_COLUMN_TEXT: string
 	COLUMN_ADD_LABEL: string
@@ -238,7 +255,8 @@ export default interface LanguageBase {
 	GRANT_FAIL_BY_EXTERNAL_SUCCESS: string
 	GRANT_DECLINED: string
 	GOOGLE_CONTACT_GRANT_TEXT: string
-	GOOGLE_CONTACT_GRANT_TITLE: string
+	GOOGLE_CALENDAR_GRANT_TEXT: string
+	GOOGLE_GRANT_TITLE: string
 	ARROW_BACK_ARIA_LABEL: string
 	GOOGLE_LOGIN_BUTTON_ARIA_LABEL: string
 	OPEN_DRAWER_BUTTON_ARIA_LABEL: string

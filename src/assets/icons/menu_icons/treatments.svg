@@ -1,10 +1,13 @@
-<svg width="92" height="77" viewBox="0 0 92 77" fill="none" xmlns="http://www.w3.org/2000/svg" id='treatment_icon'>
-<style type="text/css">
-	.st0{fill:#FFFFFF;}
-    .st1{stroke: white;}
-</style>
-<path class='st1' d="M13.4575 24.9741L35.9734 15.3157L45.829 38.291L23.3131 47.9495C16.9687 50.6711 9.6192 47.7341 6.89765 41.3896C4.17611 35.0451 7.11307 27.6957 13.4575 24.9741Z" stroke="white" stroke-width="3"/>
-<path class='st0' d="M40.4375 11.7689L64.3319 1.51911C71.4377 -1.52902 79.6691 1.76038 82.7172 8.86619C85.7653 15.972 82.4759 24.2034 75.3701 27.2515L51.4758 37.5013L40.4375 11.7689Z" fill="white"/>
-<circle class='st1' cx="72.4998" cy="57.4999" r="14" transform="rotate(16.1472 72.4998 57.4999)" stroke="white" stroke-width="3"/>
-<line class='st1' x1="57.6115" y1="53.1894" x2="87.3886" y2="61.8107" stroke="white" stroke-width="3"/>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+
+ <g>
+  <title>Layer 1</title>
+  <g stroke="null" id="svg_26">
+   <path stroke="#ffffff" id="svg_16" d="m68.48942,63.62874l-30.70038,21.49664l0,0c-16.95535,11.87227 -22.86755,32.68307 -13.20527,46.48224c9.66228,13.79917 31.24013,15.36123 48.19549,3.48897l30.70038,-21.49664l-34.99022,-49.97121z" stroke-width="10" fill="none"/>
+   <path stroke="#ffffff" id="svg_17" d="m120.66277,101.56817l30.70037,-21.49663l0,0c16.95536,-11.87227 22.86755,-32.68308 13.20527,-46.48224c-9.66229,-13.79917 -31.24013,-15.36124 -48.19549,-3.48897l-30.70037,21.49663l34.99022,49.97121z" stroke-width="10" fill="#fff"/>
+   <ellipse stroke="#ffffff" transform="matrix(0.787826 0.787826 -0.787826 0.787826 136.576 -66.427)" ry="25" rx="25" id="svg_19" cy="120.01734" cx="140.07909" stroke-width="7.5" fill="none"/>
+   <line stroke="#ffffff" id="svg_21" y2="159.74509" x2="132.10904" y1="117.2223" x1="172.65402" stroke-width="10" fill="none"/>
+  </g>
+ </g>
 </svg>

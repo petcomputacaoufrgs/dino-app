@@ -45,7 +45,7 @@ class MenuService {
 		{
 			image: CalendarSVG,
 			name: language.MENU_CALENDAR,
-			onClick: () => HistoryService.push(PathConstants.USER_SETTINGS),
+			onClick: () => HistoryService.push(PathConstants.USER_CALENDAR),
 		},
 		{
 			image: SettingsSVG,

@@ -1,0 +1,44 @@
+import React, { useState } from 'react'
+import { MenuItem, Select } from '@material-ui/core'
+import { useLanguage } from '../../../context/language'
+import { ReactComponent as RepeatSVG } from '../../../assets/icons/general_use/repeat.svg'
+import './styles.css'
+import { EventView } from '../../../types/calendar/view/CalendarView'
+
+const SelectRepeat: React.FC<{item?: EventView}> = (props) => {
+	const language = useLanguage()
+	const [selectedRepeat, setSelectedRepeat] = useState(props.item?.event.repeat)
+
+	const repeatList = [
+		language.data.EVENT_REPEAT_NOT_REPEAT,
+		language.data.EVENT_REPEAT_EVERY_DAY,
+		language.data.EVENT_REPEAT_EVERY_WEEK,
+		language.data.EVENT_REPEAT_EVERY_MONTH,
+		language.data.EVENT_REPEAT_EVERY_YEAR,
+	]
+
+	return (
+		<div className='repeat__selector dino__flex_row'>
+			<div className='svg__selector'>
+				<RepeatSVG />
+			</div>
+			<Select
+				value={selectedRepeat}
+				displayEmpty
+				renderValue={value =>
+					selectedRepeat || language.data.EVENT_REPEAT_ICON_ALT
+				}
+				onChange={e => setSelectedRepeat(e.target.value as string)}
+				fullWidth
+			>
+				{repeatList.map((option, index) => (
+					<MenuItem key={index} value={option}>
+						{option}
+					</MenuItem>
+				))}
+			</Select>
+		</div>
+	)
+}
+
+export default SelectRepeat

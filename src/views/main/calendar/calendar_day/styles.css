@@ -1,0 +1,53 @@
+.day_wrapper {
+	width: 95%;
+	margin: auto;
+	padding-bottom: 0.5em;
+	align-items: flex-start;
+}
+
+.day_left_column_wrapper {
+	width: 20%;
+	display: flex;
+	justify-content: space-around;
+	margin-right: 0.75em;
+}
+
+.day_number_wrapper {
+	height: 4rem;
+	width: 4rem;
+	text-align: center;
+}
+.day_number_wrapper.today {
+	border-radius: 50%;
+	background-color: #cbbab4;
+}
+
+.day_number_wrapper p {
+	color: var(--base-font-color);
+	margin: 0;
+}
+
+.week_day {
+	font-size: var(--big-font);
+}
+
+.month_day {
+	font-size: var(--large-font);
+}
+
+.day_event_list_wrapper {
+	width: 79%;
+	margin: auto;
+}
+
+.empty_event_list {
+	width: 100%;
+}
+
+.empty_event_list p {
+	font-size: var(--default-font);
+	color: var(--base-font-color);
+	text-align: center;
+	opacity: 0.5;
+	margin: 0;
+}

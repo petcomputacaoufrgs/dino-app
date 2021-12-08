@@ -242,7 +242,23 @@ export default class EN implements LanguageBase {
 
 	INVALID_MONTH = 'Invalid month'
 
-	STRING_DATE_FORMAT = 'MM DD, YYYY'
+	STRING_DATE_FORMAT = 'MM/DD/YYYY'
+
+	SUNDAY_ABREVIATION = 'Sun'
+
+	MONDAY_ABREVIATION = 'Mon'
+
+	TUESDAY_ABREVIATION = 'Tue'
+
+	WEDNESDAY_ABREVIATION = 'Wed'
+
+	THURSDAY_ABREVIATION = 'Thu'
+
+	FRIDAY_ABREVIATION = 'Fri'
+
+	SATURDAY_ABREVIATION = 'Sat'
+
+	EMPTY_EVENT_LIST = 'no scheduled events'
 
 	DELETE_NOTE_ALERT_TITLE = 'Are you sure you want to delete this note?'
 
@@ -278,6 +294,9 @@ export default class EN implements LanguageBase {
 		'Load essential contacts related to my treatment'
 
 	SAVE_CONTACT_ON_GOOGLE_GRANT = 'Save DinoApp contacts on my Google account'
+
+	SAVE_CALENDAR_EVENT_GOOGLE_GRANT =
+		'Save DinoApp calendar events on my Google account'
 
 	SUNDAY_NAME = 'Sunday'
 
@@ -317,23 +336,31 @@ export default class EN implements LanguageBase {
 
 	INVALID_EVENT_TYPE = 'Invalid event type'
 
-	MINUTES = 'minutes'
+	MINUTES = 'Minutes'
 
-	HOURS = 'hours'
+	HOURS = 'Hours'
 
-	DAYS = 'days'
+	DAYS = 'Days'
 
 	AND = 'and'
 
-	BEFORE = 'before'
+	BEFORE = 'Before'
 
-	MINUTE = 'minute'
+	MINUTE = 'Minute'
 
-	HOUR = 'hour'
+	HOUR = 'Hour'
 
-	DAY = 'day'
+	DAY = 'Day'
 
-	ADD_EVENT_TITLE = 'New Event'
+	MONTH = 'Month'
+
+	YEAR = 'Year'
+
+	EVENT = 'event'
+
+	EVENT_TYPES = 'Event Types'
+
+	ADD_EVENT_TITLE = 'Add Event'
 
 	EVENT_TYPE_LABEL = 'Event Type'
 
@@ -348,6 +375,8 @@ export default class EN implements LanguageBase {
 	EVENT_END_TIME_LABEL = 'End time'
 
 	DATE_PICKER_DAY_FORMAT = 'MM/dd/yyyy'
+
+	EVENT_REPEAT = 'Repeat'
 
 	EVENT_REPEAT_NOT_REPEAT = 'Not repeat'
 
@@ -371,7 +400,7 @@ export default class EN implements LanguageBase {
 
 	EVENT_DATE_ICON_ALT = 'Choose event date'
 
-	EVENT_REPEAT_ICON_ALT = 'Choose event repetition'
+	EVENT_REPEAT_ICON_ALT = 'Event repetition'
 
 	EVENT_REPEAT_END_DATE_LABEL = 'Repetition end'
 
@@ -382,6 +411,10 @@ export default class EN implements LanguageBase {
 	EVENT_ADD_ALARM_LABEL = 'Time'
 
 	EVENT_ADD_ALARM_TYPE_LABEL = 'Time measure'
+
+	EVENT_ALERT = 'Alert'
+
+	EVENT_ALERT_NOT_DEFINED = 'Notification not defined'
 
 	EVENT_ADD_ALERT = 'Add notification'
 
@@ -410,6 +443,8 @@ export default class EN implements LanguageBase {
 	OPTIONS = 'Options'
 
 	EVENT_COLOR_LABEL = 'Selected color'
+
+	EVENT_COLOR_ICON = 'Selected icon'
 
 	MAX = 'max. '
 
@@ -471,7 +506,7 @@ export default class EN implements LanguageBase {
 
 	CONTACT_CLEAR_BUTTON_ARIA_LABEL = 'Click here to clean'
 
-	COLOR_THEME_SELECTION_ARIA_LABEL = 'Click here to change the contact color'
+	COLOR_THEME_SELECTION_ARIA_LABEL = "Click here to change the item's color"
 
 	DIALOG_AGREE_TEXT = 'Accept'
 
@@ -498,9 +533,12 @@ export default class EN implements LanguageBase {
 	GRANT_DECLINED = 'You can active this at any time.'
 
 	GOOGLE_CONTACT_GRANT_TEXT =
-		"We would like permissions to save and edit your DinoApp's contacts in your Google account. So you will have your emergency contacts in several different applications. We will never read or modify other contacts outside DinoApp's contacts."
+		"We would like permissions to save and synchronize your DinoApp's contacts to your Google Contacts account. We will never read or modify other contacts outside DinoApp's contacts."
 
-	GOOGLE_CONTACT_GRANT_TITLE = 'Your contacts anywhere'
+	GOOGLE_CALENDAR_GRANT_TEXT =
+		"We would like permissions to save and synchronize your DinoApp's events to your Google Calendar account. We will never read or modify other events outside DinoApp's events."
+
+	GOOGLE_GRANT_TITLE = 'Your google account synchronized'
 
 	ARROW_BACK_ARIA_LABEL = 'Return to last page'
 

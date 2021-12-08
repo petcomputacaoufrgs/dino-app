@@ -1,0 +1,15 @@
+.time__selector {
+	margin-top: 2rem;
+}
+
+.drop_down__flex_row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.time__selector .time__wrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 8px;
+}

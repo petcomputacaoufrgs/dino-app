@@ -2,7 +2,6 @@ import Dexie from 'dexie'
 import NoteEntity from '../types/note/database/NoteEntity'
 import NoteColumnEntity from '../types/note/database/NoteColumnEntity'
 import LogAppErrorEntity from '../types/log_app_error/database/LogAppErrorEntity'
-import CalendarEventEntity from '../types/calendar/database/CalendarEventEntity'
 import GlossaryItemEntity from '../types/glossary/database/GlossaryItemEntity'
 import UserEntity from '../types/user/database/UserEntity'
 import ContactEntity from '../types/contact/database/ContactEntity'
@@ -19,6 +18,8 @@ import { KidsSpaceSettingsEntity } from '../types/kids_space/database/KidsSpaceS
 import StaffEntity from '../types/staff/database/StaffEntity'
 import EssentialPhoneEntity from '../types/contact/database/EssentialPhoneEntity'
 import ReportEntity from '../types/report/database/ReportEntity'
+import EventEntity from '../types/calendar/database/EventEntity'
+import EventTypeEntity from '../types/calendar/database/EventTypeEntity'
 
 const DATABASE_NAME = 'DinoDatabase'
 const DATABASE_VERSION = 31
@@ -29,7 +30,6 @@ class Database extends Dexie {
 	note: Dexie.Table<NoteEntity, number>
 	noteColumn: Dexie.Table<NoteColumnEntity, number>
 	logAppError: Dexie.Table<LogAppErrorEntity, number>
-	calendarEvent: Dexie.Table<CalendarEventEntity, number>
 	glossary: Dexie.Table<GlossaryItemEntity, number>
 	contact: Dexie.Table<ContactEntity, number>
 	essentialContact: Dexie.Table<EssentialContactEntity, number>
@@ -44,6 +44,8 @@ class Database extends Dexie {
 	tab: Dexie.Table<TabEntity, number>
 	kidsSpaceSettings: Dexie.Table<KidsSpaceSettingsEntity, number>
 	report: Dexie.Table<ReportEntity, number>
+	event: Dexie.Table<EventEntity, number>
+	eventType: Dexie.Table<EventTypeEntity, number>
 
 	constructor() {
 		super(DATABASE_NAME)
@@ -75,11 +77,11 @@ class Database extends Dexie {
 			treatment: generateSynchronizableTableString('name'),
 			googleScope: generateSynchronizableTableString('name'),
 			kidsSpaceSettings: generateSynchronizableTableString(),
-			report: generateSynchronizableTableString('userId'),
+			report: generateSynchronizableTableString(),
+			event: generateSynchronizableTableString(),
+			eventType: generateSynchronizableTableString(),
 			auth: '++id',
 			logAppError: '++id,title,file,error,date',
-			calendarEvent:
-				'++id,external_id,name,description,color,init_date,end_date,reminder_alarm_ms,type',
 			tab: '++id,isMain',
 		})
 
@@ -97,12 +99,13 @@ class Database extends Dexie {
 		this.faqItem = this.table('faqItem')
 		this.treatmentQuestion = this.table('treatmentQuestion')
 		this.logAppError = this.table('logAppError')
-		this.calendarEvent = this.table('calendarEvent')
 		this.treatment = this.table('treatment')
 		this.googleScope = this.table('googleScope')
 		this.tab = this.table('tab')
 		this.kidsSpaceSettings = this.table('kidsSpaceSettings')
 		this.report = this.table('report')
+		this.event = this.table('event')
+		this.eventType = this.table('eventType')
 	}
 }
 

@@ -1,0 +1,9 @@
+.event_type__list__item svg.event_type__icon {
+	width: 3rem;
+	height: 3rem;
+}
+
+.event_type_item__wrapper {
+	align-items: center;
+	margin-bottom: 1rem;
+}

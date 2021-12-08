@@ -40,6 +40,9 @@ body .MuiInput-underline:before {
 body .MuiInputBase-root {
 	font-size: var(--default-font);
 }
+body .MuiPaper-rounded {
+	border-radius: 10px;
+}
 
 /* para as labels dos textos deixarem de ser cortadas verticalmente */
 body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
@@ -47,8 +50,11 @@ body .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-animated {
 	overflow-x: clip;
 }
 
+/* TODO */
 .MuiPaper-root.MuiMenu-paper,
-.MuiPaper-root.MuiDialog-paper {
+.MuiPaper-root.MuiDialog-paper,
+.MuiPaper-root.MuiPopover-paper {
+	/* .MuiAutocomplete-noOptions { TODO see this stuff*/
 	background-color: var(--dialog-background);
 	color: var(--base-font-color);
 }
@@ -124,9 +130,9 @@ body .MuiCheckbox-colorSecondary.Mui-checked {
 	color: var(--hover-link-font-color);
 }
 
-body .MuiFormHelperText-root.MuiFormHelperText-marginDense {
+/* body .MuiFormHelperText-root.MuiFormHelperText-marginDense {
 	color: var(--base-font-color);
-}
+} */
 
 @media (orientation: landscape) {
 	body .MuiListItemText-root .MuiTypography-body1 {

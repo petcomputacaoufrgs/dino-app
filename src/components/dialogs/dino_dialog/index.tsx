@@ -17,6 +17,7 @@ const DinoDialog: React.FC<DinoDialogProps> = ({
 	children,
 	labelSave,
 	labelClose,
+	fullScreen,
 }) => {
 	const language = useLanguage()
 
@@ -35,6 +36,7 @@ const DinoDialog: React.FC<DinoDialogProps> = ({
 			onClose={onClose}
 			TransitionComponent={TransitionSlide}
 			fullWidth
+			fullScreen={fullScreen}
 			disableBackdropClick
 			disableEscapeKeyDown
 		>

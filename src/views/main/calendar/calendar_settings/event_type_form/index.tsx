@@ -5,10 +5,9 @@ import CalendarEventTypeService from '../../../../../services/calendar/EventType
 import EventTypeEntity from '../../../../../types/calendar/database/EventTypeEntity'
 import DinoDialog from '../../../../../components/dialogs/dino_dialog'
 import { DinoTextfield } from '../../../../../components/textfield'
-import './styles.css'
 import { ColorPalette } from '../../../../../components/color_pallete'
 import { getAllIcons } from '../../../../../services/calendar/EventTypeViewService'
-import ColorConstants from '../../../../../constants/app/ColorConstants'
+import './styles.css'
 
 interface CalendarEventTypeFormProps {
 	open: boolean

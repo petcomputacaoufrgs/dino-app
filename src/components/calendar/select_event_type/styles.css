@@ -1,3 +1,8 @@
-.event_type__selector{
-    margin-top: 1rem;
+.event_type__selector {
+	margin-top: 1rem;
+}
+.event_type__selector .event_type__icon,
+.event_type__selector__menu_item .event_type__icon {
+	margin-right: 0.5rem;
+	margin-botttom: 2px;
 }

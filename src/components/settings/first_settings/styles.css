@@ -41,3 +41,8 @@
 .first_settings__message_dialog .font-size__selector {
 	margin-top: 20px;
 }
+
+.first_settings__message_dialog .text_wrap {
+	white-space: pre-wrap;
+	text-align: justify;
+}

@@ -92,7 +92,7 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 				title={language.data.FIRST_LOGIN_WELCOME_MESSAGE_HEADER}
 				size='small'
 			/>
-			<p>{language.data.FIRST_LOGIN_WELCOME_MESSAGE}</p>
+			<p className='text_wrap'>{language.data.FIRST_LOGIN_WELCOME_MESSAGE}</p>
 			<h6 className='citation'>— {language.data.DINOAPP_TEAM}</h6>
 		</div>
 	)
@@ -109,8 +109,10 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 				title={language.data.FIRST_LOGIN_DONE_MESSAGE}
 				size='small'
 			/>
-			<p>{language.data.FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE}</p>
-			<p>{language.data.FIRST_LOGIN_CONFIGURATIONS_MESSAGE}</p>
+			<p className='text_wrap'>
+				{language.data.FIRST_LOGIN_THANK_YOU_FOR_JOINING_MESSAGE}
+				{language.data.FIRST_LOGIN_CONFIGURATIONS_MESSAGE}
+			</p>
 		</div>
 	)
 

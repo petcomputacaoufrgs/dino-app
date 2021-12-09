@@ -9,7 +9,8 @@ body .MuiButton-label,
 body .MuiFormLabel-root,
 body .MuiInputBase-root,
 .dino_dialog__header,
-.dino_dialog__content {
+.dino_dialog__content,
+.first_settings__message_dialog {
 	font-family: var(--font-base);
 	/* text-align: justify; */
 	color: var(--base-font-color);

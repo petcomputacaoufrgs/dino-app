@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PathConstants from '../../../../constants/app/PathConstants'
 import HistoryService from '../../../../services/history/HistoryService'
 import { startGame } from './engine/index'
@@ -7,6 +7,9 @@ import { useLanguage } from '../../../../context/language'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
+import { DinoRecord } from '../../../../components/record'
+import GameRecordService from '../../../../storage/local_storage/GameRecordService'
+import { GameRecordEnum } from '../../../../storage/local_storage/LS_Enum'
 
 const FluteSound = require('../../../../assets/kids_space/games/musical_dino/flute.mp3')
 const MarimbaSound = require('../../../../assets/kids_space/games/musical_dino/marimba.mp3')
@@ -16,6 +19,11 @@ const StringSound = require('../../../../assets/kids_space/games/musical_dino/st
 const MusicalDino: React.FC = () => {
 	const language = useLanguage()
 	const [openDialog, setOpenDialog] = useState(false)
+	const [record, setRecord] = useState(0)
+
+	useEffect(() => {
+		setRecord(GameRecordService.getRecord(GameRecordEnum.DINO_MUSICAL))
+	}, [])
 
 	function handleWin() {
 		setOpenDialog(true)
@@ -28,7 +36,15 @@ const MusicalDino: React.FC = () => {
 
 	function handleRestart() {
 		setOpenDialog(false)
-		startGame(handleWin)
+		startGame(handleWin, handleWrongPlay)
+	}
+
+	function handleWrongPlay(score: number) {
+		console.log(score, record)
+		if (score > record) {
+			setRecord(score)
+			GameRecordService.setRecord(GameRecordEnum.DINO_MUSICAL, score)
+		}
 	}
 
 	return (
@@ -54,8 +70,9 @@ const MusicalDino: React.FC = () => {
 				<p>{language.data.PLAY_AGAIN_MESSAGE}</p>
 			</GameOverDialog>
 			<div className='musical_dino__header'>
-				<ArrowBack kids/>
+				<ArrowBack kids />
 				<div id='musical_dino__header__turn'>0</div>
+				<DinoRecord value={record} />
 			</div>
 			<div className='musical_dino__dino_song_board'>
 				<div className='musical_dino__dino_song_board__top'>
@@ -91,7 +108,7 @@ const MusicalDino: React.FC = () => {
 				<button
 					className='musical_dino__start_game__button'
 					id='musical_dino__start'
-					onClick={() => startGame(handleWin)}
+					onClick={() => startGame(handleWin, handleWrongPlay)}
 				>
 					{language.data.START_GAME}
 				</button>

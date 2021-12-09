@@ -1,5 +1,6 @@
 import React from 'react'
 import { useLanguage } from '../../context/language'
+import './styles.css'
 
 export const DinoRecord: React.FC<{ value: number }> = props => {
 	const language = useLanguage()

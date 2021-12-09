@@ -1,0 +1,9 @@
+.record_div {
+	padding: 1em;
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	color: var(--light-color);
+	text-shadow: 2px 4px 4px rgb(17 17 17 / 84%);
+	font-weight: bold;
+}

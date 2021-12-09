@@ -6,7 +6,8 @@
 	align-items: center;
 }
 .dino_slider .record_div {
-	color: var(--dark-color-transparency);
+	color: var(--dark-color);
+	text-shadow: none;
 }
 
 .dino_slider .dino_slider__board {
@@ -31,5 +32,5 @@
 
 .dino_slider__switch .dino_switch__form p {
 	margin-right: 0.2rem;
-	color: var(--dark-color-transparency);
+	color: var(--dark-color);
 }

@@ -5,12 +5,24 @@
 	background-color: var(--musical-dino-game-background-color);
 	background-image: url("data:image/svg+xml,%3Csvg width='84' height='16' viewBox='0 0 84 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M78 7V4h-2v3h-3v2h3v3h2V9h3V7h-3zM30 7V4h-2v3h-3v2h3v3h2V9h3V7h-3zM10 0h2v16h-2V0zm6 0h4v16h-4V0zM2 0h4v16H2V0zm50 0h2v16h-2V0zM38 0h2v16h-2V0zm28 0h2v16h-2V0zm-8 0h6v16h-6V0zM42 0h6v16h-6V0z' fill='%23febf95' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
+.musical_dino .record_div {
+	color: #ae2276;
+	text-shadow: none;
+	padding: 0 1em;
+}
 
 #musical_dino__header__turn {
-	color: var(--dark-color);
-	font-size: var(--titan-font);
-	margin-left: auto;
-	padding: 0.5rem;
+	color: var(--light-color);
+	font-size: var(--very-large-font);
+	margin: auto;
+	background-color: var(--musical-dino-game-button-background-color);
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 1em;
 }
 
 .musical_dino__header {
@@ -69,11 +81,11 @@
 }
 
 .musical_dino__dino {
-	margin: 2vmin;
+	margin: 6vmin;
 }
 
 .musical_dino__dino svg {
-	width: 25vh;
+	width: 20vh;
 }
 
 .musical_dino__dino_moving svg {
@@ -83,170 +95,163 @@
 }
 
 .musical_dino__dino_light_pink .dark_color {
-	fill: #9D497A;
+	fill: #9d497a;
 }
 
 .musical_dino__dino_light_pink .main_color {
-	fill: #D161A2;
+	fill: #d161a2;
 }
 
 .musical_dino__dino_light_pink .light_color {
-	fill: #E8B0D1;
+	fill: #e8b0d1;
 }
 
 .musical_dino__dino_light_pink .details_color {
-	fill: #833D65;
+	fill: #833d65;
 }
 
 .musical_dino__dino_light_pink .scale_color {
-	fill: #7A0149;
+	fill: #7a0149;
 }
 
-
 .musical_dino__dino_orange .dark_color {
-	fill: #BE7240;
+	fill: #be7240;
 }
 
 .musical_dino__dino_orange .main_color {
-	fill: #FD9855;
+	fill: #fd9855;
 }
 
 .musical_dino__dino_orange .light_color {
-	fill: #FECCAA;
+	fill: #feccaa;
 }
 
 .musical_dino__dino_orange .details_color {
-	fill: #9E5F35;
+	fill: #9e5f35;
 }
 
 .musical_dino__dino_orange .scale_color {
-	fill: #9D497A;
+	fill: #9d497a;
 }
 
-
 .musical_dino__dino_red .dark_color {
-	fill: #9F2100;
+	fill: #9f2100;
 }
 
 .musical_dino__dino_red .main_color {
-	fill: #D42C00;
+	fill: #d42c00;
 }
 
 .musical_dino__dino_red .light_color {
-	fill: #EA9580;
+	fill: #ea9580;
 }
 
 .musical_dino__dino_red .details_color {
-	fill: #851B00;
+	fill: #851b00;
 }
 
 .musical_dino__dino_red .scale_color {
-	fill: #851B00;
+	fill: #851b00;
 }
 
-
 .musical_dino__dino_dark_pink .dark_color {
-	fill: #7A0149;
+	fill: #7a0149;
 }
 
 .musical_dino__dino_dark_pink .main_color {
-	fill: #A20161;
+	fill: #a20161;
 }
 
 .musical_dino__dino_dark_pink .light_color {
-	fill: #D180B0;
+	fill: #d180b0;
 }
 
 .musical_dino__dino_dark_pink .details_color {
-	fill: #65013D;
+	fill: #65013d;
 }
 
 .musical_dino__dino_dark_pink .scale_color {
-	fill: #FD9855;
+	fill: #fd9855;
 }
 
-
 .musical_dino__dino_light_pink.musical_dino__dino_moving .dark_color {
-	fill: #B6779B;
+	fill: #b6779b;
 }
 
 .musical_dino__dino_light_pink.musical_dino__dino_moving .main_color {
-	fill: #DD89B9;
+	fill: #dd89b9;
 }
 
 .musical_dino__dino_light_pink.musical_dino__dino_moving .light_color {
-	fill: #EEC4DD;
+	fill: #eec4dd;
 }
 
 .musical_dino__dino_light_pink.musical_dino__dino_moving .details_color {
-	fill: #A26E8C;
+	fill: #a26e8c;
 }
 
 .musical_dino__dino_light_pink.musical_dino__dino_moving .scale_color {
-	fill: #9B4177;
+	fill: #9b4177;
 }
 
-
 .musical_dino__dino_orange.musical_dino__dino_moving .dark_color {
-	fill: #CE9570;
+	fill: #ce9570;
 }
 
 .musical_dino__dino_orange.musical_dino__dino_moving .main_color {
-	fill: #FEB280;
+	fill: #feb280;
 }
 
 .musical_dino__dino_orange.musical_dino__dino_moving .light_color {
-	fill: #FED9BF;
+	fill: #fed9bf;
 }
 
 .musical_dino__dino_orange.musical_dino__dino_moving .details_color {
-	fill: #B68768;
+	fill: #b68768;
 }
 
 .musical_dino__dino_orange.musical_dino__dino_moving .scale_color {
-	fill: #B6779B;
+	fill: #b6779b;
 }
 
-
 .musical_dino__dino_red.musical_dino__dino_moving .dark_color {
-	fill: #B75940;
+	fill: #b75940;
 }
 
 .musical_dino__dino_red.musical_dino__dino_moving .main_color {
-	fill: #DF6140;
+	fill: #df6140;
 }
 
 .musical_dino__dino_red.musical_dino__dino_moving .light_color {
-	fill: #EFB0A0;
+	fill: #efb0a0;
 }
 
 .musical_dino__dino_red.musical_dino__dino_moving .details_color {
-	fill: #A45440;
+	fill: #a45440;
 }
 
 .musical_dino__dino_red.musical_dino__dino_moving .scale_color {
-	fill: #A45440;
+	fill: #a45440;
 }
 
-
 .musical_dino__dino_dark_pink.musical_dino__dino_moving .dark_color {
-	fill: #9B4177;
+	fill: #9b4177;
 }
 
 .musical_dino__dino_dark_pink.musical_dino__dino_moving .main_color {
-	fill: #B94189;
+	fill: #b94189;
 }
 
 .musical_dino__dino_dark_pink.musical_dino__dino_moving .light_color {
-	fill: #DDA0C4;
+	fill: #dda0c4;
 }
 
 .musical_dino__dino_dark_pink.musical_dino__dino_moving .details_color {
-	fill: #8C416E;
+	fill: #8c416e;
 }
 
 .musical_dino__dino_dark_pink.musical_dino__dino_moving .scale_color {
-	fill: #FEB280;
+	fill: #feb280;
 }
 
 @keyframes dino-rotation-animation {

@@ -10,4 +10,5 @@ export enum GameRecordEnum {
 	DINO_RUNNER = 'record_dr',
 	DINO_SLIDER = 'record_sldr',
 	DINO_SNAKE = 'record_snk',
+	DINO_MUSICAL = 'record_m',
 }

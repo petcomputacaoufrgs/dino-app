@@ -5,7 +5,7 @@ const TOTAL_TURNS = 20
 let allPlaysOrder: number[] = []
 let playerOrder: number[] = []
 let currentDinoDisplaying: number
-let currentTurn: number
+let score: number
 let gameCanContinue: boolean
 let compTurn: boolean
 let gameWon: boolean
@@ -21,6 +21,7 @@ let turnDiv: HTMLElement | null
 
 // Functions variables
 let onWin: () => void
+let onSetPlayerRecord: (score: number) => void
 // //#endregion
 
 //#region Functions
@@ -28,8 +29,12 @@ let onWin: () => void
  * @description initialize game variables
  * @param handleWin callback for win game event
  */
-export const startGame = (handleWin: () => void) => {
+export const startGame = (
+	handleWin: () => void,
+	handleSetPlayerRecord: (score: number) => void,
+) => {
 	onWin = handleWin
+	onSetPlayerRecord = handleSetPlayerRecord
 	setHTMLElements()
 	addOnClickHandler()
 
@@ -51,7 +56,7 @@ const setHTMLElements = () => {
 		document.getElementById('musical_dino__topleft'),
 		document.getElementById('musical_dino__topright'),
 		document.getElementById('musical_dino__bottomleft'),
-		document.getElementById('musical_dino__bottomright')
+		document.getElementById('musical_dino__bottomright'),
 	]
 	startButton = document.getElementById('musical_dino__start')
 	turnDiv = document.getElementById('musical_dino__header__turn')
@@ -94,7 +99,7 @@ const setInitialValuesToVariables = () => {
 	gameWon = false
 	playerOrder = []
 	currentDinoDisplaying = 0
-	currentTurn = 1
+	score = 1
 	gameCanContinue = true
 	compTurn = true
 	allPlaysOrder = fillArrayRandomly()
@@ -102,7 +107,7 @@ const setInitialValuesToVariables = () => {
 }
 
 /**
- * @description fill array with numbers between 1 and 4 
+ * @description fill array with numbers between 1 and 4
  */
 const fillArrayRandomly = () => {
 	const newArray: number[] = []
@@ -117,7 +122,7 @@ const fillArrayRandomly = () => {
  */
 const displayScore = () => {
 	if (turnDiv) {
-		turnDiv.innerHTML = currentTurn.toString()
+		turnDiv.innerHTML = (score - 1).toString()
 	}
 }
 
@@ -125,7 +130,7 @@ const displayScore = () => {
  * @description display computer's turn
  */
 const gameTurn = () => {
-	if (currentDinoDisplaying === currentTurn) {
+	if (currentDinoDisplaying === score) {
 		clearInterval(intervalId!)
 		compTurn = false
 		clearColor()
@@ -146,7 +151,9 @@ const gameTurn = () => {
  * @param index index of witch dino button need to be animated
  */
 const animateDino = (index: number) => {
-	const audio = document.getElementById(`musical_dino__clip${index + 1}`) as HTMLAudioElement | null
+	const audio = document.getElementById(
+		`musical_dino__clip${index + 1}`,
+	) as HTMLAudioElement | null
 	if (audio) {
 		audio.play()
 	}
@@ -175,7 +182,10 @@ const flashColor = () => {
  * @description verify current game status
  */
 const checkGameStatus = () => {
-	if (playerOrder[playerOrder.length - 1] !== allPlaysOrder[playerOrder.length - 1]) {
+	if (
+		playerOrder[playerOrder.length - 1] !==
+		allPlaysOrder[playerOrder.length - 1]
+	) {
 		gameCanContinue = false
 	}
 
@@ -189,17 +199,17 @@ const checkGameStatus = () => {
 		return
 	}
 
-	if (currentTurn === playerOrder.length && gameCanContinue && !gameWon) {
+	if (score === playerOrder.length && gameCanContinue && !gameWon) {
 		handlePlayerCorrectPlay()
 		return
 	}
 }
 
 /**
- * @description set variables to user's correct play 
+ * @description set variables to user's correct play
  */
 const handlePlayerCorrectPlay = () => {
-	currentTurn++
+	score++
 	displayScore()
 	playerOrder = []
 	currentDinoDisplaying = 0
@@ -211,8 +221,11 @@ const handlePlayerCorrectPlay = () => {
  * @description set variables to user's wrong play
  */
 const handlePlayerWrongPlay = () => {
+	onSetPlayerRecord(score - 1)
 	flashColor()
 	currentDinoDisplaying = 0
+	score = 1
+	displayScore()
 	playerOrder = []
 	gameCanContinue = true
 	compTurn = true

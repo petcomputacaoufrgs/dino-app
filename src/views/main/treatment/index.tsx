@@ -12,7 +12,7 @@ import './styles.css'
 import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
 import { useStaffData } from '../../../context/staff_data'
-import FilterService from '../../../storage/local_storage/filter/FilterService'
+import FilterService from '../../../storage/local_storage/FilterService'
 
 const Treatment: React.FC<{ ref: React.Ref<unknown> }> = () => {
 	const language = useLanguage()

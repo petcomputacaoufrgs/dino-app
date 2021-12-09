@@ -31,7 +31,7 @@ import DinoFilterList from '../../../components/list_components/filter_list'
 import ListTitle from '../../../components/list_components/list_title'
 import CRUDEnum from '../../../types/enum/CRUDEnum'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import FilterService from '../../../storage/local_storage/filter/FilterService'
+import FilterService from '../../../storage/local_storage/FilterService'
 import ContactEntity from '../../../types/contact/database/ContactEntity'
 
 export const renderIcon = (contact: ContactType) => {

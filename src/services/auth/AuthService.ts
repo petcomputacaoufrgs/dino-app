@@ -29,7 +29,7 @@ import PermissionEnum from '../../types/enum/PermissionEnum'
 import PathConstants from '../../constants/app/PathConstants'
 import HistoryService from '../history/HistoryService'
 import APIHTTPPathsConstants from '../../constants/api/APIHTTPPathsConstants'
-import FilterService from '../../storage/local_storage/filter/FilterService'
+import FilterService from '../../storage/local_storage/FilterService'
 
 class AuthService extends UpdatableService {
 	private logoutCallbacks: LogoutCallback[]

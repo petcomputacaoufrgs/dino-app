@@ -1,14 +1,14 @@
-import { LanguageContextType } from '../../../context/language'
+import { LanguageContextType } from '../../context/language'
 import {
 	isEssential,
 	isUniversalEssential,
-} from '../../../services/contact/ContactViewService'
-import { ContactType } from '../../../types/contact/view/ContactView'
-import TreatmentView from '../../../types/faq/view/TreatmentView'
-import FilterType from '../../../types/filter/Filter'
-import ArrayUtils from '../../../utils/ArrayUtils'
-import BaseLocalStorage from '../BaseLocalStorage'
-import FilterEnum from './FilterEnum'
+} from '../../services/contact/ContactViewService'
+import { ContactType } from '../../types/contact/view/ContactView'
+import TreatmentView from '../../types/faq/view/TreatmentView'
+import FilterType from '../../types/filter/Filter'
+import ArrayUtils from '../../utils/ArrayUtils'
+import BaseLocalStorage from './BaseLocalStorage'
+import { FilterEnum } from './LS_Enum'
 
 class FilterService extends BaseLocalStorage {
 	clear = () => Object.values(FilterEnum).forEach(f => this.remove(f))

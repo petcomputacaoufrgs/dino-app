@@ -1,15 +1,16 @@
 export interface HandleSwipeProps {
-  isOffline: (piece: number, iterator: number) => boolean,
-  selectLinePieces: (pieces: number[], iterator?: number) => void,
-  nextPieceFrom: (pieces: number[]) => void
+	isOffline: (piece: number, iterator: number) => boolean
+	selectLinePieces: (pieces: number[], iterator?: number) => void
+	nextPieceFrom: (pieces: number[]) => void
 }
 
 export interface SliderPieceProps {
-  reduced: boolean,
-  value: number,
+	reduced: boolean
+	value: number
 }
 
-export default interface SliderBoardProps { 
-  restart: boolean, onGameOver: () => void 
-  reduced: boolean
+export default interface SliderBoardProps {
+	restart: boolean
+	onGameOver: (score: number) => void
+	reduced: boolean
 }

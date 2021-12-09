@@ -22,7 +22,7 @@ let isJumping = false
 let isGameOver = false
 
 // Functions to handle events
-let onGameEnd: () => void
+let onGameEnd: (score: number) => void
 let handleStopBackgroundEngine: () => void
 //#endregion
 
@@ -30,13 +30,13 @@ let handleStopBackgroundEngine: () => void
  * @description set all HTML elements and events
  * @param handleGameEnd div where the game renders
  * @param dinoContainer div where the game renders
- * @param dinoGrid div containg the game grid 
+ * @param dinoGrid div containg the game grid
  * @param character div containg the character
  * @param dinoScoreBoard div containing the score display
  * @return list with the functions to handle the start of game and to handle the stop of animation
  */
 export function startDinoRunnerGame(
-	handleGameEnd: () => void,
+	handleGameEnd: (score: number) => void,
 	dinoContainer: HTMLDivElement,
 	dinoGrid: HTMLDivElement,
 	character: HTMLDivElement,
@@ -53,7 +53,12 @@ export function startDinoRunnerGame(
 /**
  * @description set all divs to their respective variables
  */
-const setHTMLElements = (character, dinoGrid, dinoContainer, dinoScoreBoard) => {
+const setHTMLElements = (
+	character,
+	dinoGrid,
+	dinoContainer,
+	dinoScoreBoard,
+) => {
 	dino = character
 	grid = dinoGrid
 	container = dinoContainer
@@ -133,7 +138,6 @@ async function runGame() {
 	let obstaclePosition = INITIAL_OBSTACLE_POSITION
 	let nextObstacleGenerated = false
 
-
 	if (grid) {
 		grid.appendChild(obstacle)
 
@@ -145,11 +149,12 @@ async function runGame() {
 
 			if (isGameOver) break
 
-			const hasCollision = obstaclePosition > -160 && obstaclePosition < -50 && dinoYPosition < 50
+			const hasCollision =
+				obstaclePosition > -160 && obstaclePosition < -50 && dinoYPosition < 50
 			if (hasCollision) {
 				isGameOver = true
 				handleStopBackgroundEngine()
-				onGameEnd()
+				onGameEnd(score)
 				break
 			}
 
@@ -169,7 +174,7 @@ async function runGame() {
 
 /**
  * @description set an interval to call the next obstacle
- * @return obstacle div created 
+ * @return obstacle div created
  */
 const createObstacle = () => {
 	const obstacle = document.createElement('div')

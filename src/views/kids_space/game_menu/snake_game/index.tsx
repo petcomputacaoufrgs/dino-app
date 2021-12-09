@@ -7,12 +7,19 @@ import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/gam
 
 import './styles.css'
 import ArrowBack from '../../../../components/arrow_back'
+import GameRecordService from '../../../../storage/local_storage/GameRecordService'
+import { GameRecordEnum } from '../../../../storage/local_storage/LS_Enum'
+import { DinoRecord } from '../../../../components/record'
 
 const SnakeGame: React.FC = () => {
 	const language = useLanguage()
 	const [openDialog, setOpenDialog] = useState(false)
+	const [record, setRecord] = useState(0)
 
-	useEffect(() => starGame(handleGameOver), [])
+	useEffect(() => {
+		setRecord(GameRecordService.getRecord(GameRecordEnum.DINO_SNAKE))
+		starGame(handleGameOver)
+	}, [])
 
 	const handleClose = () => {
 		setOpenDialog(false)
@@ -24,8 +31,13 @@ const SnakeGame: React.FC = () => {
 		starGame(handleGameOver)
 	}
 
-	const handleGameOver = () => {
+	const handleGameOver = (score?: number) => {
 		setOpenDialog(true)
+		console.log(score)
+		if (score && score > record) {
+			setRecord(score)
+			GameRecordService.setRecord(GameRecordEnum.DINO_SNAKE, score)
+		}
 	}
 
 	return (
@@ -38,6 +50,7 @@ const SnakeGame: React.FC = () => {
 				<p>{language.data.SNAKE_GAME_GAME_OVER_MSG_1}</p>
 			</GameOverDialog>
 			<ArrowBack kids />
+			<DinoRecord value={record} />
 			<div id='snake_game__score_board' />
 			<div id='snake_game__game_board' />
 		</div>

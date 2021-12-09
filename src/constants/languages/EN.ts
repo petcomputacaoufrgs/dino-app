@@ -106,6 +106,8 @@ export default class EN implements LanguageBase {
 
 	MENU_STAFF_MODERATION = 'Staff Moderation'
 
+	GAME_RECORD = 'Record'
+
 	TREATMENTS = 'Treatments'
 
 	TITLE = 'Title'

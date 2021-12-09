@@ -21,7 +21,7 @@ let firstRender = true
 let snakeSpeed = 400
 
 //External function
-let onGameOver: () => void
+let onGameOver: (score: number) => void
 
 //#endregion
 
@@ -59,7 +59,7 @@ function setDefaultVars(handleGameOver: () => void) {
 function main() {
 	// Verify if is a game over scenario
 	if (gameOver) {
-		onGameOver()
+		onGameOver(score)
 		return
 	}
 

@@ -11,3 +11,11 @@
 	height: 3rem;
 	fill: var(--light-color);
 }
+
+.record_div {
+	padding: 1em;
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	color: var(--light-color);
+}

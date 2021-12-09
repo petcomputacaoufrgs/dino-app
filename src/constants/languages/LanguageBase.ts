@@ -50,6 +50,7 @@ export default interface LanguageBase {
 	MENU_CALENDAR: string
 	ABOUT_US: string
 	MENU_STAFF_MODERATION: string
+	GAME_RECORD: string
 	TREATMENTS: string
 	TITLE: string
 	SUBTITLE: string

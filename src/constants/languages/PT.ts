@@ -103,6 +103,8 @@ export default class PT implements LanguageBase {
 
 	MENU_STAFF_MODERATION = 'Equipe'
 
+	GAME_RECORD = 'Recorde'
+
 	TREATMENTS = 'Tratamentos'
 
 	TITLE = 'Título'

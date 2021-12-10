@@ -60,9 +60,9 @@ class TestInstanceService {
 
 		if (faqItemData) {
 			instances = faqItemData.itemList as FaqItemEntity[]
-			const nutrition = treatments.find(t => t.name === "Nutrição")
+			const nutrition = treatments.find(t => t.name === 'Nutrição')
 			if (nutrition) {
-				instances.forEach(i => i.localTreatmentId = nutrition.localId)
+				instances.forEach(i => (i.localTreatmentId = nutrition.localId))
 			}
 		} else {
 			treatments.forEach(t => {
@@ -83,7 +83,6 @@ class TestInstanceService {
 						localTreatmentId: t.localId,
 					},
 				] as FaqItemEntity[]
-
 			})
 		}
 
@@ -133,8 +132,6 @@ class TestInstanceService {
 		await EssentialContactService.saveAll(instancesUniversal)
 
 		const treatments = await TreatmentService.getAll()
-
-		console.log(treatments)
 
 		const instancesNonUniversal: EssentialContactEntity[] =
 			this.contactInstances.map(c => {

@@ -40,7 +40,6 @@ const MusicalDino: React.FC = () => {
 	}
 
 	function handleWrongPlay(score: number) {
-		console.log(score, record)
 		if (score > record) {
 			setRecord(score)
 			GameRecordService.setRecord(GameRecordEnum.DINO_MUSICAL, score)

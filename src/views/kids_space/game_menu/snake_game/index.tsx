@@ -33,7 +33,6 @@ const SnakeGame: React.FC = () => {
 
 	const handleGameOver = (score?: number) => {
 		setOpenDialog(true)
-		console.log(score)
 		if (score && score > record) {
 			setRecord(score)
 			GameRecordService.setRecord(GameRecordEnum.DINO_SNAKE, score)
@@ -41,7 +40,7 @@ const SnakeGame: React.FC = () => {
 	}
 
 	return (
-		<div className='minigame snake_game'>
+		<div className='snake_container'>
 			<GameOverDialog
 				onAgree={handleRestart}
 				onDisagree={handleClose}
@@ -49,10 +48,12 @@ const SnakeGame: React.FC = () => {
 			>
 				<p>{language.data.SNAKE_GAME_GAME_OVER_MSG_1}</p>
 			</GameOverDialog>
-			<ArrowBack kids />
-			<DinoRecord value={record} />
-			<div id='snake_game__score_board' />
-			<div id='snake_game__game_board' />
+			<div className='snake_game'>
+				<ArrowBack kids />
+				<DinoRecord value={record} />
+				<div id='snake_game__score_board' />
+				<div id='snake_game__game_board' />
+			</div>
 		</div>
 	)
 }

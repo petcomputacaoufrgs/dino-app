@@ -9,17 +9,37 @@ import './styles.css'
 import { useLanguage } from '../../context/language'
 
 const AboutUs: React.FC = () => {
-
 	const language = useLanguage()
 
 	const sections = [
 		{
 			title: language.data.ABOUT_US_PET,
 			img: PetLogo,
-			text: language.data.ABOUT_US_PET_TEXT
+			text: language.data.ABOUT_US_PET_TEXT,
+			children: (
+				<div>
+					<br />
+					<h5>Petianos desenvolvedores:</h5>
+					<ul>
+						<li>Bernardo Beneduzi Borba</li>
+						<li>João Pedro Silveira e Silva</li>
+						<li>Léo de Vasconcelos</li>
+						<li>Mayra Camargo Cademartori</li>
+						<li>Victória de Avelar Duarte</li>
+					</ul>
+				</div>
+			),
 		},
-		{ title: language.data.ABOUT_US_HCPA, img: HCLogo, text: language.data.ABOUT_US_HCPA_TEXT },
-		{ title: language.data.ABOUT_US_UFRGS, img: UfrgsLogo, text: language.data.ABOUT_US_UFRGS_TEXT },
+		{
+			title: language.data.ABOUT_US_HCPA,
+			img: HCLogo,
+			text: language.data.ABOUT_US_HCPA_TEXT,
+		},
+		{
+			title: language.data.ABOUT_US_UFRGS,
+			img: UfrgsLogo,
+			text: language.data.ABOUT_US_UFRGS_TEXT,
+		},
 	]
 
 	return (
@@ -36,7 +56,9 @@ const AboutUs: React.FC = () => {
 							ImgSrc={section.img}
 							text={section.text}
 							key={index}
-						/>
+						>
+							{section.children}
+						</Section>
 					))}
 				</div>
 			</div>

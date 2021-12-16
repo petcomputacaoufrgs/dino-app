@@ -16,6 +16,11 @@
 
 	--svg-size: 1.125rem;
 
+	--calendar-medication-background: #4b75c3;
+	--calendar-event-background: #d783bb;
+	--calendar-reminder-background: #f0994d;
+	--calendar-event-cards-font-color: #fafafa;
+
 	/* #region LIGHT - TEDDY-BEAR // */
 	/* Fontes */
 	--base-font-color: #121212;

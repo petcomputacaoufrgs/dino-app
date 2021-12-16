@@ -26,6 +26,9 @@ class DateUtils {
 	isEqualMonth = (d1: Date, d2: Date): boolean =>
 		d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()
 
+	isNowMimirTime = (date: Date): boolean =>
+		date.getHours() > 22 || date.getHours() < 8
+
 	getLastMonth = (date: Date): Date => {
 		return moment(date).add(-1, 'M').startOf('month').toDate()
 	}

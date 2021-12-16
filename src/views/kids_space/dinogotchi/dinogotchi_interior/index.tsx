@@ -18,17 +18,20 @@ import AwakeDino from './awake_dino'
 import './styles.css'
 import DinoIconButton from '../../../../components/button/icon_button'
 import StatusIndicator from '../../../../components/status_indicator'
-
+import DateUtils from '../../../../utils/DateUtils'
 
 interface DinogotchiInteriorProps {
 	handleBackgroundChange: () => void
 }
 
+const getInitialState = () =>
+	DateUtils.isNowMimirTime(new Date()) ? DinoEnum.ASLEEP : DinoEnum.INSIDE
+
 const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 	handleBackgroundChange,
 }) => {
 	const language = useLanguage()
-	const [state, setState] = useState(DinoEnum.ASLEEP)
+	const [state, setState] = useState(getInitialState())
 	const [kidsSpaceSettings, setKidsSpaceSettings] = useState<
 		KidsSpaceSettingsEntity | undefined
 	>()
@@ -67,8 +70,8 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 		}
 
 		return () => {
-			updateData = () => { }
-			finishLoading = () => { }
+			updateData = () => {}
+			finishLoading = () => {}
 			KidsSpaceSettingsService.removeUpdateEventListenner(loadData)
 		}
 	}, [isLoading, selectedHat])
@@ -196,7 +199,12 @@ const DinogotchiInterior: React.FC<DinogotchiInteriorProps> = ({
 
 	return (
 		<Loader isLoading={isLoading} className='dinogotchi_loader' hideChildren>
-			<DinoIconButton ariaLabel={language.data.CUSTOMIZE} icon={ClosetSVG} className='customize_dino' onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}/>
+			<DinoIconButton
+				ariaLabel={language.data.CUSTOMIZE}
+				icon={ClosetSVG}
+				className='customize_dino'
+				onClick={() => setCustomizeState(DinoEnum.CUSTOMIZE_COLOR)}
+			/>
 			{renderDinogotchiScreen()}
 			<StatusIndicator fillHealth={40} fillEnergy={70} fillHappiness={100} />
 		</Loader>

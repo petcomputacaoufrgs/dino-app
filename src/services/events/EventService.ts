@@ -3,7 +3,6 @@ import HistoryService from '../history/HistoryService'
 import PathConstants from '../../constants/app/PathConstants'
 import AuthService from '../auth/AuthService'
 import SyncService from '../sync/SyncService'
-// import CalendarService from '../calendar/CalendarService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
 import WebSocketService from '../websocket/WebSocketService'
@@ -31,7 +30,6 @@ class EventService {
 	}
 
 	whenLogin = async () => {
-		//CalendarService.addMocks()
 		this.startWebSocketAndSync()
 		AuthService.redirectToHome(await UserService.getPermission())
 	}

@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import PathConstants from '../../../../constants/app/PathConstants'
-import HistoryService from '../../../../services/history/HistoryService'
-import { useLanguage } from '../../../../context/language'
-import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import { ReactComponent as Braquiosaurus } from '../../../../assets/kids_space/dinos/empty_dino_triangle.svg'
 import { ReactComponent as Dinosaur } from '../../../../assets/kids_space/friends/triceratops_ray.svg'
 import { ReactComponent as Diplodocus } from '../../../../assets/kids_space/friends/trex.svg'

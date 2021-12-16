@@ -1,4 +1,5 @@
 import LogAppErrorModel from '../../types/log_app_error/api/LogAppErrorModel'
+import EventService from '../events/EventService'
 import AuthService from '../auth/AuthService'
 
 class ErrorHandlerService {
@@ -15,6 +16,8 @@ class ErrorHandlerService {
 					file: event.filename,
 					date: new Date(),
 				}
+
+				EventService.whenError(errorModel)
 			}
 		}
 	}

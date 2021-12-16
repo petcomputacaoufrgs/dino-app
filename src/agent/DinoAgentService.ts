@@ -1,6 +1,7 @@
 import Superagent from 'superagent'
 import DinoAPIHeaderConstants from '../constants/api/APIHeaderConstants'
 import AuthService from '../services/auth/AuthService'
+import EventService from '../services/events/EventService'
 import BaseAgent from './BaseAgent'
 import AuthEntity from '../types/auth/database/AuthEntity'
 import HttpStatus from '../types/http/HttpStatus'
@@ -37,8 +38,7 @@ class DinoAgentService extends BaseAgent<AuthEntity> {
 
 	protected onError = (err: any) => {
 		if (err.status === HttpStatus.FORBIDDEN) {
-			//EventService.whenLoginForbidden()
-			//TODO what?
+			EventService.whenLoginForbidden()
 		}
 	}
 }

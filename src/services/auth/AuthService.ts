@@ -4,6 +4,7 @@ import AuthResponseDataModel from '../../types/auth/api/AuthResponseModel'
 import LoginStatusConstants from '../../constants/login/LoginStatusConstants'
 import UserService from '../user/UserService'
 import DinoAgentService from '../../agent/DinoAgentService'
+import EventService from '../events/EventService'
 import LogAppErrorService from '../log_app_error/LogAppErrorService'
 import WebSocketAuthResponseModel from '../../types/auth/web_socket/WebSocketAuthResponseModel'
 import GoogleOAuth2Service from './google/GoogleOAuth2Service'
@@ -172,6 +173,8 @@ class AuthService extends UpdatableService {
 		await Promise.all(onLogoutCallbacks)
 
 		this.triggerUpdateEvent()
+
+		EventService.whenLogout()
 	}
 
 	isAuthenticated = async (): Promise<boolean> => {
@@ -225,6 +228,7 @@ class AuthService extends UpdatableService {
 					await this.saveUserSettings(body.data)
 					await this.saveUser(body.data)
 					this.triggerUpdateEvent()
+					await EventService.whenLogin()
 					return [LoginStatusConstants.SUCCESS, undefined]
 				}
 

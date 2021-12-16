@@ -10,47 +10,43 @@ import Settings from '../../settings'
 import Notes from '../../notes'
 import NotFound from '../../../not_found/index'
 import FaqHub from '../../faq_hub'
-import Calendar from '../../calendar'
 import Main from '../..'
 import ReportBug from '../../../report_bug'
 
 const UserMain: React.FC = () => {
-
-		return (
-			<Main>
-				<Switch>
-					<PrivateRoute exact path={PathConstants.USER_HOME} component={Home} />
-					<PrivateRoute
-						exact
-						path={PathConstants.USER_GLOSSARY}
-						component={Glossary}
-						/>
-					<PrivateRoute
-						exact
-						path={PathConstants.USER_CONTACTS}
-						component={Contacts}
-					/>
-					<PrivateRoute exact path={PathConstants.USER_NOTES} component={Notes} />
-					<PrivateRoute
-						exact
-						path={PathConstants.USER_SETTINGS}
-						component={Settings}
-					/>
-					<PrivateRoute
-						path={`${PathConstants.USER_GLOSSARY}/:localId`}
-						component={GlossaryItem}
-						/>
-					<PrivateRoute 
-						exact 
-						path={PathConstants.USER_FAQ}
-						component={FaqHub} 
-						/>
-					<PrivateRoute path={PathConstants.USER_CALENDAR} component={Calendar} />
-					<PrivateRoute path={PathConstants.USER_REPORT_BUG} component={ReportBug}  />
-					<PrivateRoute path={'/'} component={NotFound} />
-				</Switch>
-			</Main>
-		)
-	}
+	return (
+		<Main>
+			<Switch>
+				<PrivateRoute exact path={PathConstants.USER_HOME} component={Home} />
+				<PrivateRoute
+					exact
+					path={PathConstants.USER_GLOSSARY}
+					component={Glossary}
+				/>
+				<PrivateRoute
+					exact
+					path={PathConstants.USER_CONTACTS}
+					component={Contacts}
+				/>
+				<PrivateRoute exact path={PathConstants.USER_NOTES} component={Notes} />
+				<PrivateRoute
+					exact
+					path={PathConstants.USER_SETTINGS}
+					component={Settings}
+				/>
+				<PrivateRoute
+					path={`${PathConstants.USER_GLOSSARY}/:localId`}
+					component={GlossaryItem}
+				/>
+				<PrivateRoute exact path={PathConstants.USER_FAQ} component={FaqHub} />
+				<PrivateRoute
+					path={PathConstants.USER_REPORT_BUG}
+					component={ReportBug}
+				/>
+				<PrivateRoute path={'/'} component={NotFound} />
+			</Switch>
+		</Main>
+	)
+}
 
 export default UserMain

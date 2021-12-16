@@ -31,8 +31,6 @@ class PathConstants {
 
 	private NOTES: string = `notes`
 
-	private CALENDAR = `calendar`
-
 	USER_HOME: string = `${this.USER}/${this.HOME}`
 
 	USER_GLOSSARY: string = `${this.USER}/${this.GLOSSARY}`
@@ -44,8 +42,6 @@ class PathConstants {
 	USER_FAQ: string = `${this.USER}/${this.FAQ}`
 
 	USER_NOTES: string = `${this.USER}/${this.NOTES}`
-
-	USER_CALENDAR = `${this.USER}/${this.CALENDAR}`
 
 	STAFF_HOME: string = `${this.STAFF}/${this.HOME}`
 

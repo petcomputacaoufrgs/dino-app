@@ -2,7 +2,6 @@ import Dexie from 'dexie'
 import NoteEntity from '../types/note/database/NoteEntity'
 import NoteColumnEntity from '../types/note/database/NoteColumnEntity'
 import LogAppErrorEntity from '../types/log_app_error/database/LogAppErrorEntity'
-import CalendarEventEntity from '../types/calendar/database/CalendarEventEntity'
 import GlossaryItemEntity from '../types/glossary/database/GlossaryItemEntity'
 import UserEntity from '../types/user/database/UserEntity'
 import ContactEntity from '../types/contact/database/ContactEntity'
@@ -29,7 +28,6 @@ class Database extends Dexie {
 	note: Dexie.Table<NoteEntity, number>
 	noteColumn: Dexie.Table<NoteColumnEntity, number>
 	logAppError: Dexie.Table<LogAppErrorEntity, number>
-	calendarEvent: Dexie.Table<CalendarEventEntity, number>
 	glossary: Dexie.Table<GlossaryItemEntity, number>
 	contact: Dexie.Table<ContactEntity, number>
 	essentialContact: Dexie.Table<EssentialContactEntity, number>
@@ -97,7 +95,6 @@ class Database extends Dexie {
 		this.faqItem = this.table('faqItem')
 		this.treatmentQuestion = this.table('treatmentQuestion')
 		this.logAppError = this.table('logAppError')
-		this.calendarEvent = this.table('calendarEvent')
 		this.treatment = this.table('treatment')
 		this.googleScope = this.table('googleScope')
 		this.tab = this.table('tab')

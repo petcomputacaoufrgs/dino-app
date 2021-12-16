@@ -2,7 +2,6 @@ import Database from '../../storage/Database'
 import PostMessageType from '../../types/service_worker/PostMessageType'
 import TabEntity from '../../types/tab_control/TabEntity'
 import { hasValue } from '../../utils/Utils'
-import EventService from '../events/EventService'
 import PostMessageService from '../service_worker/PostMessageService'
 import UpdatableService from '../update/UpdatableService'
 
@@ -39,7 +38,6 @@ class TabControlService extends UpdatableService {
 	}
 
 	onMessageReceived = async () => {
-		await EventService.whenTabLoad()
 		this.triggerUpdateEvent()
 	}
 

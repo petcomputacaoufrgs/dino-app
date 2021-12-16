@@ -100,8 +100,6 @@ export default class EN implements LanguageBase {
 
 	MENU_LOGOUT = 'Logout'
 
-	MENU_CALENDAR = 'Calendar'
-
 	ABOUT_US = 'About Us'
 
 	MENU_STAFF_MODERATION = 'Staff Moderation'
@@ -512,14 +510,6 @@ export default class EN implements LanguageBase {
 	OPEN_DRAWER_BUTTON_ARIA_LABEL = 'Click here to open menu'
 
 	CLOSE_MENU_BUTTON_ARIA_LABEL = 'Click here to close menu'
-
-	CALENDAR_EDIT_BUTTON_ARIA_LABEL = 'Click here to edit'
-
-	CALENDAR_DELETE_BUTTON_ARIA_LABEL = 'Click here to delete'
-
-	CALENDAR_CLOSE_BUTTON_ARIA_LABEL = 'Click here to close the page'
-
-	CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Click here to go to the current month'
 
 	READ_MORE = 'Read more'
 

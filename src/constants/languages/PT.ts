@@ -127,8 +127,6 @@ export default class PT implements LanguageBase {
 
 	NOTES = 'Notas'
 
-	MENU_CALENDAR = 'Calendário'
-
 	NOTES_HEADER_IMAGE_DESC =
 		'Imagem com um caderno de anotações com uma mão escrevendo.'
 
@@ -514,14 +512,6 @@ export default class PT implements LanguageBase {
 	OPEN_DRAWER_BUTTON_ARIA_LABEL = 'Clique aqui para abrir o menu'
 
 	CLOSE_MENU_BUTTON_ARIA_LABEL = 'Clique aqui para fechar o menu'
-
-	CALENDAR_EDIT_BUTTON_ARIA_LABEL = 'Clique aqui para editar'
-
-	CALENDAR_DELETE_BUTTON_ARIA_LABEL = 'Clique aqui para excluir'
-
-	CALENDAR_CLOSE_BUTTON_ARIA_LABEL = 'Clique aqui para fechar a tela'
-
-	CALENDAR_CURRENT_MONTH_ARIA_LABEL = 'Clique aqui para ir para o mês atual'
 
 	READ_MORE = 'Leia mais'
 

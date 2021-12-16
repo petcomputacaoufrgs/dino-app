@@ -1,8 +1,8 @@
 .dinogotchi_screen__dino_pet {
 	position: absolute;
 	height: 75vh;
-    left: -18vmin;
-    bottom: 5vmin;
+	left: -18vmin;
+	bottom: 5vmin;
 }
 
 .dinogotchi_screen .customize_dino {
@@ -69,11 +69,11 @@
 }
 
 .dialog_chooser__button.green {
-	background-color: #69AF85;
+	background-color: #69af85;
 }
 
 .dialog_chooser__button.pink {
-	background-color: #FFAFCC;
+	background-color: #ffafcc;
 }
 
 .dialog_chooser__button.blue {
@@ -85,11 +85,11 @@
 }
 
 .selection_button {
-	position:absolute;
-    width: 30vw;
+	position: absolute;
+	width: 30vw;
 	top: 85vh;
-    left: 35vw;
-	background-color: #A977B5;
+	left: 35vw;
+	background-color: #a977b5;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -108,7 +108,7 @@
 }
 
 .speech_bubble__triangle {
-	width: 0; 
+	width: 0;
 	height: 0;
 	margin: 0 1rem 0 auto;
 	border-left: 20px solid transparent;
@@ -133,6 +133,10 @@
 	position: initial;
 }
 
+.dinogotchi_loader .loader__screen {
+	position: none;
+}
+
 #mascara,
 #bone,
 #laco,
@@ -143,23 +147,23 @@
 	visibility: hidden;
 }
 
-.has_bone #bone{
+.has_bone #bone {
 	visibility: visible;
 }
 
-.has_laco #laco{
+.has_laco #laco {
 	visibility: visible;
 }
 
-.has_gorro #gorro{
+.has_gorro #gorro {
 	visibility: visible;
 }
 
-.has_moicano #moicano{
+.has_moicano #moicano {
 	visibility: visible;
 }
 
-.has_lenco #lenco{
+.has_lenco #lenco {
 	visibility: visible;
 }
 

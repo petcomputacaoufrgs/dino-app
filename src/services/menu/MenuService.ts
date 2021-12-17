@@ -7,6 +7,7 @@ import { ReactComponent as FaqSVG } from '../../assets/icons/menu_icons/faq.svg'
 import { ReactComponent as SettingsSVG } from '../../assets/icons/menu_icons/settings.svg'
 import { ReactComponent as LogoutSVG } from '../../assets/icons/menu_icons/logout.svg'
 import { ReactComponent as ReportSVG } from '../../assets/icons/menu_icons/report.svg'
+import { ReactComponent as ReportSVG2 } from '../../assets/icons/menu_icons/bug.svg'
 import { ReactComponent as KidsSpaceSVG } from '../../assets/icons/menu_icons/kids_area.svg'
 import { ReactComponent as ModerationSVG } from '../../assets/icons/menu_icons/moderation.svg'
 import { ReactComponent as TreatmentSVG } from '../../assets/icons/menu_icons/treatments.svg'
@@ -118,7 +119,7 @@ class MenuService {
 		this.getMainPages(language),
 		[
 			{
-				image: ReportSVG,
+				image: ReportSVG2,
 				name: language.REPORT_BUG,
 				onClick: () => HistoryService.push(PathConstants.USER_REPORT_BUG),
 			},

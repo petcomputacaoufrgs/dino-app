@@ -5,9 +5,9 @@ import PathConstants from '../../../../constants/app/PathConstants'
 import GameOverDialog from '../../../../components/dialogs/kids_space_dialog/game_over_dialog'
 import Game from './components/Game'
 import ArrowBack from '../../../../components/arrow_back'
+import DinoSwitch from '../../../../components/switch'
 import '../../variables.css'
 import './styles.css'
-import DinoSwitch from '../../../../components/switch'
 
 const TicTacDino: React.FC = () => {
 	const language = useLanguage()

@@ -1,6 +1,5 @@
 import TreatmentEntity from '../../../../types/treatment/database/TreatmentEntity'
 import UserSettingsEntity from '../../../../types/user/database/UserSettingsEntity'
-import { SelectPasswordProps } from '../../select_password/props'
 
 export interface FirstSettingsDialogsProps {
 	id: string
@@ -8,7 +7,7 @@ export interface FirstSettingsDialogsProps {
 	component: () => JSX.Element
 }
 
-export default interface FirstSettingsDialogProps extends SelectPasswordProps {
+export default interface FirstSettingsDialogProps {
 	settings: UserSettingsEntity
 	step: number
 	onCloseDialogs: () => void
@@ -18,5 +17,4 @@ export default interface FirstSettingsDialogProps extends SelectPasswordProps {
 	onCancel: () => void
 	treatments: TreatmentEntity[]
 	onDoneChange: (value: boolean) => void
-	onPasswordErrorMessageChange: (value?: string) => void
 }

@@ -10,9 +10,7 @@ import { useLanguage } from '../../../../context/language'
 import FirstSettingsDialogProps from './props'
 import { FirstSettingsDialogsProps } from './props'
 import { HasStaffPowers } from '../../../../context/private_router'
-import DataConstants from '../../../../constants/app_data/DataConstants'
 import { SelectEssentialContactGrant } from '../../select_essential_contact_grant'
-import { SelectPassword } from '../../select_password'
 
 const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 	const language = useLanguage()
@@ -48,11 +46,6 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 				title: language.data.FIRST_LOGIN_CHOOSE_TREATMENT,
 				component: renderSelectTreatmentDialogContent,
 			},
-			// { //TODO Kids password
-			// 	id: 'PASSWORD',
-			// 	title: language.data.FIRST_LOGIN_CHOOSE_PASSWORD,
-			// 	component: renderSetPasswordDialog,
-			// },
 		]
 
 		let dialogs = basicDialogs
@@ -97,12 +90,6 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 		</div>
 	)
 
-	const renderSetPasswordDialog = () => (
-		<div className='first_settings__message_dialog'>
-			<SelectPassword {...props} />
-		</div>
-	)
-
 	const renderFinalMessageDialog = () => (
 		<div className='first_settings__message_dialog'>
 			<DinoLogoHeader
@@ -137,25 +124,6 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 		)
 	}
 
-	const isValidPassword = () => {
-		if (props.parentsAreaPassword.length < DataConstants.USER_PASSWORD.MIN) {
-			props.onPasswordErrorMessageChange(
-				language.data.PASSWORD_MIN_LENGHT_ERROR_MESSAGE,
-			)
-			return false
-		}
-
-		if (props.parentsAreaPassword !== props.confirmParentsAreaPassword) {
-			props.onPasswordErrorMessageChange(
-				language.data.PASSWORD_CONFIRM_LENGHT_ERROR_MESSAGE,
-			)
-			return false
-		}
-
-		props.onPasswordErrorMessageChange(undefined)
-		return true
-	}
-
 	const handleEnd = () => {
 		if (props.step === LAST_DIALOG) {
 			props.onDoneChange(true)
@@ -163,11 +131,7 @@ const FirstSettingsDialogs: React.FC<FirstSettingsDialogProps> = props => {
 		props.onSave()
 	}
 
-	const handleNextStep = () => {
-		const passwordIndex = dialogs.findIndex(d => d.id === 'PASSWORD')
-
-		if (props.step !== passwordIndex || isValidPassword()) props.onNextStep()
-	}
+	const handleNextStep = () => props.onNextStep()
 
 	return (
 		<DinoDialog

@@ -15,10 +15,10 @@ import DinoEnum from '../../../../types/enum/DinoEnum'
 import { useLanguage } from '../../../../context/language'
 import Loader from '../../../../components/loader'
 import AwakeDino from './awake_dino'
-import './styles.css'
 import DinoIconButton from '../../../../components/button/icon_button'
 import StatusIndicator from '../../../../components/status_indicator'
 import DateUtils from '../../../../utils/DateUtils'
+import './styles.css'
 
 interface DinogotchiInteriorProps {
 	handleBackgroundChange: () => void

@@ -17,10 +17,6 @@ const FirstSettings: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [settings, setSettings] = useState<UserSettingsEntity>()
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
-	const [parentsAreaPassword, setParentsAreaPassword] = useState('')
-	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] =
-		useState('')
-	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -110,16 +106,6 @@ const FirstSettings: React.FC = () => {
 						onCancel={handleCancel}
 						treatments={treatments}
 						onDoneChange={handleDoneChange}
-						parentsAreaPassword={parentsAreaPassword}
-						onChangePassword={e => setParentsAreaPassword(e.target.value)}
-						confirmParentsAreaPassword={confirmParentsAreaPassword}
-						onChangeConfirmPassword={e =>
-							setConfirmParentsAreaPassword(e.target.value)
-						}
-						passwordErrorMessage={passwordErrorMessage}
-						onPasswordErrorMessageChange={value =>
-							setPasswordErrorMessage(value)
-						}
 					/>
 				)}
 		</>

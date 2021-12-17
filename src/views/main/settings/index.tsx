@@ -27,7 +27,6 @@ import AuthService from '../../../services/auth/AuthService'
 import './styles.css'
 import { HasStaffPowers } from '../../../context/private_router'
 import { SelectEssentialContactGrant } from '../../../components/settings/select_essential_contact_grant'
-import { SelectPassword } from '../../../components/settings/select_password'
 
 const AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS = 10
 
@@ -43,25 +42,8 @@ const Settings: React.FC = () => {
 	)
 	const [treatments, setTreatments] = useState<TreatmentEntity[]>([])
 	const [syncGoogleContacts, setSyncGoogleContacts] = useState(false)
-	const [openChangePasswordDialog, setOpenChangePasswordDialog] =
-		useState(false)
 	const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false)
 	const [timeToDeleteAccount, setTimeToDeleteAccount] = useState(0)
-
-	const [oldPassword, setOldPassword] = useState('')
-	const [parentsAreaPassword, setParentsAreaPassword] = useState('')
-	const [confirmParentsAreaPassword, setConfirmParentsAreaPassword] =
-		useState('')
-	const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>()
-
-	useEffect(() => {
-		if (!openChangePasswordDialog) {
-			setParentsAreaPassword('')
-			setConfirmParentsAreaPassword('')
-			setOldPassword('')
-			setPasswordErrorMessage(undefined)
-		}
-	}, [openChangePasswordDialog])
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -132,17 +114,12 @@ const Settings: React.FC = () => {
 
 	const handleCloseContactsGrantDialog = () => setOpenGoogleContactDialog(false)
 
-	const handleCloseChangePasswordDialog = () =>
-		setOpenChangePasswordDialog(false)
-
 	const handlerDeleteAccountClick = () => {
 		setTimeToDeleteAccount(AWAIT_TIME_TO_DELETE_ACCOUNT_IN_SECONDS)
 		setOpenDeleteAccountDialog(true)
 	}
 
 	const handleCloseDeleteAccountDialog = () => setOpenDeleteAccountDialog(false)
-
-	const handleChangePasswordClick = () => setOpenChangePasswordDialog(true)
 
 	const handleDeleteAccount = async () => {
 		if (timeToDeleteAccount === 0) {
@@ -189,43 +166,6 @@ const Settings: React.FC = () => {
 		</DinoDialog>
 	)
 
-	const renderPasswordDialog = () => (
-		<DinoDialog
-			className='settings__change_password_dialog'
-			onClose={handleCloseChangePasswordDialog}
-			open={openChangePasswordDialog}
-			onSave={handleCloseChangePasswordDialog} //TODO: fazer função que salva nova senha na KidSpaceSettings
-			labelSave={language.data.CHANGE}
-			labelClose={language.data.CANCEL}
-		>
-			<Loader isLoading={isLoading}>
-				<DinoDialogContent>
-					<SelectPassword
-						oldPassword={oldPassword}
-						onChangeOldPassword={e => setOldPassword(e.target.value)}
-						parentsAreaPassword={parentsAreaPassword}
-						onChangePassword={e => setParentsAreaPassword(e.target.value)}
-						confirmParentsAreaPassword={confirmParentsAreaPassword}
-						onChangeConfirmPassword={e =>
-							setConfirmParentsAreaPassword(e.target.value)
-						}
-						passwordErrorMessage={passwordErrorMessage}
-						showOldPasswordField
-					/>
-					<a
-						className='forgot_password__link'
-						href={
-							'https://i.guim.co.uk/img/media/936a06656761f35e75cc20c9098df5b2e8c27ba7/0_398_4920_2952/master/4920.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=97df6bd31d4f899da5bf4933a39672da'
-						}
-					>
-						{' '}
-						{language.data.FORGOT_PASSWORD}
-					</a>
-				</DinoDialogContent>
-			</Loader>
-		</DinoDialog>
-	)
-
 	const renderUserOnlySection = () =>
 		!isStaff && (
 			<>
@@ -247,15 +187,6 @@ const Settings: React.FC = () => {
 				<FormControl className='settings__form'>
 					<SelectEssentialContactGrant settings={settings} />
 				</FormControl>
-				{/* <DinoHr />
-				<FormControl>
-					<TextButton
-						onClick={handleChangePasswordClick}
-						className='settings__form__change_password'
-					>
-						{language.data.CHANGE_PASSWORD_LABEL}
-					</TextButton>
-				</FormControl> */}
 			</>
 		)
 
@@ -289,8 +220,8 @@ const Settings: React.FC = () => {
 						{language.data.DELETE_ACCOUNT}
 					</TextButton>
 				</FormControl>
-				{/* {renderPasswordDialog()} */}
 				{renderDeleteAccountDialog()}
+				{/*TODO ver se isso rola ^*/}
 				<GoogleGrantDialog
 					settings={settings}
 					onClose={handleCloseContactsGrantDialog}

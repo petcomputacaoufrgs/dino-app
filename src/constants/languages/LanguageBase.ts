@@ -252,6 +252,7 @@ export default interface LanguageBase {
 	MEMORY_GAME: string
 	DINO_SLIDER_GAME: string
 	TIC_TAC_DINO_GAME: string
+	TIC_TAC_DINO_GAME_IS_AI_ON: string
 	MUSICAL_DINO_GAME: string
 	SNAKE_GAME: string
 	SNAKE_GAME_GAME_OVER_MSG_1: string

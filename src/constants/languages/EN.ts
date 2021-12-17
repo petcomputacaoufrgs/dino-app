@@ -575,6 +575,8 @@ export default class EN implements LanguageBase {
 
 	TIC_TAC_DINO_GAME = 'Tic Tac Dino'
 
+	TIC_TAC_DINO_GAME_IS_AI_ON = 'Play with computer'
+
 	MUSICAL_DINO_GAME = 'Musical Dino'
 
 	SNAKE_GAME = 'Snake Game'

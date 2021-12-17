@@ -12,6 +12,24 @@
 	display: block;
 }
 
+.tic_tac_dino_game .dino_switch__form {
+	padding: 1em;
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	top: 0;
+	width: auto;
+}
+.tic_tac_dino_game .dino_switch__form p {
+	background-color: var(--tic-tac-dino-display-background-color);
+	color: var(--dark-color);
+	display: flex;
+	padding: 0.6rem;
+	border-radius: 0.7rem;
+	font-size: var(--small-font);
+	margin-right: 4px;
+}
+
 .tic_tac_dino_game .dino_icon_button__button svg {
 	width: 3rem;
 	height: 3rem;

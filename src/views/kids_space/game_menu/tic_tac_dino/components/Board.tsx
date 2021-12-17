@@ -7,12 +7,13 @@ interface BoardProps {
 
 const TicTacBoard: React.FC<BoardProps> = ({ squares, onClick }) => (
 	<div className='tic_tac__board'>
-		{squares.map((square, i) =>
-			<button 
-				className={`tic_tac_dino__square ${square || ''}`} 
-				onClick={() => onClick(i)} 
+		{squares.map((square, i) => (
+			<button
+				key={i}
+				className={`tic_tac_dino__square ${square || ''}`}
+				onClick={() => onClick(i)}
 			/>
-		)}
+		))}
 	</div>
 )
 

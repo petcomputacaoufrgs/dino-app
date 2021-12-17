@@ -7,12 +7,14 @@ import Game from './components/Game'
 import ArrowBack from '../../../../components/arrow_back'
 import '../../variables.css'
 import './styles.css'
+import DinoSwitch from '../../../../components/switch'
 
 const TicTacDino: React.FC = () => {
 	const language = useLanguage()
 	const [openDialog, setOpenDialog] = useState(false)
 	const [gameStarted, setGameStarted] = useState(true)
 	const [message, setMessage] = useState('')
+	const [isAiOn, setAiOn] = useState(true)
 
 	function handleClose() {
 		setOpenDialog(false)
@@ -25,13 +27,13 @@ const TicTacDino: React.FC = () => {
 	}
 
 	function handleEndGame(winner: string | null) {
+		setGameStarted(false)
 		setMessage(
 			winner
 				? `${language.data.TIC_TAC_DINO_GAME_OVER_MSG_1} ${winner}!`
 				: language.data.TIE,
 		)
 		setOpenDialog(true)
-		setGameStarted(false)
 	}
 
 	return (
@@ -45,7 +47,16 @@ const TicTacDino: React.FC = () => {
 			</GameOverDialog>
 			<div className='tic_tac_dino_game'>
 				<ArrowBack kids />
-				<Game onEndGame={handleEndGame} gameStarted={gameStarted} />
+				<DinoSwitch
+					selected={isAiOn}
+					onChangeSelected={() => setAiOn(!isAiOn)}
+					label={language.data.TIC_TAC_DINO_GAME_IS_AI_ON}
+				/>
+				<Game
+					isAiOn={isAiOn}
+					onEndGame={handleEndGame}
+					gameStarted={gameStarted}
+				/>
 			</div>
 		</div>
 	)

@@ -531,6 +531,8 @@ export default class PT implements LanguageBase {
 
 	TIC_TAC_DINO_GAME = 'Tic Tac Dino'
 
+	TIC_TAC_DINO_GAME_IS_AI_ON = 'Jogar com computador'
+
 	MUSICAL_DINO_GAME = 'Dino Musical'
 
 	SNAKE_GAME = 'Jogo da Cobra'

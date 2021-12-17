@@ -6,9 +6,10 @@ import { useLanguage } from '../../../../../context/language'
 interface GameProps {
 	onEndGame: (winner: string | null) => void
 	gameStarted: boolean
+	isAiOn: boolean
 }
 
-const Game: React.FC<GameProps> = ({ onEndGame, gameStarted }) => {
+const Game: React.FC<GameProps> = ({ onEndGame, gameStarted, isAiOn }) => {
 	const language = useLanguage()
 	const [history, setHistory] = useState([Array(9).fill(null)])
 	const [stepNumber, setStepNumber] = useState(0)
@@ -17,18 +18,39 @@ const Game: React.FC<GameProps> = ({ onEndGame, gameStarted }) => {
 	const player = xIsNext ? 'Queridino' : 'Amigossauro'
 
 	const handleClick = (i: number) => {
+		if ((isAiOn && !xIsNext) || !gameStarted) return
+
+		makeMove(i)
+	}
+
+	const makeMove = (i?: number) => {
+		const getRandomEmptyIndex = () => {
+			let emptyIndexes = [] as number[]
+			squares.forEach((s, i) => {
+				if (!s) emptyIndexes.push(i)
+			})
+			return emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)]
+		}
+
 		const historyPoint = history.slice(0, stepNumber + 1)
 		const current = historyPoint[stepNumber]
 		const squares = [...current]
+		let index = i
+
+		if (index === undefined) index = getRandomEmptyIndex()
 
 		// return if won or occupied
-		if (winner || squares[i]) return
+		if (winner || index === undefined || squares[index]) return
 		// select square
-		squares[i] = player
+		squares[index] = player
 		setHistory([...historyPoint, squares])
 		setStepNumber(historyPoint.length)
 		setXisNext(!xIsNext)
 	}
+
+	useEffect(() => {
+		if (isAiOn && !xIsNext) setTimeout(makeMove, 300)
+	}, [xIsNext])
 
 	useEffect(() => {
 		const handleEndGame = () => {

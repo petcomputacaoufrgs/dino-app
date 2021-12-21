@@ -4,20 +4,20 @@
    </style>
  <g>
   <g transform="rotate(16.3327 401.401 295.229)" id="svg_19">
-   <ellipse stroke="#000" ry="172.99999" rx="140" id="svg_3" cy="335" cx="402" fill="#000000"/>
-   <ellipse stroke="#000" ry="85.9369" rx="87" id="svg_5" cy="191.9369" cx="402" fill="#000000"/>
-   <rect transform="rotate(-60 466.968 121.004)" stroke="#000" rx="10" id="svg_6" height="19" width="78" y="111.50385" x="427.96839" fill="#000000"/>
-   <rect transform="rotate(-120 339 120.684)" stroke="#000" rx="10" id="svg_7" height="18.64584" width="77.51105" y="111.36134" x="300.24479" fill="#000000"/>
-   <rect stroke="#000" rx="20" id="svg_8" height="29.64584" width="160.51105" y="315.36135" x="190.24479" fill="#000000"/>
-   <rect stroke="#000" rx="20" id="svg_9" height="29.64584" width="160.51105" y="317" x="452.24479" fill="#000000"/>
-   <rect transform="rotate(0.00466309 278.5 253.181)" stroke="#000" rx="20" id="svg_10" height="29.64584" width="82.51081" y="238.35817" x="237.24479" fill="#000000"/>
-   <rect transform="rotate(32.1725 232.401 239.252)" stroke="#000" rx="20" id="svg_11" height="29.64584" width="85.13501" y="224.42907" x="189.83379" fill="#000000"/>
-   <rect transform="rotate(0.00466309 525.5 253.181)" stroke="#000" rx="20" id="svg_12" height="29.64584" width="82.51081" y="238.35817" x="484.24479" fill="#000000"/>
-   <rect transform="rotate(-32 573.401 238.252)" stroke="#000" rx="20" id="svg_13" height="29.64584" width="85.13501" y="223.42907" x="530.83379" fill="#000000"/>
-   <rect transform="rotate(0.00466309 276.5 415.181)" stroke="#000" rx="20" id="svg_14" height="29.64584" width="82.51081" y="400.35817" x="235.24479" fill="#000000"/>
-   <rect transform="rotate(152 227.401 428.252)" stroke="#000" rx="20" id="svg_15" height="29.64584" width="85.13501" y="413.42907" x="184.83379" fill="#000000"/>
-   <rect transform="rotate(0.00466309 526.5 417.181)" stroke="#000" rx="20" id="svg_16" height="29.64584" width="82.51081" y="402.35817" x="485.24479" fill="#000000"/>
-   <rect transform="rotate(-152 575.401 430.252)" stroke="#000" rx="20" id="svg_17" height="29.64584" width="85.13501" y="415.42907" x="532.83379" fill="#000000"/>
+   <ellipse class='st0' stroke="#000" ry="172.99999" rx="140" id="svg_3" cy="335" cx="402" fill="#000000"/>
+   <ellipse class='st0' stroke="#000" ry="85.9369" rx="87" id="svg_5" cy="191.9369" cx="402" fill="#000000"/>
+   <rect class='st0' transform="rotate(-60 466.968 121.004)" stroke="#000" rx="10" id="svg_6" height="19" width="78" y="111.50385" x="427.96839" fill="#000000"/>
+   <rect class='st0' transform="rotate(-120 339 120.684)" stroke="#000" rx="10" id="svg_7" height="18.64584" width="77.51105" y="111.36134" x="300.24479" fill="#000000"/>
+   <rect class='st0' stroke="#000" rx="20" id="svg_8" height="29.64584" width="160.51105" y="315.36135" x="190.24479" fill="#000000"/>
+   <rect class='st0' stroke="#000" rx="20" id="svg_9" height="29.64584" width="160.51105" y="317" x="452.24479" fill="#000000"/>
+   <rect class='st0' transform="rotate(0.00466309 278.5 253.181)" stroke="#000" rx="20" id="svg_10" height="29.64584" width="82.51081" y="238.35817" x="237.24479" fill="#000000"/>
+   <rect class='st0' transform="rotate(32.1725 232.401 239.252)" stroke="#000" rx="20" id="svg_11" height="29.64584" width="85.13501" y="224.42907" x="189.83379" fill="#000000"/>
+   <rect class='st0' transform="rotate(0.00466309 525.5 253.181)" stroke="#000" rx="20" id="svg_12" height="29.64584" width="82.51081" y="238.35817" x="484.24479" fill="#000000"/>
+   <rect class='st0' transform="rotate(-32 573.401 238.252)" stroke="#000" rx="20" id="svg_13" height="29.64584" width="85.13501" y="223.42907" x="530.83379" fill="#000000"/>
+   <rect class='st0' transform="rotate(0.00466309 276.5 415.181)" stroke="#000" rx="20" id="svg_14" height="29.64584" width="82.51081" y="400.35817" x="235.24479" fill="#000000"/>
+   <rect class='st0' transform="rotate(152 227.401 428.252)" stroke="#000" rx="20" id="svg_15" height="29.64584" width="85.13501" y="413.42907" x="184.83379" fill="#000000"/>
+   <rect class='st0' transform="rotate(0.00466309 526.5 417.181)" stroke="#000" rx="20" id="svg_16" height="29.64584" width="82.51081" y="402.35817" x="485.24479" fill="#000000"/>
+   <rect class='st0' transform="rotate(-152 575.401 430.252)" stroke="#000" rx="20" id="svg_17" height="29.64584" width="85.13501" y="415.42907" x="532.83379" fill="#000000"/>
   </g>
  </g>
 </svg>

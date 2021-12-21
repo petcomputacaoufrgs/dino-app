@@ -27,7 +27,10 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 
 	const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
 
-	const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>, item: FaqItemEntity) => {
+	const handleClickMenu = (
+		event: React.MouseEvent<HTMLButtonElement>,
+		item: FaqItemEntity,
+	) => {
 		setSelectedItem(item)
 		setAnchor(event.currentTarget)
 	}
@@ -43,27 +46,28 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 	const handleCloseDialog = () => {
 		setToAction(CRUDEnum.NOP)
 		setSelectedItem(undefined)
-  }
+	}
 
 	return (
 		<div className='dino__text__wrap dino__list dino__list__padding'>
-			<ListTitle title={language.data.titleFAQTreatmentText(data.treatment.name)}/>
+			<ListTitle
+				title={language.data.titleFAQTreatmentText(data.treatment.name)}
+			/>
 			{ArrayUtils.isNotEmpty(data.faqItems) ? (
 				<Accordion className='dino__accordion'>
-					{data.faqItems?.map((item, index) =>	
-						<FaqItem 
-							key={index} 
-							item={item} 
-							onClickMenu={handleClickMenu} 
-						/>
-					)}
+					{data.faqItems?.map((item, index) => (
+						<FaqItem key={index} item={item} onClickMenu={handleClickMenu} />
+					))}
 				</Accordion>
-			) : <NoItemsList />}
-			{(toggle.showTreatmentQuestionButtonToStaff || !isStaff) && 
-			<LinkButton
-				text={language.data.NOT_FOUND_QUESTION_FAQ}
-				onClick={() => setQuestionDialogOpen(true)}
-			/>}
+			) : (
+				<NoItemsList />
+			)}
+			{(toggle.showTreatmentQuestionButtonToStaff || !isStaff) && (
+				<LinkButton
+					text={language.data.NOT_FOUND_QUESTION_FAQ}
+					onClick={() => setQuestionDialogOpen(true)}
+				/>
+			)}
 			<QuestionDialogForm
 				treatment={data.treatment}
 				dialogOpen={dialogOpen}
@@ -88,7 +92,7 @@ const FaqItems: React.FC<{ data: FaqView }> = ({ data }): JSX.Element => {
 					/>
 					<AgreementDialog
 						open={toAction === CRUDEnum.DELETE}
-            question={language.data.deleteItemText(language.data.FAQ_ITEM)}
+						question={language.data.deleteItemText(language.data.FAQ_ITEM)}
 						onAgree={handleAcceptDeleteDialog}
 						onDisagree={handleCloseDialog}
 					/>
